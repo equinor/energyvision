@@ -65,14 +65,26 @@ The solution should support:
 - as a minimum, blocking simultaneous editing of the same resource (page or asset) by mulyple users
 - more advanced solutions for simultanous editing (nice to have, not required)
 
+
 ## Taxonomy
+The solution should support:
+- annotating assets and pages with tags
+- gruping related assets and pages
 
 
 ## Analytics
+The solution should support:
+- analytics at both the page level (eg, which part of a page are visited more often)
+- analytics at the entire website level (eg, which parts of the webiste are visted more often)
 
-
-## Personalization
 
 ## Development process
+The solution should support:
+-
+ 
 
 ## Miscellaneous
+
+- WIP The content creator needs to have a tool to scan and highlight their content for common accessibility issues. They need to be able to see a list of potential problems. They need to be able to see suggested improvements for any issues. They need to be able to see feedback on what is implemented well.
+
+- WIP The editor needs to have a tool that scans the page for SEO factors. They need to be able to see a list of potential problems. They need to be able to see a list of suggested improvements. They need to be able to see a list of things that are implemented well.
