@@ -53,7 +53,7 @@ The solution should support:
 The solution should support:
 - language selection, at least between Norwegian and English
 - creation of the same page in multiple languages, with as little redundancy as possible
-- creation of assets' attributes (caprions, tags, ...) in multiple languages
+- creation of assets' attributes (captions, tags, ...) in multiple languages
 
 
 ## Version history
