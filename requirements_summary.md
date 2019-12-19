@@ -6,6 +6,7 @@ The solution should support:
 - creation of rich user experiences, with fine-grained control over elements in a page
 - creation of custom forms, utilizing both custom and predefined fields
 - creation and update of templates, and creation of pages starting from templates
+- displaying a preview of the page before publishing it
 - creation of global code snippets, reusable and automatically updated across the website 
 - selection of assets (eg, pictures and videos) to include in a page, with easy customization of view (crop, scale, aspect ratio, etc)
 - assigning values to metatags (title, description, open graph data) for both templates and pages
