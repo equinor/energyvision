@@ -87,9 +87,10 @@ The solution should support:
 ## Miscellaneous
 The solution should support:
 - accessibility standard, as defined by WCAG 2.1 (see also https://uu.difi.no/om-oss/english)
+- highlighting accessibility issues while editing content
 - compliance with GDPR
 - ownership of data and content should be exclusively of Equinor
-
-- WIP The content creator needs to have a tool to scan and highlight their content for common accessibility issues. They need to be able to see a list of potential problems. They need to be able to see suggested improvements for any issues. They need to be able to see feedback on what is implemented well.
-
-- WIP The editor needs to have a tool that scans the page for SEO factors. They need to be able to see a list of potential problems. They need to be able to see a list of suggested improvements. They need to be able to see a list of things that are implemented well.
+- hosting in countries outside US, UK or Australia due to laws regarding data/security/privacy in those countries
+- subscription to a newsletter, with choice of topics
+- WISIWIG editor for pages (nice to have)
+-  WIP: a few more things coming
