@@ -65,7 +65,7 @@ The solution should support:
 ## Collaboration
 The solution should support:
 - simultaneous access of multiple users
-- as a minimum, blocking simultaneous editing of the same resource (page or asset) by mulyple users
+- as a minimum, blocking simultaneous editing of the same resource (page or asset) by multiple users
 - more advanced solutions for simultanous editing (nice to have, not required)
 
 
