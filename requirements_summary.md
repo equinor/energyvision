@@ -44,7 +44,7 @@ The solution should support:
 - easy editing of basic properties of assets, such as size, scale, aspect ratio
 - defining reference points in pictures for smart scaling/cropping
 - possibly linking directly to Equinor's cloud-based image and video archive
-  - the archives should be at least compatible, so that meta data is preserved when importing assets
+  - the CMS and the Equinor archives should be at least compatible, so that meta data is preserved when importing assets
 - publishing an asset even though it's not referred to by any page
 - unpublishing assets automatically when there is no page that links to it
 
