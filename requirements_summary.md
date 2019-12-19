@@ -97,5 +97,5 @@ The solution should support:
 - ownership of data and content should be exclusively of Equinor
 - hosting in countries outside US, UK or Australia due to laws regarding data/security/privacy in those countries
 - subscription to a newsletter, with choice of topics
-  - if an article already published is modified, no new notification should be sent out
+  - if an article already published is modified, the editore should be able to choose whether to send out a new newsletter or not
 - WISIWIG editor for pages (nice to have)
