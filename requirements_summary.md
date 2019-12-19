@@ -91,9 +91,11 @@ The solution should support:
 ## Miscellaneous
 The solution should support:
 - accessibility standard, as defined by WCAG 2.1 (see also https://uu.difi.no/om-oss/english)
-- highlighting accessibility issues while editing content
+- highlighting accessibility issues while editing content (nice to have)
+  - we need anyway a system for automatically checking accessibility, even independent from the CMS if needed
 - compliance with GDPR
 - ownership of data and content should be exclusively of Equinor
 - hosting in countries outside US, UK or Australia due to laws regarding data/security/privacy in those countries
 - subscription to a newsletter, with choice of topics
+  - if an article already published is modified, no new notification should be sent out
 - WISIWIG editor for pages (nice to have)
