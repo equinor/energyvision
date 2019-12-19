@@ -99,3 +99,4 @@ The solution should support:
 - subscription to a newsletter, with choice of topics
   - if an article already published is modified, the editore should be able to choose whether to send out a new newsletter or not
 - WISIWIG editor for pages (nice to have)
+- interacting with external system, such as forwarding messages to email addresses, or get/post message to endpoints
