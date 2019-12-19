@@ -81,7 +81,6 @@ The solution should support:
 - analytics at the entire website level (eg, which parts of the website are visted more often)
 - analytics on what terms people search for
 
-
 ## Development process
 The solution should support:
 - accessing content through an API (REST/GraphQL, for develoers)
