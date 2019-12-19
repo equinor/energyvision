@@ -93,4 +93,3 @@ The solution should support:
 - hosting in countries outside US, UK or Australia due to laws regarding data/security/privacy in those countries
 - subscription to a newsletter, with choice of topics
 - WISIWIG editor for pages (nice to have)
--  WIP: a few more things coming
