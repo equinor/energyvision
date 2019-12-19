@@ -85,6 +85,10 @@ The solution should support:
  
 
 ## Miscellaneous
+The solution should support:
+- accessibility standard, as defined by WCAG 2.1 (see also https://uu.difi.no/om-oss/english)
+- compliance with GDPR
+- ownership of data and content should be exclusively of Equinor
 
 - WIP The content creator needs to have a tool to scan and highlight their content for common accessibility issues. They need to be able to see a list of potential problems. They need to be able to see suggested improvements for any issues. They need to be able to see feedback on what is implemented well.
 
