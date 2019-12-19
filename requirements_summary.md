@@ -45,6 +45,8 @@ The solution should support:
 - defining reference points in pictures for smart scaling/cropping
 - possibly linking directly to Equinor's cloud-based image and video archive
   - the archives should be at least compatible, so that meta data is preserved when importing assets
+- publishing an asset even though it's not referred to by any page
+- unpublishing assets automatically when there is no page that links to it
 
 
 ## Localization
