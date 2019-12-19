@@ -81,9 +81,10 @@ The solution should support:
 - analytics at the entire website level (eg, which parts of the website are visted more often)
 - analytics on what terms people search for
 
+
 ## Development process
 The solution should support:
-- accessing content through an API (REST/GraphQL, for develoers)
+- accessing content through an API (REST/GraphQL, for developers)
 - exporting the database(s) with the website content and assets in a _common_ format
  
 
