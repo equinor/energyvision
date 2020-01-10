@@ -87,6 +87,7 @@ The solution should support:
 The solution should support:
 - accessing content through an API (REST/GraphQL, for developers)
 - exporting the database(s) with the website content and assets in a _common_ format
+- import content from AEM
  
 
 ## Miscellaneous
