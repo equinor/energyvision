@@ -22,8 +22,8 @@ The solution should support:
 ## Workflow
 The solution should support:
 - displaying a confirmation prompt before publishing/modifying a page
-- saving articles as drafts
-- scheduling article publication at given data/time
+- saving pages as drafts
+- scheduling page publication at given data/time
 - creation of drafts and pages with limited access (see _Access Control_ further down)
 - creation of satellite websites, with custom access permission 
 
@@ -33,7 +33,7 @@ The solution should support:
 - defining users and their roles, where roles have specific customizable permissions
 - giving guest access to external/temporary users
 - revoke access to users
-- associating users accounts to their Equinor identity
+- associating users accounts to their Equinor identity, preferably SSO
 - limiting drafts and pages access to selected users/roles
 
 
