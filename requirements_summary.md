@@ -73,7 +73,7 @@ The solution should support:
 ## Taxonomy
 The solution should support:
 - annotating assets and pages with tags
-- gruping related assets and pages
+- grouping related assets and pages
 
 
 ## Analytics
