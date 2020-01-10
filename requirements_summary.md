@@ -60,6 +60,7 @@ The solution should support:
 The solution should support:
 - revision history for pages, with date, time, username and summary of changes associated to every change
 - revision history for assets, with date, time and username
+- ability to revert to a previous version of the page
 
 
 ## Collaboration
