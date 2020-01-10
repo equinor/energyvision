@@ -25,7 +25,7 @@ The solution should support:
 - saving pages as drafts
 - scheduling page publication at given data/time
 - creation of drafts and pages with limited access (see _Access Control_ further down)
-- creation of satellite websites, with custom access permission 
+- creation of satellite websites in multiple languages, with custom access permission 
 
 
 ## Access control
@@ -49,10 +49,10 @@ The solution should support:
 - unpublishing assets automatically when there is no page that links to it
 
 
-## Localization
+## Localization/i18n
 The solution should support:
 - language selection, at least between Norwegian and English
-- creation of the same page in multiple languages, with as little redundancy as possible
+- creation of localized copies of existing pages while retaining references to assets
 - creation of assets' attributes (captions, tags, ...) in multiple languages
 
 
