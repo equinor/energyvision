@@ -53,7 +53,7 @@ The solution should support:
 The solution should support:
 - language selection, at least between Norwegian and English
 - creation of localized copies of existing pages while retaining references to assets
-- creation of assets' attributes (captions, tags, ...) in multiple languages
+- creation of assets' attributes (alt text, tags, ...) in multiple languages
 
 
 ## Version history
