@@ -80,7 +80,7 @@ The solution should support:
 The solution should support:
 - analytics at page level (eg, which part of a page are visited more often)
 - analytics at the entire website level (eg, which parts of the website are visted more often)
-- analytics on what terms people search for
+- analytics on what terms people search for on the site
 
 
 ## Development process
