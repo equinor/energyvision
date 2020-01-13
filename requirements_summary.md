@@ -40,6 +40,7 @@ The solution should support:
 ## Asset management
 The solution should support:
 - management of various assets, such as videos, images, pdf documents
+- adapt to streaming for video
 - search through the assets using different properties (filename, resolution, date of creation, etc)
 - easy editing of basic properties of assets, such as size, scale, aspect ratio
 - defining reference points in pictures for smart scaling/cropping
@@ -99,6 +100,8 @@ The solution should support:
 - ownership of data and content should be exclusively of Equinor
 - hosting in countries outside US, UK or Australia due to laws regarding data/security/privacy in those countries
 - subscription to a newsletter, with choice of topics
+  - CMS should support subscriptions form(s)
+  - Able to host subscriber infomation and push notification on new news letters from Enterprise SMTP.
   - if an article already published is modified, the editor should be able to choose whether to send out a new newsletter or not
 - WYSIWYG editor for pages (nice to have)
 - interacting with external system, such as forwarding messages to email addresses, or get/post message to endpoints
