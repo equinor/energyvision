@@ -104,4 +104,5 @@ The solution should support:
   - Able to host subscriber infomation and push notification on new news letters from Enterprise SMTP.
   - if an article already published is modified, the editor should be able to choose whether to send out a new newsletter or not
 - WYSIWYG editor for pages (nice to have)
+- Real-time (or close to real-time) preview of the page that is being edited
 - interacting with external system, such as forwarding messages to email addresses, or get/post message to endpoints
