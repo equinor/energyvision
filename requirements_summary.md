@@ -105,3 +105,5 @@ The solution should support:
   - if an article already published is modified, the editor should be able to choose whether to send out a new newsletter or not
 - WYSIWYG editor for pages (nice to have)
 - interacting with external system, such as forwarding messages to email addresses, or get/post message to endpoints
+- Development should be open source
+- Hosting should be on Equinor's Azure solution
