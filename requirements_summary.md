@@ -52,8 +52,10 @@ The solution should support:
 
 ## Localization/i18n
 The solution should support:
-- language selection, at least between Norwegian and English
-- creation of localized copies of existing pages while retaining references to assets
+- publishing content in one or more languages for each page
+- creation of individual publications to support alternate languages or campaigns
+- creation of individual publications with alternate branding
+- copy a page from one publication to another while retaining references to assets
 - creation of assets' attributes (alt text, tags, ...) in multiple languages
 
 
