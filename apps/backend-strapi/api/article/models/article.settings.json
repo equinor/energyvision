@@ -1,4 +1,6 @@
 {
+  "connection": "default",
+  "collectionName": "articles",
   "info": {
     "name": "article"
   },
@@ -19,8 +21,16 @@
     },
     "body": {
       "type": "richtext"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "draft",
+        "published",
+        "unpublished"
+      ],
+      "default": "draft",
+      "required": true
     }
-  },
-  "connection": "default",
-  "collectionName": "articles"
+  }
 }
