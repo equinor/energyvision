@@ -1,0 +1,41 @@
+{
+  "connection": "default",
+  "collectionName": "pages",
+  "info": {
+    "name": "page"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "draft",
+        "published",
+        "unpublished"
+      ],
+      "default": "draft",
+      "required": true
+    },
+    "slug": {
+      "type": "string",
+      "unique": true,
+      "required": false
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero",
+        "sections.image",
+        "sections.text"
+      ]
+    }
+  }
+}
