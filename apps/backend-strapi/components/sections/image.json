@@ -1,0 +1,24 @@
+{
+  "info": {
+    "name": "image",
+    "icon": "image"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": true
+    },
+    "caption": {
+      "type": "string"
+    },
+    "alt_text": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "connection": "default",
+  "collectionName": "components_sections_images"
+}

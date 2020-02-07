@@ -1,0 +1,17 @@
+{
+  "info": {
+    "name": "text",
+    "icon": "pencil-alt"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  },
+  "connection": "default",
+  "collectionName": "components_sections_texts"
+}
