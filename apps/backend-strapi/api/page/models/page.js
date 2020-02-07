@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const slugify = require("slugify");
+const slugify = require('slugify')
 
 /**
  * Lifecycle callbacks for the `page` model.
@@ -9,13 +9,13 @@ const slugify = require("slugify");
 module.exports = {
   beforeSave: async (model, attrs, options) => {
     if (!attrs.slug) {
-      if (options.method === "insert") {
-        model.set("slug", slugify(attrs.name, { lower: true }));
-      } else if (options.method === "update") {
-        attrs.slug = slugify(attrs.name, { lower: true });
+      if (options.method === 'insert') {
+        model.set('slug', slugify(attrs.name, { lower: true }))
+      } else if (options.method === 'update') {
+        attrs.slug = slugify(attrs.name, { lower: true })
       }
     }
-  }
+  },
 
   // After saving a value.
   // Fired after an `insert` or `update` query.
@@ -60,4 +60,4 @@ module.exports = {
   // After destroying a value.
   // Fired after a `delete` query.
   // afterDestroy: async (model, attrs, options) => {}
-};
+}
