@@ -1,0 +1,26 @@
+{
+  "info": {
+    "name": "article"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    },
+    "body": {
+      "type": "richtext"
+    }
+  },
+  "connection": "default",
+  "collectionName": "articles"
+}
