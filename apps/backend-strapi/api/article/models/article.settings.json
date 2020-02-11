@@ -11,7 +11,8 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "image": {
       "model": "file",
@@ -35,6 +36,10 @@
     "ingress": {
       "type": "text",
       "maxLength": 275
+    },
+    "slug": {
+      "type": "string",
+      "unique": true
     }
   }
 }
