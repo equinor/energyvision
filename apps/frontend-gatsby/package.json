@@ -14,6 +14,7 @@
     "gatsby-source-filesystem": "^2.1.46",
     "gatsby-source-strapi": "0.0.10",
     "gatsby-transformer-sharp": "^2.3.13",
+    "luxon": "^1.22.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
