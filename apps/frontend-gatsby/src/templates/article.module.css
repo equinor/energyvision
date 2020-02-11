@@ -1,0 +1,36 @@
+.container {
+  width: 80%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.title {
+  font-size: 4.8rem;
+  font-weight: 500;
+}
+
+.date {
+  display: block;
+  color: #666;
+  text-transform: uppercase;
+  margin: 1em 0;
+}
+
+.ingress {
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 3.9rem;
+}
+
+.content {
+  font-size: 2.0rem;
+  line-height: 3.4rem;
+}
+
+.content p, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1.5em;
+}
+
+.content h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}

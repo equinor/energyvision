@@ -26,6 +26,7 @@ export const pageQuery = graphql`
       edges {
         node {
           id
+          slug
           title
           ingress
           body
