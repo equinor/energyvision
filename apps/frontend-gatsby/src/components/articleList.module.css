@@ -28,6 +28,12 @@
   font-weight: 500;
 }
 
+.title a:link,
+.title a:visited {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .ingress {
   font-size: 1.8rem;
   line-height: 2.4rem;
