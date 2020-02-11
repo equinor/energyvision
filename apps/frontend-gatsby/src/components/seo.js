@@ -68,7 +68,12 @@ function SEO({ description, lang, meta, title }) {
           content: metaDescription,
         },
       ].concat(meta)}
-    />
+    >
+      <link
+        rel="stylesheet"
+        href="https://eds-static.equinor.com/font/equinor-font.css"
+      />
+    </Helmet>
   )
 }
 
