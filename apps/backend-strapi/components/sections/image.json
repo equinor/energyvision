@@ -1,4 +1,6 @@
 {
+  "connection": "default",
+  "collectionName": "components_sections_images",
   "info": {
     "name": "image",
     "icon": "image"
@@ -14,11 +16,18 @@
     "caption": {
       "type": "string"
     },
-    "alt_text": {
+    "alt": {
       "type": "string",
       "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "inline",
+        "full_width"
+      ],
+      "default": "inline",
+      "required": true
     }
-  },
-  "connection": "default",
-  "collectionName": "components_sections_images"
+  }
 }
