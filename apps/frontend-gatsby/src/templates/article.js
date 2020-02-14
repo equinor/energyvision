@@ -10,7 +10,7 @@ import SEO from '../components/seo'
 import articleStyle from './article.module.css'
 
 const ArticleTemplate = ({ data }) => {
-  const article = data.strapiArticle
+  const article = data.cms.article
 
   return (
     <Layout>
@@ -21,7 +21,9 @@ const ArticleTemplate = ({ data }) => {
         <span className={articleStyle.date}>
           {convertDate(article.created_at, 'MMMM d, yyyy HH:mm ZZZZ')}
         </span>
-        <Img fluid={article.image.childImageSharp.fluid} />
+        <div className={articleStyle.image}>
+          <img src={`http://localhost:1337${article.image.url}`} />
+        </div>
         <h3 className={articleStyle.ingress}>{article.ingress}</h3>
         <div className={articleStyle.content}>
           <ReactMarkdown source={article.body} />
@@ -32,17 +34,15 @@ const ArticleTemplate = ({ data }) => {
 }
 
 export const query = graphql`
-  query ArticleTemplate($id: String!) {
-    strapiArticle(id: { eq: $id }) {
-      title
-      ingress
-      body
-      created_at
-      image {
-        childImageSharp {
-          fluid(maxWidth: 800) {
-            ...GatsbyImageSharpFluid
-          }
+  query($id: ID!) {
+    cms {
+      article(id: $id) {
+        title
+        ingress
+        body
+        created_at
+        image {
+          url
         }
       }
     }

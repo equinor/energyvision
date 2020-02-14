@@ -6,11 +6,11 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: 'gatsby-source-strapi',
+      resolve: 'gatsby-source-graphql',
       options: {
-        apiURL: 'http://localhost:1337',
-        contentTypes: ['article'],
-        queryLimit: 1000,
+        typeName: 'strapi',
+        fieldName: 'cms',
+        url: 'http://localhost:1337/graphql',
       },
     },
     `gatsby-plugin-react-helmet`,

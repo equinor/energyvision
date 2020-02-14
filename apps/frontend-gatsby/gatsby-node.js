@@ -1,45 +1,35 @@
 const path = require(`path`)
 
-const makeRequest = (graphql, request) =>
-  new Promise((resolve, reject) => {
+const queries = {
+  articles: `{ cms { articles { id slug } } }`,
+}
+
+const makeRequest = async (graphql, query) => {
+  return new Promise((resolve, reject) => {
     resolve(
-      graphql(request).then((result) => {
+      graphql(query).then((result) => {
         if (result.errors) {
           reject(result.errors)
         }
-        return result
+        return result.data
       }),
     )
   })
+}
 
-exports.createPages = ({ actions, graphql }) => {
+exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
 
-  const getArticles = makeRequest(
-    graphql,
-    `
-    {
-      allStrapiArticle {
-        edges {
-          node {
-            id
-            slug
-          }
-        }
-      }
-    }
-    `,
-  ).then((result) => {
-    result.data.allStrapiArticle.edges.forEach(({ node }) => {
+  const articles = await makeRequest(graphql, queries.articles)
+  if (articles) {
+    articles.cms.articles.forEach((article) => {
       createPage({
-        path: `/${node.slug}`,
+        path: `/news/${article.slug}`,
         component: path.resolve(`src/templates/article.js`),
         context: {
-          id: node.id,
+          id: article.id,
         },
       })
     })
-  })
-
-  return getArticles
+  }
 }
