@@ -42,3 +42,14 @@
 .item-body {
   padding: 0.8rem;
 }
+
+.thumbnail {
+  width: 350px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.thumbnail img {
+  max-width: 100%;
+  height: auto;
+}

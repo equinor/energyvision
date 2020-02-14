@@ -9,12 +9,12 @@ export const ArticleList = (props) => {
 
   return (
     <ul className={articleListStyle.list}>
-      {articles.map((document) => {
-        const article = document.node
-        const thumbnail = article.image.childImageSharp.fixed
+      {articles.map((article) => {
         return (
           <li className={articleListStyle.item} key={article.id}>
-            <Img fixed={thumbnail} />
+            <div className={articleListStyle.thumbnail}>
+              <img src={`http://localhost:1337${article.image.url}`} alt="" />
+            </div>
 
             <div className={articleListStyle.itemBody}>
               <span className={articleListStyle.date}>

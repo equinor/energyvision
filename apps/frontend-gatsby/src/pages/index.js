@@ -7,37 +7,34 @@ import { ArticleList } from '../components/ArticleList'
 
 import indexStyle from './index.module.css'
 
-const IndexPage = ({ data }) => (
-  <Layout>
-    <SEO title="Home" />
+const IndexPage = ({ data }) => {
+  const articles = data.cms.articles
+  return (
+    <Layout>
+      <SEO title="Home" />
 
-    <section className={indexStyle.section}>
-      <h2 className={indexStyle.title}>Latest News</h2>
-      <ArticleList articles={data.allStrapiArticle.edges} />
-    </section>
-  </Layout>
-)
+      <section className={indexStyle.section}>
+        <h2 className={indexStyle.title}>Latest News</h2>
+        <ArticleList articles={articles} />
+      </section>
+    </Layout>
+  )
+}
 
 export default IndexPage
 
 export const pageQuery = graphql`
   query IndexQuery {
-    allStrapiArticle {
-      edges {
-        node {
-          id
-          slug
-          title
-          ingress
-          body
-          created_at
-          image {
-            childImageSharp {
-              fixed(width: 350, height: 200) {
-                ...GatsbyImageSharpFixed
-              }
-            }
-          }
+    cms {
+      articles {
+        id
+        slug
+        title
+        ingress
+        body
+        created_at
+        image {
+          url
         }
       }
     }
