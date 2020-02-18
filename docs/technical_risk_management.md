@@ -23,4 +23,6 @@ Some of this may seem obvious but it's good to be thorough.
   malicious code injection or the retrieval of non-public data.
   - This includes any input forms such as newsletter signups, contact forms, or search fields as well as URL query parameters.
   - This should be secured both on the frontend as well as on the backend.
- 
+- The frontend should be served by a cdn/proxy to provide more efficient delivery and protect against potential DDOS attacks.
+- The CMS editor(s) needs to have a sufficient access-control system to restrict/grant access to specific sections and content
+  on an individual and/or role basis.
