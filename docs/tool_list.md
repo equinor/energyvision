@@ -38,3 +38,25 @@
 
 ## Input forms
 - [Formspree](https://formspree.io/) - Custom HTML forms
+  - Platform as a service (paid)
+  - Point form action to API for submissions
+  - Stores submissions on their servers
+  - Possible to host this on our own servers, will need a [Sendgrid](https://sendgrid.com/) account.
+    - See: https://github.com/formspree/formspree#running-your-own-copy-of-formspree
+    
+    
+## Email / newsletter
+- [MailChimp](https://mailchimp.com/) - Marketing platform
+  - Platform as a service
+  - Collect email addresses/information via embedded forms or API
+  - Send out newsletters, either based on templates or custom built
+  - Marketing CRM system
+- [SendGrid](https://sendgrid.com/) - Email delivery service
+  - Platform as a service
+  - Transactional emails
+  - Send emails via API
+  - Create marketing campaigns (newsletters)
+- [MailGun](https://www.mailgun.com/) - Email delivery service
+   - Software as a service
+   - Transactional emails
+   - Send email via API
