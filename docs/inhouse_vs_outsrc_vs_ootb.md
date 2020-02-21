@@ -38,3 +38,10 @@ Notes:
 - in house developers have interest in developing a future proof solution, when outsourcing this cannot be guaranteed (but can be controlled if there are IT experts on the customer side). When buying an out-of-the-box product, this all depends on how the product is further developed and is something that is outstide of our control.
 - when outsourcing we are typically bound by contracts, which limits e.g. reaction to changes and control over requirements
 - when developing a solution in-house, the knowledge and experience that went into making that solution stay within the company. This is a major benefit in the long-term as it will make any future work on the project easier as that knowledge can be documented and passed on. When outsourcing the project, we will only have this benefit if we choose the same vendor since they will be the ones that have the knowledge and experience.
+
+
+## Major risk for in house development:
+- wrong time estimate
+  -> Lean approach: focus on the MVP, then improve
+  -> Combination of services: we build a working solution (MVP) by combining existing, possibly commercial, services. If there is time and sufficient resources, replace commercial services with open source solutions
+- ...
