@@ -2,11 +2,13 @@
   width: 80%;
   max-width: 800px;
   margin: auto;
+  padding-top: 10rem;
 }
 
 .title {
   font-size: 4.8rem;
   font-weight: 500;
+  margin-top: 0;
 }
 
 .date {

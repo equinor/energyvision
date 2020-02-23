@@ -8,27 +8,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useStaticQuery, graphql } from 'gatsby'
+import { Link } from 'gatsby'
+import { PageMenu } from './PageMenu'
 
-import Header from './header'
 import 'normalize.css'
 import './layout.css'
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
+    query PageList {
+      cms {
+        pages {
+          id
+          slug
+          name
         }
       }
     }
   `)
 
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <main>{children}</main>
-    </>
+    <main className="wrapper">
+      <nav className="side-menu">
+        <Link to="/">
+          <img
+            src="https://eds-static.equinor.com/logo/equinor-logo-horizontal.svg#red"
+            alt="Equinor"
+            className="logo"
+          />
+        </Link>
+
+        <PageMenu pages={data.cms.pages} />
+      </nav>
+      <div className="page-content">{children}</div>
+    </main>
   )
 }
 

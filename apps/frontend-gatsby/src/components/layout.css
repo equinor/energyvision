@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 62.5%;
   font-family: Equinor;
@@ -5,4 +9,30 @@ html {
 
 body {
   font-size: 1.6rem;
+}
+
+.wrapper aside {
+  width: 250px;
+  border-right: solid 1px #ccc;
+  background: #fff;
+  position: relative;
+}
+
+.side-menu {
+  width: 25rem;
+  border-right: solid 1px #ccc;
+  background: #fff;
+  height: 100%;
+  position: fixed;
+}
+
+.logo {
+  max-width: 100%;
+  margin: auto;
+  padding: 25px;
+}
+
+.page-content {
+  width: calc(100% - 25rem);
+  margin-left: 25rem;
 }
