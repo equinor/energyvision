@@ -2,6 +2,7 @@ const path = require(`path`)
 
 const queries = {
   articles: `{ cms { articles { id slug } } }`,
+  pages: `{ cms { pages { id slug } } }`,
 }
 
 const makeRequest = async (graphql, query) => {
@@ -28,6 +29,19 @@ exports.createPages = async ({ actions, graphql }) => {
         component: path.resolve(`src/templates/article.js`),
         context: {
           id: article.id,
+        },
+      })
+    })
+  }
+
+  const pages = await makeRequest(graphql, queries.pages)
+  if (pages) {
+    pages.cms.pages.forEach((page) => {
+      createPage({
+        path: `/${page.slug}`,
+        component: path.resolve(`src/templates/page.js`),
+        context: {
+          id: page.id,
         },
       })
     })
