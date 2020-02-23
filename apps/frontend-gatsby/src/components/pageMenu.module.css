@@ -1,0 +1,27 @@
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list-item {
+  display: block;
+}
+
+.list-item:hover {
+  background: #f4f5f6;
+}
+
+.list-item a {
+  display: block;
+  padding: 1.5rem 3rem;
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  color: #243746;
+  font-weight: 500;
+}
+
+.list-item a:link,
+.list-item a:visited {
+  text-decoration: none;
+}
+
