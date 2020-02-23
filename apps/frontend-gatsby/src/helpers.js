@@ -7,3 +7,7 @@ export const convertDate = (date, format) => {
 
   return dt.toFormat(format)
 }
+
+export const resolveImageUrl = (url) => {
+  return process.env.API_URL + url
+}
