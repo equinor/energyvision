@@ -1,0 +1,23 @@
+.image-full-width {
+  width: 100%;
+  margin: 1em 0;
+}
+
+.image-inline {
+  width: 90%;
+  max-width: 1200px;
+  margin: 1em auto;
+}
+
+.image-full-width img,
+.image-inline img {
+  max-width: 100%;
+  height: auto;
+}
+
+.caption {
+  display: block;
+  text-align: left;
+  font-size: 1.4rem;
+  padding: 0.5em;
+}

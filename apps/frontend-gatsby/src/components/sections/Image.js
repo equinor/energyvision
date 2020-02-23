@@ -1,4 +1,5 @@
 import React from 'react'
+import { resolveImageUrl } from '../../helpers'
 
 import style from './image.module.css'
 
@@ -9,9 +10,11 @@ export const Image = (props) => {
     type === 'full_width' ? style.imageFullWidth : style.imageInline
 
   return (
-    <div className={containerClass}>
-      <img className={style.image} src={image.url} alt={alt} />
-      <caption className={style.caption}>{caption}</caption>
-    </div>
+    <figure className={containerClass}>
+      <img className={style.image} src={resolveImageUrl(image.url)} alt={alt} />
+      {caption ? (
+        <figcaption className={style.caption}>{caption}</figcaption>
+      ) : null}
+    </figure>
   )
 }
