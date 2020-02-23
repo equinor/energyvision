@@ -1,0 +1,18 @@
+.section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2em auto;
+}
+
+.content {
+  font-size: 2rem;
+  line-height: 3.4rem;
+}
+
+.content p {
+  margin: 1em 0 2em;
+}
+
+.content h1, h2, h3, h4, h5, h6 {
+  margin: 0.5em 0;
+}

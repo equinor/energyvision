@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 
-import style from 'text.module.css'
+import style from './text.module.css'
 
-export const ComponentSectionsText = (props) => {
+export const Text = (props) => {
   const { heading, content } = props
 
   return (
