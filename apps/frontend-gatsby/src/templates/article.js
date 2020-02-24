@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { graphql } from 'gatsby'
 import { convertDate } from '../helpers'
 import ReactMarkdown from 'react-markdown'
 
@@ -22,7 +21,7 @@ const ArticleTemplate = ({ data }) => {
           {convertDate(article.created_at, 'MMMM d, yyyy HH:mm ZZZZ')}
         </span>
         <div className={articleStyle.image}>
-          <img src={`http://localhost:1337${article.image.url}`} />
+          <img src={`http://localhost:1337${article.image.url}`} alt="" />
         </div>
         <h3 className={articleStyle.ingress}>{article.ingress}</h3>
         <div className={articleStyle.content}>

@@ -8,7 +8,7 @@ export const Hero = (props) => {
 
   return (
     <section className={style.container}>
-      <img className={style.image} src={resolveImageUrl(image.url)} />
+      <img className={style.image} src={resolveImageUrl(image.url)} alt="" />
       <div className={style.heroContent}>
         <h1 className={style.title}>{title}</h1>
         {subtitle ? <span className={style.subtitle}>{subtitle}</span> : null}
