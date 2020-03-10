@@ -1,14 +1,13 @@
 # Sanity demo
 
-Participants:
-Bergen: Dag-Gunnar, Andrea, Victor, Sven
-CCOM: Nicolas, Mette, Lars-Magne, Ivar(?)
-Sanity: Jacob (Sales), Magnus (CEO), Rune (Engineer)
+Date: 2020.03.10
+
+Present from Sanity: Jacob (Sales), Magnus (CEO), Rune (Engineer)
 
 
 ## General notes
-- 30 000 users
-- about 250 customers (amongst which Schibsted, TV2, Marathon Oil)
+- Sanity has about 30 000 users
+- About 250 customers (amongst which Schibsted, TV2, Marathon Oil)
 - largest office in Oslo, active in Norwegian market but expanding to the US
 - Sanity does not call itself a headless CMS, but will happily be grouped into that group
 - They want to provide the "google docs experience" where people can collaborate rather than having documents locked when
@@ -43,7 +42,6 @@ Sanity: Jacob (Sales), Magnus (CEO), Rune (Engineer)
 - Custom workflows can be created, allowing for example for reviews before publishing.
 
 
-
 ## Technical notes
 - Studio is very customizable
 - Can have multiple studio installs using one backend
@@ -61,4 +59,3 @@ Sanity: Jacob (Sales), Magnus (CEO), Rune (Engineer)
 - You can add additional steps to publishing, for example adding a "are you sure?" prompt, or showing a content analysis report
 - You can add, for example, a tab in the editing view that shows data from google analytics - so that the editors can view
   these statistics for individual posts in the editor rather than having to log in to google analytics.
-
