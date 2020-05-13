@@ -29,5 +29,7 @@
    short description (TODO)
 -  https://www.cmswire.com/web-cms/13-headless-cmss-to-put-on-your-radar/
 - headlessscms.org
+  - For the open source part, picked only those with more than 4000 stars
+  
 
    
