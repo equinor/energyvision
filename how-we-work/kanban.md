@@ -80,7 +80,7 @@ so that [business value is gained]*\
 Example:\
 *As a user of a mobile app I would like to be able to filter on tasks so that I can save valuable time*
 
-User stories may be split further into Tasks when necessary
+User stories may be split further into Tasks when necessary.
 
 ### Task
 A task on it's own does not give business value, but it is necessary in order to reach a larger goal. Tasks can be connected to a User Story, or they can exist on their own.\
@@ -95,8 +95,13 @@ Bugs should be associated with a User Story. That makes it easier to reason abou
 It is important that a Bug is written in such a manner that it is easily testable; use acceptance criterias.\
 Put bugs on top of the board so that it screams "Pick me!". We don't want many open bugs in the system!
 
-### Using the board
-[To be decided once the board is alive]
+### Using the Zenhub board
+1. Use templates for creating issues. Templates exist for User Stories, Tasks and Bugs in addition to built-in issue type Epic.
+1. Write the gist of the issue in the subject. For a US that would be the entire US text (As a user bla bla bla…).
+1. All new issues except bugs should be put in the **Backlog**. They will be prioritized during a grooming session.
+1. Bugs are always put on top of the **Prioritized** column. The backlog is not to be filled with bugs we would fix at a later stage.
+1. Make sure you finish any issue that you start. Issues move to the **RIGHT**, not to the left. If stuck, get some help!
+1. Issues that exist to the right of the **Prioritized** column must have an asignee.
 
 ## Classes of service
 In Kanban there is the concept of "classes of service" that tells us something about how a task is classified. You can define whichever classes you like, but a good strategy is to keep it simple. A typical example is to use three classes:
