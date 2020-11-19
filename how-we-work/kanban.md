@@ -4,7 +4,7 @@
 1. **Start with what you do now** - Kanban does not dictate setup or procedure. You can start with what you have.
 1. **Agree to pursue incrementar, evolutionary change**
 1. **Respect the current process, roles, responsibilities & titles**
-1. Encourage acts of leadership at all levels
+1. **Encourage acts of leadership at all levels**
 
 ## How to succeed with Kanban
 1. **Visualize the workflow**
@@ -27,12 +27,13 @@
     * Understand the customer
 * FLOW
     * Maintain the flow
-    * Do not stop!  
-\
-\
-\
-\
-\
+    * Do not stop!
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 
 ## Roles
