@@ -11,7 +11,7 @@
     * Kanban board
     * Classes of Service
 1. **Limit Work In Progress, WIP**
-1. Manage flow
+1. **Manage flow**
     * Strive for progess
 1. **Make Process Policies Explicit**
     * Understand problem at hand
