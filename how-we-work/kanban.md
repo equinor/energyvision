@@ -34,7 +34,6 @@
 <br>
 <br>
 <br>
-<br>
 
 ## Roles
 ### Service Delivery Manager (SDM)
