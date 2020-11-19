@@ -23,10 +23,22 @@ Example:\
 ## Commit messages
 A great article explaing how to write good commit messages can be found [here](https://chris.beams.io/posts/git-commit/).
 
-These are the highlights:
+The guidelines for this project are:
 1. Separate subject from body with a blank line
 1. Limit the subject line to 50 characters
-1. Capitalize the subject line
+1. Use gitmojis when applicable
+1. Include link to GitHub issue in the subject when applicable:
+    ```
+    fix #xxx
+    fixes #xxx
+    fixed #xxx
+    close #xxx
+    closes #xxx
+    closed #xxx
+    resolve #xxx
+    resolves #xxx
+    resolved #xxx
+    ```
 1. Do not end the subject line with a period
 1. Use the imperative mood in the subject line
 1. Wrap the body at 72 characters
