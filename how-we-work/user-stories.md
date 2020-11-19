@@ -9,7 +9,7 @@ Take the following [user story](http://manifesto.co.uk/agile-concepts-user-stori
 
 
 ```
-As a user I want to sign in with my Facebook account`
+As a user I want to sign in with my Facebook account
 ```
 
 This sounds fairly self-explanatory until you think about it for a moment. What kind of user? And what benefit will they derive from being able to sign in via Facebook? Is it just to avoid the need to remember a separate password, or will there be additional value?
