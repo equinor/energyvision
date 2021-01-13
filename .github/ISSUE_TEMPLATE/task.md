@@ -2,7 +2,7 @@
 name: Task
 about: This issue represents a task
 title: ''
-labels: task
+labels: "⚙️ task"
 assignees: ''
 
 ---
