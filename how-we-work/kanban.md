@@ -61,7 +61,7 @@ We have four categories of issues in this project:
 * Bug
 
 ### Epic
-* An Epic is a big piece of the systm/application. It could be a feature, a business need or similar that everyone in the project can relate to.
+* An Epic is a big piece of the system/application. It could be a feature, a business need or similar that everyone in the project can relate to.
 * The number of epics within a project should be limited. Somewhere between 10-30 is common.
 * Epics are not testable. They should be broken down into User Stories that can be testet.
 * Identifying epics is typically a task that involves the PO, the customer and the SDM. It can be a result from a [User Story Mapping](https://www.visual-paradigm.com/guide/agile-software-development/what-is-user-story-mapping/) exersise.\
@@ -105,6 +105,6 @@ In Kanban there is the concept of "classes of service" that tells us something a
 1. Use templates for creating issues. Templates exist for User Stories, Tasks and Bugs in addition to built-in issue type Epic.
 1. Write the gist of the issue in the subject. For a US that would be the entire US text (As a user bla bla bla…).
 1. All new issues except bugs should be put in the **Backlog**. They will be prioritized during a grooming session.
-1. Bugs are always put on top of the **Prioritized** column. The backlog is not to be filled with bugs we would fix at a later stage.
+1. Bugs are always put on top of the **Prioritized** column. The backlog is not to be filled with bugs we would fix at a later stage. Critical bugs are also flagged `High Priority`.
 1. Make sure you finish any issue that you start. Issues move to the **RIGHT**, not to the left. If stuck, get some help!
 1. Issues that exist to the right of the **Prioritized** column must have an asignee.
