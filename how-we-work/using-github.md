@@ -19,7 +19,7 @@ It is good custom to name the branches in a way that you can identify *who* the 
 
 Example:\
 `feature/NML-35-add-github-documentation`
- 
+
 ## Commit messages
 A great article explaing how to write good commit messages can be found [here](https://chris.beams.io/posts/git-commit/).
 
@@ -43,3 +43,6 @@ The guidelines for this project are:
 1. Use the imperative mood in the subject line
 1. Wrap the body at 72 characters
 1. Use the body to explain what and why vs. how
+
+## Gitmoji
+Working with this project should be fun and colorful. That's why we'll be using Gitmoji's for our commits.
