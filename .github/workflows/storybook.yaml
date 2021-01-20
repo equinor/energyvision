@@ -1,5 +1,6 @@
 name: Upload storybook to Azure blob storage
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
