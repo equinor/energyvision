@@ -1,0 +1,27 @@
+name: Upload storybook to Azure blob storage
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'components/**'
+defaults:
+  run:
+    working-directory: ./components
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Install and build 🔧
+        run: |
+          yarn install
+          yarn build
+      - name: Deploy 🚀
+        uses: bacongobbler/azure-blob-storage-upload@v1.1.1
+        with:
+          source_dir: './components/storybook-static'
+          container_name: '$web'
+          connection_string: ${{ secrets.AZ_CONNECTION_STRING }}
+          sync: true
