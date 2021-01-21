@@ -8,6 +8,7 @@ import * as HeaderStories from '../../components/Header.stories'
 export default {
   title: 'Pages/Page',
   component: Page,
+  viewMode: 'story',
 } as Meta
 
 const Template: Story<PageProps> = (args) => <Page {...args} />
