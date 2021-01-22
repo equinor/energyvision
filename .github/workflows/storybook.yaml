@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'components/**'
+      - 'web/components/**'
 defaults:
   run:
     working-directory: ./web/components
