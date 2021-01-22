@@ -4,7 +4,7 @@ import { Button } from '@components'
 import './header.css'
 
 export interface HeaderProps {
-  user?: {}
+  user?: Record<string, unknown>
   onLogin: () => void
   onLogout: () => void
   onCreateAccount: () => void
