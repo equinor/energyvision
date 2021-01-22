@@ -18,7 +18,7 @@ jobs:
       - name: Install and build 🔧
         run: |
           yarn install
-          yarn build
+          yarn build-storybook
       - name: Deploy 🚀
         uses: bacongobbler/azure-blob-storage-upload@v1.1.1
         with:
