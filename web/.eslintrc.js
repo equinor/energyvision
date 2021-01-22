@@ -39,6 +39,7 @@ module.exports = {
       },
     ],
     'import/newline-after-import': ['error'],
+    'import/no-unresolved': ['error', { ignore: ['^@'] }],
     'react/no-array-index-key': ['error'],
     'react/no-typos': ['error'],
     'react/destructuring-assignment': ['error', 'always'],
