@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Button } from '@components'
-import './header.css'
+import './Header.module.css'
 
 export interface HeaderProps {
   user?: Record<string, unknown>

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { Button } from '@components'
 
 export default function Home(): JSX.Element {
   return (
@@ -17,7 +18,9 @@ export default function Home(): JSX.Element {
         <p className={styles.description}>
           Get started by editing <code className={styles.code}>pages/index.js</code>
         </p>
-
+        <div>
+          Or you can <Button label="push the button" size="large" primary />
+        </div>
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h3>Documentation &rarr;</h3>

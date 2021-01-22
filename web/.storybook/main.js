@@ -8,7 +8,7 @@ module.exports = {
     '../components/stories/components/**/*.stories.@(ts|tsx|mdx)',
     '../components/stories/pages/**/*.@(ts|tsx|mdx)',
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials', 'storybook-css-modules-preset'],
   webpackFinal: async (config) => {
     config.resolve.alias['@components'] = path.resolve(__dirname, '../components/src')
     return config
