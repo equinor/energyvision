@@ -1,12 +1,24 @@
 # Web
 
-## Getting Started
+Web frontend and React components.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
+yarn
+```
+
+### Work with React components
+
+```bash
+yarn dev-storybook
+```
+
+Open [http://localhost:9000](http://localhost:9000) with your browser to see the result.
+
+### Work on Next.js application
+
+```bash
 yarn dev
 ```
 
