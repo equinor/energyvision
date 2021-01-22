@@ -7,7 +7,7 @@
 ## Storybook
 
 The Storybook for the components are running at https://envis-storybook.azureedge.net/  
-Pushing files to `./components` will trigger a build and deploy
+Pushing files to `./web/components` will trigger a build and deploy
 
 ## Overview
 
