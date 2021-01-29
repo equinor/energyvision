@@ -29,6 +29,9 @@ module.exports = {
     react: {
       version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
     },
+    'import/resolver': {
+      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
+    },
   },
   plugins: ['react', '@typescript-eslint', 'jsx-a11y'],
   rules: {
