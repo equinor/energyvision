@@ -1,21 +1,39 @@
-import "../styles/globals.css";
-// import App from "next/app";
-import type { AppProps /*, AppContext */ } from "next/app";
+import type { AppProps /*, AppContext */ } from 'next/app'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { normalize } from 'styled-normalize'
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  return <Component {...pageProps} />;
+const GlobalStyle = createGlobalStyle`
+  ${normalize}
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  * {
+    font-family: 'Open Sans', sans-serif;
+  }
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+`
+
+const theme = {
+  colors: {
+    primary: '#0070f3',
+  },
 }
 
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext: AppContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  return (
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </>
+  )
+}
 
-//   return { ...appProps }
-// }
-
-export default MyApp;
+export default MyApp
