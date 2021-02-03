@@ -17,6 +17,7 @@ const fiveToOne = (
         Math.min(Math.round(options.originalImageDimensions.width * aspectRatio), maxWidth * aspectRatio),
     )
     .auto('format')
+    .quality(60)
 }
 
 type Props = {
@@ -42,11 +43,11 @@ const Page = ({ data }: Props): JSX.Element => {
     <>
       <h1>Demo</h1>
       <div style={{ maxWidth: '800px' }}>
-        <Img {...imageProps(0.2, 800)} sizes="(max-width: 800px) 100vw, 800px" />
+        <Img {...imageProps(0.2, 800)} sizes="(max-width: 800px) 100vw, 800px" priority />
         <Img {...imageProps(0.6, 800)} sizes="(max-width: 800px) 100vw, 800px" />
       </div>
       <div style={{ maxWidth: '400px' }}>
-        <Img {...imageProps(0.2, 400)} sizes="(max-width: 400px) 100vw, 400px" />
+        <Img {...imageProps(0.2, 400)} sizes="(max-width: 400px) 100vw, 400px" priority />
         <Img {...imageProps(0.6, 400)} sizes="(max-width: 400px) 100vw, 400px" />
       </div>
       <h2>Cards in flex</h2>
@@ -86,6 +87,13 @@ const Page = ({ data }: Props): JSX.Element => {
           </div>
         )
       })}
+      <div style={{ display: 'grid', gridGap: '2rem', gridTemplateColumns: 'repeat(2, 240px)' }}>
+        {data.map((item) => (
+          <div key={item.image.asset._key} style={{ border: '1px solid slategrey' }}>
+            <Img {...imagePropsWithImage(item.image)} sizes="(max-width: 240px) 100vw, 240px" />
+          </div>
+        ))}
+      </div>
     </>
   )
 }
