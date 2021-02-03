@@ -1,5 +1,17 @@
-import React from 'react'
-import styles from './Button.module.css'
+import styled from 'styled-components'
+
+const StyledButton = styled.button`
+  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  border: 0;
+  border-radius: 3em;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1;
+  color: white;
+  background-color: #1ea7fd;
+  padding: 1rem;
+`
 
 export interface ButtonProps {
   /**
@@ -27,24 +39,16 @@ export interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button: React.FC<ButtonProps> = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  ...props
-}) => {
-  const mode = primary ? 'primary' : 'secondary'
+export const Button: React.FC<ButtonProps> = ({ backgroundColor, label, ...props }) => {
   return (
-    <button
+    <StyledButton
       type="button"
       /*       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
        */
       style={{ backgroundColor }}
-      className={`${styles[size]} ${styles[mode]}`}
       {...props}
     >
       {label}
-    </button>
+    </StyledButton>
   )
 }
