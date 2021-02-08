@@ -12,12 +12,12 @@ assignees: ''
 1. [Criteria 2]
 
 ## In order to ensure good quality we should (Keep the ones we need for this US)
-- [ ] Perform integration testing
+- [ ] Perform integration testing
 - [ ] Perform functional testing
 - [ ] Extra focus on usability
 - [ ] Test for portability
 - [ ] Test for accessibility
 - [ ] Create automated acceptance test/smoke test
-- [ ] Perform performance and load test
-- [ ] Perform user testing
-- [ ] Perform security testing
+- [ ] Perform performance and load test
+- [ ] Perform user testing
+- [ ] Perform security testing
