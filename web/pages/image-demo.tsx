@@ -3,6 +3,7 @@ import { useNextSanityImage, UseNextSanityImageBuilderOptions } from 'next-sanit
 import { client } from 'lib/sanity'
 import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
 import { Image } from '@sanity/types'
+import { GetStaticProps } from 'next'
 
 const fiveToOne = (
   aspectRatio: number,
@@ -98,11 +99,11 @@ const Page = ({ data }: Props): JSX.Element => {
   )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const data = await client.fetch(
+    /* groq */
     ` *| [_type == "news" && _lang == 'en_GB'] | {
           "image": mainImage,
-      
 		}`,
   )
   return {
