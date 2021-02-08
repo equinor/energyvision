@@ -10,3 +10,6 @@ assignees: ''
 ## Acceptance criteria
 1. [Criteria 1]
 1. [Criteria 2]
+
+## In order to ensure good quality we should
+- [ ] [Perform action]
