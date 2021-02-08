@@ -23,3 +23,13 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Guidelines
+
+### CSS
+
+We use [💅🏾 styled-components](https://styled-components.com/) for CSS. We prefer CSS Variables to
+interpolation functions. [The styled-components happy path blogpost](https://styled-components.com/) explains the concept nicely.
+
+To structure the global CSS we follow the
+[Inverted Triangle CSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/) approach.
