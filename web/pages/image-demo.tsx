@@ -4,6 +4,7 @@ import { client } from 'lib/sanity'
 import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
 import { Image } from '@sanity/types'
 import { GetStaticProps } from 'next'
+import { groq } from 'next-sanity'
 
 const fiveToOne = (
   aspectRatio: number,
@@ -101,8 +102,7 @@ const Page = ({ data }: Props): JSX.Element => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const data = await client.fetch(
-    /* groq */
-    ` *| [_type == "news" && _lang == 'en_GB'] | {
+    groq` *| [_type == "news" && _lang == 'en_GB'] | {
           "image": mainImage,
 		}`,
   )
