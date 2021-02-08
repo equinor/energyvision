@@ -8,8 +8,8 @@ const StyledButton = styled.button`
   cursor: pointer;
   display: inline-block;
   line-height: 1;
-  color: white;
-  background-color: #1ea7fd;
+  color: #36454f;
+  background-color: var(--bgColor);
   padding: 1rem;
 `
 
@@ -39,13 +39,18 @@ export interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button: React.FC<ButtonProps> = ({ backgroundColor, label, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({ primary = false, label, ...props }) => {
+  const backgroundColor = primary ? 'var(--bg-litchen-green)' : 'var(--bg-spruce-wood)'
   return (
     <StyledButton
       type="button"
       /*       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
        */
-      style={{ backgroundColor }}
+      style={
+        {
+          '--bgColor': backgroundColor,
+        } as React.CSSProperties
+      }
       {...props}
     >
       {label}

@@ -1,37 +1,17 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { normalize } from 'styled-normalize'
+import { Button } from '@components'
+import { GlobalStyle } from 'styles/globalStyles'
 
-const GlobalStyle = createGlobalStyle`
-  ${normalize}
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  * {
-    font-family: 'Open Sans', sans-serif;
-  }
-  html {
-    box-sizing: border-box;
-  }
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-`
-
-const theme = {
-  colors: {
-    primary: '#0070f3',
-  },
+const toggleTheme = () => {
+  document.documentElement.classList.toggle('dark')
 }
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <Button onClick={toggleTheme} label="Toggle theme" primary={false} />
+      <Component {...pageProps} />
     </>
   )
 }
