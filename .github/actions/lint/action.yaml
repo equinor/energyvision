@@ -1,0 +1,8 @@
+name: 'ESLint'
+runs:
+  using: 'composite'
+  steps:
+    - name: Run ESLint
+      run: |
+        yarn lint
+      shell: bash
