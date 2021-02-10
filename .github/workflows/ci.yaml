@@ -1,0 +1,16 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - gh-actions-test
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: |
+          yarn install
+      - id: eslint
+        uses: ./.github/actions/lint
