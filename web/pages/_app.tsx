@@ -1,6 +1,6 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
 import { Button } from '@components'
-import { GlobalStyle } from 'styles/globalStyles'
+import { GlobalStyle } from '../styles/globalStyles'
 
 const toggleTheme = () => {
   document.documentElement.classList.toggle('dark')
