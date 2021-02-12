@@ -5,12 +5,15 @@ on:
     branches:
       - main
 jobs:
-  build:
+  check_code:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install modules
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Install dependencies 🔧
         run: |
           yarn install
-      - id: eslint
-        uses: ./.github/actions/lint
+          yarn --cwd ./web/ install
+      - name: Run ESLint 🔎
+        run: |
+          yarn lint
