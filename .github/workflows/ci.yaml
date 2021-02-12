@@ -17,3 +17,6 @@ jobs:
       - name: Run ESLint 🔎
         run: |
           yarn lint
+      - name: Run tests 🔍
+        run: |
+          yarn --cwd ./web/ test
