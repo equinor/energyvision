@@ -1,6 +1,6 @@
 import Img from 'next/image'
 import { useNextSanityImage, UseNextSanityImageBuilderOptions } from 'next-sanity-image'
-import { client } from 'lib/sanity'
+import { client } from '../lib/sanity'
 import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
 import { Image } from '@sanity/types'
 import { GetStaticProps } from 'next'
