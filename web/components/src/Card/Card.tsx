@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export type CardProps = {
   /** Example prop */
-  test: string
+  test?: string
 } & HTMLAttributes<HTMLDivElement>
 
 const StyledCard = styled.div``
