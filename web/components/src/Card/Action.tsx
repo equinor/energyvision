@@ -2,7 +2,7 @@ import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-export type ActionProps = {} & HTMLAttributes<HTMLDivElement>
+export type ActionProps = HTMLAttributes<HTMLDivElement>
 
 const StyledAction = styled.div`
   text-transform: uppercase;

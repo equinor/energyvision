@@ -2,7 +2,7 @@ import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-export type ContentProps = {} & HTMLAttributes<HTMLDivElement>
+export type ContentProps = HTMLAttributes<HTMLDivElement>
 
 const StyledContent = styled.div``
 
