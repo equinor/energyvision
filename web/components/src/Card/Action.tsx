@@ -5,7 +5,7 @@ import styled from 'styled-components'
 export type ActionProps = HTMLAttributes<HTMLDivElement>
 
 const StyledAction = styled.div`
-  text-transform: uppercase;
+  margin-top: auto;
 `
 
 export const Action = forwardRef<HTMLDivElement, ActionProps>(function CardMedia({ children, ...rest }, ref) {

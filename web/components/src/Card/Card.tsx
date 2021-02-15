@@ -6,17 +6,17 @@ export type CardProps = {
   test?: string
 } & HTMLAttributes<HTMLDivElement>
 
-const StyledCard = styled.div``
+const StyledCard = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ children, onClick, ...rest }, ref) {
+export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ children, ...rest }, ref) {
   const props = {
     ...rest,
     ref,
   }
 
-  return (
-    <StyledCard {...props} onClick={onClick}>
-      {children}
-    </StyledCard>
-  )
+  return <StyledCard {...props}>{children}</StyledCard>
 })
