@@ -23,6 +23,12 @@ const RatioBox = styled.div`
   padding-bottom: 56.25%;
 `
 
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-gap: 2rem;
+`
+
 export default {
   title: 'Components/Card',
   component: Card,
@@ -50,7 +56,7 @@ export const Default: Story<CardProps> = (args) => <Card>Some default example</C
 Default.storyName = 'Default'
 
 export const NewsCard: Story<CardProps> = (args) => (
-  <>
+  <Wrapper>
     <a href="#">
       <Card style={{ maxWidth: '20rem' }}>
         <Card.Media>
@@ -90,7 +96,7 @@ export const NewsCard: Story<CardProps> = (args) => (
         <Card.Action>--&gt;</Card.Action>
       </Card>
     </a>
-  </>
+  </Wrapper>
 )
 
 NewsCard.storyName = 'News card'
