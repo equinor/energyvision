@@ -58,7 +58,7 @@ Default.storyName = 'Default'
 export const NewsCard: Story<CardProps> = (args) => (
   <Wrapper>
     <a href="#">
-      <Card style={{ maxWidth: '20rem' }}>
+      <Card>
         <Card.Media>
           <RatioBox>
             <ImagePlaceholder />
@@ -70,15 +70,14 @@ export const NewsCard: Story<CardProps> = (args) => (
           <p>
             Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
             Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
-            <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum. Occaecat cupidatat minim aute esse velit sint.
-            Sunt non cupidatat cillum irure.
+            <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
           </p>
         </Card.Content>
         <Card.Action>--&gt;</Card.Action>
       </Card>
     </a>
     <a href="#">
-      <Card style={{ maxWidth: '20rem' }}>
+      <Card>
         <Card.Media>
           <RatioBox>
             <ImagePlaceholder />
