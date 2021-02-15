@@ -26,6 +26,13 @@ const RatioBox = styled.div`
 export default {
   title: 'Components/Card',
   component: Card,
+  subcomponents: {
+    Media: Card.Media,
+    Eyebrow: Card.Eyebrow,
+    Title: Card.Title,
+    Content: Card.Content,
+    Action: Card.Action,
+  },
   parameters: {
     docs: {
       description: {
