@@ -2,7 +2,7 @@ import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-export type EyebrowProps = {} & HTMLAttributes<HTMLDivElement>
+export type EyebrowProps = HTMLAttributes<HTMLDivElement>
 
 const StyledEyebrow = styled.div`
   text-transform: uppercase;
