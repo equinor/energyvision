@@ -1216,6 +1216,25 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@equinor/eds-core-react@^0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@equinor/eds-core-react/-/eds-core-react-0.8.4.tgz#780dda879939207c973ac3f891410e4fe0ebe6bb"
+  integrity sha512-KICKgNVKBx/Eq+x7NEn13LGIw4d3dJg2ImeJ+WHH6fagtr8iR09RC3LoGTV0R5Pxs2V6FCUm7etnFuwceMTyOA==
+  dependencies:
+    "@equinor/eds-icons" "0.6.1"
+    "@equinor/eds-tokens" "0.5.4"
+    downshift "^6.0.6"
+
+"@equinor/eds-icons@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@equinor/eds-icons/-/eds-icons-0.6.1.tgz#fbbef1888a94e63ef5bf70a9e8e2910db664e8e5"
+  integrity sha512-GPzl83rk3wtse2HsfVu3qCY3f4uk8NZdkkh6Ze+9+BsmVrmOwKAG+ntDIQabv6DiEum54GtuqW0X2f6KkT0dnQ==
+
+"@equinor/eds-tokens@0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@equinor/eds-tokens/-/eds-tokens-0.5.4.tgz#48985b6d61610a1b3c022af5b57e75f208ca8880"
+  integrity sha512-BByowcN80LCOcK/buD9g+3gK92HsnY/54J9BH9dK5mpFKtFONu5pqBq7C2N6VqjvlLVY/tOG17jdCWMJ8P2eAQ==
+
 "@hapi/accept@5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.1.tgz#068553e867f0f63225a506ed74e899441af53e10"
