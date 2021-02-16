@@ -173,3 +173,11 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
 )
 
 EdsNewsCard.storyName = 'EDS news card'
+
+NewsCard.parameters = {
+  docs: {
+    // The story now contains a description
+    storyDescription:
+      'An example using EDS Card component. Apart from the arrow positioning aligned at the bottom, it is "as is"',
+  },
+}
