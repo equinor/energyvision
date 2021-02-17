@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - gh-actions-test
+      - main
 jobs:
   check_code:
     runs-on: ubuntu-latest
