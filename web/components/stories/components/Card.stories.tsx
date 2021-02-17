@@ -35,10 +35,21 @@ const Wrapper = styled.div`
 const StyledEDSCard = styled(EDSCard)`
   height: 100%;
   grid-template-rows: auto auto auto 1fr;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const BottomCardActions = styled(CardActions)`
   align-self: end;
+`
+
+const CardLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 export default {
@@ -121,7 +132,7 @@ NewsCard.parameters = {
 
 export const EdsNewsCard: Story<EDSCardProps> = () => (
   <Wrapper>
-    <a href="#">
+    <CardLink href="#">
       <StyledEDSCard>
         <CardMedia>
           <RatioBox>
@@ -136,15 +147,15 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
             <Typography variant="h3">Dolor sit amet</Typography>
           </CardHeaderTitle>
         </CardHeader>
-        <p>
+        <Typography variant="ingress">
           Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
           Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
           <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
-        </p>
+        </Typography>
         <BottomCardActions>--&gt;</BottomCardActions>
       </StyledEDSCard>
-    </a>
-    <a href="#">
+    </CardLink>
+    <CardLink href="#">
       <StyledEDSCard>
         <CardMedia>
           <RatioBox>
@@ -161,14 +172,14 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
             </Typography>
           </CardHeaderTitle>
         </CardHeader>
-        <p>
+        <Typography variant="ingress">
           Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the
           13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
           farm.
-        </p>
+        </Typography>
         <BottomCardActions>--&gt;</BottomCardActions>
       </StyledEDSCard>
-    </a>
+    </CardLink>
   </Wrapper>
 )
 
