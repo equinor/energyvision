@@ -6,19 +6,22 @@ on:
       - main
     paths:
       - 'web/components/**'
-defaults:
-  run:
-    working-directory: ./web/components
 jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - name: Install and build 🔧
+      - name: Install dependencies 🔽
         run: |
           yarn install
-          yarn build-storybook
+          yarn --cwd ./web/ install
+      - name: Lint components 🔎
+        run: |
+          yarn eslint './web/components/**/*.{ts,tsx}'
+      - name: Build storybook 🔧
+        run: |
+          yarn --cwd ./web/ build-storybook
       - name: Deploy 🚀
         uses: bacongobbler/azure-blob-storage-upload@v1.1.1
         with:
