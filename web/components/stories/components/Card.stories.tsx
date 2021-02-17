@@ -52,6 +52,12 @@ const CardLink = styled.a`
   }
 `
 
+const AnimatedSVG = styled.svg`
+  ${StyledEDSCard}:hover & {
+    transform: translateX(18px);
+  }
+`
+
 export default {
   title: 'Components/Card',
   component: Card,
@@ -152,7 +158,18 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
           Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
           <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
         </Typography>
-        <BottomCardActions>--&gt;</BottomCardActions>
+        <BottomCardActions>
+          <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M18.7383 16L25.9997 9L18.7383 2"
+              stroke="#FF1243"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M1 9H25.6369" stroke="#FF1243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </AnimatedSVG>
+        </BottomCardActions>
       </StyledEDSCard>
     </CardLink>
     <CardLink href="#">
@@ -177,7 +194,18 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
           13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
           farm.
         </Typography>
-        <BottomCardActions>--&gt;</BottomCardActions>
+        <BottomCardActions>
+          <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M18.7383 16L25.9997 9L18.7383 2"
+              stroke="#FF1243"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M1 9H25.6369" stroke="#FF1243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </AnimatedSVG>
+        </BottomCardActions>
       </StyledEDSCard>
     </CardLink>
   </Wrapper>
