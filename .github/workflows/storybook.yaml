@@ -24,8 +24,8 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies 🔽
         run: |
-          yarn install
-          yarn --cwd ./web/ install
+          yarn install --prefer-offline
+          yarn --cwd ./web/ install --prefer-offline
       - name: Lint components 🔎
         run: |
           yarn eslint './web/components/**/*.{ts,tsx}'
