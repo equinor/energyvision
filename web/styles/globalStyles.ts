@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   ${generic}
   ${elements}
   * {
-    font-family: 'Open Sans', sans-serif;
+    font-family: Equinor, 'Open Sans', sans-serif;
   }
 
 `
