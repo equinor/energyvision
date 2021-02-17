@@ -19,6 +19,9 @@ jobs:
       - name: Lint components 🔎
         run: |
           yarn eslint './web/components/**/*.{ts,tsx}'
+      - name: Run tests 🕵️‍♀️
+        run: |
+          yarn --cwd ./web/ run test ./components/
       - name: Build storybook 🔧
         run: |
           yarn --cwd ./web/ build-storybook
