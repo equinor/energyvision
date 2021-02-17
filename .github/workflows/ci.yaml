@@ -22,8 +22,8 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install dependencies 🔧
         run: |
-          yarn install
-          yarn --cwd ./web/ install
+          yarn install --prefer-offline
+          yarn --cwd ./web/ install --prefer-offline
       - name: Run ESLint 🔎
         run: |
           yarn lint
