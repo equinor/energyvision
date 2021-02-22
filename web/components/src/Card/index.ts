@@ -1,8 +1,8 @@
 import { Card as CardWrapper, CardProps } from './Card'
-import { Media, MediaProps } from './Media'
-import { Title, TitleProps } from './Title'
-import { Action, ActionProps } from './Action'
-import { Header, HeaderProps } from './Header'
+import { Media, CardMediaProps } from './Media'
+import { Title, CardTitleProps } from './Title'
+import { Action, CardActionProps } from './Action'
+import { Header, CardHeaderProps } from './Header'
 import { TailoredTitle } from './MoreTailoredTitle'
 
 type CardCompundProps = typeof CardWrapper & {
@@ -22,4 +22,4 @@ Card.Header = Header
 Card.TailoredTitle = TailoredTitle
 
 export { Card }
-export type { CardProps, MediaProps, TitleProps, ActionProps, HeaderProps }
+export type { CardProps, CardMediaProps, CardTitleProps, CardActionProps, CardHeaderProps }
