@@ -1,16 +1,10 @@
-import { forwardRef, HTMLAttributes } from 'react'
-import styled from 'styled-components'
+import { forwardRef } from 'react'
+import { Card as EDSCard, CardProps as EDSCardProps } from '@equinor/eds-core-react'
 
 export type CardProps = {
   /** Example prop */
-  test?: string
-} & HTMLAttributes<HTMLDivElement>
-
-const StyledCard = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`
+  variant?: string
+} & EDSCardProps
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ children, ...rest }, ref) {
   const props = {
@@ -18,5 +12,5 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ childr
     ref,
   }
 
-  return <StyledCard {...props}>{children}</StyledCard>
+  return <EDSCard {...props}>{children}</EDSCard>
 })
