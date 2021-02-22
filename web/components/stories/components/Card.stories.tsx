@@ -4,9 +4,9 @@ import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import styled from 'styled-components'
 import { Card, CardProps } from '@components'
-import { Card as EDSCard, CardProps as EDSCardProps, Typography } from '@equinor/eds-core-react'
+import { Typography } from '@equinor/eds-core-react'
 
-const { CardHeader, CardHeaderTitle, CardActions, CardMedia } = EDSCard
+// const { CardHeader, CardHeaderTitle, CardActions, CardMedia } = EDSCard
 
 const ImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
@@ -32,16 +32,12 @@ const Wrapper = styled.div`
   grid-gap: 2rem;
 `
 
-const StyledEDSCard = styled(EDSCard)`
+const StyledEDSCard = styled(Card)`
   height: 100%;
   grid-template-rows: auto auto auto 1fr;
   &:hover {
     cursor: pointer;
   }
-`
-
-const BottomCardActions = styled(CardActions)`
-  align-self: end;
 `
 
 const CardLink = styled.a`
@@ -63,9 +59,7 @@ export default {
   component: Card,
   subcomponents: {
     Media: Card.Media,
-    Eyebrow: Card.Eyebrow,
     Title: Card.Title,
-    Content: Card.Content,
     Action: Card.Action,
   },
   parameters: {
@@ -84,117 +78,65 @@ export const Default: Story<CardProps> = (args) => <Card>Some default example</C
 
 Default.storyName = 'Default'
 
-export const NewsCard: Story<CardProps> = (args) => (
-  <Wrapper>
-    <a href="#">
-      <Card>
-        <Card.Media>
-          <RatioBox>
-            <ImagePlaceholder />
-          </RatioBox>
-        </Card.Media>
-        <Card.Eyebrow>Overline</Card.Eyebrow>
-        <Card.Title>Dolor sit amet</Card.Title>
-        <Card.Content>
-          <p>
-            Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
-            Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
-            <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
-          </p>
-        </Card.Content>
-        <Card.Action>--&gt;</Card.Action>
-      </Card>
-    </a>
-    <a href="#">
-      <Card>
-        <Card.Media>
-          <RatioBox>
-            <ImagePlaceholder />
-          </RatioBox>
-        </Card.Media>
-        <Card.Eyebrow>September 24, 2020</Card.Eyebrow>
-        <Card.Title>Dogger Bank wind farm places record-breaking turbine order boosting local jobs</Card.Title>
-        <Card.Content>
-          <p>
-            Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the
-            13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
-            farm.
-          </p>
-        </Card.Content>
-        <Card.Action>--&gt;</Card.Action>
-      </Card>
-    </a>
-  </Wrapper>
-)
-
-NewsCard.storyName = 'News card'
-
-NewsCard.parameters = {
-  docs: {
-    // The story now contains a description
-    storyDescription: 'News cards should always have a date',
-  },
-}
-
-export const EdsNewsCard: Story<EDSCardProps> = () => (
+export const EdsNewsCard: Story<CardProps> = () => (
   <Wrapper>
     <CardLink href="#">
       <StyledEDSCard>
-        <CardMedia>
+        <Card.Media>
           <RatioBox>
             <ImagePlaceholder />
           </RatioBox>
-        </CardMedia>
-        <CardHeader>
-          <CardHeaderTitle>
+        </Card.Media>
+        <Card.Header>
+          <Card.Title>
             <Typography variant="overline" as="span">
               Overline
             </Typography>
             <Typography variant="h3">Dolor sit amet</Typography>
-          </CardHeaderTitle>
-        </CardHeader>
+          </Card.Title>
+        </Card.Header>
         <Typography variant="ingress">
           Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
           Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
           <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
         </Typography>
-        <BottomCardActions>
+        <Card.Action>
           <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M18.7383 16L25.9997 9L18.7383 2"
               stroke="#FF1243"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
-            <path d="M1 9H25.6369" stroke="#FF1243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M1 9H25.6369" stroke="#FF1243" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </AnimatedSVG>
-        </BottomCardActions>
+        </Card.Action>
       </StyledEDSCard>
     </CardLink>
     <CardLink href="#">
       <StyledEDSCard>
-        <CardMedia>
+        <Card.Media>
           <RatioBox>
             <ImagePlaceholder />
           </RatioBox>
-        </CardMedia>
-        <CardHeader>
-          <CardHeaderTitle>
+        </Card.Media>
+        <Card.Header>
+          <Card.Title>
             <Typography variant="overline" as="span">
               September 24, 2020
             </Typography>
             <Typography variant="h3">
               Dogger Bank wind farm places record-breaking turbine order boosting local jobs
             </Typography>
-          </CardHeaderTitle>
-        </CardHeader>
+          </Card.Title>
+        </Card.Header>
         <Typography variant="ingress">
           Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the
           13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
           farm.
         </Typography>
-        <BottomCardActions>
+        <Card.Action>
           <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M18.7383 16L25.9997 9L18.7383 2"
@@ -205,7 +147,7 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
             />
             <path d="M1 9H25.6369" stroke="#FF1243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </AnimatedSVG>
-        </BottomCardActions>
+        </Card.Action>
       </StyledEDSCard>
     </CardLink>
   </Wrapper>
@@ -213,7 +155,7 @@ export const EdsNewsCard: Story<EDSCardProps> = () => (
 
 EdsNewsCard.storyName = 'EDS news card'
 
-NewsCard.parameters = {
+EdsNewsCard.parameters = {
   docs: {
     // The story now contains a description
     storyDescription:

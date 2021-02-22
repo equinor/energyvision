@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
-import styled from 'styled-components'
+import { Card } from '@equinor/eds-core-react'
+
+const { CardMedia } = Card
 
 export type MediaProps = HTMLAttributes<HTMLDivElement>
 
-const StyledMedia = styled.div<MediaProps>``
-
-export const Media = forwardRef<HTMLDivElement, MediaProps>(function CardMedia({ children, ...rest }, ref) {
+export const Media = forwardRef<HTMLDivElement, MediaProps>(function Media({ children, ...rest }, ref) {
   const props = {
     ...rest,
     ref,
   }
 
-  return <StyledMedia {...props}>{children}</StyledMedia>
+  return <CardMedia {...props}>{children}</CardMedia>
 })

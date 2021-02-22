@@ -1,25 +1,22 @@
 import { Card as CardWrapper, CardProps } from './Card'
 import { Media } from './Media'
-import { Eyebrow } from './Eyebrow'
 import { Title } from './Title'
 import { Action } from './Action'
-import { Content } from './Content'
+import { Header } from './Header'
 
 type CardCompundProps = typeof CardWrapper & {
   Media: typeof Media
-  Eyebrow: typeof Eyebrow
   Title: typeof Title
   Action: typeof Action
-  Content: typeof Content
+  Header: typeof Header
 }
 
 const Card = CardWrapper as CardCompundProps
 
 Card.Media = Media
-Card.Eyebrow = Eyebrow
 Card.Title = Title
 Card.Action = Action
-Card.Content = Content
+Card.Header = Header
 
 export { Card }
 export type { CardProps }

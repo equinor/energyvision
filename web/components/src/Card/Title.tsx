@@ -1,23 +1,15 @@
 import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
-import styled from 'styled-components'
+import { Card } from '@equinor/eds-core-react'
 
-export type TitleProps = {
-  /** Header level */
-  level?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-} & HTMLAttributes<HTMLDivElement>
+const { HeaderTitle: EdsHeaderTitle } = Card
 
-const StyledTitle = styled.div`
-  font-weight: bold;
-`
+export type TitleProps = HTMLAttributes<HTMLDivElement>
 
-export const Title = forwardRef<HTMLDivElement, TitleProps>(function CardMedia(
-  { level = 'h3', children, ...rest },
-  ref,
-) {
+export const Title = forwardRef<HTMLDivElement, TitleProps>(function CardMedia({ children, ...rest }, ref) {
   return (
-    <StyledTitle as={level} ref={ref} {...rest}>
+    <EdsHeaderTitle ref={ref} {...rest}>
       {children}
-    </StyledTitle>
+    </EdsHeaderTitle>
   )
 })
