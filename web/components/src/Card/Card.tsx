@@ -1,16 +1,16 @@
-import { forwardRef } from 'react'
-import { Card as EDSCard, CardProps as EDSCardProps } from '@equinor/eds-core-react'
+import { forwardRef, HTMLAttributes } from 'react'
+import { Card as EdsCard } from '@equinor/eds-core-react'
 
 export type CardProps = {
   /** Example prop */
-  variant?: string
-} & EDSCardProps
+  type?: 'news' | 'greenEnergy'
+} & HTMLAttributes<HTMLDivElement>
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ children, ...rest }, ref) {
-  const props = {
-    ...rest,
-    ref,
-  }
-
-  return <EDSCard {...props}>{children}</EDSCard>
+export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ type = 'news', children, ...rest }, ref) {
+  const variant = type === 'news' ? 'info' : 'warning'
+  return (
+    <EdsCard variant={variant} ref={ref} {...rest}>
+      {children}
+    </EdsCard>
+  )
 })
