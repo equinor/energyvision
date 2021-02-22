@@ -4,9 +4,9 @@ import { Card } from '@equinor/eds-core-react'
 
 const { HeaderTitle: EdsHeaderTitle } = Card
 
-export type TitleProps = HTMLAttributes<HTMLDivElement>
+export type CardTitleProps = HTMLAttributes<HTMLDivElement>
 
-export const Title = forwardRef<HTMLDivElement, TitleProps>(function CardMedia({ children, ...rest }, ref) {
+export const Title = forwardRef<HTMLDivElement, CardTitleProps>(function CardMedia({ children, ...rest }, ref) {
   return (
     <EdsHeaderTitle ref={ref} {...rest}>
       {children}
