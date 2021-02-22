@@ -1047,10 +1047,17 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.13.tgz#0a21452352b02542db0ffb928ac2d3ca7cb6d66d"
   integrity sha512-8+3UMPBrjFa/6TtKi/7sehPKqfAm4g6K+YQjyyFOLUTxzOngcRZTlAVY8sc2CORJYqdHQY8gRPHmn+qo15rCBw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.12.5":
+  version "7.12.18"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.18.tgz#af137bd7e7d9705a412b3caaf991fe6aaa97831b"
+  integrity sha512-BogPQ7ciE6SYAUPtlm9tWbgI9+2AgqSam6QivMgXgAT+fKbgppaj4ZX15MHeLC1PVF5sNk70huBu20XxWOs8Cg==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1217,23 +1224,23 @@
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
 "@equinor/eds-core-react@^0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@equinor/eds-core-react/-/eds-core-react-0.8.4.tgz#780dda879939207c973ac3f891410e4fe0ebe6bb"
-  integrity sha512-KICKgNVKBx/Eq+x7NEn13LGIw4d3dJg2ImeJ+WHH6fagtr8iR09RC3LoGTV0R5Pxs2V6FCUm7etnFuwceMTyOA==
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@equinor/eds-core-react/-/eds-core-react-0.8.5.tgz#ee533d0377f1a61e54a4e07debf8c0ea79c84249"
+  integrity sha512-iTQmbn700cOSHJByZSOpOSFOkJsAxkC7dxphf56Ius23RSQWCdtkPV4gufGcRwuNZCvxhGm+AtzHZy1UdaV1Qw==
   dependencies:
-    "@equinor/eds-icons" "0.6.1"
-    "@equinor/eds-tokens" "0.5.4"
+    "@equinor/eds-icons" "0.6.2"
+    "@equinor/eds-tokens" "0.5.5"
     downshift "^6.0.6"
 
-"@equinor/eds-icons@0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@equinor/eds-icons/-/eds-icons-0.6.1.tgz#fbbef1888a94e63ef5bf70a9e8e2910db664e8e5"
-  integrity sha512-GPzl83rk3wtse2HsfVu3qCY3f4uk8NZdkkh6Ze+9+BsmVrmOwKAG+ntDIQabv6DiEum54GtuqW0X2f6KkT0dnQ==
+"@equinor/eds-icons@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@equinor/eds-icons/-/eds-icons-0.6.2.tgz#7eb981df5b186712e74335a45f16211368911258"
+  integrity sha512-WGYErmaOLRGLbMo5ABPCjlGMFfyKk/PfWUZRhXAvAj7boc/8XVDWUf0lTATXW4wHKWnWCkmHFghN/4OQoFh/ng==
 
-"@equinor/eds-tokens@0.5.4":
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/@equinor/eds-tokens/-/eds-tokens-0.5.4.tgz#48985b6d61610a1b3c022af5b57e75f208ca8880"
-  integrity sha512-BByowcN80LCOcK/buD9g+3gK92HsnY/54J9BH9dK5mpFKtFONu5pqBq7C2N6VqjvlLVY/tOG17jdCWMJ8P2eAQ==
+"@equinor/eds-tokens@0.5.5":
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/@equinor/eds-tokens/-/eds-tokens-0.5.5.tgz#d8f707ccc1c245a7e8b0155f90e0ec163079f488"
+  integrity sha512-PserXGVxf5Q7Z0o/AypudGWdh9Vangct3dQZsgiERfqRj8+a+mU0ObRa6bMm+JouQRV3WktNPJVWMjjJf8jQbw==
 
 "@hapi/accept@5.0.1":
   version "5.0.1"
