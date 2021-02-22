@@ -5,13 +5,13 @@ import { Card } from '@equinor/eds-core-react'
 
 const { Actions: EdsAction } = Card
 
-export type ActionProps = HTMLAttributes<HTMLDivElement>
+export type CardActionProps = HTMLAttributes<HTMLDivElement>
 
 const StyledAction = styled(EdsAction)`
   align-self: end;
 `
 
-export const Action = forwardRef<HTMLDivElement, ActionProps>(function CardMedia({ children, ...rest }, ref) {
+export const Action = forwardRef<HTMLDivElement, CardActionProps>(function CardMedia({ children, ...rest }, ref) {
   const props = {
     ...rest,
     ref,
