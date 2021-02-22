@@ -6,8 +6,6 @@ import styled from 'styled-components'
 import { Card, CardProps } from '@components'
 import { Typography } from '@equinor/eds-core-react'
 
-// const { CardHeader, CardHeaderTitle, CardActions, CardMedia } = EDSCard
-
 const ImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
   position: absolute;
@@ -48,6 +46,20 @@ const CardLink = styled.a`
   }
 `
 
+const Arrow = () => (
+  <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M18.7383 16L25.9997 9L18.7383 2"
+      stroke="#FF1243"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path d="M1 9H25.6369" stroke="#FF1243" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </AnimatedSVG>
+)
+
+// @TODO: Real animation
 const AnimatedSVG = styled.svg`
   ${StyledEDSCard}:hover & {
     transform: translateX(18px);
@@ -61,6 +73,8 @@ export default {
     Media: Card.Media,
     Title: Card.Title,
     Action: Card.Action,
+    Header: Card.Header,
+    TailoredTitle: Card.TailoredTitle,
   },
   parameters: {
     docs: {
@@ -78,7 +92,7 @@ export const Default: Story<CardProps> = (args) => <Card>Some default example</C
 
 Default.storyName = 'Default'
 
-export const EdsNewsCard: Story<CardProps> = () => (
+export const NewsCard: Story<CardProps> = () => (
   <Wrapper>
     <CardLink href="#">
       <StyledEDSCard>
@@ -101,16 +115,7 @@ export const EdsNewsCard: Story<CardProps> = () => (
           <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
         </Typography>
         <Card.Action>
-          <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M18.7383 16L25.9997 9L18.7383 2"
-              stroke="#FF1243"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path d="M1 9H25.6369" stroke="#FF1243" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </AnimatedSVG>
+          <Arrow />
         </Card.Action>
       </StyledEDSCard>
     </CardLink>
@@ -123,12 +128,9 @@ export const EdsNewsCard: Story<CardProps> = () => (
         </Card.Media>
         <Card.Header>
           <Card.Title>
-            <Typography variant="overline" as="span">
-              September 24, 2020
-            </Typography>
-            <Typography variant="h3">
+            <Card.TailoredTitle level="h3" eyebrow="September 24, 2020">
               Dogger Bank wind farm places record-breaking turbine order boosting local jobs
-            </Typography>
+            </Card.TailoredTitle>
           </Card.Title>
         </Card.Header>
         <Typography variant="ingress">
@@ -137,28 +139,19 @@ export const EdsNewsCard: Story<CardProps> = () => (
           farm.
         </Typography>
         <Card.Action>
-          <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M18.7383 16L25.9997 9L18.7383 2"
-              stroke="#FF1243"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path d="M1 9H25.6369" stroke="#FF1243" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          </AnimatedSVG>
+          <Arrow />
         </Card.Action>
       </StyledEDSCard>
     </CardLink>
   </Wrapper>
 )
 
-EdsNewsCard.storyName = 'EDS news card'
+NewsCard.storyName = 'News card'
 
-EdsNewsCard.parameters = {
+NewsCard.parameters = {
   docs: {
     // The story now contains a description
-    storyDescription:
-      'An example using EDS Card component. Apart from the arrow positioning aligned at the bottom, it is "as is"',
+    storyDescription: `An example using EDS Card component. Apart from the arrow positioning aligned at the bottom, it is EDS default card. I use the "info" variant
+      to highlight the padding from EDS`,
   },
 }
