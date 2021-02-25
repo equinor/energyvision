@@ -14,7 +14,7 @@ const StyledButton = styled(Button)`
 describe('Button', () => {
   it('Has provided label', () => {
     const labelText = 'The button label'
-    const { queryByText } = render(<Button label={labelText} />)
+    const { queryByText } = render(<Button>{labelText}</Button>)
     expect(queryByText(labelText)).toBeInTheDocument()
   })
   // This test doesn't work
@@ -23,7 +23,7 @@ describe('Button', () => {
     expect(container.firstChild).toHaveStyleRule('background-color', '#ffe7d6')
   }) */
   it('Can extend the css for the component', () => {
-    const { container } = render(<StyledButton label="button-test" />)
+    const { container } = render(<StyledButton></StyledButton>)
     expect(container.firstChild).toHaveStyleRule('clip-path', 'unset')
   })
 })
