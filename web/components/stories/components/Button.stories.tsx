@@ -1,39 +1,75 @@
-/* eslint-disable */
-import React from 'react'
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from '@storybook/react/types-6-0'
-
+import styled from 'styled-components'
 import { Button, ButtonProps } from '@components'
+import { Icon } from '@equinor/eds-core-react'
+import { arrow_forward, help_outline } from '@equinor/eds-icons'
+
+const Wrapper = styled.div`
+  margin: 32px;
+  display: grid;
+  grid-gap: 32px;
+  grid-template-columns: repeat(4, fit-content(100%));
+`
 
 export default {
   title: 'Components/Button',
   component: Button,
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
 } as Meta
 
-const Template: Story<ButtonProps> = (args) => <Button {...args} />
+export const Default: Story<ButtonProps> = (args) => <Button {...args}>This is a button</Button>
 
-export const Primary = Template.bind({})
-Primary.args = {
-  primary: true,
-  label: 'Button',
+export const Contained: Story = () => (
+  <Wrapper>
+    <Button variant="contained">Contained</Button>
+  </Wrapper>
+)
+
+Contained.parameters = {
+  docs: {
+    storyDescription: `Used as primary buttons.`,
+  },
 }
 
-export const Secondary = Template.bind({})
-Secondary.args = {
-  label: 'Button',
+export const Outlined: Story = () => (
+  <Wrapper>
+    <Button variant="outlined">Outlined</Button>
+  </Wrapper>
+)
+
+Outlined.parameters = {
+  docs: {
+    storyDescription: `Used as secondary buttons.`,
+  },
 }
 
-export const Large = Template.bind({})
-Large.args = {
-  size: 'large',
-  label: 'Button',
+export const Ghost: Story = () => (
+  <Wrapper>
+    <Button variant="ghost">
+      Read the story
+      <Icon data={arrow_forward} />
+    </Button>
+  </Wrapper>
+)
+
+Ghost.parameters = {
+  docs: {
+    storyDescription: `Used for 'read more' links.`,
+  },
 }
 
-export const Small = Template.bind({})
-Small.args = {
-  size: 'small',
-  label: 'Button',
+export const GhostIcon: Story = () => (
+  <Wrapper>
+    <Button variant="ghost_icon">
+      <Icon data={arrow_forward} />
+    </Button>
+    <Button variant="ghost_icon">
+      <Icon data={help_outline} />
+    </Button>
+  </Wrapper>
+)
+
+GhostIcon.parameters = {
+  docs: {
+    storyDescription: `Used for icon links and actions.`,
+  },
 }
