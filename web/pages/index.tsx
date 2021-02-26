@@ -52,7 +52,7 @@ export default function Home(): JSX.Element {
         </Title>
 
         <div>
-          You can <Button label="push the button" size="large" primary />
+          You can <Button href="/posts/hello-there">Click me</Button>
         </div>
       </Main>
     </Container>
