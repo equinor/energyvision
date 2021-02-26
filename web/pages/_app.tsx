@@ -10,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <GlobalStyle />
-      <Button onClick={toggleTheme} label="Toggle theme" primary={false} />
+      <Button variant="outlined" onClick={toggleTheme}>
+        Toggle theme
+      </Button>
       <Component {...pageProps} />
     </>
   )
