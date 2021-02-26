@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Button } from '@components'
+import { Button, Link, LinkType } from '@components'
 
 const Container = styled.div`
   min-height: 100vh;
@@ -53,6 +53,18 @@ export default function Home(): JSX.Element {
 
         <div>
           You can <Button href="/posts/hello-there">Click me</Button>
+        </div>
+
+        <div style={{ width: '100%' }}>
+          <Link href="/posts/hello-there" type={LinkType.ContentLink}>
+            Content
+          </Link>
+        </div>
+
+        <div style={{ marginTop: '2em' }}>
+          <Link href="/posts/hello-there" type={LinkType.ReadMore}>
+            Read more
+          </Link>
         </div>
       </Main>
     </Container>
