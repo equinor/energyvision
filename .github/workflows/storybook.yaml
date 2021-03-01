@@ -1,4 +1,4 @@
-name: Upload storybook to Azure blob storage
+name: Build & deploy Storybook
 on:
   workflow_dispatch:
   push:
