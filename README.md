@@ -1,5 +1,7 @@
 ![Storybook](https://github.com/equinor/energyvision/workflows/Upload%20storybook%20to%20Azure%20blob%20storage/badge.svg)
 
+[![CI](https://github.com/equinor/energyvision/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/equinor/energyvision/actions/workflows/ci.yaml)
+
 # Energy Vision
 
 @TODO: Add a brief introduction about this project
