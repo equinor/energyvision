@@ -30,14 +30,6 @@ const Wrapper = styled.div`
   grid-gap: 2rem;
 `
 
-const StyledEDSCard = styled(Card)`
-  height: 100%;
-  grid-template-rows: auto auto auto 1fr;
-  &:hover {
-    cursor: pointer;
-  }
-`
-
 const CardLink = styled.a`
   text-decoration: none;
   color: inherit;
@@ -45,27 +37,6 @@ const CardLink = styled.a`
     cursor: pointer;
   }
 `
-
-const Arrow = () => (
-  <AnimatedSVG width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M18.7383 16L25.9997 9L18.7383 2"
-      stroke="#FF1243"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path d="M1 9H25.6369" stroke="#FF1243" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </AnimatedSVG>
-)
-
-// @TODO: Real animation
-const AnimatedSVG = styled.svg`
-  ${StyledEDSCard}:hover & {
-    transform: translateX(18px);
-  }
-`
-
 export default {
   title: 'Components/Card',
   component: Card,
@@ -75,6 +46,7 @@ export default {
     Action: Card.Action,
     Header: Card.Header,
     TailoredTitle: Card.TailoredTitle,
+    Arrow: Card.Arrow,
   },
   parameters: {
     docs: {
@@ -95,7 +67,7 @@ Default.storyName = 'Default'
 export const NewsCard: Story<CardProps> = () => (
   <Wrapper>
     <CardLink href="#">
-      <StyledEDSCard>
+      <Card>
         <Card.Media>
           <RatioBox>
             <ImagePlaceholder />
@@ -115,12 +87,12 @@ export const NewsCard: Story<CardProps> = () => (
           <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
         </Typography>
         <Card.Action>
-          <Arrow />
+          <Card.Arrow />
         </Card.Action>
-      </StyledEDSCard>
+      </Card>
     </CardLink>
     <CardLink href="#">
-      <StyledEDSCard>
+      <Card>
         <Card.Media>
           <RatioBox>
             <ImagePlaceholder />
@@ -139,9 +111,9 @@ export const NewsCard: Story<CardProps> = () => (
           farm.
         </Typography>
         <Card.Action>
-          <Arrow />
+          <Card.Arrow />
         </Card.Action>
-      </StyledEDSCard>
+      </Card>
     </CardLink>
   </Wrapper>
 )
