@@ -42,10 +42,10 @@ export default {
   component: Card,
   subcomponents: {
     Media: Card.Media,
-    Title: Card.Title,
+    Title: Card.Text,
     Action: Card.Action,
     Header: Card.Header,
-    TailoredTitle: Card.TailoredTitle,
+    TailoredTitle: Card.Title,
     Arrow: Card.Arrow,
   },
   parameters: {
@@ -74,18 +74,13 @@ export const NewsCard: Story<CardProps> = () => (
           </RatioBox>
         </Card.Media>
         <Card.Header>
-          <Card.Title>
-            <Typography variant="overline" as="span">
-              Overline
-            </Typography>
-            <Typography variant="h3">Dolor sit amet</Typography>
-          </Card.Title>
+          <Card.Title eyebrow="Overline">Dolor sit amet</Card.Title>
         </Card.Header>
-        <Typography variant="ingress">
+        <Card.Text>
           Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
           Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
           <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
-        </Typography>
+        </Card.Text>
         <Card.Action>
           <Card.Arrow />
         </Card.Action>
@@ -99,17 +94,15 @@ export const NewsCard: Story<CardProps> = () => (
           </RatioBox>
         </Card.Media>
         <Card.Header>
-          <Card.Title>
-            <Card.TailoredTitle level="h3" eyebrow="September 24, 2020">
-              Dogger Bank wind farm places record-breaking turbine order boosting local jobs
-            </Card.TailoredTitle>
+          <Card.Title level="h3" eyebrow="September 24, 2020">
+            Dogger Bank wind farm places record-breaking turbine order boosting local jobs
           </Card.Title>
         </Card.Header>
-        <Typography variant="ingress">
+        <Card.Text>
           Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the
           13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
           farm.
-        </Typography>
+        </Card.Text>
         <Card.Action>
           <Card.Arrow />
         </Card.Action>
