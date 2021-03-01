@@ -4,6 +4,7 @@ import { Title, CardTitleProps } from './Title'
 import { Action, CardActionProps } from './Action'
 import { Header, CardHeaderProps } from './Header'
 import { TailoredTitle } from './MoreTailoredTitle'
+import { Arrow } from './Arrow'
 
 type CardCompundProps = typeof CardWrapper & {
   Media: typeof Media
@@ -11,6 +12,7 @@ type CardCompundProps = typeof CardWrapper & {
   Action: typeof Action
   Header: typeof Header
   TailoredTitle: typeof TailoredTitle
+  Arrow: typeof Arrow
 }
 
 const Card = CardWrapper as CardCompundProps
@@ -20,6 +22,7 @@ Card.Title = Title
 Card.Action = Action
 Card.Header = Header
 Card.TailoredTitle = TailoredTitle
+Card.Arrow = Arrow
 
 export { Card }
 export type { CardProps, CardMediaProps, CardTitleProps, CardActionProps, CardHeaderProps }
