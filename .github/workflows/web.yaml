@@ -1,9 +1,12 @@
-name: CI
+name: Lint & Test web
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+    paths:
+      - 'web/**/*.jsx?'
+      - 'web/**/*.tsx?'
 jobs:
   check_code:
     runs-on: ubuntu-latest
@@ -26,7 +29,7 @@ jobs:
           yarn --cwd ./web/ install --prefer-offline
       - name: Run ESLint 🔎
         run: |
-          yarn lint
+          yarn --cwd ./web/ lint
       - name: Run tests 🔍
         run: |
           yarn --cwd ./web/ test
