@@ -1,6 +1,6 @@
-![Storybook](https://github.com/equinor/energyvision/workflows/Upload%20storybook%20to%20Azure%20blob%20storage/badge.svg)
+[![Build & deploy Storybook](https://github.com/equinor/energyvision/actions/workflows/storybook.yaml/badge.svg?branch=main)](https://github.com/equinor/energyvision/actions/workflows/storybook.yaml)
 
-[![CI](https://github.com/equinor/energyvision/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/equinor/energyvision/actions/workflows/ci.yaml)
+[![Lint & Test web](https://github.com/equinor/energyvision/actions/workflows/web.yaml/badge.svg?branch=main)](https://github.com/equinor/energyvision/actions/workflows/web.yaml)
 
 # Energy Vision
 
