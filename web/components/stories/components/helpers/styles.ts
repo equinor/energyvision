@@ -26,7 +26,8 @@ export const RatioBox = styled.div`
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  grid-gap: 2rem;
+  grid-row-gap: 4rem;
+  grid-column-gap: 2rem;
 `
 
 /* Where should this be located */
