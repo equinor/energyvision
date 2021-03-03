@@ -10,6 +10,7 @@ const AnimatedSVG = styled.svg`
   ${StyledCard}:hover & {
     transition: transform 125ms;
     transform: translateX(10px);
+    transition-delay: 250ms;
   }
 `
 
