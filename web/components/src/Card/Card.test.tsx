@@ -1,9 +1,11 @@
 /* eslint-disable no-undef */
 import { render, cleanup } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { screen } from '@testing-library/dom'
 import 'jest-styled-components'
 import styled from 'styled-components'
 import { Card } from './index'
+
+const { Header, Title, Text } = Card
 
 afterEach(cleanup)
 
@@ -15,5 +17,39 @@ describe('Card', () => {
   it('Can extend the css for the component', () => {
     const { container } = render(<StyledCard />)
     expect(container.firstChild).toHaveStyleRule('clip-path', 'unset')
+  })
+  it('Can have a title', () => {
+    const title = 'My test title'
+    render(
+      <Card>
+        <Header>
+          <Title>{title}</Title>
+        </Header>
+      </Card>,
+    )
+    const inputNode = screen.getByText(title)
+    expect(inputNode).toBeDefined()
+  })
+  it('Can have an eyebrow title', () => {
+    const eyebrow = 'My test title'
+    render(
+      <Card>
+        <Header>
+          <Title eyebrow={eyebrow}>Test</Title>
+        </Header>
+      </Card>,
+    )
+    const inputNode = screen.getByText(eyebrow)
+    expect(inputNode).toBeDefined()
+  })
+  it('Can have text content', () => {
+    const text = 'My test title'
+    render(
+      <Card>
+        <Text>{text}</Text>
+      </Card>,
+    )
+    const inputNode = screen.getByText(text)
+    expect(inputNode).toBeDefined()
   })
 })
