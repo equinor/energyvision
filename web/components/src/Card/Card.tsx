@@ -12,8 +12,9 @@ export const StyledCard = styled(EdsCard)`
   grid-template-rows: auto auto auto 1fr;
   /* @TODO: Spacings */
   padding: 0 0 1rem 0;
+
   &:hover {
-    cursor: pointer;
+    cursor: inherit;
   }
 `
 
