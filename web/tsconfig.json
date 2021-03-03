@@ -9,7 +9,8 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components": ["components/src", "components/src/*"]
+      "@components": ["components/src", "components/src/*"],
+      "@utils": ["components/utils", "components/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
