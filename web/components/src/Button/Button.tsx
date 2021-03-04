@@ -4,7 +4,10 @@ import Link from 'next/link'
 
 export type ButtonProps = EdsButtonProps
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, href = null, ...rest }, ref) => {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { children, href = null, ...rest },
+  ref,
+) {
   if (href) {
     return (
       <Link href={href} passHref>
@@ -21,5 +24,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, hr
     </EdsButton>
   )
 })
-
-Button.displayName = 'Button'
