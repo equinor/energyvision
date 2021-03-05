@@ -15,5 +15,4 @@ This repository is organized into several folder. Please refer to README files i
 
 ## Storybook
 
-We use [Storybook](https://storybook.js.org/) for the development of components and can be viewed at https://envis-storybook.azureedge.net
-Pushing files to `./web/components` will trigger a build and deploy the Storybook to Azure.
+We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net
