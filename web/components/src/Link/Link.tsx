@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore'
-  href: string // should not have to declare this?
+  href: string
   external?: boolean
 } & HTMLAttributes<HTMLAnchorElement>
 
@@ -36,21 +36,36 @@ const ContentLink = styled(BaseLink)`
   }
 `
 
-// TODO: needs animation
 const ReadMoreLink = styled(BaseLink)`
   display: inline-flex;
   max-width: max-content;
   color: rgba(235, 0, 55, 1);
   justify-content: center;
-  border-bottom: solid 0.5px transparent;
   text-decoration: none;
+  position: relative;
 
   & > svg {
     padding-right: 0;
+    transition: 0.3s;
   }
 
-  &:hover {
-    border-color: rgba(235, 0, 55, 1);
+  &:hover svg {
+    padding-left: 1em;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 0%;
+    border-bottom: solid 0.5px rgba(235, 0, 55, 1);
+    transition: 0.3s;
+  }
+
+  &:hover:after {
+    width: 100%;
   }
 `
 
