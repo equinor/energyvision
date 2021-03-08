@@ -100,7 +100,6 @@ NewsCard.storyName = 'News card'
 
 NewsCard.parameters = {
   docs: {
-    // The story now contains a description
     storyDescription: `A news card should always have an overline/eyebrow with publishing date.`,
   },
 }
