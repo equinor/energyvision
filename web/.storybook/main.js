@@ -6,6 +6,7 @@ module.exports = {
   stories: [
     '../components/stories/docs/*.stories.mdx',
     '../components/stories/components/**/*.stories.@(ts|tsx|mdx)',
+    '../components/stories/typography/**/*.stories.@(ts|tsx|mdx)',
     '../components/stories/pages/**/*.@(ts|tsx|mdx)',
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials', 'storybook-css-modules-preset'],
