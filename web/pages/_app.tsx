@@ -1,5 +1,5 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
-import { Button } from '@components'
+import { Button, Topbar } from '@components'
 import { GlobalStyle } from '../styles/globalStyles'
 
 const toggleTheme = () => {
@@ -10,9 +10,12 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <>
       <GlobalStyle />
-      <Button variant="outlined" onClick={toggleTheme}>
-        Toggle theme
-      </Button>
+      <Topbar>
+        <Button variant="outlined" onClick={toggleTheme}>
+          Toggle theme
+        </Button>
+      </Topbar>
+
       <Component {...pageProps} />
     </>
   )
