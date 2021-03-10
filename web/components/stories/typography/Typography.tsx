@@ -47,6 +47,10 @@ const Article = styled.article`
     margin: 0;
   }
 
+  figcaption {
+    margin-top: 0.5em;
+  }
+
   /* misc */
 
   .timestamp {
