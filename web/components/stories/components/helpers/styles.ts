@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { outlineTemplate } from '@utils'
-import type { Outline } from '@equinor/eds-tokens'
+/* eslint-disable-next-line */
+import { outline } from 'tokens'
 
 export const ImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
@@ -30,15 +31,8 @@ export const Wrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
-/* Where should this be located */
-const outline: Outline = {
-  width: '1px',
-  color: 'rgba(0, 112, 121, 1)',
-  style: 'dashed',
-  type: 'outline',
-  offset: '4px',
-}
-
+/* Where should this be located. Should Card link be an actual component, or 
+a more generic wrapper link component */
 export const CardLink = styled.a`
   text-decoration: none;
   color: inherit;
