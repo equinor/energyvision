@@ -6,46 +6,121 @@ export type TypographyProps = {
 }
 
 const Article = styled.article`
-  font-size: var(--typeScale-1);
+  max-width: 45rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* font-size */
+
+  .timestamp,
+  figcaption {
+    font-size: var(--typeScale-0);
+  }
+
+  p {
+    font-size: var(--typeScale-1);
+  }
+
+  .lead,
+  blockquote p {
+    font-size: var(--typeScale-2);
+  }
+
+  h1 {
+    font-size: var(--typeScale-5);
+  }
+
+  /* line-height */
+
+  h1 {
+    line-height: 1.2;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+
+  /* spacing */
+
+  figure,
+  blockquote {
+    margin: 0;
+  }
+
+  /* misc */
+
+  .timestamp {
+    text-transform: uppercase;
+  }
 
   h1,
   h2,
   h3 {
     font-weight: 400;
   }
+
+  img {
+    aspect-ratio: 4/2;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+
+  p {
+    svg {
+      vertical-align: middle;
+    }
+    span {
+      vertical-align: -11%;
+      margin-left: 1em;
+    }
+  }
 `
 
 export const Typography: React.FC<TypographyProps> = () => (
   <Article>
-    <p>To mark International Women’s Day, we’re celebrating our pioneering women leaders.</p>
-    <h1>
-      “Margareth, here’s a job for you. Just fetch the coffee.”
-      <br />
-      <span>Little did he know she’d be his future boss.</span>
-    </h1>
-    <p>
-      It was 1982, and she did as she was told. But you can only wonder what that hapless male manager must have thought
-      as he watched her career unfold. Today, Margareth Øvrum is a living legend in Equinor.
+    <h1>Panasonic, Equinor and Hydro to explore potential for European battery business</h1>
+    <p className="timestamp">
+      <svg width="20" height="20">
+        <rect x="2.5" y="2.5" width="15" height="15" rx="3" stroke="black" fill="white" />
+      </svg>
+      <span>
+        <time dateTime="2021-11-18T06:45Z">November 18, 2020 07:45 CET</time>
+      </span>
+      <span>
+        Last modified <time dateTime="2021-11-19T06:53Z">November 19, 2021 07:53 CET</time>
+      </span>
+    </p>
+    <figure>
+      <img src="https://i.imgur.com/2bvab7y.jpeg" alt="" />
+      <figcaption>Photo: Panasonic</figcaption>
+    </figure>
+    <p className="lead">
+      The companies will work together towards summer 2021 to assess the market for lithium-ion batteries in Europe and
+      mature the business case for a green battery business located in Norway. The companies intend that this initiative
+      is based on Panasonic’s leading technology and targets the European market for electric vehicles and other
+      applications.
     </p>
     <p>
-      To mark International Women’s day, we look back and celebrate Margareth’s career — as well as the brave and
-      determined women leaders of today who are picking up her torch, pioneering new ways as role models in traditional
-      male bastions.
+      The companies will also investigate the potential for an integrated battery value chain and for co-location of
+      supply chain partners. The findings from this initial exploratory phase will form the basis for subsequent
+      decisions.
     </p>
+    <blockquote>
+      <p>
+        “Panasonic’s plan for expanding its footprint in the European lithium-ion battery market Mototsugu Sato,
+        Executive Vice President of Panasonic, says the company sees the strategic partnership with Equinor and Hydro as
+        a potential basis for future development and growth in the energy/battery sector in the European region.”
+      </p>
+    </blockquote>
     <p>
-      Recently retired, Margareth has held a string of responsible positions in Statoil, now Equinor, including director
-      of operations on the Norwegian Continental Shelf, senior vice president for technology and projects, member of the
-      corporate executive committee, and finally country manager for Brazil. In 2013 she was awarded the title Norway’s
-      most influential woman in technology.
-    </p>
-    <p>
-      But like any pioneer, Margareth’s story is marked by a notable first. In her case, becoming Equinor’s first female
-      platform manager in 1989. At the age of 32, she wasn’t just the first woman — she was also the youngest.{' '}
-    </p>
-    <p>
-      ”It was a fairly rough environment at the Gullfaks field. There were some tough struggles with the unions, and
-      some doors were slammed from time to time, but I do believe that I developed a good and honest relationship with
-      everyone,” Margareth says.
+      “This collaboration combines Panasonic’s position as an innovative technology company and leader in lithium-ion
+      batteries, with the deep industrial experience of Equinor and Hydro, both strong global players, to potentially
+      pave way for a robust and sustainable battery business in Norway. Panasonic has powered the last two revolutions
+      in the automotive industry – first by powering hybrids and now, by powering multiple generations of all electric
+      vehicles. We are pleased to enter into this initiative to explore implementing sustainable, highly advanced
+      technology and supply chains to deliver on the exacting needs of lithium-ion battery customers and support the
+      renewable energy sector in the European region.”
     </p>
   </Article>
 )
