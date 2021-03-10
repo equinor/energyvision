@@ -91,8 +91,8 @@ export const colors = css`
 `
 export const typography = css`
   :root {
-    /* (16-(320*0.004))/16 */
-    --typeScale-base: clamp(1rem, 0.92rem + 0.4vw, 1.25rem);
+    /* (16-(375*0.004))/16 */
+    --typeScale-base: clamp(1rem, 0.90625rem + 0.4vw, 1.25rem);
     --typeScale-multiplier: 1.2;
     --typeScale-1: var(--typeScale-base);
     --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
