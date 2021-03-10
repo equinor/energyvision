@@ -72,7 +72,7 @@ export const colors = css`
     --transparent-white: hsla(0, 0%, 100%, 20);
 
     /* EDS themes
-    
+
 
     /* Background colors */
     --bg-moss-green: #deedee;
@@ -91,7 +91,8 @@ export const colors = css`
 `
 export const typography = css`
   :root {
-    --typeScale-base: 1.2rem;
+    /* (16-(320*0.004))/16 */
+    --typeScale-base: clamp(1rem, 0.92rem + 0.4vw, 1.25rem);
     --typeScale-multiplier: 1.2;
     --typeScale-1: var(--typeScale-base);
     --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
@@ -100,8 +101,8 @@ export const typography = css`
     --typeScale-5: calc(var(--typeScale-4) * var(--typeScale-multiplier));
     --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
 
-    @media (min-width: 768px) {
+    /* @media (min-width: 768px) {
       --typeScale-base: 1.25rem;
-    }
+    } */
   }
 `
