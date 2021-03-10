@@ -11,6 +11,8 @@ module.exports = {
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials', 'storybook-css-modules-preset'],
   webpackFinal: async (config) => {
+    // Respect the baseUrl from tsconfig
+    config.resolve.modules.push(path.resolve(__dirname, '../components'))
     config.resolve.alias['@components'] = path.resolve(__dirname, '../components/src')
     config.resolve.alias['@utils'] = path.resolve(__dirname, '../components/utils')
     return config
