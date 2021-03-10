@@ -5,6 +5,9 @@ import { default as NextLink } from 'next/link'
 import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link } from '@equinor/eds-icons'
 import styled from 'styled-components'
+import { outlineTemplate } from '@utils'
+/* eslint-disable-next-line */
+import { outline } from 'tokens'
 
 export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore'
@@ -14,10 +17,12 @@ export type LinkProps = {
 
 // TODO: Get colours and other constants from theme with css variables
 const BaseLink = styled.a`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   color: rgba(0, 112, 121, 1);
-
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
   & > svg {
     flex-shrink: 0;
     box-sizing: content-box;
