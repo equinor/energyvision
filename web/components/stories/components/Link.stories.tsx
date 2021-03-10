@@ -1,13 +1,5 @@
 import { Story, Meta } from '@storybook/react/types-6-0'
-import styled from 'styled-components'
 import { Link, LinkProps } from '@components'
-
-const Wrapper = styled.div`
-  margin: 32px;
-  display: grid;
-  grid-gap: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-`
 
 export default {
   title: 'Components/Link',
@@ -20,21 +12,24 @@ export default {
 } as Meta
 
 export const Default: Story<LinkProps> = (args) => (
-  <Wrapper>
+  <>
     <Link {...args} href="/">
       This is a link
     </Link>
-  </Wrapper>
+  </>
 )
 
 export const RegularLink: Story = () => (
-  <Wrapper>
-    <Link href="/">This is a link</Link>
-
-    <Link href="/" external>
-      This is an external link
-    </Link>
-  </Wrapper>
+  <>
+    <div>
+      <Link href="/">This is a link</Link>
+    </div>
+    <div>
+      <Link href="/" external>
+        This is an external link
+      </Link>
+    </div>
+  </>
 )
 
 RegularLink.parameters = {
@@ -44,15 +39,18 @@ RegularLink.parameters = {
 }
 
 export const ContentLink: Story = () => (
-  <Wrapper>
-    <Link variant="contentLink" href="/">
-      Northern Lights project
-    </Link>
-
-    <Link variant="contentLink" href="/" external>
-      Equinor Design System - eds.equinor.com
-    </Link>
-  </Wrapper>
+  <>
+    <div>
+      <Link variant="contentLink" href="/">
+        Northern Lights project
+      </Link>
+    </div>
+    <div>
+      <Link variant="contentLink" href="/" external>
+        Equinor Design System - eds.equinor.com
+      </Link>
+    </div>
+  </>
 )
 
 ContentLink.parameters = {
