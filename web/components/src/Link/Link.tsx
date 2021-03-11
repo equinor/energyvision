@@ -5,9 +5,9 @@ import { default as NextLink } from 'next/link'
 import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link } from '@equinor/eds-icons'
 import styled from 'styled-components'
-import { outlineTemplate } from '@utils'
-/* eslint-disable-next-line */
-import { outline } from 'tokens'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore'

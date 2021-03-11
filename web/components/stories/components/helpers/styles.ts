@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { outlineTemplate } from '@utils'
-/* eslint-disable-next-line */
-import { outline } from 'tokens'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 export const ImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
