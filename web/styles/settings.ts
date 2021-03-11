@@ -91,7 +91,12 @@ export const colors = css`
 `
 export const typography = css`
   :root {
-    /* (16-(375*0.004))/16 */
+    /**
+     * Smallest device width: 375
+     * Scaling factor: 0.4% of view port
+     * For 16px at 375, base font-size: 16 - 375 * 0.4% = 14.5 = 0.90625rem
+     * A font-size of 20px (1.25rem) is reached at (20 - 14.5) / 0.004 = 1375px
+     */
     --typeScale-base: clamp(1rem, 0.90625rem + 0.4vw, 1.25rem);
     --typeScale-multiplier: 1.2;
     --typeScale-1: var(--typeScale-base);
