@@ -1,13 +1,24 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
 import Head from 'next/head'
-import { Button, Topbar } from '@components'
+import { useState, useCallback } from 'react'
+import { Button, Topbar, Menu } from '@components'
 import { GlobalStyle } from '../styles/globalStyles'
+import { MockMenuData } from '../components/stories/components/mockData/menu'
 
 const toggleTheme = () => {
   document.documentElement.classList.toggle('dark')
 }
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const [topbarHeight, setTopbarHeight] = useState(0)
+
+  const topbarRef = useCallback((node) => {
+    if (node !== null) {
+      const height = node.getBoundingClientRect().height
+      setTopbarHeight(height)
+    }
+  }, [])
+
   return (
     <>
       <Head>
@@ -15,7 +26,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
       </Head>
       <GlobalStyle />
-      <Topbar>
+
+      <Topbar height={topbarHeight} ref={topbarRef}>
+        <Menu items={MockMenuData} offset={topbarHeight}></Menu>
         <Button variant="outlined" onClick={toggleTheme}>
           Toggle theme
         </Button>
