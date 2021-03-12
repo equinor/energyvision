@@ -66,6 +66,8 @@ export default function Home(): JSX.Element {
             Read more
           </Link>
         </div>
+
+        <div style={{ height: '1500px' }}></div>
       </Main>
     </Container>
   )

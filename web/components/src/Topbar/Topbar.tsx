@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link'
 import styled from 'styled-components'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, forwardRef, HTMLAttributes } from 'react'
 
 const Bar = styled.div`
   display: flex;
@@ -14,6 +14,7 @@ const Bar = styled.div`
   position: fixed;
   top: 0;
   transition: top 0.3s;
+  z-index: 10;
 `
 
 const Logo = styled.img`
@@ -23,21 +24,19 @@ const Logo = styled.img`
   margin-right: 2em;
   box-sizing: content-box;
 `
-export const Topbar: React.FC = ({ children }) => {
+
+export type TopbarProps = {
+  height: number
+} & HTMLAttributes<HTMLDivElement>
+
+export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar({ children, height }, ref) {
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
-  const [barHeight, setBarHeight] = useState(0)
-
-  const topbarRef = useCallback((node) => {
-    if (node !== null) {
-      setBarHeight(node.getBoundingClientRect().height)
-    }
-  }, [])
 
   const handleScroll = () => {
     const currentScrollPos = window.pageYOffset
     setIsVisible(
-      (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > barHeight) ||
+      (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > height) ||
         currentScrollPos < prevScrollPos,
     )
     setPrevScrollPos(currentScrollPos)
@@ -46,10 +45,10 @@ export const Topbar: React.FC = ({ children }) => {
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [prevScrollPos, isVisible, handleScroll, barHeight])
+  }, [prevScrollPos, isVisible, handleScroll, height])
 
   return (
-    <Bar ref={topbarRef} style={{ top: isVisible ? 0 : -barHeight }}>
+    <Bar ref={ref} style={{ top: isVisible ? 0 : -height }}>
       <Link href="/">
         <a>
           <Logo src="https://eds-static.equinor.com/logo/equinor-logo-horizontal.svg#red" alt="Equinor" />
@@ -59,4 +58,4 @@ export const Topbar: React.FC = ({ children }) => {
       {children}
     </Bar>
   )
-}
+})
