@@ -9,7 +9,7 @@ const Bar = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 1em 2em;
+  padding: 1rem 2rem;
   background: rgba(255, 255, 255, 1);
   position: fixed;
   top: 0;
@@ -21,7 +21,7 @@ const Logo = styled.img`
   display: block;
   height: 45px;
   max-width: 100%;
-  margin-right: 2em;
+  margin-right: 2rem;
   box-sizing: content-box;
 `
 
