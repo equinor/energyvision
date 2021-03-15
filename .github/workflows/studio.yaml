@@ -1,0 +1,36 @@
+name: Build & deploy studio
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'studio/**/*'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies 🔧
+        run: |
+          yarn install --prefer-offline
+          yarn --cwd ./studio/ install --prefer-offline
+      - name: Run ESLint 🔎
+        run: |
+          yarn lint:studio
+      - name: Deploy 🚀
+        run: |
+          sanity deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
