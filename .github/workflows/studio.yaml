@@ -32,6 +32,6 @@ jobs:
       - name: Deploy 🚀
         working-directory: ./studio
         run: |
-          sanity deploy
+          yarn sanity deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
