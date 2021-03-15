@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
+    "lint:web": "eslint ./web/ --ext .js,.jsx,.ts,.tsx",
+    "lint:studio": "eslint ./studio/ --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install"
   },
   "dependencies": {
