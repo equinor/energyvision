@@ -30,6 +30,7 @@ jobs:
         run: |
           yarn lint:studio
       - name: Deploy 🚀
+        working-directory: ./studio
         run: |
           sanity deploy
         env:
