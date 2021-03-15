@@ -29,7 +29,7 @@ jobs:
           yarn --cwd ./web/ install --prefer-offline
       - name: Run ESLint 🔎
         run: |
-          yarn lint ./web/
+          yarn lint:web
       - name: Run tests 🔍
         run: |
           yarn --cwd ./web/ test

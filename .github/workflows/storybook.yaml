@@ -28,7 +28,7 @@ jobs:
           yarn --cwd ./web/ install --prefer-offline
       - name: Lint components 🔎
         run: |
-          yarn eslint './web/components/**/*.{ts,tsx}'
+          yarn lint:components
       - name: Run tests 🕵️‍♀️
         run: |
           yarn --cwd ./web/ run test ./components/
