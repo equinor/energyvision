@@ -38,6 +38,35 @@ export default {
         }),
     },
     {
+      name: 'heroImage',
+      title: 'Hero image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessiblity.',
+          options: {
+            isHighlighted: true,
+          },
+        },
+        {
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+        },
+        {
+          name: 'attribution',
+          type: 'string',
+          title: 'Attribution',
+        },
+      ],
+    },
+    {
       name: 'ingress',
       title: 'Ingress',
       type: 'text',
