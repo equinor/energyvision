@@ -6,6 +6,9 @@ import createSchema from 'part:@sanity/base/schema-creator'
 //eslint-disable-next-line
 import schemaTypes from 'all:part:@sanity/base/schema-type'
 
+// Document types
+import news from './documents/news'
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -14,5 +17,6 @@ export default createSchema({
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
     /* Your types here! */
+    news,
   ]),
 })
