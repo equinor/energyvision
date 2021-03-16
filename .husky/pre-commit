@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn lint ./web/
+yarn lint
 yarn --cwd ./web/ test
