@@ -1,3 +1,7 @@
+import { configureBlockContent } from '../editors/blockContentType'
+
+const blockContentType = configureBlockContent()
+
 export default {
   title: 'News',
   type: 'document',
@@ -72,6 +76,19 @@ export default {
       type: 'text',
       rows: '4',
       validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'content',
+      title: 'Content',
+      type: 'array',
+      of: [blockContentType],
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value || value.length === 0) {
+            return 'Required'
+          }
+          return true
+        }),
     },
   ],
 }
