@@ -9,6 +9,9 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 // Document types
 import news from './documents/news'
 
+// Objects
+import blockQuote from './objects/blockQuote'
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -18,5 +21,6 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     news,
+    blockQuote,
   ]),
 })
