@@ -1,18 +1,31 @@
-import { HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 
+type StyledTypographyType = {
+  center: boolean
+}
 /* @TODO: How to use this typography scale with EDS */
-const StyledTypography = styled(Typography)`
+const StyledTypography = styled(Typography)<StyledTypographyType>`
   font-size: var(--typeScale-2);
+  ${({ center }) =>
+    center && {
+      textAlign: 'center',
+    }}
 `
 
-export type TitleProps = HTMLAttributes<HTMLHeadingElement>
+export type TitleProps = {
+  /* It the title should be centered or not. Default to true */
+  center?: boolean
+} & HTMLAttributes<HTMLHeadingElement>
 
-export const Title = ({ children, ...rest }: TitleProps): JSX.Element => {
+export const Title = forwardRef<HTMLDivElement, TitleProps>(function CardMedia(
+  { center = true, children, ...rest },
+  ref,
+) {
   return (
-    <StyledTypography variant="h3" {...rest}>
+    <StyledTypography center={center} variant="h3" ref={ref} {...rest}>
       {children}
     </StyledTypography>
   )
-}
+})
