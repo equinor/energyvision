@@ -116,3 +116,92 @@ export const typography = css`
     } */
   }
 `
+
+export const spacings = css`
+  :root {
+    /** Copy'n paste from Tailwind's default.
+    It's not clear how we should do this.
+    We could do it in several ways, we could even make
+    a fluid scale for spacings as well. But what about
+    theming and that would limit design 🤷‍♀️
+    Just did it with a lot of vars and MQ as a start  
+     */
+    --spacing-0: 0px; /* 0px */
+    --spacing-px: 1px; /* 1px */
+    --spacing-0p5: 0.125rem; /* 2px */
+    --spacing-1: 0.25rem; /* 4px */
+    --spacing-1p5: 0.375rem; /* 6px */
+    --spacing-2: 0.5rem; /* 8px */
+    --spacing-2p5: 0.625rem; /* 10px */
+    --spacing-3: 0.75rem; /* 12px */
+    --spacing-3p5: 0.875rem; /* 14px */
+    --spacing-4: 1rem; /* 16px */
+    --spacing-5: 1.25rem; /* 20px */
+    --spacing-6: 1.5rem; /* 24px */
+    --spacing-7: 1.75rem; /* 28px */
+    --spacing-8: 2rem; /* 32px */
+    --spacing-9: 2.25rem; /* 36px */
+    --spacing-10: 2.5rem; /* 40px */
+    --spacing-11: 2.75rem; /* 44px */
+    --spacing-12: 3rem; /* 48px */
+    --spacing-14: 3.5rem; /* 56px */
+    --spacing-16: 4rem; /* 64px */
+    --spacing-20: 5rem; /* 80px */
+    --spacing-24: 6rem; /* 96px */
+    --spacing-28: 7rem; /* 112px */
+    --spacing-32: 8rem; /* 128px */
+    --spacing-36: 9rem; /* 144px */
+    --spacing-40: 10rem; /* 160px */
+    --spacing-44: 11rem; /* 176px */
+    --spacing-48: 12rem; /* 192px */
+    --spacing-52: 13rem; /* 208px */
+    --spacing-56: 14rem; /* 224px */
+    --spacing-60: 15rem; /* 240px */
+    --spacing-64: 16rem; /* 256px */
+    --spacing-72: 18rem; /* 288px */
+    --spacing-80: 20rem; /* 320px */
+    --spacing-96: 24rem; /* 384px */
+
+    /** Names as in EDS. I don't see why we need both vertical and horizontal 🤷‍♀️
+    They have corresponding values in EDS as well...
+    But it might be easier with theming if we do this the same way?  */
+    --spacer-vertical-xxSmall: var(--spacing-px);
+    --spacer-vertical-xSmall: var(--spacing-1);
+    --spacer-vertical-small: var(--spacing-2);
+    --spacer-vertical-medium: var(--spacing-4);
+    --spacer-vertical-large: var(--spacing-6);
+    --spacer-vertical-xLarge: var(--spacing-10);
+    --spacer-vertical-xxLarge: var(--spacing-16);
+    --spacer-vertical-xxxLarge: var(--spacing-24);
+
+    --spacer-horizontal-xxSmall: var(--spacing-px);
+    --spacer-horizontal-xSmall: var(--spacing-1);
+    --spacer-horizontal-small: var(--spacing-2);
+    --spacer-horizontal-medium: var(--spacing-4);
+    --spacer-horizontal-large: var(--spacing-6);
+    --spacer-horizontal-xLarge: var(--spacing-10);
+    --spacer-horizontal-xxLarge: var(--spacing-16);
+    --spacer-horizontal-xxxLarge: var(--spacing-24);
+
+    @media (min-width: 750px) {
+      --spacer-vertical-xxSmall: var(--spacing-px);
+      --spacer-vertical-xSmall: var(--spacing-2);
+      --spacer-vertical-small: var(--spacing-4);
+      --spacer-vertical-medium: var(--spacing-8);
+      --spacer-vertical-large: var(--spacing-12);
+      --spacer-vertical-xLarge: var(--spacing-20);
+      --spacer-vertical-xxLarge: var(--spacing-28);
+      --spacer-vertical-xxxLarge: var(--spacing-48);
+
+      --spacer-horizontal-xxSmall: var(--spacing-px);
+      --spacer-horizontal-xSmall: var(--spacing-2);
+      --spacer-horizontal-small: var(--spacing-4);
+      --spacer-horizontal-medium: var(--spacing-8);
+      --spacer-horizontal-large: var(--spacing-12);
+      --spacer-horizontal-xLarge: var(--spacing-20);
+      --spacer-horizontal-xxLarge: var(--spacing-28);
+      --spacer-horizontal-xxxLarge: var(--spacing-48);
+    }
+  }
+` /* 2px */
+/* 2px */
