@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export const StyledFact = styled.div`
   background-color: var(--background, var(--ui-background-warm));
+  padding: var(--spacer-vertical-large) var(--spacer-horizontal-medium);
 `
 
 /* @TODO: Which pattern to use for color names and prop name? */
