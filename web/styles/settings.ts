@@ -81,6 +81,11 @@ export const colors = css`
     --bg-spruce-wood: #ffe7d6;
     --bg-slate-blue: #243746;
 
+    /* UI colors This is just for testing!!!! */
+    --ui-background-default: var(--white-100);
+    --ui-background-warm: var(--spruce-wood-100);
+    --ui-background-cold: var(--mist-blue-100);
+
     /* POC Theme */
     --theme-background-primary: var(--bg-moss-green);
   }
