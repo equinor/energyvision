@@ -140,7 +140,7 @@ export const AlignTitle: Story<FactProps> = () => (
       </Fact.Text>
     </Fact>
     <Fact background="cold" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
-      <Fact.Title center={false}>Dolor sit amet</Fact.Title>
+      <Fact.Title alignment="left">Dolor sit amet</Fact.Title>
       <Fact.Text>
         <Typography>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
