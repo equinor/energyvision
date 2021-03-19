@@ -11,6 +11,7 @@ import news from './documents/news'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
+import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import blockQuote from './objects/blockQuote'
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -23,6 +24,7 @@ export default createSchema({
     /* Your types here! */
     news,
     imageWithAlt,
+    imageWithAltAndCaption,
     blockQuote,
   ]),
 })
