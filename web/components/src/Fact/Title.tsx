@@ -16,7 +16,7 @@ export type TitleProps = {
   alignment?: 'center' | 'left'
 } & HTMLAttributes<HTMLHeadingElement>
 
-export const Title = forwardRef<HTMLDivElement, TitleProps>(function CardMedia(
+export const Title = forwardRef<HTMLDivElement, TitleProps>(function Title(
   { alignment = 'center', children, ...rest },
   ref,
 ) {
