@@ -90,5 +90,14 @@ export default {
           return true
         }),
     },
+    {
+      name: 'factbox',
+      title: 'Factbox',
+      type: 'factbox',
+      options: {
+        collapsable: true,
+        collapsed: false,
+      },
+    },
   ],
 }
