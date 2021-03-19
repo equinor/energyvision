@@ -81,7 +81,7 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [blockContentType, { type: 'blockQuote' }],
+      of: [blockContentType, { type: 'blockQuote' }, { type: 'imageWithAltAndCaption' }],
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value || value.length === 0) {
