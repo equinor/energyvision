@@ -2,7 +2,7 @@ import { forwardRef, CSSProperties, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 export const StyledFact = styled.div`
-  background-color: var(--background, var(--ui-background-warm));
+  background-color: var(--background);
   padding: var(--spacer-vertical-large) var(--spacer-horizontal-medium);
 `
 
@@ -18,11 +18,15 @@ const backgroundVariants = {
 }
 
 export const Fact = forwardRef<HTMLDivElement, FactProps>(function Fact(
-  { background = 'none', children, ...rest },
+  { background = 'none', children, style, ...rest },
   ref,
 ) {
   return (
-    <StyledFact style={{ '--background': backgroundVariants[background] } as CSSProperties} {...rest} ref={ref}>
+    <StyledFact
+      style={{ ...style, '--background': backgroundVariants[background] } as CSSProperties}
+      {...rest}
+      ref={ref}
+    >
       {children}
     </StyledFact>
   )
