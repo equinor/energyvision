@@ -1,15 +1,10 @@
 import React from 'react'
+import { SchemaType } from '../../types'
 
 type PreviewProps = {
   imageUrl: string
   alt: string
   caption: string
-}
-
-type ImageWithAltAndCaptionPreview = {
-  title: string
-  subtitle: string
-  media: JSX.Element
 }
 
 export default {
@@ -34,7 +29,7 @@ export default {
       alt: 'inlineImage.alt',
       caption: 'caption',
     },
-    prepare({ imageUrl, caption, alt }: PreviewProps): ImageWithAltAndCaptionPreview {
+    prepare({ imageUrl, caption, alt }: PreviewProps): SchemaType.Preview {
       return {
         title: alt,
         subtitle: caption,

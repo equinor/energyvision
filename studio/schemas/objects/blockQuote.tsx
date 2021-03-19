@@ -1,16 +1,11 @@
 import React from 'react'
+import { SchemaType } from '../../types'
 import { format_quote } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
 type PreviewProps = {
   title: string
   author: string
-}
-
-type BlockQuotePreview = {
-  title: string
-  subtitle: string
-  media: JSX.Element
 }
 
 export default {
@@ -33,7 +28,7 @@ export default {
       title: 'quote',
       author: 'author',
     },
-    prepare({ title, author }: PreviewProps): BlockQuotePreview {
+    prepare({ title, author }: PreviewProps): SchemaType.Preview {
       return {
         title: title,
         subtitle: `By: ${author}`,
