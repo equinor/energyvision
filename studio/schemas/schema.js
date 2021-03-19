@@ -13,6 +13,7 @@ import news from './documents/news'
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import blockQuote from './objects/blockQuote'
+import backgroundColourPicker from './objects/backgroundColourPicker'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -26,5 +27,6 @@ export default createSchema({
     imageWithAlt,
     imageWithAltAndCaption,
     blockQuote,
+    backgroundColourPicker,
   ]),
 })
