@@ -10,6 +10,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import news from './documents/news'
 
 // Objects
+import imageWithAlt from './objects/imageWithAlt'
 import blockQuote from './objects/blockQuote'
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -21,6 +22,7 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     news,
+    imageWithAlt,
     blockQuote,
   ]),
 })
