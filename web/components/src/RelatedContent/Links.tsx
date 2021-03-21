@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 const StyledLinks = styled.div`
   display: grid;
+  column-gap: var(--spacer-vertical-large);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 `
 
 export type LinksProps = HTMLAttributes<HTMLDivElement>
