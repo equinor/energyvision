@@ -26,7 +26,12 @@ export const Default: Story<RelatedContentProps> = (args) => (
       <Link variant="contentLink" href="/">
         Northern Lights project
       </Link>
-
+      <Link variant="contentLink" href="/" external>
+        Carbon capture and storage
+      </Link>
+      <Link variant="contentLink" href="/">
+        Digitalisation in Equinor
+      </Link>
       <Link variant="contentLink" href="/" external>
         Equinor Design System - eds.equinor.com
       </Link>
