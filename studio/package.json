@@ -14,7 +14,7 @@
     "start": "sanity start",
     "build": "sanity build",
     "upgrade": "sanity upgrade",
-    "preinstall": "only-allow pnpm"
+    "preinstall": "npx only-allow pnpm"
   },
   "keywords": [
     "sanity"
