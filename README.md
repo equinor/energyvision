@@ -17,7 +17,7 @@ This repository is organized into several folder. Please refer to README files i
 
 We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net
 
-"" PNPM
+## PNPM
 
 This project uses the PNPM package manager. All commands should be run from root. There’s an alias in the package-file to studio and web. So to run scripts from the package.json in studio:
 
@@ -33,13 +33,11 @@ This project uses the PNPM package manager. All commands should be run from root
     # Build studio
     pnpm studio build
 
-When adding arguments to scripts, such as --force to force a re-install of all dependencies, then when running scripts from the root, you must add `--` so that for example:
+When adding arguments to scripts, such as `--force` to force a re-install of all dependencies, then when running scripts from the root, you must add `--` so that for example:
 
     pnpm studio install -- --force
 
-Some packages take advantage of the flattening of node_modules and use modules that are not in their own package.json. This is usually solved with a pnpmfile, which can be a tedious process to maintain, so these dependencies have been added to the projects package.json directly. In studio, these are: 
+Some packages take advantage of the flattening of `node_modules` and use modules that are not in their own package.json. This is usually solved with a pnpmfile, which can be a tedious process to maintain, so these dependencies have been added to the projects package.json directly. In studio, these are:
 
 - @sanity/form-builder
 - @sanity/data-aspects
-- postcss
-- css-color-functions
