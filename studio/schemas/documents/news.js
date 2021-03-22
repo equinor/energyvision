@@ -88,7 +88,6 @@ export default {
       validation: (Rule) =>
         // TODO: add character limit
         Rule.custom((value) => {
-          console.log('value', value)
           if (!value || value.length === 0) {
             return 'Required'
           }
