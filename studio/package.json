@@ -13,6 +13,7 @@
     "dev": "sanity start",
     "start": "sanity start",
     "build": "sanity build",
+    "deploy": "sanity deploy",
     "upgrade": "sanity upgrade",
     "preinstall": "npx only-allow pnpm"
   },
