@@ -86,3 +86,8 @@ export const Order: Story<RelatedContentProps> = (args) => (
 )
 
 Order.storyName = 'Order'
+Order.parameters = {
+  docs: {
+    storyDescription: `By default, the links will `,
+  },
+}

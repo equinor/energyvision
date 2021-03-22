@@ -26,16 +26,6 @@ const Title = styled.h1`
   line-height: 1.15;
   font-size: 4rem;
   text-align: center;
-  & a {
-    color: #0070f3;
-    text-decoration: none;
-  }
-
-  & a:hover,
-  & a:focus,
-  & a:active {
-    text-decoration: underline;
-  }
 `
 
 export default function Home(): JSX.Element {
@@ -48,9 +38,11 @@ export default function Home(): JSX.Element {
 
       <Main>
         <Title>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          MVP 1 is all about{' '}
+          <Link href="/news" variant="readMore">
+            News
+          </Link>
         </Title>
-
         <div>
           You can <Button href="/posts/hello-there">Click me</Button>
         </div>
