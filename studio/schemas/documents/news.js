@@ -81,7 +81,7 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [blockContentType, { type: 'blockQuote' }, { type: 'imageWithAltAndCaption' }],
+      of: [blockContentType, { type: 'blockQuote' }, { type: 'imageWithAltAndCaption' }, { type: 'factbox' }],
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value || value.length === 0) {
@@ -89,15 +89,6 @@ export default {
           }
           return true
         }),
-    },
-    {
-      name: 'factbox',
-      title: 'Factbox',
-      type: 'factbox',
-      options: {
-        collapsable: true,
-        collapsed: false,
-      },
     },
   ],
 }
