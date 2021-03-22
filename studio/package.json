@@ -1,14 +1,20 @@
 {
-  "name": "equinor",
+  "name": "energy-vision-studio",
   "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "package.json",
-  "author": "Wenche Tollevsen <wenche.tollevsen@miles.no>",
+  "author": {
+    "name": "Heap Purple",
+    "email": "fg_envis@equinor.com"
+  },
   "license": "UNLICENSED",
   "scripts": {
+    "dev": "sanity start",
     "start": "sanity start",
-    "build": "sanity build"
+    "build": "sanity build",
+    "upgrade": "sanity upgrade",
+    "preinstall": "only-allow pnpm"
   },
   "keywords": [
     "sanity"
@@ -18,10 +24,13 @@
     "@sanity/base": "^2.6.2",
     "@sanity/components": "^2.2.6",
     "@sanity/core": "^2.6.2",
+    "@sanity/data-aspects": "^2.2.6",
     "@sanity/default-layout": "^2.6.2",
     "@sanity/default-login": "^2.2.6",
-    "@sanity/desk-tool": "^2.6.3",
+    "@sanity/desk-tool": "^2.6.2",
+    "@sanity/form-builder": "^2.6.3",
     "@sanity/vision": "^2.2.6",
+    "only-allow": "^1.0.0",
     "prop-types": "^15.7",
     "react": "^17.0",
     "react-dom": "^17.0",
