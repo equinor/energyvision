@@ -1,6 +1,16 @@
 import { configureBlockContent } from '../editors/blockContentType'
 
 const blockContentType = configureBlockContent()
+const ingressBlockContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  attachment: false,
+  lists: true,
+})
 
 export default {
   title: 'News',
@@ -73,9 +83,17 @@ export default {
     {
       name: 'ingress',
       title: 'Ingress',
-      type: 'text',
-      rows: '4',
-      validation: (Rule) => Rule.required(),
+      type: 'array',
+      of: [ingressBlockContentType],
+      validation: (Rule) =>
+        // TODO: add character limit
+        Rule.custom((value) => {
+          console.log('value', value)
+          if (!value || value.length === 0) {
+            return 'Required'
+          }
+          return true
+        }),
     },
     {
       name: 'content',
