@@ -5,7 +5,7 @@ import { newsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 
-const { Title, Header, Action, Arrow, Media, CardLink } = Card
+const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
 const ImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
@@ -39,6 +39,8 @@ type NewsSchema = {
   slug: string
   title: string
   id: string
+  // Should be rich text editor
+  ingress: string
 }
 
 type NewsProps = {
@@ -57,7 +59,7 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
         {allNews.length > 0 && (
           <TempWrapper>
             {allNews.map((newsItem: NewsSchema) => {
-              const { slug, title, id } = newsItem
+              const { slug, title, id, ingress } = newsItem
               return (
                 <Link href={`/news/${slug}`} key={id}>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -71,6 +73,7 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
                       <Header>
                         <Title>{title}</Title>
                       </Header>
+                      <Text>{ingress}</Text>
                       <Action>
                         <Arrow />
                       </Action>
@@ -89,7 +92,6 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
 export async function getStaticProps({ preview = false }) {
   // const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery))
   const allNews = await getClient(preview).fetch(newsQuery)
-  console.log('allNews', allNews)
   return {
     // props: { allNews, preview },
     props: { allNews },

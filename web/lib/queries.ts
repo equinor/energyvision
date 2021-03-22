@@ -3,4 +3,5 @@ export const newsQuery = /* groq */ `
   "id": _id,
  title,
  "slug": slug.current,
+ ingress,
 }`
