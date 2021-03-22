@@ -12,6 +12,20 @@ const ingressBlockContentType = configureBlockContent({
   lists: true,
 })
 
+const validateIngress = (value) => {
+  if (!value || value.length === 0) {
+    return 'Required'
+  }
+
+  const count = value[0].children.reduce((total, current) => total + current.text.length, 0)
+
+  if (count > 400) {
+    return `Ingress cannot be longer than 400 characters. Currently ${count} characters long.`
+  }
+
+  return true
+}
+
 export default {
   title: 'News',
   type: 'document',
@@ -85,14 +99,7 @@ export default {
       title: 'Ingress',
       type: 'array',
       of: [ingressBlockContentType],
-      validation: (Rule) =>
-        // TODO: add character limit
-        Rule.custom((value) => {
-          if (!value || value.length === 0) {
-            return 'Required'
-          }
-          return true
-        }),
+      validation: (Rule) => Rule.custom((value) => validateIngress(value)),
     },
     {
       name: 'content',
