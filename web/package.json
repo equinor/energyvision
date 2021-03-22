@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "dev-storybook": "start-storybook -p 9000 --ci",
     "build-storybook": "build-storybook",
-    "preinstall": "only-allow pnpm"
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@equinor/eds-core-react": "^0.8.4",

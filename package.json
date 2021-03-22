@@ -9,7 +9,7 @@
     "studio": "pnpm --filter ./studio",
     "web": "pnpm --filter ./web",
     "prepare": "husky install",
-    "preinstall": "only-allow pnpm"
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.12.0",
