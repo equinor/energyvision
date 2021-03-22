@@ -35,6 +35,6 @@ jobs:
       - name: Deploy 🚀
         working-directory: ./studio
         run: |
-          pnpm sanity deploy
+          pnpm deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
