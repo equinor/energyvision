@@ -30,3 +30,7 @@ _site
 
 # storybook
 web/storybook-static
+
+# lock-files from other package managers than pnpm
+yarn.lock
+package-lock.json
