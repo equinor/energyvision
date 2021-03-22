@@ -26,7 +26,7 @@ export const Default: Story<RelatedContentProps> = (args) => (
       <Link variant="contentLink" href="/">
         Northern Lights project
       </Link>
-      <Link variant="contentLink" href="/" external>
+      <Link variant="contentLink" href="/">
         Carbon capture and storage
       </Link>
       <Link variant="contentLink" href="/">
@@ -40,3 +40,49 @@ export const Default: Story<RelatedContentProps> = (args) => (
 )
 
 Default.storyName = 'Default'
+
+export const WithOddNumber: Story<RelatedContentProps> = () => (
+  <RelatedContent>
+    <RelatedContent.Title>More on this topic</RelatedContent.Title>
+    <RelatedContent.Links>
+      <Link variant="contentLink" href="/">
+        Northern Lights project
+      </Link>
+      <Link variant="contentLink" href="/">
+        Carbon capture and storage
+      </Link>
+      <Link variant="contentLink" href="/">
+        Digitalisation in Equinor
+      </Link>
+    </RelatedContent.Links>
+  </RelatedContent>
+)
+
+WithOddNumber.storyName = 'With an odd number of links'
+WithOddNumber.parameters = {
+  docs: {
+    storyDescription: `If the number of links are odd, the last one will be in the left column.`,
+  },
+}
+
+export const Order: Story<RelatedContentProps> = (args) => (
+  <RelatedContent {...args}>
+    <RelatedContent.Title>More on this topic</RelatedContent.Title>
+    <RelatedContent.Links>
+      <Link variant="contentLink" href="/">
+        1. Northern Lights project
+      </Link>
+      <Link variant="contentLink" href="/">
+        2. Carbon capture and storage
+      </Link>
+      <Link variant="contentLink" href="/">
+        3. Digitalisation in Equinor
+      </Link>
+      <Link variant="contentLink" href="/" external>
+        4. Equinor Design System - eds.equinor.com
+      </Link>
+    </RelatedContent.Links>
+  </RelatedContent>
+)
+
+Order.storyName = 'Order'
