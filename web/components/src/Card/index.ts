@@ -1,4 +1,4 @@
-import { Card as CardWrapper, CardProps } from './Card'
+import { Card as CardWrapper, CardProps, CardLink } from './Card'
 import { Media, CardMediaProps } from './Media'
 import { Text, CardTextProps } from './Text'
 import { Action, CardActionProps } from './Action'
@@ -13,6 +13,7 @@ type CardCompundProps = typeof CardWrapper & {
   Header: typeof Header
   Title: typeof Title
   Arrow: typeof Arrow
+  CardLink: typeof CardLink
 }
 
 const Card = CardWrapper as CardCompundProps
@@ -23,6 +24,7 @@ Card.Action = Action
 Card.Header = Header
 Card.Title = Title
 Card.Arrow = Arrow
+Card.CardLink = CardLink
 
 export { Card }
 export type { CardProps, CardMediaProps, CardTextProps, CardActionProps, CardHeaderProps }
