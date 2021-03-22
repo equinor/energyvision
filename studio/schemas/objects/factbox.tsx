@@ -1,3 +1,13 @@
+import React from 'react'
+import { SchemaType } from '../../types'
+import { info_circle } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
+
+type PreviewProps = {
+  imageUrl: string
+  title: string
+}
+
 export default {
   name: 'factbox',
   type: 'object',
@@ -31,4 +41,17 @@ export default {
       type: 'imageWithAlt',
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+      imageUrl: 'image.asset.url',
+    },
+    prepare({ title, imageUrl }: PreviewProps): SchemaType.Preview {
+      return {
+        title: title,
+        subtitle: 'Factbox',
+        media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(info_circle),
+      }
+    },
+  },
 }
