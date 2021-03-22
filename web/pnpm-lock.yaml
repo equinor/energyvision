@@ -1,6 +1,7 @@
 dependencies:
   '@equinor/eds-core-react': 0.8.5_d56e21ef07fc37b6ee9b57ce562afcca
   '@equinor/eds-icons': 0.6.2
+  '@equinor/eds-tokens': 0.5.7
   '@sanity/client': 2.2.6
   '@sanity/image-url': 0.140.22
   next: 10.0.8_5347ba9dae72bc17e95cc7756ff465f1
@@ -1401,6 +1402,13 @@ packages:
       pnpm: '>=4'
     resolution:
       integrity: sha512-PserXGVxf5Q7Z0o/AypudGWdh9Vangct3dQZsgiERfqRj8+a+mU0ObRa6bMm+JouQRV3WktNPJVWMjjJf8jQbw==
+  /@equinor/eds-tokens/0.5.7:
+    dev: false
+    engines:
+      node: '>=10.0.0'
+      pnpm: '>=4'
+    resolution:
+      integrity: sha512-l+newy3+poPJmNbvCiN1mwRxd8uuqn5j3tnzU43k/c1NxrD34Xh4SdAzHq9J7yq32R6Zxh7sKKGwqdd5035OLw==
   /@hapi/accept/5.0.1:
     dependencies:
       '@hapi/boom': 9.1.1
@@ -12428,6 +12436,7 @@ specifiers:
   '@babel/core': ^7.12.16
   '@equinor/eds-core-react': ^0.8.4
   '@equinor/eds-icons': ^0.6.2
+  '@equinor/eds-tokens': ^0.5.7
   '@sanity/client': ^2.2.6
   '@sanity/image-url': ^0.140.22
   '@storybook/addon-essentials': ^6.1.14
