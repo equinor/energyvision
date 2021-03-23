@@ -97,6 +97,7 @@ export default {
     {
       name: 'ingress',
       title: 'Ingress',
+      description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
       type: 'array',
       of: [ingressBlockContentType],
       validation: (Rule) => Rule.custom((value) => validateIngress(value)),
