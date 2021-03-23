@@ -3,11 +3,8 @@ import Link from 'next/link'
 import { Layout, Card } from '@components'
 import { newsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
-import BlockContent from '@sanity/block-content-to-react'
+import SimpleBlockContent from '../../common/SimpleBlockContent'
 import styled from 'styled-components'
-import BlockRenderer from '../../serializers/BlockRenderer'
-import SubRenderer from '../../serializers/SubRenderer'
-import SupRenderer from '../../serializers/SupRenderer'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
@@ -84,13 +81,7 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
                         <Title>{title}</Title>
                       </Header>
                       <Text>
-                        <BlockContent
-                          blocks={ingress}
-                          serializers={{
-                            types: { block: BlockRenderer },
-                            marks: { sub: SubRenderer, sup: SupRenderer },
-                          }}
-                        ></BlockContent>
+                        <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
                       </Text>
                       <Action>
                         <Arrow />
