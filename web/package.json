@@ -21,6 +21,7 @@
     "@equinor/eds-core-react": "^0.8.4",
     "@equinor/eds-icons": "^0.6.2",
     "@equinor/eds-tokens": "^0.5.7",
+    "@sanity/block-content-to-react": "^2.0.7",
     "@sanity/client": "^2.2.6",
     "@sanity/image-url": "^0.140.22",
     "next": "^10.0.6",
