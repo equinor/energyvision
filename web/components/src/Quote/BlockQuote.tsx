@@ -23,14 +23,13 @@ export type BlockQuoteProps = {
   image?: string | null // url
 }
 
-export const BlockQuote = forwardRef<HTMLDivElement, BlockQuoteProps>(function BlockQuote({
-  quote,
-  author,
-  image = null,
-}: BlockQuoteProps) {
+export const BlockQuote = forwardRef<HTMLDivElement, BlockQuoteProps>(function BlockQuote(
+  { quote, author, image = null },
+  ref,
+) {
   return (
     <Container>
-      <figure>
+      <figure ref={ref}>
         <Quote>{quote}</Quote>
         <Author>{author}</Author>
       </figure>
