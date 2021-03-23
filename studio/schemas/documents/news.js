@@ -26,6 +26,30 @@ const validateIngress = (value) => {
   return true
 }
 
+const validateRelatedLinksTitle = (value, context) => {
+  const links = context.document.relatedLinks.links
+
+  if (!links) return true
+
+  if (!value && links.length > 0) {
+    return 'A title for this component is required if links have been selected.'
+  }
+
+  return true
+}
+
+const validateRelatedLinks = (value, context) => {
+  const title = context.document.relatedLinks.title
+
+  if (!title && !value) {
+    return true
+  } else if (title && (!value || value.length === 0)) {
+    return 'Links are required if a title for this component has been set.'
+  }
+
+  return true
+}
+
 export default {
   title: 'News',
   type: 'document',
@@ -114,6 +138,25 @@ export default {
           }
           return true
         }),
+    },
+    {
+      name: 'relatedLinks',
+      title: 'More on this topic',
+      description: 'Optional list of related links to this article.',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          type: 'string',
+          title: 'Title',
+          validation: (Rule) => Rule.custom((value, context) => validateRelatedLinksTitle(value, context)),
+        },
+        {
+          name: 'links',
+          type: 'relatedLinks',
+          validation: (Rule) => Rule.custom((value, context) => validateRelatedLinks(value, context)),
+        },
+      ],
     },
   ],
 }
