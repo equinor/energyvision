@@ -63,6 +63,7 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
           {/* TODO: Something more advanced */}
           <title>News</title>
         </Head>
+        <h1>News</h1>
         {allNews.length > 0 && (
           <TempWrapper>
             {allNews.map((newsItem: NewsSchema) => {
