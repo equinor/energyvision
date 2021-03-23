@@ -2,6 +2,7 @@ dependencies:
   '@equinor/eds-core-react': 0.8.5_d56e21ef07fc37b6ee9b57ce562afcca
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.5.7
+  '@sanity/block-content-to-react': 2.0.7_react@17.0.1
   '@sanity/client': 2.2.6
   '@sanity/image-url': 0.140.22
   next: 10.0.8_5347ba9dae72bc17e95cc7756ff465f1
@@ -10361,7 +10362,7 @@ packages:
       request-promise-core: 1.1.4_request@2.88.2
       stealthy-require: 1.1.1
       tough-cookie: 2.5.0
-    deprecated: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
+    deprecated: 'request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142'
     dev: true
     engines:
       node: '>=0.12.0'
@@ -10391,7 +10392,7 @@ packages:
       tough-cookie: 2.5.0
       tunnel-agent: 0.6.0
       uuid: 3.4.0
-    deprecated: request has been deprecated, see https://github.com/request/request/issues/3142
+    deprecated: 'request has been deprecated, see https://github.com/request/request/issues/3142'
     dev: true
     engines:
       node: '>= 6'
@@ -10438,7 +10439,7 @@ packages:
     resolution:
       integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==
   /resolve-url/0.2.1:
-    deprecated: https://github.com/lydell/resolve-url#deprecated
+    deprecated: 'https://github.com/lydell/resolve-url#deprecated'
     dev: true
     resolution:
       integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
@@ -11873,7 +11874,7 @@ packages:
     resolution:
       integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   /urix/0.1.0:
-    deprecated: Please see https://github.com/lydell/urix#deprecated
+    deprecated: 'Please see https://github.com/lydell/urix#deprecated'
     dev: true
     resolution:
       integrity: sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
@@ -12437,6 +12438,7 @@ specifiers:
   '@equinor/eds-core-react': ^0.8.4
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.5.7
+  '@sanity/block-content-to-react': ^2.0.7
   '@sanity/client': ^2.2.6
   '@sanity/image-url': ^0.140.22
   '@storybook/addon-essentials': ^6.1.14

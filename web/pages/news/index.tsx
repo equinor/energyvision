@@ -4,6 +4,7 @@ import { Layout, Card } from '@components'
 import { newsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
+import BlockContent from '@sanity/block-content-to-react'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
@@ -35,12 +36,17 @@ const TempWrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
+type Block = {
+  _type: string
+  children: []
+}
+
 type NewsSchema = {
   slug: string
   title: string
   id: string
-  // Should be rich text editor
-  ingress: string
+  // How should we do this????
+  ingress: Block[]
 }
 
 type NewsProps = {
@@ -73,7 +79,9 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
                       <Header>
                         <Title>{title}</Title>
                       </Header>
-                      <Text>{ingress}</Text>
+                      <Text>
+                        <BlockContent blocks={ingress}></BlockContent>
+                      </Text>
                       <Action>
                         <Arrow />
                       </Action>
