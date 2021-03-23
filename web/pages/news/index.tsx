@@ -6,6 +6,7 @@ import { getClient } from '../../lib/sanity.server'
 import BlockContent from '@sanity/block-content-to-react'
 import styled from 'styled-components'
 import BlockRenderer from '../../serializers/BlockRenderer'
+import SubRenderer from '../../serializers/SubRenderer'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
@@ -82,7 +83,10 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
                         <Title>{title}</Title>
                       </Header>
                       <Text>
-                        <BlockContent blocks={ingress} serializers={{ types: { block: BlockRenderer } }}></BlockContent>
+                        <BlockContent
+                          blocks={ingress}
+                          serializers={{ types: { block: BlockRenderer }, marks: { sub: SubRenderer } }}
+                        ></BlockContent>
                       </Text>
                       <Action>
                         <Arrow />
