@@ -9,7 +9,7 @@ const ingressBlockContentType = configureBlockContent({
   internalLink: false,
   externalLink: false,
   attachment: false,
-  lists: true,
+  lists: false,
 })
 
 const validateIngress = (value) => {
