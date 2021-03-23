@@ -3,8 +3,9 @@ import Link from 'next/link'
 import { Layout, Card } from '@components'
 import { newsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
-import styled from 'styled-components'
 import BlockContent from '@sanity/block-content-to-react'
+import styled from 'styled-components'
+import BlockRenderer from '../../serializers/BlockRenderer'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
@@ -80,7 +81,7 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
                         <Title>{title}</Title>
                       </Header>
                       <Text>
-                        <BlockContent blocks={ingress}></BlockContent>
+                        <BlockContent blocks={ingress} serializers={{ types: { block: BlockRenderer } }}></BlockContent>
                       </Text>
                       <Action>
                         <Arrow />
