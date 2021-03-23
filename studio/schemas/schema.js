@@ -15,6 +15,7 @@ import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import blockQuote from './objects/blockQuote'
 import backgroundColourPicker from './objects/backgroundColourPicker'
 import factbox from './objects/factbox'
+import relatedLinks from './objects/relatedLinks'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -30,5 +31,6 @@ export default createSchema({
     blockQuote,
     backgroundColourPicker,
     factbox,
+    relatedLinks,
   ]),
 })

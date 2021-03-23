@@ -23,3 +23,8 @@ export interface ValidationRule {
   warning: (arg0: string) => ValidationRule
   [x: string]: any
 }
+
+export interface ReferenceFilter {
+  filter: string // GROQ filter string
+  params: { [x: string]: any }
+}
