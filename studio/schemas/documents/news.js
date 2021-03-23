@@ -35,7 +35,7 @@ export default {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => [Rule.required(), Rule.max(100).warning('Title should be max 100 characters')],
     },
     {
       title: 'Publication date and time',
