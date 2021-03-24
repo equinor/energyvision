@@ -12,11 +12,57 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 
 const NewsLayout = styled.div`
   display: grid;
+  grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
+  grid-template-rows: auto auto 3rem auto auto;
+  &::before {
+    content: '';
+    background-color: var(--slate-blue-95);
+    grid-column: 1/4;
+    grid-row: 1/4;
+  }
 `
-
 const Title = styled(Typography)`
   font-size: var(--typeScale-5);
   line-height: 1.2;
+  grid-column: 2 / 3;
+  grid-row: 1;
+  color: var(--white-100);
+  padding: var(--spacer-vertical-large) 0 var(--spacer-vertical-medium) 0;
+`
+
+const Date = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 2;
+  color: var(--white-100);
+  padding: var(--spacer-vertical-medium) 0;
+`
+
+const Image = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 3 / 5;
+`
+
+const LeadParagraph = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 5;
+`
+
+const RatioBox = styled.div`
+  position: relative;
+  height: 0;
+  display: block;
+  width: 100%;
+  padding-bottom: 56.25%;
+`
+
+const ImagePlaceholder = styled.div`
+  background-color: hsl(0, 0%, 86%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 `
 
 type Block = {
@@ -69,8 +115,17 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
             </Head>
             <NewsLayout>
               <Title variant="h1">{news.title}</Title>
-              <div>{news.publishDateTime}</div>
-              {news.ingress && <SimpleBlockContent blocks={news.ingress}></SimpleBlockContent>}
+              <Date>{news.publishDateTime}</Date>
+              <Image>
+                <RatioBox>
+                  <ImagePlaceholder />
+                </RatioBox>
+              </Image>
+              {news.ingress && (
+                <LeadParagraph>
+                  <SimpleBlockContent blocks={news.ingress}></SimpleBlockContent>
+                </LeadParagraph>
+              )}
             </NewsLayout>
           </article>
         </>

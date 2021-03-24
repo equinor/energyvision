@@ -5,9 +5,14 @@ import styled from 'styled-components'
 
 /* Just some dummy styles */
 const StyledMain = styled.main`
-  max-width: 60rem;
-  margin: var(--spacer-vertical-xxLarge) auto;
+  /* max-width: 60rem; */
+  /* margin: var(--spacer-vertical-xxLarge) auto; */
   min-height: 80vh;
+`
+
+const Footer = styled.footer`
+  background-color: var(--slate-blue-95);
+  min-height: var(--spacer-vertical-xxLarge);
 `
 
 export type LayoutProps = {
@@ -21,7 +26,7 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => {
     <>
       <StyledMain>{children}</StyledMain>
 
-      <footer>Footer</footer>
+      <Footer></Footer>
     </>
   )
 }
