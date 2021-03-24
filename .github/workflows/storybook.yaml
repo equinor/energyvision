@@ -3,13 +3,19 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - slack-integration
     paths:
       - 'web/components/**'
 jobs:
   upload:
     runs-on: ubuntu-latest
+    env: 
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+        if: always()
       - name: Checkout 🛎️
         uses: actions/checkout@v2
       - name: Cache pnpm modules 💾
@@ -22,26 +28,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - name: Install pnpm 📦
+        id: install-pnpm
         uses: pnpm/action-setup@v1.2.1
         with:
           version: latest
       - name: Install dependencies 🔽
+        id: install-dependencies
         run: |
           pnpm install
           pnpm install --filter energy-vision-web
       - name: Lint components 🔎
+        id: lint
         run: |
           pnpm lint:components
       - name: Run tests 🕵️‍♀️
+        id: test
         run: |
           pnpm test ./components/ --filter energy-vision-web
       - name: Build storybook 🔧
+        id: build
         run: |
           pnpm build-storybook --filter energy-vision-web
       - name: Deploy 🚀
+        id: deploy
         uses: bacongobbler/azure-blob-storage-upload@v1.1.1
         with:
           source_dir: './web/storybook-static'
           container_name: '$web'
           connection_string: ${{ secrets.AZ_CONNECTION_STRING }}
           sync: true
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: always()
