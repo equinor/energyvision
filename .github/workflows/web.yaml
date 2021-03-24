@@ -10,7 +10,13 @@ on:
 jobs:
   check_code:
     runs-on: ubuntu-latest
+    env: 
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+        if: always()
       - name: Checkout 🛎️
         uses: actions/checkout@v2
       - name: Cache pnpm modules 💾
@@ -23,16 +29,26 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - name: Install pnpm 📦
+        id: install-pnpm
         uses: pnpm/action-setup@v1.2.1
         with:
           version: latest
       - name: Install dependencies 🔧
+        id: install-dependencies
         run: |
           pnpm install
           pnpm install --filter energy-vision-web
       - name: Run ESLint 🔎
+        id: lint
         run: |
           pnpm lint:web
       - name: Run tests 🔍
+        id: test
         run: |
           pnpm test --filter energy-vision-web
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: always()
