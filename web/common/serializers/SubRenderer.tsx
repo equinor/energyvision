@@ -1,5 +1,5 @@
 // @TODO: Type child
-const SubRenderer = (child: { mark: any; children: any }) => {
+export const SubRenderer = (child: { mark: any; children: any }) => {
   try {
     const { mark, children } = child
     const { sub } = mark
@@ -9,5 +9,3 @@ const SubRenderer = (child: { mark: any; children: any }) => {
     return null
   }
 }
-
-export default SubRenderer
