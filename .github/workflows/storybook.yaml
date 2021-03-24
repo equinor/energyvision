@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - slack-integration
+      - main
     paths:
       - 'web/components/**'
 jobs:
