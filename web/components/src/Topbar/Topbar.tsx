@@ -10,7 +10,7 @@ const Bar = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 1);
+  background: transparent;
   position: fixed;
   top: 0;
   transition: top 0.3s;
