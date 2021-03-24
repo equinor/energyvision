@@ -29,7 +29,7 @@ type Block = {
 
 type Props = {
   blocks: Block[]
-  serializers: Serializers
+  serializers?: Serializers
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
