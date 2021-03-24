@@ -1,4 +1,4 @@
-const SupRenderer = (child: { children: any }) => {
+export const SupRenderer = (child: { children: any }) => {
   try {
     const { children } = child
     return <sup>{children}</sup>
@@ -7,5 +7,3 @@ const SupRenderer = (child: { children: any }) => {
     return null
   }
 }
-
-export default SupRenderer

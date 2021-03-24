@@ -1,11 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from 'react'
 import BlockContent from '@sanity/block-content-to-react'
-import { BlockRenderer, SubRenderer, SupRenderer } from './serializers/'
+import {
+  BlockRenderer,
+  SubRenderer,
+  SupRenderer,
+  InternalLinkRenderer,
+  ExternalLinkRenderer,
+  FigureRenderer,
+  FactRenderer,
+  QuoteRenderer,
+} from './serializers/'
 
 const defaultSerializers = {
-  types: { block: BlockRenderer },
-  marks: { sub: SubRenderer, sup: SupRenderer },
+  marks: { sub: SubRenderer, sup: SupRenderer, link: ExternalLinkRenderer, internalLink: InternalLinkRenderer },
+  types: {
+    block: BlockRenderer,
+    imageWithAltAndCaption: FigureRenderer,
+    factbox: FactRenderer,
+    blockQuote: QuoteRenderer,
+  },
 }
 
 // @TODO: Need to revisit this!!!!
@@ -31,8 +45,8 @@ type Props = {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const SimpleBlockContent = ({ blocks, serializers = {}, ...props }: Props) => (
+const NewsBlockContent = ({ blocks, serializers = {}, ...props }: Props) => (
   <BlockContent blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
 )
 
-export default SimpleBlockContent
+export default NewsBlockContent

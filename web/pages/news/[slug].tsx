@@ -8,12 +8,13 @@ import { sanityClient, getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import { Typography } from '@equinor/eds-core-react'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
+import NewsBlockContent from '../../common/NewsBlockContent'
 import { GetStaticProps, GetStaticPaths } from 'next'
 
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
-  grid-template-rows: auto auto 3rem auto auto;
+  grid-template-rows: auto auto 3rem auto auto auto;
   &::before {
     content: '';
     background-color: var(--slate-blue-95);
@@ -45,6 +46,13 @@ const Image = styled.div`
 const LeadParagraph = styled.div`
   grid-column: 2 / 3;
   grid-row: 5;
+  padding: var(--spacer-vertical-medium) 0;
+`
+const Content = styled.div`
+  padding: var(--spacer-vertical-medium) 0;
+
+  grid-column: 2 / 3;
+  grid-row: 6;
 `
 
 const RatioBox = styled.div`
@@ -125,6 +133,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 <LeadParagraph>
                   <SimpleBlockContent blocks={news.ingress}></SimpleBlockContent>
                 </LeadParagraph>
+              )}
+              {news.content && (
+                <Content>
+                  <NewsBlockContent blocks={news.content}></NewsBlockContent>
+                </Content>
               )}
             </NewsLayout>
           </article>
