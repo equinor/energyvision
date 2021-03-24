@@ -11,6 +11,7 @@ dependencies:
   only-allow: 1.0.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-intl: 5.13.5_react@17.0.2+typescript@4.2.3
   styled-components: 5.2.1_react-dom@17.0.2+react@17.0.2
   styled-normalize: 8.0.7_styled-components@5.2.1
 devDependencies:
@@ -1414,6 +1415,44 @@ packages:
       pnpm: '>=4'
     resolution:
       integrity: sha512-l+newy3+poPJmNbvCiN1mwRxd8uuqn5j3tnzU43k/c1NxrD34Xh4SdAzHq9J7yq32R6Zxh7sKKGwqdd5035OLw==
+  /@formatjs/ecma402-abstract/1.6.3:
+    dependencies:
+      tslib: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-7ijswObmYXabVy5GvcpKG29jbyJ9rGtFdRBdmdQvoDmMo0PwlOl/L08GtrjA4YWLAZ0j2owb2YrRLGNAvLBk+Q==
+  /@formatjs/intl-displaynames/4.0.11:
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.6.3
+      tslib: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-e3917+HmXStxb2fNP3sOr3R1DMALdWrUteBb3nerA2AKa12mXwmL0lDavrdltwZWqF7/Egh8fF/esB0Z/fqOgQ==
+  /@formatjs/intl-listformat/5.0.12:
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.6.3
+      tslib: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-xWAndG73lqJ1+ar6SljCpM9nUsi2YoZfKi45F2YZRSxtUx4JbWYkhpbroOwxjCQ8ppZFoPc2mlLZjhPZiTyG7g==
+  /@formatjs/intl/1.8.4_typescript@4.2.3:
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.6.3
+      '@formatjs/intl-displaynames': 4.0.11
+      '@formatjs/intl-listformat': 5.0.12
+      fast-memoize: 2.5.2
+      intl-messageformat: 9.5.3
+      intl-messageformat-parser: 6.4.3
+      tslib: 2.1.0
+      typescript: 4.2.3
+    dev: false
+    peerDependencies:
+      typescript: ^4.2
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-m0/5ZRQZZfzXmeDieoG8kxu3QRvJazv2VbXhROs5khJKfUKu1rz6xfuUrh3gkmydWYtHuwJDIoC9oGR0ik4+/g==
   /@hapi/accept/5.0.1:
     dependencies:
       '@hapi/boom': 9.1.2
@@ -2766,7 +2805,6 @@ packages:
     dependencies:
       '@types/react': 17.0.3
       hoist-non-react-statics: 3.3.2
-    dev: true
     resolution:
       integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
   /@types/html-minifier-terser/5.1.1:
@@ -5882,6 +5920,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+  /fast-memoize/2.5.2:
+    dev: false
+    resolution:
+      integrity: sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==
   /fastq/1.11.0:
     dependencies:
       reusify: 1.0.4
@@ -6977,6 +7019,21 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw==
+  /intl-messageformat-parser/6.4.3:
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.6.3
+      tslib: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-gpB7OeKDSd9wqjIQ7wVQM9byrpMlokGoUfJND7DS9SjoBbOsZIHAHw+lrmAWYmq+MI3WQUeLouSFdYAZ6zSX9A==
+  /intl-messageformat/9.5.3:
+    dependencies:
+      fast-memoize: 2.5.2
+      intl-messageformat-parser: 6.4.3
+      tslib: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-Ei8vH41/icJsc16ZfWk1FzZ2SpaVn0gElXsQCKKPerxK/28m1gVdH0G26GuCqAyz5ETEJiSRn8sPMaSWJDuTjg==
   /into-stream/3.1.0:
     dependencies:
       from2: 2.3.0
@@ -10006,6 +10063,28 @@ packages:
       react: ^16.8.4
     resolution:
       integrity: sha512-JAwswiengIcxi4X/Ssb8nf6suOuQsyit8Fxo04+iPKTnPNY3XIOuagjMZSzpJDDKkYcc/ARlySOYZZv626WUvA==
+  /react-intl/5.13.5_react@17.0.2+typescript@4.2.3:
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.6.3
+      '@formatjs/intl': 1.8.4_typescript@4.2.3
+      '@formatjs/intl-displaynames': 4.0.11
+      '@formatjs/intl-listformat': 5.0.12
+      '@types/hoist-non-react-statics': 3.3.1
+      hoist-non-react-statics: 3.3.2
+      intl-messageformat: 9.5.3
+      intl-messageformat-parser: 6.4.3
+      react: 17.0.2
+      tslib: 2.1.0
+      typescript: 4.2.3
+    dev: false
+    peerDependencies:
+      react: ^16.3.0 || 17
+      typescript: ^4.2
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-Ym6knnC04k070vwe3UDcRHQUDE2rGn1PNfmYNhDHVPL6vbusuFbefjnt8ZC1GEjnfo29WUHn/tkGd9SMudzD+g==
   /react-is/16.13.1:
     resolution:
       integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -11624,7 +11703,6 @@ packages:
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
   /tslib/2.1.0:
-    dev: true
     resolution:
       integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
   /tty-browserify/0.0.0:
@@ -12471,6 +12549,7 @@ specifiers:
   prettier: 2.2.1
   react: ^17.0.2
   react-dom: ^17.0.2
+  react-intl: ^5.13.5
   storybook-css-modules-preset: ^1.0.7
   styled-components: ^5.2.1
   styled-normalize: ^8.0.7
