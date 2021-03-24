@@ -1,7 +1,7 @@
 import BlockContent from '@sanity/block-content-to-react'
 import { Typography } from '@equinor/eds-core-react'
 
-const BlockRenderer = (props: { children: any; node: any }) => {
+export const BlockRenderer = (props: { children: any; node: any }) => {
   const { children, node } = props
   const { style = 'normal' } = node
 
@@ -14,5 +14,3 @@ const BlockRenderer = (props: { children: any; node: any }) => {
   // @ts-ignore: Ask Sanity about progress for supporting types in block-content
   return BlockContent.defaultSerializers.types.block(props)
 }
-
-export default BlockRenderer
