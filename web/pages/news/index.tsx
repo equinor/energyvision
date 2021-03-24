@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { Layout, Card } from '@components'
-import { newsQuery } from '../../lib/queries'
+import { allNewsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import styled from 'styled-components'
@@ -49,12 +49,12 @@ type NewsSchema = {
   ingress: Block[]
 }
 
-type NewsProps = {
+type AllNewsProps = {
   allNews: NewsSchema[]
   preview?: boolean
 }
 
-export default function News({ allNews, preview }: NewsProps): JSX.Element {
+export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element {
   return (
     <>
       <Layout preview={preview}>
@@ -100,7 +100,7 @@ export default function News({ allNews, preview }: NewsProps): JSX.Element {
 
 export async function getStaticProps({ preview = false }) {
   // const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery))
-  const allNews = await getClient(preview).fetch(newsQuery)
+  const allNews = await getClient(preview).fetch(allNewsQuery)
   return {
     // props: { allNews, preview },
     props: { allNews },

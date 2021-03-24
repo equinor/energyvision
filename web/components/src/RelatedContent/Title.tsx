@@ -7,6 +7,7 @@ import styled from 'styled-components'
 /* @TODO: How to use this typography scale with EDS */
 const StyledTypography = styled(Typography)`
   font-size: var(--typeScale-2);
+
   text-align: center;
   margin-bottom: var(--spacer-vertical-medium);
 `
