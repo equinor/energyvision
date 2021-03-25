@@ -9,9 +9,9 @@
     "studio": "pnpm --filter ./studio",
     "web": "pnpm --filter ./web",
     "web2": "pnpm --filter ./web2",
-    "docker:build": "docker build --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=h61q9gi9 -t envis/web -f web/Dockerfile .",
+    "docker:build": "docker build --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=h61q9gi9 --build-arg NEXT_PUBLIC_SANITY_DATASET=production -t envis/web -f web/Dockerfile .",
     "docker:run": "docker run -p 3000:3000 --env-file=web/.env.local envis/web",
-    "docker:inspect": "docker run -it envis/web /bin/sh",
+    "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
