@@ -1,12 +1,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import { Layout } from '@components'
+import { Layout, Heading } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
-import { Typography } from '@equinor/eds-core-react'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import { GetStaticProps, GetStaticPaths } from 'next'
@@ -22,12 +21,9 @@ const NewsLayout = styled.div`
     grid-row: 1/4;
   }
 `
-const Title = styled(Typography)`
-  font-size: var(--typeScale-5);
-  line-height: 1.2;
+const StyledHeading = styled(Heading)`
   grid-column: 2 / 3;
   grid-row: 1;
-  color: var(--white-100);
   padding: var(--spacer-vertical-large) 0 var(--spacer-vertical-medium) 0;
 `
 
@@ -122,7 +118,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               <title>{news.title}</title>
             </Head>
             <NewsLayout>
-              <Title variant="h1">{news.title}</Title>
+              <StyledHeading level="h1" size="2xl" inverted>
+                {news.title}
+              </StyledHeading>
               <Date>{news.publishDateTime}</Date>
               <Image>
                 <RatioBox>

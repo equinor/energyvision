@@ -5,7 +5,7 @@ import 'jest-styled-components'
 import styled from 'styled-components'
 import { Fact } from './index'
 
-const { Title, Text } = Fact
+const { Text } = Fact
 
 afterEach(cleanup)
 
@@ -18,7 +18,7 @@ describe('Fact', () => {
     const { container } = render(<StyledFact />)
     expect(container.firstChild).toHaveStyleRule('clip-path', 'unset')
   })
-  it('Can have a title', () => {
+  /*   it('Can have a title', () => {
     const title = 'My test title'
     render(
       <Fact>
@@ -27,7 +27,7 @@ describe('Fact', () => {
     )
     const inputNode = screen.getByText(title)
     expect(inputNode).toBeDefined()
-  })
+  }) */
   it('Can have a text', () => {
     const title = 'My test title'
     render(
