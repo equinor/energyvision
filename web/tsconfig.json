@@ -10,7 +10,8 @@
     "baseUrl": ".",
     "paths": {
       "@components": ["components/src", "components/src/*"],
-      "@utils": ["components/utils", "components/utils/*"]
+      "@utils": ["components/utils", "components/utils/*"],
+      "@mockdata": ["components/stories/mockdata", "components/stories/mockdata/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
