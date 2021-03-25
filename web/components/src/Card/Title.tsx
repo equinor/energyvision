@@ -1,12 +1,17 @@
-import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
 import { Card, Typography } from '@equinor/eds-core-react'
+import { Heading } from '../Heading'
+
 import styled from 'styled-components'
 
 const { HeaderTitle: EdsHeaderTitle } = Card
 
 const StyledTitle = styled(EdsHeaderTitle)`
   padding: 0 1rem;
+`
+
+const StyledHeading = styled(Heading)`
+  margin-bottom: 0;
 `
 
 export type TitleProps = {
@@ -26,7 +31,9 @@ export const Title = forwardRef<HTMLDivElement, TitleProps>(function CardMedia(
           {eyebrow}
         </Typography>
       )}
-      <Typography variant={level}>{children}</Typography>
+      <StyledHeading level={level} size="lg">
+        {children}
+      </StyledHeading>
     </StyledTitle>
   )
 })

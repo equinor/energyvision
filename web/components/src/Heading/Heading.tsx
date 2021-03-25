@@ -7,6 +7,8 @@ const StyledHeading = styled(Typography)<TypographyProps>`
   font-size: var(--size);
   line-height: var(--line-height);
   font-weight: var(--font-weight);
+  /* @TODO How about margins */
+  margin: var(--spacer-vertical-small) 0;
 `
 
 export type HeadingProps = {
