@@ -1,0 +1,9 @@
+**/node_modules
+**/README*
+**/Dockerfile
+**/.dockerignore
+**/azure-pipelines.yml
+**/.next
+**/.env*
+**/.storybook
+**/pages-disabled

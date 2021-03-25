@@ -15,6 +15,7 @@
     "test:watch": "jest --watch",
     "dev-storybook": "start-storybook -p 9000 --ci",
     "build-storybook": "build-storybook",
+    "storybook": "pnpm dev-storybook",
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {

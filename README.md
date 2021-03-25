@@ -13,10 +13,6 @@ This repository is organized into several folder. Please refer to README files i
 - `studio` - [Sanity](https://www.sanity.io/) powered content platform.
 - `web` - Web application using [Next.js](https://nextjs.org/) and React components developed in isolation with [Storybook](https://storybook.js.org/)
 
-## Storybook
-
-We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net
-
 ## PNPM
 
 This project uses the PNPM package manager. All commands should be run from root. There’s an alias in the package-file to studio and web. So to run scripts from the package.json in studio:
@@ -33,11 +29,19 @@ This project uses the PNPM package manager. All commands should be run from root
     # Build studio
     pnpm studio build
 
-When adding arguments to scripts, such as `--force` to force a re-install of all dependencies, then when running scripts from the root, you must add `--` so that for example:
+When adding arguments to scripts, such as `--force` or `--dev` to force a re-install of all dependencies, then when running scripts from the root, you must add `--` so that for example:
 
     pnpm studio install -- --force
+    pnpm web add chalk -- --dev
 
 Some packages take advantage of the flattening of `node_modules` and use modules that are not in their own package.json. This is usually solved with a pnpmfile, which can be a tedious process to maintain, so these dependencies have been added to the projects package.json directly. In studio, these are:
 
 - @sanity/form-builder
 - @sanity/data-aspects
+
+## Storybook
+
+We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net.
+
+To start the storybook during development, run `pnpm web storyboook` from the root. 
+
