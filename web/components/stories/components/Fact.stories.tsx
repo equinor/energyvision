@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Fact, FactProps, Heading, Text } from '@components'
-import { List } from '@equinor/eds-core-react'
+import { Fact, FactProps, Heading, Text, List } from '@components'
 
 export default {
   title: 'Components/Fact',
@@ -49,28 +48,28 @@ export const WithBulletPoints: Story<FactProps> = () => (
     </Heading>
     <Fact.Text>
       <List>
-        <List.ListItem>
+        <List.Item>
           One barrel of oil produced at Johan Sverdrup during the first year has emitted 0.17kg CO₂ – almost 100 times
           lower than the global average (measured in kilogrammes of CO₂ per barrel produced). This is mainly due to the
           power supply from shore.
-        </List.ListItem>
-        <List.ListItem>
+        </List.Item>
+        <List.Item>
           The Johan Sverdrup field came on stream on 5 October 2019 – more than two months ahead of schedule and with
           investment costs that were NOK 40 billion lower than the original estimate in the plan for development and
           operation (PDO).
-        </List.ListItem>
-        <List.ListItem>
+        </List.Item>
+        <List.Item>
           Johan Sverdrup phase 2 includes the construction of a subsea production system, reconstruction of the existing
           riser platform and a new p rocessing platform (P2).
-        </List.ListItem>
-        <List.ListItem>
+        </List.Item>
+        <List.Item>
           Phase 2 will also accommodate a converter plant for shore-based power supply. The plant will distribute power
           to other fields on the Utsira High: Edvard Grieg, Ivar Aasen, Gina Krog and Sleipner.
-        </List.ListItem>
-        <List.ListItem>
+        </List.Item>
+        <List.Item>
           The four existing platforms on the Johan Sverdrup field are already receiving power from shore. Production
           start is expected in the fourth quarter of 2022.
-        </List.ListItem>
+        </List.Item>
       </List>
     </Fact.Text>
   </Fact>
