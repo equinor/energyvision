@@ -89,7 +89,7 @@ export const colors = css`
     --inverted-text: var(--white-100);
 
     /* POC Theme */
-    --theme-background-primary: var(--bg-moss-green);
+    --theme-background-primary: var(--white-100);
   }
 
   html.dark {
