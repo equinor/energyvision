@@ -14,42 +14,97 @@ import { IngressBlockRenderer } from '../../common/serializers'
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
-  grid-template-rows: auto auto 3rem auto auto auto;
+  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content;
+  width: 100%;
   &::before {
     content: '';
     background-color: var(--slate-blue-95);
     grid-column: 1/4;
-    grid-row: 1/4;
+    grid-row: 1/5;
+  }
+  @media (min-width: 800px) {
+    grid-template-columns: minmax(var(--spacer-vertical-xLarge), 1fr) 2rem minmax(auto, 60rem) 2rem minmax(
+        var(--spacer-vertical-xLarge),
+        1fr
+      );
+    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content;
+    &::before {
+      grid-column: 1/6;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    grid-template-columns: minmax(var(--spacer-vertical-xLarge), 1fr) 6rem minmax(auto, 60rem) 6rem minmax(
+        var(--spacer-vertical-xLarge),
+        1fr
+      );
+  }
+  @media (min-width: 1700px) {
+    grid-template-columns: minmax(var(--spacer-vertical-xLarge), 1fr) 6rem minmax(auto, 80rem) 6rem minmax(
+        var(--spacer-vertical-xLarge),
+        1fr
+      );
+    grid-template-rows: var(--spacer-vertical-xxLarge) min-content min-content 6rem min-content min-content min-content;
+    &::before {
+      grid-column: 1/6;
+    }
   }
 `
 const StyledHeading = styled(Heading)`
   grid-column: 2 / 3;
-  grid-row: 1;
+  grid-row: 2;
   padding: var(--spacer-vertical-large) 0 var(--spacer-vertical-medium) 0;
+  /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
+  @media (min-width: 800px) {
+    grid-column: 3 / 4;
+  }
 `
 
 const Date = styled.div`
   grid-column: 2 / 3;
-  grid-row: 2;
+  grid-row: 3;
   color: var(--white-100);
   padding: var(--spacer-vertical-medium) 0;
+  @media (min-width: 800px) {
+    grid-column: 3 / 4;
+  }
 `
 
 const Image = styled.div`
   grid-column: 2 / 3;
-  grid-row: 3 / 5;
+  grid-row: 4 / 6;
+  @media (min-width: 800px) {
+    grid-column: 2 / 5;
+  }
 `
 
 const LeadParagraph = styled.div`
   grid-column: 2 / 3;
-  grid-row: 5;
+  grid-row: 6;
   padding: var(--spacer-vertical-medium) 0;
+  @media (min-width: 800px) {
+    grid-column: 2 / 5;
+  }
+  @media (min-width: 1000px) {
+    margin: 0 var(--spacer-vertical-xxLarge);
+  }
+  @media (min-width: 1500px) {
+    margin: 0 var(--spacer-vertical-xxxLarge);
+  }
 `
 const Content = styled.div`
   padding: var(--spacer-vertical-medium) 0;
-
   grid-column: 2 / 3;
-  grid-row: 6;
+  grid-row: 7;
+  @media (min-width: 800px) {
+    grid-column: 2 / 5;
+  }
+  @media (min-width: 1000px) {
+    margin: 0 var(--spacer-vertical-xxLarge);
+  }
+  @media (min-width: 1500px) {
+    margin: 0 var(--spacer-vertical-xxxLarge);
+  }
 `
 
 const RatioBox = styled.div`
@@ -57,7 +112,7 @@ const RatioBox = styled.div`
   height: 0;
   display: block;
   width: 100%;
-  padding-bottom: 56.25%;
+  padding-bottom: 50%;
 `
 
 const ImagePlaceholder = styled.div`
