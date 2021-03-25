@@ -1,9 +1,24 @@
 import BlockContent from '@sanity/block-content-to-react'
-import { Text } from '@components'
+import { Text, Heading } from '@components'
 
 export const BlockRenderer = (props: { children: any; node: any }) => {
   const { children, node } = props
   const { style = 'normal' } = node
+
+  if (style === 'h2') {
+    return (
+      <Heading level="h2" size="lg">
+        {children}
+      </Heading>
+    )
+  }
+  if (style === 'h3') {
+    return (
+      <Heading level="h3" size="md">
+        {children}
+      </Heading>
+    )
+  }
 
   if (style === 'normal') {
     return <Text> {children}</Text>
