@@ -148,6 +148,10 @@ type ArticleProps = {
 }
 
 export default function News({ data, preview }: ArticleProps): JSX.Element {
+  /** TODO: Find out why the first time News is called it is without data */
+  if (!data) {
+    return <ErrorPage statusCode={418} />
+  }
   const router = useRouter()
   const slug = data?.news?.slug
   const {
