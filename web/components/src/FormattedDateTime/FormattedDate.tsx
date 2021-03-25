@@ -12,10 +12,16 @@ export const FormattedDate = ({
     return (
       <StyledDate>
         <DateIcon />
-        <ReactIntlDate value={new Date(datetime)} year={year} month={month} day={day} />
+        <time dateTime={datetime}>
+          <ReactIntlDate value={new Date(datetime)} year={year} month={month} day={day} />
+        </time>
       </StyledDate>
     )
   }
 
-  return <ReactIntlDate value={new Date(datetime)} year={year} month={month} day={day} />
+  return (
+    <time dateTime={datetime}>
+      <ReactIntlDate value={new Date(datetime)} year={year} month={month} day={day} />
+    </time>
+  )
 }
