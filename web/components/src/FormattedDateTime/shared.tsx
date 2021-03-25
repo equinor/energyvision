@@ -21,6 +21,10 @@ export const StyledDate = styled.span`
     box-sizing: content-box;
     padding-right: 0.5rem;
   }
+
+  & time:first-of-type {
+    margin-right: 0.5rem;
+  }
 `
 
 export const DateIcon = (): JSX.Element => <Icon data={calendar} />
