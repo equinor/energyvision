@@ -1,7 +1,6 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
-import { style } from '@equinor/eds-icons'
 
 type StyledHeadingProps = {
   center: boolean
@@ -62,7 +61,7 @@ const fontWeights = {
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
-  { size = 'lg', level = 'h3', regular = false, center = false, inverted = false, children, ...rest },
+  { size = 'lg', level = 'h3', regular = false, center = false, inverted = false, style, children, ...rest },
   ref,
 ) {
   return (
