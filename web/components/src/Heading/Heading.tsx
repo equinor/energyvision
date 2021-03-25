@@ -1,20 +1,29 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { Typography, TypographyProps } from '@equinor/eds-core-react'
+import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { style } from '@equinor/eds-icons'
 
-const StyledHeading = styled(Typography)<TypographyProps>`
+type StyledHeadingProps = {
+  center: boolean
+}
+
+const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
   line-height: var(--line-height);
   font-weight: var(--font-weight);
   /* @TODO How about margins */
   margin: var(--spacer-vertical-small) 0;
+  ${({ center }) =>
+    center && {
+      textAlign: 'center',
+    }}
 `
 
 export type HeadingProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
+  center?: boolean
 } & HTMLAttributes<HTMLHeadingElement>
 
 /* Should be easy enough to change later on */
@@ -46,13 +55,14 @@ const fontWeights = {
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
-  { size = 'lg', level = 'h3', regular = false, children, ...rest },
+  { size = 'lg', level = 'h3', regular = false, center = false, children, ...rest },
   ref,
 ) {
   return (
     <StyledHeading
       variant={level}
       ref={ref}
+      center={center}
       style={
         {
           ...style,
