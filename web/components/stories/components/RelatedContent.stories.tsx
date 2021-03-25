@@ -1,13 +1,12 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { RelatedContent, RelatedContentProps, Link } from '@components'
-import { Typography, List } from '@equinor/eds-core-react'
+import { RelatedContent, RelatedContentProps, Link, Heading } from '@components'
 
 export default {
   title: 'Components/RelatedContent',
   component: RelatedContent,
   subcomponents: {
-    Title: RelatedContent.Title,
+    Links: RelatedContent.Links,
   },
   parameters: {
     docs: {
@@ -21,7 +20,9 @@ export default {
 
 export const Default: Story<RelatedContentProps> = (args) => (
   <RelatedContent {...args}>
-    <RelatedContent.Title>More on this topic</RelatedContent.Title>
+    <Heading size="lg" level="h2" center>
+      More on this topic
+    </Heading>
     <RelatedContent.Links>
       <Link variant="contentLink" href="/">
         Northern Lights project
@@ -43,7 +44,9 @@ Default.storyName = 'Default'
 
 export const WithOddNumber: Story<RelatedContentProps> = () => (
   <RelatedContent>
-    <RelatedContent.Title>More on this topic</RelatedContent.Title>
+    <Heading size="lg" level="h2" center>
+      More on this topic
+    </Heading>
     <RelatedContent.Links>
       <Link variant="contentLink" href="/">
         Northern Lights project
@@ -67,7 +70,9 @@ WithOddNumber.parameters = {
 
 export const Order: Story<RelatedContentProps> = (args) => (
   <RelatedContent {...args}>
-    <RelatedContent.Title>More on this topic</RelatedContent.Title>
+    <Heading size="lg" level="h2" center>
+      More on this topic
+    </Heading>
     <RelatedContent.Links>
       <Link variant="contentLink" href="/">
         1. Northern Lights project
