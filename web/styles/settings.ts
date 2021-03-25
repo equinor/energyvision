@@ -111,6 +111,16 @@ export const typography = css`
     --typeScale-5: calc(var(--typeScale-4) * var(--typeScale-multiplier));
     --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
 
+    /* Should probably do something more clever here */
+    --lineHeight-1: inherit;
+    --lineHeight-2: 1.2;
+    --lineHeight-3: 1.5;
+
+    /* Font weights */
+    --fontWeight-bold: 700;
+    --fontWeight-medium: 500;
+    --fontWeight-regular: 400;
+
     /* @media (min-width: 768px) {
       --typeScale-base: 1.25rem;
     } */
