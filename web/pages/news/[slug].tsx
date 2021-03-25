@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { Layout, Heading } from '@components'
+import { Layout, Heading, FormattedDateTime } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
@@ -122,7 +122,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               <StyledHeading level="h1" size="2xl" inverted>
                 {news.title}
               </StyledHeading>
-              <Date>{news.publishDateTime}</Date>
+              <Date>
+                <FormattedDateTime datetime={news.publishDateTime} />
+              </Date>
               <Image>
                 <RatioBox>
                   <ImagePlaceholder />
