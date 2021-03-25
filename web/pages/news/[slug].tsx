@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import { Layout, Heading } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
@@ -8,7 +9,7 @@ import { sanityClient, getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { IngressBlockRenderer } from '../../common/serializers'
 
 const NewsLayout = styled.div`
   display: grid;
@@ -129,7 +130,14 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               </Image>
               {news.ingress && (
                 <LeadParagraph>
-                  <SimpleBlockContent blocks={news.ingress}></SimpleBlockContent>
+                  <SimpleBlockContent
+                    blocks={news.ingress}
+                    serializers={{
+                      types: {
+                        block: IngressBlockRenderer,
+                      },
+                    }}
+                  ></SimpleBlockContent>
                 </LeadParagraph>
               )}
               {news.content && (
