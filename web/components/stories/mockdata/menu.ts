@@ -1,16 +1,15 @@
 export const MockMenuData = [
   {
-    label: 'Hello there',
+    label: 'Links',
     links: [
-      { label: 'General kenobi', url: 'https://equinor.com' },
-      { label: 'You are a bold one', url: 'https://equinor.com' },
+      { label: 'Home', url: '/' },
+      { label: 'equinor.com', url: 'https://equinor.com' },
+      { label: 'GitHub', url: 'https://github.com/equinor/energyvision' },
+      { label: 'Storybook', url: 'https://github.com/equinor/energyvision' },
     ],
   },
   {
-    label: 'Do',
-    links: [
-      { label: 'Or do not', url: 'https://equinor.com' },
-      { label: 'There is no try', url: 'https://equinor.com' },
-    ],
+    label: 'Newsroom',
+    links: [{ label: 'Latest news', url: '/news' }],
   },
 ]
