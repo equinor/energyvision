@@ -5,5 +5,9 @@ export type TimeProps = {
 }
 
 export const FormattedTime = ({ datetime }: TimeProps): JSX.Element => {
-  return <ReactIntlTime value={new Date(datetime)} />
+  return (
+    <time dateTime={datetime}>
+      <ReactIntlTime value={new Date(datetime)} />
+    </time>
+  )
 }
