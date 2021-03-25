@@ -1,12 +1,12 @@
 import BlockContent from '@sanity/block-content-to-react'
-import { Typography } from '@equinor/eds-core-react'
+import { Text } from '@components'
 
 export const BlockRenderer = (props: { children: any; node: any }) => {
   const { children, node } = props
   const { style = 'normal' } = node
 
   if (style === 'normal') {
-    return <Typography variant="ingress"> {children}</Typography>
+    return <Text> {children}</Text>
   }
 
   // Fall back to default handling
