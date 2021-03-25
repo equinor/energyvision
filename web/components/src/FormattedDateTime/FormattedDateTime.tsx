@@ -10,9 +10,10 @@ export const FormattedDateTime = ({
 }: DateProps): JSX.Element => {
   if (!withIcon) {
     return (
-      <>
-        <FormattedDate datetime={datetime} year={year} month={month} day={day} /> <FormattedTime datetime={datetime} />
-      </>
+      <StyledDate>
+        <FormattedDate datetime={datetime} year={year} month={month} day={day} />
+        <FormattedTime datetime={datetime} />
+      </StyledDate>
     )
   }
 
