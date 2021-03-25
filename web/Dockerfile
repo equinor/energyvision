@@ -34,6 +34,7 @@ USER "$USER"
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
 RUN pnpm install -r --frozen-lockfile
+#RUN pnpm web build
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "dev"]
