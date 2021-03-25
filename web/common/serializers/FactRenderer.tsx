@@ -39,6 +39,7 @@ export const FactRenderer = (child: { node: any }) => {
           {title}
         </Heading>
         <Fact.Text style={{ margin: '0 calc(var(--spacer-vertical-xxxLarge) - var(--spacer-horizontal-medium))' }}>
+          {/*  eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore: How should we type */}
           <SimpleBlockContent blocks={content} serializers={serializers} />
         </Fact.Text>
