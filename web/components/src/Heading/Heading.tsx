@@ -5,6 +5,7 @@ import { style } from '@equinor/eds-icons'
 
 type StyledHeadingProps = {
   center: boolean
+  inverted: boolean
 }
 
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
@@ -17,6 +18,11 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
     center && {
       textAlign: 'center',
     }}
+
+  ${({ inverted }) =>
+    inverted && {
+      color: 'var(--inverted-text)',
+    }}
 `
 
 export type HeadingProps = {
@@ -24,6 +30,7 @@ export type HeadingProps = {
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
   center?: boolean
+  inverted?: boolean
 } & HTMLAttributes<HTMLHeadingElement>
 
 /* Should be easy enough to change later on */
@@ -55,7 +62,7 @@ const fontWeights = {
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
-  { size = 'lg', level = 'h3', regular = false, center = false, children, ...rest },
+  { size = 'lg', level = 'h3', regular = false, center = false, inverted = false, children, ...rest },
   ref,
 ) {
   return (
@@ -63,6 +70,7 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
       variant={level}
       ref={ref}
       center={center}
+      inverted={inverted}
       style={
         {
           ...style,

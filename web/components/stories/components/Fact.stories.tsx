@@ -1,13 +1,12 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Fact, FactProps } from '@components'
+import { Fact, FactProps, Heading } from '@components'
 import { Typography, List } from '@equinor/eds-core-react'
 
 export default {
   title: 'Components/Fact',
   component: Fact,
   subcomponents: {
-    Title: Fact.Title,
     Text: Fact.Text,
   },
   parameters: {
@@ -22,7 +21,9 @@ export default {
 
 export const Default: Story<FactProps> = (args) => (
   <Fact {...args}>
-    <Fact.Title>Dolor sit amet</Fact.Title>
+    <Heading size="md" level="h3" center>
+      Dolor sit amet
+    </Heading>
     <Fact.Text>
       <Typography>
         Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and solutions
@@ -43,7 +44,9 @@ Default.storyName = 'Default'
 /* EDS Lists I suppose? But we'll need to wrap them somehow and use them in a list serializer */
 export const WithBulletPoints: Story<FactProps> = () => (
   <Fact>
-    <Fact.Title>Dolor sit amet</Fact.Title>
+    <Heading size="md" level="h3" center>
+      Dolor sit amet
+    </Heading>
     <Fact.Text>
       <List>
         <List.ListItem>
@@ -83,7 +86,9 @@ WithBulletPoints.parameters = {
 export const WithDifferentBackgrounds: Story<FactProps> = () => (
   <>
     <Fact background="cold">
-      <Fact.Title>Dolor sit amet</Fact.Title>
+      <Heading size="md" level="h3" center>
+        Dolor sit amet
+      </Heading>
       <Fact.Text>
         <Typography>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
@@ -98,7 +103,9 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
       </Fact.Text>
     </Fact>
     <Fact background="warm" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
-      <Fact.Title>Dolor sit amet</Fact.Title>
+      <Heading size="md" level="h3" center>
+        Dolor sit amet
+      </Heading>
       <Fact.Text>
         <Typography>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
@@ -125,7 +132,9 @@ WithDifferentBackgrounds.parameters = {
 export const AlignTitle: Story<FactProps> = () => (
   <>
     <Fact background="cold">
-      <Fact.Title>Dolor sit amet</Fact.Title>
+      <Heading size="md" level="h3" center>
+        Dolor sit amet
+      </Heading>
       <Fact.Text>
         <Typography>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
@@ -140,7 +149,9 @@ export const AlignTitle: Story<FactProps> = () => (
       </Fact.Text>
     </Fact>
     <Fact background="cold" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
-      <Fact.Title alignment="left">Dolor sit amet</Fact.Title>
+      <Heading size="md" level="h3">
+        Dolor sit amet
+      </Heading>
       <Fact.Text>
         <Typography>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
