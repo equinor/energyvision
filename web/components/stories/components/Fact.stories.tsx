@@ -107,7 +107,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
         Dolor sit amet
       </Heading>
       <Fact.Text>
-        <Typography>
+        <Text>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
           solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
           which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
@@ -116,7 +116,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
           will change society’s use of and perceptions of electric power. Committed to pursuing new value through
           innovation across divisional lines, the company uses its technologies to create a better life and a better
           world for its customers.
-        </Typography>
+        </Text>
       </Fact.Text>
     </Fact>
   </>
