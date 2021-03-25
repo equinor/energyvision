@@ -32,12 +32,10 @@ RUN chown -R "$USER":"$USER" /opt/app
 USER "$USER"
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
-#RUN pnpm m i
-#RUN pnpm web build
-
-# FROM mhart/alpine-node:14
-# ENV NODE_ENV production
-# COPY --from=build /opt/app/web/.next /opt/app/.next
+ARG NEXT_PUBLIC_SANITY_DATASET
+RUN pnpm install -r --frozen-lockfile
 
 EXPOSE "$PORT"
-CMD ["pnpm", "web", "start"]
+CMD ["pnpm", "web", "dev"]
+
+# TODO: Get build to work, add step for prod
