@@ -12,10 +12,6 @@ jobs:
     env: 
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - uses: act10ns/slack@v1
-        with:
-          status: starting
-        if: always()
       - name: Checkout 🛎️
         uses: actions/checkout@v2
       - name: Cache pnpm modules 💾
@@ -62,4 +58,4 @@ jobs:
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-        if: always()
+        if: failure()
