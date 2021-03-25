@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Fact, FactProps, Heading } from '@components'
-import { Typography, List } from '@equinor/eds-core-react'
+import { Fact, FactProps, Heading, Text } from '@components'
+import { List } from '@equinor/eds-core-react'
 
 export default {
   title: 'Components/Fact',
@@ -25,7 +25,7 @@ export const Default: Story<FactProps> = (args) => (
       Dolor sit amet
     </Heading>
     <Fact.Text>
-      <Typography>
+      <Text>
         Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and solutions
         for customers in the consumer electronics, housing, automotive, and B2B businesses. The company, which
         celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
@@ -34,7 +34,7 @@ export const Default: Story<FactProps> = (args) => (
         change society’s use of and perceptions of electric power. Committed to pursuing new value through innovation
         across divisional lines, the company uses its technologies to create a better life and a better world for its
         customers.
-      </Typography>
+      </Text>
     </Fact.Text>
   </Fact>
 )
@@ -90,7 +90,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
         Dolor sit amet
       </Heading>
       <Fact.Text>
-        <Typography>
+        <Text>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
           solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
           which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
@@ -99,7 +99,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
           will change society’s use of and perceptions of electric power. Committed to pursuing new value through
           innovation across divisional lines, the company uses its technologies to create a better life and a better
           world for its customers.
-        </Typography>
+        </Text>
       </Fact.Text>
     </Fact>
     <Fact background="warm" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
@@ -136,7 +136,7 @@ export const AlignTitle: Story<FactProps> = () => (
         Dolor sit amet
       </Heading>
       <Fact.Text>
-        <Typography>
+        <Text>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
           solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
           which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
@@ -145,7 +145,7 @@ export const AlignTitle: Story<FactProps> = () => (
           will change society’s use of and perceptions of electric power. Committed to pursuing new value through
           innovation across divisional lines, the company uses its technologies to create a better life and a better
           world for its customers.
-        </Typography>
+        </Text>
       </Fact.Text>
     </Fact>
     <Fact background="cold" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
@@ -153,7 +153,7 @@ export const AlignTitle: Story<FactProps> = () => (
         Dolor sit amet
       </Heading>
       <Fact.Text>
-        <Typography>
+        <Text>
           Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
           solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
           which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
@@ -162,7 +162,7 @@ export const AlignTitle: Story<FactProps> = () => (
           will change society’s use of and perceptions of electric power. Committed to pursuing new value through
           innovation across divisional lines, the company uses its technologies to create a better life and a better
           world for its customers.
-        </Typography>
+        </Text>
       </Fact.Text>
     </Fact>
   </>
