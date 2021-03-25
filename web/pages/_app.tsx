@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl'
 import { Button, Topbar, Menu } from '@components'
 import { GlobalStyle } from '../styles/globalStyles'
 import { createGlobalStyle } from 'styled-components'
-import { MockMenuData } from '../components/stories/components/mockData/menu'
+import { MockMenuData } from '@mockdata'
 
 const toggleTheme = () => {
   document.documentElement.classList.toggle('dark')
