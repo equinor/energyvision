@@ -1,0 +1,19 @@
+apiVersion: radix.equinor.com/v1
+kind: RadixApplication
+metadata:
+  name: energyvision
+spec:
+  environments:
+    - name: dev
+      build:
+        from: main
+  components:
+    - name: web
+      publicPort: http
+      dockerfileName: web/Dockerfile
+      ports:
+        - name: http
+          port: 80
+  dnsAppAlias:
+    environment: dev
+    component: web
