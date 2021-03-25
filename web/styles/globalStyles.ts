@@ -14,4 +14,17 @@ export const GlobalStyle = createGlobalStyle`
   * {
     font-family: Equinor, 'Open Sans', sans-serif;
   }
+
+  body {
+    background-color: var(--theme-background-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: column;
+  }
+
+  #__next {
+    flex: 1;
+    display: flex;
+    align-items: column;
+  }
 `

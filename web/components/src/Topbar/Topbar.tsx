@@ -15,6 +15,7 @@ const Bar = styled.div`
   top: 0;
   transition: top 0.3s;
   z-index: 10;
+  background-color: var(--white-100);
 `
 
 const Logo = styled.img`
