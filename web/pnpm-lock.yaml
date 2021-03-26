@@ -8,6 +8,7 @@ dependencies:
   next: 10.0.9_19437c2f9b137c4ee9c416360487a7aa
   next-sanity: 0.1.10_react@17.0.2
   next-sanity-image: 1.0.1_fa070d8b4cfafdaec3fce43c6a87bcc7
+  next-seo: 4.23.0_f82b92d9993e77d3ba80af2545664498
   only-allow: 1.0.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -8792,6 +8793,18 @@ packages:
       react: '>=16.3.0'
     resolution:
       integrity: sha512-YsKFi3wt/aviTuyeGFRRJRQQ2XwgNyQl+avxiDPVJ4MQVWUPoy+2FeSTrna7hLstFt+j7gIXA8HAbIofmslDtA==
+  /next-seo/4.23.0_f82b92d9993e77d3ba80af2545664498:
+    dependencies:
+      next: 10.0.9_19437c2f9b137c4ee9c416360487a7aa
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+    peerDependencies:
+      next: ^8.1.1-canary.54 || ^9.0.0 || ^10.0.0
+      react: ^16.0.0 || ^17.0.0
+      react-dom: ^16.0.0 || ^17.0.0
+    resolution:
+      integrity: sha512-/yTeeUT+zFTsrpP8iigwiwsj+HyT+ks1G27mgfnkKQBrFz9uph6Bot4nDrwfICgjvdLt2Zdve6okAgRUmhm+/g==
   /next/10.0.9_19437c2f9b137c4ee9c416360487a7aa:
     dependencies:
       '@babel/runtime': 7.12.5
@@ -12545,6 +12558,7 @@ specifiers:
   next: ^10.0.9
   next-sanity: ^0.1.10
   next-sanity-image: ^1.0.1
+  next-seo: ^4.23.0
   only-allow: ^1.0.0
   prettier: 2.2.1
   react: ^17.0.2
