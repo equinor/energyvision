@@ -13,7 +13,7 @@ const StyledMain = styled.main`
 
 const Footer = styled.footer`
   background-color: var(--slate-blue-95);
-  min-height: var(--spacer-vertical-xx Large);
+  min-height: var(--spacer-vertical-xxLarge);
 `
 
 export type LayoutProps = {

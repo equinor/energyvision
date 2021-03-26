@@ -18,8 +18,8 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background-color: var(--theme-background-primary);
     min-height: 100vh;
-    display: flex;
-    align-items: column;
+   /*  display: flex;
+    align-items: column; */
   }
 
   /** How should we do this important ftw :/ */
@@ -32,9 +32,10 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   } */
 
-  #__next {
+
+ /*  #__next {
     flex: 1;
     display: flex;
     align-items: column;
-  }
+  } */
 `
