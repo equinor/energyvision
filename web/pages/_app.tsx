@@ -6,6 +6,7 @@ import { Button, Topbar, Menu } from '@components'
 import { GlobalStyle } from '../styles/globalStyles'
 import { createGlobalStyle } from 'styled-components'
 import { MockMenuData } from '@mockdata'
+import { DefaultSeo } from 'next-seo'
 
 const toggleTheme = () => {
   document.documentElement.classList.toggle('dark')
@@ -43,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             Toggle theme
           </Button>
         </Topbar>
-
+        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <Component {...pageProps} />
       </IntlProvider>
     </>
