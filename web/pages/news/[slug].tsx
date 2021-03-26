@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { Layout, Heading, FormattedDateTime } from '@components'
+import { Layout, Heading, FormattedDateTime, RelatedContent, Link, List } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
@@ -11,10 +11,13 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import { IngressBlockRenderer } from '../../common/serializers'
 
+const { Links } = RelatedContent
+const { Item } = List
+
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
-  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content;
+  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content min-content;
   width: 100%;
   &::before {
     content: '';
@@ -27,7 +30,7 @@ const NewsLayout = styled.div`
         var(--spacer-vertical-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content;
+    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content min-content;
     &::before {
       grid-column: 1/6;
     }
@@ -107,6 +110,16 @@ const Content = styled.div`
   }
 `
 
+const Related = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 8;
+  padding: var(--spacer-vertical-large) 0 var(--spacer-vertical-medium) 0;
+  /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
+  @media (min-width: 800px) {
+    grid-column: 3 / 4;
+  }
+`
+
 const RatioBox = styled.div`
   position: relative;
   height: 0;
@@ -130,6 +143,19 @@ type Block = {
   children: []
 }
 
+type Link = {
+  type: string
+  id: string
+  label: string
+  link?: { slug: string; type: string }
+  href?: string
+}
+
+type RelatedLinks = {
+  title: string
+  links: Link[]
+}
+
 type NewsSchema = {
   slug: string
   title: string
@@ -138,6 +164,7 @@ type NewsSchema = {
   // How should we do this????
   ingress: Block[]
   content: Block[]
+  relatedLinks: RelatedLinks
 }
 
 type ArticleProps = {
@@ -205,6 +232,32 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 <Content>
                   <NewsBlockContent blocks={news.content}></NewsBlockContent>
                 </Content>
+              )}
+              {news.relatedLinks && (
+                <Related>
+                  <RelatedContent>
+                    <Heading size="lg" level="h2" center>
+                      {news.relatedLinks.title}
+                    </Heading>
+                    <Links>
+                      {news.relatedLinks.links.length > 0 &&
+                        news.relatedLinks.links.map((item) => {
+                          const isExternal = item.type === 'externalUrl'
+                          // @TODO: a generic way to resolve internal links?
+                          // @TODO: Both external and internal links are wrapped in next/link
+                          const href = item.type === 'externalUrl' ? item.href : `/news/${item.link?.slug}`
+                          return (
+                            <Item key={item.id}>
+                              {/*  @TODO: What if href is undefined?  */}
+                              <Link variant="contentLink" href={href || '/'} external={isExternal}>
+                                {item.label}
+                              </Link>
+                            </Item>
+                          )
+                        })}
+                    </Links>
+                  </RelatedContent>
+                </Related>
               )}
             </NewsLayout>
           </article>

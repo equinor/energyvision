@@ -20,7 +20,7 @@ const newsFields = /* groq */ `
         "id": _key,
         "type": _type,
         label,
-        url,
+        "href": url,
       }
     }
   }
