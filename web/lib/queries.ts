@@ -4,6 +4,26 @@ const newsFields = /* groq */ `
   publishDateTime,
   "slug": slug.current,
   ingress,
+  "relatedLinks": relatedLinks{
+  	title,
+  	"links": links[]{
+      _type == "internalUrl" => {
+      "type": _type,
+      "id": _key,
+      label,
+      "link": reference -> {
+        "type": _type,
+        "slug": slug.current
+    	},
+    },
+    _type == "externalUrl" => {
+        "id": _key,
+        "type": _type,
+        label,
+        url,
+      }
+    }
+  }
 `
 
 export const allNewsQuery = /* groq */ `
