@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { default as NextLink } from 'next/link'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { Layout, Heading, FormattedDateTime, RelatedContent, Link, List } from '@components'
+import { Layout, Heading, FormattedDateTime, RelatedContent, Link, List, Card } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
@@ -13,11 +14,12 @@ import { IngressBlockRenderer } from '../../common/serializers'
 
 const { Links } = RelatedContent
 const { Item } = List
+const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
-  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content min-content;
+  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content min-content min-content;
   width: 100%;
   &::before {
     content: '';
@@ -30,7 +32,7 @@ const NewsLayout = styled.div`
         var(--spacer-vertical-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content min-content;
+    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content min-content min-content;
     &::before {
       grid-column: 1/6;
     }
@@ -47,7 +49,7 @@ const NewsLayout = styled.div`
         var(--spacer-vertical-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xxLarge) min-content min-content 6rem min-content min-content min-content;
+    grid-template-rows: var(--spacer-vertical-xxLarge) min-content min-content 6rem min-content min-content min-content min-content min-content;
     &::before {
       grid-column: 1/6;
     }
@@ -119,13 +121,19 @@ const Related = styled.div`
     grid-column: 3 / 4;
   }
 `
+const LatestNews = styled.div`
+  grid-column: 2 / 3;
+  grid-row: 9;
+  @media (min-width: 800px) {
+    grid-column: 2 / 5;
+  }
+`
 
-const RatioBox = styled.div`
-  position: relative;
-  height: 0;
-  display: block;
-  width: 100%;
-  padding-bottom: 50%;
+const TempWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-row-gap: 4rem;
+  grid-column-gap: 2rem;
 `
 
 const ImagePlaceholder = styled.div`
@@ -136,6 +144,25 @@ const ImagePlaceholder = styled.div`
   width: 100%;
   height: 100%;
   display: block;
+  /* TODO: Fix border radius on image */
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+`
+
+const RatioBox1to2 = styled.div`
+  position: relative;
+  height: 0;
+  display: block;
+  width: 100%;
+  padding-bottom: 50%;
+`
+
+const RatioBox = styled.div`
+  position: relative;
+  height: 0;
+  display: block;
+  width: 100%;
+  padding-bottom: 56.25%;
 `
 
 type Block = {
@@ -156,6 +183,15 @@ type RelatedLinks = {
   links: Link[]
 }
 
+type NewsCard = {
+  slug: string
+  title: string
+  id: string
+  publishDateTime: string
+  // How should we do this????
+  ingress: Block[]
+}
+
 type NewsSchema = {
   slug: string
   title: string
@@ -170,6 +206,7 @@ type NewsSchema = {
 type ArticleProps = {
   data: {
     news: NewsSchema
+    latestNews: NewsCard[]
   }
   preview: boolean
 }
@@ -182,7 +219,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   const router = useRouter()
   const slug = data?.news?.slug
   const {
-    data: { news },
+    data: { news, latestNews },
   } = usePreviewSubscription(newsQuery, {
     params: { slug },
     initialData: data,
@@ -212,9 +249,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
               <Image>
-                <RatioBox>
+                <RatioBox1to2>
                   <ImagePlaceholder />
-                </RatioBox>
+                </RatioBox1to2>
               </Image>
               {news.ingress && (
                 <LeadParagraph>
@@ -259,6 +296,42 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   </RelatedContent>
                 </Related>
               )}
+
+              {latestNews.length > 0 && (
+                <LatestNews>
+                  <Heading size="xl" level="h2" center>
+                    Latest news
+                  </Heading>
+                  <TempWrapper>
+                    {latestNews.map((newsItem: NewsCard) => {
+                      const { slug, title, id, ingress } = newsItem
+                      return (
+                        <NextLink href={`/news/${slug}`} key={id}>
+                          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                          <CardLink>
+                            <Card>
+                              <Media>
+                                <RatioBox>
+                                  <ImagePlaceholder />
+                                </RatioBox>
+                              </Media>
+                              <Header>
+                                <Title>{title}</Title>
+                              </Header>
+                              <Text>
+                                <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
+                              </Text>
+                              <Action>
+                                <Arrow />
+                              </Action>
+                            </Card>
+                          </CardLink>
+                        </NextLink>
+                      )
+                    })}
+                  </TempWrapper>
+                </LatestNews>
+              )}
             </NewsLayout>
           </article>
         </>
@@ -268,7 +341,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
-  const { news } = await getClient(preview).fetch(newsQuery, {
+  const { news, latestNews } = await getClient(preview).fetch(newsQuery, {
     slug: params?.slug,
   })
 
@@ -277,6 +350,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
       preview,
       data: {
         news,
+        latestNews,
       },
     },
   }
