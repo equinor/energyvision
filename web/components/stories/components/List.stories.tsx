@@ -74,3 +74,31 @@ export const Numbered: Story<ListProps> = () => (
     </List.Item>
   </List>
 )
+
+export const Unstyled: Story<ListProps> = () => {
+  const Box = styled.li`
+    border: 1px solid grey;
+    padding: 1rem;
+  `
+  const StyledList = styled(List)`
+    display: grid;
+    grid-gap: 32px;
+    grid-template-columns: repeat(4, fit-content(100%));
+  `
+
+  return (
+    <StyledList unstyled>
+      <Box>1</Box>
+      <Box>2</Box>
+      <Box>3</Box>
+      <Box>4</Box>
+    </StyledList>
+  )
+}
+
+Unstyled.parameters = {
+  docs: {
+    storyDescription: `Sometimes a list is more of a semantically correct thing to use rather than visually.
+    The attribute <code>unstyled</code> makes that easy.`,
+  },
+}
