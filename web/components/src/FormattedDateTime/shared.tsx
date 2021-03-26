@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
-import { calendar } from '@equinor/eds-icons'
+import { calendar, time } from '@equinor/eds-icons'
 
 export type DateProps = {
   datetime: string
@@ -28,3 +28,4 @@ export const StyledDate = styled.span`
 `
 
 export const DateIcon = (): JSX.Element => <Icon data={calendar} />
+export const TimeIcon = (): JSX.Element => <Icon data={time} />
