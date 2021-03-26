@@ -2,20 +2,29 @@ import { forwardRef, CSSProperties } from 'react'
 import { List as EdsList, ListProps as EdsListProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 
-const StyledList = styled(EdsList)`
+export type ListProps = {
+  unstyled?: boolean
+} & EdsListProps
+
+const StyledList = styled(EdsList)<ListProps>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-3);
+  ${({ unstyled }) =>
+    unstyled && {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    }}
 `
 
-export type ListProps = EdsListProps
-
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(
-  { style, children, ...rest },
+  { unstyled = false, style, children, ...rest },
   ref,
 ) {
   return (
     <StyledList
       ref={ref}
+      unstyled={unstyled}
       style={
         {
           ...style,
