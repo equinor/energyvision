@@ -6,16 +6,19 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
+import { StyledLinks } from '../RelatedContent'
 
 const { outline } = Tokens
 
 export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore'
   href: string
+  /* Is the link external or not */
   external?: boolean
 } & HTMLAttributes<HTMLAnchorElement>
 
 // TODO: Get colours and other constants from theme with css variables
+
 const BaseLink = styled.a`
   display: inline-flex;
   align-items: center;
@@ -35,7 +38,9 @@ const ContentLink = styled(BaseLink)`
   border-bottom: 0.5px solid #b4bbc0;
   text-decoration: none;
   padding: 1em 0;
-
+  ${StyledLinks} & {
+    width: 100%;
+  }
   & > svg {
     margin-left: auto;
   }
