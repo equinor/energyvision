@@ -4,7 +4,19 @@ const newsFields = /* groq */ `
   publishDateTime,
   "slug": slug.current,
   ingress,
-  "relatedLinks": relatedLinks{
+ 
+`
+
+export const allNewsQuery = /* groq */ `
+*[_type == "news"] | order(publishDateTime desc, _updatedAt desc) {
+  ${newsFields}
+}`
+
+export const newsQuery = /* groq */ `
+{
+  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc) | [0] {
+    content,
+    "relatedLinks": relatedLinks{
   	title,
   	"links": links[]{
       _type == "internalUrl" => {
@@ -23,20 +35,12 @@ const newsFields = /* groq */ `
         "href": url,
       }
     }
-  }
-`
-
-export const allNewsQuery = /* groq */ `
-*[_type == "news"] | order(publishDateTime desc, _updatedAt desc) {
-  ${newsFields}
-}`
-
-export const newsQuery = `
-{
-  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc) | [0] {
-    content,
+  },
     ${newsFields}
   },
+  "latestNews": *[_type == "news" && slug.current != $slug] | order(date desc, _updatedAt desc) | [0...2] {
+    ${newsFields}
+  }
 }`
 
 export const newsSlugsQuery = `
