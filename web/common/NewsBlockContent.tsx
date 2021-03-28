@@ -18,7 +18,7 @@ const defaultSerializers = {
     block: BlockRenderer,
     imageWithAltAndCaption: FigureRenderer,
     factbox: FactRenderer,
-    blockQuote: QuoteRenderer,
+    pullQuote: QuoteRenderer,
   },
 }
 

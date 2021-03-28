@@ -9,18 +9,29 @@ type PreviewProps = {
 }
 
 export default {
-  name: 'blockQuote',
+  name: 'pullQuote',
   type: 'object',
   localize: true,
   fieldsets: [
     {
-      title: 'Block Quote',
-      name: 'blockQuote',
+      title: 'Pull Quote',
+      name: 'pullQuote',
     },
   ],
   fields: [
-    { name: 'quote', type: 'string', title: 'Quote', validation: (Rule: any) => Rule.required() },
-    { name: 'author', type: 'string', title: 'Author', validation: (Rule: any) => Rule.required() },
+    {
+      name: 'quote',
+      type: 'string',
+      title: 'Quote',
+      description: 'Highlighted quote from the article.',
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+    },
+    {
+      name: 'author',
+      type: 'string',
+      title: 'Author',
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+    },
     { name: 'image', type: 'image' },
   ],
   preview: {
