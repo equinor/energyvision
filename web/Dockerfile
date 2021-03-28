@@ -9,7 +9,7 @@ COPY ./package.json /opt/app
 COPY ./pnpm-lock.yaml /opt/app
 COPY ./tsconfig.base.json /opt/app
 COPY ./pnpm-workspaces.yaml /opt/app
-COPY ./.npmrc /opt/app
+# COPY ./.npmrc /opt/app
 COPY ./web /opt/app/web
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
