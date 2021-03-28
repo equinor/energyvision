@@ -130,7 +130,7 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [blockContentType, { type: 'blockQuote' }, { type: 'imageWithAltAndCaption' }, { type: 'factbox' }],
+      of: [blockContentType, { type: 'pullQuote' }, { type: 'imageWithAltAndCaption' }, { type: 'factbox' }],
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value || value.length === 0) {
