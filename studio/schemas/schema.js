@@ -12,7 +12,7 @@ import news from './documents/news'
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
-import blockQuote from './objects/blockQuote'
+import pullQuote from './objects/pullQuote'
 import backgroundColourPicker from './objects/backgroundColourPicker'
 import factbox from './objects/factbox'
 import relatedLinks from './objects/relatedLinks'
@@ -28,7 +28,7 @@ export default createSchema({
     news,
     imageWithAlt,
     imageWithAltAndCaption,
-    blockQuote,
+    pullQuote,
     backgroundColourPicker,
     factbox,
     relatedLinks,
