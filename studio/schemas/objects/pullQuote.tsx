@@ -21,9 +21,10 @@ export default {
   fields: [
     {
       name: 'quote',
-      type: 'string',
+      type: 'text',
       title: 'Quote',
       description: 'Highlighted quote from the article.',
+      rows: 5,
       validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
     },
     {
@@ -31,6 +32,12 @@ export default {
       type: 'string',
       title: 'Author',
       validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+    },
+    {
+      name: 'authorTitle',
+      type: 'string',
+      title: 'Author title',
+      description: 'Optional title for the author.',
     },
     { name: 'image', type: 'image' },
   ],
