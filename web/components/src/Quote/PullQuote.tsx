@@ -1,44 +1,56 @@
+/* eslint-disable no-unused-vars */
 import { forwardRef } from 'react'
 import styled from 'styled-components'
+import { Text } from '@components'
 
 export type PullQuoteProps = {
   quote: string
   author: string
+  authorTitle: string
   image: any // TODO: add sanity image type
 }
 
-const Container = styled.div`
-  display: flex;
-  align-items: row;
-`
-
-const Quote = styled.p`
-  background: none;
+const Container = styled.figure`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: min-content min-content;
   margin: 0;
-  font-style: italic;
 `
 
-const Author = styled.figcaption`
-  text-align: right;
+// TODO: margin from Text is unwanted here?
+const Quote = styled((props) => <Text {...props}></Text>)`
+  font-style: italic;
+  grid-column: 1 / 4;
+`
+
+// TODO: font size for figcaption
+const AuthorRow = styled.figcaption`
+  text-align: left;
   margin-top: 1rem;
-  font-style: italic;
+  grid-row: 2 / 2;
+  grid-column: 3 / 4;
 `
 
+const Author = styled.strong`
+  display: block;
+`
+
+const AuthorTitle = styled.span`
+  display: block;
+`
+
+// TODO: image
 export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function BlockQuote(
-  { quote, author, image = null },
+  { quote, author, authorTitle = null, image = null },
   ref,
 ) {
   return (
-    <Container>
-      <figure ref={ref}>
-        <Quote>{quote}</Quote>
+    <Container ref={ref}>
+      <Quote size="md">{quote}</Quote>
+      <AuthorRow>
         <Author>{author}</Author>
-      </figure>
-      {image ? (
-        <div>
-          <img src={image} alt="" />
-        </div>
-      ) : null}
+        {authorTitle ? <AuthorTitle>{authorTitle}</AuthorTitle> : null}
+      </AuthorRow>
     </Container>
   )
 })
