@@ -19,7 +19,7 @@ const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
-  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content min-content min-content;
+  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content min-content min-content 3rem;
   width: 100%;
   &::before {
     content: '';
@@ -32,7 +32,7 @@ const NewsLayout = styled.div`
         var(--spacer-vertical-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content min-content min-content;
+    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
     &::before {
       grid-column: 1/6;
     }
@@ -49,7 +49,7 @@ const NewsLayout = styled.div`
         var(--spacer-vertical-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xxLarge) min-content min-content 6rem min-content min-content min-content min-content min-content;
+    grid-template-rows: var(--spacer-vertical-xxLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
     &::before {
       grid-column: 1/6;
     }
@@ -131,7 +131,7 @@ const LatestNews = styled.div`
 
 const TempWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   grid-row-gap: 4rem;
   grid-column-gap: 2rem;
 `

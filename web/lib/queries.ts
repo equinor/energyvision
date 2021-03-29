@@ -38,7 +38,7 @@ export const newsQuery = /* groq */ `
   },
     ${newsFields}
   },
-  "latestNews": *[_type == "news" && slug.current != $slug] | order(date desc, _updatedAt desc) | [0...2] {
+  "latestNews": *[_type == "news" && slug.current != $slug] | order(date desc, _updatedAt desc) | [0...3] {
     ${newsFields}
   }
 }`
