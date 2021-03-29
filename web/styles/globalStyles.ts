@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
 
   /** How should we do this important ftw :/ */
   p {
-    margin: var(--spacer-vertical-small) 0 !important;
+    margin: var(--spacer-vertical-medium) 0 !important;
   }
 
   /** We don't need this as EDS add margin 0? */
