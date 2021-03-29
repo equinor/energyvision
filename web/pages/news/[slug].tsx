@@ -353,6 +353,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
         latestNews,
       },
     },
+    revalidate: 1,
   }
 }
 
