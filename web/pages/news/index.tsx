@@ -68,7 +68,7 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
             {allNews.map((newsItem: NewsSchema) => {
               const { slug, title, id, ingress } = newsItem
               return (
-                <Link href={`/news/${slug}`} key={id} passHref>
+                <Link href={`/news/${slug}`} key={id} passHref shallow>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <CardLink>
                     <Card>
@@ -104,5 +104,6 @@ export async function getStaticProps({ preview = false }) {
   return {
     // props: { allNews, preview },
     props: { allNews },
+    revalidate: 1,
   }
 }
