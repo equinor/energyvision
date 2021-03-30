@@ -13,7 +13,10 @@
     "docker:run": "docker run -p 3000:3000 --env-file=web/.env.local envis/web",
     "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
     "prepare": "husky install",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "start:studio": "pnpm studio dev",
+    "start:storybook": "pnpm web storybook",
+    "start:web": "pnpm web dev"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.19.0",
