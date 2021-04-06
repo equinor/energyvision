@@ -22,16 +22,9 @@ export const GlobalStyle = createGlobalStyle`
     align-items: column; */
   }
 
-  /** How should we do this important ftw :/ */
-  p {
+  p + p {
     margin: var(--spacer-vertical-medium) 0 !important;
   }
-
-  /** We don't need this as EDS add margin 0? */
-/*   p:first-child {
-    margin: 0;
-  } */
-
 
  /*  #__next {
     flex: 1;
