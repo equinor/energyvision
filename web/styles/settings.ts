@@ -193,7 +193,6 @@ export const spacings = css`
     --spacing-80: 20rem; /* 320px */
     --spacing-96: 24rem; /* 384px */
 
-<<<<<<< HEAD
     --spacing-xxSmall: var(--spacing-px);
     --spacing-xSmall: var(--spacing-1);
     --spacing-small: var(--spacing-2);
@@ -202,28 +201,6 @@ export const spacings = css`
     --spacing-xLarge: var(--spacing-10);
     --spacing-xxLarge: var(--spacing-16);
     --spacing-3xLarge: var(--spacing-24);
-=======
-    /** Names as in EDS. I don't see why we need both vertical and horizontal 🤷‍♀️
-    They have corresponding values in EDS as well...
-    But it might be easier with theming if we do this the same way?  */
-    --spacer-vertical-xxSmall: var(--spacing-px); /* 1px */
-    --spacer-vertical-xSmall: var(--spacing-1); /* 4px */
-    --spacer-vertical-small: var(--spacing-2); /* 8x */
-    --spacer-vertical-medium: var(--spacing-4); /* 16px */
-    --spacer-vertical-large: var(--spacing-6); /* 24px */
-    --spacer-vertical-xLarge: var(--spacing-10); /* 40px */
-    --spacer-vertical-xxLarge: var(--spacing-16); /* 64px */
-    --spacer-vertical-xxxLarge: var(--spacing-24); /* 96px */
-
-    --spacer-horizontal-xxSmall: var(--spacing-px);
-    --spacer-horizontal-xSmall: var(--spacing-1);
-    --spacer-horizontal-small: var(--spacing-2);
-    --spacer-horizontal-medium: var(--spacing-4);
-    --spacer-horizontal-large: var(--spacing-6);
-    --spacer-horizontal-xLarge: var(--spacing-10);
-    --spacer-horizontal-xxLarge: var(--spacing-16);
-    --spacer-horizontal-xxxLarge: var(--spacing-24);
->>>>>>> ee3231f... 🚧 Tweak fluid font size + add spacers
 
     @media (min-width: 750px) {
       --spacing-xxSmall: var(--spacing-px);
