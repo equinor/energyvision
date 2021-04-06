@@ -35,7 +35,6 @@ export default {
       caption: 'caption',
     },
     prepare({ imageUrl, caption, alt }: PreviewProps): SchemaType.Preview {
-      console.log('url', imageUrl)
       return {
         title: alt,
         subtitle: caption,
