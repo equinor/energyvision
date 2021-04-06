@@ -1,6 +1,5 @@
 /* eslint-disable */
-import React from 'react'
-import { Card } from '@components'
+import { Card, Text as Paragraph } from '@components'
 import { ImagePlaceholder, RatioBox, CardLink, Wrapper } from '../../components/helpers/styles'
 import { data } from './data'
 import styled from 'styled-components'
@@ -28,7 +27,9 @@ export const News = () => (
                 <Eyebrow>{item.eyebrow}</Eyebrow>
                 <Title level="h3">{item.title}</Title>
               </Header>
-              <Text>{item.lead}</Text>
+              <Text>
+                <Paragraph>{item.lead}</Paragraph>
+              </Text>
               <Action>
                 <Arrow />
               </Action>
