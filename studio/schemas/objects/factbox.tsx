@@ -9,6 +9,7 @@ type PreviewProps = {
 }
 
 export default {
+  title: 'Factbox',
   name: 'factbox',
   type: 'object',
   fields: [

@@ -10,6 +10,7 @@ type PreviewProps = {
 
 export default {
   name: 'pullQuote',
+  title: 'Pull quote',
   type: 'object',
   localize: true,
   fieldsets: [
