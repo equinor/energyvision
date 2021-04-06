@@ -5,7 +5,7 @@ import 'jest-styled-components'
 import styled from 'styled-components'
 import { Card } from './index'
 
-const { Header, Title, Text } = Card
+const { Header, Title, Text, Eyebrow } = Card
 
 afterEach(cleanup)
 
@@ -35,7 +35,7 @@ describe('Card', () => {
     render(
       <Card>
         <Header>
-          <Title eyebrow={eyebrow}>Test</Title>
+          <Eyebrow>{eyebrow}</Eyebrow>
         </Header>
       </Card>,
     )

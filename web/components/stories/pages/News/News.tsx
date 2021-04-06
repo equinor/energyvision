@@ -4,7 +4,7 @@ import { Card } from '@components'
 import { ImagePlaceholder, RatioBox, CardLink, Wrapper } from '../../components/helpers/styles'
 import { data } from './data'
 import styled from 'styled-components'
-const { Media, Header, Text, Title, Arrow, Action } = Card
+const { Media, Header, Text, Title, Arrow, Action, Eyebrow } = Card
 
 const StyledMain = styled.main`
   max-width: 60rem;
@@ -25,9 +25,8 @@ export const News = () => (
                 </RatioBox>
               </Media>
               <Header>
-                <Title level="h3" eyebrow={item.eyebrow}>
-                  {item.title}
-                </Title>
+                <Eyebrow>{item.eyebrow}</Eyebrow>
+                <Title level="h3">{item.title}</Title>
               </Header>
               <Text>{item.lead}</Text>
               <Action>

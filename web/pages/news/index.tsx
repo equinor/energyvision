@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { Layout, Card } from '@components'
+import { Layout, Card, FormattedDate } from '@components'
 import { allNewsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import styled from 'styled-components'
 
-const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
+const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const ImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
@@ -45,6 +45,7 @@ type NewsSchema = {
   slug: string
   title: string
   id: string
+  publishDateTime: string
   // How should we do this????
   ingress: Block[]
 }
@@ -66,7 +67,7 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
         {allNews.length > 0 && (
           <TempWrapper>
             {allNews.map((newsItem: NewsSchema) => {
-              const { slug, title, id, ingress } = newsItem
+              const { slug, title, id, ingress, publishDateTime } = newsItem
               return (
                 <Link href={`/news/${slug}`} key={id} passHref shallow>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -78,6 +79,9 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
                         </RatioBox>
                       </Media>
                       <Header>
+                        <Eyebrow>
+                          <FormattedDate datetime={publishDateTime} />
+                        </Eyebrow>
                         <Title>{title}</Title>
                       </Header>
                       <Text>

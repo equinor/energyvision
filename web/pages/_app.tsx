@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   // TODO: get locale from Sanity
   return (
     <>
-      <IntlProvider locale="no" defaultLocale="en">
+      <IntlProvider locale="en" defaultLocale="en">
         <Head>
           {/* TODO: load the font in a better way */}
           <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" />

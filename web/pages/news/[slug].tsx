@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { Layout, Heading, FormattedDateTime, RelatedContent, Link, List, Card } from '@components'
+import { Layout, Heading, FormattedDateTime, RelatedContent, Link, List, Card, FormattedDate } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
@@ -14,7 +14,7 @@ import { IngressBlockRenderer } from '../../common/serializers'
 
 const { Links } = RelatedContent
 const { Item } = List
-const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
+const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const NewsLayout = styled.div`
   display: grid;
@@ -304,7 +304,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   </Heading>
                   <TempWrapper>
                     {latestNews.map((newsItem: NewsCard) => {
-                      const { slug, title, id, ingress } = newsItem
+                      const { slug, title, id, ingress, publishDateTime } = newsItem
                       return (
                         <NextLink href={`/news/${slug}`} key={id}>
                           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -316,6 +316,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                                 </RatioBox>
                               </Media>
                               <Header>
+                                <Eyebrow>
+                                  <FormattedDate datetime={publishDateTime} />
+                                </Eyebrow>
                                 <Title>{title}</Title>
                               </Header>
                               <Text>
