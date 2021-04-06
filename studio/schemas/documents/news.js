@@ -1,5 +1,6 @@
 import { configureBlockContent } from '../editors/blockContentType'
-import { formatDate } from '../helpers/formatDate'
+import { CharCounterEditor } from '../components/CharCounterEditor'
+import { formatDate } from '../../helpers/formatDate'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -100,6 +101,7 @@ export default {
       title: 'Ingress',
       description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
       type: 'array',
+      inputComponent: CharCounterEditor,
       of: [ingressBlockContentType],
       validation: (Rule) => Rule.custom((value) => validateIngress(value)),
     },
