@@ -100,17 +100,21 @@ export const typography = css`
   :root {
     /**
      * Smallest device width: 375
-     * Scaling factor: 0.4% of view port
-     * For 16px at 375, base font-size: 16 - 375 * 0.4% = 14.5 = 0.90625rem
-     * A font-size of 20px (1.25rem) is reached at (20 - 14.5) / 0.004 = 1375px
+     * Largest device width from GA 1920
+     * Scaling factor: 0.454% of view port will give us 16px on smallest
+     * and roughly 23px on largest display
+     * 16 - 375 * 0.454% + 1920 * 0.454% = 23.0143
      */
-    --typeScale-base: clamp(1rem, 0.90625rem + 0.4vw, 1.25rem);
+
+    --scalingFactor: 0.454vw;
+    --typeScale-base: clamp(1rem, calc(0.8935rem + var(--scalingFactor)), 1.4375rem);
     --typeScale-multiplier: 1.2;
     --typeScale-1: var(--typeScale-base);
     --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
     --typeScale-3: calc(var(--typeScale-2) * var(--typeScale-multiplier));
     --typeScale-4: calc(var(--typeScale-3) * var(--typeScale-multiplier));
     --typeScale-5: calc(var(--typeScale-4) * var(--typeScale-multiplier));
+    --typeScale-6: calc(var(--typeScale-5) * var(--typeScale-multiplier));
     --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
 
     /* Should probably do something more clever here */
@@ -122,22 +126,37 @@ export const typography = css`
     --fontWeight-bold: 700;
     --fontWeight-medium: 500;
     --fontWeight-regular: 400;
-
-    /* @media (min-width: 768px) {
-      --typeScale-base: 1.25rem;
-    } */
   }
 `
 
 export const spacings = css`
+  /** Fluid spacers… need better name? */
+  :root {
+    --fluid-xSmall: calc(var(--typeScale-1) / 4); /* 4 */
+    --fluid-small: calc(var(--fluid-xSmall) * 2); /* 8 */
+    --fluid-medium: calc(var(--fluid-small) * 2); /* 16 */
+    --fluid-large: calc(var(--fluid-small) * 3); /* 24 */
+    --fluid-xLarge: calc(var(--fluid-medium) * 2); /* 32 */
+  }
+
+  /** Fluid units for borders, border-radius etc. */
+  :root {
+    --fluid-1: calc(var(--typeScale-1) / 16); /* 1 */
+    --fluid-2: calc(var(--unit-1) * 2); /* 2 */
+    --fluid-3: calc(var(--unit-1) * 3); /* 3 */
+    --fluid-4: calc(var(--unit-1) * 4); /* 4 */
+    --fluid-5: calc(var(--unit-1) * 5); /* 5 */
+  }
+
   :root {
     /** Copy'n paste from Tailwind's default.
     It's not clear how we should do this.
     We could do it in several ways, we could even make
     a fluid scale for spacings as well. But what about
     theming and that would limit design 🤷‍♀️
-    Just did it with a lot of vars and MQ as a start  
+    Just did it with a lot of vars and MQ as a start
      */
+
     --spacing-0: 0px; /* 0px */
     --spacing-px: 1px; /* 1px */
     --spacing-0p5: 0.125rem; /* 2px */
@@ -174,6 +193,7 @@ export const spacings = css`
     --spacing-80: 20rem; /* 320px */
     --spacing-96: 24rem; /* 384px */
 
+<<<<<<< HEAD
     --spacing-xxSmall: var(--spacing-px);
     --spacing-xSmall: var(--spacing-1);
     --spacing-small: var(--spacing-2);
@@ -182,6 +202,28 @@ export const spacings = css`
     --spacing-xLarge: var(--spacing-10);
     --spacing-xxLarge: var(--spacing-16);
     --spacing-3xLarge: var(--spacing-24);
+=======
+    /** Names as in EDS. I don't see why we need both vertical and horizontal 🤷‍♀️
+    They have corresponding values in EDS as well...
+    But it might be easier with theming if we do this the same way?  */
+    --spacer-vertical-xxSmall: var(--spacing-px); /* 1px */
+    --spacer-vertical-xSmall: var(--spacing-1); /* 4px */
+    --spacer-vertical-small: var(--spacing-2); /* 8x */
+    --spacer-vertical-medium: var(--spacing-4); /* 16px */
+    --spacer-vertical-large: var(--spacing-6); /* 24px */
+    --spacer-vertical-xLarge: var(--spacing-10); /* 40px */
+    --spacer-vertical-xxLarge: var(--spacing-16); /* 64px */
+    --spacer-vertical-xxxLarge: var(--spacing-24); /* 96px */
+
+    --spacer-horizontal-xxSmall: var(--spacing-px);
+    --spacer-horizontal-xSmall: var(--spacing-1);
+    --spacer-horizontal-small: var(--spacing-2);
+    --spacer-horizontal-medium: var(--spacing-4);
+    --spacer-horizontal-large: var(--spacing-6);
+    --spacer-horizontal-xLarge: var(--spacing-10);
+    --spacer-horizontal-xxLarge: var(--spacing-16);
+    --spacer-horizontal-xxxLarge: var(--spacing-24);
+>>>>>>> ee3231f... 🚧 Tweak fluid font size + add spacers
 
     @media (min-width: 750px) {
       --spacing-xxSmall: var(--spacing-px);
