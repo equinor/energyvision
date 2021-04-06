@@ -1,5 +1,6 @@
 export default {
   name: 'backgroundColourPicker',
+  title: 'Background color picker',
   type: 'object',
   fields: [
     {
