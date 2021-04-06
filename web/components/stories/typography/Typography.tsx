@@ -6,7 +6,8 @@ export type TypographyProps = {
 }
 
 const Article = styled.article`
-  max-width: 45rem;
+  font-size: var(--typeScale-1);
+  max-width: 45em;
   margin-left: auto;
   margin-right: auto;
 
@@ -48,7 +49,7 @@ const Article = styled.article`
   }
 
   figcaption {
-    margin-top: 0.5em;
+    margin-top: var(--fluid-small);
   }
 
   /* misc */
