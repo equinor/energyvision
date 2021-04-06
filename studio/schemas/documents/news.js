@@ -1,4 +1,5 @@
 import { configureBlockContent } from '../editors/blockContentType'
+import { formatDate } from '../helpers/formatDate'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -135,4 +136,28 @@ export default {
       ],
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'heroImage.inlineImage',
+      description: 'ingress',
+      publishedDate: 'publishDateTime',
+    },
+    prepare(selection) {
+      const { title, media, description, publishedDate } = selection
+      const date = publishedDate ? formatDate(publishedDate) : 'Ikke oppgitt'
+      const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
+      return {
+        title,
+        subtitle: `Published date: ${date}`,
+        description: ingressBlock
+          ? ingressBlock.children
+              .filter((child) => child._type === 'span')
+              .map((span) => span.text)
+              .join('')
+          : 'Missing lead',
+        media,
+      }
+    },
+  },
 }
