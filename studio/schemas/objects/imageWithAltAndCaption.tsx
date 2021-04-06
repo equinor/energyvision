@@ -30,8 +30,8 @@ export default {
   ],
   preview: {
     select: {
-      imageUrl: 'inlineImage.asset.url',
-      alt: 'inlineImage.alt',
+      imageUrl: 'image.asset.url',
+      alt: 'image.alt',
       caption: 'caption',
     },
     prepare({ imageUrl, caption, alt }: PreviewProps): SchemaType.Preview {

@@ -139,7 +139,7 @@ export default {
   preview: {
     select: {
       title: 'title',
-      media: 'heroImage.inlineImage',
+      media: 'heroImage.image',
       description: 'ingress',
       publishedDate: 'publishDateTime',
     },
