@@ -19,7 +19,7 @@ export type LinkProps = {
 
 // TODO: Get colours and other constants from theme with css variables
 
-const BaseLink = styled.a`
+export const BaseLink = styled.a`
   display: inline-flex;
   align-items: center;
   color: rgba(0, 112, 121, 1);
@@ -29,7 +29,7 @@ const BaseLink = styled.a`
   & > svg {
     flex-shrink: 0;
     box-sizing: content-box;
-    padding: 0 0.5em;
+    padding: 0 var(--spacing-xxSmall);
   }
 `
 
