@@ -2,7 +2,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { ImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
-import { Card, CardProps } from '@components'
+import { Card, CardProps, Text } from '@components'
 
 export default {
   title: 'Components/Card',
@@ -40,9 +40,11 @@ export const Default: Story<CardProps> = (args) => (
         <Card.Title>Dolor sit amet</Card.Title>
       </Card.Header>
       <Card.Text>
-        Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
-        Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
-        <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
+        <Text>
+          Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
+          Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
+          <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
+        </Text>
       </Card.Text>
     </Card>
   </Wrapper>
@@ -64,9 +66,11 @@ export const NewsCard: Story<CardProps> = () => (
           <Card.Title>Dolor sit amet</Card.Title>
         </Card.Header>
         <Card.Text>
-          Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
-          Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
-          <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
+          <Text>
+            Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
+            Deserunt culpa proident est fugiat Lorem eu qui <i>eiusmod</i>. Labore aliquip enim est magna CO
+            <sub>2</sub> eu dolore dolor occaecat dolor laboris laborum.
+          </Text>
         </Card.Text>
         <Card.Action>
           <Card.Arrow />
@@ -87,9 +91,11 @@ export const NewsCard: Story<CardProps> = () => (
           </Card.Title>
         </Card.Header>
         <Card.Text>
-          Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the
-          13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
-          farm.
+          <Text>
+            Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the
+            13MW Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind
+            farm.
+          </Text>
         </Card.Text>
         <Card.Action>
           <Card.Arrow />
