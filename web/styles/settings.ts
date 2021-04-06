@@ -174,46 +174,24 @@ export const spacings = css`
     --spacing-80: 20rem; /* 320px */
     --spacing-96: 24rem; /* 384px */
 
-    /** Names as in EDS. I don't see why we need both vertical and horizontal 🤷‍♀️
-    They have corresponding values in EDS as well...
-    But it might be easier with theming if we do this the same way?  */
-    --spacer-vertical-xxSmall: var(--spacing-px);
-    --spacer-vertical-xSmall: var(--spacing-1);
-    --spacer-vertical-small: var(--spacing-2);
-    --spacer-vertical-medium: var(--spacing-4);
-    --spacer-vertical-large: var(--spacing-6);
-    --spacer-vertical-xLarge: var(--spacing-10);
-    --spacer-vertical-xxLarge: var(--spacing-16);
-    --spacer-vertical-xxxLarge: var(--spacing-24);
-
-    --spacer-horizontal-xxSmall: var(--spacing-px);
-    --spacer-horizontal-xSmall: var(--spacing-1);
-    --spacer-horizontal-small: var(--spacing-2);
-    --spacer-horizontal-medium: var(--spacing-4);
-    --spacer-horizontal-large: var(--spacing-6);
-    --spacer-horizontal-xLarge: var(--spacing-10);
-    --spacer-horizontal-xxLarge: var(--spacing-16);
-    --spacer-horizontal-xxxLarge: var(--spacing-24);
+    --spacing-xxSmall: var(--spacing-px);
+    --spacing-xSmall: var(--spacing-1);
+    --spacing-small: var(--spacing-2);
+    --spacing-medium: var(--spacing-4);
+    --spacing-large: var(--spacing-6);
+    --spacing-xLarge: var(--spacing-10);
+    --spacing-xxLarge: var(--spacing-16);
+    --spacing-3xLarge: var(--spacing-24);
 
     @media (min-width: 750px) {
-      --spacer-vertical-xxSmall: var(--spacing-px);
-      --spacer-vertical-xSmall: var(--spacing-2);
-      --spacer-vertical-small: var(--spacing-4);
-      --spacer-vertical-medium: var(--spacing-8);
-      --spacer-vertical-large: var(--spacing-12);
-      --spacer-vertical-xLarge: var(--spacing-20);
-      --spacer-vertical-xxLarge: var(--spacing-28);
-      --spacer-vertical-xxxLarge: var(--spacing-48);
-
-      --spacer-horizontal-xxSmall: var(--spacing-px);
-      --spacer-horizontal-xSmall: var(--spacing-2);
-      --spacer-horizontal-small: var(--spacing-4);
-      --spacer-horizontal-medium: var(--spacing-8);
-      --spacer-horizontal-large: var(--spacing-12);
-      --spacer-horizontal-xLarge: var(--spacing-20);
-      --spacer-horizontal-xxLarge: var(--spacing-28);
-      --spacer-horizontal-xxxLarge: var(--spacing-48);
+      --spacing-xxSmall: var(--spacing-px);
+      --spacing-xSmall: var(--spacing-2);
+      --spacing-small: var(--spacing-4);
+      --spacing-medium: var(--spacing-8);
+      --spacing-large: var(--spacing-12);
+      --spacing-xLarge: var(--spacing-20);
+      --spacing-xxLarge: var(--spacing-28);
+      --spacing-3xLarge: var(--spacing-48);
     }
   }
-` /* 2px */
-/* 2px */
+`

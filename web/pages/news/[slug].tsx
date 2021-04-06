@@ -21,8 +21,8 @@ const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const NewsLayout = styled.div`
   display: grid;
-  grid-template-columns: var(--spacer-vertical-medium) 1fr var(--spacer-vertical-medium);
-  grid-template-rows: var(--spacer-vertical-medium) min-content min-content 3rem min-content min-content min-content min-content min-content 3rem;
+  grid-template-columns: var(--spacing-medium) 1fr var(--spacing-medium);
+  grid-template-rows: var(--spacing-medium) min-content min-content 3rem min-content min-content min-content min-content min-content 3rem;
   width: 100%;
   &::before {
     content: '';
@@ -31,28 +31,28 @@ const NewsLayout = styled.div`
     grid-row: 1/5;
   }
   @media (min-width: 800px) {
-    grid-template-columns: minmax(var(--spacer-vertical-xLarge), 1fr) 2rem minmax(auto, 60rem) 2rem minmax(
-        var(--spacer-vertical-xLarge),
+    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 2rem minmax(auto, 60rem) 2rem minmax(
+        var(--spacing-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
+    grid-template-rows: var(--spacing-xLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
     &::before {
       grid-column: 1/6;
     }
   }
 
   @media (min-width: 1100px) {
-    grid-template-columns: minmax(var(--spacer-vertical-xLarge), 1fr) 6rem minmax(auto, 60rem) 6rem minmax(
-        var(--spacer-vertical-xLarge),
+    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 6rem minmax(auto, 60rem) 6rem minmax(
+        var(--spacing-xLarge),
         1fr
       );
   }
   @media (min-width: 1700px) {
-    grid-template-columns: minmax(var(--spacer-vertical-xLarge), 1fr) 6rem minmax(auto, 80rem) 6rem minmax(
-        var(--spacer-vertical-xLarge),
+    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 6rem minmax(auto, 80rem) 6rem minmax(
+        var(--spacing-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacer-vertical-xxLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
+    grid-template-rows: var(--spacing-xxLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
     &::before {
       grid-column: 1/6;
     }
@@ -61,7 +61,7 @@ const NewsLayout = styled.div`
 const StyledHeading = styled(Heading)`
   grid-column: 2 / 3;
   grid-row: 2;
-  padding: var(--spacer-vertical-large) 0 var(--spacer-vertical-medium) 0;
+  padding: var(--spacing-large) 0 var(--spacing-medium) 0;
   /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
   @media (min-width: 800px) {
     grid-column: 3 / 4;
@@ -72,7 +72,7 @@ const Date = styled.div`
   grid-column: 2 / 3;
   grid-row: 3;
   color: var(--white-100);
-  padding: var(--spacer-vertical-medium) 0;
+  padding: var(--spacing-medium) 0;
   @media (min-width: 800px) {
     grid-column: 3 / 4;
   }
@@ -89,36 +89,36 @@ const ImageWrapper = styled.div`
 const LeadParagraph = styled.div`
   grid-column: 2 / 3;
   grid-row: 6;
-  padding: var(--spacer-vertical-medium) 0;
+  padding: var(--spacing-medium) 0;
   @media (min-width: 800px) {
     grid-column: 2 / 5;
   }
   @media (min-width: 1000px) {
-    margin: 0 var(--spacer-vertical-xxLarge);
+    margin: 0 var(--spacing-xxLarge);
   }
   @media (min-width: 1500px) {
-    margin: 0 var(--spacer-vertical-xxxLarge);
+    margin: 0 var(--spacing-xxxLarge);
   }
 `
 const Content = styled.div`
-  padding: var(--spacer-vertical-medium) 0;
+  padding: var(--spacing-medium) 0;
   grid-column: 2 / 3;
   grid-row: 7;
   @media (min-width: 800px) {
     grid-column: 2 / 5;
   }
   @media (min-width: 1000px) {
-    margin: 0 var(--spacer-vertical-xxLarge);
+    margin: 0 var(--spacing-xxLarge);
   }
   @media (min-width: 1500px) {
-    margin: 0 var(--spacer-vertical-xxxLarge);
+    margin: 0 var(--spacing-xxxLarge);
   }
 `
 
 const Related = styled.div`
   grid-column: 2 / 3;
   grid-row: 8;
-  padding: var(--spacer-vertical-large) 0 var(--spacer-vertical-medium) 0;
+  padding: var(--spacing-large) 0 var(--spacing-medium) 0;
   /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
   @media (min-width: 800px) {
     grid-column: 3 / 4;
