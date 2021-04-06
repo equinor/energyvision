@@ -25,9 +25,19 @@ export const RegularLink: Story = () => (
       <Link href="/">This is a link</Link>
     </div>
     <div>
+      Hello, inside here <Link href="/">is a link</Link> that can take you to somewhere else.
+    </div>
+    <div>
       <Link href="/" external>
         This is an external link
       </Link>
+    </div>
+    <div>
+      Wrapped in some text and{' '}
+      <Link href="/" external>
+        still an external link
+      </Link>{' '}
+      to the Universe.
     </div>
   </>
 )
