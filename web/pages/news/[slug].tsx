@@ -11,6 +11,9 @@ import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import { IngressBlockRenderer } from '../../common/serializers'
+import { useNextSanityImage } from 'next-sanity-image'
+import Img from 'next/image'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 const { Links } = RelatedContent
 const { Item } = List
@@ -75,7 +78,7 @@ const Date = styled.div`
   }
 `
 
-const Image = styled.div`
+const ImageWrapper = styled.div`
   grid-column: 2 / 3;
   grid-row: 4 / 6;
   @media (min-width: 800px) {
@@ -149,13 +152,13 @@ const ImagePlaceholder = styled.div`
   border-top-right-radius: 4px;
 `
 
-const RatioBox1to2 = styled.div`
-  position: relative;
-  height: 0;
-  display: block;
-  width: 100%;
-  padding-bottom: 50%;
-`
+// const RatioBox1to2 = styled.div`
+//   position: relative;
+//   height: 0;
+//   display: block;
+//   width: 100%;
+//   padding-bottom: 50%;
+// `
 
 const RatioBox = styled.div`
   position: relative;
@@ -197,6 +200,7 @@ type NewsSchema = {
   title: string
   id: string
   publishDateTime: string
+  heroImage: { _type: string; alt: string; asset: SanityImageObject; caption?: string; attribution?: string }
   // How should we do this????
   ingress: Block[]
   content: Block[]
@@ -209,6 +213,13 @@ type ArticleProps = {
     latestNews: NewsCard[]
   }
   preview: boolean
+}
+
+const customImageBuilder = (imageUrlBuilder: any, options: any) => {
+  return imageUrlBuilder
+    .width(options.width)
+    .height(options.width / 2)
+    .auto('format')
 }
 
 export default function News({ data, preview }: ArticleProps): JSX.Element {
@@ -231,6 +242,8 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     return <ErrorPage statusCode={404} />
   }
 
+  const heroImageProps = useNextSanityImage(sanityClient, news.heroImage, { imageBuilder: customImageBuilder })
+  console.log('props', heroImageProps)
   return (
     <Layout preview={preview}>
       {router.isFallback ? (
@@ -248,11 +261,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               <Date>
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
-              <Image>
-                <RatioBox1to2>
-                  <ImagePlaceholder />
-                </RatioBox1to2>
-              </Image>
+              <ImageWrapper>
+                <Img {...heroImageProps} sizes="(max-width: 800px) 100vw, 800px" alt={news.heroImage.alt} />
+              </ImageWrapper>
               {news.ingress && (
                 <LeadParagraph>
                   <SimpleBlockContent
