@@ -16,7 +16,19 @@ export const allNewsQuery = /* groq */ `
 export const newsQuery = /* groq */ `
 {
   "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc) | [0] {
-    content,
+    "content": content[]{
+      ...,
+      "markDefs": markDefs[]{
+        ...,
+        _type == "internalLink" => {
+          "internalLink": reference->{
+            name,
+            "id": slug.current,
+            "type": _type,
+          },
+        },
+      }, 
+    },
     "relatedLinks": relatedLinks{
   	title,
     heroImage,
