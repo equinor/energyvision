@@ -22,6 +22,11 @@ export default {
       title: 'Image caption',
       type: 'string',
     },
+    {
+      name: 'attribution',
+      type: 'string',
+      title: 'Attribution',
+    },
   ],
   preview: {
     select: {
