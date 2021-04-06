@@ -7,13 +7,12 @@ dependencies:
   '@sanity/default-layout': 2.7.2_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/default-login': 2.7.0
   '@sanity/desk-tool': 2.7.2_9bdd65c2b60ce8638444b80b396a481b
-  '@sanity/form-builder': 2.7.2_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/vision': 2.7.3_9bdd65c2b60ce8638444b80b396a481b
   only-allow: 1.0.0
   prop-types: 15.7.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-  sanity-plugin-color-list: 2.0.1_821fff52f5384e63eaa59d38886dc51d
+  sanity-plugin-color-list: 2.0.1_react@17.0.2
 devDependencies:
   '@sanity/cli': 2.7.2
 lockfileVersion: 5.2
@@ -1861,6 +1860,7 @@ packages:
       react: ^16.14.0
     resolution:
       integrity: sha512-EN9czvcLsMYmSDo5yRKZOAq3ZGRlDpad1gPtX0NdMMomJXcPE3yFSeFzE94X/NjOaiSVimB7LuqPYpkWVaIi4Q==
+      tarball: '@hot-loader/react-dom/-/react-dom-16.14.0.tgz'
   /@juggle/resize-observer/3.3.0:
     dev: false
     resolution:
@@ -1893,12 +1893,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DvJbbn3dUgMxDnJLH+RZQPnXak1h4ZVYQ7CWiFWjQwBFkVajT4rfw2PdpHLTSTwxrYfnoEXkuBiwkDm6tPMQeA==
+  /@popperjs/core/2.9.2:
+    dev: false
+    resolution:
+      integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
   /@reach/auto-id/0.13.2_react-dom@17.0.2+react@17.0.2:
     dependencies:
       '@reach/utils': 0.13.2_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.1.0
+      tslib: 2.2.0
     dev: false
     peerDependencies:
       react: ^16.8.0 || 17.x
@@ -1910,7 +1914,7 @@ packages:
       '@reach/utils': 0.14.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.1.0
+      tslib: 2.2.0
     dev: false
     peerDependencies:
       react: ^16.8.0 || 17.x
@@ -1922,7 +1926,7 @@ packages:
       '@types/warning': 3.0.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.1.0
+      tslib: 2.2.0
       warning: 4.0.3
     dev: false
     peerDependencies:
@@ -1935,7 +1939,7 @@ packages:
       '@types/warning': 3.0.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.1.0
+      tslib: 2.2.0
       warning: 4.0.3
     dev: false
     peerDependencies:
@@ -2027,6 +2031,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-eCiJeHXgdTntP8rmXc18XiaVIJmidxAuG1Hr39M+p4X7266TC/yVTC7t9BxBLc/OrMR6dRELuTa2c0XBRD9b/A==
+  /@sanity/block-tools/2.7.4:
+    dependencies:
+      get-random-values: 1.2.2
+      lodash: 4.17.21
+    dev: false
+    resolution:
+      integrity: sha512-Q7RMePOkO6Xf3CCtt4FFbteIOamI8ejtQGvNSM9E62vZfj1BlVh0ajflbLLOL+mWdo4KStRuSejZn0bmBDzYpQ==
   /@sanity/cli/2.7.2:
     dev: true
     engines:
@@ -2433,10 +2444,10 @@ packages:
       integrity: sha512-1OKg76Q9QF3KDQDLPgNpjJxd4IIArDU1Q6hwXFq1RdH06C8iPH1T/l/MJ8egEJ+SOxqaGsWj1fxAzpAuYSYlow==
   /@sanity/portable-text-editor/0.1.25_1a955eba674747f5ad8a8b16251cd610:
     dependencies:
-      '@sanity/block-tools': 2.5.0
-      '@sanity/schema': 2.5.0
+      '@sanity/block-tools': 2.7.4
+      '@sanity/schema': 2.7.4
       '@sanity/slate-react': 0.58.6_03973f8e36439486154abde0a70253e8
-      '@sanity/types': 2.7.2
+      '@sanity/types': 2.7.4
       debug: 4.3.1
       get-random-values: 1.2.2
       is-hotkey: 0.1.8
@@ -2444,7 +2455,7 @@ packages:
       react: 17.0.2
       rxjs: 6.6.7
       slate: 0.58.4
-      styled-components: 5.2.1_react-dom@17.0.2+react@17.0.2
+      styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
     dev: false
     engines:
       node: '>=8.0.0'
@@ -2493,6 +2504,18 @@ packages:
     dev: false
     resolution:
       integrity: sha512-m3zPQwvoDs3hazwt4q0aFhRLmdZgLByUu+KCnQNcTL5op2HTpgzuJgtaG5bdlswWbKHNHbyWuqkhUEPm1e/tVQ==
+  /@sanity/schema/2.7.4:
+    dependencies:
+      '@sanity/generate-help-url': 2.2.6
+      arrify: 1.0.1
+      humanize-list: 1.0.1
+      json-reduce: 1.0.0
+      leven: 2.1.0
+      lodash: 4.17.21
+      object-inspect: 1.9.0
+    dev: false
+    resolution:
+      integrity: sha512-iNl2twjq3L2qISEEui/QW/dDOD/T6q+pID0frbEIe+ildaKoObG61Hm8KRiK3vF55vK5t5mSMHDmPQ/4ZfCc2g==
   /@sanity/server/2.7.2_9bdd65c2b60ce8638444b80b396a481b:
     dependencies:
       '@babel/core': 7.13.14
@@ -2612,19 +2635,27 @@ packages:
     dev: false
     resolution:
       integrity: sha512-hGkgLrCgpTmUMbRIykmt0jWq/jNmY7dT/+SuGIsPSrkf2CNRstQ+QVD2ru6gp/PMtPTY6a7t/S3a/yNN4Mc6EQ==
+  /@sanity/types/2.7.4:
+    dependencies:
+      '@sanity/client': 2.7.1
+      '@types/react': 17.0.3
+      rxjs: 6.6.7
+    dev: false
+    resolution:
+      integrity: sha512-QK7b3W7kix5kcVGOxbRGI/ryZJHwWYBFeeCN9nx4050ImWfRiNuFBhpS7IoYwDIvwZT6E/2uQ7Hqqjhet7DoJQ==
   /@sanity/ui/0.33.11_bbdb8d52999b72a1711e5d621e13b66d:
     dependencies:
       '@juggle/resize-observer': 3.3.0
-      '@popperjs/core': 2.9.1
+      '@popperjs/core': 2.9.2
       '@reach/auto-id': 0.14.0_react-dom@17.0.2+react@17.0.2
       '@sanity/color': 2.0.15
       '@sanity/icons': 1.0.6_react@17.0.2
-      framer-motion: 4.0.3_react-dom@17.0.2+react@17.0.2
-      popper-max-size-modifier: 0.2.0_@popperjs+core@2.9.1
+      framer-motion: 4.1.2_react-dom@17.0.2+react@17.0.2
+      popper-max-size-modifier: 0.2.0_@popperjs+core@2.9.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-is: 17.0.2
-      react-popper: 2.2.5_3214d5d495cd1dacc318fb9f5cacc4c4
+      react-popper: 2.2.5_a16f30364266ce234ee1188a6d27cb60
       react-refractor: 2.1.4_react@17.0.2
       styled-components: 5.2.1_react-dom@17.0.2+react@17.0.2
     dev: false
@@ -2637,16 +2668,16 @@ packages:
   /@sanity/ui/0.33.11_react-dom@17.0.2+react@17.0.2:
     dependencies:
       '@juggle/resize-observer': 3.3.0
-      '@popperjs/core': 2.9.1
+      '@popperjs/core': 2.9.2
       '@reach/auto-id': 0.14.0_react-dom@17.0.2+react@17.0.2
       '@sanity/color': 2.0.15
       '@sanity/icons': 1.0.6_react@17.0.2
-      framer-motion: 4.0.3_react-dom@17.0.2+react@17.0.2
-      popper-max-size-modifier: 0.2.0_@popperjs+core@2.9.1
+      framer-motion: 4.1.2_react-dom@17.0.2+react@17.0.2
+      popper-max-size-modifier: 0.2.0_@popperjs+core@2.9.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-is: 17.0.2
-      react-popper: 2.2.5_3214d5d495cd1dacc318fb9f5cacc4c4
+      react-popper: 2.2.5_a16f30364266ce234ee1188a6d27cb60
       react-refractor: 2.1.4_react@17.0.2
     dev: false
     peerDependencies:
@@ -3305,6 +3336,18 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       styled-components: 5.2.1_react-dom@17.0.2+react@17.0.2
+    dev: false
+    peerDependencies:
+      styled-components: '>= 2'
+    resolution:
+      integrity: sha512-FEiD7l5ZABdJPpLssKXjBUJMYqzbcNzBowfXDCdJhOpbhWiewapUaY+LZGT8R4Jg2TwOjGjG4RKeyrO5p9sBkA==
+  /babel-plugin-styled-components/1.12.0_styled-components@5.2.3:
+    dependencies:
+      '@babel/helper-annotate-as-pure': 7.12.13
+      '@babel/helper-module-imports': 7.13.12
+      babel-plugin-syntax-jsx: 6.18.0
+      lodash: 4.17.21
+      styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
     dev: false
     peerDependencies:
       styled-components: '>= 2'
@@ -4178,7 +4221,7 @@ packages:
     resolution:
       integrity: sha512-jXAirMQxrkbiiLsCx9bQPJFA6llDadKMpYrBJQJ3/c4/vsPP/fAf29h24tviRlvwUL6AmY5CHLu2GvjuYviQqA==
   /core-js/2.6.12:
-    deprecated: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
+    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -5319,7 +5362,7 @@ packages:
       schema-utils: 0.3.0
       webpack: 3.12.0
       webpack-sources: 1.4.3
-    deprecated: Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin
+    deprecated: 'Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin'
     dev: false
     engines:
       node: '>= 4.8 < 5.0.0 || >= 5.10'
@@ -5608,15 +5651,15 @@ packages:
     optional: true
     resolution:
       integrity: sha1-QpD60n8T6Jvn8zeZxrxaCr//DRk=
-  /framer-motion/4.0.3_react-dom@17.0.2+react@17.0.2:
+  /framer-motion/4.1.2_react-dom@17.0.2+react@17.0.2:
     dependencies:
-      framesync: 5.2.3
+      framesync: 5.3.0
       hey-listen: 1.0.8
-      popmotion: 9.3.4
+      popmotion: 9.3.5
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       style-value-types: 4.1.4
-      tslib: 2.1.0
+      tslib: 2.2.0
     dev: false
     optionalDependencies:
       '@emotion/is-prop-valid': 0.8.8
@@ -5624,13 +5667,13 @@ packages:
       react: '>=16.8 || ^17.0.0'
       react-dom: '>=16.8 || ^17.0.0'
     resolution:
-      integrity: sha512-5p9VPpgPctMJuNW8CqHSk9k/v3xAUpReWzlgKl1a1fsvqzcFgNGENZPfBwHuukanvMmh3trzO5jZNX0Kc8/pAA==
-  /framesync/5.2.3:
+      integrity: sha512-nVieffLWWmK5gog46PsoecgJCsFV+n6A5GOqoGXkWtvB9jWcscRVIdGzAaPKo2uiJHkGSyXUHU8+lt6YOQVRqw==
+  /framesync/5.3.0:
     dependencies:
-      tslib: 2.1.0
+      tslib: 2.2.0
     dev: false
     resolution:
-      integrity: sha512-5PxjYm5RxvsT68a9trOOL/61POxL7DcHrbx+j/50CR33mvBdp0aUTI+EfrMeVXprx3XOZ37NWg6r5ZQQOA2arA==
+      integrity: sha512-oc5m68HDO/tuK2blj7ZcdEBRx3p1PjrgHazL8GYEpvULhrtGIFbQArN6cQS2QhW8mitffaB+VYzMjDqBxxQeoA==
   /fresh/0.5.2:
     dev: false
     engines:
@@ -8167,15 +8210,15 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-4MZTrfPMPRLD7ac8b+2JZxei58zw6N1hFkdBDERif5Tlj19y3vPoPusrLG+mJIlPTGnUlKw3+yWz0BazvMx1vg==
-  /popmotion/9.3.4:
+  /popmotion/9.3.5:
     dependencies:
-      framesync: 5.2.3
+      framesync: 5.3.0
       hey-listen: 1.0.8
       style-value-types: 4.1.4
-      tslib: 2.1.0
+      tslib: 2.2.0
     dev: false
     resolution:
-      integrity: sha512-CwUJwVEkhXZg7ZCtWLrO2lK40g/J+cEwAV0bPxOq83g2UNrvN2HTcUDnlf/rq6QeMKJPwDvXd6R8SsJO5BjDXg==
+      integrity: sha512-Lr2rq8OP0j8D7CO2/6eO17ALeFCxjx1hfTGbMg+TLqFj+KZSGOoj6gRBVTzDINGqo6LQrORQSSSDaCL5OrB3bw==
   /popper-max-size-modifier/0.2.0_@popperjs+core@2.9.1:
     dependencies:
       '@popperjs/core': 2.9.1
@@ -8184,8 +8227,16 @@ packages:
       '@popperjs/core': ^2.2.0
     resolution:
       integrity: sha512-UerPt9pZfTFnpSpIBVJrR3ibHMuU1k5K01AyNLfMUWCr4z1MFH+dsayPlAF9ZeYExa02HPiQn5OIMqUSVtJEbg==
+  /popper-max-size-modifier/0.2.0_@popperjs+core@2.9.2:
+    dependencies:
+      '@popperjs/core': 2.9.2
+    dev: false
+    peerDependencies:
+      '@popperjs/core': ^2.2.0
+    resolution:
+      integrity: sha512-UerPt9pZfTFnpSpIBVJrR3ibHMuU1k5K01AyNLfMUWCr4z1MFH+dsayPlAF9ZeYExa02HPiQn5OIMqUSVtJEbg==
   /popper.js/1.16.1:
-    deprecated: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+    deprecated: 'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
     dev: false
     resolution:
       integrity: sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -9282,6 +9333,18 @@ packages:
       react: ^16.8.0 || ^17
     resolution:
       integrity: sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==
+  /react-popper/2.2.5_a16f30364266ce234ee1188a6d27cb60:
+    dependencies:
+      '@popperjs/core': 2.9.2
+      react: 17.0.2
+      react-fast-compare: 3.2.0
+      warning: 4.0.3
+    dev: false
+    peerDependencies:
+      '@popperjs/core': ^2.0.0
+      react: ^16.8.0 || ^17
+    resolution:
+      integrity: sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==
   /react-props-stream/1.0.1_react@17.0.2+rxjs@6.6.7:
     dependencies:
       react: 17.0.2
@@ -9601,7 +9664,7 @@ packages:
       request-promise-core: 1.1.4_request@2.88.2
       stealthy-require: 1.1.1
       tough-cookie: 2.5.0
-    deprecated: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
+    deprecated: 'request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142'
     dev: false
     engines:
       node: '>=0.12.0'
@@ -9631,7 +9694,7 @@ packages:
       tough-cookie: 2.5.0
       tunnel-agent: 0.6.0
       uuid: 3.4.0
-    deprecated: request has been deprecated, see https://github.com/request/request/issues/3142
+    deprecated: 'request has been deprecated, see https://github.com/request/request/issues/3142'
     dev: false
     engines:
       node: '>= 6'
@@ -9699,7 +9762,7 @@ packages:
     resolution:
       integrity: sha512-C7rARubxI8bXFNB/hqcp/4iUeIXJhJZvFPFPiSPRnhU5UPxzMFIl+2E6yY6c4k9giDJAhtV+enfA+G89N6Csng==
   /resolve-url/0.2.1:
-    deprecated: https://github.com/lydell/resolve-url#deprecated
+    deprecated: 'https://github.com/lydell/resolve-url#deprecated'
     dev: false
     optional: true
     resolution:
@@ -9811,10 +9874,9 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-J5YeuM/S7rLTp51iqUunwzz7Rf68K/jCDGKtNCj6Wzcfgf9CH+0GtPlvf2DFsg0QQhYYZ72FOVn6skmoLjMCdw==
-  /sanity-plugin-color-list/2.0.1_821fff52f5384e63eaa59d38886dc51d:
+  /sanity-plugin-color-list/2.0.1_react@17.0.2:
     dependencies:
       '@ctrl/tinycolor': 2.6.1
-      '@sanity/form-builder': 2.7.2_9bdd65c2b60ce8638444b80b396a481b
       classnames: 2.2.6
       lodash: 4.17.21
       prop-types: 15.7.2
@@ -10393,7 +10455,7 @@ packages:
   /style-value-types/4.1.4:
     dependencies:
       hey-listen: 1.0.8
-      tslib: 2.1.0
+      tslib: 2.2.0
     dev: false
     resolution:
       integrity: sha512-LCJL6tB+vPSUoxgUBt9juXIlNJHtBMy8jkXzUJSBzeHWdBu6lhzHqCvLVkXFGsFIlNa2ln1sQHya/gzaFmB2Lg==
@@ -10420,6 +10482,29 @@ packages:
       react-is: '>= 16.8.0'
     resolution:
       integrity: sha512-sBdgLWrCFTKtmZm/9x7jkIabjFNVzCUeKfoQsM6R3saImkUnjx0QYdLwJHBjY9ifEcmjDamJDVfknWm1yxZPxQ==
+  /styled-components/5.2.3_react-dom@17.0.2+react@17.0.2:
+    dependencies:
+      '@babel/helper-module-imports': 7.13.12
+      '@babel/traverse': 7.13.13_supports-color@5.5.0
+      '@emotion/is-prop-valid': 0.8.8
+      '@emotion/stylis': 0.8.5
+      '@emotion/unitless': 0.7.5
+      babel-plugin-styled-components: 1.12.0_styled-components@5.2.3
+      css-to-react-native: 3.0.0
+      hoist-non-react-statics: 3.3.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      shallowequal: 1.1.0
+      supports-color: 5.5.0
+    dev: false
+    engines:
+      node: '>=10'
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+      react-is: '>= 16.8.0'
+    resolution:
+      integrity: sha512-BlR+KrLW3NL1yhvEB+9Nu9Dt51CuOnHoxd+Hj+rYPdtyR8X11uIW9rvhpy3Dk4dXXBsiW1u5U78f00Lf/afGoA==
   /stylehacks/4.0.3:
     dependencies:
       browserslist: 4.16.3
@@ -10711,10 +10796,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-  /tslib/2.1.0:
+  /tslib/2.2.0:
     dev: false
     resolution:
-      integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
+      integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
   /tty-browserify/0.0.0:
     dev: false
     resolution:
@@ -10959,7 +11044,7 @@ packages:
     resolution:
       integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   /urix/0.1.0:
-    deprecated: Please see https://github.com/lydell/urix#deprecated
+    deprecated: 'Please see https://github.com/lydell/urix#deprecated'
     dev: false
     optional: true
     resolution:
@@ -11477,7 +11562,6 @@ specifiers:
   '@sanity/default-layout': ^2.7.2
   '@sanity/default-login': ^2.7.0
   '@sanity/desk-tool': ^2.7.2
-  '@sanity/form-builder': ^2.7.2
   '@sanity/vision': ^2.7.3
   only-allow: ^1.0.0
   prop-types: ^15.7.2

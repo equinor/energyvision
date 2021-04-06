@@ -29,7 +29,6 @@
     "@sanity/default-layout": "^2.7.2",
     "@sanity/default-login": "^2.7.0",
     "@sanity/desk-tool": "^2.7.2",
-    "@sanity/form-builder": "^2.7.2",
     "@sanity/vision": "^2.7.3",
     "only-allow": "^1.0.0",
     "prop-types": "^15.7.2",
