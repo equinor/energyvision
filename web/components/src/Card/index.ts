@@ -5,6 +5,7 @@ import { Action, CardActionProps } from './Action'
 import { Header, CardHeaderProps } from './Header'
 import { Title } from './Title'
 import { Arrow } from './Arrow'
+import { Eyebrow, EyebrowProps } from './Eyebrow'
 
 type CardCompundProps = typeof CardWrapper & {
   Media: typeof Media
@@ -14,6 +15,7 @@ type CardCompundProps = typeof CardWrapper & {
   Title: typeof Title
   Arrow: typeof Arrow
   CardLink: typeof CardLink
+  Eyebrow: typeof Eyebrow
 }
 
 const Card = CardWrapper as CardCompundProps
@@ -25,6 +27,7 @@ Card.Header = Header
 Card.Title = Title
 Card.Arrow = Arrow
 Card.CardLink = CardLink
+Card.Eyebrow = Eyebrow
 
 export { Card }
-export type { CardProps, CardMediaProps, CardTextProps, CardActionProps, CardHeaderProps }
+export type { CardProps, CardMediaProps, CardTextProps, CardActionProps, CardHeaderProps, EyebrowProps }

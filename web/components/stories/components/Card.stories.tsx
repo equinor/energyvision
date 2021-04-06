@@ -14,6 +14,7 @@ export default {
     Action: Card.Action,
     Header: Card.Header,
     Arrow: Card.Arrow,
+    Eyebrow: Card.Eyebrow,
   },
   parameters: {
     docs: {
@@ -59,7 +60,8 @@ export const NewsCard: Story<CardProps> = () => (
           </RatioBox>
         </Card.Media>
         <Card.Header>
-          <Card.Title eyebrow="Overline">Dolor sit amet</Card.Title>
+          <Card.Eyebrow>Overline</Card.Eyebrow>
+          <Card.Title>Dolor sit amet</Card.Title>
         </Card.Header>
         <Card.Text>
           Lorem <strong>excepteur</strong> cillum exercitation cillum deserunt exercitation non in velit in id veniam.
@@ -79,7 +81,8 @@ export const NewsCard: Story<CardProps> = () => (
           </RatioBox>
         </Card.Media>
         <Card.Header>
-          <Card.Title level="h3" eyebrow="September 24, 2020">
+          <Card.Eyebrow>September 24, 2020</Card.Eyebrow>
+          <Card.Title level="h3">
             Dogger Bank wind farm places record-breaking turbine order boosting local jobs
           </Card.Title>
         </Card.Header>
