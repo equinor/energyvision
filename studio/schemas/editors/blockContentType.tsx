@@ -107,6 +107,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         type: 'reference',
         to: [
           /* objects of allowed page types */
+          { type: 'news' },
         ],
       },
     ],
