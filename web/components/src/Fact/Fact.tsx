@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const StyledFact = styled.div`
   background-color: var(--background);
-  padding: var(--spacer-vertical-large) var(--spacer-horizontal-medium);
+  padding: var(--spacing-large) var(--spacing-medium);
 `
 
 /* @TODO: Which pattern to use for color names and prop name? */

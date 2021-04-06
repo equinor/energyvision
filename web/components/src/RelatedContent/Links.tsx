@@ -4,7 +4,7 @@ import { List } from '../List'
 
 export const StyledLinks = styled(List)`
   display: grid;
-  column-gap: var(--spacer-vertical-large);
+  column-gap: var(--spacing-large);
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 `
 

@@ -5,15 +5,13 @@ import styled from 'styled-components'
 
 /* Just some dummy styles */
 const StyledMain = styled.main`
-  /* max-width: 60rem; */
-  /* margin: var(--spacer-vertical-xxLarge) auto; */
   min-height: 80vh;
   width: 100%;
 `
 
 const Footer = styled.footer`
   background-color: var(--slate-blue-95);
-  min-height: var(--spacer-vertical-xxLarge);
+  min-height: var(--spacing-xxLarge);
 `
 
 export type LayoutProps = {

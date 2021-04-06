@@ -12,7 +12,7 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
   line-height: var(--line-height);
   font-weight: var(--font-weight);
   /* @TODO How about margins */
-  margin: var(--spacer-vertical-small) 0;
+  margin: var(--spacing-small) 0;
   ${({ center }) =>
     center && {
       textAlign: 'center',
