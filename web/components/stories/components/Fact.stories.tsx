@@ -101,7 +101,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
         </Text>
       </Fact.Text>
     </Fact>
-    <Fact background="warm" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
+    <Fact background="warm" style={{ marginTop: 'var(--spacing-medium)' }}>
       <Heading size="md" level="h3" center>
         Dolor sit amet
       </Heading>
@@ -147,7 +147,7 @@ export const AlignTitle: Story<FactProps> = () => (
         </Text>
       </Fact.Text>
     </Fact>
-    <Fact background="cold" style={{ marginTop: 'var(--spacer-vertical-medium)' }}>
+    <Fact background="cold" style={{ marginTop: 'var(--spacing-medium)' }}>
       <Heading size="md" level="h3">
         Dolor sit amet
       </Heading>

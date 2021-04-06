@@ -6,7 +6,7 @@ const StyledText = styled(Typography)`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
   & + & {
-    margin: var(--spacer-vertical-medium) 0;
+    margin: var(--spacing-medium) 0;
   }
 `
 
