@@ -200,7 +200,7 @@ type NewsSchema = {
   title: string
   id: string
   publishDateTime: string
-  heroImage: { _type: string; alt: string; asset: SanityImageObject; caption?: string; attribution?: string }
+  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
   // How should we do this????
   ingress: Block[]
   content: Block[]
