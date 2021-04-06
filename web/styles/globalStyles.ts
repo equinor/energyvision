@@ -22,9 +22,6 @@ export const GlobalStyle = createGlobalStyle`
     align-items: column; */
   }
 
-  p + p {
-    margin: var(--spacer-vertical-medium) 0 !important;
-  }
 
  /*  #__next {
     flex: 1;
