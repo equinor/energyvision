@@ -5,6 +5,9 @@ import styled from 'styled-components'
 const StyledText = styled(Typography)`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
+  & + & {
+    margin: var(--spacer-vertical-medium) 0;
+  }
 `
 
 export type TextProps = {
