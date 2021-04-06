@@ -1,6 +1,7 @@
 const newsFields = /* groq */ `
   "id": _id,
   title,
+  heroImage,
   publishDateTime,
   "slug": slug.current,
   ingress,
@@ -18,6 +19,7 @@ export const newsQuery = /* groq */ `
     content,
     "relatedLinks": relatedLinks{
   	title,
+    heroImage,
   	"links": links[]{
       _type == "internalUrl" => {
       "type": _type,
