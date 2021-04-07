@@ -11,10 +11,9 @@ import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import { IngressBlockRenderer } from '../../common/serializers'
-import { useNextSanityImage } from 'next-sanity-image'
 import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { SanityImgLoader } from '../../common/helpers'
+import { imageProps } from '../../common/helpers'
 
 const { Links } = RelatedContent
 const { Item } = List
@@ -226,12 +225,6 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
-  }
-
-  const imageProps = (image: SanityImageObject, maxWidth: number, aspectRatio?: number) => {
-    return useNextSanityImage(sanityClient, image, {
-      imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
-    })
   }
 
   return (
