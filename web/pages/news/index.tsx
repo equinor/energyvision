@@ -11,27 +11,6 @@ import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
-// const ImagePlaceholder = styled.div`
-//   background-color: hsl(0, 0%, 86%);
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   display: block;
-//   /* TODO: Fix border radius on image */
-//   border-top-left-radius: 4px;
-//   border-top-right-radius: 4px;
-// `
-
-// const RatioBox = styled.div`
-//   position: relative;
-//   height: 0;
-//   display: block;
-//   width: 100%;
-//   padding-bottom: 56.25%;
-// `
-
 const TempWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
