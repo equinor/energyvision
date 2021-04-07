@@ -39,6 +39,8 @@ module.exports = {
         varsIgnorePattern: '^React$',
       },
     ],
+    // This rule was so noicy so let's turn it off and see how that works
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'import/newline-after-import': ['error'],
     'import/no-unresolved': ['error', { ignore: ['^@'] }],
     'react/no-array-index-key': ['error'],
