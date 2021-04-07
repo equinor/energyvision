@@ -1,12 +1,12 @@
-import React, { forwardRef } from 'react'
+/* import React, { forwardRef } from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { BlockEditor } from 'part:@sanity/form-builder'
 import blocksToText from '../../helpers/blocksToText'
 
 type CharCounterEditorProps = {
   value: []
-}
-export const CharCounterEditor = forwardRef(function CharCounterEditor({
+} */
+/* export const CharCounterEditor = forwardRef(function CharCounterEditor({
   value = [],
   ...rest
 }: CharCounterEditorProps): JSX.Element {
@@ -18,3 +18,24 @@ export const CharCounterEditor = forwardRef(function CharCounterEditor({
     </div>
   )
 })
+ */
+
+import React, { PureComponent } from 'react'
+// eslint-disable-next-line import/no-unresolved
+import { BlockEditor } from 'part:@sanity/form-builder'
+import blocksToText from '../../helpers/blocksToText'
+
+export default class CustomEditor extends PureComponent {
+  render() {
+    // eslint-disable-next-line
+    // @ts-ignore: How to do this with classes
+    const { value = [] } = this.props
+    const plainText = blocksToText(value)
+    return (
+      <div>
+        <BlockEditor {...this.props} />
+        <div>Characters: {plainText.length}</div>
+      </div>
+    )
+  }
+}
