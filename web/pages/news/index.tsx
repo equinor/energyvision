@@ -5,29 +5,32 @@ import { allNewsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import styled from 'styled-components'
+import Img from 'next/image'
+import { imageProps } from '../../common/helpers'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
-const ImagePlaceholder = styled.div`
-  background-color: hsl(0, 0%, 86%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  /* TODO: Fix border radius on image */
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-`
+// const ImagePlaceholder = styled.div`
+//   background-color: hsl(0, 0%, 86%);
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   display: block;
+//   /* TODO: Fix border radius on image */
+//   border-top-left-radius: 4px;
+//   border-top-right-radius: 4px;
+// `
 
-const RatioBox = styled.div`
-  position: relative;
-  height: 0;
-  display: block;
-  width: 100%;
-  padding-bottom: 56.25%;
-`
+// const RatioBox = styled.div`
+//   position: relative;
+//   height: 0;
+//   display: block;
+//   width: 100%;
+//   padding-bottom: 56.25%;
+// `
 
 const TempWrapper = styled.div`
   display: grid;
@@ -46,6 +49,7 @@ type NewsSchema = {
   title: string
   id: string
   publishDateTime: string
+  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
   // How should we do this????
   ingress: Block[]
 }
@@ -67,16 +71,14 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
         {allNews.length > 0 && (
           <TempWrapper>
             {allNews.map((newsItem: NewsSchema) => {
-              const { slug, title, id, ingress, publishDateTime } = newsItem
+              const { slug, title, id, ingress, publishDateTime, heroImage } = newsItem
               return (
                 <Link href={`/news/${slug}`} key={id} passHref shallow>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <CardLink>
                     <Card>
                       <Media>
-                        <RatioBox>
-                          <ImagePlaceholder />
-                        </RatioBox>
+                        <Img {...imageProps(heroImage.image, 400, 0.56)} alt={heroImage.alt} />
                       </Media>
                       <Header>
                         <Eyebrow>
