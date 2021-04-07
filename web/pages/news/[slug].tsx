@@ -139,27 +139,6 @@ const TempWrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
-const ImagePlaceholder = styled.div`
-  background-color: hsl(0, 0%, 86%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  /* TODO: Fix border radius on image */
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-`
-
-const RatioBox = styled.div`
-  position: relative;
-  height: 0;
-  display: block;
-  width: 100%;
-  padding-bottom: 56.25%;
-`
-
 type Block = {
   _type: string
   children: []
@@ -183,6 +162,7 @@ type NewsCard = {
   title: string
   id: string
   publishDateTime: string
+  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
   // How should we do this????
   ingress: Block[]
 }
@@ -307,16 +287,14 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   </Heading>
                   <TempWrapper>
                     {latestNews.map((newsItem: NewsCard) => {
-                      const { slug, title, id, ingress, publishDateTime } = newsItem
+                      const { slug, title, id, ingress, publishDateTime, heroImage } = newsItem
                       return (
                         <NextLink href={`/news/${slug}`} key={id}>
                           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                           <CardLink>
                             <Card>
                               <Media>
-                                <RatioBox>
-                                  <ImagePlaceholder />
-                                </RatioBox>
+                                <Img {...imageProps(heroImage.image, 400, 0.56)} alt={heroImage.alt} />
                               </Media>
                               <Header>
                                 <Eyebrow>
