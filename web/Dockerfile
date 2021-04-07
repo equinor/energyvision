@@ -54,7 +54,8 @@ ARG NEXT_PUBLIC_SANITY_DATASET
 RUN pnpm web install -- --frozen-lockfile
 
 RUN rm ./web/pnpm-lock.yaml
-RUN rm -r .pnpm-store .config
+# RUN rm -r .pnpm-store .config
+RUN rm -rf .pnpm-store
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
