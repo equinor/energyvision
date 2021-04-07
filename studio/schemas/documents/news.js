@@ -95,6 +95,7 @@ export default {
       name: 'heroImage',
       title: 'Hero image',
       type: 'imageWithAltAndCaption',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'ingress',
