@@ -1,5 +1,5 @@
 import { configureBlockContent } from '../editors/blockContentType'
-import { CharCounterEditor } from '../components/CharCounterEditor'
+import CharCounterEditor from '../components/CharCounterEditor'
 import { formatDate } from '../../helpers/formatDate'
 
 const blockContentType = configureBlockContent()
