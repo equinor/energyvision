@@ -19,7 +19,7 @@ export const FigureRenderer = (child: { node: FigureNode }) => {
   const { node } = child
   const { image = undefined, caption, attribution } = node
 
-  if (!image) return false
+  if (!image) return null
 
   // TODO: add styling for figcaption
   return (
