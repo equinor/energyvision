@@ -36,7 +36,7 @@ export const newsQuery = /* groq */ `
       "type": _type,
       "id": _key,
       label,
-      "link": reference -> {
+      "link": reference-> {
         "type": _type,
         "slug": slug.current
     	},
