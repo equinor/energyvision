@@ -10,11 +10,11 @@ import { sanityClient, getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
-import { IngressBlockRenderer } from '../../common/serializers'
 import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { imageProps } from '../../common/helpers'
 import HeroImage from '../../tempcomponents/news/HeroImage'
+import Lead from '../../tempcomponents/news/Lead'
 import type { ImageWithCaptionData } from '../../types/types'
 
 const { Links } = RelatedContent
@@ -80,7 +80,7 @@ const Date = styled.div`
   }
 `
 
-const ImageWrapper = styled.div`
+const Image = styled.div`
   grid-column: 2 / 3;
   grid-row: 4 / 6;
   @media (min-width: 800px) {
@@ -226,19 +226,10 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               <Date>
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
-              <ImageWrapper>
-                <HeroImage data={news.heroImage} />
-              </ImageWrapper>
+              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
               {news.ingress && (
                 <LeadParagraph>
-                  <SimpleBlockContent
-                    blocks={news.ingress}
-                    serializers={{
-                      types: {
-                        block: IngressBlockRenderer,
-                      },
-                    }}
-                  ></SimpleBlockContent>
+                  <Lead blocks={news.ingress} />
                 </LeadParagraph>
               )}
               {news.content && (

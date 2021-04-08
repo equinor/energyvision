@@ -8,3 +8,9 @@ export type ImageWithCaptionData = {
   alt: string
   image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
 }
+
+// @TODO Complete types
+export type Block = {
+  _type: string
+  children: []
+}
