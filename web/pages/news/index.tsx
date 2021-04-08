@@ -1,15 +1,10 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import { Layout, Card, FormattedDate } from '@components'
+import { Layout } from '@components'
 import { allNewsQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
 import styled from 'styled-components'
-import Img from 'next/image'
-import { imageProps } from '../../common/helpers'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-
-const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
+import type { NewsSchema } from '../../types/types'
+import NewsCard from '../../tempcomponents/news/NewsCard'
 
 const TempWrapper = styled.div`
   display: grid;
@@ -17,21 +12,6 @@ const TempWrapper = styled.div`
   grid-row-gap: 4rem;
   grid-column-gap: 2rem;
 `
-
-type Block = {
-  _type: string
-  children: []
-}
-
-type NewsSchema = {
-  slug: string
-  title: string
-  id: string
-  publishDateTime: string
-  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
-  // How should we do this????
-  ingress: Block[]
-}
 
 type AllNewsProps = {
   allNews: NewsSchema[]
@@ -50,31 +30,7 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
         {allNews.length > 0 && (
           <TempWrapper>
             {allNews.map((newsItem: NewsSchema) => {
-              const { slug, title, id, ingress, publishDateTime, heroImage } = newsItem
-              return (
-                <Link href={`/news/${slug}`} key={id} passHref shallow>
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <CardLink>
-                    <Card>
-                      <Media>
-                        <Img {...imageProps(heroImage.image, 400, 0.56)} alt={heroImage.alt} />
-                      </Media>
-                      <Header>
-                        <Eyebrow>
-                          <FormattedDate datetime={publishDateTime} />
-                        </Eyebrow>
-                        <Title>{title}</Title>
-                      </Header>
-                      <Text>
-                        <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-                      </Text>
-                      <Action>
-                        <Arrow />
-                      </Action>
-                    </Card>
-                  </CardLink>
-                </Link>
-              )
+              return <NewsCard data={newsItem} key={newsItem.id} />
             })}
           </TempWrapper>
         )}

@@ -23,7 +23,7 @@ export type RelatedLinksData = {
   links: LinkData[]
 }
 
-export type NewsCard = {
+export type NewsCardData = {
   slug: string
   title: string
   id: string
