@@ -4,7 +4,6 @@ import styles from './IframePreview.module.css'
 export default function NewsPreview(props) {
   const { document } = props
   const { displayed } = document
-  console.log('displayed', displayed, props)
   if (!displayed?.slug?.current) {
     return <div>The product needs a slug before it can be previewed.</div>
   }
