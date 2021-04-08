@@ -1,38 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from 'react'
-import BlockContent from '@sanity/block-content-to-react'
+import { PortableText } from '../lib/sanity'
 import { BlockRenderer, SubRenderer, SupRenderer } from './serializers/'
+import { PortableTextProps } from '@sanity/block-content-to-react'
 
 const defaultSerializers = {
   types: { block: BlockRenderer },
   marks: { sub: SubRenderer, sup: SupRenderer },
 }
 
-// @TODO: Need to revisit this!!!!
-type Serializers = {
-  // eslint-disable-next-line no-unused-vars
-  types?: Record<string, (props: any) => JSX.Element | null>
-  // eslint-disable-next-line no-unused-vars
-  marks?: Record<string, (props: any) => JSX.Element | null>
-  list?: Component
-  listItem?: Component
-  hardBreak?: Component
-  container?: Component
-}
-
-type Block = {
-  _type: string
-  children: []
-}
-
-type Props = {
-  blocks: Block[]
-  serializers?: Serializers
-}
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const SimpleBlockContent = ({ blocks, serializers = {}, ...props }: Props) => (
-  <BlockContent blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
+const SimpleBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => (
+  <PortableText blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
 )
 
 export default SimpleBlockContent
