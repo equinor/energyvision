@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { Layout, Heading, FormattedDateTime, RelatedContent, Link, List, Card, FormattedDate } from '@components'
+import { Layout, Heading, FormattedDateTime, Card, FormattedDate } from '@components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
@@ -15,11 +15,11 @@ import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { imageProps } from '../../common/helpers'
 import HeroImage from '../../tempcomponents/news/HeroImage'
 import Lead from '../../tempcomponents/news/Lead'
-import type { ImageWithCaptionData } from '../../types/types'
+import RelatedContent from '../../tempcomponents/news/RelatedContent'
+import type { ImageWithCaptionData, RelatedLinksData } from '../../types/types'
+
 import { PortableTextEntry } from '@sanity/block-content-to-react'
 
-const { Links } = RelatedContent
-const { Item } = List
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const NewsLayout = styled.div`
@@ -142,19 +142,6 @@ const TempWrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
-type Link = {
-  type: string
-  id: string
-  label: string
-  link?: { slug: string; type: string }
-  href?: string
-}
-
-type RelatedLinks = {
-  title: string
-  links: Link[]
-}
-
 type NewsCard = {
   slug: string
   title: string
@@ -173,7 +160,7 @@ type NewsSchema = {
   heroImage: ImageWithCaptionData
   ingress: PortableTextEntry[]
   content: PortableTextEntry[]
-  relatedLinks: RelatedLinks
+  relatedLinks: RelatedLinksData
 }
 
 type ArticleProps = {
@@ -234,28 +221,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               )}
               {news.relatedLinks && (
                 <Related>
-                  <RelatedContent>
-                    <Heading size="lg" level="h2" center>
-                      {news.relatedLinks.title}
-                    </Heading>
-                    <Links>
-                      {news.relatedLinks.links.length > 0 &&
-                        news.relatedLinks.links.map((item) => {
-                          const isExternal = item.type === 'externalUrl'
-                          // @TODO: a generic way to resolve internal links?
-                          // @TODO: Both external and internal links are wrapped in next/link
-                          const href = item.type === 'externalUrl' ? item.href : `/news/${item.link?.slug}`
-                          return (
-                            <Item key={item.id}>
-                              {/*  @TODO: What if href is undefined?  */}
-                              <Link variant="contentLink" href={href || '/'} external={isExternal}>
-                                {item.label}
-                              </Link>
-                            </Item>
-                          )
-                        })}
-                    </Links>
-                  </RelatedContent>
+                  <RelatedContent data={news.relatedLinks} />
                 </Related>
               )}
 
