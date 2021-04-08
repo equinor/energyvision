@@ -5,7 +5,6 @@ const newsFields = /* groq */ `
   publishDateTime,
   "slug": slug.current,
   ingress,
- 
 `
 
 export const allNewsQuery = /* groq */ `
