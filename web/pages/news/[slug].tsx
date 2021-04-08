@@ -1,26 +1,18 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { default as NextLink } from 'next/link'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import { Layout, Heading, FormattedDateTime, Card, FormattedDate } from '@components'
+import { Layout, Heading, FormattedDateTime } from '@components'
+import styled from 'styled-components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
-import styled from 'styled-components'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
 import NewsBlockContent from '../../common/NewsBlockContent'
-import Img from 'next/image'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { imageProps } from '../../common/helpers'
 import HeroImage from '../../tempcomponents/news/HeroImage'
 import Lead from '../../tempcomponents/news/Lead'
 import RelatedContent from '../../tempcomponents/news/RelatedContent'
-import type { ImageWithCaptionData, RelatedLinksData } from '../../types/types'
-
-import { PortableTextEntry } from '@sanity/block-content-to-react'
-
-const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
+import LatestNews from '../../tempcomponents/news/LatestNews'
+import type { NewsCard, NewsSchema } from '../../types/types'
 
 const NewsLayout = styled.div`
   display: grid;
@@ -127,41 +119,13 @@ const Related = styled.div`
     grid-column: 3 / 4;
   }
 `
-const LatestNews = styled.div`
+const Latest = styled.div`
   grid-column: 2 / 3;
   grid-row: 9;
   @media (min-width: 800px) {
     grid-column: 2 / 5;
   }
 `
-
-const TempWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  grid-row-gap: 4rem;
-  grid-column-gap: 2rem;
-`
-
-type NewsCard = {
-  slug: string
-  title: string
-  id: string
-  publishDateTime: string
-  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
-  // How should we do this????
-  ingress: PortableTextEntry[]
-}
-
-type NewsSchema = {
-  slug: string
-  title: string
-  id: string
-  publishDateTime: string
-  heroImage: ImageWithCaptionData
-  ingress: PortableTextEntry[]
-  content: PortableTextEntry[]
-  relatedLinks: RelatedLinksData
-}
 
 type ArticleProps = {
   data: {
@@ -224,42 +188,10 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   <RelatedContent data={news.relatedLinks} />
                 </Related>
               )}
-
               {latestNews.length > 0 && (
-                <LatestNews>
-                  <Heading size="xl" level="h2" center>
-                    Latest news
-                  </Heading>
-                  <TempWrapper>
-                    {latestNews.map((newsItem: NewsCard) => {
-                      const { slug, title, id, ingress, publishDateTime, heroImage } = newsItem
-                      return (
-                        <NextLink href={`/news/${slug}`} key={id}>
-                          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                          <CardLink>
-                            <Card>
-                              <Media>
-                                <Img {...imageProps(heroImage.image, 400, 0.56)} alt={heroImage.alt} />
-                              </Media>
-                              <Header>
-                                <Eyebrow>
-                                  <FormattedDate datetime={publishDateTime} />
-                                </Eyebrow>
-                                <Title>{title}</Title>
-                              </Header>
-                              <Text>
-                                <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-                              </Text>
-                              <Action>
-                                <Arrow />
-                              </Action>
-                            </Card>
-                          </CardLink>
-                        </NextLink>
-                      )
-                    })}
-                  </TempWrapper>
-                </LatestNews>
+                <Latest>
+                  <LatestNews data={latestNews} />
+                </Latest>
               )}
             </NewsLayout>
           </article>
