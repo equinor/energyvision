@@ -16,6 +16,7 @@ import { imageProps } from '../../common/helpers'
 import HeroImage from '../../tempcomponents/news/HeroImage'
 import Lead from '../../tempcomponents/news/Lead'
 import type { ImageWithCaptionData } from '../../types/types'
+import { PortableTextEntry } from '@sanity/block-content-to-react'
 
 const { Links } = RelatedContent
 const { Item } = List
@@ -141,11 +142,6 @@ const TempWrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
-type Block = {
-  _type: string
-  children: []
-}
-
 type Link = {
   type: string
   id: string
@@ -166,7 +162,7 @@ type NewsCard = {
   publishDateTime: string
   heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
   // How should we do this????
-  ingress: Block[]
+  ingress: PortableTextEntry[]
 }
 
 type NewsSchema = {
@@ -175,9 +171,8 @@ type NewsSchema = {
   id: string
   publishDateTime: string
   heroImage: ImageWithCaptionData
-  // How should we do this????
-  ingress: Block[]
-  content: Block[]
+  ingress: PortableTextEntry[]
+  content: PortableTextEntry[]
   relatedLinks: RelatedLinks
 }
 

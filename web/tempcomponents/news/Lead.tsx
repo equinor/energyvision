@@ -1,8 +1,12 @@
 import { IngressBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { PortableTextProps } from '@sanity/block-content-to-react'
+import { PortableTextEntry } from '@sanity/block-content-to-react'
 
-const Lead = ({ blocks }: PortableTextProps) => {
+type LeadProps = {
+  blocks: PortableTextEntry[]
+}
+
+const Lead = ({ blocks }: LeadProps) => {
   return (
     <SimpleBlockContent
       blocks={blocks}
