@@ -14,6 +14,8 @@ import { IngressBlockRenderer } from '../../common/serializers'
 import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { imageProps } from '../../common/helpers'
+import HeroImage from '../../tempcomponents/news/HeroImage'
+import type { ImageWithCaptionData } from '../../types/types'
 
 const { Links } = RelatedContent
 const { Item } = List
@@ -172,7 +174,7 @@ type NewsSchema = {
   title: string
   id: string
   publishDateTime: string
-  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
+  heroImage: ImageWithCaptionData
   // How should we do this????
   ingress: Block[]
   content: Block[]
@@ -225,16 +227,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
               <ImageWrapper>
-                <Img
-                  {...imageProps(news.heroImage.image, 800, 0.5)}
-                  sizes="
-                    (min-width: 800px) 64rem,
-                    (min-width: 1100px) 72rem,
-                    (min-width: 1700px) 92rem,
-                    1400px
-                    "
-                  alt={news.heroImage.alt}
-                />
+                <HeroImage data={news.heroImage} />
               </ImageWrapper>
               {news.ingress && (
                 <LeadParagraph>
