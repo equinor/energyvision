@@ -147,10 +147,10 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   } = usePreviewSubscription(newsQuery, {
     params: { slug },
     initialData: data,
-    //enabled: preview && slug,
-    enabled: false,
+    enabled: preview || router.query.preview !== null,
+    //enabled: false,
   })
-
+  console.log('is preview', preview || router.query.preview !== null)
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -202,6 +202,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
+  console.log('serverside preview *****', preview)
   const { news, latestNews } = await getClient(preview).fetch(newsQuery, {
     slug: params?.slug,
   })
