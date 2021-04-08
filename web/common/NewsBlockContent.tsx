@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import BlockContent, { PortableTextProps } from '@sanity/block-content-to-react'
+import { PortableTextProps } from '@sanity/block-content-to-react'
+import { PortableText } from '../lib/sanity'
 import {
   BlockRenderer,
   SubRenderer,
@@ -23,7 +24,7 @@ const defaultSerializers = {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const NewsBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => (
-  <BlockContent blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
+  <PortableText blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
 )
 
 export default NewsBlockContent
