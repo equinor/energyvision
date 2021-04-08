@@ -7,7 +7,7 @@ export const QuoteRenderer = (child: { node: any }): JSX.Element => {
   const { quote, author, authorTitle, image }: { quote: string; author: string; authorTitle: string; image: any } = node
 
   return (
-    <PullQuote quote={quote}>
+    <PullQuote>
       <PullQuote.Quote text={quote} />
       <PullQuote.Author name={author} title={authorTitle} />
 
