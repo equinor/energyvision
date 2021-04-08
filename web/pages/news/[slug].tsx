@@ -12,7 +12,7 @@ import HeroImage from '../../tempcomponents/news/HeroImage'
 import Lead from '../../tempcomponents/news/Lead'
 import RelatedContent from '../../tempcomponents/news/RelatedContent'
 import LatestNews from '../../tempcomponents/news/LatestNews'
-import type { NewsCard, NewsSchema } from '../../types/types'
+import type { NewsCardData, NewsSchema } from '../../types/types'
 
 const NewsLayout = styled.div`
   display: grid;
@@ -130,7 +130,7 @@ const Latest = styled.div`
 type ArticleProps = {
   data: {
     news: NewsSchema
-    latestNews: NewsCard[]
+    latestNews: NewsCardData[]
   }
   preview: boolean
 }
