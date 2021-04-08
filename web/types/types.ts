@@ -9,8 +9,15 @@ export type ImageWithCaptionData = {
   image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
 }
 
-// @TODO Complete types
-export type Block = {
-  _type: string
-  children: []
+export type LinkData = {
+  type: string
+  id: string
+  label: string
+  link?: { slug: string; type: string }
+  href?: string
+}
+
+export type RelatedLinksData = {
+  title: string
+  links: LinkData[]
 }
