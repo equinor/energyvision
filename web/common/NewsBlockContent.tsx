@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from 'react'
-import BlockContent from '@sanity/block-content-to-react'
+import BlockContent, { PortableTextProps } from '@sanity/block-content-to-react'
 import {
   BlockRenderer,
   SubRenderer,
@@ -22,30 +21,8 @@ const defaultSerializers = {
   },
 }
 
-// @TODO: Need to revisit this!!!!
-type Serializers = {
-  // eslint-disable-next-line no-unused-vars
-  types?: Record<string, (props: any) => JSX.Element | null>
-  // eslint-disable-next-line no-unused-vars
-  marks?: Record<string, (props: any) => JSX.Element | null>
-  list?: Component
-  listItem?: Component
-  hardBreak?: Component
-  container?: Component
-}
-
-type Block = {
-  _type: string
-  children: []
-}
-
-type Props = {
-  blocks: Block[]
-  serializers?: Serializers
-}
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const NewsBlockContent = ({ blocks, serializers = {}, ...props }: Props) => (
+const NewsBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => (
   <BlockContent blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
 )
 
