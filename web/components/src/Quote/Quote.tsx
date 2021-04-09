@@ -9,7 +9,7 @@ type QuoteProps = {
 // TODO: margin from Text is unwanted here?
 const QuoteText = styled((props) => <Text {...props}></Text>)`
   font-style: italic;
-  grid-column: 1 / 3;
+  grid-area: quote;
   align-self: end;
 `
 
