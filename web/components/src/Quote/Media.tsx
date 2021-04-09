@@ -5,9 +5,8 @@ type MediaProps = HTMLAttributes<HTMLDivElement>
 
 const Img = styled.div`
   width: 100%;
-  grid-column: 4 / 4;
-  grid-row: 1 / 3;
   align-self: center;
+  grid-area: media;
 
   img {
     border-radius: 50%;

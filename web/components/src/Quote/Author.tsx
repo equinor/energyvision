@@ -8,11 +8,14 @@ type AuthorProps = {
 
 // TODO: font size for figcaption
 const Row = styled.figcaption`
-  text-align: right;
-  margin-top: 1rem;
-  grid-row: 2 / 2;
-  grid-column: 2 / 3;
-  align-self: start;
+  text-align: left;
+  grid-area: author;
+  align-self: end;
+
+  @media (min-width: 800px) {
+    text-align: right;
+    align-self: start;
+  }
 `
 
 const Name = styled.strong`
