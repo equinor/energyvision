@@ -1,9 +1,7 @@
-import React from 'react'
 import styles from './IframePreview.module.css'
 
-export default function NewsPreview(props) {
+export default function NewsPreview(props: { document: any }) {
   const baseUrl = process.env.SANITY_STUDIO_PROJECT_URL
-  console.log('baseUrl', baseUrl, process.env.NODE_ENV)
 
   const { document } = props
   const { displayed } = document
