@@ -11,9 +11,9 @@ const Container = styled.figure`
     [media-start author-start] min-content
     [media-end author-end quote-start] min-content [quote-end];
   grid-template-columns:
-    [main-start media-start quote-start] 5rem
+    [media-start quote-start] 5rem
     [media-end spacing-start] var(--spacing-medium)
-    [spacing-end author-start] 1fr [author-end quote-end main-end];
+    [spacing-end author-start] 1fr [author-end quote-end];
 
   // TODO: find better solution for image sizing
   @media (min-width: 800px) {
@@ -22,27 +22,27 @@ const Container = styled.figure`
       [quote-end author-start] min-content [author-end media-end];
 
     grid-template-columns:
-      [main-start quote-start author-start] 1fr
+      [quote-start author-start] 1fr
       [quote-end author-end spacing-start] var(--spacing-medium)
-      [spacing-end media-start] 8rem [media-end main-end];
+      [spacing-end media-start] 8rem [media-end];
   }
   @media (min-width: 1000px) {
     grid-template-columns:
-      [main-start quote-start author-start] 1fr
+      [quote-start author-start] 1fr
       [quote-end author-end spacing-start] var(--spacing-medium)
-      [spacing-end media-start] 10rem [media-end main-end];
+      [spacing-end media-start] 10rem [media-end];
   }
   @media (min-width: 1200px) {
     grid-template-columns:
-      [main-start quote-start author-start] 1fr
+      [quote-start author-start] 1fr
       [quote-end author-end spacing-start] var(--spacing-medium)
-      [spacing-end media-start] 13rem [media-end main-end];
+      [spacing-end media-start] 13rem [media-end];
   }
   @media (min-width: 1400px) {
     grid-template-columns:
-      [main-start quote-start author-start] 1fr
+      [quote-start author-start] 1fr
       [quote-end author-end spacing-start] var(--spacing-medium)
-      [spacing-end media-start] 16rem [media-end main-end];
+      [spacing-end media-start] 16rem [media-end];
   }
 `
 
