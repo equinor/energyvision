@@ -1,7 +1,7 @@
 import { platforms } from '../platforms.js'
 import { credentials } from '../credentials.js'
 import { seleniumConfig} from '../seleniumConfig.js'
-import webdriver, { Capabilities } from 'selenium-webdriver'
+import webdriver from 'selenium-webdriver'
 
 
 const project = {
@@ -11,10 +11,10 @@ const project = {
 }
 
 platforms.forEach( platform => {
-  gotoNews(platform)
+  gotoNewsAsync(platform)
 })
 
-async function gotoNews(platform) {
+async function gotoNewsAsync(platform) {
   const capabilities = Object.assign({}, platform, project , seleniumConfig)
   console.log(capabilities)
 
@@ -28,8 +28,10 @@ async function gotoNews(platform) {
   const newsElementText = await driver.findElement(webdriver.By.xpath("//*[text()='News']"))
   await newsElementText.click()
   const longestTitleOfAllTimesElement = await (await driver).findElement(webdriver.By.xpath("//*[text()='Testing with the longest title of all time, testing with the longest title of all time. This is 100 ']"))
-  if (!longestTitleOfAllTimesElement.isDisplayed()) {
-    console.log('Longest title of all times not visible')
+  if (false === await longestTitleOfAllTimesElement.isDisplayed()) {
+    console.log("Longest title ever not displayed")
+    throw new Error("Longest title ever not displayed")
   }
   await driver.quit()
 }
+
