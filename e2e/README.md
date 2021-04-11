@@ -1,6 +1,6 @@
 # E2E test framework
 
-The E2E test framework will contain end-to-end tests for Enery Vision
+The E2E test framework will contain end-to-end tests for Energy Vision
 
 ## Setup
 
