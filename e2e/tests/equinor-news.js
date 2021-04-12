@@ -1,7 +1,8 @@
-import { platforms } from '../platforms.js'
+import { platforms } from './platforms.js'
 import { credentials } from '../credentials.js'
 import { seleniumConfig} from '../seleniumConfig.js'
 import webdriver from 'selenium-webdriver'
+import { envisStartPage} from '../energyVision.js'
 
 
 const project = {
@@ -21,7 +22,7 @@ async function gotoNewsAsync(platform) {
   var userName = credentials.userName
   var accessKey = credentials.accessKey
   var browserstackURL = 'https://' + userName + ':' + accessKey + '@hub-cloud.browserstack.com/wd/hub'
-  const envisStartPage = 'https://energyvision.app.radix.equinor.com/'
+
 
   var driver = new webdriver.Builder().usingServer(browserstackURL).withCapabilities(capabilities).build()
   await driver.get(envisStartPage)
