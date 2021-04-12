@@ -1,10 +1,11 @@
-export const platforms = [{
+export const platforms = [
+  {
   os: 'Windows',
   os_version: '10',
   browserName: 'Chrome',
   browser_version: 'latest',
-},
-{
+}
+,{
   os: 'Windows',
   os_version: '10',
   browserName: 'Firefox',
