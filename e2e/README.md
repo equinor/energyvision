@@ -20,14 +20,9 @@ The E2E test framework will contain end-to-end tests for Energy Vision
 
 ## Setup
 
-In order to run the tests the user must create a file named 'credentials.js' with the login information for browserstack.com.
-
-### Sample credentials.js
-
-export const credentials = {
-userName : 'bamsemoms',
-accessKey : 'daAccessKey'
-}
+In order to run the tests, set the following environment variables:
+BS_UserName='Browserstack username'
+BS_Accesskey'Browserstack accesskey'
 
 ### Visual testing using Percy - visualTests
 To run visual tests, set the following environment variable.

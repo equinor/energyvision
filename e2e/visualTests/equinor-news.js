@@ -1,4 +1,3 @@
-import { credentials } from '../credentials.js'
 import { seleniumConfig} from '../seleniumConfig.js'
 import { envisStartPage} from '../energyVision.js'
 import webdriver from 'selenium-webdriver'
@@ -19,8 +18,8 @@ const platform =  {
 
 const capabilities = Object.assign({}, platform, project , seleniumConfig)
 
-var userName = credentials.userName
-var accessKey = credentials.accessKey
+var userName = process.env.BS_UserName
+var accessKey = process.env.BS_Accesskey
 var browserstackURL = 'https://' + userName + ':' + accessKey + '@hub-cloud.browserstack.com/wd/hub'
 
 var driver = new webdriver.Builder().usingServer(browserstackURL).withCapabilities(capabilities).build()
