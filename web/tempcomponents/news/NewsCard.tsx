@@ -11,7 +11,7 @@ type NewsCardProp = {
   data: NewsCardData
 }
 
-const NewsCardList = ({ data }: NewsCardProp) => {
+const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
   return (
     <NextLink href={`/news/${slug}`}>
@@ -19,7 +19,7 @@ const NewsCardList = ({ data }: NewsCardProp) => {
       <CardLink>
         <Card>
           <Media>
-            <Img {...imageProps(heroImage.image, 400, 0.56)} alt={heroImage.alt} />
+            <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage.alt} />
           </Media>
           <Header>
             <Eyebrow>
@@ -39,4 +39,4 @@ const NewsCardList = ({ data }: NewsCardProp) => {
   )
 }
 
-export default NewsCardList
+export default NewsCard
