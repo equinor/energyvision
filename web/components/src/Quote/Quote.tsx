@@ -8,14 +8,15 @@ type QuoteProps = {
 
 // TODO: margin from Text is unwanted here?
 const QuoteText = styled((props) => <Text {...props}></Text>)`
-  font-style: italic;
   grid-area: quote;
   align-self: end;
 `
 
+const textBoldLimit = 160
+
 export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ text, ...rest }, ref) {
   return (
-    <QuoteText size="md" ref={ref} {...rest}>
+    <QuoteText size="md" italic bold={text.length < textBoldLimit} ref={ref} {...rest}>
       {text}
     </QuoteText>
   )
