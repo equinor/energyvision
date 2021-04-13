@@ -40,18 +40,6 @@ const validateRelatedLinksTitle = (value, context) => {
   return true
 }
 
-const validateRelatedLinks = (value, context) => {
-  const title = context.document.relatedLinks.title
-
-  if (!title && !value) {
-    return true
-  } else if (title && (!value || value.length === 0)) {
-    return 'Links are required if a title for this component has been set.'
-  }
-
-  return true
-}
-
 export default {
   title: 'News',
   type: 'document',
@@ -134,11 +122,17 @@ export default {
         {
           name: 'links',
           type: 'relatedLinks',
-          validation: (Rule) => Rule.custom((value, context) => validateRelatedLinks(value, context)),
         },
       ],
     },
   ],
+  initialValue: {
+    relatedLinks: {
+      _type: 'object',
+      title: 'More on this topic',
+      links: [],
+    },
+  },
   preview: {
     select: {
       title: 'title',
