@@ -14,15 +14,18 @@ import RelatedContent from '../../tempcomponents/news/RelatedContent'
 import LatestNews from '../../tempcomponents/news/LatestNews'
 import type { NewsCardData, NewsSchema } from '../../types/types'
 
-const NewsLayoutAlt = styled.div``
+const NewsLayoutAlt = styled.div`
+  --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
+  --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+`
 
 const Header = styled.div`
   background: var(--slate-blue-95);
-  padding: clamp(40px, calc(14.3125px + 11.0032vw), 210px) clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
+  padding: var(--banner-paddingVertical) var(--banner-paddingHorizontal);
 `
 
 const HeaderInner = styled.div`
-  max-width: 1186px; /** 1920 - (2 * 367) */
+  max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
 `
@@ -42,7 +45,7 @@ const ImageAlt = styled.div`
   max-width: 1920px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: calc(clamp(40px, calc(14.3125px + 11.0032vw), 210px) * -1);
+  margin-top: calc(var(--banner-paddingVertical) * -1);
   & > figure {
     margin: 0;
   }
