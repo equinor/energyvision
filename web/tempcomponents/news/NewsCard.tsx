@@ -13,14 +13,13 @@ type NewsCardProp = {
 
 const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
-  if (!heroImage) return
   return (
     <NextLink href={`/news/${slug}`}>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <CardLink>
         <Card>
           <Media>
-            <Img {...imageProps(heroImage.image, 400, 0.56)} alt={heroImage.alt} />
+            <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage.alt} />
           </Media>
           <Header>
             <Eyebrow>
