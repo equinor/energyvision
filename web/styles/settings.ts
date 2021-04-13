@@ -98,16 +98,7 @@ export const colors = css`
 `
 export const typography = css`
   :root {
-    /**
-     * Smallest device width: 375
-     * Largest device width from GA 1920
-     * Scaling factor: 0.454% of view port will give us 16px on smallest
-     * and roughly 23px on largest display
-     * 16 - 375 * 0.454% + 1920 * 0.454% = 23.0143
-     */
-
-    --scalingFactor: 0.454vw;
-    --typeScale-base: clamp(1rem, calc(0.8935rem + var(--scalingFactor)), 1.4375rem);
+    --typeScale-base: 1rem;
     --typeScale-multiplier: 1.2;
     --typeScale-1: var(--typeScale-base);
     --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
@@ -130,29 +121,30 @@ export const typography = css`
 `
 
 export const spacings = css`
-  /** Fluid spacers… need better name? */
+  /** space spacers… need better name? */
   :root {
-    --fluid-xSmall: calc(var(--typeScale-1) / 4); /* 4 */
-    --fluid-small: calc(var(--fluid-xSmall) * 2); /* 8 */
-    --fluid-medium: calc(var(--fluid-small) * 2); /* 16 */
-    --fluid-large: calc(var(--fluid-small) * 3); /* 24 */
-    --fluid-xLarge: calc(var(--fluid-medium) * 2); /* 32 */
+    --space-xSmall: calc(1rem / 4); /* 4 */
+    --space-small: calc(1rem / 2); /* 8 */
+    --space-medium: 1rem; /* 16 */
+    --space-large: calc(1rem * 1.5); /* 24 */
+    --space-xLarge: calc(1rem * 2); /* 32 */
+    --space-xxLarge: calc(1rem * 2.5); /* 40 */
   }
 
-  /** Fluid units for borders, border-radius etc. */
+  /** space units for borders, border-radius etc. */
   :root {
-    --fluid-1: calc(var(--typeScale-1) / 16); /* 1 */
-    --fluid-2: calc(var(--unit-1) * 2); /* 2 */
-    --fluid-3: calc(var(--unit-1) * 3); /* 3 */
-    --fluid-4: calc(var(--unit-1) * 4); /* 4 */
-    --fluid-5: calc(var(--unit-1) * 5); /* 5 */
+    --space-1: calc(1rem / 16); /* 1 */
+    --space-2: calc(1rem / 8); /* 2 */
+    --space-3: calc(1rem / 16 * 3); /* 3 */
+    --space-4: calc(1rem * 4); /* 4 */
+    --space-5: calc(1rem / 16 * 5); /* 5 */
   }
 
   :root {
     /** Copy'n paste from Tailwind's default.
     It's not clear how we should do this.
     We could do it in several ways, we could even make
-    a fluid scale for spacings as well. But what about
+    a space scale for spacings as well. But what about
     theming and that would limit design 🤷‍♀️
     Just did it with a lot of vars and MQ as a start
      */
