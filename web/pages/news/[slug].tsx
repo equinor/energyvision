@@ -14,16 +14,52 @@ import RelatedContent from '../../tempcomponents/news/RelatedContent'
 import LatestNews from '../../tempcomponents/news/LatestNews'
 import type { NewsCardData, NewsSchema } from '../../types/types'
 
+const NewsLayoutAlt = styled.div``
+
+const Header = styled.div`
+  background: var(--slate-blue-95);
+  padding: clamp(40px, calc(14.3125px + 11.0032vw), 210px) clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
+`
+
+const HeaderInner = styled.div`
+  max-width: 1186px; /** 1920 - (2 * 367) */
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const StyledHeadingAlt = styled(Heading)`
+  margin: 0;
+`
+
+const DateAlt = styled.div`
+  color: var(--white-100);
+  margin-top: var(--space-xxLarge);
+  margin-bottom: var(--space-xxLarge);
+`
+
+const ImageAlt = styled.div`
+  padding: 0 clamp(16px, calc(-38.3689px + 14.4984vw), 240px);
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: calc(clamp(40px, calc(14.3125px + 11.0032vw), 210px) * -1);
+  & > figure {
+    margin: 0;
+  }
+`
+
+/** ------------------------------------------ */
+
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacing-medium) 1fr var(--spacing-medium);
   grid-template-rows: var(--spacing-medium) min-content min-content 3rem min-content min-content min-content min-content min-content 3rem;
   width: 100%;
   &::before {
-    content: '';
+    /* content: '';
     background-color: var(--slate-blue-95);
     grid-column: 1/4;
-    grid-row: 1/5;
+    grid-row: 1/5; */
   }
   @media (min-width: 800px) {
     grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 2rem minmax(auto, 60rem) 2rem minmax(
@@ -166,14 +202,27 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
             <Head>
               <title>{news.title}</title>
             </Head>
+            <NewsLayoutAlt>
+              <Header>
+                <HeaderInner>
+                  <StyledHeadingAlt level="h1" size="2xl" inverted>
+                    {news.title}
+                  </StyledHeadingAlt>
+                  <DateAlt>
+                    <FormattedDateTime datetime={news.publishDateTime} />
+                  </DateAlt>
+                </HeaderInner>
+              </Header>
+              <ImageAlt>{news.heroImage && <HeroImage data={news.heroImage} />}</ImageAlt>
+            </NewsLayoutAlt>
             <NewsLayout>
-              <StyledHeading level="h1" size="2xl" inverted>
+              {/*<StyledHeading level="h1" size="2xl" inverted>
                 {news.title}
               </StyledHeading>
               <Date>
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
-              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
+              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>*/}
               {news.ingress && (
                 <LeadParagraph>
                   <Lead blocks={news.ingress} />
