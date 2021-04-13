@@ -15,9 +15,11 @@ const QuoteText = styled((props) => <Text {...props}></Text>)`
 const textBoldLimit = 160
 
 export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ text, ...rest }, ref) {
+  const quoteText = text.trim()
+
   return (
-    <QuoteText size="md" italic bold={text.length < textBoldLimit} ref={ref} {...rest}>
-      {text}
+    <QuoteText size="md" italic bold={quoteText.length < textBoldLimit} ref={ref} {...rest}>
+      {quoteText}
     </QuoteText>
   )
 })
