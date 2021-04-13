@@ -1,5 +1,4 @@
 import { platforms } from './platforms.js'
-import { credentials } from '../credentials.js'
 import { seleniumConfig} from '../seleniumConfig.js'
 import webdriver from 'selenium-webdriver'
 import { envisStartPage} from '../energyVision.js'
@@ -19,8 +18,8 @@ async function gotoNewsAsync(platform) {
   const capabilities = Object.assign({}, platform, project , seleniumConfig)
   console.log(capabilities)
 
-  var userName = credentials.userName
-  var accessKey = credentials.accessKey
+  var userName = process.env.BS_UserName
+  var accessKey = process.env.BS_Accesskey
   var browserstackURL = 'https://' + userName + ':' + accessKey + '@hub-cloud.browserstack.com/wd/hub'
 
 
