@@ -1,4 +1,5 @@
 import Img from 'next/image'
+import styled from 'styled-components'
 import { imageProps } from '../../common/helpers'
 import type { ImageWithCaptionData } from '../../types/types'
 
@@ -6,10 +7,14 @@ type HeroImageProps = {
   data: ImageWithCaptionData
 }
 
+const StyledFigure = styled.figure`
+  margin: 0;
+`
+
 const HeroImage = ({ data }: HeroImageProps) => {
   const { image, alt, caption, attribution } = data
   return (
-    <figure>
+    <StyledFigure>
       <Img
         {...imageProps(image, 800, 0.5)}
         sizes="
@@ -25,7 +30,7 @@ const HeroImage = ({ data }: HeroImageProps) => {
           {caption} {attribution}
         </figcaption>
       ) : null}
-    </figure>
+    </StyledFigure>
   )
 }
 

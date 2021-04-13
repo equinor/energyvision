@@ -19,11 +19,11 @@ export const StyledDate = styled.span`
   & > svg {
     flex-shrink: 0;
     box-sizing: content-box;
-    padding-right: 0.5rem;
+    padding-right: 0.5em;
   }
 
   & time:first-of-type {
-    margin-right: 0.5rem;
+    margin-right: 0.5em;
   }
 `
 
