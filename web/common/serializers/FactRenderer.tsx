@@ -10,7 +10,10 @@ export const FactRenderer = (child: { node: any }) => {
     backgroundColour,
   }: { title: string; content: []; backgroundColour: { colours: { title: string; value: string } } } = node
   const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
-
+  if (!content || content.length === 0) {
+    console.warn('Missing content in a fact box')
+    return null
+  }
   // @TODO: Color mapping must be more generic than this!!!
   // Find a better way to do this.
   // Create a proper type for colors
