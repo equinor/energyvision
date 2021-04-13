@@ -11,8 +11,9 @@ type NewsCardProp = {
   data: NewsCardData
 }
 
-const NewsCardList = ({ data }: NewsCardProp) => {
+const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
+  if (!heroImage) return
   return (
     <NextLink href={`/news/${slug}`}>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -39,4 +40,4 @@ const NewsCardList = ({ data }: NewsCardProp) => {
   )
 }
 
-export default NewsCardList
+export default NewsCard
