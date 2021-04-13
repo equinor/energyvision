@@ -89,6 +89,8 @@ const NewsLayout = styled.div`
     }
   }
 `
+/** eslint */
+// eslint-disable-next-line no-unused-vars
 const StyledHeading = styled(Heading)`
   grid-column: 2 / 3;
   grid-row: 2;
@@ -98,7 +100,7 @@ const StyledHeading = styled(Heading)`
     grid-column: 3 / 4;
   }
 `
-
+// eslint-disable-next-line no-unused-vars
 const Date = styled.div`
   grid-column: 2 / 3;
   grid-row: 3;
@@ -108,7 +110,7 @@ const Date = styled.div`
     grid-column: 3 / 4;
   }
 `
-
+// eslint-disable-next-line no-unused-vars
 const Image = styled.div`
   grid-column: 2 / 3;
   grid-row: 4 / 6;
