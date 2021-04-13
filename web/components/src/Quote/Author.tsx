@@ -6,7 +6,6 @@ type AuthorProps = {
   title: string | null
 } & HTMLAttributes<HTMLDivElement>
 
-// TODO: font size for figcaption
 const Row = styled.figcaption`
   text-align: left;
   grid-area: author;
@@ -18,19 +17,28 @@ const Row = styled.figcaption`
   }
 `
 
-const Name = styled.strong`
-  display: block;
-`
+const AuthorWrapper = styled.div`
+  text-align: left;
+  display: inline-flex;
+  flex-direction: column;
+  margin-right: auto;
 
-const Title = styled.span`
-  display: block;
+  @media (min-width: 800px) {
+    margin-left: auto;
+  }
 `
 
 export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author({ name, title = null, ...rest }, ref) {
   return (
     <Row ref={ref} {...rest}>
-      <Name>{name}</Name>
-      {title ? <Title>{title}</Title> : null}
+      {title ? (
+        <AuthorWrapper>
+          <strong>{name}</strong>
+          {title}
+        </AuthorWrapper>
+      ) : (
+        <strong>{name}</strong>
+      )}
     </Row>
   )
 })
