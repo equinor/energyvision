@@ -12,6 +12,8 @@ const StyledText = styled(Typography)`
 
 export type TextProps = {
   size?: 'regular' | 'md'
+  bold?: boolean
+  italic?: boolean
 } & HTMLAttributes<HTMLHeadingElement>
 
 /* Should be easy enough to change later on */
