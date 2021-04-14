@@ -10,6 +10,7 @@ import {
   FigureRenderer,
   FactRenderer,
   QuoteRenderer,
+  FigureRendererWithLayout,
 } from './serializers/'
 
 const defaultSerializers = {
@@ -17,7 +18,7 @@ const defaultSerializers = {
   types: {
     block: BlockRenderer,
     imageWithAltAndCaption: FigureRenderer,
-    positionedInlineImage: FigureRenderer,
+    positionedInlineImage: FigureRendererWithLayout,
     factbox: FactRenderer,
     pullQuote: QuoteRenderer,
   },
