@@ -14,22 +14,24 @@ const Figure = styled.figure<FigureStyles>`
   margin: var(--spacing-medium) calc(var(--spacing-medium) * -1);
   /*   @TODO Needs lot of peace and love when the design has settled
  */
-  ${({ layout }) =>
-    layout === 'right' && {
-      width: 'calc(50% + var(--spacing-medium))',
-      marginLeft: 'var(--spacing-small)',
-      marginTop: '0',
-      marginBottom: 'var(--spacing-small)',
-      float: 'right',
-    }}
-  ${({ layout }) =>
-    layout === 'left' && {
-      width: 'calc(50% + var(--spacing-medium))',
-      marginRight: 'var(--spacing-small)',
-      marginBottom: 'var(--spacing-small)',
-      marginTop: '0',
-      float: 'left',
-    }}
+  @media (min-width: 1700px) {
+    ${({ layout }) =>
+      layout === 'right' && {
+        width: 'calc(50% + var(--spacing-medium))',
+        marginLeft: 'var(--spacing-small)',
+        marginTop: '0',
+        marginBottom: 'var(--spacing-small)',
+        float: 'right',
+      }}
+    ${({ layout }) =>
+      layout === 'left' && {
+        width: 'calc(50% + var(--spacing-medium))',
+        marginRight: 'var(--spacing-small)',
+        marginBottom: 'var(--spacing-small)',
+        marginTop: '0',
+        float: 'left',
+      }}
+  }
 `
 
 type FigureNode = {
