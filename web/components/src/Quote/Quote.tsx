@@ -24,6 +24,8 @@ const textBoldLimit = 160
 const textSizeLimit = 50
 
 export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ text, ...rest }, ref) {
+  if (!text) return null
+
   const quoteText = text.trim()
 
   const weight = quoteText.length < textBoldLimit ? '--fontWeight-medium' : '--fontWeight-regular'
