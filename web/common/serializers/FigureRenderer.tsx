@@ -4,7 +4,7 @@ import { imageProps } from '../../common/helpers'
 import styled from 'styled-components'
 
 const Figure = styled.figure`
-  margin: var(--spacing-medium) 0;
+  margin: var(--spacing-medium) calc(var(--spacing-medium) * -1);
 `
 
 type FigureNode = {
