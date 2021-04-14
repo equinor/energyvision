@@ -82,7 +82,7 @@ const NewsLayout = styled.div`
       );
   }
   @media (min-width: 1700px) {
-    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 6rem minmax(auto, 80rem) 6rem minmax(
+    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 4rem minmax(auto, 32rem) 4rem minmax(
         var(--spacing-xLarge),
         1fr
       );
@@ -141,7 +141,7 @@ const Content = styled.div`
   grid-column: 2 / 3;
   grid-row: 7;
   @media (min-width: 800px) {
-    grid-column: 2 / 5;
+    grid-column: 3 / 4;
   }
   @media (min-width: 1000px) {
     margin: 0 var(--spacing-xxLarge);
