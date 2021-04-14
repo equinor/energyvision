@@ -17,6 +17,7 @@ const defaultSerializers = {
   types: {
     block: BlockRenderer,
     imageWithAltAndCaption: FigureRenderer,
+    positionedInlineImage: FigureRenderer,
     factbox: FactRenderer,
     pullQuote: QuoteRenderer,
   },
