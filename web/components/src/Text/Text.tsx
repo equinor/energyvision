@@ -5,6 +5,7 @@ import styled from 'styled-components'
 const StyledText = styled(Typography)`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
+  margin-bottom: var(--spacing-medium);
   & + & {
     margin: var(--spacing-medium) 0;
   }
