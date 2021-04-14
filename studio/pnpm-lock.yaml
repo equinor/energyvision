@@ -4,33 +4,19 @@ dependencies:
   '@sanity/components': 2.2.6
   '@sanity/core': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/data-aspects': 2.2.6
-<<<<<<< HEAD
   '@sanity/default-layout': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/default-login': 2.8.0
   '@sanity/desk-tool': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/form-builder': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
-  '@sanity/vision': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
-=======
-  '@sanity/default-layout': 2.7.4_9bdd65c2b60ce8638444b80b396a481b
-  '@sanity/default-login': 2.7.0
-  '@sanity/desk-tool': 2.7.4_9bdd65c2b60ce8638444b80b396a481b
-  '@sanity/form-builder': 2.7.4_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/ui': 0.33.15_react-dom@17.0.2+react@17.0.2
-  '@sanity/vision': 2.7.4_9bdd65c2b60ce8638444b80b396a481b
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
+  '@sanity/vision': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
   only-allow: 1.0.0
   prop-types: 15.7.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-<<<<<<< HEAD
-  sanity-plugin-color-list: 2.0.1_31403e5b4399bbca16cb0b1b0d8482f4
+  sanity-plugin-color-list: 2.0.1_acec1bd3a5e514aed34affea6ff20b64
 devDependencies:
   '@sanity/cli': 2.8.0
-=======
-  sanity-plugin-color-list: 2.0.1_bc702d88f4f5a3e0ef3d6084f79387d2
-devDependencies:
-  '@sanity/cli': 2.7.4
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.13:
@@ -90,7 +76,7 @@ packages:
     dependencies:
       '@babel/compat-data': 7.13.15
       '@babel/helper-validator-option': 7.12.17
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       semver: 6.3.0
     dev: false
     peerDependencies:
@@ -102,7 +88,7 @@ packages:
       '@babel/compat-data': 7.13.15
       '@babel/core': 7.13.15
       '@babel/helper-validator-option': 7.12.17
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       semver: 6.3.0
     dev: false
     peerDependencies:
@@ -1876,10 +1862,6 @@ packages:
       react: ^16.14.0
     resolution:
       integrity: sha512-EN9czvcLsMYmSDo5yRKZOAq3ZGRlDpad1gPtX0NdMMomJXcPE3yFSeFzE94X/NjOaiSVimB7LuqPYpkWVaIi4Q==
-<<<<<<< HEAD
-=======
-      tarball: '@hot-loader/react-dom/-/react-dom-16.14.0.tgz'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@juggle/resize-observer/3.3.0:
     dev: false
     resolution:
@@ -1913,8 +1895,6 @@ packages:
     resolution:
       integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
   /@reach/auto-id/0.13.2_react-dom@17.0.2+react@17.0.2:
-<<<<<<< HEAD
-=======
     dependencies:
       '@reach/utils': 0.13.2_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
@@ -1926,19 +1906,6 @@ packages:
       react-dom: ^16.8.0 || 17.x
     resolution:
       integrity: sha512-dWeXt6xxjN+NPRoZFXgmNkF89t8MEPsWLYjIIDf3gNXA/Dxaoytc9YBOIfVGpDSpdOwxPpxOu8rH+4Y3Jk2gHA==
-  /@reach/auto-id/0.14.0_react-dom@17.0.2+react@17.0.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
-    dependencies:
-      '@reach/utils': 0.14.0_react-dom@17.0.2+react@17.0.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      tslib: 2.2.0
-    dev: false
-    peerDependencies:
-      react: ^16.8.0 || 17.x
-      react-dom: ^16.8.0 || 17.x
-    resolution:
-      integrity: sha512-Ym8PBXubuXP7m8CFReqHIH8iXOTcZ3PuAjtHHGuc2EToCwhbbFSf1OouWMUdr6S6vZmu0pOnhOgIE1QGw+dEpw==
   /@reach/auto-id/0.15.0_react-dom@17.0.2+react@17.0.2:
     dependencies:
       '@reach/utils': 0.15.0_react-dom@17.0.2+react@17.0.2
@@ -1950,33 +1917,8 @@ packages:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     resolution:
-<<<<<<< HEAD
-      integrity: sha512-dWeXt6xxjN+NPRoZFXgmNkF89t8MEPsWLYjIIDf3gNXA/Dxaoytc9YBOIfVGpDSpdOwxPpxOu8rH+4Y3Jk2gHA==
-  /@reach/auto-id/0.15.0_react-dom@17.0.2+react@17.0.2:
-    dependencies:
-      '@reach/utils': 0.15.0_react-dom@17.0.2+react@17.0.2
-=======
       integrity: sha512-iACaCcZeqAhDf4OOwJpmHHS/LaRj9z3Ip8JmlhpCrFWV2YOIiiZk42amlBZX6CKH66Md+eriYZQk3TyAjk6Oxg==
   /@reach/utils/0.13.2_react-dom@17.0.2+react@17.0.2:
-    dependencies:
-      '@types/warning': 3.0.0
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      tslib: 2.2.0
-      warning: 4.0.3
-    dev: false
-    peerDependencies:
-      react: ^16.8.0 || 17.x
-      react-dom: ^16.8.0 || 17.x
-    resolution:
-<<<<<<< HEAD
-      integrity: sha512-iACaCcZeqAhDf4OOwJpmHHS/LaRj9z3Ip8JmlhpCrFWV2YOIiiZk42amlBZX6CKH66Md+eriYZQk3TyAjk6Oxg==
-  /@reach/utils/0.13.2_react-dom@17.0.2+react@17.0.2:
-=======
-      integrity: sha512-3ir6cN60zvUrwjOJu7C6jec/samqAeyAB12ZADK+qjnmQPdzSYldrFWwDVV5H0WkhbYXR3uh+eImu13hCetNPQ==
-  /@reach/utils/0.14.0_react-dom@17.0.2+react@17.0.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@types/warning': 3.0.0
       react: 17.0.2
@@ -1988,11 +1930,7 @@ packages:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     resolution:
-<<<<<<< HEAD
       integrity: sha512-3ir6cN60zvUrwjOJu7C6jec/samqAeyAB12ZADK+qjnmQPdzSYldrFWwDVV5H0WkhbYXR3uh+eImu13hCetNPQ==
-=======
-      integrity: sha512-QbSFO5p44qUCkOllJM06Lt5A/EsoVIYlB9Ij1vKEezy53keaa5bc879dD2Ahv+mMf+E1VppCeiL6YYvdpJmVVQ==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@reach/utils/0.15.0_react-dom@17.0.2+react@17.0.2:
     dependencies:
       react: 17.0.2
@@ -2009,22 +1947,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YnrybIoM9WFqmeK1D8p/gutqjJnmXCVFWAU3ucka9M7Dzpen3f2Dy4KsC6k1wDHrCtHQuUHHwZovh3i5UPDaZw==
-<<<<<<< HEAD
-  /@sanity/asset-utils/1.1.4:
-=======
   /@sanity/asset-utils/1.1.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     engines:
       node: '>=10'
     resolution:
-<<<<<<< HEAD
-      integrity: sha512-5EiUzZ7tRj8HQWZZH1EBJwg0kQ8fp/tWsf5aYkm2CrcbTKHMWmMYpD3B0TtwtqHuDzAmdmEvn1VbLJ7iCulncw==
-  /@sanity/base/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
       integrity: sha512-wVNhZ/W0ktlvHUzUrCuJMY9YtSls3PU+p5iQko8+P2R0HhEJfBCeTMTdqCe4BY/AfzVb4tn3/xr6XRRBKEL+AA==
-  /@sanity/base/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
+  /@sanity/base/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
     dependencies:
       '@popperjs/core': 2.9.2
       '@reach/auto-id': 0.13.2_react-dom@17.0.2+react@17.0.2
@@ -2049,7 +1978,7 @@ packages:
       circular-at: 1.0.4
       classnames: 2.3.1
       dataloader: 2.0.0
-      date-fns: 2.20.3
+      date-fns: 2.20.0
       dom-scroll-into-view: 1.2.1
       element-resize-detector: 1.2.2
       history: 4.10.1
@@ -2084,11 +2013,7 @@ packages:
       react: ^16.9 || ^17
       react-dom: ^16.9 || ^17
     resolution:
-<<<<<<< HEAD
       integrity: sha512-yHBsBtu9Nu13nF1AryruA99snjYjEz8KIpKU+V0+/lfEmiWKxKDw+nlx5NQ+o9Jivb488Bk6AsPKlStwz433+w==
-=======
-      integrity: sha512-9Q7zPpWRenFx8dutpk0FY6xEzxpSI98dmO3sANl3YAfOHXqpsPHIEYn8t9hutGxjRotytFoIygCabpqrljKcFw==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/bifur-client/0.0.8:
     dependencies:
       nanoid: 3.1.22
@@ -2103,23 +2028,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Q7RMePOkO6Xf3CCtt4FFbteIOamI8ejtQGvNSM9E62vZfj1BlVh0ajflbLLOL+mWdo4KStRuSejZn0bmBDzYpQ==
-<<<<<<< HEAD
   /@sanity/cli/2.8.0:
-=======
-  /@sanity/cli/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: true
     engines:
       node: '>=10.0.0'
     hasBin: true
     resolution:
-<<<<<<< HEAD
       integrity: sha512-ebhJ7K6x+kffOIsDxrGmgsOIDIBedZ/F5GedrNRutv5ijdLgnwkZaRRgXSZQ2vDv+yp2HlIRrzfYZrQcbZudjw==
   /@sanity/client/2.8.0:
-=======
-      integrity: sha512-cQLyPdb1FRdOCn3qJK7nuQhOcDVtyX4WjNSe1Ywt1jINIYCrj1JW3YvUC4MHaUqwdBHwRQLnHwVwZHotunxhxg==
-  /@sanity/client/2.7.1:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/eventsource': 2.2.6
       '@sanity/generate-help-url': 2.2.6
@@ -2130,11 +2046,7 @@ packages:
       object-assign: 4.1.1
     dev: false
     resolution:
-<<<<<<< HEAD
       integrity: sha512-S/EYj4SOJ4OMOOULCjNE2moFsb4h2Vy9zV/v4dOappal+GBxafJ9E/J4+qLhkMZqd2hTfECfawjshuoUUo+L+g==
-=======
-      integrity: sha512-uKMlB4v8PDQQd2+5MGC2ccE/5lteJoqeH6iPr5ELC/608KonazMrOx7ROS0gxjNlDEq7NkJePaWwiaNu1xdujA==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/color/1.0.0:
     dev: false
     resolution:
@@ -2147,11 +2059,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KK+6eJgrgHEd9Hq+LbRamdAI64cNXYoVn/f/Dn3ES1GA55AvQyKQUay4T/zZ1yEITKSyIZgETQjpAl/Hg+72eQ==
-<<<<<<< HEAD
   /@sanity/core/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-  /@sanity/core/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@babel/plugin-proposal-class-properties': 7.13.0
       '@babel/preset-env': 7.13.15
@@ -2210,11 +2118,7 @@ packages:
       react: '*'
       react-dom: '*'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-OjjhS7qFeTYhuVPpVp8AN+emtpU7mvVmvgRgXrvwX4lgb89Jw3H5p1q7WlDcQN262ynqCHqhdrdIrRQGVjlxqA==
-=======
-      integrity: sha512-z2eSQxd9j6a3Bt6QlbY+Yzyn/NwZhpwdRFIh2I9fOZBsyvl95HcxoNKvzhdcmtw3A8JoYHohc7Qzc0xPCH1edQ==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/css-loader/0.28.12:
     dependencies:
       babel-code-frame: 6.26.0
@@ -2243,11 +2147,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ImcEFN/Sub+d5fPpZs7RwKQlE+24fTIwkxHEQ217E40TBh0PYGQ3LQKDqDepM75XFlNuIMP7XQZ6ih2K8KizaA==
-<<<<<<< HEAD
   /@sanity/default-layout/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-  /@sanity/default-layout/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@reach/auto-id': 0.13.2_react-dom@17.0.2+react@17.0.2
       '@sanity/base': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
@@ -2272,26 +2172,16 @@ packages:
       react: ^16.9 || ^17
       react-dom: ^16.9 || ^17
     resolution:
-<<<<<<< HEAD
       integrity: sha512-GwAqGRvH7KKwpNLxDbPEMy6RIlOuwYB+bmnoE+p6p4lK6mMNDT7FFDl75Fw9aYR4YksWHpoice8OLhtMl07m+w==
   /@sanity/default-login/2.8.0:
-=======
-      integrity: sha512-XI1Cl546s1EFiV2L8QmNHSHfjFO0b5xuOsboDVNDprcYM/REfp7Atg+eWYVEXCWGj5y+Ze2YPrvW8VP+wFEGBQ==
-  /@sanity/default-login/2.7.0:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/generate-help-url': 2.2.6
       prop-types: 15.7.2
       rxjs: 6.6.7
     dev: false
     resolution:
-<<<<<<< HEAD
       integrity: sha512-4wiYuWejsUW8rf9Op8Qyz9wly+0pirNzI/oXJioqMZGBm3ibc7XoPM1qrQHKS6BDv2Jpd7P9o77mVu6jjx4zJg==
   /@sanity/desk-tool/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-      integrity: sha512-rxEtkcaO9OkzUSUWGLWf8OzzTCJ01lIDwIVR45Czt4Os9CRcaSuvpYN2B+JKWusgpG5WboH16MYtC4ljTORnTg==
-  /@sanity/desk-tool/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@popperjs/core': 2.9.2
       '@reach/auto-id': 0.13.2_react-dom@17.0.2+react@17.0.2
@@ -2311,7 +2201,7 @@ packages:
       '@sanity/uuid': 3.0.1
       boundless-arrow-key-navigation: 1.1.0_react-dom@17.0.2+react@17.0.2
       classnames: 2.3.1
-      date-fns: 2.20.3
+      date-fns: 2.20.0
       diff: 3.5.0
       element-resize-detector: 1.2.2
       hashlru: 2.3.0
@@ -2335,11 +2225,7 @@ packages:
       react: ^16.9 || ^17
       react-dom: '*'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-ai9npTsFu4K5vXMn+CIDGP178DL0H1FEEbaEhDC9YneHi7h+r08EWWgFCpDubpN0ienZCMZvoO43Y1/oc97sgw==
-=======
-      integrity: sha512-WlimmdXIQg2t8/qnnKOVdMWCNF7Xfxsp/WUrGonvKhLkSnEzDCLSN/SxDR/C/8xKmZYGAqT/8KLJnTnM825S3Q==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/diff/2.7.4:
     dependencies:
       diff-match-patch: 1.0.5
@@ -2355,11 +2241,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RcrX/+sQwHfvNO3Fpie9rwi4RKTjaxN2BmaoJ9VayrbkL+12Tf1wcqwerPfR+VRA15c7NnLlDFCdu+iKpa7Tng==
-<<<<<<< HEAD
   /@sanity/export/2.8.0:
-=======
-  /@sanity/export/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       agentkeepalive: 4.1.4
       archiver: 5.3.0
@@ -2374,15 +2256,10 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-Ybl/sYYi3dPXGoNQbLU3fLvHUOHiBmnmqWprGffVl5HiHDDyIGOhgPtNZSGpejOGPWBWFtaYyYYR8F4XHQXxqg==
   /@sanity/field/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-      integrity: sha512-8Ogb8s9P8NLDpfMXaAzZ53KzSnVfF9RnhzhdKCVVbyDt96ys3Fy/XxFS2MrFIFDULdsxr8jB915fytZ03xfMgw==
-  /@sanity/field/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
-      '@sanity/asset-utils': 1.1.4
+      '@sanity/asset-utils': 1.1.2
       '@sanity/base': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
       '@sanity/client': 2.8.0
       '@sanity/diff': 2.7.4
@@ -2390,7 +2267,7 @@ packages:
       '@sanity/types': 2.8.0
       '@sanity/ui': 0.33.15_84d21352b10017addcdab28b8d95ead5
       '@sanity/util': 2.8.0
-      date-fns: 2.20.3
+      date-fns: 2.20.0
       react: 17.0.2
       sanity-diff-patch: 1.0.9
       styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
@@ -2402,13 +2279,8 @@ packages:
       react: ^16.2.0 || ^17
       react-dom: '*'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-0jE+c2f4kLzd35ofACdw6HnZGcExyBUaR9MVtXI5TjI/uasLVuHR9bVwqu91LhbGNscpOelcZLx8AYCZqbw0bQ==
   /@sanity/form-builder/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-      integrity: sha512-UZ8gwD+UciI6ZMnPz8d0MUlC4bzZ5Ax+1+Eo4tU6zo77I5OBJzYFLG/tgaNOjvgg48OZGkJ3MMDZpVJQG7ii6w==
-  /@sanity/form-builder/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@reach/auto-id': 0.13.2_react-dom@17.0.2+react@17.0.2
       '@sanity/base': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
@@ -2426,7 +2298,7 @@ packages:
       '@sanity/uuid': 3.0.1
       attr-accept: 1.1.3
       classnames: 2.3.1
-      date-fns: 2.20.3
+      date-fns: 2.20.0
       debug: 3.2.7
       diff-match-patch: 1.0.5
       exif-component: 1.0.1
@@ -2452,11 +2324,7 @@ packages:
       react: ^16.9 || ^17
       react-dom: ^16.9 || ^17
     resolution:
-<<<<<<< HEAD
       integrity: sha512-eey57sxbYhsQkPuJNjgMI3KW89r1BxWz4cUwXpFKPpL6x6GmptDhYjroLH2blpEjSD5sXRs6vC9R7pO51HpXAg==
-=======
-      integrity: sha512-5kAuFrJEvX/fwk1JK0801eAbNncXLTwgY4F196D+x2a9Jtyo4msh6sJEXis35oLU6BiRAkcqQY67IVmcCOmmxQ==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/generate-help-url/2.2.6:
     dev: false
     resolution:
@@ -2498,11 +2366,7 @@ packages:
       react-dom: ^16.9 || ^17
     resolution:
       integrity: sha512-mpVRG4RbR4Nzf5NExBSxRXNeKXtBIrWr6Hiq0UinpE15YxOs7JaclFzi88Y2m8YVS/bgofIRipzVzRR4fh/Y9w==
-<<<<<<< HEAD
   /@sanity/import/2.8.0:
-=======
-  /@sanity/import/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/generate-help-url': 2.2.6
       '@sanity/mutator': 2.2.6
@@ -2526,13 +2390,8 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-zNGHr7a5eGAel0cRKQKX6ZkU/1OjXbIYVyqWhITVhFwf5CfvR3ogKOsIHzjdGA7zd7vjhr9D8RiyuJ8OIPvpEA==
   /@sanity/initial-value-templates/2.8.0:
-=======
-      integrity: sha512-+ILhGpAH4zG+4pX1aE23up/uynRlKdY6FLr2g9hPtRczQnOis+lt2yU+KlGuoXH0aINWFx8FsSZmNg0ldC1ONg==
-  /@sanity/initial-value-templates/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/util': 2.8.0
       '@types/lodash': 4.14.168
@@ -2544,11 +2403,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-IoTrWcm3TOHh4+BTrgUO+PF+8DIw1ZGG1AIE48QLdGRN3dTs7wgzWS0IvqXT1lKUiCQi2lHunYsFwSQ7gU9f6g==
-=======
-      integrity: sha512-w9nca5l+j+xa3ViHFHcTNh7OPeunK2icGsnwNb3RRSBGbOvuqYbk6QezntDUggBa3g9zWF0uEc1EWUl03plNGg==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/mutator/2.2.6:
     dependencies:
       '@types/diff-match-patch': 1.0.32
@@ -2565,11 +2420,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IUpzsEbhOhofTBUu2tiQ4Ymbkmhr6oe4UC4Ds1khZ9Td4t4mzzPGmGQIr5SBEDawz0UD7ZgZAb4LeEzV3hUrtA==
-<<<<<<< HEAD
   /@sanity/plugin-loader/2.8.0:
-=======
-  /@sanity/plugin-loader/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/resolver': 2.8.0
       '@sanity/util': 2.8.0
@@ -2580,11 +2431,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-o3AUpsxozbBwwhr23eMr6KDnHjTUn6LU21xLKyvQG3sMpK59qdCiBzMQRwShqta5qcTvj3EE9CzAyLkCP5Dfkw==
-=======
-      integrity: sha512-OEmE1AbA/QTXIzehzOC56Lkl5tveoqqpWezhEV8DLxGLgxj59GQRR82tFzfdR9PMH/d2F4c4H8EtgzHN5ueCOw==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/portable-text-editor/0.1.25_1a955eba674747f5ad8a8b16251cd610:
     dependencies:
       '@sanity/block-tools': 2.7.4
@@ -2608,11 +2455,7 @@ packages:
       rxjs: '>=6.5.3'
     resolution:
       integrity: sha512-OdcI2TN8/Kwmq5GP+J9GgAVGXs9+qhVO1ElMEyrR9lvKhKxHmt0PIOBcVkS+/Tr07zU6vfoX9tCGePqmFlVrvQ==
-<<<<<<< HEAD
   /@sanity/react-hooks/2.8.0_react@17.0.2:
-=======
-  /@sanity/react-hooks/2.7.4_react@17.0.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/types': 2.8.0
       lodash: 4.17.21
@@ -2625,13 +2468,8 @@ packages:
     peerDependencies:
       react: ^16.9 || ^17
     resolution:
-<<<<<<< HEAD
       integrity: sha512-jGCei89GKmZNSY6MxffyW+fY+M79B4cIHLdiq+FgfnWVlNNl61i9A04uxniMztyfrwyvPrGryNLQVgjT/l1v8A==
   /@sanity/resolver/2.8.0:
-=======
-      integrity: sha512-zh2jsxvbbTdTqG0jECFfz3ytaAueL0l9CfGAEhN31o1Sg2F6h92/WuPLYjm0Q7O+FmKLAvoMApeEoz6fsaUIUw==
-  /@sanity/resolver/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/generate-help-url': 2.2.6
       '@sanity/util': 2.8.0
@@ -2643,11 +2481,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-1MxfgtLev8krJIugndXeIMtyxMYtuaSoxpDdWbpYuVUtBy3IUKwK/rCN0NOeRomixOjuxncM9YgosAAnxrvJBg==
-=======
-      integrity: sha512-rwY0i7xLv+i/WyqNwigiGD2rOGDi8eE4kL2+fqMZF0agSOMYMSugXI6zQKMsF5IHguEZIguN6ArPVPraY4hEgg==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/schema/2.7.4:
     dependencies:
       '@sanity/generate-help-url': 2.2.6
@@ -2660,11 +2494,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-iNl2twjq3L2qISEEui/QW/dDOD/T6q+pID0frbEIe+ildaKoObG61Hm8KRiK3vF55vK5t5mSMHDmPQ/4ZfCc2g==
-<<<<<<< HEAD
   /@sanity/server/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-  /@sanity/server/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@babel/core': 7.13.15
       '@babel/plugin-proposal-class-properties': 7.13.0_@babel+core@7.13.15
@@ -2713,11 +2543,7 @@ packages:
       react: ^16.9 || ^17
       react-dom: ^16.9 || ^17
     resolution:
-<<<<<<< HEAD
       integrity: sha512-d3qkUean1oW0HDcbgfiiykV2ayUBEGhDtkxuhaSZb+sHiXDJ4zUn/7MV52B3ttdlxLZeSo5iQfGwRHh10RhZRQ==
-=======
-      integrity: sha512-ei03Sfne1QAzRFB54rpIg0SMlsXq7AJOt4HzcDf2cPZJ/TMJQC31ZoWtMIEa/1LZYEeFVetgKr0ErdP3td3H4Q==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/slate-react/0.58.6_03973f8e36439486154abde0a70253e8:
     dependencies:
       '@types/is-hotkey': 0.1.2
@@ -2749,11 +2575,7 @@ packages:
       react-dom: ^16.9 || ^17
     resolution:
       integrity: sha512-hKIUr8GVusN6E1eZ/yjEh5dn3BS1ywZGna4VUUoX1A0at4rAitOEUjM6lTfU0uOi1MoEdI81Zx9Q2958yfkngg==
-<<<<<<< HEAD
   /@sanity/structure/2.8.0:
-=======
-  /@sanity/structure/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/client': 2.8.0
       '@sanity/initial-value-templates': 2.8.0
@@ -2766,11 +2588,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-w1Xd2bLE6KBPz7q8SqhRx6yY61bULaefy4+JuHuDRgyVXV4wMtYFmEoTqRfsR39GXF/FpRn7VeFgDXMKsjK6sg==
-=======
-      integrity: sha512-03Q8HW49/VCw0UKKMmSlcFWUMDPnpFikKYmrQFMrkNCEWxiiCYEMinwSGcROD0o1GJHNb0L8BBkebUUpWvoG0g==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/timed-out/4.0.2:
     dev: false
     engines:
@@ -2786,27 +2604,19 @@ packages:
       node: '>=10.0.0'
     resolution:
       integrity: sha512-pLaCbzQ6aYXtlcKlsFThpLGLNEXygPn0T+C6VMYFuQ2JQzBQGEjSItE6AlkYNc1pyNTSDPgq1Vk8W3P/olSKmw==
-<<<<<<< HEAD
   /@sanity/types/2.8.0:
-=======
-  /@sanity/types/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/client': 2.8.0
       '@types/react': 17.0.3
       rxjs: 6.6.7
     dev: false
     resolution:
-<<<<<<< HEAD
       integrity: sha512-7qcqsmJNFrVqw+Kbv3HkklgiTFKRfjzidwO9Xmk/V5MKI+sN3yzsdSn+w1oNiB50v3xZsG20hWLET35C+vJsLA==
   /@sanity/ui/0.33.15_84d21352b10017addcdab28b8d95ead5:
-=======
-      integrity: sha512-QK7b3W7kix5kcVGOxbRGI/ryZJHwWYBFeeCN9nx4050ImWfRiNuFBhpS7IoYwDIvwZT6E/2uQ7Hqqjhet7DoJQ==
-  /@sanity/ui/0.33.12_84d21352b10017addcdab28b8d95ead5:
     dependencies:
       '@juggle/resize-observer': 3.3.0
       '@popperjs/core': 2.9.2
-      '@reach/auto-id': 0.14.0_react-dom@17.0.2+react@17.0.2
+      '@reach/auto-id': 0.15.0_react-dom@17.0.2+react@17.0.2
       '@sanity/color': 2.0.15
       '@sanity/icons': 1.0.6_react@17.0.2
       framer-motion: 4.1.3_react-dom@17.0.2+react@17.0.2
@@ -2823,33 +2633,7 @@ packages:
       react-dom: ^16.9 || ^17
       styled-components: ^5.2
     resolution:
-      integrity: sha512-xNk5zNdQLpuDSa/R5YQJ4E4pPpMQYlUzrRrId2BND13PBn/3OAFbijHka8Q8p/OVMhHvqFJB86hG7mkx7XUsiA==
-  /@sanity/ui/0.33.12_react-dom@17.0.2+react@17.0.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
-    dependencies:
-      '@juggle/resize-observer': 3.3.0
-      '@popperjs/core': 2.9.2
-      '@reach/auto-id': 0.15.0_react-dom@17.0.2+react@17.0.2
-      '@sanity/color': 2.0.15
-      '@sanity/icons': 1.0.6_react@17.0.2
-      framer-motion: 4.1.3_react-dom@17.0.2+react@17.0.2
-      popper-max-size-modifier: 0.2.0_@popperjs+core@2.9.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 17.0.2
-      react-popper: 2.2.5_a16f30364266ce234ee1188a6d27cb60
-      react-refractor: 2.1.4_react@17.0.2
-    dev: false
-    peerDependencies:
-      react: ^16.9 || ^17
-      react-dom: ^16.9 || ^17
-      styled-components: ^5.2
-    resolution:
-<<<<<<< HEAD
       integrity: sha512-+4gspW1JnTpVKEXFL2+SrX0xzpZKKHrcYuk//KsxX/W/poVuMg2kYtIOsM8shU6uZI55u8g5GxKVnU3G9Jvggw==
-=======
-      integrity: sha512-xNk5zNdQLpuDSa/R5YQJ4E4pPpMQYlUzrRrId2BND13PBn/3OAFbijHka8Q8p/OVMhHvqFJB86hG7mkx7XUsiA==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/ui/0.33.15_react-dom@17.0.2+react@17.0.2:
     dependencies:
       '@juggle/resize-observer': 3.3.0
@@ -2871,11 +2655,7 @@ packages:
       styled-components: ^5.2
     resolution:
       integrity: sha512-+4gspW1JnTpVKEXFL2+SrX0xzpZKKHrcYuk//KsxX/W/poVuMg2kYtIOsM8shU6uZI55u8g5GxKVnU3G9Jvggw==
-<<<<<<< HEAD
   /@sanity/util/2.8.0:
-=======
-  /@sanity/util/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/types': 2.8.0
       dotenv: 8.2.0
@@ -2887,11 +2667,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-sawpgiH4OV5m1Ag7zRCaSWixJQE0kDOuPDWlgK2ROL9dfkkNrgOgYp4fldG2YMocdjaSuTHtAKmZyHs0LUQ8XA==
-=======
-      integrity: sha512-ktlqEqH81NDfGHUlQdAoWaTibWVMrwyhTsZDFw/DEmZNocF0E42ILgQ5w+ycaR0d1s29KrB1WnUYFN5CBO2DDA==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@sanity/uuid/3.0.1:
     dependencies:
       '@types/uuid': 8.3.0
@@ -2902,17 +2678,13 @@ packages:
   /@sanity/validation/2.7.4:
     dependencies:
       clone-deep: 2.0.2
-      date-fns: 2.20.3
+      date-fns: 2.20.0
       es6-error: 4.1.1
       type-of-is: 3.5.1
     dev: false
     resolution:
       integrity: sha512-rNoZI5McM3etD9mvindmewQfeUUgI+VARkine1BJ8teIVoUD6AGOf9nM9cLTygAZ2QE3OxOOudYsg/Qjdl6MYQ==
-<<<<<<< HEAD
   /@sanity/vision/2.8.0_9bdd65c2b60ce8638444b80b396a481b:
-=======
-  /@sanity/vision/2.7.4_9bdd65c2b60ce8638444b80b396a481b:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/icons': 1.0.6_react@17.0.2
       '@sanity/ui': 0.33.15_react-dom@17.0.2+react@17.0.2
@@ -2934,13 +2706,8 @@ packages:
       react: ^16.9 || ^17
       react-dom: ^16.9 || ^17
     resolution:
-<<<<<<< HEAD
       integrity: sha512-h45RU8PBxmE7Y2zzFQurRGfwiNKC05nwGUc/JxXTxEDSQwmEq8ailqmSbTRqRNyauCV9dQ3hLG/imQohRlIOug==
   /@sanity/webpack-integration/2.8.0:
-=======
-      integrity: sha512-jO1DokcHpig6e0VE2wZfUjpgC3bqeeWNh0HNBajumeu6tpqgJ6laJOGK75ZG7VQ+tfxpaGd/X4nXwQrxGd5bdQ==
-  /@sanity/webpack-integration/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/resolver': 2.8.0
       '@sanity/webpack-loader': 2.8.0
@@ -2957,13 +2724,8 @@ packages:
     peerDependencies:
       webpack: '>= 1.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-Q0ToxoucSeyEQ1zYNZWW4E1WvWxNMm87t4q3bt61rNmESMcItylv8iG4M85cgbvcIgtgmB9sVBPJHPujMViQxw==
   /@sanity/webpack-integration/2.8.0_webpack@3.12.0:
-=======
-      integrity: sha512-nIR69ocxO/i/rlp+ingEk1qujfdhvPVcrK0uiVKSXRqebM9bmk+dUKS4nLNPnFb/9vTTyt4plHuvQZd4vOJlKA==
-  /@sanity/webpack-integration/2.7.4_webpack@3.12.0:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/resolver': 2.8.0
       '@sanity/webpack-loader': 2.8.0
@@ -2981,13 +2743,8 @@ packages:
     peerDependencies:
       webpack: '>= 1.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-Q0ToxoucSeyEQ1zYNZWW4E1WvWxNMm87t4q3bt61rNmESMcItylv8iG4M85cgbvcIgtgmB9sVBPJHPujMViQxw==
   /@sanity/webpack-loader/2.8.0:
-=======
-      integrity: sha512-nIR69ocxO/i/rlp+ingEk1qujfdhvPVcrK0uiVKSXRqebM9bmk+dUKS4nLNPnFb/9vTTyt4plHuvQZd4vOJlKA==
-  /@sanity/webpack-loader/2.7.4:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       '@sanity/resolver': 2.8.0
       '@sanity/util': 2.8.0
@@ -2996,11 +2753,7 @@ packages:
     engines:
       node: '>=10.0.0'
     resolution:
-<<<<<<< HEAD
       integrity: sha512-3CUYXOx0+1r0O6n85254+INdLQwITRxXz0VwnC0GU5wDijlLJNPxVUVPdHNK38magW/Z39D5lumbG96qICIT/g==
-=======
-      integrity: sha512-Pc9l53/3p5JiUCgAq1waFkHq129AOVVpajGXyp2ndnWxZFa2I3G/qOfDOdjSfkyxhZvDjtAmi0ylq0mhKlrW1w==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /@types/diff-match-patch/1.0.32:
     dev: false
     resolution:
@@ -3263,7 +3016,7 @@ packages:
   /anymatch/3.1.2:
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.2.3
+      picomatch: 2.2.2
     dev: false
     engines:
       node: '>= 8'
@@ -3831,25 +3584,17 @@ packages:
   /browserslist/2.11.3:
     dependencies:
       caniuse-lite: 1.0.30001208
-<<<<<<< HEAD
-      electron-to-chromium: 1.3.715
-=======
       electron-to-chromium: 1.3.711
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     deprecated: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
     dev: false
     hasBin: true
     resolution:
       integrity: sha512-yWu5cXT7Av6mVwzWc8lMsJMHWn4xyjSuGYi4IozbVTLUOEYPSagUB8kiMDUHA1fS3zjr8nkxkn9jdvug4BBRmA==
-<<<<<<< HEAD
-  /browserslist/4.16.4:
-=======
   /browserslist/4.16.3:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       caniuse-lite: 1.0.30001208
       colorette: 1.2.2
-      electron-to-chromium: 1.3.715
+      electron-to-chromium: 1.3.711
       escalade: 3.1.1
       node-releases: 1.1.71
     dev: false
@@ -3857,11 +3602,7 @@ packages:
       node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7
     hasBin: true
     resolution:
-<<<<<<< HEAD
-      integrity: sha512-d7rCxYV8I9kj41RH8UKYnvDYCRENUlHRgyXy/Rhr/1BaeLGfiCptEdFE8MIrvGfWbBFNjVYx76SQWvNX1j+/cQ==
-=======
       integrity: sha512-vIyhWmIkULaq04Gt93txdh+j02yX/JzlyhLYbV3YQCn/zvES3JnY7TifHHvvr1w5hTDluNKMkV05cs4vy8Q7sw==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /buffer-alloc-unsafe/1.1.0:
     dev: false
     resolution:
@@ -4007,7 +3748,7 @@ packages:
       integrity: sha1-sd21pZZrFvSNxJmERNS7xsfZ2DQ=
   /caniuse-api/3.0.0:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       caniuse-lite: 1.0.30001208
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
@@ -4427,17 +4168,13 @@ packages:
       integrity: sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
   /core-js-compat/3.10.1:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       semver: 7.0.0
     dev: false
     resolution:
       integrity: sha512-ZHQTdTPkqvw2CeHiZC970NNJcnwzT6YIueDMASKt+p3WbZsLXOcoD392SkcWhkC0wBBHhlfhqGKKsNCQUozYtg==
   /core-js/2.6.12:
-<<<<<<< HEAD
-    deprecated: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
-=======
     deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     requiresBuild: true
     resolution:
@@ -4554,7 +4291,7 @@ packages:
       create-hmac: 1.1.7
       diffie-hellman: 5.0.3
       inherits: 2.0.4
-      pbkdf2: 3.1.2
+      pbkdf2: 3.1.1
       public-encrypt: 4.0.3
       randombytes: 2.1.0
       randomfill: 1.0.4
@@ -4826,20 +4563,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YzhyDAwA4TaQIhM5go+vCLmU0UikghC/t9DTQYZR2M/UvZ1MdOhPezSDZcjj9uqQJOMqjLcpWtyW2iNINdlatQ==
-<<<<<<< HEAD
-  /date-fns/2.20.3:
-=======
   /date-fns/2.20.0:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     engines:
       node: '>=0.11'
     resolution:
-<<<<<<< HEAD
-      integrity: sha512-BbiJSlfmr1Fnfi1OHY8arklKdwtZ9n3NkjCeK8G9gtEe0ZSUwJuwHc6gYBl0uoC0Oa5RdpJV1gBBdXcZi8Efdw==
-=======
       integrity: sha512-nmA7y6aDH5+fknfJ0G77HQzUSfTPpq4ifq+c9blP9d+X9zs3kNjxC+t3pcbBMGTp262a6PJB3RVjLlxIgoMI+Q==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /date-now/1.0.1:
     dev: false
     resolution:
@@ -5125,17 +4854,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
-<<<<<<< HEAD
-  /electron-to-chromium/1.3.715:
-    dev: false
-    resolution:
-      integrity: sha512-VCWxo9RqTYhcCsHtG+l0TEOS6H5QmO1JyVCQB9nv8fllmAzj1VcCYH3qBCXP75/En6FeoepefnogLPE+5W7OiQ==
-=======
   /electron-to-chromium/1.3.711:
     dev: false
     resolution:
       integrity: sha512-XbklBVCDiUeho0PZQCjC25Ha6uBwqqJeyDhPLwLwfWRAo4x+FZFsmu1pPPkXT+B4MQMQoQULfyaMltDopfeiHQ==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /element-resize-detector/1.2.2:
     dependencies:
       batch-processor: 1.0.0
@@ -5574,11 +5296,7 @@ packages:
       schema-utils: 0.3.0
       webpack: 3.12.0
       webpack-sources: 1.4.3
-<<<<<<< HEAD
-    deprecated: Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin
-=======
     deprecated: 'Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     engines:
       node: '>= 4.8 < 5.0.0 || >= 5.10'
@@ -5606,8 +5324,8 @@ packages:
       '@nodelib/fs.walk': 1.2.6
       glob-parent: 5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.4
-      picomatch: 2.2.3
+      micromatch: 4.0.2
+      picomatch: 2.2.2
     dev: false
     engines:
       node: '>=8'
@@ -5649,7 +5367,7 @@ packages:
       object-assign: 4.1.1
       promise: 7.3.1
       setimmediate: 1.0.5
-      ua-parser-js: 0.7.28
+      ua-parser-js: 0.7.27
     dev: false
     resolution:
       integrity: sha512-dJd4PiDOFuhe7vk4F80Mba83Vr2QuK86FoxtgPmzBqEJahncp+13YCmfoa53KHCo6OnlXLG7eeMWPfB5CrpVKg==
@@ -7477,25 +7195,15 @@ packages:
     optional: true
     resolution:
       integrity: sha512-MWikgl9n9M3w+bpsY3He8L+w9eF9338xRl8IAO5viDizwSzziFEyUzo2xrrloB64ADbTf8uA8vRqqttDTOmccg==
-<<<<<<< HEAD
-  /micromatch/4.0.4:
-=======
   /micromatch/4.0.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       braces: 3.0.2
-      picomatch: 2.2.3
+      picomatch: 2.2.2
     dev: false
     engines:
-<<<<<<< HEAD
-      node: '>=8.6'
-    resolution:
-      integrity: sha512-pRmzw/XUcwXGpD9aI9q/0XOwLNygjETJ8y0ao0wdqprrzDa4YnxLcz7fQRZr8voh8V10kGhABbNcHVk5wHgWwg==
-=======
       node: '>=8'
     resolution:
       integrity: sha512-y7FpHSbMUMoyPbYUSzO6PaZ6FyRnQOpHuKwbo1G+Knck95XVU4QAiKdGEnj5wwoS7PlOgthX/09u5iFJ+aYf5Q==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /miller-rabin/4.0.1:
     dependencies:
       bn.js: 4.12.0
@@ -7774,13 +7482,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
-<<<<<<< HEAD
-=======
-  /normalize.css/5.0.0:
-    dev: false
-    resolution:
-      integrity: sha1-fOyHXOgXilMzxN6Ato6pwYudfDc=
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /npm-run-path/2.0.2:
     dependencies:
       path-key: 2.0.1
@@ -8083,7 +7784,7 @@ packages:
       asn1.js: 5.4.1
       browserify-aes: 1.2.0
       evp_bytestokey: 1.0.3
-      pbkdf2: 3.1.2
+      pbkdf2: 3.1.1
       safe-buffer: 5.2.1
     dev: false
     resolution:
@@ -8209,11 +7910,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
-<<<<<<< HEAD
-  /pbkdf2/3.1.2:
-=======
   /pbkdf2/3.1.1:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dependencies:
       create-hash: 1.2.0
       create-hmac: 1.1.7
@@ -8224,11 +7921,7 @@ packages:
     engines:
       node: '>=0.12'
     resolution:
-<<<<<<< HEAD
-      integrity: sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA==
-=======
       integrity: sha512-4Ejy1OPxi9f2tt1rRV7Go7zmfDQ+ZectEQz3VGUQhgq62HtIRPDyG/JtnwIxs6x3uNMwo2V7q1fMvKjb+Tnpqg==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /peek-stream/1.1.3:
     dependencies:
       buffer-from: 1.1.1
@@ -8247,20 +7940,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
-<<<<<<< HEAD
-  /picomatch/2.2.3:
-=======
   /picomatch/2.2.2:
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     engines:
       node: '>=8.6'
     resolution:
-<<<<<<< HEAD
-      integrity: sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==
-=======
       integrity: sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /pify/2.3.0:
     dev: false
     engines:
@@ -8464,7 +8149,7 @@ packages:
       integrity: sha1-N9XJNToHoJJwkSqCYGu0Kg1wLAQ=
   /postcss-colormin/4.0.3:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       color: 3.1.3
       has: 1.0.3
       postcss: 7.0.35
@@ -8656,7 +8341,7 @@ packages:
       integrity: sha512-alx/zmoeXvJjp7L4mxEMjh8lxVlDFX1gqWHzaaQewwMZiVhLo42TEClKaeHbRf6J7j82ZOdTJ808RtN0ZOZwvw==
   /postcss-merge-rules/4.0.3:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       caniuse-api: 3.0.0
       cssnano-util-same-parent: 4.0.1
       postcss: 7.0.35
@@ -8694,7 +8379,7 @@ packages:
   /postcss-minify-params/4.0.2:
     dependencies:
       alphanum-sort: 1.0.2
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       cssnano-util-get-arguments: 4.0.0
       postcss: 7.0.35
       postcss-value-parser: 3.3.1
@@ -8822,7 +8507,7 @@ packages:
       integrity: sha512-acwJY95edP762e++00Ehq9L4sZCEcOPyaHwoaFOhIwWCDfik6YvqsYNxckee65JHLKzuNSSmAdxwD2Cud1Z54A==
   /postcss-normalize-unicode/4.0.1:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       postcss: 7.0.35
       postcss-value-parser: 3.3.1
     dev: false
@@ -8877,7 +8562,7 @@ packages:
       integrity: sha1-7vGU6NUkZFylIKlJ6V5RjoEkAss=
   /postcss-reduce-initial/4.0.3:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       caniuse-api: 3.0.0
       has: 1.0.3
       postcss: 7.0.35
@@ -9613,7 +9298,7 @@ packages:
       integrity: sha512-1JU/8q+VgFZyxwrJ+SVIOsh+KywWGpds3NTqikiKpDMZWScmAYyKIgqkO+ARvNWJfXeXR1zxz7aHF4u4CyH6vQ==
   /readdirp/3.5.0:
     dependencies:
-      picomatch: 2.2.3
+      picomatch: 2.2.2
     dev: false
     engines:
       node: '>=8.10.0'
@@ -9743,11 +9428,7 @@ packages:
       request-promise-core: 1.1.4_request@2.88.2
       stealthy-require: 1.1.1
       tough-cookie: 2.5.0
-<<<<<<< HEAD
-    deprecated: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
-=======
     deprecated: 'request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     engines:
       node: '>=0.12.0'
@@ -9777,11 +9458,7 @@ packages:
       tough-cookie: 2.5.0
       tunnel-agent: 0.6.0
       uuid: 3.4.0
-<<<<<<< HEAD
-    deprecated: request has been deprecated, see https://github.com/request/request/issues/3142
-=======
     deprecated: 'request has been deprecated, see https://github.com/request/request/issues/3142'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     engines:
       node: '>= 6'
@@ -9839,11 +9516,7 @@ packages:
     resolution:
       integrity: sha512-C7rARubxI8bXFNB/hqcp/4iUeIXJhJZvFPFPiSPRnhU5UPxzMFIl+2E6yY6c4k9giDJAhtV+enfA+G89N6Csng==
   /resolve-url/0.2.1:
-<<<<<<< HEAD
-    deprecated: https://github.com/lydell/resolve-url#deprecated
-=======
     deprecated: 'https://github.com/lydell/resolve-url#deprecated'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     optional: true
     resolution:
@@ -9963,18 +9636,11 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-J5YeuM/S7rLTp51iqUunwzz7Rf68K/jCDGKtNCj6Wzcfgf9CH+0GtPlvf2DFsg0QQhYYZ72FOVn6skmoLjMCdw==
-<<<<<<< HEAD
-  /sanity-plugin-color-list/2.0.1_31403e5b4399bbca16cb0b1b0d8482f4:
+  /sanity-plugin-color-list/2.0.1_acec1bd3a5e514aed34affea6ff20b64:
     dependencies:
       '@ctrl/tinycolor': 2.6.1
       '@sanity/form-builder': 2.8.0_9bdd65c2b60ce8638444b80b396a481b
-=======
-  /sanity-plugin-color-list/2.0.1_bc702d88f4f5a3e0ef3d6084f79387d2:
-    dependencies:
-      '@ctrl/tinycolor': 2.6.1
-      '@sanity/form-builder': 2.7.4_9bdd65c2b60ce8638444b80b396a481b
       '@sanity/ui': 0.33.15_react-dom@17.0.2+react@17.0.2
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
       classnames: 2.3.1
       lodash: 4.17.21
       prop-types: 15.7.2
@@ -10582,7 +10248,7 @@ packages:
       integrity: sha512-BlR+KrLW3NL1yhvEB+9Nu9Dt51CuOnHoxd+Hj+rYPdtyR8X11uIW9rvhpy3Dk4dXXBsiW1u5U78f00Lf/afGoA==
   /stylehacks/4.0.3:
     dependencies:
-      browserslist: 4.16.4
+      browserslist: 4.16.3
       postcss: 7.0.35
       postcss-selector-parser: 3.1.2
     dev: false
@@ -10948,17 +10614,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-<<<<<<< HEAD
-  /ua-parser-js/0.7.28:
-    dev: false
-    resolution:
-      integrity: sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
-=======
   /ua-parser-js/0.7.27:
     dev: false
     resolution:
       integrity: sha512-eXMaRYK2skomGocoX0x9sBXzx5A1ZVQgXfrW4mTc8dT0zS7olEcyfudAzRC5tIIRgLxQ69B6jut3DI+n5hslPA==
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
   /uglify-js/2.8.29:
     dependencies:
       source-map: 0.5.7
@@ -11126,11 +10785,7 @@ packages:
     resolution:
       integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   /urix/0.1.0:
-<<<<<<< HEAD
-    deprecated: Please see https://github.com/lydell/urix#deprecated
-=======
     deprecated: 'Please see https://github.com/lydell/urix#deprecated'
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
     dev: false
     optional: true
     resolution:
@@ -11631,7 +11286,6 @@ packages:
       integrity: sha512-zshzwQW7gG7hjpBlgeQP9RuyPGNxvJdzR8SUM3QhxCnLjWN2E7j3dOvpeDcQoETfHx0urRS7EtmVToql7YpU4A==
 specifiers:
   '@equinor/eds-icons': ^0.6.2
-<<<<<<< HEAD
   '@sanity/base': ^2.8.0
   '@sanity/cli': ^2.8.0
   '@sanity/components': ^2.2.6
@@ -11641,20 +11295,8 @@ specifiers:
   '@sanity/default-login': ^2.8.0
   '@sanity/desk-tool': ^2.8.0
   '@sanity/form-builder': ^2.8.0
-  '@sanity/vision': ^2.8.0
-=======
-  '@sanity/base': ^2.7.4
-  '@sanity/cli': ^2.7.4
-  '@sanity/components': ^2.2.6
-  '@sanity/core': ^2.7.4
-  '@sanity/data-aspects': ^2.2.6
-  '@sanity/default-layout': ^2.7.4
-  '@sanity/default-login': ^2.7.0
-  '@sanity/desk-tool': ^2.7.4
-  '@sanity/form-builder': ^2.7.4
   '@sanity/ui': ^0.33.15
-  '@sanity/vision': ^2.7.4
->>>>>>> 73fe939 (🚧 Add first version of layout input (#244))
+  '@sanity/vision': ^2.8.0
   only-allow: ^1.0.0
   prop-types: ^15.7.2
   react: ^17.0.2
