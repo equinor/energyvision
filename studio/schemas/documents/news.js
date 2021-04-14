@@ -98,13 +98,7 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [
-        blockContentType,
-        { type: 'pullQuote' },
-        { type: 'imageWithAltAndCaption' },
-        { type: 'positionedInlineImage' },
-        { type: 'factbox' },
-      ],
+      of: [blockContentType, { type: 'pullQuote' }, { type: 'positionedInlineImage' }, { type: 'factbox' }],
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value || value.length === 0) {
