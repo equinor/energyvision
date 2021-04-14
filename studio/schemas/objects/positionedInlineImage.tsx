@@ -8,7 +8,7 @@ import { PatchEvent, set } from 'part:@sanity/form-builder/patch-event'
 import FormField from 'part:@sanity/components/formfields/default'
 import { Box, Inline, Radio } from '@sanity/ui'
 
-const LayoutInput = function Layout({ value: defaultValue, type, onChange }) {
+const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChange }) {
   const [value, setValue] = React.useState(defaultValue)
 
   const handleChange = React.useCallback((event) => {
@@ -114,6 +114,7 @@ export default {
       inputComponent: LayoutInput,
     },
   ],
+
   preview: {
     select: {
       imageUrl: 'image.asset.url',
