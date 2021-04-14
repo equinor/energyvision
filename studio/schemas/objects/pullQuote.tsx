@@ -40,7 +40,13 @@ export default {
       title: 'Author title',
       description: 'Optional title for the author.',
     },
-    { name: 'image', type: 'image' },
+    {
+      name: 'image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    },
   ],
   preview: {
     select: {
