@@ -13,7 +13,7 @@ export const QuoteRenderer = (child: { node: any }): JSX.Element => {
 
       {image ? (
         <PullQuote.Media>
-          <Img {...imageProps(image.asset, 300, 1)} alt={image.alt} layout="intrinsic" />
+          <Img {...imageProps(image.asset, 400, 1)} alt={image.alt} layout="responsive" />
         </PullQuote.Media>
       ) : null}
     </PullQuote>

@@ -13,21 +13,11 @@ const Container = styled.figure`
     'media spacing author'
     'quote quote quote';
 
-  // TODO: find better solution for image sizing
   @media (min-width: 800px) {
-    grid-template-columns: 1fr var(--spacing-medium) 8rem;
+    grid-template-columns: 1fr var(--spacing-medium) clamp(8rem, 20vw, 16rem);
     grid-template-areas:
       'quote spacing media'
       'author spacing media';
-  }
-  @media (min-width: 1000px) {
-    grid-template-columns: 1fr var(--spacing-medium) 10rem;
-  }
-  @media (min-width: 1200px) {
-    grid-template-columns: 1fr var(--spacing-medium) 13rem;
-  }
-  @media (min-width: 1400px) {
-    grid-template-columns: 1fr var(--spacing-medium) 16rem;
   }
 `
 
