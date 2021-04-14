@@ -142,7 +142,7 @@ type PreviewProps = {
 
 export default {
   name: 'positionedInlineImage',
-  title: '🚧 Image',
+  title: 'Image',
   type: 'object',
   fields: [
     {
