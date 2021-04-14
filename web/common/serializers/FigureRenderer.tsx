@@ -4,6 +4,7 @@ import { imageProps } from '../../common/helpers'
 import styled from 'styled-components'
 
 const Figure = styled.figure`
+  /* Temp negative margin */
   margin: var(--spacing-medium) calc(var(--spacing-medium) * -1);
 `
 
