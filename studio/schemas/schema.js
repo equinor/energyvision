@@ -16,6 +16,7 @@ import pullQuote from './objects/pullQuote'
 import backgroundColourPicker from './objects/backgroundColourPicker'
 import factbox from './objects/factbox'
 import relatedLinks from './objects/relatedLinks'
+import positionedInlineImage from './objects/positionedInlineImage'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -32,5 +33,6 @@ export default createSchema({
     backgroundColourPicker,
     factbox,
     relatedLinks,
+    positionedInlineImage,
   ]),
 })
