@@ -1,6 +1,11 @@
 import SimpleBlockContent from '../SimpleBlockContent'
 import { Fact, Heading } from '@components'
 import { ListRenderer, ListItemRenderer } from './'
+import styled from 'styled-components'
+
+const Wrapper = styled.aside`
+  margin: var(--space-4xLarge) 0;
+`
 
 export const FactRenderer = (child: { node: any }) => {
   const { node } = child
@@ -33,7 +38,7 @@ export const FactRenderer = (child: { node: any }) => {
   }
 
   return (
-    <aside>
+    <Wrapper>
       {/* //@TODO: Bullet proof, what do we need here actually 
         Will need media queries here as well
       */}
@@ -47,6 +52,6 @@ export const FactRenderer = (child: { node: any }) => {
           <SimpleBlockContent blocks={content} serializers={serializers} />
         </Fact.Text>
       </Fact>
-    </aside>
+    </Wrapper>
   )
 }
