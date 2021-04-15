@@ -13,6 +13,8 @@ import Lead from '../../tempcomponents/news/Lead'
 import RelatedContent from '../../tempcomponents/news/RelatedContent'
 import LatestNews from '../../tempcomponents/news/LatestNews'
 import type { NewsCardData, NewsSchema } from '../../types/types'
+import { Icon } from '@equinor/eds-core-react'
+import { calendar } from '@equinor/eds-icons'
 
 const NewsLayoutAlt = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -38,12 +40,23 @@ const DateAlt = styled.div`
   color: var(--white-100);
   margin-top: var(--space-xxLarge);
   margin-bottom: var(--space-xxLarge);
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-gap: var(--space-small);
 `
 
-const LastModified = styled.span`
-  margin-left: var(--space-medium);
+const DateContainer = styled.div`
+  overflow-wrap: break-word;
+  line-height: var(--lineHeight-3);
+`
+
+const LastModifiedLabel = styled.span`
+  margin: 0 var(--space-small);
+
+  &:before {
+    content: '|';
+    margin-right: var(--space-small);
+  }
 `
 
 const ImageAlt = styled.div`
@@ -220,10 +233,12 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                     {news.title}
                   </StyledHeadingAlt>
                   <DateAlt>
-                    <FormattedDateTime datetime={news.publishDateTime} />
-                    <LastModified>
-                      LAST MODIFIED: <FormattedDateTime datetime={news.updatedAt} withIcon={false} />
-                    </LastModified>
+                    <Icon data={calendar} />
+                    <DateContainer>
+                      <FormattedDateTime datetime={news.publishDateTime} />
+                      <LastModifiedLabel>LAST MODIFIED:</LastModifiedLabel>
+                      <FormattedDateTime datetime={news.updatedAt} />
+                    </DateContainer>
                   </DateAlt>
                 </HeaderInner>
               </Header>
