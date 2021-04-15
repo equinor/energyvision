@@ -87,123 +87,16 @@ const ContentAlt = styled.div`
   /** I don't think we need this? */
 `
 
-/** ------------------------------------------ */
-
-const NewsLayout = styled.div`
-  display: grid;
-  grid-template-columns: var(--spacing-medium) 1fr var(--spacing-medium);
-  grid-template-rows: min-content min-content min-content min-content 3rem;
-  width: 100%;
-  &::before {
-    /* content: '';
-    background-color: var(--slate-blue-95);
-    grid-column: 1/4;
-    grid-row: 1/5; */
-  }
-  @media (min-width: 800px) {
-    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 2rem minmax(auto, 60rem) 2rem minmax(
-        var(--spacing-xLarge),
-        1fr
-      );
-    grid-template-rows: min-content min-content min-content min-content 5rem;
-    /*     &::before {
-      grid-column: 1/6;
-    } */
-  }
-
-  @media (min-width: 1100px) {
-    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 6rem minmax(auto, 60rem) 6rem minmax(
-        var(--spacing-xLarge),
-        1fr
-      );
-  }
-  @media (min-width: 1700px) {
-    grid-template-columns: minmax(var(--spacing-xLarge), 1fr) 4rem minmax(auto, 32rem) 4rem minmax(
-        var(--spacing-xLarge),
-        1fr
-      );
-    grid-template-rows: min-content min-content min-content min-content 5rem;
-    /* &::before {
-      grid-column: 1/6;
-    } */
-  }
-`
-/** eslint */
-// eslint-disable-next-line no-unused-vars
-const StyledHeading = styled(Heading)`
-  grid-column: 2 / 3;
-  grid-row: 2;
-  padding: var(--spacing-large) 0 var(--spacing-medium) 0;
-  /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
-  @media (min-width: 800px) {
-    grid-column: 3 / 4;
-  }
-`
-// eslint-disable-next-line no-unused-vars
-const Date = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 3;
-  color: var(--white-100);
-  padding: var(--spacing-medium) 0;
-  @media (min-width: 800px) {
-    grid-column: 3 / 4;
-  }
-`
-// eslint-disable-next-line no-unused-vars
-const Image = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 4 / 6;
-  @media (min-width: 800px) {
-    grid-column: 2 / 5;
-  }
-`
-// eslint-disable-next-line no-unused-vars
-const LeadParagraph = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 1;
-  padding: var(--spacing-medium) 0;
-  @media (min-width: 800px) {
-    grid-column: 2 / 5;
-  }
-  @media (min-width: 1000px) {
-    margin: 0 var(--spacing-xxLarge);
-  }
-  @media (min-width: 1500px) {
-    margin: 0 var(--spacing-xxxLarge);
-  }
-`
-// eslint-disable-next-line no-unused-vars
-const Content = styled.div`
-  padding: var(--spacing-medium) 0;
-  grid-column: 2 / 3;
-  grid-row: 2;
-  @media (min-width: 800px) {
-    grid-column: 3 / 4;
-  }
-  @media (min-width: 1000px) {
-    margin: 0 var(--spacing-xxLarge);
-  }
-  @media (min-width: 1500px) {
-    margin: 0 var(--spacing-xxxLarge);
-  }
+const RelatedAlt = styled.div`
+  padding: 0 var(--layout-spacing-large);
+  max-width: 1700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: var(--space-xLarge);
+  margin-bottom: var(--space-3xLarge);
 `
 
-const Related = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 3;
-  padding: var(--spacing-large) 0 var(--spacing-medium) 0;
-  /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
-  @media (min-width: 800px) {
-    grid-column: 3 / 4;
-  }
-`
-const Latest = styled.div`
-  grid-column: 2 / 3;
-  grid-row: 4;
-  @media (min-width: 800px) {
-    grid-column: 2 / 5;
-  }
-`
+const Latest = styled.div``
 
 type ArticleProps = {
   data: {
@@ -284,19 +177,19 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   <NewsBlockContent blocks={news.content}></NewsBlockContent>
                 </ContentAlt>
               )}
-            </NewsLayoutAlt>
-            <NewsLayout>
+
               {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
-                <Related>
+                <RelatedAlt>
                   <RelatedContent data={news.relatedLinks} />
-                </Related>
+                </RelatedAlt>
               )}
+
               {latestNews.length > 0 && (
                 <Latest>
                   <LatestNews data={latestNews} />
                 </Latest>
               )}
-            </NewsLayout>
+            </NewsLayoutAlt>
           </article>
         </>
       )}
