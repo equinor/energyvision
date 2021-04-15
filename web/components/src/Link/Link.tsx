@@ -6,7 +6,6 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
-import { StyledLinks } from '../RelatedContent'
 
 const { outline } = Tokens
 
@@ -37,10 +36,9 @@ export const BaseLink = styled.a`
 const ContentLink = styled(BaseLink)`
   border-bottom: 0.5px solid #b4bbc0;
   text-decoration: none;
-  padding: 1em 0;
-  ${StyledLinks} & {
-    width: 100%;
-  }
+  padding: var(--spacing-small) 0;
+  /* Should be safe to assume that content links always will be 100% width? */
+  width: 100%;
   & > svg {
     margin-left: auto;
   }

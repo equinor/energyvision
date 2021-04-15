@@ -1,7 +1,6 @@
-import { Heading, RelatedContent as RC, Link, List } from '@components'
+import { Heading, Link, List } from '@components'
 import type { RelatedLinksData } from '../../types/types'
 
-const { Links } = RC
 const { Item } = List
 
 type RelatedContentProps = {
@@ -10,11 +9,11 @@ type RelatedContentProps = {
 
 const RelatedContent = ({ data }: RelatedContentProps) => {
   return (
-    <RC>
+    <aside>
       <Heading size="lg" level="h2" center>
         {data.title}
       </Heading>
-      <Links>
+      <List unstyled>
         {data.links.length > 0 &&
           data.links.map((item) => {
             const isExternal = item.type === 'externalUrl'
@@ -30,8 +29,8 @@ const RelatedContent = ({ data }: RelatedContentProps) => {
               </Item>
             )
           })}
-      </Links>
-    </RC>
+      </List>
+    </aside>
   )
 }
 
