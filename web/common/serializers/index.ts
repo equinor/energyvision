@@ -1,6 +1,7 @@
 export * from './SubRenderer'
 export * from './SupRenderer'
 export * from './BlockRenderer'
+export * from './PaddedBlockRenderer'
 export * from './ExternalLinkRenderer'
 export * from './InternalLinkRenderer'
 export * from './FactRenderer'
