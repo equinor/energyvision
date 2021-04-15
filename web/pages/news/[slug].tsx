@@ -75,7 +75,7 @@ const ImageAlt = styled.div`
 const NewsLayout = styled.div`
   display: grid;
   grid-template-columns: var(--spacing-medium) 1fr var(--spacing-medium);
-  grid-template-rows: var(--spacing-medium) min-content min-content 3rem min-content min-content min-content min-content min-content 3rem;
+  grid-template-rows: min-content min-content min-content min-content 3rem;
   width: 100%;
   &::before {
     /* content: '';
@@ -88,10 +88,10 @@ const NewsLayout = styled.div`
         var(--spacing-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacing-xLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
-    &::before {
+    grid-template-rows: min-content min-content min-content min-content 5rem;
+    /*     &::before {
       grid-column: 1/6;
-    }
+    } */
   }
 
   @media (min-width: 1100px) {
@@ -105,10 +105,10 @@ const NewsLayout = styled.div`
         var(--spacing-xLarge),
         1fr
       );
-    grid-template-rows: var(--spacing-xxLarge) min-content min-content 6rem min-content min-content min-content min-content min-content 5rem;
-    &::before {
+    grid-template-rows: min-content min-content min-content min-content 5rem;
+    /* &::before {
       grid-column: 1/6;
-    }
+    } */
   }
 `
 /** eslint */
@@ -143,7 +143,7 @@ const Image = styled.div`
 
 const LeadParagraph = styled.div`
   grid-column: 2 / 3;
-  grid-row: 6;
+  grid-row: 1;
   padding: var(--spacing-medium) 0;
   @media (min-width: 800px) {
     grid-column: 2 / 5;
@@ -158,7 +158,7 @@ const LeadParagraph = styled.div`
 const Content = styled.div`
   padding: var(--spacing-medium) 0;
   grid-column: 2 / 3;
-  grid-row: 7;
+  grid-row: 2;
   @media (min-width: 800px) {
     grid-column: 3 / 4;
   }
@@ -172,7 +172,7 @@ const Content = styled.div`
 
 const Related = styled.div`
   grid-column: 2 / 3;
-  grid-row: 8;
+  grid-row: 3;
   padding: var(--spacing-large) 0 var(--spacing-medium) 0;
   /** Could probably reduce the amount of mq with some more collapsible columns on smaller devices  */
   @media (min-width: 800px) {
@@ -181,7 +181,7 @@ const Related = styled.div`
 `
 const Latest = styled.div`
   grid-column: 2 / 3;
-  grid-row: 9;
+  grid-row: 4;
   @media (min-width: 800px) {
     grid-column: 2 / 5;
   }
