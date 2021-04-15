@@ -13,9 +13,8 @@ const Figure = styled.figure<FigureStyles>`
   /* Temp negative margin */
   padding: 0 var(--layout-spacing-medium);
   max-width: 1700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin: var(--space-xxLarge) 0;
+
+  margin: var(--space-xxLarge) auto;
   /*   @TODO Needs lot of peace and love when the design has settled
  */
   @media (min-width: 1000px) {
@@ -24,6 +23,7 @@ const Figure = styled.figure<FigureStyles>`
         width: '50%',
         paddingLeft: 'var(--spacing-small)',
         marginTop: '0',
+        maxWidth: 'calc(1700px / 2)',
         marginBottom: 'var(--spacing-small)',
         float: 'right',
       }}
