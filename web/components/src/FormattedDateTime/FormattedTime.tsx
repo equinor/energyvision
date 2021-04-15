@@ -3,11 +3,11 @@ import { StyledDate, TimeIcon } from './shared'
 
 export type FormattedTimeProps = {
   datetime: string
-  withIcon?: boolean
+  icon?: boolean
 }
 
-export const FormattedTime = ({ datetime, withIcon = false }: FormattedTimeProps): JSX.Element => {
-  if (withIcon) {
+export const FormattedTime = ({ datetime, icon = false }: FormattedTimeProps): JSX.Element => {
+  if (icon) {
     return (
       <StyledDate>
         <TimeIcon />

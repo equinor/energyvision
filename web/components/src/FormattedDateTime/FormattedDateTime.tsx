@@ -6,10 +6,10 @@ export const FormattedDateTime = ({
   year = 'numeric',
   month = 'long',
   day = '2-digit',
-  withIcon = true,
+  icon = false,
   ...rest
 }: DateProps): JSX.Element => {
-  if (!withIcon) {
+  if (!icon) {
     return (
       <StyledDate {...rest}>
         <FormattedDate datetime={datetime} year={year} month={month} day={day} />
