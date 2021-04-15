@@ -96,7 +96,9 @@ const RelatedAlt = styled.div`
   margin-bottom: var(--space-3xLarge);
 `
 
-const Latest = styled.div``
+const Latest = styled.div`
+  margin-bottom: var(--space-4xLarge);
+`
 
 type ArticleProps = {
   data: {
