@@ -2,7 +2,7 @@
 import { PortableTextProps } from '@sanity/block-content-to-react'
 import { PortableText } from '../lib/sanity'
 import {
-  BlockRenderer,
+  PaddedBlockRenderer,
   SubRenderer,
   SupRenderer,
   InternalLinkRenderer,
@@ -15,7 +15,7 @@ import {
 const defaultSerializers = {
   marks: { sub: SubRenderer, sup: SupRenderer, link: ExternalLinkRenderer, internalLink: InternalLinkRenderer },
   types: {
-    block: BlockRenderer,
+    block: PaddedBlockRenderer,
     positionedInlineImage: FigureRendererWithLayout,
     factbox: FactRenderer,
     pullQuote: QuoteRenderer,
