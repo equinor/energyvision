@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
@@ -8,7 +9,7 @@ export type DateProps = {
   year?: 'numeric' | '2-digit'
   month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
   day?: 'numeric' | '2-digit'
-}
+} & HTMLAttributes<HTMLSpanElement>
 
 export const StyledDate = styled.span`
   display: inline-flex;
