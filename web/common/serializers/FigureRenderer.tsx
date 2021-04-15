@@ -1,3 +1,5 @@
+/** Not used anywhere at the moment, but we'll need it later */
+
 import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { imageProps } from '../../common/helpers'
