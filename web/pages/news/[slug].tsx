@@ -38,6 +38,12 @@ const DateAlt = styled.div`
   color: var(--white-100);
   margin-top: var(--space-xxLarge);
   margin-bottom: var(--space-xxLarge);
+  display: flex;
+  align-items: center;
+`
+
+const LastModified = styled.span`
+  margin-left: var(--space-medium);
 `
 
 const ImageAlt = styled.div`
@@ -215,6 +221,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   </StyledHeadingAlt>
                   <DateAlt>
                     <FormattedDateTime datetime={news.publishDateTime} />
+                    <LastModified>
+                      LAST MODIFIED: <FormattedDateTime datetime={news.updatedAt} withIcon={false} />
+                    </LastModified>
                   </DateAlt>
                 </HeaderInner>
               </Header>
