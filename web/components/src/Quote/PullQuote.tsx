@@ -6,7 +6,8 @@ export type PullQuoteProps = HTMLAttributes<HTMLDivElement>
 const Container = styled.figure`
   display: grid;
   row-gap: var(--spacing-medium);
-  margin: var(--spacing-xLarge) 0;
+  margin: 0;
+  /* margin: var(--spacing-xLarge) 0; */
   grid-template-rows: min-content min-content;
   grid-template-columns: 5rem var(--spacing-medium) 1fr;
   grid-template-areas:
