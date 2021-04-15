@@ -7,7 +7,6 @@ import {
   SupRenderer,
   InternalLinkRenderer,
   ExternalLinkRenderer,
-  FigureRenderer,
   FactRenderer,
   QuoteRenderer,
   FigureRendererWithLayout,
@@ -17,7 +16,6 @@ const defaultSerializers = {
   marks: { sub: SubRenderer, sup: SupRenderer, link: ExternalLinkRenderer, internalLink: InternalLinkRenderer },
   types: {
     block: BlockRenderer,
-    imageWithAltAndCaption: FigureRenderer,
     positionedInlineImage: FigureRendererWithLayout,
     factbox: FactRenderer,
     pullQuote: QuoteRenderer,
