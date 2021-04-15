@@ -70,6 +70,18 @@ const ImageAlt = styled.div`
   }
 `
 
+const LeadParagraphAlt = styled.div`
+  padding: 0 var(--layout-spacing-large);
+  max-width: 1700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: var(--space-xLarge);
+  /* Side effect of change yesterday :/ */
+  & > p {
+    margin-bottom: 0;
+  }
+`
+
 /** ------------------------------------------ */
 
 const NewsLayout = styled.div`
@@ -140,7 +152,7 @@ const Image = styled.div`
     grid-column: 2 / 5;
   }
 `
-
+// eslint-disable-next-line no-unused-vars
 const LeadParagraph = styled.div`
   grid-column: 2 / 3;
   grid-row: 1;
@@ -243,6 +255,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 </HeaderInner>
               </Header>
               <ImageAlt>{news.heroImage && <HeroImage data={news.heroImage} />}</ImageAlt>
+              {news.ingress && (
+                <LeadParagraphAlt>
+                  <Lead blocks={news.ingress} />
+                </LeadParagraphAlt>
+              )}
             </NewsLayoutAlt>
             <NewsLayout>
               {/*<StyledHeading level="h1" size="2xl" inverted>
@@ -252,11 +269,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
               <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>*/}
-              {news.ingress && (
+              {/*     {news.ingress && (
                 <LeadParagraph>
                   <Lead blocks={news.ingress} />
                 </LeadParagraph>
-              )}
+              )} */}
               {news.content && (
                 <Content>
                   <NewsBlockContent blocks={news.content}></NewsBlockContent>
