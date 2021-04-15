@@ -11,9 +11,9 @@ export const FormattedDate = ({
   year = 'numeric',
   month = 'long',
   day = '2-digit',
-  withIcon = false,
+  icon = false,
 }: DateProps): JSX.Element => {
-  if (withIcon) {
+  if (icon) {
     return (
       <StyledDate>
         <DateIcon />
