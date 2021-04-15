@@ -14,7 +14,7 @@ type NewsCardProp = {
 const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
   return (
-    <NextLink href={`/news/${slug}`}>
+    <NextLink href={`/news/${slug}`} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <CardLink>
         <Card>
