@@ -7,10 +7,11 @@ export const FormattedDateTime = ({
   month = 'long',
   day = '2-digit',
   withIcon = true,
+  ...rest
 }: DateProps): JSX.Element => {
   if (!withIcon) {
     return (
-      <StyledDate>
+      <StyledDate {...rest}>
         <FormattedDate datetime={datetime} year={year} month={month} day={day} />
         <FormattedTime datetime={datetime} />
       </StyledDate>
@@ -18,7 +19,7 @@ export const FormattedDateTime = ({
   }
 
   return (
-    <StyledDate>
+    <StyledDate {...rest}>
       <DateIcon />
       <FormattedDate datetime={datetime} year={year} month={month} day={day} /> <FormattedTime datetime={datetime} />
     </StyledDate>
