@@ -76,10 +76,15 @@ const LeadParagraphAlt = styled.div`
   margin-left: auto;
   margin-right: auto;
   margin-top: var(--space-xLarge);
+  margin-bottom: var(--space-3xLarge);
   /* Side effect of change yesterday :/ */
   & > p {
     margin-bottom: 0;
   }
+`
+
+const ContentAlt = styled.div`
+  /** I don't think we need this? */
 `
 
 /** ------------------------------------------ */
@@ -167,6 +172,7 @@ const LeadParagraph = styled.div`
     margin: 0 var(--spacing-xxxLarge);
   }
 `
+// eslint-disable-next-line no-unused-vars
 const Content = styled.div`
   padding: var(--spacing-medium) 0;
   grid-column: 2 / 3;
@@ -260,8 +266,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   <Lead blocks={news.ingress} />
                 </LeadParagraphAlt>
               )}
-            </NewsLayoutAlt>
-            <NewsLayout>
+
               {/*<StyledHeading level="h1" size="2xl" inverted>
                 {news.title}
               </StyledHeading>
@@ -275,10 +280,12 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 </LeadParagraph>
               )} */}
               {news.content && (
-                <Content>
+                <ContentAlt>
                   <NewsBlockContent blocks={news.content}></NewsBlockContent>
-                </Content>
+                </ContentAlt>
               )}
+            </NewsLayoutAlt>
+            <NewsLayout>
               {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
                 <Related>
                   <RelatedContent data={news.relatedLinks} />

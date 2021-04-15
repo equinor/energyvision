@@ -129,6 +129,9 @@ export const spacings = css`
     --space-large: calc(1rem * 1.5); /* 24 */
     --space-xLarge: calc(1rem * 2); /* 32 */
     --space-xxLarge: calc(1rem * 2.5); /* 40 */
+    /* What to do about this as six sizes are too few. Should be xxSmall */
+    --space-3xLarge: calc(1rem * 3.5); /* 56 */
+    --space-4xLarge: calc(1rem * 6); /* 96 */
   }
 
   /** space units for borders, border-radius etc. */
@@ -144,7 +147,7 @@ export const spacings = css`
     /** @TODO: More clever mathematics */
     --layout-spacing-small: clamp(16px, calc(-38.3689px + 14.4984vw), 240px);
     --layout-spacing-medium: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-    --layout-spacing-large: clamp(16px, 20vw, 400px);
+    --layout-spacing-large: clamp(16px, 22vw, 400px);
     /** Random number coming up */
     --layout-max-content-width: 720px;
   }

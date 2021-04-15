@@ -11,22 +11,26 @@ type FigureStyles = {
 
 const Figure = styled.figure<FigureStyles>`
   /* Temp negative margin */
-  margin: var(--spacing-medium) calc(var(--spacing-medium) * -1);
+  padding: 0 var(--layout-spacing-medium);
+  max-width: 1700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: var(--space-xxLarge) 0;
   /*   @TODO Needs lot of peace and love when the design has settled
  */
-  @media (min-width: 1700px) {
+  @media (min-width: 1000px) {
     ${({ layout }) =>
       layout === 'right' && {
-        width: 'calc(50% + var(--spacing-medium))',
-        marginLeft: 'var(--spacing-small)',
+        width: '50%',
+        paddingLeft: 'var(--spacing-small)',
         marginTop: '0',
         marginBottom: 'var(--spacing-small)',
         float: 'right',
       }}
     ${({ layout }) =>
       layout === 'left' && {
-        width: 'calc(50% + var(--spacing-medium))',
-        marginRight: 'var(--spacing-small)',
+        width: '50%',
+        paddingRight: 'var(--spacing-small)',
         marginBottom: 'var(--spacing-small)',
         marginTop: '0',
         float: 'left',
@@ -50,9 +54,10 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
   if (!image) return null
 
   // TODO: add styling for figcaption
+  // @TODO: Optimaze srcset for image!!!!!!
   return (
     <Figure layout={layout}>
-      <Img {...imageProps(image.asset, 830)} alt={image.alt} sizes="80rem" layout="intrinsic" />
+      <Img {...imageProps(image.asset, 1200)} alt={image.alt} sizes="80rem" layout="intrinsic" />
       {caption || attribution ? (
         <figcaption>
           {caption} {attribution}
