@@ -139,7 +139,15 @@ export const spacings = css`
     --space-4: calc(1rem * 4); /* 4 */
     --space-5: calc(1rem / 16 * 5); /* 5 */
   }
-
+  :root {
+    /** Victor: We need these spacings woo on root level because of the serializers */
+    /** @TODO: More clever mathematics */
+    --layout-spacing-small: clamp(16px, calc(-38.3689px + 14.4984vw), 240px);
+    --layout-spacing-medium: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
+    --layout-spacing-large: clamp(16px, 20vw, 400px);
+    /** Random number coming up */
+    --layout-max-content-width: 720px;
+  }
   :root {
     /** Copy'n paste from Tailwind's default.
     It's not clear how we should do this.
