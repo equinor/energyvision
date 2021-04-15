@@ -36,6 +36,7 @@ export type NewsSchema = {
   slug: string
   title: string
   id: string
+  updatedAt: string
   publishDateTime: string
   heroImage: ImageWithCaptionData
   ingress: PortableTextEntry[]

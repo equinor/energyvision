@@ -1,5 +1,6 @@
 const newsFields = /* groq */ `
   "id": _id,
+  "updatedAt": _updatedAt,
   title,
   heroImage,
   publishDateTime,
