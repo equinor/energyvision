@@ -2,13 +2,13 @@ export const platforms = [
   {
   os: 'Windows',
   os_version: '10',
-  browserName: 'Chrome',
+  browserName: 'Firefox',
   browser_version: 'latest',
 }
 ,{
   os: 'Windows',
   os_version: '10',
-  browserName: 'Firefox',
+  browserName: 'Chrome',
   browser_version: 'latest',
 },
 {
