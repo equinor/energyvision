@@ -10,20 +10,20 @@ type FigureStyles = {
 }
 
 const Figure = styled.figure<FigureStyles>`
-  /* Temp negative margin */
-  padding: 0 var(--layout-spacing-medium);
-  max-width: 1700px;
+  --max-width: 1700px;
+  --margin-auto: calc(100% - var(--max-width));
+  --margin-auto-half: calc(var(--margin-auto) / 2);
 
+  padding: 0 var(--layout-spacing-medium);
+  max-width: var(--max-width);
   margin: var(--space-xxLarge) auto;
-  /*   @TODO Needs lot of peace and love when the design has settled
- */
+
   @media (min-width: 1000px) {
     ${({ layout }) =>
       layout === 'right' && {
         width: '50%',
         paddingLeft: 'var(--spacing-small)',
         marginTop: '0',
-        maxWidth: 'calc(1700px / 2)',
         marginBottom: 'var(--spacing-small)',
         float: 'right',
       }}
@@ -34,6 +34,16 @@ const Figure = styled.figure<FigureStyles>`
         marginBottom: 'var(--spacing-small)',
         marginTop: '0',
         float: 'left',
+      }}
+  }
+  @media (min-width: 1700px) {
+    ${({ layout }) =>
+      layout === 'right' && {
+        paddingRight: 'calc(var(--layout-spacing-medium)  + var(--margin-auto-half))',
+      }}
+    ${({ layout }) =>
+      layout === 'left' && {
+        paddingLeft: 'calc(var(--layout-spacing-medium)  + var(--margin-auto-half))',
       }}
   }
 `
@@ -55,6 +65,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
 
   // TODO: add styling for figcaption
   // @TODO: Optimaze srcset for image!!!!!!
+  // @TODO: Remember to ask for half of the size for left and right images
   return (
     <Figure layout={layout}>
       <Img {...imageProps(image.asset, 1200)} alt={image.alt} sizes="80rem" layout="intrinsic" />
