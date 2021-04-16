@@ -8,6 +8,13 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   grid-row-gap: 4rem;
   grid-column-gap: 2rem;
+  /** @TODO: Clamp? */
+  @media (min-width: 1300px) {
+    grid-column-gap: 4rem;
+  }
+  @media (min-width: 1900px) {
+    grid-column-gap: var(--space-4xLarge);
+  }
 `
 
 type LatestNewsProp = {
