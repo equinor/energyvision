@@ -1,5 +1,5 @@
 dependencies:
-  '@equinor/eds-core-react': 0.9.2_84d21352b10017addcdab28b8d95ead5
+  '@equinor/eds-core-react': 0.10.1_84d21352b10017addcdab28b8d95ead5
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.5.7
   '@sanity/block-content-to-react': 2.0.7_react@17.0.2
@@ -23,9 +23,9 @@ devDependencies:
   '@testing-library/dom': 7.30.3
   '@testing-library/jest-dom': 5.11.10
   '@testing-library/react': 11.2.6_react-dom@17.0.2+react@17.0.2
-  '@testing-library/user-event': 13.1.2_@testing-library+dom@7.30.3
+  '@testing-library/user-event': 13.1.3_@testing-library+dom@7.30.3
   '@types/jest': 26.0.22
-  '@types/node': 14.14.37
+  '@types/node': 14.14.41
   '@types/react': 17.0.3
   '@types/react-dom': 17.0.3
   '@types/styled-components': 5.1.9
@@ -1399,13 +1399,16 @@ packages:
     dev: true
     resolution:
       integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
-  /@equinor/eds-core-react/0.9.2_84d21352b10017addcdab28b8d95ead5:
+  /@equinor/eds-core-react/0.10.1_84d21352b10017addcdab28b8d95ead5:
     dependencies:
       '@equinor/eds-icons': 0.6.2
       '@equinor/eds-tokens': 0.5.7
+      '@popperjs/core': 2.9.0
       downshift: 6.1.2_react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      react-fast-compare: 3.2.0
+      react-popper: 2.2.4_69426ddbd994faff2e3b3da5e39313c8
       styled-components: 5.2.3_react-dom@17.0.2+react@17.0.2
     dev: false
     engines:
@@ -1416,7 +1419,7 @@ packages:
       react-dom: '>=16.8'
       styled-components: '>=4.2'
     resolution:
-      integrity: sha512-gniv7cEED6Ia6vEbTdiz312nkTJDdWsaDDLF0gBCSFpMQZwdxbZRXFdU4vc81qOFzvmfPUBzvvma2LlGeoWDeg==
+      integrity: sha512-a/ielyPo/z2ljLbErEKpWTqQc9F0kKiFVLM9/sPxF/m9R/OgB/njjy6pIS65FyCjS+t2zHNs2X+7nNSVggIEWw==
   /@equinor/eds-icons/0.6.2:
     dev: false
     engines:
@@ -1522,7 +1525,7 @@ packages:
   /@jest/console/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       chalk: 4.1.0
       jest-message-util: 26.6.2
       jest-util: 26.6.2
@@ -1539,7 +1542,7 @@ packages:
       '@jest/test-result': 26.6.2
       '@jest/transform': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       ansi-escapes: 4.3.2
       chalk: 4.1.0
       exit: 0.1.2
@@ -1571,7 +1574,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       jest-mock: 26.6.2
     dev: true
     engines:
@@ -1582,7 +1585,7 @@ packages:
     dependencies:
       '@jest/types': 26.6.2
       '@sinonjs/fake-timers': 6.0.1
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       jest-message-util: 26.6.2
       jest-mock: 26.6.2
       jest-util: 26.6.2
@@ -1693,7 +1696,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.3
       '@types/istanbul-reports': 3.0.0
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       '@types/yargs': 15.0.13
       chalk: 4.1.0
     dev: true
@@ -1887,6 +1890,10 @@ packages:
         optional: true
     resolution:
       integrity: sha512-br5Qwvh8D2OQqSXpd1g/xqXKnK0r+Jz6qVKBbWmpUcrbGOxUrf39V5oZ1876084CGn18uMdR5uvPqBv9UqtBjQ==
+  /@popperjs/core/2.9.0:
+    dev: false
+    resolution:
+      integrity: sha512-wjtKehFAIARq2OxK8j3JrggNlEslJfNuSm2ArteIbKyRMts2g0a7KzTxfRVNUM+O0gnBJ2hNV8nWPOYBgI1sew==
   /@popperjs/core/2.9.2:
     dev: true
     resolution:
@@ -2026,7 +2033,7 @@ packages:
       prop-types: 15.7.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-inspector: 5.1.0_react@17.0.2
+      react-inspector: 5.1.1_react@17.0.2
       regenerator-runtime: 0.13.7
       ts-dedent: 2.1.1
       util-deprecate: 1.0.2
@@ -2377,7 +2384,7 @@ packages:
       '@storybook/semver': 7.3.2
       '@storybook/theming': 6.2.8_react-dom@17.0.2+react@17.0.2
       '@storybook/ui': 6.2.8_ba191c0052acfa37659f3ba04a2d9405
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       '@types/webpack': 4.41.27
       autoprefixer: 9.8.6
       babel-loader: 8.2.2_f2e3c02d5be8d19d96f0a6f9023762b2
@@ -2610,7 +2617,7 @@ packages:
       '@storybook/semver': 7.3.2
       '@types/glob-base': 0.3.0
       '@types/micromatch': 4.0.1
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       '@types/pretty-hrtime': 1.0.0
       babel-loader: 8.2.2_f2e3c02d5be8d19d96f0a6f9023762b2
       babel-plugin-macros: 3.0.1
@@ -2665,7 +2672,7 @@ packages:
       '@storybook/semver': 7.3.2
       '@storybook/theming': 6.2.8_react-dom@17.0.2+react@17.0.2
       '@storybook/ui': 6.2.8_ba191c0052acfa37659f3ba04a2d9405
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       '@types/node-fetch': 2.5.10
       '@types/pretty-hrtime': 1.0.0
       '@types/webpack': 4.41.27
@@ -2993,7 +3000,7 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-TXMCg0jT8xmuU8BkKMtp8l7Z50Ykew5WNX8UoIKTaLFwKkP2+1YDhOLA2Ga3wY4x29jyntk7EWfum0kjlYiSjQ==
-  /@testing-library/user-event/13.1.2_@testing-library+dom@7.30.3:
+  /@testing-library/user-event/13.1.3_@testing-library+dom@7.30.3:
     dependencies:
       '@babel/runtime': 7.13.10
       '@testing-library/dom': 7.30.3
@@ -3004,7 +3011,7 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
     resolution:
-      integrity: sha512-89S/QELVCXbcHmgAfPrk0U8kCu9qESqV8/QQaUe5B4+7qi3kJlfQYCiB7Pfi2XInBtO0qm7vDmJb+/Oa+TFdyQ==
+      integrity: sha512-PDTAb7CDhWzxdEFh29vnSyNFx/gigFPsVli2lgxoX+cbX6Dy2kTetB1J3dLm5TKh4d5nUWFfLpaPMoZuLLZ1Dg==
   /@types/anymatch/1.3.1:
     dev: true
     resolution:
@@ -3063,13 +3070,13 @@ packages:
   /@types/glob/7.1.3:
     dependencies:
       '@types/minimatch': 3.0.4
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
     dev: true
     resolution:
       integrity: sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==
   /@types/graceful-fs/4.1.5:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
     dev: true
     resolution:
       integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==
@@ -3144,14 +3151,14 @@ packages:
       integrity: sha512-1z8k4wzFnNjVK/tlxvrWuK5WMt6mydWWP7+zvH5eFep4oj+UkrfiJTRtjCeBXNpwaA/FYqqtb4/QS4ianFpIRA==
   /@types/node-fetch/2.5.10:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       form-data: 3.0.1
     dev: true
     resolution:
       integrity: sha512-IpkX0AasN44hgEad0gEF/V6EgR5n69VEqPEgnmoM8GsIGro3PowbWs4tR6IhxUTyPLpOn+fiGG6nrQhcmoCuIQ==
-  /@types/node/14.14.37:
+  /@types/node/14.14.41:
     resolution:
-      integrity: sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
+      integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==
   /@types/normalize-package-data/2.4.0:
     dev: true
     resolution:
@@ -3257,7 +3264,7 @@ packages:
       integrity: sha512-Fx+NpfOO0CpeYX2g9bkvX8O5qh9wrU1sOF4g8sft4Mu7z+qfe387YlyY8w8daDyDsKY5vUxM0yxkAYnbkRbZEw==
   /@types/webpack-sources/2.1.0:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       '@types/source-list-map': 0.1.2
       source-map: 0.7.3
     dev: true
@@ -3266,7 +3273,7 @@ packages:
   /@types/webpack/4.41.27:
     dependencies:
       '@types/anymatch': 1.3.1
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       '@types/tapable': 1.0.7
       '@types/uglify-js': 3.13.0
       '@types/webpack-sources': 2.1.0
@@ -4295,7 +4302,7 @@ packages:
   /browserslist/4.14.2:
     dependencies:
       caniuse-lite: 1.0.30001208
-      electron-to-chromium: 1.3.715
+      electron-to-chromium: 1.3.717
       escalade: 3.1.1
       node-releases: 1.1.71
     dev: true
@@ -4308,7 +4315,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001208
       colorette: 1.2.2
-      electron-to-chromium: 1.3.715
+      electron-to-chromium: 1.3.717
       escalade: 3.1.1
       node-releases: 1.1.71
     dev: false
@@ -4321,7 +4328,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001208
       colorette: 1.2.2
-      electron-to-chromium: 1.3.715
+      electron-to-chromium: 1.3.717
       escalade: 3.1.1
       node-releases: 1.1.71
     dev: true
@@ -5528,9 +5535,9 @@ packages:
     dev: true
     resolution:
       integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
-  /electron-to-chromium/1.3.715:
+  /electron-to-chromium/1.3.717:
     resolution:
-      integrity: sha512-VCWxo9RqTYhcCsHtG+l0TEOS6H5QmO1JyVCQB9nv8fllmAzj1VcCYH3qBCXP75/En6FeoepefnogLPE+5W7OiQ==
+      integrity: sha512-OfzVPIqD1MkJ7fX+yTl2nKyOE4FReeVfMCzzxQS+Kp43hZYwHwThlGP+EGIZRXJsxCM7dqo8Y65NOX/HP12iXQ==
   /element-resize-detector/1.2.2:
     dependencies:
       batch-processor: 1.0.0
@@ -7701,7 +7708,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/fake-timers': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       jest-mock: 26.6.2
       jest-util: 26.6.2
       jsdom: 16.5.3
@@ -7715,7 +7722,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/fake-timers': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       jest-mock: 26.6.2
       jest-util: 26.6.2
     dev: true
@@ -7733,7 +7740,7 @@ packages:
     dependencies:
       '@jest/types': 26.6.2
       '@types/graceful-fs': 4.1.5
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       anymatch: 3.1.2
       fb-watchman: 2.0.1
       graceful-fs: 4.2.6
@@ -7758,7 +7765,7 @@ packages:
       '@jest/source-map': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       chalk: 4.1.0
       co: 4.6.0
       expect: 26.6.2
@@ -7815,7 +7822,7 @@ packages:
   /jest-mock/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
     dev: true
     engines:
       node: '>= 10.14.2'
@@ -7871,7 +7878,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       chalk: 4.1.0
       emittery: 0.7.2
       exit: 0.1.2
@@ -7929,7 +7936,7 @@ packages:
       integrity: sha512-lrzyR3N8sacTAMeonbqpnSka1dHNux2uk0qqDXVkMv2c/A3wYnvQ4EXuI013Y6+gSKSCxdaczvf4HF0mVXHRdw==
   /jest-serializer/26.6.2:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       graceful-fs: 4.2.6
     dev: true
     engines:
@@ -7971,7 +7978,7 @@ packages:
   /jest-util/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       chalk: 4.1.0
       graceful-fs: 4.2.6
       is-ci: 2.0.0
@@ -7998,7 +8005,7 @@ packages:
     dependencies:
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       ansi-escapes: 4.3.2
       chalk: 4.1.0
       jest-util: 26.6.2
@@ -8010,7 +8017,7 @@ packages:
       integrity: sha512-WKJob0P/Em2csiVthsI68p6aGKTIcsfjH9Gsx1f0A3Italz43e3ho0geSAVsmj09RWOELP1AZ/DXyJgOgDKxXQ==
   /jest-worker/26.6.2:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: true
@@ -8020,7 +8027,7 @@ packages:
       integrity: sha512-KWYVV1c4i+jbMpaBC+U++4Va0cp8OisU185o73T1vo99hqi7w8tSJfUXYswwqqrjzwxa6KpRK54WhPvwf5w6PQ==
   /jest-worker/27.0.0-next.5:
     dependencies:
-      '@types/node': 14.14.37
+      '@types/node': 14.14.41
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -10116,7 +10123,6 @@ packages:
     resolution:
       integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
   /react-fast-compare/3.2.0:
-    dev: true
     resolution:
       integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
   /react-helmet-async/1.0.9_react-dom@17.0.2+react@17.0.2:
@@ -10134,7 +10140,7 @@ packages:
       react-dom: ^16.6.0 || ^17.0.0
     resolution:
       integrity: sha512-N+iUlo9WR3/u9qGMmP4jiYfaD6pe9IvDTapZLFJz2D3xlTlCM1Bzy4Ab3g72Nbajo/0ZyW+W9hdz8Hbe4l97pQ==
-  /react-inspector/5.1.0_react@17.0.2:
+  /react-inspector/5.1.1_react@17.0.2:
     dependencies:
       '@babel/runtime': 7.13.10
       is-dom: 1.1.0
@@ -10142,9 +10148,9 @@ packages:
       react: 17.0.2
     dev: true
     peerDependencies:
-      react: ^16.8.4
+      react: ^16.8.4 || ^17.0.0
     resolution:
-      integrity: sha512-JAwswiengIcxi4X/Ssb8nf6suOuQsyit8Fxo04+iPKTnPNY3XIOuagjMZSzpJDDKkYcc/ARlySOYZZv626WUvA==
+      integrity: sha512-GURDaYzoLbW8pMGXwYPDBIv6nqei4kK7LPRZ9q9HCZF54wqXz/dnylBp/kfE9XmekBhHvLDdcYeyIwSrvtOiWg==
   /react-intl/5.15.8_react@17.0.2+typescript@4.2.4:
     dependencies:
       '@formatjs/ecma402-abstract': 1.6.5
@@ -10190,6 +10196,18 @@ packages:
       react-dom: ^16.6.0 || ^17.0.0
     resolution:
       integrity: sha512-EnERAnnKRptQBJyaee5GJScWNUKQPDD2ywvzZyUjst/wj5U64C8/CnSYLNEmP2hG0IJ3ZhtDxE8oDN+KOyavXQ==
+  /react-popper/2.2.4_69426ddbd994faff2e3b3da5e39313c8:
+    dependencies:
+      '@popperjs/core': 2.9.0
+      react: 17.0.2
+      react-fast-compare: 3.2.0
+      warning: 4.0.3
+    dev: false
+    peerDependencies:
+      '@popperjs/core': ^2.0.0
+      react: ^16.8.0 || ^17
+    resolution:
+      integrity: sha512-NacOu4zWupdQjVXq02XpTD3yFPSfg5a7fex0wa3uGKVkFK7UN6LvVxgcb+xYr56UCuWiNPMH20tntdVdJRwYew==
   /react-popper/2.2.5_a16f30364266ce234ee1188a6d27cb60:
     dependencies:
       '@popperjs/core': 2.9.2
@@ -12236,7 +12254,6 @@ packages:
   /warning/4.0.3:
     dependencies:
       loose-envify: 1.4.0
-    dev: true
     resolution:
       integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
   /watchpack-chokidar2/2.0.1:
@@ -12591,7 +12608,7 @@ packages:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
 specifiers:
   '@babel/core': ^7.13.15
-  '@equinor/eds-core-react': ^0.9.2
+  '@equinor/eds-core-react': ^0.10.1
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.5.7
   '@sanity/block-content-to-react': ^2.0.7
@@ -12603,9 +12620,9 @@ specifiers:
   '@testing-library/dom': ^7.30.3
   '@testing-library/jest-dom': ^5.11.10
   '@testing-library/react': ^11.2.6
-  '@testing-library/user-event': ^13.1.2
+  '@testing-library/user-event': ^13.1.3
   '@types/jest': ^26.0.22
-  '@types/node': ^14.14.37
+  '@types/node': ^14.14.41
   '@types/react': ^17.0.3
   '@types/react-dom': ^17.0.3
   '@types/styled-components': ^5.1.9
