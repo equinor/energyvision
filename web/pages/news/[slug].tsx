@@ -90,14 +90,13 @@ const ContentAlt = styled.div`
 const RelatedAlt = styled.div`
   padding: 0 var(--layout-spacing-large);
   max-width: 1700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: var(--space-xLarge);
-  margin-bottom: var(--space-3xLarge);
+  margin: var(--space-4xLarge) auto;
 `
 
 const Latest = styled.div`
-  margin-bottom: var(--space-4xLarge);
+  padding: 0 var(--space-medium);
+  margin: var(--space-4xLarge) auto;
+  max-width: 1700px;
 `
 
 type ArticleProps = {
