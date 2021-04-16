@@ -4,11 +4,13 @@ import { imageProps } from '../helpers'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  padding: 0 var(--layout-spacing-medium);
-  max-width: 1700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin: var(--space-xxLarge) 0;
+  --max-width: 1700px;
+  --margin-auto: calc(100% - var(--max-width));
+  --margin-auto-half: calc(var(--margin-auto) / 2);
+
+  padding: 0 var(--layout-spacing-small) 0 var(--layout-spacing-medium);
+  max-width: var(--max-width);
+  margin: var(--space-xxLarge) auto;
 `
 
 export const QuoteRenderer = (child: { node: any }): JSX.Element => {
