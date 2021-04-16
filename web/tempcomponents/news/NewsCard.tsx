@@ -14,17 +14,12 @@ type NewsCardProp = {
 const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
 
-  // TODO: handle drafts better
-  if (!slug || !title || !ingress || !publishDateTime || !heroImage) return null
-
   return (
     <NextLink href={`/news/${slug}`} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <CardLink>
         <Card>
-          <Media>
-            <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage.alt} />
-          </Media>
+          <Media>{heroImage && <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage.alt} />}</Media>
           <Header>
             <Eyebrow>
               <FormattedDate datetime={publishDateTime} />
