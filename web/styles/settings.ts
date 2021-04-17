@@ -139,7 +139,7 @@ export const spacings = css`
     --space-1: calc(1rem / 16); /* 1 */
     --space-2: calc(1rem / 8); /* 2 */
     --space-3: calc(1rem / 16 * 3); /* 3 */
-    --space-4: calc(1rem * 4); /* 4 */
+    --space-4: calc(1rem / 4); /* 4 */
     --space-5: calc(1rem / 16 * 5); /* 5 */
   }
   :root {
