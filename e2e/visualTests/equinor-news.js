@@ -33,4 +33,9 @@ if (false === await longestTitleOfAllTimesElement.isDisplayed()) {
 }
 var snapshotName = 'Energy Vision News'
 await percySnapshot(driver, snapshotName);
+const thisIsATestingPageText = await driver.findElement(webdriver.By.xpath("//*[text()='Petters test article']"))
+thisIsATestingPageText.click()
+await (await driver).findElement(webdriver.By.xpath("//*[text()='LAST MODIFIED:']"))
+snapshotName = 'This is a testing page'
+await percySnapshot(driver, snapshotName);
 await driver.quit()
