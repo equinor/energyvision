@@ -4,6 +4,7 @@ import styled from 'styled-components'
 export const StyledFact = styled.div`
   background-color: var(--background);
   padding: var(--spacing-large) var(--spacing-medium);
+  list-style-position: inside;
 `
 
 /* @TODO: Which pattern to use for color names and prop name? */
