@@ -2,6 +2,7 @@ import SimpleBlockContent from '../SimpleBlockContent'
 import { Fact, Heading } from '@components'
 import { ListRenderer, ListItemRenderer } from './'
 import styled from 'styled-components'
+import { blocksToText } from '../helpers'
 
 const Wrapper = styled.aside`
   margin: var(--space-4xLarge) 0;
@@ -37,6 +38,9 @@ export const FactRenderer = (child: { node: any }) => {
     listItem: ListItemRenderer,
   }
 
+  const plainText = blocksToText(content)
+  const columnCount = plainText.length > 800 ? 2 : 1
+
   return (
     <Wrapper>
       {/* //@TODO: Bullet proof, what do we need here actually 
@@ -46,7 +50,10 @@ export const FactRenderer = (child: { node: any }) => {
         <Heading size="md" level="h3" center>
           {title}
         </Heading>
-        <Fact.Text style={{ margin: '0 calc(var(--spacer-vertical-xxxLarge) - var(--spacer-horizontal-medium))' }}>
+        <Fact.Text
+          columns={columnCount}
+          style={{ margin: '0 calc(var(--spacer-vertical-xxxLarge) - var(--spacer-horizontal-medium))' }}
+        >
           {/*  eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore: How should we type */}
           <SimpleBlockContent blocks={content} serializers={serializers} />
