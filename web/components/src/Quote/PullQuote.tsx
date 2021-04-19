@@ -29,6 +29,6 @@ const Container = styled.figure`
   }
 `
 
-export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function BlockQuote({ children }, ref) {
+export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function PullQuote({ children }, ref) {
   return <Container ref={ref}>{children}</Container>
 })
