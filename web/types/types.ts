@@ -1,5 +1,5 @@
 // @TODO Don't know yet where to put this or how to structure it
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { SanityImageObject, SanityImageCrop, SanityImageHotspot } from '@sanity/image-url/lib/types/types'
 import { PortableTextEntry } from '@sanity/block-content-to-react'
 
 export type ImageWithCaptionData = {
@@ -23,12 +23,20 @@ export type RelatedLinksData = {
   links: LinkData[]
 }
 
+export type ImageWithAlt = {
+  alt: string
+  asset: SanityImageObject
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
+  _type: 'imageWithAlt'
+}
+
 export type NewsCardData = {
   slug: string
   title: string
   id: string
   publishDateTime: string
-  heroImage: { _type: string; alt: string; image: SanityImageObject; caption?: string; attribution?: string }
+  heroImage: { _type: string; image: ImageWithAlt; caption?: string; attribution?: string }
   ingress: PortableTextEntry[]
 }
 
