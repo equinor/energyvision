@@ -9,13 +9,16 @@ type TextProps = {
 }
 
 const Text = styled.p`
-  grid-area: quote;
   align-self: end;
   margin: 0;
   font-style: italic;
   line-height: var(--lineHeight-3);
   font-weight: var(${({ weight }: TextProps) => weight}, --fontWeight-regular);
   font-size: var(${({ size }: TextProps) => size}, --typeScale-1);
+`
+
+const Container = styled.div`
+  grid-area: quote;
 `
 
 const textBoldLimit = 160
@@ -30,7 +33,7 @@ export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ chi
   const size = quoteText.length < textSizeLimit ? '--typeScale-5' : '--typeScale-2'
   const iconSize = quoteText.length < textSizeLimit ? '48px' : '36px'
   return (
-    <div>
+    <Container>
       <svg
         width={iconSize}
         height={iconSize}
@@ -48,6 +51,6 @@ export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ chi
       <Text size={size} weight={weight} ref={ref} {...rest}>
         {quoteText}
       </Text>
-    </div>
+    </Container>
   )
 })
