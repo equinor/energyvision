@@ -47,7 +47,7 @@ export const FactRenderer = (child: { node: any }) => {
         Will need media queries here as well
       */}
       <Fact background={backgroundColor} style={{ margin: '0 calc(var(--spacer-vertical-xxxLarge)*-1)' }}>
-        <Heading size="md" level="h3" center>
+        <Heading size="xl" level="h3">
           {title}
         </Heading>
         <Fact.Text
