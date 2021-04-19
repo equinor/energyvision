@@ -2,7 +2,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 type AuthorProps = {
-  title: string | null
+  title?: string | null
 } & HTMLAttributes<HTMLDivElement>
 
 const Row = styled.figcaption`
