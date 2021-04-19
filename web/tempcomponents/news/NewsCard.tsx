@@ -19,7 +19,7 @@ const NewsCard = ({ data }: NewsCardProp) => {
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <CardLink>
         <Card>
-          <Media>{heroImage && <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage.alt} />}</Media>
+          <Media>{heroImage && <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage?.image.alt} />}</Media>
           <Header>
             <Eyebrow>
               <FormattedDate datetime={publishDateTime} />
