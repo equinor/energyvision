@@ -42,7 +42,7 @@ export default {
     },
     {
       name: 'image',
-      type: 'image',
+      type: 'imageWithAlt',
       options: {
         hotspot: true,
       },
