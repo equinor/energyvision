@@ -6,7 +6,6 @@ The E2E test framework will contain end-to-end tests for Energy Vision
 
 .
 |e2e
-|   +--credentials.js
 |   +--energyVision.js
 |   +--package.json
 |   +--seleniumCfg.js
@@ -28,6 +27,10 @@ BS_Accesskey'Browserstack accesskey'
 To run visual tests, set the following environment variable.
 PERCY_TOKEN=c96f042120d71e27afbf238a481e551b62ab1a1d75ab5cdab13263ada2fdfa93
 This sets up the integration with Percy.io and ensures test results are written there.
+
+#### Run from command line
+To run Percy from the command line, cd into the directory visualTests and type
+npx percy exec -- node equinor-news.js
 
 ### Tests (Accessibility) - tests
 Tests in this folder will be accessibility tests
