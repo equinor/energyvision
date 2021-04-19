@@ -12,7 +12,7 @@ const StyledFigure = styled.figure`
 `
 
 const HeroImage = ({ data }: HeroImageProps) => {
-  const { image, alt, caption, attribution } = data
+  const { image, caption, attribution } = data
   return (
     <StyledFigure>
       <Img
@@ -23,7 +23,7 @@ const HeroImage = ({ data }: HeroImageProps) => {
                     (min-width: 1700px) 92rem,
                     1400px
                     "
-        alt={alt}
+        alt={image.alt}
       />
       {caption || attribution ? (
         <figcaption>

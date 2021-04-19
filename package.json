@@ -1,6 +1,9 @@
 {
   "name": "energy-vision",
   "private": true,
+  "engines": {
+    "pnpm": ">=6"
+  },
   "scripts": {
     "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
     "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
@@ -32,5 +35,8 @@
   },
   "devDependencies": {
     "husky": "^5.2.0"
+  },
+  "volta": {
+    "node": "14.16.1"
   }
 }
