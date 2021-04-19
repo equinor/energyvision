@@ -2,7 +2,9 @@ import { PullQuote } from '@components'
 import Img from 'next/image'
 import { imageProps } from '../helpers'
 import styled from 'styled-components'
+import type { ImageWithAlt } from '../../types/types'
 
+const { Quote, Author, Media } = PullQuote
 const Container = styled.div`
   --max-width: 1700px;
   --margin-auto: calc(100% - var(--max-width));
@@ -15,18 +17,22 @@ const Container = styled.div`
 
 export const QuoteRenderer = (child: { node: any }): JSX.Element => {
   const { node } = child
-  const { quote, author, authorTitle, image }: { quote: string; author: string; authorTitle: string; image: any } = node
-
+  const {
+    quote,
+    author,
+    authorTitle,
+    image,
+  }: { quote: string; author: string; authorTitle: string; image: ImageWithAlt } = node
   return (
     <Container>
       <PullQuote>
-        <PullQuote.Quote text={quote} />
-        <PullQuote.Author name={author} title={authorTitle} />
+        <Quote>{quote}</Quote>
+        <Author title={authorTitle}>{author}</Author>
 
         {image ? (
-          <PullQuote.Media>
+          <Media>
             <Img {...imageProps(image, 400, 1)} alt={image.alt} />
-          </PullQuote.Media>
+          </Media>
         ) : null}
       </PullQuote>
     </Container>

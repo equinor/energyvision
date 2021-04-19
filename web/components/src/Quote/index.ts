@@ -1,4 +1,4 @@
-import { PullQuote as PullQuoteWrapper } from './PullQuote'
+import { PullQuote as PullQuoteWrapper, PullQuoteProps } from './PullQuote'
 import { Media } from './Media'
 import { Author } from './Author'
 import { Quote } from './Quote'
@@ -16,4 +16,6 @@ PullQuote.Author = Author
 PullQuote.Quote = Quote
 
 export { PullQuote }
+export type { PullQuoteProps }
+
 export * from './BlockQuote'

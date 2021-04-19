@@ -1,7 +1,7 @@
 FROM mhart/alpine-node:14 AS builder
 
 RUN apk add --no-cache libc6-compat && \
-  npm install -g pnpm
+  npm install -g pnpm@6.0.2
 
 WORKDIR /opt/app
 
@@ -20,7 +20,7 @@ RUN pnpm web build
 FROM mhart/alpine-node:14
 
 RUN apk add --no-cache libc6-compat && \
-  npm install -g pnpm
+  npm install -g pnpm@6.0.2
 
 WORKDIR /opt/app
 
