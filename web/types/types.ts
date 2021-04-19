@@ -6,8 +6,7 @@ export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
   attribution?: string
   caption?: string
-  alt: string
-  image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
+  image: ImageWithAlt
 }
 
 export type LinkData = {
@@ -36,7 +35,7 @@ export type NewsCardData = {
   title: string
   id: string
   publishDateTime: string
-  heroImage: { _type: string; image: ImageWithAlt; caption?: string; attribution?: string }
+  heroImage: ImageWithCaptionData
   ingress: PortableTextEntry[]
 }
 
