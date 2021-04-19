@@ -2,7 +2,6 @@ import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 type AuthorProps = {
-  name: string
   title: string | null
 } & HTMLAttributes<HTMLDivElement>
 
@@ -28,16 +27,19 @@ const AuthorWrapper = styled.div`
   }
 `
 
-export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author({ name, title = null, ...rest }, ref) {
+export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author(
+  { children, title = null, ...rest },
+  ref,
+) {
   return (
     <Row ref={ref} {...rest}>
       {title ? (
         <AuthorWrapper>
-          <strong>{name}</strong>
+          <strong>{children}</strong>
           {title}
         </AuthorWrapper>
       ) : (
-        <strong>{name}</strong>
+        <strong>{children}</strong>
       )}
     </Row>
   )

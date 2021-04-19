@@ -1,9 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-type QuoteProps = {
-  text: string
-} & HTMLAttributes<HTMLDivElement>
+type QuoteProps = HTMLAttributes<HTMLParagraphElement>
 
 type TextProps = {
   weight: string
@@ -23,10 +21,10 @@ const Text = styled.p`
 const textBoldLimit = 160
 const textSizeLimit = 50
 
-export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ text, ...rest }, ref) {
-  if (!text) return null
+export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ children, ...rest }, ref) {
+  if (!children) return null
 
-  const quoteText = text.trim()
+  const quoteText = children.toString().trim()
 
   const weight = quoteText.length < textBoldLimit ? '--fontWeight-medium' : '--fontWeight-regular'
   const size = quoteText.length < textSizeLimit ? '--typeScale-5' : '--typeScale-2'
