@@ -3,8 +3,8 @@ import { Text, Heading } from '@components'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  padding: 0 var(--layout-spacing-large);
-  max-width: 1700px;
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
 `
