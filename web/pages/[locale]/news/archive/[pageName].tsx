@@ -6,7 +6,11 @@ import {
   pageResponseData
 } from "./archive-utils";
 
-const NewsPage2016To2018 = ({title, description, content}: pageResponseData): JSX.Element => {
+const NewsPage2016To2018 = ({
+                              title,
+                              description,
+                              content
+                            }: pageResponseData): JSX.Element => {
   return (
     <>
       <NewsArchiveHead title={title}
@@ -26,7 +30,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
   const pageDate = await response.json()
   return {
     props: {
-      pageData: pageDate,
+      title: pageDate.title,
+      description: pageDate.description,
+      content: pageDate.content
     },
   }
 }

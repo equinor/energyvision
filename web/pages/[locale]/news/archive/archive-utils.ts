@@ -24,13 +24,18 @@ export const archiveServerHostname = 'http://localhost:8080'
 export const news2016To2018File = 'news2016To2018.txt'
 export const oldArchiveNewsFile = 'oldArchiveNews.txt'
 
-export const get2016To2018NewsStaticPaths = ():Old2016To2018ArchiveNewsPageInfo[] => {
-  const params:Old2016To2018ArchiveNewsPageInfo[] = []
+export const get2016To2018NewsStaticPaths = (): Old2016To2018ArchiveNewsPageInfo[] => {
+  const params: Old2016To2018ArchiveNewsPageInfo[] = []
   const newsPagesList = getNewsPaths(news2016To2018File)
   newsPagesList.map(pagePath => {
     const languageCode = pagePath.substr(1, 2)
     const pageName = removeHTMLExtension(pagePath.substr(pagePath.lastIndexOf("/") + 1))
-    const pageInfo:Old2016To2018ArchiveNewsPageInfo = {'params': {'locale': languageCode, 'pageName': pageName}}
+    const pageInfo: Old2016To2018ArchiveNewsPageInfo = {
+      'params': {
+        'locale': languageCode,
+        'pageName': pageName
+      }
+    }
     params.push(pageInfo)
   })
   return params
@@ -55,7 +60,8 @@ export const getOldArchivedNewsStaticPaths = (): OldArchiveNewsPageInfo[] => {
 }
 
 export const getArchivedNewsList = (locale: string): string[] => {
-  return getNewsPaths("news2016To2018.txt").filter(pagePath => pagePath.startsWith(`/${locale}`))
+  return getNewsPaths("news2016To2018.txt")
+    .filter(pagePath => pagePath.startsWith(`/${locale}`))
     .map(pagePath => sanitizeNewsURL(pagePath))
 }
 
