@@ -17,7 +17,7 @@ export const newsQuery = /* groq */ `
 {
   "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc) | [0] {
     "documentTitle": seo.documentTitle,
-    "metaDescription":seo.metaDescription,
+    "metaDescription": seo.metaDescription,
     "content": content[]{
       ...,
       "markDefs": markDefs[]{
