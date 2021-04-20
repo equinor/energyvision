@@ -10,12 +10,8 @@ type FigureStyles = {
 }
 
 const Figure = styled.figure<FigureStyles>`
-  --max-width: 1700px;
-  --margin-auto: calc(100% - var(--max-width));
-  --margin-auto-half: calc(var(--margin-auto) / 2);
-
-  padding: 0 var(--layout-spacing-medium);
-  max-width: var(--max-width);
+  padding: 0 var(--layout-paddingHorizontal-medium);
+  max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
 
   @media (min-width: 1000px) {
@@ -36,16 +32,11 @@ const Figure = styled.figure<FigureStyles>`
         float: 'left',
       }}
   }
-  @media (min-width: 1700px) {
-    ${({ layout }) =>
-      layout === 'right' && {
-        paddingRight: 'calc(var(--layout-spacing-medium)  + var(--margin-auto-half))',
-      }}
-    ${({ layout }) =>
-      layout === 'left' && {
-        paddingLeft: 'calc(var(--layout-spacing-medium)  + var(--margin-auto-half))',
-      }}
-  }
+`
+
+const FigCaption = styled.figcaption`
+  font-size: var(--typeScale-0);
+  margin-top: var(--space-small);
 `
 
 type FigureNode = {
@@ -70,9 +61,9 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
     <Figure layout={layout}>
       <Img {...imageProps(image.asset, 1200)} alt={image.alt} sizes="80rem" layout="intrinsic" />
       {caption || attribution ? (
-        <figcaption>
+        <FigCaption>
           {caption} {attribution}
-        </figcaption>
+        </FigCaption>
       ) : null}
     </Figure>
   )
