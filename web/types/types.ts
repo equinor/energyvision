@@ -42,6 +42,8 @@ export type NewsCardData = {
 export type NewsSchema = {
   slug: string
   title: string
+  documentTitle?: string
+  metaDescription?: string
   id: string
   updatedAt: string
   publishDateTime: string
