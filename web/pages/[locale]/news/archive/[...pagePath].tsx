@@ -28,7 +28,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   return {
     props: {
-      pageData: pageDate,
+      title: pageDate.title,
+      description: pageDate.description,
+      content: pageDate.content
     },
   }
 }

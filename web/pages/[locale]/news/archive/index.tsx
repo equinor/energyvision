@@ -2,22 +2,25 @@ import {
   getArchivedNewsList,
   getSupportedLocalesAsStaticPathParams
 } from './archive-utils'
+import {Heading, Link, List} from "@components";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {Link} from "@components";
 
-const allArchivedNews = (newsList: string[]): JSX.Element => {
+type OldLinks = {
+  newsList: string[]
+}
+const allArchivedNews = ({newsList}: OldLinks): JSX.Element => {
   return (
     <>
-      <h2> 2016 to 2018 archived news page list</h2>
-      <ul>
-        {newsList.map((value) => (
-          <li key={value}>
+      <Heading center={true}>2016 to 2018 archived news page list</Heading>
+      <List>
+        {newsList && newsList.map((value) => (
+          <List.Item key={value}>
             <Link href={value}>
               {value}
             </Link>
-          </li>
+          </List.Item>
         ))}
-      </ul>
+      </List>
     </>
   )
 }
