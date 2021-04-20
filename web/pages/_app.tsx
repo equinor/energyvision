@@ -36,15 +36,15 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         </Head>
         <GlobalStyle />
+        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <TopbarOffset />
-
         <Topbar height={topbarHeight} ref={topbarRef}>
           <Menu items={MockMenuData} offset={topbarHeight}></Menu>
           <Button variant="outlined" onClick={toggleTheme}>
             Toggle theme
           </Button>
         </Topbar>
-        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+
         <Component {...pageProps} />
       </IntlProvider>
     </>

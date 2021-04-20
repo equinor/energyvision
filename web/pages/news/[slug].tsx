@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
+import { NextSeo } from 'next-seo'
 import { Layout, Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
@@ -134,72 +135,72 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   }
 
   return (
-    <Layout preview={preview}>
-      {router.isFallback ? (
-        <p>Loading…</p>
-      ) : (
-        <>
-          <article>
-            <Head>
-              <title>{news.title}</title>
-            </Head>
-            <NewsLayoutAlt>
-              <Header>
-                <HeaderInner>
-                  <StyledHeadingAlt level="h1" size="2xl" inverted>
-                    {news.title}
-                  </StyledHeadingAlt>
-                  <DateAlt>
-                    <Icon data={calendar} />
-                    <DateContainer>
-                      <FormattedDateTime datetime={news.publishDateTime} />
-                      <LastModifiedLabel>LAST MODIFIED:</LastModifiedLabel>
-                      <FormattedDateTime datetime={news.updatedAt} />
-                    </DateContainer>
-                  </DateAlt>
-                </HeaderInner>
-              </Header>
-              <ImageAlt>{news.heroImage && <HeroImage data={news.heroImage} />}</ImageAlt>
-              {news.ingress && (
-                <LeadParagraphAlt>
-                  <Lead blocks={news.ingress} />
-                </LeadParagraphAlt>
-              )}
+    <>
+      <NextSeo title={news.documentTitle || news.title} description={news.metaDescription}></NextSeo>
+      <Layout preview={preview}>
+        {router.isFallback ? (
+          <p>Loading…</p>
+        ) : (
+          <>
+            <article>
+              <NewsLayoutAlt>
+                <Header>
+                  <HeaderInner>
+                    <StyledHeadingAlt level="h1" size="2xl" inverted>
+                      {news.title}
+                    </StyledHeadingAlt>
+                    <DateAlt>
+                      <Icon data={calendar} />
+                      <DateContainer>
+                        <FormattedDateTime datetime={news.publishDateTime} />
+                        <LastModifiedLabel>LAST MODIFIED:</LastModifiedLabel>
+                        <FormattedDateTime datetime={news.updatedAt} />
+                      </DateContainer>
+                    </DateAlt>
+                  </HeaderInner>
+                </Header>
+                <ImageAlt>{news.heroImage && <HeroImage data={news.heroImage} />}</ImageAlt>
+                {news.ingress && (
+                  <LeadParagraphAlt>
+                    <Lead blocks={news.ingress} />
+                  </LeadParagraphAlt>
+                )}
 
-              {/*<StyledHeading level="h1" size="2xl" inverted>
+                {/*<StyledHeading level="h1" size="2xl" inverted>
                 {news.title}
               </StyledHeading>
               <Date>
                 <FormattedDateTime datetime={news.publishDateTime} />
               </Date>
               <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>*/}
-              {/*     {news.ingress && (
+                {/*     {news.ingress && (
                 <LeadParagraph>
                   <Lead blocks={news.ingress} />
                 </LeadParagraph>
               )} */}
-              {news.content && (
-                <ContentAlt>
-                  <NewsBlockContent blocks={news.content}></NewsBlockContent>
-                </ContentAlt>
-              )}
+                {news.content && (
+                  <ContentAlt>
+                    <NewsBlockContent blocks={news.content}></NewsBlockContent>
+                  </ContentAlt>
+                )}
 
-              {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
-                <RelatedAlt>
-                  <RelatedContent data={news.relatedLinks} />
-                </RelatedAlt>
-              )}
+                {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
+                  <RelatedAlt>
+                    <RelatedContent data={news.relatedLinks} />
+                  </RelatedAlt>
+                )}
 
-              {latestNews.length > 0 && (
-                <Latest>
-                  <LatestNews data={latestNews} />
-                </Latest>
-              )}
-            </NewsLayoutAlt>
-          </article>
-        </>
-      )}
-    </Layout>
+                {latestNews.length > 0 && (
+                  <Latest>
+                    <LatestNews data={latestNews} />
+                  </Latest>
+                )}
+              </NewsLayoutAlt>
+            </article>
+          </>
+        )}
+      </Layout>
+    </>
   )
 }
 
