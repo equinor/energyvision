@@ -10,11 +10,13 @@ type TextAreaWithCharsProps = {
   value: string
   type: { title: 'string'; description: string }
   onChange: any
+  markers: any
+  presence: any
 }
 
 // eslint-disable-next-line react/display-name
 const TextAreaWithChars = forwardRef<HTMLTextAreaElement, TextAreaWithCharsProps>(
-  ({ value = '', type, onChange }, ref) => {
+  ({ value = '', type, markers, presence, onChange }, ref) => {
     const length = value.split('').length
 
     const handleChange = useCallback((event) => {
@@ -23,7 +25,7 @@ const TextAreaWithChars = forwardRef<HTMLTextAreaElement, TextAreaWithCharsProps
 
     return (
       <div>
-        <FormField label={type.title} description={type.description}>
+        <FormField label={type.title} description={type.description} markers={markers} presence={presence}>
           <TextArea type="text" ref={ref} value={value} onChange={handleChange} />
         </FormField>
         <Box marginTop={2}>
@@ -53,7 +55,7 @@ export default {
       name: 'metaDescription',
       title: 'Meta description',
       validation: (Rule: any) => [
-        Rule.required().warning('Meta description is very important for SEO'),
+        Rule.required().warning('Meta description is important for SEO'),
         Rule.max(160).warning('Google recommends max. 160 chars'),
       ],
       description: `Meta descriptions are HTML attributes that provide concise summaries of webpages.
