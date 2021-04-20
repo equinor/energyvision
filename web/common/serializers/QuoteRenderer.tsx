@@ -6,12 +6,8 @@ import type { ImageWithAlt } from '../../types/types'
 
 const { Quote, Author, Media } = PullQuote
 const Container = styled.div`
-  --max-width: 1700px;
-  --margin-auto: calc(100% - var(--max-width));
-  --margin-auto-half: calc(var(--margin-auto) / 2);
-
-  padding: 0 var(--layout-spacing-small) 0 var(--layout-spacing-medium);
-  max-width: var(--max-width);
+  padding: 0 var(--layout-paddingHorizontal-small) 0 var(--layout-paddingHorizontal-medium);
+  max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
 `
 

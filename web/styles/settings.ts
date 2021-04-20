@@ -145,11 +145,15 @@ export const spacings = css`
   :root {
     /** Victor: We need these spacings woo on root level because of the serializers */
     /** @TODO: More clever mathematics */
-    --layout-spacing-small: clamp(16px, calc(-38.3689px + 14.4984vw), 240px);
-    --layout-spacing-medium: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-    --layout-spacing-large: clamp(16px, 22vw, 400px);
+    --minViewportWidth: 375px;
+    --maxViewportWidth: 1920px;
+    --layout-paddingHorizontal-small: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
+    --layout-paddingHorizontal-medium: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
+    --layout-paddingHorizontal-large: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);
     /** Random number coming up */
-    --layout-max-content-width: 720px;
+    --layout-maxContent-narrow: calc(1920px - 500px * 2); /* 920 */
+    --layout-maxContent-medium: calc(1920px - 368px * 2); /* 1184 */
+    --layout-maxContent-wide: calc(1920px - 250px * 2); /* 1420 */
   }
   :root {
     /** Copy'n paste from Tailwind's default.

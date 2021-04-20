@@ -23,7 +23,7 @@ const NewsLayoutAlt = styled.div`
 
 const Header = styled.div`
   background: var(--slate-blue-95);
-  padding: var(--banner-paddingVertical) var(--banner-paddingHorizontal);
+  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium);
 `
 
 const HeaderInner = styled.div`
@@ -60,7 +60,7 @@ const LastModifiedLabel = styled.span`
 `
 
 const ImageAlt = styled.div`
-  padding: 0 clamp(16px, calc(-38.3689px + 14.4984vw), 240px);
+  padding: 0 var(--layout-paddingHorizontal-small);
   max-width: 1920px;
   margin-left: auto;
   margin-right: auto;
@@ -71,12 +71,13 @@ const ImageAlt = styled.div`
 `
 
 const LeadParagraphAlt = styled.div`
-  padding: 0 var(--layout-spacing-large);
-  max-width: 1700px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0 var(--layout-paddingHorizontal-large);
   margin-top: var(--space-xLarge);
   margin-bottom: var(--space-3xLarge);
+
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
   /* Side effect of change yesterday :/ */
   & > p {
     margin-bottom: 0;
@@ -85,10 +86,14 @@ const LeadParagraphAlt = styled.div`
 
 const ContentAlt = styled.div`
   /** I don't think we need this? */
+  /* but it makes things a bit easier… */
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const RelatedAlt = styled.div`
-  padding: 0 var(--layout-spacing-large);
+  padding: 0 var(--layout-paddingHorizontal-large);
   max-width: 1700px;
   margin: var(--space-4xLarge) auto;
 `
