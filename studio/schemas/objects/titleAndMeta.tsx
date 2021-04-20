@@ -26,7 +26,7 @@ const TextAreaWithChars = forwardRef<HTMLTextAreaElement, TextAreaWithCharsProps
     return (
       <div>
         <FormField label={type.title} description={type.description} markers={markers} presence={presence}>
-          <TextArea type="text" ref={ref} value={value} onChange={handleChange} />
+          <TextArea type="text" ref={ref} value={value} onChange={handleChange} rows={5} />
         </FormField>
         <Box marginTop={2}>
           <Label size={1}>Characters: {length}</Label>
@@ -62,7 +62,6 @@ export default {
       It shows up in search results and in social media. Should be max. 160 chars`,
       type: 'text',
       inputComponent: TextAreaWithChars,
-      rows: 5,
     },
   ],
 }
