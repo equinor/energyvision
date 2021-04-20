@@ -44,7 +44,24 @@ export default {
   title: 'News',
   type: 'document',
   name: 'news',
+  fieldsets: [
+    {
+      title: 'SEO & metadata',
+      name: 'metadata',
+      description: 'This part is used for meta information when this content is used on the web',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+  ],
   fields: [
+    {
+      name: 'seo',
+      type: 'titleAndMeta',
+      fieldset: 'metadata',
+      title: 'Meta information',
+    },
     {
       name: 'title',
       title: 'Title',
