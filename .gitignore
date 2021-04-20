@@ -34,3 +34,6 @@ web/storybook-static
 # lock-files from other package managers than pnpm
 yarn.lock
 package-lock.json
+
+# IDE specific files
+.idea
