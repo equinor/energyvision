@@ -150,6 +150,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
         openGraph={{
           title: news.title,
           description: news.metaDescription,
+          type: 'article',
+          article: {
+            publishedTime: news.publishDateTime,
+            modifiedTime: news.updatedAt,
+          },
           url: fullUrl,
           images: getOpenGraphImages(news.openGraphImage || news.heroImage?.image),
         }}
