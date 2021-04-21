@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
+import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
 import { Layout, Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
@@ -15,6 +16,9 @@ import LatestNews from '../../tempcomponents/news/LatestNews'
 import type { NewsCardData, NewsSchema } from '../../types/types'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
+import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
+
+const { publicRuntimeConfig } = getConfig()
 
 const NewsLayoutAlt = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -118,6 +122,8 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     return <ErrorPage statusCode={418} />
   }
   const router = useRouter()
+  const { pathname } = useRouter()
+
   const slug = data?.news?.slug
   const {
     data: { news, latestNews },
@@ -133,9 +139,21 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     return <ErrorPage statusCode={404} />
   }
 
+  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
+  const fullUrl = fullUrlDyn.replace('[slug]', slug)
+
   return (
     <>
-      <NextSeo title={news.documentTitle || news.title} description={news.metaDescription}></NextSeo>
+      <NextSeo
+        title={news.documentTitle || news.title}
+        description={news.metaDescription}
+        openGraph={{
+          title: news.title,
+          description: news.metaDescription,
+          url: fullUrl,
+          images: getOpenGraphImages(news.openGraphImage || news.heroImage?.image),
+        }}
+      ></NextSeo>
       <Layout preview={preview}>
         {router.isFallback ? (
           <p>Loading…</p>
