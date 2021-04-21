@@ -89,7 +89,7 @@ export const FactRenderer = (child: { node: any }) => {
     return (
       <WrapperWithImg>
         <ImgWrapper>
-          <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" />
+          <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
         </ImgWrapper>
 
         <StyledFact background={backgroundColor} hasImage>
