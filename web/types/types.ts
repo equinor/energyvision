@@ -44,6 +44,7 @@ export type NewsSchema = {
   title: string
   documentTitle?: string
   metaDescription?: string
+  openGraphImage?: ImageWithAlt
   id: string
   updatedAt: string
   publishDateTime: string
