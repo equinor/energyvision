@@ -141,7 +141,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
-  console.log('Urls', fullUrl, publicRuntimeConfig.domain)
+
   return (
     <>
       <NextSeo
