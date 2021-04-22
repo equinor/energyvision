@@ -158,6 +158,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
           url: fullUrl,
           images: getOpenGraphImages(news.openGraphImage || news.heroImage?.image),
         }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
       ></NextSeo>
       <Layout preview={preview}>
         {router.isFallback ? (
