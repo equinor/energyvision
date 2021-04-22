@@ -9,6 +9,7 @@ const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small) 0 var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
+  clear: both;
 `
 
 export const QuoteRenderer = (child: { node: any }): JSX.Element => {
