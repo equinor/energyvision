@@ -143,81 +143,34 @@ export const spacings = css`
     --space-5: calc(1rem / 16 * 5); /* 5 */
   }
   :root {
-    /** Victor: We need these spacings woo on root level because of the serializers */
-    /** @TODO: More clever mathematics */
     --minViewportWidth: 375px;
     --maxViewportWidth: 1920px;
     --layout-paddingHorizontal-small: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
     --layout-paddingHorizontal-medium: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
     --layout-paddingHorizontal-large: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);
-    /** Random number coming up */
     --layout-maxContent-narrow: calc(1920px - 500px * 2); /* 920 */
     --layout-maxContent-medium: calc(1920px - 368px * 2); /* 1184 */
     --layout-maxContent-wide: calc(1920px - 250px * 2); /* 1420 */
   }
   :root {
-    /** Copy'n paste from Tailwind's default.
-    It's not clear how we should do this.
-    We could do it in several ways, we could even make
-    a space scale for spacings as well. But what about
-    theming and that would limit design 🤷‍♀️
-    Just did it with a lot of vars and MQ as a start
-     */
-
-    --spacing-0: 0px; /* 0px */
-    --spacing-px: 1px; /* 1px */
-    --spacing-0p5: 0.125rem; /* 2px */
-    --spacing-1: 0.25rem; /* 4px */
-    --spacing-1p5: 0.375rem; /* 6px */
-    --spacing-2: 0.5rem; /* 8px */
-    --spacing-2p5: 0.625rem; /* 10px */
-    --spacing-3: 0.75rem; /* 12px */
-    --spacing-3p5: 0.875rem; /* 14px */
-    --spacing-4: 1rem; /* 16px */
-    --spacing-5: 1.25rem; /* 20px */
-    --spacing-6: 1.5rem; /* 24px */
-    --spacing-7: 1.75rem; /* 28px */
-    --spacing-8: 2rem; /* 32px */
-    --spacing-9: 2.25rem; /* 36px */
-    --spacing-10: 2.5rem; /* 40px */
-    --spacing-11: 2.75rem; /* 44px */
-    --spacing-12: 3rem; /* 48px */
-    --spacing-14: 3.5rem; /* 56px */
-    --spacing-16: 4rem; /* 64px */
-    --spacing-20: 5rem; /* 80px */
-    --spacing-24: 6rem; /* 96px */
-    --spacing-28: 7rem; /* 112px */
-    --spacing-32: 8rem; /* 128px */
-    --spacing-36: 9rem; /* 144px */
-    --spacing-40: 10rem; /* 160px */
-    --spacing-44: 11rem; /* 176px */
-    --spacing-48: 12rem; /* 192px */
-    --spacing-52: 13rem; /* 208px */
-    --spacing-56: 14rem; /* 224px */
-    --spacing-60: 15rem; /* 240px */
-    --spacing-64: 16rem; /* 256px */
-    --spacing-72: 18rem; /* 288px */
-    --spacing-80: 20rem; /* 320px */
-    --spacing-96: 24rem; /* 384px */
-
-    --spacing-xxSmall: var(--spacing-px);
-    --spacing-xSmall: var(--spacing-1);
-    --spacing-small: var(--spacing-2);
-    --spacing-medium: var(--spacing-4);
-    --spacing-large: var(--spacing-6);
-    --spacing-xLarge: var(--spacing-10);
-    --spacing-xxLarge: var(--spacing-16);
-    --spacing-3xLarge: var(--spacing-24);
+    --spacing-xxSmall: 1px; /* 1px */
+    --spacing-xSmall: 0.25rem; /* 4px */
+    --spacing-small: 0.5rem; /* 8px */
+    --spacing-medium: 1rem; /* 16px */
+    --spacing-large: 1.5rem; /* 24px */
+    --spacing-xLarge: 2.5rem; /* 40px */
+    --spacing-xxLarge: 4rem; /* 64px */
+    --spacing-3xLarge: 6rem; /* 96px */
 
     @media (min-width: 750px) {
-      --spacing-xxSmall: var(--spacing-px);
-      --spacing-xSmall: var(--spacing-2);
-      --spacing-small: var(--spacing-4);
-      --spacing-medium: var(--spacing-8);
-      --spacing-large: var(--spacing-12);
-      --spacing-xLarge: var(--spacing-20);
-      --spacing-xxLarge: var(--spacing-28);
-      --spacing-3xLarge: var(--spacing-48);
+      --spacing-xxSmall: 1px; /* 1px */
+      --spacing-xSmall: 0.5rem; /* 8px */
+      --spacing-small: 1rem; /* 16px */
+      --spacing-medium: 2rem; /* 32px */
+      --spacing-large: 3rem; /* 48px */
+      --spacing-xLarge: 5rem; /* 80px */
+      --spacing-xxLarge: 7rem; /* 112px */
+      --spacing-3xLarge: 12rem; /* 192px */
     }
   }
 `
