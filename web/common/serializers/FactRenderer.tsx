@@ -33,14 +33,29 @@ const ImgWrapper = styled.div`
   }
 `
 
-const StyledFact = styled(Fact)<{ hasImage?: boolean }>`
-  margin: 0 calc(var(--spacer-vertical-xxxLarge) * -1);
+type StyledFactProps = {
+  hasImage?: boolean
+  dynamicHeight?: boolean
+}
+
+const StyledFact = styled(Fact)<StyledFactProps>`
+  margin: 0 calc(var(--spacer-vertical-xxxLarge)*-1);
 
   ${({ hasImage }) =>
     hasImage && {
       overflowY: 'auto',
       maxHeight: '800px',
-    }}
+    }
+  }
+
+  ${({ hasImage, dynamicHeight }) => 
+    hasImage && !dynamicHeight && {
+      height: '800px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }
+  }
 `
 
 const StyledFactText = styled(Fact.Text)<{ hasColumns?: boolean }>`
@@ -51,6 +66,14 @@ const StyledFactText = styled(Fact.Text)<{ hasColumns?: boolean }>`
   }
 `
 
+type FactboxNodeProps = {
+  title: string
+  content: []
+  backgroundColour: { colours: { title: string; value: string } }
+  image: ImageWithAlt
+  dynamicHeight: boolean
+}
+
 export const FactRenderer = (child: { node: any }) => {
   const { node } = child
   const {
@@ -58,12 +81,8 @@ export const FactRenderer = (child: { node: any }) => {
     content,
     backgroundColour,
     image,
-  }: {
-    title: string
-    content: []
-    backgroundColour: { colours: { title: string; value: string } }
-    image: ImageWithAlt
-  } = node
+    dynamicHeight,
+  }: FactboxNodeProps = node
   const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
   if (!content || content.length === 0) {
     console.warn('Missing content in a fact box')
@@ -97,7 +116,7 @@ export const FactRenderer = (child: { node: any }) => {
           <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
         </ImgWrapper>
 
-        <StyledFact background={backgroundColor} hasImage>
+        <StyledFact background={backgroundColor} hasImage dynamicHeight={dynamicHeight}>
           <Heading size="xl" level="h3">
             {title}
           </Heading>
