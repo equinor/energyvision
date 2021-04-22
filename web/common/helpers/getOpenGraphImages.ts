@@ -14,7 +14,7 @@ const getOpenGraphImages = (image: ImageWithAlt) => {
           alt: image.alt,
         },
         {
-          // Facebook recommended size
+          // Facebook and Twitter recommended size
           url: builder.image(image).width(1200).height(630).url() || '',
           width: 1200,
           height: 630,
