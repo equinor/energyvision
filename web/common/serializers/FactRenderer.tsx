@@ -12,20 +12,32 @@ const Wrapper = styled.aside`
   clear: both;
 `
 
-const WrapperWithImg = styled(Wrapper)`
+const WrapperWithImg = styled(Wrapper)<{ imagePosition: 'left' | 'right' }>`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: min-content min-content;
+  grid-template-areas:
+    'image'
+    'content';
 
   @media (min-width: 800px) {
     grid-template-columns: 50% 50%;
     grid-template-rows: min-content;
+
+    ${({ imagePosition }) => 
+      imagePosition === 'left' ? {
+        gridTemplateAreas: '"image content"'
+      } : {
+        gridTemplateAreas: '"content image"'
+      }
+    }
   }
 `
 
 const ImgWrapper = styled.div`
   position: relative;
   height: 400px;
+  grid-area: image;
 
   @media (min-width: 800px) {
     height: auto;
@@ -40,6 +52,7 @@ type StyledFactProps = {
 
 const StyledFact = styled(Fact)<StyledFactProps>`
   margin: 0 calc(var(--spacer-vertical-xxxLarge)*-1);
+  grid-area: content;
 
   ${({ hasImage }) =>
     hasImage && {
@@ -71,6 +84,7 @@ type FactboxNodeProps = {
   content: []
   backgroundColour: { colours: { title: string; value: string } }
   image: ImageWithAlt
+  imagePosition: 'left' | 'right'
   dynamicHeight: boolean
 }
 
@@ -81,6 +95,7 @@ export const FactRenderer = (child: { node: any }) => {
     content,
     backgroundColour,
     image,
+    imagePosition,
     dynamicHeight,
   }: FactboxNodeProps = node
   const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
@@ -111,7 +126,7 @@ export const FactRenderer = (child: { node: any }) => {
 
   if (imageSrc) {
     return (
-      <WrapperWithImg>
+      <WrapperWithImg imagePosition={imagePosition}>
         <ImgWrapper>
           <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
         </ImgWrapper>
