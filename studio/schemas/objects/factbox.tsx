@@ -41,6 +41,12 @@ export default {
       title: 'Image',
       type: 'imageWithAlt',
     },
+    { 
+      name: 'dynamicHeight',
+      type: 'boolean',
+      title: 'Dynamic height',
+      description: 'Let the text decide height of the component instead of the image, up to a maximum of 800 pixels. Used by default if no image is selected.'
+    },
   ],
   preview: {
     select: {
