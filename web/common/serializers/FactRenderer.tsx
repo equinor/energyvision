@@ -61,12 +61,14 @@ const StyledFact = styled(Fact)<StyledFactProps>`
     }
   }
 
-  ${({ hasImage, dynamicHeight }) => 
-    hasImage && !dynamicHeight && {
-      height: '800px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+  @media (min-width: 800px) {
+    ${({ hasImage, dynamicHeight }) => 
+      hasImage && !dynamicHeight && {
+        height: '800px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }
     }
   }
 `
