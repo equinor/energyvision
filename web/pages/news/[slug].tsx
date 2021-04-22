@@ -56,7 +56,10 @@ const DateContainer = styled.div`
 
 const LastModifiedLabel = styled.span`
   margin: 0 var(--space-small);
-
+  text-transform: uppercase;
+  &:after {
+    content: ':';
+  }
   &:before {
     content: '|';
     margin-right: var(--space-small);
@@ -178,7 +181,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                       <Icon data={calendar} />
                       <DateContainer>
                         <FormattedDateTime datetime={news.publishDateTime} />
-                        <LastModifiedLabel>LAST MODIFIED:</LastModifiedLabel>
+                        <LastModifiedLabel>Last modified</LastModifiedLabel>
                         <FormattedDateTime datetime={news.updatedAt} />
                       </DateContainer>
                     </Date>
