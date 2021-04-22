@@ -2,6 +2,7 @@ import React from 'react'
 import { SchemaType } from '../../types'
 import { info_circle } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import { AlignmentSelector } from '../components'
 
 type PreviewProps = {
   imageUrl: string
@@ -40,6 +41,13 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
+    },
+    {
+      name: 'imagePosition',
+      title: 'Image position',
+      description: 'Select which side of the factbox the image should be displayed at on larger screens.',
+      type: 'string',
+      inputComponent: AlignmentSelector,
     },
     { 
       name: 'dynamicHeight',
