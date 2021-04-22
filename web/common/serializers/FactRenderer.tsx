@@ -9,6 +9,7 @@ import { urlFor } from '../helpers'
 
 const Wrapper = styled.aside`
   margin: var(--space-4xLarge) 0;
+  clear: both;
 `
 
 const WrapperWithImg = styled(Wrapper)`
@@ -33,20 +34,19 @@ const ImgWrapper = styled.div`
 `
 
 const StyledFact = styled(Fact)<{ hasImage?: boolean }>`
-  margin: 0 calc(var(--spacer-vertical-xxxLarge)*-1);
+  margin: 0 calc(var(--spacer-vertical-xxxLarge) * -1);
 
-  ${({ hasImage }) => 
+  ${({ hasImage }) =>
     hasImage && {
       overflowY: 'auto',
       maxHeight: '800px',
-    }
-  }
+    }}
 `
 
 const StyledFactText = styled(Fact.Text)<{ hasColumns?: boolean }>`
   margin: 0 calc(var(--spacer-vertical-xxxLarge) - var(--spacer-horizontal-medium));
 
-  @media(min-width: 800px) {
+  @media (min-width: 800px) {
     ${({ hasColumns }) => hasColumns && { columns: 2 }}
   }
 `
@@ -58,7 +58,12 @@ export const FactRenderer = (child: { node: any }) => {
     content,
     backgroundColour,
     image,
-  }: { title: string; content: []; backgroundColour: { colours: { title: string; value: string } }, image: ImageWithAlt } = node
+  }: {
+    title: string
+    content: []
+    backgroundColour: { colours: { title: string; value: string } }
+    image: ImageWithAlt
+  } = node
   const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
   if (!content || content.length === 0) {
     console.warn('Missing content in a fact box')

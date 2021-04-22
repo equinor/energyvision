@@ -97,6 +97,13 @@ const Content = styled.div`
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
+  &:after {
+    content: '.';
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+  }
 `
 
 const Related = styled.div`
