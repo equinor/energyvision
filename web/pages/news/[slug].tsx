@@ -13,14 +13,14 @@ import HeroImage from '../../tempcomponents/news/HeroImage'
 import Lead from '../../tempcomponents/news/Lead'
 import RelatedContent from '../../tempcomponents/news/RelatedContent'
 import LatestNews from '../../tempcomponents/news/LatestNews'
-import type { NewsCardData, NewsSchema } from '../../types/types'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
+import type { NewsCardData, NewsSchema } from '../../types/types'
 
 const { publicRuntimeConfig } = getConfig()
 
-const NewsLayoutAlt = styled.div`
+const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 `
@@ -36,11 +36,11 @@ const HeaderInner = styled.div`
   margin-right: auto;
 `
 
-const StyledHeadingAlt = styled(Heading)`
+const StyledHeading = styled(Heading)`
   margin: 0;
 `
 
-const DateAlt = styled.div`
+const Date = styled.div`
   color: var(--white-100);
   margin-top: var(--space-xxLarge);
   margin-bottom: var(--space-xxLarge);
@@ -63,7 +63,7 @@ const LastModifiedLabel = styled.span`
   }
 `
 
-const ImageAlt = styled.div`
+const Image = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small);
   max-width: 1920px;
   margin-left: auto;
@@ -74,7 +74,7 @@ const ImageAlt = styled.div`
   }
 `
 
-const LeadParagraphAlt = styled.div`
+const LeadParagraph = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   margin-top: var(--space-xLarge);
   margin-bottom: var(--space-3xLarge);
@@ -88,7 +88,7 @@ const LeadParagraphAlt = styled.div`
   }
 `
 
-const ContentAlt = styled.div`
+const Content = styled.div`
   /** I don't think we need this? */
   /* but it makes things a bit easier… */
   max-width: var(--maxViewportWidth);
@@ -96,7 +96,7 @@ const ContentAlt = styled.div`
   margin-right: auto;
 `
 
-const RelatedAlt = styled.div`
+const Related = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: 1700px;
   margin: var(--space-4xLarge) auto;
@@ -131,8 +131,6 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     params: { slug },
     initialData: data,
     enabled: preview || router.query.preview !== null,
-    //enabled: true,
-    //enabled: false,
   })
 
   if (!router.isFallback && !slug) {
@@ -170,51 +168,38 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
         ) : (
           <>
             <article>
-              <NewsLayoutAlt>
+              <NewsLayout>
                 <Header>
                   <HeaderInner>
-                    <StyledHeadingAlt level="h1" size="2xl" inverted>
+                    <StyledHeading level="h1" size="2xl" inverted>
                       {news.title}
-                    </StyledHeadingAlt>
-                    <DateAlt>
+                    </StyledHeading>
+                    <Date>
                       <Icon data={calendar} />
                       <DateContainer>
                         <FormattedDateTime datetime={news.publishDateTime} />
                         <LastModifiedLabel>LAST MODIFIED:</LastModifiedLabel>
                         <FormattedDateTime datetime={news.updatedAt} />
                       </DateContainer>
-                    </DateAlt>
+                    </Date>
                   </HeaderInner>
                 </Header>
-                <ImageAlt>{news.heroImage && <HeroImage data={news.heroImage} />}</ImageAlt>
+                <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
                 {news.ingress && (
-                  <LeadParagraphAlt>
+                  <LeadParagraph>
                     <Lead blocks={news.ingress} />
-                  </LeadParagraphAlt>
+                  </LeadParagraph>
                 )}
-
-                {/*<StyledHeading level="h1" size="2xl" inverted>
-                {news.title}
-              </StyledHeading>
-              <Date>
-                <FormattedDateTime datetime={news.publishDateTime} />
-              </Date>
-              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>*/}
-                {/*     {news.ingress && (
-                <LeadParagraph>
-                  <Lead blocks={news.ingress} />
-                </LeadParagraph>
-              )} */}
                 {news.content && (
-                  <ContentAlt>
+                  <Content>
                     <NewsBlockContent blocks={news.content}></NewsBlockContent>
-                  </ContentAlt>
+                  </Content>
                 )}
 
                 {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
-                  <RelatedAlt>
+                  <Related>
                     <RelatedContent data={news.relatedLinks} />
-                  </RelatedAlt>
+                  </Related>
                 )}
 
                 {latestNews.length > 0 && (
@@ -222,7 +207,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                     <LatestNews data={latestNews} />
                   </Latest>
                 )}
-              </NewsLayoutAlt>
+              </NewsLayout>
             </article>
           </>
         )}
