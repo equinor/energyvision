@@ -12,11 +12,8 @@ export const GlobalStyle = createGlobalStyle`
   ${generic}
   ${elements}
   * {
-/*     font-family: Equinor, 'Open Sans', sans-serif;
-
- */
-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-   }
+    font-family: Equinor, 'Open Sans', sans-serif;
+  }
 
   body {
     background-color: var(--theme-background-primary);
