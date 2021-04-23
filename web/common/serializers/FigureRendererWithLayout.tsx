@@ -14,7 +14,7 @@ const Figure = styled.figure<FigureStyles>`
   max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
 
-  @media (min-width: 1000px) {
+  @media (min-width: 800px) {
     ${({ layout }) =>
       layout === 'right' && {
         width: '50%',
@@ -59,7 +59,38 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
   // @TODO: Remember to ask for half of the size for left and right images
   return (
     <Figure layout={layout}>
-      <Img {...imageProps(image.asset, 1200)} alt={image.alt} sizes="80rem" layout="intrinsic" />
+      {layout === 'full' ? (
+        <Img
+          {...imageProps(image.asset, 1184)}
+          alt={image.alt}
+          sizes="
+        (max-width: 340px) 295px,
+        (max-width: 600px) 451px,
+        (max-width: 950px) 642px,
+        (max-width: 1250px) 805px,
+        (max-width: 1450px) 915px,
+        (max-width: 1700px) 1049px,
+        1184px
+        "
+          layout="responsive"
+        />
+      ) : (
+        <Img
+          {...imageProps(image.asset, 570)}
+          alt={image.alt}
+          sizes="
+          (max-width: 340px) 295px,
+          (max-width: 600px) 451px,
+          (max-width: 800px) 560px,
+          (max-width: 900px) 290px,
+          (max-width: 1250px) 390px,
+          (max-width: 1450px) 436px,
+          (max-width: 1700px) 503px,
+        570px
+        "
+          layout="responsive"
+        />
+      )}
       {caption || attribution ? (
         <FigCaption>
           {caption} {attribution}
