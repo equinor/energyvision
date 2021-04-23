@@ -9,7 +9,9 @@ type FigureStyles = {
   layout: Layout
 }
 
-const Figure = styled.figure<FigureStyles>`
+const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
+  className: `float-${layout}`,
+}))<FigureStyles>`
   padding: 0 var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
@@ -54,11 +56,8 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
 
   if (!image) return null
 
-  // TODO: add styling for figcaption
-  // @TODO: Optimaze srcset for image!!!!!!
-  // @TODO: Remember to ask for half of the size for left and right images
   return (
-    <Figure layout={layout}>
+    <FigureTest layout={layout}>
       {layout === 'full' ? (
         <Img
           {...imageProps(image.asset, 1184)}
@@ -96,6 +95,6 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
           {caption} {attribution}
         </FigCaption>
       ) : null}
-    </Figure>
+    </FigureTest>
   )
 }
