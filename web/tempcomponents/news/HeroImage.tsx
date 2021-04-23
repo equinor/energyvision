@@ -16,13 +16,17 @@ const HeroImage = ({ data }: HeroImageProps) => {
   return (
     <StyledFigure>
       <Img
-        {...imageProps(image, 800, 0.5)}
+        {...imageProps(image, 1420, 0.5)}
         sizes="
-                    (min-width: 800px) 64rem,
-                    (min-width: 1100px) 72rem,
-                    (min-width: 1700px) 92rem,
-                    1400px
-                    "
+          (max-width: 340px) 295px,
+          (max-width: 600px) 490px,
+          (max-width: 800px) 630px,
+          (max-width: 1050px) 810px,
+          (max-width: 1250px) 950px,
+          (max-width: 1450px) 1100px,
+          (max-width: 1700px) 1270px,
+          1420px
+        "
         alt={image.alt}
       />
       {caption || attribution ? (
