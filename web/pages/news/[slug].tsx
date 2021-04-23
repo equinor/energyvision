@@ -104,6 +104,12 @@ const Content = styled.div`
     height: 0;
     clear: both;
   }
+  /*   Clear floats if two left or right aligned images are adjacent siblings
+ */
+  .float-left + .float-left,
+  .float-right + .float-right {
+    clear: both;
+  }
 `
 
 const Related = styled.div`
