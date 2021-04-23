@@ -67,7 +67,16 @@ const StyledFact = styled(Fact)<StyledFactProps>`
         height: '800px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+      }
+    }
+  }
+`
+
+const StyledFactContent = styled.div<StyledFactProps>`
+  @media (min-width: 800px) {
+    ${({ hasImage, dynamicHeight }) => 
+      hasImage && !dynamicHeight && {
+        margin: 'auto 0'
       }
     }
   }
@@ -134,12 +143,14 @@ export const FactRenderer = (child: { node: any }) => {
         </ImgWrapper>
 
         <StyledFact background={backgroundColor} hasImage dynamicHeight={dynamicHeight}>
-          <Heading size="xl" level="h3">
-            {title}
-          </Heading>
-          <StyledFactText>
-            <SimpleBlockContent blocks={content} serializers={serializers} />
-          </StyledFactText>
+          <StyledFactContent hasImage dynamicHeight={dynamicHeight}>
+            <Heading size="xl" level="h3">
+              {title}
+            </Heading>
+            <StyledFactText>
+              <SimpleBlockContent blocks={content} serializers={serializers} />
+            </StyledFactText>
+          </StyledFactContent>
         </StyledFact>
       </WrapperWithImg>
     )
