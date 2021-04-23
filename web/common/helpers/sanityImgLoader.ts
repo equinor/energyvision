@@ -17,17 +17,22 @@ export const SanityImgLoader = (
   aspectRatio?: number,
 ): ImageUrlBuilder => {
   if (!aspectRatio) {
+    console.log(
+      'Image width',
+      options.width,
+      options.width || Math.min(options.originalImageDimensions.width, maxWidth),
+    )
     return imageUrlBuilder
       .width(options.width || Math.min(options.originalImageDimensions.width, maxWidth))
       .auto('format')
-      .quality(60)
+      .quality(70)
   }
 
   return imageUrlBuilder
     .width(options.width || Math.min(options.originalImageDimensions.width, maxWidth))
     .height(getHeightByAspectRatio(options, maxWidth, aspectRatio))
     .auto('format')
-    .quality(60)
+    .quality(70)
 }
 
 export const imageProps = (
