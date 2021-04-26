@@ -11,6 +11,11 @@ const StyledFigure = styled.figure`
   margin: 0;
 `
 
+const FigCaption = styled.figcaption`
+  font-size: var(--typeScale-0);
+  margin-top: var(--space-small);
+`
+
 const HeroImage = ({ data }: HeroImageProps) => {
   const { image, caption, attribution } = data
   return (
@@ -29,11 +34,7 @@ const HeroImage = ({ data }: HeroImageProps) => {
         "
         alt={image.alt}
       />
-      {caption || attribution ? (
-        <figcaption>
-          {caption} {attribution}
-        </figcaption>
-      ) : null}
+      {caption || attribution ? <FigCaption>{`${caption} ${attribution}`}</FigCaption> : null}
     </StyledFigure>
   )
 }
