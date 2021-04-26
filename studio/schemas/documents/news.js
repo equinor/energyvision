@@ -44,7 +44,31 @@ export default {
   title: 'News',
   type: 'document',
   name: 'news',
+  fieldsets: [
+    {
+      title: 'SEO & metadata',
+      name: 'metadata',
+      description: 'This part is used for meta information when this content is used on the web',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+  ],
   fields: [
+    {
+      name: 'seo',
+      type: 'titleAndMeta',
+      fieldset: 'metadata',
+      title: 'Meta information',
+    },
+    {
+      name: 'openGraphImage',
+      type: 'imageWithAlt',
+      title: 'Open Graph Image',
+      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      fieldset: 'metadata',
+    },
     {
       name: 'title',
       title: 'Title',

@@ -1,7 +1,8 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
+import getConfig from 'next/config'
+import { NextSeo } from 'next-seo'
 import { Layout, Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
@@ -12,18 +13,21 @@ import HeroImage from '../../tempcomponents/news/HeroImage'
 import Lead from '../../tempcomponents/news/Lead'
 import RelatedContent from '../../tempcomponents/news/RelatedContent'
 import LatestNews from '../../tempcomponents/news/LatestNews'
-import type { NewsCardData, NewsSchema } from '../../types/types'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
+import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
+import type { NewsCardData, NewsSchema } from '../../types/types'
 
-const NewsLayoutAlt = styled.div`
+const { publicRuntimeConfig } = getConfig()
+
+const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 `
 
 const Header = styled.div`
   background: var(--slate-blue-95);
-  padding: var(--banner-paddingVertical) var(--banner-paddingHorizontal);
+  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium);
 `
 
 const HeaderInner = styled.div`
@@ -32,11 +36,11 @@ const HeaderInner = styled.div`
   margin-right: auto;
 `
 
-const StyledHeadingAlt = styled(Heading)`
+const StyledHeading = styled(Heading)`
   margin: 0;
 `
 
-const DateAlt = styled.div`
+const Date = styled.div`
   color: var(--white-100);
   margin-top: var(--space-xxLarge);
   margin-bottom: var(--space-xxLarge);
@@ -52,15 +56,18 @@ const DateContainer = styled.div`
 
 const LastModifiedLabel = styled.span`
   margin: 0 var(--space-small);
-
+  text-transform: uppercase;
+  &:after {
+    content: ':';
+  }
   &:before {
     content: '|';
     margin-right: var(--space-small);
   }
 `
 
-const ImageAlt = styled.div`
-  padding: 0 clamp(16px, calc(-38.3689px + 14.4984vw), 240px);
+const Image = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-small);
   max-width: 1920px;
   margin-left: auto;
   margin-right: auto;
@@ -70,25 +77,43 @@ const ImageAlt = styled.div`
   }
 `
 
-const LeadParagraphAlt = styled.div`
-  padding: 0 var(--layout-spacing-large);
-  max-width: 1700px;
-  margin-left: auto;
-  margin-right: auto;
+const LeadParagraph = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
   margin-top: var(--space-xLarge);
   margin-bottom: var(--space-3xLarge);
+
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
   /* Side effect of change yesterday :/ */
   & > p {
     margin-bottom: 0;
   }
 `
 
-const ContentAlt = styled.div`
+const Content = styled.div`
   /** I don't think we need this? */
+  /* but it makes things a bit easier… */
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
+  &:after {
+    content: '.';
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+  }
+  /*   Clear floats if two left or right aligned images are adjacent siblings
+ */
+  .float-left + .float-left,
+  .float-right + .float-right {
+    clear: both;
+  }
 `
 
-const RelatedAlt = styled.div`
-  padding: 0 var(--layout-spacing-large);
+const Related = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
   max-width: 1700px;
   margin: var(--space-4xLarge) auto;
 `
@@ -113,6 +138,8 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     return <ErrorPage statusCode={418} />
   }
   const router = useRouter()
+  const { pathname } = useRouter()
+
   const slug = data?.news?.slug
   const {
     data: { news, latestNews },
@@ -120,81 +147,88 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     params: { slug },
     initialData: data,
     enabled: preview || router.query.preview !== null,
-    //enabled: true,
-    //enabled: false,
   })
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
 
+  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
+  const fullUrl = fullUrlDyn.replace('[slug]', slug)
+
   return (
-    <Layout preview={preview}>
-      {router.isFallback ? (
-        <p>Loading…</p>
-      ) : (
-        <>
-          <article>
-            <Head>
-              <title>{news.title}</title>
-            </Head>
-            <NewsLayoutAlt>
-              <Header>
-                <HeaderInner>
-                  <StyledHeadingAlt level="h1" size="2xl" inverted>
-                    {news.title}
-                  </StyledHeadingAlt>
-                  <DateAlt>
-                    <Icon data={calendar} />
-                    <DateContainer>
-                      <FormattedDateTime datetime={news.publishDateTime} />
-                      <LastModifiedLabel>LAST MODIFIED:</LastModifiedLabel>
-                      <FormattedDateTime datetime={news.updatedAt} />
-                    </DateContainer>
-                  </DateAlt>
-                </HeaderInner>
-              </Header>
-              <ImageAlt>{news.heroImage && <HeroImage data={news.heroImage} />}</ImageAlt>
-              {news.ingress && (
-                <LeadParagraphAlt>
-                  <Lead blocks={news.ingress} />
-                </LeadParagraphAlt>
-              )}
+    <>
+      <NextSeo
+        title={news.documentTitle || news.title}
+        description={news.metaDescription}
+        openGraph={{
+          title: news.title,
+          description: news.metaDescription,
+          type: 'article',
+          article: {
+            publishedTime: news.publishDateTime,
+            modifiedTime: news.updatedAt,
+          },
+          url: fullUrl,
+          images: getOpenGraphImages(news.openGraphImage || news.heroImage?.image),
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+      ></NextSeo>
+      <Layout preview={preview}>
+        {router.isFallback ? (
+          <p>Loading…</p>
+        ) : (
+          <>
+            <article>
+              <NewsLayout>
+                <Header>
+                  <HeaderInner>
+                    <StyledHeading level="h1" size="2xl" inverted>
+                      {news.title}
+                    </StyledHeading>
+                    <Date>
+                      <Icon data={calendar} />
+                      <DateContainer>
+                        <FormattedDateTime datetime={news.publishDateTime} />
+                        <LastModifiedLabel>Last modified</LastModifiedLabel>
+                        <FormattedDateTime datetime={news.updatedAt} />
+                      </DateContainer>
+                    </Date>
+                  </HeaderInner>
+                </Header>
+                <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
+                {news.ingress && (
+                  <LeadParagraph>
+                    <Lead blocks={news.ingress} />
+                  </LeadParagraph>
+                )}
+                {news.content && (
+                  <Content>
+                    <NewsBlockContent blocks={news.content}></NewsBlockContent>
+                  </Content>
+                )}
 
-              {/*<StyledHeading level="h1" size="2xl" inverted>
-                {news.title}
-              </StyledHeading>
-              <Date>
-                <FormattedDateTime datetime={news.publishDateTime} />
-              </Date>
-              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>*/}
-              {/*     {news.ingress && (
-                <LeadParagraph>
-                  <Lead blocks={news.ingress} />
-                </LeadParagraph>
-              )} */}
-              {news.content && (
-                <ContentAlt>
-                  <NewsBlockContent blocks={news.content}></NewsBlockContent>
-                </ContentAlt>
-              )}
+                {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
+                  <Related>
+                    <RelatedContent data={news.relatedLinks} />
+                  </Related>
+                )}
 
-              {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
-                <RelatedAlt>
-                  <RelatedContent data={news.relatedLinks} />
-                </RelatedAlt>
-              )}
-
-              {latestNews.length > 0 && (
-                <Latest>
-                  <LatestNews data={latestNews} />
-                </Latest>
-              )}
-            </NewsLayoutAlt>
-          </article>
-        </>
-      )}
-    </Layout>
+                {latestNews.length > 0 && (
+                  <Latest>
+                    <LatestNews data={latestNews} />
+                  </Latest>
+                )}
+              </NewsLayout>
+            </article>
+          </>
+        )}
+      </Layout>
+    </>
   )
 }
 
