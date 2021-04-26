@@ -15,7 +15,9 @@ const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
   padding: 0 var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
-
+  /*  img {
+    object-fit: contain;
+  } */
   @media (min-width: 800px) {
     ${({ layout }) =>
       layout === 'right' && {
@@ -60,7 +62,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
     <FigureTest layout={layout}>
       {layout === 'full' ? (
         <Img
-          {...imageProps(image.asset, 1184)}
+          {...imageProps(image, 1184)}
           alt={image.alt}
           sizes="
         (max-width: 340px) 295px,
@@ -75,7 +77,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
         />
       ) : (
         <Img
-          {...imageProps(image.asset, 570)}
+          {...imageProps(image, 570)}
           alt={image.alt}
           sizes="
           (max-width: 340px) 295px,
