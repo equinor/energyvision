@@ -36,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         </Head>
         <GlobalStyle />
+        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <TopbarOffset />
 
         <Topbar height={topbarHeight} ref={topbarRef}>
@@ -44,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             Toggle theme
           </Button>
         </Topbar>
-        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+
         <Component {...pageProps} />
       </IntlProvider>
     </>

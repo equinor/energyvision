@@ -9,16 +9,14 @@ type FigureStyles = {
   layout: Layout
 }
 
-const Figure = styled.figure<FigureStyles>`
-  --max-width: 1700px;
-  --margin-auto: calc(100% - var(--max-width));
-  --margin-auto-half: calc(var(--margin-auto) / 2);
-
-  padding: 0 var(--layout-spacing-medium);
-  max-width: var(--max-width);
+const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
+  className: `float-${layout}`,
+}))<FigureStyles>`
+  padding: 0 var(--layout-paddingHorizontal-medium);
+  max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
 
-  @media (min-width: 1000px) {
+  @media (min-width: 800px) {
     ${({ layout }) =>
       layout === 'right' && {
         width: '50%',
@@ -36,16 +34,11 @@ const Figure = styled.figure<FigureStyles>`
         float: 'left',
       }}
   }
-  @media (min-width: 1700px) {
-    ${({ layout }) =>
-      layout === 'right' && {
-        paddingRight: 'calc(var(--layout-spacing-medium)  + var(--margin-auto-half))',
-      }}
-    ${({ layout }) =>
-      layout === 'left' && {
-        paddingLeft: 'calc(var(--layout-spacing-medium)  + var(--margin-auto-half))',
-      }}
-  }
+`
+
+const FigCaption = styled.figcaption`
+  font-size: var(--typeScale-0);
+  margin-top: var(--space-small);
 `
 
 type FigureNode = {
@@ -63,17 +56,45 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
 
   if (!image) return null
 
-  // TODO: add styling for figcaption
-  // @TODO: Optimaze srcset for image!!!!!!
-  // @TODO: Remember to ask for half of the size for left and right images
   return (
-    <Figure layout={layout}>
-      <Img {...imageProps(image.asset, 1200)} alt={image.alt} sizes="80rem" layout="intrinsic" />
+    <FigureTest layout={layout}>
+      {layout === 'full' ? (
+        <Img
+          {...imageProps(image.asset, 1184)}
+          alt={image.alt}
+          sizes="
+        (max-width: 340px) 295px,
+        (max-width: 600px) 451px,
+        (max-width: 950px) 642px,
+        (max-width: 1250px) 805px,
+        (max-width: 1450px) 915px,
+        (max-width: 1700px) 1049px,
+        1184px
+        "
+          layout="responsive"
+        />
+      ) : (
+        <Img
+          {...imageProps(image.asset, 570)}
+          alt={image.alt}
+          sizes="
+          (max-width: 340px) 295px,
+          (max-width: 600px) 451px,
+          (max-width: 800px) 560px,
+          (max-width: 900px) 290px,
+          (max-width: 1250px) 390px,
+          (max-width: 1450px) 436px,
+          (max-width: 1700px) 503px,
+        570px
+        "
+          layout="responsive"
+        />
+      )}
       {caption || attribution ? (
-        <figcaption>
+        <FigCaption>
           {caption} {attribution}
-        </figcaption>
+        </FigCaption>
       ) : null}
-    </Figure>
+    </FigureTest>
   )
 }

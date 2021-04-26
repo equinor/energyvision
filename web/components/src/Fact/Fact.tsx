@@ -4,6 +4,18 @@ import styled from 'styled-components'
 export const StyledFact = styled.div`
   background-color: var(--background);
   padding: var(--spacing-large) var(--spacing-medium);
+
+  ul, ol {
+    padding-left: 1rem;
+  }
+
+  li {
+    margin-bottom: var(--space-small);
+
+    &::marker {
+      color: var(--moss-green-100);
+    }
+  }
 `
 
 /* @TODO: Which pattern to use for color names and prop name? */
