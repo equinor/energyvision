@@ -145,6 +145,7 @@ export default {
         },
         {
           name: 'links',
+          title: 'Links and downloads',
           type: 'relatedLinks',
         },
       ],
