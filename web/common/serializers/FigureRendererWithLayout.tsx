@@ -62,7 +62,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
     <FigureTest layout={layout}>
       {layout === 'full' ? (
         <Img
-          {...imageProps(image, 1184)}
+          {...imageProps(image.asset, 1184)}
           alt={image.alt}
           sizes="
         (max-width: 340px) 295px,
@@ -77,7 +77,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
         />
       ) : (
         <Img
-          {...imageProps(image, 570)}
+          {...imageProps(image.asset, 570)}
           alt={image.alt}
           sizes="
           (max-width: 340px) 295px,
