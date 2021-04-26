@@ -18,6 +18,7 @@ import factbox from './objects/factbox'
 import relatedLinks from './objects/relatedLinks'
 import positionedInlineImage from './objects/positionedInlineImage'
 import titleAndMeta from './objects/titleAndMeta'
+import fileUpload from './objects/files'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -36,5 +37,6 @@ export default createSchema({
     relatedLinks,
     positionedInlineImage,
     titleAndMeta,
+    fileUpload,
   ]),
 })
