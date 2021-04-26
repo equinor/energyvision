@@ -1,9 +1,10 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes, isValidElement, Children } from 'react'
+import { Media } from './Media'
 import styled from 'styled-components'
 
 export type PullQuoteProps = HTMLAttributes<HTMLDivElement>
 
-const Container = styled.figure`
+const Container = styled.figure<{ hasImage: boolean }>`
   display: grid;
   row-gap: var(--spacing-medium);
   margin: 0;
@@ -11,9 +12,16 @@ const Container = styled.figure`
   /* margin: var(--spacing-xLarge) 0; */
   grid-template-rows: min-content min-content;
   grid-template-columns: 5rem var(--spacing-medium) 1fr;
-  grid-template-areas:
-    'media spacing author'
-    'quote quote quote';
+  grid-template-areas: ${({ hasImage }) => hasImage ? 
+    `
+      'media spacing author'
+      'quote quote quote'
+    ` :
+    `
+      'quote quote quote'
+      'author author author'
+    `
+  };
 
   @media (min-width: 800px) {
     grid-template-columns: 1fr var(--spacing-medium) 164px;
@@ -30,5 +38,9 @@ const Container = styled.figure`
 `
 
 export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function PullQuote({ children }, ref) {
-  return <Container ref={ref}>{children}</Container>
+  const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Media)
+  return (
+    <Container hasImage={hasImage} ref={ref}>{children}</Container>
+  )
 })
+
