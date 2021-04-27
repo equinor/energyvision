@@ -25,9 +25,9 @@ describe('Link', () => {
     expect(queryByText(label)).toBeInTheDocument()
   })
 
-  it('renders the link with an icon if prop external = true', () => {
+  it('renders the link with an icon if type is externalUrl = true', () => {
     const { container } = render(
-      <Link href={href} external>
+      <Link href={href} type="externalUrl">
         {label}
       </Link>,
     )
