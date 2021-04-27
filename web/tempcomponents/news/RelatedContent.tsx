@@ -1,5 +1,5 @@
 import { Heading, Link, List } from '@components'
-import type { RelatedLinksData } from '../../types/types'
+import type { RelatedLinksData, LinkData } from '../../types/types'
 
 const { Item } = List
 
@@ -15,16 +15,14 @@ const RelatedContent = ({ data }: RelatedContentProps) => {
       </Heading>
       <List unstyled>
         {data.links.length > 0 &&
-          data.links.map((item) => {
-            const isExternal = item.type === 'externalUrl'
-            // @TODO: a generic way to resolve internal links?
-            // @TODO: Both external and internal links are wrapped in next/link
-            const href = item.type === 'externalUrl' ? item.href : `/news/${item.link?.slug}`
+          data.links.map((item: LinkData) => {
+            const { id, label, type, link, href, extension = null } = item
+            // @TODO Internal link beyond news articles
+            const url = type === 'internalUrl' ? `/news/${link?.slug}` : href
             return (
-              <Item key={item.id}>
-                {/*  @TODO: What if href is undefined?  */}
-                <Link variant="contentLink" href={href || '/'} external={isExternal}>
-                  {item.label}
+              <Item key={id}>
+                <Link variant="contentLink" type={type} href={url || '/'}>
+                  {label} {extension && `(${extension.toUpperCase()})`}
                 </Link>
               </Item>
             )
