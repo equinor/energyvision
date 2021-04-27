@@ -4,7 +4,7 @@ import { EdsIcon } from '../../icons'
 
 export default {
   type: 'object',
-  name: 'fileUpload',
+  name: 'downloadableFile',
   title: 'File',
   fields: [
     {
