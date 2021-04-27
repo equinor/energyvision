@@ -55,8 +55,8 @@ export const newsQuery = /* groq */ `
         "id": _key,
         "type": _type,
         "label": filename,
-        "href": file.asset -> url,
-        "extension": file.asset -> extension 
+        "href": file.asset-> url,
+        "extension": file.asset-> extension 
       }
     }
   },
