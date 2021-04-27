@@ -9,12 +9,15 @@ export type ImageWithCaptionData = {
   image: ImageWithAlt
 }
 
+export type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile'
+
 export type LinkData = {
-  type: string
+  type: LinkType
   id: string
   label: string
   link?: { slug: string; type: string }
   href?: string
+  extension?: string
 }
 
 export type RelatedLinksData = {
