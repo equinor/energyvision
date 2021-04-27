@@ -1,4 +1,6 @@
 import { SchemaType } from '../../types'
+import { external_link } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
 
 export default {
   name: 'relatedLinks',
@@ -13,6 +15,18 @@ export default {
         { name: 'label', type: 'string', title: 'Label' },
         { name: 'url', type: 'url', title: 'URL' },
       ],
+      preview: {
+        select: {
+          title: 'label',
+        },
+        prepare({ title = '' }: { title: string }) {
+          const Icon = EdsIcon(external_link)
+          return {
+            title,
+            media: Icon,
+          }
+        },
+      },
     },
     {
       type: 'object',
@@ -37,6 +51,18 @@ export default {
           },
         },
       ],
+      preview: {
+        select: {
+          title: 'label',
+          media: 'reference.heroImage.image',
+        },
+        prepare({ title = '', media }: { title: string; media: any }) {
+          return {
+            title,
+            media,
+          }
+        },
+      },
     },
     { type: 'downloadableFile' },
   ],
