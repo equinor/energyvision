@@ -47,7 +47,7 @@ export const newsQuery = /* groq */ `
       },
       _type == "externalUrl" => {
           "id": _key,
-          "type": _type,
+          "type": _type,x
           label,
           "href": url,
         },
