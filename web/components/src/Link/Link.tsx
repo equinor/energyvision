@@ -3,17 +3,19 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { default as NextLink } from 'next/link'
 import { Icon } from '@equinor/eds-core-react'
-import { arrow_forward, external_link } from '@equinor/eds-icons'
+import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
 
+type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile'
+
 export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore'
   href: string
   /* Is the link external or not */
-  external?: boolean
+  type?: LinkType
 } & HTMLAttributes<HTMLAnchorElement>
 
 // TODO: Get colours and other constants from theme with css variables
@@ -77,15 +79,28 @@ const ReadMoreLink = styled(BaseLink)`
   }
 `
 
+const getIconData = (type: LinkType) => {
+  switch (type) {
+    case 'downloadableFile': {
+      return arrow_down
+    }
+    case 'externalUrl': {
+      return external_link
+    }
+    default:
+      return arrow_forward
+  }
+}
+
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, href, variant = 'regular', external = false, ...rest },
+  { children, href, variant = 'regular', type = 'internalUrl', ...rest },
   ref,
 ) {
   if (variant === 'contentLink') {
     return (
       <NextLink href={href} {...rest} passHref>
         <ContentLink ref={ref}>
-          {children} <Icon data={external ? external_link : arrow_forward} />
+          {children} <Icon data={getIconData(type)} />
         </ContentLink>
       </NextLink>
     )
@@ -103,7 +118,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <NextLink href={href} {...rest} passHref>
       <BaseLink ref={ref}>
-        {children} {external ? <Icon data={external_link} size={16} /> : null}
+        {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}
       </BaseLink>
     </NextLink>
   )
