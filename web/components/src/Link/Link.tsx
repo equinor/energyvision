@@ -43,6 +43,13 @@ const ContentLink = styled(BaseLink)`
   width: 100%;
   & > svg {
     margin-left: auto;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    padding: 8px;
+  }
+  &:hover svg {
+    /* @TODO Fix colours and theming */
+    background: var(--moss-green-60);
   }
 `
 
