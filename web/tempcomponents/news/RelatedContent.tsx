@@ -17,6 +17,9 @@ const RelatedContent = ({ data }: RelatedContentProps) => {
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
             const { id, label, type, link, href, extension = null } = item
+            if (type === 'internalUrl' && link?.slug === undefined) {
+              console.warn('An internal link is missing slug', label)
+            }
             // @TODO Internal link beyond news articles
             const url = type === 'internalUrl' ? `/news/${link?.slug}` : href
             return (
