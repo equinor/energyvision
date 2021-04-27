@@ -33,23 +33,30 @@ export const newsQuery = /* groq */ `
       }, 
     },
     "relatedLinks": relatedLinks{
-  	title,
-    heroImage,
-  	"links": links[]{
-      _type == "internalUrl" => {
-      "type": _type,
-      "id": _key,
-      label,
-      "link": reference-> {
+      title,
+      heroImage,
+      "links": links[]{
+        _type == "internalUrl" => {
         "type": _type,
-        "slug": slug.current
-    	},
-    },
-    _type == "externalUrl" => {
+        "id": _key,
+        label,
+        "link": reference-> {
+          "type": _type,
+          "slug": slug.current
+        },
+      },
+      _type == "externalUrl" => {
+          "id": _key,
+          "type": _type,
+          label,
+          "href": url,
+        },
+      _type == "downloadableFile" => {
         "id": _key,
         "type": _type,
-        label,
-        "href": url,
+        "label": filename,
+        "href": file.asset -> url,
+        "extension": file.asset -> extension 
       }
     }
   },
