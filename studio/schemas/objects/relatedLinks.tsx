@@ -24,6 +24,7 @@ export default {
           return {
             title,
             media: Icon,
+            subtitle: 'External URL',
           }
         },
       },
@@ -60,11 +61,13 @@ export default {
           return {
             title,
             media,
+            subtitle: 'Internal URL / reference',
           }
         },
       },
     },
     { type: 'downloadableFile' },
+    { type: 'downloadableImage' },
   ],
   validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationResult => Rule.unique(),
 }

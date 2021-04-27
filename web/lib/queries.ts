@@ -47,7 +47,7 @@ export const newsQuery = /* groq */ `
       },
       _type == "externalUrl" => {
           "id": _key,
-          "type": _type,x
+          "type": _type,
           label,
           "href": url,
         },
@@ -57,7 +57,14 @@ export const newsQuery = /* groq */ `
         "label": filename,
         "href": file.asset-> url,
         "extension": file.asset-> extension 
-      }
+      },
+      _type == "downloadableImage" => {
+        "id": _key,
+        "type": _type,
+        label,
+        "href": image.asset-> url, 
+        "extension": image.asset-> extension 
+      },
     }
   },
     ${newsFields}

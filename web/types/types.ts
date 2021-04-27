@@ -9,7 +9,7 @@ export type ImageWithCaptionData = {
   image: ImageWithAlt
 }
 
-export type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile'
+export type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
 
 export type LinkData = {
   type: LinkType
