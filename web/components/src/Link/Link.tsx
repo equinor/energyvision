@@ -9,7 +9,7 @@ import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
 
-type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile'
+type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
 
 export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore'
@@ -88,7 +88,8 @@ const ReadMoreLink = styled(BaseLink)`
 
 const getIconData = (type: LinkType) => {
   switch (type) {
-    case 'downloadableFile': {
+    case 'downloadableFile':
+    case 'downloadableImage': {
       return arrow_down
     }
     case 'externalUrl': {

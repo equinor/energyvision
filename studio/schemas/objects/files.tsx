@@ -51,6 +51,7 @@ export default {
       return {
         title,
         media: Icon,
+        subtitle: 'File',
       }
     },
   },
