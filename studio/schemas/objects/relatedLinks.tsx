@@ -38,7 +38,7 @@ export default {
         },
       ],
     },
-    { type: 'fileUpload' },
+    { type: 'downloadableFile' },
   ],
   validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationResult => Rule.unique(),
 }
