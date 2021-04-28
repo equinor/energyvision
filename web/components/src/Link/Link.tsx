@@ -1,22 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { forwardRef, HTMLAttributes } from 'react'
-import { default as NextLink } from 'next/link'
+import { forwardRef, AnchorHTMLAttributes } from 'react'
 import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
-
-type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
-
-export type LinkProps = {
-  variant?: 'regular' | 'contentLink' | 'readMore'
-  href: string
-  /* Is the link external or not */
-  type?: LinkType
-} & HTMLAttributes<HTMLAnchorElement>
 
 // TODO: Get colours and other constants from theme with css variables
 
@@ -100,34 +90,37 @@ const getIconData = (type: LinkType) => {
   }
 }
 
+type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
+
+export type LinkProps = {
+  /* Which design to use */
+  variant?: 'regular' | 'contentLink' | 'readMore'
+  /* What kind of content is it  */
+  type?: LinkType
+} & AnchorHTMLAttributes<HTMLAnchorElement>
+
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, href, variant = 'regular', type = 'internalUrl', ...rest },
+  { children, variant = 'regular', type = 'internalUrl', ...rest },
   ref,
 ) {
   if (variant === 'contentLink') {
     return (
-      <NextLink href={href} {...rest} passHref>
-        <ContentLink ref={ref}>
-          {children} <Icon data={getIconData(type)} />
-        </ContentLink>
-      </NextLink>
+      <ContentLink ref={ref} {...rest}>
+        {children} <Icon data={getIconData(type)} />
+      </ContentLink>
     )
   } else if (variant === 'readMore') {
     return (
-      <NextLink href={href} {...rest} passHref>
-        <ReadMoreLink ref={ref}>
-          {children} <Icon data={arrow_forward} />
-        </ReadMoreLink>
-      </NextLink>
+      <ReadMoreLink ref={ref} {...rest}>
+        {children} <Icon data={arrow_forward} />
+      </ReadMoreLink>
     )
   }
 
   // TODO: design not final
   return (
-    <NextLink href={href} {...rest} passHref>
-      <BaseLink ref={ref}>
-        {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}
-      </BaseLink>
-    </NextLink>
+    <BaseLink ref={ref} {...rest}>
+      {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}
+    </BaseLink>
   )
 })

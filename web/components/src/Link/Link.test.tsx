@@ -11,7 +11,7 @@ describe('Link', () => {
   const label = 'equinor.com'
 
   it('renders an anchor tag', () => {
-    const { container } = render(<Link href={href}>{label}</Link>)
+    const { container } = render(<Link target="_blank">{label}</Link>)
     expect(container.querySelector('a')).toBeInTheDocument()
   })
 
