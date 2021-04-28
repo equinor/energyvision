@@ -109,7 +109,7 @@ gulp.task('Iconfont', () =>
 //  ---------------------------------------------------------------------------------------
 
 // Default Task
-gulp.task('default', gulp.series('clean', 'compass-minify', 'Iconfont'))
+gulp.task('default', gulp.series('clean', gulp.parallel('compass-minify', 'Iconfont')))
 
 // Watch Task
 gulp.task('watch', () => gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify']))
