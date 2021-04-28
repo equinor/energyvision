@@ -1,13 +1,27 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState, useCallback } from 'react'
 import { SchemaType } from '../../types'
-import styles from './positionedInlineImage.module.css'
+import styled from 'styled-components'
 
 // Important items to allow form fields to work properly and patch the dataset.
 // eslint-disable-next-line import/no-unresolved
 import { PatchEvent, set } from 'part:@sanity/form-builder/patch-event'
 import FormField from 'part:@sanity/components/formfields/default'
 import { Box, Inline } from '@sanity/ui'
+
+const StyledRadio = styled.input`
+  opacity: 0;
+  position: absolute;
+
+  &:focus + label {
+    outline: #2276fc auto 1px;
+    border-radius: 0;
+  }
+
+  &:checked + label div {
+    background-color: rgba(34, 118, 252, 0.15);
+  }
+`
 
 type Props = {
   children: React.ReactNode
@@ -38,14 +52,13 @@ const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChan
     <FormField label={type.title} description={type.description}>
       <Inline space={3}>
         <div>
-          <input
+          <StyledRadio
             type="radio"
             checked={value === 'full'}
             onChange={handleChange}
             name="layout"
             value="full"
             id="full"
-            className={styles.radio}
           />
           <label htmlFor="full">
             <StyledBox>
@@ -54,9 +67,10 @@ const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChan
                 height="48"
                 viewBox="0 0 48 48"
                 role="img"
-                fill="none"
+                fill="#3d3d3d"
+                stroke="#3d3d3d"
+                strokeWidth="2"
                 aria-labelledby="fullWidthTitle"
-                className={styles.svg}
               >
                 <title id="fullWidthTitle">Full width</title>
                 <path d="M40 9H8" />
@@ -67,14 +81,13 @@ const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChan
           </label>
         </div>
         <div>
-          <input
+          <StyledRadio
             type="radio"
             checked={value === 'left'}
             onChange={handleChange}
             name="layout"
             value="left"
             id="left"
-            className={styles.radio}
           />
           <label htmlFor="left">
             <StyledBox>
@@ -82,9 +95,10 @@ const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChan
                 width="48"
                 height="48"
                 viewBox="0 0 48 48"
-                fill="none"
+                fill="#3d3d3d"
+                stroke="#3d3d3d"
+                strokeWidth="2"
                 aria-labelledby="leftAlignedTitle"
-                className={styles.svg}
               >
                 <title id="leftAlignedTitle">Left aligned</title>
                 <path d="M43 9H8" />
@@ -99,14 +113,13 @@ const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChan
           </label>
         </div>
         <div>
-          <input
+          <StyledRadio
             type="radio"
             checked={value === 'right'}
             onChange={handleChange}
             name="layout"
             value="right"
             id="right"
-            className={styles.radio}
           />
           <label htmlFor="right">
             <StyledBox>
@@ -114,9 +127,10 @@ const LayoutInput = function Layout({ value: defaultValue = 'full', type, onChan
                 width="48"
                 height="48"
                 viewBox="0 0 48 48"
-                fill="none"
+                fill="#3d3d3d"
+                stroke="#3d3d3d"
+                strokeWidth="2"
                 aria-labelledby="rightAlignedTitle"
-                className={styles.svg}
               >
                 <title id="rightAlignedTitle">Right aligned</title>
                 <path d="M40 9H5" />
