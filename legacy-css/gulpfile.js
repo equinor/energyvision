@@ -10,7 +10,7 @@ const scss = require('gulp-sass'),
   minifyCSS = require('gulp-minify-css'),
   iconfont = require('gulp-iconfont'),
   consolidate = require('gulp-consolidate'),
-  copyAssets = require('gulp-css-copy-src').default,
+  copyAssets = require('gulp-css-copy-assets').default,
   // eslint-disable-next-line no-unused-vars
   _ = require('lodash')
 
@@ -33,18 +33,18 @@ function npmModule(url, file, done) {
   // check if the path was already found and cached
   console.log('import', url)
   if (aliases[url]) {
-    return done({ file: aliases[url] })
+    return done({file: aliases[url]})
   }
 
   // look for modules installed through npm
   try {
     const newPath = path.relative('./css', require.resolve(url))
     aliases[url] = newPath // cache this request
-    return done({ file: newPath })
+    return done({file: newPath})
   } catch (e) {
     // if your module could not be found, just return the original url
     aliases[url] = url
-    return done({ file: url })
+    return done({file: url})
   }
 }
 
