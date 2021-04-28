@@ -11,6 +11,7 @@ const scss = require('gulp-sass'),
   iconfont = require('gulp-iconfont'),
   consolidate = require('gulp-consolidate'),
   copyAssets = require('gulp-css-copy-assets').default,
+  del = require('del'),
   // eslint-disable-next-line no-unused-vars
   _ = require('lodash')
 
@@ -33,18 +34,18 @@ function npmModule(url, file, done) {
   // check if the path was already found and cached
   console.log('import', url)
   if (aliases[url]) {
-    return done({file: aliases[url]})
+    return done({ file: aliases[url] })
   }
 
   // look for modules installed through npm
   try {
     const newPath = path.relative('./css', require.resolve(url))
     aliases[url] = newPath // cache this request
-    return done({file: newPath})
+    return done({ file: newPath })
   } catch (e) {
     // if your module could not be found, just return the original url
     aliases[url] = url
-    return done({file: url})
+    return done({ file: url })
   }
 }
 
@@ -55,28 +56,30 @@ const scssSettings = {
 //  Gulp functions
 //  ---------------------------------------------------------------------------------------
 console.log(copyAssets)
+
+// Delete dist folder
+gulp.task('clean', () => del(['./dist/']))
+
 // Build SASS
-gulp.task('compass-minify', function (done) {
+gulp.task('compass-minify', () =>
   gulp
-    .src('src/sass/common.scss')
+    .src('src/sass/legacy.scss')
     .pipe(scss(scssSettings))
     .pipe(minifyCSS())
     .pipe(autoprefixer())
     .pipe(copyAssets(copySettings))
-    .pipe(gulp.dest('dist/css/minified'))
-  done()
-})
+    .pipe(gulp.dest('dist/css/minified')),
+)
 
 // Build SASS
-gulp.task('compass-unminified', function (done) {
-  gulp.src('src/sass/common.scss').pipe(scss(scssSettings)).pipe(copyAssets(copySettings)).pipe(gulp.dest('dist/css'))
-  done()
-})
+gulp.task('compass-unminified', () =>
+  gulp.src('src/sass/common.scss').pipe(scss(scssSettings)).pipe(copyAssets(copySettings)).pipe(gulp.dest('dist/css')),
+)
 
 // Build icons
 const fontName = 'equinor_icons'
 
-gulp.task('Iconfont', function (done) {
+gulp.task('Iconfont', () =>
   gulp
     .src(['src/icons/*.svg'])
     .pipe(
@@ -97,21 +100,17 @@ gulp.task('Iconfont', function (done) {
         }),
       )
     })
-    .pipe(gulp.dest('src/font/equinor-icons'))
-  done()
-})
+    .pipe(gulp.dest('src/font/equinor-icons')),
+)
 
 //  Gulp Tasks
 //  ---------------------------------------------------------------------------------------
 
 // Default Task
-gulp.task('default', gulp.series('compass-minify', 'Iconfont'))
+gulp.task('default', gulp.series('clean', 'compass-minify', 'Iconfont'))
 
 // Watch Task
-gulp.task('watch', function (done) {
-  gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify'])
-  done()
-})
+gulp.task('watch', () => gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify']))
 
 // Autoprefixer
 gulp.task('autoprefixer')
