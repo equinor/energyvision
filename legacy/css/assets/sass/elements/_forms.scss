@@ -1,0 +1,114 @@
+input, select, textarea { font-size: 16px; } // Prevent iOS devices from zooming when entering a form
+
+.form-error {
+  @include Equinor-Medium-italic;
+  display: none;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #CB000B;
+
+  span.fa {
+    margin-right: 0.5rem;
+  }
+
+  &.is-visible {
+    display: block;
+  }
+}
+
+.is-invalid-input {
+  border: 1px solid #CB000B !important;
+}
+
+.subscription-form {
+  margin: 0 auto;
+  max-width: 50rem;
+  text-align: center;
+
+  h2 {
+    margin-bottom: 5rem;
+  }
+
+  label {
+    @extend %offscreen;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    @include Equinor-Medium;
+    font-size: 1.5rem;
+    border: 1px solid #CCC;
+    color: #333333;
+    width: 100%;
+    max-width: 31rem;
+    height: 4rem;
+    margin-bottom: 3.8rem;
+    outline: 0 none;
+    padding: 0.5rem 2.8rem;
+    border-radius: 2rem;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
+
+  .selectbox-container {
+    max-width: 31rem;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  ::-webkit-input-placeholder{
+    font-weight: 500;
+    font-style: italic;
+    color: #333333;
+  }
+
+  :-moz-placeholder{ /* Firefox 18- */
+    font-weight: 500;
+    font-style: italic;
+    color: #333333;
+  }
+
+  ::-moz-placeholder{  /* Firefox 19+ */
+    font-weight: 500;
+    font-style: italic;
+    color: #333333;
+  }
+
+  :-ms-input-placeholder{
+    font-weight: 500;
+    font-style: italic;
+    color: #333333;
+  }
+
+  .button-content{
+    margin-top: 3rem;
+  }
+
+  .button-content > a.btn{
+    width: 100%;
+    max-width: 31rem;
+
+    &:after {
+      content:''
+    }
+  }
+
+}
+/*
+.statoil-form{
+    input[type="tel"].field-name, input[type="text"].field-name {
+    @include Equinor-Medium-italic;
+    font-size: 1.4rem;
+    padding-left: 1.2rem;
+    
+  }
+}
+*/
+
+
+
