@@ -1,0 +1,601 @@
+@import '../core/core-colors';
+@import '../core/core-variables';
+@import 'list';
+$newsroom-padding: 1rem;
+
+// //Newsroom list v2 styles
+.newsroom {
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
+
+  &.space-below_none {
+    margin-bottom: 0px;
+  }
+
+  &.space-below_normal {
+    margin-bottom: 1.5rem;
+  }
+
+  &.space-below_big {
+    margin-bottom: 4.5rem;
+  }
+}
+
+.newsroom-list-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-top: 2rem;
+  min-height: 50rem;
+}
+
+.newslist-item {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0;
+  list-style: none;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  a {
+    text-decoration: none;
+
+    .newslist-item__image {
+      display: flex;
+      overflow: hidden;
+      background-color: $white;
+
+      img {
+        width: 100%;
+        transition: transform 0.3s;
+
+        &:hover {
+          transform: scale(1.07);
+        }
+      }
+    }
+
+    .newslist-item__text-container {
+      position: relative;
+      margin-top: .3rem;
+      padding: 1.4rem;
+      background-color: $white;
+      color: $default-font-text-color;
+    }
+
+    .newslist-item__title {
+      font-weight: 500;
+    }
+
+    .newslist-item__description {
+      padding: 0;
+    }
+
+    .newslist-item__date {
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      padding: 0;
+      color: $newsdate-color;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.newsroom__no-result-container {
+  text-align: center;
+  margin: 4rem auto 0 auto;
+}
+
+.newsroom-list-search-container {
+  display: flex;
+  border: 1px solid #cccccc;
+  border-radius: 0.4rem;
+  background-color: $white;
+
+  .search {
+    margin: 0;
+    border: 0;
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+    padding: $newsroom-padding;
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    border-top-right-radius: .4rem;
+    border-bottom-right-radius: .4rem;
+    padding: $newsroom-padding;
+    color: #cccccc;
+    font-size: 20px;
+  }
+
+  .search__clear-input {
+    margin-right: .5rem;
+    font-size: medium;
+    color: $default-font-text-color;
+  }
+}
+
+.newsroom-list-filters-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+// DATEPICKER
+
+.datepicker-container {
+  display: flex;
+  flex-basis: calc((100% - 6px) / 3);
+  border-radius: 0.4rem;
+  border: 1px solid #cccccc;
+  background-color: $white;
+
+  .react-datepicker__triangle {
+    border-bottom-color: $white !important;
+  }
+
+  .react-datepicker__header {
+    background: transparent;
+    border-bottom: none;
+  }
+
+  .datepicker__header-controls {
+    margin: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .month-select-wrapper {
+    position: relative;
+
+    &::after {
+      content: '\f078';
+      font: normal normal normal 1.2rem/1 FontAwesome;
+      color: $secondary-color;
+      right: .8rem;
+      top: -1rem;
+      padding: 1.5rem 0 0 .8rem;
+      position: absolute;
+      pointer-events: none;
+    }
+  }
+
+  .datepicker__month-select {
+    font-family: Equinor;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    padding: 0 2.4rem 0 1rem;
+    height: 2.5rem;
+
+    /* To remove dropdown button */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* To remove button from IE11 */
+    &::-ms-expand {
+      display: none;
+    }
+
+    color: $default-font-text-color;
+  }
+
+  .year-select-wrapper {
+    position: relative;
+
+    &::after {
+      content: '\f078';
+      font: normal normal normal 1.2rem/1 FontAwesome;
+      color: $secondary-color;
+      right: .8rem;
+      top: -1rem;
+      padding: 1.5rem 0 0 .8rem;
+      position: absolute;
+      pointer-events: none;
+    }
+  }
+
+  .datepicker__year-select {
+    font-family: Equinor;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    padding: 0 2.4rem 0 1rem;
+    height: 2.5rem;
+
+    /* To remove dropdown button */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* To remove button from IE11 */
+    &::-ms-expand {
+      display: none;
+    }
+
+    color: $default-font-text-color;
+  }
+
+  .react-datepicker {
+    font-family: Equinor;
+    font-size: 1.3rem;
+    border-radius: .4rem;
+    border: .01rem solid #cccccc;
+    width: 30rem;
+  }
+
+  .react-datepicker__month-container {
+    width: 100%;
+  }
+
+  .react-datepicker__day-names {
+    display: flex;
+    justify-content: space-evenly;
+    margin: .4rem 1rem;
+  }
+
+  .react-datepicker__month {
+    margin: .4rem 1rem 1.2rem 1rem;
+  }
+
+  .react-datepicker__week {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 3.4rem;
+    line-height: 3.4rem;
+    margin: 0.166rem;
+  }
+
+  .react-datepicker__day-name {
+    color: #757575;
+  }
+
+  .react-datepicker__day {
+    &:hover {
+      border-radius: 50%;
+    }
+
+    &:focus {
+      border-radius: 50%;
+    }
+  }
+
+  .react-datepicker__day--selected {
+    background-color: $secondary-color;
+    border-radius: 50%;
+  }
+
+  .react-datepicker__day--in-range {
+    background-color: $secondary-color;
+    border-radius: 50%;
+  }
+
+  .react-datepicker__day--keyboard-selected {
+    background-color: $secondary-color;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $secondary-color-dark;
+      border-radius: 50%;
+      color: $white;
+    }
+  }
+
+  .react-datepicker__day--in-selecting-range {
+    background-color: $secondary-color-light-bg;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: $secondary-color;
+      color: $white;
+    }
+  }
+
+  .from-container {
+    border-right: 1px solid #cccccc;
+    width: 50%;
+  }
+
+  .to-container {
+    width: 50%;
+  }
+
+  .datepicker__reset-button {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+
+    &::before {
+      font-size: medium;
+    }
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .react-datepicker-from {
+    border-top-left-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
+  }
+
+  .react-datepicker-to {
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+  }
+
+  .react-datepicker__input-container {
+    height: 100%;
+
+    .datepicker-input-custom-wrapper {
+      display: flex;
+
+      input {
+        height: 100%;
+        width: 100%;
+        border-style: none;
+        padding: 1rem 0 1rem 1rem;
+      }
+    }
+  }
+}
+
+
+
+// TYPE DROPDOWN AND TOPIC DROPDOWN
+
+.react-select-container {
+  flex-basis: calc((100% - 6px) / 3);
+  font-size: 16px;
+
+  .react-select__dropdown-indicator {
+    margin-right: 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 50%;
+    padding: 0;
+    transition: transform 0.3s;
+
+    svg {
+      height: 1.7rem;
+      width: 1.7rem;
+    }
+  }
+
+  .react-select__control {
+    border: 1px solid #cccccc;
+    height: 100%;
+  }
+
+  .react-select__control--is-focused {
+    .react-select__dropdown-indicator {
+      color: #cccccc;
+    }
+  }
+
+  .react-select__control--menu-is-open {
+    .react-select__dropdown-indicator {
+      transform: rotate(180deg);
+    }
+  }
+
+  .select__clear-indicator {
+    display: flex;
+    color: $default-font-text-color;
+  }
+
+  .react-select__option {
+    display: flex;
+
+    .si-newsroom-unpicked,
+    .si-newsroom-picked {
+      display: flex;
+      align-items: center;
+      margin-right: .8rem;
+    }
+  }
+
+  .react-select__option--is-selected {
+    background-color: $white;
+    color: $dark-grey-promo;
+
+    .si-newsroom-unpicked,
+    .si-newsroom-picked {
+      display: flex;
+      align-items: center;
+      margin-right: .8rem;
+    }
+  }
+
+  .react-select__option:active {
+    background-color: $secondary-color-light;
+  }
+
+  .react-select__option--is-focused {
+    background-color: $secondary-color-light;
+  }
+}
+
+.newsroom-list-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+.newsroom-list-more-button {
+  padding: 0.5rem;
+}
+
+
+
+// RESPONSIVENESS
+
+@media (min-width: $screen-xs) and (max-width: 599px) {
+  .newsroom-list-search-container {
+    width: 100%;
+  }
+
+  .newsroom-list-filters-container {
+    flex-direction: column;
+  }
+
+  .datepicker-container {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+
+  // Adjust calendar placement on small screens
+  .react-datepicker__tab-loop {
+    position: relative;
+  }
+
+  .from-container {
+    .react-datepicker-popper[style] {
+      will-change: auto !important;
+      transform: none !important;
+      left: -1px !important;
+    }
+  }
+
+  .to-container {
+    .react-datepicker-popper[style] {
+      will-change: auto !important;
+      transform: none !important;
+      left: auto !important;
+      right: -1px !important;
+    }
+
+    .react-datepicker__triangle {
+      position: absolute;
+      left: auto;
+      right: 43px;
+    }
+  }
+  // -- Adjust calendar placement on small screens
+
+
+  .newsroom__type {
+    margin-top: 1rem;
+    flex-basis: 100%;
+  }
+
+  .newsroom__topic {
+    margin-top: 1rem;
+    flex-basis: 100%;
+  }
+
+  .newslist-item {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+
+  .newslist-item__title {
+    font-size: 2.2rem;
+    line-height: 2.8rem;
+  }
+
+  .newslist-item__text-container {
+    height: 32rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1439px) {
+  .newsroom-list-search-container {
+    width: 100%;
+  }
+
+  .newsroom-list-filters-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .datepicker-container {
+    margin-top: 1rem;
+    flex-basis: calc((100% - 3px) / 2);
+  }
+
+  .newsroom__type {
+    margin-top: 1rem;
+    flex-basis: calc((100% - 3px) / 2);
+  }
+
+  .newsroom__topic {
+    margin-top: 1rem;
+    flex-basis: 100%;
+  }
+
+  .newslist-item__title {
+    font-size: 2.5rem;
+    line-height: 3.2rem;
+  }
+
+  .newslist-item__text-container {
+    height: 38rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1199px) {
+  .newslist-item {
+    flex-basis: calc((100% - 3px) / 2);
+
+    &:nth-child(odd) {
+      margin-right: 3px;
+    }
+  }
+}
+
+@media (min-width: $screen-lg) {
+  .newslist-item {
+    flex-basis: calc((100% - 6px) / 3);
+
+    &:not(:nth-child(3n)) {
+      margin-right: 3px;
+    }
+  }
+}
+
+@media (min-width: 1440px) {
+  .newsroom-list-search-container {
+    margin-bottom: 2rem;
+    width: 66.6%;
+  }
+
+  .newsroom-list-filters-container {
+    flex-direction: row;
+  }
+
+  .datepicker-container {
+    margin-top: 1rem;
+    flex-basis: calc((100% - 6px) / 3);
+  }
+
+  .newsroom__type {
+    margin-top: 1rem;
+    width: calc((100% - 6px) / 3);
+  }
+
+  .newsroom__topic {
+    margin-top: 1rem;
+    width: calc((100% - 6px) / 3);
+  }
+
+  .newslist-item__text-container {
+    height: 38rem;
+  }
+}

@@ -1,0 +1,33 @@
+.mfp-content {
+  .page-footer, footer, .cookie-alert {
+    display: none;
+  }
+}
+
+.mfp-wrap{
+  .mfp-close {
+    font-size: 0rem;
+    &:before {
+      font-size: 1.8rem;
+    }
+    padding: 0.3rem;
+  }
+}
+
+.mfp-close{
+  font-size: 0rem;
+  &:before {
+    font-size: 1.8rem;
+  }
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2.5rem;
+  padding: 0.3rem;
+  opacity: 1;
+  &:hover{
+    opacity: 0.9;
+  }
+  &:focus{
+    opacity: 0.9;
+  }
+}

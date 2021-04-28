@@ -1,0 +1,120 @@
+//  Core Typography
+//    - requires extends from file: _core-font.scss
+//  ---------------------------------------------------------------------------------------
+
+$default-margin-bottom-xs: calc(1rem / 1.6);
+$default-margin-bottom-md: calc(1.5rem / 1.6);
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include Equinor-Regular;
+}
+
+h1, .h1, h2, .h2, h3 .h3, h4 .h4 {
+  @include Equinor-Regular;
+}
+
+h1, .h1 {
+  font-size: calc(3.2rem / 1.6);
+  line-height: calc(3.6rem / 1.6);
+}
+
+h2, .h2 {
+  font-size: calc(2.4rem / 1.6);
+  line-height: calc(3.0rem / 1.6);
+}
+
+h3, .h3 {
+  font-size: calc(1.8rem / 1.6);
+  line-height: calc(2.8rem / 1.6);
+}
+
+h4, .h4 {
+  text-transform: uppercase;
+  font-size: calc(1.6rem / 1.6);
+  line-height: calc(2.4rem / 1.6);
+}
+
+h1, .h1, h2, .h2, h3, .h3{
+  @include susy-breakpoint($screen-xs, $susy) { margin-bottom: $default-margin-bottom-xs; }
+  @include susy-breakpoint($screen-md, $susy) { margin-bottom: $default-margin-bottom-md; }
+}
+
+p, ul, ol, li, tr, td, .base, .text, .factbox {
+  font-size: calc(1.6rem / 1.6);
+  line-height: calc(2.4rem / 1.6);
+}
+p, tr, td {
+  padding-bottom: calc(2.4rem / 1.6);
+}
+.base p + ul, .base p + ol {
+  margin-top: calc(-1.8rem / 1.6);
+  @include susy-breakpoint($screen-md, $susy) {
+    margin-top: calc(-2.2rem / 1.6);
+  }
+}
+.base ul li {
+  background-image: url(/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/bullet.png);
+  background-size: 6px;
+  background-repeat: no-repeat;
+  background-position: 12px .6em;
+  padding-left: 2.5rem; //TODO check how does this behave with clamp function on root element
+  list-style: none;
+  .primary-100 &,
+  .slate-blue &,
+  .heritage-red & {
+    background-image: url(/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/bullet-white.png);
+  }
+  @at-root .moss-green#{&} {
+    background-image: url(/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/bullet-mossgreen.png);
+  }
+  @at-root .signal-red#{&} {
+    background-image: url(/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/bullet-red.png);
+  }
+}
+
+.small, small {
+  font-size: calc(1.4rem / 1.6);
+  line-height: calc(1.8rem / 1.6);
+}
+.alternative {
+  font-feature-settings: "ss01";
+}
+
+cite, var, address, dfn {
+  @include Equinor-Medium-italic;
+}
+
+i, em {
+  //@include Equinor-Regular-italic;
+  font-style : italic;
+}
+
+sub, sup {
+  font-size: 70%;
+  line-height: 1;
+}
+
+input {
+  font-family: Equinor;
+}
+
+sub {
+  vertical-align: sub;
+}
+
+sup {
+  vertical-align: super;
+}
+
+a{
+  color: $secondary-color;
+  &:hover{
+    text-decoration:none;
+    color: $secondary-color-dark;
+  }
+  &:visited{
+    color:$secondary-color-dark;
+  }
+}
