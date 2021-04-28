@@ -28,7 +28,7 @@
     "gulp-iconfont": "^5.0.1",
     "gulp-minify-css": "^1.0.0",
     "gulp-sass": "^4.0.2",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.19",
     "node-sass": "^4.11.0",
     "susy": "2.2.14"
   }
