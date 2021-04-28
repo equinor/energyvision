@@ -1,0 +1,283 @@
+#remit-container {
+  position: relative;
+
+  $REMIT-UPDATED: $primary-color;//#FF7900;
+  $REMIT-PUBLISHED: #999999;
+  $REMIT-TABCOLOR: $secondary-color;//#545454;
+
+  #remit-tabs {
+
+
+
+    @include susy-breakpoint($screen-xs, $susy) {
+      position: relative;
+    }
+
+    @include susy-breakpoint($screen-md, $susy) {
+      position: absolute;
+      padding: 0 0 0 1rem;
+      top: 1rem;
+    }
+
+    background: transparent;
+
+
+
+    .tabs-title {
+    @media(max-width: 385px){
+            width: 100%;
+    }
+
+      margin-right: 1.5rem;
+      a {
+        color: $secondary-color;
+      }
+      &.is-active > a, &.is-active > a:hover {
+        &::before {
+          display: none;
+        }
+        background-color: $REMIT-TABCOLOR;
+        color: $white;
+      }
+    }
+  }
+
+  .remit-table {
+
+    .accordion-title::before {
+      content: '';
+    }
+
+    .is-active > .accordion-title::before {
+      content: '';
+    }
+
+    .accordion {
+
+      .accordion-title {
+        @include susy-breakpoint($screen-xs, $susy) { padding: 0 0 2rem 3rem; }
+        @include susy-breakpoint($screen-md, $susy) { padding: 0 0 2rem 1rem; }
+      }
+
+      &:nth-child(odd) {
+        .accordion-item > .remit-item {
+          background: #f5f5f5;
+        }
+
+        .accordion-title {
+          background-color: #f5f5f5;
+          border: 0;
+        }
+
+        .accordion-content > .remit-item {
+          background-color: #f5f5f5;
+        }
+
+      }
+
+      &:nth-child(even) {
+        .accordion-item > .remit-item {
+          background: #fff;
+        }
+
+        .accordion-title {
+          background-color: #fff;
+          border: 0;
+        }
+
+        .accordion-content > .remit-item {
+          background-color: #fff;
+        }
+
+      }
+
+    }
+
+    ul.remit-legend {
+
+      @include susy-breakpoint($screen-xs, $susy) { display: none; }
+      @include susy-breakpoint($screen-md, $susy) {
+        display: block;
+        width: 100%;
+        text-align: right;
+        border-bottom: 1px solid #ccc;
+        list-style-type: none;
+        padding: .5rem 0 2rem 0;
+        margin: 0 0 2rem 0;
+
+        li {
+          display: inline;
+          font-size: 1.5rem;
+
+          &:before {
+            display: inline-block;
+            content: '';
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+          }
+
+          &:last-child {
+            padding-left: 4rem;
+            padding-right: 2rem;
+          }
+
+          &.published:before { background-color: $REMIT-PUBLISHED; }
+          &.updated:before { background-color: $REMIT-UPDATED; }
+
+        }
+      }
+
+    }
+
+    ul.remit-header {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+
+
+      li {
+
+        @include susy-breakpoint($screen-xs, $susy) {
+          display: none;
+        }
+
+        @include susy-breakpoint($screen-md, $susy) {
+          @include Equinor-Bold;
+          @include span(1.7 nest);
+          display: block;
+          text-transform: uppercase;
+          font-size: 1.5rem;
+          line-height: 1.2;
+          padding: 1rem;
+
+          span {
+            display: block;
+            color: #999;
+            font-size: 1.3rem;
+            text-transform: none;
+            padding-top: 0.4rem;
+          }
+
+        }
+
+      }
+
+    }
+
+
+    ul.remit-item {
+
+      @include susy-breakpoint($screen-xs, $susy) {
+        list-style-type: none;
+        padding: 2rem;
+        margin: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        background-color: #f5f5f5;
+      }
+
+      @include susy-breakpoint($screen-md, $susy) {
+        padding: 0;
+      }
+
+      li.description {
+        @include susy-breakpoint($screen-xs, $susy) {
+          @include span(6 nest);
+          @include Equinor-Bold;
+          text-transform: uppercase;
+          padding: 1rem;
+          font-size: 1.65rem;
+          line-height: 1.2;
+
+          span {
+            display: block;
+            color: #999;
+            font-size: 1.3rem;
+            text-transform: none;
+            padding-top: 0.4rem;
+          }
+
+        }
+
+        @include susy-breakpoint($screen-md, $susy) {
+          display: none;
+        }
+      }
+
+      li.data {
+
+        @include susy-breakpoint($screen-xs, $susy) {
+          @include span(6 nest);
+          font-size: 1.65rem;
+          line-height: 1.2;
+          padding: 1rem;
+        }
+
+        @include susy-breakpoint($screen-md, $susy) {
+          @include span(1.7 nest);
+          font-size: 1.5rem;
+          line-height: 1.5;
+          display: flex;
+          word-break: break-word;
+        }
+
+        ul {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            font-size: 1.5rem;
+            line-height: 1.5;
+          }
+
+          li.history > button {
+            @include Equinor-Bold;
+            background-color: $grey-button-color;
+            border-radius: 1.2rem;
+            color: $grey-button-text-color;
+            text-transform: uppercase;
+            font-size: 1.15rem;
+            padding: 0.4rem 1rem;
+
+            &:hover {
+              background-color: $grey-button-hover-color;
+            }
+          }
+
+          .event-id { padding-bottom: 0; }
+
+          @include susy-breakpoint($screen-xs, $susy) {
+            .published, .updated { padding-bottom: 0; }
+            .published > span { display: block; }
+          }
+
+          @include susy-breakpoint($screen-md, $susy) {
+            .published, .updated { display: inline; }
+            .published > span, .updated > span { display: none; }
+            .published::after, .updated::after {
+              display: inline-block;
+              content: '';
+              border-radius: 50%;
+              width: 1rem;
+              height: 1rem;
+              margin-right: 0.5rem;
+            }
+
+            .published::after { background-color: $REMIT-PUBLISHED; }
+            .updated::after { background-color: $REMIT-UPDATED}
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}
