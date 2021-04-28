@@ -2,3 +2,4 @@ packages:
   - '.'
   - 'studio'
   - 'web'
+  - 'legacy-css'
