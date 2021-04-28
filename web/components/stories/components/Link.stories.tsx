@@ -28,13 +28,13 @@ export const RegularLink: Story = () => (
       Hello, inside here <Link href="/">is a link</Link> that can take you to somewhere else.
     </div>
     <div>
-      <Link href="/" external>
+      <Link href="/" type="externalUrl">
         This is an external link
       </Link>
     </div>
     <div>
       Wrapped in some text and{' '}
-      <Link href="/" external>
+      <Link href="/" type="externalUrl">
         still an external link
       </Link>{' '}
       to the Universe.
@@ -56,7 +56,7 @@ export const ContentLink: Story = () => (
       </Link>
     </div>
     <div>
-      <Link variant="contentLink" href="/" external>
+      <Link variant="contentLink" href="/" type="externalUrl">
         Equinor Design System - eds.equinor.com
       </Link>
     </div>
