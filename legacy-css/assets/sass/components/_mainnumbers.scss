@@ -1,0 +1,77 @@
+.colctrl-2c,
+.colctrl-3c,
+.colctrl-4c,
+.colctrl-5c,
+.colctrl-7c,
+.colctrl-2c-wideleft,
+.colctrl-2c-wideright,
+.cq-colctrl-default {
+
+   &.primary-100,
+   &.slate-blue,
+   &.heritage-red {
+     .mainnumbers { color: $white; }
+   }
+}
+
+.mainnumbers {
+  .component-container {
+
+    text-align: center;
+    margin-top: 2rem;
+    padding-left:0.5rem;
+    padding-right:0.5rem;
+    
+    > .number {
+      display: inline-block;
+      font-size: 5rem;
+      @include susy-breakpoint($screen-xs, $susy) {
+        font-size: 5rem;
+      }
+
+      @include susy-breakpoint($screen-sm, $susy) {
+        font-size: 2.8rem;
+      }
+      @include susy-breakpoint($screen-md, $susy) {
+        font-size: 3.9rem;
+      }
+      @include susy-breakpoint($screen-lg, $susy) {
+        font-size: 4.0rem;
+      }
+      @include susy-breakpoint($screen-xl, $susy) {
+        font-size: 5rem;
+      }
+
+      max-width: 95%;
+      line-height: 5rem;
+      word-wrap: break-word;
+      &.cyan {
+        color: $secondary-color;
+      }
+      &.magenta {
+        color: $primary-color;
+      }
+      &.white {
+        color: $white;
+      }
+    }
+
+    > .sub {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      display: block;
+      width: 100%;
+      @include Equinor-Medium-italic;
+
+      &.primary-color{
+        color: $primary-color;
+      }
+      &.secondary-color{
+        color: $secondary-color;
+      }
+      
+    }
+
+  }
+}
+

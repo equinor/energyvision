@@ -1,0 +1,933 @@
+//  Navigation variables
+//  ---------------------------------------------------------------------------------------
+
+$navigation-main-bg-color: #fff;
+$navigation-header-bg-color: #fff;
+$navigation-header-border-color: #141414;
+$navigation-list-border-color: rgba($primary-link-color, 0.3);
+$navigation-list-bg-color: #fff;
+$navigation-list-item-bg-color: #fff;
+$navigation-list-arrow-bg-color: #fff;
+$navigation-partner-links-color: #1e1e1c;
+$navigation-links-color: $primary-link-unselected-menu;
+$navigation-links-hover-color: $primary-link-color;
+$navigation-links-current-color: white; // Used on red background
+$navigation-list-active-color: $primary-link-color;
+
+$statoil-icon-color: #bbbbba; // remove
+
+$navigation-width-sm: 5rem;
+$navigation-height-sm: 5rem;
+$navigation-width-lg: 25rem;
+$navigation-height-lg: 12.5rem;
+
+// IE hacks... Remove me when support is added in IE
+//  ---------------------------------------------------------------------------------------
+.ie {
+  ul.navigation-list {
+    perspective: none;
+  }
+
+  .navigation-list {
+    @include susy-breakpoint($screen-sm, $susy) {
+      &.show-subtree {
+        .selected-subtree.closing>ul {
+          transform: rotateY(90deg);
+        }
+      }
+    }
+
+    .navigation-list-subtree {
+      @include susy-breakpoint($screen-lg, $susy) {
+        transform: rotateY(90deg);
+      }
+    }
+  }
+}
+
+//  Mobile menu (wrapper)
+//  ---------------------------------------------------------------------------------------
+body {
+  &.show-menu {
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+//  Main-navigation (wrapper)
+//  ---------------------------------------------------------------------------------------
+
+.topnav {
+  @include susy-breakpoint($screen-sm, $susy) {
+    position: relative;
+    background-color: $navigation-list-bg-color;
+    z-index: $z-index-popout;
+  }
+}
+
+.main-navigation {
+  background-color: $navigation-main-bg-color;
+  @include Equinor-Medium;
+  z-index: $z-index-popout;
+
+  .selected-subtree {
+
+    &>.navigation-list-item,
+    &:hover>.navigation-list-item {
+      background-color: $grey-light;
+    }
+  }
+
+  @include susy-breakpoint($screen-xs, $susy) {
+    @include span(12);
+    position: fixed;
+    padding: 0;
+  }
+
+  @include susy-breakpoint($screen-sm, $susy) {
+    &.expand-menu {
+      width: $navigation-width-lg;
+
+      .navigation-list {
+        width: $navigation-width-lg;
+
+        .navigation-list-link {
+          display: flex;
+        }
+
+        .navigation-list-arrow {
+          display: flex;
+          cursor: pointer;
+        }
+      }
+
+      .navigation-header {
+        padding-top: 2rem;
+        width: $navigation-width-lg;
+        height: $navigation-height-lg;
+
+        .expand-menu-button {
+          display: block;
+          position: absolute;
+          cursor: pointer;
+          right: 0;
+          top: 0;
+
+          .fa:before {
+            content: $fa-var-angle-left;
+          }
+        }
+
+        .expand-menu-button {
+          @include susy-breakpoint($screen-lg, $susy) {
+            display: none;
+          }
+        }
+
+        .medium {
+          display: none;
+        }
+
+        .default {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    width: $navigation-width-lg;
+    height: 100vh;
+
+    .main-logo {
+      padding: 1.5rem 3rem;
+    }
+
+    &:not(.expand-menu) {
+      .navigation-list.show-subtree .selected-subtree>ul {
+        display: block;
+      }
+
+      .navigation-list.show-subtree .opening>ul {
+        display: block;
+      }
+    }
+
+    &.expand-menu {
+      width: $navigation-width-lg;
+
+      .navigation-list {
+        width: $navigation-width-lg;
+
+        .navigation-list-link {
+          display: flex;
+        }
+
+        .navigation-list-arrow {
+          display: flex;
+          cursor: pointer;
+        }
+      }
+
+      .navigation-header {
+        padding-top: 2rem;
+        width: $navigation-width-lg;
+        height: $navigation-height-lg;
+
+        .expand-menu-button {
+          display: block;
+          position: absolute;
+          cursor: pointer;
+          right: 0;
+          top: 0;
+
+          .fa:before {
+            content: $fa-var-angle-left;
+          }
+        }
+
+        .expand-menu-button {
+          @include susy-breakpoint($screen-lg, $susy) {
+            display: none;
+          }
+        }
+
+        .medium {
+          display: none;
+        }
+
+        .default {
+          display: inline;
+        }
+      }
+    }
+  }
+
+  .hide {
+    display: none;
+  }
+}
+
+//  Navigation Header
+//  ---------------------------------------------------------------------------------------
+
+.navigation-header {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background-color: $navigation-header-bg-color;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  min-height: 80px;
+
+  img {
+    height: 5rem;
+
+    @include susy-breakpoint($screen-xs, $susy) {
+      &.medium {
+        display: none;
+      }
+
+      &.default {
+        display: inline;
+      }
+    }
+
+    @include susy-breakpoint($screen-sm, $susy) {
+      &.default {
+        display: inline;
+      }
+    }
+
+    @include susy-breakpoint($screen-lg, $susy) {
+      width: 50%;
+      height: auto;
+
+      &.medium {
+        display: none;
+      }
+
+      &.default {
+        display: inline;
+        width: 100%;
+      }
+
+      &.wide-logo {
+        margin: 15px 10px;
+        width: 90%;
+      }
+    }
+  }
+
+  .expand-menu-button {
+    color: $statoil-icon-color;
+    cursor: pointer;
+
+    &:hover {
+      color: $navigation-links-hover-color;
+    }
+  }
+
+  @include susy-breakpoint($screen-xs, $susy) {
+    border-bottom: none;
+
+    .expand-menu-button {
+      display: none;
+      width: 5rem;
+      height: 5rem;
+      line-height: 4rem;
+      font-size: 2.5rem;
+    }
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    width: $navigation-width-lg;
+    padding-top: 0.5rem;
+    height: $navigation-height-lg;
+
+    .expand-menu-button {
+      display: none;
+    }
+  }
+
+  .menu-button {
+    @include susy-breakpoint($screen-xs, $susy) {
+      width: 5rem;
+      height: 6.5rem;
+      line-height: 6.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: $primary-color;
+      font-size: 0rem;
+
+      &:before {
+        font-size: 2rem;
+      }
+    }
+
+    @include susy-breakpoint($screen-lg, $susy) {
+      display: none;
+    }
+  }
+
+  .menu-button {
+    position: absolute;
+    top: 1.2rem;
+  }
+
+  .menu-button {
+    left: 10px;
+    top: 8px;
+  }
+}
+
+//  Navigation List
+//  ---------------------------------------------------------------------------------------
+
+ul.navigation-list {
+  padding: 0;
+  background-color: $navigation-list-item-bg-color;
+  perspective: 40rem;
+
+  @include susy-breakpoint($screen-xs, $susy) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: calc(100vh - 5rem);
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    overflow-y: visible;
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 20rem; // Compensate for address bar and toolbar height on mobile devices
+    background-color: $navigation-list-item-bg-color;
+
+    @include susy-breakpoint($screen-lg, $susy) {
+      display: none;
+    }
+  }
+
+  &.show-subtree:after {
+    float: left;
+  }
+
+  ul.navigation-list-subtree {
+    li {
+      border-bottom: none;
+
+      @include susy-breakpoint($screen-sm, $susy) {
+        border-left: none;
+      }
+    }
+
+    @include susy-breakpoint($screen-xs, $susy) {
+      padding: 0;
+    }
+
+    @include susy-breakpoint($screen-lg, $susy) {
+      // This stops height of menu to flow down to bottom of page
+      height: calc(100vh - 12rem);
+      overflow-y: auto;
+      position: absolute;
+      top: 5rem; // on tablet and desktop, position the subtree starting on top, under the logo block
+    }
+  }
+}
+
+.navigation-list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+
+  @include susy-breakpoint($screen-xs, $susy) {
+    display: none;
+    @include span(12 nest);
+
+    &.show-subtree {
+      .selected-subtree.closing>ul {
+        opacity: 1;
+      }
+
+      .selected-subtree>ul {
+        opacity: 1;
+        display: block;
+        overflow: hidden;
+      }
+    }
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    display: block;
+    width: $navigation-width-lg;
+
+    &.show-subtree {
+      &>li>.navigation-list-item {
+        display: flex;
+      }
+
+      .selected-subtree.closing>ul {
+        opacity: 1;
+        transform: rotateY(73deg);
+      }
+
+      .selected-subtree.instant>ul {
+        transform: none; //rotateY(0deg);
+        transition: none;
+      }
+
+      .selected-subtree>ul {
+        opacity: 1;
+        display: block;
+        transform: rotateY(0deg);
+        overflow-y: auto; // Display a vertical scrollbar (if needed)
+        -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+        overflow-x: hidden; // Never display a horizontal scrollbar
+      }
+    }
+  }
+
+  .navigation-list-arrow {
+    cursor: pointer;
+  }
+
+  &.show-subtree {
+    li {
+      border-bottom: none;
+
+      &.selected-subtree {
+
+        // hover non current as well
+        &>div {
+          .navigation-list-link {
+            color: $navigation-links-hover-color;
+          }
+        }
+      }
+
+      &.current-page {
+
+        // Only current page
+        &>div {
+          .navigation-list-link {
+            color: $navigation-links-current-color; // Take care of selected top menu loosing white link when mouse exits onto submenu
+
+            &.sublink {
+              color: $navigation-links-hover-color; // But keep the currently active submenu items non white
+            }
+          }
+        }
+      }
+    }
+
+    @include susy-breakpoint($screen-sm, $susy) {
+      &>li {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &>li {
+    border-bottom: none;
+
+    &>.navigation-list-item:hover {
+      .navigation-list-link {
+        color: $navigation-links-hover-color;
+
+        .icon:before {
+          color: $navigation-links-hover-color;
+        }
+      }
+    }
+
+    &>.navigation-list-item.no-subtree:hover {
+      .navigation-list-link {
+        color: $navigation-links-hover-color;
+
+        .icon:before {
+          color: $navigation-links-hover-color;
+        }
+      }
+    }
+  }
+
+  li {
+    display: block;
+    padding: 0;
+    color: $navigation-links-color;
+    background-color: $navigation-list-bg-color;
+	&.only-mobile{
+	    background-color: $primary-color-light;
+	  }
+	@include susy-breakpoint($screen-lg, $susy) {
+      &.only-mobile{
+	    display: none;
+	  }
+	}
+
+    @include susy-breakpoint($screen-xs, $susy) {
+      &.current-page {
+        &>.navigation-list-item:hover {
+          .navigation-list-link {
+            color: $navigation-links-current-color;
+
+            .icon:before {
+              color: $navigation-links-hover-color;
+            }
+          }
+        }
+
+        &>div {
+          .navigation-list-link:not(.sublink) {
+            background-color: $primary-color;
+            color: $navigation-links-current-color;
+          }
+
+          .navigation-list-arrow {
+            background-color: $primary-color;
+
+            .icon {
+              &:before {
+                color: $navigation-links-current-color;
+              }
+            }
+          }
+        }
+
+        .current-page {
+          background: $secondary-color-light-5p;
+        }
+
+        &.partner>div {
+          &.no-subtree {
+            .navigation-list-link {
+              color: $navigation-list-bg-color;
+
+              .icon:before {
+                color: $navigation-list-bg-color;
+              }
+            }
+          }
+
+          .navigation-list-link {
+            color: $navigation-list-bg-color;
+          }
+
+          .navigation-list-arrow {
+            color: $navigation-list-bg-color;
+            cursor: pointer;
+
+            .icon:before {
+              color: $navigation-list-bg-color;
+            }
+          }
+        }
+      }
+    }
+
+    @include susy-breakpoint($screen-sm, $susy) {
+      &.current-page {
+        &>div {
+          .navigation-list-arrow {
+            background-color: $primary-color;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.navigation-list-item {
+  @include susy-breakpoint($screen-xs, $susy) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+    min-height: 5rem;
+    height: 5rem;
+  }
+}
+
+.main-menu-list-item:hover>.navigation-list-item,
+.navigation-list-subtree .navigation-list-item:hover {
+  background: $secondary-color-light-5p;
+}
+
+.navigation-list-link,
+.navigation-list-arrow,
+.navigation-list-back,
+.navigation-list-thumb {
+  @include susy-breakpoint($screen-xs, $susy) {
+    order: 0;
+    align-self: center;
+  }
+}
+
+.navigation-list-back,
+.navigation-list-thumb {
+  @include susy-breakpoint($screen-xs, $susy) {
+    display: flex;
+    flex: 0 0 auto;
+    align-self: stretch;
+
+    min-width: 5rem;
+    text-align: center;
+    text-decoration: none;
+    align-self: center;
+
+    line-height: 1.8rem;
+    font-size: 1.6rem;
+
+    .icon {
+      font-size: 0;
+      margin: 0 auto;
+      align-self: center;
+
+      &:before {
+        font-size: 3rem;
+        color: $navigation-links-color;
+      }
+    }
+  }
+}
+
+.navigation-list-link {
+  flex: 1 1 auto;
+  display: flex;
+  align-self: stretch;
+
+  text-decoration: none;
+  line-height: 1.8rem;
+  font-size: 1.6rem;
+  color: $navigation-links-color;
+
+  &:visited {
+    color: $navigation-links-color;
+  }
+
+  @include susy-breakpoint($screen-xs, $susy) {
+    padding: 0 1rem;
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    display: flex;
+    padding: 0 3rem;
+  }
+
+  &.header .link-text{
+    font-size: 2rem;
+  }
+  .link-text {
+    font-size: 1.6rem;
+
+    img {
+      display: none;
+    }
+    .arrow-sectionpage-container {
+      display: inline-block;
+      width: 1px;
+    }
+    .arrow-sectionpage-link {
+      height: 10px;
+      width: 16px;
+      padding: 8px;
+      font-size: 1rem;
+    }
+
+    @include susy-breakpoint($screen-lg, $susy) {
+      img {
+        display: inline-block;
+        margin-left: 8px;
+      }
+    }
+
+    align-self: center;
+  }
+
+  &.sublink {
+    @include susy-breakpoint($screen-xs, $susy) {
+      order: 1;
+    }
+  }
+}
+
+.navigation-list-arrow {
+  @include susy-breakpoint($screen-xs, $susy) {
+    display: none;
+  }
+
+  @include susy-breakpoint($screen-md, $susy) {
+    display: none;
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    display: flex;
+    flex: 0 0 auto;
+    align-self: stretch;
+
+    cursor: pointer;
+
+    .icon {
+      text-align: center;
+      align-self: center;
+      min-width: 5rem;
+
+      &:before {
+        color: $navigation-links-color;
+        font-size: 2.5rem;
+      }
+    }
+
+    &:hover {
+      .icon:before {
+        color: $navigation-links-hover-color;
+        @include susy-breakpoint($screen-lg, $susy) {
+          color: $navigation-links-color;
+        }
+      }
+    }
+  }
+}
+
+.navigation-list-arrow-mobile {
+  display: flex;
+  flex: 0 0 auto;
+  align-self: stretch;
+  .icon {
+    text-align: center;
+    align-self: center;
+    min-width: 5rem;
+    font-family: Equinor;
+   
+    &:before {
+      color: $navigation-links-color;
+      font-size: 2.5rem;
+      content: "+";
+    }
+    
+    .selected-subtree &:before {
+      content: "-";
+    }
+  }
+
+  .current-page & { 
+    background-color: $primary-color;
+    .icon {
+      &:before {
+        color: $navigation-links-current-color;
+      }
+    }
+  }
+  
+  @include susy-breakpoint($screen-lg, $susy) {
+   display: none;
+  }
+}
+
+//  Navigation List Subnavigation
+//  ---------------------------------------------------------------------------------------
+
+.navigation-list-subtree {
+  margin: 0;
+
+  @include susy-breakpoint($screen-xs, $susy) {
+    display: none;
+    background-color: $navigation-list-arrow-bg-color;
+
+    .navigation-list-back {
+      display: none;
+      padding-left: 0;
+      cursor: pointer;
+
+      .icon {
+        &:before {
+          color: $navigation-links-hover-color;
+        }
+      }
+    }
+
+    li .navigation-list-link {
+      color: $navigation-links-color;
+
+      &:hover {
+        color: $navigation-links-hover-color;
+      }
+    }
+
+    &.partner li {
+      .navigation-list-back {
+        .icon:before {
+          color: $navigation-list-bg-color;
+        }
+      }
+    }
+
+    li {
+      background-color: transparent;
+
+      &.current-page>div {
+        .navigation-list-link {
+          color: $navigation-links-hover-color;
+        }
+      }
+    }
+
+    li:first-child>.navigation-list-item {
+      &>.navigation-list-back {
+        display: flex;
+      }
+
+      &>.navigation-list-link {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .navigation-list-thumb {
+    display: none;
+    background-color: $navigation-list-bg-color;
+    border-bottom: none;
+    padding-left: 0;
+
+    .thumb-image-container {
+      width: 4.5rem;
+      height: 4.5rem;
+      overflow: hidden;
+      margin: 0.25rem;
+    }
+
+    img {
+      position: relative;
+      left: -0.65rem;
+      width: 6.3rem;
+      height: 4.5rem;
+    }
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    border: 1px solid $navigation-list-border-color;
+    opacity: 0;
+    display: block;
+    position: absolute;
+    margin-top: -$navigation-height-sm;
+    left: $navigation-width-lg;
+
+    transition: transform 0.15s ease-in-out;
+    transform-origin: 0% 0%;
+    transform: rotateY(73deg);
+
+    .navigation-list-thumb {
+      display: flex;
+    }
+
+    li {
+      opacity: 1 !important;
+
+      .navigation-list-item>.navigation-list-link {
+        margin-left: 0;
+      }
+    }
+
+    li .navigation-list-link {
+      color: $navigation-links-color;
+      margin-left: $navigation-width-sm;
+
+      &:hover {
+        color: $navigation-links-hover-color;
+      }
+    }
+
+    li {
+      background-color: transparent;
+
+      &.current-page>div {
+        .navigation-list-link {
+          color: $navigation-list-active-color;
+        }
+      }
+    }
+  }
+
+  li {
+    min-height: $navigation-height-sm;
+    min-width: $navigation-width-lg;
+  }
+
+  @include susy-breakpoint($screen-lg, $susy) {
+    display: none;
+  }
+
+  a.sublink {
+    padding-left: 3rem;
+  }
+
+  a {
+    line-height: 1.8rem;
+    padding-left: 3rem;
+  }
+}
+
+@media (max-width: $screen-lg) {
+  .main-menu-list-item>.navigation-list-item .navigation-list-link {
+    font-size: 1.8rem;
+  }
+
+  .navigation-list-arrow .icon {
+    font-family: Equinor;
+
+    &:before {
+      content: "+";
+    }
+
+    .selected-subtree &:before {
+      content: "-";
+    }
+  }
+}

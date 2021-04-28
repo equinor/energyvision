@@ -1,0 +1,67 @@
+// Skip to main content link
+.skip-to-main {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  top: -10px;
+}
+
+.skip-to-main:active,
+.skip-to-main:focus,
+.skip-to-main:hover {
+   position: fixed;
+   top: 0%;
+   left: 50%;
+   transform: translateX(-50%);
+   color: $black_normal;
+   background-color: white;
+   padding: calc(2rem / 1.6);
+   width: auto;
+   height: auto;
+   text-align: center;
+   overflow: visible;
+   z-index: 9999;
+   font-size: calc(1.8rem / 1.6);
+   line-height: calc(1.5rem / 1.6);
+}
+
+// Hide content visually, but make it readable for screen readers
+%offscreen {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  padding:0 !important;
+  border:0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
+}
+
+.visually-hidden { /*https://developer.yahoo.com/blogs/ydn/clip-hidden-content-better-accessibility-53456.html*/
+  @extend %offscreen;
+}
+
+#scroll-to-top {
+  display: none; // Display only when user have started scrolling
+  position: fixed;
+  text-align: center;
+  right: calc(4rem / 1.6);
+  bottom: calc(4rem / 1.6);
+  color: #000;
+  width: calc(5rem / 1.6);
+  height: calc(5rem / 1.6);
+  background-color: $white;
+  border-radius: 2.5rem;
+  border: 1px solid $primary-color;
+  font-size: 0;
+  padding-top: 0;
+  z-index: 1040; // Place the button below the modal layer (used in panel-page and search)
+
+  &:before {
+    font-size: calc(2rem /1.6);
+    font-weight: bold;
+  }
+
+  span { @extend %offscreen; } // Hide the description text on the screen, but make it available for screen-readers
+}
