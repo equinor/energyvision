@@ -1,0 +1,208 @@
+.statoil-form {
+  padding: 3rem 0;
+  padding-bottom: 9.8rem;
+  position:relative;
+  $formfield-padding: 1rem;
+
+  h2 {
+    margin-bottom: 3rem;
+  }
+
+  p {
+    @include Equinor-Medium;
+    font-size: 1.5rem;
+    line-height: normal;
+  }
+
+  &.steps {
+    .form-input, .checkbox-wrapper {
+      @include susy-breakpoint($screen-xs, $susy) { padding-left: 2.2rem; }
+      @include susy-breakpoint($screen-sm, $susy) { padding-left: 2.8rem; }
+    }
+  }
+
+  .form-input {
+    display: flex;
+    @include susy-breakpoint($screen-xs, $susy) { flex-direction: column; }
+    @include susy-breakpoint($screen-sm, $susy) { flex-direction: row; }
+    margin-bottom: 2rem;
+
+    &.narrow {
+      width: 60%;
+    }
+
+    .form-error.is-visible + label {
+      display: none;
+    }
+
+    label,
+    .empty-label,
+    .form-error.is-visible,
+    .visual-label {
+      @include Equinor-Bold;
+      line-height: normal;
+      flex-shrink: 0;
+      @include susy-breakpoint($screen-xs, $susy) {
+        font-size: 1.5rem;
+        width: 100%;
+        text-align: left;
+        padding: 0 0 0.5rem 0;
+        margin: 0;
+      }
+
+      @include susy-breakpoint($screen-sm, $susy) {
+        width: 30%;
+        align-self: center;
+        padding: 0 2rem 0 0;
+      }
+
+    }
+
+    .checkbox-group-wrapper {
+      width: 100%;
+
+      .checkbox {
+        label {
+          @include Equinor-Medium;
+          font-size: 1.6rem;
+        }
+      }
+    }
+
+    select {
+      width: 100%;
+    }
+
+  }
+
+  .checkbox-wrapper {
+    display: flex;
+    @include susy-breakpoint($screen-xs, $susy) { flex-direction: column; }
+    @include susy-breakpoint($screen-sm, $susy) { flex-direction: row; }
+
+    .column {
+      flex-grow: 1;
+      @include susy-breakpoint($screen-xs, $susy) { margin: 0; }
+      @include susy-breakpoint($screen-sm, $susy) { margin: 0 0 2rem 0; }
+
+      .checkbox {
+        flex-grow: 0;
+
+        label {
+          max-width: 85%;
+
+          a { line-height: 2.5rem; }
+        }
+      }
+    }
+
+    .checkbox {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+      padding: 1rem;
+      margin-left: -1rem;
+
+      &:hover {
+        background-color: #EFEFEF;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"] {
+        margin: 0;
+        padding: 0;
+        align-self: flex-start;
+        cursor: pointer;
+      }
+
+      label {
+        display: inline-block;
+        @include Equinor-Medium;
+        font-size: 1.6rem;
+        padding-left: 1rem;
+        cursor: pointer;
+        max-width: 100%;
+        margin-top: 1px;
+      }
+
+    }
+
+  }
+
+  .section-divider {
+    margin: 6rem 0 2rem 0;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  textarea {
+    font-family: $default-font-family;
+    @include Equinor-Medium;
+    font-size: 1.5rem;
+    border: 1px solid #CCC;
+    color: #333333;
+    width: 100%;
+    padding: 0.5rem $formfield-padding;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
+  textarea {
+    resize: vertical;
+    padding: $formfield-padding;
+  }
+
+  .form-submit {
+    width: 100%;
+    text-align: right;
+    margin: 2rem 0 0 0;
+  }
+
+  .timespan-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .form-input:last-child { margin-bottom: 0; }
+    .form-input {
+      width: 100%;
+
+      @include susy-breakpoint($screen-md, $susy) {
+        width: 47%;
+        margin-bottom: 0;
+      }
+
+      label {
+        width: 4em;
+      }
+    }
+  }
+
+  .form-error{
+	.error-message {
+	  display: inline-block;
+	  width: calc(100% - 22px);
+	  vertical-align: top;
+	}
+  }
+
+  .career-fair-visit-help-text {
+    display:none;
+    p {
+      margin-left: 0;
+      @include susy-breakpoint($screen-sm, $susy) {
+        margin-left: 28.8%;
+      }
+    }
+  }
+
+  .cookieconsent-optin-marketing, .cookieconsent-optout-marketing{
+    position: absolute;
+    right: 0px;
+    margin-bottom: 3rem;
+  }
+
+}
