@@ -1,0 +1,260 @@
+@import "../core/core-colors";
+@import "../core/core-font";
+
+.page-container.language-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $language-switch-background;
+    @include susy-breakpoint($screen-lg, $susy) {
+        padding-top: 5rem;
+        height: auto;
+    }
+}
+
+
+// DESKTOP
+.sites {
+    max-width: 1250px;
+
+    @include susy-breakpoint($screen-lg, $susy) {
+       margin: 7rem 10% 0 10%;
+       padding: 0;
+    }
+}
+
+@media (min-width: $screen-lg) {
+    .sites {
+        max-width: 1250px;
+    }
+}
+
+@media (min-width: 1300px) and (max-width: 1650px) {
+    .sites {
+        width: 915px;
+        margin: 0 10% 0;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+    .sites {
+        width: 775px;
+        margin: 0 10% 0;
+    }
+}
+
+.sites__heading {
+    color: $slate-blue;
+    padding-left: 2rem;
+    margin-top: 2.5rem;
+    font-size: 2rem;
+    @include Equinor-Medium;
+    @include susy-breakpoint($screen-lg, $susy) {
+        margin-top: 0;
+        font-size: 2.8rem;
+    }
+}
+
+.sites__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    @include susy-breakpoint($screen-lg, $susy) {
+        flex-direction: row;
+    }
+}
+
+.sites__item {
+    font-size: 1.4rem;
+    background: #fff;
+    margin-bottom: 0.2rem;
+	padding: 0 2rem;
+    @include susy-breakpoint($screen-lg, $susy) {
+        margin-bottom: 0;
+        background: transparent;
+    }
+	
+	>a{
+		width: 240px;
+		display: inline-block;
+		overflow: hidden;
+		&:hover img, &:focus img{
+			transform: scale(1.07);
+			}
+	}
+    img {
+        display: none;
+        width: 100%;
+		transition: transform .3s;
+        @include susy-breakpoint($screen-lg, $susy) {
+            display: block;
+        }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1300px) {
+        a {
+            width: 320px;
+        }
+    }
+}
+
+.site__name {
+    color: $slate-blue;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    @include Equinor-Medium;
+    @include susy-breakpoint($screen-lg, $susy) {
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+    }
+}
+
+.site__languages {
+    color: $slate-blue;
+		@include susy-breakpoint($screen-lg, $susy) {
+        float: right;
+			  padding: 0;
+		}
+
+    a {
+        color: $slate-blue;
+        text-decoration: none;
+        &:hover, &:visited {
+            color: $slate-blue;
+        }
+    }
+
+    span {
+        color: $primary-color;
+    }
+}
+
+
+// TABLET and MOBILE
+@media (min-width: $screen-sm) and (max-width: $screen-lg) {
+    .page-container.language-page{
+        padding: 6% 25% 25% 25%;
+    }
+}
+
+.sites-tablet {
+    display: none;
+}
+
+.sites-tablet__heading {
+    color: $slate-blue;
+    padding-left: 2rem;
+    margin-top: 5.5rem;
+    font-size: 2.5rem;
+
+    @include Equinor-Medium;
+    @include susy-breakpoint($screen-lg, $susy) {
+        margin-top: 0;
+        font-size: 2.8rem;
+    }
+}
+
+.sites-tablet__first-heading {
+    margin-top: 2.5rem;
+}
+
+@media (max-width: $screen-sm) {
+    .sites-tablet__heading {
+        margin-top: 3rem;
+        margin-bottom: 2.5rem;
+    }
+}
+
+.sites-tablet__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sites-tablet__button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.8rem;
+}
+
+.si-site-switch {
+    display: flex;
+    line-height: 1.8rem;
+    transition: transform 0.2s;
+}
+
+.sites-tablet__button--open {
+    .si-site-switch {
+        transform-origin: 50% 52%;
+        transform: rotate(180deg);
+    }
+}
+
+.sites-tablet__button-items-container {
+    display: none;
+}
+
+.sites-tablet__button-items {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.sites-tablet__button-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-top: .3rem;
+    padding: 2.2rem 3rem 2.2rem 5rem;
+    background-color: white;
+    color: $slate-blue;
+    font-size: 1.8rem;
+    font-weight: 500;
+    height: 62px;
+
+    &:visited, &:hover {
+        color: $slate-blue;
+    }
+
+    &:not(:first-child) {
+        margin-top: .3rem;
+    }
+}
+
+.sites-tablet__item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 2.2rem 3rem;
+    background-color: white;
+    color: $slate-blue;
+    font-size: 1.8rem;
+    font-weight: 500;
+    height: 62px;
+
+    &:visited, &:hover {
+        color: $slate-blue;
+    }
+
+    &:not(:first-child) {
+        margin-top: .3rem;
+    }
+}
+
+.sites-tablet__language-code {
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+@media (max-width: $screen-lg) {
+    .sites {
+        display: none;
+    }
+
+    .sites-tablet {
+        display: block;
+    }
+}
