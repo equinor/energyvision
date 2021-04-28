@@ -11,6 +11,7 @@ const scss = require('gulp-sass'),
   iconfont = require('gulp-iconfont'),
   consolidate = require('gulp-consolidate'),
   copyAssets = require('gulp-css-copy-assets').default,
+  rename = require('gulp-rename'),
   del = require('del'),
   // eslint-disable-next-line no-unused-vars
   _ = require('lodash')
@@ -22,7 +23,7 @@ require('es6-promise').polyfill()
 
 const copySettings = {
   srcdirs: [__dirname + '/src/font'],
-  resolve: '../clientlibs/clientlib/resources/css',
+  resolve: '../fonts',
 }
 
 /**
@@ -67,8 +68,9 @@ gulp.task('compass-minify', () =>
     .pipe(scss(scssSettings))
     .pipe(minifyCSS())
     .pipe(autoprefixer())
+    .pipe(rename({ suffix: '.minified' }))
     .pipe(copyAssets(copySettings))
-    .pipe(gulp.dest('dist/css/minified')),
+    .pipe(gulp.dest('dist/css')),
 )
 
 // Build SASS
@@ -100,7 +102,7 @@ gulp.task('Iconfont', () =>
         }),
       )
     })
-    .pipe(gulp.dest('src/font/equinor-icons')),
+    .pipe(gulp.dest('dist/fonts')),
 )
 
 //  Gulp Tasks
