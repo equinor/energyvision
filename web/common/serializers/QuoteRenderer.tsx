@@ -28,7 +28,17 @@ export const QuoteRenderer = (child: { node: any }): JSX.Element => {
 
         {image ? (
           <Media>
-            <Img {...imageProps(image, 400, 1)} alt={image.alt} />
+            <Img
+              {...imageProps(image, 220, 1)}
+              alt={image.alt}
+              sizes="
+        (max-width: 340px) 80px,
+        (max-width: 600px) 86px,
+        (max-width: 1440px) 164px,
+        220px
+        "
+              layout="responsive"
+            />
           </Media>
         ) : null}
       </PullQuote>
