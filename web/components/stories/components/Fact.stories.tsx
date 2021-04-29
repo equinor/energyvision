@@ -1,12 +1,15 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Fact, FactProps, Heading, Text, List } from '@components'
+import { FactBox, FactProps, Heading } from '@components'
+import { ImagePlaceholder } from './helpers/styles'
 
 export default {
   title: 'Components/Fact',
-  component: Fact,
+  component: FactBox,
   subcomponents: {
-    Text: Fact.Text,
+    Text: FactBox.Text,
+    Content: FactBox.Content,
+    Image: FactBox.Image
   },
   parameters: {
     docs: {
@@ -19,157 +22,119 @@ export default {
 } as Meta
 
 export const Default: Story<FactProps> = (args) => (
-  <Fact {...args}>
-    <Heading size="md" level="h3" center>
-      Dolor sit amet
-    </Heading>
-    <Fact.Text>
-      <Text>
-        Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and solutions
-        for customers in the consumer electronics, housing, automotive, and B2B businesses. The company, which
-        celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
-        associated companies worldwide. The mission at Panasonic is to make the world’s safest, highest quality, and
-        lowest cost batteries. Through this effort, Panasonic will create a clean energy society, and our products will
-        change society’s use of and perceptions of electric power. Committed to pursuing new value through innovation
-        across divisional lines, the company uses its technologies to create a better life and a better world for its
-        customers.
-      </Text>
-    </Fact.Text>
-  </Fact>
+  <FactBox {...args}>
+    <FactBox.Content>
+      <Heading size="xl" level="h3">
+        Dolor sit amet
+      </Heading>
+      <FactBox.Text>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, ad, ab labore inventore quos tenetur eligendi, quisquam quod sapiente voluptate sint provident. Doloribus quas nemo eligendi? At sapiente impedit earum?</p>
+      </FactBox.Text>
+    </FactBox.Content>
+  </FactBox>
 )
 
 Default.storyName = 'Default'
 
-/* EDS Lists I suppose? But we'll need to wrap them somehow and use them in a list serializer */
-export const WithBulletPoints: Story<FactProps> = () => (
-  <Fact>
-    <Heading size="md" level="h3" center>
-      Dolor sit amet
-    </Heading>
-    <Fact.Text>
-      <List>
-        <List.Item>
-          One barrel of oil produced at Johan Sverdrup during the first year has emitted 0.17kg CO₂ – almost 100 times
-          lower than the global average (measured in kilogrammes of CO₂ per barrel produced). This is mainly due to the
-          power supply from shore.
-        </List.Item>
-        <List.Item>
-          The Johan Sverdrup field came on stream on 5 October 2019 – more than two months ahead of schedule and with
-          investment costs that were NOK 40 billion lower than the original estimate in the plan for development and
-          operation (PDO).
-        </List.Item>
-        <List.Item>
-          Johan Sverdrup phase 2 includes the construction of a subsea production system, reconstruction of the existing
-          riser platform and a new p rocessing platform (P2).
-        </List.Item>
-        <List.Item>
-          Phase 2 will also accommodate a converter plant for shore-based power supply. The plant will distribute power
-          to other fields on the Utsira High: Edvard Grieg, Ivar Aasen, Gina Krog and Sleipner.
-        </List.Item>
-        <List.Item>
-          The four existing platforms on the Johan Sverdrup field are already receiving power from shore. Production
-          start is expected in the fourth quarter of 2022.
-        </List.Item>
-      </List>
-    </Fact.Text>
-  </Fact>
+export const WithBulletPoints: Story<FactProps> = (args) => (
+  <FactBox {...args}>
+    <FactBox.Content>
+      <Heading size="xl" level="h3">
+        Dolor sit amet
+      </Heading>
+      <FactBox.Text>
+        <ul>
+          <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci maxime culpa veritatis modi! Optio harum exercitationem repellat, dicta saepe placeat officiis, incidunt labore reiciendis inventore eveniet dolores nihil voluptates. Labore.</li>
+          <li>Necessitatibus excepturi nobis iusto, ipsa similique eius provident a aperiam aspernatur minus tempore cum ad quos ut officiis molestiae neque architecto mollitia saepe amet suscipit temporibus soluta eligendi qui. Voluptatum.</li>
+          <li>Similique, labore incidunt, exercitationem aspernatur sint culpa neque at quae ducimus sunt quas harum animi fugit! Quis eveniet ullam quibusdam recusandae reiciendis, fuga amet laboriosam debitis labore eos ex sed?</li>
+        </ul>
+      </FactBox.Text>
+    </FactBox.Content>
+  </FactBox>
 )
-
-WithBulletPoints.storyName = 'With bullet points'
-WithBulletPoints.parameters = {
-  docs: {
-    storyDescription: `We need to theme the EDS list items or typography somehow.`,
-  },
-}
 
 export const WithDifferentBackgrounds: Story<FactProps> = () => (
   <>
-    <Fact background="cold">
-      <Heading size="md" level="h3" center>
-        Dolor sit amet
-      </Heading>
-      <Fact.Text>
-        <Text>
-          Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
-          solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
-          which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
-          associated companies worldwide. The mission at Panasonic is to make the world’s safest, highest quality, and
-          lowest cost batteries. Through this effort, Panasonic will create a clean energy society, and our products
-          will change society’s use of and perceptions of electric power. Committed to pursuing new value through
-          innovation across divisional lines, the company uses its technologies to create a better life and a better
-          world for its customers.
-        </Text>
-      </Fact.Text>
-    </Fact>
-    <Fact background="warm" style={{ marginTop: 'var(--spacing-medium)' }}>
-      <Heading size="md" level="h3" center>
-        Dolor sit amet
-      </Heading>
-      <Fact.Text>
-        <Text>
-          Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
-          solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
-          which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
-          associated companies worldwide. The mission at Panasonic is to make the world’s safest, highest quality, and
-          lowest cost batteries. Through this effort, Panasonic will create a clean energy society, and our products
-          will change society’s use of and perceptions of electric power. Committed to pursuing new value through
-          innovation across divisional lines, the company uses its technologies to create a better life and a better
-          world for its customers.
-        </Text>
-      </Fact.Text>
-    </Fact>
+    <FactBox background="none">
+      <FactBox.Content>
+        <Heading size="xl" level="h3">
+          Dolor sit amet
+        </Heading>
+        <FactBox.Text>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, ad, ab labore inventore quos tenetur eligendi, quisquam quod sapiente voluptate sint provident. Doloribus quas nemo eligendi? At sapiente impedit earum?</p>
+        </FactBox.Text>
+      </FactBox.Content>
+    </FactBox>
+    <FactBox background="warm">
+      <FactBox.Content>
+        <Heading size="xl" level="h3">
+          Dolor sit amet
+        </Heading>
+        <FactBox.Text>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, ad, ab labore inventore quos tenetur eligendi, quisquam quod sapiente voluptate sint provident. Doloribus quas nemo eligendi? At sapiente impedit earum?</p>
+        </FactBox.Text>
+      </FactBox.Content>
+    </FactBox>
+    <FactBox background="cold">
+      <FactBox.Content>
+        <Heading size="xl" level="h3">
+          Dolor sit amet
+        </Heading>
+        <FactBox.Text>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, ad, ab labore inventore quos tenetur eligendi, quisquam quod sapiente voluptate sint provident. Doloribus quas nemo eligendi? At sapiente impedit earum?</p>
+        </FactBox.Text>
+      </FactBox.Content>
+    </FactBox>
   </>
 )
 
-WithDifferentBackgrounds.storyName = 'With different backgrounds'
-WithDifferentBackgrounds.parameters = {
+type WithImageProps = {
+  dynamicHeight: boolean
+} & FactProps
+
+export const WithImage: Story<WithImageProps> = ({ background = 'warm', imagePosition = 'left', dynamicHeight = false }) => (
+  <>
+    <FactBox background={background} imagePosition={imagePosition}>
+      <FactBox.Image>
+        <ImagePlaceholder style={{ borderRadius: 0}} />
+      </FactBox.Image>
+      <FactBox.Content hasImage dynamicHeight={dynamicHeight}>
+        <Heading size="xl" level="h3">
+          Dolor sit amet
+        </Heading>
+        <FactBox.Text>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quo, ad, ab labore inventore quos tenetur eligendi, quisquam quod sapiente voluptate sint provident. Doloribus quas nemo eligendi? At sapiente impedit earum?</p>
+        </FactBox.Text>
+      </FactBox.Content>
+    </FactBox>
+  </>
+)
+
+WithImage.parameters = {
   docs: {
-    storyDescription: `This is just an example. We need to specify this along with a proper naming`,
-  },
+    storyDescription: `Factbox with image. Select "canvas" mode for this story to see different variations.`
+  }
 }
 
-export const AlignTitle: Story<FactProps> = () => (
-  <>
-    <Fact background="cold">
-      <Heading size="md" level="h3" center>
-        Dolor sit amet
-      </Heading>
-      <Fact.Text>
-        <Text>
-          Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
-          solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
-          which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
-          associated companies worldwide. The mission at Panasonic is to make the world’s safest, highest quality, and
-          lowest cost batteries. Through this effort, Panasonic will create a clean energy society, and our products
-          will change society’s use of and perceptions of electric power. Committed to pursuing new value through
-          innovation across divisional lines, the company uses its technologies to create a better life and a better
-          world for its customers.
-        </Text>
-      </Fact.Text>
-    </Fact>
-    <Fact background="cold" style={{ marginTop: 'var(--spacing-medium)' }}>
-      <Heading size="md" level="h3">
-        Dolor sit amet
-      </Heading>
-      <Fact.Text>
-        <Text>
-          Panasonic Corporation is a worldwide leader in the development of diverse electronics technologies and
-          solutions for customers in the consumer electronics, housing, automotive, and B2B businesses. The company,
-          which celebrated its 100th anniversary in 2018, has expanded globally and now operates 528 subsidiaries and 72
-          associated companies worldwide. The mission at Panasonic is to make the world’s safest, highest quality, and
-          lowest cost batteries. Through this effort, Panasonic will create a clean energy society, and our products
-          will change society’s use of and perceptions of electric power. Committed to pursuing new value through
-          innovation across divisional lines, the company uses its technologies to create a better life and a better
-          world for its customers.
-        </Text>
-      </Fact.Text>
-    </Fact>
-  </>
-)
-
-AlignTitle.storyName = 'Title alignment'
-AlignTitle.parameters = {
-  docs: {
-    storyDescription: `The title can be positioned to the left or centered. Is there a pattern here Birte? What should be the default? `,
+WithImage.argTypes = {
+  background: {
+    control: {
+      type: 'radio',
+      options: ['none', 'warm', 'cold']
+    },
+    defaultValue: 'warm'
   },
+  imagePosition: {
+    control: {
+      type: 'radio',
+      options: ['left', 'right']
+    },
+    defaultValue: 'left'
+  },
+  dynamicHeight: {
+    control: {
+      type: 'boolean',
+    },
+    defaultValue: false,
+  }
 }
