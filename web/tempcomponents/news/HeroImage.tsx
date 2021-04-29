@@ -34,7 +34,11 @@ const HeroImage = ({ data }: HeroImageProps) => {
         "
         alt={image.alt}
       />
-      {caption || attribution ? <FigCaption>{`${caption} ${attribution}`}</FigCaption> : null}
+      {caption || attribution ? (
+        <FigCaption>
+          {caption && caption} {attribution && attribution}
+        </FigCaption>
+      ) : null}
     </StyledFigure>
   )
 }
