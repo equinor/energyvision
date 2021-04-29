@@ -4,9 +4,13 @@ import { Link, LinkProps } from '@components'
 export default {
   title: 'Components/Link',
   component: Link,
-  argTypes: {
-    variant: {
-      description: 'Used to select a pre-styled type of link.',
+  parameters: {
+    docs: {
+      description: {
+        component: `A <code>Link</code> is used for both internal links (references), external links and downloads. <br/>
+        ❗&nbsp; For use with Next.js, remember to wrap internal links with <code>next/link</code> component to enable client-side transitions.
+        `,
+      },
     },
   },
 } as Meta
@@ -25,20 +29,20 @@ export const RegularLink: Story = () => (
       <Link href="/">This is a link</Link>
     </div>
     <div>
-      Hello, inside here <Link href="/">is a link</Link> that can take you to somewhere else.
-    </div>
-    <div>
       <Link href="/" type="externalUrl">
         This is an external link
       </Link>
     </div>
-    <div>
+    <p>
+      Hello, inside here <Link href="/">is a link</Link> that can take you to somewhere else.
+    </p>
+    <p>
       Wrapped in some text and{' '}
       <Link href="/" type="externalUrl">
         still an external link
       </Link>{' '}
       to the Universe.
-    </div>
+    </p>
   </>
 )
 
@@ -58,6 +62,16 @@ export const ContentLink: Story = () => (
     <div>
       <Link variant="contentLink" href="/" type="externalUrl">
         Equinor Design System - eds.equinor.com
+      </Link>
+    </div>
+    <div>
+      <Link variant="contentLink" href="/" type="downloadableFile">
+        A pdf or an excel file
+      </Link>
+    </div>
+    <div>
+      <Link variant="contentLink" href="/" type="downloadableImage">
+        An image file
       </Link>
     </div>
   </>
