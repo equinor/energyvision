@@ -12,7 +12,7 @@ type RelatedContentProps = {
 const RelatedContent = ({ data }: RelatedContentProps) => {
   return (
     <aside>
-      <Heading size="lg" level="h2" center>
+      <Heading size="lg" level="h2">
         {data.title}
       </Heading>
       <List unstyled>
