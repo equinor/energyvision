@@ -93,9 +93,9 @@ const getIconData = (type: LinkType) => {
 type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
 
 export type LinkProps = {
-  /* Which design to use */
+  /** Which design to use */
   variant?: 'regular' | 'contentLink' | 'readMore'
-  /* What kind of content is it  */
+  /** What kind of content is it  */
   type?: LinkType
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
