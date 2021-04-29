@@ -1,4 +1,5 @@
 import { Link } from '@components'
+import { default as NextLink } from 'next/link'
 
 export const InternalLinkRenderer = (child: { mark: any; children: any }) => {
   try {
@@ -7,7 +8,11 @@ export const InternalLinkRenderer = (child: { mark: any; children: any }) => {
     /** @TODO: More future proof way of handling this when routing is solved */
     switch (type) {
       case 'news':
-        return <Link href={`/news/${id}`}>{children}</Link>
+        return (
+          <NextLink passHref href={`/news/${id}`}>
+            <Link href={`/news/${id}`}>{children}</Link>
+          </NextLink>
+        )
       default:
         return <span>Need to implement internal link</span>
     }
