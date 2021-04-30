@@ -22,7 +22,6 @@
     "@equinor/eds-core-react": "^0.10.1",
     "@equinor/eds-icons": "^0.6.2",
     "@equinor/eds-tokens": "^0.5.7",
-    "@equinor/energyvision-legacy-css": "workspace:^1.0.0",
     "@sanity/block-content-to-react": "^2.0.7",
     "@sanity/client": "^2.8.0",
     "@sanity/image-url": "^0.140.22",
