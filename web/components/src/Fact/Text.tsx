@@ -14,7 +14,7 @@ const Container = styled.div<ContainerProps>`
   margin: 0 calc(var(--spacer-vertical-xxxLarge) - var(--spacer-horizontal-medium));
 
   @media (min-width: 800px) {
-    ${({ hasColumns }) => hasColumns && { columns: 2 }}
+    ${({ hasColumns }) => hasColumns && { columns: 2, columnGap: 'var(--spacing-large)' }}
   }
 `
 

@@ -7,7 +7,7 @@ type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   background-color: var(--background);
-  padding: var(--spacing-large) var(--spacing-medium);
+  padding: var(--spacing-large) var(--spacing-large);
 
   ul, ol {
     padding-left: 1rem;
