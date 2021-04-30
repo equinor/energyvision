@@ -3,7 +3,7 @@ import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
-import { Layout, Heading, FormattedDateTime } from '@components'
+import { Layout, Heading, FormattedDateTime, FactBoxWrapperStyle } from '@components'
 import styled from 'styled-components'
 import { newsQuery, newsSlugsQuery } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
@@ -109,6 +109,9 @@ const Content = styled.div`
   .float-left + .float-left,
   .float-right + .float-right {
     clear: both;
+  }
+  & ${FactBoxWrapperStyle} {
+    margin: var(--space-4xLarge) 0;
   }
 `
 
