@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const styleSheetLocation = `/etc.clientlibs/statoil/clientlibs/clientlib.min.de138a71a0f77931f77c17c829588101.css`
+//const styleSheetLocation = `/etc.clientlibs/z/clientlibs/clientlib.min.de138a71a0f77931f77c17c829588101.css`
 
 type PageHeaderData = {
   title: string
@@ -11,7 +11,6 @@ const NewsArchiveHead = ({title}: PageHeaderData): JSX.Element => {
     <Head>
       <title>{title}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-      <link rel="stylesheet" href={styleSheetLocation}/>
     </Head>
   )
 }

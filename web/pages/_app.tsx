@@ -7,6 +7,8 @@ import { GlobalStyle } from '../styles/globalStyles'
 import { createGlobalStyle } from 'styled-components'
 import { MockMenuData } from '@mockdata'
 import { DefaultSeo } from 'next-seo'
+import '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css';
+
 
 const toggleTheme = () => {
   document.documentElement.classList.toggle('dark')
