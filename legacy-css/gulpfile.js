@@ -21,11 +21,6 @@ scss.compiler = require('node-sass')
 // ES6-promise is required by autoprefixer
 require('es6-promise').polyfill()
 
-const copySettings = {
-  srcdirs: [__dirname + '/src/font'],
-  resolve: '../fonts',
-}
-
 /**
  * Will look for .scss|sass files inside the node_modules folder
  */
@@ -62,6 +57,10 @@ console.log(copyAssets)
 gulp.task('clean', () => del(['./dist/']))
 
 // Build SASS
+const copySettings = {
+  srcdirs: [__dirname + '/src/font'],
+  resolve: '../fonts',
+}
 gulp.task('compass-minify', () =>
   gulp
     .src('src/sass/legacy.scss')
