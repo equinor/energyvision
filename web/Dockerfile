@@ -11,6 +11,7 @@ COPY ./tsconfig.base.json /opt/app
 COPY ./pnpm-workspaces.yaml /opt/app
 # COPY ./.npmrc /opt/app
 COPY ./web /opt/app/web
+COPY ./legacy-css /opt/app/legacy-css
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
@@ -45,6 +46,7 @@ COPY --from=builder /opt/app/web/package.json /opt/app/web
 COPY --from=builder /opt/app/web/pnpm-lock.yaml /opt/app/web
 COPY --from=builder /opt/app/package.json /opt/app
 COPY --from=builder /opt/app/pnpm-workspaces.yaml /opt/app
+COPY --from=builder /opt/app/legacy-css/package.json /opt/app/legacy-css
 
 RUN chown -R "$USER":"$USER" /opt/app
 USER "$USER"
