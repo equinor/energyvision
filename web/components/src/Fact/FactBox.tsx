@@ -9,14 +9,14 @@ const backgroundVariants: { [name: string]: string } = {
   warm: 'var(--ui-background-warm)',
 }
 
-const Wrapper = styled.aside<{background?: FactBackground}>`
+const Wrapper = styled.aside<{ background?: FactBackground }>`
   margin: var(--space-4xLarge) 0;
   clear: both;
 
-  ${({ background }) => 
+  ${({ background }) =>
     background && {
-     '--background': backgroundVariants[background]}
-    }
+      '--background': backgroundVariants[background],
+    }}
   }
 `
 
@@ -32,13 +32,14 @@ const WrapperWithImg = styled(Wrapper)<{ imagePosition: FactImagePosition }>`
     grid-template-columns: 50% 50%;
     grid-template-rows: min-content;
 
-    ${({ imagePosition }) => 
-      imagePosition === 'left' ? {
-        gridTemplateAreas: '"image content"'
-      } : {
-        gridTemplateAreas: '"content image"'
-      }
-    }
+    ${({ imagePosition }) =>
+      imagePosition === 'left'
+        ? {
+            gridTemplateAreas: '"image content"',
+          }
+        : {
+            gridTemplateAreas: '"content image"',
+          }}
   }
 `
 
@@ -47,16 +48,23 @@ export type FactProps = {
   imagePosition?: FactImagePosition
 } & HTMLAttributes<HTMLDivElement>
 
-export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox({ background = 'none', imagePosition = 'left', children }, ref) {
+export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox(
+  { background = 'none', imagePosition = 'left', children },
+  ref,
+) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Image)
 
   if (hasImage) {
     return (
-      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref}>{children}</WrapperWithImg>
+      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref}>
+        {children}
+      </WrapperWithImg>
     )
   }
 
   return (
-    <Wrapper background={background} ref={ref}>{children}</Wrapper>
+    <Wrapper background={background} ref={ref}>
+      {children}
+    </Wrapper>
   )
 })
