@@ -1,12 +1,12 @@
-import { FactBox as FactBoxWrapper, FactProps } from './FactBox'
+import { FactBox as FactBoxWrapper, FactProps, FactBoxWrapperStyle } from './FactBox'
 import { Text } from './Text'
 import { Image } from './Image'
 import { Content } from './Content'
 
 export type FactImagePosition = 'left' | 'right'
-  // @TODO: Color mapping must be more generic than this!!!
-  // Find a better way to do this.
-  // Create a proper type for colors
+// @TODO: Color mapping must be more generic than this!!!
+// Find a better way to do this.
+// Create a proper type for colors
 export type FactBackground = 'none' | 'cold' | 'warm'
 
 type FactBoxCompoundProps = typeof FactBoxWrapper & {
@@ -19,5 +19,5 @@ const FactBox = FactBoxWrapper as FactBoxCompoundProps
 FactBox.Image = Image
 FactBox.Text = Text
 FactBox.Content = Content
-export { FactBox }
+export { FactBox, FactBoxWrapperStyle }
 export type { FactProps }

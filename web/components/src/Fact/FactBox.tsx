@@ -9,8 +9,8 @@ const backgroundVariants: { [name: string]: string } = {
   warm: 'var(--ui-background-warm)',
 }
 
-const Wrapper = styled.aside<{ background?: FactBackground }>`
-  margin: var(--space-4xLarge) 0;
+export const FactBoxWrapperStyle = styled.aside<{ background?: FactBackground }>`
+ 
   clear: both;
 
   ${({ background }) =>
@@ -20,7 +20,7 @@ const Wrapper = styled.aside<{ background?: FactBackground }>`
   }
 `
 
-const WrapperWithImg = styled(Wrapper)<{ imagePosition: FactImagePosition }>`
+const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePosition }>`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: min-content min-content;
@@ -49,22 +49,22 @@ export type FactProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox(
-  { background = 'none', imagePosition = 'left', children },
+  { background = 'none', imagePosition = 'left', children, ...rest },
   ref,
 ) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Image)
 
   if (hasImage) {
     return (
-      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref}>
+      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref} {...rest}>
         {children}
       </WrapperWithImg>
     )
   }
 
   return (
-    <Wrapper background={background} ref={ref}>
+    <FactBoxWrapperStyle background={background} ref={ref} {...rest}>
       {children}
-    </Wrapper>
+    </FactBoxWrapperStyle>
   )
 })
