@@ -5,6 +5,7 @@ specifiers:
   '@equinor/eds-core-react': ^0.12.0
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.5.7
+  '@equinor/energyvision-legacy-css': workspace:^1.0.0
   '@next/bundle-analyzer': ^10.2.3
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.10.5
@@ -44,6 +45,7 @@ dependencies:
   '@equinor/eds-core-react': 0.12.0_c59160f3e2ae0f45324a65c8464c8ff0
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.5.7
+  '@equinor/energyvision-legacy-css': link:../legacy/css
   '@next/bundle-analyzer': 10.2.3
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.10.5
