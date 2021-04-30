@@ -1,13 +1,18 @@
+import { Children, isValidElement } from 'react'
+import { Text } from './Text'
 import styled from 'styled-components'
 
 type ContainerProps = {
   hasImage?: boolean
   dynamicHeight?: boolean
+  hasColumns?: boolean
 }
 
 export const Container = styled.div<ContainerProps>`
   background-color: var(--background);
-  padding: var(--spacing-large) var(--spacing-large);
+  padding: ${({ hasColumns, hasImage }) => 
+    hasColumns || hasImage ? 'var(--spacing-large) var(--spacing-large);' : 'var(--spacing-large) var(--layout-paddingHorizontal-large);'
+  }
 
   ul, ol {
     padding-left: 1rem;
@@ -59,6 +64,10 @@ type ContentProps = {
 }
 
 export const Content: React.FC<ContentProps> = ({ hasImage = false, dynamicHeight = false, children }) => {
+  const FactText = Children.map(children, child => {
+    if (isValidElement(child) && child.type === Text) return child
+  })
+
   if (hasImage) {
     return (
       <Container hasImage dynamicHeight={dynamicHeight}>
@@ -69,5 +78,5 @@ export const Content: React.FC<ContentProps> = ({ hasImage = false, dynamicHeigh
     )
   }
 
-  return <Container hasImage={hasImage} dynamicHeight={dynamicHeight}>{children}</Container>
+  return <Container hasColumns={FactText && FactText[0].props.hasColumns} hasImage={hasImage} dynamicHeight={dynamicHeight}>{children}</Container>
 }
