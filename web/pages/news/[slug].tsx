@@ -94,7 +94,7 @@ const LeadParagraph = styled.div`
 const Content = styled.div`
   /** I don't think we need this? */
   /* but it makes things a bit easier… */
-  max-width: var(--maxViewportWidth);
+  /* max-width: var(--maxViewportWidth); */
   margin-left: auto;
   margin-right: auto;
   &:after {
