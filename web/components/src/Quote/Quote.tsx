@@ -1,20 +1,20 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
+import { Text as BaseText } from '../Text'
 
 type QuoteProps = HTMLAttributes<HTMLParagraphElement>
 
 type TextProps = {
   weight: string
-  size: string
+  fontSize: string
 }
 
-const Text = styled.p`
+const Text = styled(BaseText)`
   align-self: end;
   margin: 0;
   font-style: italic;
-  line-height: var(--lineHeight-3);
   font-weight: var(${({ weight }: TextProps) => weight}, --fontWeight-regular);
-  font-size: var(${({ size }: TextProps) => size}, --typeScale-1);
+  font-size: var(${({ fontSize }: TextProps) => fontSize}, --typeScale-1);
 `
 
 const Container = styled.div`
@@ -48,7 +48,7 @@ export const Quote = forwardRef<HTMLDivElement, QuoteProps>(function Quote({ chi
           fill="#3D3D3D"
         />
       </svg>
-      <Text size={size} weight={weight} ref={ref} {...rest}>
+      <Text fontSize={size} weight={weight} ref={ref} {...rest}>
         {quoteText}
       </Text>
     </Container>

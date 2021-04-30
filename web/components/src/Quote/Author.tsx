@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
+import { Typography } from '@equinor/eds-core-react'
 
 type AuthorProps = {
   title?: string | null
@@ -16,7 +17,7 @@ const Row = styled.figcaption`
   }
 `
 
-const AuthorWrapper = styled.div`
+const AuthorWrapper = styled(Typography)`
   text-align: left;
   display: inline-flex;
   flex-direction: column;
@@ -34,7 +35,7 @@ export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author(
   return (
     <Row ref={ref} {...rest}>
       {title ? (
-        <AuthorWrapper>
+        <AuthorWrapper forwardedAs="div">
           <strong>{children}</strong>
           {title}
         </AuthorWrapper>
