@@ -7,6 +7,7 @@ import { GlobalStyle } from '../styles/globalStyles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { DefaultSeo } from 'next-seo'
 import NextLink from 'next/link'
+import '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
@@ -21,7 +22,7 @@ const MenuWrapper = styled.div`
 `
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
-  #__next { 
+  #__next {
     margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
   }
 `
