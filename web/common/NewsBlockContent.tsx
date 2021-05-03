@@ -10,7 +10,7 @@ import {
   FactRenderer,
   QuoteRenderer,
   FigureRendererWithLayout,
-  ListRenderer,
+  PaddedListRenderer,
   ListItemRenderer,
 } from './serializers/'
 
@@ -22,7 +22,7 @@ const defaultSerializers = {
     factbox: FactRenderer,
     pullQuote: QuoteRenderer,
   },
-  list: ListRenderer,
+  list: PaddedListRenderer,
   listItem: ListItemRenderer,
 }
 
