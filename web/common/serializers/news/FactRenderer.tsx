@@ -1,11 +1,12 @@
-import SimpleBlockContent from '../SimpleBlockContent'
+import SimpleBlockContent from '../../SimpleBlockContent'
 import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
-import { ListRenderer, ListItemRenderer } from './'
-import { blocksToText } from '../helpers'
-import type { ImageWithAlt } from '../../types/types'
+import styled from 'styled-components'
+import { ListRenderer, ListItemRenderer } from '..'
+import { blocksToText } from '../../helpers'
+import type { ImageWithAlt } from '../../../types/types'
 import Img from 'next/image'
-import { urlFor } from '../helpers'
+import { urlFor } from '../../helpers'
 
 type FactboxNodeProps = {
   title: string
@@ -16,16 +17,13 @@ type FactboxNodeProps = {
   dynamicHeight: boolean
 }
 
+const FactBoxWithPadding = styled(FactBox)`
+  margin: var(--space-4xLarge) 0;
+`
+
 export const FactRenderer = (child: { node: any }) => {
   const { node } = child
-  const {
-    title,
-    content,
-    backgroundColour,
-    image,
-    imagePosition,
-    dynamicHeight,
-  }: FactboxNodeProps = node
+  const { title, content, backgroundColour, image, imagePosition, dynamicHeight }: FactboxNodeProps = node
   const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
   if (!content || content.length === 0) {
     console.warn('Missing content in a fact box')
@@ -49,21 +47,21 @@ export const FactRenderer = (child: { node: any }) => {
   const plainText = blocksToText(content)
 
   return (
-    <FactBox imagePosition={imagePosition} background={backgroundColor}>
-      { imageSrc && (
+    <FactBoxWithPadding imagePosition={imagePosition} background={backgroundColor}>
+      {imageSrc && (
         <FactBox.Image>
           <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
         </FactBox.Image>
       )}
 
-        <FactBox.Content dynamicHeight={dynamicHeight} hasImage={imageSrc ? true : false}>
-          <Heading size="xl" level="h3">
-            {title}
-          </Heading>
-          <FactBox.Text hasColumns={!imageSrc && plainText.length > 800}>
-            <SimpleBlockContent blocks={content} serializers={serializers} />
-          </FactBox.Text>
-        </FactBox.Content>
-    </FactBox>
+      <FactBox.Content dynamicHeight={dynamicHeight} hasImage={imageSrc ? true : false}>
+        <Heading size="xl" level="h3">
+          {title}
+        </Heading>
+        <FactBox.Text hasColumns={!imageSrc && plainText.length > 800}>
+          <SimpleBlockContent blocks={content} serializers={serializers} />
+        </FactBox.Text>
+      </FactBox.Content>
+    </FactBoxWithPadding>
   )
 }
