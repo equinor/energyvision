@@ -13,8 +13,18 @@ export default {
   title: 'Factbox',
   name: 'factbox',
   type: 'object',
+  fieldsets: [
+    {
+      title: 'Design options',
+      name: 'design',
+      description: 'Some options for design',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
-    { name: 'backgroundColour', type: 'backgroundColourPicker' },
     { name: 'title', type: 'string', title: 'Title' },
     {
       name: 'content',
@@ -42,18 +52,22 @@ export default {
       title: 'Image',
       type: 'imageWithAlt',
     },
+    { name: 'backgroundColour', type: 'backgroundColourPicker', fieldset: 'design' },
     {
       name: 'imagePosition',
       title: 'Image position',
       description: 'Select which side of the factbox the image should be displayed at on larger screens.',
       type: 'string',
       inputComponent: AlignmentSelector,
+      fieldset: 'design',
     },
-    { 
+    {
       name: 'dynamicHeight',
       type: 'boolean',
       title: 'Dynamic height',
-      description: 'Let the text decide height of the component instead of the image, up to a maximum of 800 pixels. Used by default if no image is selected.'
+      fieldset: 'design',
+      description:
+        'Let the text decide height of the component instead of the image, up to a maximum of 800 pixels. Used by default if no image is selected.',
     },
   ],
   preview: {

@@ -10,14 +10,12 @@ const backgroundVariants: { [name: string]: string } = {
 }
 
 export const FactBoxWrapperStyle = styled.aside<{ background?: FactBackground }>`
- 
   clear: both;
 
   ${({ background }) =>
     background && {
       '--background': backgroundVariants[background],
     }}
-  }
 `
 
 const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePosition }>`
