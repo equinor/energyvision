@@ -20,6 +20,14 @@ const FactBoxWithPadding = styled(FactBox)`
   margin: var(--space-4xLarge) 0;
 `
 
+const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean; hasImage: boolean }>`
+  ${({ hasColumns, hasImage }) =>
+    !hasColumns &&
+    !hasImage && {
+      padding: 'var(--spacing-large) var(--layout-paddingHorizontal-large)',
+    }}
+`
+
 export const FactRenderer = (child: { node: any }) => {
   const { node } = child
   const { title, content, backgroundColour, image, imagePosition, dynamicHeight }: FactboxNodeProps = node
@@ -44,6 +52,8 @@ export const FactRenderer = (child: { node: any }) => {
 
   const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
   const plainText = blocksToText(content)
+  const hasColumns = !imageSrc && plainText.length > 800
+  const hasImage = imageSrc ? true : false
 
   return (
     <FactBoxWithPadding imagePosition={imagePosition} background={backgroundColor}>
@@ -53,14 +63,14 @@ export const FactRenderer = (child: { node: any }) => {
         </FactBox.Image>
       )}
 
-      <FactBox.Content dynamicHeight={dynamicHeight} hasImage={imageSrc ? true : false}>
+      <FactBoxContentWithPadding dynamicHeight={dynamicHeight} hasImage={hasImage} hasColumns={hasColumns}>
         <Heading size="xl" level="h3">
           {title}
         </Heading>
-        <FactBox.Text hasColumns={!imageSrc && plainText.length > 800}>
+        <FactBox.Text hasColumns={hasColumns}>
           <SimpleBlockContent blocks={content} serializers={serializers} />
         </FactBox.Text>
-      </FactBox.Content>
+      </FactBoxContentWithPadding>
     </FactBoxWithPadding>
   )
 }
