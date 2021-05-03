@@ -11,6 +11,6 @@ const Container = styled.div`
   }
 `
 
-export const Image: React.FC = ({ children }): React.ReactElement => (
-  <Container>{children}</Container>
+export const Image: React.FC = ({ children, ...rest }): React.ReactElement => (
+  <Container {...rest}>{children}</Container>
 )
