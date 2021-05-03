@@ -92,11 +92,19 @@ const LeadParagraph = styled.div`
 `
 
 const Content = styled.div`
-  /** I don't think we need this? */
-  /* but it makes things a bit easier… */
+  /* The max-width makes things easier with 50% floating images */
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
+  /** Remove the bottom margin of the last element inside the rich text editor/content
+  Sanity add a div container for the rich text editor */
+  > div > aside:last-child,
+  > div > div:last-child {
+    margin-bottom: 0;
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
   &:after {
     content: '.';
     visibility: hidden;
