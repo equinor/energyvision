@@ -12,8 +12,18 @@ export default {
       name: 'externalUrl',
       title: 'External URL',
       fields: [
-        { name: 'label', type: 'string', title: 'Label' },
-        { name: 'url', type: 'url', title: 'URL' },
+        {
+          name: 'label',
+          type: 'string',
+          title: 'Label',
+          validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+        },
+        {
+          name: 'url',
+          type: 'url',
+          title: 'URL',
+          validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+        },
       ],
       preview: {
         select: {
@@ -34,11 +44,17 @@ export default {
       name: 'internalUrl',
       title: 'Internal URL / reference',
       fields: [
-        { name: 'label', type: 'string', title: 'Label' },
+        {
+          name: 'label',
+          type: 'string',
+          title: 'Label',
+          validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+        },
         {
           name: 'reference',
           type: 'reference',
           title: 'Link to',
+          validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
           to: [
             {
               type: 'news',
