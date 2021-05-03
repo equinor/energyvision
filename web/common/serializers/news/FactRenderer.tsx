@@ -3,10 +3,9 @@ import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
 import styled from 'styled-components'
 import { ListRenderer, ListItemRenderer } from '..'
-import { blocksToText } from '../../helpers'
+import { blocksToText, urlFor } from '../../helpers'
 import type { ImageWithAlt } from '../../../types/types'
 import Img from 'next/image'
-import { urlFor } from '../../helpers'
 
 type FactboxNodeProps = {
   title: string
