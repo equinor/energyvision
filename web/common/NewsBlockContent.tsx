@@ -10,6 +10,8 @@ import {
   FactRenderer,
   QuoteRenderer,
   FigureRendererWithLayout,
+  ListRenderer,
+  ListItemRenderer,
 } from './serializers/'
 
 const defaultSerializers = {
@@ -20,6 +22,8 @@ const defaultSerializers = {
     factbox: FactRenderer,
     pullQuote: QuoteRenderer,
   },
+  list: ListRenderer,
+  listItem: ListItemRenderer,
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

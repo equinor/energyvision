@@ -9,7 +9,7 @@ const backgroundVariants: { [name: string]: string } = {
   warm: 'var(--ui-background-warm)',
 }
 
-export const FactBoxWrapperStyle = styled.aside<{ background?: FactBackground }>`
+const FactBoxWrapperStyle = styled.aside<{ background?: FactBackground }>`
   clear: both;
 
   ${({ background }) =>
