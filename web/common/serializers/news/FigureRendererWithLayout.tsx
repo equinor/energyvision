@@ -1,6 +1,6 @@
 import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { imageProps } from '../../common/helpers'
+import { imageProps } from '../../helpers'
 import styled from 'styled-components'
 
 type Layout = 'full' | 'left' | 'right'

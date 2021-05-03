@@ -1,8 +1,8 @@
 import { PullQuote } from '@components'
 import Img from 'next/image'
-import { imageProps } from '../helpers'
+import { imageProps } from '../../helpers'
 import styled from 'styled-components'
-import type { ImageWithAlt } from '../../types/types'
+import type { ImageWithAlt } from '../../../types/types'
 
 const { Quote, Author, Media } = PullQuote
 const Container = styled.div`
