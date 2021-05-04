@@ -9,7 +9,7 @@ specifiers:
   eslint-plugin-import: ^2.22.1
   eslint-plugin-jsx-a11y: ^6.4.1
   eslint-plugin-react: ^7.23.2
-  husky: ^5.2.0
+  husky: ^6.0.0
   only-allow: ^1.0.0
   typescript: ^4.2.4
 
@@ -26,7 +26,7 @@ dependencies:
   typescript: 4.2.4
 
 devDependencies:
-  husky: 5.2.0
+  husky: 6.0.0
 
 packages:
 
@@ -974,9 +974,8 @@ packages:
     resolution: {integrity: sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==}
     dev: false
 
-  /husky/5.2.0:
-    resolution: {integrity: sha512-AM8T/auHXRBxlrfPVLKP6jt49GCM2Zz47m8G3FOMsLmTv8Dj/fKVWE0Rh2d4Qrvmy131xEsdQnb3OXRib67PGg==}
-    engines: {node: '>= 10'}
+  /husky/6.0.0:
+    resolution: {integrity: sha512-SQS2gDTB7tBN486QSoKPKQItZw97BMOd+Kdb6ghfpBc0yXyzrddI0oDV5MkDAbuB4X2mO3/nj60TRMcYxwzZeQ==}
     hasBin: true
     dev: true
 
