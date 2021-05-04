@@ -28,9 +28,9 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean;
     }}
 `
 
-export const FactRenderer = (child: { node: any }) => {
+export const FactRenderer = (child: { node: FactboxNodeProps }) => {
   const { node } = child
-  const { title, content, backgroundColour, image, imagePosition, dynamicHeight }: FactboxNodeProps = node
+  const { title, content, backgroundColour, image, imagePosition, dynamicHeight } = node
   const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
   if (!content || content.length === 0) {
     console.warn('Missing content in a fact box')

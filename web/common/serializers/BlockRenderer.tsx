@@ -1,7 +1,8 @@
 import BlockContent from '@sanity/block-content-to-react'
 import { Text, Heading } from '@components'
+import { PortableTextBlock } from '../../types/types'
 
-export const BlockRenderer = (props: { children: any; node: any }) => {
+export const BlockRenderer = (props: { children: string[]; node: PortableTextBlock }) => {
   const { children, node } = props
   const { style = 'normal' } = node
 

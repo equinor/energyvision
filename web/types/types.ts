@@ -56,3 +56,19 @@ export type NewsSchema = {
   content: PortableTextEntry[]
   relatedLinks: RelatedLinksData
 }
+
+// From https://github.com/sanity-io/sanity/blob/next/packages/%40sanity/field/src/types/portableText/diff/types.ts
+export type PortableTextBlock = {
+  _key: string
+  _type: string
+  children: PortableTextChild[]
+  markDefs?: { _key: string; _type: string }[]
+  style?: string
+}
+
+export type PortableTextChild = {
+  _key: string
+  _type: string
+  marks?: string[]
+  text?: string
+}
