@@ -20,5 +20,21 @@ module.exports = {
         destination: `${archiveServerHostname}/etc.clientlibs/:slug*`
       }
     ]
+  },
+  webpack(config, {defaultLoaders}) {
+    config.module.rules.push({
+      test: /\.(css)$/,
+      use: [
+        defaultLoaders.babel,
+        {
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          loader: require('styled-jsx/webpack').loader,
+          options: {
+            type: 'global',
+          },
+        },
+      ],
+    });
+    return config;
   }
 }
