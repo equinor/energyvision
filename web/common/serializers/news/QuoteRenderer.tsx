@@ -12,14 +12,16 @@ const Container = styled.div`
   clear: both;
 `
 
-export const QuoteRenderer = (child: { node: any }): JSX.Element => {
+type QuoteRendererNode = {
+  quote: string
+  author: string
+  authorTitle: string
+  image: ImageWithAlt
+}
+
+export const QuoteRenderer = (child: { node: QuoteRendererNode }): JSX.Element => {
   const { node } = child
-  const {
-    quote,
-    author,
-    authorTitle,
-    image,
-  }: { quote: string; author: string; authorTitle: string; image: ImageWithAlt } = node
+  const { quote, author, authorTitle, image } = node
   return (
     <Container>
       <PullQuote>

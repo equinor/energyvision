@@ -1,6 +1,7 @@
 import BlockContent from '@sanity/block-content-to-react'
 import { Text, Heading } from '@components'
 import styled from 'styled-components'
+import { PortableTextBlock } from '../../../types/types'
 
 const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
@@ -9,7 +10,7 @@ const Container = styled.div`
   margin-right: auto;
 `
 
-export const PaddedBlockRenderer = (props: { children: any; node: any }) => {
+export const PaddedBlockRenderer = (props: { children: string[]; node: PortableTextBlock }) => {
   const { children, node } = props
   const { style = 'normal' } = node
 
