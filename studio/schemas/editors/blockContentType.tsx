@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react'
 import { ExternalLinkRenderer, SuperScriptRenderer, SubScriptRenderer } from '../components'
+import { SchemaType } from '../../types'
 import { link, attach_file, external_link } from '@equinor/eds-icons'
 import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
 
@@ -109,6 +110,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           /* objects of allowed page types */
           { type: 'news' },
         ],
+        validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
       },
     ],
   }
