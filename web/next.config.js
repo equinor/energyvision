@@ -10,6 +10,11 @@ module.exports = {
   future: {
     webpack5: true,
   },
+  i18n: {
+    locales: ['no', 'en'],
+    defaultLocale: 'en',
+    localeDetection: false,
+  },
   async rewrites() {
     return [
       // Archive_Rule: This rule load the archived images from dam
