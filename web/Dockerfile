@@ -9,6 +9,7 @@ COPY ./package.json /opt/app
 COPY ./pnpm-lock.yaml /opt/app
 COPY ./tsconfig.base.json /opt/app
 COPY ./pnpm-workspaces.yaml /opt/app
+
 # COPY ./.npmrc /opt/app
 COPY ./web /opt/app/web
 # COPY ./legacy-css /opt/app/legacy-css
@@ -40,8 +41,9 @@ RUN addgroup -S "$USER" && \
   --no-create-home \
   --uid "$UID" \
   "$USER"
-
+  
 COPY --from=builder /opt/app/web/.next /opt/app/web/.next
+COPY --from=builder /opt/app/web/next.config.js /opt/app/web
 COPY --from=builder /opt/app/web/package.json /opt/app/web
 COPY --from=builder /opt/app/web/pnpm-lock.yaml /opt/app/web
 COPY --from=builder /opt/app/package.json /opt/app
