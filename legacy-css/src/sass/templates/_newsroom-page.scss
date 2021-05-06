@@ -95,7 +95,7 @@ body.gray {
   .news-page {
     position: relative;
     width: 100%;
-    max-width: 110rem;
+    max-width: calc(110rem / 1.6);
     margin: 0 auto;
 
     h1 {
@@ -111,7 +111,7 @@ body.gray {
       }
 
     }
-    .button-container {   
+    .button-container {
        margin: 0 3rem;
     }
 
