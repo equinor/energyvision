@@ -56,8 +56,8 @@
           width: 50%;
           height: 100%;
           position: static;
-          min-width: 12rem;
-          min-height: 12rem;
+          min-width: calc(12rem / 1.6);
+          min-height: calc(12rem / 1.6);
         }
     }
 
