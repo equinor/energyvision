@@ -6,15 +6,20 @@ import { Topbar, Link } from '@components'
 import { GlobalStyle } from '../styles/globalStyles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { DefaultSeo } from 'next-seo'
+<<<<<<< HEAD
 import NextLink from 'next/link'
 import '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
+=======
+import ArchiveNewsStyles from './[locale]/news/archive/ArchiveNewsStyles'
+>>>>>>> 9ad92cb (:recycle: Cleaned up all the news archive pages to follow prettier)
 
   a {
     margin: 0 var(--space-medium) 0 0;
 
+<<<<<<< HEAD
     &:last-of-type {
       margin: 0;
     }
@@ -26,6 +31,11 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
     margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
   }
 `
+=======
+const isArchivePage = (currentPagePath: string): boolean => {
+  return currentPagePath.includes('/archive')
+}
+>>>>>>> 9ad92cb (:recycle: Cleaned up all the news archive pages to follow prettier)
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [topbarHeight, setTopbarHeight] = useState(0)
@@ -37,6 +47,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     }
   }, [])
 
+<<<<<<< HEAD
+=======
+  const archivedPage = isArchivePage(router.asPath)
+
+>>>>>>> 9ad92cb (:recycle: Cleaned up all the news archive pages to follow prettier)
   // TODO: get locale from Sanity
   return (
     <>
