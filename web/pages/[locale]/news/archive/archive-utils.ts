@@ -87,7 +87,7 @@ const sanitizeNewsURL = (pagePath: string): string => {
 }
 
 const getNewsPaths = (fileName: string): Array<string> => {
-  return fs.readFileSync(process.cwd() + `\\pages\\[locale]\\news\\archive\\resources\\${fileName}`)
+  return fs.readFileSync(process.cwd() + `/pages/[locale]/news/archive/resources/${fileName}`)
     .toString()
     .replace(/\r/g, "")
     .split(/\n/)
