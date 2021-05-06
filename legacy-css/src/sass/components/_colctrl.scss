@@ -87,8 +87,8 @@ $md-base-padding:calc(10rem / 1.6);
       }
 
       @include susy-breakpoint($screen-md, $susy) {
-        padding-left: calc(15rem);
-        padding-right: calc(15rem);
+        padding-left: 15rem;
+        padding-right: 15rem;
       }
 
     }
