@@ -53,11 +53,11 @@ export const Menu: React.FC<MenuProps> = ({ items, offset = 0 }) => {
 
   return (
     <Tabs ref={menuRef} variant="fullWidth" activeTab={activeTab} onChange={handleTabChange}>
-      <Tabs.TabList>
+      <Tabs.List>
         {items.map((item) => (
           <Tabs.Tab key={item.label}>{item.label}</Tabs.Tab>
         ))}
-      </Tabs.TabList>
+      </Tabs.List>
       <StyledPanels style={{ display: isVisible ? 'block' : 'none', top: `${offset}px` }}>
         {items.map((item) => (
           <Tabs.Panel key={item.label}>
