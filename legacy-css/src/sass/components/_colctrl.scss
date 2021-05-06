@@ -87,8 +87,8 @@ $md-base-padding:calc(10rem / 1.6);
       }
 
       @include susy-breakpoint($screen-md, $susy) {
-        padding-left: calc(15rem / 1.6);
-        padding-right: calc(15rem / 1.6);
+        padding-left: calc(15rem);
+        padding-right: calc(15rem);
       }
 
     }
@@ -198,8 +198,8 @@ $md-base-padding:calc(10rem / 1.6);
   @include susy-breakpoint($screen-md, $susy) {
     @include span(4);
   }
-  
- 
+
+
 }
 
 // Makes sure three col-setup will left align on small screens with two cols, independent of element height
