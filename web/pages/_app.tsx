@@ -8,14 +8,13 @@ import { GlobalStyle } from '../styles/globalStyles'
 import { createGlobalStyle } from 'styled-components'
 import { MockMenuData } from '@mockdata'
 import { DefaultSeo } from 'next-seo'
-import ArchiveNewsStyles from "./[locale]/news/archive/ArchiveNewsStyles";
-
+import ArchiveNewsStyles from './[locale]/news/archive/ArchiveNewsStyles'
 
 const toggleTheme = () => {
   document.documentElement.classList.toggle('dark')
 }
 
-const isArchivePage = (currentPagePath: string):boolean => {
+const isArchivePage = (currentPagePath: string): boolean => {
   return currentPagePath.includes('/archive')
 }
 
@@ -33,11 +32,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     }
   }, [])
 
-  const archivedPage = isArchivePage(router.asPath) ;
+  const archivedPage = isArchivePage(router.asPath)
 
   // TODO: get locale from Sanity
   return (
-  <>
+    <>
       <IntlProvider locale="en" defaultLocale="en">
         <Head>
           {/* TODO: load the font in a better way */}
