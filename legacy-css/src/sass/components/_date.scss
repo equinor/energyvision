@@ -4,8 +4,8 @@
     .date-module {
       @include span(12 nest);
       float:left;
-      font-size: calc(1.5rem / 1.6);
-      line-height: calc(2.6rem / 1.6);
+      font-size: 0.75rem;
+      line-height: 1rem;
       @include Equinor-Light;
       color: #565656;
       margin-top:calc(1rem / 1.6);
