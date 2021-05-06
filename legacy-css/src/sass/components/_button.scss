@@ -70,35 +70,35 @@ $filter-button-color: #d2d2d2;
 $filter-button-active-text-color: #ffffff;
 $filter-button-active-color: #808080;
 
-$xs-medium-font-size: calc(1.3rem / 1.6);
+$xs-medium-font-size: calc(1.3rem / 1.8);
 $xs-medium-height: 2px;
-$xs-medium-padding-sides: calc(2.5rem / 1.6);
-$xs-medium-chevron-size: calc(1.45rem / 1.6);
+$xs-medium-padding-sides: calc(2.5rem / 1.8);
+$xs-medium-chevron-size: calc(1.45rem / 1.8);
 
-$xs-large-font-size: calc(1.4rem / 1.6);
+$xs-large-font-size: calc(1.4rem / 1.8);
 $xs-large-height: 2px;
-$xs-large-padding-sides: calc(2.5rem / 1.6);
-$xs-large-chevron-size: calc(1.6rem / 1.6);
+$xs-large-padding-sides: calc(2.5rem / 1.8);
+$xs-large-chevron-size: calc(1.6rem / 1.8);
 
-$sm-medium-font-size: calc(1.4rem / 1.6);
+$sm-medium-font-size: calc(1.4rem / 1.8);
 $sm-medium-height: 3px;
-$sm-medium-padding-sides: calc(2.5rem / 1.6);
-$sm-medium-chevron-size: calc(1.45rem / 1.6);
+$sm-medium-padding-sides: calc(2.5rem / 1.8);
+$sm-medium-chevron-size: calc(1.45rem / 1.8);
 
-$sm-large-font-size: calc(1.6rem / 1.6);
+$sm-large-font-size: calc(1.6rem / 1.8);
 $sm-large-height: 3px;
-$sm-large-padding-sides: calc(3rem / 1.6);
-$sm-large-chevron-size: calc(1.85rem / 1.6);
+$sm-large-padding-sides: calc(3rem / 1.8);
+$sm-large-chevron-size: calc(1.85rem / 1.8);
 
-$lg-medium-font-size: calc(1.6rem / 1.6);
+$lg-medium-font-size: calc(1.6rem / 1.8);
 $lg-medium-height: 4px;
-$lg-medium-padding-sides: calc(2.5rem / 1.6);
-$lg-medium-chevron-size: calc(1.45rem / 1.6);
+$lg-medium-padding-sides: calc(2.5rem / 1.8);
+$lg-medium-chevron-size: calc(1.45rem / 1.8);
 
-$lg-large-font-size: calc(1.8rem / 1.6);
+$lg-large-font-size: calc(1.8rem / 1.8);
 $lg-large-height: 4px;
-$lg-large-padding-sides: calc(3.5rem / 1.6);
-$lg-large-chevron-size: calc(2rem / 1.6);
+$lg-large-padding-sides: calc(3.5rem / 1.8);
+$lg-large-chevron-size: calc(2rem / 1.8);
 
 $line-height: calc(1.8rem / 1.6);
 
@@ -108,13 +108,10 @@ $line-height: calc(1.8rem / 1.6);
 
 @mixin button-size-mixin($font-size, $height, $padding, $chevron-size) {
   font-size: $font-size;
-  padding-left: $padding;
-  padding-right: $padding;
   height: auto;
   line-height: $line-height;
   border-radius: $height;
-  padding-top: calc(1rem / 1.6);
-  padding-bottom: calc(1rem / 1.6);
+  padding: calc(1rem / 1.8) $padding;
 
   &.filter {
     padding-right: $padding;
@@ -159,7 +156,6 @@ $line-height: calc(1.8rem / 1.6);
 
 .btn {
   @include Equinor-Medium;
-  margin:0 auto;
   max-width: 100%;
   border: 1px solid $button-border-color;
   background-color: $button-background;
@@ -171,7 +167,7 @@ $line-height: calc(1.8rem / 1.6);
   border-radius: calc(2rem / 1.6);
   text-shadow: none;
   white-space: normal;
-  margin-bottom:calc(1rem);
+  margin: 0 auto calc(1rem / 1.8);
   cursor: pointer;
 
   // Animated buttons start
