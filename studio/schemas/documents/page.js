@@ -23,6 +23,12 @@ export default (topicPrefix, title) => {
     ],
     fields: [
       {
+        name: 'topicPrefix',
+        initialValue: `${topicPrefix}`,
+        type: 'string',
+        hidden: true,
+      },
+      {
         name: 'title',
         type: 'string',
         title: 'Title',
