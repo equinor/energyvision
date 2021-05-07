@@ -47,7 +47,7 @@ export const DateTime: Story<DateTimeProps> = () => {
   return (
     <Wrapper>
       <FormattedDateTime datetime={datetime.toString()} />
-      <FormattedDateTime datetime={datetime.toString()} withIcon={false} />
+      <FormattedDateTime datetime={datetime.toString()} icon={true} />
     </Wrapper>
   )
 }
@@ -64,7 +64,7 @@ export const JustDate: Story<DateTimeProps> = () => {
   return (
     <Wrapper>
       <FormattedDate datetime={datetime.toString()} />
-      <FormattedDate datetime={datetime.toString()} withIcon={true} />
+      <FormattedDate datetime={datetime.toString()} icon={true} />
     </Wrapper>
   )
 }
@@ -81,7 +81,7 @@ export const JustTime: Story<FormattedTimeProps> = () => {
   return (
     <Wrapper>
       <FormattedTime datetime={datetime.toString()} />
-      <FormattedTime datetime={datetime.toString()} withIcon={true} />
+      <FormattedTime datetime={datetime.toString()} icon={true} />
     </Wrapper>
   )
 }

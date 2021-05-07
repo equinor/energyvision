@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import styled from 'styled-components'
 import { Link } from '@components'
+import NextLink from 'next/link'
 
 const Container = styled.main`
   flex: 1;
-  padding: 0 0.5rem;
+  padding: var(--space-medium);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,9 +28,9 @@ export default function Home(): JSX.Element {
       </Head>
       <Title>
         MVP 1 is all about{' '}
-        <Link href="/news" variant="readMore">
-          News
-        </Link>
+        <NextLink href="/news" passHref>
+          <Link variant="readMore">News</Link>
+        </NextLink>
       </Title>
     </Container>
   )
