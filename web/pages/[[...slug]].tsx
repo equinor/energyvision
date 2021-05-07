@@ -5,11 +5,19 @@ import { groq } from 'next-sanity'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
+import { usePreviewSubscription } from '../lib/sanity'
 
 const HomePage = dynamic(() => import('../tempcomponents/pages/Home'))
+const TopicPage = dynamic(() => import('../tempcomponents/pages/TopicPage'))
 
-export default function Page({ data, docType }: any) {
-  if (docType === 'home') {
+export default function Page({ data, preview }: any) {
+  const { data: pageData } = usePreviewSubscription(data?.query, {
+    params: data?.queryParams ?? {},
+    initialData: data?.pageData,
+    enabled: preview,
+  })
+  console.log('docType in page', data?.docType)
+  if (data?.docType === 'home') {
     return <HomePage />
   }
 
@@ -17,7 +25,7 @@ export default function Page({ data, docType }: any) {
     return <ErrorPage statusCode={418} />
   }
 
-  return <h1>Amazing page here</h1>
+  return <div>{data?.docType === 'page' && <TopicPage data={pageData.content} />}</div>
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
@@ -31,7 +39,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
 
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[])
   const pageData = await getClient(preview).fetch(query, queryParams)
-
+  console.log('data', pageData)
   return {
     props: {
       data: { query, queryParams, pageData, docType },
