@@ -28,10 +28,13 @@ export default function Home(): JSX.Element {
       </Head>
       <Title>
         MVP 1 is all about{' '}
-        <NextLink href="/news" passHref>
+        <NextLink href="/en/news" passHref>
           <Link variant="readMore">News</Link>
         </NextLink>
       </Title>
+      <NextLink href="/en/careers" passHref>
+        <Link variant="readMore">Careers</Link>
+      </NextLink>
     </Container>
   )
 }
