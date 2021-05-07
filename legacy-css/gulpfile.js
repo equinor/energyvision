@@ -10,7 +10,6 @@ const scss = require('gulp-sass'),
   minifyCSS = require('gulp-minify-css'),
   iconfont = require('gulp-iconfont'),
   consolidate = require('gulp-consolidate'),
-  copyAssets = require('gulp-css-copy-assets').default,
   rename = require('gulp-rename'),
   del = require('del'),
   // eslint-disable-next-line no-unused-vars
@@ -49,18 +48,15 @@ const scssSettings = {
   importer: npmModule,
 }
 
+const fontName = 'equinor_icons'
+
 //  Gulp functions
 //  ---------------------------------------------------------------------------------------
-console.log(copyAssets)
 
 // Delete dist folder
 gulp.task('clean', () => del(['./dist/']))
 
 // Build SASS
-const copySettings = {
-  srcdirs: [__dirname + '/src/font'],
-  resolve: '../fonts',
-}
 gulp.task('compass-minify', () =>
   gulp
     .src('src/sass/legacy.scss')
@@ -68,18 +64,18 @@ gulp.task('compass-minify', () =>
     .pipe(minifyCSS())
     .pipe(autoprefixer())
     .pipe(rename({ suffix: '.minified' }))
-    .pipe(copyAssets(copySettings))
     .pipe(gulp.dest('dist/css')),
 )
 
+// Copy font-awesome fonts to dist
+gulp.task('copy-fontawesome', function () {
+  return gulp.src('./src/font/fontawesome/*.*').pipe(gulp.dest('./dist/fonts'))
+})
+
 // Build SASS
-gulp.task('compass-unminified', () =>
-  gulp.src('src/sass/common.scss').pipe(scss(scssSettings)).pipe(copyAssets(copySettings)).pipe(gulp.dest('dist/css')),
-)
+gulp.task('compass-unminified', () => gulp.src('src/sass/legacy.scss').pipe(scss(scssSettings)).pipe(gulp.dest('dist')))
 
-// Build icons
-const fontName = 'equinor_icons'
-
+// Build equinor icons to font
 gulp.task('Iconfont', () =>
   gulp
     .src(['src/icons/*.svg'])
@@ -108,7 +104,7 @@ gulp.task('Iconfont', () =>
 //  ---------------------------------------------------------------------------------------
 
 // Default Task
-gulp.task('default', gulp.series('clean', gulp.parallel('compass-minify', 'Iconfont')))
+gulp.task('default', gulp.series('clean', gulp.parallel('compass-minify', 'Iconfont', 'copy-fontawesome')))
 
 // Watch Task
 gulp.task('watch', () => gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify']))

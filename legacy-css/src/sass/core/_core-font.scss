@@ -145,6 +145,6 @@ $default-font-family: $brand-font, $fallback-fonts;
 //Equinor Icons font
 @font-face {
   font-family: 'equinor_icons';
-  src: url(../fonts/equinor_icons.woff) format("woff");
+  src: url('/fonts/equinor_icons.woff') format("woff");
   font-display: swap;
 }
