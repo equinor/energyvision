@@ -8,6 +8,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 // Document types
 import news from './documents/news'
+import page from './documents/page'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -20,7 +21,11 @@ import positionedInlineImage from './objects/positionedInlineImage'
 import titleAndMeta from './objects/titleAndMeta'
 import downloadableFile from './objects/files'
 import downloadableImage from './objects/downloadableImage'
+import { topicsList } from '../helpers/topics'
 
+const topicSchemas = topicsList.map(({ id, title }) => {
+  return page(id, title)
+})
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -30,6 +35,7 @@ export default createSchema({
   types: schemaTypes.concat([
     /* Your types here! */
     news,
+    ...topicSchemas,
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,

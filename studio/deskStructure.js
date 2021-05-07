@@ -1,11 +1,24 @@
 /* eslint-disable no-unused-vars */
+import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
 import { EdsList } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
+import { getTopicConfig } from './helpers/topics'
+
+// I'm having a hard time to get the desk structure file work with typescript.
+// So not possible to type the topicPrefix :/
+const topicPageStructure = (topicPrefix, icon) => {
+  const topic = getTopicConfig(topicPrefix)
+  return S.documentTypeListItem(`${topic.id}_page`).icon(icon).title(topic.title)
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
-  const listItems = [S.documentTypeListItem('news').icon(EdsList).title('News')]
+  const listItems = [
+    S.documentTypeListItem('news').icon(EdsList).title('News'),
+    topicPageStructure('career', EdsList),
+    topicPageStructure('whatWeDo', EdsList),
+  ]
 
   return S.list().title('Content').items(listItems)
 }
