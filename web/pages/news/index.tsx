@@ -13,6 +13,10 @@ const TempWrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
+const Container = styled.div`
+  padding: var(--space-large);
+`
+
 type AllNewsProps = {
   allNews: NewsSchema[]
   preview?: boolean
@@ -26,14 +30,16 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
           {/* TODO: Something more advanced */}
           <title>News</title>
         </Head>
-        <h1>News</h1>
-        {allNews.length > 0 && (
-          <TempWrapper>
-            {allNews.map((newsItem: NewsSchema) => {
-              return <NewsCard data={newsItem} key={newsItem.id} />
-            })}
-          </TempWrapper>
-        )}
+        <Container>
+          <h1>News</h1>
+          {allNews.length > 0 && (
+            <TempWrapper>
+              {allNews.map((newsItem: NewsSchema) => {
+                return <NewsCard data={newsItem} key={newsItem.id} />
+              })}
+            </TempWrapper>
+          )}
+        </Container>
       </Layout>
     </>
   )
