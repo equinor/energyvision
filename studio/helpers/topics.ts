@@ -18,7 +18,7 @@ type TopicConfixTypes = {
 export const topicsList: TopicConfixTypes[] = [
   {
     id: 'careers',
-    title: 'Careers',
+    title: 'Careers ( 🚧 )',
     slug: {
       en: 'careers',
       no: 'karriere',
@@ -26,7 +26,7 @@ export const topicsList: TopicConfixTypes[] = [
   },
   {
     id: 'whatWeDo',
-    title: 'What we do',
+    title: 'What we do ( 🚧 )',
     slug: {
       en: 'what-we-do',
       no: 'hva-vi-gjør',
