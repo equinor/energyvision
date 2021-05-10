@@ -1,4 +1,4 @@
-import { newsQuery, careersQuery, whatWeDoQuery } from './queries'
+import { newsQuery, pageQuery } from './queries'
 
 const getQuery = (docType: string) => {
   // @TODO A more sophisticated mapper to avoid to hard code this here
@@ -6,25 +6,30 @@ const getQuery = (docType: string) => {
   switch (docType) {
     case 'news':
       return newsQuery
-    case 'careers':
-      return careersQuery
-    case 'what-we-do':
-      return whatWeDoQuery
     default:
-      return newsQuery
+      return pageQuery
   }
 }
 
+const getQueryParams = (docType: string, slugArray: string[]) => {
+  const slug = `/${slugArray.join('/')}`
+  switch (docType) {
+    case 'news':
+      return { slug: slug }
+    default:
+      return { slug: slug, pageType: `${docType}_page` }
+  }
+}
 export const getQueryFromSlug = (slugArray: string[] = []) => {
   const [slugStart] = slugArray
   console.log(slugArray)
   // Quick n' dirty
   const docType = slugStart === 'news' ? 'news' : 'page'
 
-  const queryParams = { slug: `/${slugArray.join('/')}` }
+  // const queryParams = { slug: `/${slugArray.join('/')}` }
 
   return {
-    queryParams,
+    queryParams: getQueryParams(slugStart, slugArray),
     query: getQuery(slugStart),
     docType: docType,
   }

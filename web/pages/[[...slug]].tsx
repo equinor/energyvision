@@ -38,6 +38,9 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
   }
 
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[])
+  console.log('query:', query)
+  console.log('queryParams:', queryParams)
+  console.log('docType:', docType)
   const pageData = await getClient(preview).fetch(query, queryParams)
   console.log('data', pageData)
   return {
