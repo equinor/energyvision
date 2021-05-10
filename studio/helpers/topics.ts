@@ -4,7 +4,7 @@
 // What about canonicals?
 // Lot's of other stuffs
 
-export type Topics = 'career' | 'whatWeDo'
+export type Topics = 'careers' | 'whatWeDo'
 
 type TopicConfixTypes = {
   id: Topics
@@ -17,8 +17,8 @@ type TopicConfixTypes = {
 
 export const topicsList: TopicConfixTypes[] = [
   {
-    id: 'career',
-    title: 'Career',
+    id: 'careers',
+    title: 'Careers',
     slug: {
       en: 'careers',
       no: 'karriere',
