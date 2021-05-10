@@ -74,15 +74,13 @@ export const newsQuery = /* groq */ `
   }
 }`
 
-export const newsSlugsQuery = `
+export const newsSlugsQuery = /* groq */ `
 *[_type == "news" && defined(slug.current)][].slug.current
 `
 
 // @TODO: Don't know if we need the content key, it depends...
-export const careersQuery = /* groq */ ` {
-  "content": *[_type == "career_page" && slug.current == $slug][0] {
+export const pageQuery = /* groq */ ` {
+  "content": *[_type == $pageType && slug.current == $slug][0] {
     title,
   }
 }`
-
-export const whatWeDoQuery = ``
