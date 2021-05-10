@@ -26,6 +26,7 @@ import { topicsList } from '../helpers/topics'
 const topicSchemas = topicsList.map(({ id, title }) => {
   return page(id, title)
 })
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema

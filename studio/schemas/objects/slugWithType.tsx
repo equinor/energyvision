@@ -7,13 +7,23 @@ function slugify(input: string) {
 }
 
 function formatSlug(input: string, slugStart: string) {
-  const slug = slugify(input)
+  // Really bad code coming up
+  const test = input.split(';')
+
+  if (test[0] === 'true') {
+    return slugStart.slice(0, -1)
+  }
+
+  if (test[1] === 'undefined') {
+    return slugStart
+  }
+  const slug = slugify(test[1])
   return slugStart + slug
 }
 
 // @TODO: Do something more clever with types if we'll use this for the news articles
 
-export function slugWithType(prefix: Topics, source = 'title', fieldset = 'slug') {
+export function slugWithType(prefix: Topics, fieldset = 'slug') {
   const topic = getTopicConfig(prefix)
 
   const slugStart = prefix ? `/${topic?.slug.en}/` : `/`
@@ -24,18 +34,20 @@ export function slugWithType(prefix: Topics, source = 'title', fieldset = 'slug'
     title: 'Full slug',
     // readOnly: true,
     fieldset: fieldset,
+
     options: {
-      source,
+      source: (doc: any) => `${doc.isLandingPage};${doc.topicSlug}`,
       slugify: (value: any) => formatSlug(value, slugStart),
     },
     validation: (Rule: SchemaType.ValidationRule) =>
-      Rule.required().custom(({ current }: { current: any }) => {
-        if (typeof current === 'undefined') {
+      Rule.required().custom((slug: any) => {
+        const current = slug && slug.current
+        if (slug && typeof slug.current === 'undefined') {
           return true
         }
 
-        if (current) {
-          if (!current.startsWith(slugStart)) {
+        if (slug && slug.current) {
+          if (!Rule.valueOfField('isLandingPage') && !current.startsWith(slugStart)) {
             return `Slug must begin with "${slugStart}". Click "Generate" to reset.`
           }
 

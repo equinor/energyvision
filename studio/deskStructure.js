@@ -9,7 +9,29 @@ import { getTopicConfig } from './helpers/topics'
 // So not possible to type the topicPrefix :/
 const topicPageStructure = (topicPrefix, icon) => {
   const topic = getTopicConfig(topicPrefix)
-  return S.documentTypeListItem(`${topic.id}_page`).icon(icon).title(topic.title)
+  //return S.documentTypeListItem(`${topic.id}_page`).icon(icon).title(topic.title)
+  return S.listItem()
+    .title(`${topic.title} (Work in progress)`)
+    .icon(icon)
+    .child(
+      S.list()
+        .title(`/${topic.slug.en}`)
+        .items([
+          /* We can do something clever here if we have a pushlishedDate that actually works :) */
+          /*  S.listItem()
+            .title('Published pages')
+            .schemaType(`${topic.id}_page`)
+            .child(
+              S.documentList(`${topic.id}_page`)
+                .title('Published posts')
+                .filter('_type == "careers_page" && publishedAt < now() && !(_id in path("drafts.**"))')
+                .child((documentId) =>
+                  S.document().documentId(documentId).schemaType(`${topic.id}_page`).views([S.view.form()]),
+                ),
+            ), */
+          S.documentTypeListItem(`${topic.id}_page`).title('All pages'),
+        ]),
+    )
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
