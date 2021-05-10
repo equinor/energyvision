@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@babel/core': ^7.14.0
-  '@equinor/eds-core-react': ^0.11.0
+  '@equinor/eds-core-react': ^0.11.1
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.5.7
   '@sanity/block-content-to-react': ^2.0.7
@@ -30,17 +30,17 @@ specifiers:
   next-sanity-image: ^2.0.0
   next-seo: ^4.24.0
   only-allow: ^1.0.0
-  prettier: 2.2.1
+  prettier: 2.3.0
   react: ^17.0.2
   react-dom: ^17.0.2
-  react-intl: ^5.17.4
-  storybook-css-modules-preset: ^1.1.0
+  react-intl: ^5.17.5
+  storybook-css-modules-preset: ^1.1.1
   styled-components: ^5.3.0
   styled-normalize: ^8.0.7
   typescript: ^4.2.4
 
 dependencies:
-  '@equinor/eds-core-react': 0.11.0_c59160f3e2ae0f45324a65c8464c8ff0
+  '@equinor/eds-core-react': 0.11.1_c59160f3e2ae0f45324a65c8464c8ff0
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.5.7
   '@sanity/block-content-to-react': 2.0.7_react@17.0.2
@@ -53,7 +53,7 @@ dependencies:
   only-allow: 1.0.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
-  react-intl: 5.17.4_react@17.0.2+typescript@4.2.4
+  react-intl: 5.17.5_react@17.0.2+typescript@4.2.4
   styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
   styled-normalize: 8.0.7_styled-components@5.3.0
 
@@ -76,8 +76,8 @@ devDependencies:
   babel-plugin-styled-components: 1.12.0_styled-components@5.3.0
   jest: 26.6.3
   jest-styled-components: 7.0.4_styled-components@5.3.0
-  prettier: 2.2.1
-  storybook-css-modules-preset: 1.1.0
+  prettier: 2.3.0
+  storybook-css-modules-preset: 1.1.1
   typescript: 4.2.4
 
 packages:
@@ -1972,8 +1972,8 @@ packages:
     resolution: {integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==}
     dev: true
 
-  /@equinor/eds-core-react/0.11.0_c59160f3e2ae0f45324a65c8464c8ff0:
-    resolution: {integrity: sha512-of26mPz9H7CtnqPQV9wtv0sYm72GAnV9wIEBpqYK6GcwUjrDMarR47uxoslUC4qvKixHRyqo6r5SDPxar2UN9w==}
+  /@equinor/eds-core-react/0.11.1_c59160f3e2ae0f45324a65c8464c8ff0:
+    resolution: {integrity: sha512-J07689mOTlMZsc9PtmNxc8/DXLq7mbT9ywxj1BT4ciLoiPaG6cLFm0BrVQC3nWpqhCJHZkqJcKACsvx8RieHFA==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
       react: '>=16.8'
@@ -1981,7 +1981,7 @@ packages:
       styled-components: '>=4.2'
     dependencies:
       '@equinor/eds-icons': 0.6.2
-      '@equinor/eds-tokens': 0.5.7
+      '@equinor/eds-tokens': 0.5.8
       '@popperjs/core': 2.9.0
       downshift: 6.1.3_react@17.0.2
       react: 17.0.2
@@ -2001,8 +2001,13 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@formatjs/ecma402-abstract/1.7.0:
-    resolution: {integrity: sha512-0IQF4oDZdO8ruyrNJZuRle3F/YiGgRwTNrZyMI1N1X8GERZusOrXU9Stw+j/lyyfDWaJK44b+Qnri/qfLPCtGQ==}
+  /@equinor/eds-tokens/0.5.8:
+    resolution: {integrity: sha512-TB/vpWUV803fSiknnTT4tN8M10N+kTpGcoaD2AGMMJDdrz3qjYvnmXtF9wJIt8UN5wtu8D3zrP3aCijyqBtBmg==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    dev: false
+
+  /@formatjs/ecma402-abstract/1.7.1:
+    resolution: {integrity: sha512-FjewVLB2DVEVCvvC7IMffzXVhysvi442i6ed0H7qcrT6xtUpO4vr0oZgpOmsv6D9I4Io0GVebIuySwteS/k3gg==}
     dependencies:
       tslib: 2.2.0
     dev: false
@@ -2011,49 +2016,49 @@ packages:
     resolution: {integrity: sha512-mIqBr5uigIlx13eZTOPSEh2buDiy3BCdMYUtewICREQjbb4xarDiVWoXSnrERM7NanZ+0TAHNXSqDe6HpEFQUg==}
     dev: false
 
-  /@formatjs/icu-messageformat-parser/2.0.0:
-    resolution: {integrity: sha512-NwbcVP6jtnL+4vpmlWJoBA2/vxrl57uw5jBq8Cb3bfYJLxdL01IRxh//hFBePvLi9cyTYJEC3ZfzIuEH4kyX+w==}
+  /@formatjs/icu-messageformat-parser/2.0.1:
+    resolution: {integrity: sha512-GXHsATo6/9OMgrfAuyX86fYPMLeQXDN93TOKXQeW7A7ULCy9eEOp3beNwhrVFxaGIjVy/haLLqHMT36iyhwvCA==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.7.0
-      '@formatjs/icu-skeleton-parser': 1.2.1
+      '@formatjs/ecma402-abstract': 1.7.1
+      '@formatjs/icu-skeleton-parser': 1.2.2
       tslib: 2.2.0
     dev: false
 
-  /@formatjs/icu-skeleton-parser/1.2.1:
-    resolution: {integrity: sha512-mTpmCozmksatv3gQ+6/9dwwtoR+r+DFms22X6D6GLS4TaeaFKIPmC3k/DlsMGZIr3Q+dT+is5IcexChrPBGmCg==}
+  /@formatjs/icu-skeleton-parser/1.2.2:
+    resolution: {integrity: sha512-peBBPIiNzJdPsvEzFGCicD7ARvlcaUYOVZ5dljvzzcHqc5OHlH58OrUNWwYgxFS6Dnb3Ncy4qFwlTdPGTTvw1g==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.7.0
+      '@formatjs/ecma402-abstract': 1.7.1
       tslib: 2.2.0
     dev: false
 
-  /@formatjs/intl-displaynames/4.0.15:
-    resolution: {integrity: sha512-iOrzwRpro9ggNgGH6Mec9PPMw9Oo6IY6c/Ujjdt85p2wOnS4FnKu2EP/X1pKDRcKOXS3SF4Ec4XqGeikRTR3DA==}
+  /@formatjs/intl-displaynames/4.0.16:
+    resolution: {integrity: sha512-2vmY2yKu7VvtLmuZhPAGAZ6AtQMQpbUGEW/5IEwFub0AGR5iF/ayC7nbrQvg2NWVRVdVBt/HlTws/QWTZaRCyg==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.7.0
+      '@formatjs/ecma402-abstract': 1.7.1
       tslib: 2.2.0
     dev: false
 
-  /@formatjs/intl-listformat/5.0.16:
-    resolution: {integrity: sha512-kKT8g+uoPdjyyQNZPlbnTo1juNhnHROTljhukx7m8Vm/W6ahtFVwFRgyMbOcaGvGH2p7Rfus4Tg/NQ6mFI2giA==}
+  /@formatjs/intl-listformat/5.0.17:
+    resolution: {integrity: sha512-3WU1cmcoGk1zgNR7BoD/GIOaIJSjWa6GXArEOPiE+ocM6ZgYIYsDcjfQOso0z2NNN1k8CPOlfzWY4olwdKAtxQ==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.7.0
+      '@formatjs/ecma402-abstract': 1.7.1
       tslib: 2.2.0
     dev: false
 
-  /@formatjs/intl/1.10.5_typescript@4.2.4:
-    resolution: {integrity: sha512-B486yGoCij6qKGtopk+Ln8i850yE2PJUSW7G7gJXWnYUpBiIlYBi9kINDqOF3G5HBRM3f1WmIv/GB01aD8OaSA==}
+  /@formatjs/intl/1.10.6_typescript@4.2.4:
+    resolution: {integrity: sha512-Szxu18bG2LSXWlMHQyNap9AibOaCYgK4/1JlBy2o2UB89fjqJfXaotF7rNGD9dJc+JGzcUYhhBH0ofyN9uSXLg==}
     peerDependencies:
       typescript: ^4.2
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.7.0
+      '@formatjs/ecma402-abstract': 1.7.1
       '@formatjs/fast-memoize': 1.1.1
-      '@formatjs/icu-messageformat-parser': 2.0.0
-      '@formatjs/intl-displaynames': 4.0.15
-      '@formatjs/intl-listformat': 5.0.16
-      intl-messageformat: 9.6.12
+      '@formatjs/icu-messageformat-parser': 2.0.1
+      '@formatjs/intl-displaynames': 4.0.16
+      '@formatjs/intl-listformat': 5.0.17
+      intl-messageformat: 9.6.13
       tslib: 2.2.0
       typescript: 4.2.4
     dev: false
@@ -3715,7 +3720,7 @@ packages:
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 17.0.4
+      '@types/react': 17.0.5
       hoist-non-react-statics: 3.3.2
 
   /@types/html-minifier-terser/5.1.1:
@@ -3855,6 +3860,7 @@ packages:
       '@types/prop-types': 15.7.3
       '@types/scheduler': 0.16.1
       csstype: 3.0.8
+    dev: true
 
   /@types/react/17.0.5:
     resolution: {integrity: sha512-bj4biDB9ZJmGAYTWSKJly6bMr4BLUiBrx9ujiJEoP9XIDY9CTaPGxE5QWN/1WjpPLzYF7/jRNnV2nNxNe970sw==}
@@ -3862,7 +3868,6 @@ packages:
       '@types/prop-types': 15.7.3
       '@types/scheduler': 0.16.1
       csstype: 3.0.8
-    dev: true
 
   /@types/scheduler/0.16.1:
     resolution: {integrity: sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==}
@@ -7597,11 +7602,11 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /intl-messageformat/9.6.12:
-    resolution: {integrity: sha512-4oLEiYRWq+GAYETFxYOaGPWb9CT7j9F5UavhXIvBdbcsLIbaQFAa3LQBJh/9/NgV0Y8ZTzX2z+A1sf2AzslWxw==}
+  /intl-messageformat/9.6.13:
+    resolution: {integrity: sha512-F8OHdgdZYdY3O7TSkQtIGY1qBL7ttbbfIb6g9sgjLw1SQ9SlN3rlaUa1tv9RK3sX0qVkqNLqlPVuOfHlhXpm2Q==}
     dependencies:
       '@formatjs/fast-memoize': 1.1.1
-      '@formatjs/icu-messageformat-parser': 2.0.0
+      '@formatjs/icu-messageformat-parser': 2.0.1
       tslib: 2.2.0
     dev: false
 
@@ -10086,6 +10091,12 @@ packages:
     hasBin: true
     dev: true
 
+  /prettier/2.3.0:
+    resolution: {integrity: sha512-kXtO4s0Lz/DW/IJ9QdWhAf7/NmPWQXkFr/r/WkR3vyI+0v8amTDxiaQSLzs8NBlytfLWX/7uQUMIW677yLKl4w==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
+
   /pretty-error/2.1.2:
     resolution: {integrity: sha512-EY5oDzmsX5wvuynAByrmY0P0hcp+QpnAKbJng2A2MPjVKXCxrDSUkzghVJ4ZGPIv+JC4gX8fPUWscC0RtjsWGw==}
     dependencies:
@@ -10471,8 +10482,8 @@ packages:
       react: 17.0.2
     dev: true
 
-  /react-intl/5.17.4_react@17.0.2+typescript@4.2.4:
-    resolution: {integrity: sha512-Y4JaY8zxJc2CpNai0MY/UvuDJL3YlzRVRrhgOnitKngNBIen+rCmqefZ3fF+mwpwejcP4Kycv3ql/x3tVlUgNw==}
+  /react-intl/5.17.5_react@17.0.2+typescript@4.2.4:
+    resolution: {integrity: sha512-CCGZnb69TUXlDm/GL6R6VAD4RFTqPcIlotRs8RA5SjZX5gxJVgVokvlM9T3sA5BWInGNZUXXNOiZE7yROVUDIg==}
     peerDependencies:
       react: ^16.3.0 || 17
       typescript: ^4.2
@@ -10480,14 +10491,14 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@formatjs/ecma402-abstract': 1.7.0
-      '@formatjs/icu-messageformat-parser': 2.0.0
-      '@formatjs/intl': 1.10.5_typescript@4.2.4
-      '@formatjs/intl-displaynames': 4.0.15
-      '@formatjs/intl-listformat': 5.0.16
+      '@formatjs/ecma402-abstract': 1.7.1
+      '@formatjs/icu-messageformat-parser': 2.0.1
+      '@formatjs/intl': 1.10.6_typescript@4.2.4
+      '@formatjs/intl-displaynames': 4.0.16
+      '@formatjs/intl-listformat': 5.0.17
       '@types/hoist-non-react-statics': 3.3.1
       hoist-non-react-statics: 3.3.2
-      intl-messageformat: 9.6.12
+      intl-messageformat: 9.6.13
       react: 17.0.2
       tslib: 2.2.0
       typescript: 4.2.4
@@ -11441,8 +11452,8 @@ packages:
     resolution: {integrity: sha512-7t+/wpKLanLzSnQPX8WAcuLCCeuSHoWdQuh9SB3xD0kNOM38DNf+0Oa+wmvxmYueRzkmh6IcdKFtvTa+ecgPDw==}
     dev: true
 
-  /storybook-css-modules-preset/1.1.0:
-    resolution: {integrity: sha512-zrtRTOmfQ4pDUlKgtlbK6xr7ZmeLTOHeznox3Kp8aZLUooLW4mEycK8QG4EAnNQerbvKLDlW2044T+KPqOhooA==}
+  /storybook-css-modules-preset/1.1.1:
+    resolution: {integrity: sha512-wyINPOtB/8SvU7J92ePAhciBk4xoHuwrcqDNyGnSwilwHjmtHwbeEgZ1//JALOTwMB10zwz3WPONRkWec9LdGw==}
     dev: true
 
   /stream-browserify/2.0.2:
