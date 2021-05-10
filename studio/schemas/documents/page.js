@@ -9,7 +9,7 @@ export default (topicPrefix, title) => {
   return {
     type: 'document',
     name: `${topicPrefix}_page`,
-    title: `${title} Page`,
+    title: `${title}`,
     fieldsets: [
       {
         title: 'Slug',
