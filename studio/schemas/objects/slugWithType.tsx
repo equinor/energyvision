@@ -40,14 +40,15 @@ export function slugWithType(prefix: Topics, fieldset = 'slug') {
       slugify: (value: any) => formatSlug(value, slugStart),
     },
     validation: (Rule: SchemaType.ValidationRule) =>
-      Rule.required().custom((slug: any) => {
+      Rule.required().custom((slug: any, context: any) => {
         const current = slug && slug.current
+        const isLandingPage = context.document.isLandingPage
         if (slug && typeof slug.current === 'undefined') {
           return true
         }
 
         if (slug && slug.current) {
-          if (!Rule.valueOfField('isLandingPage') && !current.startsWith(slugStart)) {
+          if (!isLandingPage && !current.startsWith(slugStart)) {
             return `Slug must begin with "${slugStart}". Click "Generate" to reset.`
           }
 
