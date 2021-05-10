@@ -1,4 +1,4 @@
-const TopicPage = ({ data }) => {
+const TopicPage = ({ data }: any) => {
   console.log(data)
   return (
     <div>
