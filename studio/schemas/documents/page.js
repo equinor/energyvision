@@ -43,7 +43,27 @@ export default (topicPrefix, title) => {
         validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
       },
-      slugWithType(topicPrefix, 'topicSlug', 'slug'),
+      {
+        title: 'Is the landing page?',
+        description: 'This is the landing page and should not have a unique part in the url',
+        name: 'isLandingPage',
+        type: 'boolean',
+        fieldset: 'slug',
+      },
+      slugWithType(topicPrefix, 'slug', 'isLandingPage'),
     ],
+    preview: {
+      select: {
+        title: 'title',
+        slug: 'slug.current',
+      },
+      prepare(selection) {
+        const { title, slug } = selection
+        return {
+          title,
+          subtitle: slug,
+        }
+      },
+    },
   }
 }
