@@ -19,7 +19,7 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@equinor/eds-core-react": "^0.11.0",
+    "@equinor/eds-core-react": "^0.11.1",
     "@equinor/eds-icons": "^0.6.2",
     "@equinor/eds-tokens": "^0.5.7",
     "@sanity/block-content-to-react": "^2.0.7",
@@ -32,7 +32,7 @@
     "only-allow": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-intl": "^5.17.4",
+    "react-intl": "^5.17.5",
     "styled-components": "^5.3.0",
     "styled-normalize": "^8.0.7"
   },
@@ -55,8 +55,8 @@
     "babel-plugin-styled-components": "^1.12.0",
     "jest": "^26.6.3",
     "jest-styled-components": "^7.0.4",
-    "prettier": "2.2.1",
-    "storybook-css-modules-preset": "^1.1.0",
+    "prettier": "2.3.0",
+    "storybook-css-modules-preset": "^1.1.1",
     "typescript": "^4.2.4"
   }
 }
