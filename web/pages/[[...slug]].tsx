@@ -29,23 +29,22 @@ export default function Page({ data, preview }: any) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
-  if (params && !params.slug) {
-    return {
-      props: {
-        docType: 'home',
-      },
-    }
-  }
-
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[])
+  const pageData = query && (await getClient(preview).fetch(query, queryParams))
+
   console.log('query:', query)
   console.log('queryParams:', queryParams)
   console.log('docType:', docType)
-  const pageData = await getClient(preview).fetch(query, queryParams)
   console.log('data', pageData)
+
   return {
     props: {
-      data: { query, queryParams, pageData, docType },
+      data: {
+        query,
+        queryParams,
+        pageData,
+        docType,
+      },
     },
   }
 }
