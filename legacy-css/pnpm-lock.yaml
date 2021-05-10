@@ -8,7 +8,6 @@ specifiers:
   gulp: ^4.0.2
   gulp-autoprefixer: ^3.1.0
   gulp-consolidate: ^0.1.2
-  gulp-css-copy-assets: 0.0.5
   gulp-csslint: ^0.1.5
   gulp-iconfont: ^5.0.1
   gulp-minify-css: ^1.0.0
@@ -29,7 +28,6 @@ devDependencies:
   gulp: 4.0.2
   gulp-autoprefixer: 3.1.1
   gulp-consolidate: 0.1.2
-  gulp-css-copy-assets: 0.0.5
   gulp-csslint: 0.1.5
   gulp-iconfont: 5.0.1
   gulp-minify-css: 1.2.4
@@ -438,24 +436,9 @@ packages:
       electron-to-chromium: 1.3.723
     dev: true
 
-  /buffer-alloc-unsafe/1.1.0:
-    resolution: {integrity: sha512-TEM2iMIEQdJ2yjPJoSIsldnleVaAk1oW3DBVUykyOLsEsFmEc9kn+SFFPz+gl54KQNxlDnAwCXosOS9Okx2xAg==}
-    dev: true
-
-  /buffer-alloc/1.2.0:
-    resolution: {integrity: sha512-CFsHQgjtW1UChdXgbyJGtnm+O/uLQeZdtbDo8mfUgYXCHSM1wgrVxXm6bSyrUuErEb+4sYVGCzASBRot7zyrow==}
-    dependencies:
-      buffer-alloc-unsafe: 1.1.0
-      buffer-fill: 1.0.0
-    dev: true
-
   /buffer-equal/1.0.0:
     resolution: {integrity: sha1-WWFrSYME1Var1GaWayLu2j7KX74=}
     engines: {node: '>=0.4.0'}
-    dev: true
-
-  /buffer-fill/1.0.0:
-    resolution: {integrity: sha1-+PeLdniYiO858gXNY39o5wISKyw=}
     dev: true
 
   /buffer-from/1.1.1:
@@ -1434,12 +1417,6 @@ packages:
       vinyl-sourcemaps-apply: 0.2.1
     dev: true
 
-  /gulp-bufferify/0.0.4:
-    resolution: {integrity: sha1-H4AH4HDO/MKilZqf34bVTBFo6sI=}
-    dependencies:
-      through2: 2.0.5
-    dev: true
-
   /gulp-cli/2.3.0:
     resolution: {integrity: sha512-zzGBl5fHo0EKSXsHzjspp3y5CONegCm8ErO5Qh0UzFzk2y4tMvzLWhoDokADbarfZRL2pGpRp7yt6gfJX4ph7A==}
     engines: {node: '>= 0.10'}
@@ -1478,13 +1455,6 @@ packages:
     dependencies:
       consolidate: 0.10.0
       map-stream: 0.0.4
-    dev: true
-
-  /gulp-css-copy-assets/0.0.5:
-    resolution: {integrity: sha512-feXQjv0TSVjdJxp9onlxKIU/A/es9ZqpRIqM6PZ5rndxpBjIcCSg8HzzMQdBVr7QijComrOEWzHOWzDX4mYaAw==}
-    dependencies:
-      gulp-bufferify: 0.0.4
-      md5-file: 3.2.3
     dev: true
 
   /gulp-csslint/0.1.5:
@@ -2405,14 +2375,6 @@ packages:
       micromatch: 3.1.10
       resolve: 1.20.0
       stack-trace: 0.0.10
-    dev: true
-
-  /md5-file/3.2.3:
-    resolution: {integrity: sha512-3Tkp1piAHaworfcCgH0jKbTvj1jWWFgbvh2cXaNCgHwyTCBxxvD1Y04rmfpvdPm1P4oXMOpm6+2H7sr7v9v8Fw==}
-    engines: {node: '>=0.10'}
-    hasBin: true
-    dependencies:
-      buffer-alloc: 1.2.0
     dev: true
 
   /meow/3.7.0:
