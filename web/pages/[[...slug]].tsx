@@ -37,6 +37,7 @@ export default function Page({ data, preview }: any) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
+  console.log('params', params)
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[])
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
 
@@ -54,6 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
         docType,
       },
     },
+    revalidate: 1,
   }
 }
 
