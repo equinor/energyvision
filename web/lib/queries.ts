@@ -79,9 +79,9 @@ export const newsSlugsQuery = /* groq */ `
 `
 
 // @TODO: Don't know if we need the content key, it depends...
-export const pageQuery = /* groq */ ` {
-  "content": *[_type == $pageType && slug.current == $slug][0] {
+export const pageQuery = /* groq */ ` 
+   *[_type == $pageType && slug.current == $slug][0] {
     title,
     "slug": slug.current
   }
-}`
+`
