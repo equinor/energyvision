@@ -2,7 +2,7 @@
   "name": "@equinor/energyvision-legacy-css",
   "version": "1.0.0",
   "description": "Legacy styles project moved from AEM source code",
-  "main": "index.js",
+  "main": "dist/css/legacy.minified.css",
   "style": "dist/css/legacy.minified.css",
   "files": [
     "dist/*"
