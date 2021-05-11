@@ -185,7 +185,7 @@
       header {
         .event-date {
           &:before {
-            @include susy-breakpoint($screen-xs, $susy) { background-image: url(/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/icons/arrow-up-white.svg); }
+            @include susy-breakpoint($screen-xs, $susy) { background-image: url('../static/images/icons/arrow-up-white.svg'); }
           }
         }
 
