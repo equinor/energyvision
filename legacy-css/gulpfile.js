@@ -67,9 +67,9 @@ gulp.task('compass-minify', () =>
     .pipe(gulp.dest('dist/css')),
 )
 
-// Copy font-awesome fonts to dist
-gulp.task('copy-fontawesome', function () {
-  return gulp.src('./src/font/fontawesome/*.*').pipe(gulp.dest('./dist/fonts'))
+// Copy static files to dist
+gulp.task('copy-static-files', function () {
+  return gulp.src('./src/static/**/*.*').pipe(gulp.dest('./dist/static/'))
 })
 
 // Build SASS
@@ -97,14 +97,14 @@ gulp.task('Iconfont', () =>
         }),
       )
     })
-    .pipe(gulp.dest('dist/fonts')),
+    .pipe(gulp.dest('dist/static/fonts')),
 )
 
 //  Gulp Tasks
 //  ---------------------------------------------------------------------------------------
 
 // Default Task
-gulp.task('default', gulp.series('clean', gulp.parallel('compass-minify', 'Iconfont', 'copy-fontawesome')))
+gulp.task('default', gulp.series('clean', gulp.parallel('compass-minify', 'Iconfont', 'copy-static-files')))
 
 // Watch Task
 gulp.task('watch', () => gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify']))
