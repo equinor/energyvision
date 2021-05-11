@@ -7,7 +7,7 @@ export const getQueryFromSlug = (slugArray: string[] = ['']) => {
   switch (slugStart) {
     case '':
       return {
-        queryParams: { slug: slug },
+        queryParams: { slug: [] },
         query: '',
         docType: 'home',
       }
@@ -19,7 +19,7 @@ export const getQueryFromSlug = (slugArray: string[] = ['']) => {
       }
     default:
       return {
-        queryParams: { slug: slug, pageType: `${slugStart}_page` },
+        queryParams: { slug: slug, pageType: `page_${slugStart}` },
         query: pageQuery,
         docType: 'page',
       }
