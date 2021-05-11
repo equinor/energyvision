@@ -21,7 +21,7 @@ $banner-color: #FFF;
       &.alternate { color: $alternate-color; }
 
     }
-    
+
     span {
       display: block;
       font-size: 2rem;
@@ -85,9 +85,9 @@ $banner-color: #FFF;
           padding-bottom: 10%;
         }
 
-        .banner-text { 
-          width: 100%; 
-          
+        .banner-text {
+          width: 100%;
+
         }
 
       }
@@ -108,17 +108,14 @@ $banner-color: #FFF;
       }
 
       &-top:before {
-        background: url("/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/overlay-top-blue.svg") no-repeat;
         background-position: left top;
         background-size: 105% auto;
       }
 
       &-top-alternate:before {
-        background: url("/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/overlay-top-bluedark.svg") no-repeat;
         background-position: left top;
         background-size: 105% auto;
       }
-
 
       &-bottom:after, &-bottom-alternate:after {
         content: '';
@@ -129,16 +126,13 @@ $banner-color: #FFF;
         bottom: 0;
       }
       &-bottom:after {
-        background: url("/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/overlay-bottom-blue.svg") no-repeat;
         background-position: left bottom;
         background-size: 105% auto;
       }
       &-bottom-alternate:after {
-        background: url("/etc.clientlibs/statoil/clientlibs/clientlib/resources/images/graphics/overlay-bottom-bluedark.svg") no-repeat;
         background-position: left bottom;
         background-size: 105% auto;
       }
-
     }
   }
 }
