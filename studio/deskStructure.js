@@ -6,9 +6,9 @@ import NewsPreview from './src/previews/news/NewsPreview'
 import { getTopicConfig } from './helpers/topics'
 
 // I'm having a hard time to get the desk structure file work with typescript.
-// So not possible to type the topicPrefix :/
-const topicPageStructure = (topicPrefix, icon) => {
-  const topic = getTopicConfig(topicPrefix)
+// So not possible to type the topicSuffix :/
+const topicPageStructure = (topicSuffix, icon) => {
+  const topic = getTopicConfig(topicSuffix)
   //return S.documentTypeListItem(`${topic.id}_page`).icon(icon).title(topic.title)
   return S.listItem()
     .title(`${topic.title} (Work in progress)`)
@@ -29,7 +29,7 @@ const topicPageStructure = (topicPrefix, icon) => {
                   S.document().documentId(documentId).schemaType(`${topic.id}_page`).views([S.view.form()]),
                 ),
             ), */
-          S.documentTypeListItem(`${topic.id}_page`).title('All pages'),
+          S.documentTypeListItem(`page_${topic.id}`).title('All pages'),
         ]),
     )
 }

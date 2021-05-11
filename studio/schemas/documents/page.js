@@ -5,10 +5,10 @@ import React from 'react'
 import { slugWithType } from '../objects/slugWithType'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
-export default (topicPrefix, title) => {
+export default (topicSuffix, title) => {
   return {
     type: 'document',
-    name: `${topicPrefix}_page`,
+    name: `page_${topicSuffix}`,
     title: `${title}`,
     fieldsets: [
       {
@@ -23,8 +23,8 @@ export default (topicPrefix, title) => {
     ],
     fields: [
       {
-        name: 'topicPrefix',
-        initialValue: `${topicPrefix}`,
+        name: 'topicSuffix',
+        initialValue: `${topicSuffix}`,
         type: 'string',
         hidden: true,
       },
@@ -50,7 +50,7 @@ export default (topicPrefix, title) => {
         type: 'boolean',
         fieldset: 'slug',
       },
-      slugWithType(topicPrefix, 'slug', 'isLandingPage'),
+      slugWithType(topicSuffix, 'slug', 'isLandingPage'),
     ],
     preview: {
       select: {
