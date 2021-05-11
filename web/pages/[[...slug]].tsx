@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetStaticProps, GetStaticPaths } from 'next'
+import { useRouter } from 'next/router'
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { groq } from 'next-sanity'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
@@ -11,6 +12,9 @@ const HomePage = dynamic(() => import('../tempcomponents/pages/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pages/TopicPage'))
 
 export default function Page({ data, preview }: any) {
+  const router = useRouter()
+  const slug = data?.pageData?.content?.slug
+
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
@@ -21,9 +25,13 @@ export default function Page({ data, preview }: any) {
     return <HomePage />
   }
 
-  if (!data) {
-    return <ErrorPage statusCode={418} />
+  if (!router.isFallback && !slug) {
+    return <ErrorPage statusCode={404} />
   }
+
+  /*  if (!data) {
+    return <ErrorPage statusCode={418} />
+  } */
 
   return <div>{data?.docType === 'page' && <TopicPage data={pageData.content} />}</div>
 }
