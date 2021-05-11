@@ -13,7 +13,7 @@ const TopicPage = dynamic(() => import('../tempcomponents/pages/TopicPage'))
 
 export default function Page({ data, preview }: any) {
   const router = useRouter()
-  const slug = data?.pageData?.content?.slug
+  const slug = data?.pageData?.slug
 
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
@@ -33,7 +33,7 @@ export default function Page({ data, preview }: any) {
     return <ErrorPage statusCode={418} />
   } */
 
-  return <div>{data?.docType === 'page' && <TopicPage data={pageData.content} />}</div>
+  return <div>{data?.docType === 'page' && <TopicPage data={pageData} />}</div>
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
