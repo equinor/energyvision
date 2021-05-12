@@ -20,7 +20,7 @@ export default function Page({ data, preview }: any) {
     initialData: data?.pageData,
     enabled: preview,
   })
-  console.log('docType in page', data?.docType)
+  // console.log('docType in page', data?.docType)
   if (data?.docType === 'home') {
     return <HomePage />
   }
@@ -37,14 +37,14 @@ export default function Page({ data, preview }: any) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
-  console.log('params', params)
+  //console.log('params', params)
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[])
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
 
-  console.log('query:', query)
-  console.log('queryParams:', queryParams)
-  console.log('docType:', docType)
-  console.log('data', pageData)
+  //console.log('query:', query)
+  //console.log('queryParams:', queryParams)
+  //console.log('docType:', docType)
+  // console.log('data', pageData)
 
   return {
     props: {
