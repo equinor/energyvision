@@ -27,7 +27,7 @@ specifiers:
   jest-styled-components: ^7.0.4
   next: ^10.2.0
   next-sanity: ^0.1.12
-  next-sanity-image: ^2.0.0
+  next-sanity-image: ^3.0.0
   next-seo: ^4.24.0
   only-allow: ^1.0.0
   prettier: 2.3.0
@@ -48,7 +48,7 @@ dependencies:
   '@sanity/image-url': 0.140.22
   next: 10.2.0_507781d099a67956587e23f5ac79078b
   next-sanity: 0.1.12_react@17.0.2
-  next-sanity-image: 2.0.0_6e6242bef337f8b0da634ba9f1e64255
+  next-sanity-image: 3.0.0_6e6242bef337f8b0da634ba9f1e64255
   next-seo: 4.24.0_3a7f9b0847035abd95643f9e1809652e
   only-allow: 1.0.0
   react: 17.0.2
@@ -9238,8 +9238,8 @@ packages:
     resolution: {integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==}
     dev: true
 
-  /next-sanity-image/2.0.0_6e6242bef337f8b0da634ba9f1e64255:
-    resolution: {integrity: sha512-muDwiQD+k3YTzOsEDNtSTCoiTDxdA0kfzhBKaDdNMd8bJzNGWo5pxk28WMVTTRAmQNiSsncEadlXVGTzoomtzQ==}
+  /next-sanity-image/3.0.0_6e6242bef337f8b0da634ba9f1e64255:
+    resolution: {integrity: sha512-9RqsNhEhjsMVeStXuqV2p/BgD9huRvg5gGrOuIy4/yRtnNStMaErnwBWrTZwRC/B3lDP82WgdiXKBkqqo4d9lQ==}
     peerDependencies:
       '@sanity/client': ^2.0.0
       next: ^10.0.0
