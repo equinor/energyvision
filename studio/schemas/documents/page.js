@@ -51,6 +51,13 @@ export default (topicSuffix, title) => {
         fieldset: 'slug',
       },
       slugWithType(topicSuffix, 'slug', 'isLandingPage'),
+      {
+        name: 'content',
+        type: 'array',
+        title: 'Page sections',
+        localize: false,
+        of: [{ type: 'teaser' }],
+      },
     ],
     preview: {
       select: {
