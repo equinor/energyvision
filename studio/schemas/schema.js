@@ -21,6 +21,7 @@ import positionedInlineImage from './objects/positionedInlineImage'
 import titleAndMeta from './objects/titleAndMeta'
 import downloadableFile from './objects/files'
 import downloadableImage from './objects/downloadableImage'
+import teaser from './objects/teaser'
 import { topicsList } from '../helpers/topics'
 
 const topicSchemas = topicsList.map(({ id, title }) => {
@@ -47,5 +48,6 @@ export default createSchema({
     titleAndMeta,
     downloadableFile,
     downloadableImage,
+    teaser,
   ]),
 })
