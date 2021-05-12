@@ -33,6 +33,7 @@ const HeroImage = ({ data }: HeroImageProps) => {
           1420px
         "
         alt={image.alt}
+        layout="responsive"
       />
       {caption || attribution ? (
         <FigCaption>
