@@ -19,7 +19,7 @@ export const getQueryFromSlug = (slugArray: string[] = ['']) => {
       }
     default:
       return {
-        queryParams: { slug: slug, pageType: `page_${slugStart}` },
+        queryParams: { slug: slug, pageType: `${slugStart}` },
         query: pageQuery,
         docType: 'page',
       }
