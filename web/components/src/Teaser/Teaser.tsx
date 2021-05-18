@@ -12,7 +12,7 @@ export const StyledCard = styled.article`
     'content';
   /*     Hardcoded value while waiting for the w3c proposal for environment()
  */
-  @media (min-width: 500px) {
+  @media (min-width: 650px) {
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
   }

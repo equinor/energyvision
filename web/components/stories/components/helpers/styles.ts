@@ -25,6 +25,11 @@ export const ImagePlaceholder = styled.div<ImagePlaceholderProps>`
   background-color: hsl(0, 0%, 86%);
   width: ${(props) => (props.width ? props.width : '100%')};
   height: ${(props) => (props.height ? props.height : '100%')};
+  /*   Sry, no love for future self*/
+  @media (min-width: 650px) {
+    height: 100%;
+    width: 100%;
+  }
 `
 
 export const RatioBox = styled.div`
