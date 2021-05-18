@@ -23,9 +23,8 @@ export default {
 
 export const Default: Story<TeaserProps> = (args) => (
   <Teaser {...args}>
-    {' '}
     <Teaser.Media>
-      <ImagePlaceholder />
+      <ImagePlaceholder height="150px" />
     </Teaser.Media>
     <Teaser.Content>Text content</Teaser.Content>
   </Teaser>
@@ -36,7 +35,7 @@ Default.storyName = 'Default'
 export const WithMedia: Story<TeaserProps> = ({}) => (
   <Teaser>
     <Teaser.Media>
-      <ImagePlaceholder />
+      <ImagePlaceholder height="150px" />
     </Teaser.Media>
     <Teaser.Content>Text content</Teaser.Content>
   </Teaser>
