@@ -87,9 +87,55 @@ export const WithEyebrow: Story<TeaserProps> = ({}) => (
   </Teaser>
 )
 
-WithEyebrow.storyName = 'With media'
+WithEyebrow.storyName = 'With eyebrow title'
 WithEyebrow.parameters = {
   docs: {
-    storyDescription: `An eyebrow title can be used to <insert here>`,
+    storyDescription: `An eyebrow title can be used to ...`,
+  },
+}
+
+export const WithTheme: Story<TeaserProps> = (args) => (
+  <>
+    <Teaser styleVariant="five" {...args}>
+      <Teaser.Media>
+        <ImagePlaceholder height="150px" />
+      </Teaser.Media>
+      <Teaser.Content>
+        <Heading level="h2" size="xl">
+          We’re acting on it. Here are our results.
+        </Heading>
+        <Text size="md">
+          We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+          renewables. We report openly on all our sustainability priorities and performance.
+        </Text>
+        <Link variant="readMore" href="/">
+          Read more
+        </Link>
+      </Teaser.Content>
+    </Teaser>
+    <Teaser styleVariant="one" style={{ marginTop: '1rem' }}>
+      <Teaser.Media>
+        <ImagePlaceholder height="150px" />
+      </Teaser.Media>
+      <Teaser.Content>
+        <Heading level="h2" size="xl">
+          We’re acting on it. Here are our results.
+        </Heading>
+        <Text size="md">
+          We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+          renewables. We report openly on all our sustainability priorities and performance.
+        </Text>
+        <Link variant="readMore" href="/">
+          Read more
+        </Link>
+      </Teaser.Content>
+    </Teaser>
+  </>
+)
+
+WithTheme.storyName = 'With different styles'
+WithTheme.parameters = {
+  docs: {
+    storyDescription: ``,
   },
 }
