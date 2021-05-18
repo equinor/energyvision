@@ -3,7 +3,7 @@ import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
 
-export const ImagePlaceholder = styled.div`
+export const AspectImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
   position: absolute;
   top: 0;
