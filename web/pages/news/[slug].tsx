@@ -23,6 +23,12 @@ const { publicRuntimeConfig } = getConfig()
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+
+  /*  @TODO: Revisit when finalizing news article */
+  & h2,
+  & h3 {
+    margin: var(--spacing-small) 0;
+  }
 `
 
 const Header = styled.div`
