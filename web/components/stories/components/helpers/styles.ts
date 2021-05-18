@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 
@@ -15,11 +16,15 @@ export const AspectImagePlaceholder = styled.div`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 `
+type ImagePlaceholderProps = {
+  height?: string
+  width?: string
+} & HTMLAttributes<HTMLDivElement>
 
-export const ImagePlaceholder = styled.div`
+export const ImagePlaceholder = styled.div<ImagePlaceholderProps>`
   background-color: hsl(0, 0%, 86%);
-  height: 100%;
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : '100%')};
+  height: ${(props) => (props.height ? props.height : '100%')};
 `
 
 export const RatioBox = styled.div`
