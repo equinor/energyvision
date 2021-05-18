@@ -1,10 +1,11 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { Typography } from '@equinor/eds-core-react'
+import { Typography, TypographyProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 
 const StyledText = styled(Typography)`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
+  /* @TODO: Let's consider to move all the margin woo to the article layout */
   margin-bottom: var(--spacing-medium);
   & + & {
     margin: var(--spacing-medium) 0;
@@ -15,7 +16,8 @@ export type TextProps = {
   size?: 'regular' | 'md'
   bold?: boolean
   italic?: boolean
-} & HTMLAttributes<HTMLHeadingElement>
+} & HTMLAttributes<HTMLHeadingElement> &
+  TypographyProps
 
 /* Should be easy enough to change later on */
 const sizes = {
