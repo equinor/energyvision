@@ -8,6 +8,7 @@ export default {
   component: Teaser,
   subcomponents: {
     Media: Teaser.Media,
+    Content: Teaser.Content,
   },
   parameters: {
     docs: {
@@ -20,15 +21,24 @@ export default {
   },
 } as Meta
 
-export const Default: Story<TeaserProps> = (args) => <Teaser {...args}></Teaser>
+export const Default: Story<TeaserProps> = (args) => (
+  <Teaser {...args}>
+    {' '}
+    <Teaser.Media>
+      <ImagePlaceholder />
+    </Teaser.Media>
+    <Teaser.Content>Text content</Teaser.Content>
+  </Teaser>
+)
 
 Default.storyName = 'Default'
 
 export const WithMedia: Story<TeaserProps> = ({}) => (
   <Teaser>
     <Teaser.Media>
-      <ImagePlaceholder style={{ borderRadius: 0 }} />
+      <ImagePlaceholder />
     </Teaser.Media>
+    <Teaser.Content>Text content</Teaser.Content>
   </Teaser>
 )
 

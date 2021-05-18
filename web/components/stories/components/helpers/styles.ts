@@ -16,6 +16,12 @@ export const AspectImagePlaceholder = styled.div`
   border-top-right-radius: 4px;
 `
 
+export const ImagePlaceholder = styled.div`
+  background-color: hsl(0, 0%, 86%);
+  height: 100%;
+  width: 100%;
+`
+
 export const RatioBox = styled.div`
   position: relative;
   height: 0;
