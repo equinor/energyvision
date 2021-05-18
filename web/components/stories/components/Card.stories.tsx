@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
-import { ImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
+import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
 import { Card, CardProps, Text } from '@components'
 
 export default {
@@ -33,7 +33,7 @@ export const Default: Story<CardProps> = (args) => (
     <Card {...args}>
       <Card.Media>
         <RatioBox>
-          <ImagePlaceholder />
+          <AspectImagePlaceholder />
         </RatioBox>
       </Card.Media>
       <Card.Header>
@@ -58,7 +58,7 @@ export const NewsCard: Story<CardProps> = () => (
       <Card>
         <Card.Media>
           <RatioBox>
-            <ImagePlaceholder />
+            <AspectImagePlaceholder />
           </RatioBox>
         </Card.Media>
         <Card.Header>
@@ -81,7 +81,7 @@ export const NewsCard: Story<CardProps> = () => (
       <Card>
         <Card.Media>
           <RatioBox>
-            <ImagePlaceholder />
+            <AspectImagePlaceholder />
           </RatioBox>
         </Card.Media>
         <Card.Header>

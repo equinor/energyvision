@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
 import { FactBox, FactProps, Heading, Text, List } from '@components'
-import { ImagePlaceholder } from './helpers/styles'
+import { AspectImagePlaceholder } from './helpers/styles'
 
 export default {
   title: 'Components/Fact',
@@ -126,7 +126,7 @@ export const WithImage: Story<WithImageProps> = ({
   <>
     <FactBox background={background} imagePosition={imagePosition}>
       <FactBox.Image>
-        <ImagePlaceholder style={{ borderRadius: 0 }} />
+        <AspectImagePlaceholder style={{ borderRadius: 0 }} />
       </FactBox.Image>
       <FactBox.Content hasImage dynamicHeight={dynamicHeight}>
         <Heading size="xl" level="h3">
