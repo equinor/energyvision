@@ -1,6 +1,7 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { Typography, TypographyProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
+import { StyledTeaser } from '../Teaser/Teaser'
 
 const StyledText = styled(Typography)`
   font-size: var(--size);
@@ -9,6 +10,11 @@ const StyledText = styled(Typography)`
   margin-bottom: var(--spacing-medium);
   & + & {
     margin: var(--spacing-medium) 0;
+  }
+
+  /* If the text is used inside a inverted teaser component, the text colour must also be inverted */
+  ${StyledTeaser}.inverted & {
+    color: var(--inverted-text);
   }
 `
 

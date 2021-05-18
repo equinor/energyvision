@@ -34,7 +34,7 @@ export const colors = css`
 
     --mist-blue-100: hsl(199, 58%, 90%);
 
-    --litchen-green-100: hsl(138, 67%, 94%);
+    --lichen-green-100: hsl(138, 67%, 94%);
 
     --spruce-wood-100: hsl(25, 100%, 92%);
     --spruce-wood-90: hsl(25, 100%, 94%);
