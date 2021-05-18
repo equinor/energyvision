@@ -5,6 +5,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
+import { StyledTeaser } from '../Teaser/Teaser'
 
 const { outline } = Tokens
 
@@ -73,6 +74,14 @@ const ReadMoreLink = styled(BaseLink)`
 
   &:hover:after {
     width: 100%;
+  }
+
+  /* If the link is used inside a inverted teaser component, the text colour must also be inverted */
+  ${StyledTeaser}.inverted & {
+    color: var(--inverted-text);
+    &:after {
+      border-bottom-color: var(--inverted-text);
+    }
   }
 `
 
