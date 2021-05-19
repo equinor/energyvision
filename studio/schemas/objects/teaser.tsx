@@ -3,6 +3,7 @@ import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { topicsList } from '../../helpers/topics'
 import { AlignmentSelector } from '../components'
+import { Colors } from '../../helpers/ColorListValues'
 
 const topicPages = topicsList.map((topic: any) => ({ type: `page_${topic.id}` }))
 
@@ -55,6 +56,10 @@ export default {
       name: 'link',
       title: 'Link',
       description: 'Select either an internal link or external URL.',
+    },
+    {
+      name: 'design',
+      title: 'Design options',
     },
   ],
   fields: [
@@ -117,6 +122,22 @@ export default {
       description: 'Select which side of the teaser the image should be displayed at on larger screens.',
       type: 'string',
       inputComponent: AlignmentSelector,
+      fieldset: 'design',
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        borderradius: {
+          outer: '100%',
+          inner: '100%',
+        },
+        tooltip: true,
+        list: Colors,
+      },
+      fieldset: 'design',
     },
   ],
   preview: {
