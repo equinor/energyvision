@@ -1,11 +1,26 @@
 import { forwardRef, HTMLAttributes } from 'react'
+import styled from 'styled-components'
 
-export type TeaserMediaProps = HTMLAttributes<HTMLDivElement>
+export type TeaserMediaProps = {
+  size?: 'small' | 'full'
+} & HTMLAttributes<HTMLDivElement>
 
-export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media({ children, ...rest }, ref) {
+const StyledMedia = styled.div<TeaserMediaProps>`
+  ${({ size }) =>
+    size === 'small' && {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+`
+
+export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media(
+  { size = 'full', children, ...rest },
+  ref,
+) {
   return (
-    <div ref={ref} {...rest}>
+    <StyledMedia size={size} ref={ref} {...rest}>
       {children}
-    </div>
+    </StyledMedia>
   )
 })
