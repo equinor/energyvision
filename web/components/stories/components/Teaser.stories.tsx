@@ -2,6 +2,14 @@
 import { Story, Meta } from '@storybook/react'
 import { Teaser, TeaserProps, Heading, Text, Link } from '@components'
 import { ImagePlaceholder } from './helpers/styles'
+import styled from 'styled-components'
+
+const SmallImageContainer = styled.div`
+  @media (min-width: 650px) {
+    width: 55%;
+    height: 40%;
+  }
+`
 
 export default {
   title: 'Components/Teaser',
@@ -137,5 +145,34 @@ WithTheme.storyName = 'With different styles'
 WithTheme.parameters = {
   docs: {
     storyDescription: ``,
+  },
+}
+
+export const WithConstrainedMediaWidth: Story<TeaserProps> = (args) => (
+  <Teaser styleVariant="three" {...args}>
+    <Teaser.Media size="small">
+      <SmallImageContainer>
+        <ImagePlaceholder height="150px" />
+      </SmallImageContainer>
+    </Teaser.Media>
+    <Teaser.Content>
+      <Heading level="h2" size="xl">
+        We’re acting on it. Here are our results.
+      </Heading>
+      <Text size="md">
+        We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+        renewables. We report openly on all our sustainability priorities and performance.
+      </Text>
+      <Link variant="readMore" href="/">
+        Read more
+      </Link>
+    </Teaser.Content>
+  </Teaser>
+)
+
+WithConstrainedMediaWidth.storyName = 'With constrained image width'
+WithConstrainedMediaWidth.parameters = {
+  docs: {
+    storyDescription: `Work in progress. We will probably need to add the width constraint to the actual image. This is just a dummy showcase.`,
   },
 }
