@@ -176,6 +176,33 @@ WithTheme.parameters = {
   },
 }
 
+export const WithRightPositionedImage: Story<TeaserProps> = (args) => (
+  <Teaser styleVariant="three" imagePosition="right" {...args}>
+    <Teaser.Media>
+      <ImagePlaceholder height="150px" />
+    </Teaser.Media>
+    <Teaser.Content>
+      <Heading level="h2" size="xl">
+        We’re acting on it. Here are our results.
+      </Heading>
+      <Text size="md">
+        We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+        renewables. We report openly on all our sustainability priorities and performance.
+      </Text>
+      <Link variant="readMore" href="/">
+        Read more
+      </Link>
+    </Teaser.Content>
+  </Teaser>
+)
+
+WithRightPositionedImage.storyName = 'With right aligned image'
+WithRightPositionedImage.parameters = {
+  docs: {
+    storyDescription: `The image can be positioned to the right`,
+  },
+}
+
 export const WithConstrainedMediaWidth: Story<TeaserProps> = (args) => (
   <Teaser styleVariant="three" {...args}>
     <Teaser.Media size="small">

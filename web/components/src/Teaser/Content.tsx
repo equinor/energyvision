@@ -8,6 +8,7 @@ const StyledContent = styled.div`
   align-items: center;
   align-content: start;
   padding: var(--space-large);
+  grid-area: content;
   /* @TODO: Revisit when we move the margins to the article layout */
   p {
     margin-bottom: 0;
