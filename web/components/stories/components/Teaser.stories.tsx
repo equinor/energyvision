@@ -84,10 +84,6 @@ export const WithEyebrow: Story<TeaserProps> = ({}) => (
         We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
         renewables. We report openly on all our sustainability priorities and performance.
       </Text>
-      <Text size="md">
-        We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
-        renewables. We report openly on all our sustainability priorities and performance.
-      </Text>
       <Link variant="readMore" href="/">
         Read more
       </Link>
@@ -99,6 +95,38 @@ WithEyebrow.storyName = 'With eyebrow title'
 WithEyebrow.parameters = {
   docs: {
     storyDescription: `An eyebrow title can be used to ...`,
+  },
+}
+
+export const WithLongContent: Story<TeaserProps> = ({}) => (
+  <Teaser>
+    <Teaser.Media>
+      <ImagePlaceholder height="150px" />
+    </Teaser.Media>
+    <Teaser.Content>
+      <Teaser.Eyebrow>Some people are still disputing global warming</Teaser.Eyebrow>
+      <Heading level="h2" size="xl">
+        We’re acting on it. Here are our results.
+      </Heading>
+      <Text size="md">
+        We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+        renewables. We report openly on all our sustainability priorities and performance.
+      </Text>
+      <Text size="md">
+        We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+        renewables. We report openly on all our sustainability priorities and performance.
+      </Text>
+      <Link variant="readMore" href="/">
+        Read more
+      </Link>
+    </Teaser.Content>
+  </Teaser>
+)
+
+WithLongContent.storyName = 'With too long content'
+WithLongContent.parameters = {
+  docs: {
+    storyDescription: `The height of the teaser can be a maximum of 800px with no scroll for content overflow.`,
   },
 }
 
