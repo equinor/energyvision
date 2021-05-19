@@ -1,13 +1,18 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
 
+type ImagePosition = 'left' | 'right'
+
 export type TeaserProps = {
   /** Define some good names for this */
   styleVariant?: 'none' | 'one' | 'two' | 'three' | 'four' | 'five'
+  /** Should the image be positioned to the left or the right */
+  imagePosition?: ImagePosition
 } & HTMLAttributes<HTMLElement>
 
 type StyledTeaserProps = {
   isInverted: boolean
+  imagePosition: ImagePosition
 }
 
 export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
@@ -21,6 +26,7 @@ export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
   grid-template-columns: 1fr;
   grid-template-rows: min-content min-content;
   max-height: 800px;
+  overflow: hidden;
   grid-template-areas:
     'image'
     'content';
@@ -29,6 +35,15 @@ export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
   @media (min-width: 750px) {
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
+
+    ${({ imagePosition }) =>
+      imagePosition === 'left'
+        ? {
+            gridTemplateAreas: '"image content"',
+          }
+        : {
+            gridTemplateAreas: '"content image"',
+          }}
   }
 `
 // @TODO: Color naming
@@ -42,7 +57,7 @@ const backgrounds: { [name: string]: string } = {
 }
 
 export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
-  { styleVariant = 'none', style, children, ...rest },
+  { styleVariant = 'none', imagePosition = 'left', style, children, ...rest },
   ref,
 ) {
   const isInverted = styleVariant === 'five'
@@ -50,6 +65,7 @@ export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
     <StyledTeaser
       ref={ref}
       isInverted={isInverted}
+      imagePosition={imagePosition}
       style={{ ...style, '--background-color': backgrounds[styleVariant] } as CSSProperties}
       {...rest}
     >

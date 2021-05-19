@@ -6,6 +6,7 @@ export type TeaserMediaProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const StyledMedia = styled.div<TeaserMediaProps>`
+  grid-area: image;
   ${({ size }) =>
     size === 'small' && {
       display: 'flex',
