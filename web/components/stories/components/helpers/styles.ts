@@ -26,7 +26,7 @@ export const ImagePlaceholder = styled.div<ImagePlaceholderProps>`
   width: ${(props) => (props.width ? props.width : '100%')};
   height: ${(props) => (props.height ? props.height : '100%')};
   /*   Sry, no love for future self*/
-  @media (min-width: 650px) {
+  @media (min-width: 750px) {
     height: 100%;
     width: 100%;
   }
