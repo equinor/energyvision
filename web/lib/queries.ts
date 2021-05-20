@@ -82,6 +82,14 @@ export const newsSlugsQuery = /* groq */ `
 export const pageQuery = /* groq */ ` 
    *[_type match "page_*" && slug.current == $slug][0] {
     title,
-    "slug": slug.current
+    "slug": slug.current,
+    "content": content[]{
+      _type == "teaser"=>{
+        _type,
+        _key,
+        title,
+        text  
+      }
+    }
   }
 `

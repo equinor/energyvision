@@ -7,6 +7,7 @@ import { getQueryFromSlug } from '../lib/queryFromSlug'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { usePreviewSubscription } from '../lib/sanity'
+import { Layout } from '@components'
 
 const HomePage = dynamic(() => import('../tempcomponents/pages/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pages/TopicPage'))
@@ -29,11 +30,13 @@ export default function Page({ data, preview }: any) {
     return <ErrorPage statusCode={404} />
   }
 
-  /*  if (!data) {
-    return <ErrorPage statusCode={418} />
-  } */
-
-  return <div>{data?.docType === 'page' && <TopicPage data={pageData} />}</div>
+  return (
+    <>
+      <Layout preview={preview}>
+        {router.isFallback ? <p>Loading…</p> : <>{data?.docType === 'page' && <TopicPage data={pageData} />}</>}
+      </Layout>
+    </>
+  )
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {

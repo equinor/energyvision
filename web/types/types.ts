@@ -72,3 +72,18 @@ export type PortableTextChild = {
   marks?: string[]
   text?: string
 }
+
+export type PageSchema = {
+  slug: string
+  title: string
+  content?: []
+  _key: string
+  _type: string
+}
+
+export type TeaserData = {
+  _type: string
+  _key: string
+  title: string
+  text: PortableTextEntry[]
+}
