@@ -90,6 +90,8 @@ export const pageQuery = /* groq */ `
         overline,
         title,
         text,
+        background,
+        imagePosition,
         "action": {
           "label": linkLabel,
           "link": reference-> {

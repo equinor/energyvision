@@ -14,7 +14,12 @@ type TeaserProps = {
   data: TeaserData
 }
 
-const StyledTeaser = styled(EnvisTeaser)`
+type TempStyleVariants = 'none' | 'one' | 'two' | 'three' | 'four' | 'five'
+
+type StyledTeaserProps = {
+  styleVariant?: TempStyleVariants
+}
+const StyledTeaser = styled(EnvisTeaser)<StyledTeaserProps>`
   margin: var(--space-xLarge) 0;
 `
 
@@ -35,7 +40,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 }
 
 const Teaser = ({ data }: TeaserProps) => {
-  const { title, overline, text, image, action } = data
+  const { title, overline, text, image, action, background, imagePosition } = data
 
   // @TODO: We should do this in a more optimal way
   const linkType = action.href ? 'externalUrl' : 'internalUrl'
@@ -46,9 +51,27 @@ const Teaser = ({ data }: TeaserProps) => {
   } else {
     url = action.href || ''
   }
+  console.log('back', background)
+  // @TODO: Find a better way with task #334
+  const backgroundColourTitle = background ? background.title : 'none'
+  console.log('background color', backgroundColourTitle)
+  let styleVariant: TempStyleVariants = 'none'
+  if (backgroundColourTitle === 'White') {
+    styleVariant = 'none'
+  } else if (backgroundColourTitle === 'Moss Green') {
+    styleVariant = 'one'
+  } else if (backgroundColourTitle === 'Lichen Green') {
+    styleVariant = 'two'
+  } else if (backgroundColourTitle === 'Spruce Wood') {
+    styleVariant = 'three'
+  } else if (backgroundColourTitle === 'Mist Blue') {
+    styleVariant = 'four'
+  } else if (backgroundColourTitle === 'Slate Blue') {
+    styleVariant = 'five'
+  }
 
   return (
-    <StyledTeaser>
+    <StyledTeaser styleVariant={styleVariant} imagePosition={imagePosition}>
       <Media size={image?.extension === 'svg' ? 'small' : 'full'}>{image && <TeaserImage image={image} />}</Media>
       <Content>
         {overline && <Eyebrow>{overline}</Eyebrow>}

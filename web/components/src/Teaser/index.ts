@@ -1,4 +1,4 @@
-import { Teaser as TeaserWrapper, TeaserProps } from './Teaser'
+import { Teaser as TeaserWrapper, TeaserProps, ImagePosition as TeaserImagePosition } from './Teaser'
 import { Media, TeaserMediaProps } from './Media'
 import { Content, TeaserContentProps } from './Content'
 import { Eyebrow, TeaserEyebrowProps } from './Eyebrow'
@@ -16,4 +16,4 @@ Teaser.Content = Content
 Teaser.Eyebrow = Eyebrow
 
 export { Teaser }
-export type { TeaserProps, TeaserMediaProps, TeaserContentProps, TeaserEyebrowProps }
+export type { TeaserProps, TeaserMediaProps, TeaserContentProps, TeaserEyebrowProps, TeaserImagePosition }

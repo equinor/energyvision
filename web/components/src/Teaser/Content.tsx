@@ -14,7 +14,11 @@ const StyledContent = styled.div`
     margin-bottom: 0;
   }
   p + p {
-    margin: 0 !important;
+    /* margin: 0 !important; */
+  }
+
+  @media (min-width: 750px) {
+    max-height: 800px;
   }
 `
 export type TeaserContentProps = HTMLAttributes<HTMLDivElement>
