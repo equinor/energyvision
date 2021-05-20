@@ -83,6 +83,13 @@ export default {
         Rule.custom((value: any) => validateContent(value, 600)).warning(),
     },
     {
+      name: 'linkLabel',
+      title: 'Link label',
+      type: 'string',
+      fieldset: 'link',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+    },
+    {
       name: 'reference',
       title: 'Internal link',
       type: 'reference',
