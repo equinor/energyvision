@@ -3,6 +3,7 @@ import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
 import { EdsList } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
+import PagePreview from './src/previews/page/PagePreview'
 import { getTopicConfig } from './helpers/topics'
 
 // I'm having a hard time to get the desk structure file work with typescript.
@@ -56,6 +57,8 @@ export const getDefaultDocumentNode = (props) => {
   const { schemaType } = props
   if (schemaType === 'news') {
     return S.document().views([S.view.form(), S.view.component(NewsPreview).title('News preview')])
+  } else if (schemaType.startsWith('page_')) {
+    return S.document().views([S.view.form(), S.view.component(PagePreview).title('Page preview')])
   }
 
   return S.document().views([S.view.form()])
