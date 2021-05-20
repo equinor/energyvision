@@ -7,6 +7,7 @@ export type TeaserMediaProps = {
 
 const StyledMedia = styled.div<TeaserMediaProps>`
   grid-area: image;
+  position: relative;
   ${({ size }) =>
     size === 'small' && {
       display: 'flex',

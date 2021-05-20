@@ -90,6 +90,14 @@ export const pageQuery = /* groq */ `
         overline,
         title,
         text,
+        "action": {
+          "label": linkLabel,
+          "link": reference-> {
+            "type": _type,
+            "slug": slug.current
+          },
+          "href": url,
+        },
         "image": image{
           ...,
           "extension": asset-> extension
