@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
 
-type ImagePosition = 'left' | 'right'
+export type ImagePosition = 'left' | 'right'
 
 export type TeaserProps = {
   /** Define some good names for this */
@@ -22,8 +22,7 @@ export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
 )<StyledTeaserProps>`
   background-color: var(--background-color);
 
-  max-height: 800px;
-  overflow: hidden;
+  overflow-y: hidden;
 `
 
 const TeaserWrapper = styled.div<TeaserProps>`
