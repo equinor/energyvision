@@ -12,8 +12,8 @@ export type ImageWithCaptionData = {
 export type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
 
 export type LinkData = {
-  type: LinkType
-  id: string
+  type?: LinkType
+  id?: string
   label: string
   link?: { slug: string; type: string }
   href?: string
@@ -89,4 +89,5 @@ export type TeaserData = {
   text: PortableTextEntry[]
   overline?: string
   image: ImageWithAlt
+  action: LinkData
 }
