@@ -74,8 +74,8 @@ export default {
       type: 'string',
     },
     {
-      name: 'content',
-      title: 'Content',
+      name: 'text',
+      title: 'Text content',
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [blockContentType],
