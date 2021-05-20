@@ -11,7 +11,7 @@ specifiers:
   web-vitals: ^1.1.2
 
 dependencies:
-  '@equinor/energyvision-legacy-css': link:../legacy-css
+  '@equinor/energyvision-legacy-css': link:../css
   '@testing-library/jest-dom': 5.12.0
   '@testing-library/react': 11.2.6_react-dom@17.0.2+react@17.0.2
   '@testing-library/user-event': 12.8.3
