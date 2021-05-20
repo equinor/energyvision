@@ -12,7 +12,6 @@ export type TeaserProps = {
 
 type StyledTeaserProps = {
   isInverted: boolean
-  imagePosition: ImagePosition
 }
 
 export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
@@ -22,15 +21,22 @@ export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
     },
 )<StyledTeaserProps>`
   background-color: var(--background-color);
+
+  max-height: 800px;
+  overflow: hidden;
+`
+
+const TeaserWrapper = styled.div<TeaserProps>`
+  --max-content-width: 1440px;
+
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: min-content min-content;
-  max-height: 800px;
-  overflow: hidden;
   grid-template-areas:
     'image'
     'content';
-
+  max-width: var(--max-content-width);
+  margin: 0 auto;
   /* Hardcoded value while waiting for the w3c proposal for environment() */
   @media (min-width: 750px) {
     grid-template-columns: repeat(2, 50%);
@@ -46,6 +52,7 @@ export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
           }}
   }
 `
+
 // @TODO: Color naming
 const backgrounds: { [name: string]: string } = {
   none: 'var(--ui-background-default)',
@@ -65,11 +72,10 @@ export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
     <StyledTeaser
       ref={ref}
       isInverted={isInverted}
-      imagePosition={imagePosition}
       style={{ ...style, '--background-color': backgrounds[styleVariant] } as CSSProperties}
       {...rest}
     >
-      {children}
+      <TeaserWrapper imagePosition={imagePosition}>{children}</TeaserWrapper>
     </StyledTeaser>
   )
 })
