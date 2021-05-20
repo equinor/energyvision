@@ -87,8 +87,13 @@ export const pageQuery = /* groq */ `
       _type == "teaser"=>{
         _type,
         _key,
+        overline,
         title,
-        text  
+        text,
+        "image": image{
+          ...,
+          "extension": asset-> extension
+        }  
       }
     }
   }

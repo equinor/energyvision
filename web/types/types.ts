@@ -31,6 +31,7 @@ export type ImageWithAlt = {
   crop?: SanityImageCrop
   hotspot?: SanityImageHotspot
   _type: 'imageWithAlt'
+  extension?: string
 }
 
 export type NewsCardData = {
@@ -86,4 +87,6 @@ export type TeaserData = {
   _key: string
   title: string
   text: PortableTextEntry[]
+  overline?: string
+  image: ImageWithAlt
 }
