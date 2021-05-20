@@ -16,7 +16,7 @@ export type ValidationResult = true | string | Promise<true | string>
 
 export interface ValidationRule {
   required: () => ValidationRule
-  custom: (value: any, context?: ValidationContext) => ValidationResult
+  custom: (value: any, context?: ValidationContext) => ValidationResult | warning
   min: (arg0: number) => ValidationRule
   max: (arg0: number) => ValidationRule
   error: (arg0: string) => ValdiationRule

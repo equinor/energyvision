@@ -13,7 +13,7 @@ const validateContent = (value: any, maxLength: number) => {
   const count = value[0].children.reduce((total: number, current: any) => total + current.text.length, 0)
 
   if (count > maxLength) {
-    return `Ingress cannot be longer than ${maxLength} characters. Currently ${count} characters long.`
+    return `Content should be short and concise.`
   }
 
   return true
@@ -74,19 +74,13 @@ export default {
       type: 'string',
     },
     {
-      name: 'ingress',
-      title: 'Ingress',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [blockContentType],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.custom((value: any) => validateContent(value, 400)),
-    },
-    {
       name: 'content',
       title: 'Content',
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [blockContentType],
+      validation: (Rule: SchemaType.ValidationRule) =>
+        Rule.custom((value: any) => validateContent(value, 600)).warning(),
     },
     {
       name: 'reference',
