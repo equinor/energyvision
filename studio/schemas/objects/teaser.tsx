@@ -126,6 +126,22 @@ export default {
       fieldset: 'design',
     },
     {
+      name: 'imageSize',
+      title: 'Image size',
+      description: 'Select whether the image should be full size or have padding around it',
+      type: 'string',
+      fieldset: 'design',
+      options: {
+        list: [
+          { title: 'Full', value: 'full' },
+          { title: 'Small', value: 'small' },
+        ],
+        layout: 'radio',
+        direction: 'horizontal',
+      },
+      initialValue: 'full',
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
