@@ -41,8 +41,8 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 }
 
 const Teaser = ({ data }: TeaserProps) => {
-  const { title, overline, text, image, action, background, imagePosition } = data
-
+  const { title, overline, text, image, action, designOptions } = data
+  const { background, imageSize, imagePosition } = designOptions
   // @TODO: We should do this in a more optimal way, but it involves task # 332
   const linkType = action.href ? 'externalUrl' : 'internalUrl'
   let url: string
@@ -72,9 +72,11 @@ const Teaser = ({ data }: TeaserProps) => {
 
   return (
     <StyledTeaser styleVariant={styleVariant} imagePosition={imagePosition}>
-      {/*       // @TODO: When we have size in Sanity, add size small|full dersom SVG
-       */}
-      <Media center={isSvg ? true : false} fixedHeight={isSvg ? false : true}>
+      <Media
+        size={isSvg && imageSize === 'small' ? 'small' : 'full'}
+        center={isSvg ? true : false}
+        fixedHeight={isSvg ? false : true}
+      >
         {image && <TeaserImage image={image} />}
       </Media>
       <Content>

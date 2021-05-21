@@ -1,7 +1,7 @@
 // @TODO Don't know yet where to put this or how to structure it
 import { SanityImageObject, SanityImageCrop, SanityImageHotspot } from '@sanity/image-url/lib/types/types'
 import { PortableTextEntry } from '@sanity/block-content-to-react'
-import { TeaserImagePosition } from '@components'
+import { TeaserImagePosition, TeaserImageSize } from '@components'
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
@@ -91,6 +91,9 @@ export type TeaserData = {
   overline?: string
   image: ImageWithAlt
   action: LinkData
-  background: { title: string; value: string }
-  imagePosition: TeaserImagePosition
+  designOptions: {
+    background: { title: string; value: string }
+    imagePosition: TeaserImagePosition
+    imageSize: TeaserImageSize
+  }
 }
