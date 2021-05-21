@@ -19,8 +19,9 @@ export default function Page({ data, preview }: any) {
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
-    enabled: preview,
+    enabled: preview || router.query.preview !== null,
   })
+
   // console.log('docType in page', data?.docType)
   if (data?.docType === 'home') {
     return <HomePage />
@@ -51,6 +52,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
 
   return {
     props: {
+      preview,
       data: {
         query,
         queryParams,
