@@ -19,9 +19,10 @@ const StyledMedia = styled.div<TeaserMediaProps>`
     }}
   ${({ size }) =>
     size === 'small' && {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignSelf: 'center',
+      justifySelf: 'center',
+      textAlign: 'center',
+      width: '100%',
     }}
   @media (min-width: 750px) {
     height: auto;
