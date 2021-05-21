@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
 import { Teaser, TeaserProps, Heading, Text, Link } from '@components'
-import { ImagePlaceholder } from './helpers/styles'
+import { ImagePlaceholder, RatioBox, AspectImagePlaceholder } from './helpers/styles'
 import styled from 'styled-components'
 
 const SmallImageContainer = styled.div`
@@ -205,10 +205,10 @@ WithRightPositionedImage.parameters = {
 
 export const WithConstrainedMediaWidth: Story<TeaserProps> = (args) => (
   <Teaser styleVariant="three" {...args}>
-    <Teaser.Media size="small">
-      <SmallImageContainer>
-        <ImagePlaceholder height="150px" />
-      </SmallImageContainer>
+    <Teaser.Media size="small" center={true}>
+      <RatioBox>
+        <AspectImagePlaceholder />
+      </RatioBox>
     </Teaser.Media>
     <Teaser.Content>
       <Heading level="h2" size="xl">
