@@ -21,7 +21,7 @@ type StyledTeaserProps = {
   styleVariant?: TempStyleVariants
 }
 const StyledTeaser = styled(EnvisTeaser)<StyledTeaserProps>`
-  margin: var(--space-xLarge) 0;
+  /* margin: var(--space-xLarge) 0; */
 `
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
