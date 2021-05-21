@@ -2,40 +2,41 @@ import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 export type TeaserMediaProps = {
-  /** Don't know how to solve this */
+  /** If the image is of type SVG it can have a small size */
   size?: 'small' | 'full'
   /** Should the height be fixed for small screens */
   fixedHeight?: boolean
+  /** If the media is smaller than the container, it can be centered with the content  */
+  center?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 const StyledMedia = styled.div<TeaserMediaProps>`
   grid-area: image;
   position: relative;
   /* @TODO: Discuss this image height */
-
+  width: ${(props) => (props.size === 'small' ? '55%' : '100%')};
   ${({ fixedHeight }) =>
     fixedHeight && {
       height: '400px',
     }}
-  ${({ size }) =>
-    size === 'small' && {
+  ${({ center }) =>
+    center && {
       alignSelf: 'center',
       justifySelf: 'center',
       textAlign: 'center',
-      width: '100%',
     }}
-  @media (min-width: 750px) {
+    @media (min-width: 750px) {
     height: auto;
     max-height: 800px;
   }
 `
 
 export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media(
-  { size = 'full', fixedHeight = true, children, ...rest },
+  { size = 'full', fixedHeight = true, center = false, children, ...rest },
   ref,
 ) {
   return (
-    <StyledMedia size={size} fixedHeight={fixedHeight} ref={ref} {...rest}>
+    <StyledMedia size={size} center={center} fixedHeight={fixedHeight} ref={ref} {...rest}>
       {children}
     </StyledMedia>
   )

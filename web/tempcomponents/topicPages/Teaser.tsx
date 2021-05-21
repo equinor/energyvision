@@ -32,7 +32,6 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   return (
     <>
       {image.extension === 'svg' ? (
-        /*         <img alt={image.alt} src={imageSrc} style={{ width: '100%' }} /> */
         <Img {...imageProps(image.asset, 720)} alt={image.alt} layout="responsive" />
       ) : (
         <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
@@ -44,10 +43,8 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 const Teaser = ({ data }: TeaserProps) => {
   const { title, overline, text, image, action, background, imagePosition } = data
 
-  // @TODO: We should do this in a more optimal way
+  // @TODO: We should do this in a more optimal way, but it involves task # 332
   const linkType = action.href ? 'externalUrl' : 'internalUrl'
-  const isSvg = image?.extension === 'svg'
-
   let url: string
   if (linkType === 'internalUrl') {
     url = action.link?.type === 'news' ? `/news/${action.link?.slug}` : action.link?.slug || ''
@@ -71,9 +68,13 @@ const Teaser = ({ data }: TeaserProps) => {
     styleVariant = 'five'
   }
 
+  const isSvg = image?.extension === 'svg'
+
   return (
     <StyledTeaser styleVariant={styleVariant} imagePosition={imagePosition}>
-      <Media size={isSvg ? 'full' : 'full'} fixedHeight={isSvg ? false : true}>
+      {/*       // @TODO: When we have size in Sanity, add size small|full dersom SVG
+       */}
+      <Media center={isSvg ? true : false} fixedHeight={isSvg ? false : true}>
         {image && <TeaserImage image={image} />}
       </Media>
       <Content>
