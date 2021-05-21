@@ -4,15 +4,16 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import { topicsList } from '../../helpers/topics'
 import { AlignmentSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
+import blocksToText from '../../helpers/blocksToText'
 
 const topicPages = topicsList.map((topic: any) => ({ type: `page_${topic.id}` }))
 
 const validateContent = (value: any, maxLength: number) => {
   if (!value) return true
 
-  const count = value[0].children.reduce((total: number, current: any) => total + current.text.length, 0)
+  const plainText = blocksToText(value)
 
-  if (count > maxLength) {
+  if (plainText.length > maxLength) {
     return `Content should be short and concise.`
   }
 
