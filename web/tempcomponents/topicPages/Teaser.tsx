@@ -1,6 +1,7 @@
 import { Teaser as EnvisTeaser, Heading, Link } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
+import { imageProps } from '../../common/helpers/sanityImgLoader'
 import { IngressBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
@@ -31,7 +32,8 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   return (
     <>
       {image.extension === 'svg' ? (
-        <img alt={image.alt} src={imageSrc} />
+        /*         <img alt={image.alt} src={imageSrc} style={{ width: '100%' }} /> */
+        <Img {...imageProps(image.asset, 720)} alt={image.alt} layout="responsive" />
       ) : (
         <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
       )}
@@ -72,7 +74,7 @@ const Teaser = ({ data }: TeaserProps) => {
 
   return (
     <StyledTeaser styleVariant={styleVariant} imagePosition={imagePosition}>
-      <Media size={image?.extension === 'svg' ? 'small' : 'full'}>{image && <TeaserImage image={image} />}</Media>
+      <Media size={image?.extension === 'svg' ? 'full' : 'full'}>{image && <TeaserImage image={image} />}</Media>
       <Content>
         {overline && <Eyebrow>{overline}</Eyebrow>}
         <Heading level="h2" size="xl">
