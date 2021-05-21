@@ -7,18 +7,15 @@ const StyledContent = styled.div`
   grid-auto-columns: auto;
   align-items: center;
   align-content: start;
-  padding: var(--space-large);
+  padding: var(--space-xxLarge) var(--space-large);
   grid-area: content;
   /* @TODO: Revisit when we move the margins to the article layout */
   p {
     margin-bottom: 0;
   }
-  p + p {
-    /* margin: 0 !important; */
-  }
 
   @media (min-width: 750px) {
-    max-height: 800px;
+    /*  max-height: 800px; */
   }
 `
 export type TeaserContentProps = HTMLAttributes<HTMLDivElement>
