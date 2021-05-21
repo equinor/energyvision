@@ -2,14 +2,21 @@ import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 export type TeaserMediaProps = {
+  /** Don't know how to solve this */
   size?: 'small' | 'full'
+  /** Should the height be fixed for small screens */
+  fixedHeight?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 const StyledMedia = styled.div<TeaserMediaProps>`
   grid-area: image;
   position: relative;
   /* @TODO: Discuss this image height */
-  height: 400px;
+
+  ${({ fixedHeight }) =>
+    fixedHeight && {
+      height: '400px',
+    }}
   ${({ size }) =>
     size === 'small' && {
       display: 'flex',
@@ -23,11 +30,11 @@ const StyledMedia = styled.div<TeaserMediaProps>`
 `
 
 export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media(
-  { size = 'full', children, ...rest },
+  { size = 'full', fixedHeight = true, children, ...rest },
   ref,
 ) {
   return (
-    <StyledMedia size={size} ref={ref} {...rest}>
+    <StyledMedia size={size} fixedHeight={fixedHeight} ref={ref} {...rest}>
       {children}
     </StyledMedia>
   )

@@ -46,6 +46,7 @@ const Teaser = ({ data }: TeaserProps) => {
 
   // @TODO: We should do this in a more optimal way
   const linkType = action.href ? 'externalUrl' : 'internalUrl'
+  const isSvg = image?.extension === 'svg'
 
   let url: string
   if (linkType === 'internalUrl') {
@@ -53,10 +54,8 @@ const Teaser = ({ data }: TeaserProps) => {
   } else {
     url = action.href || ''
   }
-  console.log('back', background)
   // @TODO: Find a better way with task #334
   const backgroundColourTitle = background ? background.title : 'none'
-  console.log('background color', backgroundColourTitle)
   let styleVariant: TempStyleVariants = 'none'
   if (backgroundColourTitle === 'White') {
     styleVariant = 'none'
@@ -74,7 +73,9 @@ const Teaser = ({ data }: TeaserProps) => {
 
   return (
     <StyledTeaser styleVariant={styleVariant} imagePosition={imagePosition}>
-      <Media size={image?.extension === 'svg' ? 'full' : 'full'}>{image && <TeaserImage image={image} />}</Media>
+      <Media size={isSvg ? 'full' : 'full'} fixedHeight={isSvg ? false : true}>
+        {image && <TeaserImage image={image} />}
+      </Media>
       <Content>
         {overline && <Eyebrow>{overline}</Eyebrow>}
         <Heading level="h2" size="xl">
