@@ -2,6 +2,7 @@ import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
 
 export type ImagePosition = 'left' | 'right'
+export type ImageSize = 'small' | 'full'
 
 export type TeaserProps = {
   /** Define some good names for this */
