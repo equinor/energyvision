@@ -17,7 +17,13 @@ type FactboxNodeProps = {
 }
 
 const FactBoxWithPadding = styled(FactBox)`
-  margin: var(--space-4xLarge) 0;
+  margin-top: var(--space-4xLarge);
+  margin-bottom: var(--space-4xLarge);
+
+  @media (min-width: 1920px) {
+    margin-left: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
+    margin-right: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
+  }
 `
 
 const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean; hasImage: boolean }>`
