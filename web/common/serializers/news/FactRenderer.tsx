@@ -21,8 +21,9 @@ const FactBoxWithPadding = styled(FactBox)`
   margin-bottom: var(--space-4xLarge);
 
   @media (min-width: 1920px) {
-    margin-left: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
-    margin-right: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
+    /* Maybe some day */
+    /* margin-left: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
+    margin-right: calc(((100vw - var(--maxViewportWidth)) / 2) * -1); */
   }
 `
 
