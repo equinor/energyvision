@@ -13,8 +13,6 @@ type TopicPageProps = {
 type ComponentProps = TeaserData
 
 const TopicPage = ({ data }: TopicPageProps) => {
-  console.log('page data', data)
-
   const content = (data.content || []).map((c: ComponentProps) => {
     switch (c._type) {
       case 'teaser':
