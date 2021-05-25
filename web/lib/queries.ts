@@ -81,6 +81,11 @@ export const newsSlugsQuery = /* groq */ `
 // @TODO: Don't know if we need the content key, it depends...
 export const pageQuery = /* groq */ ` 
    *[_type match "page_*" && slug.current == $slug][0] {
+     "seoAndSome": {
+      "documentTitle": seo.documentTitle,
+      "metaDescription": seo.metaDescription,
+      openGraphImage,
+     },
     title,
     "slug": slug.current,
     "content": content[]{

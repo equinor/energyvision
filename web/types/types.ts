@@ -78,6 +78,11 @@ export type PortableTextChild = {
 export type PageSchema = {
   slug: string
   title: string
+  seoAndSome: {
+    documentTitle?: string
+    metaDescription?: string
+    openGraphImage?: ImageWithAlt
+  }
   content?: []
   _key: string
   _type: string
