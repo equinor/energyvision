@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 /* eslint-disable no-undef */
 import { render, cleanup } from '@testing-library/react'
 import { screen } from '@testing-library/dom'
