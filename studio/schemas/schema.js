@@ -14,7 +14,6 @@ import page from './documents/page'
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import pullQuote from './objects/pullQuote'
-import backgroundColourPicker from './objects/backgroundColourPicker'
 import factbox from './objects/factbox'
 import relatedLinks from './objects/relatedLinks'
 import positionedInlineImage from './objects/positionedInlineImage'
@@ -41,7 +40,6 @@ export default createSchema({
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,
-    backgroundColourPicker,
     factbox,
     relatedLinks,
     positionedInlineImage,
