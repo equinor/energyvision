@@ -36,32 +36,38 @@ export default function Page({ data, preview }: any) {
     return <ErrorPage statusCode={404} />
   }
 
-  const { seoAndSome } = pageData
+  //const { seoAndSome } = router.isFallback ? undefined : pageData
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
   return (
     <>
-      <NextSeo
-        title={seoAndSome.documentTitle || pageData.title}
-        description={seoAndSome.metaDescription}
-        openGraph={{
-          title: pageData.title,
-          description: seoAndSome.metaDescription,
-          type: 'website',
-          url: fullUrl,
-          /* @TODO: Add fallback image */
-          images: getOpenGraphImages(seoAndSome.openGraphImage),
-        }}
-        twitter={{
-          handle: '@handle',
-          site: '@site',
-          cardType: 'summary_large_image',
-        }}
-      ></NextSeo>
-      <Layout preview={preview}>
-        {router.isFallback ? <p>Loading…</p> : <>{data?.docType === 'page' && <TopicPage data={pageData} />}</>}
-      </Layout>
+      {router.isFallback ? (
+        <p>Loading…</p>
+      ) : (
+        <>
+          <NextSeo
+            title={pageData?.seoAndSome?.documentTitle || pageData?.title}
+            description={pageData?.seoAndSome?.metaDescription}
+            openGraph={{
+              title: pageData.title,
+              description: pageData?.seoAndSome?.metaDescription,
+              type: 'website',
+              url: fullUrl,
+              /* @TODO: Add fallback image */
+              images: getOpenGraphImages(pageData?.seoAndSome?.openGraphImage),
+            }}
+            twitter={{
+              handle: '@handle',
+              site: '@site',
+              cardType: 'summary_large_image',
+            }}
+          ></NextSeo>
+          <Layout preview={preview}>
+            <>{data?.docType === 'page' && <TopicPage data={pageData} />}</>
+          </Layout>
+        </>
+      )}
     </>
   )
 }
