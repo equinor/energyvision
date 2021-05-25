@@ -10,7 +10,7 @@ import Img from 'next/image'
 type FactboxNodeProps = {
   title: string
   content: []
-  backgroundColour: { colours: { title: string; value: string } }
+  background: { title: string; value: string }
   image: ImageWithAlt
   imagePosition: FactImagePosition
   dynamicHeight: boolean
@@ -30,19 +30,19 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean;
 
 export const FactRenderer = (child: { node: FactboxNodeProps }) => {
   const { node } = child
-  const { title, content, backgroundColour, image, imagePosition, dynamicHeight } = node
-  const bgTitle = backgroundColour?.colours ? backgroundColour.colours?.title : 'none'
+  const { title, content, background, image, imagePosition, dynamicHeight } = node
+  const bgTitle = background ? background?.title : 'none'
   if (!content || content.length === 0) {
     console.warn('Missing content in a fact box')
     return null
   }
 
   let backgroundColor: FactBackground = 'none'
-  if (bgTitle === 'Default') {
+  if (bgTitle === 'White') {
     backgroundColor = 'none'
-  } else if (bgTitle === 'Cold') {
+  } else if (bgTitle === 'Moss Green') {
     backgroundColor = 'cold'
-  } else if (bgTitle === 'Warm') {
+  } else if (bgTitle === 'Spruce Wood') {
     backgroundColor = 'warm'
   }
   const serializers = {

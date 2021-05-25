@@ -3,6 +3,10 @@ import { SchemaType } from '../../types'
 import { info_circle } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { AlignmentSelector } from '../components'
+import { Colors } from '../../helpers/ColorListValues'
+
+const chosenColors = ['White', 'Moss Green', 'Spruce Wood']
+const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
 
 type PreviewProps = {
   imageUrl: string
@@ -52,7 +56,18 @@ export default {
       title: 'Image',
       type: 'imageWithAlt',
     },
-    { name: 'backgroundColour', type: 'backgroundColourPicker', fieldset: 'design' },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        tooltip: true,
+        list: backgroundColors,
+      },
+      fieldset: 'design',
+      initialValue: backgroundColors[0],
+    },
     {
       name: 'imagePosition',
       title: 'Image position',
