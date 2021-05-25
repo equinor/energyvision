@@ -3,18 +3,23 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import { useRouter } from 'next/router'
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { groq } from 'next-sanity'
+import getConfig from 'next/config'
+import { NextSeo } from 'next-seo'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
+import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 
 const HomePage = dynamic(() => import('../tempcomponents/pages/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pages/TopicPage'))
+const { publicRuntimeConfig } = getConfig()
 
 export default function Page({ data, preview }: any) {
   const router = useRouter()
   const slug = data?.pageData?.slug
+  const { pathname } = useRouter()
 
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
@@ -31,8 +36,29 @@ export default function Page({ data, preview }: any) {
     return <ErrorPage statusCode={404} />
   }
 
+  const { seoAndSome } = pageData
+  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
+  const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
+
   return (
     <>
+      <NextSeo
+        title={seoAndSome.documentTitle || pageData.title}
+        description={seoAndSome.metaDescription}
+        openGraph={{
+          title: pageData.title,
+          description: seoAndSome.metaDescription,
+          type: 'website',
+          url: fullUrl,
+          /* @TODO: Add fallback image */
+          images: getOpenGraphImages(seoAndSome.openGraphImage),
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+      ></NextSeo>
       <Layout preview={preview}>
         {router.isFallback ? <p>Loading…</p> : <>{data?.docType === 'page' && <TopicPage data={pageData} />}</>}
       </Layout>
