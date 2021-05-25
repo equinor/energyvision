@@ -1,6 +1,10 @@
 const archiveServerHostname = 'http://localhost:8080'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   publicRuntimeConfig: {
     domain: 'https://energyvision.app.radix.equinor.com',
   },
@@ -29,4 +33,4 @@ module.exports = {
       },
     ]
   },
-}
+})
