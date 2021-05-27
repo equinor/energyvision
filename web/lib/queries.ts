@@ -15,7 +15,7 @@ export const allNewsQuery = /* groq */ `
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc) | [0] {
+  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc)[0] {
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     openGraphImage,
@@ -69,7 +69,7 @@ export const newsQuery = /* groq */ `
   },
     ${newsFields}
   },
-  "latestNews": *[_type == "news" && slug.current != $slug] | order(publishDateTime desc, _updatedAt desc) | [0...3] {
+  "latestNews": *[_type == "news" && slug.current != $slug] | order(publishDateTime desc, _updatedAt desc)[0...3] {
     ${newsFields}
   }
 }`
