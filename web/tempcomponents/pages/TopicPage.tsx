@@ -14,9 +14,9 @@ type ComponentProps = TeaserData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data.content || []).map((c: ComponentProps) => {
-    switch (c._type) {
+    switch (c.type) {
       case 'teaser':
-        return <Teaser key={c._key} data={c} />
+        return <Teaser key={c.id} data={c} />
       default:
         return null
     }
