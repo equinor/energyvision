@@ -15,6 +15,11 @@ const StyledMedia = styled.div<TeaserMediaProps>`
   position: relative;
   /* @TODO: Discuss this image height */
   width: ${(props) => (props.size === 'small' ? '55%' : '100%')};
+  ${({ size }) =>
+    size &&
+    size === 'small' && {
+      paddingTop: 'var(--space-xxLarge)',
+    }}
   ${({ fixedHeight }) =>
     fixedHeight && {
       height: '400px',
@@ -28,6 +33,7 @@ const StyledMedia = styled.div<TeaserMediaProps>`
     @media (min-width: 750px) {
     height: auto;
     max-height: 800px;
+    padding: 0;
   }
 `
 
