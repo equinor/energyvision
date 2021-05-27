@@ -112,6 +112,14 @@ export const pageQuery = /* groq */ `
           ...,
           "extension": asset-> extension
         }  
+      },
+      _type == "textBlock"=>{
+        "type": _type,
+        "id": _key,
+        overline,
+        title,
+        ingress,
+        text
       }
     }
   }
