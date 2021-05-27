@@ -88,6 +88,15 @@ export type PageSchema = {
   type: string
 }
 
+export type TextBlockData = {
+  type: string
+  id: string
+  title: string
+  overline?: string
+  text: PortableTextEntry[]
+  ingress: PortableTextEntry[]
+}
+
 export type TeaserData = {
   type: string
   id: string
