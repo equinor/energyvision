@@ -17,9 +17,9 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data.content || []).map((c: ComponentProps) => {
     switch (c.type) {
       case 'teaser':
-        return <Teaser key={c.id} data={c} />
+        return <Teaser key={c.id} data={c as TeaserData} />
       case 'textBlock':
-        return <TextBlock key={c.id} data={c} />
+        return <TextBlock key={c.id} data={c as TextBlockData} />
       default:
         return null
     }
