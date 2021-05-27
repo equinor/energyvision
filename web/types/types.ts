@@ -84,13 +84,13 @@ export type PageSchema = {
     openGraphImage?: ImageWithAlt
   }
   content?: []
-  _key: string
-  _type: string
+  id: string
+  type: string
 }
 
 export type TeaserData = {
-  _type: string
-  _key: string
+  type: string
+  id: string
   title: string
   text: PortableTextEntry[]
   overline?: string

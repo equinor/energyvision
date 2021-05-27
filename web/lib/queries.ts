@@ -90,8 +90,8 @@ export const pageQuery = /* groq */ `
     "slug": slug.current,
     "content": content[]{
       _type == "teaser"=>{
-        _type,
-        _key,
+        "type": _type,
+        "id": _key,
         overline,
         title,
         text,
