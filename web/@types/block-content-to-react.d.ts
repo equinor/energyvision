@@ -41,4 +41,17 @@ declare module '@sanity/block-content-to-react' {
   // eslint-disable-next-line no-unused-vars
   function BlockContent(props: BlockContent.PortableTextProps): ReactElement
   export = BlockContent
+
+  export type BlockNode = {
+    _key: string
+    _type: string
+    children: {
+      _key: string
+      _type: string
+      marks: string[]
+      text: string
+    }[]
+    markDefs: string[]
+    style: string
+  }
 }

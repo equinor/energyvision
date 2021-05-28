@@ -1,6 +1,13 @@
-export const SupRenderer = (child: { children: any }) => {
+type SupProps = {
+  _type: string
+  _key: string
+  children: string[]
+  mark: string
+  markKey: string
+}
+
+export const SupRenderer = ({ children }: SupProps) => {
   try {
-    const { children } = child
     return <sup>{children}</sup>
   } catch (e) {
     console.error('Could not render sup', e)

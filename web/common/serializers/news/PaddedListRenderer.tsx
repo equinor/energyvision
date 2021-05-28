@@ -1,6 +1,13 @@
 import { List } from '@components'
 import styled from 'styled-components'
 
+type PaddedListProps = {
+  level: number
+  type: string
+  children: JSX.Element[]
+  [x: string]: unknown
+}
+
 const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
@@ -8,8 +15,8 @@ const Container = styled.div`
   margin-right: auto;
   margin-bottom: var(--spacing-medium);
 `
-export const PaddedListRenderer = (child: { type: any; children: any }) => {
-  const { type, children } = child
+
+export const PaddedListRenderer = ({ type, children }: PaddedListProps) => {
   const bullet = type === 'bullet'
   if (bullet) {
     return (
