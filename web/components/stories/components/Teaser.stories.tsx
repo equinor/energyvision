@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Teaser, TeaserProps, Heading, Text, Link } from '@components'
+import { Teaser, TeaserProps, Heading, Text, Link, Eyebrow } from '@components'
 import { ImagePlaceholder, RatioBox, AspectImagePlaceholder } from './helpers/styles'
 import styled from 'styled-components'
 
@@ -18,7 +18,6 @@ export default {
   subcomponents: {
     Media: Teaser.Media,
     Content: Teaser.Content,
-    Eyebrow: Teaser.Eyebrow,
   },
   parameters: {
     docs: {
@@ -37,7 +36,7 @@ export const Default: Story<TeaserProps> = (args) => (
       <ImagePlaceholder height="150px" />
     </Teaser.Media>
     <Teaser.Content>
-      <Teaser.Eyebrow>Some people are still disputing global warming</Teaser.Eyebrow>
+      <Eyebrow>Some people are still disputing global warming</Eyebrow>
       <Heading level="h2" size="xl">
         We’re acting on it. Here are our results.
       </Heading>
@@ -76,7 +75,7 @@ export const WithEyebrow: Story<TeaserProps> = ({}) => (
       <ImagePlaceholder height="150px" />
     </Teaser.Media>
     <Teaser.Content>
-      <Teaser.Eyebrow>Some people are still disputing global warming</Teaser.Eyebrow>
+      <Eyebrow>Some people are still disputing global warming</Eyebrow>
       <Heading level="h2" size="xl">
         We’re acting on it. Here are our results.
       </Heading>
@@ -104,7 +103,7 @@ export const WithLongContent: Story<TeaserProps> = ({}) => (
       <ImagePlaceholder height="150px" />
     </Teaser.Media>
     <Teaser.Content>
-      <Teaser.Eyebrow>Some people are still disputing global warming</Teaser.Eyebrow>
+      <Eyebrow>Some people are still disputing global warming</Eyebrow>
       <Heading level="h2" size="xl">
         We’re acting on it. Here are our results.
       </Heading>

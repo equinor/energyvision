@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
-import { StyledTeaser } from './Teaser'
+import { StyledTeaser } from '../Teaser'
 
 const StyledTypography = styled(Typography)`
   font-size: var(--typeScale-2);
