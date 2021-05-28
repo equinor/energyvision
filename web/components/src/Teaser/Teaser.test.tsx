@@ -7,7 +7,7 @@ import 'jest-styled-components'
 import styled from 'styled-components'
 import { Teaser } from './'
 
-const { Content, Eyebrow } = Teaser
+const { Content } = Teaser
 
 afterEach(cleanup)
 
@@ -30,18 +30,7 @@ describe('Teaser', () => {
     const inputNode = screen.getByText(content)
     expect(inputNode).toBeDefined()
   })
-  it('Can have an eyebrow title by using the Eyebrow sub component', () => {
-    const eyebrow = 'My test title'
-    render(
-      <Teaser>
-        <Content>
-          <Eyebrow>{eyebrow}</Eyebrow>
-        </Content>
-      </Teaser>,
-    )
-    const inputNode = screen.getByText(eyebrow)
-    expect(inputNode).toBeDefined()
-  })
+
   it('Supports different background colours', () => {
     // Update with real style variant names. This is a stupid test
     const { container } = render(<Teaser />)

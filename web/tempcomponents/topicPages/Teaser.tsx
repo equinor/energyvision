@@ -1,4 +1,4 @@
-import { Teaser as EnvisTeaser, Heading, Link } from '@components'
+import { Teaser as EnvisTeaser, Heading, Link, Eyebrow } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 import { imageProps } from '../../common/helpers/sanityImgLoader'
@@ -9,7 +9,7 @@ import { urlFor } from '../../common/helpers'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
 import Img from 'next/image'
 
-const { Content, Media, Eyebrow } = EnvisTeaser
+const { Content, Media } = EnvisTeaser
 
 type TeaserProps = {
   data: TeaserData
