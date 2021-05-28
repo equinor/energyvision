@@ -1,7 +1,13 @@
-// @TODO: Type child
-export const SubRenderer = (child: { mark: any; children: any }) => {
+type SubProps = {
+  _type: string
+  _key: string
+  children: string[]
+  mark: string
+  markKey: string
+}
+
+export const SubRenderer = ({ mark, children }: SubProps) => {
   try {
-    const { mark, children } = child
     const { sub } = mark
     return <sub>{children}</sub>
   } catch (e) {

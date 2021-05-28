@@ -1,7 +1,12 @@
 import { List } from '@components'
 
-export const ListRenderer = (child: { type: any; children: any }) => {
-  const { type, children } = child
+type ListProps = {
+  type: string
+  children: JSX.Element[]
+  [x: string]: unknown
+}
+
+export const ListRenderer = ({ type, children }: ListProps) => {
   const bullet = type === 'bullet'
   if (bullet) {
     return <List>{children}</List>

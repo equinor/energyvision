@@ -1,10 +1,15 @@
 import BlockContent from '@sanity/block-content-to-react'
+import type { BlockNode } from '@sanity/block-content-to-react'
 import { Text } from '@components'
 
-export const IngressBlockRenderer = (props: { children: any; node: any }) => {
+type IngressProps = {
+  children: string[]
+  node: BlockNode
+}
+
+export const IngressBlockRenderer = (props: IngressProps) => {
   const { children, node } = props
   const { style = 'normal' } = node
-
   if (style === 'normal') {
     return <Text size="md"> {children}</Text>
   }

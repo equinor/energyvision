@@ -2,7 +2,11 @@ import { List } from '@components'
 
 const { Item } = List
 
-export const ListItemRenderer = (child: { children: any }) => {
-  const { children } = child
+type ListItemProps = {
+  children: string[]
+  [x: string]: unknown
+}
+
+export const ListItemRenderer = ({ children }: ListItemProps) => {
   return <Item>{children}</Item>
 }
