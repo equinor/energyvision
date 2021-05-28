@@ -1,9 +1,6 @@
-# Sanity Clean Content Studio
+# Sanity studio
 
-Congratulations, you have now installed the Sanity Content Studio, an open source real-time content editing environment connected to the Sanity backend.
+## Notes
 
-Now you can do the following things:
-
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the community Slack](https://slack.sanity.io/?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+- `import React from 'react'` is used in various places despite technically not being needed anymore in React v17 - this is because the studio crashes with `React is not defined` if not imported where needed.
+- TypeScript typing in Sanity is currently very incomplete.
