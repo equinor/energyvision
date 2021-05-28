@@ -30,7 +30,7 @@
     "@sanity/default-login": "^2.10.5",
     "@sanity/desk-tool": "^2.10.5",
     "@sanity/form-builder": "^2.10.5",
-    "@sanity/ui": "^0.33.27",
+    "@sanity/ui": "^0.34.0",
     "@sanity/vision": "^2.10.5",
     "only-allow": "^1.0.0",
     "prop-types": "^15.7.2",
