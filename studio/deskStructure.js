@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
 import { EdsList } from './icons'

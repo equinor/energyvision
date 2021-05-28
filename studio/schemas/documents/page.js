@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react'
 // We should at some point use typescript
 // import type { Topics } from '../../helpers/topics'

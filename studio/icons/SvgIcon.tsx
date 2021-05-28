@@ -1,5 +1,3 @@
-// Sanity studio chrashed without this React import. :/
-// And it wasn't satisfied with the React 17 way of importing either :/
 import React from 'react'
 import type { IconData } from '@equinor/eds-icons'
 
