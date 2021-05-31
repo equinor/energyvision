@@ -9,9 +9,15 @@ import { getStyleVariant } from './helpers/backgroundColours'
 
 type StyledTextBlockProps = {
   styleVariant?: StyleVariants
+  isInverted: boolean
 }
 
-const StyledTextBlock = styled.section<StyledTextBlockProps>`
+const StyledTextBlock = styled.section.attrs<StyledTextBlockProps>(
+  ({ isInverted }) =>
+    isInverted && {
+      className: 'inverted',
+    },
+)<StyledTextBlockProps>`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
@@ -32,6 +38,7 @@ const TextBlock = ({ data }: TextBlockProps) => {
 
   // @TODO: Find a better way with task #334
   const styleVariant = getStyleVariant(background)
+  const isInverted = styleVariant === 'five'
 
   // @TODO: Can we map colours in a better way? Duplicate code atm
   const backgrounds: { [name: string]: string } = {
@@ -43,7 +50,10 @@ const TextBlock = ({ data }: TextBlockProps) => {
     five: 'var(--slate-blue-100)',
   }
   return (
-    <StyledTextBlock style={{ '--background-color': backgrounds[styleVariant] } as CSSProperties}>
+    <StyledTextBlock
+      style={{ '--background-color': backgrounds[styleVariant] } as CSSProperties}
+      isInverted={isInverted}
+    >
       {overline && <Eyebrow>{overline}</Eyebrow>}
       {title && (
         <Heading size="xl" level="h2">
