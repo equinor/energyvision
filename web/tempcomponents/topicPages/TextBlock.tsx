@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react'
-import { Heading } from '@components'
+import { Heading, Eyebrow } from '@components'
 import { IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TextBlockData } from '../../types/types'
@@ -44,7 +44,7 @@ const TextBlock = ({ data }: TextBlockProps) => {
   }
   return (
     <StyledTextBlock style={{ '--background-color': backgrounds[styleVariant] } as CSSProperties}>
-      {overline && <div>{overline}</div>}
+      {overline && <Eyebrow>{overline}</Eyebrow>}
       {title && (
         <Heading size="xl" level="h2">
           {title}
