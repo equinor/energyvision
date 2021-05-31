@@ -43,14 +43,14 @@ type RadioIconSelectorProps = {
   onChange: any
 }
 
-export const RadioIconSelector = function Layout({
+export const RadioIconSelector = ({
   name,
   options,
   currentValue,
   defaultValue,
   type,
   onChange,
-}: RadioIconSelectorProps) {
+}: RadioIconSelectorProps) => {
   const [value, setValue] = useState(currentValue || defaultValue)
 
   const handleChange = useCallback((event) => {
