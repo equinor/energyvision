@@ -46,7 +46,7 @@ const ContentLink = styled(BaseLink)`
 const ReadMoreLink = styled(BaseLink)`
   display: inline-flex;
   max-width: max-content;
-  color: rgba(235, 0, 55, 1);
+  color: var(--slate-blue-100);
   justify-content: center;
   text-decoration: none;
   position: relative;
@@ -67,7 +67,7 @@ const ReadMoreLink = styled(BaseLink)`
     left: 0;
     display: block;
     width: 0%;
-    border-bottom: solid 0.5px rgba(235, 0, 55, 1);
+    border-bottom: solid 0.5px var(--slate-blue-100);
     transition: 0.3s;
   }
 
@@ -77,9 +77,9 @@ const ReadMoreLink = styled(BaseLink)`
 
   /* If the link is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
-    color: var(--inverted-text);
+    color: var(--mist-blue-100);
     &:after {
-      border-bottom-color: var(--inverted-text);
+      border-bottom-color: var(--mist-blue-100);
     }
   }
 `
