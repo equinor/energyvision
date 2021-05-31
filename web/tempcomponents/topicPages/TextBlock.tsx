@@ -12,17 +12,11 @@ type StyledTextBlockProps = {
   isInverted: boolean
 }
 
-const StyledTextBlock = styled.section.attrs<StyledTextBlockProps>(
-  ({ isInverted }) =>
-    isInverted && {
-      className: 'inverted-background',
-    },
-)<StyledTextBlockProps>`
+const StyledTextBlock = styled.section`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
-  background-color: var(--background-color);
 
   /* Where exactly should we put these styles */
   & h2 {
@@ -35,6 +29,14 @@ const StyledTextBlock = styled.section.attrs<StyledTextBlockProps>(
   & p:last-child {
     margin-bottom: 0;
   }
+`
+const ColourContainer = styled.div.attrs<StyledTextBlockProps>(
+  ({ isInverted }) =>
+    isInverted && {
+      className: 'inverted-background',
+    },
+)<StyledTextBlockProps>`
+  background-color: var(--background-color);
 `
 
 type TextBlockProps = {
@@ -62,37 +64,39 @@ const TextBlock = ({ data }: TextBlockProps) => {
     five: 'var(--slate-blue-100)',
   }
   return (
-    <StyledTextBlock
+    <ColourContainer
       style={{ '--background-color': backgrounds[styleVariant] } as CSSProperties}
       isInverted={isInverted}
     >
-      {overline && <Eyebrow>{overline}</Eyebrow>}
-      {title && (
-        <Heading size="xl" level="h2">
-          {title}
-        </Heading>
-      )}
-      {ingress && (
-        <SimpleBlockContent
-          blocks={ingress}
-          serializers={{
-            types: {
-              block: IngressBlockRenderer,
-            },
-          }}
-        />
-      )}
-      {text && (
-        <SimpleBlockContent
-          blocks={text}
-          serializers={{
-            types: {
-              block: BlockRenderer,
-            },
-          }}
-        />
-      )}
-    </StyledTextBlock>
+      <StyledTextBlock>
+        {overline && <Eyebrow>{overline}</Eyebrow>}
+        {title && (
+          <Heading size="xl" level="h2">
+            {title}
+          </Heading>
+        )}
+        {ingress && (
+          <SimpleBlockContent
+            blocks={ingress}
+            serializers={{
+              types: {
+                block: IngressBlockRenderer,
+              },
+            }}
+          />
+        )}
+        {text && (
+          <SimpleBlockContent
+            blocks={text}
+            serializers={{
+              types: {
+                block: BlockRenderer,
+              },
+            }}
+          />
+        )}
+      </StyledTextBlock>
+    </ColourContainer>
   )
 }
 
