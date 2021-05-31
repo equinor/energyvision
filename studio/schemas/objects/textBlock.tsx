@@ -3,6 +3,7 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import { text_field } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
+import { Colors } from '../../helpers/ColorListValues'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -28,6 +29,10 @@ export default {
     {
       title: 'Header',
       name: 'header',
+    },
+    {
+      name: 'design',
+      title: 'Design options',
     },
   ],
   fields: [
@@ -57,6 +62,22 @@ export default {
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [blockContentType],
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        borderradius: {
+          outer: '100%',
+          inner: '100%',
+        },
+        tooltip: true,
+        list: Colors,
+      },
+      fieldset: 'design',
+      initialValue: Colors[0],
     },
   ],
   preview: {
