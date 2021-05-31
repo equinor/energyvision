@@ -88,6 +88,12 @@ export type PageSchema = {
   type: string
 }
 
+export type DesignOptions = {
+  background: { title: string; value: string }
+  imagePosition?: TeaserImagePosition
+  imageSize?: TeaserImageSize
+}
+
 export type TextBlockData = {
   type: string
   id: string
@@ -95,6 +101,7 @@ export type TextBlockData = {
   overline?: string
   text: PortableTextEntry[]
   ingress: PortableTextEntry[]
+  designOptions: DesignOptions
 }
 
 export type TeaserData = {
@@ -105,9 +112,5 @@ export type TeaserData = {
   overline?: string
   image: ImageWithAlt
   action: LinkData
-  designOptions: {
-    background: { title: string; value: string }
-    imagePosition: TeaserImagePosition
-    imageSize: TeaserImageSize
-  }
+  designOptions: DesignOptions
 }

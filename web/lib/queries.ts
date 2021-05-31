@@ -119,7 +119,10 @@ export const pageQuery = /* groq */ `
         overline,
         title,
         ingress,
-        text
+        text,
+        "designOptions": {
+          background,
+        },
       }
     }
   }
