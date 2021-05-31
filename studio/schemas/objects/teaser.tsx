@@ -2,7 +2,7 @@ import { SchemaType } from '../../types'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { topicsList } from '../../helpers/topics'
-import { AlignmentSelector } from '../components'
+import { AlignmentSelector, ImageSizeSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
 
@@ -132,15 +132,7 @@ export default {
       description: 'Select whether the image should be full size or have padding around it',
       type: 'string',
       fieldset: 'design',
-      options: {
-        list: [
-          { title: 'Full', value: 'full' },
-          { title: 'Small', value: 'small' },
-        ],
-        layout: 'radio',
-        direction: 'horizontal',
-      },
-      initialValue: 'full',
+      inputComponent: ImageSizeSelector,
     },
     {
       title: 'Background',
