@@ -15,7 +15,7 @@ type StyledTextBlockProps = {
 const StyledTextBlock = styled.section.attrs<StyledTextBlockProps>(
   ({ isInverted }) =>
     isInverted && {
-      className: 'inverted',
+      className: 'inverted-background',
     },
 )<StyledTextBlockProps>`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);

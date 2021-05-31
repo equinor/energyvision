@@ -1,7 +1,6 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
-import { StyledTeaser } from '../Teaser/Teaser'
 
 type StyledHeadingProps = {
   center: boolean
@@ -23,8 +22,8 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
       color: 'var(--inverted-text)',
     }}
   
-  /* If the heading is used inside a inverted teaser component, the text colour must also be inverted */
-  ${StyledTeaser}.inverted & {
+  /* If the heading is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
     color: var(--inverted-text);
   }
 `
