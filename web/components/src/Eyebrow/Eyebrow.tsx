@@ -17,7 +17,7 @@ export type TeaserEyebrowProps = HTMLAttributes<HTMLDivElement>
 
 export const Eyebrow = forwardRef<HTMLDivElement, TeaserEyebrowProps>(function Eyebrow({ children, ...rest }, ref) {
   return (
-    <StyledTypography as="div" ref={ref} {...rest}>
+    <StyledTypography forwardedAs="div" ref={ref} {...rest}>
       {children}
     </StyledTypography>
   )
