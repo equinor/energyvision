@@ -33,6 +33,7 @@ export const colors = css`
     --slate-blue-50: hsl(210, 8%, 90%);
 
     --mist-blue-100: hsl(199, 58%, 90%);
+    --mist-blue-60: hsl(200, 56%, 94%);
 
     --lichen-green-100: hsl(138, 67%, 94%);
 
