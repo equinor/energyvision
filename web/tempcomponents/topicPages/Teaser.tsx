@@ -5,9 +5,10 @@ import { imageProps } from '../../common/helpers/sanityImgLoader'
 import { IngressBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
-// import styled from 'styled-components'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
 import Img from 'next/image'
+import type { StyleVariants } from './helpers/backgroundColours'
+import { getStyleVariant } from './helpers/backgroundColours'
 
 const { Content, Media } = EnvisTeaser
 
@@ -15,10 +16,8 @@ type TeaserProps = {
   data: TeaserData
 }
 
-type TempStyleVariants = 'none' | 'one' | 'two' | 'three' | 'four' | 'five'
-
 type StyledTeaserProps = {
-  styleVariant?: TempStyleVariants
+  styleVariant?: StyleVariants
 }
 const StyledTeaser = styled(EnvisTeaser)<StyledTeaserProps>`
   /* margin: var(--space-xLarge) 0; */
@@ -52,21 +51,8 @@ const Teaser = ({ data }: TeaserProps) => {
     url = action.href || ''
   }
   // @TODO: Find a better way with task #334
-  const backgroundColourTitle = background ? background.title : 'none'
-  let styleVariant: TempStyleVariants = 'none'
-  if (backgroundColourTitle === 'White') {
-    styleVariant = 'none'
-  } else if (backgroundColourTitle === 'Moss Green') {
-    styleVariant = 'one'
-  } else if (backgroundColourTitle === 'Lichen Green') {
-    styleVariant = 'two'
-  } else if (backgroundColourTitle === 'Spruce Wood') {
-    styleVariant = 'three'
-  } else if (backgroundColourTitle === 'Mist Blue') {
-    styleVariant = 'four'
-  } else if (backgroundColourTitle === 'Slate Blue') {
-    styleVariant = 'five'
-  }
+
+  const styleVariant = getStyleVariant(background)
 
   const isSvg = image?.extension === 'svg'
 

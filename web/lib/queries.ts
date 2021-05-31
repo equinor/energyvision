@@ -96,7 +96,7 @@ export const pageQuery = /* groq */ `
         title,
         text,
         "designOptions": {
-          background,
+          "background": coalesce(background.title, 'none'),
           imagePosition,
           imageSize,
         },
@@ -121,7 +121,7 @@ export const pageQuery = /* groq */ `
         ingress,
         text,
         "designOptions": {
-          background,
+          "background": coalesce(background.title, 'none'),
         },
       }
     }

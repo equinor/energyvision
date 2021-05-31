@@ -88,8 +88,10 @@ export type PageSchema = {
   type: string
 }
 
+export type BackgroundColours = 'White' | 'Moss Green' | 'Lichen Green' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
+
 export type DesignOptions = {
-  background: { title: string; value: string }
+  background: BackgroundColours
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
