@@ -28,6 +28,9 @@ const StyledTextBlock = styled.section.attrs<StyledTextBlockProps>(
   & h2 {
     padding: var(--spacing-small) 0;
   }
+  & h2:first-child {
+    padding-top: 0;
+  }
 
   & p:last-child {
     margin-bottom: 0;
