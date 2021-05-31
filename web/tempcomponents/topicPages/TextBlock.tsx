@@ -5,22 +5,29 @@ import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
 
 const StyledTextBlock = styled.section`
-  padding: var(--space-xLarge) 0;
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
 `
 
 type TextBlockProps = {
   data: TextBlockData
 }
-// @TODO: Should the Eyebrow component from the Teaser be global exported?
 
 const TextBlock = ({ data }: TextBlockProps) => {
   const { overline, title, ingress, text } = data
+  /* Don't render the component if it only has an eyebrow */
+  if (!title && !ingress && !text) return null
+
   return (
     <StyledTextBlock>
       {overline && <div>{overline}</div>}
-      <Heading size="xl" level="h2">
-        {title}
-      </Heading>
+      {title && (
+        <Heading size="xl" level="h2">
+          {title}
+        </Heading>
+      )}
       {ingress && (
         <SimpleBlockContent
           blocks={ingress}
@@ -33,7 +40,7 @@ const TextBlock = ({ data }: TextBlockProps) => {
       )}
       {text && (
         <SimpleBlockContent
-          blocks={ingress}
+          blocks={text}
           serializers={{
             types: {
               block: BlockRenderer,
