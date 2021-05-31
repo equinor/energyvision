@@ -21,3 +21,144 @@ export const IconSubScript = (): JSX.Element => {
     </svg>
   )
 }
+
+export const FullSizeImage = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-labelledby="fullSizeTitle"
+  >
+    <title id="fullSizeTitle">Full size</title>
+
+    <path d="M43 15H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 21H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 27H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 33H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path
+      d="M23.5 14H4.5C4.22386 14 4 14.4477 4 15V33C4 33.5523 4.22386 34 4.5 34H23.5C23.7761 34 24 33.5523 24 33V15C24 14.4477 23.7761 14 23.5 14Z"
+      fill="#3D3D3D"
+    />
+  </svg>
+)
+
+export const SmallSizeImage = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-labelledby="smallSizeTitle"
+  >
+    <title id="smallSizeTitle">Small size</title>
+    <path d="M43 15H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 21H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 27H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 33H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path
+      d="M18.7 18H7.3C7.13432 18 7 18.2686 7 18.6V29.4C7 29.7314 7.13432 30 7.3 30H18.7C18.8657 30 19 29.7314 19 29.4V18.6C19 18.2686 18.8657 18 18.7 18Z"
+      fill="#3D3D3D"
+    />
+  </svg>
+)
+
+export const LeftAlignedImage = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    aria-labelledby="leftAlignedTitle"
+    fill="#3d3d3d"
+    stroke="#3d3d3d"
+    strokeWidth="2"
+  >
+    <title id="leftAlignedTitle">Left aligned</title>
+    <path d="M43 15H27" />
+    <path d="M43 21H27" />
+    <path d="M43 27H27" />
+    <path d="M43 33H27" />
+    <path d="M23.525 14H5.475C5.21267 14 5 14.4477 5 15V33C5 33.5523 5.21267 34 5.475 34H23.525C23.7873 34 24 33.5523 24 33V15C24 14.4477 23.7873 14 23.525 14Z" />
+  </svg>
+)
+
+export const RightAlignedImage = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    aria-labelledby="rightAlignedTitle"
+    fill="#3d3d3d"
+    stroke="#3d3d3d"
+    strokeWidth="2"
+  >
+    <title id="rightAlignedTitle">Right aligned</title>
+    <path d="M21 15H5" />
+    <path d="M21 21H5" />
+    <path d="M21 27H5" />
+    <path d="M21 33H5" />
+    <path d="M42.525 14H24.475C24.2127 14 24 14.4477 24 15V33C24 33.5523 24.2127 34 24.475 34H42.525C42.7873 34 43 33.5523 43 33V15C43 14.4477 42.7873 14 42.525 14Z" />
+  </svg>
+)
+
+export const InlineImageFullWidth = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    role="img"
+    fill="#3d3d3d"
+    stroke="#3d3d3d"
+    strokeWidth="2"
+    aria-labelledby="fullWidthTitle"
+  >
+    <title id="fullWidthTitle">Full width</title>
+    <path d="M40 9H8" />
+    <path d="M40 39H8" />
+    <path d="M42.05 14H5.95C5.42533 14 5 14.4477 5 15V33C5 33.5523 5.42533 34 5.95 34H42.05C42.5747 34 43 33.5523 43 33V15C43 14.4477 42.5747 14 42.05 14Z" />
+  </svg>
+)
+
+export const InlineImageLeftAlign = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="#3d3d3d"
+    stroke="#3d3d3d"
+    strokeWidth="2"
+    aria-labelledby="leftAlignedTitle"
+  >
+    <title id="leftAlignedTitle">Left aligned</title>
+    <path d="M43 9H8" />
+    <path d="M43 15H27" />
+    <path d="M43 21H27" />
+    <path d="M43 27H27" />
+    <path d="M43 33H27" />
+    <path d="M43 39H8" />
+    <path d="M23.525 14H5.475C5.21267 14 5 14.4477 5 15V33C5 33.5523 5.21267 34 5.475 34H23.525C23.7873 34 24 33.5523 24 33V15C24 14.4477 23.7873 14 23.525 14Z" />
+  </svg>
+)
+
+export const InlineImageRightAlign = (): JSX.Element => (
+  <svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="#3d3d3d"
+    stroke="#3d3d3d"
+    strokeWidth="2"
+    aria-labelledby="rightAlignedTitle"
+  >
+    <title id="rightAlignedTitle">Right aligned</title>
+    <path d="M40 9H5" />
+    <path d="M21 15H5" />
+    <path d="M21 21H5" />
+    <path d="M21 27H5" />
+    <path d="M21 33H5" />
+    <path d="M40 39H5" />
+    <path d="M42.525 14H24.475C24.2127 14 24 14.4477 24 15V33C24 33.5523 24.2127 34 24.475 34H42.525C42.7873 34 43 33.5523 43 33V15C43 14.4477 42.7873 14 42.525 14Z" />
+  </svg>
+)

@@ -1,12 +1,25 @@
+/* eslint-disable react/display-name */
+import React from 'react'
 import { SchemaType } from '../../types'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { topicsList } from '../../helpers/topics'
-import { AlignmentSelector, ImageSizeSelector } from '../components'
+import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
+import { FullSizeImage, SmallSizeImage, LeftAlignedImage, RightAlignedImage } from '../../icons'
 
 const topicPages = topicsList.map((topic: any) => ({ type: `page_${topic.id}` }))
+
+const imageSizeOptions = [
+  { value: 'full', icon: FullSizeImage },
+  { value: 'small', icon: SmallSizeImage },
+]
+
+const imageAlignmentOptions = [
+  { value: 'left', icon: LeftAlignedImage },
+  { value: 'right', icon: RightAlignedImage },
+]
 
 const validateContent = (value: any, maxLength: number) => {
   if (!value) return true
@@ -129,8 +142,19 @@ export default {
       title: 'Image position',
       description: 'Select which side of the teaser the image should be displayed at on larger screens.',
       type: 'string',
-      inputComponent: AlignmentSelector,
       fieldset: 'design',
+      inputComponent: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+        return (
+          <RadioIconSelector
+            name="imageAlignmentSelector"
+            options={imageAlignmentOptions}
+            defaultValue="left"
+            currentValue={value}
+            type={type}
+            onChange={onChange}
+          />
+        )
+      },
     },
     {
       name: 'imageSize',
@@ -138,7 +162,18 @@ export default {
       description: 'Select whether the image should be full size or have padding around it',
       type: 'string',
       fieldset: 'design',
-      inputComponent: ImageSizeSelector,
+      inputComponent: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+        return (
+          <RadioIconSelector
+            name="imageSizeSelector"
+            options={imageSizeOptions}
+            defaultValue="full"
+            currentValue={value}
+            type={type}
+            onChange={onChange}
+          />
+        )
+      },
     },
     {
       title: 'Background',
