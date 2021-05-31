@@ -54,6 +54,10 @@ export default {
   localize: true,
   fieldsets: [
     {
+      title: 'Header',
+      name: 'header',
+    },
+    {
       name: 'link',
       title: 'Link',
       description: 'Select either an internal link or external URL.',
@@ -68,11 +72,13 @@ export default {
       name: 'overline',
       title: 'Overline',
       type: 'string',
+      fieldset: 'header',
     },
     {
       name: 'title',
       title: 'Title',
       type: 'string',
+      fieldset: 'header',
     },
     {
       name: 'text',
