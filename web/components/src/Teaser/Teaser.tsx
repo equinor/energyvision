@@ -18,7 +18,7 @@ type StyledTeaserProps = {
 export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
   ({ isInverted }) =>
     isInverted && {
-      className: 'inverted',
+      className: 'inverted-background',
     },
 )<StyledTeaserProps>`
   background-color: var(--background-color);
