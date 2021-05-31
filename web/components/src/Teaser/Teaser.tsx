@@ -56,10 +56,10 @@ const TeaserWrapper = styled.div<TeaserProps>`
 // @TODO: Color naming
 const backgrounds: { [name: string]: string } = {
   none: 'var(--ui-background-default)',
-  one: 'var(--moss-green-80)',
+  one: 'var(--moss-green-70)',
   two: 'var(--lichen-green-100)',
   three: 'var(--spruce-wood-90)',
-  four: 'var(--mist-blue-100)',
+  four: 'var(--mist-blue-60)',
   five: 'var(--slate-blue-100)',
 }
 
