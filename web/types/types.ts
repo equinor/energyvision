@@ -116,3 +116,9 @@ export type TeaserData = {
   action: LinkData
   designOptions: DesignOptions
 }
+
+export type FullWidthImageData = {
+  type: string
+  id: string
+  image: ImageWithAlt
+}

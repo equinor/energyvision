@@ -123,6 +123,11 @@ export const pageQuery = /* groq */ `
         "designOptions": {
           "background": coalesce(background.title, 'none'),
         },
+      },
+      _type == "fullWidthImage"=>{
+        "type": _type,
+        "id": _key,
+        image
       }
     }
   }
