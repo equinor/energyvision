@@ -7,6 +7,13 @@ import { SchemaType } from '../../types'
 const blockContentType = configureBlockContent({
   h1: false,
   h2: false,
+  h3: true,
+  h4: false,
+  attachment: false,
+})
+const ingressContentType = configureBlockContent({
+  h1: false,
+  h2: false,
   h3: false,
   h4: false,
   attachment: false,
@@ -17,24 +24,32 @@ export default {
   title: 'Text block 🚧',
   type: 'object',
   localize: true,
+  fieldsets: [
+    {
+      title: 'Header',
+      name: 'header',
+    },
+  ],
   fields: [
     {
       name: 'overline',
       title: 'Overline',
       type: 'string',
+      fieldset: 'header',
     },
     {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      fieldset: 'header',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
       inputComponent: CharCounterEditor,
-      of: [blockContentType],
+      of: [ingressContentType],
     },
     {
       name: 'text',
@@ -43,23 +58,32 @@ export default {
       inputComponent: CharCounterEditor,
       of: [blockContentType],
     },
-    {
-      name: 'image',
-      title: 'Image',
-      type: 'imageWithAltAndCaption',
-      collapsible: true,
-    },
   ],
   preview: {
     select: {
       title: 'title',
-      image: 'image',
+      ingress: 'ingress',
+      text: 'text',
     },
-    prepare({ title = '', image }: { title: string; image: any }) {
+    prepare({ title = '', ingress, text }: { title: string; ingress: any; text: any }) {
+      const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
+      const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
       return {
-        title: title,
+        title:
+          title ||
+          (textBlock &&
+            textBlock.children
+              .filter((child: any) => child._type === 'span')
+              .map((span: any) => span.text)
+              .join('')) ||
+          (ingressBlock &&
+            ingressBlock.children
+              .filter((child: any) => child._type === 'span')
+              .map((span: any) => span.text)
+              .join('')) ||
+          'Missing content!',
         subtitle: `Text block component.`,
-        media: image?.image || EdsIcon(text_field),
+        media: EdsIcon(text_field),
       }
     },
   },
