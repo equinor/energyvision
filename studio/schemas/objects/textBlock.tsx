@@ -22,9 +22,8 @@ const ingressContentType = configureBlockContent({
 
 export default {
   name: 'textBlock',
-  title: 'Text block 🚧',
+  title: 'Text block',
   type: 'object',
-  localize: true,
   fieldsets: [
     {
       title: 'Header',

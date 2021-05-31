@@ -77,7 +77,7 @@ export default (topicSuffix, title) => {
         type: 'array',
         title: 'Page sections',
         localize: false,
-        of: [{ type: 'teaser' }, { type: 'textBlock' }],
+        of: [{ type: 'teaser' }, { type: 'textBlock' }, { type: 'fullWidthImage' }],
       },
     ],
     preview: {
