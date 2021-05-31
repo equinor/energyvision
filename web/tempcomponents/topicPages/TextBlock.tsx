@@ -1,14 +1,22 @@
+import { CSSProperties } from 'react'
 import { Heading } from '@components'
 import { IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
+import type { StyleVariants } from './helpers/backgroundColours'
+import { getStyleVariant } from './helpers/backgroundColours'
 
-const StyledTextBlock = styled.section`
+type StyledTextBlockProps = {
+  styleVariant?: StyleVariants
+}
+
+const StyledTextBlock = styled.section<StyledTextBlockProps>`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
+  background-color: var(--background-color);
 `
 
 type TextBlockProps = {
@@ -16,12 +24,26 @@ type TextBlockProps = {
 }
 
 const TextBlock = ({ data }: TextBlockProps) => {
-  const { overline, title, ingress, text } = data
+  const { overline, title, ingress, text, designOptions } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text) return null
 
+  const { background } = designOptions
+
+  // @TODO: Find a better way with task #334
+  const styleVariant = getStyleVariant(background)
+
+  // @TODO: Can we map colours in a better way? Duplicate code atm
+  const backgrounds: { [name: string]: string } = {
+    none: 'var(--ui-background-default)',
+    one: 'var(--moss-green-80)',
+    two: 'var(--lichen-green-100)',
+    three: 'var(--spruce-wood-90)',
+    four: 'var(--mist-blue-100)',
+    five: 'var(--slate-blue-100)',
+  }
   return (
-    <StyledTextBlock>
+    <StyledTextBlock style={{ '--background-color': backgrounds[styleVariant] } as CSSProperties}>
       {overline && <div>{overline}</div>}
       {title && (
         <Heading size="xl" level="h2">

@@ -22,7 +22,6 @@ export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
     },
 )<StyledTeaserProps>`
   background-color: var(--background-color);
-
   overflow-y: hidden;
 `
 
