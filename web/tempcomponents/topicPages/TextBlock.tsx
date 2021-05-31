@@ -23,6 +23,15 @@ const StyledTextBlock = styled.section.attrs<StyledTextBlockProps>(
   margin-left: auto;
   margin-right: auto;
   background-color: var(--background-color);
+
+  /* Where exactly should we put these styles */
+  & h2 {
+    padding: var(--spacing-small) 0;
+  }
+
+  & p:last-child {
+    margin-bottom: 0;
+  }
 `
 
 type TextBlockProps = {

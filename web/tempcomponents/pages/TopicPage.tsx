@@ -4,16 +4,7 @@ import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
 import { TeaserData, TextBlockData } from '../../types/types'
 
-const TopicPageLayout = styled.div`
-  /* Where exactly should we put these styles */
-  & h2 {
-    padding: var(--spacing-small) 0;
-  }
-
-  & p:last-child {
-    margin-bottom: 0;
-  }
-`
+const TopicPageLayout = styled.div``
 
 type TopicPageProps = {
   data: PageSchema
