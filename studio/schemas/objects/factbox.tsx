@@ -1,9 +1,14 @@
 import React from 'react'
 import { SchemaType } from '../../types'
 import { info_circle } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-import { AlignmentSelector } from '../components'
+import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
+import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
+
+const imageAlignmentOptions = [
+  { value: 'left', icon: LeftAlignedImage },
+  { value: 'right', icon: RightAlignedImage },
+]
 
 const chosenColors = ['White', 'Moss Green', 'Spruce Wood']
 const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
@@ -73,8 +78,19 @@ export default {
       title: 'Image position',
       description: 'Select which side of the factbox the image should be displayed at on larger screens.',
       type: 'string',
-      inputComponent: AlignmentSelector,
       fieldset: 'design',
+      inputComponent: function ImagePosition({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+        return (
+          <RadioIconSelector
+            name="imageAlignmentSelector"
+            options={imageAlignmentOptions}
+            defaultValue="left"
+            currentValue={value}
+            type={type}
+            onChange={onChange}
+          />
+        )
+      },
     },
     {
       name: 'dynamicHeight',
