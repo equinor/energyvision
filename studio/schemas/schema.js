@@ -24,6 +24,8 @@ import teaser from './objects/teaser'
 import textBlock from './objects/textBlock'
 import fullWidthImage from './objects/fullWidthImage'
 import figure from './objects/figure'
+import textWithIcon from './objects/textWithIcon'
+import textWithIconArray from './objects/textWithIconArray'
 
 import { topicsList } from '../helpers/topics'
 
@@ -54,5 +56,7 @@ export default createSchema({
     textBlock,
     fullWidthImage,
     figure,
+    textWithIcon,
+    textWithIconArray,
   ]),
 })
