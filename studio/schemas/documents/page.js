@@ -1,6 +1,7 @@
 import React from 'react'
 // We should at some point use typescript
 // import type { Topics } from '../../helpers/topics'
+
 import { slugWithType } from '../objects/slugWithType'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
@@ -20,6 +21,10 @@ export default (topicSuffix, title) => {
         },
       },
       {
+        title: 'Header / Banner v1',
+        name: 'header',
+      },
+      {
         title: 'SEO & metadata',
         name: 'metadata',
         description: 'This part is used for meta information when this content is used on the web',
@@ -31,15 +36,15 @@ export default (topicSuffix, title) => {
     ],
     fields: [
       {
+        title: 'Meta information',
         name: 'seo',
         type: 'titleAndMeta',
         fieldset: 'metadata',
-        title: 'Meta information',
       },
       {
+        title: 'Open Graph Image',
         name: 'openGraphImage',
         type: 'imageWithAlt',
-        title: 'Open Graph Image',
         description: 'You can override the hero image as the SoMe image by uploading another image here.',
         fieldset: 'metadata',
       },
@@ -50,17 +55,26 @@ export default (topicSuffix, title) => {
         hidden: true,
       },
       {
+        title: 'Page title',
         name: 'title',
         type: 'string',
-        title: 'Title',
         validation: (Rule) => Rule.required(),
+        fieldset: 'header',
+      },
+      {
+        title: 'Hero image',
+        name: 'heroFigure',
+        type: 'imageWithAltAndCaption',
+        validation: (Rule) => Rule.required(),
+        fieldset: 'header',
       },
       {
         name: 'topicSlug',
         type: 'string',
         title: 'Topic slug',
         placeholder: 'E.g. "Experienced professionals"',
-        description: 'The unique part of the URL for this topic page. Should probably be something like the title.',
+        description:
+          'The unique part of the URL for this topic page. Should probably be something like the page title.',
         validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
       },
