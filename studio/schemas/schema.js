@@ -23,6 +23,7 @@ import downloadableImage from './objects/downloadableImage'
 import teaser from './objects/teaser'
 import textBlock from './objects/textBlock'
 import fullWidthImage from './objects/fullWidthImage'
+import figure from './objects/figure'
 
 import { topicsList } from '../helpers/topics'
 
@@ -52,5 +53,6 @@ export default createSchema({
     teaser,
     textBlock,
     fullWidthImage,
+    figure,
   ]),
 })
