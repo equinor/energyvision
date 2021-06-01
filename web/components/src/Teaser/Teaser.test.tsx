@@ -31,9 +31,9 @@ describe('Teaser', () => {
     expect(inputNode).toBeDefined()
   })
 
-  it('Supports different background colours', () => {
+  /*  it('Supports different background colours', () => {
     // Update with real style variant names. This is a stupid test
     const { container } = render(<Teaser />)
     expect(container.firstChild).toHaveStyleRule('background-color', 'var(--background-color)')
-  })
+  }) */
 })

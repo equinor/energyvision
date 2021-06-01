@@ -1,4 +1,4 @@
-import { Teaser as EnvisTeaser, Heading, Link, Eyebrow } from '@components'
+import { Teaser as EnvisTeaser, Heading, Link, Eyebrow, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 import { imageProps } from '../../common/helpers/sanityImgLoader'
@@ -7,8 +7,6 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
 import Img from 'next/image'
-import type { StyleVariants } from './helpers/backgroundColours'
-import { getStyleVariant } from './helpers/backgroundColours'
 
 const { Content, Media } = EnvisTeaser
 
@@ -16,10 +14,7 @@ type TeaserProps = {
   data: TeaserData
 }
 
-type StyledTeaserProps = {
-  styleVariant?: StyleVariants
-}
-const StyledTeaser = styled(EnvisTeaser)<StyledTeaserProps>`
+const StyledTeaser = styled(EnvisTeaser)`
   /* margin: var(--space-xLarge) 0; */
 `
 
@@ -50,45 +45,44 @@ const Teaser = ({ data }: TeaserProps) => {
   } else {
     url = action.href || ''
   }
-  // @TODO: Find a better way with task #334
-
-  const styleVariant = getStyleVariant(background)
 
   const isSvg = image?.extension === 'svg'
 
   return (
-    <StyledTeaser styleVariant={styleVariant} imagePosition={imagePosition}>
-      <Media
-        size={isSvg && imageSize === 'small' ? 'small' : 'full'}
-        center={isSvg ? true : false}
-        fixedHeight={isSvg ? false : true}
-      >
-        {image && <TeaserImage image={image} />}
-      </Media>
-      <Content>
-        {overline && <Eyebrow>{overline}</Eyebrow>}
-        <Heading level="h2" size="xl">
-          {title}
-        </Heading>
-        <SimpleBlockContent
-          blocks={text}
-          serializers={{
-            types: {
-              block: IngressBlockRenderer,
-            },
-          }}
-        ></SimpleBlockContent>
-        {linkType === 'internalUrl' ? (
-          <NextLink href={url} passHref>
-            <Link variant="readMore">{action.label}</Link>
-          </NextLink>
-        ) : (
-          <Link variant="readMore" href={url}>
-            {action.label}
-          </Link>
-        )}
-      </Content>
-    </StyledTeaser>
+    <BackgroundContainer background={background}>
+      <StyledTeaser imagePosition={imagePosition}>
+        <Media
+          size={isSvg && imageSize === 'small' ? 'small' : 'full'}
+          center={isSvg ? true : false}
+          fixedHeight={isSvg ? false : true}
+        >
+          {image && <TeaserImage image={image} />}
+        </Media>
+        <Content>
+          {overline && <Eyebrow>{overline}</Eyebrow>}
+          <Heading level="h2" size="xl">
+            {title}
+          </Heading>
+          <SimpleBlockContent
+            blocks={text}
+            serializers={{
+              types: {
+                block: IngressBlockRenderer,
+              },
+            }}
+          ></SimpleBlockContent>
+          {linkType === 'internalUrl' ? (
+            <NextLink href={url} passHref>
+              <Link variant="readMore">{action.label}</Link>
+            </NextLink>
+          ) : (
+            <Link variant="readMore" href={url}>
+              {action.label}
+            </Link>
+          )}
+        </Content>
+      </StyledTeaser>
+    </BackgroundContainer>
   )
 }
 

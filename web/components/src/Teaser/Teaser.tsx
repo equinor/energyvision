@@ -5,23 +5,11 @@ export type ImagePosition = 'left' | 'right'
 export type ImageSize = 'small' | 'full'
 
 export type TeaserProps = {
-  /** Define some good names for this */
-  styleVariant?: 'none' | 'one' | 'two' | 'three' | 'four' | 'five'
   /** Should the image be positioned to the left or the right */
   imagePosition?: ImagePosition
 } & HTMLAttributes<HTMLElement>
 
-type StyledTeaserProps = {
-  isInverted: boolean
-}
-
-export const StyledTeaser = styled.article.attrs<StyledTeaserProps>(
-  ({ isInverted }) =>
-    isInverted && {
-      className: 'inverted-background',
-    },
-)<StyledTeaserProps>`
-  background-color: var(--background-color);
+export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
 
@@ -52,28 +40,12 @@ const TeaserWrapper = styled.div<TeaserProps>`
   }
 `
 
-// @TODO: Color naming
-const backgrounds: { [name: string]: string } = {
-  none: 'var(--ui-background-default)',
-  one: 'var(--moss-green-70)',
-  two: 'var(--lichen-green-100)',
-  three: 'var(--spruce-wood-90)',
-  four: 'var(--mist-blue-60)',
-  five: 'var(--slate-blue-100)',
-}
-
 export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
-  { styleVariant = 'none', imagePosition = 'left', style, children, ...rest },
+  { imagePosition = 'left', children, ...rest },
   ref,
 ) {
-  const isInverted = styleVariant === 'five'
   return (
-    <StyledTeaser
-      ref={ref}
-      isInverted={isInverted}
-      style={{ ...style, '--background-color': backgrounds[styleVariant] } as CSSProperties}
-      {...rest}
-    >
+    <StyledTeaser ref={ref} {...rest}>
       <TeaserWrapper imagePosition={imagePosition}>{children}</TeaserWrapper>
     </StyledTeaser>
   )

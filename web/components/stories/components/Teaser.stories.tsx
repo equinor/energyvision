@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Teaser, TeaserProps, Heading, Text, Link, Eyebrow } from '@components'
+import { Teaser, TeaserProps, Heading, Text, Link, Eyebrow, BackgroundContainer } from '@components'
 import { ImagePlaceholder, RatioBox, AspectImagePlaceholder } from './helpers/styles'
 import styled from 'styled-components'
 
@@ -131,40 +131,44 @@ WithLongContent.parameters = {
 
 export const WithTheme: Story<TeaserProps> = (args) => (
   <>
-    <Teaser styleVariant="five" {...args}>
-      <Teaser.Media>
-        <ImagePlaceholder height="150px" />
-      </Teaser.Media>
-      <Teaser.Content>
-        <Heading level="h2" size="xl">
-          We’re acting on it. Here are our results.
-        </Heading>
-        <Text size="md">
-          We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
-          renewables. We report openly on all our sustainability priorities and performance.
-        </Text>
-        <Link variant="readMore" href="/">
-          Read more
-        </Link>
-      </Teaser.Content>
-    </Teaser>
-    <Teaser styleVariant="one" style={{ marginTop: '1rem' }}>
-      <Teaser.Media>
-        <ImagePlaceholder height="150px" />
-      </Teaser.Media>
-      <Teaser.Content>
-        <Heading level="h2" size="xl">
-          We’re acting on it. Here are our results.
-        </Heading>
-        <Text size="md">
-          We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
-          renewables. We report openly on all our sustainability priorities and performance.
-        </Text>
-        <Link variant="readMore" href="/">
-          Read more
-        </Link>
-      </Teaser.Content>
-    </Teaser>
+    <BackgroundContainer background="Lichen Green">
+      <Teaser {...args}>
+        <Teaser.Media>
+          <ImagePlaceholder height="150px" />
+        </Teaser.Media>
+        <Teaser.Content>
+          <Heading level="h2" size="xl">
+            We’re acting on it. Here are our results.
+          </Heading>
+          <Text size="md">
+            We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+            renewables. We report openly on all our sustainability priorities and performance.
+          </Text>
+          <Link variant="readMore" href="/">
+            Read more
+          </Link>
+        </Teaser.Content>
+      </Teaser>
+    </BackgroundContainer>
+    <BackgroundContainer background="Spruce Wood">
+      <Teaser style={{ marginTop: '1rem' }}>
+        <Teaser.Media>
+          <ImagePlaceholder height="150px" />
+        </Teaser.Media>
+        <Teaser.Content>
+          <Heading level="h2" size="xl">
+            We’re acting on it. Here are our results.
+          </Heading>
+          <Text size="md">
+            We’re one of the world’s most CO2-efficient producers of oil and gas and we are proactively investing in
+            renewables. We report openly on all our sustainability priorities and performance.
+          </Text>
+          <Link variant="readMore" href="/">
+            Read more
+          </Link>
+        </Teaser.Content>
+      </Teaser>
+    </BackgroundContainer>
   </>
 )
 
@@ -176,7 +180,7 @@ WithTheme.parameters = {
 }
 
 export const WithRightPositionedImage: Story<TeaserProps> = (args) => (
-  <Teaser styleVariant="three" imagePosition="right" {...args}>
+  <Teaser imagePosition="right" {...args}>
     <Teaser.Media>
       <ImagePlaceholder height="150px" />
     </Teaser.Media>
@@ -203,7 +207,7 @@ WithRightPositionedImage.parameters = {
 }
 
 export const WithConstrainedMediaWidth: Story<TeaserProps> = (args) => (
-  <Teaser styleVariant="three" {...args}>
+  <Teaser {...args}>
     <Teaser.Media size="small" center={true}>
       <RatioBox>
         <AspectImagePlaceholder />
