@@ -24,8 +24,8 @@ const FullWidthImage = ({ data }: TeaserProps) => {
   return (
     <StyledFigure>
       <Img
-        {...imageProps(figure.image.asset, 920)}
-        alt={figure.image.alt}
+        {...imageProps(image.asset, 920)}
+        alt={image.alt}
         sizes="
 (max-width: 360px) 313px,
 (max-width: 600px) 415px,
