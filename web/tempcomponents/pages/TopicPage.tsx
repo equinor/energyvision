@@ -3,7 +3,8 @@ import type { PageSchema } from '../../types/types'
 import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
 import FullWidthImage from '../topicPages/FullWidthImage'
-import { TeaserData, TextBlockData, FullWidthImageData } from '../../types/types'
+import Figure from '../topicPages/Figure'
+import { TeaserData, TextBlockData, FullWidthImageData, FigureData } from '../../types/types'
 
 const TopicPageLayout = styled.div``
 
@@ -12,7 +13,7 @@ type TopicPageProps = {
 }
 
 // How could we do this for several different component types?
-type ComponentProps = TeaserData | TextBlockData | FullWidthImageData
+type ComponentProps = TeaserData | TextBlockData | FullWidthImageData | FigureData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data.content || []).map((c: ComponentProps) => {
@@ -23,6 +24,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <TextBlock key={c.id} data={c as TextBlockData} />
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} />
+      case 'figure':
+        return <Figure key={c.id} data={c as FigureData} />
       default:
         return null
     }
