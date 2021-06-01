@@ -83,6 +83,7 @@ export type PageSchema = {
     metaDescription?: string
     openGraphImage?: ImageWithAlt
   }
+  // @TODO: Better typings here
   content?: []
   id: string
   type: string
@@ -121,4 +122,11 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithAlt
+}
+
+export type FigureData = {
+  type: string
+  id: string
+  figure: ImageWithCaptionData
+  designOptions: DesignOptions
 }

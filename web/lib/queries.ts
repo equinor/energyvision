@@ -128,6 +128,11 @@ export const pageQuery = /* groq */ `
         "type": _type,
         "id": _key,
         image
+      },
+      _type == "figure"=>{
+        "type": _type,
+        "id": _key,
+        figure
       }
     }
   }
