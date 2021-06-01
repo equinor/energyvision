@@ -13,8 +13,13 @@ const StyledFigure = styled.figure`
   max-width: var(--maxViewportWidth);
   margin: 0 auto;
 `
+
 const FullWidthImage = ({ data }: TeaserProps) => {
   const { figure, designOptions } = data
+
+  // With previews in Sanity, we need to support work in progress figures
+  if (!figure) return null
+
   const { image, caption, attribution } = figure
 
   return (
