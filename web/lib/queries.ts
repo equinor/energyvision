@@ -132,7 +132,10 @@ export const pageQuery = /* groq */ `
       _type == "figure"=>{
         "type": _type,
         "id": _key,
-        figure
+        figure,
+        "designOptions": {
+          "background": coalesce(background.title, 'none'),
+        },
       }
     }
   }

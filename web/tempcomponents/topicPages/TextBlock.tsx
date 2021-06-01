@@ -1,4 +1,3 @@
-import { CSSProperties } from 'react'
 import { Heading, Eyebrow, BackgroundContainer } from '@components'
 import { IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
