@@ -6,7 +6,7 @@ type MediaProps = HTMLAttributes<HTMLDivElement>
 const Img = styled.div`
   align-self: center;
   grid-area: media;
-  margin-bottom: var(--space-xSmall);
+  margin-bottom: var(--space-medium);
 `
 
 export const Media = ({ children, ...rest }: MediaProps) => {
