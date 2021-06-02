@@ -40,7 +40,6 @@ export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
   { imagePosition = 'left', children, ...rest },
   ref,
 ) {
-  console.log('Image position', imagePosition)
   return (
     <StyledTeaser ref={ref} {...rest}>
       <TeaserWrapper imagePosition={imagePosition}>{children}</TeaserWrapper>
