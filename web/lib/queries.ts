@@ -87,6 +87,7 @@ export const pageQuery = /* groq */ `
       openGraphImage,
      },
     title,
+    "heroImage": heroFigure,
     "slug": slug.current,
     "content": content[]{
       _type == "teaser"=>{

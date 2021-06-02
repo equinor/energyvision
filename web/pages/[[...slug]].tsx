@@ -12,8 +12,8 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 
-const HomePage = dynamic(() => import('../tempcomponents/pages/Home'))
-const TopicPage = dynamic(() => import('../tempcomponents/pages/TopicPage'))
+const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
+const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
 const { publicRuntimeConfig } = getConfig()
 
 export default function Page({ data, preview }: any) {

@@ -1,5 +1,6 @@
 import Img from 'next/image'
 import styled from 'styled-components'
+import { FigureCaption } from '@components'
 import { imageProps } from '../../common/helpers'
 import type { ImageWithCaptionData } from '../../types/types'
 
@@ -9,11 +10,6 @@ type HeroImageProps = {
 
 const StyledFigure = styled.figure`
   margin: 0;
-`
-
-const FigCaption = styled.figcaption`
-  font-size: var(--typeScale-0);
-  margin-top: var(--space-small);
 `
 
 const HeroImage = ({ data }: HeroImageProps) => {
@@ -36,9 +32,9 @@ const HeroImage = ({ data }: HeroImageProps) => {
         layout="responsive"
       />
       {caption || attribution ? (
-        <FigCaption>
+        <FigureCaption>
           {caption && caption} {attribution && attribution}
-        </FigCaption>
+        </FigureCaption>
       ) : null}
     </StyledFigure>
   )
