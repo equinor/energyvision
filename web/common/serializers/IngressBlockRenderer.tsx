@@ -5,13 +5,19 @@ import { Text } from '@components'
 type IngressProps = {
   children: string[]
   node: BlockNode
+  centered?: boolean
 }
 
 export const IngressBlockRenderer = (props: IngressProps) => {
-  const { children, node } = props
+  const { children, node, centered = false } = props
   const { style = 'normal' } = node
   if (style === 'normal') {
-    return <Text size="md"> {children}</Text>
+    return (
+      <Text size="md" centered={centered}>
+        {' '}
+        {children}
+      </Text>
+    )
   }
 
   // Fall back to default handling
