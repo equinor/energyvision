@@ -5,15 +5,19 @@
   },
   "devDependencies": {
     "@percy/cli": "^1.0.0-beta.47",
-    "@percy/selenium-webdriver": "^1.0.0"
+    "@percy/selenium-webdriver": "^1.0.0",
+    "axe-core": "^4.2.1"
   },
   "percy": {
     "version": 2,
     "snapshot": {
-      "widths": [375, 1920],
+      "widths": [
+        375,
+        1920
+      ],
       "min-height": 1024,
       "percy-css": "iframe { display: none; }",
-      "enable-javascript" : false
+      "enable-javascript": false
     }
   }
 }
