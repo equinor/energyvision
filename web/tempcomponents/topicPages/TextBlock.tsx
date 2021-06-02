@@ -13,7 +13,7 @@ const StyledTextBlock = styled.section`
   /* Where exactly should we put these styles */
   /* If the title has an eyebrow we need some tweaks */
   & h2 {
-    padding: var(--spacing-large) 0;
+    padding: var(--space-large) 0;
   }
   & h2:first-child {
     padding-top: 0;
