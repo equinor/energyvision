@@ -6,9 +6,7 @@ type TitleProps = HTMLAttributes<HTMLDivElement>
 
 const StyledTitle = styled(Heading)`
   margin: 0;
-  grid-area: title;
   text-align: center;
-  margin-bottom: var(--space-xSmall);
 `
 
 export const Title = ({ children, ...rest }: TitleProps) => {
