@@ -1,12 +1,39 @@
 import styled from 'styled-components'
 import type { PageSchema } from '../../types/types'
+import { Heading } from '@components'
+import HeroImage from '../../tempcomponents/shared/HeroImage'
 import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
 import FullWidthImage from '../topicPages/FullWidthImage'
 import Figure from '../topicPages/Figure'
 import { TeaserData, TextBlockData, FullWidthImageData, FigureData } from '../../types/types'
 
-const TopicPageLayout = styled.div``
+const TopicPageLayout = styled.div`
+  --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
+  /* @TODO: Find a good value here */
+  --banner-paddingVertical: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
+`
+
+const HeroBanner = styled.div`
+  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
+    var(--layout-paddingHorizontal-medium);
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+`
+
+const StyledHeading = styled(Heading)`
+  margin: 0;
+`
+
+const Image = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-small) var(--space-3xLarge) var(--layout-paddingHorizontal-small);
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+
+  & > figure {
+    margin: 0;
+  }
+`
 
 type TopicPageProps = {
   data: PageSchema
@@ -32,7 +59,12 @@ const TopicPage = ({ data }: TopicPageProps) => {
   })
   return (
     <TopicPageLayout>
-      <h1>{data?.title}</h1>
+      <HeroBanner>
+        <StyledHeading level="h1" size="2xl">
+          {data?.title}
+        </StyledHeading>
+      </HeroBanner>
+      <Image>{data.heroImage && <HeroImage data={data.heroImage} />}</Image>
       {content}
     </TopicPageLayout>
   )

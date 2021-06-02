@@ -78,6 +78,7 @@ export type PortableTextChild = {
 export type PageSchema = {
   slug: string
   title: string
+  heroImage: ImageWithCaptionData
   seoAndSome: {
     documentTitle?: string
     metaDescription?: string
