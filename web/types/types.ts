@@ -131,3 +131,17 @@ export type FigureData = {
   figure: ImageWithCaptionData
   designOptions: DesignOptions
 }
+
+export type TextWithIconItem = {
+  id: string
+  icon: ImageWithAlt
+  text: PortableTextEntry[]
+  title: string
+}
+
+export type TextWithIconArrayData = {
+  type: string
+  id: string
+  group: TextWithIconItem[]
+  designOptions: DesignOptions
+}
