@@ -97,7 +97,7 @@ export const pageQuery = /* groq */ `
         title,
         text,
         "designOptions": {
-          "background": coalesce(background.title, 'none'),
+          "background": coalesce(background.title, 'White'),
           "imagePosition": coalesce(imagePosition, 'left'),
           imageSize,
         },
@@ -122,7 +122,7 @@ export const pageQuery = /* groq */ `
         ingress,
         text,
         "designOptions": {
-          "background": coalesce(background.title, 'none'),
+          "background": coalesce(background.title, 'White'),
         },
       },
       _type == "fullWidthImage"=>{
@@ -135,7 +135,7 @@ export const pageQuery = /* groq */ `
         "id": _key,
         figure,
         "designOptions": {
-          "background": coalesce(background.title, 'none'),
+          "background": coalesce(background.title, 'White'),
         },
       },
       _type == "textWithIconArray"=>{
