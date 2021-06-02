@@ -137,6 +137,19 @@ export const pageQuery = /* groq */ `
         "designOptions": {
           "background": coalesce(background.title, 'none'),
         },
+      },
+      _type == "textWithIconArray"=>{
+        "type": _type,
+        "id": _key,
+        "group": group[]{
+          "id": _key,
+          title,
+          text,
+          icon
+        },
+        "designOptions": {
+          "background": coalesce(background.title, 'none'),
+        },
       }
     }
   }
