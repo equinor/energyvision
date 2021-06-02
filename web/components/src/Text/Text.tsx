@@ -2,7 +2,7 @@ import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { Typography, TypographyProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 
-const StyledText = styled(Typography)`
+const StyledText = styled(Typography)<{ centered?: boolean }>`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
   /* @TODO: Let's consider to move all the margin woo to the article layout */
@@ -10,6 +10,11 @@ const StyledText = styled(Typography)`
   & + & {
     margin: var(--spacing-medium) 0;
   }
+
+  ${({ centered }) =>
+    centered && {
+      textAlign: 'center',
+    }}
 
   /* If the text is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
@@ -21,6 +26,7 @@ export type TextProps = {
   size?: 'regular' | 'md'
   bold?: boolean
   italic?: boolean
+  centered?: boolean
 } & HTMLAttributes<HTMLHeadingElement> &
   TypographyProps
 
