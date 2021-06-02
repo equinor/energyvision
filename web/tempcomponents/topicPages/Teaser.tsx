@@ -47,7 +47,6 @@ const Teaser = ({ data }: TeaserProps) => {
   }
 
   const isSvg = image?.extension === 'svg'
-
   return (
     <BackgroundContainer background={background}>
       <StyledTeaser imagePosition={imagePosition}>

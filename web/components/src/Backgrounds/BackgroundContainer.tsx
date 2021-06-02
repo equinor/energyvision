@@ -43,8 +43,8 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
 
   return (
     <ColourContainer
-      style={{ ...style, '--background-color': backgrounds[styleVariant] } as CSSProperties}
       isInverted={isInverted}
+      style={{ ...style, '--background-color': backgrounds[styleVariant] } as CSSProperties}
       ref={ref}
       {...rest}
     >
