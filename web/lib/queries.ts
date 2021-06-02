@@ -98,7 +98,7 @@ export const pageQuery = /* groq */ `
         text,
         "designOptions": {
           "background": coalesce(background.title, 'none'),
-          imagePosition,
+          "imagePosition": coalesce(imagePosition, 'left'),
           imageSize,
         },
         "action": {
