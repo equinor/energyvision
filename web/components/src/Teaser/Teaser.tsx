@@ -28,15 +28,11 @@ const TeaserWrapper = styled.div<TeaserProps>`
   @media (min-width: 750px) {
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
-
+    grid-template-areas: 'image content';
     ${({ imagePosition }) =>
-      imagePosition === 'left'
-        ? {
-            gridTemplateAreas: '"image content"',
-          }
-        : {
-            gridTemplateAreas: '"content image"',
-          }}
+      imagePosition === 'right' && {
+        gridTemplateAreas: '"content image"',
+      }}
   }
 `
 
@@ -44,6 +40,7 @@ export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
   { imagePosition = 'left', children, ...rest },
   ref,
 ) {
+  console.log('Image position', imagePosition)
   return (
     <StyledTeaser ref={ref} {...rest}>
       <TeaserWrapper imagePosition={imagePosition}>{children}</TeaserWrapper>
