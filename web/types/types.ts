@@ -145,3 +145,10 @@ export type TextWithIconArrayData = {
   group: TextWithIconItem[]
   designOptions: DesignOptions
 }
+
+export type CallToActionData = {
+  type: string
+  id: string
+  action: LinkData
+  designOptions: DesignOptions
+}

@@ -7,7 +7,15 @@ import TextBlock from '../topicPages/TextBlock'
 import FullWidthImage from '../topicPages/FullWidthImage'
 import Figure from '../topicPages/Figure'
 import TextWithIconArray from '../topicPages/TextWithIconArray'
-import { TeaserData, TextBlockData, FullWidthImageData, FigureData, TextWithIconArrayData } from '../../types/types'
+import CallToAction from '../topicPages/CallToAction'
+import {
+  TeaserData,
+  TextBlockData,
+  FullWidthImageData,
+  FigureData,
+  TextWithIconArrayData,
+  CallToActionData,
+} from '../../types/types'
 
 const TopicPageLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -41,11 +49,16 @@ type TopicPageProps = {
 }
 
 // How could we do this for several different component types?
-type ComponentProps = TeaserData | TextBlockData | FullWidthImageData | FigureData | TextWithIconArrayData
+type ComponentProps =
+  | TeaserData
+  | TextBlockData
+  | FullWidthImageData
+  | FigureData
+  | TextWithIconArrayData
+  | CallToActionData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data.content || []).map((c: ComponentProps) => {
-    console.log(c.type)
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} />
@@ -57,6 +70,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <Figure key={c.id} data={c as FigureData} />
       case 'textWithIconArray':
         return <TextWithIconArray key={c.id} data={c as TextWithIconArrayData} />
+      case 'callToAction':
+        return <CallToAction key={c.id} data={c as CallToActionData} />
       default:
         return null
     }

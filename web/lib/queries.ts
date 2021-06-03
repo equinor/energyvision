@@ -150,7 +150,25 @@ export const pageQuery = /* groq */ `
         "designOptions": {
           "background": coalesce(background.title, 'none'),
         },
-      }
+      },
+      _type == "callToAction"=>{
+        "type": _type,
+        "id": _key,
+        "action": action[0]{
+          _type == "internalUrl" => {
+            "type": _type,
+            "id": _key,
+            label,
+            "link": reference-> {
+              "type": _type,
+              "slug": slug.current
+            },
+          },
+        },
+        "designOptions": {
+          "background": coalesce(background.title, 'none'),
+        },
+      },
     }
   }
 `
