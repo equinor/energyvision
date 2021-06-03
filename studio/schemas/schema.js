@@ -26,7 +26,9 @@ import fullWidthImage from './objects/fullWidthImage'
 import figure from './objects/figure'
 import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
-
+import callToAction from './objects/callToAction'
+import externalUrl from './objects/externalUrl'
+import internalUrl from './objects/internalUrl'
 import { topicsList } from '../helpers/topics'
 
 const topicSchemas = topicsList.map(({ id, title }) => {
@@ -58,5 +60,8 @@ export default createSchema({
     figure,
     textWithIcon,
     textWithIconArray,
+    callToAction,
+    externalUrl,
+    internalUrl,
   ]),
 })
