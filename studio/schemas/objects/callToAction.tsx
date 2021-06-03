@@ -22,7 +22,7 @@ export default {
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.length(1).required(),
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
     },
     {
       title: 'Background',

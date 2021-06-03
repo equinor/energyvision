@@ -27,7 +27,7 @@ const CallToAction = ({ data }: TeaserProps) => {
       <LinkContainer>
         {/*     Internal POC */}
         <NextLink passHref href={url}>
-          <Button as="a" variant="outlined">
+          <Button as="a" variant="outlined" color="secondary">
             {action.label}
           </Button>
         </NextLink>
