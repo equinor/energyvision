@@ -45,6 +45,7 @@ type ComponentProps = TeaserData | TextBlockData | FullWidthImageData | FigureDa
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data.content || []).map((c: ComponentProps) => {
+    console.log(c.type)
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} />
