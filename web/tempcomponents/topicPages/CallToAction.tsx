@@ -15,6 +15,7 @@ const LinkContainer = styled.figure`
 
 const CallToAction = ({ data }: TeaserProps) => {
   const { designOptions, action } = data
+  if (!action) return null
   let url: string
   if (action?.type === 'internalUrl') {
     url = action.link?.type === 'news' ? `/news/${action.link?.slug}` : action.link?.slug || ''
