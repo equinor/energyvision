@@ -6,7 +6,12 @@ import { Heading, Link, List, Layout } from '@components'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import styled from 'styled-components'
 
-const Container = styled.div``
+const Container = styled.div`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
+`
 
 export default function AllArchivedNews({ newsList }: any) {
   return (
@@ -16,17 +21,21 @@ export default function AllArchivedNews({ newsList }: any) {
           <title>Archived news</title>
         </Head>
         <Container>
-          <Heading level="h1">2016 to 2018 archived news page list</Heading>
-          <List>
-            {newsList &&
-              newsList.map((value: string) => {
+          <Heading level="h1" size="2xl" style={{ margin: '1rem 0' }}>
+            2016 to 2018 archived news page list
+          </Heading>
+          {newsList && (
+            <List unstyled>
+              {newsList.map((value: string) => {
                 return (
                   <List.Item key="value">
+                    {/* @TODO: Internal link? Depends on how we solve it */}
                     <Link href="value">{value}</Link>
                   </List.Item>
                 )
               })}
-          </List>
+            </List>
+          )}
         </Container>
       </Layout>
     </>
