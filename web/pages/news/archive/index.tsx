@@ -2,8 +2,9 @@ import * as fs from 'fs'
 
 import Head from 'next/head'
 import { Heading, Link, List, Layout } from '@components'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetStaticProps /* GetStaticPaths */ } from 'next'
 import styled from 'styled-components'
+import { default as NextLink } from 'next/link'
 
 const Container = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
@@ -28,8 +29,9 @@ export default function AllArchivedNews({ newsList }: any) {
               {newsList.map((value: string) => {
                 return (
                   <List.Item key={value}>
-                    {/* @TODO: Internal link? Depends on how we solve it */}
-                    <Link href={value}>{value}</Link>
+                    <NextLink href={value} passHref>
+                      <Link>{value}</Link>
+                    </NextLink>
                   </List.Item>
                 )
               })}
@@ -51,7 +53,7 @@ const removeHTMLExtension = (path: string): string => {
   return path.replace('.html', '')
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   const newsPaths = fs
     .readFileSync(process.cwd() + `/pages/news/archive/resources/news2016To2018.txt`)
     .toString()

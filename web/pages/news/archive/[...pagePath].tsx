@@ -1,6 +1,7 @@
 //import NewsArchiveHead from './NewsArchiveHead'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import * as fs from 'fs'
+
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 
@@ -30,11 +31,13 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
       ) : (
         // @TODO: SEO stuffs
         // @TODO: Menu
-        <div
-          dangerouslySetInnerHTML={{
-            __html: data?.news?.content,
-          }}
-        />
+        <>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: data?.news?.content,
+            }}
+          />
+        </>
         // @TODO: Footer
       )}
     </>
