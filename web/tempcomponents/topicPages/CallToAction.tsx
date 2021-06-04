@@ -16,21 +16,30 @@ const LinkContainer = styled.figure`
 const CallToAction = ({ data }: TeaserProps) => {
   const { designOptions, action } = data
   if (!action) return null
+
+  const { type, link, href, label } = action
   let url: string
-  if (action?.type === 'internalUrl') {
-    url = action.link?.type === 'news' ? `/news/${action.link?.slug}` : action.link?.slug || ''
+  if (type === 'internalUrl') {
+    url = link?.type === 'news' ? `/news/${link?.slug}` : link?.slug || ''
+  } else if (type === 'externalUrl') {
+    url = href || ''
   } else {
     url = '/'
   }
   return (
     <BackgroundContainer background={designOptions?.background}>
       <LinkContainer>
-        {/*     Internal POC */}
-        <NextLink passHref href={url}>
-          <Button as="a" variant="outlined" color="secondary">
-            {action.label}
+        {type === 'internalUrl' ? (
+          <NextLink passHref href={url}>
+            <Button as="a" variant="outlined" color="secondary">
+              {label}
+            </Button>
+          </NextLink>
+        ) : (
+          <Button as="a" variant="outlined" href={url} color="secondary">
+            {label}
           </Button>
-        </NextLink>
+        )}
       </LinkContainer>
     </BackgroundContainer>
   )

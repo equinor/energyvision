@@ -164,6 +164,12 @@ export const pageQuery = /* groq */ `
               "slug": slug.current
             },
           },
+          _type == "externalUrl" => {
+            "id": _key,
+            "type": _type,
+            label,
+            "href": url,
+          },
         },
         "designOptions": {
           "background": coalesce(background.title, 'none'),
