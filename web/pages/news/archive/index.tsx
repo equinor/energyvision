@@ -1,5 +1,4 @@
 import * as fs from 'fs'
-import path from 'path'
 
 import Head from 'next/head'
 import { Heading, Link, List, Layout } from '@components'
@@ -28,9 +27,9 @@ export default function AllArchivedNews({ newsList }: any) {
             <List unstyled>
               {newsList.map((value: string) => {
                 return (
-                  <List.Item key="value">
+                  <List.Item key={value}>
                     {/* @TODO: Internal link? Depends on how we solve it */}
-                    <Link href="value">{value}</Link>
+                    <Link href={value}>{value}</Link>
                   </List.Item>
                 )
               })}

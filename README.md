@@ -6,6 +6,10 @@ This is the main repository for the EnergyVision project, home of the next versi
 
 The project is licensed under the [MIT license](https://github.com/equinor/energyvision/blob/main/LICENSE) following [the open source strategy of Equinor](https://opensource.equinor.com).
 
+## Archive news pages
+
+To test the news archive, run `pnpm m i`, then `pnpm legacy-css build` and finally `pnpm legacy-content serve` + `pnpm web dev`. You’ll find the archive by going to **Newsroom** and then **News archive**.
+
 ## Overview
 
 This repository is organized into several folder. Please refer to README files inside each folder for more information.
