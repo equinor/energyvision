@@ -3,6 +3,7 @@ lockfileVersion: 5.3
 specifiers:
   '@percy/cli': ^1.0.0-beta.47
   '@percy/selenium-webdriver': ^1.0.0
+  axe-core: ^4.2.1
   selenium-webdriver: ^4.0.0-beta.1
 
 dependencies:
@@ -11,6 +12,7 @@ dependencies:
 devDependencies:
   '@percy/cli': 1.0.0-beta.47
   '@percy/selenium-webdriver': 1.0.0_selenium-webdriver@4.0.0-beta.2
+  axe-core: 4.2.2
 
 packages:
 
@@ -347,6 +349,11 @@ packages:
   /array-union/2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
+    dev: true
+
+  /axe-core/4.2.2:
+    resolution: {integrity: sha512-OKRkKM4ojMEZRJ5UNJHmq9tht7cEnRnqKG6KyB/trYws00Xtkv12mHtlJ0SK7cmuNbrU8dPUova3ELTuilfBbw==}
+    engines: {node: '>=4'}
     dev: true
 
   /balanced-match/1.0.2:
