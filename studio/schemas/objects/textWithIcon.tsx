@@ -50,7 +50,7 @@ export default {
       return {
         title: title || blocksToText(text),
         subtitle: 'Text with icon component',
-        media: icon.asset || <div>{EdsIcon(puzzle_filled)}</div>,
+        media: icon?.asset || <div>{EdsIcon(puzzle_filled)}</div>,
       }
     },
   },
