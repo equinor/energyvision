@@ -1,24 +1,42 @@
 //import NewsArchiveHead from './NewsArchiveHead'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import * as fs from 'fs'
+import { useRouter } from 'next/router'
+import ErrorPage from 'next/error'
 
-export type pageResponseData = {
+type PageResponseData = {
   title: string
   description: string
   content: string
 }
 
-const OldArchivedNewsPage = ({ title, description, content }: pageResponseData): JSX.Element => {
+type OldArchivedNewsPageProps = {
+  data: {
+    news: PageResponseData
+  }
+}
+
+const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
+  const router = useRouter()
+
+  if (!router.isFallback && !data.news) {
+    return <ErrorPage statusCode={404} />
+  }
+
   return (
     <>
-      {/*   <NewsArchiveHead title={title} description={description} /> */}
-      {/* Header */}
-      <div
-        dangerouslySetInnerHTML={{
-          __html: content,
-        }}
-      />
-      {/* Footer */}
+      {router.isFallback ? (
+        <p>Loading…</p>
+      ) : (
+        // @TODO: SEO stuffs
+        // @TODO: Menu
+        <div
+          dangerouslySetInnerHTML={{
+            __html: data?.news?.content,
+          }}
+        />
+        // @TODO: Footer
+      )}
     </>
   )
 }
@@ -35,15 +53,22 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   // const response = await fetch(`${archiveServerHostname}/en/news/${pagePath}.json`)
   const response = await fetch(`https://envis-legacy.azureedge.net/legacy/en/news/${pagePath}.json`)
-  const pageDate = await response.json()
+  let pageData
+  try {
+    pageData = await response.json()
+  } catch (err) {
+    console.log('error', err)
+    pageData = null
+  }
 
-  console.log('page data', pageDate)
+  console.log(pageData)
   return {
     props: {
-      title: pageDate.title,
-      description: pageDate.description,
-      content: pageDate.content,
+      data: {
+        news: pageData,
+      },
     },
+    revalidate: 1,
   }
 }
 
