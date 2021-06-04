@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint @typescript-eslint/no-var-requires: "off" */
 
 const path = require('path')
