@@ -65,6 +65,10 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             <NextLink href="/news" passHref>
               <Link>News</Link>
             </NextLink>
+
+            <NextLink href="/news/archive" passHref>
+              <Link>Archive</Link>
+            </NextLink>
           </MenuWrapper>
         </Topbar>
 
