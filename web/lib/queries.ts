@@ -185,7 +185,14 @@ export const pageQuery = /* groq */ `
           "background": coalesce(background.title, 'none'),
         },
       },
-   
+      _type == "pullQuote" => {
+        "type": _type,
+        "id": _key,
+        author,
+        authorTitle,
+        image,
+        quote
+      },
     }
   }
 `
