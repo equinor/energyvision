@@ -1,14 +1,18 @@
 //import NewsArchiveHead from './NewsArchiveHead'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import * as fs from 'fs'
-
+import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 type PageResponseData = {
   title: string
   description: string
   content: string
+  slug: string
 }
 
 type OldArchivedNewsPageProps = {
@@ -24,22 +28,38 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     return <ErrorPage statusCode={404} />
   }
 
+  const { pathname } = useRouter()
+  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
+  const fullUrl = fullUrlDyn.replace('[...pagePath]', data?.news?.slug)
+
   return (
     <>
       {router.isFallback ? (
         <p>Loading…</p>
       ) : (
-        // @TODO: SEO stuffs
-        // @TODO: Menu
-        <>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: data?.news?.content,
-            }}
-          />
-        </>
-        // @TODO: Footer
-      )}
+
+          // @TODO: SEO stuffs
+          // @TODO: Menu
+          <>
+            <NextSeo
+              title={data?.news?.title}
+              description={data?.news?.description}
+              openGraph={{
+                title: data?.news?.title,
+                description: data?.news?.description,
+                type: 'article',
+                url: fullUrl,
+              }}
+
+            ></NextSeo>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: data?.news?.content,
+              }}
+            />
+          </>
+          // @TODO: Footer
+        )}
     </>
   )
 }
@@ -68,7 +88,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       data: {
-        news: pageData,
+        news: {
+          ...pageData,
+          slug: pagePath
+        }
       },
     },
     revalidate: 1,
