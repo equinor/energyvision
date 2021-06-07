@@ -163,8 +163,6 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     enabled: preview || router.query.preview !== null,
   })
 
-  console.log('docType in page', slug)
-
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
