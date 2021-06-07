@@ -3,7 +3,7 @@ import { IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
-import CallToAction from './CallToAction'
+import CallToActions from './CallToActions'
 
 const StyledTextBlock = styled.section`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
@@ -30,7 +30,7 @@ type TextBlockProps = {
 }
 
 const TextBlock = ({ data }: TextBlockProps) => {
-  const { overline, title, ingress, text, designOptions, callToAction } = data
+  const { overline, title, ingress, text, designOptions, callToActions } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text) return null
   const { background } = designOptions
@@ -64,8 +64,8 @@ const TextBlock = ({ data }: TextBlockProps) => {
             }}
           />
         )}
-        {callToAction && (
-          <CallToAction callToAction={callToAction} />
+        {callToActions && (
+          <CallToActions callToActions={callToActions} />
         )}
 
       </StyledTextBlock>

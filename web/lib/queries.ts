@@ -121,7 +121,7 @@ export const pageQuery = /* groq */ `
         title,
         ingress,
         text,
-        "callToAction": action[]{
+        "callToActions": action[]{
           
             _type == "internalUrl" => {
               "type": _type,

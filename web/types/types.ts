@@ -105,7 +105,7 @@ export type TextBlockData = {
   overline?: string
   text: PortableTextEntry[]
   ingress: PortableTextEntry[]
-  callToAction?: LinkData[]
+  callToActions?: LinkData[]
   designOptions: DesignOptions
 }
 
