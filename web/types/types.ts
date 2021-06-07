@@ -154,3 +154,11 @@ export type TextWithIconArrayData = {
   designOptions: DesignOptions
 }
 
+export type QuoteData = {
+  type: string
+  id: string
+  author: string
+  authorTitle: string
+  quote: string
+  image: ImageWithAlt
+}
