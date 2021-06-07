@@ -1,9 +1,10 @@
 import * as fs from 'fs'
-
+import { NextSeo } from 'next-seo'
 import Head from 'next/head'
 import { Heading, Link, List, Layout } from '@components'
 import { GetStaticProps /* GetStaticPaths */ } from 'next'
 import styled from 'styled-components'
+
 import { default as NextLink } from 'next/link'
 
 const Container = styled.div`
@@ -16,6 +17,14 @@ const Container = styled.div`
 export default function AllArchivedNews({ newsList }: any) {
   return (
     <>
+      {/* @TODO: Norwegian version */}
+      {/*       @TODO: Avoid duplicate description, write one for the archived pages
+ */}      <NextSeo
+        title="Archived news"
+        description="Keep updated on news from Equinor. Find all our general news, stock market announcements and notifiable tradings here in our news archive."
+
+
+      ></NextSeo>
       <Layout>
         <Head>
           <title>Archived news</title>
