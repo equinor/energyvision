@@ -7,7 +7,7 @@ import TextBlock from '../topicPages/TextBlock'
 import FullWidthImage from '../topicPages/FullWidthImage'
 import Figure from '../topicPages/Figure'
 import TextWithIconArray from '../topicPages/TextWithIconArray'
-import CallToAction from '../topicPages/CallToAction'
+
 import {
   TeaserData,
   TextBlockData,
@@ -70,8 +70,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <Figure key={c.id} data={c as FigureData} />
       case 'textWithIconArray':
         return <TextWithIconArray key={c.id} data={c as TextWithIconArrayData} />
-      case 'callToAction':
-        return <CallToAction key={c.id} data={c as CallToActionData} />
       default:
         return null
     }

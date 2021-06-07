@@ -63,6 +63,17 @@ export default {
       of: [blockContentType],
     },
     {
+      name: 'action',
+      type: 'array',
+      title: 'Call to action',
+      of: [
+        { type: 'internalUrl', title: 'Call to action: Internal link' },
+        { type: 'externalUrl', title: 'Call to action: External link' },
+        { type: 'downloadableImage', title: 'Call to action: Download image' },
+        { type: 'downloadableFile', title: 'Call to action: Download file' },
+      ],
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',

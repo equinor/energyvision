@@ -105,7 +105,15 @@ export type TextBlockData = {
   overline?: string
   text: PortableTextEntry[]
   ingress: PortableTextEntry[]
+  callToAction?: LinkData[]
   designOptions: DesignOptions
+}
+
+// This type is deprecated
+export type CallToActionData = {
+  type: string
+  id: string
+  action: LinkData
 }
 
 export type TeaserData = {
@@ -146,9 +154,3 @@ export type TextWithIconArrayData = {
   designOptions: DesignOptions
 }
 
-export type CallToActionData = {
-  type: string
-  id: string
-  action: LinkData
-  designOptions: DesignOptions
-}

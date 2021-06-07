@@ -121,6 +121,39 @@ export const pageQuery = /* groq */ `
         title,
         ingress,
         text,
+        "callToAction": action[]{
+          
+            _type == "internalUrl" => {
+              "type": _type,
+              "id": _key,
+              label,
+              "link": reference-> {
+                "type": _type,
+                "slug": slug.current
+              },
+            },
+            _type == "externalUrl" => {
+              "id": _key,
+              "type": _type,
+              label,
+              "href": url,
+            },
+            _type == "downloadableFile" => {
+              "id": _key,
+              "type": _type,
+              "label": filename,
+              "href": file.asset-> url,
+              "extension": file.asset-> extension 
+            },
+            _type == "downloadableImage" => {
+              "id": _key,
+              "type": _type,
+              label,
+              "href": image.asset-> url, 
+              "extension": image.asset-> extension 
+            },
+          },
+    
         "designOptions": {
           "background": coalesce(background.title, 'White'),
         },
@@ -147,48 +180,12 @@ export const pageQuery = /* groq */ `
           text,
           icon
         },
+   
         "designOptions": {
           "background": coalesce(background.title, 'none'),
         },
       },
-      _type == "callToAction"=>{
-        "type": _type,
-        "id": _key,
-        "action": action[0]{
-          _type == "internalUrl" => {
-            "type": _type,
-            "id": _key,
-            label,
-            "link": reference-> {
-              "type": _type,
-              "slug": slug.current
-            },
-          },
-          _type == "externalUrl" => {
-            "id": _key,
-            "type": _type,
-            label,
-            "href": url,
-          },
-          _type == "downloadableFile" => {
-            "id": _key,
-            "type": _type,
-            "label": filename,
-            "href": file.asset-> url,
-            "extension": file.asset-> extension 
-          },
-          _type == "downloadableImage" => {
-            "id": _key,
-            "type": _type,
-            label,
-            "href": image.asset-> url, 
-            "extension": image.asset-> extension 
-          },
-        },
-        "designOptions": {
-          "background": coalesce(background.title, 'none'),
-        },
-      },
+   
     }
   }
 `
