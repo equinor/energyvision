@@ -1,4 +1,4 @@
-const archiveServerHostname = 'http://localhost:8080'
+const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',

@@ -37,29 +37,27 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
       {router.isFallback ? (
         <p>Loading…</p>
       ) : (
-
-          // @TODO: SEO stuffs
-          // @TODO: Menu
-          <>
-            <NextSeo
-              title={data?.news?.title}
-              description={data?.news?.description}
-              openGraph={{
-                title: data?.news?.title,
-                description: data?.news?.description,
-                type: 'article',
-                url: fullUrl,
-              }}
-
-            ></NextSeo>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: data?.news?.content,
-              }}
-            />
-          </>
-          // @TODO: Footer
-        )}
+        // @TODO: SEO stuffs
+        // @TODO: Menu
+        <>
+          <NextSeo
+            title={data?.news?.title}
+            description={data?.news?.description}
+            openGraph={{
+              title: data?.news?.title,
+              description: data?.news?.description,
+              type: 'article',
+              url: fullUrl,
+            }}
+          ></NextSeo>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: data?.news?.content,
+            }}
+          />
+        </>
+        // @TODO: Footer
+      )}
     </>
   )
 }
@@ -75,7 +73,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // const response = await fetch(`${archiveServerHostname}/en/news/archive/${pagePath}.json`)
 
   // const response = await fetch(`${archiveServerHostname}/en/news/${pagePath}.json`)
-  const response = await fetch(`https://envis-legacy.azureedge.net/legacy/en/news/${pagePath}.json`)
+  const response = await fetch(`https://envis-legacy.azureedge.net/equinor-archive-content/en/news/${pagePath}.json`)
   let pageData
   try {
     pageData = await response.json()
@@ -90,8 +88,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       data: {
         news: {
           ...pageData,
-          slug: pagePath
-        }
+          slug: pagePath,
+        },
       },
     },
     revalidate: 1,
