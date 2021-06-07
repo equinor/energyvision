@@ -85,6 +85,7 @@ export default {
         calendarTodayLabel: 'Today',
       },
       validation: (Rule) => Rule.required(),
+      initialValue: () => new Date().toISOString(),
     },
     {
       // TODO: Figure out a way to run a slugify function before publish
