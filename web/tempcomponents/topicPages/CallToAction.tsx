@@ -17,14 +17,12 @@ const CallToAction = ({ data }: TeaserProps) => {
   const { designOptions, action } = data
   if (!action) return null
 
-  const { type, link, href, label } = action
+  const { type, link, href, label, extension } = action
   let url: string
   if (type === 'internalUrl') {
     url = link?.type === 'news' ? `/news/${link?.slug}` : link?.slug || ''
-  } else if (type === 'externalUrl') {
-    url = href || ''
   } else {
-    url = '/'
+    url = href || ''
   }
   return (
     <BackgroundContainer background={designOptions?.background}>
@@ -36,10 +34,10 @@ const CallToAction = ({ data }: TeaserProps) => {
             </Button>
           </NextLink>
         ) : (
-          <Button as="a" variant="outlined" href={url} color="secondary">
-            {label}
-          </Button>
-        )}
+            <Button as="a" variant="outlined" href={url} color="secondary">
+              {label} {extension && `(${extension.toUpperCase()})`}
+            </Button>
+          )}
       </LinkContainer>
     </BackgroundContainer>
   )
