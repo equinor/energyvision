@@ -97,6 +97,7 @@ export default (topicSuffix, title) => {
           { type: 'figure' },
           { type: 'textWithIconArray' },
           { type: 'callToAction' },
+          { type: 'pullQuote' },
         ],
       },
     ],
