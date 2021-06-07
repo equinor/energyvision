@@ -3,15 +3,28 @@ import { imageProps } from '../../common/helpers'
 import type { FigureData } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer, FigureCaption } from '@components'
+import { StyledTextBlockWrapper } from './TextBlock'
+import { Component } from 'react'
 
 type TeaserProps = {
   data: FigureData
 }
 
 const StyledFigure = styled.figure`
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin: 0 auto;
+`
+
+/* If the image is an adjacent sibling of a text block component, we don't want
+to double up the padding (with text block bottom and image top padding) 
+This is not an optimal solution, but we still don't know how many components
+that will act like this, and/or if the image should be a part of the text block component instead
+*/
+const StyledFigureWrapper = styled(BackgroundContainer)`
+  ${StyledTextBlockWrapper} + & ${StyledFigure} {
+    padding-top: 0;
+  }
 `
 
 const FullWidthImage = ({ data }: TeaserProps) => {
@@ -23,7 +36,7 @@ const FullWidthImage = ({ data }: TeaserProps) => {
   const { image, caption, attribution } = figure
 
   return (
-    <BackgroundContainer background={designOptions?.background}>
+    <StyledFigureWrapper background={designOptions?.background}>
       <StyledFigure>
         <Img
           {...imageProps(image.asset, 920)}
@@ -45,7 +58,7 @@ const FullWidthImage = ({ data }: TeaserProps) => {
           </FigureCaption>
         ) : null}
       </StyledFigure>
-    </BackgroundContainer>
+    </StyledFigureWrapper>
   )
 }
 
