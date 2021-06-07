@@ -2,19 +2,42 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2015",
-    "lib": ["dom", "dom.iterable", "ES2015"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2015"
+    ],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components": ["components/src", "components/src/*"],
-      "@utils": ["components/utils", "components/utils/*"],
-      "@mockdata": ["components/stories/mockdata", "components/stories/mockdata/*"]
+      "@components": [
+        "components/src",
+        "components/src/*"
+      ],
+      "@utils": [
+        "components/utils",
+        "components/utils/*"
+      ],
+      "@mockdata": [
+        "components/stories/mockdata",
+        "components/stories/mockdata/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "**/*.stories.*", "pages-disabled/*.tsx"],
-  "files": ["@types/block-content-to-react.d.ts"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.stories.*",
+    "pages-disabled/*.tsx"
+  ],
+  "files": [
+    "@types/block-content-to-react.d.ts"
+  ]
 }

@@ -1,3 +1,5 @@
+// This object is deprecated for the topic pages. It will be a part of the TextBlock instead
+
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 
