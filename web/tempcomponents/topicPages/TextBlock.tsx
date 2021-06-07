@@ -5,8 +5,10 @@ import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
 import CallToActions from './CallToActions'
 
+export const StyledTextBlockWrapper = styled(BackgroundContainer)``
+
 const StyledTextBlock = styled.section`
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
@@ -36,7 +38,7 @@ const TextBlock = ({ data }: TextBlockProps) => {
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background}>
+    <StyledTextBlockWrapper background={background}>
       <StyledTextBlock>
         {overline && <Eyebrow>{overline}</Eyebrow>}
         {title && (
@@ -69,7 +71,8 @@ const TextBlock = ({ data }: TextBlockProps) => {
         )}
 
       </StyledTextBlock>
-    </BackgroundContainer>
+
+    </StyledTextBlockWrapper>
   )
 }
 
