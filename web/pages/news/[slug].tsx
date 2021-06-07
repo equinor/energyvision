@@ -46,7 +46,7 @@ const StyledHeading = styled(Heading)`
   margin: 0;
 `
 
-const Date = styled.div`
+const DateWrapper = styled.div`
   color: var(--white-100);
   margin-top: var(--space-xxLarge);
   margin-bottom: var(--space-xxLarge);
@@ -138,6 +138,13 @@ const Latest = styled.div`
   max-width: 1700px;
 `
 
+const getModifiedDate = (publishDate: string, updatedDate: string) => {
+  const publishDt = new Date(publishDate).getTime()
+  const updateDt = new Date(updatedDate).getTime()
+
+  return publishDt > updateDt ? publishDate : updatedDate
+}
+
 type ArticleProps = {
   data: {
     news: NewsSchema
@@ -169,6 +176,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
+
+  const modifiedDate = getModifiedDate(news.publishDateTime, news.updatedAt)
+
   return (
     <>
       <NextSeo
@@ -180,7 +190,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
           type: 'article',
           article: {
             publishedTime: news.publishDateTime,
-            modifiedTime: news.updatedAt,
+            modifiedTime: modifiedDate,
           },
           url: fullUrl,
           images: getOpenGraphImages(news.openGraphImage || news.heroImage?.image),
@@ -203,14 +213,14 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                     <StyledHeading level="h1" size="2xl" inverted>
                       {news.title}
                     </StyledHeading>
-                    <Date>
+                    <DateWrapper>
                       <Icon data={calendar} />
                       <DateContainer>
                         <FormattedDateTime datetime={news.publishDateTime} />
                         <LastModifiedLabel>Last modified</LastModifiedLabel>
-                        <FormattedDateTime datetime={news.updatedAt} />
+                        <FormattedDateTime datetime={modifiedDate} />
                       </DateContainer>
-                    </Date>
+                    </DateWrapper>
                   </HeaderInner>
                 </Header>
                 <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
