@@ -170,6 +170,20 @@ export const pageQuery = /* groq */ `
             label,
             "href": url,
           },
+          _type == "downloadableFile" => {
+            "id": _key,
+            "type": _type,
+            "label": filename,
+            "href": file.asset-> url,
+            "extension": file.asset-> extension 
+          },
+          _type == "downloadableImage" => {
+            "id": _key,
+            "type": _type,
+            label,
+            "href": image.asset-> url, 
+            "extension": image.asset-> extension 
+          },
         },
         "designOptions": {
           "background": coalesce(background.title, 'none'),
