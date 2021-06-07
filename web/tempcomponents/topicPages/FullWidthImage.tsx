@@ -8,7 +8,7 @@ type TeaserProps = {
 
 const FullWidthImage = ({ data }: TeaserProps) => {
   const { image } = data
-  return <Img {...imageProps(image, 2000, 0.375)} sizes="100vw" alt={image.alt} layout="responsive" />
+  return <Img {...imageProps(image, 2000, 0.3)} sizes="100vw" alt={image.alt} layout="responsive" />
 }
 
 export default FullWidthImage
