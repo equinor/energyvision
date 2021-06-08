@@ -43,28 +43,30 @@ export default {
       group: 'group',
     },
     prepare({ group }: any) {
-      const title = group.reduce((sum: string, current: any, index: number): string => {
-        const cutOff = 20
-
-        let string = ''
-
-        if (current.title) {
-          string = current.title.substr(0, cutOff).trim()
-        } else if (current.text) {
-          const plainText = blocksToText(current.text)
-          string = plainText.substr(0, cutOff).trim()
-        } else {
-          string = `Missing title and text`
-        }
-
-        return sum + `${index + 1}: ${string.length < cutOff ? string : string + '...'} `
-      }, '')
-
       return {
-        title: title,
-        subtitle: `${group.length} Text with Icon component(s)`,
+        title: group ? generatePreviewTitle(group) : 'Missing content',
+        subtitle: `${group ? group.length : 0} Text with Icon component(s)`,
         media: <div>{EdsIcon(view_module)}</div>,
       }
     },
   },
+}
+
+const generatePreviewTitle = (group: any) => {
+  return group.reduce((sum: string, current: any, index: number): string => {
+    const cutOff = 20
+
+    let string = ''
+
+    if (current.title) {
+      string = current.title.substr(0, cutOff).trim()
+    } else if (current.text) {
+      const plainText = blocksToText(current.text)
+      string = plainText.substr(0, cutOff).trim()
+    } else {
+      string = `Missing title and text`
+    }
+
+    return sum + `${index + 1}: ${string.length < cutOff ? string : string + '...'} `
+  }, '')
 }
