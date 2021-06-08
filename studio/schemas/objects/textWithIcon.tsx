@@ -46,9 +46,9 @@ export default {
       text: `text`,
       icon: 'icon',
     },
-    prepare({ title = '', text, icon }: { title: string; text: any; icon: any }) {
+    prepare({ title = '', text = null, icon }: { title: string; text: any; icon: any }) {
       return {
-        title: title || blocksToText(text),
+        title: text ? blocksToText(text) : title || 'Missing content',
         subtitle: 'Text with icon component',
         media: icon?.asset || <div>{EdsIcon(puzzle_filled)}</div>,
       }
