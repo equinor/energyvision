@@ -1,10 +1,13 @@
 import slugify from 'slugify'
+import { SchemaType } from '../../types'
+// eslint-disable-next-line import/no-unresolved
+//eslint-disable-next-line
 import sanityClient from 'part:@sanity/base/client'
 
 const client = sanityClient.withConfig({ apiVersion: `2021-05-19` })
 const slugifyConfig = { lower: true }
 
-function formatSlug(input) {
+function formatSlug(input: any) {
   if (Array.isArray(input)) {
     return `/${input.join(`/`)}`
   }
@@ -13,7 +16,7 @@ function formatSlug(input) {
   return `/${slug}`
 }
 
-async function getPrefix(doc, source, ref) {
+async function getPrefix(doc: any, source: any, ref: any) {
   const docTitle = doc[source]
 
   const refQuery = `*[_id == $ref][0].title`
@@ -41,11 +44,11 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     type: `slug`,
     fieldset: fieldset,
     options: {
-      source: (doc) => getPrefix(doc, source, ref),
-      slugify: (value) => formatSlug(value),
+      source: (doc: any) => getPrefix(doc, source, ref),
+      slugify: (value: any) => formatSlug(value),
     },
-    validation: (Rule) =>
-      Rule.required().custom(({ current }) => {
+    validation: (Rule: SchemaType.ValidationRule) =>
+      Rule.required().custom(({ current }: { current: any }) => {
         if (typeof current === 'undefined') {
           return true
         }
