@@ -1,4 +1,5 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { useState, useCallback } from 'react'
 import { IntlProvider } from 'react-intl'
@@ -7,7 +8,7 @@ import { GlobalStyle } from '../styles/globalStyles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { DefaultSeo } from 'next-seo'
 import NextLink from 'next/link'
-// import ArchiveNewsStyles from './[locale]/news/archive/ArchiveNewsStyles'
+import ArchiveNewsStyles from './news/archive/ArchiveNewsStyles'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
@@ -32,7 +33,7 @@ const isArchivePage = (currentPagePath: string): boolean => {
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [topbarHeight, setTopbarHeight] = useState(0)
-
+  const router = useRouter()
   const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
@@ -40,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     }
   }, [])
 
-  // const archivedPage = isArchivePage(router.asPath)
+  const archivedPage = isArchivePage(router.asPath)
 
   // TODO: get locale from Sanity
   return (
@@ -52,6 +53,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         </Head>
+        {/* TODO: Find out why this works in the news-archive branch and not here */}
+        {/* {archivedPage && <ArchiveNewsStyles />} */}
         <GlobalStyle />
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <TopbarOffset topbarHeight={topbarHeight} />
