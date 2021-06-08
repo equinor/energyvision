@@ -12,7 +12,7 @@ const topicPageStructure = (topicSuffix, icon) => {
   const topic = getTopicConfig(topicSuffix)
   //return S.documentTypeListItem(`${topic.id}_page`).icon(icon).title(topic.title)
   return S.listItem()
-    .title(`${topic.title} (Work in progress)`)
+    .title(`${topic.title} (Deprecated)`)
     .icon(icon)
     .child(
       S.list()
@@ -41,6 +41,7 @@ export default () => {
     S.documentTypeListItem('news').icon(EdsList).title('News'),
     parentChild('page'),
     S.documentTypeListItem('page').icon(EdsList).title('Topic pages'),
+    S.divider(),
     topicPageStructure('careers', EdsList),
     topicPageStructure('whatWeDo', EdsList),
   ]

@@ -3,6 +3,7 @@ import React from 'react'
 // import type { Topics } from '../../helpers/topics'
 
 import { slugWithType } from '../objects/slugWithType'
+import { slugWithRef } from '../objects/slugWithRef'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
 export default {
@@ -53,13 +54,6 @@ export default {
       type: 'reference',
       to: [{ type: 'page' }],
     },
-    // @TODO: Remove
-    {
-      name: 'topicSuffix',
-      initialValue: `careers`,
-      type: 'string',
-      hidden: true,
-    },
     {
       title: 'Page title',
       name: 'title',
@@ -78,7 +72,7 @@ export default {
       name: 'topicSlug',
       type: 'string',
       title: 'Topic slug',
-      placeholder: 'E.g. "Experienced professionals"',
+      placeholder: 'For example "Experienced professionals"',
       description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
       validation: (Rule) => Rule.max(200),
       fieldset: 'slug',
@@ -91,7 +85,7 @@ export default {
       fieldset: 'slug',
     },
     // @TODO: Write a new function
-    slugWithType('careers', 'slug', 'isLandingPage'),
+    slugWithRef('topicSlug', 'parent', 'slug'),
     {
       name: 'content',
       type: 'array',
