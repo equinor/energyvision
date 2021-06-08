@@ -20,6 +20,17 @@ export const newsQuery = /* groq */ `
     "metaDescription": seo.metaDescription,
     openGraphImage,
     "content": content[]{
+      _type == "pullQuote" => {
+        "type": _type,
+        "id": _key,
+        author,
+        authorTitle,
+        image,
+        quote,
+        "designOptions": {
+          "imagePosition": coalesce(imagePosition, 'right'),
+        }
+      },
       ...,
       "markDefs": markDefs[]{
         ...,
@@ -191,7 +202,10 @@ export const pageQuery = /* groq */ `
         author,
         authorTitle,
         image,
-        quote
+        quote,
+        "designOptions": {
+          "imagePosition": coalesce(imagePosition, 'right'),
+        }
       },
     }
   }

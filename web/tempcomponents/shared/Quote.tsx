@@ -3,8 +3,8 @@ import Img from 'next/image'
 import { imageProps } from '../../common/helpers'
 import type { QuoteData } from '../../types/types'
 
-const Quote = ({ data: { quote, authorTitle, author, image } }: { data: QuoteData }) => (
-  <PullQuote>
+const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: { data: QuoteData }) => (
+  <PullQuote imagePosition={designOptions?.imagePosition || 'left'}>
     <PullQuote.Quote>{quote}</PullQuote.Quote>
 
     {authorTitle && <PullQuote.Author title={authorTitle}>{author}</PullQuote.Author>}
