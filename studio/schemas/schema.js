@@ -9,6 +9,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 // Document types
 import news from './documents/news'
 import page from './documents/page'
+import pagev2 from './documents/pagev2'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -45,6 +46,7 @@ export default createSchema({
     /* Your types here! */
     news,
     ...topicSchemas,
+    pagev2,
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,

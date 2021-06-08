@@ -38,6 +38,7 @@ const topicPageStructure = (topicSuffix, icon) => {
 export default () => {
   const listItems = [
     S.documentTypeListItem('news').icon(EdsList).title('News'),
+    S.documentTypeListItem('page').icon(EdsList).title('Topic pages'),
     topicPageStructure('careers', EdsList),
     topicPageStructure('whatWeDo', EdsList),
   ]
