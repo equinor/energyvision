@@ -1,7 +1,14 @@
+/* eslint-disable react/display-name */
 import React from 'react'
 import { SchemaType } from '../../types'
 import { format_quote } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
+import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
+import { RadioIconSelector } from '../components'
+
+const imageAlignmentOptions = [
+  { value: 'left', icon: LeftAlignedImage },
+  { value: 'right', icon: RightAlignedImage },
+]
 
 type PreviewProps = {
   title: string
@@ -17,6 +24,14 @@ export default {
     {
       title: 'Pull Quote',
       name: 'pullQuote',
+    },
+    {
+      title: 'Design options',
+      name: 'design',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
     },
   ],
   fields: [
@@ -45,6 +60,25 @@ export default {
       type: 'imageWithAlt',
       options: {
         hotspot: true,
+      },
+    },
+    {
+      name: 'imagePosition',
+      title: 'Image position',
+      description: 'Select which side of the teaser the image should be displayed at on larger screens.',
+      type: 'string',
+      fieldset: 'design',
+      inputComponent: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+        return (
+          <RadioIconSelector
+            name="imageAlignmentSelector"
+            options={imageAlignmentOptions}
+            defaultValue="right"
+            currentValue={value}
+            type={type}
+            onChange={onChange}
+          />
+        )
       },
     },
   ],
