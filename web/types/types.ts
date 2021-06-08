@@ -161,4 +161,5 @@ export type QuoteData = {
   authorTitle: string
   quote: string
   image: ImageWithAlt
+  designOptions: DesignOptions
 }
