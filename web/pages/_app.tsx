@@ -7,7 +7,7 @@ import { GlobalStyle } from '../styles/globalStyles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { DefaultSeo } from 'next-seo'
 import NextLink from 'next/link'
-import '@equinor/energyvision-legacy-css'
+// import ArchiveNewsStyles from './[locale]/news/archive/ArchiveNewsStyles'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
@@ -26,6 +26,9 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
     margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
   }
 `
+const isArchivePage = (currentPagePath: string): boolean => {
+  return currentPagePath.includes('/archive')
+}
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [topbarHeight, setTopbarHeight] = useState(0)
@@ -36,6 +39,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       setTopbarHeight(height)
     }
   }, [])
+
+  // const archivedPage = isArchivePage(router.asPath)
 
   // TODO: get locale from Sanity
   return (
