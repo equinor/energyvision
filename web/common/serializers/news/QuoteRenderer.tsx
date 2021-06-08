@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { ImageWithAlt } from '../../../types/types'
+import type { QuoteData } from '../../../types/types'
 import Quote from '../../../tempcomponents/shared/Quote'
 
 const Container = styled.div`
@@ -12,17 +12,20 @@ const Container = styled.div`
 type QuoteRendererNode = {
   _key: string
   _type: string
-  quote: string
-  author: string
-  authorTitle: string
-  image: ImageWithAlt
-}
+} & QuoteData
 
 export const QuoteRenderer = (child: { node: QuoteRendererNode }): JSX.Element => {
   const { node } = child
+
+  const data = {
+    ...node,
+    type: node._type,
+    id: node._key,
+  }
+
   return (
     <Container>
-      <Quote data={{ type: node._type, id: node._key, ...node }} />
+      <Quote data={data} />
     </Container>
   )
 }
