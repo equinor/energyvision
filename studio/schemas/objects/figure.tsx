@@ -3,8 +3,9 @@ import { Colors } from '../../helpers/ColorListValues'
 
 export default {
   name: 'figure',
-  title: 'Image (what is a good name)',
+  title: 'Image',
   type: 'object',
+  description: 'Image with optional caption and attribution.',
   fieldsets: [
     {
       name: 'design',
