@@ -3,6 +3,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { view_module } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Colors } from '../../helpers/ColorListValues'
+import { SchemaType } from '../../types'
 
 export default {
   type: 'object',
@@ -20,6 +21,7 @@ export default {
       name: 'group',
       title: 'Group of text with icon',
       of: [{ type: 'textWithIcon' }],
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
     {
       title: 'Background',
