@@ -65,7 +65,7 @@ export default {
     {
       name: 'imagePosition',
       title: 'Image position',
-      description: 'Select which side of the teaser the image should be displayed at on larger screens.',
+      description: 'Select which side of the quote the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
       inputComponent: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
