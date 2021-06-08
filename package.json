@@ -11,6 +11,7 @@
     "lint:studio": "eslint ./studio/ --ext .js,.jsx,.ts,.tsx",
     "studio": "pnpm --filter ./studio",
     "web": "pnpm --filter ./web",
+    "e2e": "pnpm --filter ./e2e",
     "legacy-css": "pnpm --filter ./legacy/css",
     "legacy-content": "pnpm --filter ./legacy/content",
     "docker:build": "docker build --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=h61q9gi9 --build-arg NEXT_PUBLIC_SANITY_DATASET=production -t envis/web -f web/Dockerfile .",

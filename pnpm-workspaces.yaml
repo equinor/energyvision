@@ -2,5 +2,6 @@ packages:
   - '.'
   - 'studio'
   - 'web'
+  - 'e2e'
   - 'legacy/css'
   - 'legacy/content'
