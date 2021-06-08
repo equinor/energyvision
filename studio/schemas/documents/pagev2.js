@@ -2,7 +2,7 @@ import React from 'react'
 // We should at some point use typescript
 // import type { Topics } from '../../helpers/topics'
 
-import { slugWithType } from '../objects/slugWithType'
+// import { slugWithType } from '../objects/slugWithType'
 import { slugWithRef } from '../objects/slugWithRef'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
