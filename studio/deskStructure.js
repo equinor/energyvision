@@ -4,6 +4,7 @@ import { EdsList } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import { getTopicConfig } from './helpers/topics'
+import parentChild from './src/structure/parentChild'
 
 // I'm having a hard time to get the desk structure file work with typescript.
 // So not possible to type the topicSuffix :/
@@ -38,6 +39,7 @@ const topicPageStructure = (topicSuffix, icon) => {
 export default () => {
   const listItems = [
     S.documentTypeListItem('news').icon(EdsList).title('News'),
+    parentChild('page'),
     S.documentTypeListItem('page').icon(EdsList).title('Topic pages'),
     topicPageStructure('careers', EdsList),
     topicPageStructure('whatWeDo', EdsList),
