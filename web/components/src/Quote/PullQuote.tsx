@@ -2,9 +2,18 @@ import { forwardRef, HTMLAttributes, isValidElement, Children } from 'react'
 import { Media } from './Media'
 import styled from 'styled-components'
 
-export type PullQuoteProps = HTMLAttributes<HTMLDivElement>
+type ImagePosition = 'left' | 'right'
 
-const Container = styled.figure<{ hasImage: boolean }>`
+export type PullQuoteProps = {
+  imagePosition?: ImagePosition
+} & HTMLAttributes<HTMLDivElement>
+
+type ContainerProps = {
+  hasImage: boolean
+  imagePosition: ImagePosition
+}
+
+const Container = styled.figure<ContainerProps>`
   display: grid;
   row-gap: var(--spacing-medium);
   margin: 0;
@@ -12,35 +21,41 @@ const Container = styled.figure<{ hasImage: boolean }>`
   /* margin: var(--spacing-xLarge) 0; */
   grid-template-rows: min-content min-content;
   grid-template-columns: 5rem var(--spacing-medium) 1fr;
-  grid-template-areas: ${({ hasImage }) => hasImage ? 
-    `
+  grid-template-areas: ${({ hasImage }) =>
+    hasImage
+      ? `
       'media spacing author'
       'quote quote quote'
-    ` :
     `
+      : `
       'quote quote quote'
       'author author author'
-    `
-  };
+    `};
 
   @media (min-width: 800px) {
-    grid-template-columns: 1fr var(--spacing-medium) 164px;
-    grid-template-areas:
-      'quote spacing media'
-      'author spacing media';
-  }
-  @media (min-width: 1440px) {
-    grid-template-columns: 1fr var(--spacing-medium) 220px;
-  }
-  @media (min-width: 1920px) {
-    grid-template-columns: 1fr var(--spacing-medium) 294px;
+    grid-template-columns: ${({ imagePosition }) =>
+      imagePosition === 'left' ? `11rem var(--spacing-medium) 1fr` : `1fr var(--spacing-medium) 11rem`};
+    grid-template-areas: ${({ imagePosition }) =>
+      imagePosition === 'left'
+        ? `
+        'media spacing quote'
+        'media spacing author'
+        `
+        : `
+        'quote spacing media'
+        'author spacing media'
+        `};
   }
 `
 
-export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function PullQuote({ children }, ref) {
+export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function PullQuote(
+  { imagePosition = 'right', children },
+  ref,
+) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Media)
   return (
-    <Container hasImage={hasImage} ref={ref}>{children}</Container>
+    <Container imagePosition={imagePosition} hasImage={hasImage} ref={ref}>
+      {children}
+    </Container>
   )
 })
-
