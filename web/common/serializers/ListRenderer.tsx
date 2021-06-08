@@ -7,7 +7,6 @@ type ListProps = {
 }
 
 export const ListRenderer = ({ type, children }: ListProps) => {
-  console.log('list')
   const bullet = type === 'bullet'
   if (bullet) {
     return <List>{children}</List>
