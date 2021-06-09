@@ -15,3 +15,4 @@ const legacyStyles = (): JSX.Element => {
 
 export default legacyStyles
  */
+export {}

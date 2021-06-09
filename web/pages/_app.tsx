@@ -1,6 +1,6 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
+/* import { useRouter } from 'next/router'
+ */ import Head from 'next/head'
 import { useState, useCallback } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Topbar, Link } from '@components'
@@ -8,8 +8,8 @@ import { GlobalStyle } from '../styles/globalStyles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { DefaultSeo } from 'next-seo'
 import NextLink from 'next/link'
-import ArchiveNewsStyles from './news/archive/ArchiveNewsStyles'
-
+/* import ArchiveNewsStyles from './news/archive/ArchiveNewsStyles'
+ */
 const MenuWrapper = styled.div`
   margin: 0 auto;
 
@@ -27,22 +27,22 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
     margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
   }
 `
-const isArchivePage = (currentPagePath: string): boolean => {
+/* const isArchivePage = (currentPagePath: string): boolean => {
   return currentPagePath.includes('/archive')
-}
+} */
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [topbarHeight, setTopbarHeight] = useState(0)
-  const router = useRouter()
-  const topbarRef = useCallback((node) => {
+  /*   const router = useRouter()
+   */ const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
       setTopbarHeight(height)
     }
   }, [])
 
-  const archivedPage = isArchivePage(router.asPath)
-
+  /*   const archivedPage = isArchivePage(router.asPath)
+   */
   // TODO: get locale from Sanity
   return (
     <>
