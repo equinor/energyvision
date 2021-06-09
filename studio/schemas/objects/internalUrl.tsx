@@ -1,5 +1,4 @@
 //validation: (Rule: any) => Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }),
-import { ToastProvider } from '@sanity/ui'
 import { SchemaType } from '../../types'
 
 export default {
@@ -23,8 +22,7 @@ export default {
         {
           type: 'news',
         },
-        /* @TODO: Fix this with another structure */
-        { type: 'page_careers' },
+        { type: 'page' },
       ],
       options: {
         filter: ({ document: { title: title = '' } }: any): SchemaType.ReferenceFilter => ({

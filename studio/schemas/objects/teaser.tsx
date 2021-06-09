@@ -3,13 +3,10 @@ import React from 'react'
 import { SchemaType } from '../../types'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
-import { topicsList } from '../../helpers/topics'
 import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, SmallSizeImage, LeftAlignedImage, RightAlignedImage } from '../../icons'
-
-const topicPages = topicsList.map((topic: any) => ({ type: `page_${topic.id}` }))
 
 const imageSizeOptions = [
   { value: 'full', icon: FullSizeImage },
@@ -117,7 +114,12 @@ export default {
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
           return validateLink(value, context.parent.url)
         }),
-      to: topicPages,
+      to: [
+        {
+          type: 'news',
+        },
+        { type: 'page' },
+      ],
       fieldset: 'link',
     },
     {
@@ -128,7 +130,6 @@ export default {
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
           return validateLink(value, context.parent.reference)
         }),
-      to: topicPages,
       fieldset: 'link',
     },
     {
