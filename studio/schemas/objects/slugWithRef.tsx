@@ -19,7 +19,8 @@ function formatSlug(input: any) {
 async function getPrefix(doc: any, source: any, ref: any) {
   const docTitle = doc[source]
 
-  const refQuery = `*[_id == $ref][0].title`
+  // We use the slug as a base, as it's not a one to one relationship between the slug and the title
+  const refQuery = `*[_id == $ref][0].slug.current`
   const refParams = { ref: doc?.[ref]?._ref }
 
   if (!refParams.ref) {
