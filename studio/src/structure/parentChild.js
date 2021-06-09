@@ -20,7 +20,7 @@ export default function parentChild(schema = 'category') {
   const categoryParents = `_type == "${schema}" && !defined(parent)`
 
   return S.listItem(schema)
-    .title('Topic pages by category')
+    .title('Topic Routes')
     .icon(EdsList)
     .child(() =>
       documentStore.listenQuery(`*[${categoryParents}]`).pipe(
