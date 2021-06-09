@@ -29,7 +29,7 @@ export const getDefaultDocumentNode = (props) => {
   const { schemaType } = props
   if (schemaType === 'news') {
     return S.document().views([S.view.form(), S.view.component(NewsPreview).title('News preview')])
-  } else if (schemaType.startsWith('page_')) {
+  } else if (schemaType === 'page') {
     return S.document().views([S.view.form(), S.view.component(PagePreview).title('Page preview')])
   }
 
