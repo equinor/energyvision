@@ -40,7 +40,7 @@ export default function parentChild(schema = 'category') {
               S.divider(),
               ...parents.map((parent) =>
                 S.listItem()
-                  .title(parent.title)
+                  .title(`${parent.title} (${parent.slug.current})`)
                   .icon(EdsList)
                   .child(() =>
                     S.documentList()
