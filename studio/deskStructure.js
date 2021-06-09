@@ -3,37 +3,7 @@ import S from '@sanity/desk-tool/structure-builder'
 import { EdsList } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
-import { getTopicConfig } from './helpers/topics'
 import parentChild from './src/structure/parentChild'
-
-// I'm having a hard time to get the desk structure file work with typescript.
-// So not possible to type the topicSuffix :/
-const topicPageStructure = (topicSuffix, icon) => {
-  const topic = getTopicConfig(topicSuffix)
-  //return S.documentTypeListItem(`${topic.id}_page`).icon(icon).title(topic.title)
-  return S.listItem()
-    .title(`${topic.title} (Deprecated)`)
-    .icon(icon)
-    .child(
-      S.list()
-        .title(`/${topic.slug.en}`)
-        .items([
-          /* We can do something clever here if we have a pushlishedDate that actually works :) */
-          /*  S.listItem()
-            .title('Published pages')
-            .schemaType(`${topic.id}_page`)
-            .child(
-              S.documentList(`${topic.id}_page`)
-                .title('Published posts')
-                .filter('_type == "careers_page" && publishedAt < now() && !(_id in path("drafts.**"))')
-                .child((documentId) =>
-                  S.document().documentId(documentId).schemaType(`${topic.id}_page`).views([S.view.form()]),
-                ),
-            ), */
-          S.documentTypeListItem(`page_${topic.id}`).title('All pages'),
-        ]),
-    )
-}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
@@ -43,9 +13,6 @@ export default () => {
     S.documentTypeListItem('page').icon(EdsList).title('Topic content'),
     S.divider(),
     parentChild('page'),
-    S.divider(),
-    topicPageStructure('careers', EdsList),
-    topicPageStructure('whatWeDo', EdsList),
   ]
 
   return S.list().title('Content').items(listItems)
