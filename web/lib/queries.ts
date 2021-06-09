@@ -3,7 +3,7 @@ const newsFields = /* groq */ `
   "updatedAt": _updatedAt,
   title,
   heroImage,
-  publishDateTime,
+  "publishDateTime": coalesce(publishDateTime, _createdAt),
   "slug": slug.current,
   ingress,
 `
