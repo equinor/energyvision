@@ -138,11 +138,11 @@ const Latest = styled.div`
   max-width: 1700px;
 `
 
-const getModifiedDate = (publishDate: string, updatedDate: string) => {
-  const publishDt = new Date(publishDate).getTime()
-  const updateDt = new Date(updatedDate).getTime()
+const isDateAfter = (a: string, b: string) => {
+  const dtA = new Date(a).getTime()
+  const dtB = new Date(b).getTime()
 
-  return publishDt > updateDt ? publishDate : updatedDate
+  return dtA > dtB
 }
 
 type ArticleProps = {
@@ -177,7 +177,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
 
-  const modifiedDate = getModifiedDate(news.publishDateTime, news.updatedAt)
+  const modifiedDate = isDateAfter(news.publishDateTime, news.updatedAt) ? news.publishDateTime : news.updatedAt
 
   return (
     <>
@@ -217,8 +217,12 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                       <Icon data={calendar} />
                       <DateContainer>
                         <FormattedDateTime datetime={news.publishDateTime} />
-                        <LastModifiedLabel>Last modified</LastModifiedLabel>
-                        <FormattedDateTime datetime={modifiedDate} />
+                        {isDateAfter(modifiedDate, news.publishDateTime) && (
+                          <>
+                            <LastModifiedLabel>Last modified</LastModifiedLabel>
+                            <FormattedDateTime datetime={modifiedDate} />
+                          </>
+                        )}
                       </DateContainer>
                     </DateWrapper>
                   </HeaderInner>
