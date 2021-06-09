@@ -1,7 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 //TODO cleanup
-import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
+
+// @TODO: This must be located a completely different place than in the pages folder
+/* import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
 
 const legacyStyles = (): JSX.Element => {
   return (
@@ -12,3 +14,4 @@ const legacyStyles = (): JSX.Element => {
 }
 
 export default legacyStyles
+ */
