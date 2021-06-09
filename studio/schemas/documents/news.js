@@ -84,8 +84,6 @@ export default {
         timeStep: 15,
         calendarTodayLabel: 'Today',
       },
-      validation: (Rule) => Rule.required(),
-      initialValue: () => new Date().toISOString(),
     },
     {
       // TODO: Figure out a way to run a slugify function before publish
