@@ -53,6 +53,7 @@ export default {
       name: 'parent',
       type: 'reference',
       to: [{ type: 'page' }],
+      hidden: 'true',
     },
     {
       title: 'Page title',
@@ -76,6 +77,7 @@ export default {
       description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
       validation: (Rule) => Rule.max(200),
       fieldset: 'slug',
+      hidden: 'true',
     },
     //This is no longer in use, but will it make sense to be more explicit about this? Dunno
     // Keeping this field as a reminder
@@ -87,7 +89,7 @@ export default {
       fieldset: 'slug',
     }, */
     // @TODO: Write a new function
-    slugWithRef('topicSlug', 'parent', 'slug'),
+    //slugWithRef('topicSlug', 'parent', 'slug'),
     {
       name: 'content',
       type: 'array',
@@ -107,12 +109,14 @@ export default {
     select: {
       title: 'title',
       slug: 'slug.current',
+      media: 'heroFigure.image',
     },
     prepare(selection) {
-      const { title, slug } = selection
+      const { title, slug, media } = selection
       return {
         title,
         subtitle: slug,
+        media,
       }
     },
   },

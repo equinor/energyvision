@@ -27,7 +27,7 @@ export default () => {
       ),
     S.documentTypeListItem('page').icon(EdsList).title('Topic content'),
     S.divider(),
-    parentChild('page'),
+    parentChild('route'),
   ]
 
   return S.list().title('Content').items(listItems)

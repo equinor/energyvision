@@ -29,7 +29,7 @@ export default function parentChild(schema = 'category') {
             .title('All Categories')
             .items([
               S.listItem()
-                .title('Topic Categories')
+                .title('Top Level Pages')
                 .child(() =>
                   S.documentList()
                     .title('Topic Categories')
@@ -40,7 +40,7 @@ export default function parentChild(schema = 'category') {
               S.divider(),
               ...parents.map((parent) =>
                 S.listItem()
-                  .title(`${parent.title} (${parent.slug.current})`)
+                  .title(`${parent.slug?.current || 'Missing slug'}`)
                   .icon(EdsList)
                   .child(() =>
                     S.documentList()
