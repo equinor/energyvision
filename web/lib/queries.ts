@@ -133,7 +133,6 @@ export const pageQuery = /* groq */ `
         ingress,
         text,
         "callToActions": action[]{
-          
             _type == "internalUrl" => {
               "type": _type,
               "id": _key,
