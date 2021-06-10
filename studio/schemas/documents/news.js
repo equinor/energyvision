@@ -1,3 +1,4 @@
+import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { formatDate } from '../../helpers/formatDate'
@@ -44,6 +45,7 @@ export default {
   title: 'News',
   type: 'document',
   name: 'news',
+  i18n,
   fieldsets: [
     {
       title: 'SEO & metadata',

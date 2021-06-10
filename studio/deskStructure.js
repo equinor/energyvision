@@ -4,12 +4,27 @@ import { EdsList } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
+import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
+import { i18n } from './schemas/documentTranslation'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
   const listItems = [
-    S.documentTypeListItem('news').icon(EdsList).title('News'),
-
+    S.listItem()
+      .title('News')
+      .icon(EdsList)
+      .schemaType('news')
+      .child(
+        S.documentList()
+          .id('news')
+          .title('News articles')
+          .filter('_type == "news" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params, _context) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'news'
+          }),
+      ),
     S.documentTypeListItem('page').icon(EdsList).title('Topic content'),
     S.divider(),
     parentChild('page'),
@@ -28,7 +43,10 @@ export const getDefaultDocumentNode = (props) => {
    */
   const { schemaType } = props
   if (schemaType === 'news') {
-    return S.document().views([S.view.form(), S.view.component(NewsPreview).title('News preview')])
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(NewsPreview).title('News preview'),
+    ])
   } else if (schemaType === 'page') {
     return S.document().views([S.view.form(), S.view.component(PagePreview).title('Page preview')])
   }

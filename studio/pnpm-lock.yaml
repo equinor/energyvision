@@ -20,6 +20,7 @@ specifiers:
   react-dom: ^17.0.2
   rxjs: ^7.1.0
   sanity-plugin-color-list: ^2.0.1
+  sanity-plugin-intl-input: ^5.1.0
   slugify: ^1.5.3
   styled-components: ^5.3.0
 
@@ -41,6 +42,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   rxjs: 7.1.0
   sanity-plugin-color-list: 2.0.1_943c3a7c645b7dbd4f9512b242be5685
+  sanity-plugin-intl-input: 5.1.0_0764e36a2ce9049137a546abb6bfecdf
   slugify: 1.5.3
   styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
 
@@ -1968,6 +1970,13 @@ packages:
 
   /@babel/runtime/7.14.0:
     resolution: {integrity: sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==}
+    dependencies:
+      regenerator-runtime: 0.13.7
+    dev: false
+
+  /@babel/runtime/7.14.5:
+    resolution: {integrity: sha512-121rumjddw9c3NCQ55KGkyE1h/nzWhU/owjhw0l4mQrkzz4x9SGS1X8gFLraHwX7td3Yo4QTL+qj0NcIzN87BA==}
+    engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.7
     dev: false
@@ -6961,6 +6970,10 @@ packages:
       lodash.isarray: 3.0.4
     dev: false
 
+  /lodash.get/4.4.2:
+    resolution: {integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=}
+    dev: false
+
   /lodash.isarguments/3.1.0:
     resolution: {integrity: sha1-L1c9hcaiQon/AGY7SRwdM4/zRYo=}
     dev: false
@@ -9477,6 +9490,30 @@ packages:
       prop-types: 15.7.2
       react: 17.0.2
       styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
+    dev: false
+
+  /sanity-plugin-intl-input/5.1.0_0764e36a2ce9049137a546abb6bfecdf:
+    resolution: {integrity: sha512-viwQGnXv/cBcN78eIhRrYtioRjvJ0KKTD1TqBydxmXhG9uFWymUepQDkuNdg4xLXWKNUBXcwH/0hHblsvFd38A==}
+    peerDependencies:
+      '@sanity/base': ^2.0.0
+      '@sanity/desk-tool': ^2.0.0
+      '@sanity/form-builder': ^2.0.0
+      '@sanity/react-hooks': ^2.0.0
+      '@sanity/structure': ^2.0.0
+      react: ^17.0.0
+      react-router: ^5.0.0
+      react-router-dom: ^5.0.0
+    dependencies:
+      '@babel/runtime': 7.14.5
+      '@sanity/base': 2.10.5_9bdd65c2b60ce8638444b80b396a481b
+      '@sanity/desk-tool': 2.10.5_9bdd65c2b60ce8638444b80b396a481b
+      '@sanity/form-builder': 2.10.5_9bdd65c2b60ce8638444b80b396a481b
+      classnames: 2.3.1
+      lodash.get: 4.4.2
+      moment: 2.29.1
+      react: 17.0.2
+      regenerator-runtime: 0.13.7
+      slugify: 1.5.3
     dev: false
 
   /sax/1.2.4:
