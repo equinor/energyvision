@@ -1,11 +1,12 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { EdsList } from './icons'
+import { EdsList, EdsIcon } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
+import { warning_outlined } from '@equinor/eds-icons'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
@@ -28,6 +29,21 @@ export default () => {
     S.documentTypeListItem('page').icon(EdsList).title('Topic content'),
     S.divider(),
     parentChild('route'),
+    S.divider(),
+    S.listItem()
+      .title('News nb_no (Temporary)')
+      .icon(() => EdsIcon(warning_outlined))
+      .schemaType('news')
+      .child(
+        S.documentList()
+          .id('news')
+          .title('News articles')
+          .filter('_type == "news" &&  _lang == "nb_no"')
+          .canHandleIntent((_name, params, _context) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'news'
+          }),
+      ),
   ]
 
   return S.list().title('Content').items(listItems)
