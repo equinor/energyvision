@@ -108,14 +108,12 @@ export default {
   preview: {
     select: {
       title: 'title',
-      slug: 'slug.current',
       media: 'heroFigure.image',
     },
     prepare(selection) {
-      const { title, slug, media } = selection
+      const { title, media } = selection
       return {
         title,
-        subtitle: slug,
         media,
       }
     },

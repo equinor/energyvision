@@ -91,121 +91,111 @@ export const newsSlugsQuery = /* groq */ `
 
 // @TODO: Don't know if we need the content key, it depends...
 export const pageQuery = /* groq */ ` 
-   *[_type == "page" && slug.current == $slug][0] {
-     "seoAndSome": {
-      "documentTitle": seo.documentTitle,
-      "metaDescription": seo.metaDescription,
-      openGraphImage,
-     },
-    title,
-    "heroImage": heroFigure,
+   *[_type == "route" && slug.current == $slug][0] {
     "slug": slug.current,
-    "content": content[]{
-      _type == "teaser"=>{
-        "type": _type,
-        "id": _key,
-        overline,
-        title,
-        text,
-        "designOptions": {
-          "background": coalesce(background.title, 'White'),
-          "imagePosition": coalesce(imagePosition, 'left'),
-          imageSize,
-        },
-        "action": {
-          "label": linkLabel,
-          "link": reference-> {
-            "type": _type,
-            "slug": slug.current
-          },
-          "href": url,
-        },
-        "image": image{
-          ...,
-          "extension": asset-> extension
-        }  
-      },
-      _type == "textBlock"=>{
-        "type": _type,
-        "id": _key,
-        overline,
-        title,
-        ingress,
-        text,
-        "callToActions": action[]{
-            _type == "internalUrl" => {
-              "type": _type,
-              "id": _key,
-              label,
-              "link": reference-> {
-                "type": _type,
-                "slug": slug.current
-              },
-            },
-            _type == "externalUrl" => {
-              "id": _key,
-              "type": _type,
-              label,
-              "href": url,
-            },
-            _type == "downloadableFile" => {
-              "id": _key,
-              "type": _type,
-              "label": filename,
-              "href": file.asset-> url,
-              "extension": file.asset-> extension 
-            },
-            _type == "downloadableImage" => {
-              "id": _key,
-              "type": _type,
-              label,
-              "href": image.asset-> url, 
-              "extension": image.asset-> extension 
-            },
-          },
-    
-        "designOptions": {
-          "background": coalesce(background.title, 'White'),
-        },
-      },
-      _type == "fullWidthImage"=>{
-        "type": _type,
-        "id": _key,
-        image
-      },
-      _type == "figure"=>{
-        "type": _type,
-        "id": _key,
-        figure,
-        "designOptions": {
-          "background": coalesce(background.title, 'White'),
-        },
-      },
-      _type == "textWithIconArray"=>{
-        "type": _type,
-        "id": _key,
-        "group": group[]{
+    "title": content->title,
+    "seoAndSome": content->{
+      "documentTitle": seo.documentTitle,
+          "metaDescription": seo.metaDescription,
+          openGraphImage,
+    },
+    "heroImage": content->heroFigure,
+    "content": content->content[]{
+        _type == "teaser"=>{
+          "type": _type,
           "id": _key,
+          overline,
           title,
           text,
-          icon
+          "designOptions": {
+            "background": coalesce(background.title, 'White'),
+            "imagePosition": coalesce(imagePosition, 'left'),
+            imageSize,
+          },
+          "action": {
+            "label": linkLabel,
+            "link": reference-> {
+              "type": _type,
+              "slug": slug.current
+            },
+            "href": url,
+          },
+          "image": image{
+            ...,
+            "extension": asset-> extension
+          }  
         },
-   
-        "designOptions": {
-          "background": coalesce(background.title, 'none'),
+        _type == "textBlock"=>{
+          "type": _type,
+          "id": _key,
+          overline,
+          title,
+          ingress,
+          text,
+          "callToActions": action[]{
+              _type == "internalUrl" => {
+                "type": _type,
+                "id": _key,
+                label,
+                "link": reference-> {
+                  "type": _type,
+                  "slug": slug.current
+                },
+              },
+              _type == "externalUrl" => {
+                "id": _key,
+                "type": _type,
+                label,
+                "href": url,
+              },
+              _type == "downloadableFile" => {
+                "id": _key,
+                "type": _type,
+                "label": filename,
+                "href": file.asset-> url,
+                "extension": file.asset-> extension 
+              },
+              _type == "downloadableImage" => {
+                "id": _key,
+                "type": _type,
+                label,
+                "href": image.asset-> url, 
+                "extension": image.asset-> extension 
+              },
+            },
+      
+          "designOptions": {
+            "background": coalesce(background.title, 'White'),
+          },
         },
-      },
-      _type == "pullQuote" => {
-        "type": _type,
-        "id": _key,
-        author,
-        authorTitle,
-        image,
-        quote,
-        "designOptions": {
-          "imagePosition": coalesce(imagePosition, 'right'),
-        }
-      },
+        _type == "fullWidthImage"=>{
+          "type": _type,
+          "id": _key,
+          image
+        },
+        _type == "figure"=>{
+          "type": _type,
+          "id": _key,
+          figure,
+          "designOptions": {
+            "background": coalesce(background.title, 'White'),
+          },
+        },
+        _type == "textWithIconArray"=>{
+          "type": _type,
+          "id": _key,
+          "group": group[]{
+            "id": _key,
+            title,
+            text,
+            icon
+          },
+    
+          "designOptions": {
+            "background": coalesce(background.title, 'none'),
+          },
+        },
+    
     }
   }
 `
