@@ -26,10 +26,10 @@ export default function parentChild(schema = 'category') {
       documentStore.listenQuery(`*[${categoryParents}]`).pipe(
         map((parents) =>
           S.list()
-            .title('All Categories')
+            .title('All Routes')
             .items([
               S.listItem()
-                .title('Top Level Pages')
+                .title('Top Level Routes')
                 .child(() =>
                   S.documentList()
                     .title('Topic Categories')
@@ -44,7 +44,7 @@ export default function parentChild(schema = 'category') {
                   .icon(EdsList)
                   .child(() =>
                     S.documentList()
-                      .title('Child Pages')
+                      .title('Child Routes')
                       .schemaType(schema)
                       .filter(`_type == "${schema}" && parent._ref == $parentId`)
                       .params({ parentId: parent._id })

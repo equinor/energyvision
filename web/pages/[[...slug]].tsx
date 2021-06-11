@@ -20,7 +20,6 @@ export default function Page({ data, preview }: any) {
   const router = useRouter()
   const slug = data?.pageData?.slug
   const { pathname } = useRouter()
-
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
@@ -81,7 +80,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
   //console.log('queryParams:', queryParams)
   //console.log('docType:', docType)
   // console.log('data', pageData)
-
   return {
     props: {
       preview,
