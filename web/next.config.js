@@ -7,6 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
   publicRuntimeConfig: {
     domain: 'https://energyvision.app.radix.equinor.com',
+    archiveStorageURL: archiveServerHostname,
   },
   images: {
     domains: ['cdn.sanity.io'],
