@@ -1,4 +1,4 @@
 {
-  "idStructure": "subpath",
-  "referenceBehavior": "hard"
+  "idStructure": "delimiter",
+  "referenceBehavior": "weak"
 }
