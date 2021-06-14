@@ -31,7 +31,7 @@ export default function Page({ data, preview }: any) {
     return <HomePage />
   }
 
-  if (!router.isFallback && !slug) {
+  if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
   }
 
