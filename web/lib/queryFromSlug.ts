@@ -1,8 +1,19 @@
-import { newsQuery, pageQuery } from './queries'
+import { newsQuery, pageQuery, pageQueryById } from './queries'
 
 export const getQueryFromSlug = (slugArray: string[] = ['']) => {
   const [slugStart] = slugArray
-  const slug = `/${slugArray.join('/')}`
+  const slug = `/${slugArray.join('/')}` || ''
+
+  console.log(slugStart)
+
+  if (slugStart.startsWith('drafts.')) {
+    // We are in preview mode for content that has currently no slug (no routes)
+    return {
+      queryParams: { id: slugStart },
+      query: pageQueryById,
+      docType: 'page',
+    }
+  }
 
   switch (slugStart) {
     case '':
