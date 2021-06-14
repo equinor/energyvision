@@ -21,14 +21,12 @@ export default function PagePreview(props: any) {
   const {
     document: { displayed },
   } = props
-  console.log('Page id: ', displayed._id)
 
-  if (!displayed?._id) {
-    return <div>The product needs an id before it can be previewed.</div>
+  if (!displayed?.slug?.current) {
+    return <div>The route needs a slug before it can be previewed.</div>
   }
 
-  const url = `${baseUrl}/${displayed?._id}?preview`
-  console.log('Preview url', url)
+  const url = `${baseUrl}${displayed?.slug?.current}?preview`
 
   return (
     <Wrapper>

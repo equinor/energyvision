@@ -8,7 +8,7 @@
     "./**/*.ts",
     "./**/*.tsx",
     "deskStructure.js",
-    "schemas/documents/page.js",
+    "schemas/documents/page_old.js",
     "schemas/schema.js"
   ]
 }
