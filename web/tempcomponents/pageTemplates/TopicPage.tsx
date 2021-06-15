@@ -60,7 +60,7 @@ type ComponentProps =
   | QuoteData
 
 const TopicPage = ({ data }: TopicPageProps) => {
-  const content = (data.content || []).map((c: ComponentProps) => {
+  const content = (data?.content || []).map((c: ComponentProps) => {
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} />
@@ -85,7 +85,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           {data?.title}
         </StyledHeading>
       </HeroBanner>
-      <Image>{data.heroImage && <HeroImage data={data.heroImage} />}</Image>
+      <Image>{data?.heroImage && <HeroImage data={data?.heroImage} />}</Image>
       {content}
     </TopicPageLayout>
   )

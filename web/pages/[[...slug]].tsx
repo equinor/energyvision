@@ -49,7 +49,7 @@ export default function Page({ data, preview }: any) {
             title={pageData?.seoAndSome?.documentTitle || pageData?.title}
             description={pageData?.seoAndSome?.metaDescription}
             openGraph={{
-              title: pageData.title,
+              title: pageData?.title,
               description: pageData?.seoAndSome?.metaDescription,
               type: 'website',
               url: fullUrl,
