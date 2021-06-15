@@ -16,7 +16,8 @@ import { EdsList } from '../../icons'
  */
 
 const views = [S.view.form(), S.view.component(RoutePreview).title('Route preview')]
-
+// Original version without preview pane
+// const views = [S.view.form()]
 export default function parentChild(schema = 'category') {
   const categoryParents = `_type == "${schema}" && !defined(parent)`
 
@@ -30,6 +31,7 @@ export default function parentChild(schema = 'category') {
             .title('All Routes')
             .items([
               S.listItem()
+
                 .title('Top Level Routes')
                 .child(() =>
                   S.documentList()
@@ -41,6 +43,8 @@ export default function parentChild(schema = 'category') {
               S.divider(),
               ...parents.map((parent) =>
                 S.listItem()
+                  // Fix to avoid multiple list items with the same id
+                  .id(`${parent.title}${parent._id}`)
                   .title(`${parent.slug?.current || 'Missing slug'}`)
                   .icon(EdsList)
                   .child(() =>
