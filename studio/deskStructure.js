@@ -26,7 +26,21 @@ export default () => {
             return params.type === 'news'
           }),
       ),
-    S.documentTypeListItem('page').icon(EdsList).title('Topic content'),
+    S.listItem()
+      .title('Topic content')
+      .icon(EdsList)
+      .schemaType('page')
+      .child(
+        S.documentList('page')
+          .id('pages')
+          .title('Topic content')
+          .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params, _context) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'page'
+          }),
+      ),
     S.divider(),
     parentChild('route'),
     S.divider(),
@@ -64,7 +78,10 @@ export const getDefaultDocumentNode = (props) => {
       S.view.component(NewsPreview).title('News preview'),
     ])
   } else if (schemaType === 'page') {
-    return S.document().views([S.view.form(), S.view.component(PagePreview).title('Page preview')])
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(PagePreview).title('Page preview'),
+    ])
   }
 
   return S.document().views([S.view.form()])
