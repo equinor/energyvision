@@ -4,12 +4,14 @@ import React from 'react'
 
 // import { slugWithType } from '../objects/slugWithType'
 import { slugWithRef } from '../objects/slugWithRef'
+import { i18n } from '../documentTranslation'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
 export default {
   type: 'document',
   name: `page`,
   title: `Topic page`,
+  i18n,
   fieldsets: [
     {
       title: 'Slug',
