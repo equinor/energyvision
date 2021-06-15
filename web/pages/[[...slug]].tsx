@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
 
   // console.log('query:', query)
-  console.log('queryParams:', queryParams)
+  // console.log('queryParams:', queryParams)
   //console.log('docType:', docType)
   // console.log('data', pageData)
 
