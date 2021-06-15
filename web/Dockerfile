@@ -16,7 +16,7 @@ COPY ./legacy/css /opt/app/legacy/css
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
 RUN pnpm install -r --frozen-lockfile
-RUN pnpm legacy-css build
+# RUN pnpm legacy-css build # built with postinstall scripts
 RUN pnpm web build
 
 FROM mhart/alpine-node:14
