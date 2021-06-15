@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
   // console.log('query:', query)
   console.log('queryParams:', queryParams)
   //console.log('docType:', docType)
-  console.log('data', pageData)
+  // console.log('data', pageData)
 
   return {
     props: {
@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pageQueries = await sanityClient.fetch(groq`*[_type match "page_*" && defined(slug.current)][].slug.current`)
+  const pageQueries = await sanityClient.fetch(groq`*[_type == "route" && defined(slug.current)][].slug.current`)
 
   return {
     paths: pageQueries.map((slug: string) => ({
