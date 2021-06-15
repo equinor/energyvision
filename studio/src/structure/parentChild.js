@@ -31,7 +31,6 @@ export default function parentChild(schema = 'category') {
             .title('All Routes')
             .items([
               S.listItem()
-
                 .title('Top Level Routes')
                 .child(() =>
                   S.documentList()
@@ -44,7 +43,7 @@ export default function parentChild(schema = 'category') {
               ...parents.map((parent) =>
                 S.listItem()
                   // Fix to avoid multiple list items with the same id
-                  .id(`${parent.title}${parent._id}`)
+                  .id(`${parent._id}`)
                   .title(`${parent.slug?.current || 'Missing slug'}`)
                   .icon(EdsList)
                   .id(`${parent.title}${parent._id}`)
