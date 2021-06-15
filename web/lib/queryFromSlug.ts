@@ -1,7 +1,7 @@
 import { newsQuery, pageQuery, pageQueryById } from './queries'
 
 const isSlugID = (slug: string): boolean => {
-  const str = slug.startsWith('draft.') ? slug.split('.')[1] : slug
+  const str = slug.startsWith('drafts.') ? slug.split('.')[1] : slug
   // regex magic to see if string is a UUID
   const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
 
