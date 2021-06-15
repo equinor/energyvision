@@ -46,7 +46,6 @@ export default function parentChild(schema = 'category') {
                   .id(`${parent._id}`)
                   .title(`${parent.slug?.current || 'Missing slug'}`)
                   .icon(EdsList)
-                  .id(`${parent.title}${parent._id}`)
                   .child(() =>
                     S.documentList()
                       .title('Child Routes')
