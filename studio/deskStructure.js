@@ -73,21 +73,16 @@ export const getDefaultDocumentNode = (props) => {
    * https://www.sanity.io/docs/structure-builder-reference#getdefaultdocumentnode-97e44ce262c9
    */
   const { schemaType } = props
-  console.log('This is a route!!!!!!!!!!!', schemaType)
   if (schemaType === 'news') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(NewsPreview).title('News preview'),
     ])
   } else if (schemaType === 'page') {
-<<<<<<< HEAD
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
-      S.view.component(PagePreview).title('Page preview'),
+      S.view.component(PagePreview).title('Preview'),
     ])
-=======
-    return S.document().views([S.view.form(), S.view.component(PagePreview).title('Preview')])
->>>>>>> 492c4bc (✨ Add preview for the Route (#372))
   }
 
   return S.document().views([S.view.form()])
