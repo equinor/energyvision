@@ -1,6 +1,6 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
-/* import { useRouter } from 'next/router'
- */ import Head from 'next/head'
+import { useRouter } from 'next/router'
+import Head from 'next/head'
 import { useState, useCallback } from 'react'
 import { IntlProvider } from 'react-intl'
 import { Topbar, Link } from '@components'
@@ -8,8 +8,12 @@ import { GlobalStyle } from '../styles/globalStyles'
 import styled, { createGlobalStyle } from 'styled-components'
 import { DefaultSeo } from 'next-seo'
 import NextLink from 'next/link'
-/* import ArchiveNewsStyles from './news/archive/ArchiveNewsStyles'
- */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// TODO fix the eslint issues
+import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
+import { isArchivePage } from './news/archive/archiveUtils'
+
 const MenuWrapper = styled.div`
   margin: 0 auto;
 
@@ -27,22 +31,17 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
     margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
   }
 `
-/* const isArchivePage = (currentPagePath: string): boolean => {
-  return currentPagePath.includes('/archive')
-} */
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const [topbarHeight, setTopbarHeight] = useState(0)
-  /*   const router = useRouter()
-   */ const topbarRef = useCallback((node) => {
+  const router = useRouter()
+  const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
       setTopbarHeight(height)
     }
   }, [])
 
-  /*   const archivedPage = isArchivePage(router.asPath)
-   */
   // TODO: get locale from Sanity
   return (
     <>
@@ -54,7 +53,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         </Head>
         {/* TODO: Find out why this works in the news-archive branch and not here */}
-        {/* {archivedPage && <ArchiveNewsStyles />} */}
+        {isArchivePage(router.asPath) && (
+          <style jsx global>
+            {archivedStyles}
+          </style>
+        )}
         <GlobalStyle />
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <TopbarOffset topbarHeight={topbarHeight} />
