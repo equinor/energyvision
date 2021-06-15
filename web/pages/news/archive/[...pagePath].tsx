@@ -4,6 +4,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import getConfig from 'next/config'
+import { removeHTMLExtension } from './archiveUtils'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -18,10 +19,6 @@ type OldArchivedNewsPageProps = {
   data: {
     news: PageResponseData
   }
-}
-
-const removeHTMLExtension = (path: string): string => {
-  return path.replace('.html', '')
 }
 
 const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
