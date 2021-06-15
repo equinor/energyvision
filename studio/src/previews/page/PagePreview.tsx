@@ -24,7 +24,8 @@ export default function PagePreview(props: any) {
   console.log('Page id: ', displayed._id)
 
   if (!displayed?._id) {
-    return <div>The document needs an ID before it can be previewed.</div>
+    // This should never happen
+    return <div>The content needs an id before it can be previewed.</div>
   }
 
   const url = `${baseUrl}/${displayed?._id}?preview`

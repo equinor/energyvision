@@ -16,7 +16,7 @@ const Frame = styled.iframe`
   width: 100%;
 `
 
-export default function PagePreview(props: any) {
+export default function RoutePreview(props: any) {
   const baseUrl = process.env.SANITY_STUDIO_PROJECT_URL
   const {
     document: { displayed },

@@ -1,6 +1,7 @@
 import S from '@sanity/desk-tool/structure-builder'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
+import RoutePreview from '../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
 import { EdsList } from '../../icons'
 
@@ -14,7 +15,7 @@ import { EdsList } from '../../icons'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = [S.view.form()]
+const views = [S.view.form(), S.view.component(RoutePreview).title('Route preview')]
 
 export default function parentChild(schema = 'category') {
   const categoryParents = `_type == "${schema}" && !defined(parent)`
