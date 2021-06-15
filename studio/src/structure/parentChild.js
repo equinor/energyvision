@@ -19,7 +19,7 @@ const views = [S.view.form(), S.view.component(RoutePreview).title('Route previe
 // Original version without preview pane
 // const views = [S.view.form()]
 export default function parentChild(schema = 'category') {
-  const categoryParents = `_type == "${schema}" && !defined(parent)`
+  const categoryParents = `_type == "${schema}" && !defined(parent) && !(_id in path("drafts.**"))`
 
   return S.listItem(schema)
     .title('Topic Routes')
@@ -47,6 +47,7 @@ export default function parentChild(schema = 'category') {
                   .id(`${parent.title}${parent._id}`)
                   .title(`${parent.slug?.current || 'Missing slug'}`)
                   .icon(EdsList)
+                  .id(`${parent.title}${parent._id}`)
                   .child(() =>
                     S.documentList()
                       .title('Child Routes')
