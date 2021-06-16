@@ -3,7 +3,7 @@ import S from '@sanity/desk-tool/structure-builder'
 import documentStore from 'part:@sanity/base/datastore/document'
 import RoutePreview from '../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
-import { EdsList } from '../../icons'
+import { RouteDocuments } from '../../icons'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -23,7 +23,7 @@ export default function parentChild(schema = 'category') {
 
   return S.listItem(schema)
     .title('Topic Routes')
-    .icon(EdsList)
+    .icon(RouteDocuments)
     .child(() =>
       documentStore.listenQuery(`*[${categoryParents}]`).pipe(
         map((parents) =>
@@ -45,7 +45,7 @@ export default function parentChild(schema = 'category') {
                   // Fix to avoid multiple list items with the same id
                   .id(`${parent._id}`)
                   .title(`${parent.slug?.current || 'Missing slug'}`)
-                  .icon(EdsList)
+                  .icon(RouteDocuments)
                   .child(() =>
                     S.documentList()
                       .title('Child Routes')
