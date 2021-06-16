@@ -1,6 +1,6 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { EdsList, EdsIcon } from './icons'
+import { EdsList, EdsIcon, TopicDocuments, NewsDocuments } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
@@ -13,7 +13,7 @@ export default () => {
   const listItems = [
     S.listItem()
       .title('News')
-      .icon(EdsList)
+      .icon(NewsDocuments)
       .schemaType('news')
       .child(
         S.documentList()
@@ -28,7 +28,7 @@ export default () => {
       ),
     S.listItem()
       .title('Topic content')
-      .icon(EdsList)
+      .icon(TopicDocuments)
       .schemaType('page')
       .child(
         S.documentList('page')
