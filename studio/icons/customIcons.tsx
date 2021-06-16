@@ -164,7 +164,7 @@ export const InlineImageRightAlign = (): JSX.Element => (
 )
 
 export const RouteDocuments = () => (
-  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-labelledby="routeTitle">
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-labelledby="routeTitle">
     <title id="routeTitle">Route</title>
     <path
       d="M16.675 4H4.325C4.14553 4 4 4.17908 4 4.4V11.6C4 11.8209 4.14553 12 4.325 12H16.675C16.8545 12 17 11.8209 17 11.6V4.4C17 4.17908 16.8545 4 16.675 4Z"
@@ -193,7 +193,7 @@ export const RouteDocuments = () => (
   </svg>
 )
 export const NewsDocuments = () => (
-  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-labelledby="newsTitle">
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-labelledby="newsTitle">
     <title id="newsTitle">News</title>
     <path
       d="M16.7 14H5.3C5.13434 14 5 14.2686 5 14.6V25.4C5 25.7314 5.13434 26 5.3 26H16.7C16.8657 26 17 25.7314 17 25.4V14.6C17 14.2686 16.8657 14 16.7 14Z"
@@ -230,7 +230,7 @@ export const NewsDocuments = () => (
   </svg>
 )
 export const TopicDocuments = () => (
-  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-labelledby="topicTitle">
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" aria-labelledby="topicTitle">
     <title id="topicTitle">Topic pages</title>
     <path
       d="M42.05 8H5.95C5.4254 8 5 8.31339 5 8.7V21.3C5 21.6866 5.4254 22 5.95 22H42.05C42.5746 22 43 21.6866 43 21.3V8.7C43 8.31339 42.5746 8 42.05 8Z"
