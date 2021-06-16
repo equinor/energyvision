@@ -4,7 +4,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import getConfig from 'next/config'
-import { removeHTMLExtension } from './archiveUtils'
+import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -97,7 +97,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths: string[] = []
 
   const newsPagesList = fs
-    .readFileSync(process.cwd() + `/pages/news/archive/resources/news2016To2018.txt`)
+    .readFileSync(process.cwd() + `/lib/archive/news2016To2018.txt`)
     .toString()
     .replace(/\r/g, '')
     .split(/\n/)

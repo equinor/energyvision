@@ -19,11 +19,10 @@ export default function AllArchivedNews({ newsList }: any) {
     <>
       {/* @TODO: Norwegian version */}
       {/*       @TODO: Avoid duplicate description, write one for the archived pages
- */}      <NextSeo
+       */}{' '}
+      <NextSeo
         title="Archived news"
         description="Keep updated on news from Equinor. Find all our general news, stock market announcements and notifiable tradings here in our news archive."
-
-
       ></NextSeo>
       <Layout>
         <Head>
@@ -64,7 +63,7 @@ const removeHTMLExtension = (path: string): string => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const newsPaths = fs
-    .readFileSync(process.cwd() + `/pages/news/archive/resources/news2016To2018.txt`)
+    .readFileSync(process.cwd() + `/lib/archive/news2016To2018.txt`)
     .toString()
     .replace(/\r/g, '')
     .split(/\n/)

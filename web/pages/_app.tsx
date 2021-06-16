@@ -12,7 +12,7 @@ import NextLink from 'next/link'
 // @ts-ignore
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
-import { isArchivePage } from './news/archive/archiveUtils'
+import { isArchivePage } from '../lib/archive/archiveUtils'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
