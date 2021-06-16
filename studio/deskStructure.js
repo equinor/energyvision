@@ -43,21 +43,6 @@ export default () => {
       ),
     S.divider(),
     parentChild('route'),
-    S.divider(),
-    S.listItem()
-      .title('News nb_no (Temporary)')
-      .icon(() => EdsIcon(warning_outlined))
-      .schemaType('news')
-      .child(
-        S.documentList()
-          .id('news')
-          .title('News articles')
-          .filter('_type == "news" &&  _lang == "nb_no"')
-          .canHandleIntent((_name, params, _context) => {
-            // Assume we can handle all intents (actions) regarding post documents
-            return params.type === 'news'
-          }),
-      ),
   ]
 
   return S.list().title('Content').items(listItems)
