@@ -1,12 +1,12 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { EdsList, EdsIcon, TopicDocuments, NewsDocuments } from './icons'
+import { TopicDocuments, NewsDocuments } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
-import { warning_outlined } from '@equinor/eds-icons'
+import DocumentsPane from 'sanity-plugin-documents-pane'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
@@ -66,6 +66,14 @@ export const getDefaultDocumentNode = (props) => {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
+      S.view
+        .component(DocumentsPane)
+        .options({
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type == "route"]`,
+          params: { id: `_id` },
+          useDraft: false,
+        })
+        .title('Connected routes'),
     ])
   }
 
