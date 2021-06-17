@@ -31,7 +31,9 @@ const HeroBanner = styled.div`
 `
 
 const StyledHeading = styled(Heading)`
-  margin: 0;
+  max-width: 1186px; /* 1920 - (2 * 367) */
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const Image = styled.div`
