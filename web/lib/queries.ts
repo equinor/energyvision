@@ -103,6 +103,17 @@ _type == "teaser"=>{
             "background": coalesce(background.title, 'none'),
           },
         },
+        _type == "pullQuote" => {
+          "type": _type,
+          "id": _key,
+          author,
+          authorTitle,
+          image,
+          quote,
+          "designOptions": {
+            "imagePosition": coalesce(imagePosition, 'right'),
+          }
+        },
 `
 
 export const allNewsQuery = /* groq */ `
