@@ -12,9 +12,6 @@ module.exports = withBundleAnalyzer({
   images: {
     domains: ['cdn.sanity.io'],
   },
-  future: {
-    webpack5: true,
-  },
   i18n: {
     locales: ['no', 'en'],
     defaultLocale: 'en',
