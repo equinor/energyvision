@@ -44,7 +44,7 @@ export default function parentChild(schema = 'category') {
                 S.listItem()
                   // Fix to avoid multiple list items with the same id
                   .id(`${parent._id}`)
-                  .title(`${parent.slug?.current || 'Missing slug'}`)
+                  .title(`${parent.slug?.en_gb.current || 'Missing slug'}`)
                   .icon(RouteDocuments)
                   .child(() =>
                     S.documentList()

@@ -16,17 +16,18 @@ const Frame = styled.iframe`
   width: 100%;
 `
 
+// @TODO: Preview in Norwegian & English
 export default function RoutePreview(props: any) {
   const baseUrl = process.env.SANITY_STUDIO_PROJECT_URL
   const {
     document: { displayed },
   } = props
 
-  if (!displayed?.slug?.current) {
+  if (!displayed?.slug?.en_gb.current) {
     return <div>The route needs a slug before it can be previewed.</div>
   }
 
-  const url = `${baseUrl}${displayed?.slug?.current}?preview`
+  const url = `${baseUrl}${displayed?.slug?.en_gb.current}?preview`
 
   return (
     <Wrapper>

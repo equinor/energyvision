@@ -16,12 +16,12 @@ function formatSlug(input: any) {
   return `/${slug}`
 }
 
-async function getPrefix(doc: any, source: any, ref: any) {
-  const docTitle = doc[source]
+async function getPrefix(doc: any, source: any, language: string, ref: any) {
+  const docTitle = doc[source][language]
 
   // We use the slug as a base, as it's not a one to one relationship between the slug and the title
-  const refQuery = `*[_id == $ref][0].slug.current`
-  const refParams = { ref: doc?.[ref]?._ref }
+  const refQuery = `*[_id == $ref][0].slug.[$language].current`
+  const refParams = { ref: doc?.[ref]?._ref, language: language }
 
   if (!refParams.ref) {
     return slugify(docTitle, slugifyConfig)
@@ -44,25 +44,45 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     description:
       'Danger zone! Do not edit this field directly, use the "Generate" button. We will make if more fool proof with issue #308',
     name: `slug`,
-    type: `slug`,
+    type: `object`,
+    fields: [
+      {
+        title: 'English',
+        name: 'en_gb',
+        type: 'slug',
+        options: {
+          source: (doc: any) => getPrefix(doc, source, 'en_gb', ref),
+          slugify: (value: any) => formatSlug(value),
+        },
+        validation: (Rule: SchemaType.ValidationRule) =>
+          Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
+      },
+      {
+        title: 'Norwegian',
+        name: 'nb_no',
+        type: 'slug',
+        options: {
+          source: (doc: any) => getPrefix(doc, source, 'nb_no', ref),
+          slugify: (value: any) => formatSlug(value),
+        },
+        validation: (Rule: SchemaType.ValidationRule) =>
+          Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
+      },
+    ],
     fieldset: fieldset,
-    options: {
-      source: (doc: any) => getPrefix(doc, source, ref),
-      slugify: (value: any) => formatSlug(value),
-    },
-    validation: (Rule: SchemaType.ValidationRule) =>
-      Rule.required().custom(({ current }: { current: any }) => {
-        if (typeof current === 'undefined') {
-          return true
-        }
-
-        if (current) {
-          if (current.endsWith('/')) {
-            return `Slug cannot end with "/"`
-          }
-        }
-
-        return true
-      }),
   }
+}
+
+const SlugValidation = (current: any) => {
+  if (typeof current === 'undefined') {
+    return true
+  }
+
+  if (current) {
+    if (current.endsWith('/')) {
+      return `Slug cannot end with "/"`
+    }
+  }
+
+  return true
 }

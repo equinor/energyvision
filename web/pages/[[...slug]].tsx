@@ -69,8 +69,8 @@ export default function Page({ data, preview }: any) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
-  const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[])
+export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale }) => {
+  const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[], locale)
 
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
 
@@ -94,12 +94,28 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pageQueries = await sanityClient.fetch(groq`*[_type == "route" && defined(slug.current)][].slug.current`)
+  const EnglishPages = await sanityClient.fetch(
+    groq`*[_type == "route" && defined(slug.en_gb.current)][].slug.en_gb.current`,
+  )
+  const NorwegianPages = await sanityClient.fetch(
+    groq`*[_type == "route" && defined(slug.nb_no.current)][].slug.nb_no.current`,
+  )
 
   return {
-    paths: pageQueries.map((slug: string) => ({
-      params: { slug: slug.split('/').filter((p) => p) },
-    })),
+    paths: [
+      ...EnglishPages.map((slug: string) => ({
+        params: {
+          slug: slug.split('/').filter((p) => p),
+          locale: 'en',
+        },
+      })),
+      ...NorwegianPages.map((slug: string) => ({
+        params: {
+          slug: slug.split('/').filter((p) => p),
+          locale: 'no',
+        },
+      })),
+    ],
     fallback: true,
   }
 }

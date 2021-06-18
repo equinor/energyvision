@@ -1,4 +1,5 @@
 import { newsQuery, pageQuery, pageQueryById } from './queries'
+import { mapLocaleToLang } from './localization'
 
 const isSlugID = (slug: string): boolean => {
   // regex magic to see if string is a UUID
@@ -6,8 +7,8 @@ const isSlugID = (slug: string): boolean => {
   return regExp.test(slug.replace('drafts.', ''))
 }
 
-export const getQueryFromSlug = (slugArray: string[] = ['']) => {
-  const [slugStart] = slugArray
+export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
+  const [slugStart] = slugArray.filter((part: string) => part !== locale)
 
   if (isSlugID(slugStart)) {
     // We are in preview mode for content that has currently no slug (no routes)
@@ -34,7 +35,7 @@ export const getQueryFromSlug = (slugArray: string[] = ['']) => {
       }
     default:
       return {
-        queryParams: { slug: slug, pageType: `${slugStart}` },
+        queryParams: { slug: slug, pageType: `${slugStart}`, lang: mapLocaleToLang(locale) },
         query: pageQuery,
         docType: 'page',
       }
