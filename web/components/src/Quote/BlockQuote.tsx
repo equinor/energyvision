@@ -35,6 +35,7 @@ export const BlockQuote = forwardRef<HTMLDivElement, BlockQuoteProps>(function B
       </figure>
       {image ? (
         <div>
+          {/*  eslint-disable-next-line @next/next/no-img-element */}
           <img src={image} alt="" />
         </div>
       ) : null}

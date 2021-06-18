@@ -4,7 +4,6 @@ import type { FigureData } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer, FigureCaption } from '@components'
 import { StyledTextBlockWrapper } from './TextBlock'
-import { Component } from 'react'
 
 type TeaserProps = {
   data: FigureData
