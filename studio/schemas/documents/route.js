@@ -8,7 +8,7 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description: 'Some clever description of the slug woo',
+      description: '⚠️ This feature is still actively being worked on ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
