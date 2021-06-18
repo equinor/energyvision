@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@next/eslint-plugin-next': ^11.0.0
   '@typescript-eslint/eslint-plugin': ^4.26.1
   '@typescript-eslint/parser': ^4.26.1
   eslint: ^7.28.0
@@ -14,6 +15,7 @@ specifiers:
   typescript: 4.2.4
 
 dependencies:
+  '@next/eslint-plugin-next': 11.0.0
   '@typescript-eslint/eslint-plugin': 4.27.0_ccb2a4bbc5b994c9ab715bb8399a19f1
   '@typescript-eslint/parser': 4.27.0_eslint@7.28.0+typescript@4.2.4
   eslint: 7.28.0
@@ -80,6 +82,10 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@next/eslint-plugin-next/11.0.0:
+    resolution: {integrity: sha512-fPZ0904yY1box6bRpR9rJqIkNxJdvzzxH7doXS+cdjyBAdptMR7wj3mcx1hEikBHzWduU8BOXBvRg2hWc09YDQ==}
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:

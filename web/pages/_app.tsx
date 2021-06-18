@@ -61,7 +61,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <GlobalStyle />
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <TopbarOffset topbarHeight={topbarHeight} />
-
         <Topbar height={topbarHeight} ref={topbarRef}>
           <MenuWrapper>
             <NextLink href="/" passHref>

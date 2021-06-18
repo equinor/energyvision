@@ -97,6 +97,7 @@ export const Typography: React.FC<TypographyProps> = () => (
       </span>
     </p>
     <figure>
+      {/*  eslint-disable-next-line @next/next/no-img-element */}
       <img src="https://i.imgur.com/2bvab7y.jpeg" alt="" />
       <figcaption>Photo: Panasonic</figcaption>
     </figure>
