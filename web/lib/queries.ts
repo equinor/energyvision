@@ -214,8 +214,8 @@ export const pageQueryById = /* groq */ `
 `
 
 export const pageQuery = /* groq */ ` 
-   *[_type == "route" && slug.current == $slug][0] {
-    "slug": slug.current,
+   *[_type == "route" && slug[$lang].current == $slug][0] {
+    "slug": slug[$lang].current,
     "title": content->title,
     "seoAndSome": content->{
       "documentTitle": seo.documentTitle,

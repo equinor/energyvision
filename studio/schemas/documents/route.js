@@ -37,11 +37,23 @@ export default {
     },
     {
       name: 'topicSlug',
-      type: 'string',
       title: 'Topic slug',
-      placeholder: 'For example "Experienced professionals"',
-      description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
-      validation: (Rule) => Rule.max(200),
+      type: 'object',
+      fields: [
+        {
+          title: 'English',
+          name: 'en_gb',
+          type: 'string',
+        },
+        {
+          title: 'Norwegian',
+          name: 'nb_no',
+          type: 'string',
+        },
+      ],
+      // placeholder: 'For example "Experienced professionals"',
+      // description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
+      // validation: (Rule) => Rule.max(200),
       fieldset: 'slug',
     },
     slugWithRef('topicSlug', 'parent', 'slug'),
