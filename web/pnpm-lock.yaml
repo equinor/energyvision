@@ -27,7 +27,7 @@ specifiers:
   babel-plugin-styled-components: ^1.12.0
   jest: ^27.0.4
   jest-styled-components: ^7.0.4
-  next: ^10.2.3
+  next: ^11.0.0
   next-sanity: ^0.2.0
   next-sanity-image: ^3.0.0
   next-seo: ^4.24.0
@@ -51,10 +51,10 @@ dependencies:
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.11.0
   '@sanity/image-url': 0.140.22
-  next: 10.2.3_b8ab330e9e90828dbee94d91c8f5e91e
+  next: 11.0.0_b8ab330e9e90828dbee94d91c8f5e91e
   next-sanity: 0.2.0_react@17.0.2
-  next-sanity-image: 3.0.0_9837f85e697a9c398cb649ff80ee4e3a
-  next-seo: 4.24.0_cdb07c42721266739ffbd3ea8e818efe
+  next-sanity-image: 3.0.0_2d38dcf0cf942010b2863ee1053731c8
+  next-seo: 4.24.0_202b18601d71dc92f6dbf39b46c5242f
   only-allow: 1.0.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -2067,19 +2067,19 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@next/env/10.2.3:
-    resolution: {integrity: sha512-uBOjRBjsWC4C8X3DfmWWP6ekwLnf2JCCwQX9KVnJtJkqfDsv1yQPakdOEwvJzXQc3JC/v5KKffYPVmV2wHXCgQ==}
+  /@next/env/11.0.0:
+    resolution: {integrity: sha512-VKpmDvTYeCpEQjREg3J4pCmVs/QjEzoLmkM8shGFK6e9AmFd0G9QXOL8HGA8qKhy/XmNb7dHeMqrcMiBua4OgA==}
     dev: false
 
-  /@next/polyfill-module/10.2.3:
-    resolution: {integrity: sha512-OkeY4cLhzfYbXxM4fd+6V4s5pTPuyfKSlavItfNRA6PpS7t1/R6YjO7S7rB8tu1pbTGuDHGIdE1ioDv15bAbDQ==}
+  /@next/polyfill-module/11.0.0:
+    resolution: {integrity: sha512-gydtFzRqsT549U8+sY8382I/f4HFcelD8gdUGnAofQJa/jEU1jkxmjCHC8tmEiyeMLidl7iDZgchfSCpmMzzUg==}
     dev: false
 
-  /@next/react-dev-overlay/10.2.3_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-E6g2jws4YW94l0lMMopBVKIZK2mEHfSBvM0d9dmzKG9L/A/kEq6LZCB4SiwGJbNsAdlk2y3USDa0oNbpA+m5Kw==}
+  /@next/react-dev-overlay/11.0.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-q+Wp+eStEMThe77zxdeJ/nbuODkHR6P+/dfUqYXZSqbLf6x5c5xwLBauwwVbkCYFZpAlDuL8Jk8QSAH1OsqC2w==}
     peerDependencies:
-      react: ^16.9.0 || ^17
-      react-dom: ^16.9.0 || ^17
+      react: ^17.0.2
+      react-dom: ^17.0.2
     dependencies:
       '@babel/code-frame': 7.12.11
       anser: 1.4.9
@@ -2096,8 +2096,8 @@ packages:
       strip-ansi: 6.0.0
     dev: false
 
-  /@next/react-refresh-utils/10.2.3_react-refresh@0.8.3:
-    resolution: {integrity: sha512-qtBF56vPC6d6a8p7LYd0iRjW89fhY80kAIzmj+VonvIGjK/nymBjcFUhbKiMFqlhsarCksnhwX+Zmn95Dw9qvA==}
+  /@next/react-refresh-utils/11.0.0_react-refresh@0.8.3:
+    resolution: {integrity: sha512-hi5eY+KBn4QGtUv7VL2OptdM33fI2hxhd7+omOFmAK+S0hDWhg1uqHqqGJk0W1IfqlWEzzL10WvTJDPRAtDugQ==}
     peerDependencies:
       react-refresh: 0.8.3
       webpack: ^4 || ^5
@@ -2138,18 +2138,6 @@ packages:
       mkdirp: 1.0.4
       rimraf: 3.0.2
     dev: true
-
-  /@opentelemetry/api/0.14.0:
-    resolution: {integrity: sha512-L7RMuZr5LzMmZiQSQDy9O1jo0q+DaLy6XpYJfIGfYSfoJA5qzYwUP3sP1uMIQ549DvxAgM3ng85EaPTM/hUHwQ==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      '@opentelemetry/context-base': 0.14.0
-    dev: false
-
-  /@opentelemetry/context-base/0.14.0:
-    resolution: {integrity: sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==}
-    engines: {node: '>=8.0.0'}
-    dev: false
 
   /@pmmmwh/react-refresh-webpack-plugin/0.4.3_133f2312fd2dfba9fc3b3697533854a6:
     resolution: {integrity: sha512-br5Qwvh8D2OQqSXpd1g/xqXKnK0r+Jz6qVKBbWmpUcrbGOxUrf39V5oZ1876084CGn18uMdR5uvPqBv9UqtBjQ==}
@@ -4773,7 +4761,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001237
+      caniuse-lite: 1.0.30001238
       colorette: 1.2.2
       electron-to-chromium: 1.3.752
       escalade: 3.1.1
@@ -4937,6 +4925,10 @@ packages:
 
   /caniuse-lite/1.0.30001237:
     resolution: {integrity: sha512-pDHgRndit6p1NR2GhzMbQ6CkRrp4VKuSsqbcLeOQppYPKOYkKT/6ZvZDvKJUqcmtyWIAHuZq3SVS2vc1egCZzw==}
+    dev: true
+
+  /caniuse-lite/1.0.30001238:
+    resolution: {integrity: sha512-bZGam2MxEt7YNsa2VwshqWQMwrYs5tR5WZQRYSuFxsBQunWjBuXhN4cS9nV5FFb1Z9y+DoQcQ0COyQbv6A+CKw==}
 
   /capture-exit/2.0.0:
     resolution: {integrity: sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g==}
@@ -5551,7 +5543,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.1
     dependencies:
-      caniuse-lite: 1.0.30001237
+      caniuse-lite: 1.0.30001238
       postcss: 8.2.13
     dev: false
 
@@ -7300,6 +7292,14 @@ packages:
   /ignore/5.1.8:
     resolution: {integrity: sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==}
     engines: {node: '>= 4'}
+
+  /image-size/1.0.0:
+    resolution: {integrity: sha512-JLJ6OwBfO1KcA+TvJT+v8gbE6iWbj24LyDNFgFEN0lzegn6cC6a/p3NIDaepMsJjQjlUWqIC7wJv8lBFxPNjcw==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
+    dependencies:
+      queue: 6.0.2
+    dev: false
 
   /immer/8.0.1:
     resolution: {integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==}
@@ -9133,7 +9133,7 @@ packages:
     resolution: {integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==}
     dev: true
 
-  /next-sanity-image/3.0.0_9837f85e697a9c398cb649ff80ee4e3a:
+  /next-sanity-image/3.0.0_2d38dcf0cf942010b2863ee1053731c8:
     resolution: {integrity: sha512-9RqsNhEhjsMVeStXuqV2p/BgD9huRvg5gGrOuIy4/yRtnNStMaErnwBWrTZwRC/B3lDP82WgdiXKBkqqo4d9lQ==}
     peerDependencies:
       '@sanity/client': ^2.0.0
@@ -9142,7 +9142,7 @@ packages:
     dependencies:
       '@sanity/client': 2.11.0
       '@sanity/image-url': 0.140.22
-      next: 10.2.3_b8ab330e9e90828dbee94d91c8f5e91e
+      next: 11.0.0_b8ab330e9e90828dbee94d91c8f5e91e
       react: 17.0.2
     dev: false
 
@@ -9161,27 +9161,27 @@ packages:
       use-deep-compare-effect: 1.6.1_react@17.0.2
     dev: false
 
-  /next-seo/4.24.0_cdb07c42721266739ffbd3ea8e818efe:
+  /next-seo/4.24.0_202b18601d71dc92f6dbf39b46c5242f:
     resolution: {integrity: sha512-9VQXfXAelhE+hAWzJ4azigQaW3FPX0kU0eYKFQXKsQjgY7AWtukjRGXls0oSIk8khhDJwmCt46EwsO9n5DDW6Q==}
     peerDependencies:
       next: ^8.1.1-canary.54 || ^9.0.0 || ^10.0.0
       react: ^16.0.0 || ^17.0.0
       react-dom: ^16.0.0 || ^17.0.0
     dependencies:
-      next: 10.2.3_b8ab330e9e90828dbee94d91c8f5e91e
+      next: 11.0.0_b8ab330e9e90828dbee94d91c8f5e91e
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
-  /next/10.2.3_b8ab330e9e90828dbee94d91c8f5e91e:
-    resolution: {integrity: sha512-dkM1mIfnORtGyzw/Yme8RdqNxlCMZyi4Lqj56F01/yHbe1ZtOaJ0cyqqRB4RGiPhjGGh0319f8ddjDyO1605Ow==}
-    engines: {node: '>=10.13.0'}
+  /next/11.0.0_b8ab330e9e90828dbee94d91c8f5e91e:
+    resolution: {integrity: sha512-1OA0ccCTwVtdLats/1v7ReiBVx+Akya0UVhHo9IBr8ZkpDI3/SGNcaruJBp5agy8ROF97VDKkZamoUXxRB9NUA==}
+    engines: {node: '>=12.0.0'}
     hasBin: true
     peerDependencies:
       fibers: '>= 3.1.0'
       node-sass: ^4.0.0 || ^5.0.0
-      react: ^16.6.0 || ^17
-      react-dom: ^16.6.0 || ^17
+      react: ^17.0.2
+      react-dom: ^17.0.2
       sass: ^1.3.0
     peerDependenciesMeta:
       fibers:
@@ -9193,17 +9193,16 @@ packages:
     dependencies:
       '@babel/runtime': 7.12.5
       '@hapi/accept': 5.0.2
-      '@next/env': 10.2.3
-      '@next/polyfill-module': 10.2.3
-      '@next/react-dev-overlay': 10.2.3_react-dom@17.0.2+react@17.0.2
-      '@next/react-refresh-utils': 10.2.3_react-refresh@0.8.3
-      '@opentelemetry/api': 0.14.0
+      '@next/env': 11.0.0
+      '@next/polyfill-module': 11.0.0
+      '@next/react-dev-overlay': 11.0.0_react-dom@17.0.2+react@17.0.2
+      '@next/react-refresh-utils': 11.0.0_react-refresh@0.8.3
       assert: 2.0.0
       ast-types: 0.13.2
       browserify-zlib: 0.2.0
       browserslist: 4.16.6
       buffer: 5.6.0
-      caniuse-lite: 1.0.30001237
+      caniuse-lite: 1.0.30001238
       chalk: 2.4.2
       chokidar: 3.5.1
       constants-browserify: 1.0.0
@@ -9215,6 +9214,7 @@ packages:
       find-cache-dir: 3.3.1
       get-orientation: 1.1.2
       https-browserify: 1.0.0
+      image-size: 1.0.0
       jest-worker: 27.0.0-next.5
       native-url: 0.3.4
       node-fetch: 2.6.1
@@ -9231,7 +9231,7 @@ packages:
       raw-body: 2.4.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-is: 16.13.1
+      react-is: 17.0.2
       react-refresh: 0.8.3
       stream-browserify: 3.0.0
       stream-http: 3.1.1
@@ -10150,6 +10150,12 @@ packages:
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+
+  /queue/6.0.2:
+    resolution: {integrity: sha512-iHZWu+q3IdFZFX36ro/lKBkSvfkztY5Y7HMiPlOUjhupPcG2JMfst2KKEpu5XndviX/3UhFbRngUPNKtgvtZiA==}
+    dependencies:
+      inherits: 2.0.4
+    dev: false
 
   /ramda/0.21.0:
     resolution: {integrity: sha1-oAGr7bP/YQd9T/HVd9RN536NCjU=}
