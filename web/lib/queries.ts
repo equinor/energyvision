@@ -206,13 +206,15 @@ export const pageQueryById = /* groq */ `
           openGraphImage,
     },
     "heroImage": heroFigure,
-    "content": content.en_GB[]{
+    "content": content[]{
         
       ${pageContentFields}
     }
   }
 `
 
+// @TODO: This should definitely not be duplicated across languages like this, but we are working with Sanity to figure
+// out why the preview plugin doesn't work with param locale
 export const pageQueryEn = /* groq */ ` 
    *[_type == "route" && slug.en_GB.current == $slug][0] {
     "slug": slug.en_GB.current,
