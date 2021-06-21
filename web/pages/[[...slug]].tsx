@@ -21,7 +21,7 @@ export default function Page({ data, preview }: any) {
   const slug = data?.pageData?.slug
   const { pathname } = useRouter()
   const { data: pageData } = usePreviewSubscription(data?.query, {
-    params: { slug: '/careers', lang: 'en_GB' },
+    params: data?.queryParams ?? {},
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
