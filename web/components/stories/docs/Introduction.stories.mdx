@@ -200,4 +200,7 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
   <span className="tip">Tip</span>Edit the Markdown in <code>src/stories/Introduction.stories.mdx</code>
 </div>
 
-<p className="timestamp">This storybook was built at {new Date(process.env.STORYBOOK_BUILT_AT).toISOString()}</p>
+<p className="sbdocs sbdocs-p">
+  👷‍♀️ This storybook was built{' '}
+  {new Intl.DateTimeFormat('en-GB', { dateStyle: 'full', timeStyle: 'long' }).format(process.env.STORYBOOK_BUILT_AT)}
+</p>
