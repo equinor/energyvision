@@ -44,18 +44,18 @@
       p {
         width: 100%;
         float: left;
-        font-size: 1.5rem;
-        line-height: 2.6rem;
+        font-size: 0.75rem;
+        line-height: 1.3rem;
         @include Equinor-Light;
         color: #565656;
 
         &:before {
           color: $primary-color;
           content: $fa-var-camera;
-          margin-right: 1rem;
+          margin-right: 0.6rem;
           display: inline-block;
           font: normal normal normal #{$fa-font-size-base}/1 FontAwesome; // shortening font declaration
-          font-size:1.7rem; // can't have font-size inherit on line above, so need to override
+          font-size: 0.8rem; // can't have font-size inherit on line above, so need to override
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           transform: translate(0, 0); // ensures no half-pixel rendering in firefox

@@ -55,7 +55,7 @@ p, tr, td {
   }
 }
 .base ul li {
-  background-image: url('../static/images/graphics/bullet.png');
+  background-image: url('/legacy/images/graphics/bullet.png');
   background-size: 6px;
   background-repeat: no-repeat;
   background-position: 12px .6em;
@@ -64,13 +64,16 @@ p, tr, td {
   .primary-100 &,
   .slate-blue &,
   .heritage-red & {
-    background-image: url('../static/images/graphics/bullet-white.png');
+    background-image: url('/legacy/images/graphics/bullet-white.png');
   }
   @at-root .moss-green#{&} {
-    background-image: url('../static/images/graphics/bullet-mossgreen.png');
+    background-image: url('/legacy/images/graphics/bullet-mossgreen.png');
   }
   @at-root .signal-red#{&} {
-    background-image: url('../static/images/graphics/bullet-red.png');
+    background-image: url('/legacy/images/graphics/bullet-red.png');
+  }
+  @include susy-breakpoint($screen-md, $susy) {
+    background-position: 12px .8em;
   }
 }
 
