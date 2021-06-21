@@ -5,7 +5,7 @@ specifiers:
   '@equinor/eds-core-react': ^0.12.1
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.6.0
-  '@equinor/energyvision-legacy-css': ^1.0.0-beta.0
+  '@equinor/energyvision-legacy-css': ^1.0.0-beta.3
   '@next/bundle-analyzer': ^10.2.3
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.11.0
@@ -46,7 +46,7 @@ dependencies:
   '@equinor/eds-core-react': 0.12.1_c59160f3e2ae0f45324a65c8464c8ff0
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.6.0
-  '@equinor/energyvision-legacy-css': 1.0.0-beta.0
+  '@equinor/energyvision-legacy-css': 1.0.0-beta.3
   '@next/bundle-analyzer': 10.2.3
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.11.0
@@ -1679,8 +1679,8 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@equinor/energyvision-legacy-css/1.0.0-beta.0:
-    resolution: {integrity: sha512-gZPXIJftLz7+ZDhU9KOkO+pfhJV5SXkjZj/i7yUSHN/NdFAseEhhN/CLSzjnXMYd9gernDBWMHvHPx4xYR3tjQ==}
+  /@equinor/energyvision-legacy-css/1.0.0-beta.3:
+    resolution: {integrity: sha512-bDcO0xIDf5Rl87/u0U3CI0rSYO2tBeCwSEsAcDGeTWj8LhgDsuV9sCE6pQoT/D2Sx4g510cjQyxTn7WDCSDBkQ==}
     dependencies:
       del: 6.0.0
       gulp-rename: 2.0.0
