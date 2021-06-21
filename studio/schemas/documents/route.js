@@ -61,7 +61,6 @@ export default {
       title: 'Parent',
       name: 'parent',
       description: 'Unless this route is a top level route, it should have a parent.',
-      validation: (Rule) => Rule.required(),
       type: 'reference',
       to: [{ type: 'route' }],
       // Only allow to select a route that does not have a parent
