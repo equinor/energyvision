@@ -15,25 +15,83 @@ export default {
       },
     },
   ],
+  // @TODO: Temp. solution aka 1. iteration.
   fields: [
     {
       title: 'Content',
+      description: '1. iteration with separate content for each language',
+      type: 'object',
       name: 'content',
-      description: 'The content you want to appear at this path. Remember it needs to be published.',
-      validation: (Rule) => Rule.required(),
-      type: 'reference',
-      to: [
+      fields: [
         {
-          type: 'page',
+          title: 'English content',
+          name: 'en_GB',
+          description: 'The content you want to appear at this path. Remember it needs to be published.',
+          validation: (Rule) => Rule.required(),
+          type: 'reference',
+          to: [
+            {
+              type: 'page',
+            },
+          ],
+          options: {
+            filter: '_lang == $lang',
+            filterParams: { lang: 'en_GB' },
+          },
+        },
+        {
+          title: 'Norwegian content',
+          name: 'nb_NO',
+          description: 'The content you want to appear at this path. Remember it needs to be published.',
+          validation: (Rule) => Rule.required(),
+          type: 'reference',
+          to: [
+            {
+              type: 'page',
+            },
+          ],
+          options: {
+            filter: '_lang == $lang',
+            filterParams: { lang: 'nb_NO' },
+          },
         },
       ],
     },
     {
       title: 'Parent route',
-      description: 'Unless this route is a top level route, it should have a parent.',
+      description: '1. iteration with separate parent for each language',
+      type: 'object',
       name: 'parent',
-      type: 'reference',
-      to: [{ type: 'route' }],
+      fields: [
+        {
+          title: 'English parent',
+          name: 'en_GB',
+          description: 'Unless this route is a top level route, it should have a parent.',
+          validation: (Rule) => Rule.required(),
+          type: 'reference',
+          to: [{ type: 'route' }],
+          options: {
+            filter: '_lang == $lang',
+            filterParams: { lang: 'en_GB' },
+          },
+        },
+        {
+          title: 'Norwegian content',
+          name: 'nb_NO',
+          description: 'Unless this route is a top level route, it should have a parent.',
+          validation: (Rule) => Rule.required(),
+          type: 'reference',
+          to: [
+            {
+              type: 'page',
+            },
+          ],
+          options: {
+            filter: '_lang == $lang',
+            filterParams: { lang: 'nb_NO' },
+          },
+        },
+      ],
     },
     {
       name: 'topicSlug',
@@ -42,12 +100,12 @@ export default {
       fields: [
         {
           title: 'English',
-          name: 'en_gb',
+          name: 'en_GB',
           type: 'string',
         },
         {
           title: 'Norwegian',
-          name: 'nb_no',
+          name: 'nb_NO',
           type: 'string',
         },
       ],
@@ -60,9 +118,9 @@ export default {
   ],
   preview: {
     select: {
-      title: 'content.title',
-      slug: 'slug.current',
-      media: 'content.heroFigure.image',
+      title: 'content.en_GB.title',
+      slug: 'slug.en_GB.current',
+      media: 'content.en_GB.heroFigure.image',
     },
     prepare(selection) {
       const { title, slug, media } = selection

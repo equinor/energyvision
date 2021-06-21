@@ -21,11 +21,11 @@ export default function Page({ data, preview }: any) {
   const slug = data?.pageData?.slug
   const { pathname } = useRouter()
   const { data: pageData } = usePreviewSubscription(data?.query, {
-    params: data?.queryParams ?? {},
+    params: { slug: '/careers', lang: 'en_gb' },
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
-
+  //console.log('page data', pageData, data)
   if (data?.docType === 'home') {
     return <HomePage />
   }

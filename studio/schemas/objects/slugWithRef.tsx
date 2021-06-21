@@ -48,10 +48,10 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     fields: [
       {
         title: 'English',
-        name: 'en_gb',
+        name: 'en_GB',
         type: 'slug',
         options: {
-          source: (doc: any) => getPrefix(doc, source, 'en_gb', ref),
+          source: (doc: any) => getPrefix(doc, source, 'en_GB', ref),
           slugify: (value: any) => formatSlug(value),
         },
         validation: (Rule: SchemaType.ValidationRule) =>
@@ -59,10 +59,10 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
       },
       {
         title: 'Norwegian',
-        name: 'nb_no',
+        name: 'nb_NO',
         type: 'slug',
         options: {
-          source: (doc: any) => getPrefix(doc, source, 'nb_no', ref),
+          source: (doc: any) => getPrefix(doc, source, 'nb_NO', ref),
           slugify: (value: any) => formatSlug(value),
         },
         validation: (Rule: SchemaType.ValidationRule) =>

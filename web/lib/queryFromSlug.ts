@@ -1,4 +1,4 @@
-import { newsQuery, pageQuery, pageQueryById } from './queries'
+import { newsQuery, pageQueryEn, pageQueryNo, pageQueryById } from './queries'
 import { mapLocaleToLang } from './localization'
 
 const isSlugID = (slug: string): boolean => {
@@ -36,7 +36,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
     default:
       return {
         queryParams: { slug: slug, pageType: `${slugStart}`, lang: mapLocaleToLang(locale) },
-        query: pageQuery,
+        query: locale === 'en' ? pageQueryEn : pageQueryNo,
         docType: 'page',
       }
   }
