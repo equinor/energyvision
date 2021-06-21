@@ -29,8 +29,10 @@ const getImgSrc = (img: ImageWithAlt): string => urlFor(img).size(150, 150).auto
 const TextWithIconArray = ({ data }: TextWithIconArrayProps) => {
   const { designOptions, group } = data
 
+  if (!group) return null
+
   return (
-    <BackgroundContainer background={designOptions.background}>
+    <BackgroundContainer background={designOptions?.background}>
       <Container>
         {group.map((item: TextWithIconItem) => (
           <TextWithIcon key={item.id}>
