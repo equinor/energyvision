@@ -1,3 +1,5 @@
+// @TODO: Optimize Route preview into one function with language code as param
+
 import React from 'react'
 import { Wrapper, Frame } from './styles/shared'
 
@@ -7,11 +9,11 @@ export default function RoutePreview(props: any) {
     document: { displayed },
   } = props
 
-  if (!displayed?.slug?.en_GB.current) {
-    return <div>The route needs a slug before it can be previewed.</div>
+  if (!displayed?.slug?.nb_NO.current) {
+    return <div>The route needs a Norwegian slug before it can be previewed.</div>
   }
 
-  const url = `${baseUrl}${displayed?.slug?.en_GB.current}?preview`
+  const url = `${baseUrl}/no${displayed?.slug?.nb_NO.current}?preview`
 
   return (
     <Wrapper>
