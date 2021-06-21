@@ -21,7 +21,7 @@ export default function Page({ data, preview }: any) {
   const slug = data?.pageData?.slug
   const { pathname } = useRouter()
   const { data: pageData } = usePreviewSubscription(data?.query, {
-    params: { slug: '/careers', lang: 'en_gb' },
+    params: { slug: '/careers', lang: 'en_GB' },
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
@@ -95,10 +95,10 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const EnglishPages = await sanityClient.fetch(
-    groq`*[_type == "route" && defined(slug.en_gb.current)][].slug.en_gb.current`,
+    groq`*[_type == "route" && defined(slug.en_GB.current)][].slug.en_GB.current`,
   )
   const NorwegianPages = await sanityClient.fetch(
-    groq`*[_type == "route" && defined(slug.nb_no.current)][].slug.nb_no.current`,
+    groq`*[_type == "route" && defined(slug.nb_NO.current)][].slug.nb_NO.current`,
   )
 
   return {

@@ -1,10 +1,10 @@
 export const mapLocaleToLang = (locale: string) => {
   switch (locale) {
     case 'en':
-      return 'en_gb'
+      return 'en_GB'
     case 'no':
-      return 'nb_no'
+      return 'nb_NO'
     default:
-      return 'en_gb'
+      return 'en_GB'
   }
 }
