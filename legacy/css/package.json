@@ -8,8 +8,7 @@
     "dist/*"
   ],
   "scripts": {
-    "build": "gulp default",
-    "postinstall": "pnpm build"
+    "build": "gulp default"
   },
   "repository": {
     "type": "git",
