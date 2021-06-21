@@ -206,7 +206,7 @@ export const pageQueryById = /* groq */ `
           openGraphImage,
     },
     "heroImage": heroFigure,
-    "content": content[]{
+    "content": content.en_GB[]{
         
       ${pageContentFields}
     }
@@ -214,16 +214,16 @@ export const pageQueryById = /* groq */ `
 `
 
 export const pageQueryEn = /* groq */ ` 
-   *[_type == "route" && slug.en_gb.current == $slug][0] {
-    "slug": slug.en_gb.current,
-    "title": content->title,
-    "seoAndSome": content->{
+   *[_type == "route" && slug.en_GB.current == $slug][0] {
+    "slug": slug.en_GB.current,
+    "title": content.en_GB->title,
+    "seoAndSome": content.en_GB->{
       "documentTitle": seo.documentTitle,
           "metaDescription": seo.metaDescription,
           openGraphImage,
     },
-    "heroImage": content->heroFigure,
-    "content": content->content[]{
+    "heroImage": content.en_GB->heroFigure,
+    "content": content.en_GB->content[]{
         
       ${pageContentFields}
     }
@@ -231,16 +231,16 @@ export const pageQueryEn = /* groq */ `
 `
 
 export const pageQueryNo = /* groq */ ` 
-   *[_type == "route" && slug.nb_no.current == $slug][0] {
-    "slug": slug.nb_no.current,
-    "title": content->title,
-    "seoAndSome": content->{
+   *[_type == "route" && slug.nb_NO.current == $slug][0] {
+    "slug": slug.nb_NO.current,
+    "title": content.nb_NO->title,
+    "seoAndSome": content.nb_NO->{
       "documentTitle": seo.documentTitle,
           "metaDescription": seo.metaDescription,
           openGraphImage,
     },
-    "heroImage": content->heroFigure,
-    "content": content->content[]{
+    "heroImage": content.nb_NO->heroFigure,
+    "content": content.nb_NO->content[]{
         
       ${pageContentFields}
     }
