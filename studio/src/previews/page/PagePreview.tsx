@@ -6,7 +6,6 @@ export default function PagePreview(props: any) {
   const {
     document: { displayed },
   } = props
-  console.log('Page id: ', displayed._id)
 
   if (!displayed?._id) {
     // This should never happen
@@ -14,7 +13,6 @@ export default function PagePreview(props: any) {
   }
 
   const url = `${baseUrl}/${displayed?._id}?preview`
-  console.log('Preview url', url)
 
   return (
     <Wrapper>
