@@ -111,6 +111,9 @@ import StackAlt from '../assets/stackalt.svg'
     display: inline-block;
   }
 
+  .timestamp {
+    margin-top: 3rem;
+  }
   
 `}</style>
 
@@ -196,3 +199,5 @@ We recommend building UIs with a [**component-driven**](https://componentdriven.
 <div className="tip-wrapper">
   <span className="tip">Tip</span>Edit the Markdown in <code>src/stories/Introduction.stories.mdx</code>
 </div>
+
+<p className="timestamp">This storybook was built at {new Date(process.env.STORYBOOK_BUILT_AT).toISOString()}</p>
