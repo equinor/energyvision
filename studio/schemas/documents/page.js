@@ -14,15 +14,6 @@ export default {
   i18n,
   fieldsets: [
     {
-      title: 'Slug',
-      name: 'slug',
-      description: 'Some clever description of the slug woo',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
-    {
       title: 'Header / Banner v1',
       name: 'header',
     },
@@ -71,16 +62,7 @@ export default {
       validation: (Rule) => Rule.required(),
       fieldset: 'header',
     },
-    {
-      name: 'topicSlug',
-      type: 'string',
-      title: 'Topic slug',
-      placeholder: 'For example "Experienced professionals"',
-      description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
-      validation: (Rule) => Rule.max(200),
-      fieldset: 'slug',
-      hidden: 'true',
-    },
+
     //This is no longer in use, but will it make sense to be more explicit about this? Dunno
     // Keeping this field as a reminder
     /*  {
