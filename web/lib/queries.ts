@@ -213,9 +213,26 @@ export const pageQueryById = /* groq */ `
   }
 `
 
-export const pageQuery = /* groq */ ` 
-   *[_type == "route" && slug[$lang].current == $slug][0] {
-    "slug": slug[$lang].current,
+export const pageQueryEn = /* groq */ ` 
+   *[_type == "route" && slug.en_gb.current == $slug][0] {
+    "slug": slug.en_gb.current,
+    "title": content->title,
+    "seoAndSome": content->{
+      "documentTitle": seo.documentTitle,
+          "metaDescription": seo.metaDescription,
+          openGraphImage,
+    },
+    "heroImage": content->heroFigure,
+    "content": content->content[]{
+        
+      ${pageContentFields}
+    }
+  }
+`
+
+export const pageQueryNo = /* groq */ ` 
+   *[_type == "route" && slug.nb_no.current == $slug][0] {
+    "slug": slug.nb_no.current,
     "title": content->title,
     "seoAndSome": content->{
       "documentTitle": seo.documentTitle,
