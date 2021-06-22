@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
+import { mapLocaleToLang } from '../lib/localization'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
@@ -75,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
 
   // console.log('query:', query)
-  console.log('queryParams:', queryParams)
+  // console.log('queryParams:', queryParams)
   // console.log('docType:', docType)
   // console.log('data', pageData)
 
@@ -93,29 +94,30 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   }
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const EnglishPages = await sanityClient.fetch(
-    groq`*[_type == "route" && defined(slug.en_GB.current)][].slug.en_GB.current`,
+export const getTopicRoutesForLocale = async (locale: string) => {
+  const lang = mapLocaleToLang(locale)
+  const data = await sanityClient.fetch(
+    groq`*[_type == "route" && defined(slug[$lang].current)][].slug[$lang].current`,
+    {
+      lang,
+    },
   )
-  const NorwegianPages = await sanityClient.fetch(
-    groq`*[_type == "route" && defined(slug.nb_NO.current)][].slug.nb_NO.current`,
-  )
+  return data
+}
 
+export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
+  const fetchPaths = locales.map(async (locale) => {
+    const pages = await getTopicRoutesForLocale(locale)
+    const pagePaths = pages.map((slug: string) => {
+      return { params: { slug: slug.split('/').filter((p) => p) }, locale }
+    })
+    return pagePaths
+  })
+  const pathsForLocales = await Promise.all(fetchPaths)
+
+  const paths = pathsForLocales.reduce((acc, val) => acc.concat(val), [])
   return {
-    paths: [
-      ...EnglishPages.map((slug: string) => ({
-        params: {
-          slug: slug.split('/').filter((p) => p),
-        },
-        locale: 'en',
-      })),
-      ...NorwegianPages.map((slug: string) => ({
-        params: {
-          slug: slug.split('/').filter((p) => p),
-        },
-        locale: 'no',
-      })),
-    ],
+    paths: paths,
     fallback: true,
   }
 }
