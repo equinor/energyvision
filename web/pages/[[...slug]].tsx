@@ -113,11 +113,10 @@ export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
     })
     return pagePaths
   })
-  const pathsForLocales = await Promise.all(fetchPaths)
+  const paths = await Promise.all(fetchPaths)
 
-  const paths = pathsForLocales.reduce((acc, val) => acc.concat(val), [])
   return {
-    paths: paths,
+    paths: paths.flat(),
     fallback: true,
   }
 }
