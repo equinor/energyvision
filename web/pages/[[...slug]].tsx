@@ -106,14 +106,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
       ...EnglishPages.map((slug: string) => ({
         params: {
           slug: slug.split('/').filter((p) => p),
-          locale: 'en',
         },
+        locale: 'en',
       })),
       ...NorwegianPages.map((slug: string) => ({
         params: {
           slug: slug.split('/').filter((p) => p),
-          locale: 'no',
         },
+        locale: 'no',
       })),
     ],
     fallback: true,
