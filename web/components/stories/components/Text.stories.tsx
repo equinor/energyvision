@@ -17,7 +17,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Text</code> component is used for text.
+        component: `A Text component is used for text.
         `,
       },
     },

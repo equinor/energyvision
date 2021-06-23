@@ -22,7 +22,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Teaser</code> component is used to highlight and link to other
+        component: `A Teaser component is used to highlight and link to other
         content.
         `,
       },
@@ -65,7 +65,7 @@ export const WithMedia: Story<TeaserProps> = ({}) => (
 WithMedia.storyName = 'With media'
 WithMedia.parameters = {
   docs: {
-    storyDescription: `A <code>Teaser</code> component with image or video. Select "canvas" mode for this story to see different variations.`,
+    storyDescription: `A Teaser component with image or video. Select "canvas" mode for this story to see different variations.`,
   },
 }
 

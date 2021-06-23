@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Heading</code> component is used for headings.
+        component: `A Heading component is used for headings.
         `,
       },
     },
@@ -65,7 +65,7 @@ FontWeight.storyName = 'Font weight'
 
 FontWeight.parameters = {
   docs: {
-    storyDescription: `The largest font size, <code>2xl</code>, can be either bold or regular`,
+    storyDescription: `The largest font size, 2xl, can be either bold or regular`,
   },
 }
 

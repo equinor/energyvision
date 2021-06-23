@@ -23,7 +23,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>TextWithIcon</code> component is used for displaying an icon or piece of text in a highlighted way, or in a group.
+        component: `A TextWithIcon component is used for displaying an icon or piece of text in a highlighted way, or in a group.
         `,
       },
     },

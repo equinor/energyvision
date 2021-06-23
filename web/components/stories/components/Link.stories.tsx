@@ -7,8 +7,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Link</code> is used for both internal links (references), external links and downloads. <br/>
-        ❗&nbsp; For use with Next.js, remember to wrap internal links with <code>next/link</code> component to enable client-side transitions.
+        component: `A Link is used for both internal links (references), external links and downloads. <br/>
+        ❗&nbsp; For use with Next.js, remember to wrap internal links with next/link component to enable client-side transitions.
         `,
       },
     },

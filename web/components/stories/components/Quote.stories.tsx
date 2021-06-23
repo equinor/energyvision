@@ -40,7 +40,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>PullQuote</code> component is used for rendering a pull quote.
+        component: `A PullQuote component is used for rendering a pull quote.
         `,
       },
     },
