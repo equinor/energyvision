@@ -12,6 +12,7 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
+import { Menu } from '../tempcomponents/shared/Menu'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
@@ -38,6 +39,14 @@ export default function Page({ data, preview }: any) {
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
+  const localization = {
+    activeLocale: router.locale,
+    slugs: {
+      en_GB: data?.pageData?.allSlugs?.en_GB.current,
+      nb_NO: data?.pageData?.allSlugs?.nb_NO.current,
+    },
+  }
+
   return (
     <>
       {router.isFallback ? (
@@ -62,7 +71,8 @@ export default function Page({ data, preview }: any) {
             }}
           ></NextSeo>
           <Layout preview={preview}>
-            <>{data?.docType === 'page' && <TopicPage data={pageData} />}</>
+            <Menu localization={localization} />
+            {data?.docType === 'page' && <TopicPage data={pageData} />}
           </Layout>
         </>
       )}

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import { Link } from '@components'
 import NextLink from 'next/link'
+import { Menu } from '../shared/Menu'
 
 const Container = styled.main`
   flex: 1;
@@ -21,20 +22,23 @@ const Title = styled.h1`
 
 export default function Home(): JSX.Element {
   return (
-    <Container>
-      <Head>
-        <title>EnergyVision</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Title>
-        MVP 1 is all about{' '}
-        <NextLink href="/en/news" passHref>
-          <Link variant="readMore">News</Link>
+    <>
+      <Menu />
+      <Container>
+        <Head>
+          <title>EnergyVision</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Title>
+          MVP 1 is all about{' '}
+          <NextLink href="/en/news" passHref>
+            <Link variant="readMore">News</Link>
+          </NextLink>
+        </Title>
+        <NextLink href="/en/careers" passHref>
+          <Link variant="readMore">Careers</Link>
         </NextLink>
-      </Title>
-      <NextLink href="/en/careers" passHref>
-        <Link variant="readMore">Careers</Link>
-      </NextLink>
-    </Container>
+      </Container>
+    </>
   )
 }

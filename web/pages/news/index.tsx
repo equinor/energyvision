@@ -5,6 +5,7 @@ import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import type { NewsSchema } from '../../types/types'
 import NewsCard from '../../tempcomponents/news/NewsCard'
+import { Menu } from '../../tempcomponents/shared/Menu'
 
 const TempWrapper = styled.div`
   display: grid;
@@ -30,6 +31,7 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
           {/* TODO: Something more advanced */}
           <title>News</title>
         </Head>
+        <Menu />
         <Container>
           <h1>News</h1>
           {allNews.length > 0 && (
