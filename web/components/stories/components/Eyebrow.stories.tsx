@@ -10,7 +10,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Eyebrow</code> component is used for text overline.
+        component: `An Eyebrow component is used for text overline.
         `,
       },
     },

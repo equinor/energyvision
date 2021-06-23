@@ -14,7 +14,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Fact</code> box component gives facts about a specific topic, preferably as bullet points.
+        component: `A Fact box component gives facts about a specific topic, preferably as bullet points.
         `,
       },
     },
@@ -226,7 +226,7 @@ export const WithLongText: Story<WithImageProps> = ({ background = 'warm', dynam
 WithLongText.parameters = {
   docs: {
     storyDescription: `If the text contains more than 800 characters and has no image, it will split into two columns. 
-    Remember to set this using the <code>hasColumns</code> prop.`,
+    Remember to set this using the hasColumns prop.`,
   },
 }
 

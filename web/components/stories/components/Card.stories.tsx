@@ -19,7 +19,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>Card</code> displays content related to a single subject and 
+        component: `A Card displays content related to a single subject and 
         acts as an entry point to more detailed information. <br />
         🚧 &nbsp; v1 with focus on news listing cards
         `,

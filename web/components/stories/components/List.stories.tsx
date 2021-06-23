@@ -12,7 +12,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A <code>List</code> component is used for lists, both bullet lists and numbered.
+        component: `A List component is used for lists, both bullet lists and numbered.
         `,
       },
     },
@@ -99,6 +99,6 @@ export const Unstyled: Story<ListProps> = () => {
 Unstyled.parameters = {
   docs: {
     storyDescription: `Sometimes a list is more of a semantically correct thing to use rather than visually.
-    The attribute <code>unstyled</code> makes that easy.`,
+    The attribute unstyled makes that easy.`,
   },
 }
