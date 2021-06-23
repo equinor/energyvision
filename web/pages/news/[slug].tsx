@@ -17,6 +17,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { NewsCardData, NewsSchema } from '../../types/types'
+import { Menu } from '../../tempcomponents/shared/Menu'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -206,6 +207,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
           <p>Loading…</p>
         ) : (
           <>
+            <Menu />
             <article>
               <NewsLayout>
                 <Header>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
+import { Menu } from '../../../tempcomponents/shared/Menu'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -40,6 +41,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
         // @TODO: SEO stuffs
         // @TODO: Menu
         <>
+          <Menu />
           <NextSeo
             title={data?.news?.title}
             description={data?.news?.description}

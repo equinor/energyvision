@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { Heading, Link, List, Layout } from '@components'
 import { GetStaticProps /* GetStaticPaths */ } from 'next'
 import styled from 'styled-components'
+import { Menu } from '../../../tempcomponents/shared/Menu'
 
 import { default as NextLink } from 'next/link'
 
@@ -28,6 +29,7 @@ export default function AllArchivedNews({ newsList }: any) {
         <Head>
           <title>Archived news</title>
         </Head>
+        <Menu />
         <Container>
           <Heading level="h1" size="2xl" style={{ margin: '1rem 0' }}>
             2016 to 2018 archived news page list

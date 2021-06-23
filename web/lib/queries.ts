@@ -218,6 +218,7 @@ export const pageQueryById = /* groq */ `
 export const pageQueryEn = /* groq */ ` 
    *[_type == "route" && slug.en_GB.current == $slug][0] {
     "slug": slug.en_GB.current,
+    "allSlugs": slug,
     "title": content.en_GB->title,
     "seoAndSome": content.en_GB->{
       "documentTitle": seo.documentTitle,
@@ -235,6 +236,7 @@ export const pageQueryEn = /* groq */ `
 export const pageQueryNo = /* groq */ ` 
    *[_type == "route" && slug.nb_NO.current == $slug][0] {
     "slug": slug.nb_NO.current,
+    "allSlugs": slug,
     "title": content.nb_NO->title,
     "seoAndSome": content.nb_NO->{
       "documentTitle": seo.documentTitle,
