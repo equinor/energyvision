@@ -131,7 +131,7 @@ WithLongContent.parameters = {
 
 export const WithTheme: Story<TeaserProps> = (args) => (
   <>
-    <BackgroundContainer background="Lichen Green">
+    <BackgroundContainer background="Moss Green Light">
       <Teaser {...args}>
         <Teaser.Media>
           <ImagePlaceholder height="150px" />

@@ -2,8 +2,7 @@ import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { StyleVariants } from './backgroundColours'
 import { getStyleVariant } from './backgroundColours'
-
-type BackgroundColours = 'White' | 'Moss Green' | 'Lichen Green' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
+import type { BackgroundColours } from '../../../types/types'
 
 export type BackgroundContainerProps = {
   background?: BackgroundColours
@@ -35,7 +34,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   const backgrounds: { [name: string]: string } = {
     none: 'var(--ui-background-default)',
     one: 'var(--moss-green-80)',
-    two: 'var(--lichen-green-100)',
+    two: 'var(--moss-green-50)',
     three: 'var(--spruce-wood-90)',
     four: 'var(--mist-blue-100)',
     five: 'var(--slate-blue-100)',

@@ -8,7 +8,7 @@ function getStyleVariant(backgroundTitle: BackgroundColours) {
     styleVariant = 'none'
   } else if (backgroundTitle === 'Moss Green') {
     styleVariant = 'one'
-  } else if (backgroundTitle === 'Lichen Green') {
+  } else if (backgroundTitle === 'Moss Green Light') {
     styleVariant = 'two'
   } else if (backgroundTitle === 'Spruce Wood') {
     styleVariant = 'three'
