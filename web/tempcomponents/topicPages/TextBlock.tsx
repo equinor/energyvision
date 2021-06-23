@@ -27,6 +27,10 @@ const StyledTextBlock = styled.section`
   }
 `
 
+const TextContainer = styled.div`
+  margin-bottom: var(--spacing-medium);
+`
+
 type TextBlockProps = {
   data: TextBlockData
 }
@@ -63,15 +67,12 @@ const TextBlock = ({ data }: TextBlockProps) => {
               types: {
                 block: BlockRenderer,
               },
+              container: TextContainer,
             }}
           />
         )}
-        {callToActions && (
-          <CallToActions callToActions={callToActions} />
-        )}
-
+        {callToActions && <CallToActions callToActions={callToActions} />}
       </StyledTextBlock>
-
     </StyledTextBlockWrapper>
   )
 }
