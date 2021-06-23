@@ -84,7 +84,6 @@ export default {
         { type: 'fullWidthImage' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'callToAction' },
         { type: 'pullQuote' },
       ],
     },
