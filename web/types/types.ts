@@ -90,7 +90,7 @@ export type PageSchema = {
   type: string
 }
 
-export type BackgroundColours = 'White' | 'Moss Green' | 'Lichen Green' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
+export type BackgroundColours = 'White' | 'Moss Green' | 'Moss Green Light' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
 
 export type DesignOptions = {
   background: BackgroundColours
