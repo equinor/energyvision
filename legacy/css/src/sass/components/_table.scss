@@ -1,19 +1,19 @@
 .table {
   tr {
-    border-bottom: .2rem solid #F0F0F0;
+    border-bottom: 2px solid #F0F0F0;
 
       &:first-child {
         text-transform: uppercase;
         color:#717171;
         @include Equinor-Bold;
-          td { font-size:1.4rem; }
+          td { font-size:14px; }
       }
 
       td,th {
-        font-size: 1.3rem;
-        line-height: 1.5rem;
+        font-size: 13px;
+        line-height: 15px;
 		b {
-			font-size: 1.3rem
+			font-size: 13px;
 		}
 
         b * {
