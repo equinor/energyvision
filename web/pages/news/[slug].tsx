@@ -5,7 +5,7 @@ import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
 import { Layout, Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
-import { newsQuery, newsSlugsQuery } from '../../lib/queries'
+import { newsQuery, newsSlugsQuery, queryLocalizedNewsById } from '../../lib/queries'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
 import NewsBlockContent from '../../common/NewsBlockContent'
@@ -150,6 +150,10 @@ type ArticleProps = {
   data: {
     news: NewsSchema
     latestNews: NewsCardData[]
+    slugs: {
+      en_GB: string
+      nb_NO: string
+    }
   }
   preview: boolean
 }
@@ -180,6 +184,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
   const modifiedDate = isDateAfter(news.publishDateTime, news.updatedAt) ? news.publishDateTime : news.updatedAt
 
+  const localization = {
+    activeLocale: router.locale,
+    slugs: data?.slugs,
+  }
+
   return (
     <>
       <NextSeo
@@ -207,7 +216,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
           <p>Loading…</p>
         ) : (
           <>
-            <Menu />
+            <Menu localization={localization} />
             <article>
               <NewsLayout>
                 <Header>
@@ -266,12 +275,25 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
     slug: params?.slug,
   })
 
+  // @TODO: why does the 'match' filter in groq not work here?
+  // "&& _id match $id" where $id = the base id without __i18n
+  const id = news.id.replace('drafts.', '').substr(0, 36)
+  const slugs = await getClient(preview).fetch(queryLocalizedNewsById, {
+    id_en: id,
+    id_no: `${id}__i18n_nb_NO`,
+  })
+
   return {
     props: {
       preview,
       data: {
         news,
         latestNews,
+        slugs: {
+          // @TODO: do this better?
+          en_GB: slugs.find((i: { lang: string; slug: string }) => i.lang === 'en_GB')?.slug,
+          nb_NO: slugs.find((i: { lang: string; slug: string }) => i.lang === 'nb_NO')?.slug,
+        },
       },
     },
     revalidate: 1,
