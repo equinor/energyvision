@@ -197,6 +197,15 @@ export const newsSlugsQuery = /* groq */ `
 *[_type == "news" && defined(slug.current)][].slug.current
 `
 
+// @TODO: why does the 'match' filter in groq not work here?
+// "&& _id match $id" where $id = the base id without __i18n
+export const queryLocalizedNewsById = /* groq */ `
+*[_type == "news" && !(_id in path("drafts.**")) && _id == $id_en || _id == $id_no] {
+  "slug": slug.current,
+  "lang": _lang,
+}
+`
+
 export const pageQueryById = /* groq */ `
   *[_type == "page" && _id == $id][0] {
     "title": title,
