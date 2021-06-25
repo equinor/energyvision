@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react'
-import { Topbar, Link, Button } from '@components'
+import { Topbar, Link } from '@components'
 import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
+import { LocalizationSwitch } from './LocalizationSwitch'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
@@ -21,15 +22,8 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   }
 `
 
-const LanguageSwitch = styled.div`
-  a {
-    margin: 0 var(--space-xSmall);
-  }
-`
-
 export type MenuProps = {
   localization?: {
-    activeLocale: string | undefined
     slugs: {
       en_GB: string
       nb_NO: string
@@ -64,17 +58,7 @@ export const Menu = ({ localization }: MenuProps) => {
           </NextLink>
         </MenuWrapper>
 
-        {localization && (
-          <LanguageSwitch>
-            <NextLink href={localization.slugs.en_GB} locale="en" passHref>
-              <Button variant={localization.activeLocale == 'en' ? 'outlined' : 'ghost'}>EN</Button>
-            </NextLink>
-            |
-            <NextLink href={localization.slugs.nb_NO} locale="no" passHref>
-              <Button variant={localization.activeLocale == 'no' ? 'outlined' : 'ghost'}>NO</Button>
-            </NextLink>
-          </LanguageSwitch>
-        )}
+        {localization && <LocalizationSwitch {...localization.slugs} />}
       </Topbar>
     </>
   )
