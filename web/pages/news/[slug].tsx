@@ -289,11 +289,11 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
       data: {
         news,
         latestNews,
-        slugs: {
-          // @TODO: do this better?
-          en_GB: slugs.find((i: { lang: string; slug: string }) => i.lang === 'en_GB')?.slug,
-          nb_NO: slugs.find((i: { lang: string; slug: string }) => i.lang === 'nb_NO')?.slug,
-        },
+        slugs: slugs.reduce((obj: any, item: any) => {
+          // @TODO: do better
+          obj[item.lang] = item.slug
+          return obj
+        }, {}),
       },
     },
     revalidate: 1,
