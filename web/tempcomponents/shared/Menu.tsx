@@ -28,6 +28,7 @@ export type MenuProps = {
       en_GB: string
       nb_NO: string
     }
+    activeLocale: string
   }
 }
 
@@ -58,7 +59,7 @@ export const Menu = ({ localization }: MenuProps) => {
           </NextLink>
         </MenuWrapper>
 
-        {localization && <LocalizationSwitch {...localization.slugs} />}
+        {localization && <LocalizationSwitch activeLocale={localization.activeLocale} {...localization.slugs} />}
       </Topbar>
     </>
   )

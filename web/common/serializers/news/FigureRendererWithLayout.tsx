@@ -1,6 +1,4 @@
-import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { imageProps } from '../../helpers'
 import styled from 'styled-components'
 import Image from '../../../tempcomponents/shared/Image'
 
@@ -58,10 +56,6 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
   const { image, caption, attribution, layout = 'full' } = node
   if (!image) return null
 
-  /* const fullImageProps = useNextSanityImage(sanityClient, image, {
-    imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1184),
-  }) */
-
   return (
     <FigureTest layout={layout}>
       {layout === 'full' ? (
@@ -77,11 +71,11 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
         (max-width: 1700px) 1049px,
         1184px
         "
+          maxWidth={1184}
         />
       ) : (
-        <Img
-          {...imageProps(image.asset, 570)}
-          alt={image.alt}
+        <Image
+          image={image}
           sizes="
           (max-width: 340px) 295px,
           (max-width: 600px) 451px,
@@ -93,6 +87,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
         570px
         "
           layout="responsive"
+          maxWidth={570}
         />
       )}
       {caption || attribution ? (

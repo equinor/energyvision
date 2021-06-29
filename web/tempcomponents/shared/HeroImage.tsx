@@ -1,8 +1,7 @@
-import Img from 'next/image'
 import styled from 'styled-components'
 import { FigureCaption } from '@components'
-import { imageProps } from '../../common/helpers'
 import type { ImageWithCaptionData } from '../../types/types'
+import Image from '../shared/Image'
 
 type HeroImageProps = {
   data: ImageWithCaptionData
@@ -14,10 +13,13 @@ const StyledFigure = styled.figure`
 
 const HeroImage = ({ data }: HeroImageProps) => {
   const { image, caption, attribution } = data
+  if (!image) return null
   return (
     <StyledFigure>
-      <Img
-        {...imageProps(image, 1420, 0.5)}
+      <Image
+        maxWidth={1420}
+        aspectRatio={0.5}
+        image={image}
         sizes="
           (max-width: 340px) 295px,
           (max-width: 600px) 490px,
@@ -28,7 +30,6 @@ const HeroImage = ({ data }: HeroImageProps) => {
           (max-width: 1700px) 1270px,
           1420px
         "
-        alt={image.alt}
         layout="responsive"
       />
       {caption || attribution ? (

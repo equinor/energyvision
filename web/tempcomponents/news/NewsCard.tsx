@@ -1,9 +1,8 @@
 import { Card, FormattedDate } from '@components'
 import { default as NextLink } from 'next/link'
-import Img from 'next/image'
-import { imageProps } from '../../common/helpers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { NewsCardData } from '../../types/types'
+import Image from '../shared/Image'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
@@ -13,6 +12,7 @@ type NewsCardProp = {
 
 const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
+  if (!heroImage) return null
 
   return (
     <NextLink href={`/news/${slug}`} passHref>
@@ -20,9 +20,7 @@ const NewsCard = ({ data }: NewsCardProp) => {
       <CardLink>
         <Card>
           <Media>
-            {heroImage && (
-              <Img {...imageProps(heroImage?.image, 400, 0.56)} alt={heroImage?.image.alt} layout="responsive" />
-            )}
+            {heroImage && <Image image={heroImage.image} maxWidth={400} aspectRatio={0.56} layout="responsive" />}
           </Media>
           <Header>
             <Eyebrow>

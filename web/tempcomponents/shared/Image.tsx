@@ -1,4 +1,4 @@
-import Img, { ImageProps } from 'next/image'
+import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { useNextSanityImage } from 'next-sanity-image'
 import { SanityImgLoader } from '../../common/helpers'
@@ -12,18 +12,23 @@ type ImgProps = Omit<
   'src' | 'srcSet' | 'ref' | 'width' | 'height' | 'loading' | 'style'
 > & {
   image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
-  //layout?: Pick<ImageProps, 'layout'>
   layout?: LayoutValue
   maxWidth: number
+  aspectRatio?: number
 }
 
 // Couldn't make it work with ...props due to TypesScript
-const Image = ({ image, sizes, layout = 'responsive', maxWidth }: ImgProps) => {
+const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio }: ImgProps) => {
   const imageProps = useNextSanityImage(sanityClient, image, {
-    imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth),
+    imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
   })
 
-  return <Img {...imageProps} alt={image.alt} sizes={sizes} layout="responsive" />
+  // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
+  if (layout === 'fill') {
+    return <Img src={imageProps.src} alt={image.alt} sizes={sizes} layout={layout} />
+  }
+
+  return <Img {...imageProps} alt={image.alt} sizes={sizes} layout={layout} />
 }
 
 export default Image

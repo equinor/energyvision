@@ -84,7 +84,17 @@ _type == "teaser"=>{
         _type == "figure"=>{
           "type": _type,
           "id": _key,
-          figure,
+           // For these images, we don't want crop and hotspot
+        // because we don't know the aspect ratio
+          "figure": figure{
+            _type,
+             "image": {
+               "asset": image.asset,
+               "alt": image.alt,
+              },
+            attribution,
+            caption
+          },
           "designOptions": {
             "background": coalesce(background.title, 'White'),
           },
