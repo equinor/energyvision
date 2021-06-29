@@ -21,7 +21,7 @@ export default () => {
           .title('News articles')
           .filter('_type == "news" && (!defined(_lang) || _lang == $baseLang)')
           .params({ baseLang: i18n.base })
-          .canHandleIntent((_name, params, _context) => {
+          .canHandleIntent((_name, params) => {
             // Assume we can handle all intents (actions) regarding post documents
             return params.type === 'news'
           }),
@@ -36,7 +36,7 @@ export default () => {
           .title('Topic content')
           .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
           .params({ baseLang: i18n.base })
-          .canHandleIntent((_name, params, _context) => {
+          .canHandleIntent((_name, params) => {
             // Assume we can handle all intents (actions) regarding post documents
             return params.type === 'page'
           }),

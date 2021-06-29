@@ -110,6 +110,7 @@ export default {
       return {
         title: title,
         subtitle: 'Factbox',
+        // eslint-disable-next-line @next/next/no-img-element
         media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(info_circle),
       }
     },
