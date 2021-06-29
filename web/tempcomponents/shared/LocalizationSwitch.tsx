@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { Button } from '@components'
 import NextLink from 'next/link'
-import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
   a {
@@ -12,15 +11,13 @@ const Wrapper = styled.div`
 export type LocalizationSwitchProps = {
   en_GB: string
   nb_NO: string
+  activeLocale: string
 }
 
 // @TODO: how to handle cases where no translation available
 // should this redirect to front page? should there be a message in that case?
-export const LocalizationSwitch = ({ en_GB, nb_NO }: LocalizationSwitchProps) => {
+export const LocalizationSwitch = ({ en_GB, nb_NO, activeLocale }: LocalizationSwitchProps) => {
   if (!en_GB || !nb_NO) return null
-
-  const router = useRouter()
-  const activeLocale = router.locale
 
   return (
     <Wrapper>

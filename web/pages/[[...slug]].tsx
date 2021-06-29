@@ -40,7 +40,7 @@ export default function Page({ data, preview }: any) {
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
   const localization = {
-    activeLocale: router.locale,
+    activeLocale: router.locale || 'en',
     slugs: {
       en_GB: data?.pageData?.allSlugs?.en_GB.current,
       nb_NO: data?.pageData?.allSlugs?.nb_NO.current,

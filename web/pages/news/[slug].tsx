@@ -188,7 +188,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   const modifiedDate = isDateAfter(news.publishDateTime, news.updatedAt) ? news.publishDateTime : news.updatedAt
 
   const localization = {
-    activeLocale: router.locale,
+    activeLocale: router.locale || 'en',
     slugs: data?.slugs,
   }
 

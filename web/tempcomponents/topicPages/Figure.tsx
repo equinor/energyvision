@@ -1,9 +1,8 @@
-import Img from 'next/image'
-import { imageProps } from '../../common/helpers'
 import type { FigureData } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer, FigureCaption } from '@components'
 import { StyledTextBlockWrapper } from './TextBlock'
+import Image from '../shared/Image'
 
 type TeaserProps = {
   data: FigureData
@@ -30,25 +29,25 @@ const FullWidthImage = ({ data }: TeaserProps) => {
   const { figure, designOptions } = data
 
   // With previews in Sanity, we need to support work in progress figures
-  if (!figure) return null
+  if (!figure.image) return null
 
   const { image, caption, attribution } = figure
 
   return (
     <StyledFigureWrapper background={designOptions?.background}>
       <StyledFigure>
-        <Img
-          {...imageProps(image.asset, 920)}
-          alt={image.alt}
+        <Image
+          image={image}
+          maxWidth={920}
           sizes="
-(max-width: 360px) 313px,
-(max-width: 600px) 415px,
-(max-width: 950px) 550px,
-(max-width: 1250px) 655px,
-(max-width: 1450px) 730px,
-(max-width: 1700px) 825px,
-920px
-"
+          (max-width: 360px) 313px,
+          (max-width: 600px) 415px,
+          (max-width: 950px) 550px,
+          (max-width: 1250px) 655px,
+          (max-width: 1450px) 730px,
+          (max-width: 1700px) 825px,
+          920px
+          "
           layout="responsive"
         />
         {caption || attribution ? (
