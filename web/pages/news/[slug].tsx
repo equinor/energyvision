@@ -278,13 +278,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
     slug: params?.slug,
   })
 
-  // @TODO: why does the 'match' filter in groq not work here?
-  // "&& _id match $id" where $id = the base id without __i18n
-  const id = news.id.replace('drafts.', '').substr(0, 36)
-  const slugs = await getClient(preview).fetch(queryLocalizedNewsById, {
-    id_en: id,
-    id_no: `${id}__i18n_nb_NO`,
-  })
+  const allSlugs = await getLocalizedNewsSlugs(news, preview)
 
   return {
     props: {
@@ -292,11 +286,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false }
       data: {
         news,
         latestNews,
-        slugs: slugs.reduce((obj: any, item: any) => {
-          // @TODO: do better
-          obj[item.lang] = item.slug
-          return obj
-        }, {}),
+        slugs: allSlugs,
       },
     },
     revalidate: 1,
@@ -309,4 +299,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: paths.map((slug: string) => ({ params: { slug } })),
     fallback: true,
   }
+}
+
+const getLocalizedNewsSlugs = async (record: any, preview: boolean) => {
+  if (!record || !record.id) return null
+
+  // @TODO: why does the 'match' filter in groq not work here?
+  // "&& _id match $id" where $id = the base id without __i18n
+  const id = record.id.replace('drafts.', '').substr(0, 36)
+  const slugs = await getClient(preview).fetch(queryLocalizedNewsById, {
+    id_en: id,
+    id_no: `${id}__i18n_nb_NO`,
+  })
+
+  if (!slugs) return null
+
+  return slugs.reduce((obj: { [key: string]: string }, item: { lang: string; slug: string }) => {
+    obj[item.lang] = item.slug
+    return obj
+  }, {})
 }
