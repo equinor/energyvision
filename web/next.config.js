@@ -8,7 +8,7 @@ module.exports = withBundleAnalyzer({
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.
-    //ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true,
   },
   publicRuntimeConfig: {
     domain: 'https://energyvision.app.radix.equinor.com',
