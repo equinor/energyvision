@@ -1,9 +1,6 @@
 /** Not used anywhere at the moment, but we'll need it later */
 
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { useNextSanityImage } from 'next-sanity-image'
-import { SanityImgLoader } from '../../common/helpers'
-import { sanityClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import Image from '../../tempcomponents/shared/Image'
 
