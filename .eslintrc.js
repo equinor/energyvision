@@ -14,7 +14,6 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:jsx-a11y/recommended',
     'prettier',
-    'plugin:@next/next/recommended',
     'plugin:react-hooks/recommended',
   ],
   parser: '@typescript-eslint/parser',
@@ -75,7 +74,5 @@ module.exports = {
         depth: 25,
       },
     ],
-    // eslint-disable-next-line no-undef
-    '@next/next/no-html-link-for-pages': ['warn', (pagesDirectory = 'web/pages')],
   },
 }

@@ -7,6 +7,7 @@ specifiers:
   '@equinor/eds-tokens': ^0.6.0
   '@equinor/energyvision-legacy-css': ^1.0.0-beta.3
   '@next/bundle-analyzer': ^11.0.1
+  '@next/eslint-plugin-next': ^11.0.1
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.11.0
   '@sanity/image-url': ^0.140.22
@@ -65,6 +66,7 @@ dependencies:
 
 devDependencies:
   '@babel/core': 7.14.6
+  '@next/eslint-plugin-next': 11.0.1
   '@storybook/addon-essentials': 6.3.0-rc.11_ab4c6eddad15187612cebc7a4d328a99
   '@storybook/addon-links': 6.3.0-rc.11_react-dom@17.0.2+react@17.0.2
   '@storybook/react': 6.3.0-rc.11_ae22560e88984b5973a213ab831663e8
@@ -1465,11 +1467,11 @@ packages:
       source-map-support: 0.5.19
     dev: true
 
-  /@babel/runtime-corejs3/7.14.6:
-    resolution: {integrity: sha512-Xl8SPYtdjcMoCsIM4teyVRg7jIcgl8F2kRtoCcXuHzXswt9UxZCS6BzRo8fcnCuP6u2XtPgvyonmEPF57Kxo9Q==}
+  /@babel/runtime-corejs3/7.14.7:
+    resolution: {integrity: sha512-Wvzcw4mBYbTagyBVZpAJWI06auSIj033T/yNE0Zn1xcup83MieCddZA7ls3kme17L4NOGBrQ09Q+nKB41RLWBA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      core-js-pure: 3.14.0
+      core-js-pure: 3.15.1
       regenerator-runtime: 0.13.7
     dev: true
 
@@ -2093,6 +2095,10 @@ packages:
   /@next/env/11.0.1:
     resolution: {integrity: sha512-yZfKh2U6R9tEYyNUrs2V3SBvCMufkJ07xMH5uWy8wqcl5gAXoEw6A/1LDqwX3j7pUutF9d1ZxpdGDA3Uag+aQQ==}
     dev: false
+
+  /@next/eslint-plugin-next/11.0.1:
+    resolution: {integrity: sha512-UzdX3y6XSrj9YuASUb/p4sRvfjP2klj2YgIOfMwrWoLTTPJQMh00hREB9Ftr7m7RIxjVSAaaLXIRLdxvq948GA==}
+    dev: true
 
   /@next/polyfill-module/11.0.1:
     resolution: {integrity: sha512-Cjs7rrKCg4CF4Jhri8PCKlBXhszTfOQNl9AjzdNy4K5jXFyxyoSzuX2rK4IuoyE+yGp5A3XJCBEmOQ4xbUp9Mg==}
@@ -4245,7 +4251,7 @@ packages:
     engines: {node: '>=6.0'}
     dependencies:
       '@babel/runtime': 7.14.6
-      '@babel/runtime-corejs3': 7.14.6
+      '@babel/runtime-corejs3': 7.14.7
     dev: true
 
   /arr-diff/4.0.0:
@@ -5423,6 +5429,11 @@ packages:
 
   /core-js-pure/3.14.0:
     resolution: {integrity: sha512-YVh+LN2FgNU0odThzm61BsdkwrbrchumFq3oztnE9vTKC4KS2fvnPmcx8t6jnqAyOTCTF4ZSiuK8Qhh7SNcL4g==}
+    requiresBuild: true
+    dev: true
+
+  /core-js-pure/3.15.1:
+    resolution: {integrity: sha512-OZuWHDlYcIda8sJLY4Ec6nWq2hRjlyCqCZ+jCflyleMkVt3tPedDVErvHslyS2nbO+SlBFMSBJYvtLMwxnrzjA==}
     requiresBuild: true
     dev: true
 
