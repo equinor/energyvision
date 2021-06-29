@@ -23,7 +23,7 @@ const Image = ({ image, sizes, layout = 'responsive', maxWidth }: ImgProps) => {
     imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth),
   })
 
-  return <Img {...imageProps} alt={image.alt} sizes={sizes} layout={layout} />
+  return <Img {...imageProps} alt={image.alt} sizes={sizes} layout="responsive" />
 }
 
 export default Image

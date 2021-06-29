@@ -35,6 +35,7 @@ export const imageProps = (
   maxWidth: number,
   aspectRatio?: number,
 ): UseNextSanityImageProps => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   return useNextSanityImage(sanityClient, image, {
     imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
   })
