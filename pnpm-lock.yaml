@@ -10,6 +10,7 @@ specifiers:
   eslint-plugin-import: ^2.23.4
   eslint-plugin-jsx-a11y: ^6.4.1
   eslint-plugin-react: ^7.24.0
+  eslint-plugin-react-hooks: ^4.2.0
   husky: ^6.0.0
   only-allow: ^1.0.0
   typescript: 4.2.4
@@ -28,6 +29,7 @@ dependencies:
   typescript: 4.2.4
 
 devDependencies:
+  eslint-plugin-react-hooks: 4.2.0_eslint@7.28.0
   husky: 6.0.0
 
 packages:
@@ -686,6 +688,15 @@ packages:
       jsx-ast-utils: 3.2.0
       language-tags: 1.0.5
     dev: false
+
+  /eslint-plugin-react-hooks/4.2.0_eslint@7.28.0:
+    resolution: {integrity: sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+    dependencies:
+      eslint: 7.28.0
+    dev: true
 
   /eslint-plugin-react/7.24.0_eslint@7.28.0:
     resolution: {integrity: sha512-KJJIx2SYx7PBx3ONe/mEeMz4YE0Lcr7feJTCMyyKb/341NcjuAgim3Acgan89GfPv7nxXK2+0slu0CWXYM4x+Q==}

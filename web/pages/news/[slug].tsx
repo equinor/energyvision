@@ -159,21 +159,24 @@ type ArticleProps = {
 }
 
 export default function News({ data, preview }: ArticleProps): JSX.Element {
+  const router = useRouter()
+  const slug = data?.news?.slug
   /** TODO: Find out why the first time News is called it is without data */
   if (!data) {
     return <ErrorPage statusCode={418} />
   }
-  const router = useRouter()
-  const { pathname } = useRouter()
 
-  const slug = data?.news?.slug
+  // @TODO: Since data can be undefined, the rules of hooks fails. Why is data undefined
   const {
     data: { news, latestNews },
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = usePreviewSubscription(newsQuery, {
     params: { slug },
     initialData: data,
     enabled: preview || router.query.preview !== null,
   })
+
+  const { pathname } = router
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
