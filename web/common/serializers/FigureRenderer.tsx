@@ -2,7 +2,9 @@
 
 import Img from 'next/image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { imageProps } from '../../common/helpers'
+import { useNextSanityImage } from 'next-sanity-image'
+import { SanityImgLoader } from '../../common/helpers'
+import { sanityClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 
 const Figure = styled.figure``
@@ -17,14 +19,17 @@ type FigureNode = {
 
 export const FigureRenderer = (child: { node: FigureNode }) => {
   const { node } = child
-  const { image = undefined, caption, attribution } = node
+  const { image, caption, attribution } = node
+  const imageProps = useNextSanityImage(sanityClient, image, {
+    imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 800),
+  })
 
   if (!image) return null
 
   // TODO: add styling for figcaption
   return (
     <Figure>
-      <Img {...imageProps(image.asset, 800)} alt={image.alt} sizes="80rem" layout="intrinsic" />
+      <Img {...imageProps} alt={image.alt} sizes="80rem" layout="intrinsic" />
       {caption || attribution ? (
         <figcaption>
           {caption} {attribution}

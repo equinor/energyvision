@@ -128,6 +128,7 @@ export const newsQuery = /* groq */ `
     "metaDescription": seo.metaDescription,
     openGraphImage,
     "content": content[]{
+      ...,
       _type == "pullQuote" => {
         "type": _type,
         "id": _key,
@@ -139,7 +140,16 @@ export const newsQuery = /* groq */ `
           "imagePosition": coalesce(imagePosition, 'right'),
         }
       },
-      ...,
+      _type == "positionedInlineImage" => {
+        ...,
+        // For these images, we don't want crop and hotspot
+        // because we don't know the aspect ratio
+        "image": image{
+          _type,
+          "asset": asset,
+          "alt": alt
+        }
+      },
       "markDefs": markDefs[]{
         ...,
         _type == "internalLink" => {

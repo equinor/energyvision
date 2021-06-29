@@ -24,12 +24,11 @@ type OldArchivedNewsPageProps = {
 
 const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
   const router = useRouter()
-
+  const { pathname } = router
   if (!router.isFallback && !data.news) {
     return <ErrorPage statusCode={404} />
   }
 
-  const { pathname } = useRouter()
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[...pagePath]', data?.news?.slug)
 
