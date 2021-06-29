@@ -3,7 +3,6 @@ import { configureBlockContent } from '../editors/blockContentType'
 import blocksToText from '../../helpers/blocksToText'
 import { puzzle_filled } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { SchemaType } from '../../types'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -16,21 +15,6 @@ const blockContentType = configureBlockContent({
   lists: false,
 })
 
-const validateText = (value: string, context: SchemaType.ValidationContext): SchemaType.ValidationResult => {
-  const icon = context.parent.icon
-
-  if (!icon) return true
-
-  const title = context.parent.title
-  const text = context.parent.text
-
-  if (!value && !title && !text) {
-    return 'A title or text is required if an icon has been selected.'
-  }
-
-  return true
-}
-
 export default {
   title: 'Short text with icon',
   name: 'textWithIcon',
@@ -40,16 +24,12 @@ export default {
       title: 'Title',
       name: 'title',
       type: 'string',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: string, context: SchemaType.ValidationContext) => validateText(value, context)),
     },
     {
       name: 'text',
       title: 'Text',
       type: 'array',
       of: [blockContentType],
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: string, context: SchemaType.ValidationContext) => validateText(value, context)),
     },
     {
       title: 'Icon',
