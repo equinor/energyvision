@@ -80,6 +80,7 @@ export default {
         { type: 'figure' },
         { type: 'textWithIconArray' },
         { type: 'pullQuote' },
+        { type: 'accordion' },
       ],
     },
   ],

@@ -23,6 +23,8 @@ import downloadableFile from './objects/files'
 import downloadableImage from './objects/downloadableImage'
 import teaser from './objects/teaser'
 import textBlock from './objects/textBlock'
+import accordion from './objects/accordion'
+import accordionItem from './objects/accordionItem'
 import fullWidthImage from './objects/fullWidthImage'
 import figure from './objects/figure'
 import textWithIcon from './objects/textWithIcon'
@@ -53,6 +55,8 @@ export default createSchema({
     downloadableImage,
     teaser,
     textBlock,
+    accordion,
+    accordionItem,
     fullWidthImage,
     figure,
     textWithIcon,
