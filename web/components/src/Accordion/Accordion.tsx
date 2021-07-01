@@ -1,53 +1,45 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { Accordion as EdsAccordion } from '@equinor/eds-core-react'
 import styled from 'styled-components'
+import {
+  Accordion as RAccordion,
+  AccordionItem as RAccordionItem,
+  AccordionButton as RAccordionButton,
+  AccordionPanel as RAccordionPanel,
+  AccordionProps as RAccordionProps,
+  AccordionItemProps as RAccordionItemProps,
+  AccordionButtonProps as RAccordionButtonProps,
+  AccordionPanelProps as RAccordionPanelProps,
+} from '@reach/accordion'
 
-const { Item: EdsItem, Header: EdsHeader, HeaderTitle: EdsHeaderTitle, Panel: EdsPanel } = EdsAccordion
+export type AccordionProps = RAccordionProps
 
-export type AccordionProps = HTMLAttributes<HTMLDivElement>
-export type AccordionItemProps = HTMLAttributes<HTMLDivElement>
-export type AccordionHeaderProps = HTMLAttributes<HTMLDivElement>
-export type AccordionHeaderTitleProps = HTMLAttributes<HTMLDivElement>
-export type AccordionPanelProps = HTMLAttributes<HTMLDivElement>
+export type AccordionItemProps = RAccordionItemProps
+export type AccordionHeaderProps = RAccordionButtonProps
+export type AccordionPanelProps = RAccordionPanelProps
 
-export const StyledAccordion = styled(EdsAccordion)``
+export const Accordion = ({ children, ...rest }: AccordionProps) => {
+  return <RAccordion {...rest}>{children}</RAccordion>
+}
 
-export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(function Accordion({ children, ...rest }, ref) {
+export const Item = forwardRef<HTMLDivElement, RAccordionItemProps>(function Item({ children, ...rest }, ref) {
   return (
-    <StyledAccordion chevronPosition="right" ref={ref} {...rest}>
+    <RAccordionItem ref={ref} {...rest}>
       {children}
-    </StyledAccordion>
+    </RAccordionItem>
+  )
+})
+export const Header = forwardRef<HTMLButtonElement, RAccordionButtonProps>(function Header({ children, ...rest }, ref) {
+  return (
+    <RAccordionButton ref={ref} {...rest}>
+      {children}
+    </RAccordionButton>
   )
 })
 
-export const Item = forwardRef<HTMLDivElement, AccordionItemProps>(function Item({ children, ...rest }, ref) {
+export const Panel = forwardRef<HTMLDivElement, RAccordionPanelProps>(function Panel({ children, ...rest }, ref) {
   return (
-    <EdsItem ref={ref} {...rest}>
+    <RAccordionPanel ref={ref} {...rest}>
       {children}
-    </EdsItem>
-  )
-})
-export const Header = forwardRef<HTMLDivElement, AccordionHeaderProps>(function Header({ children, ...rest }, ref) {
-  return (
-    <EdsHeader ref={ref} {...rest}>
-      {children}
-    </EdsHeader>
-  )
-})
-export const HeaderTitle = forwardRef<HTMLDivElement, AccordionHeaderTitleProps>(function HeaderTitle(
-  { children, ...rest },
-  ref,
-) {
-  return (
-    <EdsHeaderTitle ref={ref} {...rest}>
-      {children}
-    </EdsHeaderTitle>
-  )
-})
-export const Panel = forwardRef<HTMLDivElement, AccordionPanelProps>(function Panel({ children, ...rest }, ref) {
-  return (
-    <EdsPanel ref={ref} {...rest}>
-      {children}
-    </EdsPanel>
+    </RAccordionPanel>
   )
 })

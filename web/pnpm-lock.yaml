@@ -8,6 +8,7 @@ specifiers:
   '@equinor/energyvision-legacy-css': ^1.0.0-beta.3
   '@next/bundle-analyzer': ^11.0.1
   '@next/eslint-plugin-next': ^11.0.1
+  '@reach/accordion': ^0.15.2
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.11.0
   '@sanity/image-url': ^0.140.22
@@ -49,6 +50,7 @@ dependencies:
   '@equinor/eds-tokens': 0.6.0
   '@equinor/energyvision-legacy-css': 1.0.0-beta.3
   '@next/bundle-analyzer': 11.0.1
+  '@reach/accordion': 0.15.2_react-dom@17.0.2+react@17.0.2
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.11.0
   '@sanity/image-url': 0.140.22
@@ -2193,6 +2195,46 @@ packages:
     resolution: {integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==}
     dev: true
 
+  /@reach/accordion/0.15.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-nclT+VwA2eG5fZ/KPUAjJo9JoYzLzj5vv6OQMyAKbLJARJDN24VOevAyByJkZtNJ5kk5kI3ZiRqhKu4NTrjlLg==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/auto-id': 0.15.2_react-dom@17.0.2+react@17.0.2
+      '@reach/descendants': 0.15.2_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.15.2_react-dom@17.0.2+react@17.0.2
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tiny-warning: 1.0.3
+      tslib: 2.3.0
+    dev: false
+
+  /@reach/auto-id/0.15.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-K7d5qhYBlBHIjy+IpSEAyMeB5VTZ9m0tZdr7xyNd5Fr6oeefHEvJiJGuQpubP5bDoe7ShC3y0VQGFmT0g7KcZg==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/utils': 0.15.2_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tslib: 2.3.0
+    dev: false
+
+  /@reach/descendants/0.15.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-GdQXWVpscss89MOhWh+sL4TnIn0qX1y+Te3wE72aKQrz/QCR69JFEW4wftovmF7rFm4/kDZcp14lMy512U6VlA==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/utils': 0.15.2_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tslib: 2.3.0
+    dev: false
+
   /@reach/router/1.3.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==}
     peerDependencies:
@@ -2206,6 +2248,18 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-lifecycles-compat: 3.0.4
     dev: true
+
+  /@reach/utils/0.15.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-Lr1SJ5X4hEjD/M0TAonURM8wytM/JuPSuIP7t+e5cil34pThyLsBvTGeNfmpSgaLJ5vlsv0x9u6g4SRAEr84Og==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tiny-warning: 1.0.3
+      tslib: 2.3.0
+    dev: false
 
   /@rexxars/eventsource-polyfill/1.0.0:
     resolution: {integrity: sha512-YnrybIoM9WFqmeK1D8p/gutqjJnmXCVFWAU3ucka9M7Dzpen3f2Dy4KsC6k1wDHrCtHQuUHHwZovh3i5UPDaZw==}
@@ -11716,6 +11770,10 @@ packages:
     engines: {node: '>=0.6.0'}
     dependencies:
       setimmediate: 1.0.5
+
+  /tiny-warning/1.0.3:
+    resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
+    dev: false
 
   /tmpl/1.0.4:
     resolution: {integrity: sha1-I2QN17QtAEM5ERQIIOXPRA5SHdE=}
