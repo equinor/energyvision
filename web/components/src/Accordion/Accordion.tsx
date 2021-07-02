@@ -95,6 +95,9 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
 
 const StyledPanel = styled(RAccordionPanel)`
   padding: var(--space-small) var(--space-small) var(--space-small) var(--space-xLarge);
+  p:last-child {
+    margin-bottom: 0;
+  }
 `
 
 export const Panel = forwardRef<HTMLDivElement, RAccordionPanelProps>(function Panel({ children, ...rest }, ref) {
