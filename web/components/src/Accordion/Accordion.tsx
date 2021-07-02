@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { Typography } from '@equinor/eds-core-react'
 import { add_circle_outlined, remove_outlined } from '@equinor/eds-icons'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 import {
   Accordion as RAccordion,
   AccordionItem as RAccordionItem,
@@ -55,6 +58,9 @@ const StyledRAccordionButton = styled(RAccordionButton)`
   padding: var(--space-small) 0;
   border: none;
   cursor: pointer;
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
 `
 const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   font-size: var(--typeScale-1);
