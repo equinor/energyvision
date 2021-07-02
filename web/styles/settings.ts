@@ -174,4 +174,8 @@ export const spacings = css`
       --spacing-3xLarge: 12rem; /* 192px */
     }
   }
+  /** Because Jest hates you when you do an import style in the component */
+  :root {
+    --reach-accordion: 1;
+  }
 `
