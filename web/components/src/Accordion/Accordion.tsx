@@ -61,6 +61,7 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   line-height: var(--lineHeight-2);
   display: inline-block;
   padding-top: 2px;
+  text-align: left;
   ${({ isExpanded }) =>
     isExpanded && {
       fontWeight: 700,
