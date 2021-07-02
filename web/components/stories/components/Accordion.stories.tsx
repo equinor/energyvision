@@ -143,18 +143,45 @@ export const ControlledAccordion: Story<AccordionProps> = () => {
 }
 
 ControlledAccordion.storyName = 'Controlled accordion'
+ControlledAccordion.parameters = {
+  docs: {
+    storyDescription: `An accordion could be controlled and have items open by default`,
+  },
+}
 
-export const WithBackgroundColour: Story<AccordionProps> = () => (
-  <BackgroundContainer background="Moss Green">
-    <Accordion>
-      <Accordion.Item>
-        <Accordion.Header>Header 1</Accordion.Header>
-        <Accordion.Panel>Content 1</Accordion.Panel>
-      </Accordion.Item>
-      <Accordion.Item>
-        <Accordion.Header>Header 2</Accordion.Header>
-        <Accordion.Panel>Content 2</Accordion.Panel>
-      </Accordion.Item>
-    </Accordion>
-  </BackgroundContainer>
+export const WithBackgroundColours: Story<AccordionProps> = () => (
+  <>
+    <BackgroundContainer background="Moss Green">
+      <Accordion>
+        <Accordion.Item>
+          <Accordion.Header>Header 1</Accordion.Header>
+          <Accordion.Panel>
+            <Text>Content 1</Text>
+          </Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item>
+          <Accordion.Header>Header 2</Accordion.Header>
+          <Accordion.Panel>
+            <Text>Content 2</Text>
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    </BackgroundContainer>
+    <BackgroundContainer background="Slate Blue" style={{ marginTop: '1rem' }}>
+      <Accordion>
+        <Accordion.Item>
+          <Accordion.Header>Header 1</Accordion.Header>
+          <Accordion.Panel>
+            <Text>Content 1</Text>
+          </Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item>
+          <Accordion.Header>Header 2</Accordion.Header>
+          <Accordion.Panel>
+            <Text>Content 2</Text>
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+    </BackgroundContainer>
+  </>
 )
