@@ -1,7 +1,7 @@
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { text_field } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
+import { AccordionComponent } from '../../icons'
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 
@@ -70,7 +70,7 @@ export default {
       return {
         title: title || 'Missing title',
         subtitle: `Accordion component.`,
-        media: EdsIcon(text_field),
+        media: AccordionComponent,
       }
     },
   },
