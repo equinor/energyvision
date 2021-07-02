@@ -12,8 +12,13 @@ export default {
 export const Default: Story<AccordionProps> = (args) => (
   <Accordion {...args}>
     <Accordion.Item>
-      <Accordion.Header>Header 1</Accordion.Header>
-      <Accordion.Panel>Content 1</Accordion.Panel>
+      <Accordion.Header>Produced and processed water</Accordion.Header>
+      <Accordion.Panel>
+        Our efforts to continuously improve our management of discharges of large volumes of produced and processed
+        water to the sea continue. The main objective is to minimise the environmental impact from oil and chemicals
+        contained in the discharged water. We continuosly monitor discharges from each of our installations and onshore
+        plants.{' '}
+      </Accordion.Panel>
     </Accordion.Item>
   </Accordion>
 )
