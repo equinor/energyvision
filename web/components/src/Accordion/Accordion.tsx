@@ -68,6 +68,9 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   display: inline-block;
   padding-top: 2px;
   text-align: left;
+  .inverted-background & {
+    color: var(--inverted-text);
+  }
   ${({ isExpanded }) =>
     isExpanded && {
       fontWeight: 700,
@@ -92,7 +95,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
         ) : (
           <StyledIcon size={16} data={add_circle_outlined} />
         )}
-        <StyledTypography isExpanded={isExpanded} as="span">
+        <StyledTypography isExpanded={isExpanded} forwardedAs="span">
           {children}
         </StyledTypography>
       </StyledRAccordionButton>
