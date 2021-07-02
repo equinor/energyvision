@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 import { Accordion, AccordionProps, BackgroundContainer, Text } from '@components'
 
@@ -77,6 +78,71 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
 )
 
 WithMultipleItems.storyName = 'With multiple items'
+
+export const ControlledAccordion: Story<AccordionProps> = () => {
+  const [indices, setIndices] = useState([0, 2])
+
+  function toggleItem(toggledIndex: number) {
+    if (indices.includes(toggledIndex)) {
+      setIndices(indices.filter((currentIndex) => currentIndex !== toggledIndex))
+    } else {
+      setIndices([...indices, toggledIndex].sort())
+    }
+  }
+
+  return (
+    <Accordion index={indices} onChange={toggleItem}>
+      <Accordion.Item>
+        <Accordion.Header>Produced and processed water</Accordion.Header>
+        <Accordion.Panel>
+          <Text>
+            Our efforts to continuously improve our management of discharges of large volumes of produced and processed
+            water to the sea continue. The main objective is to minimise the environmental impact from oil and chemicals
+            contained in the discharged water. We continuosly monitor discharges from each of our installations and
+            onshore plants.
+          </Text>
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item>
+        <Accordion.Header>NOx Emissions</Accordion.Header>
+        <Accordion.Panel>
+          <Text>
+            Our efforts to continuously improve our management of discharges of large volumes of produced and processed
+            water to the sea continue. The main objective is to minimise the environmental impact from oil and chemicals
+            contained in the discharged water. We continuosly monitor discharges from each of our installations and
+            onshore plants.
+          </Text>
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item>
+        <Accordion.Header>
+          Waste handling and a loong title over several lines and even more and more and more
+        </Accordion.Header>
+        <Accordion.Panel>
+          <Text>
+            Our efforts to continuously improve our management of discharges of large volumes of produced and processed
+            water to the sea continue. The main objective is to minimise the environmental impact from oil and chemicals
+            contained in the discharged water. We continuosly monitor discharges from each of our installations and
+            onshore plants.
+          </Text>
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item>
+        <Accordion.Header>Fresh water</Accordion.Header>
+        <Accordion.Panel>
+          <Text>
+            Our efforts to continuously improve our management of discharges of large volumes of produced and processed
+            water to the sea continue. The main objective is to minimise the environmental impact from oil and chemicals
+            contained in the discharged water. We continuosly monitor discharges from each of our installations and
+            onshore plants.
+          </Text>
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  )
+}
+
+ControlledAccordion.storyName = 'Controlled accordion'
 
 export const WithBackgroundColour: Story<AccordionProps> = () => (
   <BackgroundContainer background="Moss Green">
