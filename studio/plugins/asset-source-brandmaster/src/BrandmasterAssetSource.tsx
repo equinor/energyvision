@@ -7,7 +7,7 @@ const BM_URL = process.env.SANITY_STUDIO_BRANDMASTER_URL
 const BM_SOURCE = process.env.SANITY_STUDIO_BRANDMASTER_SOURCE
 
 const BrandmasterAssetSource = (props: any) => {
-  const { onSelect, handleClose } = props
+  const { onSelect, onClose } = props
 
   const handleBrandmasterEvent = useCallback(
     (event) => {
@@ -47,7 +47,7 @@ const BrandmasterAssetSource = (props: any) => {
   }, [handleBrandmasterEvent])
 
   return (
-    <Dialog title="Select image from Brandmaster" onClose={handleClose} isOpen>
+    <Dialog title="Select image from Brandmaster" onClose={onClose} isOpen>
       {BM_URL && BM_SOURCE ? (
         <iframe title="Brandmaster" src={BM_URL + BM_SOURCE}></iframe>
       ) : (
