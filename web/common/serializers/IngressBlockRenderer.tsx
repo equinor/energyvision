@@ -14,7 +14,6 @@ export const IngressBlockRenderer = (props: IngressProps) => {
   if (style === 'normal') {
     return (
       <Text size="md" centered={centered}>
-        {' '}
         {children}
       </Text>
     )

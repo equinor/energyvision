@@ -8,6 +8,7 @@ import FullWidthImage from '../topicPages/FullWidthImage'
 import Figure from '../topicPages/Figure'
 import TextWithIconArray from '../topicPages/TextWithIconArray'
 import PageQuote from '../topicPages/PageQuote'
+import Accordion from '../topicPages/Accordion'
 import {
   TeaserData,
   TextBlockData,
@@ -16,6 +17,7 @@ import {
   TextWithIconArrayData,
   CallToActionData,
   QuoteData,
+  AccordionData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.div`
@@ -60,6 +62,7 @@ type ComponentProps =
   | TextWithIconArrayData
   | CallToActionData
   | QuoteData
+  | AccordionData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data?.content || []).map((c: ComponentProps) => {
@@ -76,6 +79,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <TextWithIconArray key={c.id} data={c as TextWithIconArrayData} />
       case 'pullQuote':
         return <PageQuote key={c.id} data={c as QuoteData} />
+      case 'accordion':
+        return <Accordion key={c.id} data={c as AccordionData} />
       default:
         return null
     }
