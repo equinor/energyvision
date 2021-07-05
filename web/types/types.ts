@@ -163,3 +163,18 @@ export type QuoteData = {
   image: ImageWithAlt
   designOptions: DesignOptions
 }
+
+export type AccordionListData = {
+  id: string
+  title: string
+  content: PortableTextEntry[]
+}
+
+export type AccordionData = {
+  type: string
+  id: string
+  title: string
+  ingress: PortableTextEntry[]
+  accordion: AccordionListData[]
+  designOptions: DesignOptions
+}

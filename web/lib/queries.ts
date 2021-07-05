@@ -124,6 +124,20 @@ _type == "teaser"=>{
             "imagePosition": coalesce(imagePosition, 'right'),
           }
         },
+        _type == "accordion" => {
+          "type": _type,
+          "id": _key,
+          title,
+          ingress,
+          "accordion": accordion[]{
+            "id": _key,
+            title,
+            content
+          },
+          "designOptions": {
+            "background": coalesce(background.title, 'none'),
+          }
+        }
 `
 
 export const allNewsQuery = /* groq */ `

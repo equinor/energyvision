@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 import styled from 'styled-components'
-import { Icon } from '@equinor/eds-core-react'
-import { Typography } from '@equinor/eds-core-react'
+import { Icon, Typography } from '@equinor/eds-core-react'
 import { add_circle_outlined, remove_outlined } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
 

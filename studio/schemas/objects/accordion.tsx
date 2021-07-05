@@ -1,6 +1,5 @@
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
-import { text_field } from '@equinor/eds-icons'
 import { AccordionComponent } from '../../icons'
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
