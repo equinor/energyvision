@@ -128,11 +128,35 @@ _type == "teaser"=>{
           "type": _type,
           "id": _key,
           title,
-          ingress,
+          ingress[]{
+            ...,
+            "markDefs": markDefs[]{
+              ...,
+              _type == "internalLink" => {
+                "internalLink": reference->{
+                  name,
+                  "id": slug.current,
+                  "type": _type,
+                },
+              },
+            }, 
+          },
           "accordion": accordion[]{
             "id": _key,
             title,
-            content
+            content[]{
+              ...,
+              "markDefs": markDefs[]{
+                ...,
+                _type == "internalLink" => {
+                  "internalLink": reference->{
+                    name,
+                    "id": slug.current,
+                    "type": _type,
+                  },
+                },
+              }, 
+            }
           },
           "designOptions": {
             "background": coalesce(background.title, 'none'),
