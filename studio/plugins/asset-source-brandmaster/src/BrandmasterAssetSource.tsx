@@ -1,10 +1,22 @@
 import React, { useEffect, useCallback } from 'react'
 // eslint-disable-next-line import/no-unresolved
 import Dialog from 'part:@sanity/components/dialogs/fullscreen'
+import styled from 'styled-components'
 
 const BM_EVENT_NAME = 'dam:plugin-assets-selected-event'
 const BM_URL = process.env.SANITY_STUDIO_BRANDMASTER_URL
 const BM_SOURCE = process.env.SANITY_STUDIO_BRANDMASTER_SOURCE
+
+const StyledIframe = styled.iframe`
+  width: 100%;
+  height: 100%;
+  min-height: 70vh;
+`
+
+const Warning = styled.p`
+  margin: 4em;
+  text-align: center;
+`
 
 const BrandmasterAssetSource = (props: any) => {
   const { onSelect, onClose } = props
@@ -49,9 +61,12 @@ const BrandmasterAssetSource = (props: any) => {
   return (
     <Dialog title="Select image from Brandmaster" onClose={onClose} isOpen>
       {BM_URL && BM_SOURCE ? (
-        <iframe title="Brandmaster" src={BM_URL + BM_SOURCE}></iframe>
+        <StyledIframe title="Brandmaster" src={BM_URL + BM_SOURCE}></StyledIframe>
       ) : (
-        <p>Brandmaster source URL not defined in environment variables.</p>
+        <Warning>
+          No Brandmaster source URL found. Please define the URL and path to load the iframe in the enviromental
+          variables.
+        </Warning>
       )}
     </Dialog>
   )
