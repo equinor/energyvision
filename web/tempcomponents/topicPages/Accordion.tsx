@@ -13,19 +13,6 @@ const StyledTextBlock = styled.section`
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
-
-  /* Where exactly should we put these styles */
-  /* If the title has an eyebrow we need some tweaks */
-  & h2 {
-    padding: var(--space-large) 0;
-  }
-  & h2:first-child {
-    padding-top: 0;
-  }
-
-  & p:last-child {
-    margin-bottom: 0;
-  }
 `
 
 type AccordionProps = {
@@ -36,7 +23,6 @@ const Accordion = ({ data }: AccordionProps) => {
   const { title, ingress, designOptions, accordion } = data
 
   const { background } = designOptions
-
   return (
     <StyledTextBlockWrapper background={background}>
       <StyledTextBlock>
@@ -58,10 +44,11 @@ const Accordion = ({ data }: AccordionProps) => {
         {accordion && accordion.length > 0 && (
           <EnvisAccordion>
             {accordion.map((item) => {
-              const { id, title, content } = item
+              const { id, title: itemTitle, content } = item
+
               return (
                 <Item key={id}>
-                  <Header>{title}</Header>
+                  <Header headingLevel={title ? 'h3' : 'h2'}>{itemTitle}</Header>
                   <Panel>
                     {content && (
                       <SimpleBlockContent

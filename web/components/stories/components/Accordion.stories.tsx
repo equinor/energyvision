@@ -76,8 +76,23 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
     </Accordion.Item>
   </Accordion>
 )
+export const WithAnotherHeaderLevel: Story<AccordionProps> = () => (
+  <Accordion>
+    <Accordion.Item>
+      <Accordion.Header headingLevel="h2">Produced and processed water</Accordion.Header>
+      <Accordion.Panel>
+        <Text>
+          Our efforts to continuously improve our management of discharges of large volumes of produced and processed
+          water to the sea continue. The main objective is to minimise the environmental impact from oil and chemicals
+          contained in the discharged water. We continuosly monitor discharges from each of our installations and
+          onshore plants.
+        </Text>
+      </Accordion.Panel>
+    </Accordion.Item>
+  </Accordion>
+)
 
-WithMultipleItems.storyName = 'With multiple items'
+WithAnotherHeaderLevel.storyName = 'With another header level (h2)'
 
 export const ControlledAccordion: Story<AccordionProps> = () => {
   const [indices, setIndices] = useState([0, 2])

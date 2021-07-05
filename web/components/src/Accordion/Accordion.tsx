@@ -26,7 +26,6 @@ export type AccordionHeaderProps = {
 export type AccordionPanelProps = RAccordionPanelProps
 
 export const Accordion = ({ children, ...rest }: AccordionProps) => {
-  console.log('Icon', remove_outlined)
   return (
     <RAccordion collapsible multiple {...rest}>
       {children}
@@ -97,7 +96,7 @@ const StyledHeader = styled(Typography)`
 `
 
 export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(function Header(
-  { headingLevel = 'h3', children, ...rest },
+  { headingLevel, children, ...rest },
   ref,
 ) {
   const context = useAccordionItemContext()
