@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import styled from 'styled-components'
 import { Icon, Typography } from '@equinor/eds-core-react'
-import { add_circle_outlined, remove_outlined } from '@equinor/eds-icons'
+import { add_circle_outlined, remove_outlined, add_circle_filled, remove } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
@@ -26,6 +26,7 @@ export type AccordionHeaderProps = {
 export type AccordionPanelProps = RAccordionPanelProps
 
 export const Accordion = ({ children, ...rest }: AccordionProps) => {
+  console.log('Icon', remove_outlined)
   return (
     <RAccordion collapsible multiple {...rest}>
       {children}
@@ -44,10 +45,6 @@ export const Item = forwardRef<HTMLDivElement, RAccordionItemProps>(function Ite
     </StyledItem>
   )
 })
-
-const StyledHeader = styled(Typography)`
-  margin: 0;
-`
 
 const StyledRAccordionButton = styled(RAccordionButton)`
   display: flex;
@@ -76,10 +73,29 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
     }}
 `
 
-const StyledIcon = styled(Icon)`
+const FilledIcon = styled(Icon)``
+
+const OutlineIcon = styled(Icon)``
+
+const StyledIcon = styled.span`
   flex: 0 0 var(--space-xLarge);
-  fill: var(--energy-red-100);
+  & ${FilledIcon}, & ${OutlineIcon} {
+    fill: var(--energy-red-100);
+  }
 `
+const StyledHeader = styled(Typography)`
+  margin: 0;
+  & ${FilledIcon} {
+    display: none;
+  }
+  &:hover ${FilledIcon} {
+    display: inline-flex;
+  }
+  &:hover ${OutlineIcon} {
+    display: none;
+  }
+`
+
 export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(function Header(
   { headingLevel = 'h3', children, ...rest },
   ref,
@@ -89,10 +105,17 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   return (
     <StyledHeader forwardedAs={headingLevel}>
       <StyledRAccordionButton ref={ref} {...rest}>
+        {/* Let's do it in the easiest way by just swapping the icons and see how that works */}
         {isExpanded ? (
-          <StyledIcon size={16} data={remove_outlined} />
+          <StyledIcon>
+            <OutlineIcon size={16} data={remove_outlined} />
+            <FilledIcon size={16} data={remove} />
+          </StyledIcon>
         ) : (
-          <StyledIcon size={16} data={add_circle_outlined} />
+          <StyledIcon>
+            <OutlineIcon size={16} data={add_circle_outlined} />
+            <FilledIcon size={16} data={add_circle_filled} />
+          </StyledIcon>
         )}
         <StyledTypography isExpanded={isExpanded} forwardedAs="span">
           {children}
