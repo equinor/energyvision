@@ -1,10 +1,7 @@
-import { forwardRef } from 'react'
+import { forwardRef, useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Icon, Typography } from '@equinor/eds-core-react'
 import { add_circle_outlined, remove_outlined, add_circle_filled, remove } from '@equinor/eds-icons'
-import { outlineTemplate, Tokens } from '@utils'
-
-const { outline } = Tokens
 import {
   Accordion as RAccordion,
   AccordionItem as RAccordionItem,
@@ -16,6 +13,11 @@ import {
   AccordionPanelProps as RAccordionPanelProps,
   useAccordionItemContext,
 } from '@reach/accordion'
+import { animated, useSpring } from '@react-spring/web'
+
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 export type AccordionProps = RAccordionProps
 
@@ -61,6 +63,9 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   display: inline-block;
   padding-top: 2px;
   text-align: left;
+  @media (prefers-reduced-motion: no-preference) {
+    transition: font-weight 0.1s ease-in-out;
+  }
   .inverted-background & {
     color: var(--inverted-text);
   }
@@ -123,19 +128,73 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   )
 })
 
-const StyledPanel = styled(RAccordionPanel)`
-  margin: var(--space-small) var(--space-small) var(--space-large) calc(var(--space-xLarge) / 2);
-  border-left: 1px dashed var(--energy-red-100);
-  padding-left: calc(var(--space-xLarge) / 2);
+function useDivHeight() {
+  const ref = useRef(null)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      requestAnimationFrame(() => {
+        if (!entry) {
+          return
+        }
+        setHeight(entry.target.getBoundingClientRect().height)
+      })
+    })
+
+    if (ref.current) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: Do you have any suggestions here Sven
+      resizeObserver.observe(ref.current)
+    }
+
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [])
+
+  return { ref, height }
+}
+
+const AnimatedAccordionPanel = animated(RAccordionPanel)
+
+const StyledPanel = styled.div`
+  padding: var(--space-small) var(--space-small) var(--space-large) 0;
+  margin-left: calc(var(--space-xLarge) / 2);
   p:last-child {
     margin-bottom: 0;
   }
 `
+const ContentWithBorder = styled.div`
+  border-left: 1px dashed var(--energy-red-100);
+  padding-left: calc(var(--space-xLarge) / 2);
+`
 
-export const Panel = forwardRef<HTMLDivElement, RAccordionPanelProps>(function Panel({ children, ...rest }, ref) {
+export const Panel = forwardRef<HTMLDivElement, RAccordionPanelProps>(function Panel(
+  { children, ...rest },
+  forwardedRef,
+) {
+  const { isExpanded } = useAccordionItemContext()
+  const { ref, height } = useDivHeight()
+
+  const animation = useSpring({
+    opacity: isExpanded ? 1 : 0,
+    height: isExpanded ? height : 0,
+    overflow: 'hidden',
+    config: { duration: 150 },
+  })
+
   return (
-    <StyledPanel ref={ref} {...rest}>
-      {children}
-    </StyledPanel>
+    <AnimatedAccordionPanel
+      style={animation}
+      hidden={false}
+      aria-hidden={!isExpanded || undefined}
+      ref={forwardedRef}
+      {...rest}
+    >
+      <StyledPanel ref={ref}>
+        <ContentWithBorder>{children}</ContentWithBorder>
+      </StyledPanel>
+    </AnimatedAccordionPanel>
   )
 })

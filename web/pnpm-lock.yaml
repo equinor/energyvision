@@ -9,6 +9,7 @@ specifiers:
   '@next/bundle-analyzer': ^11.0.1
   '@next/eslint-plugin-next': ^11.0.1
   '@reach/accordion': ^0.15.2
+  '@react-spring/web': ^9.2.3
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.11.0
   '@sanity/image-url': ^0.140.22
@@ -52,6 +53,7 @@ dependencies:
   '@equinor/energyvision-legacy-css': 1.0.0-beta.3
   '@next/bundle-analyzer': 11.0.1
   '@reach/accordion': 0.15.2_react-dom@17.0.2+react@17.0.2
+  '@react-spring/web': 9.2.3_react-dom@17.0.2+react@17.0.2
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.11.0
   '@sanity/image-url': 0.140.22
@@ -2261,6 +2263,60 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       tiny-warning: 1.0.3
       tslib: 2.3.0
+    dev: false
+
+  /@react-spring/animated/9.2.3_react@17.0.2:
+    resolution: {integrity: sha512-xxYOxxrk4r+yy218lVnkR027GXGvHcadDnnXRW0l6atcL+1AGYwimMwIuvzlvnsVnyoK0YUABEeGjk9ENOrVMQ==}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0
+    dependencies:
+      '@react-spring/shared': 9.2.3_react@17.0.2
+      '@react-spring/types': 9.2.3
+      react: 17.0.2
+    dev: false
+
+  /@react-spring/core/9.2.3_react@17.0.2:
+    resolution: {integrity: sha512-8qJbj0xjjoYGVqdmNd2bVaFzKSAwrMVLweHkaYJiTY6p0g7LhSdt5KSl1MjYA4Rj6S4wO1KgefAPK6mH6MtGtA==}
+    requiresBuild: true
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0
+    dependencies:
+      '@react-spring/animated': 9.2.3_react@17.0.2
+      '@react-spring/shared': 9.2.3_react@17.0.2
+      '@react-spring/types': 9.2.3
+      react: 17.0.2
+    dev: false
+
+  /@react-spring/rafz/9.2.3:
+    resolution: {integrity: sha512-ThBI3HWp1Y82uRSFVpoykwgM3M9s3SJD6ilKKp9C2OTPcGhWiRGt1IMjzKPwB+F1NX3psbPTt30Bev8WzA/DQQ==}
+    dev: false
+
+  /@react-spring/shared/9.2.3_react@17.0.2:
+    resolution: {integrity: sha512-MehdmKao1oUAwSEJo8BXOz1OGgsSav/dimD1Vz920hirShj9s/I4zKnWtkdK92xQ4n35D/xD3hATHkXbt/WSvg==}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0
+    dependencies:
+      '@react-spring/rafz': 9.2.3
+      '@react-spring/types': 9.2.3
+      react: 17.0.2
+    dev: false
+
+  /@react-spring/types/9.2.3:
+    resolution: {integrity: sha512-G7AWUJavwsvvvprnYmqUXE5N1XKINktc8V72ipvkFTE3DD3GApYpX/ORNmieJljKJYvBSBzpRSIzk2qELUs30Q==}
+    dev: false
+
+  /@react-spring/web/9.2.3_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-dWRcgVDbO2UI9I03n/HVmCx9tY++Na+RwRzkzXv3E53BcFsjvnWGArnpj+xE/XgXiaII3ep2RmUj5jyYoukqGg==}
+    peerDependencies:
+      react: ^16.8.0  || ^17.0.0
+      react-dom: ^16.8.0  || ^17.0.0
+    dependencies:
+      '@react-spring/animated': 9.2.3_react@17.0.2
+      '@react-spring/core': 9.2.3_react@17.0.2
+      '@react-spring/shared': 9.2.3_react@17.0.2
+      '@react-spring/types': 9.2.3
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /@rexxars/eventsource-polyfill/1.0.0:
