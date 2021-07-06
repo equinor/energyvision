@@ -95,7 +95,7 @@ const StyledHeader = styled(Typography)`
 `
 
 export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(function Header(
-  { headingLevel, children, ...rest },
+  { headingLevel = 'h3', children, ...rest },
   ref,
 ) {
   const context = useAccordionItemContext()
