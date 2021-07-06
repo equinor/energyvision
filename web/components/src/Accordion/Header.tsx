@@ -21,7 +21,7 @@ const StyledRAccordionButton = styled(RAccordionButton)`
   align-items: center;
   width: 100%;
   background: transparent;
-  padding: var(--space-small) 0;
+  padding: var(--space-medium) 0;
   border: none;
   cursor: pointer;
   &[data-focus-visible-added]:focus {
