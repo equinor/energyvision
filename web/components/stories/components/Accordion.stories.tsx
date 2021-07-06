@@ -7,6 +7,8 @@ export default {
   component: Accordion,
   subcomponents: {
     Item: Accordion.Item,
+    Panel: Accordion.Panel,
+    Header: Accordion.Header,
   },
 } as Meta
 
