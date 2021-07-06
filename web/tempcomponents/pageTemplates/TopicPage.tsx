@@ -8,7 +8,7 @@ import FullWidthImage from '../topicPages/FullWidthImage'
 import Figure from '../topicPages/Figure'
 import TextWithIconArray from '../topicPages/TextWithIconArray'
 import PageQuote from '../topicPages/PageQuote'
-import Accordion from '../topicPages/Accordion'
+import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import {
   TeaserData,
   TextBlockData,
@@ -80,7 +80,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       case 'pullQuote':
         return <PageQuote key={c.id} data={c as QuoteData} />
       case 'accordion':
-        return <Accordion key={c.id} data={c as AccordionData} />
+        return <AccordionBlock key={c.id} data={c as AccordionData} />
       default:
         return null
     }
