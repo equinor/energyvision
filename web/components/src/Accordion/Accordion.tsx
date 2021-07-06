@@ -20,17 +20,15 @@ import {
 export type AccordionProps = RAccordionProps
 
 export type AccordionItemProps = RAccordionItemProps
+
 export type AccordionHeaderProps = {
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
 } & RAccordionButtonProps
+
 export type AccordionPanelProps = RAccordionPanelProps
 
 export const Accordion = ({ children, ...rest }: AccordionProps) => {
-  return (
-    <RAccordion collapsible multiple {...rest}>
-      {children}
-    </RAccordion>
-  )
+  return <RAccordion {...rest}>{children}</RAccordion>
 }
 
 const StyledItem = styled(RAccordionItem)`
