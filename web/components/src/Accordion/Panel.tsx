@@ -36,7 +36,9 @@ function useDivHeight() {
   return { ref, height }
 }
 
-export type AccordionPanelProps = RAccordionPanelProps
+export type AccordionPanelProps = {
+  animate?: boolean
+} & RAccordionPanelProps
 
 const AnimatedAccordionPanel = animated(RAccordionPanel)
 
@@ -52,19 +54,20 @@ const ContentWithBorder = styled.div`
   padding-left: calc(var(--space-xLarge) / 2);
 `
 
-export const Panel = forwardRef<HTMLDivElement, RAccordionPanelProps>(function Panel(
-  { children, ...rest },
+export const Panel = forwardRef<HTMLDivElement, AccordionPanelProps>(function Panel(
+  { animate = true, children, ...rest },
   forwardedRef,
 ) {
   const { isExpanded } = useAccordionItemContext()
   const { ref, height } = useDivHeight()
   const prefersReducedMotion = usePrefersReducedMotion()
+  console.log('Animate er ', animate)
   const animation = useSpring({
     opacity: isExpanded ? 1 : 0,
     height: isExpanded ? height : 0,
     overflow: 'hidden',
     config: { duration: 150 },
-    immediate: prefersReducedMotion,
+    immediate: prefersReducedMotion || !animate,
   })
 
   return (
