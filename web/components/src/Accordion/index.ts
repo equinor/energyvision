@@ -1,13 +1,7 @@
-import {
-  Accordion as AccordionWrapper,
-  AccordionProps,
-  Header,
-  Item,
-  Panel,
-  AccordionHeaderProps,
-  AccordionItemProps,
-  AccordionPanelProps,
-} from './Accordion'
+import { Accordion as AccordionWrapper, AccordionProps } from './Accordion'
+import { Panel, AccordionPanelProps } from './Panel'
+import { Item, AccordionItemProps } from './Item'
+import { Header, AccordionHeaderProps } from './Header'
 
 type AccordionCompoundProps = typeof AccordionWrapper & {
   Item: typeof Item
