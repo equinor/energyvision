@@ -14,7 +14,7 @@ import {
   useAccordionItemContext,
 } from '@reach/accordion'
 import { animated, useSpring } from '@react-spring/web'
-
+import { usePrefersReducedMotion } from './usePrefersReducedMotion'
 import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
@@ -176,12 +176,13 @@ export const Panel = forwardRef<HTMLDivElement, RAccordionPanelProps>(function P
 ) {
   const { isExpanded } = useAccordionItemContext()
   const { ref, height } = useDivHeight()
-
+  const prefersReducedMotion = usePrefersReducedMotion()
   const animation = useSpring({
     opacity: isExpanded ? 1 : 0,
     height: isExpanded ? height : 0,
     overflow: 'hidden',
     config: { duration: 150 },
+    immediate: prefersReducedMotion,
   })
 
   return (
