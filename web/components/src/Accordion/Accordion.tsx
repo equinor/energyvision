@@ -76,6 +76,7 @@ const OutlineIcon = styled(Icon)``
 
 const StyledIcon = styled.span`
   flex: 0 0 var(--space-xLarge);
+  line-height: 16px;
   & ${FilledIcon}, & ${OutlineIcon} {
     fill: var(--energy-red-100);
   }
@@ -123,7 +124,9 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
 })
 
 const StyledPanel = styled(RAccordionPanel)`
-  padding: var(--space-small) var(--space-small) var(--space-small) var(--space-xLarge);
+  margin: var(--space-small) var(--space-small) var(--space-large) calc(var(--space-xLarge) / 2);
+  border-left: 1px dashed var(--energy-red-100);
+  padding-left: calc(var(--space-xLarge) / 2);
   p:last-child {
     margin-bottom: 0;
   }

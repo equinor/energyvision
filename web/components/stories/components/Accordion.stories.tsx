@@ -13,7 +13,7 @@ export default {
 } as Meta
 
 export const Default: Story<AccordionProps> = (args) => (
-  <Accordion {...args}>
+  <Accordion {...args} multiple collapsible>
     <Accordion.Item>
       <Accordion.Header>Produced and processed water</Accordion.Header>
       <Accordion.Panel>
@@ -29,7 +29,7 @@ export const Default: Story<AccordionProps> = (args) => (
 )
 
 export const WithMultipleItems: Story<AccordionProps> = () => (
-  <Accordion>
+  <Accordion multiple collapsible>
     <Accordion.Item>
       <Accordion.Header>Produced and processed water</Accordion.Header>
       <Accordion.Panel>
@@ -79,7 +79,7 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
   </Accordion>
 )
 export const WithAnotherHeaderLevel: Story<AccordionProps> = () => (
-  <Accordion>
+  <Accordion multiple collapsible>
     <Accordion.Item>
       <Accordion.Header headingLevel="h2">Produced and processed water</Accordion.Header>
       <Accordion.Panel>
@@ -169,7 +169,7 @@ ControlledAccordion.parameters = {
 export const WithBackgroundColours: Story<AccordionProps> = () => (
   <>
     <BackgroundContainer background="Moss Green">
-      <Accordion>
+      <Accordion multiple collapsible>
         <Accordion.Item>
           <Accordion.Header>Header 1</Accordion.Header>
           <Accordion.Panel>
