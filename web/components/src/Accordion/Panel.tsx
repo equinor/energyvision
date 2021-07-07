@@ -61,7 +61,6 @@ export const Panel = forwardRef<HTMLDivElement, AccordionPanelProps>(function Pa
   const { isExpanded } = useAccordionItemContext()
   const { ref, height } = useDivHeight()
   const prefersReducedMotion = usePrefersReducedMotion()
-  console.log('Animate er ', animate)
   const animation = useSpring({
     opacity: isExpanded ? 1 : 0,
     height: isExpanded ? height : 0,
