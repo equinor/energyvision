@@ -81,6 +81,7 @@ export default {
         { type: 'textWithIconArray' },
         { type: 'pullQuote' },
         { type: 'accordion' },
+        { type: 'promoTile' },
       ],
     },
   ],

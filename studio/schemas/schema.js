@@ -32,6 +32,7 @@ import textWithIconArray from './objects/textWithIconArray'
 import callToAction from './objects/callToAction'
 import externalUrl from './objects/externalUrl'
 import internalUrl from './objects/internalUrl'
+import promoTile from './objects/promoTile'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -64,5 +65,6 @@ export default createSchema({
     callToAction,
     externalUrl,
     internalUrl,
+    promoTile,
   ]),
 })
