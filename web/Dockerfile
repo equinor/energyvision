@@ -48,7 +48,7 @@ COPY --from=builder /opt/app/package.json /opt/app
 COPY --from=builder /opt/app/pnpm-workspaces.yaml /opt/app
 
 RUN chown -R "$USER":"$USER" /opt/app
-USER "$USER"
+USER "$UID"
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
