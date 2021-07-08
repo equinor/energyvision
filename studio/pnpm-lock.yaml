@@ -13,15 +13,15 @@ specifiers:
   '@sanity/form-builder': ^2.11.2
   '@sanity/ui': ^0.34.4
   '@sanity/vision': ^2.11.2
-  '@types/styled-components': ^5.1.10
+  '@types/styled-components': ^5.1.11
   only-allow: ^1.0.0
   prop-types: ^15.7.2
   react: ^17.0.2
   react-dom: ^17.0.2
   rxjs: ^7.1.0
-  sanity-plugin-color-list: ^2.0.1
+  sanity-plugin-color-list: ^2.0.2
   sanity-plugin-documents-pane: ^1.0.3
-  sanity-plugin-intl-input: ^5.1.0
+  sanity-plugin-intl-input: ^5.2.1
   slugify: ^1.5.3
   styled-components: ^5.3.0
 
@@ -42,15 +42,15 @@ dependencies:
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   rxjs: 7.1.0
-  sanity-plugin-color-list: 2.0.1_cd7f9eb5b57e47ec0b43b1bd152ce0ea
+  sanity-plugin-color-list: 2.0.2_a3b9184a04cdb1a7887803b684325bf1
   sanity-plugin-documents-pane: 1.0.3_react@17.0.2
-  sanity-plugin-intl-input: 5.1.0_bb76b760e2af1743fb488fc14cb2f0da
+  sanity-plugin-intl-input: 5.2.1_bb76b760e2af1743fb488fc14cb2f0da
   slugify: 1.5.3
   styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
 
 devDependencies:
   '@sanity/cli': 2.11.0
-  '@types/styled-components': 5.1.10
+  '@types/styled-components': 5.1.11
 
 packages:
 
@@ -3212,8 +3212,8 @@ packages:
     resolution: {integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==}
     dev: false
 
-  /@types/styled-components/5.1.10:
-    resolution: {integrity: sha512-g3ZfWlTiyXktASIhcfCicZtqB/fFFnq0a7kPYYxKXNggdrohp8m/9bMmmt3zDvHj2gplWDGCkZByfFnEXfbSWg==}
+  /@types/styled-components/5.1.11:
+    resolution: {integrity: sha512-u8g3bSw9KUiZY+S++gh+LlURGraqBe3MC5I5dygrNjGDHWWQfsmZZRTJ9K9oHU2CqWtxChWmJkDI/gp+TZPQMw==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
       '@types/react': 17.0.11
@@ -9693,22 +9693,24 @@ packages:
       diff-match-patch: 1.0.5
     dev: false
 
-  /sanity-plugin-color-list/2.0.1_cd7f9eb5b57e47ec0b43b1bd152ce0ea:
-    resolution: {integrity: sha512-ro6MxRHjZufEXhfMqWQCdNdEqB+Wll8OzzxsoWrFlnjRaNQiCxRxTxkIP8yrHNuGYUQlKmOZ0B+1u8Wuuuhxag==}
+  /sanity-plugin-color-list/2.0.2_a3b9184a04cdb1a7887803b684325bf1:
+    resolution: {integrity: sha512-NEejkHQOUj3lXwzJRiWlYzbtMr6xgbiiQNmu872iCoZ2g3m/B2GAMLnPeMFrKfTvjA6lTW+CgR4okBeoZrKP4w==}
     peerDependencies:
+      '@sanity/base': ^2.11.0
       '@sanity/form-builder': '>=2.1.3'
-      '@sanity/ui': ^0.31.4
-      react: '>=16.9'
+      react: ^16.9 || ^17
       styled-components: ^5.2.1
     dependencies:
       '@ctrl/tinycolor': 2.6.1
+      '@sanity/base': 2.11.2_9bdd65c2b60ce8638444b80b396a481b
       '@sanity/form-builder': 2.11.2_9bdd65c2b60ce8638444b80b396a481b
       '@sanity/ui': 0.34.4_c59160f3e2ae0f45324a65c8464c8ff0
-      classnames: 2.3.1
       lodash: 4.17.21
       prop-types: 15.7.2
       react: 17.0.2
       styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
+    transitivePeerDependencies:
+      - react-dom
     dev: false
 
   /sanity-plugin-documents-pane/1.0.3_react@17.0.2:
@@ -9721,8 +9723,8 @@ packages:
       react: 17.0.2
     dev: false
 
-  /sanity-plugin-intl-input/5.1.0_bb76b760e2af1743fb488fc14cb2f0da:
-    resolution: {integrity: sha512-viwQGnXv/cBcN78eIhRrYtioRjvJ0KKTD1TqBydxmXhG9uFWymUepQDkuNdg4xLXWKNUBXcwH/0hHblsvFd38A==}
+  /sanity-plugin-intl-input/5.2.1_bb76b760e2af1743fb488fc14cb2f0da:
+    resolution: {integrity: sha512-o34e32Xm2PsHjOjeLQCeCjcFX1EPsV4INldjjrcfEKwFjN68z35s/S6FJsuq7cC1WWgzZSBb3rHfWwZRcxMEYw==}
     peerDependencies:
       '@sanity/base': ^2.0.0
       '@sanity/desk-tool': ^2.0.0
