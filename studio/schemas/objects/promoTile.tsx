@@ -1,24 +1,7 @@
 import React from 'react'
-import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 import { label } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-
-const validateLink = (value: any, connectedField: any): SchemaType.ValidationResult => {
-  if (value && connectedField) {
-    return 'Can only have a single link. Choose either an internal or external link.'
-  }
-
-  if (!connectedField && !value) {
-    return 'An internal or external link is required.'
-  }
-
-  if (connectedField && !value) {
-    return true
-  }
-
-  return true
-}
 
 export default {
   title: 'Promo tile',
@@ -48,37 +31,8 @@ export default {
       type: 'imageWithAlt',
     },
     {
-      name: 'buttonLabel',
-      title: 'Button label',
-      type: 'string',
-      fieldset: 'link',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
-    },
-    {
-      name: 'reference',
-      title: 'Internal link',
-      type: 'reference',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.url)
-        }),
-      to: [
-        {
-          type: 'news',
-        },
-        { type: 'page' },
-      ],
-      fieldset: 'link',
-    },
-    {
-      name: 'url',
-      title: 'External URL',
-      type: 'url',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.reference)
-        }),
-      fieldset: 'link',
+      name: 'link',
+      type: 'linkSelector',
     },
     {
       title: 'Background',
