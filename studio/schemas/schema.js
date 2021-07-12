@@ -34,6 +34,7 @@ import externalUrl from './objects/externalUrl'
 import internalUrl from './objects/internalUrl'
 import linkSelector from './objects/linkSelector'
 import promoTile from './objects/promoTile'
+import promoTileArray from './objects/promoTileArray'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -68,5 +69,6 @@ export default createSchema({
     internalUrl,
     linkSelector,
     promoTile,
+    promoTileArray,
   ]),
 })
