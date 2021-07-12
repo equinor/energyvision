@@ -100,37 +100,8 @@ export default {
         Rule.custom((value: any) => validateContent(value, 600)).warning(),
     },
     {
-      name: 'linkLabel',
-      title: 'Link label',
-      type: 'string',
-      fieldset: 'link',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
-    },
-    {
-      name: 'reference',
-      title: 'Internal link',
-      type: 'reference',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.url)
-        }),
-      to: [
-        {
-          type: 'news',
-        },
-        { type: 'page' },
-      ],
-      fieldset: 'link',
-    },
-    {
-      name: 'url',
-      title: 'External URL',
-      type: 'url',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.reference)
-        }),
-      fieldset: 'link',
+      name: 'link',
+      type: 'linkSelector',
     },
     {
       name: 'image',
@@ -197,8 +168,8 @@ export default {
     select: {
       title: 'title',
       image: 'image.asset',
-      slug: 'reference.slug.current',
-      url: 'url',
+      slug: 'link.reference.slug.current',
+      url: 'link.url',
     },
     prepare(selection: any) {
       const { title, image, slug, url } = selection

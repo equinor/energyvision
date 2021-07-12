@@ -21,12 +21,12 @@ _type == "teaser"=>{
             imageSize,
           },
           "action": {
-            "label": linkLabel,
-            "link": reference-> {
+            "label": link.label,
+            "link": link.reference-> {
               "type": _type,
               "slug": slug.current
             },
-            "href": url,
+            "href": link.url,
           },
           "image": image{
             ...,
