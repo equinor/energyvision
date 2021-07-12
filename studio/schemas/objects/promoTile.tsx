@@ -2,6 +2,7 @@ import React from 'react'
 import { Colors } from '../../helpers/ColorListValues'
 import { label } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import { SchemaType } from '../../types'
 
 export default {
   title: 'Promo tile',
@@ -24,7 +25,12 @@ export default {
     },
   ],
   fields: [
-    { name: 'title', type: 'string', title: 'Title' },
+    {
+      name: 'title',
+      type: 'string',
+      title: 'Title',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+    },
     {
       name: 'image',
       title: 'Image',
