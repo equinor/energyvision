@@ -30,7 +30,7 @@ export default function Home(): JSX.Element {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Title>
-          MVP 1 is all about{' '}
+          MVP 1 is not about{' '}
           <NextLink href="/en/news" passHref>
             <Link variant="readMore">News</Link>
           </NextLink>

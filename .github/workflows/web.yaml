@@ -1,9 +1,9 @@
-name: Lint & Test web
+name: Lint, Test and Deploy web 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - radix
     paths:
       - 'web/**/*.jsx?'
       - 'web/**/*.tsx?'
@@ -48,3 +48,40 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
+
+  deploy:
+    needs: check_code
+    runs-on: ubuntu-latest
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set default image tag
+        run: |
+          echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
+      - name: Build web component
+        run: |
+          docker build . --file web/Dockerfile --tag ghcr.io/equinor/energyvision/web:${{ env.IMAGE_TAG }}
+      - name: Push the image to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker push ghcr.io/equinor/energyvision/web:${{ env.IMAGE_TAG }}
+      - name: Get environment from branch
+        id: getEnvironment
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            get config branch-environment
+            --from-config
+            -b ${GITHUB_REF##*/}
+      - name: Deploy API on Radix
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --context development
+            --from-config
+            -e ${{ steps.getEnvironment.outputs.result }}
+            -f
+      

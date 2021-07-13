@@ -6,14 +6,21 @@ spec:
   environments:
     - name: dev
       build:
-        from: main
+        from: radix
   components:
     - name: web
       publicPort: http
-      dockerfileName: web/Dockerfile
+      image: ghcr.io/equinor/energyvision/web:{imageTagName}
       ports:
         - name: http
           port: 3000
+      environmentConfig:
+        - environment: dev
+          imageName: radix-latest
   dnsAppAlias:
     environment: dev
     component: web
+  privateImageHubs:
+    ghcr.io:
+      username: nilsml
+      email: nilsml@nilsland.com
