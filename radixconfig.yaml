@@ -17,7 +17,7 @@ spec:
           port: 3000
       environmentConfig:
         - environment: dev
-          imageName: radix-latest
+          imageTagName: radix-latest
   dnsAppAlias:
     environment: dev
     component: web
