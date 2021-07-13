@@ -75,13 +75,14 @@ jobs:
             --from-config
             -b ${GITHUB_REF##*/}
       - name: Deploy API on Radix
+        id: deploy
         uses: equinor/radix-github-actions@master
         with:
           args: >
             create job
             deploy
+            --token-environment
             --context development
             --from-config
             -e ${{ steps.getEnvironment.outputs.result }}
             -f
-      
