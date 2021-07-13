@@ -11,6 +11,7 @@ spec:
     - name: web
       publicPort: http
       image: ghcr.io/equinor/energyvision/web:{imageTagName}
+      alwaysPullImageOnDeploy: true
       ports:
         - name: http
           port: 3000
