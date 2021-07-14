@@ -178,3 +178,17 @@ export type AccordionData = {
   accordion: AccordionListData[]
   designOptions: DesignOptions
 }
+
+export type PromoTileData = {
+  id: string
+  title: string
+  image: ImageWithAlt
+  action: LinkData
+  designOptions: DesignOptions
+}
+
+export type PromoTileArrayData = {
+  type: string
+  id: string
+  group: PromoTileData[]
+}
