@@ -161,7 +161,34 @@ _type == "teaser"=>{
           "designOptions": {
             "background": coalesce(background.title, 'none'),
           }
-        }
+        },
+        _type == "promoTileArray"=>{
+          "type": _type,
+          "id": _key,
+          "group": group[]{
+            "id": _key,
+            title,
+            "image": {
+              "asset": image.asset,
+              "alt": image.alt,
+             },
+             "action": {
+              "label": link.label,
+              "link": link.reference-> {
+                "type": _type,
+                "slug": slug.current
+              },
+              "href": link.url,
+            },
+            "image": image{
+              ...,
+              "extension": asset-> extension
+            },
+            "designOptions": {
+              "background": coalesce(background.title, 'none'),
+            },
+          },
+        },
 `
 
 export const allNewsQuery = /* groq */ `
