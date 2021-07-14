@@ -9,6 +9,7 @@ import Figure from '../topicPages/Figure'
 import TextWithIconArray from '../topicPages/TextWithIconArray'
 import PageQuote from '../topicPages/PageQuote'
 import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
+import PromoTileArray from '../topicPages/PromoTileArray'
 import {
   TeaserData,
   TextBlockData,
@@ -18,6 +19,7 @@ import {
   CallToActionData,
   QuoteData,
   AccordionData,
+  PromoTileArrayData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.div`
@@ -63,6 +65,7 @@ type ComponentProps =
   | CallToActionData
   | QuoteData
   | AccordionData
+  | PromoTileArrayData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const content = (data?.content || []).map((c: ComponentProps) => {
@@ -81,6 +84,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <PageQuote key={c.id} data={c as QuoteData} />
       case 'accordion':
         return <AccordionBlock key={c.id} data={c as AccordionData} />
+      case 'promoTileArray':
+        return <PromoTileArray key={c.id} data={c as PromoTileArrayData} />
       default:
         return null
     }
