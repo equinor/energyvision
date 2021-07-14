@@ -6,7 +6,7 @@ spec:
   environments:
     - name: dev
       build:
-        from: radix
+        from: main
   components:
     - name: web
       publicPort: http
@@ -17,7 +17,7 @@ spec:
           port: 3000
       environmentConfig:
         - environment: dev
-          imageTagName: radix-latest
+          imageTagName: main-latest
   dnsAppAlias:
     environment: dev
     component: web
