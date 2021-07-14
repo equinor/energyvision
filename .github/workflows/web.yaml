@@ -82,7 +82,6 @@ jobs:
             create job
             deploy
             --token-environment
-            --context development
             --from-config
             -e ${{ steps.getEnvironment.outputs.result }}
             -f
