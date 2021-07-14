@@ -42,7 +42,8 @@ jobs:
         id: test
         run: |
           pnpm test --filter energy-vision-web
-      - uses: act10ns/slack@v1
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
@@ -56,17 +57,17 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v1
-      - name: Set default image tag
+      - name: Set default image tag 🏷
         run: |
           echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-      - name: Build web component
+      - name: Build web component ⚙️
         run: |
           docker build . --file web/Dockerfile --tag ghcr.io/equinor/energyvision/web:${{ env.IMAGE_TAG }}
-      - name: Push the image to GHCR
+      - name: Push the image to GHCR ☁
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker push ghcr.io/equinor/energyvision/web:${{ env.IMAGE_TAG }}
-      - name: Get environment from branch
+      - name: Get environment from branch 🦞
         id: getEnvironment
         uses: equinor/radix-github-actions@master
         with:
@@ -74,7 +75,7 @@ jobs:
             get config branch-environment
             --from-config
             -b ${GITHUB_REF##*/}
-      - name: Deploy API on Radix
+      - name: Deploy API on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master
         with:
@@ -85,7 +86,8 @@ jobs:
             --from-config
             -e ${{ steps.getEnvironment.outputs.result }}
             -f
-      - uses: act10ns/slack@v1
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
