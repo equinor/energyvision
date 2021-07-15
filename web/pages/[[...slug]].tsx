@@ -118,10 +118,9 @@ export const getTopicRoutesForLocale = async (locale: string) => {
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const fetchPaths = locales.map(async (locale) => {
     const pages = await getTopicRoutesForLocale(locale)
-    const pagePaths = pages.map((slug: string) => {
-      return { params: { slug: slug.split('/').filter((p) => p) }, locale }
-    })
-    return pagePaths
+    return pages.map((slug: string) => ({
+      params: { slug: slug.split('/').filter((p) => p) }, locale
+    }))
   })
   const paths = await Promise.all(fetchPaths)
 
