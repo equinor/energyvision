@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BackgroundContainer, Card } from '@components'
+import { Card, ColorMapping } from '@components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
@@ -15,30 +15,33 @@ const Container = styled.div`
   margin: auto;
 `
 
+// The EDS Card component has a hardcoded background color preventing us
+// from using our colored BackgroundContainer component
+// @TODO: refactor Card component to allow us to use BackgroundContainer
+const StyledCard = styled(Card)`
+  background: ${({ color }) => `var(${color})`};
+`
+
 const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
-  console.log(data)
   return (
     <Container>
       {data.group.map((tile: PromoTileData) => (
-        <BackgroundContainer
+        <StyledCard
           key={tile.id}
-          background={tile.designOptions.background}
-          data-fubar={tile.designOptions.background}
+          color={ColorMapping[tile.designOptions.background.toLowerCase()] || ColorMapping.default}
         >
-          <Card>
-            {tile.image && (
-              <Media>
-                <Image image={tile.image} alt={tile.image.alt} maxWidth={400} aspectRatio={0.56} layout="responsive" />
-              </Media>
-            )}
-            <Header>
-              <Title>{tile.title}</Title>
-            </Header>
-            <Action>
-              <ButtonLink action={tile.action} />
-            </Action>
-          </Card>
-        </BackgroundContainer>
+          {tile.image && (
+            <Media>
+              <Image image={tile.image} alt={tile.image.alt} maxWidth={400} aspectRatio={0.56} layout="responsive" />
+            </Media>
+          )}
+          <Header>
+            <Title>{tile.title}</Title>
+          </Header>
+          <Action>
+            <ButtonLink action={tile.action} />
+          </Action>
+        </StyledCard>
       ))}
     </Container>
   )
