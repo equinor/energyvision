@@ -7,6 +7,7 @@ spec:
     - name: dev
       build:
         from: main
+    - name: test
   components:
     - name: web
       publicPort: http
