@@ -30,13 +30,13 @@ export default function Home(): JSX.Element {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Title>
-          MVP 1 is all about{' '}
-          <NextLink href="/en/news" passHref>
-            <Link variant="readMore">News</Link>
+          MVP 2 is all about{' '}
+          <NextLink href="/en/careers" passHref>
+            <Link variant="readMore">Careers</Link>
           </NextLink>
         </Title>
-        <NextLink href="/en/careers" passHref>
-          <Link variant="readMore">Careers</Link>
+        <NextLink href="/en/news" passHref>
+          <Link variant="readMore">News</Link>
         </NextLink>
       </Container>
     </>
