@@ -1,43 +1,10 @@
 import styled from 'styled-components'
-import { BackgroundContainer, Card, Button } from '@components'
-import type { PromoTileArrayData, PromoTileData, LinkData } from '../../types/types'
+import { BackgroundContainer, Card } from '@components'
+import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
-import NextLink from 'next/link'
+import { ButtonLink } from '../shared/ButtonLink'
 
 const { Title, Header, Action, Media } = Card
-
-function getUrl(callToAction: LinkData) {
-  const { type, link, href } = callToAction
-  let url: string
-  if (type === 'internalUrl') {
-    url = link?.type === 'news' ? `/news/${link?.slug}` : link?.slug || ''
-  } else {
-    url = href || ''
-  }
-  return url
-}
-
-const C2ALinkAsButton = ({ callToAction }: { callToAction: LinkData }) => {
-  const { type, label, extension } = callToAction
-
-  const url = getUrl(callToAction)
-
-  return (
-    <>
-      {type === 'internalUrl' ? (
-        <NextLink passHref href={url}>
-          <Button as="a" variant="outlined" color="secondary">
-            {label}
-          </Button>
-        </NextLink>
-      ) : (
-        <Button as="a" variant="outlined" href={url} color="secondary">
-          {label} {extension && `(${extension.toUpperCase()})`}
-        </Button>
-      )}
-    </>
-  )
-}
 
 const Container = styled.div`
   display: grid;
@@ -68,7 +35,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
               <Title>{tile.title}</Title>
             </Header>
             <Action>
-              <C2ALinkAsButton callToAction={tile.action} />
+              <ButtonLink action={tile.action} />
             </Action>
           </Card>
         </BackgroundContainer>
