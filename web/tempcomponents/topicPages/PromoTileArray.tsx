@@ -8,11 +8,15 @@ const { Title, Header, Action, Media } = Card
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: var(--space-large);
+  grid-template-columns: 1fr;
+  grid-gap: var(--space-medium);
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin: auto;
+
+  @media (min-width: 750px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `
 
 // The EDS Card component has a hardcoded background color preventing us
