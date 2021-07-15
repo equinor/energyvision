@@ -23,6 +23,8 @@ const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio }: I
     imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
   })
 
+  if (!imageProps) return false
+
   // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
   if (layout === 'fill') {
     return <Img src={imageProps.src} alt={image.alt} sizes={sizes} layout={layout} />
