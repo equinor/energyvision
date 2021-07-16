@@ -6,6 +6,8 @@ specifiers:
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.6.0
   '@equinor/energyvision-legacy-css': ^1.0.0-beta.3
+  '@microsoft/applicationinsights-react-js': ^3.1.4
+  '@microsoft/applicationinsights-web': ^2.6.4
   '@next/bundle-analyzer': ^11.0.1
   '@next/eslint-plugin-next': ^11.0.1
   '@reach/accordion': ^0.15.3
@@ -51,6 +53,8 @@ dependencies:
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.6.0
   '@equinor/energyvision-legacy-css': 1.0.0-beta.3
+  '@microsoft/applicationinsights-react-js': 3.1.4_react@17.0.2
+  '@microsoft/applicationinsights-web': 2.6.4
   '@next/bundle-analyzer': 11.0.1
   '@reach/accordion': 0.15.3_react-dom@17.0.2+react@17.0.2
   '@react-spring/web': 9.2.4_react-dom@17.0.2+react@17.0.2
@@ -2057,6 +2061,91 @@ packages:
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: true
+
+  /@microsoft/applicationinsights-analytics-js/2.6.4:
+    resolution: {integrity: sha512-BHx3U6H4j3ddtl2wSJNt+kX2jG+qsvH4mNnimFJjZ4Mq9dheD3o6ghnBH8gQjIb5Up09JdyV5itsTZf1aC84Dg==}
+    dependencies:
+      '@microsoft/applicationinsights-common': 2.6.4
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/applicationinsights-channel-js/2.6.4:
+    resolution: {integrity: sha512-ps9ZglUw8nzou9/CxmfRgHO7aGjhopu9YqsadbQL6yz/q8LSj1w30+ADa3gSMYCEEy8FQrDo5e5UebDEnX/w+A==}
+    dependencies:
+      '@microsoft/applicationinsights-common': 2.6.4
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/applicationinsights-common/2.6.4:
+    resolution: {integrity: sha512-/YLrKpxXL8zusjzu8GTYPuRrKw0OzUD4rLh8mxSlUZWK+SLOE/1loizJIesmd6OLgcgmOTrd1iZFVsuxn20b/g==}
+    dependencies:
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/applicationinsights-core-js/2.6.4:
+    resolution: {integrity: sha512-rYxfJzl4aLXFGOLsRoJqyKj5qfhQTz1u/eXSo6N6gIIr/D+RCVNJZKVzeBh3xOOytm4UBGRshK0QFZJlIQL3Kw==}
+    dependencies:
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/applicationinsights-dependencies-js/2.6.4:
+    resolution: {integrity: sha512-mJ/yTe00HPlUpQCmQWGhY3ronlkhsPgIYBWjxstN4NHRO4Qt17/ITxFoRa+r50J8Sf4ouc4qBoEFSVc56x80bg==}
+    dependencies:
+      '@microsoft/applicationinsights-common': 2.6.4
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/applicationinsights-properties-js/2.6.4:
+    resolution: {integrity: sha512-SdIR3gVX46N0RdC0zV/pXKoCxwT+2+79ek6hVXvXa2o2I+JfgYEAxb1Q8flYNGEdlFd/Ge7BHcJLqFvjat1t4Q==}
+    dependencies:
+      '@microsoft/applicationinsights-common': 2.6.4
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/applicationinsights-react-js/3.1.4_react@17.0.2:
+    resolution: {integrity: sha512-PHMj09AAXmZlbPa6+XZ47tbKgaudU8gJVNFMW0Uy1onmDxqmnstXVirweJTHN1+qU9GWI+HWI1Zee5A+hKRjxQ==}
+    peerDependencies:
+      react: ^17.0.1
+    dependencies:
+      '@microsoft/applicationinsights-common': 2.6.4
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+      history: 4.10.1
+      react: 17.0.2
+    dev: false
+
+  /@microsoft/applicationinsights-shims/2.0.0:
+    resolution: {integrity: sha512-OaKew7f7acuNFgKYjMSPrRTRQi93xUyONWeeCeBlJSx7oRNJaL0TqbTvW6j5GHnSr3mhinPtAQ+rCQWASBnOrg==}
+    dev: false
+
+  /@microsoft/applicationinsights-web/2.6.4:
+    resolution: {integrity: sha512-/lBngt78Q7YNs8Llu1xz22f9oT5Rr2lo1QmSSSSKal30HL6kkzkP14J2E6+0+O5dRmyTDgOSiEePt6AhF8NFzg==}
+    dependencies:
+      '@microsoft/applicationinsights-analytics-js': 2.6.4
+      '@microsoft/applicationinsights-channel-js': 2.6.4
+      '@microsoft/applicationinsights-common': 2.6.4
+      '@microsoft/applicationinsights-core-js': 2.6.4
+      '@microsoft/applicationinsights-dependencies-js': 2.6.4
+      '@microsoft/applicationinsights-properties-js': 2.6.4
+      '@microsoft/applicationinsights-shims': 2.0.0
+      '@microsoft/dynamicproto-js': 1.1.4
+    dev: false
+
+  /@microsoft/dynamicproto-js/1.1.4:
+    resolution: {integrity: sha512-Ot53G927ykMF8cQ3/zq4foZtdk+Tt1YpX7aUTHxBU7UHNdkEiBvBfZSq+rnlUmKCJ19VatwPG4mNzvcGpBj4og==}
+    dev: false
 
   /@mrmlnc/readdir-enhanced/2.2.1:
     resolution: {integrity: sha512-bPHp6Ji8b41szTOcaP63VlnbbO5Ny6dwAATtY6JTjh5N2OLrb5Qk/Th5cRkRQhkWCt+EJsYrNB0MiL+Gpn6e3g==}
@@ -7443,6 +7532,17 @@ packages:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
     dev: true
 
+  /history/4.10.1:
+    resolution: {integrity: sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      loose-envify: 1.4.0
+      resolve-pathname: 3.0.0
+      tiny-invariant: 1.1.0
+      tiny-warning: 1.0.3
+      value-equal: 1.0.1
+    dev: false
+
   /hmac-drbg/1.0.1:
     resolution: {integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=}
     dependencies:
@@ -11076,6 +11176,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /resolve-pathname/3.0.0:
+    resolution: {integrity: sha512-C7rARubxI8bXFNB/hqcp/4iUeIXJhJZvFPFPiSPRnhU5UPxzMFIl+2E6yY6c4k9giDJAhtV+enfA+G89N6Csng==}
+    dev: false
+
   /resolve-url/0.2.1:
     resolution: {integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=}
     deprecated: https://github.com/lydell/resolve-url#deprecated
@@ -12076,6 +12180,10 @@ packages:
     dependencies:
       setimmediate: 1.0.5
 
+  /tiny-invariant/1.1.0:
+    resolution: {integrity: sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==}
+    dev: false
+
   /tiny-warning/1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
     dev: false
@@ -12588,6 +12696,10 @@ packages:
       spdx-correct: 3.1.1
       spdx-expression-parse: 3.0.1
     dev: true
+
+  /value-equal/1.0.1:
+    resolution: {integrity: sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==}
+    dev: false
 
   /vary/1.1.2:
     resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
