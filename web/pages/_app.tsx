@@ -9,6 +9,8 @@ import { DefaultSeo } from 'next-seo'
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
 import { isArchivePage } from '../lib/archive/archiveUtils'
+import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
+import { reactPlugin } from '../common'
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
@@ -16,24 +18,28 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   // TODO: get locale from Sanity
   return (
     <>
-      <IntlProvider locale="en" defaultLocale="en">
-        <Head>
-          {/* TODO: load the font in a better way */}
-          <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" />
-          <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-          <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-        </Head>
-        {/* TODO: Find out why this works in the news-archive branch and not here */}
-        {isArchivePage(router.asPath) && (
-          <style jsx global>
-            {archivedStyles}
-          </style>
-        )}
-        <GlobalStyle />
-        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+      <AppInsightsErrorBoundary onError={() => <h1>I believe something went wrong</h1>} appInsights={reactPlugin}>
+        <AppInsightsContext.Provider value={reactPlugin}>
+          <IntlProvider locale="en" defaultLocale="en">
+            <Head>
+              {/* TODO: load the font in a better way */}
+              <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" />
+              <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+              <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+            </Head>
+            {/* TODO: Find out why this works in the news-archive branch and not here */}
+            {isArchivePage(router.asPath) && (
+              <style jsx global>
+                {archivedStyles}
+              </style>
+            )}
+            <GlobalStyle />
+            <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
-        <Component {...pageProps} />
-      </IntlProvider>
+            <Component {...pageProps} />
+          </IntlProvider>
+        </AppInsightsContext.Provider>
+      </AppInsightsErrorBoundary>
     </>
   )
 }
