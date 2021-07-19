@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
+import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
@@ -160,6 +161,7 @@ type ArticleProps = {
 
 export default function News({ data, preview }: ArticleProps): JSX.Element {
   const router = useRouter()
+  const appInsights = useAppInsightsContext()
   const slug = data?.news?.slug
   /** TODO: Find out why the first time News is called it is without data */
   if (!data) {
@@ -191,6 +193,8 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     activeLocale: router.locale || 'en',
     slugs: data?.slugs,
   }
+
+  appInsights.trackPageView({ name: slug, uri: fullUrl })
 
   return (
     <>

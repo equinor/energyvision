@@ -13,12 +13,14 @@ import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
 import { Menu } from '../tempcomponents/shared/Menu'
+import { useAppInsightsContext } from "@microsoft/applicationinsights-react-js"
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
 const { publicRuntimeConfig } = getConfig()
 
 export default function Page({ data, preview }: any) {
+  const appInsights = useAppInsightsContext()
   const router = useRouter()
   const slug = data?.pageData?.slug
   const { pathname } = useRouter()
@@ -46,6 +48,8 @@ export default function Page({ data, preview }: any) {
       nb_NO: data?.pageData?.allSlugs?.nb_NO.current,
     },
   }
+
+  appInsights.trackPageView({ name: slug, uri: fullUrl })
 
   return (
     <>
