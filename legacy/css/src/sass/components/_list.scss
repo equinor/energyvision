@@ -5,8 +5,14 @@ $list-bottom-border-color: #ddd;
 .no-result-container{
     text-align: center;
     display: none;
-    padding-top: 4rem;
-    padding-bottom: 15rem;
+    @include susy-breakpoint($screen-xs, $susy) {
+    padding-top: calc(4rem/1.6);
+    padding-bottom: calc(15rem/1.6);
+    }
+    @include susy-breakpoint($screen-sm, $susy) {
+      padding-top: calc(4rem/2.01);
+      padding-bottom: calc(15rem/2.01);
+      }
     .no-result-heading{
         display: inline-block;
         width: 100%;
@@ -14,7 +20,12 @@ $list-bottom-border-color: #ddd;
 }
 
 .section.list {
-  margin-top: 1rem;
+  @include susy-breakpoint($screen-xs, $susy) {
+    margin-top: calc(1rem/1.6);
+    }
+    @include susy-breakpoint($screen-xs, $susy) {
+      margin-top: calc(1rem/2.01);
+      }
 }
 
 .list-container {
@@ -32,29 +43,43 @@ $list-bottom-border-color: #ddd;
 
   .loading-indicator {
     text-align: center;
-    font-size: 3.5rem;
     display: none;
     width: 10%;
-    margin: 0 auto 1rem auto;
+    @include susy-breakpoint($screen-xs, $susy) {
+      font-size: calc(3.5rem/1.6);
+      margin: 0 auto calc(1rem/1.6) auto;
+    }
+    @include susy-breakpoint($screen-sm, $susy) {
+      font-size: calc(3.5rem/2.01);
+      margin: 0 auto calc(1rem/2.01) auto;
+    }
   }
 
   .search-and-sort {
     width: 100%;
-    padding-top: 2rem;
-    height: 7.5rem;
     overflow: visible;
 
     @include susy-breakpoint($screen-xs, $susy) {
       padding-left: 0;
+      padding-top: calc(2rem/1.6);
+      height: calc(7.5rem/1.6);
     }
     @include susy-breakpoint($screen-sm, $susy) {
       padding-left: 50%;
+      padding-top: calc(2rem/2.01);
+      height: calc(7.5rem/2.01);
     }
 
     .list-search-container {
       width: 50%;
       float: right;
-      padding-bottom: 2rem;
+      @include susy-breakpoint($screen-xs, $susy) {
+      padding-bottom: calc(2rem/1.6);
+      }
+
+      @include susy-breakpoint($screen-sm, $susy) {
+        padding-bottom: calc(2rem/2.01);
+        }
 
       label {
         @extend %offscreen;
@@ -69,9 +94,16 @@ $list-bottom-border-color: #ddd;
 
     .sort-options-container {
       width: 50%;
-      padding-left: 2rem;
-      padding-bottom: 2rem;
       float: right;
+
+      @include susy-breakpoint($screen-xs, $susy) {
+        padding-left: calc(2rem/1.6);
+        padding-bottom: calc(2rem/1.6);
+      }
+      @include susy-breakpoint($screen-sm, $susy) {
+        padding-left: calc(2rem/2.01);
+        padding-bottom: calc(2rem/2.01);
+      }
 
       .selectric-wrapper {
         width: 100%;
@@ -84,14 +116,21 @@ $list-bottom-border-color: #ddd;
       }
 
       .custom-dropdown-items{
-        height: 4.2rem;
+        @include susy-breakpoint($screen-xs, $susy) {
+        height: calc(4.2rem/1.6);
+        }
+        @include susy-breakpoint($screen-sm, $susy) {
+          height: calc(4.2rem/2.01);
+          }
       }
     }
   }
 
   .queried {
     @include Equinor-Medium-italic;
-    font-size: 1.5rem;
+    @include susy-breakpoint($screen-xs, $susy) { font-size: calc(1.5rem/1.6); }
+    @include susy-breakpoint($screen-sm, $susy) { font-size: calc(1.5rem/2.01); }
+    
   }
 
   > h2 {
@@ -188,7 +227,7 @@ $list-bottom-border-color: #ddd;
     flex-direction: column;
     @include susy-breakpoint($screen-sm, $susy) {
       flex-direction: row;
-      padding: 2rem;
+      padding: calc(2rem/2.01);
     }
     //}
 
@@ -225,11 +264,16 @@ $list-bottom-border-color: #ddd;
     }
 
     .item-text {
-      padding-top: 2rem;
-      padding-left: 2.5rem;
-      padding-right: 2.5rem;
+      @include susy-breakpoint($screen-xs, $susy) {
+      padding-top: calc(2rem/1.6);
+      padding-left: calc(2.5rem/1.6);
+      padding-right: calc(2.5rem/1.6);
+      }
 
       @include susy-breakpoint($screen-sm, $susy) {
+        padding-top: calc(2rem/2.01);
+        padding-left: calc(2.5rem/2.01);
+        padding-right: calc(2.5rem/2.01);
         width: 54%;
         padding-top: 0;
         flex-grow: 1;
@@ -246,9 +290,9 @@ $list-bottom-border-color: #ddd;
       .item-date {
         @include susy-breakpoint($screen-xs, $susy) {
           display: block;
-          margin-bottom: 1.5rem;
+          margin-bottom: calc(1.5rem/1.6);
           text-transform: uppercase;
-          font-size: 1.5rem;
+          font-size: calc(1.5rem/1.6);
           color: $newsdate-color;
         }
 
@@ -262,7 +306,7 @@ $list-bottom-border-color: #ddd;
       @include susy-breakpoint($screen-xs, $susy) {
         width: 100%;
         text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: calc(1rem/1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
@@ -288,9 +332,9 @@ $list-bottom-border-color: #ddd;
 
         @include susy-breakpoint($screen-sm, $susy) {
           display: block;
-          margin-bottom: 1.5rem;
+          margin-bottom: calc(1.5rem/2.01);
           text-transform: uppercase;
-          font-size: 1.5rem;
+          font-size: calc(1.5rem/2.01);
           color: $newsdate-color;
         }
       }
