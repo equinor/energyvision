@@ -1,4 +1,6 @@
 import { SchemaType } from '../../types'
+import { link } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
 
 const validateLink = (value: any, connectedField: any): SchemaType.ValidationResult => {
   if (value && connectedField) {
@@ -62,6 +64,19 @@ const LinkField = {
         }),
     },
   ],
+  preview: {
+    select: {
+      title: 'label',
+      url: 'url',
+    },
+    prepare({ title, url }: { title: string; url: string | null }): SchemaType.Preview {
+      return {
+        title: title,
+        subtitle: `${url ? 'External' : 'Internal'} link`,
+        media: EdsIcon(link),
+      }
+    },
+  },
 }
 
 // Used to generate a linkSelector field with dynamic reference targets
