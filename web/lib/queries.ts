@@ -20,18 +20,36 @@ _type == "teaser"=>{
             "imagePosition": coalesce(imagePosition, 'left'),
             imageSize,
           },
-          "action": {
-            "label": link.label,
-            "link": link.reference-> {
-              "type": _type,
-              "slug": slug.current
-            },
-            "href": link.url,
-          },
           "image": image{
             ...,
             "extension": asset-> extension
-          }  
+          },  
+          "action": action[0]{
+            _type == "linkSelector" => {
+              "id": _key,
+              "type": _type,
+              "label": label,
+              "link": reference-> {
+                "type": _type,
+                "slug": slug.current
+              },
+              "href": url,
+            },
+            _type == "downloadableFile" => {
+              "id": _key,
+              "type": _type,
+              "label": filename,
+              "href": file.asset-> url,
+              "extension": file.asset-> extension 
+            },
+            _type == "downloadableImage" => {
+              "id": _key,
+              "type": _type,
+              label,
+              "href": image.asset-> url, 
+              "extension": image.asset-> extension 
+            },
+          }
         },
         _type == "textBlock"=>{
           "type": _type,

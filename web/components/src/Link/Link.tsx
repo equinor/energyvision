@@ -120,7 +120,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   } else if (variant === 'readMore') {
     return (
       <ReadMoreLink ref={ref} {...rest}>
-        {children} <Icon data={arrow_forward} />
+        {children} <Icon data={getIconData(type)} />
       </ReadMoreLink>
     )
   }

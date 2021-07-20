@@ -4,7 +4,7 @@ import { default as NextLink } from 'next/link'
 import { IngressBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
-import type { TeaserData, ImageWithAlt } from '../../types/types'
+import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
 import Img from 'next/image'
 import Image from '../shared/Image'
 
@@ -34,17 +34,30 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
+const buildHref = (action: LinkData) => {
+  if (action.type === 'linkSelector') {
+    if (action.href) {
+      return action.href
+    }
+
+    if (action.link?.type === 'news') {
+      return `/news/${action.link?.slug}`
+    }
+
+    return action.link?.slug
+  }
+
+  return action.href
+}
+
 const Teaser = ({ data }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions } = data
   const { background, imageSize, imagePosition } = designOptions
-  // @TODO: We should do this in a more optimal way, but it involves task # 332
-  const linkType = action.href ? 'externalUrl' : 'internalUrl'
-  let url: string
-  if (linkType === 'internalUrl') {
-    url = action.link?.type === 'news' ? `/news/${action.link?.slug}` : action.link?.slug || ''
-  } else {
-    url = action.href || ''
-  }
+
+  if (!action?.type) return null
+
+  const linkType = action.type === 'linkSelector' ? (action?.href ? 'externalUrl' : 'internalUrl') : action.type
+  const url = buildHref(action) || ''
 
   const isSvg = image?.extension === 'svg'
   return (
@@ -75,7 +88,7 @@ const Teaser = ({ data }: TeaserProps) => {
               <Link variant="readMore">{action.label}</Link>
             </NextLink>
           ) : (
-            <Link variant="readMore" href={url}>
+            <Link variant="readMore" href={url} type={linkType}>
               {action.label}
             </Link>
           )}
