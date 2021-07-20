@@ -70,48 +70,50 @@ $filter-button-color: #d2d2d2;
 $filter-button-active-text-color: #ffffff;
 $filter-button-active-color: #808080;
 
-$xs-medium-font-size: calc(1.3rem / 1.8);
+$xs-medium-font-size: calc(1.3rem / 2.02);
 $xs-medium-height: 2px;
-$xs-medium-padding-sides: calc(2.5rem / 1.8);
-$xs-medium-chevron-size: calc(1.45rem / 1.8);
+$xs-medium-padding-sides: calc(2.5rem / 2.02);
+$xs-medium-chevron-size: calc(1.45rem / 2.02);
 
-$xs-large-font-size: calc(1.4rem / 1.8);
+$xs-large-font-size: calc(1.4rem / 1.6);
 $xs-large-height: 2px;
-$xs-large-padding-sides: calc(2.5rem / 1.8);
-$xs-large-chevron-size: calc(1.6rem / 1.8);
+$xs-large-padding-sides: calc(2.5rem / 1.6);
+$xs-large-chevron-size: calc(1.6rem / 1.6);
 
-$sm-medium-font-size: calc(1.4rem / 1.8);
+$sm-medium-font-size: calc(1.4rem / 2.02);
 $sm-medium-height: 3px;
-$sm-medium-padding-sides: calc(2.5rem / 1.8);
-$sm-medium-chevron-size: calc(1.45rem / 1.8);
+$sm-medium-padding-sides: calc(2.5rem / 2.02);
+$sm-medium-chevron-size: calc(1.45rem / 2.02);
 
-$sm-large-font-size: calc(1.6rem / 1.8);
+$sm-large-font-size: calc(1.6rem / 2.02);
 $sm-large-height: 3px;
-$sm-large-padding-sides: calc(3rem / 1.8);
-$sm-large-chevron-size: calc(1.85rem / 1.8);
+$sm-large-padding-sides: calc(3rem / 2.02);
+$sm-large-chevron-size: calc(1.85rem / 2.02);
 
-$lg-medium-font-size: calc(1.6rem / 1.8);
+$lg-medium-font-size: calc(1.6rem / 2.02);
 $lg-medium-height: 4px;
-$lg-medium-padding-sides: calc(2.5rem / 1.8);
-$lg-medium-chevron-size: calc(1.45rem / 1.8);
+$lg-medium-padding-sides: calc(2.5rem / 2.02);
+$lg-medium-chevron-size: calc(1.45rem / 2.02);
 
-$lg-large-font-size: calc(1.8rem / 1.8);
+$lg-large-font-size: calc(1.8rem / 2.02);
 $lg-large-height: 4px;
-$lg-large-padding-sides: calc(3.5rem / 1.8);
-$lg-large-chevron-size: calc(2rem / 1.8);
+$lg-large-padding-sides: calc(3.5rem / 2.02);
+$lg-large-chevron-size: calc(2rem / 2.02);
 
 $line-height: calc(1.8rem / 1.6);
+$size-factor-xs: 1.6;
+$size-factor-sm: 2.02;
 
 
 //  Button module
 //  ---------------------------------------------------------------------------------------
 
-@mixin button-size-mixin($font-size, $height, $padding, $chevron-size) {
+@mixin button-size-mixin($font-size, $height, $padding, $chevron-size, $size-factor) {
   font-size: $font-size;
   height: auto;
   line-height: $line-height;
   border-radius: $height;
-  padding: calc(1rem / 1.8) $padding;
+  padding: calc(1rem / #{$size-factor}) $padding;
 
   &.filter {
     padding-right: $padding;
@@ -167,7 +169,7 @@ $line-height: calc(1.8rem / 1.6);
   border-radius: calc(2rem / 1.6);
   text-shadow: none;
   white-space: normal;
-  margin: 0 auto calc(1rem / 1.8);
+  margin: 0 auto calc(1rem / 2.02);
   cursor: pointer;
 
   // Animated buttons start
@@ -332,31 +334,31 @@ $line-height: calc(1.8rem / 1.6);
 
   @include susy-breakpoint($screen-xs, $susy) {
     &.medium {
-      @include button-size-mixin($xs-medium-font-size, $xs-medium-height, $xs-medium-padding-sides, $xs-medium-chevron-size);
+      @include button-size-mixin($xs-medium-font-size, $xs-medium-height, $xs-medium-padding-sides, $xs-medium-chevron-size, $size-factor-xs);
     }
 
     &.large {
-      @include button-size-mixin($xs-large-font-size, $xs-large-height, $xs-large-padding-sides, $xs-large-chevron-size);
+      @include button-size-mixin($xs-large-font-size, $xs-large-height, $xs-large-padding-sides, $xs-large-chevron-size, $size-factor-xs);
     }
   }
 
   @include susy-breakpoint($screen-sm, $susy) {
     &.medium {
-      @include button-size-mixin($sm-medium-font-size, $sm-medium-height, $sm-medium-padding-sides, $sm-medium-chevron-size);
+      @include button-size-mixin($sm-medium-font-size, $sm-medium-height, $sm-medium-padding-sides, $sm-medium-chevron-size, $size-factor-sm);
     }
 
     &.large {
-      @include button-size-mixin($sm-large-font-size, $sm-large-height, $sm-large-padding-sides, $sm-large-chevron-size);
+      @include button-size-mixin($sm-large-font-size, $sm-large-height, $sm-large-padding-sides, $sm-large-chevron-size, $size-factor-sm);
     }
   }
 
   @include susy-breakpoint($screen-lg, $susy) {
     &.medium {
-      @include button-size-mixin($lg-medium-font-size, $lg-medium-height, $lg-medium-padding-sides, $lg-medium-chevron-size);
+      @include button-size-mixin($lg-medium-font-size, $lg-medium-height, $lg-medium-padding-sides, $lg-medium-chevron-size,2.02);
     }
 
     &.large {
-      @include button-size-mixin($lg-large-font-size, $lg-large-height, $lg-large-padding-sides, $lg-large-chevron-size);
+      @include button-size-mixin($lg-large-font-size, $lg-large-height, $lg-large-padding-sides, $lg-large-chevron-size,2.02);
     }
   }
 }
