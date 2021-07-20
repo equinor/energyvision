@@ -13,7 +13,7 @@ import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
 import { Menu } from '../tempcomponents/shared/Menu'
-import { useAppInsightsContext } from "@microsoft/applicationinsights-react-js"
+import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
@@ -123,7 +123,8 @@ export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const fetchPaths = locales.map(async (locale) => {
     const pages = await getTopicRoutesForLocale(locale)
     return pages.map((slug: string) => ({
-      params: { slug: slug.split('/').filter((p) => p) }, locale
+      params: { slug: slug.split('/').filter((p) => p) },
+      locale,
     }))
   })
   const paths = await Promise.all(fetchPaths)
