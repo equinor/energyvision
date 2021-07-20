@@ -100,8 +100,16 @@ export default {
         Rule.custom((value: any) => validateContent(value, 600)).warning(),
     },
     {
-      name: 'link',
-      type: 'linkSelector',
+      name: 'action',
+      title: 'Link/action',
+      description: 'Select the link or downloadable file for the teaser',
+      type: 'array',
+      of: [
+        { type: 'linkSelector', title: 'Link' },
+        { type: 'downloadableImage', title: 'Downloadable image' },
+        { type: 'downloadableFile', title: 'Downloadable file' },
+      ],
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().max(1),
     },
     {
       name: 'image',
