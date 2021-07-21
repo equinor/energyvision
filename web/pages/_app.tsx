@@ -14,13 +14,15 @@ import { reactPlugin } from '../common'
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
+  const defaultLocale = router.defaultLocale || 'en'
+  const locale = router.locale || defaultLocale
 
   // TODO: get locale from Sanity
   return (
     <>
       <AppInsightsErrorBoundary onError={() => <h1>I believe something went wrong</h1>} appInsights={reactPlugin}>
         <AppInsightsContext.Provider value={reactPlugin}>
-          <IntlProvider locale="en" defaultLocale="en">
+          <IntlProvider locale={locale} defaultLocale={defaultLocale}>
             <Head>
               {/* TODO: load the font in a better way */}
               <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" />
