@@ -5,6 +5,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
+import type { LinkType } from '../../../types/types'
 
 const { outline } = Tokens
 
@@ -97,8 +98,6 @@ const getIconData = (type: LinkType) => {
       return arrow_forward
   }
 }
-
-type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
 
 export type LinkProps = {
   /** Which design to use */
