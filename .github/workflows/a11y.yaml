@@ -45,11 +45,9 @@ jobs:
           pnpm install
           pnpm install --filter energy-vision-web
       - name: 'Running application under test'
-        run: pnpm web start & # TODO: Configure in code first! Use next instead?! Determine which pages to run.
-
+        run: pnpm web start &
       - name: 'Running test on BrowserStack'
         run: pnpm e2e test
-
       - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
         uses: browserstack/github-actions/setup-local@master
         with:

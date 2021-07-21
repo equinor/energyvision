@@ -14,13 +14,16 @@ const platform = {
   browserName: 'Chrome',
   browser_version: 'latest',
 }
+const authentication = {
+  'browserstack.localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER,
+  'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+  'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY
+}
 
-const capabilities = { ...platform, ...project, ...seleniumConfig }
+const capabilities = { ...platform, ...project, ...seleniumConfig, ...authentication }
 console.log(capabilities)
 
-const userName = process.env.BS_UserName
-const accessKey = process.env.BS_Accesskey
-const browserstackURL = `https://${userName}:${accessKey}@hub-cloud.browserstack.com/wd/hub`
+const browserstackURL = `https://hub-cloud.browserstack.com/wd/hub`
 
 const driver = new webdriver.Builder().usingServer(browserstackURL).withCapabilities(capabilities).build()
 await driver.get(envisStartPage)
