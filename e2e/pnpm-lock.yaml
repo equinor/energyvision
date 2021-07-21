@@ -4,6 +4,7 @@ specifiers:
   '@percy/cli': ^1.0.0-beta.47
   '@percy/selenium-webdriver': ^1.0.0
   axe-core: ^4.2.1
+  dotenv: ^10.0.0
   selenium-webdriver: ^4.0.0-beta.1
 
 dependencies:
@@ -13,6 +14,7 @@ devDependencies:
   '@percy/cli': 1.0.0-beta.47
   '@percy/selenium-webdriver': 1.0.0_selenium-webdriver@4.0.0-beta.2
   axe-core: 4.2.2
+  dotenv: 10.0.0
 
 packages:
 
@@ -480,6 +482,11 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-type: 4.0.0
+    dev: true
+
+  /dotenv/10.0.0:
+    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
+    engines: {node: '>=10'}
     dev: true
 
   /dotenv/8.2.0:
