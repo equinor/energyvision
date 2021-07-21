@@ -1,23 +1,9 @@
 import { forwardRef } from 'react'
 import { Button as EdsButton, ButtonProps as EdsButtonProps } from '@equinor/eds-core-react'
-import Link from 'next/link'
 
 export type ButtonProps = EdsButtonProps
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { children, href = null, ...rest },
-  ref,
-) {
-  if (href) {
-    return (
-      <Link href={href} passHref>
-        <EdsButton ref={ref} {...rest}>
-          {children}
-        </EdsButton>
-      </Link>
-    )
-  }
-
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button({ children, ...rest }, ref) {
   return (
     <EdsButton ref={ref} {...rest}>
       {children}
