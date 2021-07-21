@@ -47,6 +47,8 @@ try {
   fs.writeFileSync(reportFile, JSON.stringify(result))
 } catch (err) {
   console.error('An error occured for browser', platform.browserName, err)
+  await driver.quit()
+  throw err
 }
 
 await driver.quit()
