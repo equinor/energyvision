@@ -91,7 +91,7 @@ const Teaser = ({ data }: TeaserProps) => {
             </NextLink>
           ) : (
             <Link variant="readMore" href={url} type={linkType}>
-              {action.label}
+              {action.label} {action.extension && `(${action.extension.toUpperCase()})`}
             </Link>
           )}
         </Content>
