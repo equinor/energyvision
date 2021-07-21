@@ -43,12 +43,16 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm install --filter energy-vision-web
+          pnpm web install
+          pnpm e2e install
       - name: 'Running application under test'
+        id: run-webapp
         run: pnpm web start &
       - name: 'Running test on BrowserStack'
+        id: execute-tests-on-browserstack
         run: pnpm e2e test
       - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
+        id: stop-browserstack
         uses: browserstack/github-actions/setup-local@master
         with:
           local-testing: stop
