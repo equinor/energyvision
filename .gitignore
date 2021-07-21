@@ -38,3 +38,9 @@ package-lock.json
 
 # IDE specific files
 .idea
+
+# Husky
+.husky
+
+# Vercel
+.vercel
