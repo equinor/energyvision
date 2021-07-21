@@ -1,2 +1,2 @@
-export const envisStartPage = 'https://energyvision.app.radix.equinor.com/'
-export const pettersTestPage = 'https://energyvision.app.radix.equinor.com/news/petters-test-slug'
+export const envisStartPage = 'https://localhost:3000'
+export const pettersTestPage = 'https://localhost:3000/news/petters-test-slug'

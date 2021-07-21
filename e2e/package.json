@@ -1,7 +1,11 @@
 {
+  "name": "energy-vision-e2e-testing",
   "type": "module",
   "dependencies": {
     "selenium-webdriver": "^4.0.0-beta.1"
+  },
+  "scripts": {
+    "test": "node ./tests/equinor-news-WCAG-Chrome.js"
   },
   "devDependencies": {
     "@percy/cli": "^1.0.0-beta.47",
