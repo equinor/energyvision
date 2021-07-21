@@ -53,12 +53,13 @@ const ReadMoreLink = styled(BaseLink)`
   position: relative;
 
   & > svg {
+    margin-left: var(--space-small);
     padding-right: 0;
     transition: 0.3s;
   }
 
   &:hover svg {
-    padding-left: 1em;
+    padding-left: var(--space-medium);
   }
 
   &:after {
