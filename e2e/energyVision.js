@@ -1,2 +1,2 @@
-export const envisStartPage = 'https://localhost:3000'
-export const pettersTestPage = 'https://localhost:3000/news/petters-test-slug'
+export const envisStartPage = 'http://localhost:3000'
+export const pettersTestPage = 'http://localhost:3000/news/petters-test-slug'
