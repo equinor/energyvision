@@ -62,7 +62,7 @@ export default function ArrayFunctions<MemberType>(props: ArrayFunctionsProps<Ar
           id={menuButtonId || ''}
           menu={
             <Menu>
-              {type.of.map((memberDef, i) => {
+              {type.of.map((memberDef) => {
                 // Use reference icon if reference is to one type only
                 const referenceIcon =
                   isReferenceSchemaType(memberDef) && (memberDef.to || []).length === 1 && memberDef.to[0].icon
