@@ -3,7 +3,8 @@ import webdriver from 'selenium-webdriver'
 import {envisStartPage} from '../energyVision.js'
 import * as fs from 'fs'
 
-const axeFile = require.resolve('axe-core/axe.min.js')
+const getAxeFile = async () => 
+  await import.meta.resolve('axe-core/axe.min.js');
 
 const project = {
   name: 'Equinor News',
@@ -30,7 +31,7 @@ const browserstackURL = `https://hub-cloud.browserstack.com/wd/hub`
 const driver = new webdriver.Builder().usingServer(browserstackURL).withCapabilities(capabilities).build()
 await driver.get(envisStartPage)
 
-const axe = fs.readFileSync(axeFile, 'utf8')
+const axe = fs.readFileSync(await getAxeFile(), 'utf8')
 await driver.executeScript(axe.toString())
 try {
   const result = (platform.browserName === "Firefox")
