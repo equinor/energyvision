@@ -75,14 +75,16 @@ const Teaser = ({ data }: TeaserProps) => {
           <Heading level="h2" size="xl">
             {title}
           </Heading>
-          <SimpleBlockContent
-            blocks={text}
-            serializers={{
-              types: {
-                block: IngressBlockRenderer,
-              },
-            }}
-          ></SimpleBlockContent>
+          {text && (
+            <SimpleBlockContent
+              blocks={text}
+              serializers={{
+                types: {
+                  block: IngressBlockRenderer,
+                },
+              }}
+            ></SimpleBlockContent>
+          )}
           {linkType === 'internalUrl' ? (
             <NextLink href={url} passHref>
               <Link variant="readMore">{action.label}</Link>
