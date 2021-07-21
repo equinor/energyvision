@@ -176,14 +176,12 @@ export default {
     select: {
       title: 'title',
       image: 'image.asset',
-      slug: 'link.reference.slug.current',
-      url: 'link.url',
     },
     prepare(selection: any) {
-      const { title, image, slug, url } = selection
+      const { title, image } = selection
       return {
-        title: title,
-        subtitle: `Teaser for: ${slug || url}`,
+        title: title || 'Missing title!',
+        subtitle: 'Teaser component',
         media: image,
       }
     },
