@@ -3,23 +3,24 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - foobar
+      - main
     paths:
       - 'web/**/*.jsx?'
       - 'web/**/*.tsx?'
+      - 'e2e/tests/**/*.js?'
 jobs:
   check_code:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
+      - name: BrowserStack Env Setup 🌎 # Invokes the setup-env action
         id: setup-browserstack-environment
         uses: browserstack/github-actions/setup-env@master
         with:
           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      - name: 'BrowserStack Local Tunnel Setup'  # Invokes the setup-local action
+      - name: BrowserStack Local Tunnel Setup 🚇  # Invokes the setup-local action
         id: setup-local-browserstack-tunnel
         uses: browserstack/github-actions/setup-local@master
         with:
@@ -47,16 +48,16 @@ jobs:
           pnpm install
           pnpm web install
           pnpm e2e install
-      - name: Build web application
+      - name: Build web application ⚙️
         id: build-web-app
         run: pnpm web build
-      - name: 'Running application under test'
+      - name: Running application under test ▶️
         id: run-webapp
         run: pnpm web start &
-      - name: 'Running test on BrowserStack'
+      - name: Running test on BrowserStack 🔎
         id: execute-tests-on-browserstack
         run: pnpm e2e test
-      - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
+      - name: BrowserStackLocal Stop ✋  # Terminating the BrowserStackLocal tunnel connection
         id: stop-browserstack
         uses: browserstack/github-actions/setup-local@master
         with:

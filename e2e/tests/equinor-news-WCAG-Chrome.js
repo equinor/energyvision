@@ -8,7 +8,6 @@ import { config } from 'dotenv'
 const require = createRequire(import.meta.url);
 
 config()
-console.log(config.BROWSERSTACK_USERNAME)
 
 const axeFile = require.resolve('axe-core/axe.min.js');
 
@@ -43,10 +42,11 @@ try {
   const result = (platform.browserName === "Firefox")
     ? driver.executeScript('let result; axe.run().then((r)=> {result=r}); return result;')
     : await driver.executeScript('let result; await axe.run().then((r)=> {result=r}); return result;')
-  const reportFile = `${platform.browserName}_envis_news_report.json`
+  const reportFile = `output/${platform.browserName}_envis_news_report.json`
   console.log('report file: ', reportFile)
   fs.writeFileSync(reportFile, JSON.stringify(result))
 } catch (err) {
   console.error('An error occured for browser', platform.browserName, err)
 }
+
 await driver.quit()
