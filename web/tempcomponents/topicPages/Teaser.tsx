@@ -4,9 +4,10 @@ import { default as NextLink } from 'next/link'
 import { IngressBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
-import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
+import type { TeaserData, ImageWithAlt } from '../../types/types'
 import Img from 'next/image'
 import Image from '../shared/Image'
+import { getUrlFromAction } from '../shared/utils'
 
 const { Content, Media } = EnvisTeaser
 
@@ -34,29 +35,13 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
-const buildHref = ({ type, href, link }: LinkData) => {
-  if (type === 'internalUrl') {
-    if (href) {
-      return href
-    }
-
-    if (link?.type === 'news') {
-      return `/news/${link?.slug}`
-    }
-
-    return link?.slug
-  }
-
-  return href
-}
-
 const Teaser = ({ data }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions } = data
   const { background, imageSize, imagePosition } = designOptions
 
   if (!action?.type) return null
 
-  const url = buildHref(action) || ''
+  const url = getUrlFromAction(action)
 
   const isSvg = image?.extension === 'svg'
   return (

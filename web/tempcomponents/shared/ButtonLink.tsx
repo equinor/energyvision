@@ -1,23 +1,11 @@
 import NextLink from 'next/link'
 import { Button } from '@components'
+import { getUrlFromAction } from './utils'
 import type { LinkData } from '../../types/types'
-
-export const getUrl = (action: LinkData) => {
-  const { link, href, type } = action
-
-  if (type === 'internalUrl') {
-    // Will there be more cases in the future?
-    if (link?.type === 'news') return `/news/${link?.slug}`
-
-    return link?.slug || ''
-  }
-
-  return href || ''
-}
 
 export const ButtonLink = ({ action }: { action: LinkData }) => {
   const { label, extension, type } = action
-  const url = getUrl(action)
+  const url = getUrlFromAction(action)
 
   if (type === 'internalUrl') {
     return (
