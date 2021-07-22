@@ -12,6 +12,8 @@ specifiers:
   '@sanity/default-login': ^2.11.1
   '@sanity/desk-tool': ^2.11.2
   '@sanity/form-builder': ^2.11.2
+  '@sanity/icons': ^1.1.3
+  '@sanity/types': ^2.13.1
   '@sanity/ui': ^0.34.4
   '@sanity/vision': ^2.11.2
   '@types/styled-components': ^5.1.11
@@ -37,6 +39,8 @@ dependencies:
   '@sanity/default-login': 2.11.1
   '@sanity/desk-tool': 2.11.2_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/form-builder': 2.11.2_9bdd65c2b60ce8638444b80b396a481b
+  '@sanity/icons': 1.1.3_react@17.0.2
+  '@sanity/types': 2.13.1
   '@sanity/ui': 0.34.4_c59160f3e2ae0f45324a65c8464c8ff0
   '@sanity/vision': 2.11.2_f62f3aa834b1584fd188dc26811398dc
   only-allow: 1.0.0
@@ -2460,8 +2464,24 @@ packages:
       object-assign: 4.1.1
     dev: false
 
+  /@sanity/client/2.13.0:
+    resolution: {integrity: sha512-hp4snNL+VVWNamVkezDxmYM6oCNecB43iOt+tSEJ8VtRbb6yvrqqYUT0WEQEwoF9xWbfJ7Uu/WHwjm8ry93xVQ==}
+    dependencies:
+      '@sanity/eventsource': 2.13.0
+      '@sanity/generate-help-url': 2.13.0
+      '@sanity/observable': 2.0.9
+      deep-assign: 2.0.0
+      get-it: 5.0.4
+      make-error: 1.3.6
+      object-assign: 4.1.1
+    dev: false
+
   /@sanity/color/2.1.2:
     resolution: {integrity: sha512-6WE14xdSWMPfWHGs9kzZyK3eCUVc37U94R4hpqTwMbAYyxvpq6KEEqWh3lsrqrxUk97MQCoWyzCpfGjMmOfpCw==}
+    dev: false
+
+  /@sanity/color/2.1.3:
+    resolution: {integrity: sha512-FmRImfIpe5u9cvka0TOoAO/7Bs/KRLAKo/0VTlHHr1FRWvt7I+hiT0QJlLarlfiJPUuYu+qEvp1zb6hyJzWPlg==}
     dev: false
 
   /@sanity/components/2.2.6:
@@ -2653,6 +2673,13 @@ packages:
       diff-match-patch: 1.0.5
     dev: false
 
+  /@sanity/eventsource/2.13.0:
+    resolution: {integrity: sha512-MpAae07N6olw3y00og50m4HFK2jNKYYH6NKfIvGCd2GNWCPb8D78eG6OkVqXGWf4jWYNQO0m6BhxBRHmFLxm/w==}
+    dependencies:
+      '@rexxars/eventsource-polyfill': 1.0.0
+      eventsource: 1.1.0
+    dev: false
+
   /@sanity/eventsource/2.2.6:
     resolution: {integrity: sha512-RcrX/+sQwHfvNO3Fpie9rwi4RKTjaxN2BmaoJ9VayrbkL+12Tf1wcqwerPfR+VRA15c7NnLlDFCdu+iKpa7Tng==}
     dependencies:
@@ -2752,12 +2779,24 @@ packages:
       - supports-color
     dev: false
 
+  /@sanity/generate-help-url/2.13.0:
+    resolution: {integrity: sha512-h+kRqRozLnmFC+ji82og7S60AQaY8Y4x/F1noS08M5T9N7mXCwGYZOHLfSMSNyBCaJwqWpEzzq/qvq9Wxxa7ow==}
+    dev: false
+
   /@sanity/generate-help-url/2.2.6:
     resolution: {integrity: sha512-DXRKXnOCoqObNEEuJJlJ78YOehgoBk92xm1ol4PfPuD4xJv5Z/cMwDecaQ2K05nx8Ecr4KJR/26XMF/FQMg9Tw==}
     dev: false
 
   /@sanity/icons/1.1.2_react@17.0.2:
     resolution: {integrity: sha512-Ti9qn76hrA/LNPjxzK8BRroudNqGrT1bqfUq0HJt1wIW+pCG0EVvyRqdBlW0HGIoUhlMit6lypyhAvwe637BKg==}
+    peerDependencies:
+      react: ^16.9 || ^17
+    dependencies:
+      react: 17.0.2
+    dev: false
+
+  /@sanity/icons/1.1.3_react@17.0.2:
+    resolution: {integrity: sha512-2pbrUKFvrTWTixjnGzOIZKf1+u7Z5+1vvWiG4tuErAlpVT0VRjuldcI+k+5+inXqqPUBt+6FjEGFpN9E1/MUZQ==}
     peerDependencies:
       react: ^16.9 || ^17
     dependencies:
@@ -3032,6 +3071,15 @@ packages:
       rxjs: 6.6.7
     dev: false
 
+  /@sanity/types/2.13.1:
+    resolution: {integrity: sha512-McKPWSEH0waiql/FSZprR48EFlifE5uZDvLDrPNNNlaZm9uLhXj9rTWZ8eT5S2dMADV2HG0oJci/Y2bXGy1Wsw==}
+    dependencies:
+      '@sanity/client': 2.13.0
+      '@sanity/color': 2.1.3
+      '@types/react': 17.0.14
+      rxjs: 6.6.7
+    dev: false
+
   /@sanity/ui/0.34.4_c59160f3e2ae0f45324a65c8464c8ff0:
     resolution: {integrity: sha512-vRWBqwjzld7NvZ2Je7NtqyBO7u3yDvRzTN5L2JX1cac3+gdg2oh76QS8dn8OBe2z8GIYBQDVAR8m1EAmz90Tbw==}
     peerDependencies:
@@ -3216,6 +3264,10 @@ packages:
   /@types/prop-types/15.7.3:
     resolution: {integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==}
 
+  /@types/prop-types/15.7.4:
+    resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
+    dev: false
+
   /@types/q/1.5.4:
     resolution: {integrity: sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug==}
     dev: false
@@ -3227,8 +3279,20 @@ packages:
       '@types/scheduler': 0.16.1
       csstype: 3.0.8
 
+  /@types/react/17.0.14:
+    resolution: {integrity: sha512-0WwKHUbWuQWOce61UexYuWTGuGY/8JvtUe/dtQ6lR4sZ3UiylHotJeWpf3ArP9+DSGUoLY3wbU59VyMrJps5VQ==}
+    dependencies:
+      '@types/prop-types': 15.7.4
+      '@types/scheduler': 0.16.2
+      csstype: 3.0.8
+    dev: false
+
   /@types/scheduler/0.16.1:
     resolution: {integrity: sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==}
+
+  /@types/scheduler/0.16.2:
+    resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: false
 
   /@types/strip-bom/3.0.0:
     resolution: {integrity: sha1-FKjsOVbC6B7bdSB5CuzyHCkK69I=}
