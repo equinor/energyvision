@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@equinor/eds-icons': ^0.6.2
+  '@reach/auto-id': ^0.15.3
   '@sanity/base': ^2.11.2
   '@sanity/cli': ^2.11.0
   '@sanity/components': ^2.2.6
@@ -27,6 +28,7 @@ specifiers:
 
 dependencies:
   '@equinor/eds-icons': 0.6.2
+  '@reach/auto-id': 0.15.3_react-dom@17.0.2+react@17.0.2
   '@sanity/base': 2.11.2_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/components': 2.2.6
   '@sanity/core': 2.11.0_9bdd65c2b60ce8638444b80b396a481b
@@ -2300,6 +2302,18 @@ packages:
       tslib: 2.3.0
     dev: false
 
+  /@reach/auto-id/0.15.3_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-lbLUI9mrn74qVis141ib0Rsyhgk+gzUMtpplRmjy06cUWDFZyiBATNWMUxN5T+0fU4tpfgcjkAuPeTCCGThKtQ==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/utils': 0.15.3_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tslib: 2.3.0
+    dev: false
+
   /@reach/utils/0.13.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-3ir6cN60zvUrwjOJu7C6jec/samqAeyAB12ZADK+qjnmQPdzSYldrFWwDVV5H0WkhbYXR3uh+eImu13hCetNPQ==}
     peerDependencies:
@@ -2315,6 +2329,18 @@ packages:
 
   /@reach/utils/0.15.0_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-JHHN7T5ucFiuQbqkgv8ECbRWKfRiJxrO/xHR3fHf+f2C7mVs/KkJHhYtovS1iEapR4silygX9PY0+QUmHPOTYw==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tiny-warning: 1.0.3
+      tslib: 2.3.0
+    dev: false
+
+  /@reach/utils/0.15.3_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-HFyjw8LZ4/RRk5bcMpDAeEc3aOeLR/vWRDsljlE3cHI5GfFlZcG3DDLSW8C2ba74RCFp/4X3Nz0nOrd4JdkZ1w==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
