@@ -19,6 +19,7 @@ import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { NewsCardData, NewsSchema } from '../../types/types'
 import { Menu } from '../../tempcomponents/shared/Menu'
+import { mapLocaleToLang } from '../../lib/localization'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -277,9 +278,10 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false }) => {
+export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { news, latestNews } = await getClient(preview).fetch(newsQuery, {
     slug: params?.slug,
+    lang: mapLocaleToLang(locale),
   })
 
   const allSlugs = await getLocalizedNewsSlugs(news, preview)
