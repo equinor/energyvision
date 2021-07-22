@@ -2,7 +2,8 @@ import { Fragment } from 'react'
 import { List, Link } from '@components'
 import type { LinkData } from '../../types/types'
 import { default as NextLink } from 'next/link'
-import { ButtonLink, getUrl } from '../shared/ButtonLink'
+import { ButtonLink } from '../shared/ButtonLink'
+import { getUrlFromAction } from '../shared/utils'
 
 const { Item } = List
 
@@ -19,7 +20,7 @@ const CallToActions = ({ callToActions }: CallToActionsProps) => {
     <List unstyled>
       {callToActions.map((callToAction: LinkData) => {
         const { id, type, label, extension } = callToAction
-        const url = getUrl(callToAction)
+        const url = getUrlFromAction(callToAction)
         return (
           <Fragment key={id}>
             {type === 'internalUrl' ? (
