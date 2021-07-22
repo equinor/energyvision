@@ -34,20 +34,20 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
-const buildHref = (action: LinkData) => {
-  if (action.type === 'linkSelector') {
-    if (action.href) {
-      return action.href
+const buildHref = ({ type, href, link }: LinkData) => {
+  if (type === 'internalUrl') {
+    if (href) {
+      return href
     }
 
-    if (action.link?.type === 'news') {
-      return `/news/${action.link?.slug}`
+    if (link?.type === 'news') {
+      return `/news/${link?.slug}`
     }
 
-    return action.link?.slug
+    return link?.slug
   }
 
-  return action.href
+  return href
 }
 
 const Teaser = ({ data }: TeaserProps) => {
@@ -56,7 +56,6 @@ const Teaser = ({ data }: TeaserProps) => {
 
   if (!action?.type) return null
 
-  const linkType = action.type === 'linkSelector' ? (action?.href ? 'externalUrl' : 'internalUrl') : action.type
   const url = buildHref(action) || ''
 
   const isSvg = image?.extension === 'svg'
@@ -85,12 +84,12 @@ const Teaser = ({ data }: TeaserProps) => {
               }}
             ></SimpleBlockContent>
           )}
-          {linkType === 'internalUrl' ? (
+          {action.type === 'internalUrl' ? (
             <NextLink href={url} passHref>
               <Link variant="readMore">{action.label}</Link>
             </NextLink>
           ) : (
-            <Link variant="readMore" href={url} type={linkType}>
+            <Link variant="readMore" href={url} type={action.type}>
               {action.label} {action.extension && `(${action.extension.toUpperCase()})`}
             </Link>
           )}

@@ -27,7 +27,10 @@ _type == "teaser"=>{
           "action": action[0]{
             _type == "linkSelector" => {
               "id": _key,
-              "type": _type,
+              "type": select(
+                defined(url) => "externalUrl",
+                "internalUrl"
+              ),
               "label": label,
               "link": reference-> {
                 "type": _type,
@@ -197,6 +200,10 @@ _type == "teaser"=>{
                 "slug": slug.current
               },
               "href": link.url,
+              "type": select(
+                defined(link.url) => "externalUrl",
+                "internalUrl"
+              ),
             },
             "image": image{
               ...,

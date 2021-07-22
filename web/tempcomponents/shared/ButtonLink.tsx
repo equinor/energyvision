@@ -1,18 +1,9 @@
 import NextLink from 'next/link'
 import { Button } from '@components'
-import type { LinkData, LinkType } from '../../types/types'
+import type { LinkData } from '../../types/types'
 
-// @TODO: Add support for other LinkType options
-const getLinkType = (action: LinkData): LinkType => {
-  const { link } = action
-
-  if (link && link?.slug) return 'internalUrl'
-
-  return 'externalUrl'
-}
-
-export const getUrl = (action: LinkData, type: LinkType) => {
-  const { link, href } = action
+export const getUrl = (action: LinkData) => {
+  const { link, href, type } = action
 
   if (type === 'internalUrl') {
     // Will there be more cases in the future?
@@ -25,9 +16,8 @@ export const getUrl = (action: LinkData, type: LinkType) => {
 }
 
 export const ButtonLink = ({ action }: { action: LinkData }) => {
-  const { label, extension } = action
-  const type = getLinkType(action)
-  const url = getUrl(action, type)
+  const { label, extension, type } = action
+  const url = getUrl(action)
 
   if (type === 'internalUrl') {
     return (
