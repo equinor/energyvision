@@ -1,3 +1,9 @@
+const slugReference = /* groq */ `
+  select(
+    _type == 'route' => slug[$lang].current, slug.current
+  )
+`
+
 const newsFields = /* groq */ `
   "id": _id,
   "updatedAt": _updatedAt,
@@ -28,13 +34,12 @@ _type == "teaser"=>{
             _type == "linkSelector" => {
               "id": _key,
               "type": select(
-                defined(url) => "externalUrl",
-                "internalUrl"
+                defined(url) => "externalUrl", "internalUrl"
               ),
               "label": label,
               "link": reference-> {
                 "type": _type,
-                "slug": slug.current
+                "slug": ${slugReference}
               },
               "href": url,
             },
@@ -68,7 +73,7 @@ _type == "teaser"=>{
                 label,
                 "link": reference-> {
                   "type": _type,
-                  "slug": slug.current
+                  "slug": ${slugReference}
                 },
               },
               _type == "externalUrl" => {
@@ -156,7 +161,7 @@ _type == "teaser"=>{
               _type == "internalLink" => {
                 "internalLink": reference->{
                   name,
-                  "id": slug.current,
+                  "id": ${slugReference},
                   "type": _type,
                 },
               },
@@ -172,7 +177,7 @@ _type == "teaser"=>{
                 _type == "internalLink" => {
                   "internalLink": reference->{
                     name,
-                    "id": slug.current,
+                    "id": ${slugReference},
                     "type": _type,
                   },
                 },
@@ -197,7 +202,7 @@ _type == "teaser"=>{
               "label": link.label,
               "link": link.reference-> {
                 "type": _type,
-                "slug": slug.current
+                "slug": ${slugReference}
               },
               "href": link.url,
               "type": select(
@@ -255,7 +260,7 @@ export const newsQuery = /* groq */ `
         _type == "internalLink" => {
           "internalLink": reference->{
             name,
-            "id": slug.current,
+            "id": ${slugReference},
             "type": _type,
           },
         },
@@ -271,7 +276,7 @@ export const newsQuery = /* groq */ `
         label,
         "link": reference-> {
           "type": _type,
-          "slug": slug.current
+          "slug": ${slugReference}
         },
       },
       _type == "externalUrl" => {

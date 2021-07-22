@@ -84,7 +84,7 @@ export default function Page({ data, preview }: any) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale }) => {
+export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[], locale)
 
   const pageData = query && (await getClient(preview).fetch(query, queryParams))

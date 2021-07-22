@@ -16,7 +16,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
     console.log('This is a translation', isATranslation)
     // We are in preview mode for content that has currently no slug (no routes)
     return {
-      queryParams: { id: slugStart.replace('drafts.', '') },
+      queryParams: { id: slugStart.replace('drafts.', ''), lang: mapLocaleToLang(locale) },
       query: pageQueryById,
       docType: 'page',
     }
@@ -26,13 +26,13 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   switch (slugStart) {
     case '':
       return {
-        queryParams: { slug: [] },
+        queryParams: { slug: [], lang: mapLocaleToLang(locale) },
         query: '',
         docType: 'home',
       }
     case 'news':
       return {
-        queryParams: { slug: slug },
+        queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
         query: newsQuery,
         docType: 'news',
       }

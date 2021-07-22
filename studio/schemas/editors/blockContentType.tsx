@@ -105,10 +105,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
       {
         name: 'reference',
         type: 'reference',
-        to: [
-          /* objects of allowed page types */
-          { type: 'news' },
-        ],
+        to: [{ type: 'news' }, { type: 'route' }],
         validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
       },
     ],
