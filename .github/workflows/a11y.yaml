@@ -66,7 +66,7 @@ jobs:
         id: publish-to-slack
         uses: equinor/axe-slack-reporter@main
         with:
-          result: output/Chrome_envis_news_report.json
+          fileName: output/Chrome_envis_news_report.json  ## Temporary file name. Will use something more clever. Promise!
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
