@@ -12,6 +12,7 @@ build
 dist
 
 # misc
+.env
 .DS_Store
 *.pem
 
@@ -44,3 +45,7 @@ package-lock.json
 
 # Vercel
 .vercel
+
+# e2e
+.secret
+output
