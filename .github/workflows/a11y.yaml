@@ -64,7 +64,7 @@ jobs:
           local-testing: stop
       - name: Publish results to Slack
         id: publish-to-slack
-        uses: equinor/axe-slack-reporter@v1.1
+        uses: equinor/axe-slack-reporter@main
         with:
           result: output/Chrome_envis_news_report.json
 
