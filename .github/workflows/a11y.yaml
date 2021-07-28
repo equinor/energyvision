@@ -9,7 +9,7 @@ on:
       - 'web/**/*.tsx?'
       - 'e2e/tests/**/*.js?'
 jobs:
-  check_code:
+  test_for_accessibility_issues:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -62,7 +62,7 @@ jobs:
         uses: browserstack/github-actions/setup-local@master
         with:
           local-testing: stop
-      - name: Publish results to Slack
+      - name: Publish results to Slack 💬
         id: publish-to-slack
         uses: equinor/axe-slack-reporter@main
         with:
