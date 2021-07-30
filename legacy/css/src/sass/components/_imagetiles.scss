@@ -1,9 +1,5 @@
 .imagetiles {
 
-  .duo {
-
-  }
-
   .imagetiles-images.tri {
     img:nth-child(5) {
       @include susy-breakpoint($screen-sm, $susy) {
@@ -99,7 +95,14 @@
 
     .description {
       @include Equinor-Medium-italic;
-      font-size: 1.3rem;
+      @include susy-breakpoint($screen-xs, $susy) {
+        font-size: calc(1.3rem/1.6);
+      }
+
+      @include susy-breakpoint($screen-sm, $susy) {
+        font-size: calc(1.3rem/2.02);
+      }
+     
       line-height: 140%;
       padding-left: 0;
       padding-right: 5%;
