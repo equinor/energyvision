@@ -11,6 +11,7 @@ const scss = require('gulp-sass'),
   minifyCSS = require('gulp-minify-css'),
   iconfont = require('gulp-iconfont'),
   consolidate = require('gulp-consolidate'),
+  concat = require('gulp-concat'),
   rename = require('gulp-rename'),
   del = require('del'),
   // eslint-disable-next-line no-unused-vars
@@ -57,24 +58,19 @@ const fontName = 'equinor_icons'
 // Delete dist folder
 gulp.task('clean', () => del(['./dist/']))
 
-// Build SASS
 gulp.task('compass-minify', () =>
-  gulp
-    .src('src/sass/legacy.scss')
-    .pipe(scss(scssSettings))
+gulp.src(['dist/legacy.css','dist/equinor-icons.css'])
     .pipe(minifyCSS())
-    .pipe(autoprefixer())
-    .pipe(rename({ suffix: '.minified' }))
+    .pipe(concat('legacy.minified.css'))
     .pipe(gulp.dest('dist/css')),
 )
-
 // Copy static files to dist
 gulp.task('copy-static-files', function () {
   return gulp.src('./src/static/**/*.*').pipe(gulp.dest('./dist/static/'))
 })
 
 // Build SASS
-gulp.task('compass-unminified', () => gulp.src('src/sass/legacy.scss').pipe(scss(scssSettings)).pipe(gulp.dest('dist')))
+gulp.task('compass-unminified', () => gulp.src('src/sass/legacy.scss').pipe(scss(scssSettings)) .pipe(autoprefixer()) .pipe(gulp.dest('dist')))
 
 // Build equinor icons to font
 gulp.task('Iconfont', () =>
@@ -97,15 +93,16 @@ gulp.task('Iconfont', () =>
           className: 'si',
         }),
       )
+      .pipe(gulp.dest('dist'))
     })
-    .pipe(gulp.dest('dist/static/fonts')),
+    .pipe(gulp.dest('dist/static/fonts'))
 )
 
 //  Gulp Tasks
 //  ---------------------------------------------------------------------------------------
 
 // Default Task
-gulp.task('default', gulp.series('clean', gulp.parallel('compass-minify', 'Iconfont', 'copy-static-files')))
+gulp.task('default', gulp.series('clean', gulp.parallel('compass-unminified', 'Iconfont', 'copy-static-files'),'compass-minify'))
 
 // Watch Task
 gulp.task('watch', () => gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify']))

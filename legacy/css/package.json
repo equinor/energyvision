@@ -33,7 +33,8 @@
     "gulp-sass": "^4.0.2",
     "lodash": "^4.17.21",
     "node-sass": "^4.11.0",
-    "susy": "2.2.14"
+    "susy": "2.2.14",
+    "gulp-concat":"2.6.1"
   },
   "dependencies": {
     "del": "^6.0.0",
