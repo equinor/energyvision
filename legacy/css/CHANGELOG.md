@@ -7,4 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2021-08-03
 
-### Changed
+### Fixed
+- Fix custom icon font issue in download button.
+- Fix style issues for image tiles component description, list, inline banner, button and table components.
+
