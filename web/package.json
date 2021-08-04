@@ -22,7 +22,7 @@
     "@equinor/eds-core-react": "^0.13.0",
     "@equinor/eds-icons": "^0.6.2",
     "@equinor/eds-tokens": "^0.6.0",
-    "@equinor/energyvision-legacy-css": "^1.0.0-beta.3",
+    "@equinor/energyvision-legacy-css": "^1.0.0",
     "@microsoft/applicationinsights-react-js": "^3.1.4",
     "@microsoft/applicationinsights-web": "^2.6.4",
     "@next/bundle-analyzer": "^11.0.1",
