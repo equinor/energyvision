@@ -88,7 +88,7 @@ jobs:
             --token-environment
             --from-config
             -e ${{ steps.getEnvironment.outputs.result }}
-            -f
+            dev
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
         with:
