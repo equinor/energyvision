@@ -19,6 +19,8 @@ spec:
       environmentConfig:
         - environment: dev
           imageTagName: main-latest
+        - environment: test
+          imageTagName: main-latest
   dnsAppAlias:
     environment: dev
     component: web
