@@ -5,7 +5,7 @@ specifiers:
   '@equinor/eds-core-react': ^0.13.0
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.6.0
-  '@equinor/energyvision-legacy-css': ^1.0.0-beta.3
+  '@equinor/energyvision-legacy-css': ^1.0.0
   '@microsoft/applicationinsights-react-js': ^3.1.4
   '@microsoft/applicationinsights-web': ^2.6.4
   '@next/bundle-analyzer': ^11.0.1
@@ -52,7 +52,7 @@ dependencies:
   '@equinor/eds-core-react': 0.13.0_c59160f3e2ae0f45324a65c8464c8ff0
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.6.0
-  '@equinor/energyvision-legacy-css': 1.0.0-beta.3
+  '@equinor/energyvision-legacy-css': 1.0.0
   '@microsoft/applicationinsights-react-js': 3.1.4_react@17.0.2
   '@microsoft/applicationinsights-web': 2.6.4
   '@next/bundle-analyzer': 11.0.1
@@ -1691,8 +1691,8 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@equinor/energyvision-legacy-css/1.0.0-beta.3:
-    resolution: {integrity: sha512-bDcO0xIDf5Rl87/u0U3CI0rSYO2tBeCwSEsAcDGeTWj8LhgDsuV9sCE6pQoT/D2Sx4g510cjQyxTn7WDCSDBkQ==}
+  /@equinor/energyvision-legacy-css/1.0.0:
+    resolution: {integrity: sha512-Z0qwwRI32fg1XlZvKT1dCNH7hRI4YiVDaNk4MtrmL2/GekKrlf5eWqmCipCcjAFaBPHoz0OhDH6Y4QVE5ULqSQ==}
     dependencies:
       del: 6.0.0
       gulp-rename: 2.0.0
