@@ -7,7 +7,6 @@ spec:
     - name: dev
       build:
         from: main
-    - name: test
   components:
     - name: web
       publicPort: http
@@ -18,8 +17,6 @@ spec:
           port: 3000
       environmentConfig:
         - environment: dev
-          imageTagName: main-latest
-        - environment: test
           imageTagName: main-latest
   dnsAppAlias:
     environment: dev
