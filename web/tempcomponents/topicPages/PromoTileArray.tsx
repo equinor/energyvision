@@ -37,7 +37,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
         >
           {tile.image && (
             <Media>
-              <Image image={tile.image} alt={tile.image.alt} maxWidth={400} aspectRatio={0.56} layout="responsive" />
+              <Image image={tile.image} alt={tile.image.alt} maxWidth={400} aspectRatio={0.8} layout="responsive" />
             </Media>
           )}
           <Header>

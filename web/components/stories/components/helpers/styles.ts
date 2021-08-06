@@ -31,13 +31,15 @@ export const ImagePlaceholder = styled.div<ImagePlaceholderProps>`
     width: 100%;
   }
 `
-
-export const RatioBox = styled.div`
+type RatioBoxProps = {
+  aspect?: string
+}
+export const RatioBox = styled.div<RatioBoxProps>`
   position: relative;
   height: 0;
   display: block;
   width: 100%;
-  padding-bottom: 56.25%;
+  padding-bottom: ${(props) => (props.aspect ? props.aspect : '56.25%')};
 `
 
 export const Wrapper = styled.div`
