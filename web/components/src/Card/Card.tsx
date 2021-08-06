@@ -25,9 +25,9 @@ export const CardLink = styled.a`
 
 export const StyledCard = styled(EdsCard)<CardProps>`
   height: 100%;
+  grid-gap: var(--space-large);
   grid-template-rows: ${(props) => (props.type === 'promo' ? 'auto auto 1fr' : 'auto auto auto 1fr')};
-  /* @TODO: Spacings */
-  padding: 0 0 1rem 0;
+  padding: 0 0 var(--space-xLarge) 0;
 
   &:hover {
     cursor: inherit;
