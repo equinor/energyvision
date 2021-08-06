@@ -116,7 +116,7 @@ export const PromoTile: Story<CardProps> = () => (
   <Wrapper>
     <Card type="promo">
       <Card.Media>
-        <RatioBox>
+        <RatioBox aspect="80%">
           <AspectImagePlaceholder />
         </RatioBox>
       </Card.Media>
@@ -130,7 +130,7 @@ export const PromoTile: Story<CardProps> = () => (
 
     <Card type="promo">
       <Card.Media>
-        <RatioBox>
+        <RatioBox aspect="80%">
           <AspectImagePlaceholder />
         </RatioBox>
       </Card.Media>
@@ -156,7 +156,7 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
   <Wrapper>
     <Card type="promo">
       <Card.Media>
-        <RatioBox>
+        <RatioBox aspect="80%">
           <AspectImagePlaceholder />
         </RatioBox>
       </Card.Media>
@@ -164,13 +164,13 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
         <Card.Title>Find out what its like to work in Equinor and what we can offer</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">Find out more about Equinor work life</Link>
+        <Link variant="buttonLink">More about Equinor work life</Link>
       </Card.Action>
     </Card>
 
     <Card type="promo">
       <Card.Media>
-        <RatioBox>
+        <RatioBox aspect="80%">
           <AspectImagePlaceholder />
         </RatioBox>
       </Card.Media>
@@ -187,6 +187,40 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
 PromoTileWithDifferentLength.storyName = 'Promo tile with different title lenght'
 
 PromoTileWithDifferentLength.parameters = {
+  docs: {
+    storyDescription: `If the title wraps on different numbers of lines, the buttons align to the bottom.`,
+  },
+}
+export const PromoTileWithoutImage: Story<CardProps> = () => (
+  <Wrapper>
+    <Card type="promo">
+      <Card.Header>
+        <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
+      </Card.Header>
+      <Card.Action>
+        <Link variant="buttonLink">Find out more</Link>
+      </Card.Action>
+    </Card>
+
+    <Card type="promo">
+      <Card.Media>
+        <RatioBox aspect="80%">
+          <AspectImagePlaceholder />
+        </RatioBox>
+      </Card.Media>
+      <Card.Header>
+        <Card.Title level="h3">Check out your future dream job</Card.Title>
+      </Card.Header>
+      <Card.Action>
+        <Link variant="buttonLink">Check it out</Link>
+      </Card.Action>
+    </Card>
+  </Wrapper>
+)
+
+PromoTileWithoutImage.storyName = 'Promo tile without image'
+
+PromoTileWithoutImage.parameters = {
   docs: {
     storyDescription: `If the title wraps on different numbers of lines, the buttons align to the bottom.`,
   },
