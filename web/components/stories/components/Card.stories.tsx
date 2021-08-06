@@ -114,7 +114,7 @@ NewsCard.parameters = {
 }
 export const PromoTile: Story<CardProps> = () => (
   <Wrapper>
-    <Card>
+    <Card type="promo">
       <Card.Media>
         <RatioBox>
           <AspectImagePlaceholder />
@@ -130,7 +130,7 @@ export const PromoTile: Story<CardProps> = () => (
       </Card.Action>
     </Card>
 
-    <Card>
+    <Card type="promo">
       <Card.Media>
         <RatioBox>
           <AspectImagePlaceholder />
@@ -154,5 +154,48 @@ PromoTile.parameters = {
   docs: {
     storyDescription: `A promo tile should always be in pairs. <br />
     ⚠️ &nbsp; Showcases the issue of too long texts in buttons`,
+  },
+}
+export const PromoTileWithDifferentLength: Story<CardProps> = () => (
+  <Wrapper>
+    <Card type="promo">
+      <Card.Media>
+        <RatioBox>
+          <AspectImagePlaceholder />
+        </RatioBox>
+      </Card.Media>
+      <Card.Header>
+        <Card.Title>Find out what its like to work in Equinor and what we can offer</Card.Title>
+      </Card.Header>
+      <Card.Action>
+        <Button as="a" variant="outlined" color="secondary">
+          Find out more about Equinor work life
+        </Button>
+      </Card.Action>
+    </Card>
+
+    <Card type="promo">
+      <Card.Media>
+        <RatioBox>
+          <AspectImagePlaceholder />
+        </RatioBox>
+      </Card.Media>
+      <Card.Header>
+        <Card.Title level="h3">Check out your future dream job</Card.Title>
+      </Card.Header>
+      <Card.Action>
+        <Button as="a" variant="outlined" color="secondary">
+          Check it out
+        </Button>
+      </Card.Action>
+    </Card>
+  </Wrapper>
+)
+
+PromoTileWithDifferentLength.storyName = 'Promo tile with different title lenght'
+
+PromoTileWithDifferentLength.parameters = {
+  docs: {
+    storyDescription: `If the title wraps on different numbers of lines, the buttons align to the bottom.`,
   },
 }

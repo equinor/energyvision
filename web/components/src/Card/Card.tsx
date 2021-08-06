@@ -6,8 +6,8 @@ import { outlineTemplate, Tokens } from '@utils'
 const { outline } = Tokens
 
 export type CardProps = {
-  /** What kind of card is this (we'll probably add things to this list) */
-  type?: 'news'
+  /** What kind of card is this (we'll probably add more options to this list) */
+  type?: 'news' | 'promo'
 } & HTMLAttributes<HTMLDivElement>
 
 /* Where should this be located. Should Card link be an actual component, or 
@@ -23,9 +23,9 @@ export const CardLink = styled.a`
   }
 `
 
-export const StyledCard = styled(EdsCard)`
+export const StyledCard = styled(EdsCard)<CardProps>`
   height: 100%;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: ${(props) => (props.type === 'promo' ? 'auto auto 1fr' : 'auto auto auto 1fr')};
   /* @TODO: Spacings */
   padding: 0 0 1rem 0;
 
@@ -35,9 +35,8 @@ export const StyledCard = styled(EdsCard)`
 `
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card({ type = 'news', children, ...rest }, ref) {
-  const variant = type === 'news' ? 'default' : 'info'
   return (
-    <StyledCard variant={variant} ref={ref} {...rest}>
+    <StyledCard variant="default" ref={ref} type={type} {...rest}>
       {children}
     </StyledCard>
   )
