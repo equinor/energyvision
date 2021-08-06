@@ -2,7 +2,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
-import { Card, CardProps, Text } from '@components'
+import { Card, CardProps, Text, Button } from '@components'
 
 export default {
   title: 'Components/Card',
@@ -110,5 +110,49 @@ NewsCard.storyName = 'News card'
 NewsCard.parameters = {
   docs: {
     storyDescription: `A news card should always have an overline/eyebrow with publishing date.`,
+  },
+}
+export const PromoTile: Story<CardProps> = () => (
+  <Wrapper>
+    <Card>
+      <Card.Media>
+        <RatioBox>
+          <AspectImagePlaceholder />
+        </RatioBox>
+      </Card.Media>
+      <Card.Header>
+        <Card.Title>Find out what its like to work in Equinor</Card.Title>
+      </Card.Header>
+      <Card.Action>
+        <Button as="a" variant="outlined" color="secondary">
+          Find out more about Equinor work life
+        </Button>
+      </Card.Action>
+    </Card>
+
+    <Card>
+      <Card.Media>
+        <RatioBox>
+          <AspectImagePlaceholder />
+        </RatioBox>
+      </Card.Media>
+      <Card.Header>
+        <Card.Title level="h3">Are you a student? Check out your future dream job</Card.Title>
+      </Card.Header>
+      <Card.Action>
+        <Button as="a" variant="outlined" color="secondary">
+          Check it out
+        </Button>
+      </Card.Action>
+    </Card>
+  </Wrapper>
+)
+
+PromoTile.storyName = 'Promo tile'
+
+PromoTile.parameters = {
+  docs: {
+    storyDescription: `A promo tile should always be in pairs. <br />
+    ⚠️ &nbsp; Showcases the issue of too long texts in buttons`,
   },
 }
