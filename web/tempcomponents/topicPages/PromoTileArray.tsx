@@ -31,6 +31,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
     <Container>
       {data.group.map((tile: PromoTileData) => (
         <StyledCard
+          type="promo"
           key={tile.id}
           color={ColorMapping[tile.designOptions.background.toLowerCase()] || ColorMapping.default}
         >
