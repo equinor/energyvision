@@ -88,6 +88,7 @@ export const colors = css`
     --ui-background-cold: var(--moss-green-50);
 
     --inverted-text: var(--white-100);
+    --default-text: rgba(61, 61, 61, 1);
 
     /* POC Theme */
     --theme-background-primary: var(--white-100);

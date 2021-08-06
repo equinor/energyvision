@@ -2,7 +2,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
-import { Card, CardProps, Text, Button } from '@components'
+import { Card, CardProps, Text, Link } from '@components'
 
 export default {
   title: 'Components/Card',
@@ -124,9 +124,7 @@ export const PromoTile: Story<CardProps> = () => (
         <Card.Title>Find out what its like to work in Equinor</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Button as="a" variant="outlined" color="secondary">
-          Find out more about Equinor work life
-        </Button>
+        <Link variant="buttonLink">Find out more about Equinor work life</Link>
       </Card.Action>
     </Card>
 
@@ -140,9 +138,7 @@ export const PromoTile: Story<CardProps> = () => (
         <Card.Title level="h3">Are you a student? Check out your future dream job</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Button as="a" variant="outlined" color="secondary">
-          Check it out
-        </Button>
+        <Link variant="buttonLink">Check it out</Link>
       </Card.Action>
     </Card>
   </Wrapper>
@@ -168,9 +164,7 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
         <Card.Title>Find out what its like to work in Equinor and what we can offer</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Button as="a" variant="outlined" color="secondary">
-          Find out more about Equinor work life
-        </Button>
+        <Link variant="buttonLink">Find out more about Equinor work life</Link>
       </Card.Action>
     </Card>
 
@@ -184,9 +178,7 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
         <Card.Title level="h3">Check out your future dream job</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Button as="a" variant="outlined" color="secondary">
-          Check it out
-        </Button>
+        <Link variant="buttonLink">Check it out</Link>
       </Card.Action>
     </Card>
   </Wrapper>
