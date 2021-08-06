@@ -88,3 +88,14 @@ export const ReadMoreLink: Story = () => (
     Read more
   </Link>
 )
+
+export const ButtonLink: Story = () => (
+  <Link variant="buttonLink" href="/">
+    Check out our exciting career opportunities
+  </Link>
+)
+ButtonLink.parameters = {
+  docs: {
+    storyDescription: `A link with a button look. `,
+  },
+}

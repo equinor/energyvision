@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { forwardRef, AnchorHTMLAttributes } from 'react'
-import { Icon } from '@equinor/eds-core-react'
+import { Icon, Typography } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
+import { tokens } from '@equinor/eds-tokens'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 import type { LinkType } from '../../../types/types'
@@ -10,6 +11,15 @@ import type { LinkType } from '../../../types/types'
 const { outline } = Tokens
 
 // TODO: Get colours and other constants from theme with css variables
+
+// Fetch the eds border colour. Hot or not?
+const {
+  colors: {
+    interactive: {
+      secondary__resting: { hsla: edsBorderColor },
+    },
+  },
+} = tokens
 
 export const BaseLink = styled.a`
   display: inline-flex;
@@ -86,6 +96,14 @@ const ReadMoreLink = styled(BaseLink)`
   }
 `
 
+const ButtonLink = styled(Typography)`
+  color: var(--default-text);
+  text-decoration: none;
+  padding: var(--space-small);
+  border: 1px solid ${edsBorderColor};
+  border-radius: ${tokens.shape.button.borderRadius};
+`
+
 const getIconData = (type: LinkType) => {
   switch (type) {
     case 'downloadableFile':
@@ -102,7 +120,7 @@ const getIconData = (type: LinkType) => {
 
 export type LinkProps = {
   /** Which design to use */
-  variant?: 'regular' | 'contentLink' | 'readMore'
+  variant?: 'regular' | 'contentLink' | 'readMore' | 'buttonLink'
   /** What kind of content is it  */
   type?: LinkType
 } & AnchorHTMLAttributes<HTMLAnchorElement>
@@ -122,6 +140,12 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       <ReadMoreLink ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ReadMoreLink>
+    )
+  } else if (variant === 'buttonLink') {
+    return (
+      <ButtonLink link ref={ref} {...rest}>
+        {children}
+      </ButtonLink>
     )
   }
 
