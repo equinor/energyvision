@@ -76,19 +76,20 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
 ) {
   const context = useAccordionItemContext()
   const isExpanded = context.isExpanded
+  const iconSize = 24
   return (
     <StyledHeader forwardedAs={headingLevel}>
       <StyledRAccordionButton ref={ref} {...rest}>
         {/* Let's do it in the easiest way by just swapping the icons and see how that works */}
         {isExpanded ? (
           <StyledIcon>
-            <OutlineIcon size={16} data={remove_outlined} />
-            <FilledIcon size={16} data={remove} />
+            <OutlineIcon size={iconSize} data={remove_outlined} />
+            <FilledIcon size={iconSize} data={remove} />
           </StyledIcon>
         ) : (
           <StyledIcon>
-            <OutlineIcon size={16} data={add_circle_outlined} />
-            <FilledIcon size={16} data={add_circle_filled} />
+            <OutlineIcon size={iconSize} data={add_circle_outlined} />
+            <FilledIcon size={iconSize} data={add_circle_filled} />
           </StyledIcon>
         )}
         <StyledTypography isExpanded={isExpanded} forwardedAs="span">
