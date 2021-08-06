@@ -1,16 +1,16 @@
 FROM mhart/alpine-node:14 AS builder
 
 RUN apk add --no-cache libc6-compat && \
-  npm install -g pnpm@6.0.2
+  npm install -g pnpm@6.11.5
 
 WORKDIR /opt/app
 
-COPY ./package.json /opt/app
-COPY ./pnpm-lock.yaml /opt/app
-COPY ./tsconfig.base.json /opt/app
-COPY ./pnpm-workspaces.yaml /opt/app
+COPY ./package.json ./
+COPY ./pnpm-lock.yaml ./
+COPY ./tsconfig.base.json ./
+COPY ./pnpm-workspaces.yaml ./
 
-COPY ./web /opt/app/web
+COPY ./web ./web
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
@@ -20,7 +20,7 @@ RUN pnpm web build
 FROM mhart/alpine-node:14
 
 RUN apk add --no-cache libc6-compat && \
-  npm install -g pnpm@6.0.2
+  npm install -g pnpm@6.11.5
 
 WORKDIR /opt/app
 
@@ -40,14 +40,14 @@ RUN addgroup -S "$USER" && \
   --uid "$UID" \
   "$USER"
 
-COPY --from=builder /opt/app/web/.next /opt/app/web/.next
-COPY --from=builder /opt/app/web/next.config.js /opt/app/web
-COPY --from=builder /opt/app/web/package.json /opt/app/web
-COPY --from=builder /opt/app/web/pnpm-lock.yaml /opt/app/web
-COPY --from=builder /opt/app/package.json /opt/app
-COPY --from=builder /opt/app/pnpm-workspaces.yaml /opt/app
+COPY --from=builder /opt/app/web/.next ./web/.next
+COPY --from=builder /opt/app/web/next.config.js ./web
+COPY --from=builder /opt/app/web/package.json ./web
+COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
+COPY --from=builder /opt/app/package.json ./
+COPY --from=builder /opt/app/pnpm-workspaces.yaml ./
 
-RUN chown -R "$USER":"$USER" /opt/app
+RUN chown -R "$USER":"$USER" .
 USER "$UID"
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
