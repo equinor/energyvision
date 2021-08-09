@@ -34,13 +34,28 @@ const LinkField = {
   title: 'Link',
   type: 'object',
   description: 'Select either an internal or external URL',
-  fields: [
+  fieldsets: [
     {
       name: 'label',
       title: 'Label',
       description: 'The label that the link/button should have.',
+    },
+  ],
+  fields: [
+    {
+      name: 'label',
+      title: 'Visible label',
+      description: 'The visible text on the link/button.',
       type: 'string',
+      fieldset: 'label',
       validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+    },
+    {
+      name: 'ariaLabel',
+      title: '♿ Aria label',
+      description: 'A text used for providing screen readers with additional information',
+      type: 'string',
+      fieldset: 'label',
     },
     {
       name: 'reference',
