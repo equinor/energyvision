@@ -11,10 +11,10 @@ export default {
     {
       type: 'array',
       name: 'group',
-      description: 'Add 2 promotional tiles.',
+      description: 'Add promo tiles in pairs of two (2, 4, 6...)',
       title: 'Promo tiles',
       of: [{ type: 'promoTile' }],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required().min(2).max(2),
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required().min(2),
     },
   ],
   preview: {
