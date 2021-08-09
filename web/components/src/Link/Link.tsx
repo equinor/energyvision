@@ -102,6 +102,7 @@ const ButtonLink = styled(Typography)`
   padding: var(--space-small);
   border: 1px solid ${edsBorderColor};
   border-radius: ${tokens.shape.button.borderRadius};
+  display: inline-block;
 `
 
 const getIconData = (type: LinkType) => {
