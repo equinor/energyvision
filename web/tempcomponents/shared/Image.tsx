@@ -18,7 +18,7 @@ type ImgProps = Omit<
 }
 
 // Couldn't make it work with ...props due to TypesScript
-const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio }: ImgProps) => {
+const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, ...rest }: ImgProps) => {
   const imageProps = useNextSanityImage(sanityClient, image, {
     imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
   })
@@ -30,7 +30,7 @@ const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio }: I
     return <Img src={imageProps.src} alt={image.alt} sizes={sizes} layout={layout} />
   }
 
-  return <Img {...imageProps} alt={image.alt} sizes={sizes} layout={layout} />
+  return <Img {...rest} {...imageProps} alt={image.alt} sizes={sizes} layout={layout} />
 }
 
 export default Image
