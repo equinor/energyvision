@@ -184,7 +184,7 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
   </Wrapper>
 )
 
-PromoTileWithDifferentLength.storyName = 'Promo tile with different title lenght'
+PromoTileWithDifferentLength.storyName = 'Promo tile with different title length'
 
 PromoTileWithDifferentLength.parameters = {
   docs: {
@@ -193,7 +193,7 @@ PromoTileWithDifferentLength.parameters = {
 }
 export const PromoTileWithoutImage: Story<CardProps> = () => (
   <Wrapper>
-    <Card type="promo">
+    <Card type="promo" textOnly>
       <Card.Header>
         <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
       </Card.Header>
@@ -222,6 +222,6 @@ PromoTileWithoutImage.storyName = 'Promo tile without image'
 
 PromoTileWithoutImage.parameters = {
   docs: {
-    storyDescription: `If the title wraps on different numbers of lines, the buttons align to the bottom.`,
+    storyDescription: `A promo tile doesn't need to have an image. If that is the case, the button does not align to the bottom and the promo tile has more spacings.`,
   },
 }
