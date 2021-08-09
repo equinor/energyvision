@@ -200,6 +200,7 @@ _type == "teaser"=>{
              },
              "action": {
               "label": link.label,
+              "ariaLabel": link.ariaLabel,
               "link": link.reference-> {
                 "type": _type,
                 "slug": ${slugReference}
