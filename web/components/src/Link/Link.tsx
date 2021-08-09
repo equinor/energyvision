@@ -99,7 +99,7 @@ const ReadMoreLink = styled(BaseLink)`
 const ButtonLink = styled(Typography)`
   color: var(--default-text);
   text-decoration: none;
-  padding: var(--space-small);
+  padding: var(--space-xSmall) var(--space-medium);
   border: 1px solid ${edsBorderColor};
   border-radius: ${tokens.shape.button.borderRadius};
   display: inline-block;
