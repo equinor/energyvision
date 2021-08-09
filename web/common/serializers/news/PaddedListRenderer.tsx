@@ -13,7 +13,7 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: var(--spacing-medium);
+  margin-bottom: var(--space-medium);
 `
 
 export const PaddedListRenderer = ({ type, children }: PaddedListProps) => {

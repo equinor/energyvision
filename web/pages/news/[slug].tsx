@@ -30,7 +30,7 @@ const NewsLayout = styled.div`
   /*  @TODO: Revisit when finalizing news article */
   & h2,
   & h3 {
-    margin: var(--spacing-small) 0;
+    margin: var(--space-small) 0;
   }
 `
 

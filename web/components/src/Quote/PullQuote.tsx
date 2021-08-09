@@ -15,12 +15,11 @@ type ContainerProps = {
 
 const Container = styled.figure<ContainerProps>`
   display: grid;
-  row-gap: var(--spacing-medium);
+  row-gap: var(--space-medium);
   margin: 0;
   position: relative;
-  /* margin: var(--spacing-xLarge) 0; */
   grid-template-rows: min-content min-content;
-  grid-template-columns: 5rem var(--spacing-medium) 1fr;
+  grid-template-columns: 5rem var(--space-medium) 1fr;
   grid-template-areas: ${({ hasImage }) =>
     hasImage
       ? `
@@ -34,7 +33,7 @@ const Container = styled.figure<ContainerProps>`
 
   @media (min-width: 800px) {
     grid-template-columns: ${({ imagePosition }) =>
-      imagePosition === 'left' ? `11rem var(--spacing-medium) 1fr` : `1fr var(--spacing-medium) 11rem`};
+      imagePosition === 'left' ? `11rem var(--space-medium) 1fr` : `1fr var(--space-medium) 11rem`};
     grid-template-areas: ${({ imagePosition }) =>
       imagePosition === 'left'
         ? `

@@ -14,7 +14,7 @@ const Container = styled.div<ContainerProps>`
   margin: 0 calc(var(--spacer-vertical-xxxLarge) - var(--spacer-horizontal-medium));
 
   @media (min-width: 800px) {
-    ${({ hasColumns }) => hasColumns && { columns: 2, columnGap: 'var(--spacing-large)' }}
+    ${({ hasColumns }) => hasColumns && { columns: 2, columnGap: 'var(--space-large)' }}
   }
 `
 
@@ -22,7 +22,10 @@ export type TextProps = {
   hasColumns?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export const Text = forwardRef<HTMLDivElement, TextProps>(function CardMedia({ children, hasColumns = false, ...rest }, ref) {
+export const Text = forwardRef<HTMLDivElement, TextProps>(function CardMedia(
+  { children, hasColumns = false, ...rest },
+  ref,
+) {
   return (
     <Container ref={ref} hasColumns={hasColumns} {...rest}>
       {children}

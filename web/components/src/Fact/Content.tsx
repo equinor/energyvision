@@ -8,10 +8,10 @@ type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   background-color: var(--background);
-  padding: var(--spacing-large) var(--spacing-large);
+  padding: var(--space-large) var(--space-large);
   h2,
   h3 {
-    margin: var(--spacing-small) 0;
+    margin: var(--space-small) 0;
   }
   ul,
   ol {

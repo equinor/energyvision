@@ -31,7 +31,7 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean;
   ${({ hasColumns, hasImage }) =>
     !hasColumns &&
     !hasImage && {
-      padding: 'var(--spacing-large) var(--layout-paddingHorizontal-large)',
+      padding: 'var(--space-large) var(--layout-paddingHorizontal-large)',
     }}
 `
 

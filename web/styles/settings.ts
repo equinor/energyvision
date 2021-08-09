@@ -123,7 +123,6 @@ export const typography = css`
 `
 
 export const spacings = css`
-  /** space spacers… need better name? */
   :root {
     --space-xSmall: calc(1rem / 4); /* 4 */
     --space-small: calc(1rem / 2); /* 8 */
@@ -131,7 +130,6 @@ export const spacings = css`
     --space-large: calc(1rem * 1.5); /* 24 */
     --space-xLarge: calc(1rem * 2); /* 32 */
     --space-xxLarge: calc(1rem * 2.5); /* 40 */
-    /* What to do about this as six sizes are too few. Should be xxSmall */
     --space-3xLarge: calc(1rem * 3.5); /* 56 */
     --space-4xLarge: calc(1rem * 6); /* 96 */
   }
@@ -154,27 +152,7 @@ export const spacings = css`
     --layout-maxContent-medium: calc(1920px - 368px * 2); /* 1184 */
     --layout-maxContent-wide: calc(1920px - 250px * 2); /* 1420 */
   }
-  :root {
-    --spacing-xxSmall: 1px; /* 1px */
-    --spacing-xSmall: 0.25rem; /* 4px */
-    --spacing-small: 0.5rem; /* 8px */
-    --spacing-medium: 1rem; /* 16px */
-    --spacing-large: 1.5rem; /* 24px */
-    --spacing-xLarge: 2.5rem; /* 40px */
-    --spacing-xxLarge: 4rem; /* 64px */
-    --spacing-3xLarge: 6rem; /* 96px */
 
-    @media (min-width: 750px) {
-      --spacing-xxSmall: 1px; /* 1px */
-      --spacing-xSmall: 0.5rem; /* 8px */
-      --spacing-small: 1rem; /* 16px */
-      --spacing-medium: 2rem; /* 32px */
-      --spacing-large: 3rem; /* 48px */
-      --spacing-xLarge: 5rem; /* 80px */
-      --spacing-xxLarge: 7rem; /* 112px */
-      --spacing-3xLarge: 12rem; /* 192px */
-    }
-  }
   /** Because Jest hates you when you do an import style in the component */
   :root {
     --reach-accordion: 1;

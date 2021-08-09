@@ -21,16 +21,16 @@ const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
     ${({ layout }) =>
       layout === 'right' && {
         width: '50%',
-        paddingLeft: 'var(--spacing-small)',
+        paddingLeft: 'var(--space-small)',
         marginTop: '0',
-        marginBottom: 'var(--spacing-small)',
+        marginBottom: 'var(--space-small)',
         float: 'right',
       }}
     ${({ layout }) =>
       layout === 'left' && {
         width: '50%',
-        paddingRight: 'var(--spacing-small)',
-        marginBottom: 'var(--spacing-small)',
+        paddingRight: 'var(--space-small)',
+        marginBottom: 'var(--space-small)',
         marginTop: '0',
         float: 'left',
       }}
