@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Card, ColorMapping } from '@components'
+import { tokens } from '@equinor/eds-tokens'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
@@ -17,6 +18,10 @@ const Container = styled.div`
   @media (min-width: 750px) {
     grid-template-columns: 1fr 1fr;
   }
+`
+const ImageWithRoundedUpperCorners = styled(Image)`
+  /*  Use the border radius from the tokens to ensure the same as on the Card itself */
+  border-radius: ${tokens.shape.button.borderRadius} ${tokens.shape.button.borderRadius} 0 0;
 `
 
 // The EDS Card component has a hardcoded background color preventing us
@@ -38,7 +43,13 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
         >
           {tile.image && (
             <Media>
-              <Image image={tile.image} alt={tile.image.alt} maxWidth={400} aspectRatio={0.8} layout="responsive" />
+              <ImageWithRoundedUpperCorners
+                image={tile.image}
+                alt={tile.image.alt}
+                maxWidth={400}
+                aspectRatio={0.8}
+                layout="responsive"
+              />
             </Media>
           )}
           <Header>
