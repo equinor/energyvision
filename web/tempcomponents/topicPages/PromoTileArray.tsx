@@ -34,6 +34,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
           type="promo"
           key={tile.id}
           color={ColorMapping[tile.designOptions.background.toLowerCase()] || ColorMapping.default}
+          textOnly={!tile.image}
         >
           {tile.image && (
             <Media>
