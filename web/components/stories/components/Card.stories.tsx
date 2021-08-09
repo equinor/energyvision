@@ -222,6 +222,6 @@ PromoTileWithoutImage.storyName = 'Promo tile without image'
 
 PromoTileWithoutImage.parameters = {
   docs: {
-    storyDescription: `A promo tile doesn't need to have an image. If that is the case, the button does not align to the bottom and the promo tile has more spacings.`,
+    storyDescription: `A promo tile doesn't need to have an image. If that is the case, the promo tile has more top spacing.`,
   },
 }

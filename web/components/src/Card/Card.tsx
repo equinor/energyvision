@@ -29,9 +29,23 @@ export const StyledCard = styled(EdsCard)<CardProps>`
   /* If the card doesn't have media, there will be more space */
   grid-gap: ${(props) => (props.textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)')};
   padding: ${(props) =>
-    props.textOnly ? 'var(--space-3xLarge) 0 var(--space-3xLarge) 0' : '0 0 var(--space-xLarge) 0'};
+    props.textOnly ? 'var(--space-3xLarge) 0 var(--space-xLarge) 0' : '0 0 var(--space-xLarge) 0'};
 
-  grid-template-rows: ${(props) => (props.type === 'promo' ? 'auto auto 1fr' : 'auto auto auto 1fr')};
+  ${(props) => {
+    if (props.type === 'promo' && props.textOnly) {
+      return `
+        grid-template-rows: auto 1fr;
+    `
+    } else if (props.type === 'promo') {
+      return `
+      grid-template-rows: auto auto 1fr;
+    `
+    } else {
+      return `
+      grid-template-rows: auto auto auto 1fr;
+    `
+    }
+  }}
 
   &:hover {
     cursor: inherit;
