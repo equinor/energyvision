@@ -72,16 +72,6 @@ export const colors = css`
     --transparent-black: hsla(0, 0%, 0%, 20);
     --transparent-white: hsla(0, 0%, 100%, 20);
 
-    /* EDS themes
-
-
-    /* Background colors */
-    --bg-moss-green: #deedee;
-    --bg-mist-blue: #d5eaf4;
-    --bg-litchen-green: #e6faec;
-    --bg-spruce-wood: #ffe7d6;
-    --bg-slate-blue: #243746;
-
     /* UI colors This is just for testing!!!! */
     --ui-background-default: var(--white-100);
     --ui-background-warm: var(--spruce-wood-100);
@@ -90,12 +80,7 @@ export const colors = css`
     --inverted-text: var(--white-100);
     --default-text: rgba(61, 61, 61, 1);
 
-    /* POC Theme */
     --theme-background-primary: var(--white-100);
-  }
-
-  html.dark {
-    --theme-background-primary: var(--bg-slate-blue);
   }
 `
 export const typography = css`
