@@ -10,6 +10,7 @@ const { Title, Header, Action, Media } = Card
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
   grid-gap: var(--space-medium);
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
