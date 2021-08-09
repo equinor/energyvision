@@ -16,6 +16,7 @@ export type LinkData = {
   type?: LinkType
   id?: string
   label: string
+  ariaLabel?: string
   link?: { slug: string; type: string }
   href?: string
   extension?: string
