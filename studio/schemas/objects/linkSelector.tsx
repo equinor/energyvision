@@ -52,7 +52,7 @@ const LinkField = {
     },
     {
       name: 'ariaLabel',
-      title: '♿ Aria label',
+      title: '♿ Screenreader label',
       description: 'A text used for providing screen readers with additional information',
       type: 'string',
       fieldset: 'label',
