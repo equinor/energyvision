@@ -4,19 +4,21 @@ import { getUrlFromAction } from './utils'
 import type { LinkData } from '../../types/types'
 
 export const ButtonLink = ({ action }: { action: LinkData }) => {
-  const { label, extension, type } = action
+  const { label, ariaLabel, extension, type } = action
   const url = getUrlFromAction(action)
 
   if (type === 'internalUrl') {
     return (
       <NextLink passHref href={url}>
-        <Link variant="buttonLink">{label}</Link>
+        <Link variant="buttonLink" aria-label={ariaLabel}>
+          {label}
+        </Link>
       </NextLink>
     )
   }
 
   return (
-    <Link href={url} variant="buttonLink">
+    <Link href={url} variant="buttonLink" aria-label={ariaLabel}>
       {label} {extension && `(${extension.toUpperCase()})`}
     </Link>
   )
