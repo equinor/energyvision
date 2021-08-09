@@ -70,10 +70,6 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
     isExpanded && {
       fontWeight: 700,
     }}
-
-  ${StyledHeader}:hover & {
-    font-weight: 500;
-  }
 `
 
 export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(function Header(
