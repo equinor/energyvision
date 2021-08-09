@@ -28,23 +28,6 @@ const StyledRAccordionButton = styled(RAccordionButton)`
     ${outlineTemplate(outline)}
   }
 `
-const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
-  font-size: var(--typeScale-1);
-  line-height: var(--lineHeight-2);
-  display: inline-block;
-  padding-top: 2px;
-  text-align: left;
-  @media (prefers-reduced-motion: no-preference) {
-    transition: font-weight 0.1s ease-in-out;
-  }
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
-  ${({ isExpanded }) =>
-    isExpanded && {
-      fontWeight: 700,
-    }}
-`
 
 const FilledIcon = styled(Icon)``
 
@@ -67,6 +50,29 @@ const StyledHeader = styled(Typography)`
   }
   &:hover ${OutlineIcon} {
     display: none;
+  }
+`
+
+const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
+  font-size: var(--typeScale-1);
+  line-height: var(--lineHeight-2);
+  display: inline-block;
+  padding-top: 2px;
+  text-align: left;
+  @media (prefers-reduced-motion: no-preference) {
+    transition: font-weight 0.1s ease-in-out;
+  }
+  .inverted-background & {
+    color: var(--inverted-text);
+  }
+
+  ${({ isExpanded }) =>
+    isExpanded && {
+      fontWeight: 700,
+    }}
+
+  ${StyledHeader}:hover & {
+    font-weight: 500;
   }
 `
 
