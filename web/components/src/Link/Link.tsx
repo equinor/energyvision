@@ -31,7 +31,7 @@ export const BaseLink = styled.a`
   & > svg {
     flex-shrink: 0;
     box-sizing: content-box;
-    padding: 0 var(--spacing-xxSmall);
+    padding: 0 var(--space-1);
   }
 `
 
@@ -39,7 +39,7 @@ export const BaseLink = styled.a`
 const ContentLink = styled(BaseLink)`
   border-bottom: 0.5px solid #b4bbc0;
   text-decoration: none;
-  padding: var(--spacing-small) 0;
+  padding: var(--space-small) 0;
   /* Should be safe to assume that content links always will be 100% width? */
   width: 100%;
   & > svg {

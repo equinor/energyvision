@@ -28,7 +28,7 @@ const StyledTextBlock = styled.section`
 `
 
 const TextContainer = styled.div`
-  margin-bottom: var(--spacing-medium);
+  margin-bottom: var(--space-medium);
 `
 
 type TextBlockProps = {
