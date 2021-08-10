@@ -4,6 +4,7 @@ import { tokens } from '@equinor/eds-tokens'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
+import { idText } from 'typescript'
 
 const { Title, Header, Action, Media } = Card
 
@@ -37,32 +38,37 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
 
   return (
     <Container>
-      {data.group.map((tile: PromoTileData) => (
-        <StyledCard
-          type="promo"
-          key={tile.id}
-          color={ColorMapping[tile.designOptions.background.toLowerCase()] || ColorMapping.default}
-          textOnly={!tile.image}
-        >
-          {tile.image && (
-            <Media>
-              <ImageWithRoundedUpperCorners
-                image={tile.image}
-                alt={tile.image.alt}
-                maxWidth={400}
-                aspectRatio={0.8}
-                layout="responsive"
-              />
-            </Media>
-          )}
-          <Header>
-            <Title>{tile.title}</Title>
-          </Header>
-          <Action>
-            <ButtonLink action={tile.action} />
-          </Action>
-        </StyledCard>
-      ))}
+      {data.group.map((tile: PromoTileData) => {
+        const { id, designOptions, image, title, action } = tile
+        return (
+          <StyledCard
+            type="promo"
+            key={id}
+            color={ColorMapping[designOptions.background.toLowerCase()] || ColorMapping.default}
+            textOnly={!image}
+          >
+            {image && (
+              <Media>
+                <ImageWithRoundedUpperCorners
+                  image={image}
+                  alt={image.alt}
+                  maxWidth={400}
+                  aspectRatio={0.8}
+                  layout="responsive"
+                />
+              </Media>
+            )}
+            <Header>
+              <Title>{title}</Title>
+            </Header>
+            {action.label && (
+              <Action>
+                <ButtonLink action={action} />
+              </Action>
+            )}
+          </StyledCard>
+        )
+      })}
     </Container>
   )
 }
