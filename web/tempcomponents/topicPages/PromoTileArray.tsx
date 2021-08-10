@@ -33,6 +33,8 @@ const StyledCard = styled(Card)`
 `
 
 const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
+  if (!data.group) return null
+
   return (
     <Container>
       {data.group.map((tile: PromoTileData) => (
