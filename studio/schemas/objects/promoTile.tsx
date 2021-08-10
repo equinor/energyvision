@@ -39,6 +39,7 @@ export default {
     {
       name: 'link',
       type: 'linkSelector',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
     {
       title: 'Background',
