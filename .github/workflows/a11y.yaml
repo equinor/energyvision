@@ -2,6 +2,8 @@ name: Test accessibility with axe-core on Browserstack
 on:
   workflow_dispatch:
   - cron:  '0 8 * * *'
+    branches:
+      - main
     paths:
       - 'web/**/*.jsx?'
       - 'web/**/*.tsx?'
