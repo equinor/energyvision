@@ -1,10 +1,9 @@
 import styled from 'styled-components'
-import { Card, ColorMapping } from '@components'
+import { Card, BackgroundContainer } from '@components'
 import { tokens } from '@equinor/eds-tokens'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
-import { idText } from 'typescript'
 
 const { Title, Header, Action, Media } = Card
 
@@ -26,13 +25,6 @@ const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.button.borderRadius} ${tokens.shape.button.borderRadius} 0 0;
 `
 
-// The EDS Card component has a hardcoded background color preventing us
-// from using our colored BackgroundContainer component
-// @TODO: refactor Card component to allow us to use BackgroundContainer
-const StyledCard = styled(Card)`
-  background: ${({ color }) => `var(${color})`};
-`
-
 const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
   if (!data.group) return null
 
@@ -40,33 +32,32 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
     <Container>
       {data.group.map((tile: PromoTileData) => {
         const { id, designOptions, image, title, action } = tile
+        const { background } = designOptions
+
         return (
-          <StyledCard
-            type="promo"
-            key={id}
-            color={ColorMapping[designOptions.background.toLowerCase()] || ColorMapping.default}
-            textOnly={!image}
-          >
-            {image && (
-              <Media>
-                <ImageWithRoundedUpperCorners
-                  image={image}
-                  alt={image.alt}
-                  maxWidth={400}
-                  aspectRatio={0.8}
-                  layout="responsive"
-                />
-              </Media>
-            )}
-            <Header>
-              <Title>{title}</Title>
-            </Header>
-            {action.label && (
-              <Action>
-                <ButtonLink action={action} />
-              </Action>
-            )}
-          </StyledCard>
+          <BackgroundContainer background={background} key={id}>
+            <Card type="promo" textOnly={!image}>
+              {image && (
+                <Media>
+                  <ImageWithRoundedUpperCorners
+                    image={image}
+                    alt={image.alt}
+                    maxWidth={400}
+                    aspectRatio={0.8}
+                    layout="responsive"
+                  />
+                </Media>
+              )}
+              <Header>
+                <Title>{title}</Title>
+              </Header>
+              {action.label && (
+                <Action>
+                  <ButtonLink action={action} />
+                </Action>
+              )}
+            </Card>
+          </BackgroundContainer>
         )
       })}
     </Container>
