@@ -1,7 +1,7 @@
 import { createRequire } from 'module'
 import { seleniumConfig } from '../seleniumConfig.js'
 import webdriver from 'selenium-webdriver'
-import { envisStartPage } from '../energyVision.js'
+import { careers } from '../energyVision.js'
 import fs, { promises as fsAsync } from 'fs'
 import { config } from 'dotenv'
 
@@ -55,4 +55,4 @@ const testPage = (browserstackURL) => (capabilities) => async (page) => {
   await driver.quit()
 }
 
-await testPage(browserstackURL)(defaultCapabilities)(envisStartPage)
+await testPage(browserstackURL)(defaultCapabilities)(careers)
