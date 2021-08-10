@@ -1,13 +1,7 @@
 name: Test accessibility with axe-core on Browserstack
 on:
-  workflow_dispatch:
+  schedule:
   - cron:  '0 8 * * *'
-    branches:
-      - main
-    paths:
-      - 'web/**/*.jsx?'
-      - 'web/**/*.tsx?'
-      - 'e2e/tests/**/*.js?'
 jobs:
   test_for_accessibility_issues:
     runs-on: ubuntu-latest
