@@ -26,6 +26,8 @@ export const CardLink = styled.a`
 
 export const StyledCard = styled(EdsCard)<CardProps>`
   height: 100%;
+  /* News cards should have white background (current status as least) Will probably change at some point */
+  background-color: ${(props) => (props.type === 'promo' ? 'transparent' : '--ui-background-default')};
   /* If the card doesn't have media, there will be more space */
   grid-gap: ${(props) => (props.textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)')};
   padding: ${(props) =>

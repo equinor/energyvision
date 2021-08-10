@@ -237,13 +237,38 @@ export const CardWithBackground: Story<CardProps> = () => (
         </Card.Action>
       </Card>
     </BackgroundContainer>
-    <BackgroundContainer background="Moss Green">
-      <Card type="promo">
-        <Card.Media>
-          <RatioBox aspect="80%">
-            <AspectImagePlaceholder />
-          </RatioBox>
-        </Card.Media>
+    <BackgroundContainer background="Slate Blue">
+      <Card type="promo" textOnly>
+        <Card.Header>
+          <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
+        </Card.Header>
+        <Card.Action>
+          <Link variant="buttonLink">Find out more</Link>
+        </Card.Action>
+      </Card>
+    </BackgroundContainer>
+    <BackgroundContainer background="Spruce Wood">
+      <Card type="promo" textOnly>
+        <Card.Header>
+          <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
+        </Card.Header>
+        <Card.Action>
+          <Link variant="buttonLink">Find out more</Link>
+        </Card.Action>
+      </Card>
+    </BackgroundContainer>
+    <BackgroundContainer background="Moss Green Light">
+      <Card type="promo" textOnly>
+        <Card.Header>
+          <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
+        </Card.Header>
+        <Card.Action>
+          <Link variant="buttonLink">Find out more</Link>
+        </Card.Action>
+      </Card>
+    </BackgroundContainer>
+    <BackgroundContainer background="Mist Blue">
+      <Card type="promo" textOnly>
         <Card.Header>
           <Card.Title level="h3">Check out your future dream job</Card.Title>
         </Card.Header>
@@ -256,3 +281,8 @@ export const CardWithBackground: Story<CardProps> = () => (
 )
 
 CardWithBackground.storyName = 'Cards with background colour'
+PromoTileWithoutImage.parameters = {
+  docs: {
+    storyDescription: `At the moment, background colours only apply to promo tiles.`,
+  },
+}
