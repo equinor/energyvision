@@ -2,7 +2,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
-import { Card, CardProps, Text, Link } from '@components'
+import { Card, CardProps, Text, Link, BackgroundContainer } from '@components'
 
 export default {
   title: 'Components/Card',
@@ -225,3 +225,34 @@ PromoTileWithoutImage.parameters = {
     storyDescription: `A promo tile doesn't need to have an image. If that is the case, the promo tile has more top spacing.`,
   },
 }
+export const CardWithBackground: Story<CardProps> = () => (
+  <Wrapper>
+    <BackgroundContainer background="Moss Green Light">
+      <Card type="promo" textOnly>
+        <Card.Header>
+          <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
+        </Card.Header>
+        <Card.Action>
+          <Link variant="buttonLink">Find out more</Link>
+        </Card.Action>
+      </Card>
+    </BackgroundContainer>
+    <BackgroundContainer background="Moss Green">
+      <Card type="promo">
+        <Card.Media>
+          <RatioBox aspect="80%">
+            <AspectImagePlaceholder />
+          </RatioBox>
+        </Card.Media>
+        <Card.Header>
+          <Card.Title level="h3">Check out your future dream job</Card.Title>
+        </Card.Header>
+        <Card.Action>
+          <Link variant="buttonLink">Check it out</Link>
+        </Card.Action>
+      </Card>
+    </BackgroundContainer>
+  </Wrapper>
+)
+
+CardWithBackground.storyName = 'Cards with background colour'
