@@ -13,6 +13,7 @@ import {
   PaddedListRenderer,
   ListItemRenderer,
 } from './serializers/'
+import removeEmptyBlocks from './helpers/removeEmptyBlocks'
 
 const defaultSerializers = {
   marks: { sub: SubRenderer, sup: SupRenderer, link: ExternalLinkRenderer, internalLink: InternalLinkRenderer },
@@ -28,7 +29,11 @@ const defaultSerializers = {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const NewsBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => (
-  <PortableText blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
+  <PortableText
+    blocks={blocks && removeEmptyBlocks(blocks)}
+    serializers={{ ...defaultSerializers, ...serializers }}
+    {...props}
+  />
 )
 
 export default NewsBlockContent
