@@ -10,6 +10,7 @@ import {
   ListItemRenderer,
 } from './serializers/'
 import { PortableTextProps } from '@sanity/block-content-to-react'
+import removeEmptyBlocks from './helpers/removeEmptyBlocks'
 
 const defaultSerializers = {
   types: { block: BlockRenderer },
@@ -20,7 +21,11 @@ const defaultSerializers = {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const SimpleBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => (
-  <PortableText blocks={blocks} serializers={{ ...defaultSerializers, ...serializers }} {...props} />
+  <PortableText
+    blocks={blocks && removeEmptyBlocks(blocks)}
+    serializers={{ ...defaultSerializers, ...serializers }}
+    {...props}
+  />
 )
 
 export default SimpleBlockContent
