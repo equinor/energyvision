@@ -1,5 +1,6 @@
 name: Test accessibility with axe-core on Browserstack
 on:
+  workflow_dispatch:
   schedule:
   - cron:  '0 8 * * *'
 jobs:
