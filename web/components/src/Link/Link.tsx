@@ -156,7 +156,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   if (variant === 'contentLink') {
     return (
       <ContentLink ref={ref} {...rest}>
-        {children} <Icon size={16} data={getIconData(type)} />
+        {children} <Icon data={getIconData(type)} />
       </ContentLink>
     )
   } else if (variant === 'readMore') {
