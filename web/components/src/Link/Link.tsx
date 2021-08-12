@@ -33,6 +33,10 @@ export const BaseLink = styled.a`
     box-sizing: content-box;
     padding: 0 var(--space-1);
   }
+  /* If the link is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
+    color: var(--mist-blue-100);
+  }
 `
 
 // TODO: should part of this styling be moved to a list item instead?
@@ -105,6 +109,10 @@ const ButtonLink = styled(Typography)`
   border-radius: ${tokens.shape.button.borderRadius};
   display: inline-block;
   /* If the button link is used inside a inverted component, the text colour must also be inverted */
+  &:hover {
+    color: var(--inverted-text);
+    background-color: var(--slate-blue-100);
+  }
   .inverted-background & {
     color: var(--inverted-text);
     border-color: var(--white-100);
