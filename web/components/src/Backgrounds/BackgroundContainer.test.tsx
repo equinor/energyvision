@@ -18,7 +18,7 @@ describe(`The background container supports different colours from Sanity's colo
   })
   it('it can be Moss green ', () => {
     const { container } = render(<BackgroundContainer background="Moss Green" />)
-    expect(container.firstChild).toHaveStyle(`--background-color: var(--moss-green-80)`)
+    expect(container.firstChild).toHaveStyle(`--background-color: var(--moss-green-70)`)
   })
   it('it can be light mint blue (default)', () => {
     const { container } = render(<BackgroundContainer background="Moss Green Light" />)
