@@ -66,6 +66,7 @@ const ReadMoreLink = styled(BaseLink)`
     margin-left: var(--space-small);
     padding-right: 0;
     transition: 0.3s;
+    fill: var(--energy-red-100);
   }
 
   &:hover svg {
@@ -89,9 +90,9 @@ const ReadMoreLink = styled(BaseLink)`
 
   /* If the link is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
-    color: var(--mist-blue-100);
+    color: var(--inverted-text);
     &:after {
-      border-bottom-color: var(--mist-blue-100);
+      border-bottom-color: var(--white-100);
     }
   }
 `
