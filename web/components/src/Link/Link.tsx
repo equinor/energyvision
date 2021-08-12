@@ -24,7 +24,7 @@ const {
 export const BaseLink = styled.a`
   display: inline-flex;
   align-items: center;
-  color: rgba(0, 112, 121, 1);
+  color: var(--slate-blue-95);
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
@@ -44,17 +44,20 @@ const ContentLink = styled(BaseLink)`
   border-bottom: 0.5px solid #b4bbc0;
   text-decoration: none;
   padding: var(--space-small) 0;
-  /* Should be safe to assume that content links always will be 100% width? */
+  color: var(--slate-blue-100) !important;
   width: 100%;
   & > svg {
+    fill: var(--energy-red-100);
     margin-left: auto;
     border: 1px solid transparent;
     border-radius: 50%;
-    padding: 8px;
+    padding: var(--space-small) !important;
   }
   &:hover svg {
-    /* @TODO Fix colours and theming */
-    background: var(--moss-green-60);
+    background: var(--energy-red-50);
+  }
+  .inverted-background & {
+    color: var(--inverted-text) !important;
   }
 `
 
@@ -151,7 +154,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   if (variant === 'contentLink') {
     return (
       <ContentLink ref={ref} {...rest}>
-        {children} <Icon data={getIconData(type)} />
+        {children} <Icon size={16} data={getIconData(type)} />
       </ContentLink>
     )
   } else if (variant === 'readMore') {
