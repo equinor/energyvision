@@ -41,7 +41,7 @@ export const BaseLink = styled.a`
 
 // TODO: should part of this styling be moved to a list item instead?
 const ContentLink = styled(BaseLink)`
-  border-bottom: 0.5px solid #b4bbc0;
+  border-bottom: 0.5px solid var(--grey-40);
   text-decoration: none;
   padding: var(--space-small) 0;
   color: var(--slate-blue-100) !important;
