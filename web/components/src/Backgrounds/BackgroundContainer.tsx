@@ -33,7 +33,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   // @TODO: Can we map colours in a better way? Duplicate code atm
   const backgrounds: { [name: string]: string } = {
     none: 'var(--ui-background-default)',
-    one: 'var(--moss-green-80)',
+    one: 'var(--moss-green-70)',
     two: 'var(--moss-green-50)',
     three: 'var(--spruce-wood-90)',
     four: 'var(--mist-blue-100)',
