@@ -103,6 +103,15 @@ const ButtonLink = styled(Typography)`
   border: 1px solid ${edsBorderColor};
   border-radius: ${tokens.shape.button.borderRadius};
   display: inline-block;
+  /* If the button link is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
+    color: var(--inverted-text);
+    border-color: var(--white-100);
+    &:hover {
+      background-color: var(--white-100);
+      color: var(--slate-blue-100);
+    }
+  }
 `
 
 const getIconData = (type: LinkType) => {
