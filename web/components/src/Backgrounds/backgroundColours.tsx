@@ -20,18 +20,4 @@ function getStyleVariant(backgroundTitle: BackgroundColours) {
   return styleVariant
 }
 
-type ColorMappingType = {
-  [key: string]: string
-}
-
-const ColorMapping: ColorMappingType = {
-  default: '--ui-background-default',
-  white: '--ui-background-default',
-  'moss green': '--moss-green-70',
-  'moss green light': '--moss-green-50',
-  'spruce wood': '--spruce-wood-90',
-  'mist blue': '--mist-blue-100',
-  'slate blue': '--slate-blue-100',
-}
-
-export { getStyleVariant, ColorMapping }
+export { getStyleVariant }
