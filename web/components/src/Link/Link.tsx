@@ -105,12 +105,14 @@ const ReadMoreLink = styled(BaseLink)`
 `
 
 const ButtonLink = styled(Typography)`
-  color: var(--default-text);
+  color: var(--slate-blue-95);
   text-decoration: none;
   padding: var(--space-xSmall) var(--space-medium);
+  display: inline-block;
+  /*  @TODO: Do we want to use eds tokens? */
   border: 1px solid ${edsBorderColor};
   border-radius: ${tokens.shape.button.borderRadius};
-  display: inline-block;
+
   /* If the button link is used inside a inverted component, the text colour must also be inverted */
   &:hover {
     color: var(--inverted-text);
