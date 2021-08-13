@@ -33,7 +33,7 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm install --filter energy-vision-studio
+          pnpm studio yarn
       - name: Run ESLint 🔎
         id: lint
         run: |
