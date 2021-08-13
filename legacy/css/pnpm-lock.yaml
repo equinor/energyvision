@@ -7,6 +7,7 @@ specifiers:
   es6-promise: ^3.0.2
   gulp: ^4.0.2
   gulp-autoprefixer: ^3.1.0
+  gulp-concat: 2.6.1
   gulp-consolidate: ^0.1.2
   gulp-csslint: ^0.1.5
   gulp-iconfont: ^5.0.1
@@ -27,6 +28,7 @@ devDependencies:
   es6-promise: 3.3.1
   gulp: 4.0.2
   gulp-autoprefixer: 3.1.1
+  gulp-concat: 2.6.1
   gulp-consolidate: 0.1.2
   gulp-csslint: 0.1.5
   gulp-iconfont: 5.0.1
@@ -707,6 +709,12 @@ packages:
       inherits: 2.0.4
       readable-stream: 2.3.7
       typedarray: 0.0.6
+    dev: true
+
+  /concat-with-sourcemaps/1.1.0:
+    resolution: {integrity: sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==}
+    dependencies:
+      source-map: 0.6.1
     dev: true
 
   /console-control-strings/1.1.0:
@@ -1440,6 +1448,15 @@ packages:
       semver-greatest-satisfied-range: 1.1.0
       v8flags: 3.2.0
       yargs: 7.1.2
+    dev: true
+
+  /gulp-concat/2.6.1:
+    resolution: {integrity: sha1-Yz0WyV2IUEYorQJmVmPO5aR5M1M=}
+    engines: {node: '>= 0.10'}
+    dependencies:
+      concat-with-sourcemaps: 1.1.0
+      through2: 2.0.5
+      vinyl: 2.2.1
     dev: true
 
   /gulp-cond/1.0.0:
@@ -3347,6 +3364,11 @@ packages:
 
   /source-map/0.5.7:
     resolution: {integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
+  /source-map/0.6.1:
+    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
     dev: true
 
