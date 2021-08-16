@@ -30,22 +30,6 @@ const validateContent = (value: any, maxLength: number) => {
   return true
 }
 
-const validateLink = (value: any, connectedField: any): SchemaType.ValidationResult => {
-  if (value && connectedField) {
-    return 'Can only have a single link. Choose either an internal or external link.'
-  }
-
-  if (!connectedField && !value) {
-    return 'An internal or external link is required.'
-  }
-
-  if (connectedField && !value) {
-    return true
-  }
-
-  return true
-}
-
 const blockContentType = configureBlockContent({
   h1: false,
   h2: false,
