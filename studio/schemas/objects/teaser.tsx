@@ -109,7 +109,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().max(1),
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().min(1).max(1),
     },
     {
       name: 'image',
