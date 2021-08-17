@@ -82,6 +82,7 @@ export default {
         { type: 'pullQuote' },
         { type: 'accordion' },
         { type: 'promoTileArray' },
+        { type: 'stockValuesApi' },
       ],
     },
   ],

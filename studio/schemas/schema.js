@@ -35,6 +35,7 @@ import internalUrl from './objects/internalUrl'
 import linkSelector from './objects/linkSelector'
 import promoTile from './objects/promoTile'
 import promoTileArray from './objects/promoTileArray'
+import stockValuesApi from './objects/stockValuesApi'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -70,5 +71,6 @@ export default createSchema({
     linkSelector,
     promoTile,
     promoTileArray,
+    stockValuesApi,
   ]),
 })
