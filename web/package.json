@@ -26,7 +26,7 @@
     "@microsoft/applicationinsights-react-js": "^3.1.5",
     "@microsoft/applicationinsights-web": "^2.6.5",
     "@next/bundle-analyzer": "^11.1.0",
-    "@reach/accordion": "^0.15.3",
+    "@reach/accordion": "^0.16.1",
     "@react-spring/web": "^9.2.4",
     "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^2.14.0",
