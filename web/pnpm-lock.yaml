@@ -38,6 +38,7 @@ specifiers:
   next-seo: ^4.26.0
   only-allow: ^1.0.0
   prettier: 2.3.2
+  prom-client: ^13.2.0
   query-string: ^7.0.1
   react: ^17.0.2
   react-dom: ^17.0.2
@@ -66,6 +67,7 @@ dependencies:
   next-sanity-image: 3.1.5_23346a98bfabb0e4b85740f074f4be8b
   next-seo: 4.26.0_7df30a00c1bfce1004e3004b7e801a78
   only-allow: 1.0.0
+  prom-client: 13.2.0
   query-string: 7.0.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -5072,6 +5074,10 @@ packages:
       file-uri-to-path: 1.0.0
     dev: true
     optional: true
+
+  /bintrees/1.0.1:
+    resolution: {integrity: sha1-DmVcm5wkNeqraL9AJyJtK1WjRSQ=}
+    dev: false
 
   /bluebird/3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
@@ -10634,6 +10640,13 @@ packages:
       through2: 2.0.5
     dev: false
 
+  /prom-client/13.2.0:
+    resolution: {integrity: sha512-wGr5mlNNdRNzEhRYXgboUU2LxHWIojxscJKmtG3R8f4/KiWqyYgXTLHs0+Ted7tG3zFT7pgHJbtomzZ1L0ARaQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      tdigest: 0.1.1
+    dev: false
+
   /promise-inflight/1.0.1:
     resolution: {integrity: sha1-mEcocL8igTL8vdhoEputEsPAKeM=}
     dev: true
@@ -12254,6 +12267,12 @@ packages:
       mkdirp: 1.0.4
       yallist: 4.0.0
     dev: true
+
+  /tdigest/0.1.1:
+    resolution: {integrity: sha1-Ljyyw56kSeVdHmzZEReszKRYgCE=}
+    dependencies:
+      bintrees: 1.0.1
+    dev: false
 
   /telejson/5.3.3:
     resolution: {integrity: sha512-PjqkJZpzEggA9TBpVtJi1LVptP7tYtXB6rEubwlHap76AMjzvOdKX41CxyaW7ahhzDU1aftXnMCx5kAPDZTQBA==}
