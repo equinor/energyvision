@@ -24,13 +24,14 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
 `
 
 export type MenuProps = {
+  data?: any
   slugs?: {
     en_GB: string
     nb_NO: string
   }
 }
 
-export const Menu = ({ slugs }: MenuProps) => {
+export const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
   const router = useRouter()
   const topbarRef = useCallback((node) => {
@@ -39,7 +40,7 @@ export const Menu = ({ slugs }: MenuProps) => {
       setTopbarHeight(height)
     }
   }, [])
-
+  console.log('Menu data', data)
   const localization = {
     activeLocale: router.locale || 'en',
   }

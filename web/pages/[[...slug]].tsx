@@ -3,6 +3,7 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { sanityClient, getClient } from '../lib/sanity.server'
+import { menuQuery } from '../lib/queries/menu'
 import { groq } from 'next-sanity'
 import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
@@ -90,7 +91,7 @@ Page.getLayout = (page: AppProps) => {
   }
   return (
     <Layout preview={preview}>
-      <Menu slugs={slugs} />
+      <Menu slugs={slugs} data={data?.menuData} />
       {page}
     </Layout>
   )
@@ -100,6 +101,8 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[], locale)
 
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
+  // Let's do it simple stupid and iterate later on
+  const menuData = await getClient(preview).fetch(menuQuery)
 
   // console.log('query:', query)
   // console.log('queryParams:', queryParams)
@@ -114,6 +117,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         queryParams,
         pageData,
         docType,
+        menuData,
       },
     },
     revalidate: 1,
