@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetStaticProps, GetStaticPaths } from 'next'
+import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { groq } from 'next-sanity'
@@ -41,14 +42,6 @@ export default function Page({ data, preview }: any) {
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
-  const localization = {
-    activeLocale: router.locale || 'en',
-    slugs: {
-      en_GB: data?.pageData?.allSlugs?.en_GB.current,
-      nb_NO: data?.pageData?.allSlugs?.nb_NO.current,
-    },
-  }
-
   appInsights.trackPageView({ name: slug, uri: fullUrl })
 
   return (
@@ -74,13 +67,32 @@ export default function Page({ data, preview }: any) {
               cardType: 'summary_large_image',
             }}
           ></NextSeo>
-          <Layout preview={preview}>
-            <Menu localization={localization} />
-            {data?.docType === 'page' && <TopicPage data={pageData} />}
-          </Layout>
+
+          {data?.docType === 'page' && <TopicPage data={pageData} />}
         </>
       )}
     </>
+  )
+}
+
+// eslint-disable-next-line react/display-name
+Page.getLayout = (page: AppProps) => {
+  // This is just an ordinary function
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { props } = page
+
+  const { data, preview } = props
+  const slugs = {
+    en_GB: data?.pageData?.allSlugs?.en_GB.current,
+    nb_NO: data?.pageData?.allSlugs?.nb_NO.current,
+  }
+  return (
+    <Layout preview={preview}>
+      <Menu slugs={slugs} />
+      {page}
+    </Layout>
   )
 }
 

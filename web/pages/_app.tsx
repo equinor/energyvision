@@ -16,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
   const defaultLocale = router.defaultLocale || 'en'
   const locale = router.locale || defaultLocale
-
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const getLayout = Component.getLayout || ((page) => page)
   // TODO: get locale from Sanity
   return (
     <>
@@ -38,7 +40,8 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             <GlobalStyle />
             <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
-            <Component {...pageProps} />
+            {/* <Component {...pageProps} /> */}
+            {getLayout(<Component {...pageProps} />)}
           </IntlProvider>
         </AppInsightsContext.Provider>
       </AppInsightsErrorBoundary>

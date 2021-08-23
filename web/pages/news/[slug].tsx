@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import type { AppProps } from 'next/app'
 import ErrorPage from 'next/error'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { GetStaticProps, GetStaticPaths } from 'next'
@@ -190,11 +191,6 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
   const modifiedDate = isDateAfter(news.publishDateTime, news.updatedAt) ? news.publishDateTime : news.updatedAt
 
-  const localization = {
-    activeLocale: router.locale || 'en',
-    slugs: data?.slugs,
-  }
-
   appInsights.trackPageView({ name: slug, uri: fullUrl })
 
   return (
@@ -219,62 +215,81 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
           cardType: 'summary_large_image',
         }}
       ></NextSeo>
-      <Layout preview={preview}>
-        {router.isFallback ? (
-          <p>Loading…</p>
-        ) : (
-          <>
-            <Menu localization={localization} />
-            <article>
-              <NewsLayout>
-                <Header>
-                  <HeaderInner>
-                    <StyledHeading level="h1" size="2xl" inverted>
-                      {news.title}
-                    </StyledHeading>
-                    <DateWrapper>
-                      <Icon data={calendar} />
-                      <DateContainer>
-                        <FormattedDateTime datetime={news.publishDateTime} />
-                        {isDateAfter(modifiedDate, news.publishDateTime) && (
-                          <>
-                            <LastModifiedLabel>Last modified</LastModifiedLabel>
-                            <FormattedDateTime datetime={modifiedDate} />
-                          </>
-                        )}
-                      </DateContainer>
-                    </DateWrapper>
-                  </HeaderInner>
-                </Header>
-                <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
-                {news.ingress && (
-                  <LeadParagraph>
-                    <Lead blocks={news.ingress} />
-                  </LeadParagraph>
-                )}
-                {news.content && (
-                  <Content>
-                    <NewsBlockContent blocks={news.content}></NewsBlockContent>
-                  </Content>
-                )}
 
-                {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
-                  <Related>
-                    <RelatedContent data={news.relatedLinks} />
-                  </Related>
-                )}
+      {router.isFallback ? (
+        <p>Loading…</p>
+      ) : (
+        <>
+          <article>
+            <NewsLayout>
+              <Header>
+                <HeaderInner>
+                  <StyledHeading level="h1" size="2xl" inverted>
+                    {news.title}
+                  </StyledHeading>
+                  <DateWrapper>
+                    <Icon data={calendar} />
+                    <DateContainer>
+                      <FormattedDateTime datetime={news.publishDateTime} />
+                      {isDateAfter(modifiedDate, news.publishDateTime) && (
+                        <>
+                          <LastModifiedLabel>Last modified</LastModifiedLabel>
+                          <FormattedDateTime datetime={modifiedDate} />
+                        </>
+                      )}
+                    </DateContainer>
+                  </DateWrapper>
+                </HeaderInner>
+              </Header>
+              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
+              {news.ingress && (
+                <LeadParagraph>
+                  <Lead blocks={news.ingress} />
+                </LeadParagraph>
+              )}
+              {news.content && (
+                <Content>
+                  <NewsBlockContent blocks={news.content}></NewsBlockContent>
+                </Content>
+              )}
 
-                {latestNews.length > 0 && (
-                  <Latest>
-                    <LatestNews data={latestNews} />
-                  </Latest>
-                )}
-              </NewsLayout>
-            </article>
-          </>
-        )}
-      </Layout>
+              {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
+                <Related>
+                  <RelatedContent data={news.relatedLinks} />
+                </Related>
+              )}
+
+              {latestNews.length > 0 && (
+                <Latest>
+                  <LatestNews data={latestNews} />
+                </Latest>
+              )}
+            </NewsLayout>
+          </article>
+        </>
+      )}
     </>
+  )
+}
+
+// eslint-disable-next-line react/display-name
+News.getLayout = (page: AppProps) => {
+  // This is just an ordinary function
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { props } = page
+
+  const { preview, data } = props
+
+  // @TODO: Fix slugs for news
+  const slugs = data?.slugs
+
+  return (
+    <Layout preview={preview}>
+      <Menu slugs={slugs} />
+      {page}
+    </Layout>
   )
 }
 

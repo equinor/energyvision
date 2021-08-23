@@ -3,6 +3,7 @@ import { Topbar, Link } from '@components'
 import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from './LocalizationSwitch'
+import { useRouter } from 'next/router'
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
@@ -23,17 +24,15 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
 `
 
 export type MenuProps = {
-  localization?: {
-    slugs: {
-      en_GB: string
-      nb_NO: string
-    }
-    activeLocale: string
+  slugs?: {
+    en_GB: string
+    nb_NO: string
   }
 }
 
-export const Menu = ({ localization }: MenuProps) => {
+export const Menu = ({ slugs }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
+  const router = useRouter()
   const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
@@ -41,25 +40,28 @@ export const Menu = ({ localization }: MenuProps) => {
     }
   }, [])
 
+  const localization = {
+    activeLocale: router.locale || 'en',
+  }
   return (
     <>
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         <MenuWrapper>
-          <NextLink href="/" passHref>
-            <Link>Home</Link>
+          <NextLink href="/en/careers" passHref>
+            <Link>Careers</Link>
           </NextLink>
-
-          <NextLink href="/news" passHref>
+          <NextLink href="/en/news" passHref>
             <Link>News</Link>
           </NextLink>
 
           <NextLink href="/news/archive" passHref>
             <Link>Archive</Link>
           </NextLink>
+          {/* For testing state 
+          <input placeholder="Search..." /> */}
         </MenuWrapper>
-
-        {localization && <LocalizationSwitch activeLocale={localization.activeLocale} {...localization.slugs} />}
+        {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
       </Topbar>
     </>
   )
