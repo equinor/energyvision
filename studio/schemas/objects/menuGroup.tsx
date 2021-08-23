@@ -32,7 +32,7 @@ export default {
       links: 'links',
     },
     prepare(selection: any) {
-      const { label, links } = selection
+      const { label = 'Unlabeled group', links = [] } = selection
       return {
         title: label,
         subtitle: `Links: ${links.length}`,
