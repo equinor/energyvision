@@ -262,3 +262,9 @@ export const AccordionComponent = () => (
     <path d="M30.9091 31L35 35.5L39.0909 31L40 31.75L35 37L30 31.75L30.9091 31Z" fill="#3D3D3D" />
   </svg>
 )
+
+export const MenuIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M3 8V6h18v2H3zm0 5h18v-2H3v2zm0 5h18v-2H3v2z" />
+  </svg>
+)
