@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import type { AppProps } from 'next/app'
 import { Layout } from '@components'
 import { allNewsQuery } from '../../lib/queries/news'
 import { getClient } from '../../lib/sanity.server'
@@ -26,24 +27,46 @@ type AllNewsProps = {
 export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element {
   return (
     <>
-      <Layout preview={preview}>
-        <Head>
-          {/* TODO: Something more advanced */}
-          <title>News</title>
-        </Head>
-        <Menu />
-        <Container>
-          <h1>News</h1>
-          {allNews.length > 0 && (
-            <TempWrapper>
-              {allNews.map((newsItem: NewsSchema) => {
-                return <NewsCard data={newsItem} key={newsItem.id} />
-              })}
-            </TempWrapper>
-          )}
-        </Container>
-      </Layout>
+      <Head>
+        {/* TODO: Something more advanced */}
+        <title>News</title>
+      </Head>
+
+      <Container>
+        <h1>News</h1>
+        {allNews.length > 0 && (
+          <TempWrapper>
+            {allNews.map((newsItem: NewsSchema) => {
+              return <NewsCard data={newsItem} key={newsItem.id} />
+            })}
+          </TempWrapper>
+        )}
+      </Container>
     </>
+  )
+}
+
+// eslint-disable-next-line react/display-name
+AllNews.getLayout = (page: AppProps) => {
+  // This is just an ordinary function
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { props } = page
+
+  const { preview } = props
+
+  return (
+    <Layout preview={preview}>
+      <Menu
+        /*  @TODO: Fetch in a proper way */
+        slugs={{
+          en_GB: '/en/news',
+          nb_NO: '/no/nyheter',
+        }}
+      />
+      {page}
+    </Layout>
   )
 }
 

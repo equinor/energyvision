@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@equinor/eds-icons': ^0.6.2
-  '@reach/auto-id': ^0.15.3
+  '@reach/auto-id': ^0.16.0
   '@sanity/base': ^2.14.0
   '@sanity/cli': ^2.14.0
   '@sanity/components': ^2.14.0
@@ -12,9 +12,9 @@ specifiers:
   '@sanity/default-login': ^2.14.0
   '@sanity/desk-tool': ^2.14.0
   '@sanity/form-builder': ^2.14.0
-  '@sanity/icons': ^1.1.4
+  '@sanity/icons': ^1.1.5
   '@sanity/types': ^2.14.0
-  '@sanity/ui': ^0.34.8
+  '@sanity/ui': ^0.36.1
   '@sanity/vision': ^2.14.0
   '@types/styled-components': ^5.1.12
   only-allow: ^1.0.0
@@ -30,7 +30,7 @@ specifiers:
 
 dependencies:
   '@equinor/eds-icons': 0.6.2
-  '@reach/auto-id': 0.15.3_react-dom@17.0.2+react@17.0.2
+  '@reach/auto-id': 0.16.0_react-dom@17.0.2+react@17.0.2
   '@sanity/base': 2.14.0_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/cli': 2.14.0
   '@sanity/components': 2.14.0
@@ -40,9 +40,9 @@ dependencies:
   '@sanity/default-login': 2.14.0_react-dom@17.0.2+react@17.0.2
   '@sanity/desk-tool': 2.14.0_9bdd65c2b60ce8638444b80b396a481b
   '@sanity/form-builder': 2.14.0_9bdd65c2b60ce8638444b80b396a481b
-  '@sanity/icons': 1.1.4_react@17.0.2
+  '@sanity/icons': 1.1.5_react@17.0.2
   '@sanity/types': 2.14.0
-  '@sanity/ui': 0.34.8_c59160f3e2ae0f45324a65c8464c8ff0
+  '@sanity/ui': 0.36.2_c59160f3e2ae0f45324a65c8464c8ff0
   '@sanity/vision': 2.14.0_f62f3aa834b1584fd188dc26811398dc
   only-allow: 1.0.0
   prop-types: 15.7.2
@@ -2775,6 +2775,14 @@ packages:
       react: 17.0.2
     dev: false
 
+  /@sanity/icons/1.1.5_react@17.0.2:
+    resolution: {integrity: sha512-L2t8tfeDyZnycW0LWNwRFo/kVU4t8cHaljZIu1O6kh8eDkfKhmYXPnLLuTK3Zjy+iXLX7PhaATAVHR/QyRpj9g==}
+    peerDependencies:
+      react: ^16.9 || ^17
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /@sanity/image-url/0.140.22:
     resolution: {integrity: sha512-CAmQZnj+KM7FSEYiWlIGDit072syicYuAw0w7R2ctMzHiZ4p9mE/g6dBnYqrqFUrw2J+GpJgPt+RVspKP8vdqA==}
     engines: {node: '>=10.0.0'}
@@ -3087,6 +3095,28 @@ packages:
       react-popper: 2.2.5_79d2345123b2a187d5f9cef19367e432
       react-refractor: 2.1.4_react@17.0.2
       styled-components: 5.3.0_281a4fa50a045c9112baf635f3bc27a7
+    dev: false
+
+  /@sanity/ui/0.36.2_c59160f3e2ae0f45324a65c8464c8ff0:
+    resolution: {integrity: sha512-6AlwqqQqGWXhc5r0gK+6r/MICwJOt8/rSOma0c7uLRYGb4Zjwxao8CYhnm1GI3ldjf2110irfqFYtEofox/RSQ==}
+    peerDependencies:
+      react: ^16.9 || ^17
+      react-dom: ^16.9 || ^17
+      styled-components: ^5.2
+    dependencies:
+      '@juggle/resize-observer': 3.3.1
+      '@popperjs/core': 2.9.3
+      '@reach/auto-id': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@sanity/color': 2.1.4
+      '@sanity/icons': 1.1.5_react@17.0.2
+      framer-motion: 4.1.17_react-dom@17.0.2+react@17.0.2
+      popper-max-size-modifier: 0.2.0_@popperjs+core@2.9.3
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-is: 17.0.2
+      react-popper: 2.2.5_79d2345123b2a187d5f9cef19367e432
+      react-refractor: 2.1.4_react@17.0.2
+      styled-components: 5.3.0_react-dom@17.0.2+react@17.0.2
     dev: false
 
   /@sanity/util/2.14.0:
