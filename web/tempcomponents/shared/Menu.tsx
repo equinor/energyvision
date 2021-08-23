@@ -16,6 +16,13 @@ const MenuWrapper = styled.div`
     }
   }
 `
+const TopLevelItem = styled(Link)`
+  /* Just some bling to see the different
+ */
+  text-decoration: none;
+  padding: var(--space-xSmall) var(--space-small);
+  border-bottom: 2px solid var(--moss-green-80);
+`
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   #__next {
@@ -61,7 +68,15 @@ export const Menu = ({ slugs, data }: MenuProps) => {
           </NextLink>
           {/* For testing state 
           <input placeholder="Search..." /> */}
+          {data.map((topLevelItem: any) => {
+            return (
+              <NextLink href="/" passHref key={topLevelItem._id}>
+                <TopLevelItem>{topLevelItem.label}</TopLevelItem>
+              </NextLink>
+            )
+          })}
         </MenuWrapper>
+
         {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
       </Topbar>
     </>
