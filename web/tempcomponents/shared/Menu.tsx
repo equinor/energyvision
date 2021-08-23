@@ -1,9 +1,11 @@
 import { useState, useCallback } from 'react'
-import { Topbar, Link } from '@components'
+import { Topbar, Link, List, Heading } from '@components'
 import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import { useRouter } from 'next/router'
+
+const { Item } = List
 
 const MenuWrapper = styled.div`
   margin: 0 auto;
@@ -16,7 +18,25 @@ const MenuWrapper = styled.div`
     }
   }
 `
-const TopLevelItem = styled(Link)`
+
+const SubMenuPanel = styled.div`
+  /* Nevermind about a11y at this point */
+  /*  For the sake of quick and dirty, let's do the stupid hover interaction */
+  display: none;
+  position: absolute;
+  background-color: var(--ui-background-default);
+  padding: var(--space-large);
+  left: 0;
+  right: 0;
+`
+
+const TopLevelItem = styled(Item)`
+  &:hover ${SubMenuPanel} {
+    display: block;
+  }
+`
+
+const TopLevelLink = styled(Link)`
   /* Just some bling to see the different
  */
   text-decoration: none;
@@ -68,13 +88,41 @@ export const Menu = ({ slugs, data }: MenuProps) => {
           </NextLink>
           {/* For testing state 
           <input placeholder="Search..." /> */}
-          {data.map((topLevelItem: any) => {
-            return (
-              <NextLink href="/" passHref key={topLevelItem._id}>
-                <TopLevelItem>{topLevelItem.label}</TopLevelItem>
-              </NextLink>
-            )
-          })}
+          <List unstyled style={{ display: 'inline-flex' }}>
+            {data.map((topLevelItem: any) => {
+              return (
+                <TopLevelItem key={topLevelItem._id}>
+                  <div>
+                    <NextLink href="/" passHref>
+                      <TopLevelLink>{topLevelItem.label}</TopLevelLink>
+                    </NextLink>
+                    {topLevelItem.group && topLevelItem.group.length > 0 && (
+                      <SubMenuPanel>
+                        {topLevelItem.group.map((groupItem: any) => {
+                          return (
+                            <div key={groupItem._key}>
+                              <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
+                                {groupItem.label}
+                              </Heading>
+                              <List unstyled>
+                                {groupItem.links.map((link: any) => (
+                                  <Item key={link._key}>
+                                    <NextLink href="/" passHref key={link._key}>
+                                      <Link>{link.label}</Link>
+                                    </NextLink>
+                                  </Item>
+                                ))}
+                              </List>
+                            </div>
+                          )
+                        })}
+                      </SubMenuPanel>
+                    )}
+                  </div>
+                </TopLevelItem>
+              )
+            })}
+          </List>
         </MenuWrapper>
 
         {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
