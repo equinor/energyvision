@@ -10,6 +10,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import news from './documents/news'
 import page from './documents/page'
 import route from './documents/route'
+import subMenu from './documents/menu'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -36,6 +37,8 @@ import linkSelector from './objects/linkSelector'
 import promoTile from './objects/promoTile'
 import promoTileArray from './objects/promoTileArray'
 import stockValuesApi from './objects/stockValuesApi'
+import menuGroup from './objects/menuGroup'
+import menuLink from './objects/menuLink'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -48,6 +51,7 @@ export default createSchema({
     news,
     page,
     route,
+    subMenu,
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,
@@ -72,5 +76,7 @@ export default createSchema({
     promoTile,
     promoTileArray,
     stockValuesApi,
+    menuGroup,
+    menuLink,
   ]),
 })

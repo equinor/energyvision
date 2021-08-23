@@ -1,6 +1,6 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { TopicDocuments, NewsDocuments } from './icons'
+import { TopicDocuments, NewsDocuments, MenuIcon } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
@@ -43,6 +43,23 @@ export default () => {
       ),
     S.divider(),
     parentChild('route'),
+    S.divider(),
+
+    S.listItem()
+      .title('Site menu')
+      .icon(MenuIcon)
+      .schemaType('subMenu')
+      .child(
+        S.documentList()
+          .id('subMenu')
+          .title('Sub menus')
+          .filter('_type == "subMenu"')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'subMenu'
+          }),
+      ),
   ]
 
   return S.list().title('Content').items(listItems)
