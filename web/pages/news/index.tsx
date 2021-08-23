@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Layout } from '@components'
-import { allNewsQuery } from '../../lib/queries'
+import { allNewsQuery } from '../../lib/queries/news'
 import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import type { NewsSchema } from '../../types/types'
