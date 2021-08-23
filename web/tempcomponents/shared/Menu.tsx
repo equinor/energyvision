@@ -67,7 +67,7 @@ export const Menu = ({ slugs, data }: MenuProps) => {
       setTopbarHeight(height)
     }
   }, [])
-  console.log('Menu data', data)
+
   const localization = {
     activeLocale: router.locale || 'en',
   }
@@ -88,41 +88,44 @@ export const Menu = ({ slugs, data }: MenuProps) => {
           </NextLink>
           {/* For testing state 
           <input placeholder="Search..." /> */}
-          <List unstyled style={{ display: 'inline-flex' }}>
-            {data.map((topLevelItem: any) => {
-              return (
-                <TopLevelItem key={topLevelItem._id}>
-                  <div>
-                    <NextLink href="/" passHref>
-                      <TopLevelLink>{topLevelItem.label}</TopLevelLink>
-                    </NextLink>
-                    {topLevelItem.group && topLevelItem.group.length > 0 && (
-                      <SubMenuPanel>
-                        {topLevelItem.group.map((groupItem: any) => {
-                          return (
-                            <div key={groupItem._key}>
-                              <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
-                                {groupItem.label}
-                              </Heading>
-                              <List unstyled>
-                                {groupItem.links.map((link: any) => (
-                                  <Item key={link._key}>
-                                    <NextLink href="/" passHref key={link._key}>
-                                      <Link>{link.label}</Link>
-                                    </NextLink>
-                                  </Item>
-                                ))}
-                              </List>
-                            </div>
-                          )
-                        })}
-                      </SubMenuPanel>
-                    )}
-                  </div>
-                </TopLevelItem>
-              )
-            })}
-          </List>
+
+          {data && (
+            <List unstyled style={{ display: 'inline-flex' }}>
+              {data.map((topLevelItem: any) => {
+                return (
+                  <TopLevelItem key={topLevelItem._id}>
+                    <div>
+                      <NextLink href="/" passHref>
+                        <TopLevelLink>{topLevelItem.label}</TopLevelLink>
+                      </NextLink>
+                      {topLevelItem.group && topLevelItem.group.length > 0 && (
+                        <SubMenuPanel>
+                          {topLevelItem.group.map((groupItem: any) => {
+                            return (
+                              <div key={groupItem._key}>
+                                <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
+                                  {groupItem.label}
+                                </Heading>
+                                <List unstyled>
+                                  {groupItem.links.map((link: any) => (
+                                    <Item key={link._key}>
+                                      <NextLink href="/" passHref key={link._key}>
+                                        <Link>{link.label}</Link>
+                                      </NextLink>
+                                    </Item>
+                                  ))}
+                                </List>
+                              </div>
+                            )
+                          })}
+                        </SubMenuPanel>
+                      )}
+                    </div>
+                  </TopLevelItem>
+                )
+              })}
+            </List>
+          )}
         </MenuWrapper>
 
         {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
