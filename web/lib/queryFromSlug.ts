@@ -1,4 +1,6 @@
-import { newsQuery, pageQueryEn, pageQueryNo, pageQueryById } from './queries'
+import { newsQuery } from './queries/news'
+import { pageQueryEn, pageQueryNo } from './queries/routes'
+import { pageQueryById } from './queries/pages'
 import { mapLocaleToLang } from './localization'
 
 const isSlugID = (slug: string): boolean => {
