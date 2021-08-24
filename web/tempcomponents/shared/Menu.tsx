@@ -96,7 +96,7 @@ export const Menu = ({ slugs, data }: MenuProps) => {
             <List unstyled style={{ display: 'inline-flex' }}>
               {data.map((topLevelItem: any) => {
                 return (
-                  <TopLevelItem key={topLevelItem._id}>
+                  <TopLevelItem key={topLevelItem.id}>
                     <div>
                       <NextLink href="/" passHref>
                         <TopLevelLink>{topLevelItem.label}</TopLevelLink>
@@ -105,14 +105,14 @@ export const Menu = ({ slugs, data }: MenuProps) => {
                         <SubMenuPanel>
                           {topLevelItem.group.map((groupItem: any) => {
                             return (
-                              <div key={groupItem._key}>
+                              <div key={groupItem.id}>
                                 <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
                                   {groupItem.label}
                                 </Heading>
                                 <List unstyled>
                                   {groupItem.links.map((link: any) => (
-                                    <Item key={link._key}>
-                                      <NextLink href="/" passHref key={link._key}>
+                                    <Item key={link.id}>
+                                      <NextLink href={link.slug} passHref>
                                         <Link>{link.label}</Link>
                                       </NextLink>
                                     </Item>

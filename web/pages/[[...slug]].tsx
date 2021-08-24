@@ -102,7 +102,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
   // Let's do it simple stupid and iterate later on
-  const menuData = await getClient(preview).fetch(menuQuery)
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
   // console.log('query:', query)
   // console.log('queryParams:', queryParams)
