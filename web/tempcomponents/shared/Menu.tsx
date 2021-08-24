@@ -86,9 +86,6 @@ export const Menu = ({ slugs, data }: MenuProps) => {
             <Link>News</Link>
           </NextLink>
 
-          <NextLink href="/news/archive" passHref>
-            <Link>Archive</Link>
-          </NextLink>
           {/* For testing state 
           <input placeholder="Search..." /> */}
 
