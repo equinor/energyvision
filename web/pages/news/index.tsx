@@ -1,12 +1,15 @@
 import Head from 'next/head'
+import NextLink from 'next/link'
 import type { AppProps } from 'next/app'
-import { Layout } from '@components'
+import { Layout, BackgroundContainer, Card, Link } from '@components'
 import { allNewsQuery } from '../../lib/queries/news'
 import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import type { NewsSchema } from '../../types/types'
 import NewsCard from '../../tempcomponents/news/NewsCard'
 import { Menu } from '../../tempcomponents/shared/Menu'
+
+const { Title, Header, Action } = Card
 
 const TempWrapper = styled.div`
   display: grid;
@@ -34,8 +37,23 @@ export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element
 
       <Container>
         <h1>News</h1>
+        <BackgroundContainer background="Moss Green">
+          <Card type="promo" textOnly>
+            <Header>
+              <Title>Are you looking for yesterday&apos;s news? We&apos;ve got you covered by the archive.</Title>
+            </Header>
+
+            <Action>
+              <NextLink passHref href="/en/news/archive">
+                <Link variant="buttonLink" aria-label="Go to archived news">
+                  Take me there!
+                </Link>
+              </NextLink>
+            </Action>
+          </Card>
+        </BackgroundContainer>
         {allNews.length > 0 && (
-          <TempWrapper>
+          <TempWrapper style={{ marginTop: 'var(--space-medium' }}>
             {allNews.map((newsItem: NewsSchema) => {
               return <NewsCard data={newsItem} key={newsItem.id} />
             })}
