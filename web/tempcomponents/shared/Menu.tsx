@@ -42,6 +42,9 @@ const TopLevelLink = styled(Link)`
   text-decoration: none;
   padding: var(--space-xSmall) var(--space-small);
   border-bottom: 2px solid var(--moss-green-80);
+  &:focus + ${SubMenuPanel} {
+    display: block;
+  }
 `
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
