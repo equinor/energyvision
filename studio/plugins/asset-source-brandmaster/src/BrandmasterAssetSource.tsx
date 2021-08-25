@@ -1,16 +1,18 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, forwardRef } from 'react'
+import { Dialog } from '@sanity/ui'
 // eslint-disable-next-line import/no-unresolved
-import Dialog from 'part:@sanity/components/dialogs/fullscreen'
 import styled from 'styled-components'
 
 const BM_EVENT_NAME = 'dam:plugin-assets-selected-event'
-const BM_URL = process.env.SANITY_STUDIO_BRANDMASTER_URL
-const BM_SOURCE = process.env.SANITY_STUDIO_BRANDMASTER_SOURCE
+const BM_URL = process.env.SANITY_STUDIO_BRANDMASTER_URL || ''
+const BM_SOURCE = BM_URL + process.env.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE || ''
 
 const StyledIframe = styled.iframe`
+  display: block;
   width: 100%;
   height: 100%;
   min-height: 70vh;
+  border: none;
 `
 
 const Warning = styled.p`
@@ -18,7 +20,7 @@ const Warning = styled.p`
   text-align: center;
 `
 
-const BrandmasterAssetSource = (props: any) => {
+const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
 
   const handleBrandmasterEvent = useCallback(
@@ -31,18 +33,23 @@ const BrandmasterAssetSource = (props: any) => {
 
       if (!data.eventName || data.eventName !== BM_EVENT_NAME) return false
 
-      const file = data.eventData.files[0]
+      const file = data.eventData.selected[0]
+      // @TODO: get this to work with brandmaster provided download URLs (cors issue)
+      const downloadUrl = BM_URL + file.arrayfiles[0].file_ref
 
       onSelect([
         {
           kind: 'url',
-          value: file.fileURL,
+          value: downloadUrl,
           assetDocumentProps: {
-            originalFileName: file.obtId,
+            originalFileName: file.uniqueId,
             source: {
-              id: file.obtId,
-              name: `brandmaster:${file.obtId}`,
+              id: file.uniqueId,
+              name: `brandmaster:${file.uniqueId}`,
             },
+            title: file.title,
+            description: file.description,
+            creditLine: file.photographer,
           },
         },
       ])
@@ -59,17 +66,19 @@ const BrandmasterAssetSource = (props: any) => {
   }, [handleBrandmasterEvent])
 
   return (
-    <Dialog title="Select image from Brandmaster" onClose={onClose} isOpen>
-      {BM_URL && BM_SOURCE ? (
-        <StyledIframe title="Brandmaster" src={BM_URL + BM_SOURCE}></StyledIframe>
+    <Dialog id="brandmasterAssetSource" header="Select image from Brandmaster" onClose={onClose} ref={ref} width={80}>
+      {BM_SOURCE ? (
+        <StyledIframe title="Brandmaster" src={BM_SOURCE}></StyledIframe>
       ) : (
         <Warning>
-          No Brandmaster source URL found. Please define the URL and path to load the iframe in the enviromental
-          variables.
+          No Brandmaster source URL found. Please define the URL and path in the enviromental variables to load the
+          iframe.
         </Warning>
       )}
     </Dialog>
   )
-}
+})
+
+BrandmasterAssetSource.displayName = 'BrandmasterAssetSource'
 
 export default BrandmasterAssetSource
