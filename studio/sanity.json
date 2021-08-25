@@ -14,7 +14,8 @@
     "@sanity/default-login",
     "@sanity/desk-tool",
     "color-list",
-    "intl-input"
+    "intl-input",
+    "asset-source-brandmaster"
   ],
   "env": {
     "development": {
