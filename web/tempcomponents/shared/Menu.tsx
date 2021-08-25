@@ -12,10 +12,6 @@ const MenuWrapper = styled.div`
 
   a {
     margin: 0 var(--space-medium) 0 0;
-
-    &:last-of-type {
-      margin: 0;
-    }
   }
 `
 
