@@ -3,11 +3,13 @@ import NextLink from 'next/link'
 import type { AppProps } from 'next/app'
 import { Layout, BackgroundContainer, Card, Link } from '@components'
 import { allNewsQuery } from '../../lib/queries/news'
+import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import type { NewsSchema } from '../../types/types'
 import NewsCard from '../../tempcomponents/news/NewsCard'
 import { Menu } from '../../tempcomponents/shared/Menu'
+import { mapLocaleToLang } from '../../lib/localization'
 
 const { Title, Header, Action } = Card
 
@@ -23,11 +25,15 @@ const Container = styled.div`
 `
 
 type AllNewsProps = {
-  allNews: NewsSchema[]
+  data: {
+    allNews: NewsSchema[]
+    menuData: any
+  }
   preview?: boolean
 }
 
-export default function AllNews({ allNews, preview }: AllNewsProps): JSX.Element {
+export default function AllNews({ data, preview }: AllNewsProps): JSX.Element {
+  const { allNews } = data
   return (
     <>
       <Head>
@@ -71,8 +77,7 @@ AllNews.getLayout = (page: AppProps) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { props } = page
-
-  const { preview } = props
+  const { data, preview } = props
 
   return (
     <Layout preview={preview}>
@@ -82,18 +87,23 @@ AllNews.getLayout = (page: AppProps) => {
           en_GB: '/en/news',
           nb_NO: '/no/nyheter',
         }}
+        data={data?.menuData}
       />
+
       {page}
     </Layout>
   )
 }
 
-export async function getStaticProps({ preview = false }) {
+export async function getStaticProps({ preview = false, locale = 'en' }) {
   // const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery))
   const allNews = await getClient(preview).fetch(allNewsQuery)
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
   return {
-    // props: { allNews, preview },
-    props: { allNews },
+    props: {
+      preview,
+      data: { allNews, menuData },
+    },
     revalidate: 1,
   }
 }
