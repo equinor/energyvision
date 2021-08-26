@@ -12,6 +12,8 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       SANITY_STUDIO_PROJECT_URL: ${{secrets.SANITY_STUDIO_PROJECT_URL}}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE}}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
