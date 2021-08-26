@@ -1,8 +1,9 @@
 import * as fs from 'fs'
 import { NextSeo } from 'next-seo'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { Heading, Link, List, Layout } from '@components'
-import { GetStaticProps /* GetStaticPaths */ } from 'next'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import styled from 'styled-components'
 import { Menu } from '../../../tempcomponents/shared/Menu'
 
@@ -16,6 +17,8 @@ const Container = styled.div`
 `
 
 export default function AllArchivedNews({ newsList }: any) {
+  const router = useRouter()
+  const { locale } = router
   return (
     <>
       {/* @TODO: Norwegian version */}
@@ -32,7 +35,8 @@ export default function AllArchivedNews({ newsList }: any) {
         <Menu />
         <Container>
           <Heading level="h1" size="2xl" style={{ margin: '1rem 0' }}>
-            2016 to 2018 archived news page list
+            {/* @TODO Language strings */}
+            {locale === 'no' ? 'Arkiverte nyheter fra 2016 til 2018' : '2016 to 2018 archived news page list'}
           </Heading>
           {newsList && (
             <List unstyled>
@@ -63,7 +67,7 @@ const removeHTMLExtension = (path: string): string => {
   return path.replace('.html', '')
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const newsPaths = fs
     .readFileSync(process.cwd() + `/lib/archive/news2016To2018.txt`)
     .toString()
@@ -72,7 +76,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const newsList = newsPaths
     // @TODO: Revisit with i18n
-    .filter((pagePath) => pagePath.startsWith('/en'))
+    .filter((pagePath) => pagePath.startsWith(`/${locale}`))
     .map((pagePath) => sanitizeNewsURL(pagePath))
 
   return {
@@ -81,11 +85,3 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   }
 }
-
-// @TODO: We don't need this until i18n
-/* export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: ['/en/news/archive', '/no/news/archive'],
-    fallback: true,
-  }
-} */

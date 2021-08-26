@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import NextLink from 'next/link'
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { Layout, BackgroundContainer, Card, Link } from '@components'
 import { allNewsQuery } from '../../lib/queries/news'
 import { menuQuery } from '../../lib/queries/menu'
@@ -10,6 +11,7 @@ import type { NewsSchema } from '../../types/types'
 import NewsCard from '../../tempcomponents/news/NewsCard'
 import { Menu } from '../../tempcomponents/shared/Menu'
 import { mapLocaleToLang } from '../../lib/localization'
+import { couldStartTrivia } from 'typescript'
 
 const { Title, Header, Action } = Card
 
@@ -33,6 +35,9 @@ type AllNewsProps = {
 }
 
 export default function AllNews({ data, preview }: AllNewsProps): JSX.Element {
+  const router = useRouter()
+  const { locale } = router
+
   const { allNews } = data
   return (
     <>
@@ -50,7 +55,7 @@ export default function AllNews({ data, preview }: AllNewsProps): JSX.Element {
             </Header>
 
             <Action>
-              <NextLink passHref href="/en/news/archive">
+              <NextLink passHref href={`/${locale}/news/archive`}>
                 <Link variant="buttonLink" aria-label="Go to archived news">
                   Take me there!
                 </Link>
