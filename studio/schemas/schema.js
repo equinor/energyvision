@@ -2,6 +2,7 @@
 //eslint-disable-next-line
 import createSchema from 'part:@sanity/base/schema-creator'
 
+import { languages } from './languages'
 // Then import schema types from any plugins that might expose them
 //eslint-disable-next-line
 import schemaTypes from 'all:part:@sanity/base/schema-type'
@@ -10,7 +11,8 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import news from './documents/news'
 import page from './documents/page'
 import route from './documents/route'
-import subMenu from './documents/menu'
+import subMenu from './documents/subMenu'
+import siteMenu from './documents/menu'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -40,6 +42,10 @@ import stockValuesApi from './objects/stockValuesApi'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 
+const menuSchemas = languages.map(({ name }) => {
+  return siteMenu(name)
+})
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -52,6 +58,7 @@ export default createSchema({
     page,
     route,
     subMenu,
+    ...menuSchemas,
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,
