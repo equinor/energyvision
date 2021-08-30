@@ -12,7 +12,8 @@ import news from './documents/news'
 import page from './documents/page'
 import route from './documents/route'
 import subMenu from './documents/subMenu'
-import siteMenu from './documents/menu'
+import menu from './documents/menu'
+import siteMenu from './documents/siteMenu'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -43,7 +44,7 @@ import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 
 const menuSchemas = languages.map(({ name, title }) => {
-  return siteMenu(name, title)
+  return menu(name, title)
 })
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -61,6 +62,8 @@ export default createSchema({
     page,
     subMenu,
     ...routeSchemas,
+
+    siteMenu,
     ...menuSchemas,
     imageWithAlt,
     imageWithAltAndCaption,

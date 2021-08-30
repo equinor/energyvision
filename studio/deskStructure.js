@@ -78,16 +78,30 @@ export default () => {
                   .views([S.view.form()]),
               ),
           ]),
-
-        /* S.documentList()
-          .id('subMenu')
-          .title('Sub menus')
-          .filter('_type == "subMenu"')
-          .params({ baseLang: i18n.base })
-          .canHandleIntent((_name, params) => {
-            // Assume we can handle all intents (actions) regarding post documents
-            return params.type === 'subMenu'
-          }), */
+      ),
+    S.divider(),
+    S.listItem()
+      .title('Menu with initial template')
+      .icon(MenuIcon)
+      .child(
+        S.list('menu')
+          .id('menusv2')
+          .title('Menus')
+          .items([
+            S.listItem()
+              .title('English menu')
+              .icon(GreatBritain)
+              .child(S.editor().title('English menu').id(`menu`).schemaType(`siteMenu`).views([S.view.form()])),
+            S.listItem({
+              title: 'Norwegian menu',
+              id: 'menu-norwegian',
+              icon: Norway,
+              child: () =>
+                S.documentTypeList('siteMenu')
+                  .title('Norwegian menu')
+                  .initialValueTemplates([S.initialValueTemplateItem('menu-norwegian', { isoCode: 'nb_NO' })]),
+            }),
+          ]),
       ),
   ]
 
