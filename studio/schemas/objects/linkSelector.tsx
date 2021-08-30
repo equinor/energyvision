@@ -26,7 +26,8 @@ const defaultReferenceTargets: ReferenceTarget[] = [
   {
     type: 'news',
   },
-  { type: 'route' },
+  { type: 'route_en_GB' },
+  { type: 'route_nb_NO' },
 ]
 
 const LinkField = {
