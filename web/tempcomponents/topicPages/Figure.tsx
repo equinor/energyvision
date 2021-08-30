@@ -29,7 +29,7 @@ const FullWidthImage = ({ data }: TeaserProps) => {
   const { figure, designOptions } = data
 
   // With previews in Sanity, we need to support work in progress figures
-  if (!figure.image) return null
+  if (!figure?.image) return null
 
   const { image, caption, attribution } = figure
 
