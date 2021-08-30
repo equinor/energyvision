@@ -2,18 +2,22 @@ import { SchemaType } from '../../types'
 
 import React from 'react'
 
-export default (isoCode: string) => {
+export default (isoCode: string, title: string) => {
   return {
     type: 'document',
-    title: `Menu`,
+    title: `Menu ${title}`,
     name: `menu_${isoCode}`,
     fieldsets: [],
     fields: [
       {
-        name: 'title',
-        title: 'Tittel',
-        type: 'string',
-        validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+        title: 'Menu items',
+        name: 'group',
+        type: 'array',
+        of: [
+          {
+            type: 'subMenu',
+          },
+        ],
       },
     ],
   }
