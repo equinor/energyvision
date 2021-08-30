@@ -34,6 +34,10 @@
     {
       "implements": "part:@sanity/form-builder/input/array/functions",
       "path": "./components/CustomArrayFunctions.tsx"
+    },
+    {
+      "name": "part:@sanity/base/initial-value-templates",
+      "path": "./initialValueTemplates.js"
     }
   ]
 }
