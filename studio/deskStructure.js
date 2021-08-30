@@ -1,6 +1,8 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
 import { TopicDocuments, NewsDocuments, MenuIcon } from './icons'
+import GreatBritain from './icons/GreatBritain'
+import Norway from './icons/Norway'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
@@ -46,11 +48,24 @@ export default () => {
     S.divider(),
 
     S.listItem()
-      .title('Site menu')
+      .title('Menu')
       .icon(MenuIcon)
-      .schemaType('subMenu')
       .child(
-        S.documentList()
+        S.list('menu')
+          .id('menus')
+          .title('Menus')
+          .items([
+            S.listItem()
+              .title('English menu')
+              .icon(GreatBritain)
+              .child(S.editor().title('English menu').id(`en_menu`).schemaType(`menu_en_GB`).views([S.view.form()])),
+            S.listItem()
+              .title('Norwegian menu')
+              .icon(Norway)
+              .child(S.editor().title('Norwegian menu').id(`no_menu`).schemaType(`menu_nb_NO`).views([S.view.form()])),
+          ]),
+
+        /* S.documentList()
           .id('subMenu')
           .title('Sub menus')
           .filter('_type == "subMenu"')
@@ -58,7 +73,7 @@ export default () => {
           .canHandleIntent((_name, params) => {
             // Assume we can handle all intents (actions) regarding post documents
             return params.type === 'subMenu'
-          }),
+          }), */
       ),
   ]
 

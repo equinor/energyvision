@@ -42,8 +42,8 @@ import stockValuesApi from './objects/stockValuesApi'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 
-const menuSchemas = languages.map(({ name }) => {
-  return siteMenu(name)
+const menuSchemas = languages.map(({ name, title }) => {
+  return siteMenu(name, title)
 })
 
 // Then we give our schema to the builder and provide the result to Sanity
