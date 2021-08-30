@@ -32,7 +32,7 @@ export default (isoCode: string, title: string) => {
         ],
         options: {
           filter: '_lang == $lang',
-          filterParams: { lang: 'en_GB' },
+          filterParams: { lang: `${isoCode}` },
         },
       },
 
@@ -41,7 +41,8 @@ export default (isoCode: string, title: string) => {
         name: 'parent',
         description: 'Unless this route is a top level route, it should have a parent.',
         type: 'reference',
-        to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+        // Only allow a reference to the same language
+        to: [{ type: `route_${isoCode}` }],
         // Only allow to select a route that does not have a parent
         // Two level url structure only for the time being?
         options: {
@@ -63,7 +64,7 @@ export default (isoCode: string, title: string) => {
     preview: {
       select: {
         title: 'content.title',
-        slug: 'slug.en_GB.current',
+        slug: 'slug.current',
         media: 'content.heroFigure.image',
       },
       prepare(selection: any) {
