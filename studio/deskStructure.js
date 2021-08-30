@@ -58,11 +58,25 @@ export default () => {
             S.listItem()
               .title('English menu')
               .icon(GreatBritain)
-              .child(S.editor().title('English menu').id(`en_menu`).schemaType(`menu_en_GB`).views([S.view.form()])),
+              .child(
+                S.editor()
+                  .title('English menu')
+                  .id(`en_menu`)
+                  .schemaType(`menu_en_GB`)
+                  .documentId('menu_en_GB')
+                  .views([S.view.form()]),
+              ),
             S.listItem()
               .title('Norwegian menu')
               .icon(Norway)
-              .child(S.editor().title('Norwegian menu').id(`no_menu`).schemaType(`menu_nb_NO`).views([S.view.form()])),
+              .child(
+                S.editor()
+                  .title('Norwegian menu')
+                  .id(`no_menu`)
+                  .schemaType(`menu_nb_NO`)
+                  .documentId('menu_nb_NO')
+                  .views([S.view.form()]),
+              ),
           ]),
 
         /* S.documentList()

@@ -18,7 +18,7 @@ export default {
       type: 'reference',
       title: 'Link to',
       validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
-      to: [{ type: 'news' }, { type: 'route' }],
+      to: [{ type: 'news' }, { type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
         filter: ({ document: { title: title = '' } }: any): SchemaType.ReferenceFilter => ({
           filter: 'title != $title',

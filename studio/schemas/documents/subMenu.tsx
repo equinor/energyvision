@@ -51,7 +51,7 @@ export default {
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
           return validateLink(value, context.parent.url)
         }),
-      to: [{ type: 'route' }],
+      to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
     },
     {
       name: 'url',

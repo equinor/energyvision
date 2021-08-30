@@ -45,6 +45,9 @@ import menuLink from './objects/menuLink'
 const menuSchemas = languages.map(({ name, title }) => {
   return siteMenu(name, title)
 })
+const routeSchemas = languages.map(({ name, title }) => {
+  return route(name, title)
+})
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -56,8 +59,8 @@ export default createSchema({
     /* Your types here! */
     news,
     page,
-    route,
     subMenu,
+    ...routeSchemas,
     ...menuSchemas,
     imageWithAlt,
     imageWithAltAndCaption,

@@ -16,12 +16,12 @@ function formatSlug(input: any) {
   return `/${slug}`
 }
 
-async function getPrefix(doc: any, source: any, language: string, ref: any) {
-  const docTitle = doc[source][language]
+async function getPrefix(doc: any, source: any, ref: any) {
+  const docTitle = doc[source]
 
   // We use the slug as a base, as it's not a one to one relationship between the slug and the title
-  const refQuery = `*[_id == $ref][0].slug.[$language].current`
-  const refParams = { ref: doc?.[ref]?._ref, language: language }
+  const refQuery = `*[_id == $ref][0].slug.current`
+  const refParams = { ref: doc?.[ref]?._ref }
 
   if (!refParams.ref) {
     return slugify(docTitle, slugifyConfig)
@@ -43,33 +43,15 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     title: 'Complete URL for this page',
     description:
       'Danger zone! Do not edit this field directly, use the "Generate" button. We will make if more fool proof with issue #308',
-    name: `slug`,
-    type: `object`,
-    fields: [
-      {
-        title: 'English',
-        name: 'en_GB',
-        type: 'slug',
-        options: {
-          source: (doc: any) => getPrefix(doc, source, 'en_GB', ref),
-          slugify: (value: any) => formatSlug(value),
-        },
-        validation: (Rule: SchemaType.ValidationRule) =>
-          Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
-      },
-      {
-        title: 'Norwegian',
-        name: 'nb_NO',
-        type: 'slug',
-        options: {
-          source: (doc: any) => getPrefix(doc, source, 'nb_NO', ref),
-          slugify: (value: any) => formatSlug(value),
-        },
-        validation: (Rule: SchemaType.ValidationRule) =>
-          Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
-      },
-    ],
+    name: 'slug',
+    type: 'slug',
     fieldset: fieldset,
+    options: {
+      source: (doc: any) => getPrefix(doc, source, ref),
+      slugify: (value: any) => formatSlug(value),
+    },
+    validation: (Rule: SchemaType.ValidationRule) =>
+      Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
   }
 }
 

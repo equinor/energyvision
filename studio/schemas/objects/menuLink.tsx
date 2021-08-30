@@ -19,11 +19,7 @@ export default {
       name: 'route',
       description: 'The content you want to appear at this path. Remember that it needs to be published first.',
       type: 'reference',
-      to: [
-        {
-          type: 'route',
-        },
-      ],
+      to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
     },
   ],
