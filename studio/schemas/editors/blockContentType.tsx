@@ -105,7 +105,21 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
       {
         name: 'reference',
         type: 'reference',
-        to: [{ type: 'news' }, { type: 'route' }],
+        to: [
+          {
+            type: 'news',
+          },
+          { type: 'route_en_GB' },
+          { type: 'route_nb_NO' },
+        ],
+        options: {
+          filter: ({ document }: { document: any }) => ({
+            // @TODO: Fix _lang for English version. Atm we can't link to
+            // English topic pages and can't filter for news articles in the same language
+            filter: `_type == $routeLang || _type == 'news'`,
+            params: { routeLang: `route_${document._lang}` },
+          }),
+        },
         validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
       },
     ],
