@@ -46,46 +46,12 @@ export default () => {
     S.divider(),
     parentChild('route'),
     S.divider(),
-
     S.listItem()
       .title('Menu')
       .icon(MenuIcon)
       .child(
         S.list('menu')
-          .id('menus')
-          .title('Menus')
-          .items([
-            S.listItem()
-              .title('English menu')
-              .icon(GreatBritain)
-              .child(
-                S.editor()
-                  .title('English menu')
-                  .id(`en_menu`)
-                  .schemaType(`menu_en_GB`)
-                  .documentId('menu_en_GB')
-                  .views([S.view.form()]),
-              ),
-            S.listItem()
-              .title('Norwegian menu')
-              .icon(Norway)
-              .child(
-                S.editor()
-                  .title('Norwegian menu')
-                  .id(`no_menu`)
-                  .schemaType(`menu_nb_NO`)
-                  .documentId('menu_nb_NO')
-                  .views([S.view.form()]),
-              ),
-          ]),
-      ),
-    S.divider(),
-    S.listItem()
-      .title('Menu with initial template')
-      .icon(MenuIcon)
-      .child(
-        S.list('menu')
-          .id('menusv2')
+          .id('menu')
           .title('Menus')
           .items([
             S.listItem({
