@@ -126,12 +126,9 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
 export const getTopicRoutesForLocale = async (locale: string) => {
   const lang = mapLocaleToLang(locale)
-  const data = await sanityClient.fetch(
-    groq`*[_type == "route" && defined(slug[$lang].current)][].slug[$lang].current`,
-    {
-      lang,
-    },
-  )
+  const data = await sanityClient.fetch(groq`*[_type == "route_" + $lang && defined(slug.current)][].slug.current`, {
+    lang,
+  })
   return data
 }
 
