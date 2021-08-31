@@ -36,13 +36,7 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    {
-      title: 'Parent',
-      name: 'parent',
-      type: 'reference',
-      to: [{ type: 'page' }],
-      hidden: 'true',
-    },
+
     {
       title: 'Page title',
       name: 'title',
