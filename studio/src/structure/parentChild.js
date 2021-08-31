@@ -2,7 +2,6 @@ import S from '@sanity/desk-tool/structure-builder'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
 import RoutePreview from '../previews/page/RoutePreview'
-import NorwegianRoutePreview from '../previews/page/NorwegianRoutePreview'
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../icons'
 import GreatBritain from '../../icons/GreatBritain'
@@ -18,11 +17,7 @@ import Norway from '../../icons/Norway'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = [
-  S.view.form(),
-  S.view.component(RoutePreview).title('English preview'),
-  S.view.component(NorwegianRoutePreview).title('Norwegian preview'),
-]
+const views = [S.view.form(), S.view.component(RoutePreview).title('Preview')]
 // Original version without preview pane
 // const views = [S.view.form()]
 export default function parentChild(schema = 'category') {
