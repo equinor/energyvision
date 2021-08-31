@@ -57,9 +57,11 @@ export default {
           validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
           to: [{ type: 'news' }, { type: 'route_en_GB' }, { type: 'route_nb_NO' }],
           options: {
-            filter: ({ document: { title: title = '' } }: any): SchemaType.ReferenceFilter => ({
-              filter: 'title != $title',
-              params: { title: title },
+            filter: ({ document: { title: title = '', _lang } }: any): SchemaType.ReferenceFilter => ({
+              // @TODO: Fix _lang for English version. Atm we can't link to
+              // English topic pages and can't filter for news articles in the same language
+              filter: `title != $title && (_type == $routeLang || _type == 'news')`,
+              params: { title: title, routeLang: `route_${_lang}`, lang: _lang },
             }),
           },
         },
