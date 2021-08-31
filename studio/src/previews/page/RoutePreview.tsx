@@ -7,11 +7,14 @@ export default function RoutePreview(props: any) {
     document: { displayed },
   } = props
 
-  if (!displayed?.slug?.en_GB.current) {
+  if (!displayed?.slug?.current) {
     return <div>The route needs a slug before it can be previewed.</div>
   }
 
-  const url = `${baseUrl}${displayed?.slug?.en_GB.current}?preview`
+  const slug = `${displayed?.slug?.current}?preview`
+  const locale = displayed._type == 'route_nb_NO' ? '/no' : ''
+
+  const url = baseUrl + locale + slug
 
   return (
     <Wrapper>
