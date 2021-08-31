@@ -17,7 +17,4 @@ export default {
       ],
     },
   ],
-  initialValue: {
-    _lang: 'en_GB',
-  },
 }
