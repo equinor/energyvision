@@ -52,6 +52,12 @@ export default {
           return validateLink(value, context.parent.url)
         }),
       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+      options: {
+        filter: ({ document }: { document: any }) => ({
+          filter: `_type == $routeLang`,
+          params: { routeLang: `route_${document._lang}` },
+        }),
+      },
     },
     {
       name: 'url',
