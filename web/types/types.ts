@@ -193,3 +193,17 @@ export type PromoTileArrayData = {
   id: string
   group: PromoTileData[]
 }
+
+export type SubMenuData = {
+  id: string
+  label: string
+  group: {
+    id: string
+    label: string
+    links: any[]
+  }[]
+}
+
+export type MenuData = {
+  subMenus: SubMenuData[]
+}
