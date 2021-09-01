@@ -38,7 +38,7 @@ export default {
       const { label, route } = selection
       return {
         title: label || 'No label added yet',
-        subtitle: route?.en_GB?.current || 'No route selected yet',
+        subtitle: route?.current || 'No route selected yet',
         media: EdsIcon(link),
       }
     },
