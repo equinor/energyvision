@@ -79,9 +79,9 @@ export const Menu = ({ slugs, data }: MenuProps) => {
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         <MenuWrapper>
-          <NextLink href="/en/careers" passHref>
+          {/*   <NextLink href="/en/careers" passHref>
             <Link>Careers</Link>
-          </NextLink>
+          </NextLink> */}
           <NextLink href="/en/news" passHref>
             <Link>News</Link>
           </NextLink>
