@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import { useRouter } from 'next/router'
+import type { MenuData } from '../../types/types'
 
 const { Item } = List
 
@@ -50,7 +51,7 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
 `
 
 export type MenuProps = {
-  data?: any
+  data?: MenuData
   slugs?: {
     en_GB: string
     nb_NO: string
@@ -70,6 +71,9 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   const localization = {
     activeLocale: router.locale || 'en',
   }
+
+  const menuItems = (data && data.subMenus) || []
+
   return (
     <>
       <TopbarOffset topbarHeight={topbarHeight} />
@@ -85,9 +89,9 @@ export const Menu = ({ slugs, data }: MenuProps) => {
           {/* For testing state 
           <input placeholder="Search..." /> */}
 
-          {data && (
+          {menuItems && (
             <List unstyled style={{ display: 'inline-flex' }}>
-              {data.map((topLevelItem: any) => {
+              {menuItems.map((topLevelItem: any) => {
                 return (
                   <TopLevelItem key={topLevelItem.id}>
                     <div>

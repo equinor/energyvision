@@ -104,7 +104,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
-  console.log('Menu data', menuData)
+  // console.log('Menu data', menuData)
   // console.log('query:', query)
   // console.log('queryParams:', queryParams)
   // console.log('docType:', docType)
