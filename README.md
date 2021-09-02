@@ -15,6 +15,8 @@ The project is licensed under the [MIT license](https://github.com/equinor/energ
     $ pnpm studio yarn
 ```
 
+Remember to add the .env files as described in the .env.template files for the web and studio folders.
+
 ## Overview
 
 This repository is organized into several folder. Please refer to README files inside each folder for more information.
