@@ -99,8 +99,8 @@ Page.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   const slugs = {
-    en_GB: data?.pageData?.allSlugs?.en_GB.current,
-    nb_NO: data?.pageData?.allSlugs?.nb_NO.current,
+    en_GB: data?.pageData?.allSlugs?.en_GB,
+    nb_NO: data?.pageData?.allSlugs?.nb_NO,
   }
   return (
     <Layout preview={preview}>
