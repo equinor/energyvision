@@ -19,6 +19,7 @@ import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
+const OldTopicPage = dynamic(() => import('../tempcomponents/pageTemplates/OldTopicPage'))
 const { publicRuntimeConfig } = getConfig()
 
 export default function Page({ data, preview }: any) {
@@ -31,9 +32,15 @@ export default function Page({ data, preview }: any) {
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
-  //console.log('page data', pageData, data)
+
+  console.log(data?.docType)
   if (data?.docType === 'home') {
     return <HomePage />
+  }
+
+  if(data?.docType === 'old'){
+    console.log("I am being called .. ")
+    return <OldTopicPage data={pageData}/>
   }
 
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
@@ -69,7 +76,7 @@ export default function Page({ data, preview }: any) {
             }}
           ></NextSeo>
 
-          {data?.docType === 'page' && <TopicPage data={pageData} />}
+          {data?.docType === 'page' && <TopicPage data={pageData}/>}
         </>
       )}
     </>
@@ -106,7 +113,25 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[], locale)
 
-  const pageData = query && (await getClient(preview).fetch(query, queryParams))
+  let pageData
+  if(docType === 'old'){
+    console.log("inside getStaticProps ")
+    const pagePathArray = params?.slug as string[]
+  const pagePath = pagePathArray.join('/')
+  const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
+  /** Check if the required page is old archived AEM page or not
+   * because AEM also has archived pages which has 'archive' the page path */
+  
+  const response = await fetch(`${archiveSeverURL}/${locale}/${pagePath}.json`)
+  try {
+    pageData = await response.json()
+  } catch (err) {
+    console.log('error', err)
+    pageData = null
+  }
+  }
+else
+   pageData = query && (await getClient(preview).fetch(query, queryParams))
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
