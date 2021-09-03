@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import { useRouter } from 'next/router'
-import type { MenuData } from '../../types/types'
+import type { MenuData, TopLevelLinkData } from '../../types/types'
 
 const { Item } = List
 
@@ -50,6 +50,16 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   }
 `
 
+function getLink(linkData: TopLevelLinkData) {
+  const { isStatic, link, staticUrl } = linkData
+  if (isStatic) {
+    //  @TODO: Can we add a required validation for the conditional field
+    return staticUrl || '/boom-static'
+  } else {
+    return (link && link.slug) || '/boom-reference'
+  }
+}
+
 export type MenuProps = {
   data?: MenuData
   slugs?: {
@@ -92,13 +102,15 @@ export const Menu = ({ slugs, data }: MenuProps) => {
           {menuItems && (
             <List unstyled style={{ display: 'inline-flex' }}>
               {menuItems.map((topLevelItem: any) => {
+                const { topLevelLink, id, group } = topLevelItem
                 return (
-                  <TopLevelItem key={topLevelItem.id}>
+                  <TopLevelItem key={id}>
                     <div>
-                      <NextLink href="/" passHref>
-                        <TopLevelLink>{topLevelItem.label}</TopLevelLink>
+                      {/* @TODO: Should we allow external links at top level? */}
+                      <NextLink href={getLink(topLevelLink)} passHref>
+                        <TopLevelLink>{topLevelLink.label}</TopLevelLink>
                       </NextLink>
-                      {topLevelItem.group && topLevelItem.group.length > 0 && (
+                      {group && group.length > 0 && (
                         <SubMenuPanel>
                           {topLevelItem.group.map((groupItem: any) => {
                             return (
