@@ -62,6 +62,7 @@ module.exports = {
         extensions: ['.jsx', '.tsx'],
       },
     ],
+    'react/display-name': 'off',
     'jsx-a11y/accessible-emoji': ['warn'],
     'jsx-a11y/control-has-associated-label': ['warn'],
     'jsx-a11y/label-has-associated-control': [
