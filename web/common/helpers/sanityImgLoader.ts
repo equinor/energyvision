@@ -1,5 +1,5 @@
 import { UseNextSanityImageBuilderOptions } from 'next-sanity-image'
-import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
+import type { ImageUrlBuilder } from 'next-sanity-image'
 
 const getHeightByAspectRatio = (options: UseNextSanityImageBuilderOptions, maxWidth: number, aspectRatio: number) => {
   return (
