@@ -1,6 +1,7 @@
 import { SchemaType } from '../../types'
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import { string } from 'prop-types'
 
 // @TODO: validation
 // only allow direct link (internal/external link) if no menu groups
@@ -25,12 +26,12 @@ export default {
   title: 'Menu item',
   fieldsets: [
     {
-      title: 'Top level link',
+      title: 'Top level/landing page link',
       name: 'link',
-      description: 'Add a link here if this menu item should not be a dropdown menu',
+      // description: 'Add a link here if this menu item should not be a dropdown menu',
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
   ],
@@ -40,6 +41,15 @@ export default {
       name: 'label',
       description: 'The label that appears in the top menu bar.',
       type: 'string',
+    },
+    {
+      name: 'isStatic',
+      title: 'Is static page',
+      description: `While migrating, content can be available as static pages generated from the old CMS. If this is 
+      the case for this menu item, it's important to register the url in the static input field`,
+      type: 'boolean',
+      initialValue: false,
+      fieldset: 'link',
     },
     {
       name: 'reference',
@@ -58,6 +68,9 @@ export default {
           params: { routeLang: `route_${document._lang}` },
         }),
       },
+      // eslint-disable-next-line
+      // @ts-ignore: Djeez, typescript
+      hidden: ({ parent }) => parent?.isStatic === true,
     },
     {
       name: 'url',
@@ -69,6 +82,20 @@ export default {
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
           return validateLink(value, context.parent.reference)
         }),
+      // eslint-disable-next-line
+      // @ts-ignore: Djeez, typescript
+      hidden: ({ parent }) => parent?.isStatic === true,
+    },
+    {
+      name: 'staticUrl',
+      title: 'Static URL',
+      type: 'string',
+      description: `The URL for the static page. Don't add language information (no/en)`,
+      placeholder: '/careers/experienced-professionals',
+      fieldset: 'link',
+      // eslint-disable-next-line
+      // @ts-ignore: Djeez, typescript
+      hidden: ({ parent }) => parent?.isStatic === false,
     },
     {
       title: 'Menu groups',
