@@ -114,7 +114,7 @@ export const Menu = ({ slugs, data }: MenuProps) => {
                                 <List unstyled>
                                   {groupItem.links.map((link: any) => (
                                     <Item key={link.id}>
-                                      <NextLink href={link.slug} passHref>
+                                      <NextLink href={getLink(link)} passHref>
                                         <Link>{link.label}</Link>
                                       </NextLink>
                                     </Item>

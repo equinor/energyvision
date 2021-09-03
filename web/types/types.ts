@@ -194,11 +194,12 @@ export type PromoTileArrayData = {
   group: PromoTileData[]
 }
 
-export type TopLevelLinkData = {
+export type MenuLinkData = {
   label: string
   isStatic: boolean
   href?: string
   staticUrl?: string
+  id?: string
   link?: {
     type: string
     slug: string
@@ -207,11 +208,11 @@ export type TopLevelLinkData = {
 
 export type SubMenuData = {
   id: string
-  topLevelLink: TopLevelLinkData
+  topLevelLink: MenuLinkData
   group: {
     id: string
     label: string
-    links: any[]
+    links: MenuLinkData[]
   }[]
 }
 

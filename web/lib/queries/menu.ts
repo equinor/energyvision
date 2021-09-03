@@ -13,18 +13,18 @@ export const menuQuery = /* groq */ `
       "staticUrl": staticUrl,
     },
     "group": group[]{
-      "id": _key,
-      "topLevelLink": {
-        label,
-        isStatic,
-      },
-     
+      "id": _key,     
       "links": links[]{
+          label,
+          "isStatic": coalesce(isStatic, false),
          "id": _key,
-        "slug": route->slug.current,
-        label,
-      ...,
-      }
+         "link": route-> {
+            "type": _type,
+           "slug": slug.current,
+         },
+         
+         "staticUrl": staticUrl,
+       }
     },
 	}
 }
