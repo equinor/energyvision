@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import { useRouter } from 'next/router'
-import type { MenuData, TopLevelLinkData } from '../../types/types'
+import type { MenuData, MenuLinkData } from '../../types/types'
 
 const { Item } = List
 
@@ -50,7 +50,7 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   }
 `
 
-function getLink(linkData: TopLevelLinkData) {
+function getLink(linkData: MenuLinkData) {
   const { isStatic, link, staticUrl } = linkData
   if (isStatic) {
     //  @TODO: Can we add a required validation for the conditional field
