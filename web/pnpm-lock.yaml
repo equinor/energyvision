@@ -14,7 +14,7 @@ specifiers:
   '@react-spring/web': ^9.2.4
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.16.0
-  '@sanity/image-url': ^0.140.22
+  '@sanity/image-url': ^1.0.1
   '@storybook/addon-essentials': ^6.3.7
   '@storybook/addon-links': ^6.3.7
   '@storybook/react': ^6.3.7
@@ -61,7 +61,7 @@ dependencies:
   '@react-spring/web': 9.2.4_react-dom@17.0.2+react@17.0.2
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.16.0
-  '@sanity/image-url': 0.140.22
+  '@sanity/image-url': 1.0.1
   next: 11.1.2_a4eb30ef396b7431c88539aa95d8d42f
   next-sanity: 0.4.0_react@17.0.2
   next-sanity-image: 3.1.5_0267be62cc2881c9cbc374676332cbe9
@@ -3726,6 +3726,11 @@ packages:
 
   /@sanity/image-url/0.140.22:
     resolution: {integrity: sha512-CAmQZnj+KM7FSEYiWlIGDit072syicYuAw0w7R2ctMzHiZ4p9mE/g6dBnYqrqFUrw2J+GpJgPt+RVspKP8vdqA==}
+    engines: {node: '>=10.0.0'}
+    dev: false
+
+  /@sanity/image-url/1.0.1:
+    resolution: {integrity: sha512-AdKQ3zMk7WdoNwoJPrAvQhW+kUtBldBX0nHtnGy+rwmgsCQ0rAXasrgH43Fhmsp/yB6piiq+F2d5qEuBFsdQVg==}
     engines: {node: '>=10.0.0'}
     dev: false
 
