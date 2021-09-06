@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import ErrorPage from 'next/error'
 import type { AppProps } from 'next/app'
+import { NextSeo } from 'next-seo'
 import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
 import { mapLocaleToLang } from '../../lib/localization'
@@ -12,7 +13,12 @@ const Page = ({ data }: any): JSX.Element => {
     return <ErrorPage statusCode={404} />
   }
 
-  return <OldTopicPage data={data.pageData} />
+  return (
+    <>
+      <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
+      <OldTopicPage data={data.pageData} />
+    </>
+  )
 }
 
 // eslint-disable-next-line react/display-name
