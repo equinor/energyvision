@@ -1,6 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import ErrorPage from 'next/error'
-import dynamic from 'next/dynamic'
 import type { AppProps } from 'next/app'
 import { Menu } from '../../tempcomponents/shared/Menu'
 import { Layout } from '@components'
@@ -8,8 +7,7 @@ import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
 import { mapLocaleToLang } from '../../lib/localization'
 import { getPageData } from '../../common/helpers/staticPageHelpers'
-
-const OldTopicPage = dynamic(() => import('../../tempcomponents/pageTemplates/OldTopicPage'))
+import OldTopicPage from '../../tempcomponents/pageTemplates/OldTopicPage'
 
 const Page = ({ data }: any): JSX.Element => {
   if (!data || !data.pageData) {
