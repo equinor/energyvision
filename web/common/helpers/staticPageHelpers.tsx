@@ -1,7 +1,7 @@
 import getConfig from 'next/config'
 import type { AppProps } from 'next/app'
 import { Layout } from '@components'
-import { Menu } from '../../tempcomponents/shared/Menu'
+import { Menu } from '../../tempcomponents/shared/menu/Menu'
 
 export const getPageData = async (locale: string, path: string, slug = '') => {
   const { publicRuntimeConfig } = getConfig()

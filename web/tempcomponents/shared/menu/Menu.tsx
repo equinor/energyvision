@@ -2,9 +2,9 @@ import { useState, useCallback } from 'react'
 import { Topbar, Link, List, Heading } from '@components'
 import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
-import { LocalizationSwitch } from './LocalizationSwitch'
+import { LocalizationSwitch } from '../LocalizationSwitch'
 import { useRouter } from 'next/router'
-import type { MenuData, MenuLinkData } from '../../types/types'
+import type { MenuData, MenuLinkData } from '../../../types/types'
 
 const { Item } = List
 
