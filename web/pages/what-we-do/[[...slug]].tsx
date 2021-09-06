@@ -36,7 +36,7 @@ const Page = ({ data }: PageProps): JSX.Element => {
 Page.getLayout = (page: AppProps) => getPageLayout(page)
 
 export const getStaticProps: GetStaticProps = async ({ params, locale = 'en' }) => {
-  const pageData = await getPageData(locale, 'what-we-do', (params?.slug as string[]).join('/'))
+  const pageData = await getPageData(locale, 'what-we-do', (params?.slug as string[])?.join('/'))
   const menuData = await getClient(false).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
   return {
