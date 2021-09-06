@@ -19,7 +19,6 @@ import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
-const OldTopicPage = dynamic(() => import('../tempcomponents/pageTemplates/OldTopicPage'))
 const { publicRuntimeConfig } = getConfig()
 
 export default function Page({ data, preview }: any) {

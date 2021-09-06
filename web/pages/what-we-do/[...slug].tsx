@@ -8,7 +8,18 @@ import { mapLocaleToLang } from '../../lib/localization'
 import { getPageData, getPageLayout, getPagePaths } from '../../common/helpers/staticPageHelpers'
 import OldTopicPage from '../../tempcomponents/pageTemplates/OldTopicPage'
 
-const Page = ({ data }: any): JSX.Element => {
+type PageProps = {
+  data: {
+    pageData: {
+      title: string
+      description: string
+      content: string
+    }
+    menuData: any
+  }
+}
+
+const Page = ({ data }: PageProps): JSX.Element => {
   if (!data || !data.pageData) {
     return <ErrorPage statusCode={404} />
   }
@@ -25,9 +36,7 @@ const Page = ({ data }: any): JSX.Element => {
 Page.getLayout = (page: AppProps) => getPageLayout(page)
 
 export const getStaticProps: GetStaticProps = async ({ params, locale = 'en' }) => {
-  const slugArray = params?.slug as string[]
-  const slug = slugArray.join('/')
-  const pageData = await getPageData(locale, 'what-we-do', slug)
+  const pageData = await getPageData(locale, 'what-we-do', (params?.slug as string[]).join('/'))
   const menuData = await getClient(false).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
   return {
