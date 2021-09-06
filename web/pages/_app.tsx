@@ -28,7 +28,14 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             <Head>
               {/* TODO: load the font in a better way */}
               {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" /> */}
-              <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" />
+              {/*  <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" /> */}
+              <link
+                rel="preload"
+                href="https://eds-static.equinor.com/font/EquinorVariable-VF.woff2"
+                as="font"
+                type="font/woff2"
+                crossOrigin="anonymous"
+              />
               <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
               <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
             </Head>
