@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
 import { mapLocaleToLang } from '../../lib/localization'
-import { getPageData, getPageLayout } from '../../common/helpers/staticPageHelpers'
+import { getPageData, getPageLayout, getPagePaths } from '../../common/helpers/staticPageHelpers'
 import OldTopicPage from '../../tempcomponents/pageTemplates/OldTopicPage'
 
 const Page = ({ data }: any): JSX.Element => {
@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale = 'en' }) 
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = ['/what-we-do/exploration']
+  const paths = await getPagePaths('what-we-do')
 
   return {
     paths: paths,
