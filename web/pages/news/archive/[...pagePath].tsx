@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
-import { Menu } from '../../../tempcomponents/shared/Menu'
+import { Menu } from '../../../tempcomponents/shared/menu/Menu'
 
 const { publicRuntimeConfig } = getConfig()
 

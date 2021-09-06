@@ -19,7 +19,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { NewsCardData, NewsSchema } from '../../types/types'
-import { Menu } from '../../tempcomponents/shared/Menu'
+import { Menu } from '../../tempcomponents/shared/menu/Menu'
 import { mapLocaleToLang } from '../../lib/localization'
 
 const { publicRuntimeConfig } = getConfig()

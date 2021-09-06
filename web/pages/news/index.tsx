@@ -9,7 +9,7 @@ import { getClient } from '../../lib/sanity.server'
 import styled from 'styled-components'
 import type { NewsSchema } from '../../types/types'
 import NewsCard from '../../tempcomponents/news/NewsCard'
-import { Menu } from '../../tempcomponents/shared/Menu'
+import { Menu } from '../../tempcomponents/shared/menu/Menu'
 import { mapLocaleToLang } from '../../lib/localization'
 import { couldStartTrivia } from 'typescript'
 

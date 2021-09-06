@@ -8,5 +8,7 @@ export const elements = css`
     font-size: clamp(16px, calc(14.3125px + 0.4531vw), 23px);
   }
   body {
+    background-color: var(--theme-background-primary);
+    min-height: 100vh;
   }
 `

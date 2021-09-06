@@ -14,7 +14,7 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
-import { Menu } from '../tempcomponents/shared/Menu'
+import { Menu } from '../tempcomponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))

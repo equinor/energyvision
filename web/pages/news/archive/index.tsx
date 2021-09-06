@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Heading, Link, List, Layout } from '@components'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import styled from 'styled-components'
-import { Menu } from '../../../tempcomponents/shared/Menu'
+import { Menu } from '../../../tempcomponents/shared/menu/Menu'
 
 import { default as NextLink } from 'next/link'
 
