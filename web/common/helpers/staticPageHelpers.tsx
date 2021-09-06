@@ -21,6 +21,15 @@ export const getPageData = async (locale: string, path: string, slug: string) =>
   return pageData
 }
 
+// @TODO: figure out how to fetch list of relevant pages from azure
+export const getPagePaths = async (path: string): Promise<string[]> => {
+  if (path === 'what-we-do') {
+    return ['/what-we-do/exploration']
+  }
+
+  return []
+}
+
 export const getPageLayout = (page: AppProps) => {
   /* The getLayout pattern is a way to preserve state in the layout
   across client side navigation. The downside is that since it's just an
