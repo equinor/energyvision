@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Topbar, Link, List, Heading } from '@components'
 import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
@@ -93,7 +93,6 @@ export type MenuProps = {
 export const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
   const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu()
-  console.log('Menu state', isOpen)
   const router = useRouter()
   const topbarRef = useCallback((node) => {
     if (node !== null) {
@@ -105,6 +104,19 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   const localization = {
     activeLocale: router.locale || 'en',
   }
+
+  const handleRouteChange = () => {
+    if (isOpen || getActiveMenuItem !== null) {
+      closeMenu()
+      removeActive()
+    }
+  }
+
+  // @TODO: Has no dependency arrays, so not very optimized
+  useEffect(() => {
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
+  })
 
   const menuItems = (data && data.subMenus) || []
 
