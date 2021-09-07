@@ -3,5 +3,7 @@ export const removeHTMLExtension = (path: string): string => {
 }
 
 export const isArchivePage = (currentPagePath: string): boolean => {
-  return currentPagePath.includes('/archive') || currentPagePath.includes('/what-we-do')
+  return archivePaths.some((path) => currentPagePath.includes(path))
 }
+
+const archivePaths = ['/archive', '/what-we-do', '/sustainability']
