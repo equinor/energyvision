@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from '../LocalizationSwitch'
 import { useRouter } from 'next/router'
+import { useMenu } from './MenuProvider'
 import type { MenuData, MenuLinkData } from '../../../types/types'
 
 const { Item } = List
@@ -16,26 +17,47 @@ const MenuWrapper = styled.div`
   }
 `
 
-const SubMenuPanel = styled.div`
+type SubMenuPanelProps = {
+  isOpen: boolean
+}
+const SubMenuPanel = styled.div<SubMenuPanelProps>`
   /* Nevermind about a11y at this point */
   /*  For the sake of quick and dirty, let's do the stupid hover interaction */
-  display: none;
+  /*   display: none; */
+
+  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+  height: 37rem;
   position: absolute;
   background-color: var(--ui-background-default);
+  /* Temp. make it easier to see the menu */
+  background-color: var(--slate-blue-60);
+
   padding: var(--space-large);
   left: 0;
   right: 0;
 `
 
-const TopLevelItem = styled(Item)`
-  &:hover ${SubMenuPanel} {
-    display: block;
-  }
+const SubMenuContent = styled.div`
+  display: flex;
 `
 
+const WrappedList = styled(List)`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 35rem;
+`
+
+const ListGroup = styled.div``
+
+const TopLevelList = styled(List)`
+  display: inline-flex;
+  flex-wrap: wrap;
+`
+
+const TopLevelItem = styled(Item)``
+
 const TopLevelLink = styled(Link)`
-  /* Just some bling to see the different
- */
   text-decoration: none;
   padding: var(--space-xSmall) var(--space-small);
   border-bottom: 2px solid var(--moss-green-80);
@@ -70,6 +92,8 @@ export type MenuProps = {
 
 export const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
+  const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu()
+  console.log('Menu state', isOpen)
   const router = useRouter()
   const topbarRef = useCallback((node) => {
     if (node !== null) {
@@ -84,6 +108,18 @@ export const Menu = ({ slugs, data }: MenuProps) => {
 
   const menuItems = (data && data.subMenus) || []
 
+  // @TODO: No, we will not do it like this!
+  const openMenuItem = (linkName: string) => {
+    openMenu()
+    setActive(linkName)
+  }
+  const closeMenuItem = (linkName: string) => {
+    if (getActiveMenuItem === linkName) {
+      removeActive()
+    }
+    closeMenu()
+  }
+
   return (
     <>
       <TopbarOffset topbarHeight={topbarHeight} />
@@ -93,43 +129,49 @@ export const Menu = ({ slugs, data }: MenuProps) => {
           <input placeholder="Search..." /> */}
 
           {menuItems && (
-            <List unstyled style={{ display: 'inline-flex' }}>
+            <TopLevelList unstyled>
               {menuItems.map((topLevelItem: any) => {
                 const { topLevelLink, id, group } = topLevelItem
                 return (
-                  <TopLevelItem key={id}>
+                  <TopLevelItem
+                    key={id}
+                    onMouseEnter={() => openMenuItem(topLevelLink.label)}
+                    onMouseLeave={() => closeMenuItem(topLevelLink.label)}
+                  >
                     <div>
                       {/* @TODO: Should we allow external links at top level? */}
                       <NextLink href={getLink(topLevelLink)} passHref>
                         <TopLevelLink>{topLevelLink.label}</TopLevelLink>
                       </NextLink>
                       {group && group.length > 0 && (
-                        <SubMenuPanel>
-                          {topLevelItem.group.map((groupItem: any) => {
-                            return (
-                              <div key={groupItem.id}>
-                                <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
-                                  {groupItem.label}
-                                </Heading>
-                                <List unstyled>
-                                  {groupItem.links.map((link: any) => (
-                                    <Item key={link.id}>
-                                      <NextLink href={getLink(link)} passHref>
-                                        <Link>{link.label}</Link>
-                                      </NextLink>
-                                    </Item>
-                                  ))}
-                                </List>
-                              </div>
-                            )
-                          })}
+                        <SubMenuPanel isOpen={isOpen && getActiveMenuItem === topLevelLink.label}>
+                          <SubMenuContent>
+                            {topLevelItem.group.map((groupItem: any) => {
+                              return (
+                                <ListGroup key={groupItem.id}>
+                                  <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
+                                    {groupItem.label}
+                                  </Heading>
+                                  <WrappedList unstyled>
+                                    {groupItem.links.map((link: any) => (
+                                      <Item key={link.id}>
+                                        <NextLink href={getLink(link)} passHref>
+                                          <Link>{link.label}</Link>
+                                        </NextLink>
+                                      </Item>
+                                    ))}
+                                  </WrappedList>
+                                </ListGroup>
+                              )
+                            })}
+                          </SubMenuContent>
                         </SubMenuPanel>
                       )}
                     </div>
                   </TopLevelItem>
                 )
               })}
-            </List>
+            </TopLevelList>
           )}
         </MenuWrapper>
 
