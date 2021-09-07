@@ -25,12 +25,15 @@ const SubMenuPanel = styled.div<SubMenuPanelProps>`
   /*  For the sake of quick and dirty, let's do the stupid hover interaction */
   /*   display: none; */
 
-  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+  visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
+  opacity: ${(props) => (props.isOpen ? '1' : '0')};
+  transition: opacity 0.19s linear 0.2s, visibility 0ms 0.4s;
+
   height: 37rem;
   position: absolute;
   background-color: var(--ui-background-default);
   /* Temp. make it easier to see the menu */
-  background-color: var(--slate-blue-60);
+  background-color: var(--grey-20);
 
   padding: var(--space-large);
   left: 0;
