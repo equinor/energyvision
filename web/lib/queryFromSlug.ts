@@ -38,14 +38,6 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
         query: newsQuery,
         docType: 'news',
       }
-
-      case 'what-we-do':
-        return {
-        queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
-        query: pageQuery,
-        docType: 'old',
-        }
-
     default:
       return {
         queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
