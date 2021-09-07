@@ -109,7 +109,6 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   const router = useRouter()
   const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu()
   const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router))
-  console.log('activeMenuItem', activeMenuItem)
   const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
@@ -122,8 +121,6 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   }
 
   const handleRouteChange = useCallback((url) => {
-    console.log('handleRouteChange', isOpen, getActiveMenuItem, url)
-
     closeMenu()
     removeActive()
 
@@ -147,10 +144,8 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   const openMenuItem = (linkName: string) => {
     openMenu()
     setActive(linkName)
-    console.log(getActiveMenuItem)
   }
   const closeMenuItem = (linkName: string) => {
-    console.log('Closing', getActiveMenuItem, linkName)
     /*  if (getActiveMenuItem === linkName) { */
     removeActive()
     /*  } */
@@ -171,7 +166,6 @@ export const Menu = ({ slugs, data }: MenuProps) => {
                 const { topLevelLink, id, group } = topLevelItem
                 const topLevelHref = getLink(topLevelLink)
                 const activePanel = isOpen && getActiveMenuItem === topLevelLink.label
-                console.log('Status', activePanel, isOpen, topLevelLink.label, getActiveMenuItem)
                 return (
                   <TopLevelItem
                     key={id}
