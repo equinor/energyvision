@@ -1,5 +1,4 @@
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
-const staticPageServerHostname = 'https://envis-legacy.azureedge.net/equinor-static-non-news-content'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -14,7 +13,6 @@ module.exports = withBundleAnalyzer({
   publicRuntimeConfig: {
     domain: 'https://energyvision.app.radix.equinor.com',
     archiveStorageURL: archiveServerHostname,
-    staticPageStorageURL: staticPageServerHostname,
   },
   images: {
     domains: ['cdn.sanity.io'],
