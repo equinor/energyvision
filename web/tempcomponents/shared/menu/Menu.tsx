@@ -57,13 +57,14 @@ const TopLevelList = styled(List)`
 
 const TopLevelItem = styled(Item)``
 
-const TopLevelLink = styled(Link)`
+type TopLevelLinkProps = {
+  active: boolean
+}
+
+const TopLevelLink = styled(Link)<TopLevelLinkProps>`
   text-decoration: none;
   padding: var(--space-xSmall) var(--space-small);
-  border-bottom: 2px solid var(--moss-green-80);
-  &:focus + ${SubMenuPanel} {
-    display: block;
-  }
+  border-bottom: ${(props) => (props.active ? '2px solid var(--moss-green-80)' : '2px solid transparent ')};
 `
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
@@ -90,10 +91,22 @@ export type MenuProps = {
   }
 }
 
+const fetchTopLevel = (route: string) => {
+  if (!route) return null
+  const path = route.split('/')
+  return path[1]
+}
+
+const getInitialMenuItem = (router: any) => {
+  return fetchTopLevel(router.asPath)
+}
+
 export const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
-  const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu()
   const router = useRouter()
+  const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu()
+  const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router))
+  console.log('activeMenuItem', activeMenuItem)
   const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
@@ -105,18 +118,25 @@ export const Menu = ({ slugs, data }: MenuProps) => {
     activeLocale: router.locale || 'en',
   }
 
-  const handleRouteChange = () => {
-    if (isOpen || getActiveMenuItem !== null) {
-      closeMenu()
-      removeActive()
-    }
-  }
+  const handleRouteChange = useCallback((url) => {
+    console.log('handleRouteChange', isOpen, getActiveMenuItem, url)
+
+    closeMenu()
+    removeActive()
+
+    setActiveMenuItem(fetchTopLevel(url))
+  }, [])
 
   // @TODO: Has no dependency arrays, so not very optimized
   useEffect(() => {
-    router.events.on('routeChangeComplete', handleRouteChange)
+    router.events.on('routeChangeComplete', (url) => handleRouteChange(url))
     return () => router.events.off('routeChangeComplete', handleRouteChange)
-  })
+  }, [router.events, handleRouteChange])
+
+  /*   useEffect(() => {
+    router.events.on('routeChangeComplete', (router) => setActiveMenuItem(fetchTopLevel(router.asPath)))
+    // return () => router.events.off('routeChangeComplete', setActiveMenuItem)
+  }, [router.events]) */
 
   const menuItems = (data && data.subMenus) || []
 
@@ -124,11 +144,13 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   const openMenuItem = (linkName: string) => {
     openMenu()
     setActive(linkName)
+    console.log(getActiveMenuItem)
   }
   const closeMenuItem = (linkName: string) => {
-    if (getActiveMenuItem === linkName) {
-      removeActive()
-    }
+    console.log('Closing', getActiveMenuItem, linkName)
+    /*  if (getActiveMenuItem === linkName) { */
+    removeActive()
+    /*  } */
     closeMenu()
   }
 
@@ -144,6 +166,9 @@ export const Menu = ({ slugs, data }: MenuProps) => {
             <TopLevelList unstyled>
               {menuItems.map((topLevelItem: any) => {
                 const { topLevelLink, id, group } = topLevelItem
+                const topLevelHref = getLink(topLevelLink)
+                const activePanel = isOpen && getActiveMenuItem === topLevelLink.label
+                console.log('Status', activePanel, isOpen, topLevelLink.label, getActiveMenuItem)
                 return (
                   <TopLevelItem
                     key={id}
@@ -152,11 +177,13 @@ export const Menu = ({ slugs, data }: MenuProps) => {
                   >
                     <div>
                       {/* @TODO: Should we allow external links at top level? */}
-                      <NextLink href={getLink(topLevelLink)} passHref>
-                        <TopLevelLink>{topLevelLink.label}</TopLevelLink>
+                      <NextLink href={topLevelHref} passHref>
+                        <TopLevelLink active={activeMenuItem === fetchTopLevel(topLevelHref)}>
+                          {topLevelLink.label}
+                        </TopLevelLink>
                       </NextLink>
                       {group && group.length > 0 && (
-                        <SubMenuPanel isOpen={isOpen && getActiveMenuItem === topLevelLink.label}>
+                        <SubMenuPanel isOpen={activePanel}>
                           <SubMenuContent>
                             {topLevelItem.group.map((groupItem: any) => {
                               return (
