@@ -16,9 +16,12 @@ import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
 import { Menu } from '../tempcomponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
+import { getPageData } from '../common/helpers/staticPageHelpers'
 
 const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
+const OldTopicPage = dynamic(() => import('../tempcomponents/pageTemplates/OldTopicPage'))
+
 const { publicRuntimeConfig } = getConfig()
 
 export default function Page({ data, preview }: any) {
@@ -45,6 +48,19 @@ export default function Page({ data, preview }: any) {
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
   appInsights.trackPageView({ name: slug, uri: fullUrl })
+
+  if (data?.isArchivedFallback) {
+    if (!data.pageData.content) {
+      return <ErrorPage statusCode={404} />
+    }
+
+    return (
+      <>
+        <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
+        <OldTopicPage data={data.pageData} />
+      </>
+    )
+  }
 
   return (
     <>
@@ -111,6 +127,23 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
+  if (!pageData) {
+    const slug = params?.slug as string[]
+    const archivedData = await getPageData(locale, slug[0], slug[1])
+
+    return {
+      props: {
+        preview: false,
+        data: {
+          isArchivedFallback: true,
+          pageData: { slug: slug.join('/'), ...archivedData },
+          menuData,
+        },
+      },
+      revalidate: 1,
+    }
+  }
+
   // console.log('Menu data', menuData)
   // console.log('query:', query)
   // console.log('queryParams:', queryParams)
@@ -121,6 +154,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     props: {
       preview,
       data: {
+        isArchivedFallback: false,
         query,
         queryParams,
         pageData,
