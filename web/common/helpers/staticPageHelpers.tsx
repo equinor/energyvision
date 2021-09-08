@@ -3,12 +3,12 @@ import type { AppProps } from 'next/app'
 import { Layout } from '@components'
 import { Menu } from '../../tempcomponents/shared/menu/Menu'
 
-export const getPageData = async (locale: string, path: string, slug = '') => {
+export const getPageData = async (locale: string, slug = '') => {
   const { publicRuntimeConfig } = getConfig()
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
   /** Check if the required page is old archived AEM page or not
    * because AEM also has archived pages which has 'archive' the page path */
-  const response = await fetch(`${archiveSeverURL}/${locale}/${path}/${slug}.json`)
+  const response = await fetch(`${archiveSeverURL}/${locale}/${slug}.json`)
 
   let pageData
   try {

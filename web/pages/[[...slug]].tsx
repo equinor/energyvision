@@ -128,15 +128,15 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
   if (!pageData) {
-    const slug = params?.slug as string[]
-    const archivedData = await getPageData(locale, slug[0], slug[1])
+    const slug = (params?.slug as string[]).join('/')
+    const archivedData = await getPageData(locale, slug)
 
     return {
       props: {
         preview: false,
         data: {
           isArchivedFallback: true,
-          pageData: { slug: slug.join('/'), ...archivedData },
+          pageData: { slug: slug, ...archivedData },
           menuData,
         },
       },
