@@ -6,10 +6,17 @@ import { Menu } from '../../tempcomponents/shared/menu/Menu'
 export const getPageData = async (locale: string, slug = '') => {
   const { publicRuntimeConfig } = getConfig()
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
+
+  const getContentUrl = (slug: string) => {
+    if (slug === '' || slug === '/') {
+      return `${archiveSeverURL}/${locale}.json`
+    }
+    return `${archiveSeverURL}/${locale}/${slug}.json`
+  }
+
   /** Check if the required page is old archived AEM page or not
    * because AEM also has archived pages which has 'archive' the page path */
-  const response = await fetch(`${archiveSeverURL}/${locale}/${slug}.json`)
-
+  const response = await fetch(getContentUrl(slug))
   let pageData
   try {
     pageData = await response.json()
