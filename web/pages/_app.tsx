@@ -10,7 +10,6 @@ import MenuProvider from '../tempcomponents/shared/menu/MenuProvider'
 // @ts-ignore
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
-import { isArchivePage } from '../lib/archive/archiveUtils'
 import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 import { reactPlugin } from '../common'
 
@@ -37,11 +36,14 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
               </Head>
               {/* TODO: Find out why this works in the news-archive branch and not here */}
-              {isArchivePage(router.asPath) && (
-                <style jsx global>
-                  {archivedStyles}
-                </style>
-              )}
+
+              {/* 
+                @TODO: Figure out a way of not rendering this on Sanity pages
+                See: isArchivePage at'../lib/archive/archiveUtils'
+              */}
+              <style jsx global>
+                {archivedStyles}
+              </style>
               <GlobalStyle />
               <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
