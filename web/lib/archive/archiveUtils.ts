@@ -16,4 +16,5 @@ const archivePaths = [
   '/sustainability',
   '/what-we-do',
   '/where-we-are',
+  '/how-and-why',
 ]
