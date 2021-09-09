@@ -18,7 +18,7 @@ import { Menu } from '../tempcomponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { getPageData } from '../common/helpers/staticPageHelpers'
 
-const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
+// const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../tempcomponents/pageTemplates/OldTopicPage'))
 
@@ -35,10 +35,10 @@ export default function Page({ data, preview }: any) {
     enabled: preview || router.query.preview !== null,
   })
 
-  // console.log(data?.docType)
-  if (data?.docType === 'home') {
-    return <HomePage />
-  }
+  // temp disabled
+  // if (data?.docType === 'home') {
+  //   return <HomePage />
+  // }
 
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
   if (!pageData) {
-    const slug = params?.slug ? (params?.slug as string[]).join('/') : ''
+    const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'
     const archivedData = await getPageData(locale, slug)
 
     return {
