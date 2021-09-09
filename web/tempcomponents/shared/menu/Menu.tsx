@@ -23,8 +23,6 @@ type SubMenuPanelProps = {
 const SubMenuPanel = styled.div<SubMenuPanelProps>`
   /* Nevermind about a11y at this point */
   /*  For the sake of quick and dirty, let's do the stupid hover interaction */
-  /*   display: none; */
-
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
   opacity: ${(props) => (props.isOpen ? '1' : '0')};
   transition: opacity 0.19s linear 0.2s, visibility 0ms 0.4s;
@@ -127,16 +125,11 @@ export const Menu = ({ slugs, data }: MenuProps) => {
     setActiveMenuItem(fetchTopLevel(url))
   }, [])
 
-  // @TODO: Has no dependency arrays, so not very optimized
+  // @TODO: We need something like this to do things when the user navigates
   useEffect(() => {
     router.events.on('routeChangeComplete', (url) => handleRouteChange(url))
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events, handleRouteChange])
-
-  /*   useEffect(() => {
-    router.events.on('routeChangeComplete', (router) => setActiveMenuItem(fetchTopLevel(router.asPath)))
-    // return () => router.events.off('routeChangeComplete', setActiveMenuItem)
-  }, [router.events]) */
 
   const menuItems = (data && data.subMenus) || []
 
