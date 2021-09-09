@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
 
   if (!pageData) {
-    const slug = (params?.slug as string[]).join('/')
+    const slug = params?.slug ? (params?.slug as string[]).join('/') : ''
     const archivedData = await getPageData(locale, slug)
 
     return {
