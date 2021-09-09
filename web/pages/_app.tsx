@@ -12,6 +12,7 @@ import MenuProvider from '../tempcomponents/shared/menu/MenuProvider'
 import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
 import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 import { reactPlugin } from '../common'
+import { isArchivePage } from '../lib/archive/archiveUtils'
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
@@ -41,9 +42,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 @TODO: Figure out a way of not rendering this on Sanity pages
                 See: isArchivePage at'../lib/archive/archiveUtils'
               */}
-              <style jsx global>
-                {archivedStyles}
-              </style>
+              {isArchivePage(router.asPath) && (
+                <style jsx global>
+                  {archivedStyles}
+                </style>
+              )}
               <GlobalStyle />
               <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
