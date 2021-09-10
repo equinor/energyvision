@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from '../LocalizationSwitch'
 import { useRouter } from 'next/router'
-import { useMenu } from './MenuProvider'
+/* import { useMenu } from './MenuProvider' */
 import type { MenuData, MenuLinkData } from '../../../types/types'
 
 const { Item } = List
@@ -92,21 +92,21 @@ export type MenuProps = {
   }
 }
 
-const fetchTopLevel = (route: string) => {
+/* const fetchTopLevel = (route: string) => {
   if (!route) return null
   const path = route.split('/')
   return path[1]
 }
-
-const getInitialMenuItem = (router: any) => {
+ */
+/* const getInitialMenuItem = (router: any) => {
   return fetchTopLevel(router.asPath)
 }
-
+ */
 export const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
   const router = useRouter()
-  const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu()
-  const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router))
+  /* const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu() */
+  /*   const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router)) */
   const topbarRef = useCallback((node) => {
     if (node !== null) {
       const height = node.getBoundingClientRect().height
@@ -118,32 +118,31 @@ export const Menu = ({ slugs, data }: MenuProps) => {
     activeLocale: router.locale || 'en',
   }
 
-  const handleRouteChange = useCallback((url) => {
+  /* const handleRouteChange = useCallback((url) => {
     closeMenu()
     removeActive()
 
     setActiveMenuItem(fetchTopLevel(url))
   }, [])
-
+ */
   // @TODO: We need something like this to do things when the user navigates
-  useEffect(() => {
+  /*   useEffect(() => {
     router.events.on('routeChangeComplete', (url) => handleRouteChange(url))
     return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange])
+  }, [router.events, handleRouteChange]) */
 
   const menuItems = (data && data.subMenus) || []
 
   // @TODO: No, we will not do it like this!
-  const openMenuItem = (linkName: string) => {
+  /*   const openMenuItem = (linkName: string) => {
     openMenu()
     setActive(linkName)
   }
   const closeMenuItem = (linkName: string) => {
-    /*  if (getActiveMenuItem === linkName) { */
     removeActive()
-    /*  } */
+
     closeMenu()
-  }
+  } */
 
   return (
     <>
@@ -158,43 +157,43 @@ export const Menu = ({ slugs, data }: MenuProps) => {
               {menuItems.map((topLevelItem: any) => {
                 const { topLevelLink, id, group } = topLevelItem
                 const topLevelHref = getLink(topLevelLink)
-                const activePanel = isOpen && getActiveMenuItem === topLevelLink.label
+                /* const activePanel = isOpen && getActiveMenuItem === topLevelLink.label */
                 return (
                   <TopLevelItem
                     key={id}
-                    onMouseEnter={() => openMenuItem(topLevelLink.label)}
-                    onMouseLeave={() => closeMenuItem(topLevelLink.label)}
+                    /* onMouseEnter={() => openMenuItem(topLevelLink.label)}
+                    onMouseLeave={() => closeMenuItem(topLevelLink.label)} */
                   >
                     <div>
                       {/* @TODO: Should we allow external links at top level? */}
                       <NextLink href={topLevelHref} passHref>
-                        <TopLevelLink active={activeMenuItem === fetchTopLevel(topLevelHref)}>
-                          {topLevelLink.label}
-                        </TopLevelLink>
+                        {/*  <TopLevelLink active={activeMenuItem === fetchTopLevel(topLevelHref)}> */}
+                        {topLevelLink.label}
+                        {/*    </TopLevelLink> */}
                       </NextLink>
                       {group && group.length > 0 && (
-                        <SubMenuPanel isOpen={activePanel}>
-                          <SubMenuContent>
-                            {topLevelItem.group.map((groupItem: any) => {
-                              return (
-                                <ListGroup key={groupItem.id}>
-                                  <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
-                                    {groupItem.label}
-                                  </Heading>
-                                  <WrappedList unstyled>
-                                    {groupItem.links.map((link: any) => (
-                                      <Item key={link.id}>
-                                        <NextLink href={getLink(link)} passHref>
-                                          <Link>{link.label}</Link>
-                                        </NextLink>
-                                      </Item>
-                                    ))}
-                                  </WrappedList>
-                                </ListGroup>
-                              )
-                            })}
-                          </SubMenuContent>
-                        </SubMenuPanel>
+                        /*  <SubMenuPanel isOpen={activePanel} > */
+                        <SubMenuContent>
+                          {topLevelItem.group.map((groupItem: any) => {
+                            return (
+                              <ListGroup key={groupItem.id}>
+                                <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
+                                  {groupItem.label}
+                                </Heading>
+                                <WrappedList unstyled>
+                                  {groupItem.links.map((link: any) => (
+                                    <Item key={link.id}>
+                                      <NextLink href={getLink(link)} passHref>
+                                        <Link>{link.label}</Link>
+                                      </NextLink>
+                                    </Item>
+                                  ))}
+                                </WrappedList>
+                              </ListGroup>
+                            )
+                          })}
+                        </SubMenuContent>
+                        /*        </SubMenuPanel> */
                       )}
                     </div>
                   </TopLevelItem>
