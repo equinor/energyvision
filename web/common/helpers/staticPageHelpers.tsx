@@ -10,7 +10,7 @@ const getContentUrl = (locale: string, slug: string) => {
   if (slug === '/') {
     return `${archiveSeverURL}/${locale}.json`
   }
-  return `${archiveSeverURL}/${locale}/${slug}.json`
+  return `${archiveSeverURL}/${locale}/${slug.replace(/\/$/, '')}.json`
 }
 
 export const getPageData = async (locale: string, slug: string) => {
