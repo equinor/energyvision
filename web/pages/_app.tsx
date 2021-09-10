@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { IntlProvider } from 'react-intl'
 import { GlobalStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
-import MenuProvider from '../tempcomponents/shared/menu/MenuProvider'
+/* import MenuProvider from '../tempcomponents/shared/menu/MenuProvider' */
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -26,30 +26,30 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       <AppInsightsErrorBoundary onError={() => <h1>I believe something went wrong</h1>} appInsights={reactPlugin}>
         <AppInsightsContext.Provider value={reactPlugin}>
           <IntlProvider locale={locale} defaultLocale={defaultLocale}>
-            <MenuProvider>
-              <Head>
-                {/* TODO: load the font in a better way */}
-                {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" /> */}
-                <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" />
+            {/*       <MenuProvider> */}
+            <Head>
+              {/* TODO: load the font in a better way */}
+              {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" /> */}
+              <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" />
 
-                <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-                <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-              </Head>
-              {/* TODO: Find out why this works in the news-archive branch and not here */}
+              <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+              <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+            </Head>
+            {/* TODO: Find out why this works in the news-archive branch and not here */}
 
-              {/* 
+            {/* 
                 @TODO: Figure out a way of not rendering this on Sanity pages
                 See: isArchivePage at'../lib/archive/archiveUtils'
               */}
-              <style jsx global>
-                {archivedStyles}
-              </style>
-              <GlobalStyle />
-              <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+            <style jsx global>
+              {archivedStyles}
+            </style>
+            <GlobalStyle />
+            <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
-              {/* <Component {...pageProps} /> */}
-              {getLayout(<Component {...pageProps} />)}
-            </MenuProvider>
+            {/* <Component {...pageProps} /> */}
+            {getLayout(<Component {...pageProps} />)}
+            {/*      </MenuProvider> */}
           </IntlProvider>
         </AppInsightsContext.Provider>
       </AppInsightsErrorBoundary>
