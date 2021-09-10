@@ -3,29 +3,38 @@ import type { AppProps } from 'next/app'
 import { Layout } from '@components'
 import { Menu } from '../../tempcomponents/shared/menu/Menu'
 
-export const getPageData = async (locale: string, slug = '') => {
+const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
 
-  const getContentUrl = (slug: string) => {
-    if (slug === '' || slug === '/') {
-      return `${archiveSeverURL}/${locale}.json`
-    }
-    return `${archiveSeverURL}/${locale}/${slug}.json`
+  if (slug === '/') {
+    return `${archiveSeverURL}/${locale}.json`
   }
+  return `${archiveSeverURL}/${locale}/${slug}.json`
+}
+
+export const getPageData = async (locale: string, slug: string) => {
+  if (!slug || slug === '') return null
 
   /** Check if the required page is old archived AEM page or not
    * because AEM also has archived pages which has 'archive' the page path */
-  const response = await fetch(getContentUrl(slug))
-  let pageData
-  try {
-    pageData = await response.json()
-  } catch (err) {
-    console.log('error', err)
-    pageData = null
+  const contentUrl = getContentUrl(locale, slug)
+  const response = await fetch(contentUrl)
+
+  if (response && response.status === 200) {
+    let pageData
+    try {
+      pageData = await response.json()
+    } catch (err) {
+      console.log('error', err)
+      pageData = null
+    }
+
+    return pageData
   }
 
-  return pageData
+  console.error(`Error fetching archive data: ${response.status} ${response.statusText}`, `URL: ${response.url}`)
+  return null
 }
 
 // @TODO: figure out how to fetch list of relevant pages from azure
