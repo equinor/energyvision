@@ -33,6 +33,7 @@ specifiers:
   jest: ^27.1.0
   jest-styled-components: ^7.0.5
   next: ^11.1.2
+  next-circular-dependency: ^1.0.1
   next-sanity: ^0.4.0
   next-sanity-image: ^3.1.5
   next-seo: ^4.26.0
@@ -63,6 +64,7 @@ dependencies:
   '@sanity/client': 2.16.0
   '@sanity/image-url': 1.0.1
   next: 11.1.2_d443fb0c628b49c52334702664b7ac3e
+  next-circular-dependency: 1.0.1
   next-sanity: 0.4.0_react@17.0.2
   next-sanity-image: 3.1.5_0267be62cc2881c9cbc374676332cbe9
   next-seo: 4.26.0_6fbf59523517da779df50d355b375324
@@ -5757,6 +5759,13 @@ packages:
       inherits: 2.0.4
       safe-buffer: 5.2.1
 
+  /circular-dependency-plugin/5.2.2:
+    resolution: {integrity: sha512-g38K9Cm5WRwlaH6g03B9OEz/0qRizI+2I7n+Gz+L5DxXJAPAiWQvwlYNm1V1jkdpUv95bOe/ASm2vfi/G560jQ==}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      webpack: '>=4.0.1'
+    dev: false
+
   /cjs-module-lexer/1.2.2:
     resolution: {integrity: sha512-cOU9usZw8/dXIXKtwa8pM0OTJQuJkxMN6w30csNRUerHfeQ5R6U3kkU/FtJeIf3M202OHfY2U8ccInBG7/xogA==}
     dev: true
@@ -9936,6 +9945,14 @@ packages:
   /nested-error-stacks/2.1.0:
     resolution: {integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==}
     dev: true
+
+  /next-circular-dependency/1.0.1:
+    resolution: {integrity: sha512-DtwC/hm6ZZDrrdU7rI1Xc9jkJfurWm69CZ8XZy2grZpMwIdMc69ik2M43pc1Q004nao0mOOdNltgAPVUU7DZmA==}
+    dependencies:
+      circular-dependency-plugin: 5.2.2
+    transitivePeerDependencies:
+      - webpack
+    dev: false
 
   /next-sanity-image/3.1.5_0267be62cc2881c9cbc374676332cbe9:
     resolution: {integrity: sha512-0WjBW5ahHA3jSq5VO7Rsda62/DkoX9GREkkT/cwIdYIsaWI+c55xth10lDvllP8Z3kfqLp7B5Fb0vITMS/CE7w==}
