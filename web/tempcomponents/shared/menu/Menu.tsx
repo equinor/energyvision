@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react'
-import { Topbar, Link, List, Heading } from '@components'
+import { useState, useCallback } from 'react'
+import { Topbar, List } from '@components'
 import styled, { createGlobalStyle } from 'styled-components'
 import { LocalizationSwitch } from '../LocalizationSwitch'
 import { SubMenu } from './SubMenu'
