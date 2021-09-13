@@ -56,8 +56,14 @@ export default function Page({ data, preview }: any) {
 
     return (
       <>
+        {router.isFallback ? (
+          <p>Loading…</p>
+        ) : (
+          <>
         <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
         <OldTopicPage data={data.pageData} />
+      </>
+        )}
       </>
     )
   }
