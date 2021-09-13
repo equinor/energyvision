@@ -35,11 +35,6 @@ export default function Page({ data, preview }: any) {
     enabled: preview || router.query.preview !== null,
   })
 
-  // temp disabled
-  // if (data?.docType === 'home') {
-  //   return <HomePage />
-  // }
-
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
   }
@@ -60,9 +55,9 @@ export default function Page({ data, preview }: any) {
           <p>Loading…</p>
         ) : (
           <>
-        <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
-        <OldTopicPage data={data.pageData} />
-      </>
+            <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
+            <OldTopicPage data={data.pageData} />
+          </>
         )}
       </>
     )
@@ -92,7 +87,7 @@ export default function Page({ data, preview }: any) {
             }}
           ></NextSeo>
 
-          {data?.docType === 'page' && <TopicPage data={pageData} />}
+          <TopicPage data={pageData} />
         </>
       )}
     </>
@@ -127,7 +122,7 @@ Page.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
-  const { query, queryParams, docType } = getQueryFromSlug(params?.slug as string[], locale)
+  const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
   // console.log('params', params)
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
   // Let's do it simple stupid and iterate later on
@@ -144,7 +139,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           isArchivedFallback: true,
           pageData: { slug: slug, ...archivedData },
           menuData,
-          docType,
         },
       },
       revalidate: 1,
@@ -154,7 +148,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   // console.log('Menu data', menuData)
   // console.log('query:', query)
   // console.log('queryParams:', queryParams)
-  // console.log('docType:', docType)
   // console.log('data', pageData)
 
   return {
@@ -165,7 +158,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         query,
         queryParams,
         pageData,
-        docType,
         menuData,
       },
     },
