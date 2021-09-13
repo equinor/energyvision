@@ -18,6 +18,13 @@ spec:
           port: 3000
       environmentConfig:
         - environment: dev
+          resources:
+            requests:
+              memory: '512Mi'
+              cpu: '100m'
+            limits:
+              memory: '1Gi'
+              cpu: '2000m'
           imageTagName: main-latest
   dnsAppAlias:
     environment: dev
