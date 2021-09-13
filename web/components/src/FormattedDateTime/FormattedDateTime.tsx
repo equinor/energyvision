@@ -1,4 +1,5 @@
-import { FormattedDate, FormattedTime } from './'
+import { FormattedDate } from './FormattedDate'
+import { FormattedTime } from './FormattedTime'
 import { DateProps, StyledDate, DateIcon } from './shared'
 
 export const FormattedDateTime = ({
