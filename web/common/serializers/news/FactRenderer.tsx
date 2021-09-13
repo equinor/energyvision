@@ -1,11 +1,26 @@
-import SimpleBlockContent from '../../SimpleBlockContent'
+import { PortableText } from '../../../lib/sanity'
 import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
 import styled from 'styled-components'
-import { ListRenderer, ListItemRenderer } from '..'
+import { ListRenderer } from '../ListRenderer'
+import { ListItemRenderer } from '../ListItemRenderer'
+import { BlockRenderer } from '../BlockRenderer'
+import { SubRenderer } from '../SubRenderer'
+import { SupRenderer } from '../SupRenderer'
+import { ExternalLinkRenderer } from '../ExternalLinkRenderer'
+import { InternalLinkRenderer } from '../InternalLinkRenderer'
+
 import { blocksToText, urlFor } from '../../helpers'
 import type { ImageWithAlt } from '../../../types/types'
 import Img from 'next/image'
+import removeEmptyBlocks from '../../helpers/removeEmptyBlocks'
+
+const defaultSerializers = {
+  types: { block: BlockRenderer },
+  marks: { sub: SubRenderer, sup: SupRenderer, link: ExternalLinkRenderer, internalLink: InternalLinkRenderer },
+  list: ListRenderer,
+  listItem: ListItemRenderer,
+}
 
 type FactboxNodeProps = {
   title: string
@@ -75,7 +90,10 @@ export const FactRenderer = (child: { node: FactboxNodeProps }) => {
           {title}
         </Heading>
         <FactBox.Text hasColumns={hasColumns}>
-          <SimpleBlockContent blocks={content} serializers={serializers} />
+          <PortableText
+            blocks={content && removeEmptyBlocks(content)}
+            serializers={{ ...defaultSerializers, ...serializers }}
+          />
         </FactBox.Text>
       </FactBoxContentWithPadding>
     </FactBoxWithPadding>
