@@ -2,6 +2,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import ErrorPage from 'next/error'
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
@@ -21,14 +22,22 @@ type PageProps = {
 }
 
 const Page = ({ data }: PageProps): JSX.Element => {
-  if (!data || !data.pageData) {
+  const router = useRouter()
+
+  if (!router.isFallback && (!data || !data.pageData)) {
     return <ErrorPage statusCode={404} />
   }
 
   return (
     <>
-      <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
-      <OldTopicPage data={data.pageData} />
+      {router.isFallback ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
+          <OldTopicPage data={data.pageData} />
+        </>
+      )}
     </>
   )
 }
