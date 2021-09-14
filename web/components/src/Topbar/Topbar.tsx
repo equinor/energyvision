@@ -48,19 +48,19 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar({ 
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
 
-  const handleScroll = () => {
-    const currentScrollPos = window.pageYOffset
-    setIsVisible(
-      (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > height) ||
-        currentScrollPos < prevScrollPos,
-    )
-    setPrevScrollPos(currentScrollPos)
-  }
-
   useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset
+      setIsVisible(
+        (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > height) ||
+          currentScrollPos < prevScrollPos,
+      )
+      setPrevScrollPos(currentScrollPos)
+    }
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [prevScrollPos, isVisible, handleScroll, height])
+  }, [prevScrollPos, isVisible, height])
 
   return (
     <Bar ref={ref} style={{ top: isVisible ? 0 : -height }}>
