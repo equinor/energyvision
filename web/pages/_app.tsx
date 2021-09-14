@@ -5,10 +5,6 @@ import { GlobalStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
 /* import MenuProvider from '../tempcomponents/shared/menu/MenuProvider' */
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// TODO fix the eslint issues
-import archivedStyles from '@equinor/energyvision-legacy-css/dist/css/legacy.minified.css'
 import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 import { reactPlugin } from '../common'
 
@@ -31,9 +27,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 @TODO: Figure out a way of not rendering this on Sanity pages
                 See: isArchivePage at'../lib/archive/archiveUtils'
               */}
-            <style jsx global>
-              {archivedStyles}
-            </style>
+
             <GlobalStyle />
             <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
