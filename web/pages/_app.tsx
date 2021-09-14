@@ -1,6 +1,5 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 import { IntlProvider } from 'react-intl'
 import { GlobalStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'

@@ -2,17 +2,14 @@
 import { GetStaticProps, GetStaticPaths } from 'next'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { sanityClient, getClient } from '../lib/sanity.server'
-import { menuQuery } from '../lib/queries/menu'
 import { groq } from 'next-sanity'
-import getConfig from 'next/config'
-import { NextSeo } from 'next-seo'
-import { getQueryFromSlug } from '../lib/queryFromSlug'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
+import { sanityClient, getClient } from '../lib/sanity.server'
+import { menuQuery } from '../lib/queries/menu'
+import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
-import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
 import { Menu } from '../pageComponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
@@ -22,13 +19,10 @@ import { getArchivedPageData } from '../common/helpers/staticPageHelpers'
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 
-const { publicRuntimeConfig } = getConfig()
-
 export default function Page({ data, preview }: any) {
   const appInsights = useAppInsightsContext()
   const router = useRouter()
   const slug = data?.pageData?.slug
-  const { pathname } = useRouter()
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
@@ -39,10 +33,7 @@ export default function Page({ data, preview }: any) {
     return <ErrorPage statusCode={404} />
   }
 
-  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
-  const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
-
-  appInsights.trackPageView({ name: slug, uri: fullUrl })
+  appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
 
   if (data?.isArchivedFallback) {
     return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={data.pageData} />}</>
@@ -54,24 +45,6 @@ export default function Page({ data, preview }: any) {
         <p>Loading…</p>
       ) : (
         <>
-          <NextSeo
-            title={pageData?.seoAndSome?.documentTitle || pageData?.title}
-            description={pageData?.seoAndSome?.metaDescription}
-            openGraph={{
-              title: pageData?.title,
-              description: pageData?.seoAndSome?.metaDescription,
-              type: 'website',
-              url: fullUrl,
-              /* @TODO: Add fallback image */
-              images: getOpenGraphImages(pageData?.seoAndSome?.openGraphImage),
-            }}
-            twitter={{
-              handle: '@handle',
-              site: '@site',
-              cardType: 'summary_large_image',
-            }}
-          ></NextSeo>
-
           <TopicPage data={pageData} />
         </>
       )}

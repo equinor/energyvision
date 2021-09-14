@@ -1,6 +1,10 @@
 import styled from 'styled-components'
+import { NextSeo } from 'next-seo'
 import type { PageSchema } from '../../types/types'
+import { useRouter } from 'next/router'
 import { Heading } from '@components'
+import getConfig from 'next/config'
+import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
 import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
@@ -68,6 +72,14 @@ type ComponentProps =
   | PromoTileArrayData
 
 const TopicPage = ({ data }: TopicPageProps) => {
+  const { pathname } = useRouter()
+  const slug = data?.slug
+
+  const { publicRuntimeConfig } = getConfig()
+
+  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
+  const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
+
   const content = (data?.content || []).map((c: ComponentProps) => {
     switch (c.type) {
       case 'teaser':
@@ -91,15 +103,36 @@ const TopicPage = ({ data }: TopicPageProps) => {
     }
   })
   return (
-    <TopicPageLayout>
-      <HeroBanner>
-        <StyledHeading level="h1" size="2xl">
-          {data?.title}
-        </StyledHeading>
-      </HeroBanner>
-      <Image>{data?.heroImage && <HeroImage data={data?.heroImage} />}</Image>
-      {content}
-    </TopicPageLayout>
+    <>
+      <NextSeo
+        title={data?.seoAndSome?.documentTitle || data?.title}
+        description={data?.seoAndSome?.metaDescription}
+        openGraph={{
+          title: data?.title,
+          description: data?.seoAndSome?.metaDescription,
+          type: 'website',
+          url: fullUrl,
+          /* @TODO: Add fallback image */
+          // eslint-disable-next-line
+          // @ts-ignore: Why does ts hates because I moved this line from another file
+          images: getOpenGraphImages(data?.seoAndSome?.openGraphImage),
+        }}
+        twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+        }}
+      ></NextSeo>
+      <TopicPageLayout>
+        <HeroBanner>
+          <StyledHeading level="h1" size="2xl">
+            {data?.title}
+          </StyledHeading>
+        </HeroBanner>
+        <Image>{data?.heroImage && <HeroImage data={data?.heroImage} />}</Image>
+        {content}
+      </TopicPageLayout>
+    </>
   )
 }
 
