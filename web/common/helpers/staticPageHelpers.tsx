@@ -13,6 +13,24 @@ const getContentUrl = (locale: string, slug: string) => {
   return `${archiveSeverURL}/${locale}/${slug.replace(/\/$/, '')}.json`
 }
 
+const getLocalizedSlugs = async (locale: string, slug: string) => {
+  const localePath = locale === 'en' ? 'no' : 'en'
+  const contentUrl = getContentUrl(localePath, slug)
+  const response = await fetch(contentUrl)
+
+  if (response && response.status === 200) {
+    return {
+      en_GB: `en/${slug}`,
+      nb_NO: `no/${slug}`,
+    }
+  }
+
+  return {
+    en_GB: null,
+    nb_NO: null,
+  }
+}
+
 export const getPageData = async (locale: string, slug: string) => {
   if (!slug || slug === '') return null
 
@@ -22,9 +40,14 @@ export const getPageData = async (locale: string, slug: string) => {
   const response = await fetch(contentUrl)
 
   if (response && response.status === 200) {
+    const contentUrl = getContentUrl(locale, slug)
+    const response = await fetch(contentUrl)
+
     let pageData
     try {
       pageData = await response.json()
+      const allSlugs = await getLocalizedSlugs(locale, slug)
+      pageData = { ...pageData, allSlugs }
     } catch (err) {
       console.log('error', err)
       pageData = null
