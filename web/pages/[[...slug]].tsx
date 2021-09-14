@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           menuData,
         },
       },
-      revalidate: 1,
+      revalidate: 300,
     }
   }
 
@@ -118,7 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         menuData,
       },
     },
-    revalidate: 1,
+    revalidate: 120,
   }
 }
 
