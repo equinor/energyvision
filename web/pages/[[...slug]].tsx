@@ -14,13 +14,13 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
-import { Menu } from '../tempcomponents/shared/menu/Menu'
+import { Menu } from '../pageComponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { getPageData } from '../common/helpers/staticPageHelpers'
 
 // const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
-const TopicPage = dynamic(() => import('../tempcomponents/pageTemplates/TopicPage'))
-const OldTopicPage = dynamic(() => import('../tempcomponents/pageTemplates/OldTopicPage'))
+const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
+const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 
 const { publicRuntimeConfig } = getConfig()
 
