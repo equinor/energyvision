@@ -16,7 +16,7 @@ import getOpenGraphImages from '../common/helpers/getOpenGraphImages'
 import { mapLocaleToLang } from '../lib/localization'
 import { Menu } from '../pageComponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
-import { getPageData } from '../common/helpers/staticPageHelpers'
+import { getArchivedPageData } from '../common/helpers/staticPageHelpers'
 
 // const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -115,7 +115,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
   if (!pageData) {
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'
-    const archivedData = await getPageData(locale, slug)
+    const archivedData = await getArchivedPageData(locale, slug)
 
     return {
       props: {
