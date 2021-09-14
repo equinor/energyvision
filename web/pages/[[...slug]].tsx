@@ -11,11 +11,10 @@ import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import { mapLocaleToLang } from '../lib/localization'
-import { Menu } from '../pageComponents/shared/menu/Menu'
+import Menu from '../pageComponents/shared/menu/Menu'
 import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { getArchivedPageData } from '../common/helpers/staticPageHelpers'
 
-// const HomePage = dynamic(() => import('../tempcomponents/pageTemplates/Home'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 

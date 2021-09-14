@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import { Link } from '@components'
 import NextLink from 'next/link'
-import { Menu } from '../shared/menu/Menu'
+//import { Menu } from '../shared/menu/Menu'
 
 const Container = styled.main`
   flex: 1;
@@ -23,7 +23,7 @@ const Title = styled.h1`
 export default function Home(): JSX.Element {
   return (
     <>
-      <Menu />
+      {/*  <Menu /> */}
       <Container>
         <Head>
           <title>EnergyVision</title>
