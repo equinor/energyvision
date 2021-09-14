@@ -28,7 +28,7 @@ const getLocalizedSlugs = async (locale: string, slug: string) => {
   }
 }
 
-export const getPageData = async (locale: string, slug: string) => {
+export const getArchivedPageData = async (locale: string, slug: string) => {
   if (!slug || slug === '') return null
 
   /** Check if the required page is old archived AEM page or not
