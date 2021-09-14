@@ -1,0 +1,15 @@
+{
+  "name": "@equinor/energyvision-legacy-js",
+  "version": "1.0.0",
+  "description": "Scripts from the AEM version of equinor.com",
+  "main": "dist/js/legacy.minified.js",
+  "files": [
+    "dist/*"
+  ],
+  "author": "Equinor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/equinor/energyvision/issues"
+  },
+  "homepage": "https://github.com/equinor/energyvision/"
+}
