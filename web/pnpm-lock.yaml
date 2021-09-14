@@ -6,6 +6,7 @@ specifiers:
   '@equinor/eds-icons': ^0.6.2
   '@equinor/eds-tokens': ^0.6.0
   '@equinor/energyvision-legacy-css': ^1.0.0
+  '@equinor/energyvision-legacy-js': workspace:^1.0.0
   '@microsoft/applicationinsights-react-js': ^3.1.5
   '@microsoft/applicationinsights-web': ^2.6.5
   '@next/bundle-analyzer': ^11.1.2
@@ -55,6 +56,7 @@ dependencies:
   '@equinor/eds-icons': 0.6.2
   '@equinor/eds-tokens': 0.6.0
   '@equinor/energyvision-legacy-css': 1.0.0
+  '@equinor/energyvision-legacy-js': link:../legacy/js
   '@microsoft/applicationinsights-react-js': 3.1.5_react@17.0.2
   '@microsoft/applicationinsights-web': 2.6.5
   '@next/bundle-analyzer': 11.1.2

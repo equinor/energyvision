@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
