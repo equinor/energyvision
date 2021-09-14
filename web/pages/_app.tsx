@@ -4,9 +4,9 @@ import { IntlProvider } from 'react-intl'
 import { GlobalStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
 /* import MenuProvider from '../tempcomponents/shared/menu/MenuProvider' */
-
+/* 
 import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
-import { reactPlugin } from '../common'
+import { reactPlugin } from '../common' */
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const router = useRouter()
@@ -18,24 +18,24 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   // TODO: get locale from Sanity
   return (
     <>
-      <AppInsightsErrorBoundary onError={() => <h1>I believe something went wrong</h1>} appInsights={reactPlugin}>
-        <AppInsightsContext.Provider value={reactPlugin}>
-          <IntlProvider locale={locale} defaultLocale={defaultLocale}>
-            {/*       <MenuProvider> */}
+      {/*   <AppInsightsErrorBoundary onError={() => <h1>I believe something went wrong</h1>} appInsights={reactPlugin}>
+        <AppInsightsContext.Provider value={reactPlugin}> */}
+      <IntlProvider locale={locale} defaultLocale={defaultLocale}>
+        {/*       <MenuProvider> */}
 
-            {/* 
+        {/* 
                 @TODO: Figure out a way of not rendering this on Sanity pages
                 See: isArchivePage at'../lib/archive/archiveUtils'
               */}
 
-            <GlobalStyle />
-            <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+        <GlobalStyle />
+        <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
-            {getLayout(<Component {...pageProps} />)}
-            {/*      </MenuProvider> */}
-          </IntlProvider>
-        </AppInsightsContext.Provider>
-      </AppInsightsErrorBoundary>
+        {getLayout(<Component {...pageProps} />)}
+        {/*      </MenuProvider> */}
+      </IntlProvider>
+      {/*      </AppInsightsContext.Provider>
+      </AppInsightsErrorBoundary> */}
     </>
   )
 }

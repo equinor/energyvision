@@ -12,15 +12,15 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import { mapLocaleToLang } from '../lib/localization'
 import Menu from '../pageComponents/shared/menu/Menu'
-import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
+/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { getArchivedPageData } from '../common/helpers/staticPageHelpers'
 
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 
 export default function Page({ data, preview }: any) {
-  const appInsights = useAppInsightsContext()
-  const router = useRouter()
+  /*   const appInsights = useAppInsightsContext()
+   */ const router = useRouter()
   const slug = data?.pageData?.slug
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
@@ -32,7 +32,7 @@ export default function Page({ data, preview }: any) {
     return <ErrorPage statusCode={404} />
   }
 
-  appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
+  //appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
 
   if (data?.isArchivedFallback) {
     return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={data.pageData} />}</>

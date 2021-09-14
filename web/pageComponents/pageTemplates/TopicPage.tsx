@@ -14,6 +14,7 @@ import TextWithIconArray from '../topicPages/TextWithIconArray'
 import PageQuote from '../topicPages/PageQuote'
 import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
+
 import {
   TeaserData,
   TextBlockData,
