@@ -16,9 +16,10 @@ const getLocalizedSlugs = async (locale: string, slug: string) => {
   const response = await fetch(contentUrl)
 
   if (response && response.status === 200) {
+    const path = slug.replace(/\//g, '')
     return {
-      en_GB: `en/${slug}`,
-      nb_NO: `no/${slug}`,
+      en_GB: `en/${path}`,
+      nb_NO: `no/${path}`,
     }
   }
 
