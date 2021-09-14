@@ -12,7 +12,6 @@ const scss = require('gulp-sass'),
   iconfont = require('gulp-iconfont'),
   consolidate = require('gulp-consolidate'),
   concat = require('gulp-concat'),
-  rename = require('gulp-rename'),
   del = require('del'),
   // eslint-disable-next-line no-unused-vars
   _ = require('lodash')

@@ -6,10 +6,24 @@
   "files": [
     "dist/*"
   ],
+  "scripts": {
+    "build": "gulp default"
+  
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equinor/energyvision.git"
+  },
   "author": "Equinor",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/equinor/energyvision/issues"
   },
-  "homepage": "https://github.com/equinor/energyvision/"
+  "homepage": "https://github.com/equinor/energyvision",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "readable-stream": "3.6.0",
+    "gulp-uglify": "3.0.2",
+    "gulp-concat":"2.6.1"
+  }
 }
