@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import type { AppProps } from 'next/app'
 import ErrorPage from 'next/error'
-import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
-import { GetStaticProps, GetStaticPaths } from 'next'
+/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
+ */ import { GetStaticProps, GetStaticPaths } from 'next'
 import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
 import { Layout, Heading, FormattedDateTime } from '@components'
@@ -163,7 +163,7 @@ type ArticleProps = {
 
 export default function News({ data, preview }: ArticleProps): JSX.Element {
   const router = useRouter()
-  const appInsights = useAppInsightsContext()
+  /*  const appInsights = useAppInsightsContext() */
   const slug = data?.news?.slug
   /** TODO: Find out why the first time News is called it is without data */
   if (!data) {
@@ -191,7 +191,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
   const modifiedDate = isDateAfter(news.publishDateTime, news.updatedAt) ? news.publishDateTime : news.updatedAt
 
-  appInsights.trackPageView({ name: slug, uri: fullUrl })
+  /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
 
   return (
     <>
