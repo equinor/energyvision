@@ -45,22 +45,7 @@ export default function Page({ data, preview }: any) {
   appInsights.trackPageView({ name: slug, uri: fullUrl })
 
   if (data?.isArchivedFallback) {
-    if (!data.pageData.content) {
-      return <ErrorPage statusCode={404} />
-    }
-
-    return (
-      <>
-        {router.isFallback ? (
-          <p>Loading…</p>
-        ) : (
-          <>
-            <NextSeo title={data.pageData?.title} description={data.pageData?.description}></NextSeo>
-            <OldTopicPage data={data.pageData} />
-          </>
-        )}
-      </>
-    )
+    return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={data.pageData} />}</>
   }
 
   return (
