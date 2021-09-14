@@ -1,6 +1,6 @@
 {
   "name": "@equinor/energyvision-legacy-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scripts from the AEM version of equinor.com",
   "main": "dist/js/legacy.minified.js",
   "files": [
