@@ -34,16 +34,6 @@ export type MenuProps = {
   }
 }
 
-/* const fetchTopLevel = (route: string) => {
-  if (!route) return null
-  const path = route.split('/')
-  return path[1]
-}
- */
-/* const getInitialMenuItem = (router: any) => {
-  return fetchTopLevel(router.asPath)
-}
- */
 export const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
   const router = useRouter()
@@ -59,19 +49,6 @@ export const Menu = ({ slugs, data }: MenuProps) => {
   const localization = {
     activeLocale: router.locale || 'en',
   }
-
-  /* const handleRouteChange = useCallback((url) => {
-    closeMenu()
-    removeActive()
-
-    setActiveMenuItem(fetchTopLevel(url))
-  }, [])
- */
-  // @TODO: We need something like this to do things when the user navigates
-  /*   useEffect(() => {
-    router.events.on('routeChangeComplete', (url) => handleRouteChange(url))
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange]) */
 
   const menuItems = (data && data.subMenus) || []
   return (

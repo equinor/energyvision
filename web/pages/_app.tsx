@@ -27,15 +27,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <AppInsightsContext.Provider value={reactPlugin}>
           <IntlProvider locale={locale} defaultLocale={defaultLocale}>
             {/*       <MenuProvider> */}
-            <Head>
-              {/* TODO: load the font in a better way */}
-              {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-font.css" /> */}
-              <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" />
-
-              <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
-              <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-            </Head>
-            {/* TODO: Find out why this works in the news-archive branch and not here */}
 
             {/* 
                 @TODO: Figure out a way of not rendering this on Sanity pages
