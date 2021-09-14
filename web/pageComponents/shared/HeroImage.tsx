@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { FigureCaption } from '@components'
 import type { ImageWithCaptionData } from '../../types/types'
-import Image from '../shared/Image'
+import Image from './Image'
 
 type HeroImageProps = {
   data: ImageWithCaptionData

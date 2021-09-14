@@ -1,5 +1,5 @@
 import { PullQuote } from '@components'
-import Image from '../shared/Image'
+import Image from './Image'
 import type { QuoteData } from '../../types/types'
 
 const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: { data: QuoteData }) => (

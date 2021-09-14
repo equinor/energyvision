@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import type { PageSchema } from '../../types/types'
 import { Heading } from '@components'
-import HeroImage from '../../tempcomponents/shared/HeroImage'
+import HeroImage from '../shared/HeroImage'
 import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
 import FullWidthImage from '../topicPages/FullWidthImage'

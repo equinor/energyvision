@@ -2,7 +2,7 @@
 
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import styled from 'styled-components'
-import Image from '../../tempcomponents/shared/Image'
+import Image from '../../pageComponents/shared/Image'
 
 const Figure = styled.figure``
 

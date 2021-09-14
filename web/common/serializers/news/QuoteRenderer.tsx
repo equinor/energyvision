@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import type { QuoteData } from '../../../types/types'
-import Quote from '../../../tempcomponents/shared/Quote'
+import Quote from '../../../pageComponents/shared/Quote'
 
 const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small) 0 var(--layout-paddingHorizontal-medium);
