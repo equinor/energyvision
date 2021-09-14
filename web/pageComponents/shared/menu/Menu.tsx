@@ -34,7 +34,7 @@ export type MenuProps = {
   }
 }
 
-export const Menu = ({ slugs, data }: MenuProps) => {
+const Menu = ({ slugs, data }: MenuProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
   const router = useRouter()
   /* const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu() */
@@ -73,3 +73,4 @@ export const Menu = ({ slugs, data }: MenuProps) => {
     </>
   )
 }
+export default Menu

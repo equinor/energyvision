@@ -5,8 +5,6 @@ import { generic } from './generic'
 import { elements } from './elements'
 
 export const GlobalStyle = createGlobalStyle`
-
-
   ${colors}
   ${typography}
   ${spacings}

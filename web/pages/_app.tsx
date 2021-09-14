@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
             <GlobalStyle />
             <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
-            {/* <Component {...pageProps} /> */}
             {getLayout(<Component {...pageProps} />)}
             {/*      </MenuProvider> */}
           </IntlProvider>

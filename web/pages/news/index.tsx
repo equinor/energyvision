@@ -9,7 +9,7 @@ import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
 import type { NewsSchema } from '../../types/types'
 import NewsCard from '../../pageComponents/news/NewsCard'
-import { Menu } from '../../pageComponents/shared/menu/Menu'
+import Menu from '../../pageComponents/shared/menu/Menu'
 import { mapLocaleToLang } from '../../lib/localization'
 
 const { Title, Header, Action } = Card
