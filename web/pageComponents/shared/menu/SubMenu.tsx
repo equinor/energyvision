@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import { Link, List, Heading } from '@components'
@@ -62,19 +63,20 @@ function getLink(linkData: MenuLinkData) {
   }
 }
 
-// @TODO: No, we will not do it like this!
-/*   const openMenuItem = (linkName: string) => {
-    openMenu()
-    setActive(linkName)
-  }
-  const closeMenuItem = (linkName: string) => {
-    removeActive()
+const fetchTopLevel = (route: string) => {
+  if (!route) return null
+  const path = route.split('/')
+  return path[1]
+}
 
-    closeMenu()
-  } */
+/* const getInitialMenuItem = (router: any) => {
+  return fetchTopLevel(router.asPath)
+}
+ */
 
 export const SubMenu = (topLevelItem: any) => {
   const [open, setOpen] = useState(false)
+  const router = useRouter()
   const { topLevelLink, group } = topLevelItem
   const topLevelHref = getLink(topLevelLink)
   /* const activePanel = isOpen && getActiveMenuItem === topLevelLink.label */
@@ -85,6 +87,18 @@ export const SubMenu = (topLevelItem: any) => {
   const closeMenuItem = () => {
     setOpen(false)
   }
+
+  const handleRouteChange = useCallback(() => {
+    setOpen(false)
+
+    // setActiveMenuItem(fetchTopLevel(url))
+  }, [])
+
+  // @TODO: We need something like this to do things when the user navigates
+  useEffect(() => {
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
+  }, [router.events, handleRouteChange])
 
   return (
     <TopLevelItem onMouseEnter={openMenuItem} onMouseLeave={closeMenuItem}>
