@@ -1,7 +1,4 @@
 import getConfig from 'next/config'
-import type { AppProps } from 'next/app'
-import { Layout } from '@components'
-import { Menu } from '../../pageComponents/shared/menu/Menu'
 
 const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
