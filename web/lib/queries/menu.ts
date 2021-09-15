@@ -5,6 +5,7 @@ export const menuQuery = /* groq */ `
     "topLevelLink": {
       label,
       "isStatic": coalesce(isStatic, false),
+      "isDisabled": coalesce(isDisabled, false),
   		"link": reference-> {
         "type": _type,
         "slug": slug.current,

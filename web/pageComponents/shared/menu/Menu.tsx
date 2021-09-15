@@ -62,6 +62,8 @@ const Menu = ({ slugs, data }: MenuProps) => {
           {menuItems && (
             <TopLevelList unstyled>
               {menuItems.map((topLevelItem: any) => {
+                console.log(topLevelItem)
+                if (topLevelItem?.topLevelLink.isDisabled) return null
                 return <SubMenu key={topLevelItem.id} {...topLevelItem} />
               })}
             </TopLevelList>
