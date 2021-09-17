@@ -25,6 +25,7 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
         {archivedStyles}
       </style>
       <div
+        className="legacyStyles"
         dangerouslySetInnerHTML={{
           __html: data?.content,
         }}
