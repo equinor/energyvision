@@ -59,6 +59,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
             }}
           />
           <div
+            className="legacyStyles"
             dangerouslySetInnerHTML={{
               __html: data?.news?.content,
             }}
