@@ -87,8 +87,8 @@ $md-base-padding:calc(10rem / 1.6);
       }
 
       @include susy-breakpoint($screen-md, $susy) {
-        padding-left: 15rem;
-        padding-right: 15rem;
+        padding-left: calc(15rem/1.6);
+        padding-right: calc(15rem/1.6);
       }
 
     }
@@ -435,7 +435,7 @@ $md-base-padding:calc(10rem / 1.6);
   .slider.parsys_column.align-buttons.colctrl-2c,
   .slider.parsys_column.align-buttons.colctrl-3c,
   .slider.parsys_column.align-buttons.colctrl-4c,
-  .slider.parsys_column.align-buttons.colctrl-5c,
+  .slider.parsys_column.align-buttons.colctrl-5c
    {
     display: flex;
     height: 100%;

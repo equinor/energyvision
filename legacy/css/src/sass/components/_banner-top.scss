@@ -1,28 +1,28 @@
 //  Banner top variables
 //  ---------------------------------------------------------------------------------------
 
-$banner-height-xs: 29rem;
-$banner-height-s: 45rem;
-$banner-height-sm: 45rem;
-$banner-height-md: 45rem;
-$banner-height-lg: 47rem;
-$banner-height-xl: 50rem;
-$banner-height-1600: 48rem;
-$banner-height-1800: 53rem;
-$banner-height-2000: 60rem;
-$banner-height-2200: 67rem;
-$banner-height-2500: 73rem;
+$banner-height-xs: calc(29rem/1.6);
+$banner-height-s: calc(45rem/1.6);
+$banner-height-sm: calc(45rem/1.6);
+$banner-height-md: calc(45rem/1.6);
+$banner-height-lg: calc(47rem/1.6);
+$banner-height-xl: calc(50rem/1.6);
+$banner-height-1600: calc(48rem/1.6);
+$banner-height-1800: calc(53rem/1.6);
+$banner-height-2000: calc(60rem/1.6);
+$banner-height-2200: calc(67rem/1.6);
+$banner-height-2500: calc(73rem/1.6);
 
-$banner-videoplayer-height-xs: 43rem;
-$banner-videoplayer-height-sm: 54rem;
-$banner-videoplayer-height-md: 56rem;
-$banner-videoplayer-height-lg: 63rem;
-$banner-videoplayer-height-xl: 72rem;
-$banner-videoplayer-height-1600: 100rem;
-$banner-videoplayer-height-1800: 100rem;
-$banner-videoplayer-height-2000: 100rem;
-$banner-videoplayer-height-2200: 100rem;
-$banner-videoplayer-height-2500: 100rem;
+$banner-videoplayer-height-xs: calc(43rem/1.6);
+$banner-videoplayer-height-sm: calc(54rem/1.6);
+$banner-videoplayer-height-md: calc(56rem/1.6);
+$banner-videoplayer-height-lg: calc(3rem/1.6);
+$banner-videoplayer-height-xl: calc(72rem/1.6);
+$banner-videoplayer-height-1600: calc(100rem/1.6);
+$banner-videoplayer-height-1800: calc(100rem/1.6);
+$banner-videoplayer-height-2000: calc(100rem/1.6);
+$banner-videoplayer-height-2200: calc(100rem/1.6);
+$banner-videoplayer-height-2500: calc(100rem/1.6);
 
 $clip: polygon(0 0, 0% 100%, 100% 69%, 100% 0);
 
@@ -79,7 +79,7 @@ $banner-color: #FFF;
       bottom: auto;
       @include susy-breakpoint($screen-md, $susy) {
         position: absolute;
-        bottom: -5rem;
+        bottom: calc(-5rem/1.6);
       }
     }
   }
@@ -166,11 +166,11 @@ $banner-color: #FFF;
       color: $banner-color;
 
       &.shadow {
-        text-shadow: .1rem .1rem 0 rgba(0,0,0,.75);
+        text-shadow: calc(.1rem/1.6) calc(.1rem/1.6) 0 rgba(0,0,0,.75);
       }
 
       &.light-shadow {
-        text-shadow: .1rem .1rem 0 rgba(255,255,255,.75);
+        text-shadow: calc(.1rem/1.6) calc(.1rem/1.6) 0 rgba(255,255,255,.75);
       }
 
       &.alternate {
@@ -180,8 +180,8 @@ $banner-color: #FFF;
 
     span.tagline {
       display: block;
-      font-size: 2rem;
-      line-height: 2rem;
+      font-size: calc(2rem/1.6);
+      line-height: calc(2rem/1.6);
     }
 
     img {
@@ -204,7 +204,7 @@ $banner-color: #FFF;
        .banner-content{
           position: absolute;
           margin: auto;
-          padding: 0 5rem;
+          padding: 0 calc(5rem/1.6);
           width: 100%;
           text-align: center;
 
@@ -220,35 +220,35 @@ $banner-color: #FFF;
 
               &:before {
                 color:white;
-                font-size: 15rem;
+                font-size: calc(15rem/1.6);
                 content: '\201D';
                 display: block;
                 position: relative;
-                margin-top: 5.5rem;
+                margin-top: calc(5.5rem/1.6);
                 text-align: left;
                 height: 0;
-                line-height: 2rem;
+                line-height: calc(2rem/1.6);
                 float: left;
              }
 
               @include susy-breakpoint($screen-xs, $susy) {
-                padding-left: 12rem;
-                padding-right: 12rem;
-                  h1 { padding-left: 9rem; }
+                padding-left: calc(12rem/1.6);
+                padding-right: calc(12rem/1.6);
+                  h1 { padding-left: calc(9rem/1.6); }
                 }
 
                 @include susy-breakpoint($screen-sm, $susy) {
-                  padding-left: 18rem;
-                  padding-right: 18rem;
+                  padding-left: calc(18rem/1.6);
+                  padding-right: calc(18rem/1.6);
                 }
 
                 @include susy-breakpoint($screen-lg, $susy) {
-                  padding-left: 30rem;
-                  padding-right: 30rem;
+                  padding-left: calc(30rem/2.02);
+                  padding-right: calc(30rem/2.02);
                 }
 
                 h3 {
-                  padding-left: 9rem;
+                  padding-left: calc(9rem/1.6);
                   text-transform: uppercase;
                 }
             }
@@ -268,12 +268,12 @@ $banner-color: #FFF;
 
         h3 {
             text-transform: uppercase;
-            margin:0.5rem 0;
+            margin:calc(0.5rem/1.6) 0;
 
         }
 
         h1 {
-            margin:0.5rem 0;
+            margin:calc(0.5rem/1.6) 0;
         }
       }
     }
@@ -297,15 +297,15 @@ $banner-color: #FFF;
 
     }
     @include susy-breakpoint($screen-sm, $susy) {
-      bottom: 5rem;
+      bottom: calc(5rem/1.6);
       .responsive-small {
         @include span(4 nest);
         margin-left: 33.33333%;
       }
     }
-    @include susy-breakpoint($screen-xl, $susy) { bottom: 6rem; }
-    @include susy-breakpoint($screen-1600, $susy) { bottom: 8rem; }
-    @include susy-breakpoint($screen-1800, $susy) { bottom: 10rem; }
+    @include susy-breakpoint($screen-xl, $susy) { bottom: calc(6rem/1.6); }
+    @include susy-breakpoint($screen-1600, $susy) { bottom: calc(8rem/1.6); }
+    @include susy-breakpoint($screen-1800, $susy) { bottom: calc(10rem/2.02); }
 
     .component-container {
       margin-bottom: 0 !important;
@@ -315,7 +315,7 @@ $banner-color: #FFF;
 
   .banner-top_video_ingress{
     @include Equinor-Medium;
-    padding: gutters(5rem) 0;
+    padding: gutters(calc(5rem/1.6)) 0;
 
     @include susy-breakpoint($screen-xs, $susy){
       //width: 28rem;
@@ -403,21 +403,21 @@ $banner-color: #FFF;
     @include susy-breakpoint($screen-xs, $susy) {
       margin: auto;
       width: 100%;
-      padding: 1rem;
+      padding: calc(1rem/1.6);
       position: absolute;
       bottom: 0;
       text-align: center;
       background: $bottombar-background;
       opacity:0.5;
       color:$bottombar-color;
-      font-size: 1.3rem;
+      font-size: calc(1.3rem/1.6);
       line-height: 1;
-      i { font-size:2rem; }
+      i { font-size:calc(2rem/1.6); }
     }
 
     @include susy-breakpoint($screen-sm, $susy) {
-      font-size: 1.5rem;
-      line-height: 2.6rem;
+      font-size: calc(1.5rem/1.6);
+      line-height: calc(2.6rem/1.6);
     }
 
     .author, .tags, .date { @include span(4 nest); }
@@ -436,9 +436,9 @@ $banner-color: #FFF;
 .content-separator {
   width: 100%;
   display: block;
-  font-size: 2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  font-size: calc(2rem/1.6);
+  padding-top: calc(1rem/1.6);
+  padding-bottom: calc(1rem/1.6);
   background-color: $secondary-color;
   text-align: center;
   color: #FFF;
@@ -456,7 +456,7 @@ $banner-color: #FFF;
   position: absolute;
   bottom: -18%;
   @include susy-breakpoint($screen-sm, $susy) {
-    bottom: -5rem;
+    bottom: calc(-5rem/1.6);
   }
 
   &.edit {
@@ -498,7 +498,7 @@ $banner-color: #FFF;
   .parsys_column.colctrl-6c,
   .parsys_column.colctrl-7c {
 
-    max-width: 140rem;
+    max-width: calc(140rem/1.6);
     margin: 0 auto;
     padding-left: 0;
     padding-right: 0;
@@ -506,18 +506,18 @@ $banner-color: #FFF;
 
     // Add padding on each side
     @include susy-breakpoint($screen-xs, $susy) {
-      padding-left: 3rem;
-      padding-right: 3rem;
+      padding-left: calc(3rem/1.6);
+      padding-right: calc(3rem/1.6);
     }
 
     @include susy-breakpoint($screen-sm, $susy) {
-      padding-left: 10rem;
-      padding-right: 10rem;
+      padding-left: calc(10rem/1.6);
+      padding-right: calc(10rem/1.6);
     }
 
     @include susy-breakpoint($screen-md, $susy) {
-      padding-left: 15rem;
-      padding-right: 15rem;
+      padding-left: calc(15rem/2.02);
+      padding-right: calc(15rem/2.02);
     }
 
   }
@@ -526,7 +526,7 @@ $banner-color: #FFF;
   .colctrl-2c-c1,
   .colctrl-2c-c0 {
 
-    margin: 1rem 0;
+    margin: calc(1rem/1.6) 0;
     @include susy-breakpoint($screen-xs, $susy) {
       @include span(6);
     }
@@ -537,7 +537,7 @@ $banner-color: #FFF;
   .colctrl-3c-c1,
   .colctrl-3c-c2 {
 
-    margin: 1rem 0;
+    margin: calc(1rem/1.6) 0;
     @include susy-breakpoint($screen-xs, $susy) {
       @include span(4);
     }
@@ -549,7 +549,7 @@ $banner-color: #FFF;
   .colctrl-4c-c2,
   .colctrl-4c-c3 {
 
-    margin: 1rem 0;
+    margin: calc(1rem/1.6) 0;
     @include susy-breakpoint($screen-xs, $susy) {
       @include span(3);
     }

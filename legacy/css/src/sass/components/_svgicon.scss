@@ -18,9 +18,9 @@
     }
   }
 
-  .small { width:5rem; }
-  .normal { width:10rem; }
-  .medium { width:15rem; }
+  .small { width:calc(5rem/1.6); }
+  .normal { width:calc(10rem/1.6); }
+  .medium { width:calc(15rem/1.6); }
   .large { @include span(12 nest); }
 
   .responsive-small{
@@ -43,15 +43,15 @@
   .figure-module_reference {
     @include span(12 nest);
     float:left;
-    font-size: 1.5rem;
-    line-height: 2.6rem;
+    font-size: calc(1.5rem/1.6);
+    line-height: calc(2.6rem/1.6);
     color: #B8B8B8;
-    margin-top:1rem;
+    margin-top:calc(1rem/1.6);
 
     .figure-module_reference-icon {
       color:$primary-color;
-      font-size:1.7rem;
-      margin-right:0.4rem;
+      font-size:calc(1.7rem/1.6);
+      margin-right:calc(0.4rem/1.6);
     }
   }
 
@@ -59,8 +59,8 @@
     @include span(12 nest);
     @include Equinor-Light;
     float: left;
-    font-size: 1.5rem;
-    line-height: 2.6rem;
+    font-size: calc(1.5rem/1.6);
+    line-height: calc(2.6rem/1.6);
     color: #333;
   }
 }

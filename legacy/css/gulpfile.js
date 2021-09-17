@@ -13,7 +13,7 @@ const scss = require('gulp-sass'),
   consolidate = require('gulp-consolidate'),
   concat = require('gulp-concat'),
   del = require('del'),
-  // eslint-disable-next-line no-unused-vars
+  replace = require('gulp-replace')
   _ = require('lodash')
 
 scss.compiler = require('node-sass')
@@ -57,11 +57,13 @@ const fontName = 'equinor_icons'
 // Delete dist folder
 gulp.task('clean', () => del(['./dist/']))
 
+gulp.task('clean-intermediates', () => del(['./dist/*.css']))
+
 gulp.task('compass-minify', () =>
 gulp.src(['dist/legacy.css','dist/equinor-icons.css'])
     .pipe(minifyCSS())
     .pipe(concat('legacy.minified.css'))
-    .pipe(gulp.dest('dist/css')),
+    .pipe(gulp.dest('dist/css'))
 )
 // Copy static files to dist
 gulp.task('copy-static-files', function () {
@@ -85,13 +87,16 @@ gulp.task('Iconfont', () =>
     )
     .on('glyphs', function (glyphs, options) {
       console.log(glyphs, options)
-      gulp.src('src/sass/icons/equinor-icons.css').pipe(
+      gulp.src('src/sass/icons/equinor-icons.scss').pipe(
         consolidate('lodash', {
           glyphs: glyphs,
           fontName: fontName,
           className: 'si',
         }),
       )
+      .pipe(scss(scssSettings)) 
+      .pipe(autoprefixer()) 
+      .pipe(replace('@charset "UTF-8";', ''))
       .pipe(gulp.dest('dist'))
     })
     .pipe(gulp.dest('dist/static/fonts'))
@@ -101,7 +106,7 @@ gulp.task('Iconfont', () =>
 //  ---------------------------------------------------------------------------------------
 
 // Default Task
-gulp.task('default', gulp.series('clean', gulp.parallel('compass-unminified', 'Iconfont', 'copy-static-files'),'compass-minify'))
+gulp.task('default', gulp.series('clean', gulp.parallel('compass-unminified', 'Iconfont', 'copy-static-files'),'compass-minify','clean-intermediates'))
 
 // Watch Task
 gulp.task('watch', () => gulp.watch(['src/sass/*.scss', 'src/sass/**/*.scss'], ['compass-minify']))

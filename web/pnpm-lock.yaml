@@ -55,7 +55,7 @@ dependencies:
   '@equinor/eds-core-react': 0.13.1_dffd0ceb4cf9d0bf8f8651e8aaf0990e
   '@equinor/eds-icons': 0.7.0
   '@equinor/eds-tokens': 0.6.0
-  '@equinor/energyvision-legacy-css': 1.0.0
+  '@equinor/energyvision-legacy-css': 1.0.1
   '@equinor/energyvision-legacy-js': 1.0.1
   '@microsoft/applicationinsights-react-js': 3.2.0_react@17.0.2
   '@microsoft/applicationinsights-web': 2.7.0
@@ -1813,8 +1813,8 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@equinor/energyvision-legacy-css/1.0.0:
-    resolution: {integrity: sha512-Z0qwwRI32fg1XlZvKT1dCNH7hRI4YiVDaNk4MtrmL2/GekKrlf5eWqmCipCcjAFaBPHoz0OhDH6Y4QVE5ULqSQ==}
+  /@equinor/energyvision-legacy-css/1.0.1:
+    resolution: {integrity: sha512-BsIrBCbkMrcVk5q7kYqqdZ4dtHQnjYU94F/qbPzhhFIe6mv/Ot9kVogp7AH/kfaOYXTCiQnSLlKSv9dh7ni9WA==}
     dependencies:
       del: 6.0.0
       gulp-rename: 2.0.0
@@ -6259,7 +6259,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       globby: 11.0.4
-      graceful-fs: 4.2.6
+      graceful-fs: 4.2.8
       is-glob: 4.0.1
       is-path-cwd: 2.2.0
       is-path-inside: 3.0.3
@@ -7526,10 +7526,6 @@ packages:
       pify: 4.0.1
       slash: 2.0.0
     dev: true
-
-  /graceful-fs/4.2.6:
-    resolution: {integrity: sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==}
-    dev: false
 
   /graceful-fs/4.2.8:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}

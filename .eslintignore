@@ -3,3 +3,4 @@ storybook-static
 .next
 studio/dist
 legacy/js/src
+legacy/css

@@ -64,8 +64,6 @@
 
   //  Components
   @import 'components/dynamic-media';
-  @import 'components/navigation';
-  @import 'components/navigation-search-and-language';
   @import 'components/image';
   @import 'components/button';
   @import 'components/banner-top';
@@ -105,8 +103,6 @@
   @import 'components/basic-accordion';
   @import 'components/quicklist';
   @import 'components/tablev2';
-  @import 'components/newsroomlistv2';
-  @import 'components/site-switch';
   @import 'components/tabs';
 
   //  Modules
@@ -121,7 +117,7 @@
   @import 'modules/cookiebot-consent-container';
   @import 'modules/aos';
   @import 'modules/slider';
-
   // Archive
   @import 'archive/news';
 }
+
