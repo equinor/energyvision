@@ -6,6 +6,10 @@ import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 import Menu from '../../../pageComponents/shared/menu/Menu'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// TODO fix the eslint issues
+import archivedStyles from '@equinor/energyvision-legacy-css'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -40,6 +44,9 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
         // @TODO: SEO stuffs
         // @TODO: Menu
         <>
+          <style jsx global>
+            {archivedStyles}
+          </style>
           <Menu />
           <NextSeo
             title={data?.news?.title}
