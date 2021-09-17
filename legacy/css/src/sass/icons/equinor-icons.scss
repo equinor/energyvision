@@ -12,6 +12,6 @@
 
 <% _.each(glyphs, function(glyph) { %>
                                     .<%= className %>-<%= glyph.name %>:before {
-  content: "\<%= glyph.unicode[0].charCodeAt(0).toString(16).toUpperCase() %>";
+  content: unquote('"\<%= glyph.unicode[0].charCodeAt(0).toString(16).toUpperCase() %>"');
 }
 <% }); %>
