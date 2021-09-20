@@ -24,7 +24,7 @@ RUN rm -rf ./legacy
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
-RUN pnpm install --recursive # --frozen-lockfile
+RUN pnpm install --recursive
 RUN pnpm web build
 
 FROM mhart/alpine-node:14
