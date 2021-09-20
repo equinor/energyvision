@@ -1,6 +1,6 @@
 FROM mhart/alpine-node:14 AS builder
 
-RUN apk add --no-cache libc6-compat && \
+RUN apk add --no-cache libc6-compat jq moreutils && \
   npm install -g pnpm@6.11.5
 
 WORKDIR /opt/app
@@ -11,10 +11,20 @@ COPY ./tsconfig.base.json ./
 COPY ./pnpm-workspaces.yaml ./
 
 COPY ./web ./web
+COPY ./legacy ./legacy
+
+# Replace workspace:* with the actual versions
+RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
+  jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
+  ./web/package.json | sponge ./web/package.json
+RUN version=$(jq --raw-output .version ./legacy/js/package.json); \
+  jq --arg legacy_js "$version" '.dependencies["@equinor/energyvision-legacy-js"] = $legacy_js' \
+  ./web/package.json | sponge ./web/package.json
+RUN rm -rf ./legacy
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
-RUN pnpm install -r --frozen-lockfile
+RUN pnpm install --recursive # --frozen-lockfile
 RUN pnpm web build
 
 FROM mhart/alpine-node:14
