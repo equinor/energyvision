@@ -1,49 +1,52 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.192.0/containers/typescript-node
 {
-	"name": "Node.js & TypeScript",
-	"build": {
-		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick a Node version: 12, 14, 16
-		"args": {
-			"VARIANT": "14"
-		}
-	},
+  "name": "Node.js & TypeScript",
+  "build": {
+    "dockerfile": "Dockerfile",
+    // Update 'VARIANT' to pick a Node version: 12, 14, 16
+    "args": {
+      "VARIANT": "14"
+    }
+  },
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {},
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "workbench.colorTheme": "NarutoDark"
+  },
 
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "coenraads.bracket-pair-colorizer",
+    "airyshift.spaces-inside-braces",
+    "pflannery.vscode-versionlens",
+    "jpoissonnier.vscode-styled-components",
+    "redhat.vscode-yaml",
+    "2gua.rainbow-brackets",
+    "esbenp.prettier-vscode",
+    "ms-vsliveshare.vsliveshare-pack",
+    "ms-vsliveshare.vsliveshare-audio",
+    "ms-vsliveshare.vsliveshare",
+    "vtrois.gitmoji-vscode",
+    "eamodio.gitlens",
+    "vsls-contrib.gistfs",
+    "editorconfig.editorconfig",
+    "ms-azuretools.vscode-docker",
+    "kamikillerto.vscode-colorize",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "eg2.vscode-npm-script",
+    "thomaz.preparing"
+  ],
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"dbaeumer.vscode-eslint",
-		"coenraads.bracket-pair-colorizer",
-		"airyshift.spaces-inside-braces",
-		"pflannery.vscode-versionlens",
-		"jpoissonnier.vscode-styled-components",
-		"redhat.vscode-yaml",
-		"2gua.rainbow-brackets",
-		"esbenp.prettier-vscode",
-		"ms-vsliveshare.vsliveshare-pack",
-		"ms-vsliveshare.vsliveshare-audio",
-		"ms-vsliveshare.vsliveshare",
-		"vtrois.gitmoji-vscode",
-		"eamodio.gitlens",
-		"vsls-contrib.gistfs",
-		"editorconfig.editorconfig",
-		"ms-azuretools.vscode-docker",
-		"kamikillerto.vscode-colorize",
-		"formulahendry.auto-rename-tag",
-		"formulahendry.auto-close-tag",
-		"eg2.vscode-npm-script"
-	],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [3000],
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [3000],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "pnpm m i",
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pnpm m i",
-
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "node"
+  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "node"
 }
