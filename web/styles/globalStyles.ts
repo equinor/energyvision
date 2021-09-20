@@ -15,8 +15,12 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Equinor, 'Open Sans', sans-serif;
   }
 
+`
 
-@font-face {
+// Due to performance, we load the Equinor font from the /public folder in the Next.js application
+// Since the Storybook uses the global styles as well, this is a separate global style constant
+export const GlobalFontStyle = createGlobalStyle`
+ @font-face {
   font-family: Equinor;
   font-style: normal;
   font-weight: 1 999;
@@ -26,5 +30,4 @@ export const GlobalStyle = createGlobalStyle`
         url(/fonts/equinor/EquinorVariable-VF.woff) format('woff-variations'),
         url(/fonts/equinor/Equinor-Regular.woff) format('woff');
 }
-
-`
+ `
