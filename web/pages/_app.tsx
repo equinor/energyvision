@@ -1,7 +1,7 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
 import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
-import { GlobalStyle } from '../styles/globalStyles'
+import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
 /* import MenuProvider from '../tempcomponents/shared/menu/MenuProvider' */
 /* 
@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
               */}
 
         <GlobalStyle />
+        <GlobalFontStyle />
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
         {getLayout(<Component {...pageProps} />)}
