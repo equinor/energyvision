@@ -30,8 +30,6 @@ gulp.task(
           'src/vendor/list.min.js',
           'src/vendor/moment.js',
           'src/vendor/moment-timezone-with-data-1970-2030.js',
-        ],
-        [
           'src/animations.js',
           'src/navigation.js',
           'src/modals.js',
@@ -42,7 +40,6 @@ gulp.task(
           'src/magazine.js',
           'src/cookiealert.js',
           'src/list.js',
-          'src/language-switch-module.js',
           'src/progress-button.js',
           'src/numbers.js',
           'src/magnific-popup-module.js',
