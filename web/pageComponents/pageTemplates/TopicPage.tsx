@@ -27,7 +27,7 @@ import {
   PromoTileArrayData,
 } from '../../types/types'
 
-const TopicPageLayout = styled.div`
+const TopicPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   /* @TODO: Find a good value here */
   --banner-paddingVertical: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);

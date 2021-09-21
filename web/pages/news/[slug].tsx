@@ -219,7 +219,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
       {router.isFallback ? (
         <p>Loading…</p>
       ) : (
-        <>
+        <main>
           <article>
             <NewsLayout>
               <Header>
@@ -266,7 +266,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               )}
             </NewsLayout>
           </article>
-        </>
+        </main>
       )}
     </>
   )
