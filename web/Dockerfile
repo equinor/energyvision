@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:14 AS builder
+FROM mhart/alpine-node:16 AS builder
 
 RUN apk add --no-cache libc6-compat jq moreutils && \
   npm install -g pnpm@6.11.5
@@ -27,7 +27,7 @@ ARG NEXT_PUBLIC_SANITY_DATASET
 RUN pnpm install --recursive
 RUN pnpm web build
 
-FROM mhart/alpine-node:14
+FROM mhart/alpine-node:16
 
 RUN apk add --no-cache libc6-compat && \
   npm install -g pnpm@6.11.5
