@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 /* import { useMenu } from './MenuProvider' */
 import type { MenuData } from '../../../types/types'
 
-const MenuWrapper = styled.div`
+const MenuWrapper = styled.nav`
   margin: 0 auto;
 
   a {

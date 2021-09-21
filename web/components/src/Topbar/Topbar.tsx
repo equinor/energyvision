@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { useState, useEffect, forwardRef, HTMLAttributes } from 'react'
 
-const Bar = styled.div`
+const Bar = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
