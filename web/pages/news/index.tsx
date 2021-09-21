@@ -21,7 +21,7 @@ const TempWrapper = styled.div`
   grid-column-gap: 2rem;
 `
 
-const Container = styled.div`
+const Container = styled.main`
   padding: var(--space-large);
 `
 
