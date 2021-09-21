@@ -4,6 +4,7 @@ import ErrorPage from 'next/error'
 // @ts-ignore
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css'
+import LegacyScriptLayout from '../LegacyScriptLayout'
 
 type OldTopicPageProps = {
   data: {
@@ -24,12 +25,14 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
       <style jsx global>
         {archivedStyles}
       </style>
+      <LegacyScriptLayout>
       <div
         className="legacyStyles"
         dangerouslySetInnerHTML={{
           __html: data?.content,
         }}
       />
+      </LegacyScriptLayout>
     </>
   )
 }
