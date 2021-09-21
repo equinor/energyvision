@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - 'web/components/**'
+      - 'web/.storybook/**'
+      - 'web/package.json'
+      - 'web/pnpm-lock.yaml'
 jobs:
   upload:
     runs-on: ubuntu-latest
