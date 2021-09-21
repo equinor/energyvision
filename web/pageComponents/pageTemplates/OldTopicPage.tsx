@@ -1,10 +1,10 @@
 import { NextSeo } from 'next-seo'
+import Script from 'next/script'
 import ErrorPage from 'next/error'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css'
-import LegacyScriptLayout from '../LegacyScriptLayout'
 
 type OldTopicPageProps = {
   data: {
@@ -22,17 +22,16 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
   return (
     <>
       <NextSeo title={data?.title} description={data?.description}></NextSeo>
+      <Script src="/legacy/legacy.minified.js" strategy="afterInteractive" />
       <style jsx global>
         {archivedStyles}
       </style>
-      <LegacyScriptLayout>
       <div
         className="legacyStyles"
         dangerouslySetInnerHTML={{
           __html: data?.content,
         }}
       />
-      </LegacyScriptLayout>
     </>
   )
 }
