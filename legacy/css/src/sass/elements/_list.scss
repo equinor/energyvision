@@ -44,7 +44,7 @@ ol {
       }
 
       li:before { // make the bullet points 50% smaller than default
-        content: '\2022';
+        content: unquote('"\2022"');
         font-size: calc(3.6rem / 1.6);
         vertical-align: sub;
         padding-right: calc(1rem / 1.6);

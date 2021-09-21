@@ -18,13 +18,13 @@
                 color: white;
             }
             &:before {
-                content: "\EA31";
+                content: unquote('"\EA31"');
             }
         }
 
         &__button--expanded .cmp-accordion__icon{
             &:before {
-                content: "\EA32";
+                content: unquote('"\EA32"');
             }
         }
         &__title {

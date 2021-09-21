@@ -221,7 +221,7 @@ $banner-color: #FFF;
               &:before {
                 color:white;
                 font-size: calc(15rem/1.6);
-                content: '\201D';
+                content: unquote('"\201D"');
                 display: block;
                 position: relative;
                 margin-top: calc(5.5rem/1.6);
