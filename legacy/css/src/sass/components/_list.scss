@@ -313,6 +313,14 @@ $list-bottom-border-color: #ddd;
         text-align: right;
         margin-top: 0;
       }
+
+      @include susy-breakpoint($screen-lg, $susy) {
+          >.btn{
+            padding: calc(1rem / 2.02) calc(3.5rem /3);
+          }
+      }
+
+
     }
 
     .item-meta {
