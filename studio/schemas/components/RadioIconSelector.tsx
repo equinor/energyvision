@@ -53,11 +53,14 @@ export const RadioIconSelector = ({
 }: RadioIconSelectorProps) => {
   const [value, setValue] = useState(currentValue || defaultValue)
 
-  const handleChange = useCallback((event) => {
-    const newValue = event.currentTarget.value
-    setValue(newValue)
-    onChange(PatchEvent.from(set(newValue)))
-  }, [])
+  const handleChange = useCallback(
+    (event) => {
+      const newValue = event.currentTarget.value
+      setValue(newValue)
+      onChange(PatchEvent.from(set(newValue)))
+    },
+    [onChange],
+  )
 
   return (
     <FormField label={type.title} description={type.description}>
