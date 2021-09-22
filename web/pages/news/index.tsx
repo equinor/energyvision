@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { allNewsQuery } from '../../lib/queries/news'
 import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
-import type { NewsSchema } from '../../types/types'
+import type { NewsSchema, MenuData } from '../../types/types'
 import NewsCard from '../../pageComponents/news/NewsCard'
 import Menu from '../../pageComponents/shared/menu/Menu'
 import { mapLocaleToLang } from '../../lib/localization'
@@ -28,12 +28,12 @@ const Container = styled.main`
 type AllNewsProps = {
   data: {
     allNews: NewsSchema[]
-    menuData: any
+    menuData: MenuData
   }
   preview?: boolean
 }
 
-export default function AllNews({ data, preview }: AllNewsProps): JSX.Element {
+export default function AllNews({ data }: AllNewsProps): JSX.Element {
   const router = useRouter()
   const { locale } = router
 
