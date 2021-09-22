@@ -2,7 +2,7 @@ name: Test accessibility with axe-core on Browserstack
 on:
   workflow_dispatch:
   schedule:
-  - cron:  '0 8 * * *'
+    - cron: '0 8 * * *'
 jobs:
   test_for_accessibility_issues:
     runs-on: ubuntu-latest
@@ -13,9 +13,9 @@ jobs:
         id: setup-browserstack-environment
         uses: browserstack/github-actions/setup-env@master
         with:
-          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          username: ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      - name: BrowserStack Local Tunnel Setup 🚇  # Invokes the setup-local action
+      - name: BrowserStack Local Tunnel Setup 🚇 # Invokes the setup-local action
         id: setup-local-browserstack-tunnel
         uses: browserstack/github-actions/setup-local@master
         with:
@@ -31,7 +31,7 @@ jobs:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
-              ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
@@ -41,6 +41,7 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
+          pnpm install --filter @equinor/energyvision-legacy-css --filter @equinor/energyvision-legacy-js
           pnpm web install
           pnpm e2e install
       - name: Build web application ⚙️
@@ -52,7 +53,7 @@ jobs:
       - name: Running test on BrowserStack 🔎
         id: execute-tests-on-browserstack
         run: pnpm e2e test
-      - name: BrowserStackLocal Stop ✋  # Terminating the BrowserStackLocal tunnel connection
+      - name: BrowserStackLocal Stop ✋ # Terminating the BrowserStackLocal tunnel connection
         id: stop-browserstack
         uses: browserstack/github-actions/setup-local@master
         with:
@@ -61,7 +62,7 @@ jobs:
         id: publish-to-slack
         uses: equinor/axe-slack-reporter@main
         with:
-          fileName: e2e/output/Chrome_envis_news_report.json  ## Temporary file name. Will use something more clever. Promise!
+          fileName: e2e/output/Chrome_envis_news_report.json ## Temporary file name. Will use something more clever. Promise!
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
