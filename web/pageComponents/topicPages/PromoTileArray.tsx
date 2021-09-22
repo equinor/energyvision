@@ -20,9 +20,16 @@ const Container = styled.div`
     grid-template-columns: 1fr 1fr;
   }
 `
+
+/**
+ * tokens.shape.corners.borderRadius is the value used by the EDS Card component
+ * Use same value from @equinor/eds-tokens to ensure consistency
+ */
+const StyledBackgroundContainer = styled(BackgroundContainer)`
+  border-radius: ${tokens.shape.corners.borderRadius};
+`
 const ImageWithRoundedUpperCorners = styled(Image)`
-  /*  Use the border radius from the tokens to ensure the same as on the Card itself */
-  border-radius: ${tokens.shape.button.borderRadius} ${tokens.shape.button.borderRadius} 0 0;
+  border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
 `
 
 const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
@@ -35,7 +42,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
         const { background } = designOptions
 
         return (
-          <BackgroundContainer background={background} key={id}>
+          <StyledBackgroundContainer background={background} key={id}>
             <Card type="promo" textOnly={!image}>
               {image && (
                 <Media>
@@ -57,7 +64,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
                 </Action>
               )}
             </Card>
-          </BackgroundContainer>
+          </StyledBackgroundContainer>
         )
       })}
     </Container>
