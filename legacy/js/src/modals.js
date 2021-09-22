@@ -102,7 +102,7 @@ function initialize(){
         closeOnBgClick: true,
         disableOn:1200,
         removalDelay: 300,
-        mainClass: 'mfp-slide',
+        mainClass: 'mfp-slide legacyStyles',
         callbacks: {
             beforeOpen: function() {
                 this.st.el.attr('aria-expanded', 'true')
@@ -126,30 +126,18 @@ function initialize(){
                 if(hash.indexOf("#") > -1) {
                     window.location.hash = "#" + hash.split('#')[1];
                 }
-
-                FoundationModule.initialize();
-                ServiceNowModule.initialize();
-                MailingListModule.initialize();
                 SlickCarousel.initialize();
-                /* This is used to load the date picker code in panel pages*/
-                storageRequestDatePickerInit();
-                /* This is used to load the show hide help text for career fair forms in panel pages*/
-                showHideCareerFairHelperText();
                 /* Disabling AOS as it doesn't have support on panel pages*/
                 AOS.init({disable: true});
                 /* Runs the cookiebot scripts to load the iframes on panel pages */
                 runCookiebotScripts();
-                $('.progress-button').progressInitialize();
-
                 setCloseButtonListener();
                 focusCloseButton();
                 MagnificPopupModule.scaleCloseButton();
                 onloadCallback();
-                window.numberAnimation('.mfp-slide');
-                window.initLazy();
                 window.initVisualList('.mfp-content');
             }
-        }
+        },
     });
     }
     return{
