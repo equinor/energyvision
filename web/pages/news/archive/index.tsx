@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Heading, Link, List, Layout } from '@components'
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import Menu from '../../../pageComponents/shared/menu/Menu'
 

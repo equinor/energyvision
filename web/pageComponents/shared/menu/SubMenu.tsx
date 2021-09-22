@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import { Link, List, Heading } from '@components'
-import type { MenuLinkData } from '../../../types/types'
+import type { MenuLinkData, SubMenuData } from '../../../types/types'
 
 const { Item } = List
 const TopLevelItem = styled(Item)``
@@ -74,7 +74,7 @@ function getLink(linkData: MenuLinkData) {
 }
  */
 
-export const SubMenu = (topLevelItem: any) => {
+export const SubMenu = (topLevelItem: SubMenuData) => {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const { topLevelLink, group } = topLevelItem
