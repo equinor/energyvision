@@ -19,9 +19,12 @@ const TextAreaWithChars = forwardRef<HTMLTextAreaElement, TextAreaWithCharsProps
   ({ value = '', type, markers, presence, onChange }, ref) => {
     const length = value.split('').length
 
-    const handleChange = useCallback((event) => {
-      onChange(PatchEvent.from(set(event.target.value)))
-    }, [])
+    const handleChange = useCallback(
+      (event) => {
+        onChange(PatchEvent.from(set(event.target.value)))
+      },
+      [onChange],
+    )
 
     return (
       <div>
