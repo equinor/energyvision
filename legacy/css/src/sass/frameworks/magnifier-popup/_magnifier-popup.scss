@@ -335,8 +335,8 @@ button {
   .mfp-close {
     border-radius: 30px;
     background: #CCC;
-    top: 2rem;
-    right: 2rem;
+    top: calc(2rem/2.02);
+    right: calc(2rem/2.02);
     font-size: 35px;
     text-align: center;
     color: $mfp-inner-close-icon-color;

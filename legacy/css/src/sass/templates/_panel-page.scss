@@ -9,7 +9,7 @@
 
 .mfp-content {
   .page-container.panel-page { padding: 0; }
-  .panel-content { padding: 0 10rem 0 7rem; }
+  .panel-content { padding: 0 calc(10rem/2.02) 0 calc(7rem/2.02); }
 
   .panel-page {
     .cq-colctrl-default

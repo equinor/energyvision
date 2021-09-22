@@ -32,66 +32,9 @@
       return true;
   }
 }
-
- window.initLazy = function() {
-   try {
-     if(jazy.lazy){
-       jazy('.lazy').lazy({
-        afterLoad: function(element) {
-          var el = element[0];
-          objectFitImages(el);
-        }
-       });
-       // This is used to activate lazy load on panel page scroll
-       $('.mfp-content .lazy').lazy({
-        appendScroll: $('.mfp-content')
-       });
-
-      } else {
-        // lazy loading fallback
-        var lazyElements = $('.lazy');
-        lazyElements.each(function(){
-          var t = $(this);
-          t.removeClass('.lazy')
-          .attr('src', t.attr('data-src'))
-          .attr('srcset', t.attr('data-srcset'));
-        })
-        objectFitImages();
-      }
-    }catch(e){
-          }
-  };
-
-  $(function() {
-    initLazy();
-    objectFitImages("img:not(.lazy)");
-    if(inIframe()){
-      document.body.addEventListener("DOMNodeInserted", function (event) {
-          jazy('.lazy').lazy();
-      }, false);
-    }
-  });
-
-  $(".search-button").bind("click",function(){
-    if(window.location.pathname.includes("search.html")){
-      event.preventDefault();
-      window.history.back();
-    }
-  });
-
-  $(".language-button").bind("click",function(){
-    if(window.location.pathname.includes("languages.html")){
-      event.preventDefault();
-      window.history.back();
-    }
-  });
-
   /*
 	Components initialization.
   */
-  FoundationModule.initialize();
-  MailingListModule.initialize();
-  ServiceNowModule.initialize();
   SlickCarousel.initialize();
   AOS.init({
     easing: 'linear',
