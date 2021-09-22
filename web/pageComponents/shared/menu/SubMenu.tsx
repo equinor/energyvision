@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import { Link, List, Heading } from '@components'
-import type { MenuLinkData, SubMenuData } from '../../../types/types'
+import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 
 const { Item } = List
 const TopLevelItem = styled(Item)``
@@ -112,14 +112,14 @@ export const SubMenu = (topLevelItem: SubMenuData) => {
         {group && group.length > 0 && (
           <SubMenuPanel isOpen={open}>
             <SubMenuContent>
-              {group.map((groupItem: any) => {
+              {group.map((groupItem: SubMenuGroupData) => {
                 return (
                   <ListGroup key={groupItem.id}>
                     <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
                       {groupItem.label}
                     </Heading>
                     <WrappedList unstyled>
-                      {groupItem.links.map((link: any) => (
+                      {groupItem.links.map((link: MenuLinkData) => (
                         <Item key={link.id}>
                           <NextLink href={getLink(link)} passHref>
                             <Link>{link.label}</Link>

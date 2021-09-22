@@ -206,14 +206,16 @@ export type MenuLinkData = {
   }
 }
 
+export type SubMenuGroupData = {
+  id: string
+  label: string
+  links: MenuLinkData[]
+}
+
 export type SubMenuData = {
   id: string
   topLevelLink: MenuLinkData
-  group: {
-    id: string
-    label: string
-    links: MenuLinkData[]
-  }[]
+  group: SubMenuGroupData[]
 }
 
 export type MenuData = {
