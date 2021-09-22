@@ -5,7 +5,7 @@ import { LocalizationSwitch } from '../LocalizationSwitch'
 import { SubMenu } from './SubMenu'
 import { useRouter } from 'next/router'
 /* import { useMenu } from './MenuProvider' */
-import type { MenuData } from '../../../types/types'
+import type { MenuData, SubMenuData } from '../../../types/types'
 
 const MenuWrapper = styled.nav`
   margin: 0 auto;
@@ -61,7 +61,7 @@ const Menu = ({ slugs, data }: MenuProps) => {
 
           {menuItems && (
             <TopLevelList unstyled>
-              {menuItems.map((topLevelItem: any) => {
+              {menuItems.map((topLevelItem: SubMenuData) => {
                 if (topLevelItem?.topLevelLink.isDisabled) return null
                 return <SubMenu key={topLevelItem.id} {...topLevelItem} />
               })}

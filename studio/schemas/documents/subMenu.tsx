@@ -1,7 +1,6 @@
 import { SchemaType } from '../../types'
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { string } from 'prop-types'
 
 // @TODO: validation
 // only allow direct link (internal/external link) if no menu groups
