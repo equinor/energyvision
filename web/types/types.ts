@@ -197,6 +197,7 @@ export type PromoTileArrayData = {
 export type MenuLinkData = {
   label: string
   isStatic: boolean
+  isDisabled: boolean
   href?: string
   staticUrl?: string
   id?: string
