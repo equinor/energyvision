@@ -1,4 +1,5 @@
 @import 'frameworks/fontawesome/path';
+@import 'core/core-font';
 
 .legacyStyles {
   //  Framework Susy Grid
@@ -13,11 +14,11 @@
   @import 'core/core-component-container';
   @import 'core/core-colors';
   @import 'core/core-accessibility';
-  @import 'core/core-font';
   @import 'core/core-typography';
   @import 'core/core-variables';
   @import 'core/core-helpers';
   @import 'core/core';
+ 
 
   //  Framework  Fontawesome
   //  4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -35,7 +36,6 @@
   @import 'frameworks/fontawesome/icons';
   @import 'frameworks/magnifier-popup/magnifier-popup';
   @import 'frameworks/magnifier-popup/fade';
-  @import 'frameworks/magnifier-popup/slide';
 
   //Animation
   @import 'animation/core';
@@ -45,10 +45,8 @@
   @import 'templates/front-page';
   @import 'templates/magazine-article-page';
   @import 'templates/magazine-page';
-  @import 'templates/newsroom-page';
   @import 'templates/mfp';
   @import 'templates/news-page';
-  @import 'templates/newsroom-page';
   @import 'templates/panel-page';
   @import 'templates/panel-page-inverted';
   @import 'templates/section-page';
@@ -58,7 +56,6 @@
   @import 'elements/list';
   @import 'elements/img';
   @import 'elements/table';
-  @import 'elements/forms';
   @import 'elements/dropdowns';
   @import 'elements/button';
 
@@ -107,17 +104,15 @@
 
   //  Modules
   @import 'modules/textimage';
-  @import 'modules/search';
-  @import 'modules/google-recaptcha';
   @import 'modules/foundation-datepicker';
   @import 'modules/custom-foundation-datepicker';
   @import 'modules/slick';
   @import 'modules/slick-theme';
-  @import 'modules/cookiebot';
   @import 'modules/cookiebot-consent-container';
   @import 'modules/aos';
   @import 'modules/slider';
   // Archive
   @import 'archive/news';
 }
+  @import 'frameworks/magnifier-popup/slide';
 

@@ -1,4 +1,5 @@
-.<%= className %>:before {
+.legacyStyles{
+  .<%= className %>:before {
   font-family: "<%= fontName %>";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -15,3 +16,4 @@
   content: unquote('"\<%= glyph.unicode[0].charCodeAt(0).toString(16).toUpperCase() %>"');
 }
 <% }); %>
+}
