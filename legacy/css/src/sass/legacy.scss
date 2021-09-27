@@ -1,7 +1,7 @@
 @import 'frameworks/fontawesome/path';
 @import 'core/core-font';
 
-.legacyStyles {
+@at-root .legacyStyles {
   //  Framework Susy Grid
   //  http://susydocs.oddbird.net/
   @import 'modules/normalize';
@@ -34,8 +34,6 @@
   @import 'frameworks/fontawesome/rotated-flipped';
   @import 'frameworks/fontawesome/stacked';
   @import 'frameworks/fontawesome/icons';
-  @import 'frameworks/magnifier-popup/magnifier-popup';
-  @import 'frameworks/magnifier-popup/fade';
 
   //Animation
   @import 'animation/core';
@@ -115,4 +113,6 @@
   @import 'archive/news';
 }
   @import 'frameworks/magnifier-popup/slide';
+  @import 'frameworks/magnifier-popup/magnifier-popup';
+  @import 'frameworks/magnifier-popup/fade';
 

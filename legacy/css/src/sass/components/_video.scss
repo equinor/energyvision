@@ -19,12 +19,7 @@
     @include susy-breakpoint($screen-sm, $susy) { margin: -7rem 0 0 -7rem; }
     @include susy-breakpoint($screen-lg, $susy) { margin: -10rem 0 0 -10rem; }
 
-    .colctrl-2c &{
-      @include susy-breakpoint($screen-lg, $susy) { margin: -8rem 0 0 -8rem; }
-    }
-    .colctrl-3c &{
-      @include susy-breakpoint($screen-lg, $susy) { margin: -6rem 0 0 -6rem; }
-    }
+    
 
     svg {
       @include susy-breakpoint($screen-xs, $susy) {
@@ -44,19 +39,6 @@
         width: 20rem;
         height: 20rem;
       }
-      .colctrl-2c &{
-        @include susy-breakpoint($screen-lg, $susy) {
-          cursor: pointer;
-          width: 15rem;
-          height: 15rem;
-        }
-      }
-      .colctrl-3c &{
-        @include susy-breakpoint($screen-lg, $susy) {
-          cursor: pointer;
-          width: 12rem;
-          height: 12rem;
-        }
       }
 
       circle {
@@ -74,6 +56,27 @@
         fill-opacity: 0.9;
       }
     }
+  }
+
+  .colctrl-2c .videoplayer_play .svg{
+    @include susy-breakpoint($screen-lg, $susy) {
+      cursor: pointer;
+      width: 15rem;
+      height: 15rem;
+    }
+  }
+  .colctrl-3c .videoplayer_play .svg{
+    @include susy-breakpoint($screen-lg, $susy) {
+      cursor: pointer;
+      width: 12rem;
+      height: 12rem;
+    }
+
+  .colctrl-2c .videoplayer_play{
+    @include susy-breakpoint($screen-lg, $susy) { margin: -8rem 0 0 -8rem; }
+  }
+  .colctrl-3c .videoplayer_play{
+    @include susy-breakpoint($screen-lg, $susy) { margin: -6rem 0 0 -6rem; }
   }
 }
 
@@ -115,7 +118,7 @@
         stroke-linejoin: round;
         stroke-miterlimit: 20;
         stroke-opacity: 0.4;
-        stroke-width: 1rem;
+        stroke-width: calc(1rem/1.6);
     }
 
     polygon {
