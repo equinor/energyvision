@@ -5,14 +5,6 @@
   color: $slate-blue;
   text-align: center;
 
-  .spruce-wood & {
-    background-color: $special-slate-blue-tint;
-    color: $white;
-    a {
-      color: $white;
-    }
-  }
-
   p {
     &.request-consent-text {
       padding: calc(1.5rem/1.6) calc(1.5rem/1.6);
@@ -21,8 +13,17 @@
       }
     }
   }
+}
 
-  .colctrl-2c & {
+.spruce-wood .request-consent-container {
+  background-color: $special-slate-blue-tint;
+  color: $white;
+  a {
+    color: $white;
+  }
+}
+
+  .colctrl-2c .request-consent-container {
     p {
       &.request-consent-text {
         @include susy-breakpoint($screen-md, $susy) {
@@ -34,7 +35,7 @@
     }
   }
 
-  .colctrl-3c & {
+  .colctrl-3c .request-consent-container {
     p {
       &.request-consent-text {
         @include susy-breakpoint($screen-md, $susy) {
@@ -45,4 +46,3 @@
       }
     }
   }
-}

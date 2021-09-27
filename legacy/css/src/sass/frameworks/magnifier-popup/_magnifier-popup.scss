@@ -54,7 +54,7 @@ $mfp-iframe-background:               #FFF !default;
 $mfp-iframe-max-width:                100% !default;
 $mfp-iframe-ratio:                    9/16 !default;
 
-$mfp-ajax-background:                 $spruce-wood !default;
+$mfp-ajax-background:                 #FFECDE !default;
 
 
 // Image-type options
@@ -334,7 +334,6 @@ button {
 .mfp-ajax-holder, .mfp-wrap {
   .mfp-close {
     border-radius: 30px;
-    background: #CCC;
     top: calc(2rem/2.02);
     right: calc(2rem/2.02);
     font-size: 35px;

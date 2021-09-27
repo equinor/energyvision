@@ -82,9 +82,7 @@ ul.magazine-list-container{
 .magazine-list-item {
     position:absolute;
 	background-color: $white;
-    .white & {
-        background-color: $light-green-5;
-    }
+    
     width: 100%;
 
     @include susy-breakpoint($screen-s, $susy){
@@ -122,6 +120,9 @@ ul.magazine-list-container{
         .magazine-image-inner, img {
             transform: scale(1.1);
         }
+    }
+    .white .magazine-list-item {
+        background-color: $light-green-5;
     }
 }
 // Workaround of focus sticking, so the button is keeping its hoverstate when deselected

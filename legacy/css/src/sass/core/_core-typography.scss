@@ -61,10 +61,8 @@ p, tr, td {
   background-position: 12px .6em;
   padding-left: calc(2.5rem / 1.6);
   list-style: none;
-  .primary-100 &,
-  .slate-blue &,
-  .heritage-red & {
-    background-image: url('/legacy/images/graphics/bullet-white.png');
+  @include susy-breakpoint($screen-md, $susy) {
+    background-position: 12px .8em;
   }
   @at-root .moss-green#{&} {
     background-image: url('/legacy/images/graphics/bullet-mossgreen.png');
@@ -72,8 +70,14 @@ p, tr, td {
   @at-root .signal-red#{&} {
     background-image: url('/legacy/images/graphics/bullet-red.png');
   }
-  @include susy-breakpoint($screen-md, $susy) {
-    background-position: 12px .8em;
+  
+}
+
+.primary-100 ,
+.slate-blue ,
+.heritage-red  {
+  .base ul li{
+  background-image: url('/legacy/images/graphics/bullet-white.png');
   }
 }
 

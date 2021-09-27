@@ -62,35 +62,7 @@ body:not([data-whatinput=keyboard]) {
 	line-height: 20px;
     width: 100%;
   }
-  $s: &;
-  @at-root .colctrl{
-    #{$s} .slick-dots{
-      position: static;
-    }
-    &.heritage-red, &.slate-blue, &.primary-100 {
-      #{$s} .slick-dots {
-        & button:before {
-          border-color: $white;
-        }
-        & li.slick-active button:before, body:not([data-whatinput=touch]) & li:hover button:before {
-          background: $white;
-        }
-      }
-      @include susy-breakpoint(0 $screen-sm, $susy) {
-        .slide-text {
-          color: $white;
-          a {
-            color: $white;
-          }
-        }
-
-      }
-      #{$s} .slide-information {
-        color: $white;
-      }
-    }
-  }
-
+ 
   .slick-dots{
     position:absolute;
     bottom: 20px;
@@ -239,6 +211,36 @@ body:not([data-whatinput=keyboard]) {
     }
   }
 }
+
+$s: '.slick-slider';
+.colctrl{
+  #{$s} .slick-dots{
+    position: static;
+  }
+  &.heritage-red, &.slate-blue, &.primary-100 {
+    #{$s} .slick-dots {
+      & button:before {
+        border-color: $white;
+      }
+      & li.slick-active button:before, body:not([data-whatinput=touch]) & li:hover button:before {
+        background: $white;
+      }
+    }
+    @include susy-breakpoint(0 $screen-sm, $susy) {
+      .slide-text {
+        color: $white;
+        a {
+          color: $white;
+        }
+      }
+
+    }
+    #{$s} .slide-information {
+      color: $white;
+    }
+  }
+}
+
 // Mobile mode specific
 @include susy-breakpoint(0 $screen-sm, $susy) {
   .slick-slider {

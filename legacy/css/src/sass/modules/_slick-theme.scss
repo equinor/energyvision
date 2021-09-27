@@ -41,13 +41,13 @@ $slick-opacity-not-active: 0.25 !default;
 
 /* Slider */
 
-.slick-list {
+/*.slick-list {
     .slick-loading & {
-        /* Commented below line as next js looks for this resource and its only used as a fall back in slick carousel component
-           which is not important */
+        // Commented below line as next js looks for this resource and its only used as a fall back in slick carousel component
+        //  which is not important 
         //background: #fff slick-image-url("ajax-loader.gif") center center no-repeat;
     }
-}
+}*/
 
 /* Icons */
 @if $slick-font-family == "slick" {
