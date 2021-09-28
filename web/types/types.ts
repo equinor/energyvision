@@ -222,3 +222,11 @@ export type SubMenuData = {
 export type MenuData = {
   subMenus: SubMenuData[]
 }
+
+export type IFrameData = {
+  id: string
+  type: string
+  title: string
+  url: string
+  aspectRatio: string
+}

@@ -14,6 +14,7 @@ import TextWithIconArray from '../topicPages/TextWithIconArray'
 import PageQuote from '../topicPages/PageQuote'
 import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
+import IFrame from '../shared/IFrame'
 
 import {
   TeaserData,
@@ -25,6 +26,7 @@ import {
   QuoteData,
   AccordionData,
   PromoTileArrayData,
+  IFrameData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -71,6 +73,7 @@ type ComponentProps =
   | QuoteData
   | AccordionData
   | PromoTileArrayData
+  | IFrameData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -99,6 +102,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <AccordionBlock key={c.id} data={c as AccordionData} />
       case 'promoTileArray':
         return <PromoTileArray key={c.id} data={c as PromoTileArrayData} />
+      case 'iframe':
+        return <IFrame key={c.id} data={c as IFrameData} />
       default:
         return null
     }
