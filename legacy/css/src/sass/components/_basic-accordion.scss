@@ -100,11 +100,11 @@ $white-color-hover: rgba(255,255,255,0.5);
 
 .basicaccordion {
     .basicaccordionitem {
-        border-bottom: 0.1rem solid $black_light;
-        padding: 0.2rem 0;
+        border-bottom: calc(0.1rem/1.6) solid $black_light;
+        padding: calc(0.2rem/1.6) 0;
 
         &:first-child {
-            border-top: 0.1rem solid $black_light;
+            border-top: calc(0.1rem/1.6) solid $black_light;
         }
 
         .basicaccordion-header {
@@ -112,14 +112,14 @@ $white-color-hover: rgba(255,255,255,0.5);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 2rem 1.2rem 2rem;
+            padding: calc(1.2rem/1.6) calc(2rem/1.6) calc(1.2rem/1.6) calc(2rem/1.6);
 
             h2,h3,h4,p {
                 width: 95%;
                 padding-bottom: 0;
                 text-align: left;
-                font-size: 2rem;
-                line-height: 3.2rem;
+                font-size: calc(2rem/1.6);
+                line-height: calc(3.2rem/1.6);
                 margin-bottom: 0;
                 text-transform: none;
             }
@@ -128,10 +128,10 @@ $white-color-hover: rgba(255,255,255,0.5);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                height: 2rem;
-                width: 2rem;
-                font-size: 2rem;
-                line-height: 2.8rem;
+                height: calc(2rem/1.6);
+                width: calc(2rem/1.6);
+                font-size: calc(2rem/1.6);
+                line-height: calc(2.8rem/1.6);
 
                 &::before {
                     display: flex;
@@ -148,10 +148,10 @@ $white-color-hover: rgba(255,255,255,0.5);
         .basicaccordion-body {
             display: none;
             position: relative;
-            bottom: 1.2rem;
+            bottom: calc(1.2rem/1.6);
 
             p {
-                padding: 0 4rem 0 2rem;
+                padding: 0 calc(4rem/1.6) 0 calc(2rem/1.6);
 
                 .red-text {
                     color: $primary-color;
@@ -162,7 +162,7 @@ $white-color-hover: rgba(255,255,255,0.5);
                 }
             }
             ul,ol{
-                padding-left: 4rem;
+                padding-left: calc(4rem/1.6);
             }
         }
 
@@ -178,15 +178,15 @@ $white-color-hover: rgba(255,255,255,0.5);
     }
 
     .cmp-container {
-        margin-bottom: 2.5rem;
+        margin-bottom: calc(2.5rem/1.6);
         &.space-below_none {
             margin-bottom: 0;
         }
         &.space-below_normal {
-            margin-bottom: 1.5rem;
+            margin-bottom: calc(1.5rem/1.6);
         }
         &.space-below_big {
-            margin-bottom: 4.5rem;
+            margin-bottom: calc(4.5rem/1.6);
         }
     }
 }
@@ -194,7 +194,7 @@ $white-color-hover: rgba(255,255,255,0.5);
 @media (max-width: $screen-s) {
     .basicaccordion {
         max-width: none;
-        margin: 0 -3rem;
+        margin: 0 calc(-3rem/1.6);
     }
 }
 

@@ -1,27 +1,27 @@
 .tablev2 {
   table {
-    border-spacing: 0.2rem;
+    border-spacing: calc(0.2rem/1.6);
     border-collapse: unset;
     padding: 0;
   }
   .tablev2__smallfont {
     tr {
       td {
-        font-size: 1.8rem;
+        font-size: calc(1.8rem/1.6);
       }
     }
   }
   .tablev2__mediumfont {
     tr {
       td {
-        font-size: 2rem;
+        font-size: calc(2rem/1.6);
       }
     }
   }
   .tablev2__largefont {
     tr {
       td {
-        font-size: 2.2rem;
+        font-size: calc(2.2rem/1.6);
       }
     }
   }
@@ -31,11 +31,11 @@
   }
 
   td {
-    line-height: 2rem;
-    padding: 1rem 2rem;
+    line-height:calc( 2rem/1.6);
+    padding:calc( 1rem/1.6) calc( 2rem/1.6);
     p {
       font-size: inherit;
-      line-height: 2.5rem;
+      line-height: calc(2.5rem/1.6);
     }
     b {
       font-size: inherit;
@@ -55,28 +55,28 @@
         color: $primary-color;
       }
       &.small-text {
-        font-size: 1.8rem;
+        font-size: calc(1.8rem/1.6);
       }
       &.medium-text {
-        font-size: 2rem;
+        font-size:calc( 2rem/1.6);
       }
       &.large-text {
-        font-size: 2.2rem;
+        font-size: calc(2.2rem/1.6);
       }
     }
   }
 
   .tablev2-container {
-    margin-bottom: 2.5rem;
+    margin-bottom: calc(2.5rem/1.6);
     overflow-x: auto;
     &.space-below_none {
       margin-bottom: 0;
     }
     &.space-below_normal {
-      margin-bottom: 1.5rem;
+      margin-bottom: calc(1.5rem/1.6);
     }
     &.space-below_big {
-      margin-bottom: 4.5rem;
+      margin-bottom: calc(4.5rem/1.6);
     }
   }
 }

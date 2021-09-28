@@ -2,6 +2,7 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 const gulp = require('gulp')
 const concat = require('gulp-concat')
+var uglify = require('gulp-uglify');
 const pipeline = require('readable-stream').pipeline
 const del = require('del')
 
@@ -16,6 +17,8 @@ gulp.task(
           'src/vendor/jquery.js',
           'src/vendor/jquery.magnific-popup.js',
           'src/vendor/foundation-datepicker.js',
+          'src/vendor/polyfills.js',
+          'src/vendor/core-wcm-components-v1-accordion.js',
           'src/vendor/modernizr.js',
           'src/vendor/mustache.min.js',
           'src/vendor/slick.js',
@@ -28,6 +31,7 @@ gulp.task(
           'src/vendor/moment.js',
           'src/vendor/moment-timezone-with-data-1970-2030.js',
           'src/animations.js',
+          'src/accordion.js',
           'src/modals.js',
           'src/overlay.js',
           'src/carousels.js',
@@ -49,6 +53,7 @@ gulp.task(
           'src/init.js', //Leave init.js at the bottom.
         ],
       ),
+      uglify(),
       concat('legacy.minified.js'),
       gulp.dest('dist/js'),
     )
