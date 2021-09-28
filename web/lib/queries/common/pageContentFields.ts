@@ -206,6 +206,13 @@ const pageContentFields = /* groq */ `
       },
     },
   },
+  _type == "iframe" => {
+    "type": _type,
+    "id": _key,
+    title,
+    url,
+    aspectRatio,
+  },
 `
 
 export default pageContentFields
