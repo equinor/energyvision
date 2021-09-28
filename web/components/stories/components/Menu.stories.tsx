@@ -16,6 +16,6 @@ export default {
   },
 } as Meta
 
-export const Default: Story<MenuButtonProps> = (args) => <MenuButton {...args}></MenuButton>
+export const Default: Story<MenuButtonProps> = (args) => <MenuButton {...args} title="Menu"></MenuButton>
 
 Default.storyName = 'Default'
