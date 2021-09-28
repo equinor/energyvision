@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from 'styled-components'
 import { Typography } from '@equinor/eds-core-react'
 import {  HTMLAttributes, forwardRef } from 'react'
@@ -8,7 +9,7 @@ import { youtube_alt, twitter, instagram, facebook, linkedin } from '@equinor/ed
 const StyledFooter = styled.footer`
   background-color: pink;
   min-height: var(--space-4xLarge);
-
+  clear: both;
 `
 const SoMeLinks = styled.div`
   background-color: var(--slate-blue-95);
@@ -16,10 +17,11 @@ const SoMeLinks = styled.div`
   flex-direction: row;
 
 `
+const placeHolderSoMeLinks = [{url: "https://www.facebook.com/", icon: facebook}, {url: "https://www.twitter.com/", icon: twitter},{url: "https://www.linkedin.com/", icon: linkedin} ]
 
 type FooterProps = {
   soMeLinks?: {
-    id: string;
+    icon?: any;
     url?: string;
   }[] | null;
   links?: {
@@ -31,11 +33,12 @@ type FooterProps = {
 
 
 export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer(
-  { ...props },
+  { soMeLinks, links, ...rest },
+  ref
   
 ) {
   return (
-    <StyledFooter {...props}>
+    <StyledFooter ref={ref} {...rest}>
       <SoMeLinks></SoMeLinks>
       <p>Copyright 2021 Equinor ASA</p>
     </StyledFooter>
