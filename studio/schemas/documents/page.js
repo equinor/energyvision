@@ -77,6 +77,7 @@ export default {
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'stockValuesApi' },
+        { type: 'iframe' },
       ],
     },
   ],
