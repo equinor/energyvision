@@ -3,6 +3,8 @@ import { useState, useCallback } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Link from 'next/link'
 import { Topbar, MenuButton, Logo } from '@components'
+import Menu from './menu/Menu'
+import type { MenuData } from '../../types/types'
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   #__next {
@@ -24,7 +26,29 @@ const SrText = styled.span`
   white-space: nowrap; /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 `
 
-const Header = () => {
+const TempHideSmall = styled.div`
+  display: none;
+  @media (min-width: 1440px) {
+    display: block;
+  }
+`
+
+const TempHideLarge = styled.div`
+  display: block;
+  @media (min-width: 1440px) {
+    display: none;
+  }
+`
+
+export type HeaderProps = {
+  data?: MenuData
+  slugs?: {
+    en_GB: string
+    nb_NO: string
+  }
+}
+
+const Header = ({ slugs, data }: HeaderProps) => {
   const [topbarHeight, setTopbarHeight] = useState(0)
   const topbarRef = useCallback((node) => {
     if (node !== null) {
@@ -44,8 +68,12 @@ const Header = () => {
             <SrText>Equinor home page</SrText>
           </a>
         </Link>
-
-        <MenuButton title="Menu" ariaExpanded={false} />
+        <TempHideLarge>
+          <MenuButton title="Menu" ariaExpanded={false} />
+        </TempHideLarge>
+        <TempHideSmall>
+          <Menu slugs={slugs} data={data} />
+        </TempHideSmall>
       </Topbar>
     </>
   )

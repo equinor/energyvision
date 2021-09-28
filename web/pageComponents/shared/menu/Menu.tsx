@@ -1,6 +1,5 @@
-import { useState, useCallback } from 'react'
-import { Topbar, List } from '@components'
-import styled, { createGlobalStyle } from 'styled-components'
+import { List } from '@components'
+import styled from 'styled-components'
 import { LocalizationSwitch } from '../LocalizationSwitch'
 import { SubMenu } from './SubMenu'
 import { useRouter } from 'next/router'
@@ -20,12 +19,6 @@ const TopLevelList = styled(List)`
   flex-wrap: wrap;
 `
 
-const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
-  #__next {
-    margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
-  }
-`
-
 export type MenuProps = {
   data?: MenuData
   slugs?: {
@@ -35,16 +28,9 @@ export type MenuProps = {
 }
 
 const Menu = ({ slugs, data }: MenuProps) => {
-  const [topbarHeight, setTopbarHeight] = useState(0)
   const router = useRouter()
   /* const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu() */
   /*   const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router)) */
-  const topbarRef = useCallback((node) => {
-    if (node !== null) {
-      const height = node.getBoundingClientRect().height
-      setTopbarHeight(height)
-    }
-  }, [])
 
   const localization = {
     activeLocale: router.locale || 'en',
@@ -53,24 +39,21 @@ const Menu = ({ slugs, data }: MenuProps) => {
   const menuItems = (data && data.subMenus) || []
   return (
     <>
-      <TopbarOffset topbarHeight={topbarHeight} />
-      <Topbar height={topbarHeight} ref={topbarRef}>
-        <MenuWrapper>
-          {/* For testing state 
+      <MenuWrapper>
+        {/* For testing state 
           <input placeholder="Search..." /> */}
 
-          {menuItems && (
-            <TopLevelList unstyled>
-              {menuItems.map((topLevelItem: SubMenuData) => {
-                if (topLevelItem?.topLevelLink.isDisabled) return null
-                return <SubMenu key={topLevelItem.id} {...topLevelItem} />
-              })}
-            </TopLevelList>
-          )}
-        </MenuWrapper>
+        {menuItems && (
+          <TopLevelList unstyled>
+            {menuItems.map((topLevelItem: SubMenuData) => {
+              if (topLevelItem?.topLevelLink.isDisabled) return null
+              return <SubMenu key={topLevelItem.id} {...topLevelItem} />
+            })}
+          </TopLevelList>
+        )}
+      </MenuWrapper>
 
-        {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
-      </Topbar>
+      {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
     </>
   )
 }

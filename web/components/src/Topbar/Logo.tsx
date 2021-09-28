@@ -5,6 +5,7 @@ import styled from 'styled-components'
 // the logo here while waiting for the final topbar design
 
 // 30px roughly from the mobile sketches in Figma
+// Add minimum size
 const StyledLogo = styled.svg`
   display: block;
   height: 30px;
