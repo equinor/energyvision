@@ -1,13 +1,13 @@
 {
   "name": "@equinor/energyvision-legacy-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Scripts from the AEM version of equinor.com",
   "main": "dist/js/legacy.minified.js",
   "files": [
     "dist/*"
   ],
   "scripts": {
-    "postinstall": "gulp default",
+    "prepare": "gulp default",
     "build": "gulp default"
   },
   "repository": {
