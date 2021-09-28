@@ -11,7 +11,7 @@ import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import { mapLocaleToLang } from '../lib/localization'
-import Menu from '../pageComponents/shared/menu/Menu'
+import Header from '../pageComponents/shared/Header'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -71,7 +71,7 @@ Page.getLayout = (page: AppProps) => {
   }
   return (
     <Layout preview={preview}>
-      <Menu slugs={slugs} data={data?.menuData} />
+      <Header slugs={slugs} data={data?.menuData} />
       {page}
     </Layout>
   )
