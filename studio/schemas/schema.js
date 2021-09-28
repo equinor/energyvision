@@ -41,6 +41,7 @@ import promoTileArray from './objects/promoTileArray'
 import stockValuesApi from './objects/stockValuesApi'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
+import iframe from './objects/iframe'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -85,5 +86,6 @@ export default createSchema({
     stockValuesApi,
     menuGroup,
     menuLink,
+    iframe,
   ]),
 })
