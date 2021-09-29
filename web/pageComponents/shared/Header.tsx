@@ -27,6 +27,10 @@ const TopbarDropdown = styled.div`
   z-index: 200;
 `
 
+const HeaderRelative = styled.header`
+  position: relative;
+`
+
 export type HeaderProps = {
   data?: MenuData
   slugs?: {
@@ -58,7 +62,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
   const menuItems = (data && data.subMenus) || []
 
   return (
-    <div style={{ position: 'relative' }}>
+    <HeaderRelative>
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         {/* @TODO: Localize strings */}
@@ -90,7 +94,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
           </nav>
         </TopbarDropdown>
       </RemoveScroll>
-    </div>
+    </HeaderRelative>
   )
 }
 
