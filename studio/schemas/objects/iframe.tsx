@@ -35,6 +35,7 @@ export default {
         layout: 'dropdown',
       },
       initialValue: '16:9',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
   ],
   preview: {
