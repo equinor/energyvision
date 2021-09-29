@@ -6,4 +6,5 @@ export const generic = css`
   *:after {
     box-sizing: inherit;
   }
+  -webkit-overflow-scrolling: touch;
 `
