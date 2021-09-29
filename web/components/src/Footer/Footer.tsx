@@ -3,26 +3,48 @@ import styled from 'styled-components'
 import { Link } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { youtube_alt, twitter, instagram, facebook, linkedin } from '@equinor/eds-icons'
-import { Icon } from '@equinor/eds-core-react'
+import { Icon, Typography } from '@equinor/eds-core-react'
 
 const StyledFooter = styled.footer`
   background-color: pink;
   min-height: var(--space-4xLarge);
   clear: both;
 `
+
 const SoMeLinks = styled.div`
   background-color: var(--slate-blue-95);
   display: flex;
   flex-direction: row;
   justify-content: center;
+  min-height: var(--space-4xLarge);
+  padding: var(--space-large) var(--space-large);
   a {
     color: white;
   }
 `
+const FooterLink = styled(Link)`
+  font-size: var(--typeScale-1);
+  &:hover {
+    color: var(--heritage-red-90);
+  }
+`
+const FooterBottom = styled.div`
+  min-height: var(--space-3xLarge);
+  padding: var(--space-large) var(--space-large);
+`
+
 const LinksWrapper = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const CompanyName = styled(Typography)`
+  text-align: center;
 `
 
 const placeHolderSoMeLinks = [
@@ -34,9 +56,10 @@ const placeHolderSoMeLinks = [
 ]
 const placeHolderlinks = [
   { linkText: 'Terms and conditions', url: 'https://www.google.com/' },
-  { linkText: 'Terms and conditions', url: 'https://www.google.com/' },
-  { linkText: 'Terms and conditions', url: 'https://www.google.com/' },
-  { linkText: 'Terms and conditions', url: 'https://www.google.com/' },
+  { linkText: 'Privacy policy', url: 'https://www.google.com/' },
+  { linkText: 'Site info', url: 'https://www.google.com/' },
+  { linkText: 'Contact us', url: 'https://www.google.com/' },
+  { linkText: 'Cookie policy', url: 'https://www.google.com/' },
 ]
 
 type FooterProps = {
@@ -61,25 +84,25 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
       <SoMeLinks>
         {placeHolderSoMeLinks.map(({ url, icon }) => {
           return (
-            <a key={url} href={url}>
-              {' '}
+            <Link key={url} href={url}>
               <Icon data={icon} />
-            </a>
+            </Link>
           )
         })}
       </SoMeLinks>
-      <LinksWrapper>
-        {' '}
-        {placeHolderlinks.map(({ url, linkText }) => {
-          return (
-            <Link variant="regular" key={url} href={url}>
-              {' '}
-              {linkText}
-            </Link>
-          )
-        })}{' '}
-      </LinksWrapper>
-      <p>Copyright 2021 Equinor ASA</p>
+      <FooterBottom>
+        <LinksWrapper>
+          {placeHolderlinks.map(({ url, linkText }) => {
+            return (
+              <FooterLink variant="regular" key={url} href={url}>
+                {' '}
+                {linkText}
+              </FooterLink>
+            )
+          })}
+        </LinksWrapper>
+        <CompanyName>Copyright 2021 Equinor ASA</CompanyName>
+      </FooterBottom>
     </StyledFooter>
   )
 })
