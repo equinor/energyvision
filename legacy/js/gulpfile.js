@@ -15,7 +15,6 @@ gulp.task(
       gulp.src(
         [
           'src/vendor/jquery.js',
-          'src/vendor/jquery.magnific-popup.js',
           'src/vendor/foundation-datepicker.js',
           'src/vendor/polyfills.js',
           'src/vendor/core-wcm-components-v1-accordion.js',
@@ -32,15 +31,11 @@ gulp.task(
           'src/vendor/moment-timezone-with-data-1970-2030.js',
           'src/animations.js',
           'src/accordion.js',
-          'src/modals.js',
-          'src/overlay.js',
           'src/carousels.js',
           'src/video.js',
           'src/magazine.js',
           'src/cookiealert.js',
           'src/list.js',
-          'src/magnific-popup-module.js',
-          'src/outdated-browser-notification.js',
           'src/useragent.js',
           'src/in-page-nav.js',
           'src/horizontal-bar.js',
