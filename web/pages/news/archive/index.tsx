@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Heading, Link, List, Layout } from '@components'
 import { GetStaticProps } from 'next'
 import styled from 'styled-components'
-import Menu from '../../../pageComponents/shared/menu/Menu'
+import Header from '../../../pageComponents/shared/Header'
 
 import { default as NextLink } from 'next/link'
 
@@ -32,7 +32,7 @@ export default function AllArchivedNews({ newsList }: any) {
         <Head>
           <title>Archived news</title>
         </Head>
-        <Menu />
+        <Header />
         <Container>
           <Heading level="h1" size="2xl" style={{ margin: '1rem 0' }}>
             {/* @TODO Language strings */}

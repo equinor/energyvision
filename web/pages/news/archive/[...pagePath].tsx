@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
-import Menu from '../../../pageComponents/shared/menu/Menu'
+import Header from '../../../pageComponents/shared/Header'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // TODO fix the eslint issues
@@ -47,7 +47,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <style jsx global>
             {archivedStyles}
           </style>
-          <Menu />
+          <Header />
           <NextSeo
             title={data?.news?.title}
             description={data?.news?.description}
