@@ -4,7 +4,7 @@ import { useState, useEffect, forwardRef, HTMLAttributes } from 'react'
 
 // @TODO: Not finished
 // 64px height from the mobile sketches in figma
-const Bar = styled.header`
+const Bar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
