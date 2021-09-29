@@ -1,8 +1,6 @@
 import { List } from '@components'
 import styled from 'styled-components'
-import { LocalizationSwitch } from '../LocalizationSwitch'
 import { SubMenu } from './SubMenu'
-import { useRouter } from 'next/router'
 /* import { useMenu } from './MenuProvider' */
 import type { MenuData, SubMenuData } from '../../../types/types'
 
@@ -21,20 +19,11 @@ const TopLevelList = styled(List)`
 
 export type MenuProps = {
   data?: MenuData
-  slugs?: {
-    en_GB: string
-    nb_NO: string
-  }
 }
 
-const Menu = ({ slugs, data }: MenuProps) => {
-  const router = useRouter()
+const Menu = ({ data }: MenuProps) => {
   /* const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu() */
   /*   const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router)) */
-
-  const localization = {
-    activeLocale: router.locale || 'en',
-  }
 
   const menuItems = (data && data.subMenus) || []
   return (
@@ -52,8 +41,6 @@ const Menu = ({ slugs, data }: MenuProps) => {
           </TopLevelList>
         )}
       </MenuWrapper>
-
-      {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
     </>
   )
 }
