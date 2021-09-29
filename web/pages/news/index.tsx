@@ -9,7 +9,7 @@ import { menuQuery } from '../../lib/queries/menu'
 import { getClient } from '../../lib/sanity.server'
 import type { NewsSchema, MenuData } from '../../types/types'
 import NewsCard from '../../pageComponents/news/NewsCard'
-import Menu from '../../pageComponents/shared/menu/Menu'
+import PageHeader from '../../pageComponents/shared/Header'
 import { mapLocaleToLang } from '../../lib/localization'
 
 const { Title, Header, Action } = Card
@@ -85,7 +85,7 @@ AllNews.getLayout = (page: AppProps) => {
 
   return (
     <Layout preview={preview}>
-      <Menu
+      <PageHeader
         /*  @TODO: Fetch in a proper way */
         slugs={{
           en_GB: '/en/news',

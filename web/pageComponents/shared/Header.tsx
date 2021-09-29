@@ -1,15 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useCallback, CSSProperties } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
-import Link from 'next/link'
+import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { Topbar, MenuButton, Logo, Menu } from '@components'
+import { Topbar, MenuButton, Logo, Menu, List, Link } from '@components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 
-/* import Menu from './menu/Menu' */
-import type { MenuData } from '../../types/types'
-
-const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
+import type { MenuData, SubMenuData } from '../../types/types'
+import { MenuGroup } from './menu/MenuGroup'
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   #__next {
@@ -38,6 +36,10 @@ const TopbarDropdown = styled.div`
   top: var(--offset);
   left: 0;
   display: var(--display);
+  overflow: scroll;
+`
+const SubMenuContent = styled.div`
+  display: flex;
 `
 
 export type HeaderProps = {
@@ -68,16 +70,18 @@ const Header = ({ slugs, data }: HeaderProps) => {
     setIsOpen(!isOpen)
   }
 
+  const menuItems = (data && data.subMenus) || []
+
   return (
     <>
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         {/* @TODO: Localize strings */}
-        <Link href="/" passHref>
+        <NextLink href="/" passHref>
           <a aria-label="Equinor home page">
             <Logo />
           </a>
-        </Link>
+        </NextLink>
         {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
         <TempHideLarge>
           <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
@@ -92,18 +96,10 @@ const Header = ({ slugs, data }: HeaderProps) => {
         >
           <nav>
             <Menu>
-              <SubMenu>
-                <SubMenuHeader>Hei</SubMenuHeader>
-                <SubMenuPanel>Something</SubMenuPanel>
-              </SubMenu>
-              <SubMenu>
-                <SubMenuHeader>Hei på deg</SubMenuHeader>
-                <SubMenuPanel>Something</SubMenuPanel>
-              </SubMenu>
-              <SubMenu>
-                <SubMenuHeader>Hei på deg også</SubMenuHeader>
-                <SubMenuPanel>Something</SubMenuPanel>
-              </SubMenu>
+              {menuItems.map((topLevelItem: SubMenuData) => {
+                if (topLevelItem?.topLevelLink.isDisabled) return null
+                return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
+              })}
             </Menu>
           </nav>
         </TopbarDropdown>
