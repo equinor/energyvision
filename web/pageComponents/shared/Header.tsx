@@ -14,17 +14,6 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   }
 `
 
-const TopbarDropdown = styled.div`
-  position: fixed;
-  width: 100%;
-  height: calc(100vh - var(--offset));
-  background: var(--ui-background-default);
-  overflow: auto;
-
-  display: var(--display);
-  z-index: 200;
-`
-
 const HeaderRelative = styled.header`
   position: relative;
 `

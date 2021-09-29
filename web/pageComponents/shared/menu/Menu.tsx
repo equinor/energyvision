@@ -12,7 +12,6 @@ const TopbarDropdown = styled.div`
   height: calc(100vh - var(--offset));
   background: var(--ui-background-default);
   overflow: auto;
-
   display: var(--display);
   z-index: 200;
 `

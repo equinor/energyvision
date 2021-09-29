@@ -16,6 +16,7 @@ const StyledButton = styled(RAccordionButton)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
   background: transparent;
   padding: var(--space-medium) 0;
   border: none;
@@ -25,19 +26,21 @@ const StyledButton = styled(RAccordionButton)`
   }
 `
 
-const StyledHeader = styled(Typography)``
+const StyledHeader = styled(Typography)`
+  padding: 0 var(--space-large);
+`
 const StyledTypography = styled(Typography)``
 export type SubMenuHeaderProps = RAccordionButtonProps
 
-export const SubMenuHeader = forwardRef<HTMLDivElement, SubMenuHeaderProps>(function SubMenuHeader({
-  children,
-  ...rest
-}) {
+export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(function SubMenuHeader(
+  { children, ...rest },
+  ref,
+) {
   const context = useAccordionItemContext()
   const isExpanded = context.isExpanded
   return (
     <StyledHeader forwardedAs="h3">
-      <StyledButton {...rest}>
+      <StyledButton ref={ref} {...rest}>
         <StyledTypography forwardedAs="span">{children}</StyledTypography>
         {isExpanded ? <Icon data={minimize} /> : <Icon data={add} />}
       </StyledButton>
