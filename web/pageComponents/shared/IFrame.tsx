@@ -33,6 +33,8 @@ const calculatePadding = (aspectRatio: string): string => {
 }
 
 const IFrame = ({ data: { title, url, aspectRatio } }: { data: IFrameData }) => {
+  if (!url) return null
+
   return (
     <Container>
       <IFrameContainer aspectRatioPadding={calculatePadding(aspectRatio)}>
