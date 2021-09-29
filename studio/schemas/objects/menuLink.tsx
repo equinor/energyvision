@@ -34,9 +34,10 @@ export default {
           params: { routeLang: `route_${document._lang}` },
         }),
       },
-
-      // @TODO How can we validate only when it's active
-      // validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule =>
+        Rule.custom((route: any, context: SchemaType.ValidationContext) => {
+          return !context.parent?.isStatic && route === undefined ? 'Required' : true
+        }),
       // eslint-disable-next-line
       // @ts-ignore: Djeez, typescript
       hidden: ({ parent }) => parent?.isStatic === true,
