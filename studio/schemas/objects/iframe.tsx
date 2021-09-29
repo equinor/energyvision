@@ -1,3 +1,6 @@
+import React from 'react'
+import { code } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
 
 export default {
@@ -34,4 +37,16 @@ export default {
       initialValue: '16:9',
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+    },
+    prepare({ title }: { title: string }): SchemaType.Preview {
+      return {
+        title: title,
+        subtitle: `IFrame component`,
+        media: EdsIcon(code),
+      }
+    },
+  },
 }
