@@ -2,7 +2,10 @@
 import { useState, useCallback } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Topbar, MenuButton, Logo } from '@components'
+import { LocalizationSwitch } from './LocalizationSwitch'
+
 import Menu from './menu/Menu'
 import type { MenuData } from '../../types/types'
 
@@ -35,6 +38,7 @@ export type HeaderProps = {
 }
 
 const Header = ({ slugs, data }: HeaderProps) => {
+  const router = useRouter()
   const [topbarHeight, setTopbarHeight] = useState(0)
   const topbarRef = useCallback((node) => {
     if (node !== null) {
@@ -42,6 +46,10 @@ const Header = ({ slugs, data }: HeaderProps) => {
       setTopbarHeight(height)
     }
   }, [])
+
+  const localization = {
+    activeLocale: router.locale || 'en',
+  }
 
   return (
     <>
@@ -53,11 +61,12 @@ const Header = ({ slugs, data }: HeaderProps) => {
             <Logo />
           </a>
         </Link>
+        {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
         <TempHideLarge>
           <MenuButton title="Menu" ariaExpanded={false} />
         </TempHideLarge>
         <TempHideSmall>
-          <Menu slugs={slugs} data={data} />
+          <Menu data={data} />
         </TempHideSmall>
       </Topbar>
     </>
