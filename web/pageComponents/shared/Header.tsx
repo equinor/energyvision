@@ -3,6 +3,7 @@ import { useState, useCallback, CSSProperties } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import { RemoveScroll } from 'react-remove-scroll'
 import { Topbar, MenuButton, Logo, Menu, List, Link } from '@components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 
@@ -15,31 +16,15 @@ const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   }
 `
 
-const TempHideSmall = styled.div`
-  display: none;
-  @media (min-width: 1440px) {
-    display: block;
-  }
-`
-
-const TempHideLarge = styled.div`
-  display: block;
-  @media (min-width: 1440px) {
-    display: none;
-  }
-`
-
 const TopbarDropdown = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
+  height: calc(100vh - var(--offset));
   background: var(--ui-background-default);
-  top: var(--offset);
-  left: 0;
+  overflow: auto;
+
   display: var(--display);
-  overflow: scroll;
-`
-const SubMenuContent = styled.div`
-  display: flex;
+  z-index: 200;
 `
 
 export type HeaderProps = {
@@ -73,7 +58,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
   const menuItems = (data && data.subMenus) || []
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         {/* @TODO: Localize strings */}
@@ -83,9 +68,10 @@ const Header = ({ slugs, data }: HeaderProps) => {
           </a>
         </NextLink>
         {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
-        <TempHideLarge>
-          <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
-        </TempHideLarge>
+
+        <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
+      </Topbar>
+      <RemoveScroll enabled={isOpen}>
         <TopbarDropdown
           style={
             {
@@ -103,8 +89,8 @@ const Header = ({ slugs, data }: HeaderProps) => {
             </Menu>
           </nav>
         </TopbarDropdown>
-      </Topbar>
-    </>
+      </RemoveScroll>
+    </div>
   )
 }
 
