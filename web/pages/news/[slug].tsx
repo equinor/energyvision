@@ -20,7 +20,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { NewsCardData, NewsSchema } from '../../types/types'
-import Menu from '../../pageComponents/shared/menu/Menu'
+import PageHeader from '../../pageComponents/shared/Header'
 import { mapLocaleToLang } from '../../lib/localization'
 
 const { publicRuntimeConfig } = getConfig()
@@ -288,7 +288,7 @@ News.getLayout = (page: AppProps) => {
 
   return (
     <Layout preview={preview}>
-      <Menu slugs={slugs} data={data?.menuData} />
+      <PageHeader slugs={slugs} data={data?.menuData} />
       {page}
     </Layout>
   )
