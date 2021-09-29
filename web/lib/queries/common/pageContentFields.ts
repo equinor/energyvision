@@ -211,7 +211,7 @@ const pageContentFields = /* groq */ `
     "id": _key,
     title,
     url,
-    aspectRatio,
+    "aspectRatio": coalesce(aspectRatio, '16:9'),
   },
 `
 
