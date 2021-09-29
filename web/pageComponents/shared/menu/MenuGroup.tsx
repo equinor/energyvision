@@ -9,6 +9,7 @@ const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
 const { Item } = List
 
 const TopLevelItem = styled(Item)``
+
 type SubMenuPanelProps = {
   isOpen: boolean
 }
@@ -18,10 +19,10 @@ const SubMenuContent = styled.div`
 `
 
 const WrappedList = styled(List)`
-  display: flex;
+  /*   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  max-height: 35rem;
+  flex-wrap: wrap; 
+  max-height: 35rem;*/
 `
 
 type TopLevelLinkProps = {
