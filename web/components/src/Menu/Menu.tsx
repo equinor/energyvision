@@ -6,7 +6,7 @@ export type MenuProps = RAccordionProps
 
 export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu({ children, ...rest }, ref) {
   return (
-    <RAccordion ref={ref} {...rest}>
+    <RAccordion ref={ref} multiple collapsible {...rest}>
       {children}
     </RAccordion>
   )

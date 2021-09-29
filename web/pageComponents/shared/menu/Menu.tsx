@@ -1,6 +1,6 @@
 import { List } from '@components'
 import styled from 'styled-components'
-import { SubMenu } from './SubMenu'
+import { MenuGroup } from './MenuGroup'
 /* import { useMenu } from './MenuProvider' */
 import type { MenuData, SubMenuData } from '../../../types/types'
 
@@ -36,7 +36,7 @@ const Menu = ({ data }: MenuProps) => {
           <TopLevelList unstyled>
             {menuItems.map((topLevelItem: SubMenuData) => {
               if (topLevelItem?.topLevelLink.isDisabled) return null
-              return <SubMenu key={topLevelItem.id} {...topLevelItem} />
+              return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
             })}
           </TopLevelList>
         )}

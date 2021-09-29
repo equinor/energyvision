@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import NextLink from 'next/link'
-import { Link, List, Heading } from '@components'
+import { Link, List, Heading, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 
+const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
 const { Item } = List
+
 const TopLevelItem = styled(Item)``
 type SubMenuPanelProps = {
   isOpen: boolean
@@ -34,9 +36,8 @@ const TopLevelLink = styled(Link)<TopLevelLinkProps>`
 
 const ListGroup = styled.div``
 
-const SubMenuPanel = styled.div<SubMenuPanelProps>`
-  /* Nevermind about a11y at this point */
-  /*  For the sake of quick and dirty, let's do the stupid hover interaction */
+/* const SubMenuPanel = styled.div<SubMenuPanelProps>`
+
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
   opacity: ${(props) => (props.isOpen ? '1' : '0')};
   transition: opacity 0.19s linear 0.2s, visibility 0ms 0.4s;
@@ -44,14 +45,14 @@ const SubMenuPanel = styled.div<SubMenuPanelProps>`
   height: 37rem;
   position: absolute;
   background-color: var(--ui-background-default);
-  /* Temp. make it easier to see the menu */
+ 
   background-color: var(--grey-20);
 
   padding: var(--space-large);
   left: 0;
   right: 0;
 `
-
+ */
 function getLink(linkData: MenuLinkData) {
   if (!linkData) return 'something-wrong'
   const { isStatic, link, staticUrl } = linkData
@@ -74,43 +75,35 @@ function getLink(linkData: MenuLinkData) {
 }
  */
 
-export const SubMenu = (topLevelItem: SubMenuData) => {
-  const [open, setOpen] = useState(false)
+export const MenuGroup = (topLevelItem: SubMenuData) => {
   const router = useRouter()
   const { topLevelLink, group } = topLevelItem
   const topLevelHref = getLink(topLevelLink)
   /* const activePanel = isOpen && getActiveMenuItem === topLevelLink.label */
 
-  const openMenuItem = () => {
-    setOpen(true)
-  }
-  const closeMenuItem = () => {
-    setOpen(false)
-  }
-
-  const handleRouteChange = useCallback(() => {
+  /*  const handleRouteChange = useCallback(() => {
     setOpen(false)
 
-    // setActiveMenuItem(fetchTopLevel(url))
-  }, [])
+  }, []) */
 
   // @TODO: We need something like this to do things when the user navigates
-  useEffect(() => {
+  /*  useEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange])
+  }, [router.events, handleRouteChange]) */
 
   return (
-    <TopLevelItem onMouseEnter={openMenuItem} onMouseLeave={closeMenuItem}>
+    <SubMenu>
       <div>
+        <SubMenuHeader> {topLevelLink?.label || 'Error'}</SubMenuHeader>
         {/* @TODO: Should we allow external links at top level? */}
-        <NextLink href={topLevelHref} passHref>
-          <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
-            {topLevelLink?.label || 'Error'}
-          </TopLevelLink>
-        </NextLink>
-        {group && group.length > 0 && (
-          <SubMenuPanel isOpen={open}>
+        <SubMenuPanel>
+          <NextLink href={topLevelHref} passHref>
+            <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
+              {`${topLevelLink?.label} overview page` || 'Error'}
+            </TopLevelLink>
+          </NextLink>
+          {group && group.length > 0 && (
             <SubMenuContent>
               {group.map((groupItem: SubMenuGroupData) => {
                 return (
@@ -131,9 +124,9 @@ export const SubMenu = (topLevelItem: SubMenuData) => {
                 )
               })}
             </SubMenuContent>
-          </SubMenuPanel>
-        )}
+          )}
+        </SubMenuPanel>
       </div>
-    </TopLevelItem>
+    </SubMenu>
   )
 }
