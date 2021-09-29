@@ -1,47 +1,50 @@
-import { List } from '@components'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { MenuGroup } from './MenuGroup'
+import { Menu as EnvisMenu } from '@components'
+import { RemoveScroll } from 'react-remove-scroll'
 /* import { useMenu } from './MenuProvider' */
 import type { MenuData, SubMenuData } from '../../../types/types'
 
-const MenuWrapper = styled.nav`
-  margin: 0 auto;
+const TopbarDropdown = styled.div`
+  position: fixed;
+  width: 100%;
+  height: calc(100vh - var(--offset));
+  background: var(--ui-background-default);
+  overflow: auto;
 
-  a {
-    margin: 0 var(--space-medium) 0 0;
-  }
-`
-
-const TopLevelList = styled(List)`
-  display: inline-flex;
-  flex-wrap: wrap;
+  display: var(--display);
+  z-index: 200;
 `
 
 export type MenuProps = {
   data?: MenuData
+  isOpen: boolean
+  height: number
 }
 
-const Menu = ({ data }: MenuProps) => {
-  /* const { isOpen, closeMenu, openMenu, setActive, getActiveMenuItem, removeActive } = useMenu() */
-  /*   const [activeMenuItem, setActiveMenuItem] = useState(getInitialMenuItem(router)) */
-
+const Menu = ({ data, isOpen, height = 0 }: MenuProps) => {
   const menuItems = (data && data.subMenus) || []
   return (
-    <>
-      <MenuWrapper>
-        {/* For testing state 
-          <input placeholder="Search..." /> */}
-
-        {menuItems && (
-          <TopLevelList unstyled>
+    <RemoveScroll enabled={isOpen}>
+      <TopbarDropdown
+        style={
+          {
+            '--offset': `${height}px`,
+            '--display': isOpen ? 'block' : 'none',
+          } as CSSProperties
+        }
+      >
+        <nav>
+          <EnvisMenu>
             {menuItems.map((topLevelItem: SubMenuData) => {
               if (topLevelItem?.topLevelLink.isDisabled) return null
               return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
             })}
-          </TopLevelList>
-        )}
-      </MenuWrapper>
-    </>
+          </EnvisMenu>
+        </nav>
+      </TopbarDropdown>
+    </RemoveScroll>
   )
 }
 export default Menu

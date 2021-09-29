@@ -1,14 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useCallback, CSSProperties } from 'react'
+import { useState, useCallback } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { RemoveScroll } from 'react-remove-scroll'
-import { Topbar, MenuButton, Logo, Menu, List, Link } from '@components'
+import { Topbar, MenuButton, Logo } from '@components'
 import { LocalizationSwitch } from './LocalizationSwitch'
-
 import type { MenuData, SubMenuData } from '../../types/types'
-import { MenuGroup } from './menu/MenuGroup'
+import Menu from './menu/Menu'
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   #__next {
@@ -59,8 +57,6 @@ const Header = ({ slugs, data }: HeaderProps) => {
     setIsOpen(!isOpen)
   }
 
-  const menuItems = (data && data.subMenus) || []
-
   return (
     <HeaderRelative>
       <TopbarOffset topbarHeight={topbarHeight} />
@@ -75,25 +71,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
         <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
       </Topbar>
-      <RemoveScroll enabled={isOpen}>
-        <TopbarDropdown
-          style={
-            {
-              '--offset': `${topbarHeight}px`,
-              '--display': isOpen ? 'block' : 'none',
-            } as CSSProperties
-          }
-        >
-          <nav>
-            <Menu>
-              {menuItems.map((topLevelItem: SubMenuData) => {
-                if (topLevelItem?.topLevelLink.isDisabled) return null
-                return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
-              })}
-            </Menu>
-          </nav>
-        </TopbarDropdown>
-      </RemoveScroll>
+      <Menu height={topbarHeight} isOpen={isOpen} data={data} />
     </HeaderRelative>
   )
 }
