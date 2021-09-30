@@ -15,6 +15,7 @@ const SoMeLinks = styled.div`
   background-color: var(--slate-blue-95);
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   min-height: var(--space-4xLarge);
   padding: var(--space-large) var(--space-large);
@@ -23,7 +24,8 @@ const SoMeLinks = styled.div`
   }
 `
 const FooterLink = styled(Link)`
-  font-size: var(--typeScale-1);
+  font-size: var(--typeScale-0);
+  margin-bottom: var(--space-small);
   text-decoration: none;
   &:hover {
     color: var(--heritage-red-90);
@@ -33,19 +35,29 @@ const FooterBottom = styled.div`
   min-height: var(--space-3xLarge);
   padding: var(--space-large) var(--space-large);
 `
-
+const SoMeLink = styled(Link)`
+  font-size: var(--typeScale-0);
+  margin-bottom: var(--space-small);
+  text-decoration: none;
+  &:hover {
+    color: var(--heritage-red-90);
+  }
+`
 const LinksWrapper = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
+  padding: var(--space-small) var(--layout-paddingHorizontal-large);
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 
   margin-left: auto;
   margin-right: auto;
 `
 
 const CompanyName = styled(Typography)`
+  padding-top: var(--space-small);
   text-align: center;
+  font-size: var(--typeScale-0);
 `
 
 const placeHolderSoMeLinks = [
@@ -85,9 +97,9 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
       <SoMeLinks>
         {placeHolderSoMeLinks.map(({ url, icon }) => {
           return (
-            <Link key={url} href={url}>
+            <SoMeLink key={url} href={url}>
               <Icon data={icon} />
-            </Link>
+            </SoMeLink>
           )
         })}
       </SoMeLinks>
