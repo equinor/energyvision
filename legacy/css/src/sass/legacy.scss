@@ -43,10 +43,8 @@
   @import 'templates/front-page';
   @import 'templates/magazine-article-page';
   @import 'templates/magazine-page';
-  @import 'templates/mfp';
   @import 'templates/news-page';
   @import 'templates/panel-page';
-  @import 'templates/panel-page-inverted';
   @import 'templates/section-page';
   @import 'templates/topic-page';
 
@@ -72,14 +70,12 @@
   @import 'components/title';
   @import 'components/carousel';
   @import 'components/mainnumbers';
-  @import 'components/stock-holder';
   @import 'components/adaptiveimages';
   @import 'components/date';
   @import 'components/colctrl';
   @import 'components/factbox';
   @import 'components/organization-chart.scss';
   @import 'components/iframe';
-  @import 'components/footer';
   @import 'components/table';
   @import 'components/divider';
   @import 'components/imagetiles';
@@ -87,13 +83,9 @@
   @import 'components/magazine-list';
   @import 'components/visual-list';
   @import 'components/horisontal-bar';
-  @import 'components/remit-table';
-  @import 'components/progress-button.scss';
   @import 'components/accordion';
-  @import 'components/in-page-nav';
   @import 'components/calendar';
   @import 'components/calendar-tiles';
-  @import 'components/statoilforms';
   @import 'components/core-accordion';
   @import 'components/basic-accordion';
   @import 'components/quicklist';
@@ -111,8 +103,5 @@
   // Archive
   @import 'archive/news';
 }
-  @import 'frameworks/magnifier-popup/slide';
-  @import 'frameworks/magnifier-popup/magnifier-popup';
-  @import 'frameworks/magnifier-popup/fade';
   @import 'modules/aos';
 
