@@ -80,18 +80,6 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
   const router = useRouter()
   const { topLevelLink, group } = topLevelItem
   const topLevelHref = getLink(topLevelLink)
-  /* const activePanel = isOpen && getActiveMenuItem === topLevelLink.label */
-
-  /*  const handleRouteChange = useCallback(() => {
-    setOpen(false)
-
-  }, []) */
-
-  // @TODO: We need something like this to do things when the user navigates
-  /*  useEffect(() => {
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange]) */
 
   return (
     <SubMenu>
