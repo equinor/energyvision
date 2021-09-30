@@ -25,7 +25,8 @@ const SoMeLinks = styled.div`
 `
 const FooterLink = styled(Link)`
   font-size: var(--typeScale-0);
-  margin-bottom: var(--space-small);
+  padding: var(--space-small);
+
   text-decoration: none;
   &:hover {
     color: var(--heritage-red-90);
@@ -39,6 +40,11 @@ const SoMeLink = styled(Link)`
   font-size: var(--typeScale-0);
   margin-bottom: var(--space-small);
   text-decoration: none;
+  padding: 0 var(--space-xSmall);
+  & > svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
   &:hover {
     color: var(--heritage-red-90);
   }
