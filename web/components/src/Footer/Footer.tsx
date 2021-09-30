@@ -24,6 +24,7 @@ const SoMeLinks = styled.div`
 `
 const FooterLink = styled(Link)`
   font-size: var(--typeScale-1);
+  text-decoration: none;
   &:hover {
     color: var(--heritage-red-90);
   }
