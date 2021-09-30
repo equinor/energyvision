@@ -133,6 +133,16 @@ export default {
         }),
     },
     {
+      name: 'iframe',
+      title: 'IFrame',
+      description: 'Use this to add an iframe to this article. This could for example be a livestream, video, or map.',
+      type: 'iframe',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+    {
       name: 'relatedLinks',
       title: 'More on this topic',
       description: 'Optional list of related links to this article.',
