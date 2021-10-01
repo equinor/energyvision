@@ -31,14 +31,20 @@ export default {
       type: 'string',
       title: 'Frame title',
       description: 'The title of the iframe. This value is not visible on the page but is required for accessibility.',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: SchemaType.ValidationRule) =>
+        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
+          return context.parent?.url && value === undefined ? 'Required' : true
+        }),
     },
     {
       name: 'url',
       type: 'url',
       title: 'URL',
       description: 'Link to the content to be loaded inside the iframe.',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: SchemaType.ValidationRule) =>
+        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
+          return (context.parent?.title || context.parent?.frameTitle) && value === undefined ? 'Required' : true
+        }),
     },
     {
       name: 'aspectRatio',
