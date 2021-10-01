@@ -210,8 +210,12 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
     title,
+    frameTitle,
     url,
-    "aspectRatio": coalesce(aspectRatio, '16:9'),
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
+      "background": coalesce(background.title, 'none'),
+    },
   },
 `
 

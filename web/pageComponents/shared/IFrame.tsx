@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
+import { Heading, BackgroundContainer } from '@components'
+
+const StyledHeading = styled(Heading)`
+  padding: 0 0 var(--space-large) 0;
+`
 
 const Container = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
@@ -32,15 +37,22 @@ const calculatePadding = (aspectRatio: string): string => {
   return `${percentage}%`
 }
 
-const IFrame = ({ data: { title, url, aspectRatio } }: { data: IFrameData }) => {
+const IFrame = ({ data: { title, frameTitle, url, designOptions } }: { data: IFrameData }) => {
   if (!url) return null
 
   return (
-    <Container>
-      <IFrameContainer aspectRatioPadding={calculatePadding(aspectRatio)}>
-        <StyledIFrame src={url} title={title}></StyledIFrame>
-      </IFrameContainer>
-    </Container>
+    <BackgroundContainer background={designOptions.background}>
+      <Container>
+        {title && (
+          <StyledHeading size="xl" level="h2">
+            {title}
+          </StyledHeading>
+        )}
+        <IFrameContainer aspectRatioPadding={calculatePadding(designOptions.aspectRatio)}>
+          <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
+        </IFrameContainer>
+      </Container>
+    </BackgroundContainer>
   )
 }
 
