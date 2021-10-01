@@ -102,7 +102,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
       <SoMeLinks>
         {placeHolderSoMeLinks.map(({ url, icon }) => {
           return (
-            <SoMeLink key={url} href={url}>
+            <SoMeLink aria-label={url} key={url} href={url}>
               <Icon data={icon} />
             </SoMeLink>
           )
