@@ -26,10 +26,14 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
     return <ErrorPage statusCode={404} />
   }
   
+  // cookiebot script should be beforeInterative.. 
   return (
     <>
       <NextSeo title={data?.title} description={data?.description}></NextSeo>
       <Script src="/legacy/legacy.minified.js" strategy="afterInteractive" />
+      <Script src="https://consent.cookiebot.com/uc.js"
+       id="Cookiebot" data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+       strategy="afterInteractive"></Script> 
       <style jsx global>
         {archivedStyles}
       </style>
