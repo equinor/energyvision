@@ -37,11 +37,11 @@ const calculatePadding = (aspectRatio: string): string => {
   return `${percentage}%`
 }
 
-const IFrame = ({ data: { title, frameTitle, url, designOptions } }: { data: IFrameData }) => {
+const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { data: IFrameData }) => {
   if (!url) return null
 
   return (
-    <BackgroundContainer background={designOptions.background}>
+    <BackgroundContainer background={designOptions.background} {...rest}>
       <Container>
         {title && (
           <StyledHeading size="xl" level="h2">

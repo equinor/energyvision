@@ -144,6 +144,10 @@ const Latest = styled.div`
   max-width: 1700px;
 `
 
+const StyledIFrame = styled(IFrame)`
+  margin-top: var(--space-3xLarge);
+`
+
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()
   const dtB = new Date(b).getTime()
@@ -255,7 +259,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 </Content>
               )}
 
-              {news.iframe && <IFrame data={news.iframe} />}
+              {news.iframe && <StyledIFrame data={news.iframe} />}
 
               {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
                 <Related>
