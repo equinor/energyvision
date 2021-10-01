@@ -6,6 +6,7 @@ import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 import Header from '../../../pageComponents/shared/Header'
+import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // TODO fix the eslint issues
@@ -36,6 +37,9 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[...pagePath]', data?.news?.slug)
 
+  const onLinkClicked = (e : any) => {
+    anchorClick(e,router)
+  }
   return (
     <>
       {router.isFallback ? (
@@ -60,6 +64,9 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           />
           <div
             className="legacyStyles"
+            onClick={ onLinkClicked }
+            onKeyDown = {onLinkClicked}
+            aria-hidden= "true"
             dangerouslySetInnerHTML={{
               __html: data?.news?.content,
             }}
