@@ -6,7 +6,6 @@ import { youtube_alt, twitter, instagram, facebook, linkedin } from '@equinor/ed
 import { Icon, Typography } from '@equinor/eds-core-react'
 
 const StyledFooter = styled.footer`
-  background-color: pink;
   min-height: var(--space-4xLarge);
   clear: both;
 `
