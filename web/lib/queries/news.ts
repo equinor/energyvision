@@ -15,6 +15,7 @@ const newsFields = /* groq */ `
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       "background": coalesce(background.title, 'none'),
+      height,
     },
   },
 `

@@ -63,6 +63,14 @@ export default {
       validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
     {
+      name: 'height',
+      type: 'number',
+      title: 'Height',
+      description: 'Set a fixed height in pixels for the iframe. Note: this will override the aspect ratio setting.',
+      fieldset: 'design',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.positive().greaterThan(0).precision(0),
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',

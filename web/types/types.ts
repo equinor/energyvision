@@ -232,6 +232,7 @@ export type IFrameData = {
   url: string
   designOptions: {
     aspectRatio: string
+    height?: number
     background: BackgroundColours
   }
 }
