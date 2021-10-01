@@ -40,15 +40,18 @@ const calculatePadding = (aspectRatio: string): string => {
 const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { data: IFrameData }) => {
   if (!url) return null
 
+  const { height, aspectRatio, background } = designOptions
+  const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
+
   return (
-    <BackgroundContainer background={designOptions.background} {...rest}>
+    <BackgroundContainer background={background} {...rest}>
       <Container>
         {title && (
           <StyledHeading size="xl" level="h2">
             {title}
           </StyledHeading>
         )}
-        <IFrameContainer aspectRatioPadding={calculatePadding(designOptions.aspectRatio)}>
+        <IFrameContainer aspectRatioPadding={containerPadding}>
           <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
         </IFrameContainer>
       </Container>
