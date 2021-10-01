@@ -22,6 +22,7 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { NewsCardData, NewsSchema } from '../../types/types'
 import PageHeader from '../../pageComponents/shared/Header'
 import { mapLocaleToLang } from '../../lib/localization'
+import IFrame from '../../pageComponents/shared/IFrame'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -253,6 +254,8 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   <NewsBlockContent blocks={news.content}></NewsBlockContent>
                 </Content>
               )}
+
+              {news.iframe && <IFrame data={news.iframe} />}
 
               {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
                 <Related>

@@ -58,6 +58,7 @@ export type NewsSchema = {
   ingress: PortableTextEntry[]
   content: PortableTextEntry[]
   relatedLinks: RelatedLinksData
+  iframe: IFrameData
 }
 
 // From https://github.com/sanity-io/sanity/blob/next/packages/%40sanity/field/src/types/portableText/diff/types.ts
@@ -224,8 +225,8 @@ export type MenuData = {
 }
 
 export type IFrameData = {
-  id: string
-  type: string
+  id?: string
+  type?: string
   title: string
   frameTitle: string
   url: string
