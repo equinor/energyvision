@@ -227,6 +227,10 @@ export type IFrameData = {
   id: string
   type: string
   title: string
+  frameTitle: string
   url: string
-  aspectRatio: string
+  designOptions: {
+    aspectRatio: string
+    background: BackgroundColours
+  }
 }
