@@ -227,7 +227,7 @@ export type MenuData = {
 export type IFrameData = {
   id?: string
   type?: string
-  title: string
+  title?: string
   frameTitle: string
   url: string
   designOptions: {
