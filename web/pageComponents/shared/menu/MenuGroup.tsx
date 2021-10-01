@@ -27,13 +27,12 @@ const TopLevelLink = styled(Link)<TopLevelLinkProps>`
   border-bottom: ${(props) => (props.active ? '2px solid var(--moss-green-80)' : '2px solid transparent ')};
 `
 
-const GroupItem = styled(Item)`
-  /* We don't actually have a value for 12px */
-  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
-`
+const GroupItem = styled(Item)``
 
 const GroupLink = styled(Link)`
   text-decoration: none;
+  /* We don't actually have a value for 12px */
+  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
 `
 
 const Group = styled.div``
