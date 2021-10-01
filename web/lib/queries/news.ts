@@ -8,6 +8,15 @@ const newsFields = /* groq */ `
   "publishDateTime": coalesce(publishDateTime, _createdAt),
   "slug": slug.current,
   ingress,
+  "iframe": iframe{
+    title,
+    frameTitle,
+    url,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
+      "background": coalesce(background.title, 'none'),
+    },
+  },
 `
 
 export const allNewsQuery = /* groq */ `
