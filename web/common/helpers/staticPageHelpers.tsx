@@ -66,3 +66,18 @@ export const getPagePaths = async (path: string): Promise<string[]> => {
 
   return []
 }
+
+
+export const anchorClick = (e : any, router:any) => {
+    if(e != null){
+    const targetLink = e.target.closest('a');
+    if(!targetLink) return;
+    if(targetLink.href.includes('#')){
+      e.preventDefault();
+      if(targetLink.href.includes(router.asPath.split('#').at(0)))
+        router.replace(targetLink.href,undefined,{shallow: true})
+      else
+        router.push(targetLink.href)
+    }
+  }
+    }
