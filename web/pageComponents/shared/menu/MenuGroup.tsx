@@ -23,11 +23,20 @@ type TopLevelLinkProps = {
 
 const TopLevelLink = styled(Link)<TopLevelLinkProps>`
   text-decoration: none;
-  padding: var(--space-xSmall) var(--space-small);
+  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-large);
   border-bottom: ${(props) => (props.active ? '2px solid var(--moss-green-80)' : '2px solid transparent ')};
 `
 
-const ListGroup = styled.div``
+const GroupItem = styled(Item)`
+  /* We don't actually have a value for 12px */
+  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+`
+
+const GroupLink = styled(Link)`
+  text-decoration: none;
+`
+
+const Group = styled.div``
 
 function getLink(linkData: MenuLinkData) {
   if (!linkData) return 'something-wrong'
@@ -70,20 +79,20 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
             <SubMenuContent>
               {group.map((groupItem: SubMenuGroupData) => {
                 return (
-                  <ListGroup key={groupItem.id}>
+                  <Group key={groupItem.id}>
                     <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
                       {groupItem.label}
                     </Heading>
                     <WrappedList unstyled>
                       {groupItem.links.map((link: MenuLinkData) => (
-                        <Item key={link.id}>
+                        <GroupItem key={link.id}>
                           <NextLink href={getLink(link)} passHref>
-                            <Link>{link.label}</Link>
+                            <GroupLink>{link.label}</GroupLink>
                           </NextLink>
-                        </Item>
+                        </GroupItem>
                       ))}
                     </WrappedList>
-                  </ListGroup>
+                  </Group>
                 )
               })}
             </SubMenuContent>
