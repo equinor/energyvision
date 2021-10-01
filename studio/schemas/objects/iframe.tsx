@@ -2,16 +2,34 @@ import React from 'react'
 import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
+import { Colors } from '../../helpers/ColorListValues'
 
 export default {
   title: 'IFrame',
   name: 'iframe',
   type: 'object',
+  fieldsets: [
+    {
+      title: 'Design options',
+      name: 'design',
+      description: 'Some options for design',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
     {
       name: 'title',
       type: 'string',
       title: 'Title',
+      description: 'The (optional) title/heading shown above the iframe.',
+    },
+    {
+      name: 'frameTitle',
+      type: 'string',
+      title: 'Frame title',
       description: 'The title of the iframe. This value is not visible on the page but is required for accessibility.',
       validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
@@ -34,17 +52,35 @@ export default {
         ],
         layout: 'dropdown',
       },
+      fieldset: 'design',
       initialValue: '16:9',
       validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        borderradius: {
+          outer: '100%',
+          inner: '100%',
+        },
+        tooltip: true,
+        list: Colors,
+      },
+      fieldset: 'design',
+      initialValue: Colors[0],
     },
   ],
   preview: {
     select: {
       title: 'title',
+      frameTitle: 'frameTitle',
     },
-    prepare({ title }: { title: string }): SchemaType.Preview {
+    prepare({ title, frameTitle }: { title: string; frameTitle: string }): SchemaType.Preview {
       return {
-        title: title,
+        title: title || frameTitle,
         subtitle: `IFrame component`,
         media: EdsIcon(code),
       }
