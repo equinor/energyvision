@@ -1,6 +1,6 @@
 {
   "name": "@equinor/energyvision-legacy-css",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Legacy styles project moved from AEM source code",
   "main": "dist/css/legacy.minified.css",
   "style": "dist/css/legacy.minified.css",
@@ -28,16 +28,16 @@
     "es6-promise": "^3.0.2",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "2.6.1",
     "gulp-consolidate": "^0.1.2",
     "gulp-csslint": "^0.1.5",
     "gulp-iconfont": "^5.0.1",
     "gulp-minify-css": "^1.0.0",
     "gulp-rename": "^2.0.0",
+    "gulp-replace": "1.1.3",
     "gulp-sass": "^4.0.2",
     "lodash": "^4.17.21",
     "node-sass": "^4.11.0",
-    "susy": "2.2.14",
-    "gulp-concat": "2.6.1",
-    "gulp-replace": "1.1.3"
+    "susy": "2.2.14"
   }
 }
