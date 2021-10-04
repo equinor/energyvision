@@ -11,7 +11,7 @@ const SubMenuContent = styled.div`
 
   @media (min-width: 1300px) {
     display: block;
-    height: 100%;
+    /*  height: 100%; */
   }
 `
 
