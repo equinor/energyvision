@@ -29,15 +29,21 @@ const Title = styled.span`
   }
 `
 
+const StyledMenuButton = styled(Button)`
+  @media (min-width: 1300px) {
+    display: none;
+  }
+`
+
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(function MenuButton(
   { ariaExpanded, title, ...rest },
   ref,
 ) {
   const iconSize = 24
   return (
-    <Button variant="ghost" aria-expanded={ariaExpanded} ref={ref} {...rest}>
+    <StyledMenuButton variant="ghost" aria-expanded={ariaExpanded} ref={ref} {...rest}>
       <Title>{title}</Title>
       {ariaExpanded ? <StyledIcon size={iconSize} data={clear} /> : <StyledIcon size={iconSize} data={menu} />}
-    </Button>
+    </StyledMenuButton>
   )
 })
