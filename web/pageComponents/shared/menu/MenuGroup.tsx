@@ -8,13 +8,19 @@ const { Item } = List
 
 const SubMenuContent = styled.div`
   display: flex;
+  @media (min-width: 1300px) {
+    padding: var(--space-medium);
+    max-height: var(--menu-height-lg);
+  }
 `
 
 const WrappedList = styled(List)`
-  /*   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap; 
-  max-height: 35rem;*/
+  @media (min-width: 1300px) {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 100%;
+  }
 `
 
 type TopLevelLinkProps = {
@@ -36,7 +42,7 @@ const GroupLink = styled(Link)`
 `
 
 const Group = styled.div`
- @media (min-width: 1300px) {
+  @media (min-width: 1300px) {
     flex-direction: row-reverse;
   }
 `

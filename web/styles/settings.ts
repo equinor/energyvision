@@ -81,6 +81,8 @@ export const colors = css`
     --default-text: rgba(61, 61, 61, 1);
 
     --theme-background-primary: var(--white-100);
+
+    --menu-height-lg: 598px;
   }
 `
 export const typography = css`

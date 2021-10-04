@@ -14,6 +14,8 @@ const StyledPanel = styled(RAccordionPanel)`
     left: 0;
     right: 0;
     background-color: var(--ui-background-default);
+    height: var(--menu-height-lg);
+    padding: var(--space-medium) 0;
   }
 `
 export type SubMenuPanelProps = RAccordionPanelProps & HTMLAttributes<HTMLDivElement>
