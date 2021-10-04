@@ -4,6 +4,9 @@ import { AccordionItem as RAccordionItem, AccordionItemProps as RAccordionItemPr
 
 const StyledItem = styled(RAccordionItem)`
   border-bottom: 1px solid var(--grey-40);
+  @media (min-width: 1300px) {
+    border: 0;
+  }
 `
 export type SubMenuProps = RAccordionItemProps
 

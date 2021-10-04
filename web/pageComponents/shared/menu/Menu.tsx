@@ -14,6 +14,13 @@ const TopbarDropdown = styled.div`
   overflow: auto;
   display: var(--display);
   z-index: 200;
+  top: var(--offset);
+  left: 0;
+  @media (min-width: 1300px) {
+    display: block;
+    height: auto;
+    position: static;
+  }
 `
 
 export type MenuProps = {
@@ -25,6 +32,8 @@ export type MenuProps = {
 const Menu = ({ data, isOpen, height = 0 }: MenuProps) => {
   const menuItems = (data && data.subMenus) || []
   return (
+    // @TODO: Do we want to remove scroll?
+    // @TODO This is a div atm, so it takes space in the flexbox layout
     <RemoveScroll enabled={isOpen}>
       <TopbarDropdown
         style={
