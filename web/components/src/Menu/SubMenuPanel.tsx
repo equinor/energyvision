@@ -10,13 +10,20 @@ const StyledPanel = styled(RAccordionPanel)`
   border-bottom: 1px solid var(--grey-40);
   background-color: var(--background-color);
   @media (min-width: 1300px) {
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     background-color: var(--ui-background-default);
+    padding: var(--space-medium) 0;
+  }
+`
+
+const PanelContainer = styled.div`
+  @media (min-width: 1300px) {
+    display: grid;
+    grid-template-rows: 5rem 500px;
     max-height: var(--menu-height-lg);
     height: var(--menu-height-lg);
-    padding: var(--space-medium) 0;
   }
 `
 export type SubMenuPanelProps = RAccordionPanelProps & HTMLAttributes<HTMLDivElement>
@@ -39,7 +46,7 @@ export const SubMenuPanel = forwardRef<HTMLDivElement, SubMenuPanelProps>(functi
       ref={ref}
       {...rest}
     >
-      {children}
+      <PanelContainer>{children}</PanelContainer>
     </StyledPanel>
   )
 })
