@@ -15,7 +15,8 @@
     "@sanity/desk-tool",
     "color-list",
     "intl-input",
-    "asset-source-brandmaster"
+    "asset-source-brandmaster",
+    "media"
   ],
   "env": {
     "development": {
@@ -23,6 +24,10 @@
     }
   },
   "parts": [
+    {
+      "implements": "part:@sanity/form-builder/input/file/asset-sources",
+      "path": "./parts/assetSources.js"
+    },
     {
       "name": "part:@sanity/base/schema",
       "path": "./schemas/schema"
