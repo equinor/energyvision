@@ -73,7 +73,7 @@ const Menu = ({ data, height = 0 }: MenuProps) => {
   }
 
   const menuItems = (data && data.subMenus) || []
-  console.log('window size', windowSize)
+
   return (
     <>
       {/* @TODO: Do we want to remove scroll? */}
