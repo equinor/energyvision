@@ -24,11 +24,23 @@ const StyledButton = styled(RAccordionButton)`
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
+  @media (min-width: 1300px) {
+    padding: var(--space-small) 0;
+  }
+`
+
+const StyledIcon = styled(Icon)`
+  @media (min-width: 1300px) {
+    display: none;
+  }
 `
 
 const StyledHeader = styled(Typography)`
   padding: 0 var(--space-large);
   background-color: var(--background-color);
+  @media (min-width: 1300px) {
+    padding: 0 var(--space-small);
+  }
 `
 const StyledTypography = styled(Typography)`
   font-weight: var(--font-weight);
@@ -63,7 +75,7 @@ export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(f
         >
           {children}
         </StyledTypography>
-        {isExpanded ? <Icon data={minimize} /> : <Icon data={add} />}
+        {isExpanded ? <StyledIcon data={minimize} /> : <StyledIcon data={add} />}
       </StyledButton>
     </StyledHeader>
   )

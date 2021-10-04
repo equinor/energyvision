@@ -18,6 +18,13 @@ const HeaderRelative = styled.header`
   position: relative;
 `
 
+const TempContainer = styled.div`
+  display: flex;
+  @media (min-width: 1300px) {
+    flex-direction: row-reverse;
+  }
+`
+
 export type HeaderProps = {
   data?: MenuData
   slugs?: {
@@ -60,16 +67,20 @@ const Header = ({ slugs, data }: HeaderProps) => {
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         {/* @TODO: Localize strings */}
-        <NextLink href="/" passHref>
-          <a aria-label="Equinor home page">
-            <Logo />
-          </a>
-        </NextLink>
-        {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+        <div>
+          <NextLink href="/" passHref>
+            <a aria-label="Equinor home page">
+              <Logo />
+            </a>
+          </NextLink>
+        </div>
+        <TempContainer>
+          {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
 
-        <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
+          <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
+          <Menu height={topbarHeight} isOpen={isOpen} data={data} />
+        </TempContainer>
       </Topbar>
-      <Menu height={topbarHeight} isOpen={isOpen} data={data} />
     </HeaderRelative>
   )
 }

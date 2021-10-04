@@ -9,6 +9,12 @@ import {
 const StyledPanel = styled(RAccordionPanel)`
   border-bottom: 1px solid var(--grey-40);
   background-color: var(--background-color);
+  @media (min-width: 1300px) {
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: var(--ui-background-default);
+  }
 `
 export type SubMenuPanelProps = RAccordionPanelProps & HTMLAttributes<HTMLDivElement>
 

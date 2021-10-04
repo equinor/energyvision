@@ -19,7 +19,10 @@ const Bar = styled.div`
   z-index: 10;
   background-color: var(--white-100);
   @media (min-width: 800px) {
-    padding: 1rem 2rem;
+    /*  padding: 1rem 2rem; */
+  }
+  @media (min-width: 1300px) {
+    align-items: flex-start;
   }
 `
 

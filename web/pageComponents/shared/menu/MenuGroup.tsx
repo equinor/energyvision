@@ -35,7 +35,11 @@ const GroupLink = styled(Link)`
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
 `
 
-const Group = styled.div``
+const Group = styled.div`
+ @media (min-width: 1300px) {
+    flex-direction: row-reverse;
+  }
+`
 
 function getLink(linkData: MenuLinkData) {
   if (!linkData) return 'something-wrong'
