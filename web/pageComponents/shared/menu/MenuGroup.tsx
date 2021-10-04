@@ -8,9 +8,10 @@ const { Item } = List
 
 const SubMenuContent = styled.div`
   display: flex;
+
   @media (min-width: 1300px) {
-    padding: var(--space-medium);
-    max-height: var(--menu-height-lg);
+    display: block;
+    height: 100%;
   }
 `
 
@@ -19,7 +20,7 @@ const WrappedList = styled(List)`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: 100%;
+    height: 100%;
   }
 `
 
@@ -33,7 +34,9 @@ const TopLevelLink = styled(Link)<TopLevelLinkProps>`
   border-bottom: ${(props) => (props.active ? '2px solid var(--moss-green-80)' : '2px solid transparent ')};
 `
 
-const GroupItem = styled(Item)``
+const GroupItem = styled(Item)`
+  max-height: 100%;
+`
 
 const GroupLink = styled(Link)`
   text-decoration: none;
@@ -43,7 +46,7 @@ const GroupLink = styled(Link)`
 
 const Group = styled.div`
   @media (min-width: 1300px) {
-    flex-direction: row-reverse;
+    height: 100%;
   }
 `
 
