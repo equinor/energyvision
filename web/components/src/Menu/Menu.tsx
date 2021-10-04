@@ -12,7 +12,7 @@ const StyledAccordion = styled(RAccordion)`
 
 export const Menu = forwardRef<HTMLDivElement, MenuProps>(function Menu({ children, ...rest }, ref) {
   return (
-    <StyledAccordion ref={ref} multiple collapsible {...rest}>
+    <StyledAccordion ref={ref} {...rest}>
       {children}
     </StyledAccordion>
   )
