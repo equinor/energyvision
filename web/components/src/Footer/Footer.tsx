@@ -8,6 +8,8 @@ import { Icon, Typography } from '@equinor/eds-core-react'
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
   clear: both;
+  color: white;
+  background-color: var(--slate-blue-95);
 `
 
 const SoMeLinks = styled.div`
@@ -16,53 +18,74 @@ const SoMeLinks = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  min-height: var(--space-4xLarge);
-  padding: var(--space-large) var(--space-large);
+  min-height: var(--space-large);
+  padding: var(--space-small) var(--space-small);
   a {
     color: white;
   }
 `
+const SoMeHeader = styled(Typography)`
+  font-size: var(--typeScale-3);
+  padding: var(--space-xSmall) var(--space-medium);
+  color: white;
+`
+
 const FooterLink = styled(Link)`
   font-size: var(--typeScale-0);
-  padding: var(--space-small);
-
+  padding: var(--space-xSmall) 0;
+  color: white;
   text-decoration: none;
   &:hover {
     color: var(--heritage-red-90);
   }
 `
 const FooterBottom = styled.div`
-  min-height: var(--space-3xLarge);
-  padding: var(--space-large) var(--space-large);
+  min-height: var(--space-large);
+  padding: var(--space-medium) var(--space-large);
 `
+const LinksWrapper = styled.div`
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 0 var(--space-arge);
+  display: flex;
+  height: 5em;
+  flex-basis: 60.66%;
+  max-width: 66.66%;
+`
+const FooterTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: var(--layout-maxContent-medium);
+  min-height: var(--space-3xLarge);
+  padding: var(--space-medium) var(--space-large);
+  margin: 0 auto;
+  justify-content: space-between;
+`
+
 const SoMeLink = styled(Link)`
   font-size: var(--typeScale-0);
   margin-bottom: var(--space-small);
   text-decoration: none;
   padding: 0 var(--space-xSmall);
+
   & > svg {
-    height: 2.4rem;
-    width: 2.4rem;
+    height: 2.3rem;
+    width: 2.3rem;
   }
   &:hover {
     color: var(--heritage-red-90);
   }
 `
-const LinksWrapper = styled.div`
-  padding: var(--space-small) var(--layout-paddingHorizontal-large);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-
-  margin-left: auto;
-  margin-right: auto;
-`
 
 const CompanyName = styled(Typography)`
-  padding-top: var(--space-small);
   text-align: center;
   font-size: var(--typeScale-0);
+  color: white;
+`
+const SoMeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `
 
 const placeHolderSoMeLinks = [
@@ -76,8 +99,11 @@ const placeHolderlinks = [
   { linkText: 'Terms and conditions', url: 'https://www.google.com/' },
   { linkText: 'Privacy policy', url: 'https://www.google.com/' },
   { linkText: 'Site info', url: 'https://www.google.com/' },
+  { linkText: 'RSS', url: 'https://www.google.com/' },
   { linkText: 'Contact us', url: 'https://www.google.com/' },
   { linkText: 'Cookie policy', url: 'https://www.google.com/' },
+  { linkText: 'Investors', url: 'https://www.google.com/' },
+  { linkText: 'Suppliers', url: 'https://www.google.com/' },
 ]
 
 type FooterProps = {
@@ -99,16 +125,19 @@ type FooterProps = {
 export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ soMeLinks, links, ...rest }, ref) {
   return (
     <StyledFooter ref={ref} {...rest}>
-      <SoMeLinks>
-        {placeHolderSoMeLinks.map(({ url, icon }) => {
-          return (
-            <SoMeLink aria-label={url} key={url} href={url}>
-              <Icon data={icon} />
-            </SoMeLink>
-          )
-        })}
-      </SoMeLinks>
-      <FooterBottom>
+      <FooterTop>
+        <SoMeWrapper>
+          <SoMeHeader>Connect with us</SoMeHeader>
+          <SoMeLinks>
+            {placeHolderSoMeLinks.map(({ url, icon }) => {
+              return (
+                <SoMeLink aria-label={url} key={url} href={url}>
+                  <Icon data={icon} />
+                </SoMeLink>
+              )
+            })}
+          </SoMeLinks>
+        </SoMeWrapper>
         <LinksWrapper>
           {placeHolderlinks.map(({ url, linkText }) => {
             return (
@@ -119,6 +148,8 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
             )
           })}
         </LinksWrapper>
+      </FooterTop>
+      <FooterBottom>
         <CompanyName>Copyright 2021 Equinor ASA</CompanyName>
       </FooterBottom>
     </StyledFooter>
