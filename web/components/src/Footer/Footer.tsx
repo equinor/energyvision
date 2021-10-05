@@ -11,7 +11,21 @@ const StyledFooter = styled.footer`
   color: white;
   background-color: var(--slate-blue-95);
 `
-
+const FooterTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: var(--layout-maxContent-medium);
+  min-height: var(--space-3xLarge);
+  padding: var(--space-medium) var(--space-large);
+  margin: 0 auto;
+  justify-content: space-between;
+`
+const SoMeHeader = styled(Typography)`
+  font-size: var(--typeScale-3);
+  padding: var(--space-xSmall) var(--space-medium);
+  color: white;
+`
 const SoMeLinks = styled.div`
   background-color: var(--slate-blue-95);
   display: flex;
@@ -24,17 +38,13 @@ const SoMeLinks = styled.div`
     color: white;
   }
 `
-const SoMeHeader = styled(Typography)`
-  font-size: var(--typeScale-3);
-  padding: var(--space-xSmall) var(--space-medium);
-  color: white;
-`
 
 const FooterLink = styled(Link)`
   font-size: var(--typeScale-0);
   padding: var(--space-xSmall) 0;
   color: white;
   text-decoration: none;
+  cursor: pointer;
   &:hover {
     color: var(--heritage-red-90);
   }
@@ -52,17 +62,11 @@ const LinksWrapper = styled.div`
   flex-basis: 60.66%;
   max-width: 66.66%;
 `
-const FooterTop = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: var(--layout-maxContent-medium);
-  min-height: var(--space-3xLarge);
-  padding: var(--space-medium) var(--space-large);
-  margin: 0 auto;
-  justify-content: space-between;
-`
 
+const SoMeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 const SoMeLink = styled(Link)`
   font-size: var(--typeScale-0);
   margin-bottom: var(--space-small);
@@ -82,10 +86,6 @@ const CompanyName = styled(Typography)`
   text-align: center;
   font-size: var(--typeScale-0);
   color: white;
-`
-const SoMeWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
 `
 
 const placeHolderSoMeLinks = [
