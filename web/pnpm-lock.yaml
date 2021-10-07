@@ -36,7 +36,7 @@ specifiers:
   next: ^11.1.2
   next-circular-dependency: ^1.0.1
   next-sanity: ^0.4.0
-  next-sanity-image: ^3.1.6
+  next-sanity-image: ^3.1.7
   next-seo: ^4.28.1
   only-allow: ^1.0.0
   prettier: 2.4.1
@@ -69,7 +69,7 @@ dependencies:
   next: 11.1.2_39969d7352d8af97f97f0d53dea4f445
   next-circular-dependency: 1.0.1
   next-sanity: 0.4.0_react@17.0.2
-  next-sanity-image: 3.1.6_5b228ddd2dd914bc306795dc08c15b26
+  next-sanity-image: 3.1.7_5b228ddd2dd914bc306795dc08c15b26
   next-seo: 4.28.1_6fbf59523517da779df50d355b375324
   only-allow: 1.0.0
   prom-client: 13.2.0
@@ -10061,8 +10061,8 @@ packages:
       - webpack
     dev: false
 
-  /next-sanity-image/3.1.6_5b228ddd2dd914bc306795dc08c15b26:
-    resolution: {integrity: sha512-+DWafmOyS/9EA1tpR/bh2wmz6vBWLm9x1z1i8VJbC54mkqsoODX9xwVX270FL5eazaqPYQjEpnnZkXuv6cwGXw==}
+  /next-sanity-image/3.1.7_5b228ddd2dd914bc306795dc08c15b26:
+    resolution: {integrity: sha512-mk842380HwDrlUSmyyx54MGcGcbz847c2rCTj9c75lkO+VSpuJ00+uaiJE3arktrnHAUV4XCZ+OVxJ6C1mqtBw==}
     peerDependencies:
       '@sanity/client': ^2.11.0
       next: ^11.0.0
