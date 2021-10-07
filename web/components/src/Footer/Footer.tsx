@@ -4,6 +4,7 @@ import { Link } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { youtube_alt, twitter, instagram, facebook, linkedin } from '@equinor/eds-icons'
 import { Icon, Typography } from '@equinor/eds-core-react'
+import { link } from 'fs'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -142,7 +143,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
         <LinksWrapper>
           {placeHolderlinks.map(({ url, linkText }) => {
             return (
-              <FooterLink variant="regular" key={url} href={url}>
+              <FooterLink variant="regular" key={url + linkText} href={url}>
                 {' '}
                 {linkText}
               </FooterLink>
