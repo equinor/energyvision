@@ -44,7 +44,7 @@ const FooterLink = styled(Link)`
   padding: var(--space-xSmall) 0;
   color: white;
   text-decoration: none;
-  cursor: pointer;
+
   &:hover {
     color: var(--heritage-red-90);
   }
@@ -56,10 +56,10 @@ const FooterBottom = styled.div`
 const LinksWrapper = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
-  padding: 0 var(--space-arge);
+  padding: 0 var(--space-large);
   display: flex;
   height: 5em;
-  flex-basis: 60.66%;
+  flex-basis: 66.66%;
   max-width: 66.66%;
 `
 
@@ -74,8 +74,8 @@ const SoMeLink = styled(Link)`
   padding: 0 var(--space-xSmall);
 
   & > svg {
-    height: 2.3rem;
-    width: 2.3rem;
+    height: 2rem;
+    width: 2rem;
   }
   &:hover {
     color: var(--heritage-red-90);
@@ -128,6 +128,7 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
       <FooterTop>
         <SoMeWrapper>
           <SoMeHeader>Connect with us</SoMeHeader>
+
           <SoMeLinks>
             {placeHolderSoMeLinks.map(({ url, icon }) => {
               return (
