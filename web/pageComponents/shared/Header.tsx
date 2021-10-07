@@ -63,7 +63,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
         <TempContainer>
           {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
 
-          <Menu height={topbarHeight} data={data} />
+          <Menu topbarHeight={topbarHeight} data={data} />
         </TempContainer>
       </Topbar>
     </HeaderRelative>
