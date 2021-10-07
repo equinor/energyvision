@@ -14,7 +14,8 @@ export const menuQuery = /* groq */ `
       "staticUrl": staticUrl,
     },
     "group": group[]{
-      "id": _key,     
+      "id": _key,
+      label,   
       "links": links[]{
           label,
           "isStatic": coalesce(isStatic, false),

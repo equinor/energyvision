@@ -15,6 +15,12 @@ const SubMenuContent = styled.div`
   }
 `
 
+const StyledHeading = styled(Heading)`
+  text-transform: uppercase;
+  color: var(--grey-60);
+  padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+`
+
 const WrappedList = styled(List)`
   @media (min-width: 1300px) {
     display: flex;
@@ -93,9 +99,9 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
               {group.map((groupItem: SubMenuGroupData) => {
                 return (
                   <Group key={groupItem.id}>
-                    <Heading level="h3" size="sm" style={{ textTransform: 'uppercase' }}>
+                    <StyledHeading level="h3" size="sm">
                       {groupItem.label}
-                    </Heading>
+                    </StyledHeading>
                     <WrappedList unstyled>
                       {groupItem.links.map((link: MenuLinkData) => (
                         <GroupItem key={link.id}>
