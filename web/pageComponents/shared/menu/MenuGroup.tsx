@@ -7,7 +7,7 @@ const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
 const { Item } = List
 
 const SubMenuContent = styled.div`
-  display: flex;
+  /*  display: flex; */
 
   @media (min-width: 1300px) {
     display: block;
@@ -39,6 +39,7 @@ const GroupItem = styled(Item)`
 `
 
 const GroupLink = styled(Link)`
+  display: flex;
   text-decoration: none;
   /* We don't actually have a value for 12px */
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
