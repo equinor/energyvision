@@ -83,6 +83,7 @@ export const colors = css`
     --theme-background-primary: var(--white-100);
 
     --menu-height-lg: 598px;
+    --topbar-height: 64px;
   }
 `
 export const typography = css`
