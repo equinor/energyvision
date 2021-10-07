@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { MenuGroup } from './MenuGroup'
 import { Menu as EnvisMenu, MenuButton } from '@components'
 import { RemoveScroll } from 'react-remove-scroll'
-import { Icon, Button, ButtonProps } from '@equinor/eds-core-react'
+import { Icon, Button } from '@equinor/eds-core-react'
 import { clear } from '@equinor/eds-icons'
 /* import { useMenu } from './MenuProvider' */
 import useWindowSize from './hooks/useWindowSize'
@@ -94,7 +94,7 @@ const Menu = ({ data }: MenuProps) => {
   return (
     <>
       {/* @TODO: Do we want to remove scroll? */}
-      <MenuButton title="Menu" ariaExpanded={isOpen} onClick={onMenuButtonClick} />
+      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} />
       <RemoveScroll enabled={isOpen}>
         <TopbarDropdown
           style={
@@ -105,10 +105,8 @@ const Menu = ({ data }: MenuProps) => {
         >
           <nav>
             <NavTopbar>
-              {/*     @TODO: Translations for strings */}
-              <Button variant="ghost_icon" aria-label="Close menu" onClick={() => setIsOpen(false)}>
-                <StyledIcon size={24} data={clear} />
-              </Button>
+              {/*  @TODO: Translations of string */}
+              <MenuButton title="Menu" expanded onClick={() => setIsOpen(false)}></MenuButton>
             </NavTopbar>
             <EnvisMenu index={indices} onChange={toggleItem}>
               {menuItems.map((topLevelItem: SubMenuData) => {
