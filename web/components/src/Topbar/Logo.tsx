@@ -10,7 +10,6 @@ const StyledLogo = styled.svg`
   display: block;
   height: 30px;
   max-width: 100%;
-  margin-right: 2rem;
   box-sizing: content-box;
   /* width: 113px; */
   fill: var(--energy-red-100);
