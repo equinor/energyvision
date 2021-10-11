@@ -8,7 +8,13 @@ const StyledAccordion = styled(RAccordion)`
   margin: 0;
   padding: 0;
   list-style: none;
+  @media (min-width: 700px) {
+    margin: var(--menu-paddingVertical) 0 0 var(--menu-paddingHorizontal);
+    width: var(--minViewportWidth);
+  }
   @media (min-width: 1300px) {
+    margin: 0;
+    width: auto;
     display: flex;
   }
 `
