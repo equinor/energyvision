@@ -108,7 +108,7 @@ const Menu = ({ data }: MenuProps) => {
             <nav>
               <NavTopbar>
                 {/*  @TODO: Translations of string */}
-                <MenuButton title="Menu" expanded onClick={() => setIsOpen(false)}></MenuButton>
+                <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <EnvisMenu index={indices} onChange={toggleItem}>
                 {menuItems.map((topLevelItem: SubMenuData) => {
