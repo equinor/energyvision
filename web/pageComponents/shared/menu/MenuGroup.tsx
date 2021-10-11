@@ -103,7 +103,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                       {groupItem.label}
                     </StyledHeading>
                   )}
-                  <WrappedList unstyled>
+                  <WrappedList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                     {groupItem.links.map((link: MenuLinkData) => (
                       <GroupItem key={link.id}>
                         <NextLink href={getLink(link)} passHref>
