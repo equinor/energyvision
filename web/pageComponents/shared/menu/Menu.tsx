@@ -38,8 +38,12 @@ const MenuContainer = styled.div`
 `
 
 const AllSitesLink = styled(Link)`
-  border-left: 2px solid var(--white-100);
-  padding: var(--space-medium) var(--space-large);
+  display: none;
+  @media (min-width: 1300px) {
+    display: inline-flex;
+    border-left: 2px solid var(--white-100);
+    padding: var(--space-medium) var(--space-large);
+  }
 `
 
 const StyledIcon = styled(Icon)`
