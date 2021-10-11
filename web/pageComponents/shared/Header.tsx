@@ -9,8 +9,8 @@ import type { MenuData } from '../../types/types'
 import Menu from './menu/Menu'
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
-  #__next {
-    margin-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
+  body {
+    padding-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
   }
 `
 
