@@ -48,7 +48,7 @@ export type MenuProps = {
   data?: MenuData
 }
 
-const Menu = ({ data }: MenuProps) => {
+const Menu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
   const windowSize = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
@@ -95,7 +95,7 @@ const Menu = ({ data }: MenuProps) => {
   return (
     <>
       {/* @TODO: Do we want to remove scroll? */}
-      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} />
+      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown
