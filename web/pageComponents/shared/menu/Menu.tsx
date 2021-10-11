@@ -96,7 +96,7 @@ const Menu = ({ data }: MenuProps) => {
     <>
       {/* @TODO: Do we want to remove scroll? */}
       <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} />
-      <FocusLock disabled={!isOpen}>
+      <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown
             style={
