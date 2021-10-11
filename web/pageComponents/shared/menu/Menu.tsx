@@ -2,12 +2,14 @@ import { CSSProperties, useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { MenuGroup } from './MenuGroup'
-import { Menu as EnvisMenu, MenuButton } from '@components'
+import { Menu as EnvisMenu, MenuButton, Link } from '@components'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import { Icon, Button } from '@equinor/eds-core-react'
-import { clear } from '@equinor/eds-icons'
+import { autorenew, clear } from '@equinor/eds-icons'
 /* import { useMenu } from './MenuProvider' */
+import NextLink from 'next/link'
+
 import useWindowSize from './hooks/useWindowSize'
 import type { MenuData, SubMenuData } from '../../../types/types'
 
@@ -21,6 +23,23 @@ const TopbarDropdown = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
+`
+
+const MenuContainer = styled.div`
+  background-color: transparent;
+  @media (min-width: 1300px) {
+    background-color: var(--moss-green-50);
+
+    margin: 0 var(--space-large);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`
+
+const AllSitesLink = styled(Link)`
+  border-left: 2px solid var(--white-100);
+  padding: var(--space-medium) var(--space-large);
 `
 
 const StyledIcon = styled(Icon)`
@@ -100,12 +119,18 @@ const Menu = ({ data, ...rest }: MenuProps) => {
                 {/*  @TODO: Translations of string */}
                 <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
-              <EnvisMenu index={indices} onChange={toggleItem}>
-                {menuItems.map((topLevelItem: SubMenuData) => {
-                  if (topLevelItem?.topLevelLink.isDisabled) return null
-                  return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
-                })}
-              </EnvisMenu>
+              <MenuContainer>
+                <EnvisMenu index={indices} onChange={toggleItem}>
+                  {menuItems.map((topLevelItem: SubMenuData) => {
+                    if (topLevelItem?.topLevelLink.isDisabled) return null
+                    return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
+                  })}
+                </EnvisMenu>
+                <NextLink href="/" passHref>
+                  {/* @TODO Language strings */}
+                  <AllSitesLink>All sites</AllSitesLink>
+                </NextLink>
+              </MenuContainer>
             </nav>
           </TopbarDropdown>
         </RemoveScroll>

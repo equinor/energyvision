@@ -13,7 +13,7 @@ const StyledAccordion = styled(RAccordion)`
     width: var(--minViewportWidth);
   }
   @media (min-width: 1300px) {
-    margin: 0;
+    margin: 0 auto;
     width: auto;
     display: flex;
   }
