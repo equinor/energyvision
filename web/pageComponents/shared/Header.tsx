@@ -3,10 +3,12 @@ import { useState, useCallback } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { Topbar, Logo } from '@components'
+import { Topbar, Logo, Button } from '@components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
 import Menu from './menu/Menu'
+import { Icon } from '@equinor/eds-core-react'
+import { search } from '@equinor/eds-icons'
 
 const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
   body {
@@ -21,7 +23,7 @@ const HeaderRelative = styled.header`
 const TopbarContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-areas: 'menu logo langSwitch';
+  grid-template-areas: 'menu logo controls';
   grid-template-rows: min-content 1fr min-content;
   align-items: center;
 `
@@ -36,9 +38,16 @@ const StyledLogoLink = styled.a`
   justify-self: center;
 `
 
-const StyledLocalizationSwitch = styled(LocalizationSwitch)`
-  grid-area: langSwitch;
+const ControlsContainer = styled.div`
+  grid-area: controls;
   justify-self: right;
+  display: flex;
+  align-items: center;
+`
+
+const StyledButton = styled(Button)`
+  color: var(--default-text);
+  fill: var(--default-text);
 `
 
 export type HeaderProps = {
@@ -78,7 +87,16 @@ const Header = ({ slugs, data }: HeaderProps) => {
             </StyledLogoLink>
           </NextLink>
 
-          {slugs && <StyledLocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+          <ControlsContainer>
+            {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+
+            {/* @TODO: search page */}
+            <NextLink href="/" passHref>
+              <StyledButton variant="ghost_icon" href="">
+                <Icon data={search} />
+              </StyledButton>
+            </NextLink>
+          </ControlsContainer>
         </TopbarContainer>
       </Topbar>
     </HeaderRelative>
