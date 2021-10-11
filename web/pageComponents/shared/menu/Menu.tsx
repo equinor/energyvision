@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { MenuGroup } from './MenuGroup'
 import { Menu as EnvisMenu, MenuButton } from '@components'
 import { RemoveScroll } from 'react-remove-scroll'
+import FocusLock from 'react-focus-lock'
 import { Icon, Button } from '@equinor/eds-core-react'
 import { clear } from '@equinor/eds-icons'
 /* import { useMenu } from './MenuProvider' */
@@ -95,28 +96,30 @@ const Menu = ({ data }: MenuProps) => {
     <>
       {/* @TODO: Do we want to remove scroll? */}
       <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} />
-      <RemoveScroll enabled={isOpen}>
-        <TopbarDropdown
-          style={
-            {
-              '--display': isOpen ? 'block' : 'none',
-            } as CSSProperties
-          }
-        >
-          <nav>
-            <NavTopbar>
-              {/*  @TODO: Translations of string */}
-              <MenuButton title="Menu" expanded onClick={() => setIsOpen(false)}></MenuButton>
-            </NavTopbar>
-            <EnvisMenu index={indices} onChange={toggleItem}>
-              {menuItems.map((topLevelItem: SubMenuData) => {
-                if (topLevelItem?.topLevelLink.isDisabled) return null
-                return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
-              })}
-            </EnvisMenu>
-          </nav>
-        </TopbarDropdown>
-      </RemoveScroll>
+      <FocusLock disabled={!isOpen}>
+        <RemoveScroll enabled={isOpen}>
+          <TopbarDropdown
+            style={
+              {
+                '--display': isOpen ? 'block' : 'none',
+              } as CSSProperties
+            }
+          >
+            <nav>
+              <NavTopbar>
+                {/*  @TODO: Translations of string */}
+                <MenuButton title="Menu" expanded onClick={() => setIsOpen(false)}></MenuButton>
+              </NavTopbar>
+              <EnvisMenu index={indices} onChange={toggleItem}>
+                {menuItems.map((topLevelItem: SubMenuData) => {
+                  if (topLevelItem?.topLevelLink.isDisabled) return null
+                  return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
+                })}
+              </EnvisMenu>
+            </nav>
+          </TopbarDropdown>
+        </RemoveScroll>
+      </FocusLock>
     </>
   )
 }
