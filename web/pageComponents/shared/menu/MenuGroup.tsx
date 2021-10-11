@@ -99,9 +99,11 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
               {group.map((groupItem: SubMenuGroupData) => {
                 return (
                   <Group key={groupItem.id}>
-                    <StyledHeading level="h3" size="sm">
-                      {groupItem.label}
-                    </StyledHeading>
+                    {groupItem.label && (
+                      <StyledHeading level="h3" size="sm">
+                        {groupItem.label}
+                      </StyledHeading>
+                    )}
                     <WrappedList unstyled>
                       {groupItem.links.map((link: MenuLinkData) => (
                         <GroupItem key={link.id}>
