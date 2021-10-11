@@ -10,12 +10,9 @@ const StyledItem = styled(RAccordionItem)`
 `
 export type SubMenuProps = RAccordionItemProps
 
-export const SubMenu = forwardRef</* HTMLLIElement */ HTMLDivElement, SubMenuProps>(function SubMenu(
-  { children, ...rest },
-  ref,
-) {
+export const SubMenu = forwardRef<HTMLLIElement, SubMenuProps>(function SubMenuProps({ children, ...rest }, ref) {
   return (
-    <StyledItem /* as="li" */ ref={ref} {...rest}>
+    <StyledItem forwardedAs="li" {...rest}>
       {children}
     </StyledItem>
   )
