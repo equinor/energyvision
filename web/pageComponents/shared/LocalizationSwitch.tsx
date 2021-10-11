@@ -16,11 +16,11 @@ export type LocalizationSwitchProps = {
 
 // @TODO: how to handle cases where no translation available
 // should this redirect to front page? should there be a message in that case?
-export const LocalizationSwitch = ({ en_GB, nb_NO, activeLocale }: LocalizationSwitchProps) => {
+export const LocalizationSwitch = ({ en_GB, nb_NO, activeLocale, ...rest }: LocalizationSwitchProps) => {
   if (!en_GB || !nb_NO) return null
 
   return (
-    <Wrapper>
+    <Wrapper {...rest}>
       <NextLink href={en_GB} locale="en" passHref>
         <Button variant={activeLocale == 'en' ? 'outlined' : 'ghost'}>EN</Button>
       </NextLink>
