@@ -85,41 +85,39 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
 
   return (
     <SubMenu>
-      <div>
-        <SubMenuHeader> {topLevelLink?.label || 'Error'}</SubMenuHeader>
-        {/* @TODO: Should we allow external links at top level? */}
-        <SubMenuPanel>
-          <NextLink href={topLevelHref} passHref>
-            <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
-              {`${topLevelLink?.label} overview page` || 'Error'}
-            </TopLevelLink>
-          </NextLink>
-          {group && group.length > 0 && (
-            <SubMenuContent>
-              {group.map((groupItem: SubMenuGroupData) => {
-                return (
-                  <Group key={groupItem.id}>
-                    {groupItem.label && (
-                      <StyledHeading level="h3" size="sm">
-                        {groupItem.label}
-                      </StyledHeading>
-                    )}
-                    <WrappedList unstyled>
-                      {groupItem.links.map((link: MenuLinkData) => (
-                        <GroupItem key={link.id}>
-                          <NextLink href={getLink(link)} passHref>
-                            <GroupLink>{link.label}</GroupLink>
-                          </NextLink>
-                        </GroupItem>
-                      ))}
-                    </WrappedList>
-                  </Group>
-                )
-              })}
-            </SubMenuContent>
-          )}
-        </SubMenuPanel>
-      </div>
+      <SubMenuHeader> {topLevelLink?.label || 'Error'}</SubMenuHeader>
+      {/* @TODO: Should we allow external links at top level? */}
+      <SubMenuPanel>
+        <NextLink href={topLevelHref} passHref>
+          <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
+            {`${topLevelLink?.label} overview page` || 'Error'}
+          </TopLevelLink>
+        </NextLink>
+        {group && group.length > 0 && (
+          <SubMenuContent>
+            {group.map((groupItem: SubMenuGroupData) => {
+              return (
+                <Group key={groupItem.id}>
+                  {groupItem.label && (
+                    <StyledHeading level="h3" size="sm">
+                      {groupItem.label}
+                    </StyledHeading>
+                  )}
+                  <WrappedList unstyled>
+                    {groupItem.links.map((link: MenuLinkData) => (
+                      <GroupItem key={link.id}>
+                        <NextLink href={getLink(link)} passHref>
+                          <GroupLink>{link.label}</GroupLink>
+                        </NextLink>
+                      </GroupItem>
+                    ))}
+                  </WrappedList>
+                </Group>
+              )
+            })}
+          </SubMenuContent>
+        )}
+      </SubMenuPanel>
     </SubMenu>
   )
 }
