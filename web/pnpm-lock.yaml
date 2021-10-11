@@ -44,6 +44,7 @@ specifiers:
   query-string: ^7.0.1
   react: ^17.0.2
   react-dom: ^17.0.2
+  react-focus-lock: ^2.5.2
   react-intl: ^5.20.12
   react-remove-scroll: ^2.4.3
   storybook-css-modules-preset: ^1.1.1
@@ -76,6 +77,7 @@ dependencies:
   query-string: 7.0.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-focus-lock: 2.5.2_b094b78811fc8d2f00a90f13d0251fb6
   react-intl: 5.20.12_react@17.0.2+typescript@4.4.3
   react-remove-scroll: 2.4.3_b094b78811fc8d2f00a90f13d0251fb6
   styled-components: 5.3.1_react-dom@17.0.2+react@17.0.2
@@ -7313,6 +7315,13 @@ packages:
       readable-stream: 2.3.7
     dev: true
 
+  /focus-lock/0.9.2:
+    resolution: {integrity: sha512-YtHxjX7a0IC0ZACL5wsX8QdncXofWpGPNoVMuI/nZUrPGp6LmNI6+D5j0pPj+v8Kw5EpweA+T5yImK0rnWf7oQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      tslib: 2.3.1
+    dev: false
+
   /follow-redirects/1.14.1_debug@2.6.9:
     resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
     engines: {node: '>=4.0'}
@@ -11190,6 +11199,15 @@ packages:
       webpack: 4.46.0
     dev: true
 
+  /react-clientside-effect/1.2.5_react@17.0.2:
+    resolution: {integrity: sha512-2bL8qFW1TGBHozGGbVeyvnggRpMjibeZM2536AKNENLECutp2yfs44IL8Hmpn8qjFQ2K7A9PnYf3vc7aQq/cPA==}
+    peerDependencies:
+      react: ^15.3.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      '@babel/runtime': 7.15.4
+      react: 17.0.2
+    dev: false
+
   /react-colorful/5.4.0_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-k7QJXuQGWevr/V8hoMJ1wBW9i2CVhBdDXpBf3jy/AAtzVyYtsFqEAT+y+NOGiSG1cmnGTreqm5EFLXlVaKbPLQ==}
     peerDependencies:
@@ -11308,6 +11326,22 @@ packages:
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
+
+  /react-focus-lock/2.5.2_b094b78811fc8d2f00a90f13d0251fb6:
+    resolution: {integrity: sha512-WzpdOnEqjf+/A3EH9opMZWauag7gV0BxFl+EY4ElA4qFqYsUsBLnmo2sELbN5OC30S16GAWMy16B9DLPpdJKAQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+    dependencies:
+      '@babel/runtime': 7.15.4
+      focus-lock: 0.9.2
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-clientside-effect: 1.2.5_react@17.0.2
+      use-callback-ref: 1.2.5_b094b78811fc8d2f00a90f13d0251fb6
+      use-sidecar: 1.0.5_react@17.0.2
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
 
   /react-helmet-async/1.1.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-LTTzDDkyIleT/JJ6T/uqx7Y8qi1EuPPSiJawQY/nHHz0h7SPDT6HxP1YDDQx/fzcVxCqpWEEMS3QdrSrNkJYhg==}
