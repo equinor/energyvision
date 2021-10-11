@@ -5,20 +5,19 @@ import { Accordion as RAccordion, AccordionProps as RAccordionProps } from '@rea
 export type MenuProps = RAccordionProps
 
 const StyledAccordion = styled(RAccordion)`
-  /*   margin: 0;
+  margin: 0;
   padding: 0;
-  list-style: none; */
+  list-style: none;
   @media (min-width: 1300px) {
     display: flex;
   }
 `
 
-export const Menu = forwardRef</* HTMLUListElement */ HTMLDivElement, MenuProps>(function Menu(
-  { children, ...rest },
-  ref,
-) {
+export const Menu = forwardRef<HTMLUListElement, MenuProps>(function Menu({ children, ...rest }, ref) {
   return (
-    <StyledAccordion /* as="ul" */ ref={ref} {...rest}>
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore: @TODO: Lets look into this at some point
+    <StyledAccordion forwardedAs="ul" {...rest}>
       {children}
     </StyledAccordion>
   )
