@@ -18,11 +18,27 @@ const HeaderRelative = styled.header`
   position: relative;
 `
 
-const TempContainer = styled.div`
-  display: flex;
-  @media (min-width: 1300px) {
-    flex-direction: row-reverse;
-  }
+const TopbarContainer = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-areas: 'menu logo langSwitch';
+  grid-template-rows: min-content 1fr min-content;
+  align-items: center;
+`
+
+const StyledMenu = styled(Menu)`
+  grid-area: menu;
+  justify-self: left;
+`
+
+const StyledLogoLink = styled.a`
+  grid-area: logo;
+  justify-self: center;
+`
+
+const StyledLocalizationSwitch = styled(LocalizationSwitch)`
+  grid-area: langSwitch;
+  justify-self: right;
 `
 
 export type HeaderProps = {
@@ -53,18 +69,17 @@ const Header = ({ slugs, data }: HeaderProps) => {
       <TopbarOffset topbarHeight={topbarHeight} />
       <Topbar height={topbarHeight} ref={topbarRef}>
         {/* @TODO: Localize strings */}
-        <div>
-          <NextLink href="/" passHref>
-            <a aria-label="Equinor home page">
-              <Logo />
-            </a>
-          </NextLink>
-        </div>
-        <TempContainer>
-          {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+        <TopbarContainer>
+          <StyledMenu data={data} />
 
-          <Menu data={data} />
-        </TempContainer>
+          <NextLink href="/" passHref>
+            <StyledLogoLink aria-label="Equinor home page">
+              <Logo />
+            </StyledLogoLink>
+          </NextLink>
+
+          {slugs && <StyledLocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+        </TopbarContainer>
       </Topbar>
     </HeaderRelative>
   )
