@@ -82,7 +82,6 @@ export const colors = css`
 
     --theme-background-primary: var(--white-100);
 
-    --menu-height-lg: 598px;
     --topbar-height: 64px;
   }
 `
@@ -141,6 +140,12 @@ export const spacings = css`
     --layout-maxContent-wide: calc(1920px - 250px * 2); /* 1420 */
   }
 
+  /* Menu */
+  :root {
+    --menu-height-lg: 598px;
+    --menu-paddingHorizontal: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
+    --menu-paddingVertical: calc(8rem - var(--topbar-height));
+  }
   /** Because Jest hates you when you do an import style in the component */
   :root {
     --reach-accordion: 1;
