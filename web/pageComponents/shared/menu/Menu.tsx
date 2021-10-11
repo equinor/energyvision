@@ -21,12 +21,6 @@ const TopbarDropdown = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-
-  @media (min-width: 1300px) {
-    display: block;
-    height: auto;
-    position: static;
-  }
 `
 
 const StyledIcon = styled(Icon)`
@@ -39,9 +33,6 @@ const NavTopbar = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  @media (min-width: 1300px) {
-    display: none;
-  }
 `
 
 export type MenuProps = {

@@ -16,9 +16,6 @@ const Title = styled.span``
 const StyledMenuButton = styled(Button)`
   color: var(--default-text);
   fill: var(--default-text);
-  @media (min-width: 1300px) {
-    display: none;
-  }
 `
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(function MenuButton(
