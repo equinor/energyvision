@@ -18,7 +18,7 @@ const StyledHeading = styled(Heading)`
   color: var(--grey-60);
   padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
-    padding: var(--space-xLarge) var(--space-xLarge) var(--space-small) 0;
+    padding: 0 var(--space-xLarge) var(--space-small) 0;
   }
 `
 
@@ -55,8 +55,7 @@ const GroupLink = styled(Link)`
   /* We don't actually have a value for 12px */
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
-    padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge)
-      calc(var(--space-small) + var(--space-xSmall)) 0;
+    padding: var(--space-small) var(--space-xLarge) var(--space-small) 0;
   }
 `
 
@@ -68,11 +67,12 @@ const Group = styled.div`
 const StyledText = styled(Text)`
   margin-top: var(--space-medium);
 `
-const StyledAside = styled.aside`
+const StyledSection = styled.section`
   display: none;
   max-width: 35rem;
   @media (min-width: 1300px) {
     display: block;
+    padding-bottom: var(--space-xLarge);
   }
 `
 
@@ -114,7 +114,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
             {`${topLevelLink?.label} overview page` || 'Error'}
           </TopLevelLink>
         </NextLink>
-        <StyledAside>
+        <StyledSection>
           <Heading level="h2" size="lg">
             {topLevelLink?.label}
           </Heading>
@@ -126,7 +126,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           <NextLink href={topLevelHref} passHref>
             <Link variant="readMore">{topLevelLink?.label}</Link>
           </NextLink>
-        </StyledAside>
+        </StyledSection>
         {group && group.length > 0 && (
           <SubMenuContent>
             {group.map((groupItem: SubMenuGroupData) => {
