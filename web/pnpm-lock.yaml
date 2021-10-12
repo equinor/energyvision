@@ -12,6 +12,7 @@ specifiers:
   '@next/bundle-analyzer': ^11.1.2
   '@next/eslint-plugin-next': ^11.1.2
   '@reach/accordion': ^0.16.1
+  '@reach/window-size': ^0.16.0
   '@react-spring/web': ^9.2.6
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^2.21.0
@@ -63,6 +64,7 @@ dependencies:
   '@microsoft/applicationinsights-web': 2.7.0
   '@next/bundle-analyzer': 11.1.2
   '@reach/accordion': 0.16.1_react-dom@17.0.2+react@17.0.2
+  '@reach/window-size': 0.16.0_react-dom@17.0.2+react@17.0.2
   '@react-spring/web': 9.2.6_react-dom@17.0.2+react@17.0.2
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 2.21.0
@@ -2587,6 +2589,19 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       tiny-warning: 1.0.3
+      tslib: 2.3.1
+    dev: false
+
+  /@reach/window-size/0.16.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-8avB4RCPiTn5yOD5YYlO7szNjtTa3hZWddCpSaJwVEN7PGBFrRPeIihgfXLMSA5Vo8SUP6eP5uKAsk1zyccMYA==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
       tslib: 2.3.1
     dev: false
 
