@@ -85,7 +85,7 @@ const Menu = ({ data, ...rest }: MenuProps) => {
 
     // @TODO Mobile or desktop first
 
-    if (windowSize.width && windowSize.width > 1300) {
+    if (windowSize.width && windowSize.width > 1299) {
       // This menu item is  open, so let's close the menu by removing it from the list
       if (indices[0] === toggledIndex) {
         return setIndices([])

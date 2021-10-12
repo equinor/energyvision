@@ -1,17 +1,15 @@
 import styled from 'styled-components'
 import NextLink from 'next/link'
-import { Link, List, Heading, Menu } from '@components'
+import { Link, List, Heading, Menu, Text } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
+import { Typography } from '@equinor/eds-core-react'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
 const { Item } = List
 
 const SubMenuContent = styled.div`
-  /*  display: flex; */
-
   @media (min-width: 1300px) {
-    display: block;
-    /*  height: 100%; */
+    display: flex;
   }
 `
 
@@ -38,6 +36,9 @@ const TopLevelLink = styled(Link)<TopLevelLinkProps>`
   text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-large);
   border-bottom: ${(props) => (props.active ? '2px solid var(--moss-green-80)' : '2px solid transparent ')};
+  @media (min-width: 1300px) {
+    display: none;
+  }
 `
 
 const GroupItem = styled(Item)`
@@ -54,6 +55,16 @@ const GroupLink = styled(Link)`
 const Group = styled.div`
   @media (min-width: 1300px) {
     height: 100%;
+  }
+`
+const StyledText = styled(Text)`
+  margin-top: var(--space-medium);
+`
+const StyledAside = styled.aside`
+  display: none;
+  max-width: 35rem;
+  @media (min-width: 1300px) {
+    display: block;
   }
 `
 
@@ -88,11 +99,26 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
       <SubMenuHeader> {topLevelLink?.label || 'Error'}</SubMenuHeader>
       {/* @TODO: Should we allow external links at top level? */}
       <SubMenuPanel>
+        {/*         @TODO: Could we reuse the same link across devices
+         */}
         <NextLink href={topLevelHref} passHref>
           <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
             {`${topLevelLink?.label} overview page` || 'Error'}
           </TopLevelLink>
         </NextLink>
+        <StyledAside>
+          <Heading level="h2" size="lg">
+            {topLevelLink?.label}
+          </Heading>
+          <StyledText>
+            Without energy, the world simply stops. But the energy system must change. Does a future exist where we can
+            ensure enough energy for everyone, while also being good stewards of our planet?
+          </StyledText>
+          {/* @TODO: What to do about this link? */}
+          <NextLink href={topLevelHref} passHref>
+            <Link variant="readMore">{topLevelLink?.label}</Link>
+          </NextLink>
+        </StyledAside>
         {group && group.length > 0 && (
           <SubMenuContent>
             {group.map((groupItem: SubMenuGroupData) => {
