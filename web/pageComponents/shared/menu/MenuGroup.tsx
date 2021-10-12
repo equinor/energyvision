@@ -17,6 +17,9 @@ const StyledHeading = styled(Heading)`
   text-transform: uppercase;
   color: var(--grey-60);
   padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+  @media (min-width: 1300px) {
+    padding: var(--space-xLarge) var(--space-xLarge) var(--space-small) 0;
+  }
 `
 
 const WrappedList = styled(List)`
@@ -25,6 +28,7 @@ const WrappedList = styled(List)`
     flex-direction: column;
     flex-wrap: wrap;
     height: 100%;
+    max-width: 13rem;
   }
 `
 
@@ -50,6 +54,10 @@ const GroupLink = styled(Link)`
   text-decoration: none;
   /* We don't actually have a value for 12px */
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+  @media (min-width: 1300px) {
+    padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge)
+      calc(var(--space-small) + var(--space-xSmall)) 0;
+  }
 `
 
 const Group = styled.div`
