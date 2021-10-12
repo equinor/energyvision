@@ -2,8 +2,6 @@
 import styled from 'styled-components'
 import { useState, useEffect, useRef, HTMLAttributes } from 'react'
 
-// @TODO: Not finished
-// 64px height from the mobile sketches in figma
 const Bar = styled.div`
   display: flex;
   align-items: center;
