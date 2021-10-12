@@ -1,38 +1,32 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled from 'styled-components'
-import { useState, useEffect, forwardRef, HTMLAttributes } from 'react'
+import { useState, useEffect, useRef, HTMLAttributes } from 'react'
 
 // @TODO: Not finished
 // 64px height from the mobile sketches in figma
 const Bar = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
-  height: 64px;
+  height: var(--topbar-height);
   padding: var(--space-small) var(--space-medium);
-  background: transparent;
   position: fixed;
   top: 0;
   transition: top 0.3s;
   z-index: 10;
   background-color: var(--white-100);
-  @media (min-width: 800px) {
-    /*  padding: 1rem 2rem; */
-  }
-  @media (min-width: 1300px) {
-    align-items: flex-start;
-  }
 `
 
-export type TopbarProps = {
-  height: number
-} & HTMLAttributes<HTMLDivElement>
+export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) => {
+  const ref = useRef<HTMLDivElement>(null)
 
-export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar({ children, height }, ref) {
+  const [height, setHeight] = useState(0)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
+
+  useEffect(() => {
+    if (ref && ref?.current) {
+      setHeight(ref.current.getBoundingClientRect().height)
+    }
+  }, [setHeight])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,8 +43,8 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar({ 
   }, [prevScrollPos, isVisible, height])
 
   return (
-    <Bar ref={ref} style={{ top: isVisible ? 0 : -height }}>
+    <Bar ref={ref} style={{ top: isVisible ? 0 : -height }} {...rest}>
       {children}
     </Bar>
   )
-})
+}

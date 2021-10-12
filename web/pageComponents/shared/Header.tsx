@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useCallback } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,9 +9,9 @@ import Menu from './menu/Menu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 
-const TopbarOffset = createGlobalStyle<{ topbarHeight: number }>`
+const TopbarOffset = createGlobalStyle`
   body {
-    padding-top: ${({ topbarHeight }) => topbarHeight && `${topbarHeight}px`}
+    padding-top: var(--topbar-height);
   }
 `
 
@@ -60,14 +59,6 @@ export type HeaderProps = {
 
 const Header = ({ slugs, data }: HeaderProps) => {
   const router = useRouter()
-  const [topbarHeight, setTopbarHeight] = useState(0)
-
-  const topbarRef = useCallback((node) => {
-    if (node !== null) {
-      const height = node.getBoundingClientRect().height
-      setTopbarHeight(height)
-    }
-  }, [])
 
   const localization = {
     activeLocale: router.locale || 'en',
@@ -75,8 +66,8 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
   return (
     <HeaderRelative>
-      <TopbarOffset topbarHeight={topbarHeight} />
-      <Topbar height={topbarHeight} ref={topbarRef}>
+      <TopbarOffset />
+      <Topbar>
         {/* @TODO: Localize strings */}
         <TopbarContainer>
           <StyledMenu data={data} />
