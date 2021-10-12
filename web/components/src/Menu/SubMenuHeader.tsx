@@ -41,7 +41,12 @@ const StyledHeader = styled(Typography)`
   @media (min-width: 1300px) {
     padding: 0 var(--space-small);
     background-color: transparent;
-    border-bottom: var(--border-bottom);
+    border-bottom-color: var(--border-bottom-color);
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    &:hover {
+      background-color: var(--moss-green-70);
+    }
   }
 `
 const StyledTypography = styled(Typography)`
@@ -65,7 +70,7 @@ export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(f
       style={
         {
           ...style,
-          '--border-bottom': isExpanded ? '2px solid var(--moss-green-95)' : '2px solid transparent ',
+          '--border-bottom-color': isExpanded ? 'var(--moss-green-95)' : 'transparent ',
           '--background-color': isExpanded ? 'var(--grey-10)' : 'var(--ui-background-default)',
         } as CSSProperties
       }
