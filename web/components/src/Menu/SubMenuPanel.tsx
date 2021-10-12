@@ -11,7 +11,7 @@ const StyledPanel = styled(RAccordionPanel)`
   background-color: var(--background-color);
   @media (min-width: 1300px) {
     position: absolute;
-    top: 200px;
+    top: 240px;
     left: 0;
     right: 0;
     background-color: var(--ui-background-default);
@@ -22,10 +22,6 @@ const StyledPanel = styled(RAccordionPanel)`
 
 const PanelContainer = styled.div`
   @media (min-width: 1300px) {
-    /* display: grid;
-    grid-template-rows: 5rem 500px;
-    max-height: var(--menu-height-lg);
-    height: var(--menu-height-lg); */
     padding: 0 var(--space-3xLarge);
   }
 `
