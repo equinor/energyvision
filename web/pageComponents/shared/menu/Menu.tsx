@@ -42,7 +42,8 @@ const AllSitesLink = styled(Link)`
   @media (min-width: 1300px) {
     display: inline-flex;
     border-left: 2px solid var(--white-100);
-    padding: var(--space-medium) var(--space-large);
+    padding: var(--space-large) var(--space-large);
+    text-decoration: none;
   }
 `
 
