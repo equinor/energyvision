@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled from 'styled-components'
-import { Link } from '@components'
+import { Link, Heading } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { youtube_alt, twitter, instagram, facebook, linkedin } from '@equinor/eds-icons'
 import { Icon, Typography } from '@equinor/eds-core-react'
@@ -19,10 +19,10 @@ const FooterTop = styled.div`
   margin: 0 auto;
   max-width: var(--layout-maxContent-wide);
   justify-content: space-between;
-  padding: 0 var(--layout-paddingHorizontal-medium);
+  padding: 0 var(--layout-paddingHorizontal-small);
 `
 
-const LinkWrapper = styled.div`
+const LinkWrapper = styled.section`
   display: flex;
   flex-direction: column;
 `
@@ -30,7 +30,7 @@ const LinksList = styled.div`
   display: flex;
   flex-direction: column;
 `
-const LinkHeader = styled(Typography)`
+const LinkHeader = styled(Heading)`
   font-size: var(--typeScale-2);
   color: white;
   padding: var(--space-small) 0;
