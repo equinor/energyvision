@@ -1,6 +1,7 @@
 import { CSSProperties, useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
+import { useWindowSize } from '@reach/window-size'
 import { MenuGroup } from './MenuGroup'
 import { Menu as EnvisMenu, MenuButton, Link } from '@components'
 import { RemoveScroll } from 'react-remove-scroll'
@@ -10,7 +11,6 @@ import { autorenew, clear } from '@equinor/eds-icons'
 /* import { useMenu } from './MenuProvider' */
 import NextLink from 'next/link'
 
-import useWindowSize from './hooks/useWindowSize'
 import type { MenuData, SubMenuData } from '../../../types/types'
 
 const TopbarDropdown = styled.div`
@@ -64,7 +64,7 @@ export type MenuProps = {
 
 const Menu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
-  const windowSize = useWindowSize()
+  const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
   const handleRouteChange = useCallback(() => {
@@ -86,7 +86,7 @@ const Menu = ({ data, ...rest }: MenuProps) => {
 
     // @TODO Mobile or desktop first
 
-    if (windowSize.width && windowSize.width > 1299) {
+    if (width && width > 1299) {
       // This menu item is  open, so let's close the menu by removing it from the list
       if (indices[0] === toggledIndex) {
         return setIndices([])
