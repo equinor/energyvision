@@ -82,7 +82,7 @@ export const colors = css`
 
     --theme-background-primary: var(--white-100);
 
-    --topbar-height: 64px;
+    --topbar-height: 80px;
   }
 `
 export const typography = css`
