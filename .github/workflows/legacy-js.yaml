@@ -25,7 +25,7 @@ jobs:
         run: |
           pnpm legacy-js exec pnpm build
 
-   upload:
+  upload:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
