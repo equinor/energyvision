@@ -83,7 +83,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
             {/* @TODO: search page */}
             <NextLink href="/" passHref>
-              <StyledButton variant="ghost_icon" href="">
+              <StyledButton variant="ghost_icon" href="" aria-label="Search">
                 <Icon data={search} />
               </StyledButton>
             </NextLink>
