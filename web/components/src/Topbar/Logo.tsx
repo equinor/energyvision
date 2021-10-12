@@ -1,17 +1,10 @@
 import styled from 'styled-components'
 
-// @TODO, not really finished
-// Because of performance issues with the CDN, we jsut added
-// the logo here while waiting for the final topbar design
-
-// 30px roughly from the mobile sketches in Figma
-// Add minimum size
 const StyledLogo = styled.svg`
   display: block;
-  height: 30px;
+  height: 40px;
   max-width: 100%;
   box-sizing: content-box;
-  /* width: 113px; */
   fill: var(--energy-red-100);
 `
 
