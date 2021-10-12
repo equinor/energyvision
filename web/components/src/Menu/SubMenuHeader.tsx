@@ -37,7 +37,9 @@ const StyledIcon = styled(Icon)`
 
 const StyledHeader = styled(Typography)`
   background-color: var(--background-color);
+  padding: 0 var(--space-large);
   @media (min-width: 1300px) {
+    padding: 0;
     background-color: transparent;
     border-bottom-color: var(--border-bottom-color);
     border-bottom-style: solid;
