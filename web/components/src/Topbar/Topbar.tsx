@@ -5,6 +5,8 @@ import { useState, useEffect, useRef, HTMLAttributes } from 'react'
 // @TODO: Not finished
 // 64px height from the mobile sketches in figma
 const Bar = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
   height: var(--topbar-height);
   padding: var(--space-small) var(--space-medium);
