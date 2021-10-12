@@ -25,7 +25,7 @@ const StyledButton = styled(RAccordionButton)`
     ${outlineTemplate(outline)}
   }
   @media (min-width: 1300px) {
-    padding: var(--space-small) 0;
+    padding: var(--space-small) calc(var(--space-small) + var(--space-xSmall));
   }
 `
 
@@ -36,10 +36,8 @@ const StyledIcon = styled(Icon)`
 `
 
 const StyledHeader = styled(Typography)`
-  padding: 0 var(--space-large);
   background-color: var(--background-color);
   @media (min-width: 1300px) {
-    padding: 0 var(--space-small);
     background-color: transparent;
     border-bottom-color: var(--border-bottom-color);
     border-bottom-style: solid;
