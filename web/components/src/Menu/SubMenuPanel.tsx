@@ -15,15 +15,17 @@ const StyledPanel = styled(RAccordionPanel)`
     right: 0;
     background-color: var(--ui-background-default);
     padding: var(--space-medium) 0;
+    border-bottom: transparent;
   }
 `
 
 const PanelContainer = styled.div`
   @media (min-width: 1300px) {
-    display: grid;
+    /* display: grid;
     grid-template-rows: 5rem 500px;
     max-height: var(--menu-height-lg);
-    height: var(--menu-height-lg);
+    height: var(--menu-height-lg); */
+    padding: 0 var(--space-3xLarge);
   }
 `
 export type SubMenuPanelProps = RAccordionPanelProps & HTMLAttributes<HTMLDivElement>
