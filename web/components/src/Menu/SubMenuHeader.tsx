@@ -59,7 +59,7 @@ export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(f
   const isExpanded = context.isExpanded
   return (
     <StyledHeader
-      forwardedAs="h3"
+      forwardedAs="h2"
       style={
         {
           ...style,

@@ -30,7 +30,7 @@ const MenuContainer = styled.div`
   @media (min-width: 1300px) {
     background-color: var(--moss-green-50);
 
-    margin: 0 var(--space-large);
+    margin: var(--space-xLarge) var(--space-large) 0 var(--space-large);
     display: flex;
     justify-content: space-between;
     align-items: center;
