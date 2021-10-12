@@ -77,3 +77,6 @@
      .cmp-accordion__button { color: $white; }
    }
 }
+
+.cmp-accordion__header{margin:0}
+.cmp-accordion__button{display:block;width:100%;text-align:left}
