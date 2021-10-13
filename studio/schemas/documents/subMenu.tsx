@@ -2,14 +2,14 @@ import { SchemaType } from '../../types'
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
-// @TODO: validation
-// only allow direct link (internal/external link) if no menu groups
-// only allow menu groups if no direct link (internal/external link) selected
-// only allow internal or external link, not both
-
-const validateLink = (value: any, connectedField: any): SchemaType.ValidationResult => {
+const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
+  if (isStatic) return true
   if (value && connectedField) {
     return 'Can only have a single link. Choose either an internal or external link.'
+  }
+
+  if (!value && !connectedField) {
+    return 'You must provide either an internal or external link.'
   }
 
   if (connectedField && !value) {
@@ -27,7 +27,6 @@ export default {
     {
       title: 'Top level/landing page link',
       name: 'link',
-      // description: 'Add a link here if this menu item should not be a dropdown menu',
       options: {
         collapsible: true,
         collapsed: false,
@@ -65,7 +64,7 @@ export default {
       fieldset: 'link',
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.url)
+          return validateLink(context.parent?.isStatic, value, context.parent.url)
         }),
       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
@@ -86,7 +85,7 @@ export default {
       fieldset: 'link',
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.reference)
+          return validateLink(context.parent?.isStatic, value, context.parent.reference)
         }),
       // eslint-disable-next-line
       // @ts-ignore: Djeez, typescript
@@ -99,6 +98,10 @@ export default {
       description: `The URL for the static page. Don't add language information (no/en)`,
       placeholder: '/careers/experienced-professionals',
       fieldset: 'link',
+      validation: (Rule: SchemaType.ValidationRule) =>
+        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
+          return context.parent?.isStatic && value === undefined ? 'A link is required' : true
+        }),
       // eslint-disable-next-line
       // @ts-ignore: Djeez, typescript
       hidden: ({ parent }) => parent?.isStatic === false,

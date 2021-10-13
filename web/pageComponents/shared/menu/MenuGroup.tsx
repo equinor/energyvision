@@ -63,10 +63,9 @@ function getLink(linkData: MenuLinkData) {
   if (!linkData) return 'something-wrong'
   const { isStatic, link, staticUrl } = linkData
   if (isStatic) {
-    //  @TODO: Can we add a required validation for the conditional field
-    return staticUrl || '/boom-static'
+    return staticUrl
   } else {
-    return (link && link.slug) || '/boom-reference'
+    return link && link.slug
   }
 }
 
