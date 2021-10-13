@@ -34,6 +34,10 @@ module.exports = withBundleAnalyzer({
         source: '/etc.clientlibs/:slug*',
         destination: `${archiveServerHostname}/etc.clientlibs/:slug*`,
       },
+      {
+        source: '/legacy/:slug*',
+        destination: `${archiveServerHostname}/:slug*`,
+      },
     ]
   },
   webpack(config, { defaultLoaders }) {
