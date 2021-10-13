@@ -217,6 +217,7 @@ export type SubMenuGroupData = {
 export type SubMenuData = {
   id: string
   topLevelLink: MenuLinkData
+  intro: PortableTextEntry[]
   groups: SubMenuGroupData[]
 }
 
