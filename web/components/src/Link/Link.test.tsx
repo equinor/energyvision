@@ -36,4 +36,18 @@ describe('Link', () => {
     )
     expect(container.querySelector('svg')).toBeInTheDocument()
   })
+
+  it('has a css variable to control the underline', () => {
+    const setProperty = jest.fn()
+    document.documentElement.style.setProperty = setProperty
+    const { getByText } = render(
+      <Link href={href} underline={false}>
+        Link
+      </Link>,
+    )
+    expect(getByText('Link')).toBeInTheDocument()
+    expect(getByText('Link')).toHaveStyleRule('text-decoration: var(--textDecoration')
+    /*     expect(container.firstChild).toHaveStyle('text-decoration: none') */
+    // expect(container.firstChild).toHaveBeenCalledWith('text-decoration: none')
+  })
 })
