@@ -8,19 +8,10 @@ import NextLink from 'next/link'
 import { Menu, MenuButton, Link } from '@components'
 import { MenuGroup } from './MenuGroup'
 import { TopbarDropdown } from './TopbarDropdown'
+import { MenuContainer } from './MenuContainer'
+import { NavTopbar } from './NavTopbar'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
-
-const MenuContainer = styled.div`
-  background-color: transparent;
-  @media (min-width: 1300px) {
-    background-color: var(--moss-green-50);
-    margin: var(--space-xLarge) var(--space-large) 0 var(--space-large);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-`
 
 /* This is not finalised */
 const AllSitesLink = styled(Link)`
@@ -31,12 +22,6 @@ const AllSitesLink = styled(Link)`
     padding: var(--space-large) var(--space-large);
     text-decoration: none;
   }
-`
-const NavTopbar = styled.div`
-  height: var(--topbar-height);
-  padding: var(--space-small) var(--space-medium);
-  display: flex;
-  align-items: center;
 `
 
 export type MenuProps = {
