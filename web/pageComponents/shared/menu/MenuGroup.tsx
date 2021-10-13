@@ -25,14 +25,9 @@ const WrappedList = styled(List)`
   }
 `
 
-type TopLevelLinkProps = {
-  active: boolean
-}
-
-const TopLevelLink = styled(Link)<TopLevelLinkProps>`
+const TopLevelLink = styled(Link)`
   text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-large);
-  border-bottom: ${(props) => (props.active ? '2px solid var(--moss-green-80)' : '2px solid transparent ')};
   @media (min-width: 1300px) {
     display: none;
   }
@@ -81,9 +76,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
       <SubMenuPanel>
         {/* @TODO: Can we reuse the same link across devices */}
         <NextLink href={topLevelHref} passHref>
-          <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
-            {`${topLevelLink?.label} overview page` || 'Error'}
-          </TopLevelLink>
+          <TopLevelLink>{`${topLevelLink?.label} overview page` || 'Error'}</TopLevelLink>
         </NextLink>
         <StyledSection>
           <Heading level="h2" size="lg">
