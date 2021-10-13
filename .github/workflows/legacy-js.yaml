@@ -38,7 +38,7 @@ jobs:
       - name: Export to Azure
         uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
-          source_dir: dist/js
+          source_dir: ./legacy/js/dist/js
           container_name: equinor-archive-content
           connection_string: ${{ secrets.AZ_CONNECTION_STRING }}
           sync: false
