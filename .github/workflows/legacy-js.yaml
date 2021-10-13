@@ -36,7 +36,6 @@ jobs:
         run: |
           pnpm install
       - name: Export to Azure
-      - uses: actions/checkout@v2
       - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
           source_dir: dist/js
