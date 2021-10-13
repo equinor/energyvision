@@ -32,13 +32,18 @@ const TopLevelLink = styled(Link)`
     display: none;
   }
 `
+const Group = styled.div`
+  @media (min-width: 1300px) {
+    padding-right: var(--space-xLarge);
+  }
+`
 
 const GroupLink = styled(Link)`
   display: flex;
   text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
-    padding: var(--space-small) var(--space-xLarge) var(--space-small) 0;
+    padding: var(--space-small) 0 var(--space-small) 0;
   }
 `
 
@@ -95,7 +100,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           <SubMenuGroups>
             {groups.map((groupItem: SubMenuGroupData) => {
               return (
-                <div key={groupItem.id}>
+                <Group key={groupItem.id}>
                   {groupItem.label && (
                     <StyledHeading level="h3" size="sm">
                       {groupItem.label}
@@ -110,7 +115,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                       </Item>
                     ))}
                   </WrappedList>
-                </div>
+                </Group>
               )
             })}
           </SubMenuGroups>
