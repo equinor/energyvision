@@ -28,6 +28,7 @@ export const menuQuery = /* groq */ `
          "staticUrl": staticUrl,
        }
     },
+    intro,
 	}
 }
 `

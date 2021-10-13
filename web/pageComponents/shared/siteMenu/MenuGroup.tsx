@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 import NextLink from 'next/link'
+import { BlockRenderer } from '../../../common/serializers'
+import SimpleBlockContent from '../../../common/SimpleBlockContent'
 import { Link, List, Heading, Menu, Text } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
-import { SubMenuGroup, SubMenuGroupHeading, SubMenuGroupList, SubMenuGroupLink } from './SubMenuGroup'
+import { SubMenuGroup, SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
@@ -14,7 +16,15 @@ const TopLevelLink = styled(Link)`
   }
 `
 
-const StyledText = styled(Text)`
+const StyledSubMenuGroupLink = styled(Link)`
+  display: flex;
+  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+  @media (min-width: 1300px) {
+    padding: var(--space-small) 0 var(--space-small) 0;
+  }
+`
+
+const IntroContainer = styled.div`
   margin-top: var(--space-medium);
 `
 const StyledSection = styled.section`
@@ -40,7 +50,7 @@ function getLink(linkData: MenuLinkData) {
 }
 
 export const MenuGroup = (topLevelItem: SubMenuData) => {
-  const { topLevelLink, groups } = topLevelItem
+  const { topLevelLink, groups, intro } = topLevelItem
 
   const topLevelHref = getLink(topLevelLink)
 
@@ -57,10 +67,20 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           <Heading level="h2" size="lg">
             {topLevelLink?.label}
           </Heading>
-          <StyledText>
-            Without energy, the world simply stops. But the energy system must change. Does a future exist where we can
-            ensure enough energy for everyone, while also being good stewards of our planet?
-          </StyledText>
+
+          {intro && (
+            <IntroContainer>
+              <SimpleBlockContent
+                blocks={intro}
+                serializers={{
+                  types: {
+                    block: BlockRenderer,
+                  },
+                }}
+              />
+            </IntroContainer>
+          )}
+
           {/* @TODO: What to do about this link? */}
           <NextLink href={topLevelHref} passHref>
             <Link variant="readMore">{topLevelLink?.label}</Link>
@@ -80,7 +100,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                     {groupItem.links.map((link: MenuLinkData) => (
                       <Item key={link.id}>
                         <NextLink href={getLink(link)} passHref>
-                          <SubMenuGroupLink>{link.label}</SubMenuGroupLink>
+                          <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
                         </NextLink>
                       </Item>
                     ))}

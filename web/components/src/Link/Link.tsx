@@ -179,13 +179,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   // TODO: design not final
   return (
     <BaseLink
+      ref={ref}
       style={
         {
           ...style,
           '--textDecoration': underline ? 'underline' : 'none',
         } as CSSProperties
       }
-      ref={ref}
       {...rest}
     >
       {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}

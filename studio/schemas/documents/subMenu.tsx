@@ -1,6 +1,36 @@
 import { SchemaType } from '../../types'
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import { configureBlockContent } from '../editors/blockContentType'
+import CharCounterEditor from '../components/CharCounterEditor'
+
+const introBlockContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  attachment: false,
+  lists: false,
+})
+
+const validateIngress = (value: any) => {
+  if (!value || value.length === 0) {
+    return 'Required'
+  }
+
+  const count = value[0].children.reduce(
+    (total: any, current: { text: string | any[] }) => total + current.text.length,
+    0,
+  )
+
+  if (count > 400) {
+    return `The introduction should be no longer than 400 characters. Currently ${count} characters long.`
+  }
+
+  return true
+}
 
 const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
   if (isStatic) return true
@@ -44,7 +74,7 @@ export default {
     {
       title: 'Menu label',
       name: 'label',
-      description: 'The label that appears in the top menu bar.',
+      description: 'The label that appears at top level in the menu',
       type: 'string',
     },
     {
@@ -116,6 +146,15 @@ export default {
         },
       ],
       // validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().min(1),
+    },
+    {
+      name: 'intro',
+      title: 'Intro text',
+      description: 'A short and catchy introduction text for this menu item (max. 400 chars)',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [introBlockContentType],
+      validation: (Rule: SchemaType.ValidationRule) => Rule.custom((value: any) => validateIngress(value)),
     },
   ],
   preview: {

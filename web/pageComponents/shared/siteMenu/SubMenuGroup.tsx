@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import styled from 'styled-components'
-import { Link, List, Heading, HeadingProps, ListProps } from '@components'
+import { List, Heading, HeadingProps, ListProps } from '@components'
 
 const StyledSubMenuGroup = styled.div`
   @media (min-width: 1300px) {
@@ -26,13 +26,6 @@ const StyledSubMenuGroupList = styled(List)`
   }
 `
 
-const StyledSubMenuGroupLink = styled(Link)`
-  display: flex;
-  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
-  @media (min-width: 1300px) {
-    padding: var(--space-small) 0 var(--space-small) 0;
-  }
-`
 type Props = {
   children: ReactNode
 }
@@ -49,11 +42,4 @@ export const SubMenuGroupHeading = ({ children, ...rest }: Props & HeadingProps)
 }
 export const SubMenuGroupList = ({ children, ...rest }: Props & ListProps) => {
   return <StyledSubMenuGroupList {...rest}>{children}</StyledSubMenuGroupList>
-}
-export const SubMenuGroupLink = ({ children, ...rest }: Props) => {
-  return (
-    <StyledSubMenuGroupLink underline={false} {...rest}>
-      {children}
-    </StyledSubMenuGroupLink>
-  )
 }
