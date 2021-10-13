@@ -13,7 +13,7 @@ export const menuQuery = /* groq */ `
       "href": url,
       "staticUrl": staticUrl,
     },
-    "group": group[]{
+    "groups": group[]{
       "id": _key,
       label,   
       "links": links[]{
