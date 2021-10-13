@@ -1,11 +1,15 @@
-/* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { MenuButton, MenuButtonProps } from '@components'
+import { Menu, MenuProps } from '@components'
+import styled from 'styled-components'
 
 export default {
-  title: 'Components/Menu',
-  component: MenuButton,
-
+  title: 'Components/Menu/Menu',
+  component: Menu,
+  subcomponents: {
+    SubMenu: Menu.SubMenu,
+    SubMenuHeader: Menu.SubMenuHeader,
+    SubMenuPanel: Menu.SubMenuPanel,
+  },
   parameters: {
     docs: {
       description: {
@@ -16,6 +20,27 @@ export default {
   },
 } as Meta
 
-export const Default: Story<MenuButtonProps> = (args) => <MenuButton {...args} title="Menu"></MenuButton>
+const Wrapper = styled.div`
+  height: 300px;
+`
+
+export const Default: Story<MenuProps> = (args) => (
+  <Wrapper>
+    <Menu {...args}>
+      <Menu.SubMenu>
+        <Menu.SubMenuHeader>Menu item 1</Menu.SubMenuHeader>
+        <Menu.SubMenuPanel>Menu content 1</Menu.SubMenuPanel>
+      </Menu.SubMenu>
+      <Menu.SubMenu>
+        <Menu.SubMenuHeader>Menu item 2</Menu.SubMenuHeader>
+        <Menu.SubMenuPanel>Menu content 2</Menu.SubMenuPanel>
+      </Menu.SubMenu>
+      <Menu.SubMenu>
+        <Menu.SubMenuHeader>Menu item 3</Menu.SubMenuHeader>
+        <Menu.SubMenuPanel>Menu content 3</Menu.SubMenuPanel>
+      </Menu.SubMenu>
+    </Menu>
+  </Wrapper>
+)
 
 Default.storyName = 'Default'

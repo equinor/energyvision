@@ -6,7 +6,7 @@ import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types
 const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
 const { Item } = List
 
-const SubMenuContent = styled.div`
+const SubMenuGroup = styled.div`
   @media (min-width: 1300px) {
     display: flex;
   }
@@ -110,7 +110,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           </NextLink>
         </StyledSection>
         {group && group.length > 0 && (
-          <SubMenuContent>
+          <SubMenuGroup>
             {group.map((groupItem: SubMenuGroupData) => {
               return (
                 <Group key={groupItem.id}>
@@ -131,7 +131,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                 </Group>
               )
             })}
-          </SubMenuContent>
+          </SubMenuGroup>
         )}
       </SubMenuPanel>
     </SubMenu>
