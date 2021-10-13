@@ -33,6 +33,7 @@ jobs:
       - name: Build legacy js 
         id: build-legacy-js
         run: |
+          pnpm install
           pnpm legacy-js exec pnpm build
 
   upload:
