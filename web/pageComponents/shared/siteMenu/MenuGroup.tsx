@@ -2,48 +2,16 @@ import styled from 'styled-components'
 import NextLink from 'next/link'
 import { Link, List, Heading, Menu, Text } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
+import { SubMenuGroup, SubMenuGroupHeading, SubMenuGroupList, SubMenuGroupLink } from './SubMenuGroup'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
-
-const StyledHeading = styled(Heading)`
-  text-transform: uppercase;
-  color: var(--grey-60);
-  padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
-  @media (min-width: 1300px) {
-    padding: 0 var(--space-xLarge) var(--space-small) 0;
-  }
-`
-
-const SubMenuGroupList = styled(List)`
-  @media (min-width: 1300px) {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 100%;
-    max-width: 13rem;
-  }
-`
 
 const TopLevelLink = styled(Link)`
   text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-large);
   @media (min-width: 1300px) {
     display: none;
-  }
-`
-const SubMenuGroup = styled.div`
-  @media (min-width: 1300px) {
-    padding-right: var(--space-xLarge);
-  }
-`
-
-const SubMenuGroupLink = styled(Link)`
-  display: flex;
-  text-decoration: none;
-  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
-  @media (min-width: 1300px) {
-    padding: var(--space-small) 0 var(--space-small) 0;
   }
 `
 
@@ -105,9 +73,9 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
               return (
                 <SubMenuGroup key={groupItem.id}>
                   {groupItem.label && (
-                    <StyledHeading level="h3" size="sm">
+                    <SubMenuGroupHeading level="h3" size="sm">
                       {groupItem.label}
-                    </StyledHeading>
+                    </SubMenuGroupHeading>
                   )}
                   <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                     {groupItem.links.map((link: MenuLinkData) => (
