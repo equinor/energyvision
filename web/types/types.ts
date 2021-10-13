@@ -217,7 +217,7 @@ export type SubMenuGroupData = {
 export type SubMenuData = {
   id: string
   topLevelLink: MenuLinkData
-  group: SubMenuGroupData[]
+  groups: SubMenuGroupData[]
 }
 
 export type MenuData = {

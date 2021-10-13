@@ -82,7 +82,7 @@ function getLink(linkData: MenuLinkData) {
 }
 
 export const MenuGroup = (topLevelItem: SubMenuData) => {
-  const { topLevelLink, group } = topLevelItem
+  const { topLevelLink, groups } = topLevelItem
   const topLevelHref = getLink(topLevelLink)
 
   return (
@@ -109,9 +109,9 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
             <Link variant="readMore">{topLevelLink?.label}</Link>
           </NextLink>
         </StyledSection>
-        {group && group.length > 0 && (
+        {groups && groups.length > 0 && (
           <SubMenuGroup>
-            {group.map((groupItem: SubMenuGroupData) => {
+            {groups.map((groupItem: SubMenuGroupData) => {
               return (
                 <Group key={groupItem.id}>
                   {groupItem.label && (
