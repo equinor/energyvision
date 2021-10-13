@@ -36,7 +36,7 @@ jobs:
         run: |
           pnpm install
       - name: Export to Azure
-      - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+        uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
           source_dir: dist/js
           container_name: equinor-archive-content
