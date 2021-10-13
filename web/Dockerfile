@@ -17,9 +17,7 @@ COPY ./legacy ./legacy
 RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
   jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
   ./web/package.json | sponge ./web/package.json
-RUN version=$(jq --raw-output .version ./legacy/js/package.json); \
-  jq --arg legacy_js "$version" '.dependencies["@equinor/energyvision-legacy-js"] = $legacy_js' \
-  ./web/package.json | sponge ./web/package.json
+  
 RUN rm -rf ./legacy
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID

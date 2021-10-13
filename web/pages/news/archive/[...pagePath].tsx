@@ -12,6 +12,7 @@ import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css'
 import Script from 'next/dist/client/script'
+import Head from 'next/head'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -52,9 +53,10 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <style jsx global>
             {archivedStyles}
           </style>
-          <Script src="https://consent.cookiebot.com/uc.js"
-       id="Cookiebot" data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-       strategy="beforeInteractive"></Script> 
+          <Head> <script src="https://consent.cookiebot.com/uc.js"
+       id="Cookiebot" data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"/>
+      </Head>
+          <Script src="/legacy/legacy.minified.js" strategy="afterInteractive" />
           <Header />
           <NextSeo
             title={data?.news?.title}
@@ -65,7 +67,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
               type: 'article',
               url: fullUrl,
             }}
-          />
+          />     
           <div
             className="legacyStyles"
             onClick={ onLinkClicked }
