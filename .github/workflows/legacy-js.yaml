@@ -35,7 +35,7 @@ jobs:
         working-directory: ./legacy/js
         run: |
           pnpm install
-          pnpm legacy-js exec pnpm build
+          pnpm build
 
   upload:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
-          source_dir: dist
+          source_dir: dist/js
           container_name: equinor-archive-content
           connection_string: ${{ secrets.AZ_CONNECTION_STRING }}
           sync: false
