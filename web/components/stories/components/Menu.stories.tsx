@@ -9,6 +9,7 @@ export default {
     SubMenu: Menu.SubMenu,
     SubMenuHeader: Menu.SubMenuHeader,
     SubMenuPanel: Menu.SubMenuPanel,
+    SubMenuGroups: Menu.SubMenuGroups,
   },
   parameters: {
     docs: {
@@ -29,15 +30,15 @@ export const Default: Story<MenuProps> = (args) => (
     <Menu {...args}>
       <Menu.SubMenu>
         <Menu.SubMenuHeader>Menu item 1</Menu.SubMenuHeader>
-        <Menu.SubMenuPanel>Menu content 1</Menu.SubMenuPanel>
+        <Menu.SubMenuPanel>
+          <Menu.SubMenuGroups>Menu content 1</Menu.SubMenuGroups>
+        </Menu.SubMenuPanel>
       </Menu.SubMenu>
       <Menu.SubMenu>
         <Menu.SubMenuHeader>Menu item 2</Menu.SubMenuHeader>
-        <Menu.SubMenuPanel>Menu content 2</Menu.SubMenuPanel>
-      </Menu.SubMenu>
-      <Menu.SubMenu>
-        <Menu.SubMenuHeader>Menu item 3</Menu.SubMenuHeader>
-        <Menu.SubMenuPanel>Menu content 3</Menu.SubMenuPanel>
+        <Menu.SubMenuPanel>
+          <Menu.SubMenuGroups>Menu content 2</Menu.SubMenuGroups>
+        </Menu.SubMenuPanel>
       </Menu.SubMenu>
     </Menu>
   </Wrapper>

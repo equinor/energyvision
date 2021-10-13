@@ -3,14 +3,8 @@ import NextLink from 'next/link'
 import { Link, List, Heading, Menu, Text } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 
-const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
+const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
-
-const SubMenuGroup = styled.div`
-  @media (min-width: 1300px) {
-    display: flex;
-  }
-`
 
 const StyledHeading = styled(Heading)`
   text-transform: uppercase;
@@ -105,7 +99,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           </NextLink>
         </StyledSection>
         {groups && groups.length > 0 && (
-          <SubMenuGroup>
+          <SubMenuGroups>
             {groups.map((groupItem: SubMenuGroupData) => {
               return (
                 <div key={groupItem.id}>
@@ -126,7 +120,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                 </div>
               )
             })}
-          </SubMenuGroup>
+          </SubMenuGroups>
         )}
       </SubMenuPanel>
     </SubMenu>
