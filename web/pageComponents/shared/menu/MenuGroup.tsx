@@ -53,11 +53,6 @@ const GroupLink = styled(Link)`
   }
 `
 
-const Group = styled.div`
-  @media (min-width: 1300px) {
-    height: 100%;
-  }
-`
 const StyledText = styled(Text)`
   margin-top: var(--space-medium);
 `
@@ -113,7 +108,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           <SubMenuGroup>
             {groups.map((groupItem: SubMenuGroupData) => {
               return (
-                <Group key={groupItem.id}>
+                <div key={groupItem.id}>
                   {groupItem.label && (
                     <StyledHeading level="h3" size="sm">
                       {groupItem.label}
@@ -128,7 +123,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                       </Item>
                     ))}
                   </WrappedList>
-                </Group>
+                </div>
               )
             })}
           </SubMenuGroup>
