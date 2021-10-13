@@ -32,6 +32,7 @@ jobs:
           version: latest
       - name: Build legacy js 
         id: build-legacy-js
+        working-directory: ./legacy/js
         run: |
           pnpm install
           pnpm legacy-js exec pnpm build
