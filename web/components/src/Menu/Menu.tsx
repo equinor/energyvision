@@ -23,7 +23,7 @@ export const Menu = forwardRef<HTMLUListElement, MenuProps>(function Menu({ chil
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: @TODO: Lets look into this at some point
-    <StyledAccordion forwardedAs="ul" {...rest}>
+    <StyledAccordion forwardedAs="ul" ref={ref} {...rest}>
       {children}
     </StyledAccordion>
   )

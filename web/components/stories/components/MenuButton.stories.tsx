@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `Main site navigation.
+        component: `Button for toggling the menu.
         `,
       },
     },
