@@ -60,27 +60,31 @@ const StyledSection = styled.section`
 `
 
 function getLink(linkData: MenuLinkData) {
+  // Fallback to home page, if this happens it is an error somewhere
+  // Sanity should take care of the validation here, and this is temp. until
+  // the static pages are migrated
   if (!linkData) return 'something-wrong'
   const { isStatic, link, staticUrl } = linkData
   if (isStatic) {
-    return staticUrl
+    return staticUrl || '/'
   } else {
-    return link && link.slug
+    return (link && link.slug) || '/'
   }
 }
 
 export const MenuGroup = (topLevelItem: SubMenuData) => {
   const { topLevelLink, groups } = topLevelItem
+
   const topLevelHref = getLink(topLevelLink)
 
   return (
     <SubMenu>
-      <SubMenuHeader> {topLevelLink?.label || 'Error'}</SubMenuHeader>
+      <SubMenuHeader> {topLevelLink?.label}</SubMenuHeader>
       {/* @TODO: Should we allow external links at top level? */}
       <SubMenuPanel>
         {/* @TODO: Can we reuse the same link across devices */}
         <NextLink href={topLevelHref} passHref>
-          <TopLevelLink>{`${topLevelLink?.label} overview page` || 'Error'}</TopLevelLink>
+          <TopLevelLink>{`${topLevelLink?.label} overview page`}</TopLevelLink>
         </NextLink>
         <StyledSection>
           <Heading level="h2" size="lg">
