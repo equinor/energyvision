@@ -87,17 +87,6 @@ function getLink(linkData: MenuLinkData) {
   }
 }
 
-/* const fetchTopLevel = (route: string) => {
-  if (!route) return null
-  const path = route.split('/')
-  return path[1]
-}
- */
-/* const getInitialMenuItem = (router: any) => {
-  return fetchTopLevel(router.asPath)
-}
- */
-
 export const MenuGroup = (topLevelItem: SubMenuData) => {
   const { topLevelLink, group } = topLevelItem
   const topLevelHref = getLink(topLevelLink)

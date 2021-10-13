@@ -58,6 +58,8 @@ const Menu = ({ data, ...rest }: MenuProps) => {
   const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
+  const menuItems = (data && data.subMenus) || []
+
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
     setIndices([])
@@ -92,8 +94,6 @@ const Menu = ({ data, ...rest }: MenuProps) => {
       setIndices([...indices, toggledIndex])
     }
   }
-
-  const menuItems = (data && data.subMenus) || []
 
   return (
     <>
