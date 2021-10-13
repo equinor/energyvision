@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import NextLink from 'next/link'
 import { Link, List, Heading, Menu, Text } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
-import { Typography } from '@equinor/eds-core-react'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel } = Menu
 const { Item } = List
@@ -45,14 +44,9 @@ const TopLevelLink = styled(Link)<TopLevelLinkProps>`
   }
 `
 
-const GroupItem = styled(Item)`
-  max-height: 100%;
-`
-
 const GroupLink = styled(Link)`
   display: flex;
   text-decoration: none;
-  /* We don't actually have a value for 12px */
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
     padding: var(--space-small) var(--space-xLarge) var(--space-small) 0;
@@ -96,8 +90,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
       <SubMenuHeader> {topLevelLink?.label || 'Error'}</SubMenuHeader>
       {/* @TODO: Should we allow external links at top level? */}
       <SubMenuPanel>
-        {/*         @TODO: Could we reuse the same link across devices
-         */}
+        {/* @TODO: Can we reuse the same link across devices */}
         <NextLink href={topLevelHref} passHref>
           <TopLevelLink active={false} /* active={activeMenuItem === fetchTopLevel(topLevelHref)} */>
             {`${topLevelLink?.label} overview page` || 'Error'}
@@ -128,11 +121,11 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                   )}
                   <WrappedList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                     {groupItem.links.map((link: MenuLinkData) => (
-                      <GroupItem key={link.id}>
+                      <Item key={link.id}>
                         <NextLink href={getLink(link)} passHref>
                           <GroupLink>{link.label}</GroupLink>
                         </NextLink>
-                      </GroupItem>
+                      </Item>
                     ))}
                   </WrappedList>
                 </Group>
