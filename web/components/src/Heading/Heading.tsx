@@ -11,7 +11,7 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
   line-height: var(--line-height);
   font-weight: var(--font-weight);
-
+  text-transform: var(--text-transform);
   ${({ center }) =>
     center && {
       textAlign: 'center',
@@ -34,6 +34,7 @@ export type HeadingProps = {
   regular?: boolean
   center?: boolean
   inverted?: boolean
+  uppercase?: boolean
 } & HTMLAttributes<HTMLHeadingElement>
 
 /* Should be easy enough to change later on */
@@ -65,7 +66,17 @@ const fontWeights = {
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
-  { size = 'lg', level = 'h3', regular = false, center = false, inverted = false, style, children, ...rest },
+  {
+    size = 'lg',
+    level = 'h3',
+    regular = false,
+    center = false,
+    inverted = false,
+    uppercase = false,
+    style,
+    children,
+    ...rest
+  },
   ref,
 ) {
   return (
@@ -80,6 +91,7 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
           '--size': sizes[size],
           '--line-height': lineHeights[size],
           '--font-weight': size === '2xl' && regular ? 'var(--fontWeight-regular)' : fontWeights[size],
+          '--text-transform': uppercase ? 'uppercase' : 'none',
         } as CSSProperties
       }
       {...rest}

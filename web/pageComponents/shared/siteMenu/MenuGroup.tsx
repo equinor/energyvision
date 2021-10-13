@@ -8,7 +8,6 @@ const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
 
 const TopLevelLink = styled(Link)`
-  text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-large);
   @media (min-width: 1300px) {
     display: none;
@@ -52,7 +51,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
       <SubMenuPanel>
         {/* @TODO: Can we reuse the same link across devices */}
         <NextLink href={topLevelHref} passHref>
-          <TopLevelLink>{`${topLevelLink?.label} overview page`}</TopLevelLink>
+          <TopLevelLink underline={false}>{`${topLevelLink?.label} overview page`}</TopLevelLink>
         </NextLink>
         <StyledSection>
           <Heading level="h2" size="lg">

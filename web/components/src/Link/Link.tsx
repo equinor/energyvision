@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { forwardRef, AnchorHTMLAttributes } from 'react'
+import { forwardRef, AnchorHTMLAttributes, CSSProperties } from 'react'
 import { Icon, Typography } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import { tokens } from '@equinor/eds-tokens'
@@ -25,6 +25,7 @@ export const BaseLink = styled.a`
   display: inline-flex;
   align-items: center;
   color: var(--slate-blue-95);
+  text-decoration: var(--textDecoration);
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
@@ -147,10 +148,12 @@ export type LinkProps = {
   variant?: 'regular' | 'contentLink' | 'readMore' | 'buttonLink'
   /** What kind of content is it  */
   type?: LinkType
+  /** Some links don't have an underline, like the menu links */
+  underline?: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, variant = 'regular', type = 'internalUrl', ...rest },
+  { children, variant = 'regular', type = 'internalUrl', underline = true, style, ...rest },
   ref,
 ) {
   if (variant === 'contentLink') {
@@ -175,7 +178,16 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 
   // TODO: design not final
   return (
-    <BaseLink ref={ref} {...rest}>
+    <BaseLink
+      style={
+        {
+          ...style,
+          '--textDecoration': underline ? 'underline' : 'none',
+        } as CSSProperties
+      }
+      ref={ref}
+      {...rest}
+    >
       {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}
     </BaseLink>
   )

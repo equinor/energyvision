@@ -9,7 +9,6 @@ const StyledSubMenuGroup = styled.div`
 `
 
 const StyledSubMenuGroupHeading = styled(Heading)`
-  text-transform: uppercase;
   color: var(--grey-60);
   padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
@@ -29,7 +28,6 @@ const StyledSubMenuGroupList = styled(List)`
 
 const StyledSubMenuGroupLink = styled(Link)`
   display: flex;
-  text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
     padding: var(--space-small) 0 var(--space-small) 0;
@@ -43,11 +41,19 @@ export const SubMenuGroup = ({ children, ...rest }: Props) => {
   return <StyledSubMenuGroup {...rest}>{children}</StyledSubMenuGroup>
 }
 export const SubMenuGroupHeading = ({ children, ...rest }: Props & HeadingProps) => {
-  return <StyledSubMenuGroupHeading {...rest}>{children}</StyledSubMenuGroupHeading>
+  return (
+    <StyledSubMenuGroupHeading uppercase {...rest}>
+      {children}
+    </StyledSubMenuGroupHeading>
+  )
 }
 export const SubMenuGroupList = ({ children, ...rest }: Props & ListProps) => {
   return <StyledSubMenuGroupList {...rest}>{children}</StyledSubMenuGroupList>
 }
 export const SubMenuGroupLink = ({ children, ...rest }: Props) => {
-  return <StyledSubMenuGroupLink {...rest}>{children}</StyledSubMenuGroupLink>
+  return (
+    <StyledSubMenuGroupLink underline={false} {...rest}>
+      {children}
+    </StyledSubMenuGroupLink>
+  )
 }

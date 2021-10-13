@@ -89,6 +89,18 @@ export const ReadMoreLink: Story = () => (
   </Link>
 )
 
+export const LinkWithoutUnderline: Story = () => (
+  <Link underline={false} href="/">
+    Read more
+  </Link>
+)
+
+LinkWithoutUnderline.parameters = {
+  docs: {
+    storyDescription: `A link with no underline, like a menu link. `,
+  },
+}
+
 export const ButtonLink: Story = () => (
   <Link variant="buttonLink" href="/">
     Check out our exciting career opportunities

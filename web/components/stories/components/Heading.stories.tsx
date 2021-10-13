@@ -122,3 +122,9 @@ export const Long: Story<HeadingProps> = () => (
 )
 
 Long.storyName = 'With a long text'
+
+export const Uppercase: Story<HeadingProps> = () => (
+  <Heading uppercase level="h1" size="xs">
+    I'm uppercase
+  </Heading>
+)
