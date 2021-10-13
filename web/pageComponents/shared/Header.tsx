@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Topbar, Logo, Button } from '@components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
-import Menu from './menu/Menu'
+import SiteMenu from './siteMenu/SiteMenu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 
@@ -27,7 +27,7 @@ const TopbarContainer = styled.div`
   align-items: center;
 `
 
-const StyledMenu = styled(Menu)`
+const StyledMenu = styled(SiteMenu)`
   grid-area: menu;
   justify-self: left;
 `

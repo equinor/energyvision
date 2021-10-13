@@ -1,27 +1,15 @@
-import { CSSProperties, useEffect, useCallback, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useWindowSize } from '@reach/window-size'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import NextLink from 'next/link'
-import { Menu as EnvisMenu, MenuButton, Link } from '@components'
+import { Menu, MenuButton, Link } from '@components'
 import { MenuGroup } from './MenuGroup'
+import { TopbarDropdown } from './TopbarDropdown'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
-
-/* If we need this for e.g. the search, let's move it to components folder */
-const TopbarDropdown = styled.div`
-  position: fixed;
-  background: var(--ui-background-default);
-  overflow: auto;
-  display: var(--display);
-  z-index: 50;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-`
 
 const MenuContainer = styled.div`
   background-color: transparent;
@@ -55,7 +43,7 @@ export type MenuProps = {
   data?: MenuData
 }
 
-const Menu = ({ data, ...rest }: MenuProps) => {
+const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
   const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
@@ -102,25 +90,19 @@ const Menu = ({ data, ...rest }: MenuProps) => {
       <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
-          <TopbarDropdown
-            style={
-              {
-                '--display': isOpen ? 'block' : 'none',
-              } as CSSProperties
-            }
-          >
+          <TopbarDropdown isOpen={isOpen}>
             <nav>
               <NavTopbar>
                 {/*  @TODO: Translations of string */}
                 <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
-                <EnvisMenu index={indices} onChange={toggleItem}>
+                <Menu index={indices} onChange={toggleItem}>
                   {menuItems.map((topLevelItem: SubMenuData) => {
                     if (topLevelItem?.topLevelLink.isDisabled) return null
                     return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
                   })}
-                </EnvisMenu>
+                </Menu>
                 <NextLink href="/" passHref>
                   {/* @TODO Language strings */}
                   <AllSitesLink>All sites</AllSitesLink>
@@ -133,4 +115,4 @@ const Menu = ({ data, ...rest }: MenuProps) => {
     </>
   )
 }
-export default Menu
+export default SiteMenu

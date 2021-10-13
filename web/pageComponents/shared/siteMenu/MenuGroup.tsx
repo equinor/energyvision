@@ -15,7 +15,7 @@ const StyledHeading = styled(Heading)`
   }
 `
 
-const WrappedList = styled(List)`
+const SubMenuGroupList = styled(List)`
   @media (min-width: 1300px) {
     display: flex;
     flex-direction: column;
@@ -32,13 +32,13 @@ const TopLevelLink = styled(Link)`
     display: none;
   }
 `
-const Group = styled.div`
+const SubMenuGroup = styled.div`
   @media (min-width: 1300px) {
     padding-right: var(--space-xLarge);
   }
 `
 
-const GroupLink = styled(Link)`
+const SubMenuGroupLink = styled(Link)`
   display: flex;
   text-decoration: none;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
@@ -103,22 +103,22 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           <SubMenuGroups>
             {groups.map((groupItem: SubMenuGroupData) => {
               return (
-                <Group key={groupItem.id}>
+                <SubMenuGroup key={groupItem.id}>
                   {groupItem.label && (
                     <StyledHeading level="h3" size="sm">
                       {groupItem.label}
                     </StyledHeading>
                   )}
-                  <WrappedList aria-label={groupItem.label || topLevelLink?.label} unstyled>
+                  <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                     {groupItem.links.map((link: MenuLinkData) => (
                       <Item key={link.id}>
                         <NextLink href={getLink(link)} passHref>
-                          <GroupLink>{link.label}</GroupLink>
+                          <SubMenuGroupLink>{link.label}</SubMenuGroupLink>
                         </NextLink>
                       </Item>
                     ))}
-                  </WrappedList>
-                </Group>
+                  </SubMenuGroupList>
+                </SubMenuGroup>
               )
             })}
           </SubMenuGroups>
