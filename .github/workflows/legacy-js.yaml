@@ -35,11 +35,7 @@ jobs:
         working-directory: ./legacy/js
         run: |
           pnpm install
-          pnpm build
-
-  upload:
-    runs-on: ubuntu-latest
-    steps:
+      - name: Export to Azure
       - uses: actions/checkout@v2
       - uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:
