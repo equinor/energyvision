@@ -10,6 +10,7 @@ import { MenuGroup } from './MenuGroup'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
 
+/* If we need this for e.g. the search, let's move it to components folder */
 const TopbarDropdown = styled.div`
   position: fixed;
   background: var(--ui-background-default);
@@ -33,6 +34,7 @@ const MenuContainer = styled.div`
   }
 `
 
+/* This is not finalised */
 const AllSitesLink = styled(Link)`
   display: none;
   @media (min-width: 1300px) {
