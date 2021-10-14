@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from 'react'
+import { ReactNode, CSSProperties, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 /* If we need this for e.g. the search, let's move it to components folder */
@@ -16,9 +16,9 @@ const StyledTopbarDropdown = styled.div`
 type Props = {
   isOpen: boolean
   children: ReactNode
-}
+} & HTMLAttributes<HTMLDivElement>
 
-export const TopbarDropdown = ({ isOpen, children }: Props) => {
+export const TopbarDropdown = ({ isOpen, children, ...rest }: Props) => {
   return (
     <StyledTopbarDropdown
       style={
@@ -26,6 +26,7 @@ export const TopbarDropdown = ({ isOpen, children }: Props) => {
           '--display': isOpen ? 'block' : 'none',
         } as CSSProperties
       }
+      {...rest}
     >
       {children}
     </StyledTopbarDropdown>

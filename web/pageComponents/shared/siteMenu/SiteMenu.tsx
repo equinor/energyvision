@@ -75,7 +75,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
       <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
-          <TopbarDropdown isOpen={isOpen}>
+          <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
                 {/*  @TODO: Translations of string */}
