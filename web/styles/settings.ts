@@ -141,6 +141,10 @@ export const spacings = css`
     --layout-maxContent-wide: calc(1920px - 250px * 2); /* 1420 */
   }
 
+  :root {
+    --topbar-innerMaxWidth: calc(1920px - (var(--layout-paddingHorizontal-small) * 2));
+  }
+
   /* Menu */
   :root {
     --menu-height-lg: 598px;

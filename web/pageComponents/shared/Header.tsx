@@ -21,7 +21,7 @@ const HeaderRelative = styled.header`
 
 const TopbarContainer = styled.div`
   width: 100%;
-  max-width: calc(1920px - (var(--layout-paddingHorizontal-small) * 2));
+  max-width: var(--topbar-innerMaxWidth);
   margin: auto;
   display: grid;
   grid-template-areas: 'menu logo controls';
