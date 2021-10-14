@@ -37,11 +37,11 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
       <style jsx global>
         {archivedStyles}
       </style>
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className="legacyStyles"
         onClick={onLinkClicked}
         onKeyDown = { onLinkClicked}
-        aria-hidden= "true"
         dangerouslySetInnerHTML={{
           __html: data?.content,
         }}
