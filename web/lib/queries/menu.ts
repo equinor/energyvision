@@ -40,6 +40,13 @@ export const menuQuery = /* groq */ `
         "slug": slug.current,
         ingress,
       },
+      _type match "route_*" => {
+        "type": _type,
+        "id": _id,
+        "slug": slug.current,
+        "title": content->title,
+        "heroImage": content->heroFigure,
+      }
     },
 	}
 }

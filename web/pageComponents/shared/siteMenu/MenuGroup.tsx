@@ -53,6 +53,9 @@ const Grid = styled.div`
 const Promoted = styled.div`
   @media (min-width: 1300px) {
     width: 18rem;
+    padding-left: var(--space-medium);
+    margin-top: 35px;
+    border-left: 1px solid var(--grey-30);
   }
 `
 
