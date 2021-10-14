@@ -138,7 +138,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           </div>
           {featuredContent && (
             <Promoted>
-              <NewsCard data={featuredContent} />
+              <NewsCard data={featuredContent} fitToContent />
             </Promoted>
           )}
         </Grid>
