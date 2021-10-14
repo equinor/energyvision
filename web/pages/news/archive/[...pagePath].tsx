@@ -67,12 +67,13 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
               type: 'article',
               url: fullUrl,
             }}
-          />     
+          />  
+          {/* The <div> element has a child <button> element that allows keyboard interaction */}
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}   
           <div
             className="legacyStyles"
             onClick={ onLinkClicked }
             onKeyDown = {onLinkClicked}
-            aria-hidden= "true"
             dangerouslySetInnerHTML={{
               __html: data?.news?.content,
             }}
