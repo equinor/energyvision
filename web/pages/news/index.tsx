@@ -11,6 +11,7 @@ import type { NewsSchema, MenuData } from '../../types/types'
 import NewsCard from '../../pageComponents/news/NewsCard'
 import PageHeader from '../../pageComponents/shared/Header'
 import { mapLocaleToLang } from '../../lib/localization'
+import { SkipNavContent } from '@reach/skip-nav'
 
 const { Title, Header, Action } = Card
 
@@ -94,6 +95,7 @@ AllNews.getLayout = (page: AppProps) => {
         data={data?.menuData}
       />
 
+      <SkipNavContent />
       {page}
     </Layout>
   )

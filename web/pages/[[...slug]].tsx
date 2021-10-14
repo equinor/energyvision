@@ -12,6 +12,7 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
 import { mapLocaleToLang } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
+import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -72,6 +73,8 @@ Page.getLayout = (page: AppProps) => {
   return (
     <Layout preview={preview}>
       <Header slugs={slugs} data={data?.menuData} />
+
+      <SkipNavContent />
       {page}
     </Layout>
   )
