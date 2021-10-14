@@ -37,7 +37,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
 
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
-    setIndices([])
+    //setIndices([])
   }, [])
 
   useEffect(() => {
