@@ -147,44 +147,19 @@ export default {
       ],
       // validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().min(1),
     },
-    /*  {
+    {
       name: 'featuredContent',
       type: 'reference',
       title: 'Featured content',
-     
+
       to: [{ type: 'news' }, { type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
-        filter: ({ document }: { document: any }): SchemaType.ReferenceFilter => ({
-          // @TODO: Fix _lang for English version. Atm we can't link to
-          // English topic pages and can't filter for news articles in the same language
+        filter: ({ document: { _lang, title: title = '' } }: any): SchemaType.ReferenceFilter => ({
           filter: `title != $title && (_type == $routeLang || _type == 'news')`,
-          params: { title: title, routeLang: `route_${document._lang}`, lang: `${document._lang}` },
+          params: { routeLang: `route_${_lang}`, title, lang: _lang },
         }),
       },
     },
-
-    {
-      name: 'reference',
-      title: 'Internal link',
-      description: 'Use this field to reference an internal page.',
-      type: 'reference',
-      fieldset: 'link',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(context.parent?.isStatic, value, context.parent.url)
-        }),
-      to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
-      options: {
-        filter: ({ document }: { document: any }) => ({
-          filter: `_type == $routeLang`,
-          params: { routeLang: `route_${document._lang}` },
-        }),
-      },
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === true,
-    }, */
-
     {
       name: 'intro',
       title: 'Intro text',

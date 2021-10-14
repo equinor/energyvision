@@ -219,6 +219,7 @@ export type SubMenuData = {
   topLevelLink: MenuLinkData
   intro: PortableTextEntry[]
   groups: SubMenuGroupData[]
+  featuredContent: NewsCardData
 }
 
 export type MenuData = {

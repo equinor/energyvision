@@ -11,7 +11,7 @@ const StyledPanel = styled(RAccordionPanel)`
   background-color: var(--background-color);
   @media (min-width: 1300px) {
     position: absolute;
-    top: 240px;
+    top: 265px;
     left: 0;
     right: 0;
     background-color: var(--ui-background-default);

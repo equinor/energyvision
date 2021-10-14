@@ -6,6 +6,7 @@ export type SubMenuGroupsProps = HTMLAttributes<HTMLDivElement>
 const StyledSubMenuGroups = styled.div`
   @media (min-width: 1300px) {
     display: flex;
+    flex-wrap: wrap;
   }
 `
 

@@ -29,6 +29,18 @@ export const menuQuery = /* groq */ `
        }
     },
     intro,
+    "featuredContent": featuredContent->{
+      _type == "news" => {
+        "type": _type,
+        "id": _id,
+        "updatedAt": _updatedAt,
+        title,
+        heroImage,
+        "publishDateTime": coalesce(publishDateTime, _createdAt),
+        "slug": slug.current,
+        ingress,
+      },
+    },
 	}
 }
 `
