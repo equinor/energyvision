@@ -6,6 +6,8 @@ const StyledNavTopbar = styled.div`
   padding: var(--space-small) var(--space-medium);
   display: flex;
   align-items: center;
+  max-width: calc(var(--topbar-innerMaxWidth) + (var(--space-medium) * 2));
+  margin: auto;
 `
 
 type Props = {
