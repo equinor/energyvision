@@ -1,10 +1,58 @@
-import styled from 'styled-components'
-import { Button } from '@components'
+import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
+import { outlineTemplate, Tokens } from '@utils'
+import { useWindowSize } from '@reach/window-size'
+
+const { outline } = Tokens
 
 const Wrapper = styled.div`
-  a {
-    margin: 0 var(--space-xSmall);
+  display: flex;
+  align-items: center;
+`
+
+const SharedStyle = css`
+  display: flex;
+  padding: var(--space-small) var(--space-small);
+  margin: 0 var(--space-xSmall);
+  font-size: var(--typeScale-0);
+  font-weight: var(--fontWeight-medium);
+  line-height: 1em;
+`
+
+const ActiveLocale = styled.span`
+  ${SharedStyle}
+  color: var(--slate-blue-95);
+  position: relative;
+
+  &:after {
+    content: '';
+    display: block;
+    width: calc(100% - (var(--space-small) * 2));
+    height: 2px;
+    position: absolute;
+    bottom: calc(var(--space-small) * 0.5);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    background: var(--moss-green-100);
+  }
+`
+
+const StyledLink = styled.a`
+  ${SharedStyle}
+  text-decoration: none;
+  color: var(--grey-60);
+
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
+
+  &:hover {
+    background: var(--moss-green-70);
+  }
+
+  &:visited {
+    color: var(--grey-60);
   }
 `
 
@@ -14,20 +62,48 @@ export type LocalizationSwitchProps = {
   activeLocale: string
 }
 
+type LocaleLinkProps = {
+  href: string
+  title: string
+  locale: string
+  active: boolean
+  width: number
+}
+
+const BREAKPOINT = 600
+
+const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, width, children }) => {
+  if (!active) {
+    return (
+      <NextLink href={href} locale={locale} passHref>
+        <StyledLink aria-label={title}>{children}</StyledLink>
+      </NextLink>
+    )
+  }
+
+  if (width > BREAKPOINT) {
+    return <ActiveLocale aria-hidden="true">{children}</ActiveLocale>
+  }
+
+  return null
+}
+
 // @TODO: how to handle cases where no translation available
 // should this redirect to front page? should there be a message in that case?
 export const LocalizationSwitch = ({ en_GB, nb_NO, activeLocale, ...rest }: LocalizationSwitchProps) => {
+  const { width } = useWindowSize()
+
   if (!en_GB || !nb_NO) return null
 
   return (
     <Wrapper {...rest}>
-      <NextLink href={en_GB} locale="en" passHref>
-        <Button variant={activeLocale == 'en' ? 'outlined' : 'ghost'}>EN</Button>
-      </NextLink>
-      |
-      <NextLink href={nb_NO} locale="no" passHref>
-        <Button variant={activeLocale == 'no' ? 'outlined' : 'ghost'}>NO</Button>
-      </NextLink>
+      <LocaleLink href={en_GB} title="Switch to English" locale="en" active={activeLocale === 'en'} width={width}>
+        EN
+      </LocaleLink>
+      {width > BREAKPOINT ? '|' : null}
+      <LocaleLink href={nb_NO} title="Switch to Norwegian" locale="no" active={activeLocale === 'no'} width={width}>
+        NO
+      </LocaleLink>
     </Wrapper>
   )
 }
