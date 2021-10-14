@@ -13,6 +13,7 @@ import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import archivedStyles from '@equinor/energyvision-legacy-css'
 import Script from 'next/dist/client/script'
 import Head from 'next/head'
+import { SkipNavContent } from '@reach/skip-nav'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -68,6 +69,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
               url: fullUrl,
             }}
           />  
+          <SkipNavContent />
           {/* The <div> element has a child <button> element that allows keyboard interaction */}
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}   
           <div

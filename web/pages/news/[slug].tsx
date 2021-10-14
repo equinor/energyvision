@@ -23,6 +23,7 @@ import type { NewsCardData, NewsSchema } from '../../types/types'
 import PageHeader from '../../pageComponents/shared/Header'
 import { mapLocaleToLang } from '../../lib/localization'
 import IFrame from '../../pageComponents/shared/IFrame'
+import { SkipNavContent } from '@reach/skip-nav'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -296,6 +297,8 @@ News.getLayout = (page: AppProps) => {
   return (
     <Layout preview={preview}>
       <PageHeader slugs={slugs} data={data?.menuData} />
+
+      <SkipNavContent />
       {page}
     </Layout>
   )

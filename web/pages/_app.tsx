@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
+import { SkipNavLink } from '@reach/skip-nav'
+
 /* import MenuProvider from '../tempcomponents/shared/menu/MenuProvider' */
 /* 
 import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -31,6 +33,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
         <GlobalStyle />
         <GlobalFontStyle />
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+        <SkipNavLink />
 
         {getLayout(<Component {...pageProps} />)}
         {/*      </MenuProvider> */}
