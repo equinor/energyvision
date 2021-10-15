@@ -18,6 +18,7 @@ const StyledPanel = styled(RAccordionPanel)`
 `
 
 const PanelContainer = styled.div`
+  padding-bottom: var(--space-xLarge);
   @media (min-width: 1300px) {
     padding: 0 var(--space-3xLarge);
   }
