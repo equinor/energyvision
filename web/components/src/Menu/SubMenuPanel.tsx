@@ -18,7 +18,7 @@ const StyledPanel = styled(RAccordionPanel)`
     padding: var(--space-medium) 0;
     border-bottom: transparent;
     /* @TODO: Find a nice value */
-    max-width: 1500px;
+    max-width: 1700px;
     margin: 0 auto;
   }
 `
