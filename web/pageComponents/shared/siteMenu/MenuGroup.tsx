@@ -27,6 +27,10 @@ const StyledSubMenuGroupLink = styled(Link)`
   }
 `
 
+const ReadMore = styled(Link)`
+  padding: calc(var(--space-small) + var(--space-xSmall)) 0;
+`
+
 const StyledSection = styled.section`
   /*  display: none; */
   max-width: 35rem;
@@ -81,7 +85,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                 />
               )}
               <NextLink href={topLevelHref} passHref>
-                <Link variant="readMore">{topLevelLink?.label}</Link>
+                <ReadMore variant="readMore">{topLevelLink?.label}</ReadMore>
               </NextLink>
             </StyledSection>
             {groups && groups.length > 0 && (
