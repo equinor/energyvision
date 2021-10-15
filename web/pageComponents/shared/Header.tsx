@@ -61,7 +61,7 @@ export type HeaderProps = {
 
 const Header = ({ slugs, data }: HeaderProps) => {
   const router = useRouter()
-  console.log('menu data', data)
+
   const localization = {
     activeLocale: router.locale || 'en',
   }

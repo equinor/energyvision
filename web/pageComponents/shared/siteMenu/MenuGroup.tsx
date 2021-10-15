@@ -5,7 +5,7 @@ import SimpleBlockContent from '../../../common/SimpleBlockContent'
 import { Link, List, Heading, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 import { SubMenuGroup, SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
-import NewsCard from '../../news/NewsCard'
+import FeaturedContent from './FeaturedContent'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
@@ -47,15 +47,6 @@ const Grid = styled.div`
   @media (min-width: 1300px) {
     display: grid;
     grid-template-columns: 1fr min-content;
-  }
-`
-
-const Promoted = styled.div`
-  @media (min-width: 1300px) {
-    width: 18rem;
-    padding-left: var(--space-medium);
-    margin-top: 35px;
-    border-left: 1px solid var(--grey-30);
   }
 `
 
@@ -136,11 +127,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
               </SubMenuGroups>
             )}
           </div>
-          {featuredContent && (
-            <Promoted>
-              <NewsCard data={featuredContent} fitToContent />
-            </Promoted>
-          )}
+          {featuredContent && <FeaturedContent data={featuredContent} />}
         </Grid>
       </SubMenuPanel>
     </SubMenu>

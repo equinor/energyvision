@@ -1,7 +1,7 @@
 import { Heading } from '@components'
 import styled from 'styled-components'
 import NewsCard from './NewsCard'
-import type { NewsCardData } from '../../types/types'
+import type { CardData } from '../../types/types'
 
 const Wrapper = styled.div`
   display: grid;
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `
 
 type LatestNewsProp = {
-  data: NewsCardData[]
+  data: CardData[]
 }
 
 const LatestNews = ({ data }: LatestNewsProp) => {
@@ -29,7 +29,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
         Latest news
       </Heading>
       <Wrapper>
-        {data.map((newsItem: NewsCardData) => {
+        {data.map((newsItem: CardData) => {
           return <NewsCard data={newsItem} key={newsItem.id} />
         })}
       </Wrapper>

@@ -19,7 +19,7 @@ import LatestNews from '../../pageComponents/news/LatestNews'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import type { NewsCardData, NewsSchema } from '../../types/types'
+import type { CardData, NewsSchema } from '../../types/types'
 import PageHeader from '../../pageComponents/shared/Header'
 import { mapLocaleToLang } from '../../lib/localization'
 import IFrame from '../../pageComponents/shared/IFrame'
@@ -159,7 +159,7 @@ const isDateAfter = (a: string, b: string) => {
 type ArticleProps = {
   data: {
     news: NewsSchema
-    latestNews: NewsCardData[]
+    latestNews: CardData[]
     slugs: {
       en_GB: string
       nb_NO: string
