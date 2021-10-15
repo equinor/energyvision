@@ -145,7 +145,7 @@ export default {
           type: 'menuGroup',
         },
       ],
-      // validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().min(1),
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.max(5),
     },
     {
       name: 'featuredContent',

@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import styled from 'styled-components'
 import NextLink from 'next/link'
 import { BlockRenderer } from '../../../common/serializers'
@@ -106,7 +107,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
               <SubMenuGroups>
                 {groups.map((groupItem: SubMenuGroupData) => {
                   return (
-                    <SubMenuGroup key={groupItem.id}>
+                    <Fragment key={groupItem.id}>
                       {groupItem.label && (
                         <SubMenuGroupHeading level="h3" size="sm">
                           {groupItem.label}
@@ -121,7 +122,7 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
                           </StyledItem>
                         ))}
                       </SubMenuGroupList>
-                    </SubMenuGroup>
+                    </Fragment>
                   )
                 })}
               </SubMenuGroups>

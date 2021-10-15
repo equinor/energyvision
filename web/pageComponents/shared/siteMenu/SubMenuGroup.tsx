@@ -4,7 +4,6 @@ import { List, Heading, HeadingProps, ListProps } from '@components'
 
 const StyledSubMenuGroup = styled.div`
   @media (min-width: 1300px) {
-    padding-right: var(--space-xLarge);
     padding-bottom: var(--space-xxLarge);
     flex-basis: 13rem;
     flex-shrink: 0;
@@ -14,12 +13,11 @@ const StyledSubMenuGroup = styled.div`
 const StyledSubMenuGroupHeading = styled(Heading)`
   /*   color: var(--grey-60); */
   font-weight: 600;
-
   padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
     letter-spacing: 2px;
-    padding: 0 var(--space-xLarge) var(--space-medium) 0;
     font-size: var(--typeScale-0);
+    padding: 0;
   }
 `
 
