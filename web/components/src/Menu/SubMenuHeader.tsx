@@ -16,11 +16,12 @@ const StyledButton = styled(RAccordionButton)`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
   background: transparent;
   padding: var(--space-medium) 0;
   border: none;
   cursor: pointer;
+  /* We add the focus ring manually for keyboard users */
+  outline: none;
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
