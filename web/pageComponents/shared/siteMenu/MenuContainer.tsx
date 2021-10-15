@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const StyledMenuContainer = styled.div`
   background-color: transparent;
+  padding: 0 var(--space-large);
   @media (min-width: 1300px) {
     background-color: var(--moss-green-50);
     margin: var(--space-xLarge) var(--space-large) 0 var(--space-large);
