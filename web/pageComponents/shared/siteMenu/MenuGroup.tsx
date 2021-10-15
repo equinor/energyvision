@@ -30,11 +30,17 @@ const StyledSubMenuGroupLink = styled(Link)`
 const ReadMore = styled(Link)`
   padding: calc(var(--space-small) + var(--space-xSmall)) 0;
 `
+const TextContainer = styled.div`
+  @media (max-width: 1299px) {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+`
 
 const StyledSection = styled.section`
-  /*  display: none; */
   max-width: 35rem;
-  padding: 0 var(--space-large);
+
   @media (min-width: 1300px) {
     display: block;
     padding: 0 var(--space-large) var(--space-3xLarge) 0;
@@ -75,15 +81,18 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
           <div>
             <StyledSection>
               {intro && (
-                <SimpleBlockContent
-                  blocks={intro}
-                  serializers={{
-                    types: {
-                      block: BlockRenderer,
-                    },
-                  }}
-                />
+                <TextContainer>
+                  <SimpleBlockContent
+                    blocks={intro}
+                    serializers={{
+                      types: {
+                        block: BlockRenderer,
+                      },
+                    }}
+                  />
+                </TextContainer>
               )}
+
               <NextLink href={topLevelHref} passHref>
                 <ReadMore variant="readMore">{topLevelLink?.label}</ReadMore>
               </NextLink>
