@@ -18,7 +18,9 @@ type Props = {
 
 const FeaturedContent = ({ data }: Props) => {
   return (
-    <Promoted>{data.type === 'news' ? <NewsCard data={data} fitToContent /> : <TopicPageCard data={data} />}</Promoted>
+    <Promoted>
+      {data.type && data.type === 'news' ? <NewsCard data={data} fitToContent /> : <TopicPageCard data={data} />}
+    </Promoted>
   )
 }
 
