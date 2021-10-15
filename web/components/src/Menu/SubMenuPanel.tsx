@@ -39,12 +39,12 @@ export const SubMenuPanel = forwardRef<HTMLDivElement, SubMenuPanelProps>(functi
 
   return (
     <StyledPanel
-      style={
+      /*    style={
         {
           ...style,
           '--background-color': isExpanded ? 'var(--grey-10)' : 'var(--ui-background-default)',
         } as CSSProperties
-      }
+      } */
       ref={ref}
       {...rest}
     >
