@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import NextLink from 'next/link'
 import { BlockRenderer } from '../../../common/serializers'
 import SimpleBlockContent from '../../../common/SimpleBlockContent'
-import { Link, List, Heading, Menu } from '@components'
+import { Link, List, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 import FeaturedContent from './FeaturedContent'
@@ -12,8 +12,10 @@ const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
 
 const StyledItem = styled(Item)`
-  /*  We want a slightly smaller font size here, em on purpose */
-  font-size: 0.9em;
+  @media (min-width: 1300px) {
+    /*  We want a slightly smaller font size here, em on purpose */
+    font-size: 0.9em;
+  }
 `
 
 const StyledSubMenuGroupLink = styled(Link)`
@@ -28,9 +30,10 @@ const StyledSubMenuGroupLink = styled(Link)`
 const StyledSection = styled.section`
   /*  display: none; */
   max-width: 35rem;
+  padding: 0 var(--space-large);
   @media (min-width: 1300px) {
     display: block;
-    padding-bottom: var(--space-3xLarge);
+    padding: 0 var(--space-large) var(--space-3xLarge) 0;
   }
 `
 
