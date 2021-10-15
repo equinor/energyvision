@@ -37,7 +37,7 @@ export type ImageWithAlt = {
 }
 
 export type CardData = {
-  type: string
+  type?: string
   slug: string
   title: string
   id: string
