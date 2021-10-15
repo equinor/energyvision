@@ -11,6 +11,7 @@ const StyledCard = styled(Card)`
 `
 
 const StyledLink = styled(CardLink)`
+  width: 100%;
   display: inline-block;
 `
 
