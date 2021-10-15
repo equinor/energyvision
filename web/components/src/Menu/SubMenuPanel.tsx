@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { AccordionPanel as RAccordionPanel, AccordionPanelProps as RAccordionPanelProps } from '@reach/accordion'
 
 const StyledPanel = styled(RAccordionPanel)`
-  border-bottom: 1px solid var(--grey-40);
   background-color: var(--background-color);
   @media (min-width: 1300px) {
     position: absolute;
@@ -12,7 +11,6 @@ const StyledPanel = styled(RAccordionPanel)`
     right: 0;
     background-color: var(--ui-background-default);
     padding: var(--space-medium) 0;
-    border-bottom: transparent;
     /* @TODO: Find a nice value */
     max-width: 1700px;
     margin: 0 auto;
