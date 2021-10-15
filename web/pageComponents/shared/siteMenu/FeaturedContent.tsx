@@ -4,8 +4,10 @@ import TopicPageCard from '../../topicPages/TopicPageCard'
 import { CardData } from '../../../types/types'
 
 const Promoted = styled.div`
+  margin-top: var(--space-medium);
   @media (min-width: 1300px) {
     width: 18rem;
+    margin-top: 0;
     padding-left: var(--space-medium);
     border-left: 1px solid var(--grey-30);
   }
