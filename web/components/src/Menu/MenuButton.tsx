@@ -26,7 +26,7 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
   border: none;
   outline: none;
   color: var(--default-text);
-  font-size: var(--typeScale-0);
+  font-size: var(--typeScale-1);
   font-weight: var(--fontWeight-medium);
 
   &[data-focus-visible-added]:focus {
