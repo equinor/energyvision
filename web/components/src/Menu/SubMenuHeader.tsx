@@ -36,11 +36,10 @@ const StyledIcon = styled(Icon)`
 `
 
 const StyledHeader = styled(Typography)`
-  background-color: var(--background-color);
   padding: 0 var(--space-large);
   @media (min-width: 1300px) {
     padding: 0;
-    background-color: transparent;
+
     border-bottom-color: var(--border-bottom-color);
     border-bottom-style: solid;
     border-bottom-width: 2px;
@@ -71,7 +70,6 @@ export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(f
         {
           ...style,
           '--border-bottom-color': isExpanded ? 'var(--moss-green-95)' : 'transparent ',
-          '--background-color': isExpanded ? 'var(--grey-10)' : 'var(--ui-background-default)',
         } as CSSProperties
       }
     >
