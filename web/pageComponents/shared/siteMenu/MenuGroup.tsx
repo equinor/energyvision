@@ -11,13 +11,6 @@ import FeaturedContent from './FeaturedContent'
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
 
-const TopLevelLink = styled(Link)`
-  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-large);
-  @media (min-width: 1300px) {
-    display: none;
-  }
-`
-
 const StyledItem = styled(Item)`
   /*  We want a slightly smaller font size here, em on purpose */
   font-size: 0.9em;
@@ -32,11 +25,8 @@ const StyledSubMenuGroupLink = styled(Link)`
   }
 `
 
-const IntroContainer = styled.div`
-  margin-top: var(--space-medium);
-`
 const StyledSection = styled.section`
-  display: none;
+  /*  display: none; */
   max-width: 35rem;
   @media (min-width: 1300px) {
     display: block;
@@ -76,29 +66,17 @@ export const MenuGroup = (topLevelItem: SubMenuData) => {
       <SubMenuPanel>
         <Grid>
           <div>
-            {/* @TODO: Can we reuse the same link across devices */}
-            <NextLink href={topLevelHref} passHref>
-              <TopLevelLink underline={false}>{`${topLevelLink?.label} overview page`}</TopLevelLink>
-            </NextLink>
             <StyledSection>
-              <Heading level="h2" size="lg">
-                {topLevelLink?.label}
-              </Heading>
-
               {intro && (
-                <IntroContainer>
-                  <SimpleBlockContent
-                    blocks={intro}
-                    serializers={{
-                      types: {
-                        block: BlockRenderer,
-                      },
-                    }}
-                  />
-                </IntroContainer>
+                <SimpleBlockContent
+                  blocks={intro}
+                  serializers={{
+                    types: {
+                      block: BlockRenderer,
+                    },
+                  }}
+                />
               )}
-
-              {/* @TODO: What to do about this link? */}
               <NextLink href={topLevelHref} passHref>
                 <Link variant="readMore">{topLevelLink?.label}</Link>
               </NextLink>
