@@ -4,7 +4,7 @@ import { List, Heading, HeadingProps, ListProps } from '@components'
 
 const StyledSubMenuGroupHeading = styled(Heading)`
   font-weight: 600;
-  padding: var(--space-xLarge) var(--space-xLarge) calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+  padding: var(--space-xLarge) var(--space-medium) calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
   @media (min-width: 1300px) {
     letter-spacing: 2px;
     font-size: var(--typeScale-0);

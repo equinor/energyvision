@@ -20,7 +20,7 @@ const StyledItem = styled(Item)`
 
 const StyledSubMenuGroupLink = styled(Link)`
   display: flex;
-  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
+  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
   @media (min-width: 1300px) {
     /*  We want a slightly smaller padding here, em on purpose */
     padding: 0.45em 0;
