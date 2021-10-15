@@ -4,6 +4,7 @@ import styled from 'styled-components'
 export type SubMenuGroupsProps = HTMLAttributes<HTMLDivElement>
 
 const StyledSubMenuGroups = styled.div`
+  padding-bottom: var(--spacing-large);
   @media (min-width: 1300px) {
     /* display: flex;
     flex-wrap: wrap; */
