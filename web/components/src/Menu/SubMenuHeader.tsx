@@ -36,10 +36,8 @@ const StyledIcon = styled(Icon)`
 `
 
 const StyledHeader = styled(Typography)`
-  padding: 0 var(--space-large);
   @media (min-width: 1300px) {
     padding: 0;
-
     border-bottom-color: var(--border-bottom-color);
     border-bottom-style: solid;
     border-bottom-width: 2px;
