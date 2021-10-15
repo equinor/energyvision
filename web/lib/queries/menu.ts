@@ -46,6 +46,7 @@ export const menuQuery = /* groq */ `
         "slug": slug.current,
         "title": content->title,
         "heroImage": content->heroFigure,
+ 
       }
     },
 	}

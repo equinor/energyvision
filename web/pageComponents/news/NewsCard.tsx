@@ -3,7 +3,7 @@ import { Card, FormattedDate } from '@components'
 import { default as NextLink } from 'next/link'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import styled from 'styled-components'
-import type { NewsCardData } from '../../types/types'
+import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
@@ -11,9 +11,12 @@ const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 const StyledCard = styled(Card)`
   height: var(--height);
 `
+const StyledLink = styled(CardLink)`
+  display: inline-block;
+`
 
 type NewsCardProp = {
-  data: NewsCardData
+  data: CardData
   fitToContent?: boolean
 }
 
@@ -24,7 +27,7 @@ const NewsCard = ({ data, fitToContent = false }: NewsCardProp) => {
   return (
     <NextLink href={`/news/${slug}`} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <CardLink>
+      <StyledLink>
         <StyledCard
           style={
             {
@@ -36,9 +39,11 @@ const NewsCard = ({ data, fitToContent = false }: NewsCardProp) => {
             {heroImage && <Image image={heroImage.image} maxWidth={400} aspectRatio={0.56} layout="responsive" />}
           </Media>
           <Header>
-            <Eyebrow>
-              <FormattedDate datetime={publishDateTime} />
-            </Eyebrow>
+            {publishDateTime && (
+              <Eyebrow>
+                <FormattedDate datetime={publishDateTime} />
+              </Eyebrow>
+            )}
             <Title>{title}</Title>
           </Header>
           <Text>
@@ -48,7 +53,7 @@ const NewsCard = ({ data, fitToContent = false }: NewsCardProp) => {
             <Arrow />
           </Action>
         </StyledCard>
-      </CardLink>
+      </StyledLink>
     </NextLink>
   )
 }

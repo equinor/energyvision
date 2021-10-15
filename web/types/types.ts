@@ -36,13 +36,14 @@ export type ImageWithAlt = {
   extension?: string
 }
 
-export type NewsCardData = {
+export type CardData = {
+  type: string
   slug: string
   title: string
   id: string
-  publishDateTime: string
+  publishDateTime?: string
   heroImage: ImageWithCaptionData
-  ingress: PortableTextEntry[]
+  ingress?: PortableTextEntry[]
 }
 
 export type NewsSchema = {
@@ -219,7 +220,7 @@ export type SubMenuData = {
   topLevelLink: MenuLinkData
   intro: PortableTextEntry[]
   groups: SubMenuGroupData[]
-  featuredContent: NewsCardData
+  featuredContent: CardData
 }
 
 export type MenuData = {
