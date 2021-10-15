@@ -5,7 +5,7 @@ import { BlockRenderer } from '../../../common/serializers'
 import SimpleBlockContent from '../../../common/SimpleBlockContent'
 import { Link, List, Heading, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
-import { SubMenuGroup, SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
+import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 import FeaturedContent from './FeaturedContent'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
@@ -19,15 +19,15 @@ const TopLevelLink = styled(Link)`
 `
 
 const StyledItem = styled(Item)`
+  /*  We want a slightly smaller font size here, em on purpose */
   font-size: 0.9em;
-  /* height: 48px; */
 `
 
 const StyledSubMenuGroupLink = styled(Link)`
   display: flex;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-xLarge);
   @media (min-width: 1300px) {
-    /* padding: var(--space-small) 0 var(--space-small) 0; */
+    /*  We want a slightly smaller padding here, em on purpose */
     padding: 0.45em 0;
   }
 `
