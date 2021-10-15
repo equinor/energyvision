@@ -1,32 +1,60 @@
-import { forwardRef } from 'react'
+import { forwardRef, ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { Icon, Button, ButtonProps } from '@equinor/eds-core-react'
-import { clear, menu } from '@equinor/eds-icons'
+import { MenuIcon } from './MenuIcon'
+import { outlineTemplate, Tokens } from '@utils'
 
-export type MenuButtonProps = Omit<ButtonProps, 'color' | 'variant'> & {
+const { outline } = Tokens
+
+export type MenuButtonProps = {
   expanded?: boolean
-  /** The text for the menu button, visually hidden on small screens */
   title: string
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-const StyledIcon = styled(Icon)``
+const Title = styled.span`
+  line-height: 1em;
+`
 
-const Title = styled.span``
-
-const StyledMenuButton = styled(Button)`
+const StyledMenuButton = styled.button<{ expanded: boolean }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 0;
+  padding: var(--space-xSmall);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--default-text);
-  fill: var(--default-text);
+  font-size: var(--typeScale-0);
+  font-weight: var(--fontWeight-medium);
+
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
+
+  ${({ expanded }) =>
+    !expanded &&
+    `
+      &:hover .menuIcon {
+        span:nth-child(1) {
+          top: 3px;
+        }
+        span:nth-child(2) {
+          top: 14px;
+        }
+      }
+    `}
 `
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(function MenuButton(
   { expanded = false, title, ...rest },
   ref,
 ) {
-  const iconSize = 24
   return (
-    <StyledMenuButton variant="ghost" ref={ref} {...rest}>
+    <StyledMenuButton expanded={expanded} ref={ref} {...rest}>
+      <MenuIcon expanded={expanded} />
       <Title>{title}</Title>
-      {expanded ? <StyledIcon size={iconSize} data={clear} /> : <StyledIcon size={iconSize} data={menu} />}
     </StyledMenuButton>
   )
 })
