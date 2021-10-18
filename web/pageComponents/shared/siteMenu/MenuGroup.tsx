@@ -25,6 +25,9 @@ const StyledSubMenuGroupLink = styled(Link)`
     /*  We want a slightly smaller padding here, em on purpose */
     padding: 0.45em 0;
   }
+  :hover {
+    background-color: var(--grey-10);
+  }
 `
 
 const ReadMore = styled(Link)`
