@@ -20,6 +20,7 @@ const StyledButton = styled(RAccordionButton)`
   padding: var(--space-medium) 0;
   border: none;
   cursor: pointer;
+  color: var(--default-text);
   /* We add the focus ring manually for keyboard users */
   outline: none;
   &[data-focus-visible-added]:focus {
