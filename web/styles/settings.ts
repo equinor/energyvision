@@ -91,7 +91,6 @@ export const typography = css`
     --typeScale-multiplier: 1.2;
     --typeScale-0: calc(var(--typeScale-base) / * var(--typeScale-multiplier));
     --typeScale-1: var(--typeScale-base);
-    --typeScale-test: calc(var(--typeScale-base) -2px);
     --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
     --typeScale-3: calc(var(--typeScale-2) * var(--typeScale-multiplier));
     --typeScale-4: calc(var(--typeScale-3) * var(--typeScale-multiplier));
