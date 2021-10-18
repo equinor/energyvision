@@ -26,16 +26,20 @@ const FooterTop = styled.div`
 `
 
 const LinkWrapper = styled.section`
-  width: 10.5rem;
   display: flex;
   flex-direction: column;
   @media (max-width: 750px) {
     padding: var(--space-medium) 0;
+    width: 100%;
   }
 `
 const LinksList = styled.div`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  @media (max-width: 750px) {
+    height: 5rem;
+  }
 `
 const LinkHeader = styled(Heading)`
   font-size: var(--typeScale-2);
@@ -51,6 +55,10 @@ const FooterLink = styled(Link)`
 
   &:hover {
     color: var(--moss-green-90);
+  }
+  @media (max-width: 750px) {
+    flex: 0 0 40%;
+    max-width: 6rem;
   }
 `
 const FooterBottom = styled.div`
@@ -72,6 +80,8 @@ const placeHolderlinks = [
     header: 'Explore',
     linkList: [
       { linkText: 'Investors', url: 'https://www.google.com/' },
+
+      { linkText: 'Investors2', url: 'https://www.google.com/' },
       { linkText: 'Suppliers', url: 'https://www.google.com/' },
       { linkText: 'Contact us', url: 'https://www.google.com/' },
     ],
