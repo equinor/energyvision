@@ -23,6 +23,7 @@ const FooterTop = styled.div`
 `
 
 const LinkWrapper = styled.section`
+  width: 10.5rem;
   display: flex;
   flex-direction: column;
 `
