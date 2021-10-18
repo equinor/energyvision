@@ -13,7 +13,7 @@ const ExpandedStyle = css`
   }
 `
 
-const Icon = styled.div<{ expanded: boolean }>`
+const Icon = styled.span<{ expanded: boolean }>`
   width: 20px;
   height: 20px;
   position: relative;
