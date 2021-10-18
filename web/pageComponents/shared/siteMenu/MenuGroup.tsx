@@ -41,7 +41,7 @@ const TextContainer = styled.div`
   }
 `
 
-const StyledSection = styled.section`
+const StyledSection = styled.div`
   max-width: 35rem;
 
   @media (min-width: 1300px) {
