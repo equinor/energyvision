@@ -30,7 +30,7 @@ const LinkWrapper = styled.section`
   flex-direction: column;
   @media (max-width: 750px) {
     padding: var(--space-medium) 0;
-    width: 100%;
+    width: 70%;
   }
 `
 const LinksList = styled.div`
@@ -58,7 +58,7 @@ const FooterLink = styled(Link)`
   }
   @media (max-width: 750px) {
     flex: 0 0 40%;
-    max-width: 6rem;
+    max-width: 5rem;
   }
 `
 const FooterBottom = styled.div`
