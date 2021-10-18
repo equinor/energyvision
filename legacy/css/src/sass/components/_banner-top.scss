@@ -87,6 +87,7 @@ $banner-color: #FFF;
   &:not(.carousel){
     overflow: hidden;
     height: 100%;
+    position: relative;
 
     @include susy-breakpoint($screen-xs, $susy) {
       max-height: $banner-height-xs;
