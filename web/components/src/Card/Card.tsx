@@ -24,21 +24,26 @@ export const CardLink = styled.a`
   }
 `
 
-export const StyledCard = styled(EdsCard)<CardProps>`
+export type StyledCardProps = {
+  cardType?: 'news' | 'promo'
+  textOnly?: boolean
+}
+
+export const StyledCard = styled(EdsCard)<StyledCardProps>`
   height: 100%;
   /* News cards should have white background (current status as least) Will probably change at some point */
-  background-color: ${(props) => (props.type === 'promo' ? 'transparent' : '--ui-background-default')};
+  background-color: ${(props) => (props.cardType === 'promo' ? 'transparent' : '--ui-background-default')};
   /* If the card doesn't have media, there will be more space */
   grid-gap: ${(props) => (props.textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)')};
   padding: ${(props) =>
     props.textOnly ? 'var(--space-3xLarge) 0 var(--space-xLarge) 0' : '0 0 var(--space-xLarge) 0'};
 
   ${(props) => {
-    if (props.type === 'promo' && props.textOnly) {
+    if (props.cardType === 'promo' && props.textOnly) {
       return `
         grid-template-rows: auto 1fr;
     `
-    } else if (props.type === 'promo') {
+    } else if (props.cardType === 'promo') {
       return `
       grid-template-rows: auto auto 1fr;
     `
@@ -59,7 +64,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   ref,
 ) {
   return (
-    <StyledCard variant="default" ref={ref} type={type} textOnly={textOnly} {...rest}>
+    <StyledCard variant="default" ref={ref} cardType={type} textOnly={textOnly} {...rest}>
       {children}
     </StyledCard>
   )
