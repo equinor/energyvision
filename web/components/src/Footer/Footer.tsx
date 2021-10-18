@@ -19,7 +19,7 @@ const FooterTop = styled.div`
   margin: 0 auto;
   max-width: var(--layout-maxContent-wide);
   justify-content: space-between;
-  padding: 0 var(--layout-paddingHorizontal-small);
+  padding: 0 var(--layout-paddingHorizontal-small) var(--space-medium);
 `
 
 const LinkWrapper = styled.section`
