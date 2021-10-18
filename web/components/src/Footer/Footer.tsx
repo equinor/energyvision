@@ -20,12 +20,18 @@ const FooterTop = styled.div`
   max-width: var(--layout-maxContent-wide);
   justify-content: space-between;
   padding: 0 var(--layout-paddingHorizontal-small) var(--space-medium);
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `
 
 const LinkWrapper = styled.section`
   width: 10.5rem;
   display: flex;
   flex-direction: column;
+  @media (max-width: 750px) {
+    padding: var(--space-medium) 0;
+  }
 `
 const LinksList = styled.div`
   display: flex;
@@ -49,13 +55,16 @@ const FooterLink = styled(Link)`
 `
 const FooterBottom = styled.div`
   min-height: var(--space-large);
-  padding: var(--space-small) var(--space-large);
+  padding: var(--space-small) var(--layout-paddingHorizontal-small);
 `
 
 const CompanyName = styled(Typography)`
   text-align: center;
   font-size: var(--typeScale-0);
   color: white;
+  @media (max-width: 750px) {
+    text-align: left;
+  }
 `
 
 const placeHolderlinks = [
