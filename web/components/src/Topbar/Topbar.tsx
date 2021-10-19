@@ -7,7 +7,7 @@ const Bar = styled.div`
   align-items: center;
   width: 100%;
   height: var(--topbar-height);
-  padding: 0 var(--space-medium);
+  padding: 0 var(--layout-paddingHorizontal-small);
   position: fixed;
   top: 0;
   transition: top 0.3s;
