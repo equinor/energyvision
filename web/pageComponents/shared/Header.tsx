@@ -2,7 +2,7 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { Topbar, Button, LogoPrimary } from '@components'
+import { Topbar, Button, LogoSecondary } from '@components'
 import { LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -76,7 +76,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
           <NextLink href="/" passHref>
             <StyledLogoLink aria-label="Equinor home page">
-              <LogoPrimary />
+              <LogoSecondary />
             </StyledLogoLink>
           </NextLink>
 
