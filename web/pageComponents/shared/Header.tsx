@@ -21,21 +21,14 @@ const HeaderRelative = styled.header`
 
 const TopbarContainer = styled(Topbar.InnerContainer)`
   display: grid;
-  grid-template-areas: 'menu logo controls';
+  grid-template-areas: 'logo menu';
   grid-template-rows: 1fr;
-  grid-column-gap: var(--space-xLarge);
-  column-gap: var(--space-xLarge);
   align-items: center;
-`
-
-const StyledMenu = styled(SiteMenu)`
-  grid-area: menu;
-  justify-self: left;
 `
 
 const StyledLogoLink = styled.a`
   grid-area: logo;
-  justify-self: center;
+  justify-self: left;
 
   > svg {
     margin-top: -20%;
@@ -43,9 +36,12 @@ const StyledLogoLink = styled.a`
 `
 
 const ControlsContainer = styled.div`
-  grid-area: controls;
+  grid-area: menu;
   justify-self: right;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, min-content);
+  grid-column-gap: var(--space-medium);
+  column-gap: var(--space-medium);
   align-items: center;
 `
 
@@ -75,8 +71,6 @@ const Header = ({ slugs, data }: HeaderProps) => {
       <Topbar>
         {/* @TODO: Localize strings */}
         <TopbarContainer>
-          <StyledMenu data={data} />
-
           <NextLink href="/" passHref>
             <StyledLogoLink aria-label="Equinor home page">
               <LogoSecondary />
@@ -84,14 +78,16 @@ const Header = ({ slugs, data }: HeaderProps) => {
           </NextLink>
 
           <ControlsContainer>
-            {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
-
             {/* @TODO: search page */}
             <NextLink href="/" passHref>
               <StyledButton variant="ghost_icon" href="" aria-label="Search">
                 <Icon data={search} />
               </StyledButton>
             </NextLink>
+
+            {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+
+            <SiteMenu data={data} />
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>
