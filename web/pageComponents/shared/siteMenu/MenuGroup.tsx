@@ -46,7 +46,7 @@ const StyledSection = styled.div`
 
   @media (min-width: 1300px) {
     display: block;
-    padding: 0 var(--space-large) var(--space-3xLarge) 0;
+    padding: 0 var(--space-large) var(--space-xxLarge) 0;
   }
 `
 
