@@ -26,7 +26,6 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   grid-column-gap: var(--space-xLarge);
   column-gap: var(--space-xLarge);
   align-items: center;
-  border-bottom: solid 1px var(--black-100);
 `
 
 const StyledMenu = styled(SiteMenu)`
