@@ -1,13 +1,5 @@
 import { Footer } from '@components'
 
-/*
-const Footer = styled.footer`
-  background-color: var(--slate-blue-95);
-  min-height: var(--space-4xLarge);
-  
-  clear: both;
-` 
-*/
 /* Because the static AEM content have several float: left styles added to the wrapper containers  */
 export type LayoutProps = {
   /* Prewiew or not */
