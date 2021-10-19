@@ -5,7 +5,7 @@
 import { render, cleanup } from '@testing-library/react'
 import 'jest-styled-components'
 import styled from 'styled-components'
-import { Menu } from './index'
+import { Menu, MenuButton } from './index'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 
@@ -18,6 +18,7 @@ const StyledMenu = styled(Menu)`
 describe('Menu', () => {
   const header = 'Header'
   const content = 'Content'
+  const title = 'Menu'
 
   it('Can extend the css for the component', () => {
     const { container } = render(
@@ -59,5 +60,23 @@ describe('Menu', () => {
     )
     const contentNode = getByText(content)
     expect(contentNode).toBeDefined()
+  })
+  it('Can show the title on the menu button', () => {
+    const { getByText } = render(
+      <StyledMenu>
+        <MenuButton title="Menu" />
+      </StyledMenu>,
+    )
+    const contentNode = getByText(title)
+    expect(contentNode).toBeDefined()
+  })
+  it('Can hide the title on the menu button', () => {
+    const { queryByText } = render(
+      <StyledMenu>
+        <MenuButton title="Menu" showTitle={false} />
+      </StyledMenu>,
+    )
+    const contentNode = queryByText(title)
+    expect(contentNode).toBeNull()
   })
 })
