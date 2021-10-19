@@ -72,7 +72,13 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
 
   return (
     <>
-      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
+      <MenuButton
+        title="Menu"
+        aria-expanded={isOpen}
+        onClick={onMenuButtonClick}
+        showTitle={width && width > 600 ? true : false}
+        {...rest}
+      />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
