@@ -35,6 +35,10 @@ const StyledMenu = styled(SiteMenu)`
 const StyledLogoLink = styled.a`
   grid-area: logo;
   justify-self: center;
+
+  > svg {
+    margin-top: -20%;
+  }
 `
 
 const ControlsContainer = styled.div`
