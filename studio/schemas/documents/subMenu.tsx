@@ -25,8 +25,8 @@ const validateIngress = (value: any) => {
     0,
   )
 
-  if (count > 400) {
-    return `The introduction should be no longer than 400 characters. Currently ${count} characters long.`
+  if (count > 215) {
+    return `The introduction should be no longer than 215 characters. Currently ${count} characters long.`
   }
 
   return true
@@ -163,7 +163,7 @@ export default {
     {
       name: 'intro',
       title: 'Intro text',
-      description: 'A short and catchy introduction text for this menu item (max. 400 chars)',
+      description: 'A short and catchy introduction text for this menu item (max. 215 chars)',
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [introBlockContentType],
