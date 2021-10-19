@@ -23,6 +23,8 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   display: grid;
   grid-template-areas: 'menu logo controls';
   grid-template-rows: 1fr;
+  grid-column-gap: var(--space-xLarge);
+  column-gap: var(--space-xLarge);
   align-items: center;
   border-bottom: solid 1px var(--black-100);
 `
