@@ -2,7 +2,7 @@
 import styled from 'styled-components'
 import { Link, Heading } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
-import { youtube_alt, twitter, instagram, facebook, linkedin } from '@equinor/eds-icons'
+
 import { Icon, Typography } from '@equinor/eds-core-react'
 
 const StyledFooter = styled.footer`
