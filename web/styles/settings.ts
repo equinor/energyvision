@@ -156,3 +156,9 @@ export const spacings = css`
     --reach-accordion: 1;
   }
 `
+
+export const utility = css`
+  :root {
+    --box-shadow: 0 0 15px 10px rgba(41, 62, 64, 0.15);
+  }
+`
