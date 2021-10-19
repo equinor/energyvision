@@ -3,26 +3,26 @@ import styled, { css } from 'styled-components'
 const ExpandedStyle = css`
   span:nth-child(1) {
     transform: rotate(45deg);
-    top: 2px;
-    left: 3px;
+    top: 4px;
+    left: 5px;
   }
   span:nth-child(2) {
     transform: rotate(-45deg);
-    top: 16px;
-    left: 3px;
+    top: 25px;
+    left: 5px;
   }
 `
 
 const Icon = styled.span<{ expanded: boolean }>`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   position: relative;
   overflow: hidden;
 
   span {
     display: block;
     position: absolute;
-    height: 3px;
+    height: 2px;
     width: 100%;
     background: var(--default-text);
     border-radius: 3px;
@@ -31,11 +31,11 @@ const Icon = styled.span<{ expanded: boolean }>`
   }
 
   span:nth-child(1) {
-    top: 5px;
+    top: 11px;
     transform-origin: left center;
   }
   span:nth-child(2) {
-    top: 12px;
+    top: 19px;
     transform-origin: left center;
   }
 

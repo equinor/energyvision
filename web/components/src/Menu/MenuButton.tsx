@@ -16,8 +16,10 @@ const Title = styled.span`
 
 const StyledMenuButton = styled.button<{ expanded: boolean }>`
   position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content 1fr;
   align-items: center;
+  grid-gap: 13px;
   gap: 13px;
   margin: 0;
   padding: var(--space-xSmall);
@@ -38,10 +40,10 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
     `
       &:hover .menuIcon {
         span:nth-child(1) {
-          top: 3px;
+          top: 9px;
         }
         span:nth-child(2) {
-          top: 14px;
+          top: 21px;
         }
       }
     `}
