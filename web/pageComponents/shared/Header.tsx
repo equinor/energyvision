@@ -19,13 +19,10 @@ const HeaderRelative = styled.header`
   position: relative;
 `
 
-const TopbarContainer = styled.div`
-  width: 100%;
-  max-width: var(--topbar-innerMaxWidth);
-  margin: auto;
+const TopbarContainer = styled(Topbar.InnerContainer)`
   display: grid;
   grid-template-areas: 'menu logo controls';
-  grid-template-rows: min-content 1fr min-content;
+  grid-template-rows: 1fr;
   align-items: center;
 `
 
