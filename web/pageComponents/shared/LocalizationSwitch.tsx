@@ -12,8 +12,8 @@ const Wrapper = styled.div`
 
 const SharedStyle = css`
   display: flex;
-  padding: var(--space-small) var(--space-small);
-  margin: 0 var(--space-xSmall);
+  padding: var(--space-xSmall);
+  margin: 0;
   font-size: var(--typeScale-0);
   font-weight: var(--fontWeight-medium);
   line-height: 1em;
@@ -27,10 +27,10 @@ const ActiveLocale = styled.span`
   &:after {
     content: '';
     display: block;
-    width: calc(100% - (var(--space-small) * 2));
+    width: calc(100% - (var(--space-xSmall) * 2));
     height: 2px;
     position: absolute;
-    bottom: calc(var(--space-small) * 0.5);
+    bottom: calc(var(--space-xSmall) * 0.5);
     left: 0;
     right: 0;
     margin: 0 auto;
