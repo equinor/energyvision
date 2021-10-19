@@ -70,13 +70,15 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
     }
   }
 
+  const showMenuButton = width && width > 600 ? true : false
+
   return (
     <>
       <MenuButton
         title="Menu"
         aria-expanded={isOpen}
         onClick={onMenuButtonClick}
-        showTitle={width && width > 600 ? true : false}
+        showTitle={showMenuButton}
         {...rest}
       />
       <FocusLock disabled={!isOpen} returnFocus>
@@ -85,7 +87,13 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
             <nav>
               <NavTopbar>
                 {/*  @TODO: Translations of string */}
-                <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
+                <MenuButton
+                  title="Menu"
+                  aria-expanded={true}
+                  expanded
+                  onClick={() => setIsOpen(false)}
+                  showTitle={showMenuButton}
+                ></MenuButton>
               </NavTopbar>
               <MenuContainer>
                 <Menu index={indices} onChange={toggleItem}>
