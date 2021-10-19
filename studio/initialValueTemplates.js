@@ -11,4 +11,13 @@ export default [
       _lang: params.isoCode,
     }),
   }),
+  T.template({
+    id: 'footer-with-locale',
+    title: 'Footer',
+    schemaType: 'footer',
+    parameters: [{ name: 'isoCode', type: 'string' }],
+    value: (params) => ({
+      _lang: params.isoCode,
+    }),
+  }),
 ]
