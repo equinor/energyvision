@@ -24,6 +24,7 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   grid-template-areas: 'menu logo controls';
   grid-template-rows: 1fr;
   align-items: center;
+  border-bottom: solid 1px var(--black-100);
 `
 
 const StyledMenu = styled(SiteMenu)`
