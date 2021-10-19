@@ -7,7 +7,6 @@ const StyledNavTopbar = styled.div`
   padding: var(--space-small) var(--layout-paddingHorizontal-small);
   display: flex;
   align-items: center;
-  border-bottom: solid 1px transparent;
 `
 
 type Props = {
