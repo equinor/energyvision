@@ -31,12 +31,8 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
   useEffect(() => {
     const handleScroll = () => {
       let currentScrollPos = window.pageYOffset
+      // Fix for iOS to avoid negative scroll positions
       if (currentScrollPos < 0) currentScrollPos = 0
-      //console.log('scroll pos', currentScrollPos, prevScrollPos)
-      //const test = prevScrollPos > currentScrollPos
-      // const visibleFirst = prevScrollPos - currentScrollPos > height
-      // const visibleSecond = currentScrollPos < prevScrollPos
-      // console.log(test, visibleFirst, visibleSecond, visibleFirst || visibleSecond)
       setIsVisible(
         (prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > height) ||
           currentScrollPos < prevScrollPos ||
