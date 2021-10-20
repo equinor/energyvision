@@ -8,11 +8,14 @@ const StyledItem = styled(RAccordionItem)`
     border: 0;
   }
 `
-export type SubMenuProps = RAccordionItemProps
+export type SubMenuProps = RAccordionItemProps & {
+  id: number
+}
 
-export const SubMenu = forwardRef<HTMLLIElement, SubMenuProps>(function SubMenuProps({ children, ...rest }, ref) {
+export const SubMenu = forwardRef<HTMLLIElement, SubMenuProps>(function SubMenuProps({ id, children, ...rest }, ref) {
+  console.log('index', id)
   return (
-    <StyledItem forwardedAs="li" {...rest}>
+    <StyledItem forwardedAs="li" {...rest} index={id}>
       {children}
     </StyledItem>
   )

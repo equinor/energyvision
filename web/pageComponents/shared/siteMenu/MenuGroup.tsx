@@ -70,13 +70,18 @@ function getLink(linkData: MenuLinkData) {
   }
 }
 
-export const MenuGroup = (topLevelItem: SubMenuData) => {
+type MenuGroupType = {
+  topLevelItem: SubMenuData
+  index: number
+}
+
+export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
   const { topLevelLink, groups, intro, featuredContent } = topLevelItem
 
   const topLevelHref = getLink(topLevelLink)
 
   return (
-    <SubMenu>
+    <SubMenu id={index}>
       <SubMenuHeader> {topLevelLink?.label}</SubMenuHeader>
       {/* @TODO: Should we allow external links at top level? */}
       <SubMenuPanel>

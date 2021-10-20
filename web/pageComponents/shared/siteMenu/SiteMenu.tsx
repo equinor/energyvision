@@ -83,9 +83,9 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
               </NavTopbar>
               <MenuContainer>
                 <Menu index={indices} onChange={toggleItem}>
-                  {menuItems.map((topLevelItem: SubMenuData) => {
+                  {menuItems.map((topLevelItem: SubMenuData, idx) => {
                     if (topLevelItem?.topLevelLink.isDisabled) return null
-                    return <MenuGroup key={topLevelItem.id} {...topLevelItem} />
+                    return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                   })}
                 </Menu>
                 <NextLink href="/" passHref>
