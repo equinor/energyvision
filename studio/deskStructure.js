@@ -76,6 +76,36 @@ export default () => {
             }),
           ]),
       ),
+      S.divider(),
+      S.listItem()
+      .title('Footer')
+      .child(
+        S.list('footer')
+          .id('footer')
+          .title('Footers')
+          .items([
+            S.listItem({
+              title: 'English footer',
+              id: 'footer-english',
+              icon: GreatBritain,
+              child: () =>
+                S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: 'en_GB' })
+                  .id('english-footer')
+                  .title('English footer')
+                  .views([S.view.form()]),
+            }),
+            S.listItem({
+              title: 'Norwegian footer',
+              id: 'footer-norwegian',
+              icon: Norway,
+              child: () =>
+                S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: 'nb_NO' })
+                  .title('Norwegian footer')
+                  .id('norwegian-footer')
+                  .views([S.view.form()]),
+            }),
+          ]),
+      ),
   ]
 
   return S.list().title('Content').items(listItems)
