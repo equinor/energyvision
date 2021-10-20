@@ -50,7 +50,13 @@ export default {
                   name: 'link',
                   title: 'link',
                   fields: [
-                    { name: 'label', type: 'string', title: 'Label', description: 'Link text' },
+                    {
+                      name: 'label',
+                      type: 'string',
+                      title: 'Label',
+                      description: 'Link text',
+                      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+                    },
                     {
                       name: 'isStatic',
                       title: 'Is static page',
