@@ -63,6 +63,22 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
     return () => window.removeEventListener('scroll', handleScroll)
   }, [prevScrollPos, isVisible, height, hasDropShadow])
 
+  useEffect(() => {
+    if (ref && ref?.current) {
+      const topbar = ref.current
+
+      const handleFocus = (event: any) => {
+        if (!isVisible) {
+          topbar.contains(event.target) && setIsVisible(true)
+        }
+      }
+
+      topbar.addEventListener('focusin', handleFocus)
+
+      return () => topbar.removeEventListener('focusin', handleFocus)
+    }
+  }, [isVisible])
+
   return (
     <Bar ref={ref} style={{ top: isVisible ? 0 : -height }} hasDropShadow={hasDropShadow} {...rest}>
       {children}
