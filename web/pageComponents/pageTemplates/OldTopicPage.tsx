@@ -32,6 +32,11 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
   const onLinkClicked = (e : any) => {
     anchorClick(e,router)
   }
+  const onLinkClikedKeyHandler = (e:any) =>{
+    if(e.which == 32 || e.which == 13){
+      anchorClick(e, router)
+    }
+  }
   if (!data?.content) {
     return <ErrorPage statusCode={404} />
   }
@@ -52,7 +57,7 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
       <div
         className="legacyStyles"
         onClick={onLinkClicked}
-        onKeyDown = { onLinkClicked}
+        onKeyDown = { onLinkClikedKeyHandler}
         dangerouslySetInnerHTML={{
           __html: data?.content,
         }}

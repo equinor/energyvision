@@ -63,6 +63,12 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
   const onLinkClicked = (e: any) => {
     anchorClick(e, router)
   }
+
+  const onLinkClikedKeyHandler = (e:any) =>{
+    if(e.which == 32 || e.which == 13){
+      anchorClick(e, router)
+    }
+  }
   return (
     <>
       {router.isFallback ? (
@@ -98,7 +104,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <div
             className="legacyStyles"
             onClick={onLinkClicked}
-            onKeyDown={onLinkClicked}
+            onKeyDown={onLinkClikedKeyHandler}
             dangerouslySetInnerHTML={{
               __html: data?.news?.content,
             }}
