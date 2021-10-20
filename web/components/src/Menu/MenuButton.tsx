@@ -20,10 +20,13 @@ const StyledButtonText = styled.span`
 `
 
 const StyledMenuButton = styled.button<{ expanded: boolean }>`
+  min-width: 48px;
+  min-height: 48px;
   position: relative;
   display: grid;
-  grid-template-columns: min-content 1fr;
+  grid-template-columns: min-content;
   align-items: center;
+  justify-content: center;
   grid-gap: 13px;
   gap: 13px;
   margin: 0;
@@ -36,6 +39,10 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
   font-size: var(--typeScale-1);
   font-weight: var(--fontWeight-medium);
   line-height: 1em;
+
+  @media (min-width: 600px) {
+    grid-template-columns: min-content 1fr;
+  }
 
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}

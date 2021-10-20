@@ -42,9 +42,14 @@ const ControlsContainer = styled.div`
   justify-self: right;
   display: grid;
   grid-template-columns: repeat(3, min-content);
-  grid-column-gap: var(--space-medium);
-  column-gap: var(--space-medium);
+  grid-column-gap: var(--space-small);
+  column-gap: var(--space-small);
   align-items: center;
+
+  @media (min-width: 600px) {
+    grid-column-gap: var(--space-medium);
+    column-gap: var(--space-medium);
+  }
 `
 
 const StyledButton = styled(Button)`

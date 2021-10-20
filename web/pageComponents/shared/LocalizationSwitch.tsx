@@ -54,6 +54,14 @@ const StyledLink = styled.a`
   &:visited {
     color: var(--grey-60);
   }
+
+  @media (max-width: 600px) {
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `
 
 export type LocalizationSwitchProps = {
