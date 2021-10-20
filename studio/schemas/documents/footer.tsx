@@ -1,4 +1,3 @@
-import { array } from 'prop-types'
 import { SchemaType } from '../../types'
 
 const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
