@@ -12,6 +12,7 @@ import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import { menuQuery } from '../../lib/queries/menu'
+import { footerQuery } from '../../lib/queries/footer'
 import HeroImage from '../../pageComponents/shared/HeroImage'
 import Lead from '../../pageComponents/news/Lead'
 import RelatedContent from '../../pageComponents/news/RelatedContent'
@@ -295,7 +296,7 @@ News.getLayout = (page: AppProps) => {
   const slugs = data?.slugs
 
   return (
-    <Layout preview={preview}>
+    <Layout footerData={data?.footerData} preview={preview}>
       <PageHeader slugs={slugs} data={data?.menuData} />
 
       <SkipNavContent />
@@ -313,6 +314,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const allSlugs = await getLocalizedNewsSlugs(news, preview)
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
 
   return {
     props: {
@@ -322,6 +324,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         latestNews,
         slugs: allSlugs,
         menuData,
+        footerData,
       },
     },
     revalidate: 1,

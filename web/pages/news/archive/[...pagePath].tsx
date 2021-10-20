@@ -8,6 +8,7 @@ import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { Layout } from '@components'
 import { menuQuery } from '../../../lib/queries/menu'
+import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 import { mapLocaleToLang } from '../../../lib/localization'
@@ -64,8 +65,8 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     anchorClick(e, router)
   }
 
-  const onLinkClikedKeyHandler = (e:any) =>{
-    if(e.which == 32 || e.which == 13){
+  const onLinkClikedKeyHandler = (e: any) => {
+    if (e.which == 32 || e.which == 13) {
       anchorClick(e, router)
     }
   }
@@ -135,7 +136,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
     nb_NO: '/no/nyheter/arkiv',
   }
   return (
-    <Layout>
+    <Layout footerData={data?.footerData}>
       <Header slugs={slugs} data={data?.menuData} />
 
       <SkipNavContent />
@@ -163,10 +164,12 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   }
 
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
   return {
     props: {
       data: {
         menuData,
+        footerData,
         news: {
           ...pageData,
           slug: pagePath,

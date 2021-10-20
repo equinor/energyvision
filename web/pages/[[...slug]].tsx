@@ -7,6 +7,7 @@ import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { menuQuery } from '../lib/queries/menu'
+import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '@components'
@@ -71,7 +72,7 @@ Page.getLayout = (page: AppProps) => {
     nb_NO: data?.pageData?.allSlugs?.nb_NO,
   }
   return (
-    <Layout preview={preview}>
+    <Layout footerData={data?.footerData} preview={preview}>
       <Header slugs={slugs} data={data?.menuData} />
 
       <SkipNavContent />
@@ -85,6 +86,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
 
   if (!pageData) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
@@ -99,6 +101,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           isArchivedFallback: true,
           pageData: { slug: slug, ...archivedData },
           menuData,
+          footerData,
         },
       },
       revalidate: 300,
@@ -114,6 +117,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         queryParams,
         pageData,
         menuData,
+        footerData,
       },
     },
     revalidate: 120,

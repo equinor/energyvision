@@ -6,6 +6,7 @@ import { Layout, BackgroundContainer, Card, Link } from '@components'
 import styled from 'styled-components'
 import { allNewsQuery } from '../../lib/queries/news'
 import { menuQuery } from '../../lib/queries/menu'
+import { footerQuery } from '../../lib/queries/footer'
 import { getClient } from '../../lib/sanity.server'
 import type { NewsSchema, MenuData } from '../../types/types'
 import NewsCard from '../../pageComponents/news/NewsCard'
@@ -85,7 +86,7 @@ AllNews.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   return (
-    <Layout preview={preview}>
+    <Layout footerData={data?.footerData} preview={preview}>
       <PageHeader
         /*  @TODO: Fetch in a proper way */
         slugs={{
@@ -105,10 +106,11 @@ export async function getStaticProps({ preview = false, locale = 'en' }) {
   // const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery))
   const allNews = await getClient(preview).fetch(allNewsQuery)
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
   return {
     props: {
       preview,
-      data: { allNews, menuData },
+      data: { allNews, menuData, footerData },
     },
     revalidate: 1,
   }

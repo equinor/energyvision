@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { SkipNavContent } from '@reach/skip-nav'
 import { Heading, Link, List, Layout } from '@components'
 import { menuQuery } from '../../../lib/queries/menu'
+import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
 import { mapLocaleToLang } from '../../../lib/localization'
 import styled from 'styled-components'
@@ -88,7 +89,7 @@ AllArchivedNews.getLayout = (page: AppProps) => {
     nb_NO: '/no/nyheter/arkiv',
   }
   return (
-    <Layout>
+    <Layout footerData={data?.footerData}>
       <Header slugs={slugs} data={data?.menuData} />
 
       <SkipNavContent />
@@ -119,9 +120,10 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     .filter((pagePath) => pagePath.startsWith(`/${locale}`))
     .map((pagePath) => sanitizeNewsURL(pagePath))
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
   return {
     props: {
-      data: { newsList, menuData },
+      data: { newsList, menuData, footerData },
     },
   }
 }
