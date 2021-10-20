@@ -37,17 +37,3 @@ WithAria.parameters = {
     storyDescription: `It's important to use the aria-expanded prop for menu status`,
   },
 }
-
-export const WithoutTitle: Story<MenuButtonProps> = () => (
-  <>
-    <MenuButton aria-expanded={false} title="Menu" showTitle={false}></MenuButton>
-    <MenuButton aria-expanded={true} expanded title="Menu" showTitle={false}></MenuButton>
-  </>
-)
-
-WithoutTitle.storyName = 'Without title'
-WithoutTitle.parameters = {
-  docs: {
-    storyDescription: `You can hide the title on for example smaller screens.`,
-  },
-}

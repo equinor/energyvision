@@ -70,30 +70,16 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
     }
   }
 
-  const showMenuButton = width && width > 600 ? true : false
-
   return (
     <>
-      <MenuButton
-        title="Menu"
-        aria-expanded={isOpen}
-        onClick={onMenuButtonClick}
-        showTitle={showMenuButton}
-        {...rest}
-      />
+      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
                 {/*  @TODO: Translations of string */}
-                <MenuButton
-                  title="Menu"
-                  aria-expanded={true}
-                  expanded
-                  onClick={() => setIsOpen(false)}
-                  showTitle={showMenuButton}
-                ></MenuButton>
+                <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
                 <Menu index={indices} onChange={toggleItem}>

@@ -8,11 +8,15 @@ const { outline } = Tokens
 export type MenuButtonProps = {
   expanded?: boolean
   title: string
-  showTitle?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Title = styled.span`
+const StyledButtonText = styled.span`
   line-height: 1em;
+  display: none;
+
+  @media (min-width: 600px) {
+    display: block;
+  }
 `
 
 const StyledMenuButton = styled.button<{ expanded: boolean }>`
@@ -31,6 +35,7 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
   color: var(--default-text);
   font-size: var(--typeScale-1);
   font-weight: var(--fontWeight-medium);
+  line-height: 1em;
 
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
@@ -51,12 +56,12 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
 `
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(function MenuButton(
-  { expanded = false, title, showTitle = true, ...rest },
+  { expanded = false, title, ...rest },
   ref,
 ) {
   return (
     <StyledMenuButton expanded={expanded} ref={ref} title={title} {...rest}>
-      {showTitle && <Title>{title}</Title>}
+      <StyledButtonText>{title}</StyledButtonText>
       <MenuIcon expanded={expanded} />
     </StyledMenuButton>
   )
