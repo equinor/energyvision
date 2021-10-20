@@ -8,11 +8,11 @@ export type LayoutProps = {
   children: React.ReactNode
 }
 
-export const Layout = ({ children }: LayoutProps): JSX.Element => {
+export const Layout = ({ children, footerData }: LayoutProps): JSX.Element => {
   return (
     <div>
       {children}
-      <Footer />
+      <Footer footerData={footerData} />
     </div>
   )
 }
