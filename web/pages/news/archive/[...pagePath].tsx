@@ -7,6 +7,8 @@ import getConfig from 'next/config'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
+import { useEffect} from 'react'
+import { useState } from 'react'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // TODO fix the eslint issues
@@ -31,15 +33,24 @@ type OldArchivedNewsPageProps = {
 }
 
 const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
+  const [isArchivePage, setIsArchivePage] = useState(true);
   const router = useRouter()
   const { pathname } = router
+  useEffect(() => {
+    if (isArchivePage && document.getElementById("legacyScript") == null) {
+    const scriptTag = document.createElement('script')
+    scriptTag.src = "/legacy/legacy.minified.js";
+    scriptTag.id = "legacyScript"
+    document.body.appendChild(scriptTag)
+    }
+});
+
   if (!router.isFallback && !data.news) {
+    setIsArchivePage(false)
     return <ErrorPage statusCode={404} />
   }
-
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[...pagePath]', data?.news?.slug)
-
   const onLinkClicked = (e : any) => {
     anchorClick(e,router)
   }
@@ -57,7 +68,6 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <Head> <script src="https://consent.cookiebot.com/uc.js"
        id="Cookiebot" data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"/>
       </Head>
-          <Script src="/legacy/legacy.minified.js" strategy="afterInteractive" />
           <Header />
           <NextSeo
             title={data?.news?.title}
