@@ -73,12 +73,14 @@ export const getPagePaths = async (path: string): Promise<string[]> => {
 
 export const anchorClick = (e: any, router: any) => {
   if (e != null) {
+   
     const targetLink = e.target.closest('a')
     if (!targetLink) return
-    if (targetLink.href.includes('#') && (e.which == 32 || e.which == 13)) {
+    if (targetLink.href.includes('#')) {
       e.preventDefault()
-      if (targetLink.href.includes(router.asPath.split('#').at(0)))
+      if (targetLink.href.split(router.locale).at(1).split('#').at(0)== (router.asPath.split('#').at(0))){
         router.replace(targetLink.href, undefined, { shallow: true })
+      }
       else router.push(targetLink.href)
     }
   }
