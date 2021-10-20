@@ -1,4 +1,3 @@
-import { forwardRef } from 'react'
 import styled from 'styled-components'
 import { AccordionItem as RAccordionItem, AccordionItemProps as RAccordionItemProps } from '@reach/accordion'
 
@@ -12,11 +11,10 @@ export type SubMenuProps = RAccordionItemProps & {
   id: number
 }
 
-export const SubMenu = forwardRef<HTMLLIElement, SubMenuProps>(function SubMenuProps({ id, children, ...rest }, ref) {
-  console.log('index', id)
+export const SubMenu = ({ id, children, ...rest }: SubMenuProps) => {
   return (
     <StyledItem forwardedAs="li" {...rest} index={id}>
       {children}
     </StyledItem>
   )
-})
+}
