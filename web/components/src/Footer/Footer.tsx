@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link, Heading } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
+import NextLink from 'next/link'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -74,57 +75,54 @@ const CompanyName = styled(Typography)`
   }
 `
 
-const placeHolderlinks = [
-  {
-    header: 'Explore',
-    linkList: [
-      { linkText: 'Investors', url: 'https://www.google.com/' },
-
-      { linkText: 'Investors2', url: 'https://www.google.com/' },
-      { linkText: 'Suppliers', url: 'https://www.google.com/' },
-      { linkText: 'Contact us', url: 'https://www.google.com/' },
-    ],
-  },
-  {
-    header: 'Connect',
-    linkList: [
-      { linkText: 'Facebook', url: 'https://www.google.com/' },
-      { linkText: 'Instagram', url: 'https://www.google.com/' },
-      { linkText: 'LinkedIn', url: 'https://www.google.com/' },
-      { linkText: 'Twitter', url: 'https://www.google.com/' },
-      { linkText: 'Youtube', url: 'https://www.google.com/' },
-    ],
-  },
-  {
-    header: 'Site',
-    linkList: [
-      { linkText: 'Terms and conditions', url: 'https://www.google.com/' },
-      { linkText: 'Site info', url: 'https://www.google.com/' },
-      { linkText: 'Privacy policy', url: 'https://www.google.com/' },
-      { linkText: 'Cookie policy', url: 'https://www.google.com/' },
-    ],
-  },
-]
-
 type FooterProps = {
-  footerData?: any
+  footerData?: { footerColumns: FooterColumns[] }
+}
+
+type FooterColumns = {
+  header: string
+  linkList?: FooterLinkData[]
+}
+type FooterLinkData = {
+  label: string
+  isStatic: boolean
+  url?: string
+  staticUrl?: string
+  _key?: string
+  link?: {
+    type: string
+    slug: string
+  }
+}
+
+function getLink(linkData: FooterLinkData) {
+  // Fallback to home page, if this happens it is an error somewhere
+  // Sanity should take care of the validation here, and this is temp. until
+  // the static pages are migrated
+  if (!linkData) return 'something-wrong'
+  const { isStatic, link, staticUrl, url } = linkData
+  if (isStatic) {
+    return staticUrl || '/'
+  } else {
+    return (link && link.slug) || (url && url) || '/'
+  }
 }
 
 export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   return (
     <StyledFooter ref={ref} {...rest}>
       <FooterTop>
-        {placeHolderlinks.map(({ header, linkList }) => {
+        {footerData?.footerColumns.map(({ header, linkList }) => {
           return (
             <LinkWrapper key={header}>
               {' '}
               <LinkHeader>{header}</LinkHeader>
               <LinksList>
-                {linkList.map(({ linkText, url }) => {
+                {linkList?.map((link: FooterLinkData) => {
                   return (
-                    <FooterLink key={linkText} href={url}>
-                      {linkText}
-                    </FooterLink>
+                    <NextLink key={link._key} href={getLink(link)} passHref>
+                      <FooterLink>{link.label}</FooterLink>
+                    </NextLink>
                   )
                 })}
               </LinksList>
