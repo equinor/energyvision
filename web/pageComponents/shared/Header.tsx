@@ -33,7 +33,7 @@ const StyledLogoLink = styled.a`
   justify-self: left;
 
   > svg {
-    margin-top: -20%;
+    margin-top: -12%;
   }
 `
 
