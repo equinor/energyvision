@@ -21,12 +21,11 @@ type OldTopicPageProps = {
 const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
 
   useEffect(() => {
-    if(document.getElementById("legacyScript") == null){
+    document.getElementById("legacyScript")?.remove()
     const scriptTag = document.createElement('script')
     scriptTag.src = "/legacy/legacy.minified.js";
     scriptTag.id = "legacyScript"
     document.body.appendChild(scriptTag)
-    }
 });
 
   const router = useRouter()
