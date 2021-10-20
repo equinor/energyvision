@@ -8,6 +8,9 @@ import type { MenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -31,6 +34,13 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
 const StyledLogoLink = styled.a`
   grid-area: logo;
   justify-self: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
 
   > svg {
     margin-top: -12%;
