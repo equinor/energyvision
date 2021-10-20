@@ -75,7 +75,7 @@ export const anchorClick = (e: any, router: any) => {
   if (e != null) {
     const targetLink = e.target.closest('a')
     if (!targetLink) return
-    if (targetLink.href.includes('#')) {
+    if (targetLink.href.includes('#') && (e.which == 32 || e.which == 13)) {
       e.preventDefault()
       if (targetLink.href.includes(router.asPath.split('#').at(0)))
         router.replace(targetLink.href, undefined, { shallow: true })
