@@ -24,6 +24,8 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   grid-template-areas: 'logo menu';
   grid-template-rows: 1fr;
   align-items: center;
+  grid-column-gap: var(--space-large);
+  column-gap: var(--space-large);
 `
 
 const StyledLogoLink = styled.a`
