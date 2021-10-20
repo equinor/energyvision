@@ -2,7 +2,6 @@
 import styled from 'styled-components'
 import { Link, Heading } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
-
 import { Typography } from '@equinor/eds-core-react'
 
 const StyledFooter = styled.footer`
@@ -107,23 +106,11 @@ const placeHolderlinks = [
   },
 ]
 
-type LinkList = {
-  url?: string
-  linkText?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon?: any
-}
-
-type LinkListObject = {
-  header?: string
-  linkList?: LinkList[] | null
-}
-
 type FooterProps = {
-  links?: LinkListObject[] | null
+  footerData?: any
 }
 
-export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ links, ...rest }, ref) {
+export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   return (
     <StyledFooter ref={ref} {...rest}>
       <FooterTop>
