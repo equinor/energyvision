@@ -67,7 +67,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
   ref,
 ) {
   return (
-    <StyledMenuButton expanded={expanded} ref={ref} title={title} {...rest}>
+    <StyledMenuButton expanded={expanded} ref={ref} aria-label={title} {...rest}>
       <StyledButtonText>{title}</StyledButtonText>
       <MenuIcon expanded={expanded} />
     </StyledMenuButton>
