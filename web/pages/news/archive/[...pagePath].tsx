@@ -15,13 +15,11 @@ import Header from '../../../pageComponents/shared/Header'
 import type { MenuData } from '../../../types/types'
 
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState} from 'react'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // TODO fix the eslint issues
 import archivedStyles from '@equinor/energyvision-legacy-css'
-import Script from 'next/dist/client/script'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
 
@@ -46,11 +44,12 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
   const router = useRouter()
   const { pathname } = router
   useEffect(() => {
-    if (isArchivePage && document.getElementById('legacyScript') == null) {
-      const scriptTag = document.createElement('script')
-      scriptTag.src = '/legacy/legacy.minified.js'
-      scriptTag.id = 'legacyScript'
-      document.body.appendChild(scriptTag)
+    if (isArchivePage){
+    document.getElementById("legacyScript")?.remove()
+    const scriptTag = document.createElement('script')
+    scriptTag.src = "/legacy/legacy.minified.js";
+    scriptTag.id = "legacyScript"
+    document.body.appendChild(scriptTag)
     }
   })
 
@@ -74,15 +73,10 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <style jsx global>
             {archivedStyles}
           </style>
-          <Head>
-            {' '}
-            <script
-              src="https://consent.cookiebot.com/uc.js"
-              id="Cookiebot"
-              data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-            />
-          </Head>
-
+          <Head> <script src="https://consent.cookiebot.com/uc.js"
+       id="Cookiebot" data-cbid="f1327b03-7951-45da-a2fd-9181babc783f" async/>
+      </Head>
+          <Header />
           <NextSeo
             title={data?.news?.title}
             description={data?.news?.description}
