@@ -45,6 +45,10 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events, handleRouteChange])
 
+  useEffect(() => {
+    if (width > 1299 && indices.length > 1) setIndices([])
+  }, [width, indices.length])
+
   function onMenuButtonClick() {
     setIsOpen(!isOpen)
   }
