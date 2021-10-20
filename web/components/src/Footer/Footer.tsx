@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link, Heading } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 
-import { Icon, Typography } from '@equinor/eds-core-react'
+import { Typography } from '@equinor/eds-core-react'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
