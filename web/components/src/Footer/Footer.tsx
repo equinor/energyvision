@@ -93,6 +93,13 @@ type FooterLinkData = {
     type: string
     slug: string
   }
+  image?: {
+    _type: string
+    asset: {
+      _ref: string
+      _type: string
+    }
+  }
 }
 
 function getLink(linkData: FooterLinkData) {
