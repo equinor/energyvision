@@ -10,6 +10,7 @@ import { MenuGroup } from './MenuGroup'
 import { TopbarDropdown } from './TopbarDropdown'
 import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
+import { useCompare } from './hooks/useCompare'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
 
@@ -34,7 +35,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
   const menuItems = (data && data.subMenus) || []
-
+  const hasWidthChanged = useCompare(width)
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
     //setIndices([])
@@ -46,8 +47,13 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   }, [router.events, handleRouteChange])
 
   useEffect(() => {
-    if (width > 1299 && indices.length > 1) setIndices([])
-  }, [width, indices.length])
+    /* This code is to solve the issue where somebody open multiple menu items on a smaller
+  device and then resize their window size to above the breakpoint for the desktop
+  version where only one items is allowed */
+    if (hasWidthChanged) {
+      if (width > 1299 && indices.length > 1) setIndices([])
+    }
+  }, [width, indices.length, hasWidthChanged])
 
   function onMenuButtonClick() {
     setIsOpen(!isOpen)
