@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 export const Default: Story<MenuProps> = (args) => (
   <Wrapper>
     <Menu {...args}>
-      <Menu.SubMenu>
+      <Menu.SubMenu id={1}>
         <Menu.SubMenuHeader>Menu item 1</Menu.SubMenuHeader>
         <Menu.SubMenuPanel>
           <Menu.SubMenuGroups>
@@ -54,7 +54,7 @@ export const Default: Story<MenuProps> = (args) => (
           </Menu.SubMenuGroups>
         </Menu.SubMenuPanel>
       </Menu.SubMenu>
-      <Menu.SubMenu>
+      <Menu.SubMenu id={2}>
         <Menu.SubMenuHeader>Menu item 2</Menu.SubMenuHeader>
         <Menu.SubMenuPanel>
           <Menu.SubMenuGroups>
