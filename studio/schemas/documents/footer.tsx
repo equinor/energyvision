@@ -88,8 +88,9 @@ export default {
                     },
                     {
                       title: 'Icon',
-                      name: 'footerIcon',
+                      name: 'image',
                       type: 'image',
+                      description: 'SVG of for example the Facebook logo',
                     },
                     {
                       name: 'url',

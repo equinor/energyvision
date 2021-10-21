@@ -2,6 +2,7 @@ export const footerQuery = /* groq */ `
   *[_type == "footer" && _lang == $lang][0] {
 	footerColumns[]{
         _key,
+        image,
         "header": columnHeader, 
         "linkList": columnLinks[]{ 
         label,
