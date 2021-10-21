@@ -4,6 +4,7 @@ import { Link, Heading } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
+import Img from 'next/image'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -79,6 +80,14 @@ type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
 }
 
+type ImageProps = {
+  _type: string
+  asset: {
+    _ref: string
+    _type: string
+  }
+}
+
 type FooterColumns = {
   header: string
   linkList?: FooterLinkData[]
@@ -93,13 +102,7 @@ type FooterLinkData = {
     type: string
     slug: string
   }
-  image?: {
-    _type: string
-    asset: {
-      _ref: string
-      _type: string
-    }
-  }
+  image?: ImageProps
 }
 
 function getLink(linkData: FooterLinkData) {
