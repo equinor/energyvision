@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
 import styled from 'styled-components'
-import { Link, Heading } from '@components'
+import { Heading, Link } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
-import Img from 'next/image'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -42,11 +41,11 @@ const LinksList = styled.div`
     height: 5rem;
   }
 `
-const LinkHeader = styled(Heading)`
+/* const LinkHeader = styled(Heading)`
   font-size: var(--typeScale-2);
   color: white;
   padding: var(--space-small) 0;
-`
+` */
 
 const FooterLink = styled(Link)`
   font-size: var(--typeScale-0);
@@ -75,6 +74,9 @@ const CompanyName = styled(Typography)`
     text-align: left;
   }
 `
+const StyledFigure = styled.figure`
+  margin: 0;
+`
 
 type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
@@ -98,11 +100,11 @@ type FooterLinkData = {
   url?: string
   staticUrl?: string
   _key?: string
+  image?: ImageProps
   link?: {
     type: string
     slug: string
   }
-  image?: ImageProps
 }
 
 function getLink(linkData: FooterLinkData) {
@@ -117,8 +119,16 @@ function getLink(linkData: FooterLinkData) {
     return (link && link.slug) || (url && url) || '/'
   }
 }
+/*const FooterIcon = ({ image }: any) => {
+  if (!image) return null
+  return (
+    <StyledFigure>
+      <Image maxWidth={10} aspectRatio={0.5} image={image} layout="fill" />
+    </StyledFigure>
+  )
+} */
 
-export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
+const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   return (
     <StyledFooter ref={ref} {...rest}>
       <FooterTop>
@@ -126,13 +136,16 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
           return (
             <LinkWrapper key={header}>
               {' '}
-              <LinkHeader>{header}</LinkHeader>
+              <h3>{header}</h3>
               <LinksList>
                 {linkList?.map((link: FooterLinkData) => {
                   return (
-                    <NextLink key={link._key} href={getLink(link)} passHref>
-                      <FooterLink>{link.label}</FooterLink>
-                    </NextLink>
+                    <>
+                      {console.log(JSON.stringify(link?.image))}
+                      <NextLink key={link._key} href={getLink(link)} passHref>
+                        <FooterLink>{link.label}</FooterLink>
+                      </NextLink>
+                    </>
                   )
                 })}
               </LinksList>
@@ -146,3 +159,4 @@ export const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ 
     </StyledFooter>
   )
 })
+export default Footer
