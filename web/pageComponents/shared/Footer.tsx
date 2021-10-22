@@ -4,7 +4,7 @@ import { Heading, Link } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
-import { Head } from '@equinor/eds-core-react/dist/types/components/Table/Head'
+import Image from '../shared/Image'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -40,12 +40,26 @@ const LinkWrapper = styled.section`
     width: 70%;
   }
 `
-const LinksList = styled.div`
+/*const LinksList = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   @media (max-width: 750px) {
     height: 5rem;
+  }
+` */
+const LinksList = styled.div`
+  display: grid;
+
+  grid-template-columns: repeat(2, 50%);
+
+  grid-row-gap: var(--space-small);
+  grid-column-gap: var(--space-xLarge);
+
+  align-items: self-start;
+  @media (min-width: 750px) {
+    display: flex;
+    flex-direction: column;
   }
 `
 
