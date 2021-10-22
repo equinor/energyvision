@@ -140,12 +140,9 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
               <LinksList>
                 {linkList?.map((link: FooterLinkData) => {
                   return (
-                    <>
-                      {console.log(JSON.stringify(link?.image))}
-                      <NextLink key={link._key} href={getLink(link)} passHref>
-                        <FooterLink>{link.label}</FooterLink>
-                      </NextLink>
-                    </>
+                    <NextLink key={link._key} href={getLink(link)} passHref>
+                      <FooterLink>{link.label}</FooterLink>
+                    </NextLink>
                   )
                 })}
               </LinksList>
