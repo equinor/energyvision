@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import styled from 'styled-components'
-import { Link } from '@components'
+import { Heading, Link } from '@components'
 import { HTMLAttributes, forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
+import { Head } from '@equinor/eds-core-react/dist/types/components/Table/Head'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -69,7 +70,7 @@ const FooterBottom = styled.div`
 
 const CompanyName = styled(Typography)`
   text-align: center;
-  font-size: var(--typeScale-0);
+  font-size: var(--typeScale-small);
   color: white;
   @media (max-width: 750px) {
     text-align: left;

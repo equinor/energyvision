@@ -89,7 +89,8 @@ export const typography = css`
   :root {
     --typeScale-base: 1rem;
     --typeScale-multiplier: 1.2;
-    --typeScale-0: calc(var(--typeScale-base) / * var(--typeScale-multiplier));
+    --typeScale-small: calc(var(--typeScale-0) / var(--typeScale-multiplier));
+    --typeScale-0: calc(var(--typeScale-base) / var(--typeScale-multiplier));
     --typeScale-1: var(--typeScale-base);
     --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
     --typeScale-3: calc(var(--typeScale-2) * var(--typeScale-multiplier));
