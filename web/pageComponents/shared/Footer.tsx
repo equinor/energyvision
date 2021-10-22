@@ -24,7 +24,13 @@ const FooterTop = styled.div`
     flex-direction: column;
   }
 `
-
+const LinkHeader = styled.h3`
+  font-size: var(--typeScale-2);
+  color: white;
+  padding: var(--space-small) 0;
+  font-weight: var(--fontWeight-medium);
+  line-height: var(--lineHeight-1);
+`
 const LinkWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -41,11 +47,6 @@ const LinksList = styled.div`
     height: 5rem;
   }
 `
-/* const LinkHeader = styled(Heading)`
-  font-size: var(--typeScale-2);
-  color: white;
-  padding: var(--space-small) 0;
-` */
 
 const FooterLink = styled(Link)`
   font-size: var(--typeScale-0);
@@ -136,7 +137,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
           return (
             <LinkWrapper key={header}>
               {' '}
-              <h3>{header}</h3>
+              <LinkHeader>{header}</LinkHeader>
               <LinksList>
                 {linkList?.map((link: FooterLinkData) => {
                   return (
