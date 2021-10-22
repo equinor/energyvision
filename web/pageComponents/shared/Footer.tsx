@@ -50,12 +50,9 @@ const LinkWrapper = styled.section`
 ` */
 const LinksList = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 50%);
-
-  grid-row-gap: var(--space-small);
-  grid-column-gap: var(--space-xLarge);
-
+  row-gap: var(--space-small);
+  column-gap: var(--space-medium);
   align-items: self-start;
   @media (min-width: 750px) {
     display: flex;
