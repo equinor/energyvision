@@ -28,6 +28,16 @@ describe('Link', () => {
     expect(queryByText(label)).toBeInTheDocument()
   })
 
+  it('may render an aria-label', () => {
+    const ariaLabel = "I'm the aria label"
+    const { getByLabelText } = render(
+      <Link href={href} aria-label={ariaLabel}>
+        {label}
+      </Link>,
+    )
+    expect(getByLabelText(ariaLabel)).toBeInTheDocument()
+  })
+
   it('renders the link with an icon if type is externalUrl = true', () => {
     const { container } = render(
       <Link href={href} type="externalUrl">

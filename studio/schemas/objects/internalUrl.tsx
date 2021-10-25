@@ -5,14 +5,14 @@ export default {
   title: 'Internal URL / reference',
   type: 'object',
   name: 'internalUrl',
-
-  fields: [
+  fieldsets: [
     {
       name: 'label',
-      type: 'string',
       title: 'Label',
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      description: 'The label that the link/button should have.',
     },
+  ],
+  fields: [
     {
       name: 'reference',
       type: 'reference',
@@ -25,6 +25,20 @@ export default {
           params: { title: title },
         }),
       },
+    },
+    {
+      name: 'label',
+      type: 'string',
+      title: 'Visible label',
+      fieldset: 'label',
+      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+    },
+    {
+      name: 'ariaLabel',
+      title: '♿  Screenreader label',
+      description: 'A text used for providing screen readers with additional information',
+      type: 'string',
+      fieldset: 'label',
     },
   ],
   preview: {

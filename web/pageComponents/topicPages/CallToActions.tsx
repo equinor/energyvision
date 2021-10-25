@@ -19,21 +19,21 @@ const CallToActions = ({ callToActions }: CallToActionsProps) => {
   ) : (
     <List unstyled>
       {callToActions.map((callToAction: LinkData) => {
-        const { id, type, label, extension } = callToAction
+        const { id, type, label, ariaLabel, extension } = callToAction
         const url = getUrlFromAction(callToAction)
         return (
           <Fragment key={id}>
             {type === 'internalUrl' ? (
               <Item>
                 <NextLink href={url} passHref>
-                  <Link variant="contentLink" type={type}>
+                  <Link variant="contentLink" type={type} aria-label={ariaLabel}>
                     {label}
                   </Link>
                 </NextLink>
               </Item>
             ) : (
               <Item>
-                <Link variant="contentLink" type={type} href={url}>
+                <Link variant="contentLink" type={type} href={url} aria-label={ariaLabel}>
                   {label} {extension && `(${extension.toUpperCase()})`}
                 </Link>
               </Item>

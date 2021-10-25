@@ -57,6 +57,7 @@ const pageContentFields = /* groq */ `
           "type": _type,
           "id": _key,
           label,
+          ariaLabel,
           "link": reference-> {
             "type": _type,
             "slug": ${slugReference}
@@ -66,6 +67,7 @@ const pageContentFields = /* groq */ `
           "id": _key,
           "type": _type,
           label,
+          ariaLabel,
           "href": url,
         },
         _type == "downloadableFile" => {
