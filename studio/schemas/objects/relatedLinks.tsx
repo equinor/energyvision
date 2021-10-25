@@ -22,7 +22,8 @@ export default {
           name: 'url',
           type: 'url',
           title: 'URL',
-          validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+          validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule =>
+            Rule.required().uri({ scheme: ['http', 'https', 'tel', 'mailto'] }),
         },
       ],
       preview: {
