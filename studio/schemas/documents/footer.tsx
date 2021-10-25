@@ -99,13 +99,16 @@ export default {
                       type: 'url',
 
                       validation: (Rule: SchemaType.ValidationRule) =>
-                        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-                          return validateLink(context.parent?.isStatic, value, context.parent.reference)
-                        }),
+                        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
+                          (value: any, context: SchemaType.ValidationContext) => {
+                            return validateLink(context.parent?.isStatic, value, context.parent.reference)
+                          },
+                        ),
                       // eslint-disable-next-line
                       // @ts-ignore: Djeez, typescript
                       hidden: ({ parent }) => parent?.isStatic === true,
                     },
+
                     {
                       name: 'staticUrl',
                       title: 'Static URL',

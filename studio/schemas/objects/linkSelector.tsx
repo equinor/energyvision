@@ -81,9 +81,11 @@ const LinkField = {
       description: 'Use this field to link to an external site.',
       type: 'url',
       validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(value, context.parent.reference)
-        }),
+        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
+          (value: any, context: SchemaType.ValidationContext) => {
+            return validateLink(value, context.parent.reference)
+          },
+        ),
     },
   ],
   preview: {
