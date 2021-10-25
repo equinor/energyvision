@@ -11,7 +11,7 @@ type ImgProps = Omit<
   JSX.IntrinsicElements['img'],
   'src' | 'srcSet' | 'ref' | 'width' | 'height' | 'loading' | 'style'
 > & {
-  image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
+  image: { _type: 'imageWithAlt' | 'image'; alt: string; asset: SanityImageObject }
   layout?: LayoutValue
   maxWidth: number
   aspectRatio?: number
@@ -30,7 +30,7 @@ const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, ...
     return <Img src={imageProps.src} alt={image.alt} sizes={sizes} layout={layout} />
   }
 
-  return <Img {...rest} {...imageProps} alt={image.alt} sizes={sizes} layout={layout} />
+  return <Img {...rest} {...imageProps} alt={image.alt || ''} sizes={sizes || ''} layout={layout} />
 }
 
 export default Image

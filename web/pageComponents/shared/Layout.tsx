@@ -1,4 +1,4 @@
-import Footer from '../../../pageComponents/shared/Footer'
+import Footer from './Footer'
 
 export type LayoutProps = {
   /* Prewiew or not */
