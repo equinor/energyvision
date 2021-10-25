@@ -22,7 +22,8 @@ const pageContentFields = /* groq */ `
         "type": select(
           defined(url) => "externalUrl", "internalUrl"
         ),
-        "label": label,
+        label,
+        ariaLabel,
         "link": reference-> {
           "type": _type,
           "slug": ${slugReference}

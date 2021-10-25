@@ -71,10 +71,12 @@ const Teaser = ({ data }: TeaserProps) => {
           )}
           {action.type === 'internalUrl' ? (
             <NextLink href={url} passHref>
-              <Link variant="readMore">{action.label}</Link>
+              <Link variant="readMore" aria-label={action.ariaLabel}>
+                {action.label}
+              </Link>
             </NextLink>
           ) : (
-            <Link variant="readMore" href={url} type={action.type}>
+            <Link variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
               {action.label} {action.extension && `(${action.extension.toUpperCase()})`}
             </Link>
           )}
