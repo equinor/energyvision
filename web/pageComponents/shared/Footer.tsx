@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-vars */
 import styled from 'styled-components'
-import { Heading, Link } from '@components'
-import { HTMLAttributes, forwardRef } from 'react'
+import { Link } from '@components'
+import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
-import Image from '../shared/Image'
+import Image from './Image'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -40,14 +39,7 @@ const LinkWrapper = styled.section`
     width: 70%;
   }
 `
-/*const LinksList = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  @media (max-width: 750px) {
-    height: 5rem;
-  }
-` */
+
 const LinksList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
@@ -65,13 +57,15 @@ const FooterLink = styled(Link)`
   padding: var(--space-xSmall) 0;
   color: white;
   text-decoration: none;
+  display: flex;
+  flex-direction: row;
 
   &:hover {
     color: var(--moss-green-90);
   }
   @media (max-width: 750px) {
     flex: 0 0 40%;
-    max-width: 5rem;
+    max-width: 5.5rem;
   }
 `
 const FooterBottom = styled.div`
@@ -88,7 +82,10 @@ const CompanyName = styled(Typography)`
   }
 `
 const StyledFigure = styled.figure`
-  margin: 0;
+  margin: 0 5px 0 0;
+  width: 30px;
+  height: 30px;
+  padding-top: 3.5px;
 `
 
 type FooterProps = {
@@ -119,11 +116,20 @@ type FooterLinkData = {
     slug: string
   }
 }
-
+const FooterIcon = ({ data }: any) => {
+  const { image } = data
+  if (!image) return null
+  return (
+    <StyledFigure>
+      {' '}
+      <Image maxWidth={50} image={image} aspectRatio={0.7} layout="responsive" />
+    </StyledFigure>
+  )
+}
 function getLink(linkData: FooterLinkData) {
   // Fallback to home page, if this happens it is an error somewhere
   // Sanity should take care of the validation here, and this is temp. until
-  // the static pages are migrated
+  // the static pages are migrated  {link.image && <FooterIcon image={link.image} />}
   if (!linkData) return 'something-wrong'
   const { isStatic, link, staticUrl, url } = linkData
   if (isStatic) {
@@ -132,14 +138,6 @@ function getLink(linkData: FooterLinkData) {
     return (link && link.slug) || (url && url) || '/'
   }
 }
-/*const FooterIcon = ({ image }: any) => {
-  if (!image) return null
-  return (
-    <StyledFigure>
-      <Image maxWidth={10} aspectRatio={0.5} image={image} layout="fill" />
-    </StyledFigure>
-  )
-} */
 
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   return (
@@ -148,14 +146,18 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
         {footerData?.footerColumns.map(({ header, linkList }) => {
           return (
             <LinkWrapper key={header}>
-              {' '}
               <LinkHeader>{header}</LinkHeader>
               <LinksList>
                 {linkList?.map((link: FooterLinkData) => {
                   return (
-                    <NextLink key={link._key} href={getLink(link)} passHref>
-                      <FooterLink>{link.label}</FooterLink>
-                    </NextLink>
+                    <>
+                      <NextLink key={link._key} href={getLink(link)} passHref>
+                        <FooterLink>
+                          {link.image && <FooterIcon data={link} />}
+                          {link.label}
+                        </FooterLink>
+                      </NextLink>
+                    </>
                   )
                 })}
               </LinksList>
