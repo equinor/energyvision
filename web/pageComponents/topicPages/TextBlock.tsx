@@ -1,5 +1,5 @@
-import { Heading, Eyebrow, BackgroundContainer } from '@components'
-import { IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
+import { Eyebrow, BackgroundContainer } from '@components'
+import { IngressBlockRenderer, BlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
@@ -46,9 +46,14 @@ const TextBlock = ({ data }: TextBlockProps) => {
       <StyledTextBlock>
         {overline && <Eyebrow>{overline}</Eyebrow>}
         {title && (
-          <Heading size="xl" level="h2">
-            {title}
-          </Heading>
+          <SimpleBlockContent
+            blocks={title}
+            serializers={{
+              types: {
+                block: TitleBlockRenderer,
+              },
+            }}
+          />
         )}
         {ingress && (
           <SimpleBlockContent
