@@ -1,5 +1,8 @@
 import slugReference from './slugReference'
 import markDefs from './blockEditorMarks'
+import linkSelectorFields from './linkSelectorFields'
+import downloadableFileFields from './downloadableFileFields'
+import downloadableImageFields from './downloadableImageFields'
 
 const pageContentFields = /* groq */ `
   _type == "teaser"=>{
@@ -21,34 +24,10 @@ const pageContentFields = /* groq */ `
       "extension": asset-> extension
     },  
     "action": action[0]{
-      _type == "linkSelector" => {
-        "id": _key,
-        "type": select(
-          defined(url) => "externalUrl", "internalUrl"
-        ),
-        label,
-        ariaLabel,
-        "link": reference-> {
-          "type": _type,
-          "slug": ${slugReference}
-        },
-        "href": url,
-      },
-      _type == "downloadableFile" => {
-        "id": _key,
-        "type": _type,
-        "label": filename,
-        "href": file.asset-> url,
-        "extension": file.asset-> extension 
-      },
-      _type == "downloadableImage" => {
-        "id": _key,
-        "type": _type,
-        label,
-        "href": image.asset-> url, 
-        "extension": image.asset-> extension 
-      },
-    }
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
   },
   _type == "textBlock"=>{
     "type": _type,
@@ -64,35 +43,9 @@ const pageContentFields = /* groq */ `
       ${markDefs}, 
     },
     "callToActions": action[]{
-      _type == "linkSelector" => {
-        "id": _key,
-        "type": select(
-          defined(url) => "externalUrl", "internalUrl"
-        ),
-        label,
-        ariaLabel,
-        "link": reference-> {
-          "type": _type,
-          "slug": ${slugReference}
-        },
-        "href": url,
-      },
-        _type == "downloadableFile" => {
-          "id": _key,
-          "type": _type,
-          "label": filename,
-          "href": file.asset-> url,
-          "extension": file.asset-> extension 
-        },
-        _type == "downloadableImage" => {
-          "id": _key,
-          "type": _type,
-          label,
-          "href": image.asset-> url, 
-          "extension": image.asset-> extension 
-        },
-      },
-
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
     "designOptions": {
       "background": coalesce(background.title, 'White'),
     },
