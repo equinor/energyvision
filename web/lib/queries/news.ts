@@ -1,4 +1,5 @@
 import slugReference from './common/slugReference'
+import markDefs from './common/blockEditorMarks'
 
 const newsFields = /* groq */ `
   "id": _id,
@@ -7,7 +8,10 @@ const newsFields = /* groq */ `
   heroImage,
   "publishDateTime": coalesce(publishDateTime, _createdAt),
   "slug": slug.current,
-  ingress,
+  ingress[]{
+    ...,
+    ${markDefs},
+  },
   "iframe": iframe{
     title,
     frameTitle,
@@ -54,16 +58,7 @@ export const newsQuery = /* groq */ `
           "alt": alt
         }
       },
-      "markDefs": markDefs[]{
-        ...,
-        _type == "internalLink" => {
-          "internalLink": reference->{
-            name,
-            "id": ${slugReference},
-            "type": _type,
-          },
-        },
-      }, 
+      ${markDefs}, 
     },
     "relatedLinks": relatedLinks{
       title,
