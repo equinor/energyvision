@@ -8,5 +8,5 @@ export default `
       "type": _type,
       "lang": coalesce(_lang, 'en_GB'),
     },
-  },
+  }
 `
