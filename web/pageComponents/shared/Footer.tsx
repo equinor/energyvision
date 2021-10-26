@@ -59,6 +59,7 @@ const FooterLink = styled(Link)`
   text-decoration: none;
   display: flex;
   flex-direction: row;
+  height: 2rem;
 
   &:hover {
     color: var(--moss-green-90);
@@ -70,7 +71,7 @@ const FooterLink = styled(Link)`
 `
 const FooterBottom = styled.div`
   min-height: var(--space-large);
-  padding: var(--space-small) var(--layout-paddingHorizontal-small);
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-small) var(--space-small);
 `
 
 const CompanyName = styled(Typography)`
