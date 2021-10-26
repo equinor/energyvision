@@ -15,10 +15,11 @@ type ImgProps = Omit<
   layout?: LayoutValue
   maxWidth: number
   aspectRatio?: number
+  placeholder?: 'empty' | 'blur'
 }
 
 // Couldn't make it work with ...props due to TypesScript
-const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, ...rest }: ImgProps) => {
+const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, placeholder, ...rest }: ImgProps) => {
   const imageProps = useNextSanityImage(sanityClient, image, {
     imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
   })
@@ -27,10 +28,19 @@ const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, ...
 
   // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
   if (layout === 'fill') {
-    return <Img src={imageProps.src} alt={image.alt} sizes={sizes} layout={layout} />
+    return <Img src={imageProps.src} alt={image.alt} sizes={sizes} layout={layout} placeholder={placeholder} />
   }
 
-  return <Img {...rest} {...imageProps} alt={image.alt || ''} sizes={sizes || ''} layout={layout} />
+  return (
+    <Img
+      {...rest}
+      {...imageProps}
+      alt={image.alt || ''}
+      sizes={sizes || ''}
+      layout={layout}
+      placeholder={placeholder}
+    />
+  )
 }
 
 export default Image
