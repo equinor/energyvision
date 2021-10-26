@@ -125,7 +125,7 @@ const FooterIcon = ({ data }: any) => {
   return (
     <StyledFigure>
       {' '}
-      <Image maxWidth={50} image={image} aspectRatio={0.7} layout="responsive" />
+      <Image maxWidth={50} image={image} aspectRatio={0.7} layout="responsive" role="presentation" />
     </StyledFigure>
   )
 }
