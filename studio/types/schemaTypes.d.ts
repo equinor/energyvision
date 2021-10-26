@@ -28,3 +28,13 @@ export interface ReferenceFilter {
   filter: string // GROQ filter string
   params: { [x: string]: any }
 }
+
+export type BlockFieldType = {
+  type: string
+  styles: { title: string; value: string }[]
+  lists: { title: string; value: string }[] | []
+  marks: {
+    decorators: any[]
+    annotations: any[]
+  }
+}
