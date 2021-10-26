@@ -15,6 +15,7 @@ import PageQuote from '../topicPages/PageQuote'
 import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../shared/IFrame'
+import RemitTable from '../shared/RemitTable'
 
 import {
   TeaserData,
@@ -28,6 +29,7 @@ import {
   PromoTileArrayData,
   IFrameData,
 } from '../../types/types'
+
 
 const TopicPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -104,6 +106,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <PromoTileArray key={c.id} data={c as PromoTileArrayData} />
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} />
+      case 'remitTable':
+        return <RemitTable key={c.id}/>
       default:
         return null
     }
