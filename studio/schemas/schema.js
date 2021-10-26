@@ -44,6 +44,7 @@ import stockValuesApi from './objects/stockValuesApi'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 import iframe from './objects/iframe'
+import remitTable from './objects/remitTable'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -90,5 +91,6 @@ export default createSchema({
     menuLink,
     iframe,
     footer,
+    remitTable,
   ]),
 })

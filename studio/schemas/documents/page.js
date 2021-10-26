@@ -78,6 +78,7 @@ export default {
         { type: 'promoTileArray' },
         { type: 'stockValuesApi' },
         { type: 'iframe' },
+        { type: 'remitTable'}
       ],
     },
   ],
