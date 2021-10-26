@@ -1,4 +1,5 @@
 import slugReference from './slugReference'
+import markDefs from './blockEditorMarks'
 
 const pageContentFields = /* groq */ `
   _type == "teaser"=>{
@@ -6,7 +7,13 @@ const pageContentFields = /* groq */ `
     "id": _key,
     overline,
     title,
-    text,
+    text[]{
+      ...,
+      "markDefs": markDefs[]{
+        ...,
+        ${markDefs},
+      }, 
+    },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
       "imagePosition": coalesce(imagePosition, 'left'),
@@ -51,8 +58,20 @@ const pageContentFields = /* groq */ `
     "id": _key,
     overline,
     title,
-    ingress,
-    text,
+    ingress[]{
+      ...,
+      "markDefs": markDefs[]{
+        ...,
+        ${markDefs},
+      }, 
+    },
+    text[]{
+      ...,
+      "markDefs": markDefs[]{
+        ...,
+        ${markDefs},
+      }, 
+    },
     "callToActions": action[]{
         _type == "internalUrl" => {
           "type": _type,
@@ -120,7 +139,13 @@ const pageContentFields = /* groq */ `
     "group": group[]{
       "id": _key,
       title,
-      text,
+      text[]{
+        ...,
+        "markDefs": markDefs[]{
+          ...,
+          ${markDefs},
+        }, 
+      },
       icon
     },
 
@@ -147,13 +172,7 @@ const pageContentFields = /* groq */ `
       ...,
       "markDefs": markDefs[]{
         ...,
-        _type == "internalLink" => {
-          "internalLink": reference->{
-            name,
-            "id": ${slugReference},
-            "type": _type,
-          },
-        },
+        ${markDefs},
       }, 
     },
     "accordion": accordion[]{
@@ -163,13 +182,7 @@ const pageContentFields = /* groq */ `
         ...,
         "markDefs": markDefs[]{
           ...,
-          _type == "internalLink" => {
-            "internalLink": reference->{
-              name,
-              "id": ${slugReference},
-              "type": _type,
-            },
-          },
+          ${markDefs},
         }, 
       }
     },
