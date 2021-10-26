@@ -4,9 +4,7 @@ import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
 import Image from './Image'
-import { outlineTemplate, Tokens } from '@utils'
 
-const { outline } = Tokens
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
   clear: both;
