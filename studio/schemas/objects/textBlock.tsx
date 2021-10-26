@@ -1,9 +1,11 @@
-import { configureBlockContent } from '../editors/blockContentType'
+import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
+import SingleLineBlockEditor from '../components/SingleLineBlockEditor'
 import { text_field } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
+import blocksToText from '../../helpers/blocksToText'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -43,9 +45,10 @@ export default {
     },
     {
       name: 'title',
-      title: 'Title',
-      type: 'string',
+      type: 'array',
       fieldset: 'header',
+      inputComponent: SingleLineBlockEditor,
+      of: [configureTitleBlockContent()],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
@@ -95,12 +98,14 @@ export default {
       ingress: 'ingress',
       text: 'text',
     },
-    prepare({ title = '', ingress, text }: { title: string; ingress: any; text: any }) {
+    prepare({ title = [], ingress, text }: { title: any[]; ingress: any; text: any }) {
       const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
       const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
+      const plainTitle = blocksToText(title)
+
       return {
         title:
-          title ||
+          plainTitle ||
           (textBlock &&
             textBlock.children
               .filter((child: any) => child._type === 'span')

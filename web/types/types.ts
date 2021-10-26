@@ -104,7 +104,7 @@ export type DesignOptions = {
 export type TextBlockData = {
   type: string
   id: string
-  title: string
+  title: PortableTextEntry[]
   overline?: string
   text: PortableTextEntry[]
   ingress: PortableTextEntry[]
