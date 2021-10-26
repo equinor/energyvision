@@ -64,23 +64,19 @@ const pageContentFields = /* groq */ `
       ${markDefs}, 
     },
     "callToActions": action[]{
-        _type == "internalUrl" => {
+      _type == "linkSelector" => {
+        "id": _key,
+        "type": select(
+          defined(url) => "externalUrl", "internalUrl"
+        ),
+        label,
+        ariaLabel,
+        "link": reference-> {
           "type": _type,
-          "id": _key,
-          label,
-          ariaLabel,
-          "link": reference-> {
-            "type": _type,
-            "slug": ${slugReference}
-          },
+          "slug": ${slugReference}
         },
-        _type == "externalUrl" => {
-          "id": _key,
-          "type": _type,
-          label,
-          ariaLabel,
-          "href": url,
-        },
+        "href": url,
+      },
         _type == "downloadableFile" => {
           "id": _key,
           "type": _type,
