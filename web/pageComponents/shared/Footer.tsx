@@ -4,7 +4,9 @@ import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
 import Image from './Image'
+import { outlineTemplate, Tokens } from '@utils'
 
+const { outline } = Tokens
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
   clear: both;
@@ -64,6 +66,10 @@ const FooterLink = styled(Link)`
   &:hover {
     color: var(--moss-green-90);
   }
+  &[data-focus-visible-added]:focus {
+    outline-color: var(--energy-red-90);
+    outline-style: dashed;
+  }
   @media (max-width: 750px) {
     flex: 0 0 40%;
     max-width: 6rem;
@@ -87,8 +93,6 @@ const StyledFigure = styled.figure`
   width: 30px;
   height: 30px;
   padding-top: 2px;
-  @media (max-width: 750px) {
-  }
 `
 
 type FooterProps = {
