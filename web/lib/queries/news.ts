@@ -64,21 +64,19 @@ export const newsQuery = /* groq */ `
       title,
       heroImage,
       "links": links[]{
-        _type == "internalUrl" => {
-        "type": _type,
+        _type == "linkSelector" => {
         "id": _key,
+        "type": select(
+          defined(url) => "externalUrl", "internalUrl"
+        ),
         label,
+        ariaLabel,
         "link": reference-> {
           "type": _type,
           "slug": ${slugReference}
         },
+        "href": url,
       },
-      _type == "externalUrl" => {
-          "id": _key,
-          "type": _type,
-          label,
-          "href": url,
-        },
       _type == "downloadableFile" => {
         "id": _key,
         "type": _type,
