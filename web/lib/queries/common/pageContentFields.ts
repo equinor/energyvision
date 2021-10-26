@@ -46,6 +46,7 @@ const pageContentFields = /* groq */ `
       ${linkSelectorFields},
       ${downloadableFileFields},
       ${downloadableImageFields},
+    },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
     },
