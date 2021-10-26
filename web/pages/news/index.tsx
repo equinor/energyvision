@@ -105,7 +105,7 @@ AllNews.getLayout = (page: AppProps) => {
 
 export async function getStaticProps({ preview = false, locale = 'en' }) {
   // const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery))
-  const allNews = await getClient(preview).fetch(allNewsQuery)
+  const allNews = await getClient(preview).fetch(allNewsQuery, { lang: mapLocaleToLang(locale) })
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
   return {
