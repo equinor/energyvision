@@ -43,7 +43,7 @@ const LinkWrapper = styled.section`
 const LinksList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
-  row-gap: var(--space-small);
+
   column-gap: var(--space-medium);
   align-items: self-start;
   @media (min-width: 750px) {
