@@ -9,10 +9,7 @@ const pageContentFields = /* groq */ `
     title,
     text[]{
       ...,
-      "markDefs": markDefs[]{
-        ...,
-        ${markDefs},
-      }, 
+      ${markDefs}, 
     },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
@@ -60,17 +57,11 @@ const pageContentFields = /* groq */ `
     title,
     ingress[]{
       ...,
-      "markDefs": markDefs[]{
-        ...,
-        ${markDefs},
-      }, 
+      ${markDefs}, 
     },
     text[]{
       ...,
-      "markDefs": markDefs[]{
-        ...,
-        ${markDefs},
-      }, 
+      ${markDefs}, 
     },
     "callToActions": action[]{
         _type == "internalUrl" => {
@@ -141,10 +132,7 @@ const pageContentFields = /* groq */ `
       title,
       text[]{
         ...,
-        "markDefs": markDefs[]{
-          ...,
-          ${markDefs},
-        }, 
+        ${markDefs}, 
       },
       icon
     },
@@ -170,20 +158,14 @@ const pageContentFields = /* groq */ `
     title,
     ingress[]{
       ...,
-      "markDefs": markDefs[]{
-        ...,
-        ${markDefs},
-      }, 
+      ${markDefs}, 
     },
     "accordion": accordion[]{
       "id": _key,
       title,
       content[]{
         ...,
-        "markDefs": markDefs[]{
-          ...,
-          ${markDefs},
-        }, 
+        ${markDefs}, 
       }
     },
     "designOptions": {
