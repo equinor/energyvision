@@ -66,7 +66,7 @@ const FooterLink = styled(Link)`
   }
   @media (max-width: 750px) {
     flex: 0 0 40%;
-    max-width: 5.5rem;
+    max-width: 6rem;
   }
 `
 const FooterBottom = styled.div`
@@ -83,10 +83,12 @@ const CompanyName = styled(Typography)`
   }
 `
 const StyledFigure = styled.figure`
-  margin: 0 5px 0 0;
+  margin: 0 10px 0 0;
   width: 30px;
   height: 30px;
-  padding-top: 3.5px;
+  padding-top: 2px;
+  @media (max-width: 750px) {
+  }
 `
 
 type FooterProps = {
