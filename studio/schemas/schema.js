@@ -14,6 +14,7 @@ import route from './documents/route'
 import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
+import tag from './documents/tag'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -91,5 +92,6 @@ export default createSchema({
     iframe,
     footer,
     remitTable,
+    tag
   ]),
 })
