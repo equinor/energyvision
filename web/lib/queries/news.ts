@@ -1,5 +1,5 @@
-import slugReference from './common/slugReference'
 import markDefs from './common/blockEditorMarks'
+import linkSelectorFields from './common/actions/linkSelectorFields'
 
 const newsFields = /* groq */ `
   "id": _id,
@@ -64,19 +64,7 @@ export const newsQuery = /* groq */ `
       title,
       heroImage,
       "links": links[]{
-        _type == "linkSelector" => {
-        "id": _key,
-        "type": select(
-          defined(url) => "externalUrl", "internalUrl"
-        ),
-        label,
-        ariaLabel,
-        "link": reference-> {
-          "type": _type,
-          "slug": ${slugReference}
-        },
-        "href": url,
-      },
+       ${linkSelectorFields},
       _type == "downloadableFile" => {
         "id": _key,
         "type": _type,
