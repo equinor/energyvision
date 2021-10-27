@@ -1,6 +1,7 @@
 import { SchemaType } from '../../types'
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import { validateStaticUrl } from '../validations/validateStaticUrl'
 
 const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
   if (isStatic) return true
@@ -94,22 +95,8 @@ const LinkField = {
       description: `The URL for the static page. Please don't add language information (no/en) or .html`,
       placeholder: '/careers/experienced-professionals',
       validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          // This is not a static link
-          if (!context.parent?.isStatic) return true
-          if (context.parent?.isStatic && value === undefined) {
-            return 'A link is required'
-          }
-          if (value.startsWith('/no/') || value.startsWith('/en/')) {
-            return `Please don't add the language information`
-          }
-          if (value.endsWith('.html')) {
-            return `Please remove .html`
-          }
-          if (!value.startsWith('/')) {
-            return `The link must start with a forward slash (/)`
-          }
-          return true
+        Rule.custom((value: string, context: SchemaType.ValidationContext) => {
+          return validateStaticUrl(value, context)
         }),
       // eslint-disable-next-line
       // @ts-ignore: Djeez, typescript
