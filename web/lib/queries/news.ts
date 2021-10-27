@@ -1,5 +1,7 @@
 import markDefs from './common/blockEditorMarks'
 import linkSelectorFields from './common/actions/linkSelectorFields'
+import downloadableFileFields from './common/actions/downloadableFileFields'
+import downloadableImageFields from './common/actions/downloadableImageFields'
 
 const newsFields = /* groq */ `
   "id": _id,
@@ -65,20 +67,8 @@ export const newsQuery = /* groq */ `
       heroImage,
       "links": links[]{
        ${linkSelectorFields},
-      _type == "downloadableFile" => {
-        "id": _key,
-        "type": _type,
-        "label": filename,
-        "href": file.asset-> url,
-        "extension": file.asset-> extension 
-      },
-      _type == "downloadableImage" => {
-        "id": _key,
-        "type": _type,
-        label,
-        "href": image.asset-> url, 
-        "extension": image.asset-> extension 
-      },
+       ${downloadableFileFields},
+       ${downloadableImageFields},
     }
   },
     ${newsFields}
