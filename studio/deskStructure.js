@@ -106,6 +106,21 @@ export default () => {
             }),
           ]),
       ),
+      S.divider(),
+      S.listItem()
+      .title('Tags')
+      .schemaType('tag')
+      .child(
+        S.documentList()
+          .id('tag')
+          .title('Tags')
+          .filter('_type == "tag" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'tag'
+          }),
+      ),
   ]
 
   return S.list().title('Content').items(listItems)
@@ -137,6 +152,12 @@ export const getDefaultDocumentNode = (props) => {
           useDraft: false,
         })
         .title('Connected routes'),
+    ])
+  }
+  else if (schemaType === 'tag') {
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      
     ])
   }
 
