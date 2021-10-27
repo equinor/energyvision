@@ -1,5 +1,5 @@
-import { Heading, BackgroundContainer } from '@components'
-import { BlockRenderer } from '../../../common/serializers'
+import { BackgroundContainer } from '@components'
+import { BlockRenderer, TitleBlockRenderer } from '../../../common/serializers'
 import SimpleBlockContent from '../../../common/SimpleBlockContent'
 import type { AccordionData } from '../../../types/types'
 import styled from 'styled-components'
@@ -14,7 +14,7 @@ const StyledTextBlock = styled.section`
   margin-right: auto;
 `
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
 `
 
@@ -34,11 +34,7 @@ const AccordionBlock = ({ data }: AccordionBlockProps) => {
             blocks={title}
             serializers={{
               types: {
-                block: ({ children }) => (
-                  <StyledHeading size="xl" level="h2">
-                    {children}
-                  </StyledHeading>
-                ),
+                block: (props) => <StyledHeading {...props} />,
               },
             }}
           />
