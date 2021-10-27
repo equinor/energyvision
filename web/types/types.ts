@@ -178,7 +178,7 @@ export type AccordionListData = {
 export type AccordionData = {
   type: string
   id: string
-  title: string
+  title: PortableTextEntry[]
   ingress: PortableTextEntry[]
   accordion: AccordionListData[]
   designOptions: DesignOptions
