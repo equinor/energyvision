@@ -69,7 +69,7 @@ const Teaser = ({ data }: TeaserProps) => {
               }}
             ></SimpleBlockContent>
           )}
-          {action.type === 'internalUrl' ? (
+          {action.type === 'internalUrl' || action.isStatic ? (
             <NextLink href={url} passHref>
               <Link variant="readMore" aria-label={action.ariaLabel}>
                 {action.label}

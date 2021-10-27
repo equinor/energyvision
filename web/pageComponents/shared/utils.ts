@@ -1,8 +1,12 @@
 import type { LinkData } from '../../types/types'
 
-export const getUrlFromAction = ({ link, href, type }: LinkData): string => {
+export const getUrlFromAction = ({ link, href, staticUrl, type, isStatic }: LinkData): string => {
+  if (isStatic) {
+    return staticUrl || ''
+  }
+
   if (type === 'internalUrl') {
-    // Will there be more cases in the future?
+    // @TODO: Update Will there be more cases in the future?
     if (link?.type === 'news') return `/news/${link?.slug}`
 
     return link?.slug || ''
