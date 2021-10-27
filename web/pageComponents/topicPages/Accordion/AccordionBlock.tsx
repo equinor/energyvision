@@ -30,9 +30,18 @@ const AccordionBlock = ({ data }: AccordionBlockProps) => {
     <StyledTextBlockWrapper background={background}>
       <StyledTextBlock>
         {title && (
-          <StyledHeading size="xl" level="h2">
-            {title}
-          </StyledHeading>
+          <SimpleBlockContent
+            blocks={title}
+            serializers={{
+              types: {
+                block: ({ children }) => (
+                  <StyledHeading size="xl" level="h2">
+                    {children}
+                  </StyledHeading>
+                ),
+              },
+            }}
+          />
         )}
         {ingress && (
           <SimpleBlockContent

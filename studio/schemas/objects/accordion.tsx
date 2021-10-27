@@ -3,7 +3,11 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import { AccordionComponent } from '../../icons'
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
+import { configureTitleBlockContent } from '../editors'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+import blocksToText from '../../helpers/blocksToText'
 
+const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
   h1: false,
   h2: false,
@@ -25,8 +29,10 @@ export default {
   fields: [
     {
       name: 'title',
+      type: 'array',
       title: 'Title',
-      type: 'string',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
@@ -64,10 +70,12 @@ export default {
     select: {
       title: 'title',
     },
-    prepare({ title = '' }: { title: string; ingress: any }) {
+    prepare({ title = '' }: { title: any; ingress: any }) {
       //const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
+      const plainTitle = title ? blocksToText(title) : undefined
+
       return {
-        title: title || 'Missing title',
+        title: plainTitle || 'Missing title',
         subtitle: `Accordion component.`,
         media: AccordionComponent,
       }
