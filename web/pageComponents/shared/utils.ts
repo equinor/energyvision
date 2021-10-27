@@ -1,6 +1,7 @@
 import type { LinkData } from '../../types/types'
 
 export const getUrlFromAction = ({ link, href, staticUrl, type, isStatic }: LinkData): string => {
+  // @TODO: Remove this when the static AEM content is gone
   if (isStatic) {
     return staticUrl || ''
   }

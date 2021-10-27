@@ -1,8 +1,8 @@
 import slugReference from './slugReference'
 import markDefs from './blockEditorMarks'
-import linkSelectorFields from './linkSelectorFields'
-import downloadableFileFields from './downloadableFileFields'
-import downloadableImageFields from './downloadableImageFields'
+import linkSelectorFields from './actions/linkSelectorFields'
+import downloadableFileFields from './actions/downloadableFileFields'
+import downloadableImageFields from './actions/downloadableImageFields'
 
 const pageContentFields = /* groq */ `
   _type == "teaser"=>{
@@ -135,11 +135,13 @@ const pageContentFields = /* groq */ `
         "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
+        "isStatic": coalesce(link.isStatic, false),
         "link": link.reference-> {
           "type": _type,
           "slug": ${slugReference}
         },
         "href": link.url,
+        "staticUrl": link.staticUrl,
         "type": select(
           defined(link.url) => "externalUrl",
           "internalUrl"
