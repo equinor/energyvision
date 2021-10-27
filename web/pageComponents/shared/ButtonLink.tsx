@@ -4,10 +4,10 @@ import { getUrlFromAction } from './utils'
 import type { LinkData } from '../../types/types'
 
 export const ButtonLink = ({ action }: { action: LinkData }) => {
-  const { label, ariaLabel, extension, type } = action
+  const { label, ariaLabel, extension, type, isStatic } = action
   const url = getUrlFromAction(action)
-
-  if (type === 'internalUrl') {
+  // If the URL is a static AEM page it should behave as an internal link in the web
+  if (type === 'internalUrl' || isStatic) {
     return (
       <NextLink passHref href={url}>
         <Link variant="buttonLink" aria-label={ariaLabel}>

@@ -21,9 +21,11 @@ const CallToActions = ({ callToActions }: CallToActionsProps) => {
       {callToActions.map((callToAction: LinkData) => {
         const { id, type, label, ariaLabel, extension } = callToAction
         const url = getUrlFromAction(callToAction)
+
         return (
           <Fragment key={id}>
-            {type === 'internalUrl' ? (
+            {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
+            {type === 'internalUrl' || callToAction.isStatic ? (
               <Item>
                 <NextLink href={url} passHref>
                   <Link variant="contentLink" type={type} aria-label={ariaLabel}>

@@ -1,4 +1,4 @@
-import slugReference from './slugReference'
+import slugReference from '../slugReference'
 
 const linkSelectorFields = /* groq */ `
 _type == "linkSelector" => {
