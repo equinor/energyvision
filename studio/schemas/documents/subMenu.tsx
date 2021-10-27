@@ -130,6 +130,8 @@ export default {
       fieldset: 'link',
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
+          // This is not a static link
+          if (!context.parent?.isStatic) return true
           if (context.parent?.isStatic && value === undefined) {
             return 'A link is required'
           }
