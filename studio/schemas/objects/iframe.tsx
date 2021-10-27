@@ -3,6 +3,11 @@ import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
+import { configureTitleBlockContent } from '../editors'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+import blocksToText from '../../helpers/blocksToText'
+
+const titleContentType = configureTitleBlockContent()
 
 export default {
   title: 'IFrame',
@@ -22,9 +27,11 @@ export default {
   fields: [
     {
       name: 'title',
-      type: 'string',
+      type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the iframe.',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
     },
     {
       name: 'frameTitle',
@@ -92,9 +99,11 @@ export default {
       title: 'title',
       frameTitle: 'frameTitle',
     },
-    prepare({ title, frameTitle }: { title: string; frameTitle: string }): SchemaType.Preview {
+    prepare({ title, frameTitle }: { title: any; frameTitle: string }): SchemaType.Preview {
+      const plainTitle = title ? blocksToText(title) : undefined
+
       return {
-        title: title || frameTitle,
+        title: plainTitle || frameTitle,
         subtitle: `IFrame component`,
         media: EdsIcon(code),
       }

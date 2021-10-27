@@ -232,7 +232,7 @@ export type MenuData = {
 export type IFrameData = {
   id?: string
   type?: string
-  title?: string
+  title?: PortableTextEntry[]
   frameTitle: string
   url: string
   designOptions: {
