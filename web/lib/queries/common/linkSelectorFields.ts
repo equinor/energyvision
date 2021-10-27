@@ -8,11 +8,13 @@ _type == "linkSelector" => {
   ),
   label,
   ariaLabel,
+  "isStatic": coalesce(isStatic, false),
   "link": reference-> {
     "type": _type,
     "slug": ${slugReference}
   },
   "href": url,
+  "staticUrl": staticUrl,
 }
 `
 

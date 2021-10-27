@@ -20,6 +20,8 @@ export type LinkData = {
   link?: { slug: string; type: string }
   href?: string
   extension?: string
+  isStatic?: boolean
+  staticUrl?: string
 }
 
 export type RelatedLinksData = {
