@@ -45,21 +45,6 @@ const LinkField = {
   ],
   fields: [
     {
-      name: 'label',
-      title: 'Visible label',
-      description: 'The visible text on the link/button.',
-      type: 'string',
-      fieldset: 'label',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
-    },
-    {
-      name: 'ariaLabel',
-      title: '♿ Screenreader label',
-      description: 'A text used for providing screen readers with additional information',
-      type: 'string',
-      fieldset: 'label',
-    },
-    {
       name: 'isStatic',
       title: 'Is static page',
       description: `While migrating, content can be available as static pages generated from the old CMS. If this is 
@@ -115,6 +100,21 @@ const LinkField = {
       // eslint-disable-next-line
       // @ts-ignore: Djeez, typescript
       hidden: ({ parent }) => parent?.isStatic === false || parent?.isStatic === undefined,
+    },
+    {
+      name: 'label',
+      title: 'Visible label',
+      description: 'The visible text on the link/button.',
+      type: 'string',
+      fieldset: 'label',
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+    },
+    {
+      name: 'ariaLabel',
+      title: '♿ Screenreader label',
+      description: 'A text used for providing screen readers with additional information',
+      type: 'string',
+      fieldset: 'label',
     },
   ],
   preview: {
