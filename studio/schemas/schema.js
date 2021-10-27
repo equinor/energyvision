@@ -15,7 +15,6 @@ import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
 
-
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'

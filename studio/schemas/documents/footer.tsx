@@ -118,7 +118,19 @@ export default {
 
                       validation: (Rule: SchemaType.ValidationRule) =>
                         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-                          return context.parent?.isStatic && value === undefined ? 'A link is required' : true
+                          if (context.parent?.isStatic && value === undefined) {
+                            return 'A link is required'
+                          }
+                          if (value.startsWith('/no/') || value.startsWith('/en/')) {
+                            return `Please don't add the language information`
+                          }
+                          if (value.endsWith('.html')) {
+                            return `Please remove .html`
+                          }
+                          if (!value.startsWith('/')) {
+                            return `The link must start with a forward slash (/)`
+                          }
+                          return true
                         }),
                       // eslint-disable-next-line
                       // @ts-ignore: Djeez, typescript
