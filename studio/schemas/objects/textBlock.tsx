@@ -102,7 +102,7 @@ export default {
     prepare({ title = [], ingress, text }: { title: any[]; ingress: any; text: any }) {
       const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
       const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
-      const plainTitle = blocksToText(title)
+      const plainTitle = title ? blocksToText(title) : undefined
 
       return {
         title:
