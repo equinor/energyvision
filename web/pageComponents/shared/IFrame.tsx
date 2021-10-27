@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { Heading, BackgroundContainer } from '@components'
+import SimpleBlockContent from '../../common/SimpleBlockContent'
 
 const StyledHeading = styled(Heading)`
   padding: 0 0 var(--space-large) 0;
@@ -47,9 +48,18 @@ const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { 
     <BackgroundContainer background={background} {...rest}>
       <Container>
         {title && (
-          <StyledHeading size="xl" level="h2">
-            {title}
-          </StyledHeading>
+          <SimpleBlockContent
+            blocks={title}
+            serializers={{
+              types: {
+                block: ({ children }) => (
+                  <StyledHeading size="xl" level="h2">
+                    {children}
+                  </StyledHeading>
+                ),
+              },
+            }}
+          />
         )}
         <IFrameContainer aspectRatioPadding={containerPadding}>
           <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
