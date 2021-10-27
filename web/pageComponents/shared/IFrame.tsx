@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
-import { Heading, BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
+import { TitleBlockRenderer } from '../../common/serializers'
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
 `
 
@@ -52,11 +53,7 @@ const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { 
             blocks={title}
             serializers={{
               types: {
-                block: ({ children }) => (
-                  <StyledHeading size="xl" level="h2">
-                    {children}
-                  </StyledHeading>
-                ),
+                block: (props) => <StyledHeading {...props} />,
               },
             }}
           />
