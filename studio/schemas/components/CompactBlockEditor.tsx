@@ -6,7 +6,8 @@ import styled from 'styled-components'
 // How future proof will this be?
 const Wrapper = styled.div`
   div[class^='PortableTextInput-module_editorBoxContent'] {
-    height: 5rem;
+    min-height: 6rem;
+    height: auto;
   }
 `
 

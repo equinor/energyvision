@@ -1,6 +1,6 @@
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
-import SingleLineBlockEditor from '../components/SingleLineBlockEditor'
+import CompactBlockEditor from '../components/CompactBlockEditor'
 import { text_field } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
@@ -21,6 +21,7 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
+const titleContentType = configureTitleBlockContent()
 
 export default {
   name: 'textBlock',
@@ -47,8 +48,8 @@ export default {
       name: 'title',
       type: 'array',
       fieldset: 'header',
-      inputComponent: SingleLineBlockEditor,
-      of: [configureTitleBlockContent()],
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
