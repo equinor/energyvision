@@ -4,6 +4,7 @@ import { EdsIcon } from '../../icons'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
+import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -28,23 +29,6 @@ const validateIngress = (value: any) => {
 
   if (count > 215) {
     return `The introduction should be no longer than 215 characters. Currently ${count} characters long.`
-  }
-
-  return true
-}
-
-const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
-  if (isStatic) return true
-  if (value && connectedField) {
-    return 'Can only have a single link. Choose either an internal or external link.'
-  }
-
-  if (!value && !connectedField) {
-    return 'You must provide either an internal or external link.'
-  }
-
-  if (connectedField && !value) {
-    return true
   }
 
   return true
@@ -95,7 +79,7 @@ export default {
       fieldset: 'link',
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(context.parent?.isStatic, value, context.parent.url)
+          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.url)
         }),
       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
@@ -116,7 +100,7 @@ export default {
       fieldset: 'link',
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(context.parent?.isStatic, value, context.parent.reference)
+          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.reference)
         }),
       // eslint-disable-next-line
       // @ts-ignore: Djeez, typescript

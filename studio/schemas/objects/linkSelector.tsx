@@ -2,23 +2,7 @@ import { SchemaType } from '../../types'
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
-
-const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
-  if (isStatic) return true
-  if (value && connectedField) {
-    return 'Can only have a single link. Choose either an internal or external link.'
-  }
-
-  if (!connectedField && !value) {
-    return 'An internal or external link is required.'
-  }
-
-  if (connectedField && !value) {
-    return true
-  }
-
-  return true
-}
+import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 
 export type ReferenceTarget = {
   type: string
@@ -60,7 +44,7 @@ const LinkField = {
       type: 'reference',
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateLink(context.parent?.isStatic, value, context.parent.url)
+          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.url)
         }),
       to: defaultReferenceTargets,
       options: {
@@ -81,7 +65,7 @@ const LinkField = {
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
           (value: any, context: SchemaType.ValidationContext) => {
-            return validateLink(context.parent?.isStatic, value, context.parent.reference)
+            return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.reference)
           },
         ),
       // eslint-disable-next-line

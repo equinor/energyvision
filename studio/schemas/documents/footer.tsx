@@ -1,22 +1,6 @@
 import { SchemaType } from '../../types'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
-
-const validateLink = (isStatic: boolean, value: any, connectedField: any): SchemaType.ValidationResult => {
-  if (isStatic) return true
-  if (value && connectedField) {
-    return 'Can only have a single link. Choose either an internal or external link.'
-  }
-
-  if (!value && !connectedField) {
-    return 'You must provide either an internal or external link.'
-  }
-
-  if (connectedField && !value) {
-    return true
-  }
-
-  return true
-}
+import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 
 export default {
   type: 'document',
@@ -74,7 +58,7 @@ export default {
 
                       validation: (Rule: SchemaType.ValidationRule) =>
                         Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-                          return validateLink(context.parent?.isStatic, value, context.parent.url)
+                          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.url)
                         }),
                       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
                       options: {
@@ -102,7 +86,11 @@ export default {
                       validation: (Rule: SchemaType.ValidationRule) =>
                         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
                           (value: any, context: SchemaType.ValidationContext) => {
-                            return validateLink(context.parent?.isStatic, value, context.parent.reference)
+                            return validateInternalOrExternalUrl(
+                              context.parent?.isStatic,
+                              value,
+                              context.parent.reference,
+                            )
                           },
                         ),
                       // eslint-disable-next-line
