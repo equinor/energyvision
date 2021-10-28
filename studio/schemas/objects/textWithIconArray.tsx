@@ -8,7 +8,7 @@ import { SchemaType } from '../../types'
 export default {
   type: 'object',
   name: 'textWithIconArray',
-  title: 'Group of Text with Icon',
+  title: 'Icon & Text',
   fieldsets: [
     {
       name: 'design',
@@ -19,7 +19,7 @@ export default {
     {
       type: 'array',
       name: 'group',
-      title: 'Group of text with icon',
+      title: 'Icon & Text',
       of: [{ type: 'textWithIcon' }],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
