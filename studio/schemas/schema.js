@@ -34,9 +34,6 @@ import fullWidthImage from './objects/fullWidthImage'
 import figure from './objects/figure'
 import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
-import callToAction from './objects/callToAction'
-import externalUrl from './objects/externalUrl'
-import internalUrl from './objects/internalUrl'
 import linkSelector from './objects/linkSelector'
 import promoTile from './objects/promoTile'
 import promoTileArray from './objects/promoTileArray'
@@ -80,9 +77,6 @@ export default createSchema({
     figure,
     textWithIcon,
     textWithIconArray,
-    callToAction,
-    externalUrl,
-    internalUrl,
     linkSelector,
     promoTile,
     promoTileArray,
@@ -92,6 +86,6 @@ export default createSchema({
     iframe,
     footer,
     remitTable,
-    tag
+    tag,
   ]),
 })
