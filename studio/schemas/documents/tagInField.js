@@ -3,19 +3,19 @@
 export default {
   type: 'document',
   name: `tagInField`,
-  title: `Tag in field`,
+  title: `Tag without document translation`,
   
   fields: [
    
     {
       type: 'string',
-      name: 'title',
-      title: 'Title',
+      name: 'titleEn',
+      title: 'Title English',
       validation: (Rule) => Rule.required(),
     },
     {
       type: 'string',
-      name: 'title',
+      name: 'titleNo',
       title: 'Title Norwegian',
       validation: (Rule) => Rule.required(),
     },
