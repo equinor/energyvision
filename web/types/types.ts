@@ -124,7 +124,7 @@ export type CallToActionData = {
 export type TeaserData = {
   type: string
   id: string
-  title: string
+  title: PortableTextEntry[]
   text: PortableTextEntry[]
   overline?: string
   image: ImageWithAlt
@@ -246,37 +246,36 @@ export type RemitTableData = {
   type?: string
 }
 
-export type Remit ={
-  Timestamp: string;
-  StatusCode: number;
-  StatusMessage: string;
-  Data: Data;
+export type Remit = {
+  Timestamp: string
+  StatusCode: number
+  StatusMessage: string
+  Data: Data
 }
-export type Data ={
-  List?: (ListEntity)[] | null;
+export type Data = {
+  List?: ListEntity[] | null
 }
-export type ListEntity ={
-  CurrentMessage: Message;
-  MessageHistory?: (Message | null)[] | null;
+export type ListEntity = {
+  CurrentMessage: Message
+  MessageHistory?: (Message | null)[] | null
 }
-export type Message ={
-  ID: number;
-  MessagePublishedTimeOfDayLocal: string;
-  MessagePublishedDateLocal: string;
-  MessagePublishedTime: string;
-  EventStartTimeOfDayLocal: string;
-  EventStartDateLocal: string;
-  EventStartTime: string;
-  ExpectedEventEndTimeOfDayLocal: string;
-  ExpectedEventEndDateLocal: string;
-  ExpectedEventEndTime: string;
-  ActualEventEndTimeOfDayLocal: string;
-  ActualEventEndDateLocal: string;
-  ActualEventEndTime: string;
-  IsPublishedByGassco: boolean;
-  Comments: string;
-  Volume: string;
-  Version: number;
-  IsPlannedEvent: boolean;
+export type Message = {
+  ID: number
+  MessagePublishedTimeOfDayLocal: string
+  MessagePublishedDateLocal: string
+  MessagePublishedTime: string
+  EventStartTimeOfDayLocal: string
+  EventStartDateLocal: string
+  EventStartTime: string
+  ExpectedEventEndTimeOfDayLocal: string
+  ExpectedEventEndDateLocal: string
+  ExpectedEventEndTime: string
+  ActualEventEndTimeOfDayLocal: string
+  ActualEventEndDateLocal: string
+  ActualEventEndTime: string
+  IsPublishedByGassco: boolean
+  Comments: string
+  Volume: string
+  Version: number
+  IsPlannedEvent: boolean
 }
-
