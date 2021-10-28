@@ -1,7 +1,7 @@
 import { Teaser as EnvisTeaser, Heading, Link, Eyebrow, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { IngressBlockRenderer } from '../../common/serializers'
+import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
@@ -56,9 +56,18 @@ const Teaser = ({ data }: TeaserProps) => {
         </Media>
         <Content>
           {overline && <Eyebrow>{overline}</Eyebrow>}
-          <Heading level="h2" size="xl">
-            {title}
-          </Heading>
+
+          {title && (
+            <SimpleBlockContent
+              blocks={title}
+              serializers={{
+                types: {
+                  block: TitleBlockRenderer,
+                },
+              }}
+            />
+          )}
+
           {text && (
             <SimpleBlockContent
               blocks={text}

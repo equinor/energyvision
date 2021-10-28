@@ -1,12 +1,15 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { SchemaType } from '../../types'
-import { configureBlockContent } from '../editors/blockContentType'
+import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, SmallSizeImage, LeftAlignedImage, RightAlignedImage } from '../../icons'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+
+const titleContentType = configureTitleBlockContent()
 
 const imageSizeOptions = [
   { value: 'full', icon: FullSizeImage },
@@ -75,8 +78,9 @@ export default {
     },
     {
       name: 'title',
-      title: 'Title',
-      type: 'string',
+      type: 'array',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
     },
     {
       name: 'text',
@@ -167,8 +171,10 @@ export default {
     },
     prepare(selection: any) {
       const { title, image } = selection
+      const plainTitle = title ? blocksToText(title) : undefined
+
       return {
-        title: title || 'Missing title!',
+        title: plainTitle || 'Missing title!',
         subtitle: 'Teaser component',
         media: image,
       }
