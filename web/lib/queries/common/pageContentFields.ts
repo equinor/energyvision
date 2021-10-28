@@ -168,6 +168,10 @@ const pageContentFields = /* groq */ `
       height,
     },
   },
+  _type == "remitTable" => {
+    "type": _type,
+    "id": _key,
+  },
 `
 
 export default pageContentFields
