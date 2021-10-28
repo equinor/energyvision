@@ -48,8 +48,13 @@ export default {
   localize: true,
   fieldsets: [
     {
-      title: 'Header',
-      name: 'header',
+      title: 'Eyebrow headline',
+      name: 'eyebrow',
+      description: 'A descriptive keyword, category or phrase that appears over the main headline.',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
     },
     {
       name: 'link',
@@ -64,15 +69,14 @@ export default {
   fields: [
     {
       name: 'overline',
-      title: 'Overline',
+      title: 'Eyebrow',
       type: 'string',
-      fieldset: 'header',
+      fieldset: 'eyebrow',
     },
     {
       name: 'title',
       title: 'Title',
       type: 'string',
-      fieldset: 'header',
     },
     {
       name: 'text',

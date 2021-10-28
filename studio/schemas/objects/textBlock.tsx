@@ -29,8 +29,13 @@ export default {
   type: 'object',
   fieldsets: [
     {
-      title: 'Header',
-      name: 'header',
+      title: 'Eyebrow headline',
+      name: 'eyebrow',
+      description: 'A descriptive keyword, category or phrase that appears over the main headline.',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
     },
     {
       name: 'design',
@@ -40,14 +45,13 @@ export default {
   fields: [
     {
       name: 'overline',
-      title: 'Overline',
+      title: 'Eyebrow',
       type: 'string',
-      fieldset: 'header',
+      fieldset: 'eyebrow',
     },
     {
       name: 'title',
       type: 'array',
-      fieldset: 'header',
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
