@@ -1,17 +1,18 @@
 import { Table } from "@equinor/eds-core-react"
 import { useEffect, useState } from "react"
+import {Remit} from '../../types/types'
 
 
 const RemitTable = () =>{
   
-  const [remitData,setRemitData] = useState("")
+  const [remitData,setRemitData] = useState<Remit>()
   useEffect(() => {
     const url = "https://www.equinor.com/services/remit";
 
     const fetchData = async () => {
         try {
             const response = await fetch(url);
-            const json = await response.json();
+            const json:Remit = await response.json();
             setRemitData(json);
         } catch (error) {
             console.log("error", error);
@@ -53,7 +54,7 @@ const RemitTable = () =>{
   </Table.Head>
   <Table.Body>
      {
-        remitData?.Data?.List.map(it => 
+        remitData?.Data?.List?.map(it => 
             <Table.Row key={it.CurrentMessage.ID}>
               <Table.Cell>
                 {it.CurrentMessage.ID}
