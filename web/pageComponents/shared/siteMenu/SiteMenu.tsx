@@ -94,7 +94,6 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
               <MenuContainer>
                 <Menu index={indices} onChange={toggleItem}>
                   {menuItems.map((topLevelItem: SubMenuData, idx) => {
-                    if (topLevelItem?.topLevelLink.isDisabled) return null
                     return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                   })}
                 </Menu>

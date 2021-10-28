@@ -201,7 +201,6 @@ export type PromoTileArrayData = {
 export type MenuLinkData = {
   label: string
   isStatic: boolean
-  isDisabled: boolean
   href?: string
   staticUrl?: string
   id?: string
@@ -241,10 +240,10 @@ export type IFrameData = {
     background: BackgroundColours
   }
 }
- 
+
 export type RemitTableData = {
-    id?: string
-    type?: string
+  id?: string
+  type?: string
 }
 
 export type Remit ={

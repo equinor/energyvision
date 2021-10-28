@@ -50,13 +50,6 @@ export default {
   ],
   fields: [
     {
-      name: 'isDisabled',
-      title: 'Is disabled',
-      description: `For testing purposes, it's possible to temporarily disable the menu item`,
-      type: 'boolean',
-      initialValue: false,
-    },
-    {
       title: 'Menu label',
       name: 'label',
       description: 'The label that appears at top level in the menu',
@@ -161,13 +154,12 @@ export default {
       group: 'group',
       url: 'url',
       reference: 'reference.slug',
-      isDisabled: 'isDisabled',
     },
     prepare(selection: any) {
-      const { label, group = [], url, reference, isDisabled } = selection
+      const { label, group = [], url, reference } = selection
       return {
         title: label || 'No label added yet',
-        subtitle: reference?.en_GB?.current || url || `Menu groups: ${group.length} Is disabled: ${isDisabled}`,
+        subtitle: reference?.en_GB?.current || url || `Menu groups: ${group.length}`,
         media: EdsIcon(format_line_spacing),
       }
     },
