@@ -17,12 +17,12 @@ type PreviewProps = {
 
 export default {
   name: 'pullQuote',
-  title: 'Pull quote',
+  title: 'Quote',
   type: 'object',
   localize: true,
   fieldsets: [
     {
-      title: 'Pull Quote',
+      title: 'Quote',
       name: 'pullQuote',
     },
     {
@@ -46,13 +46,13 @@ export default {
     {
       name: 'author',
       type: 'string',
-      title: 'Author',
+      title: 'Name',
       validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
     },
     {
       name: 'authorTitle',
       type: 'string',
-      title: 'Author title',
+      title: 'Title',
       description: 'Optional title for the author.',
     },
     {
