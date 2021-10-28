@@ -241,3 +241,8 @@ export type IFrameData = {
     background: BackgroundColours
   }
 }
+ 
+export type RemitTableData = {
+    id?: string
+    type?: string
+}

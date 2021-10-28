@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
-import type { PageSchema } from '../../types/types'
+import type { PageSchema, RemitTableData } from '../../types/types'
 import { useRouter } from 'next/router'
 import { Heading } from '@components'
 import getConfig from 'next/config'
@@ -76,6 +76,7 @@ type ComponentProps =
   | AccordionData
   | PromoTileArrayData
   | IFrameData
+  | RemitTableData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -141,6 +142,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         </HeroBanner>
         <Image>{data?.heroImage && <HeroImage data={data?.heroImage} />}</Image>
         {content}
+      
       </TopicPageLayout>
     </>
   )
