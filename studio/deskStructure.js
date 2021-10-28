@@ -121,6 +121,21 @@ export default () => {
             return params.type === 'tag'
           }),
       ),
+      S.divider(),
+      S.listItem()
+      .title('Tags in document')
+      .schemaType('tagInField')
+      .child(
+        S.documentList()
+          .id('tagInField')
+          .title('Tags in docu')
+          .filter('_type == "tagInField" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'tagInField'
+          }),
+      ),
   ]
 
   return S.list().title('Content').items(listItems)
