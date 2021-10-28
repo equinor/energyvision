@@ -133,6 +133,7 @@ const FooterIcon = ({ data }: any) => {
         image={image}
         aspectRatio={0.7}
         layout="responsive"
+        sizes="50px"
         role="presentation"
       />
     </StyledFigure>
