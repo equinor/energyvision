@@ -89,7 +89,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
 
   // Don't do this at home! Temp. hack to see the static version of all news
-  if (!pageData || !pageData.news) {
+  if (!pageData || (params?.slug === 'news' && !pageData.news)) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'

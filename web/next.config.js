@@ -40,7 +40,7 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
-  webpack(config, { defaultLoaders }) {
+  /*   webpack(config, { defaultLoaders }) {
     config.module.rules.push({
       test: /\.(css)$/,
       use: [
@@ -55,5 +55,5 @@ module.exports = withBundleAnalyzer({
       ],
     })
     return config
-  },
+  }, */
 })
