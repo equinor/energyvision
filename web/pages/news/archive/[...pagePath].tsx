@@ -18,10 +18,6 @@ import type { MenuData } from '../../../types/types'
 
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// TODO fix the eslint issues
-import archivedStyles from '@equinor/energyvision-legacy-css'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
 
@@ -78,9 +74,6 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
         // @TODO: SEO stuffs
         // @TODO: Menu
         <>
-          <style jsx global>
-            {archivedStyles}
-          </style>
           <Head>
             <script
               src="https://consent.cookiebot.com/uc.js"
@@ -88,6 +81,8 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
               data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
               async
             />
+            {/*  eslint-disable-next-line @next/next/no-css-tags */}
+            <link rel="stylesheet" href="/styles/legacy.minified.test.css" />
           </Head>
           <NextSeo
             title={data?.news?.title}

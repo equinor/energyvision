@@ -39,7 +39,6 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm install --filter @equinor/energyvision-legacy-css
           pnpm install --filter energy-vision-web
       - name: Run ESLint 🔎
         id: lint

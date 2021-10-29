@@ -4,7 +4,10 @@ import { IntlProvider } from 'react-intl'
 import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
 import { SkipNavLink } from '@reach/skip-nav'
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// TODO fix the eslint issues
+/* import archivedStyles from '@equinor/energyvision-legacy-css' */
 /* import MenuProvider from '../tempcomponents/shared/menu/MenuProvider' */
 /* 
 import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -32,6 +35,9 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 
         <GlobalStyle />
         <GlobalFontStyle />
+        {/*   <style jsx global>
+          {archivedStyles}
+        </style> */}
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
         <SkipNavLink />
 

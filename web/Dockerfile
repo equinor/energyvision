@@ -13,10 +13,10 @@ COPY ./pnpm-workspaces.yaml ./
 COPY ./web ./web
 COPY ./legacy ./legacy
 
-# Replace workspace:* with the actual versions
-RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
-  jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
-  ./web/package.json | sponge ./web/package.json
+# Replace workspace:* with the actual versions | Load css from public folder atm
+# RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
+#  jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
+#  ./web/package.json | sponge ./web/package.json
   
 RUN rm -rf ./legacy
 

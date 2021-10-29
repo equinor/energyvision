@@ -41,7 +41,6 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm install --filter @equinor/energyvision-legacy-css 
           pnpm web install
           pnpm e2e install
       - name: Build web application ⚙️
