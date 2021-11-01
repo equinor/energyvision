@@ -1,5 +1,6 @@
 import { slugWithRef } from '../objects/slugWithRef'
 import { SchemaType } from '../../types'
+import blocksToText from '../../helpers/blocksToText'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -69,8 +70,10 @@ export default (isoCode: string, title: string) => {
       },
       prepare(selection: any) {
         const { title, slug, media } = selection
+        const plainTitle = title ? blocksToText(title) : ''
+
         return {
-          title,
+          title: plainTitle,
           subtitle: slug,
           media,
         }
