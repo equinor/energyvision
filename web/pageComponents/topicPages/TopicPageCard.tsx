@@ -3,6 +3,7 @@ import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
+import { blocksToText } from '../../common/helpers/blocksToText'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -24,6 +25,8 @@ const TopicPageCard = ({ data }: TopicPageCardProp) => {
   const { slug, title, heroImage } = data
   if (!heroImage) return null
 
+  const pageTitle = title ? blocksToText(title) : ''
+
   return (
     <NextLink href={slug} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -33,7 +36,7 @@ const TopicPageCard = ({ data }: TopicPageCardProp) => {
             {heroImage && <Image image={heroImage.image} maxWidth={400} aspectRatio={0.56} layout="responsive" />}
           </Media>
           <Header>
-            <Title>{title}</Title>
+            <Title>{pageTitle}</Title>
           </Header>
           <Action>
             <Arrow />
