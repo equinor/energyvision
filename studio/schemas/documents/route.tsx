@@ -55,8 +55,9 @@ export default (isoCode: string, title: string) => {
         title: 'Topic slug',
         type: 'string',
 
-        // placeholder: 'For example "Experienced professionals"',
-        // description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
+        placeholder: 'For example "Experienced professionals"',
+        description:
+          'The unique part of the URL for this topic page. Should probably be something like the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
       },
