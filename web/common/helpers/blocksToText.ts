@@ -3,6 +3,8 @@ import type { BlockNode } from '@sanity/block-content-to-react'
 const defaults = { nonTextBehavior: 'remove' }
 
 export const blocksToText = (blocks: BlockNode[], opts = {}): string => {
+  if (!Array.isArray(blocks)) return blocks
+
   const options = Object.assign({}, defaults, opts)
   return blocks
     .map((block: BlockNode) => {
