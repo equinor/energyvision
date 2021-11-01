@@ -1,5 +1,10 @@
 import React from 'react'
 import { i18n } from '../documentTranslation'
+import { configureTitleBlockContent } from '../editors'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+import blocksToText from '../../helpers/blocksToText'
+
+const titleContentType = configureTitleBlockContent()
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
 export default {
@@ -36,13 +41,14 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-
     {
-      title: 'Page title',
       name: 'title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
+      type: 'array',
+      title: 'Title',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
       fieldset: 'header',
+      validation: (Rule) => Rule.required(),
     },
     {
       title: 'Hero image',
@@ -89,8 +95,10 @@ export default {
     },
     prepare(selection) {
       const { title, media } = selection
+      const plainTitle = title ? blocksToText(title) : ''
+
       return {
-        title,
+        title: plainTitle,
         media,
       }
     },
