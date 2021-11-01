@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
 import { blocksToText } from '../../common/helpers/blocksToText'
+import type { BlockNode } from '@sanity/block-content-to-react'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -25,7 +26,7 @@ const TopicPageCard = ({ data }: TopicPageCardProp) => {
   const { slug, title, heroImage } = data
   if (!heroImage) return null
 
-  const pageTitle = title ? blocksToText(title) : ''
+  const pageTitle = title ? blocksToText(title as BlockNode[]) : ''
 
   return (
     <NextLink href={slug} passHref>

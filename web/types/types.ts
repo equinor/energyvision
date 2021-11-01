@@ -42,7 +42,7 @@ export type ImageWithAlt = {
 export type CardData = {
   type?: string
   slug: string
-  title: BlockNode[]
+  title: string | BlockNode[]
   id: string
   publishDateTime?: string
   heroImage: ImageWithCaptionData
