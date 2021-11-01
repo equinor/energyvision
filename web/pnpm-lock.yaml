@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@equinor/eds-core-react': ^0.14.2
-  '@equinor/eds-icons': ^0.7.0
+  '@equinor/eds-icons': ^0.8.0-dev20211028
   '@equinor/eds-tokens': ^0.7.0
   '@microsoft/applicationinsights-react-js': ^3.2.0
   '@microsoft/applicationinsights-web': ^2.7.0
@@ -52,7 +52,7 @@ specifiers:
 
 dependencies:
   '@equinor/eds-core-react': 0.14.2_7a082f7d10047d47195aea793f958a14
-  '@equinor/eds-icons': 0.7.0
+  '@equinor/eds-icons': 0.8.0-dev20211028
   '@equinor/eds-tokens': 0.7.0
   '@microsoft/applicationinsights-react-js': 3.2.0_react@17.0.2
   '@microsoft/applicationinsights-web': 2.7.0
@@ -2563,6 +2563,11 @@ packages:
 
   /@equinor/eds-icons/0.7.0:
     resolution: {integrity: sha512-DjbZjsKKxvsXoZV+hRO/Gg5tXH9tbq/ekrymL8YJR9tE73Wt8TbsDnjLZPWocs/Oj61xJUcY+yCoDmidSJVZ6w==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    dev: false
+
+  /@equinor/eds-icons/0.8.0-dev20211028:
+    resolution: {integrity: sha512-1kVu9eAXFtEJ65P/8JMoiYv2vjq5WAd2N+x+RbVivhI/0ApaJMfh2cWdp0s+Ldw228nUmjcoCTaNkMFZn4c89A==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
