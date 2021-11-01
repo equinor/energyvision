@@ -17,7 +17,7 @@ import Norway from '../../icons/Norway'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = [S.view.form(), S.view.component(RoutePreview).title('Preview')]
+const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview).title('Preview')]
 // Original version without preview pane
 // const views = [S.view.form()]
 export default function parentChild(schema = 'category') {
