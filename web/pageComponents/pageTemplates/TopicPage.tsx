@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
 import type { PageSchema, RemitTableData } from '../../types/types'
 import { useRouter } from 'next/router'
-import { Heading } from '@components'
 import getConfig from 'next/config'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
@@ -16,6 +15,9 @@ import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../shared/IFrame'
 import RemitTable from '../shared/RemitTable'
+import SimpleBlockContent from '../../common/SimpleBlockContent'
+import { TitleBlockRenderer } from '../../common/serializers'
+import { blocksToText } from '../../common/helpers/blocksToText'
 
 import {
   TeaserData,
@@ -30,7 +32,6 @@ import {
   IFrameData,
 } from '../../types/types'
 
-
 const TopicPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   /* @TODO: Find a good value here */
@@ -43,7 +44,7 @@ const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
 `
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(TitleBlockRenderer)`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
@@ -87,6 +88,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
+  const pageTitle = data?.title ? blocksToText(data.title) : ''
+
   const content = (data?.content || []).map((c: ComponentProps) => {
     switch (c.type) {
       case 'teaser':
@@ -108,7 +111,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} />
       case 'remitTable':
-        return <RemitTable key={c.id}/>
+        return <RemitTable key={c.id} />
       default:
         return null
     }
@@ -116,10 +119,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
   return (
     <>
       <NextSeo
-        title={data?.seoAndSome?.documentTitle || data?.title}
+        title={data?.seoAndSome?.documentTitle || pageTitle}
         description={data?.seoAndSome?.metaDescription}
         openGraph={{
-          title: data?.title,
+          title: pageTitle,
           description: data?.seoAndSome?.metaDescription,
           type: 'website',
           url: fullUrl,
@@ -136,13 +139,19 @@ const TopicPage = ({ data }: TopicPageProps) => {
       ></NextSeo>
       <TopicPageLayout>
         <HeroBanner>
-          <StyledHeading level="h1" size="2xl">
-            {data?.title}
-          </StyledHeading>
+          {data?.title && (
+            <SimpleBlockContent
+              blocks={data?.title}
+              serializers={{
+                types: {
+                  block: (props) => <StyledHeading level="h1" size="2xl" {...props} />,
+                },
+              }}
+            />
+          )}
         </HeroBanner>
         <Image>{data?.heroImage && <HeroImage data={data?.heroImage} />}</Image>
         {content}
-      
       </TopicPageLayout>
     </>
   )

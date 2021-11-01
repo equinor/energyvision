@@ -2,6 +2,7 @@
 import { SanityImageObject, SanityImageCrop, SanityImageHotspot } from '@sanity/image-url/lib/types/types'
 import { PortableTextEntry } from '@sanity/block-content-to-react'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
+import type { BlockNode } from '@sanity/block-content-to-react'
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
@@ -82,7 +83,7 @@ export type PortableTextChild = {
 
 export type PageSchema = {
   slug: string
-  title: string
+  title: BlockNode[]
   heroImage: ImageWithCaptionData
   seoAndSome: {
     documentTitle?: string
