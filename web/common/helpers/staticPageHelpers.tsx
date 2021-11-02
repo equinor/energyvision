@@ -21,6 +21,11 @@ const getLocalizedSlugs = async (locale: string, slug: string) => {
       .filter((v) => v !== '')
       .join('/')
 
+    if (!path)
+      return {
+        en_GB: `en`,
+        nb_NO: `no`,
+      }
     return {
       en_GB: `en/${path}`,
       nb_NO: `no/${path}`,
@@ -73,15 +78,13 @@ export const getPagePaths = async (path: string): Promise<string[]> => {
 
 export const anchorClick = (e: any, router: any) => {
   if (e != null) {
-   
     const targetLink = e.target.closest('a')
     if (!targetLink) return
     if (targetLink.href.includes('#')) {
       e.preventDefault()
-      if (targetLink.href.split(router.locale).at(1).split('#').at(0)== (router.asPath.split('#').at(0))){
+      if (targetLink.href.split(router.locale).at(1).split('#').at(0) == router.asPath.split('#').at(0)) {
         router.replace(targetLink.href, undefined, { shallow: true })
-      }
-      else router.push(targetLink.href)
+      } else router.push(targetLink.href)
     }
   }
 }
