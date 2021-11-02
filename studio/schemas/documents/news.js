@@ -88,6 +88,21 @@ export default {
       },
     },
     {
+      title: 'Tags',
+      name: 'tags',
+      type: 'array',
+      description: "Adds tags to news article",
+      of: [
+        {
+          type: 'reference',
+          to: [
+            {type: 'tag'},
+           
+          ]
+        }
+      ]
+    },
+    {
       // TODO: Figure out a way to run a slugify function before publish
       // so that users don't have to add hyphens and such themselves
       name: 'slug',
