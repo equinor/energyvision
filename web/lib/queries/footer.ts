@@ -1,13 +1,13 @@
 export const footerQuery = /* groq */ `
-  *[_type == "footer" && _lang == $lang][0] {
+ *[_type == "footer" && _lang == $lang][0] {
 	footerColumns[]{
-        _key,
-        footerIcon,
-        "header": columnHeader, 
-        "linkList": columnLinks[]{ 
-        "image":image,
-        _key,
+    "id": _key,
+    "header": columnHeader, 
+    "linkList": columnLinks[]{ 
+      "type": _type,
+      "id": _key,
         label,
+        someType,
         "isStatic": coalesce(isStatic, false),
   	    "link": reference-> {
         "type": _type,
@@ -15,8 +15,7 @@ export const footerQuery = /* groq */ `
       },
        url,
       "staticUrl": staticUrl,} 
-      }
-   
+    }
 	}
 
 `
