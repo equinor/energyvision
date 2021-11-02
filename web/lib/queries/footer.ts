@@ -17,5 +17,4 @@ export const footerQuery = /* groq */ `
       "staticUrl": staticUrl,} 
     }
 	}
-
 `

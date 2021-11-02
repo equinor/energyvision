@@ -1,10 +1,11 @@
 import Footer from './Footer'
+import type { FooterColumns } from '../../types/types'
 
 export type LayoutProps = {
   /* Prewiew or not */
   preview?: boolean
   // eslint-disable-next-line
-  footerData?: any
+  footerData?: { footerColumns: FooterColumns[] }
   children: React.ReactNode
 }
 
