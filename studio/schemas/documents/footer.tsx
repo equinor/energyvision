@@ -33,7 +33,7 @@ export default {
                 {
                   type: 'object',
                   name: 'link',
-                  title: 'link',
+                  title: 'Link',
                   fields: [
                     {
                       name: 'label',
@@ -71,12 +71,7 @@ export default {
                       // @ts-ignore: Djeez, typescript
                       hidden: ({ parent }) => parent?.isStatic === true,
                     },
-                    {
-                      title: 'Icon',
-                      name: 'image',
-                      type: 'image',
-                      description: 'SVG of for example the Facebook logo',
-                    },
+
                     {
                       name: 'url',
                       title: 'External URL',
@@ -112,6 +107,53 @@ export default {
                       // eslint-disable-next-line
                       // @ts-ignore: Djeez, typescript
                       hidden: ({ parent }) => parent?.isStatic === false,
+                    },
+                  ],
+                },
+                {
+                  type: 'object',
+                  name: 'someLink',
+                  title: 'Social media link',
+                  fields: [
+                    {
+                      name: 'url',
+                      title: 'URL',
+                      description: 'Use this field to link to an external site.',
+                      type: 'url',
+
+                      validation: (Rule: SchemaType.ValidationRule) =>
+                        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
+                          (value: any, context: SchemaType.ValidationContext) => {
+                            return validateInternalOrExternalUrl(
+                              context.parent?.isStatic,
+                              value,
+                              context.parent.reference,
+                            )
+                          },
+                        ),
+                    },
+                    {
+                      name: 'label',
+                      type: 'string',
+                      title: 'Label',
+                      description: 'Link text',
+                      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+                    },
+                    {
+                      name: 'someType',
+                      type: 'string',
+                      title: 'Type of SoMe platform',
+                      options: {
+                        list: [
+                          { title: 'Facebook', value: 'facebook' },
+                          { title: 'Instagram', value: 'instagram' },
+                          { title: 'Twitter', value: 'twitter' },
+                          { title: 'LinkedIn', value: 'linkedin' },
+                          { title: 'YouTube', value: 'youtube' },
+                        ],
+                        layout: 'radio',
+                      },
+                      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
                     },
                   ],
                 },
