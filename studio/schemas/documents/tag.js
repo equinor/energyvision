@@ -1,17 +1,31 @@
-import { i18n } from '../documentTranslation'
+import { languages } from "../languages"
+
+
+//takes every allowed language and makes a string field for each
+const localeStrings = languages.map(lang => ({
+  name: lang.name,
+  type: "string",
+  title: lang.title,
+  validation: (Rule) => Rule.required(),
+}));
 
 export default {
   type: 'document',
   name: `tag`,
   title: `Tag`,
-  i18n,
   fields: [
    
     {
-      type: 'string',
+      type: 'object',
       name: 'title',
       title: 'Title',
-      validation: (Rule) => Rule.required(),
+      fields: localeStrings
     },
   ],
+  preview: {
+    select: {
+      title: 'title.en_GB',
+      
+    }
+  }
 }
