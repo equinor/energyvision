@@ -19,16 +19,12 @@ const RelatedContent = ({ data }: RelatedContentProps) => {
       <List unstyled>
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
-            const { id, label, type, link, isStatic, extension, ariaLabel } = item
-            if (type === 'internalUrl' && link?.slug === undefined) {
-              console.warn('An internal link is missing slug', label)
-            }
-            // @TODO Internal link beyond news articles
-            //const url = type === 'internalUrl' ? `/news/${link?.slug}` : href
+            const { id, label, type, isStatic, extension, ariaLabel } = item
+
             const url = getUrlFromAction(item)
             if (!url) {
-              console.warn('Something weird happened. A link is missing href', label)
-              return
+              console.warn(`Missing URL on 'RelatedContent' link with type: '${type}' and label: '${label}'`)
+              return null
             }
 
             return (

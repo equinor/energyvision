@@ -20,7 +20,12 @@ const CallToActions = ({ callToActions }: CallToActionsProps) => {
     <List unstyled>
       {callToActions.map((callToAction: LinkData) => {
         const { id, type, label, ariaLabel, extension } = callToAction
+
         const url = getUrlFromAction(callToAction)
+        if (!url) {
+          console.warn(`Missing URL on 'CallToActions' link with type: '${type}' and label: '${label}'`)
+          return null
+        }
 
         return (
           <Fragment key={id}>

@@ -5,7 +5,13 @@ import type { LinkData } from '../../types/types'
 
 export const ButtonLink = ({ action }: { action: LinkData }) => {
   const { label, ariaLabel, extension, type, isStatic } = action
+
   const url = getUrlFromAction(action)
+  if (!url) {
+    console.warn(`Missing URL on 'ButtonLink' link with type: '${type}' and label: '${label}'`)
+    return null
+  }
+
   // If the URL is a static AEM page it should behave as an internal link in the web
   if (type === 'internalUrl' || isStatic) {
     return (

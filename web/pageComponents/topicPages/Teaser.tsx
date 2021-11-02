@@ -4,7 +4,7 @@ import { default as NextLink } from 'next/link'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
-import type { TeaserData, ImageWithAlt } from '../../types/types'
+import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
 import Img from 'next/image'
 import Image from '../shared/Image'
 import { getUrlFromAction } from '../shared/utils'
@@ -35,13 +35,34 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
+const TeaserAction = ({ action }: { action: LinkData }) => {
+  const { type, label, extension } = action
+  const url = getUrlFromAction(action)
+  if (!url) {
+    console.warn(`Missing URL on 'TeaserAction' link with type: '${type}' and label: '${label}'`)
+    return null
+  }
+
+  if (action.type === 'internalUrl' || action.isStatic) {
+    return (
+      <NextLink href={url} passHref>
+        <Link variant="readMore" aria-label={action.ariaLabel}>
+          {action.label}
+        </Link>
+      </NextLink>
+    )
+  }
+
+  return (
+    <Link variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
+      {action.label} {extension && `(${extension.toUpperCase()})`}
+    </Link>
+  )
+}
+
 const Teaser = ({ data }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions } = data
   const { background, imageSize, imagePosition } = designOptions
-
-  if (!action?.type) return null
-
-  const url = getUrlFromAction(action)
 
   const isSvg = image?.extension === 'svg'
   return (
@@ -78,17 +99,7 @@ const Teaser = ({ data }: TeaserProps) => {
               }}
             ></SimpleBlockContent>
           )}
-          {action.type === 'internalUrl' || action.isStatic ? (
-            <NextLink href={url} passHref>
-              <Link variant="readMore" aria-label={action.ariaLabel}>
-                {action.label}
-              </Link>
-            </NextLink>
-          ) : (
-            <Link variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
-              {action.label} {action.extension && `(${action.extension.toUpperCase()})`}
-            </Link>
-          )}
+          <TeaserAction action={action} />
         </Content>
       </StyledTeaser>
     </BackgroundContainer>
