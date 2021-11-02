@@ -135,6 +135,7 @@ const FooterIcon = ({ data }: any) => {
         layout="responsive"
         sizes="50px"
         role="presentation"
+        unoptimized
       />
     </StyledFigure>
   )

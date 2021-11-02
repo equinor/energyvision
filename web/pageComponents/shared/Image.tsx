@@ -16,10 +16,20 @@ type ImgProps = Omit<
   maxWidth: number
   aspectRatio?: number
   placeholder?: 'empty' | 'blur'
+  unoptimized?: boolean
 }
 
 // Couldn't make it work with ...props due to TypesScript
-const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, placeholder, ...rest }: ImgProps) => {
+const Image = ({
+  image,
+  sizes,
+  layout = 'responsive',
+  maxWidth,
+  aspectRatio,
+  placeholder,
+  unoptimized,
+  ...rest
+}: ImgProps) => {
   const imageProps = useNextSanityImage(sanityClient, image, {
     imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),
   })
@@ -39,6 +49,7 @@ const Image = ({ image, sizes, layout = 'responsive', maxWidth, aspectRatio, pla
       sizes={sizes || ''}
       layout={layout}
       placeholder={placeholder}
+      unoptimized={unoptimized}
     />
   )
 }
