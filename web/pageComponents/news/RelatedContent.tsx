@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Heading, Link, List } from '@components'
 import type { RelatedLinksData, LinkData } from '../../types/types'
 import { default as NextLink } from 'next/link'
-import { getUrlFromAction } from '../shared/utils'
+import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 
 const { Item } = List
 

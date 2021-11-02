@@ -7,7 +7,7 @@ import { urlFor } from '../../common/helpers'
 import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
 import Img from 'next/image'
 import Image from '../shared/Image'
-import { getUrlFromAction } from '../shared/utils'
+import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 
 const { Content, Media } = EnvisTeaser
 

@@ -1,6 +1,6 @@
 import NextLink from 'next/link'
 import { Link } from '@components'
-import { getUrlFromAction } from './utils'
+import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import type { LinkData } from '../../types/types'
 
 export const ButtonLink = ({ action }: { action: LinkData }) => {
