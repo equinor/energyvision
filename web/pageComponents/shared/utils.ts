@@ -1,9 +1,11 @@
 import type { LinkData } from '../../types/types'
 
-export const getUrlFromAction = ({ link, href, staticUrl, type, isStatic }: LinkData): string => {
+export const getUrlFromAction = ({ link, href = '', staticUrl = '', type, isStatic }: LinkData): string | false => {
+  if (!type && !href && !staticUrl) return false
+
   // @TODO: Remove this when the static AEM content is gone
   if (isStatic) {
-    return staticUrl || ''
+    return staticUrl
   }
 
   if (type === 'internalUrl') {
@@ -13,5 +15,5 @@ export const getUrlFromAction = ({ link, href, staticUrl, type, isStatic }: Link
     return link?.slug || ''
   }
 
-  return href || ''
+  return href
 }
