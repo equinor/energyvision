@@ -145,6 +145,6 @@ export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
 
   return {
     paths: paths.flat(),
-    fallback: true,
+    fallback: 'blocking',
   }
 }
