@@ -15,7 +15,7 @@ import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
 import tag from './documents/tag'
-import tagInField from "./documents/tagInField"
+
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -88,6 +88,6 @@ export default createSchema({
     footer,
     remitTable,
     tag,
-    tagInField
+    
   ]),
 })
