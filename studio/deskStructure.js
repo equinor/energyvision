@@ -122,6 +122,7 @@ export default () => {
           }),
       ),
       
+      
   ]
 
   return S.list().title('Content').items(listItems)
@@ -155,6 +156,7 @@ export const getDefaultDocumentNode = (props) => {
         .title('Connected routes'),
     ])
   }
+  
   
 
   return S.document().views([S.view.form()])
