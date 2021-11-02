@@ -3,7 +3,7 @@ import { List, Link } from '@components'
 import type { LinkData } from '../../types/types'
 import { default as NextLink } from 'next/link'
 import { ButtonLink } from '../shared/ButtonLink'
-import { getUrlFromAction } from '../shared/utils'
+import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 
 const { Item } = List
 
