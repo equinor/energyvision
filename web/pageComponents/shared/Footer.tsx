@@ -9,6 +9,8 @@ import Linkedin from '../icons/Linkedin'
 import Twitter from '../icons/Twitter'
 import Youtube from '../icons/Youtube'
 
+import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
+
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
   clear: both;
@@ -105,32 +107,6 @@ const SomeIcon = styled.span`
     }
   }
 `
-type FooterProps = {
-  footerData?: { footerColumns: FooterColumns[] }
-}
-
-type FooterColumns = {
-  id: string
-  header: string
-  linkList?: FooterLinkData[]
-}
-
-type SomeType = 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin'
-
-type FooterLinkData = {
-  id: string
-  type: 'someLink' | 'link'
-  key: string
-  label: string
-  isStatic: boolean
-  url?: string
-  staticUrl?: string
-  someType?: SomeType
-  link?: {
-    type: string
-    slug: string
-  }
-}
 
 function getSomeSvg(someType: SomeType) {
   switch (someType) {
@@ -162,6 +138,10 @@ function getLink(linkData: FooterLinkData) {
   }
 }
 
+type FooterProps = {
+  footerData?: { footerColumns: FooterColumns[] }
+}
+
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   return (
     <StyledFooter ref={ref} {...rest}>
@@ -172,12 +152,12 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
               <LinkHeader>{header}</LinkHeader>
               <LinksList>
                 {linkList?.map((link: FooterLinkData) => {
-                  console.log('some', link.someType)
+                  const { id, type, someType, label } = link
                   return (
-                    <NextLink key={link.key} href={getLink(link)} passHref>
+                    <NextLink key={id} href={getLink(link)} passHref>
                       <FooterLink>
-                        {link.type === 'someLink' && link.someType && <SomeIcon>{getSomeSvg(link.someType)}</SomeIcon>}
-                        {link.label}
+                        {type === 'someLink' && someType && <SomeIcon>{getSomeSvg(someType)}</SomeIcon>}
+                        {label}
                       </FooterLink>
                     </NextLink>
                   )

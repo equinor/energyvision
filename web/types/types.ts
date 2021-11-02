@@ -242,6 +242,29 @@ export type IFrameData = {
   }
 }
 
+export type FooterColumns = {
+  id: string
+  header: string
+  linkList?: FooterLinkData[]
+}
+
+export type SomeType = 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin'
+
+export type FooterLinkData = {
+  id: string
+  type: 'someLink' | 'link'
+  key: string
+  label: string
+  isStatic: boolean
+  url?: string
+  staticUrl?: string
+  someType?: SomeType
+  link?: {
+    type: string
+    slug: string
+  }
+}
+
 export type RemitTableData = {
   id?: string
   type?: string
