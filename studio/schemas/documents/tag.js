@@ -9,6 +9,8 @@ const localeStrings = languages.map(lang => ({
   validation: (Rule) => Rule.required(),
 }));
 
+
+
 export default {
   type: 'document',
   name: `tag`,
@@ -21,6 +23,20 @@ export default {
       title: 'Title',
       fields: localeStrings
     },
+    {
+      title: 'Key',
+      name: 'key',
+      type: 'slug',
+      description: "",
+      validation: (Rule) => Rule.required(),
+      options: {
+        source: 'title.en_GB',
+        slugify: input => input
+                             .toLowerCase()
+                             .replace(/\s+/g, '-')
+                             
+      }
+    }
   ],
   preview: {
     select: {
