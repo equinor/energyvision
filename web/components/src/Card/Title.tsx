@@ -1,12 +1,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { Card } from '@equinor/eds-core-react'
 import { Heading } from '../Heading'
 
 import styled from 'styled-components'
 
-const { HeaderTitle: EdsHeaderTitle } = Card
-
-const StyledTitle = styled(EdsHeaderTitle)`
+const StyledTitle = styled.div`
   margin-left: 0;
 `
 

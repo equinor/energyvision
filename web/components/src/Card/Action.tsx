@@ -1,13 +1,9 @@
-import * as React from 'react'
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { Card } from '@equinor/eds-core-react'
-
-const { Actions: EdsAction } = Card
 
 export type CardActionProps = HTMLAttributes<HTMLDivElement>
 
-const StyledAction = styled(EdsAction)`
+const StyledAction = styled.div`
   align-self: end;
   padding: 0 1rem;
   grid-auto-columns: auto;
