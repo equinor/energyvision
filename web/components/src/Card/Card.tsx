@@ -1,5 +1,4 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { Card as EdsCard } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 
@@ -29,8 +28,9 @@ export type StyledCardProps = {
   textOnly?: boolean
 }
 
-export const StyledCard = styled(EdsCard)<StyledCardProps>`
+export const StyledCard = styled.div<StyledCardProps>`
   height: 100%;
+  display: grid;
   /* News cards should have white background (current status as least) Will probably change at some point */
   background-color: ${(props) => (props.cardType === 'promo' ? 'transparent' : 'var(--ui-background-default)')};
   /* If the card doesn't have media, there will be more space */
@@ -64,7 +64,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   ref,
 ) {
   return (
-    <StyledCard variant="default" ref={ref} cardType={type} textOnly={textOnly} {...rest}>
+    <StyledCard ref={ref} cardType={type} textOnly={textOnly} {...rest}>
       {children}
     </StyledCard>
   )
