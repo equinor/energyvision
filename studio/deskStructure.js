@@ -18,7 +18,7 @@ export default () => {
       .icon(NewsDocuments)
       .schemaType('news')
       .child(
-        S.documentList()
+        S.documentTypeList("news")
           .id('news')
           .title('News articles')
           .filter('_type == "news" && (!defined(_lang) || _lang == $baseLang)')
@@ -33,7 +33,7 @@ export default () => {
       .icon(TopicDocuments)
       .schemaType('page')
       .child(
-        S.documentList('page')
+        S.documentTypeList('page')
           .id('pages')
           .title('Topic content')
           .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
@@ -111,15 +111,9 @@ export default () => {
       .title('Tags')
       .schemaType('tag')
       .child(
-        S.documentList()
-          .id('tag')
-          .title('Tags')
-          .filter('_type == "tag" && (!defined(_lang) || _lang == $baseLang)')
-          .params({ baseLang: i18n.base })
-          .canHandleIntent((_name, params) => {
-            // Assume we can handle all intents (actions) regarding post documents
-            return params.type === 'tag'
-          }),
+        S.documentTypeList('tag')
+        .title('Tags')
+
       ),
       
       
