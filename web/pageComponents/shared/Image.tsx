@@ -27,7 +27,7 @@ const Image = ({
   maxWidth,
   aspectRatio,
   placeholder,
-  unoptimized,
+  unoptimized = false,
   ...rest
 }: ImgProps) => {
   const imageProps = useNextSanityImage(sanityClient, image, {
