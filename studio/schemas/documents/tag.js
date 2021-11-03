@@ -28,8 +28,9 @@ export default {
       title: 'Key',
       name: 'key',
       type: 'slug',
-      description: "",
+      description: "This is a datapoint, no need to alter it beyond 'generate'",
       validation: (Rule) => Rule.required(),
+
       options: {
         source: 'title.en_GB',
         slugify: input => input
@@ -61,7 +62,14 @@ export default {
   preview: {
     select: {
       title: 'title.en_GB',
-      
+      subtitle: 'title.nb_NO'
+    },
+    prepare(selection) {
+      const {title, subtitle} = selection
+      return {
+        title: title,
+        subtitle: `Norwegian: ${subtitle }`
+      }
     }
   }
 }
