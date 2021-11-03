@@ -49,7 +49,9 @@ const AccordionBlock = ({ data }: AccordionBlockProps) => {
             }}
           />
         )}
-        {accordion && accordion.length > 0 && <Accordion data={accordion} hasTitle={!!title} queryParamName={id} />}
+        {accordion && accordion.length > 0 && (
+          <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
+        )}
       </StyledTextBlock>
     </StyledTextBlockWrapper>
   )
