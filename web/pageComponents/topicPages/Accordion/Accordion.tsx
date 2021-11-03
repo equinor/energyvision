@@ -31,9 +31,10 @@ type AccordionProps = {
   hasTitle?: boolean
   data: AccordionListData[]
   queryParamName: string
+  id: string
 }
 
-const Accordion = ({ data, hasTitle = true, queryParamName }: AccordionProps) => {
+const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps) => {
   const router = useRouter()
   const replaceUrl = useRouterReplace()
   // Query is an empty object initially https://nextjs.org/docs/routing/dynamic-routes#caveats
@@ -57,12 +58,12 @@ const Accordion = ({ data, hasTitle = true, queryParamName }: AccordionProps) =>
   }
 
   return (
-    <EnvisAccordion index={indices} onChange={toggleItem}>
-      {data.map((item) => {
+    <EnvisAccordion index={indices} onChange={toggleItem} id={id}>
+      {data.map((item, idx) => {
         const { id, title: itemTitle, content } = item
 
         return (
-          <Item key={id}>
+          <Item key={id} id={idx}>
             <Header headingLevel={hasTitle ? 'h3' : 'h2'}>{itemTitle}</Header>
             <Panel animate={animate}>
               {content && (
