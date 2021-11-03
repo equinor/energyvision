@@ -43,6 +43,7 @@ import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 import iframe from './objects/iframe'
 import remitTable from './objects/remitTable'
+import tagReference from './objects/tagReference'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -88,6 +89,7 @@ export default createSchema({
     footer,
     remitTable,
     tag,
+    tagReference,
     
   ]),
 })
