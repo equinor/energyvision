@@ -17,6 +17,7 @@ export default {
   title: `Tag`,
   fields: [
    
+   
     {
       type: 'object',
       name: 'title',
@@ -38,6 +39,8 @@ export default {
       }
     }
   ],
+  
+
   preview: {
     select: {
       title: 'title.en_GB',
