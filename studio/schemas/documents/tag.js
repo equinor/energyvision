@@ -39,7 +39,24 @@ export default {
       }
     }
   ],
+  orderings: [
+    {
+      title: 'Title descending',
+      name: 'titleDesc',
+      by: [
+        {field: 'title.en_GB', direction: 'desc'}
+      ]
+    },
+    {
+      title: 'Title ascending',
+      name: 'titleDesc',
+      by: [
+        {field: 'title.en_GB', direction: 'asc'}
+      ]
+    },
   
+    
+  ],
 
   preview: {
     select: {
