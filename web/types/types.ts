@@ -31,7 +31,8 @@ export type RelatedLinksData = {
 }
 
 export type ImageWithAlt = {
-  alt: string
+  isDecorative: boolean
+  alt?: string
   asset: SanityImageObject
   crop?: SanityImageCrop
   hotspot?: SanityImageHotspot
