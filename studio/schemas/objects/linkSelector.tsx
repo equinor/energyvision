@@ -1,11 +1,20 @@
-import { SchemaType } from '../../types'
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
+import type { Rule, ValidationContext, Reference } from '@sanity/types'
 
 export type ReferenceTarget = {
   type: string
+}
+
+export type LinkSelector = {
+  _type: 'linkSelector'
+  isStatic: boolean
+  reference?: Reference
+  url?: string
+  label?: string
+  ariaLabel?: string
 }
 
 const defaultReferenceTargets: ReferenceTarget[] = [
@@ -42,9 +51,10 @@ const LinkField = {
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.url)
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: LinkSelector }
+          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
         }),
       to: defaultReferenceTargets,
       options: {
@@ -53,24 +63,19 @@ const LinkField = {
           params: { routeLang: `route_${document._lang}` },
         }),
       },
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === true,
+      hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === true,
     },
     {
       name: 'url',
       title: 'External URL',
       description: 'Use this field to link to an external site.',
       type: 'url',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
-          (value: any, context: SchemaType.ValidationContext) => {
-            return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.reference)
-          },
-        ),
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === true,
+      validation: (Rule: Rule) =>
+        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: LinkSelector }
+          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
+        }),
+      hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === true,
     },
     {
       name: 'staticUrl',
@@ -78,13 +83,11 @@ const LinkField = {
       type: 'string',
       description: `The URL for the static page. Please don't add language information (no/en) or .html`,
       placeholder: '/careers/experienced-professionals',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: string, context: SchemaType.ValidationContext) => {
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
           return validateStaticUrl(value, context)
         }),
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === false || parent?.isStatic === undefined,
+      hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === false || parent?.isStatic === undefined,
     },
     {
       name: 'label',
@@ -92,7 +95,7 @@ const LinkField = {
       description: 'The visible text on the link/button.',
       type: 'string',
       fieldset: 'label',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'ariaLabel',
@@ -107,7 +110,7 @@ const LinkField = {
       title: 'label',
       url: 'url',
     },
-    prepare({ title, url }: { title: string; url: string | null }): SchemaType.Preview {
+    prepare({ title, url }: { title: string; url: string | null }) {
       return {
         title: title,
         subtitle: `${url ? 'External' : 'Internal'} link`,

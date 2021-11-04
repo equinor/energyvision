@@ -1,10 +1,12 @@
-import { SchemaType } from '../../types'
+import type { ValidationContext } from '@sanity/types'
 
-export const validateStaticUrl = (value: string, context: SchemaType.ValidationContext) => {
+export const validateStaticUrl = (value: string, context: ValidationContext) => {
+  const { parent } = context as { parent: { isStatic?: boolean } }
+
   // This is not a static link
-  if (!context.parent?.isStatic) return true
+  if (!parent?.isStatic) return true
 
-  if (context.parent?.isStatic && value === undefined) {
+  if (parent?.isStatic && value === undefined) {
     return 'A link is required'
   } else if (value.startsWith('/no/') || value.startsWith('/en/')) {
     return `Please don't add the language information`

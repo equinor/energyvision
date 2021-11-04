@@ -1,4 +1,10 @@
-export const validateInternalOrExternalUrl = (isStatic: boolean, value: string, connectedField: string) => {
+import type { Reference } from '@sanity/types'
+
+export const validateInternalOrExternalUrl = (
+  isStatic: boolean,
+  value: string,
+  connectedField: string | Reference | undefined,
+) => {
   // This is not a static link
   if (isStatic) return true
   if (value && connectedField) {
