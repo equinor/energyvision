@@ -1,8 +1,7 @@
 /** Not used anywhere at the moment, but we'll need it later */
-
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import styled from 'styled-components'
 import Image from '../../pageComponents/shared/Image'
+import type { ImageWithAlt } from '../../types/types'
 
 const Figure = styled.figure``
 
@@ -11,7 +10,7 @@ type FigureNode = {
   _type: 'imageWithAltAndCaption'
   attribution?: string
   caption?: string
-  image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
+  image: ImageWithAlt
 }
 
 export const FigureRenderer = (child: { node: FigureNode }) => {

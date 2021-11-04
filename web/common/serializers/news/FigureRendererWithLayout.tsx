@@ -1,6 +1,6 @@
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import styled from 'styled-components'
 import Image from '../../../pageComponents/shared/Image'
+import type { ImageWithAlt } from '../../../types/types'
 
 type Layout = 'full' | 'left' | 'right'
 
@@ -47,7 +47,7 @@ type FigureNode = {
   _type: 'imageWithAltAndCaption'
   attribution?: string
   caption?: string
-  image: { _type: 'imageWithAlt'; alt: string; asset: SanityImageObject }
+  image: ImageWithAlt
   layout: Layout
 }
 
