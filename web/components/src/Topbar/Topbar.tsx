@@ -13,7 +13,7 @@ const Bar = styled.div<{ hasDropShadow: boolean }>`
   transition: top 0.3s;
   z-index: 10;
   background-color: var(--white-100);
-  ${({ hasDropShadow }) => hasDropShadow && `box-shadow: var(--box-shadow);`}
+  ${({ hasDropShadow }) => hasDropShadow && `box-shadow: var(--topBar-box-shadow);`}
 `
 
 export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) => {
