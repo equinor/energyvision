@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 
@@ -10,8 +10,6 @@ export type CardProps = {
   textOnly?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-/* Where should this be located. Should Card link be an actual component, or 
-a more generic wrapper link component */
 export const CardLink = styled.a`
   text-decoration: none;
   color: inherit;
@@ -23,21 +21,14 @@ export const CardLink = styled.a`
   }
 `
 
-export type StyledCardProps = {
-  cardType?: 'news' | 'promo'
-  textOnly?: boolean
-}
-
-export const StyledCard = styled.div<StyledCardProps>`
+export const StyledCard = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
-  /* News cards should have white background (current status as least) Will probably change at some point */
-  background-color: ${(props) => (props.cardType === 'promo' ? 'transparent' : 'var(--ui-background-default)')};
-  /* If the card doesn't have media, there will be more space */
-  gap: ${(props) => (props.textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)')};
-  padding: ${(props) => (props.textOnly ? 'var(--space-3xLarge) 0 var(--space-xLarge) 0' : '0 0 var(--space-small) 0')};
+  box-shadow: var(--card-shadow, none);
+  background-color: var(--card-background, transparent);
+  gap: var(--card-gap, --space-large);
+  padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
 
   &:hover {
     cursor: inherit;
@@ -45,12 +36,41 @@ export const StyledCard = styled.div<StyledCardProps>`
 `
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
-  { type = 'news', textOnly = false, children, ...rest },
+  { type = 'news', textOnly = false, style, children, ...rest },
   ref,
 ) {
   return (
-    <StyledCard ref={ref} cardType={type} textOnly={textOnly} {...rest}>
-      {children}
-    </StyledCard>
+    <>
+      {type === 'news' ? (
+        <StyledCard
+          ref={ref}
+          style={
+            {
+              ...style,
+              '--card-shadow': '0px 6px 20px rgba(0, 0, 0, 0.2)',
+              '--card-background': 'var(--ui-background-default)',
+              '--card-padding': '0 0 var(--space-small) 0',
+            } as CSSProperties
+          }
+          {...rest}
+        >
+          {children}
+        </StyledCard>
+      ) : (
+        <StyledCard
+          ref={ref}
+          style={
+            {
+              ...style,
+              '--card-gap': textOnly && 'var(--space-3xLarge)',
+              '--card-padding': textOnly ? 'var(--space-3xLarge) 0 var(--space-xLarge) 0' : '0 0 var(--space-xLarge) 0',
+            } as CSSProperties
+          }
+          {...rest}
+        >
+          {children}
+        </StyledCard>
+      )}
+    </>
   )
 })
