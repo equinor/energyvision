@@ -38,6 +38,10 @@ export default {
         Rule.custom((value: string, context: ValidationContext): CustomValidatorResult => {
           const { parent } = context as { parent: ImageWithAlt }
 
+          // Only  make the alt tag required if an image has been selected
+          if (!parent?.asset) return true
+
+          // Alt tag should only be required if the image is not decorative
           if (!parent?.isDecorative && !value) {
             return 'Alt attribute is required'
           }
