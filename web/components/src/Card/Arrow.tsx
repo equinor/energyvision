@@ -63,8 +63,7 @@ export const Arrow = (): JSX.Element => {
       <path d="M18.7383 16L25.9997 9L18.7383 2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M1 9H25.6369" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </AnimatedSVG> */
-    <div>
-      <AnimatedArrow />
-    </div>
+
+    <AnimatedArrow />
   )
 }

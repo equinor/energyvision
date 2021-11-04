@@ -30,29 +30,14 @@ export type StyledCardProps = {
 
 export const StyledCard = styled.div<StyledCardProps>`
   height: 100%;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
   /* News cards should have white background (current status as least) Will probably change at some point */
   background-color: ${(props) => (props.cardType === 'promo' ? 'transparent' : 'var(--ui-background-default)')};
   /* If the card doesn't have media, there will be more space */
-  grid-gap: ${(props) => (props.textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)')};
+  gap: ${(props) => (props.textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)')};
   padding: ${(props) => (props.textOnly ? 'var(--space-3xLarge) 0 var(--space-xLarge) 0' : '0 0 var(--space-small) 0')};
-
-  ${(props) => {
-    if (props.cardType === 'promo' && props.textOnly) {
-      return `
-        grid-template-rows: auto 1fr;
-    `
-    } else if (props.cardType === 'promo') {
-      return `
-      grid-template-rows: auto auto 1fr;
-    `
-    } else {
-      return `
-      grid-template-rows: auto auto auto 1fr;
-    `
-    }
-  }}
 
   &:hover {
     cursor: inherit;
