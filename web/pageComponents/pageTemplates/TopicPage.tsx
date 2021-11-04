@@ -50,7 +50,7 @@ const StyledHeading = styled(TitleBlockRenderer)`
   margin-right: auto;
 `
 
-const Image = styled.div`
+const ImageWrapper = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small) var(--space-3xLarge) var(--layout-paddingHorizontal-small);
   max-width: 1920px;
   margin-left: auto;
@@ -150,7 +150,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
             />
           )}
         </HeroBanner>
-        <Image>{data?.heroImage && <HeroImage data={data?.heroImage} />}</Image>
+        <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
         {content}
       </TopicPageLayout>
     </>
