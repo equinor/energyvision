@@ -27,7 +27,7 @@ export const StyledCard = styled.div`
   flex-direction: column;
   box-shadow: var(--card-shadow, none);
   background-color: var(--card-background, transparent);
-  gap: var(--card-gap, --space-large);
+  gap: var(--card-gap, var(--space-large));
   padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
 
   &:hover {
