@@ -4,6 +4,7 @@ import FormField from 'part:@sanity/components/formfields/default'
 import { TextArea, Label, Box } from '@sanity/ui'
 // eslint-disable-next-line import/no-unresolved
 import PatchEvent, { set } from 'part:@sanity/form-builder/patch-event'
+import { SchemaType } from '../../types'
 //const createPatchFrom = (value) => PatchEvent.from(value === '' ? unset() : set(value))
 
 type TextAreaWithCharsProps = {
@@ -43,7 +44,7 @@ export default {
   title: 'Fields for title and description meta',
   name: 'titleAndMeta',
   type: 'object',
-
+  validation: (Rule: any) => [Rule.required().warning(`Please pay attention to SEO`)],
   fields: [
     {
       name: 'documentTitle',
@@ -52,7 +53,9 @@ export default {
       engines what the topic of a particular page is. You should create a unique title for each page on your site. Choose a
       title that reads naturally and effectively communicates the topic of the page’s content. The frontend will use h1 as a fallback for missing document title.`,
       type: 'string',
-      /* validation: Rule => Rule.required().warning('The document title is very important for SEO'), */
+
+      validation: (Rule: SchemaType.ValidationRule) =>
+        Rule.required().warning('The document title is very important for SEO'),
     },
     {
       name: 'metaDescription',
