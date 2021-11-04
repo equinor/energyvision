@@ -34,7 +34,15 @@ const TopicPageCard = ({ data }: TopicPageCardProp) => {
       <StyledLink>
         <StyledCard>
           <Media>
-            {heroImage && <Image image={heroImage.image} maxWidth={400} aspectRatio={0.56} layout="responsive" />}
+            {heroImage && (
+              <Image
+                image={heroImage.image}
+                maxWidth={400}
+                aspectRatio={0.56}
+                layout="responsive"
+                sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+              />
+            )}
           </Media>
           <Header>
             <Title>{pageTitle}</Title>
