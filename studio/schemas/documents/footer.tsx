@@ -1,6 +1,15 @@
-import { SchemaType } from '../../types'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
+import type { Rule, ValidationContext, Reference } from '@sanity/types'
+
+export type ColumnLink = {
+  _type: 'link'
+  label: string
+  isStatic: boolean
+  staticUrl?: string
+  reference?: Reference
+  url?: string
+}
 
 export default {
   type: 'document',
@@ -12,7 +21,7 @@ export default {
       title: 'Footer columns',
       name: 'footerColumns',
       type: 'array',
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.length(3),
+      validation: (Rule: Rule) => Rule.length(3),
       of: [
         {
           type: 'object',
@@ -23,7 +32,7 @@ export default {
               type: 'string',
               name: 'columnHeader',
               title: 'Column header',
-              validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+              validation: (Rule: Rule) => Rule.required(),
             },
             {
               type: 'array',
@@ -40,7 +49,7 @@ export default {
                       type: 'string',
                       title: 'Label',
                       description: 'Link text',
-                      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+                      validation: (Rule: Rule) => Rule.required(),
                     },
                     {
                       name: 'isStatic',
@@ -56,9 +65,10 @@ export default {
                       description: 'Use this field to reference an internal page.',
                       type: 'reference',
 
-                      validation: (Rule: SchemaType.ValidationRule) =>
-                        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-                          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.url)
+                      validation: (Rule: Rule) =>
+                        Rule.custom((value: any, context: ValidationContext) => {
+                          const { parent } = context as { parent: ColumnLink }
+                          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
                         }),
                       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
                       options: {
@@ -67,9 +77,7 @@ export default {
                           params: { routeLang: `route_${document._lang}` },
                         }),
                       },
-                      // eslint-disable-next-line
-                      // @ts-ignore: Djeez, typescript
-                      hidden: ({ parent }) => parent?.isStatic === true,
+                      hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === true,
                     },
 
                     {
@@ -78,19 +86,14 @@ export default {
                       description: 'Use this field to link to an external site.',
                       type: 'url',
 
-                      validation: (Rule: SchemaType.ValidationRule) =>
+                      validation: (Rule: Rule) =>
                         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
-                          (value: any, context: SchemaType.ValidationContext) => {
-                            return validateInternalOrExternalUrl(
-                              context.parent?.isStatic,
-                              value,
-                              context.parent.reference,
-                            )
+                          (value: any, context: ValidationContext) => {
+                            const { parent } = context as { parent: ColumnLink }
+                            return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
                           },
                         ),
-                      // eslint-disable-next-line
-                      // @ts-ignore: Djeez, typescript
-                      hidden: ({ parent }) => parent?.isStatic === true,
+                      hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === true,
                     },
 
                     {
@@ -100,13 +103,11 @@ export default {
                       description: `The URL for the static page. Don't add language information (no/en)`,
                       placeholder: '/careers/experienced-professionals',
 
-                      validation: (Rule: SchemaType.ValidationRule) =>
-                        Rule.custom((value: string, context: SchemaType.ValidationContext) => {
+                      validation: (Rule: Rule) =>
+                        Rule.custom((value: string, context: ValidationContext) => {
                           return validateStaticUrl(value, context)
                         }),
-                      // eslint-disable-next-line
-                      // @ts-ignore: Djeez, typescript
-                      hidden: ({ parent }) => parent?.isStatic === false,
+                      hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === false,
                     },
                   ],
                 },
@@ -121,14 +122,12 @@ export default {
                       description: 'Use this field to link to an external site.',
                       type: 'url',
 
-                      validation: (Rule: SchemaType.ValidationRule) =>
+                      validation: (Rule: Rule) =>
                         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
-                          (value: any, context: SchemaType.ValidationContext) => {
-                            return validateInternalOrExternalUrl(
-                              context.parent?.isStatic,
-                              value,
-                              context.parent.reference,
-                            )
+                          (value: any, context: ValidationContext) => {
+                            const { parent } = context as { parent: ColumnLink }
+
+                            return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
                           },
                         ),
                     },
@@ -137,7 +136,7 @@ export default {
                       type: 'string',
                       title: 'Label',
                       description: 'Link text',
-                      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+                      validation: (Rule: Rule) => Rule.required(),
                     },
                     {
                       name: 'someType',
@@ -153,7 +152,7 @@ export default {
                         ],
                         layout: 'radio',
                       },
-                      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+                      validation: (Rule: Rule) => Rule.required(),
                     },
                   ],
                 },

@@ -1,7 +1,15 @@
-import { SchemaType } from '../../types'
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
+import type { Rule, ValidationContext, Reference, SanityDocument } from '@sanity/types'
+
+export type MenuLink = {
+  _type: 'menuLink'
+  label: string
+  isStatic: boolean
+  route?: Reference
+  staticUrl?: string
+}
 
 export default {
   title: 'Menu link',
@@ -13,7 +21,7 @@ export default {
       name: 'label',
       description: 'The visible label of the link.',
       type: 'string',
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'isStatic',
@@ -30,18 +38,17 @@ export default {
       type: 'reference',
       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
-        filter: ({ document }: { document: any }) => ({
+        filter: ({ document }: { document: SanityDocument }) => ({
           filter: `_type == $routeLang`,
           params: { routeLang: `route_${document._lang}` },
         }),
       },
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule =>
-        Rule.custom((route: any, context: SchemaType.ValidationContext) => {
-          return !context.parent?.isStatic && route === undefined ? 'Required' : true
+      validation: (Rule: Rule) =>
+        Rule.custom((route: Reference, context: ValidationContext) => {
+          const { parent } = context as { parent: MenuLink }
+          return !parent?.isStatic && route === undefined ? 'Required' : true
         }),
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === true,
+      hidden: ({ parent }: { parent: MenuLink }) => parent?.isStatic === true,
     },
     {
       name: 'staticUrl',
@@ -49,13 +56,11 @@ export default {
       type: 'string',
       description: `The URL for the static page. Don't add language information (no/en)`,
       placeholder: '/careers/experienced-professionals',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
           return validateStaticUrl(value, context)
         }),
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === false,
+      hidden: ({ parent }: { parent: MenuLink }) => parent?.isStatic === false,
     },
   ],
   preview: {

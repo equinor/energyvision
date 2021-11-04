@@ -1,10 +1,23 @@
-import { SchemaType } from '../../types'
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
+import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
+
+export type SubMenu = {
+  _type: 'subMenu'
+  label: string
+  isStatic: boolean
+  isDisabled: boolean
+  intro: any
+  group?: any
+  url?: string
+  staticUrl?: string
+  reference?: Reference
+  featuredContent?: Reference
+}
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -70,9 +83,10 @@ export default {
       description: 'Use this field to reference an internal page.',
       type: 'reference',
       fieldset: 'link',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.url)
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: SubMenu }
+          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
         }),
       to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
@@ -81,9 +95,7 @@ export default {
           params: { routeLang: `route_${document._lang}` },
         }),
       },
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === true,
+      hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === true,
     },
     {
       name: 'url',
@@ -91,13 +103,12 @@ export default {
       description: 'Use this field to link to an external site.',
       type: 'url',
       fieldset: 'link',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return validateInternalOrExternalUrl(context.parent?.isStatic, value, context.parent.reference)
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: SubMenu }
+          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
         }),
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === true,
+      hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === true,
     },
     {
       name: 'staticUrl',
@@ -106,13 +117,11 @@ export default {
       description: `The URL for the static page. Don't add language information (no/en)`,
       placeholder: '/careers/experienced-professionals',
       fieldset: 'link',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: string, context: SchemaType.ValidationContext) => {
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
           return validateStaticUrl(value, context)
         }),
-      // eslint-disable-next-line
-      // @ts-ignore: Djeez, typescript
-      hidden: ({ parent }) => parent?.isStatic === false,
+      hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === false,
     },
     {
       title: 'Menu groups',
@@ -123,7 +132,7 @@ export default {
           type: 'menuGroup',
         },
       ],
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.max(5),
+      validation: (Rule: Rule) => Rule.max(5),
     },
     {
       name: 'featuredContent',
@@ -132,7 +141,7 @@ export default {
 
       to: [{ type: 'news' }, { type: 'route_en_GB' }, { type: 'route_nb_NO' }],
       options: {
-        filter: ({ document: { _lang, title: title = '' } }: any): SchemaType.ReferenceFilter => ({
+        filter: ({ document: { _lang, title: title = '' } }: any): ReferenceFilterSearchOptions => ({
           filter: `title != $title && (_type == $routeLang || _type == 'news')`,
           params: { routeLang: `route_${_lang}`, title, lang: _lang },
         }),
@@ -145,7 +154,7 @@ export default {
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [introBlockContentType],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.custom((value: any) => validateIngress(value)),
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateIngress(value)),
     },
   ],
   preview: {
