@@ -115,6 +115,18 @@ export default () => {
         .title('Tags')
 
       ),
+      S.listItem()
+    .title('News by tag')
+    .child(
+      S.documentTypeList('tag')
+      .title('News by tag')
+      .child(tagId =>
+        S.documentList()
+          .title('News')
+          .filter('_type == "news" && $tagId in tags[]._ref')
+          .params({ tagId })
+      )
+  ),
       
       
   ]
