@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React from 'react'
-import { SchemaType } from '../../types'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { RadioIconSelector } from '../components'
@@ -8,6 +7,12 @@ import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, SmallSizeImage, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import type { Rule, Block, Reference } from '@sanity/types'
+import type { ImageWithAlt } from './imageWithAlt'
+import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { LinkSelector } from './linkSelector'
+import type { DownloadableFile } from './files'
+import type { DownloadableImage } from './downloadableImage'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -21,7 +26,7 @@ const imageAlignmentOptions = [
   { value: 'right', icon: RightAlignedImage },
 ]
 
-const validateContent = (value: any, maxLength: number) => {
+const validateContent = (value: Block[], maxLength: number) => {
   if (!value) return true
 
   const plainText = blocksToText(value)
@@ -43,6 +48,18 @@ const blockContentType = configureBlockContent({
   attachment: false,
   lists: false,
 })
+
+export type Teaser = {
+  _type: 'teaser'
+  overline?: string
+  title?: Block[]
+  text?: Block[]
+  action: (LinkSelector | DownloadableFile | DownloadableImage)[]
+  image: ImageWithAlt
+  imagePosition?: string
+  imageSize?: string
+  background?: ColorListValue
+}
 
 export default {
   name: 'teaser',
@@ -88,8 +105,7 @@ export default {
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [blockContentType],
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any) => validateContent(value, 600)).warning(),
+      validation: (Rule: Rule) => Rule.custom((value: Block[]) => validateContent(value, 600)).warning(),
     },
     {
       name: 'action',
@@ -101,13 +117,13 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().max(1),
+      validation: (Rule: Rule) => Rule.required().max(1),
     },
     {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'imagePosition',
@@ -169,8 +185,7 @@ export default {
       title: 'title',
       image: 'image.asset',
     },
-    prepare(selection: any) {
-      const { title, image } = selection
+    prepare({ title, image }: { title: Block[]; image: Reference }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

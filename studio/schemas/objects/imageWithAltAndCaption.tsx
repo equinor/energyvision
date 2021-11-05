@@ -1,10 +1,11 @@
 import React from 'react'
-import { SchemaType } from '../../types'
+import type { ImageWithAlt } from './imageWithAlt'
 
-type PreviewProps = {
-  imageUrl: string
-  alt: string
-  caption: string
+export type ImageWithAltAndCaption = {
+  _type: 'imageWithAltAndCaption'
+  image: ImageWithAlt
+  caption?: string
+  attribution?: string
 }
 
 export default {
@@ -34,7 +35,7 @@ export default {
       alt: 'image.alt',
       caption: 'caption',
     },
-    prepare({ imageUrl, caption, alt }: PreviewProps): SchemaType.Preview {
+    prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
       return {
         title: alt,
         subtitle: caption,

@@ -1,9 +1,11 @@
 import React from 'react'
-import { SchemaType } from '../../types'
 import { info_circle } from '@equinor/eds-icons'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
+import type { Block } from '@sanity/types'
+import type { ImageWithAlt } from './imageWithAlt'
+import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -13,9 +15,14 @@ const imageAlignmentOptions = [
 const chosenColors = ['White', 'Moss Green', 'Spruce Wood']
 const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
 
-type PreviewProps = {
-  imageUrl: string
-  title: string
+export type Factbox = {
+  _type: 'factbox'
+  title?: string
+  content?: Block[]
+  image?: ImageWithAlt
+  background?: ColorListValue
+  imagePosition?: string
+  dynamicHeight?: boolean
 }
 
 export default {
@@ -106,7 +113,7 @@ export default {
       title: 'title',
       imageUrl: 'image.asset.url',
     },
-    prepare({ title, imageUrl }: PreviewProps): SchemaType.Preview {
+    prepare({ title = '', imageUrl }: { title: string; imageUrl: string }) {
       return {
         title: title,
         subtitle: 'Factbox',

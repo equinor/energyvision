@@ -1,19 +1,24 @@
 /* eslint-disable react/display-name */
 import React from 'react'
-import { SchemaType } from '../../types'
 import { format_quote } from '@equinor/eds-icons'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
+import type { Rule } from '@sanity/types'
+import type { ImageWithAlt } from './imageWithAlt'
+
+export type PullQuote = {
+  _type: 'pullQuote'
+  quote: string
+  author: string
+  authorTitle?: string
+  image?: ImageWithAlt
+  imagePosition?: string
+}
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
 ]
-
-type PreviewProps = {
-  title: string
-  author: string
-}
 
 export default {
   name: 'pullQuote',
@@ -41,13 +46,13 @@ export default {
       title: 'Quote',
       description: 'Highlighted quote from the article.',
       rows: 5,
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'author',
       type: 'string',
       title: 'Name',
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'authorTitle',
@@ -87,7 +92,7 @@ export default {
       title: 'quote',
       author: 'author',
     },
-    prepare({ title, author }: PreviewProps): SchemaType.Preview {
+    prepare({ title, author }: { title: string; author: string }) {
       return {
         title: title,
         subtitle: `By: ${author}`,

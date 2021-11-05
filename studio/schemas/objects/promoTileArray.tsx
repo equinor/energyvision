@@ -1,7 +1,13 @@
 import React from 'react'
 import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { SchemaType } from '../../types'
+import type { Rule } from '@sanity/types'
+import type { PromoTile } from './promoTile'
+
+export type PromoTileArray = {
+  _type: 'promoTileArray'
+  group: PromoTile[]
+}
 
 export default {
   type: 'object',
@@ -14,14 +20,14 @@ export default {
       description: 'Add promo tiles in pairs of two (2, 4, 6...)',
       title: 'Promo tiles',
       of: [{ type: 'promoTile' }],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required().min(2),
+      validation: (Rule: Rule) => Rule.required().min(2),
     },
   ],
   preview: {
     select: {
       group: 'group',
     },
-    prepare({ group }: any) {
+    prepare({ group }: { group: PromoTile[] }) {
       return {
         title: group ? group[0]?.title + ' | ' + (group[1]?.title || '') : 'Missing content',
         subtitle: 'Promo tiles component',

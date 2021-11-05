@@ -2,7 +2,13 @@ import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { text_field } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { SchemaType } from '../../types'
+import type { Rule, Block } from '@sanity/types'
+
+export type AccordionItem = {
+  _type: 'accordionItem'
+  title?: string
+  content?: Block[]
+}
 
 const contentType = configureBlockContent({
   h1: false,
@@ -21,7 +27,7 @@ export default {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
+      validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
       title: 'Content',
@@ -36,8 +42,8 @@ export default {
       title: 'title',
       content: 'content',
     },
-    prepare({ title = '', content }: { title: string; content: any }) {
-      const contentBlock = (content || []).find((contentBlock: any) => contentBlock._type === 'block')
+    prepare({ title = '', content }: { title: string; content: Block[] }) {
+      const contentBlock = (content || []).find((contentBlock: Block) => contentBlock._type === 'block')
       return {
         title: title || 'Missing title',
         subtitle:

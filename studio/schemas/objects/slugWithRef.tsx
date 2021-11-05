@@ -1,8 +1,8 @@
 import slugify from 'slugify'
-import { SchemaType } from '../../types'
 // eslint-disable-next-line import/no-unresolved
 //eslint-disable-next-line
 import sanityClient from 'part:@sanity/base/client'
+import type { Rule } from '@sanity/types'
 
 const client = sanityClient.withConfig({ apiVersion: `2021-05-19` })
 const slugifyConfig = { lower: true }
@@ -50,8 +50,7 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
       source: (doc: any) => getPrefix(doc, source, ref),
       slugify: (value: any) => formatSlug(value),
     },
-    validation: (Rule: SchemaType.ValidationRule) =>
-      Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
+    validation: (Rule: Rule) => Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
   }
 }
 

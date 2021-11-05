@@ -1,5 +1,11 @@
 import React from 'react'
-import { SchemaType } from '../../types'
+import type { Rule, Reference } from '@sanity/types'
+
+export type DownloadableImage = {
+  _type: 'downloadableImage'
+  label: string
+  image: Reference
+}
 
 export default {
   type: 'object',
@@ -10,13 +16,13 @@ export default {
       name: 'label',
       type: 'string',
       title: 'Label',
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'image',
       type: 'image',
       title: 'Image',
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {
@@ -24,7 +30,7 @@ export default {
       title: 'label',
       image: 'image',
     },
-    prepare({ title = '', image }: { title: string; image: any }) {
+    prepare({ title = '', image }: { title: string; image: Reference }) {
       return {
         title,
         media: image,

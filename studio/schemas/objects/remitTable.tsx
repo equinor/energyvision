@@ -20,6 +20,11 @@ const ApiDescription = () => {
   )
 }
 
+export type RemitTable = {
+  _type: 'remitTable'
+  description: string
+}
+
 export default {
   title: 'REMIT Table',
   description: 'This component will automatically display up to date REMIT values as a table.',
