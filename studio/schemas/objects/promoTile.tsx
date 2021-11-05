@@ -2,7 +2,18 @@ import React from 'react'
 import { Colors } from '../../helpers/ColorListValues'
 import { label } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { SchemaType } from '../../types'
+import type { Rule } from '@sanity/types'
+import type { ImageWithAlt } from './imageWithAlt'
+import type { LinkSelector } from './linkSelector'
+import type { ColorListValue } from 'sanity-plugin-color-list'
+
+export type PromoTile = {
+  _type: 'promoTile'
+  title: string
+  image?: ImageWithAlt
+  link?: LinkSelector
+  background?: ColorListValue
+}
 
 export default {
   title: 'Promo tile',
@@ -29,7 +40,7 @@ export default {
       name: 'title',
       type: 'string',
       title: 'Title',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'image',
@@ -39,7 +50,7 @@ export default {
     {
       name: 'link',
       type: 'linkSelector',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Background',
@@ -63,8 +74,7 @@ export default {
       title: 'title',
       imageUrl: 'image.asset.url',
     },
-    prepare(selection: any) {
-      const { title, imageUrl } = selection
+    prepare({ title, imageUrl }: { title: string; imageUrl: string }) {
       return {
         title: title,
         subtitle: `Promo tile component`,

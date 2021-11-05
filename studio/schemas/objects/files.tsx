@@ -1,6 +1,13 @@
 import React from 'react'
 import { library_pdf, microsoft_excel, file } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import type { Rule, File } from '@sanity/types'
+
+export type DownloadableFile = {
+  _type: 'downloadableFile'
+  filename: string
+  file: File
+}
 
 export default {
   type: 'object',
@@ -11,7 +18,7 @@ export default {
       name: 'filename',
       type: 'string',
       title: 'Name',
-      validation: (Rule: { required: () => any }) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'file',
@@ -20,7 +27,7 @@ export default {
       options: {
         accept: '.pdf,.xls,.xlsx',
       },
-      validation: (Rule: { required: () => any }) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {

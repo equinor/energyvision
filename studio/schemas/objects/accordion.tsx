@@ -1,11 +1,20 @@
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { AccordionComponent } from '../../icons'
-import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
+import type { Rule } from '@sanity/types'
+import type { ColorListValue } from 'sanity-plugin-color-list'
+
+export type Accordion = {
+  _type: 'accordion'
+  title: any
+  ingress?: any
+  accordion: any[]
+  background: ColorListValue
+}
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -33,7 +42,7 @@ export default {
       title: 'Title',
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
+      validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
       title: 'Ingress',
@@ -47,7 +56,7 @@ export default {
       name: 'accordion',
       type: 'array',
       of: [{ type: 'accordionItem' }],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Background',
@@ -70,8 +79,7 @@ export default {
     select: {
       title: 'title',
     },
-    prepare({ title = '' }: { title: any; ingress: any }) {
-      //const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
+    prepare({ title = '' }: { title: any }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

@@ -1,6 +1,13 @@
-import { SchemaType } from '../../types'
 import { list } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import type { Rule } from '@sanity/types'
+import type { MenuLink } from './menuLink'
+
+export type MenuGroup = {
+  _type: 'menuGroup'
+  label?: string
+  links?: MenuLink[]
+}
 
 export default {
   title: 'Menu group',
@@ -23,7 +30,7 @@ export default {
           type: 'menuLink',
         },
       ],
-      validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required().min(1),
+      validation: (Rule: Rule) => Rule.required().min(1),
     },
   ],
   preview: {
@@ -31,7 +38,7 @@ export default {
       label: 'label',
       links: 'links',
     },
-    prepare(selection: any) {
+    prepare(selection: { label: string; links: MenuLink[] }) {
       const { label = 'Unlabeled group', links = [] } = selection
       return {
         title: label,

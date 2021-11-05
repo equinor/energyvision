@@ -1,13 +1,24 @@
 import React from 'react'
 import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
+import type { Rule, ValidationContext, Block } from '@sanity/types'
+import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const titleContentType = configureTitleBlockContent()
+
+export type IFrame = {
+  _type: 'iframe'
+  title?: Block[]
+  frameTitle: string
+  url: string
+  aspectRatio: string
+  height?: number
+  background?: ColorListValue
+}
 
 export default {
   title: 'IFrame',
@@ -38,9 +49,10 @@ export default {
       type: 'string',
       title: 'Frame title',
       description: 'The title of the iframe. This value is not visible on the page but is required for accessibility.',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return context.parent?.url && value === undefined ? 'Required' : true
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as { parent: IFrame }
+          return parent?.url && value === undefined ? 'Required' : true
         }),
     },
     {
@@ -48,9 +60,10 @@ export default {
       type: 'url',
       title: 'URL',
       description: 'Link to the content to be loaded inside the iframe.',
-      validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.custom((value: any, context: SchemaType.ValidationContext) => {
-          return (context.parent?.title || context.parent?.frameTitle) && value === undefined ? 'Required' : true
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: IFrame }
+          return (parent?.title || parent?.frameTitle) && value === undefined ? 'Required' : true
         }),
     },
     {
@@ -67,7 +80,7 @@ export default {
       },
       fieldset: 'design',
       initialValue: '16:9',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'height',
@@ -75,7 +88,7 @@ export default {
       title: 'Height',
       description: 'Set a fixed height in pixels for the iframe. Note: this will override the aspect ratio setting.',
       fieldset: 'design',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.positive().greaterThan(0).precision(0),
+      validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
     },
     {
       title: 'Background',
@@ -99,7 +112,7 @@ export default {
       title: 'title',
       frameTitle: 'frameTitle',
     },
-    prepare({ title, frameTitle }: { title: any; frameTitle: string }): SchemaType.Preview {
+    prepare({ title, frameTitle }: { title: Block[]; frameTitle: string }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

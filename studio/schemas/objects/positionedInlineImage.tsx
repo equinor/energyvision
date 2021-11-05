@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react'
-import { SchemaType } from '../../types'
 import { InlineImageFullWidth, InlineImageLeftAlign, InlineImageRightAlign } from '../../icons'
 import { RadioIconSelector } from '../components'
+import type { ImageWithAlt } from './imageWithAlt'
 
 const imageAlignmentOptions = [
   { value: 'full', icon: InlineImageFullWidth },
@@ -10,10 +10,12 @@ const imageAlignmentOptions = [
   { value: 'right', icon: InlineImageRightAlign },
 ]
 
-type PreviewProps = {
-  imageUrl: string
-  alt: string
-  caption: string
+export type PositionedInlineImage = {
+  _type: 'positionedInlineImage'
+  image: ImageWithAlt
+  caption?: string
+  attribution?: string
+  layout?: string
 }
 
 export default {
@@ -61,7 +63,7 @@ export default {
       alt: 'image.alt',
       caption: 'caption',
     },
-    prepare({ imageUrl, caption, alt }: PreviewProps): SchemaType.Preview {
+    prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
       return {
         title: alt,
         subtitle: caption,

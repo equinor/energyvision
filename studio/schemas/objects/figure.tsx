@@ -1,5 +1,13 @@
-import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
+import type { Rule, Reference } from '@sanity/types'
+import type { ImageWithAltAndCaption } from './imageWithAltAndCaption'
+import type { ColorListValue } from 'sanity-plugin-color-list'
+
+export type Figure = {
+  _type: 'figure'
+  figure: ImageWithAltAndCaption
+  background?: ColorListValue
+}
 
 export default {
   name: 'figure',
@@ -17,7 +25,7 @@ export default {
       name: 'figure',
       title: 'Image',
       type: 'imageWithAltAndCaption',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Background',
@@ -41,7 +49,7 @@ export default {
       alt: 'figure.image.alt',
       image: 'figure.image.asset',
     },
-    prepare({ alt, image }: { alt: string; image: any }) {
+    prepare({ alt, image }: { alt: string; image: Reference }) {
       return {
         title: `Alt text: ${alt}`,
         subtitle: 'Image',

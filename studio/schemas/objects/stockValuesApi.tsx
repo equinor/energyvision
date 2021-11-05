@@ -4,6 +4,7 @@ import { dollar } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'
 import styled from 'styled-components'
+import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const StyledText = styled(Text)`
   margin: 1em 0;
@@ -20,6 +21,12 @@ const ApiDescription = () => {
       </StyledText>
     </Box>
   )
+}
+
+export type StockValues = {
+  _type: 'stockValuesApi'
+  description: string
+  background?: ColorListValue
 }
 
 export default {

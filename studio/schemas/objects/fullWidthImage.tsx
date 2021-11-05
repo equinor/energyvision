@@ -1,4 +1,10 @@
-import { SchemaType } from '../../types'
+import type { Rule, Reference } from '@sanity/types'
+import type { ImageWithAlt } from './imageWithAlt'
+
+export type FullWidthImage = {
+  _type: 'fullWidthImage'
+  image: ImageWithAlt
+}
 
 export default {
   name: 'fullWidthImage',
@@ -9,7 +15,7 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {
@@ -17,7 +23,7 @@ export default {
       alt: 'image.alt',
       image: 'image.asset',
     },
-    prepare({ alt, image }: { alt: string; image: any }) {
+    prepare({ alt, image }: { alt: string; image: Reference }) {
       return {
         title: `Alt text: ${alt}`,
         subtitle: 'Full width image',
