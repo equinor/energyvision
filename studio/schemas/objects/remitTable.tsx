@@ -1,5 +1,4 @@
 import React from 'react'
-import { Colors } from '../../helpers/ColorListValues'
 import { table_chart } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'
@@ -15,8 +14,7 @@ const ApiDescription = () => {
     <Box>
       <Heading size={2}>How to use</Heading>
       <StyledText>
-        This component will automatically display up to date REMIT values as a table. No
-        configuration is required.
+        This component will automatically display up to date REMIT values as a table. No configuration is required.
       </StyledText>
     </Box>
   )
@@ -32,7 +30,8 @@ export default {
       name: 'description',
       type: 'string',
       inputComponent: ApiDescription,
-    }],
+    },
+  ],
   preview: {
     prepare() {
       return {
