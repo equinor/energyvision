@@ -12,8 +12,7 @@
 
   // Set *default* container specific settings.json values on container create.
   "settings": {
-    "terminal.integrated.defaultProfile.linux": "fish",
-    "workbench.colorTheme": "NarutoDark"
+    "terminal.integrated.defaultProfile.linux": "fish"
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -38,15 +37,19 @@
     "formulahendry.auto-rename-tag",
     "formulahendry.auto-close-tag",
     "eg2.vscode-npm-script",
-    "thomaz.preparing"
+    "vscode-icons-team.vscode-icons"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [3000],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "pnpm m i",
+  "postCreateCommand": "gitmoji -i && pnpm m i",
 
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "node"
+  "remoteUser": "node",
+  "features":{
+    "git": "latest",
+    "node": "latest"
+  }
 }
