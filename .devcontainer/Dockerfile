@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends fish curl silversearcher-ag tmux fzf fonts-powerline
+     && apt-get -y install --no-install-recommends fish curl silversearcher-ag fonts-powerline
 
 RUN curl -L https://github.com/oh-my-fish/oh-my-fish/raw/master/bin/install > install
 RUN fish install --noninteractive
