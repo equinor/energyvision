@@ -1,27 +1,23 @@
-import React, { useEffect, useCallback, forwardRef } from 'react'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
+// @ts-ignore
+import ReactDOM from 'react-dom'
 import { Dialog } from '@sanity/ui'
-// eslint-disable-next-line import/no-unresolved
 import styled from 'styled-components'
 
 const BM_EVENT_NAME = 'dam:plugin-assets-selected-event'
 const BM_URL = process.env.SANITY_STUDIO_BRANDMASTER_URL || ''
 const BM_SOURCE = BM_URL + process.env.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE || ''
 
-const StyledIframe = styled.iframe`
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 70vh;
-  border: none;
-`
-
-const Warning = styled.p`
-  margin: 4em;
-  text-align: center;
+const Content = styled.div`
+  margin: 2em;
 `
 
 const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
+
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
+  const newWindow = useRef<Window | null>(null)
 
   const handleBrandmasterEvent = useCallback(
     (event) => {
@@ -58,22 +54,46 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   )
 
   useEffect(() => {
-    window.addEventListener('message', handleBrandmasterEvent)
+    setContainer(document.createElement('div'))
+  }, [])
 
-    return () => {
-      window.removeEventListener('message', handleBrandmasterEvent)
+  useEffect(() => {
+    if (container) {
+      newWindow.current = window.open(BM_SOURCE, 'Brandmaster', 'width=1200,height=800,left=200,top=200')
+
+      if (newWindow.current) {
+        newWindow.current.document.body.appendChild(container)
+        window.addEventListener('message', handleBrandmasterEvent)
+      }
+
+      const currentWindow = newWindow.current
+
+      return () => {
+        window.removeEventListener('message', handleBrandmasterEvent)
+
+        if (currentWindow) {
+          currentWindow.close()
+        }
+      }
     }
-  }, [handleBrandmasterEvent])
+  }, [container, handleBrandmasterEvent])
 
   return (
-    <Dialog id="brandmasterAssetSource" header="Select image from Brandmaster" onClose={onClose} ref={ref} width={80}>
+    <Dialog id="brandmasterAssetSource" header="Select image from Brandmaster" onClose={onClose} ref={ref}>
+      {container && ReactDOM.createPortal(props.children, container)}
+
       {BM_SOURCE ? (
-        <StyledIframe title="Brandmaster" src={BM_SOURCE}></StyledIframe>
+        <Content>
+          <p>Select an image from Brandmaster in the popup window.</p>
+          <p>Once selected, the upload process should start automatically.</p>
+        </Content>
       ) : (
-        <Warning>
-          No Brandmaster source URL found. Please define the URL and path in the enviromental variables to load the
-          iframe.
-        </Warning>
+        <Content>
+          <p>
+            No Brandmaster source URL found. Please define the URL and path in the enviromental variables to load the
+            iframe.
+          </p>
+        </Content>
       )}
     </Dialog>
   )
