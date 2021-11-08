@@ -116,7 +116,7 @@ export default () => {
 
       ),
       S.listItem()
-    .title('News by tag')
+    .title('News by tag(experimental)')
     .child(
       S.documentTypeList('tag')
       .title('News by tag')
