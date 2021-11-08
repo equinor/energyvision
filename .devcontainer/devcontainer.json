@@ -12,7 +12,7 @@
 
   // Set *default* container specific settings.json values on container create.
   "settings": {
-    "terminal.integrated.defaultProfile.linux": "fish"
+    "terminal.integrated.defaultProfile.linux": "zsh"
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -37,7 +37,8 @@
     "formulahendry.auto-rename-tag",
     "formulahendry.auto-close-tag",
     "eg2.vscode-npm-script",
-    "vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "ms-azuretools.vscode-azurefunctions"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
