@@ -15,6 +15,7 @@ import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
 import tag from './documents/tag'
+import countryTag from "./documents/countryTag"
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -95,5 +96,6 @@ export default createSchema({
     promotion,
     promoteNews,
     promoteTopics,
+    countryTag,
   ]),
 })

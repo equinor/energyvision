@@ -116,6 +116,15 @@ export default () => {
 
       ),
       S.listItem()
+      .title('Country tags')
+      .schemaType('countryTag')
+      .child(
+        S.documentTypeList('countryTag')
+        .title('Country tag')
+
+      ),
+      S.divider(),
+      S.listItem()
     .title('News by tag(experimental)')
     .child(
       S.documentTypeList('tag')
