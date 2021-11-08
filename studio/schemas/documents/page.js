@@ -88,6 +88,15 @@ export default {
       ],
     },
   ],
+  orderings: [
+    {
+      title: 'Title ',
+      name: 'titleAsc',
+      by: [
+        {field: 'title[0].children[0].text', direction: 'asc'}
+      ]
+    },
+  ],
   preview: {
     select: {
       title: 'title',
