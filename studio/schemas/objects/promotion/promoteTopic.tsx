@@ -60,15 +60,12 @@ export default {
     },
     {
       name: 'references',
-      title: 'Topics to promote',
       type: 'array',
       of: [
         {
+          title: 'Choose a topic page to reference',
           type: 'reference',
-          to: [
-            { type: 'route_en_GB', title: 'topic route' },
-            { type: 'route_nb_NO', title: 'something else' },
-          ],
+          to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
           options: {
             filter: ({ document }: { document: any }) => ({
               filter: `_type == $routeLang `,
