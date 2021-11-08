@@ -57,11 +57,11 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
   }
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[...pagePath]', data?.news?.slug)
-  const onLinkClicked = (e: any) => {
+  const onLinkClicked = (e: React.MouseEvent<HTMLDivElement>) => {
     anchorClick(e, router)
   }
 
-  const onLinkClikedKeyHandler = (e: any) => {
+  const onLinkClikedKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.which == 32 || e.which == 13) {
       anchorClick(e, router)
     }

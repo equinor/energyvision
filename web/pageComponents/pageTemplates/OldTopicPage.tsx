@@ -15,19 +15,19 @@ type OldTopicPageProps = {
 }
 
 const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
+  const router = useRouter()
   useEffect(() => {
     document.getElementById('legacyScript')?.remove()
     const scriptTag = document.createElement('script')
     scriptTag.src = '/legacy/legacy.minified.js'
     scriptTag.id = 'legacyScript'
     document.body.appendChild(scriptTag)
-  })
+  },[router.asPath])
 
-  const router = useRouter()
-  const onLinkClicked = (e: any) => {
+  const onLinkClicked = (e: React.MouseEvent<HTMLDivElement>) => {
     anchorClick(e, router)
   }
-  const onLinkClikedKeyHandler = (e: any) => {
+  const onLinkClikedKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.which == 32 || e.which == 13) {
       anchorClick(e, router)
     }
