@@ -172,6 +172,45 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
   },
+  _type == "promotion" => {
+    "type": _type,
+    "id": _key,
+    title[]{
+      ...,
+      ${markDefs}, 
+    },
+    ingress[]{
+      ...,
+      ${markDefs}, 
+    },
+    "promotion": promotion[0]{
+      "id": _key,
+      _type == "promoteNews" => {
+        "tags": tags[]->{
+          "id": _id,
+          key,
+          title,
+        },
+      },
+      _type == "promoteTopics" => {
+        "pages": references[]->{
+          _id,
+          "type": _type,
+          "slug": ${slugReference},
+          "content": *[_type == "page" && _id == ^.content._ref][0]{
+            title[]{
+              ...,
+              ${markDefs}, 
+            },
+            heroFigure
+          }
+        },
+      }
+    },
+    "designOptions": {
+      "background": coalesce(background.title, 'none'),
+    },
+  }
 `
 
 export default pageContentFields
