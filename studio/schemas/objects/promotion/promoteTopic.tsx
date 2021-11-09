@@ -39,29 +39,17 @@ export default {
   ],
   preview: {
     select: {
-      title: 'title',
-      ingress: 'ingress',
-      text: 'text',
+      reference1: 'references.0.content.title',
+      reference2: 'references.1.content.title',
+      reference3: 'references.2.content.title',
     },
-    prepare({ title = [], ingress, text }: { title: any[]; ingress: any; text: any }) {
-      const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
-      const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
-      const plainTitle = title ? blocksToText(title) : undefined
-
+    prepare({ reference1, reference2, reference3 }: { reference1: Block[]; reference2: Block[]; reference3: Block[] }) {
+      const plainTitle1 = reference1 ? blocksToText(reference1) : undefined
+      const plainTitle2 = reference2 ? blocksToText(reference2) : undefined
+      const plainTitle3 = reference3 ? blocksToText(reference3) : undefined
+      const titles = [plainTitle1, plainTitle2, plainTitle3].filter(Boolean)
       return {
-        title:
-          plainTitle ||
-          (textBlock &&
-            textBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          (ingressBlock &&
-            ingressBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          'Missing content!',
+        title: titles.join(', '),
         subtitle: `Topic promotions.`,
       }
     },
