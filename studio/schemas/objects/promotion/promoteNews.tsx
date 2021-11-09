@@ -1,8 +1,6 @@
 import React from 'react'
 
-import blocksToText from '../../../helpers/blocksToText'
-
-import type { Block } from '@sanity/types'
+import type { Block, Rule } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Promotion = {
@@ -24,6 +22,8 @@ export default {
       name: 'tags',
       type: 'tagReference',
       description: 'Feed in the latest 3 news that satisfies the tags',
+      validation: (Rule: Rule) => Rule.unique(),
+      options: { sortable: false },
     },
   ],
   preview: {

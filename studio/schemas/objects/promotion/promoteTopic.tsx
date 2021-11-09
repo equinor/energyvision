@@ -1,7 +1,7 @@
 import React from 'react'
 
 import blocksToText from '../../../helpers/blocksToText'
-import type { Block } from '@sanity/types'
+import type { Block, Rule } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Promotion = {
@@ -34,6 +34,7 @@ export default {
           },
         },
       ],
+      validation: (Rule: Rule) => Rule.unique().min(3).max(3),
     },
   ],
   preview: {
