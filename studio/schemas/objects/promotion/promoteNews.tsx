@@ -28,29 +28,17 @@ export default {
   ],
   preview: {
     select: {
-      title: 'title',
-      ingress: 'ingress',
-      text: 'text',
+      tags1: 'tags.0.title.en_GB',
+      tags2: 'tags.1.title.en_GB',
+      tags3: 'tags.2.title.en_GB',
+      tags4: 'tags.3.title.en_GB',
     },
-    prepare({ title = [], ingress, text }: { title: any[]; ingress: any; text: any }) {
-      const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
-      const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
-      const plainTitle = title ? blocksToText(title) : undefined
-
+    prepare({ tags1, tags2, tags3, tags4 }: { tags1?: string; tags2?: string; tags3?: string; tags4?: string }) {
+      const tags = [tags1, tags2, tags3].filter(Boolean)
+      const hasMoreTags = Boolean(tags4)
+      const title = tags.length > 0 ? `Tags: ${tags.join(', ')}` : ''
       return {
-        title:
-          plainTitle ||
-          (textBlock &&
-            textBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          (ingressBlock &&
-            ingressBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          'Missing preview',
+        title: hasMoreTags ? `${title}…` : title,
         subtitle: `News promotion.`,
       }
     },
