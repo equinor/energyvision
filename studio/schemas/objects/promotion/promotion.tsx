@@ -1,11 +1,12 @@
 import React from 'react'
 import blocksToText from '../../../helpers/blocksToText'
-
-import type { Rule, Block } from '@sanity/types'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import { Colors } from '../../../helpers/ColorListValues'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import CharCounterEditor from '../../components/CharCounterEditor'
+
+import type { Rule, Block } from '@sanity/types'
+import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Promotion = {
   _type: 'promotion'
@@ -31,7 +32,17 @@ export default {
   title: 'Promotion',
   name: 'promotion',
   type: 'object',
-
+  fieldsets: [
+    {
+      title: 'Design options',
+      name: 'design',
+      description: 'Some options for design',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
     {
       title: 'Title',
@@ -58,6 +69,22 @@ export default {
         { type: 'promoteTopics', title: 'Promote topic' },
       ],
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        borderradius: {
+          outer: '100%',
+          inner: '100%',
+        },
+        tooltip: true,
+        list: Colors,
+      },
+      fieldset: 'design',
+      initialValue: Colors[0],
     },
   ],
   preview: {

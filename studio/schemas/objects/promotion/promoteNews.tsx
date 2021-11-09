@@ -1,5 +1,4 @@
 import React from 'react'
-import { Colors } from '../../../helpers/ColorListValues'
 
 import blocksToText from '../../../helpers/blocksToText'
 
@@ -18,39 +17,13 @@ export default {
   title: 'News promotion',
   name: 'promoteNews',
   type: 'object',
-  fieldsets: [
-    {
-      title: 'Design options',
-      name: 'design',
-      description: 'Some options for design',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
-  ],
+
   fields: [
     {
       title: 'Tags',
       name: 'tags',
       type: 'tagReference',
       description: 'Feed in the latest 3 news that satisfies the tags',
-    },
-    {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
-      fieldset: 'design',
-      initialValue: Colors[0],
     },
   ],
   preview: {
