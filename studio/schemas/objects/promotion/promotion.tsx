@@ -15,6 +15,8 @@ export type Promotion = {
   background?: ColorListValue
 }
 
+type PromotionType = 'promoteTopics' | 'promoteNews'
+
 const titleContentType = configureTitleBlockContent()
 
 const ingressContentType = configureBlockContent({
@@ -61,29 +63,21 @@ export default {
   preview: {
     select: {
       title: 'title',
-      ingress: 'ingress',
-      text: 'text',
+      type: 'promotion[0]._type',
     },
-    prepare({ title = [], ingress, text }: { title: any[]; ingress: any; text: any }) {
-      const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
-      const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
+    prepare({ title = [], type }: { title: Block[]; type: PromotionType }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
+      const getPromotionType = (type: PromotionType) => {
+        if (type === 'promoteTopics') {
+          return 'Topic page promotion'
+        }
+        return 'News promotions'
+      }
+
       return {
-        title:
-          plainTitle ||
-          (textBlock &&
-            textBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          (ingressBlock &&
-            ingressBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          'What to preview',
-        subtitle: `Promotions.`,
+        title: plainTitle,
+        subtitle: getPromotionType(type),
       }
     },
   },
