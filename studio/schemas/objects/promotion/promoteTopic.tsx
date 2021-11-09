@@ -1,5 +1,4 @@
 import React from 'react'
-import { Colors } from '../../../helpers/ColorListValues'
 
 import blocksToText from '../../../helpers/blocksToText'
 import type { Block } from '@sanity/types'
@@ -17,17 +16,7 @@ export default {
   title: 'Topic promotion',
   name: 'promoteTopics',
   type: 'object',
-  fieldsets: [
-    {
-      title: 'Design options',
-      name: 'design',
-      description: 'Some options for design',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
-  ],
+
   fields: [
     {
       name: 'references',
@@ -45,22 +34,6 @@ export default {
           },
         },
       ],
-    },
-    {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
-      fieldset: 'design',
-      initialValue: Colors[0],
     },
   ],
   preview: {
