@@ -2,22 +2,9 @@ import React from 'react'
 import { Colors } from '../../../helpers/ColorListValues'
 
 import blocksToText from '../../../helpers/blocksToText'
-import { configureBlockContent, configureTitleBlockContent } from '../../editors'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import CharCounterEditor from '../../components/CharCounterEditor'
 
-import type { Rule, Block } from '@sanity/types'
+import type { Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-
-const titleContentType = configureTitleBlockContent()
-
-const ingressContentType = configureBlockContent({
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export type Promotion = {
   _type: 'promotion'
@@ -43,21 +30,6 @@ export default {
     },
   ],
   fields: [
-    {
-      title: 'Title',
-      name: 'title',
-      type: 'array',
-      inputComponent: CompactBlockEditor,
-      of: [titleContentType],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
-    },
-    {
-      name: 'ingress',
-      title: 'Ingress',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [ingressContentType],
-    },
     {
       title: 'Tags',
       name: 'tags',
