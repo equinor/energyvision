@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends fish curl silversearcher-ag fzf fonts-powerline
 
+# This does not work for some reason
 RUN curl -L https://github.com/oh-my-fish/oh-my-fish/raw/master/bin/install > install
 RUN fish install --noninteractive
 
@@ -18,3 +19,4 @@ RUN fish install --noninteractive
 # [Optional] Uncomment if you want to install more global node packages
 RUN su node -c "npm install -g pnpm"
 RUN su node -c "npm install -g gitmoji-cli"
+RUN su node -c "npm install -g azure-functions-core-tools@3 --unsafe-perm true"

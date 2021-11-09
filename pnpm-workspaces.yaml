@@ -3,3 +3,4 @@ packages:
   - 'web'
   - 'e2e'
   - 'legacy'
+  - 'search-indexers'

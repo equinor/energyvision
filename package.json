@@ -12,6 +12,7 @@
     "studio": "pnpm --filter ./studio",
     "web": "pnpm --filter ./web",
     "e2e": "pnpm --filter ./e2e",
+    "search-indexers": "pnpm --filter ./search",
     "legacy-css": "pnpm --filter ./legacy/css",
     "legacy-js": "pnpm --filter ./legacy/js",
     "legacy-content": "pnpm --filter ./legacy/content",
