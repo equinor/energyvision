@@ -23,7 +23,8 @@ export default {
       type: 'array',
       of: [
         {
-          title: 'Choose a topic page to reference',
+          title: 'Topics to be promoted',
+          description: 'Select the topics you want to promote',
           type: 'reference',
           to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
           options: {

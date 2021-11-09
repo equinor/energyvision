@@ -62,12 +62,13 @@ export default {
     {
       type: 'array',
       name: 'promotion',
-      description: 'Choose a type to promote',
-      title: 'Promoted content',
+      description: 'Select what type of content you want to promote',
+      title: 'Type of promotion',
       of: [
         { type: 'promoteNews', title: 'Promote news' },
         { type: 'promoteTopics', title: 'Promote topic' },
       ],
+      options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
     {
