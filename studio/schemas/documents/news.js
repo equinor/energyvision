@@ -91,8 +91,7 @@ export default {
       title: 'Tags',
       name: 'tags',
       type: 'tagReference',
-      description: "Adds tags to news article",
-      
+      description: 'Adds tags to news article',
     },
     {
       // TODO: Figure out a way to run a slugify function before publish
