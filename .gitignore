@@ -53,3 +53,4 @@ output
 # azureite
 __azurite*
 __blobstorage*
+__queuestorage*
