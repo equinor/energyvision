@@ -3,7 +3,7 @@ import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 
-const newsFields = /* groq */ `
+export const newsFields = /* groq */ `
   "id": _id,
   "updatedAt": _updatedAt,
   title,
