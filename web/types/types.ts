@@ -243,6 +243,40 @@ export type IFrameData = {
   }
 }
 
+export type Tag = {
+  key: {
+    _type: 'tag' | 'countryTag'
+    current: string
+  }
+  title: {
+    en_GB: string
+    nb_NO: string
+  }
+}
+
+export type TopicCardData = {
+  id: string
+  type: string
+  slug: string
+  content: {
+    title: BlockNode[]
+    heroFigure: ImageWithCaptionData
+  }
+}
+
+export type PromotionData = {
+  id: string
+  type: string
+  title: PortableTextEntry[]
+  ingress?: PortableTextEntry[]
+  promotion: {
+    tags?: Tag[]
+    articles?: CardData[]
+    pages?: TopicCardData[]
+  }
+  designOptions: DesignOptions
+}
+
 export type FooterColumns = {
   id: string
   header: string
