@@ -186,6 +186,7 @@ const pageContentFields = /* groq */ `
     },
     "promotion": promotion[0]{
       "id": _key,
+      "type": _type,
       _type == "promoteNews" => {
         "tags": tags[]->{
           "id": _id,
@@ -198,7 +199,7 @@ const pageContentFields = /* groq */ `
       },
       _type == "promoteTopics" => {
         "pages": references[]->{
-          _id,
+          "id": _id,
           "type": _type,
           "slug": ${slugReference},
           "content": *[_type == "page" && _id == ^.content._ref][0]{
