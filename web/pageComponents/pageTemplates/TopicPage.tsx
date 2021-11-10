@@ -15,6 +15,7 @@ import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../shared/IFrame'
 import RemitTable from '../shared/RemitTable'
+import Promotion from '../topicPages/Promotion'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
@@ -30,6 +31,7 @@ import {
   AccordionData,
   PromoTileArrayData,
   IFrameData,
+  PromotionData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -78,6 +80,7 @@ type ComponentProps =
   | PromoTileArrayData
   | IFrameData
   | RemitTableData
+  | PromotionData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -112,6 +115,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <IFrame key={c.id} data={c as IFrameData} />
       case 'remitTable':
         return <RemitTable key={c.id} />
+      case 'promotion':
+        return <Promotion key={c.id} data={c as PromotionData} />
       default:
         return null
     }
