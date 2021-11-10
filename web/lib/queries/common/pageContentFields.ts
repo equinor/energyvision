@@ -3,6 +3,7 @@ import markDefs from './blockEditorMarks'
 import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
+import { newsFields } from '../news'
 
 const pageContentFields = /* groq */ `
   _type == "teaser"=>{
@@ -190,6 +191,9 @@ const pageContentFields = /* groq */ `
           "id": _id,
           key,
           title,
+        },
+        "articles": *[_type == "news" && _lang == $lang && count(tags[_ref in ^.^.tags[]._ref]) > 0] | order(publishDateTime desc, _updatedAt desc)[0...3]{
+          ${newsFields}
         },
       },
       _type == "promoteTopics" => {
