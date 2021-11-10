@@ -20,3 +20,4 @@ RUN fish install --noninteractive
 RUN su node -c "npm install -g pnpm"
 RUN su node -c "npm install -g gitmoji-cli"
 RUN su node -c "npm install -g azure-functions-core-tools@3 --unsafe-perm true"
+RUN su node -c "npm install -g azurite"
