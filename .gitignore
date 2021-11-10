@@ -49,3 +49,7 @@ package-lock.json
 # e2e
 .secret
 output
+
+# azureite
+__azurite*
+__blobstorage*
