@@ -7,6 +7,8 @@ import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, SmallSizeImage, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+
 import type { Rule, Block, Reference } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { ColorListValue } from 'sanity-plugin-color-list'
@@ -25,18 +27,6 @@ const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
 ]
-
-const validateContent = (value: Block[], maxLength: number) => {
-  if (!value) return true
-
-  const plainText = blocksToText(value)
-
-  if (plainText.length > maxLength) {
-    return `Content should be short and concise.`
-  }
-
-  return true
-}
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -105,7 +95,7 @@ export default {
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [blockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: Block[]) => validateContent(value, 600)).warning(),
+      validation: (Rule: Rule) => Rule.custom((value: Block[]) => validateCharCounterEditor(value, 600)).warning(),
     },
     {
       name: 'action',

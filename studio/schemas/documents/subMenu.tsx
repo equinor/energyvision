@@ -4,6 +4,8 @@ import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+
 import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
 
 export type SubMenu = {
@@ -29,23 +31,6 @@ const introBlockContentType = configureBlockContent({
   attachment: false,
   lists: false,
 })
-
-const validateIngress = (value: any) => {
-  if (!value || value.length === 0) {
-    return 'Required'
-  }
-
-  const count = value[0].children.reduce(
-    (total: any, current: { text: string | any[] }) => total + current.text.length,
-    0,
-  )
-
-  if (count > 215) {
-    return `The introduction should be no longer than 215 characters. Currently ${count} characters long.`
-  }
-
-  return true
-}
 
 export default {
   type: 'document',
@@ -154,7 +139,7 @@ export default {
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [introBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateIngress(value)),
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215)),
     },
   ],
   preview: {
