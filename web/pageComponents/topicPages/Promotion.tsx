@@ -1,15 +1,14 @@
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import NewsCard from '../news/NewsCard'
+import TopicPageCard from './TopicPageCard'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
+import { blocksToText } from '../../common/helpers'
 import type { PromotionData, CardData, TopicCardData } from '../../types/types'
 
 const Wrapper = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small);
-  max-width: 1920px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: var(--space-3xLarge) var(--space-xxLarge);
 `
 
 const StyledHeading = styled(TitleBlockRenderer)`
@@ -20,8 +19,9 @@ const StyledHeading = styled(TitleBlockRenderer)`
 const CardsWrapper = styled.div`
   margin-top: var(--space-xLarge);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 400px));
   grid-gap: var(--space-large);
+  justify-content: center;
 `
 
 const getCards = (articles: CardData[], pages: TopicCardData[]) => {
@@ -30,15 +30,26 @@ const getCards = (articles: CardData[], pages: TopicCardData[]) => {
   }
 
   if (pages && pages.length > 0) {
-    // todo: refactor NewsCard to make it more generic
-    return false
+    return pages.map(({ reference, ingress }) => {
+      return (
+        <TopicPageCard
+          data={{
+            id: reference.id,
+            slug: reference.slug,
+            ingress: ingress,
+            title: blocksToText(reference.content.title),
+            heroImage: reference.content.heroImage,
+          }}
+          key={reference.id}
+        />
+      )
+    })
   }
 
   return false
 }
 
 const Promotion = ({ data }: { data: PromotionData }) => {
-  console.log(data)
   const { title, ingress } = data
   const { articles = [], pages = [] } = data.promotion
 
