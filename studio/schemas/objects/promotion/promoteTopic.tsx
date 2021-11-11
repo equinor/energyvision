@@ -2,7 +2,7 @@ import React from 'react'
 import { configureBlockContent } from '../../editors/blockContentType'
 import CharCounterEditor from '../../components/CharCounterEditor'
 import blocksToText from '../../../helpers/blocksToText'
-import type { Block, Rule } from '@sanity/types'
+import type { Block, Rule, Image } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Promotion = {
@@ -79,6 +79,20 @@ export default {
               validation: (Rule: Rule) => Rule.custom((value: any) => validateIngress(value)),
             },
           ],
+          preview: {
+            select: {
+              title: 'reference.content.title',
+              media: 'reference.content.heroFigure.image',
+            },
+            prepare({ title, media }: { title: Block[]; media: Image }) {
+              const plainTitle = title ? blocksToText(title) : ''
+
+              return {
+                title: plainTitle,
+                media,
+              }
+            },
+          },
         },
       ],
       validation: (Rule: Rule) => Rule.unique().min(3).max(3),
