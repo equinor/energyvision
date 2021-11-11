@@ -57,7 +57,7 @@ export default {
             {
               name: 'ingress',
               title: 'Ingress',
-              description: 'A short and catchy introduction text for this card (max. 215 chars)',
+              description: 'A short and catchy introduction text for this topic content card (max. 215 chars)',
               type: 'array',
               inputComponent: CharCounterEditor,
               of: [introBlockContentType],
