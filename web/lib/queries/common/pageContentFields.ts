@@ -198,17 +198,23 @@ const pageContentFields = /* groq */ `
         },
       },
       _type == "promoteTopics" => {
-        "pages": references[]->{
-          "id": _id,
-          "type": _type,
-          "slug": ${slugReference},
-          "content": *[_type == "page" && _id == ^.content._ref][0]{
-            title[]{
-              ...,
-              ${markDefs}, 
+        "pages": references[]{
+          ingress[]{
+            ...,
+            ${markDefs}, 
+          },
+          "reference": reference->{
+            "id": _id,
+            "type": _type,
+            "slug": ${slugReference},
+            "content": *[_type == "page" && _id == ^.content._ref][0]{
+              title[]{
+                ...,
+                ${markDefs}, 
+              },
+              "heroImage": heroFigure
             },
-            heroFigure
-          }
+          },
         },
       }
     },

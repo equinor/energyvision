@@ -1,15 +1,17 @@
+import { CSSProperties } from 'react'
 import { Card } from '@components'
 import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
 import { blocksToText } from '../../common/helpers/blocksToText'
+import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { BlockNode } from '@sanity/block-content-to-react'
 
-const { Title, Header, Action, Arrow, Media, CardLink } = Card
+const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 
 const StyledCard = styled(Card)`
-  height: auto;
+  height: var(--height);
 `
 
 const StyledLink = styled(CardLink)`
@@ -22,8 +24,8 @@ type TopicPageCardProp = {
   fitToContent?: boolean
 }
 
-const TopicPageCard = ({ data }: TopicPageCardProp) => {
-  const { slug, title, heroImage } = data
+const TopicPageCard = ({ data, fitToContent = false }: TopicPageCardProp) => {
+  const { slug, title, heroImage, ingress } = data
   if (!heroImage) return null
 
   const pageTitle = title ? blocksToText(title as BlockNode[]) : ''
@@ -32,7 +34,13 @@ const TopicPageCard = ({ data }: TopicPageCardProp) => {
     <NextLink href={slug} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <StyledLink>
-        <StyledCard>
+        <StyledCard
+          style={
+            {
+              '--height': fitToContent ? 'auto' : '100%',
+            } as CSSProperties
+          }
+        >
           <Media>
             {heroImage && (
               <Image
@@ -47,6 +55,11 @@ const TopicPageCard = ({ data }: TopicPageCardProp) => {
           <Header>
             <Title>{pageTitle}</Title>
           </Header>
+          {ingress && (
+            <Text>
+              <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
+            </Text>
+          )}
           <Action>
             <Arrow />
           </Action>

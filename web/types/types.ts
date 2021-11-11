@@ -255,12 +255,15 @@ export type Tag = {
 }
 
 export type TopicCardData = {
-  id: string
-  type: string
-  slug: string
-  content: {
-    title: BlockNode[]
-    heroFigure: ImageWithCaptionData
+  ingress?: BlockNode[]
+  reference: {
+    id: string
+    type: string
+    slug: string
+    content: {
+      title: BlockNode[]
+      heroImage: ImageWithCaptionData
+    }
   }
 }
 
