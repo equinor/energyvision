@@ -10,12 +10,13 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 // Document types
 import news from './documents/news'
 import page from './documents/page'
+import landingPage from './documents/landingPage'
 import route from './documents/route'
 import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
 import tag from './documents/tag'
-import countryTag from "./documents/countryTag"
+import countryTag from './documents/countryTag'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -62,6 +63,7 @@ export default createSchema({
     /* Your types here! */
     news,
     page,
+    landingPage,
     subMenu,
     ...routeSchemas,
     siteMenu,

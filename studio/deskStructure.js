@@ -18,7 +18,7 @@ export default () => {
       .icon(NewsDocuments)
       .schemaType('news')
       .child(
-        S.documentTypeList("news")
+        S.documentTypeList('news')
           .id('news')
           .title('News articles')
           .filter('_type == "news" && (!defined(_lang) || _lang == $baseLang)')
@@ -41,6 +41,21 @@ export default () => {
           .canHandleIntent((_name, params) => {
             // Assume we can handle all intents (actions) regarding post documents
             return params.type === 'page'
+          }),
+      ),
+    S.listItem()
+      .title('Landing page')
+      .icon(TopicDocuments)
+      .schemaType('landingPage')
+      .child(
+        S.documentTypeList('landingPage')
+          .id('landingPages')
+          .title('Landing page')
+          .filter('_type == "landingPage" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'landingPage'
           }),
       ),
     S.divider(),
@@ -76,8 +91,8 @@ export default () => {
             }),
           ]),
       ),
-      S.divider(),
-      S.listItem()
+    S.divider(),
+    S.listItem()
       .title('Footer')
       .child(
         S.list('footer')
@@ -106,38 +121,22 @@ export default () => {
             }),
           ]),
       ),
-      S.divider(),
-      S.listItem()
-      .title('Tags')
-      .schemaType('tag')
-      .child(
-        S.documentTypeList('tag')
-        .title('Tags')
-
-      ),
-      S.listItem()
+    S.divider(),
+    S.listItem().title('Tags').schemaType('tag').child(S.documentTypeList('tag').title('Tags')),
+    S.listItem()
       .title('Country tags')
       .schemaType('countryTag')
+      .child(S.documentTypeList('countryTag').title('Country tag')),
+    S.divider(),
+    S.listItem()
+      .title('News by tag(experimental)')
       .child(
-        S.documentTypeList('countryTag')
-        .title('Country tag')
-
+        S.documentTypeList('tag')
+          .title('News by tag')
+          .child((tagId) =>
+            S.documentList().title('News').filter('_type == "news" && $tagId in tags[]._ref').params({ tagId }),
+          ),
       ),
-      S.divider(),
-      S.listItem()
-    .title('News by tag(experimental)')
-    .child(
-      S.documentTypeList('tag')
-      .title('News by tag')
-      .child(tagId =>
-        S.documentList()
-          .title('News')
-          .filter('_type == "news" && $tagId in tags[]._ref')
-          .params({ tagId })
-      )
-  ),
-      
-      
   ]
 
   return S.list().title('Content').items(listItems)
@@ -157,6 +156,8 @@ export const getDefaultDocumentNode = (props) => {
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(NewsPreview).title('News preview'),
     ])
+  } else if (schemaType === 'landingPage') {
+    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
   } else if (schemaType === 'page') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
@@ -171,8 +172,6 @@ export const getDefaultDocumentNode = (props) => {
         .title('Connected routes'),
     ])
   }
-  
-  
 
   return S.document().views([S.view.form()])
 }
