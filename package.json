@@ -5,10 +5,12 @@
     "pnpm": ">=6"
   },
   "scripts": {
-    "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "lint:notworking": "eslint ./ --ext .js,.jsx,.ts,.tsx",
     "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
     "lint:web": "eslint ./web/ --ext .js,.jsx,.ts,.tsx",
     "lint:studio": "eslint ./studio/ --ext .js,.jsx,.ts,.tsx",
+    "lint:search": "eslint ./search/ --ext .ts",
+    "lint": "pnpm lint:web && pnpm lint:studio && pnpm lint:search",
     "studio": "pnpm --filter ./studio",
     "web": "pnpm --filter ./web",
     "e2e": "pnpm --filter ./e2e",
