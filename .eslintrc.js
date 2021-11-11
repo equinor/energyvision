@@ -34,12 +34,6 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'jsx-a11y'],
   rules: {
-    'no-unused-vars': [
-      'warn',
-      {
-        varsIgnorePattern: '^React$',
-      },
-    ],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
