@@ -2,6 +2,7 @@ import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { formatDate } from '../../helpers/formatDate'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -14,20 +15,6 @@ const ingressBlockContentType = configureBlockContent({
   attachment: false,
   lists: false,
 })
-
-const validateIngress = (value) => {
-  if (!value || value.length === 0) {
-    return 'Required'
-  }
-
-  const count = value[0].children.reduce((total, current) => total + current.text.length, 0)
-
-  if (count > 400) {
-    return `Ingress cannot be longer than 400 characters. Currently ${count} characters long.`
-  }
-
-  return true
-}
 
 const validateRelatedLinksTitle = (value, context) => {
   const links = context.document.relatedLinks.links
@@ -123,7 +110,7 @@ export default {
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [ingressBlockContentType],
-      validation: (Rule) => Rule.custom((value) => validateIngress(value)),
+      validation: (Rule) => Rule.custom((value) => validateCharCounterEditor(value, 400)),
     },
     {
       name: 'content',
