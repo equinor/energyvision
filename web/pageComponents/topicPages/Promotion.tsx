@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { BackgroundContainer } from '@components'
 import NewsCard from '../news/NewsCard'
 import TopicPageCard from './TopicPageCard'
@@ -9,6 +9,9 @@ import type { PromotionData, CardData, TopicCardData } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--space-3xLarge) var(--space-xxLarge);
+
+  --card-maxWidth: 400px;
+  --card-minWidth: 200px;
 `
 
 const StyledHeading = styled(TitleBlockRenderer)`
@@ -17,22 +20,44 @@ const StyledHeading = styled(TitleBlockRenderer)`
 `
 
 const CardsWrapper = styled.div`
+  width: 100%;
+  max-width: calc(var(--card-maxWidth) * 3 + var(--space-large) * 2);
+  margin: auto;
   margin-top: var(--space-xLarge);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 400px));
-  grid-gap: var(--space-large);
+  display: flex;
+  gap: var(--space-large);
   justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  @media (min-width: 750px) {
+    flex-direction: row;
+  }
+`
+
+const CardStyle = css`
+  min-width: var(--card-minWidth);
+  max-width: var(--card-maxWidth);
+  flex-basis: 0;
+  flex-grow: 1;
+`
+const StyledNewsCard = styled(NewsCard)`
+  ${CardStyle}
+`
+const StyledTopicPageCard = styled(TopicPageCard)`
+  ${CardStyle}
 `
 
 const getCards = (articles: CardData[], pages: TopicCardData[]) => {
   if (articles && articles.length > 0) {
-    return articles.map((article) => <NewsCard data={article} key={article.id} />)
+    return articles.map((article) => <StyledNewsCard data={article} key={article.id} />)
   }
 
   if (pages && pages.length > 0) {
     return pages.map(({ reference, ingress }) => {
       return (
-        <TopicPageCard
+        <StyledTopicPageCard
           data={{
             id: reference.id,
             slug: reference.slug,

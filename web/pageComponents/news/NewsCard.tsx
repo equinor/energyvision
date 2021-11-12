@@ -20,14 +20,14 @@ type NewsCardProp = {
   fitToContent?: boolean
 }
 
-const NewsCard = ({ data, fitToContent = false }: NewsCardProp) => {
+const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
   if (!heroImage) return null
 
   return (
     <NextLink href={`/news/${slug}`} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <StyledLink>
+      <StyledLink {...rest}>
         <StyledCard
           style={
             {
