@@ -1,7 +1,16 @@
 import pageContentFields from './common/pageContentFields'
 
+// Or "topLevelGroups": group[reference._ref == ^.^._id]
 const landingPageContentFields = /* groq */ `
   "ingress": content->ingress,
+  "id": _id,
+
+  "groupsWithReference": *[_type == "siteMenu" && references(^._id)]{
+
+    "topLevelGroups": group[reference->.slug.current match $slug]{
+      "topicPageGroups": group,
+    }
+ }[0]
 `
 const localizedSlugsFromEnglish = /* groq */ `
   "allSlugs": {
