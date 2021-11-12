@@ -37,6 +37,8 @@ export default function parentChild(schema = 'category') {
 
 function routeStructure(schema, isoCode) {
   const documentName = `${schema}_${isoCode}`
+  const schemaTypes = documentName
+
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
   return () =>
     documentStore.listenQuery(`*[${categoryParents}]`).pipe(
@@ -49,7 +51,7 @@ function routeStructure(schema, isoCode) {
               .child(() =>
                 S.documentList()
                   .title('Topic Categories')
-                  .schemaType(documentName)
+                  .schemaType(schemaTypes)
                   .filter(categoryParents)
                   .child((id) => S.document().documentId(id).views(views)),
               ),

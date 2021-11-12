@@ -30,6 +30,9 @@ export default (isoCode: string, title: string) => {
           {
             type: 'page',
           },
+          {
+            type: 'landingPage',
+          },
         ],
         options: {
           filter: '_lang == $lang',
