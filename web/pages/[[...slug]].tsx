@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import { groq } from 'next-sanity'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
+import { SkipNavContent } from '@reach/skip-nav'
+/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { menuQuery } from '../lib/queries/menu'
 import { footerQuery } from '../lib/queries/footer'
@@ -13,8 +15,6 @@ import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'
 import { mapLocaleToLang } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
-import { SkipNavContent } from '@reach/skip-nav'
-/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
