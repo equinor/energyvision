@@ -82,10 +82,13 @@ export type PortableTextChild = {
   text?: string
 }
 
+export type Templates = 'landingPage' | 'page'
+
 export type PageSchema = {
   slug: string
   title: BlockNode[]
   heroImage: ImageWithCaptionData
+  template: Templates
   seoAndSome: {
     documentTitle?: string
     metaDescription?: string
@@ -101,6 +104,7 @@ export type LandingPageSchema = {
   slug: string
   title: BlockNode[]
   ingress: BlockNode[]
+  template: Templates
   seoAndSome: {
     documentTitle?: string
     metaDescription?: string
