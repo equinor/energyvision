@@ -1,5 +1,8 @@
 import pageContentFields from './common/pageContentFields'
 
+const landingPageContentFields = /* groq */ `
+  ingress,
+`
 const localizedSlugsFromEnglish = /* groq */ `
   "allSlugs": {
     "en_GB": slug.current,
@@ -30,9 +33,14 @@ export const pageQuery = /* groq */ `
           openGraphImage,
     },
     "heroImage": content->heroFigure,
-    "content": content->content[]{
-        
-      ${pageContentFields}
-    }
+    "template": content->_type,
+     content->_type == "landingPage"=>{
+        ${landingPageContentFields}
+    },
+    content->_type == "page"=>{
+      "content": content->content[]{
+          ${pageContentFields}
+      },
+    },
   }
 `
