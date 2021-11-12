@@ -101,9 +101,12 @@ export type PageSchema = {
 }
 
 export type LandingPageSchema = {
+  id: string
   slug: string
   title: BlockNode[]
   ingress: BlockNode[]
+  groupsWithReference: any[]
+
   template: Templates
   seoAndSome: {
     documentTitle?: string

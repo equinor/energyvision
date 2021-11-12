@@ -4,11 +4,13 @@ import type { LandingPageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
 import getConfig from 'next/config'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import { IngressBlockRenderer } from '../../common/serializers'
+import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
+import { Card } from '@components'
+
+const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
 
 const LandingPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -20,6 +22,13 @@ const HeroBanner = styled.div`
   padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
     var(--layout-paddingHorizontal-medium);
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+`
+
+const TempGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 15rem);
+  grid-row-gap: 4rem;
+  grid-column-gap: 2rem;
 `
 
 const StyledHeading = styled(TitleBlockRenderer)`
@@ -42,7 +51,7 @@ type LandingPageProps = {
 const TopicPage = ({ data }: LandingPageProps) => {
   const { pathname } = useRouter()
   const slug = data?.slug
-  console.log(data)
+
   const { publicRuntimeConfig } = getConfig()
 
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
@@ -96,6 +105,31 @@ const TopicPage = ({ data }: LandingPageProps) => {
             ></SimpleBlockContent>
           </Intro>
         )}
+        {data?.groupsWithReference.topLevelGroups[0].topicPageGroups.map((item) => {
+          console.log(item)
+          return (
+            <>
+              {item.label && <h2>{item.label}</h2>}
+              <TempGroup>
+                {item.links.map((link) => {
+                  return (
+                    <CardLink key={link.id}>
+                      <Card>
+                        <Header>
+                          <Title>{link.label}</Title>
+                        </Header>
+
+                        <Action>
+                          <Arrow />
+                        </Action>
+                      </Card>
+                    </CardLink>
+                  )
+                })}
+              </TempGroup>
+            </>
+          )
+        })}
       </LandingPageLayout>
     </>
   )
