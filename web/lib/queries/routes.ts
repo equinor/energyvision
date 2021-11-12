@@ -1,7 +1,7 @@
 import pageContentFields from './common/pageContentFields'
 
 const landingPageContentFields = /* groq */ `
-  ingress,
+  "ingress": content->ingress,
 `
 const localizedSlugsFromEnglish = /* groq */ `
   "allSlugs": {

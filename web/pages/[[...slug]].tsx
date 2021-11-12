@@ -16,6 +16,7 @@ import Header from '../pageComponents/shared/Header'
 import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 
+const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 
@@ -39,14 +40,17 @@ export default function Page({ data, preview }: any) {
     return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={data.pageData} />}</>
   }
 
+  const template = data?.pageData.template || null
+
+  // @TODO: How should we handle this in the best possible way?
+  if (!template) console.warn('Missing template for', slug)
+
   return (
     <>
       {router.isFallback ? (
         <p>Loading…</p>
       ) : (
-        <>
-          <TopicPage data={pageData} />
-        </>
+        <>{template === 'landingPage' ? <LandingPage data={pageData} /> : <TopicPage data={pageData} />}</>
       )}
     </>
   )

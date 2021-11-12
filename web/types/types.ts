@@ -97,6 +97,17 @@ export type PageSchema = {
   type: string
 }
 
+export type LandingPageSchema = {
+  slug: string
+  title: BlockNode[]
+  ingress: BlockNode[]
+  seoAndSome: {
+    documentTitle?: string
+    metaDescription?: string
+    openGraphImage?: ImageWithAlt
+  }
+}
+
 export type BackgroundColours = 'White' | 'Moss Green' | 'Moss Green Light' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
 
 export type DesignOptions = {
