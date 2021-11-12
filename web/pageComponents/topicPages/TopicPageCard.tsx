@@ -24,7 +24,7 @@ type TopicPageCardProp = {
   fitToContent?: boolean
 }
 
-const TopicPageCard = ({ data, fitToContent = false }: TopicPageCardProp) => {
+const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardProp) => {
   const { slug, title, heroImage, ingress } = data
   if (!heroImage) return null
 
@@ -33,7 +33,7 @@ const TopicPageCard = ({ data, fitToContent = false }: TopicPageCardProp) => {
   return (
     <NextLink href={slug} passHref>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <StyledLink>
+      <StyledLink {...rest}>
         <StyledCard
           style={
             {
