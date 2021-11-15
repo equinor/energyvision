@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Card, Heading } from '@components'
 import type { SubMenuGroupData } from '../../types/types'
 
-const { Header, Action, Arrow, CardLink } = Card
+const { Header, Action, Arrow, CardLink, Media } = Card
 
 const StyledContentGroup = styled.div`
   margin: var(--space-3xLarge) 0;
@@ -28,6 +28,28 @@ const ContentGroupHeader = styled.div`
   margin-right: auto;
 `
 
+const RatioBox = styled.div`
+  position: relative;
+  height: 0;
+  display: block;
+  width: 100%;
+  padding-bottom: 47.5%;
+`
+
+const AspectImagePlaceholder = styled.div`
+  background-color: var(--ui-background-default);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+`
+
+const StyledCard = styled(Card)`
+  grid-gap: var(--space-medium);
+`
+
 type ContentGroupType = {
   group: SubMenuGroupData
 }
@@ -47,14 +69,19 @@ const ContentGroup = ({ group }: ContentGroupType) => {
         {links.map((link) => {
           return (
             <CardLink key={link.id}>
-              <Card>
+              <StyledCard>
+                <Media>
+                  <RatioBox>
+                    <AspectImagePlaceholder />
+                  </RatioBox>
+                </Media>
                 <Header>
                   <Heading size="xs">{link.label}</Heading>
                 </Header>
                 <Action>
                   <Arrow />
                 </Action>
-              </Card>
+              </StyledCard>
             </CardLink>
           )
         })}
