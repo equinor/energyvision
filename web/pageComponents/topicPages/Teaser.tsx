@@ -73,7 +73,7 @@ const Teaser = ({ data }: TeaserProps) => {
           center={isSvg ? true : false}
           fixedHeight={isSvg ? false : true}
         >
-          {image && <TeaserImage image={image} />}
+          {image?.asset && <TeaserImage image={image} />}
         </Media>
         <Content>
           {overline && <Eyebrow>{overline}</Eyebrow>}
@@ -99,7 +99,7 @@ const Teaser = ({ data }: TeaserProps) => {
               }}
             ></SimpleBlockContent>
           )}
-          <TeaserAction action={action} />
+          {action && <TeaserAction action={action} />}
         </Content>
       </StyledTeaser>
     </BackgroundContainer>
