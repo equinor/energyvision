@@ -4,11 +4,16 @@ import pageContentFields from './common/pageContentFields'
 const landingPageContentFields = /* groq */ `
   "ingress": content->ingress,
   "id": _id,
-
   "groupsWithReference": *[_type == "siteMenu" && references(^._id)]{
-
     "topLevelGroups": group[reference->.slug.current match $slug]{
-      "topicPageGroups": group,
+      "topicPageGroups": group[]{
+        "links": links[]{
+          "id": _key,
+          ...,
+        },
+        "id": _key,
+        label,
+      },
     }
  }[0]
 `
