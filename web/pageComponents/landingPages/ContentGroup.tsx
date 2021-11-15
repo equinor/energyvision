@@ -49,7 +49,7 @@ const ContentGroup = ({ group }: ContentGroupType) => {
             <CardLink key={link.id}>
               <Card>
                 <Header>
-                  <Heading size="sm">{link.label}</Heading>
+                  <Heading size="xs">{link.label}</Heading>
                 </Header>
                 <Action>
                   <Arrow />
