@@ -9,16 +9,11 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import ContentGroup from '../landingPages/ContentGroup'
 
-const LandingPageLayout = styled.main`
-  --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-  /* @TODO: Find a good value here */
-  --banner-paddingVertical: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
-`
+const LandingPageLayout = styled.main``
 
 const HeroBanner = styled.div`
-  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
     var(--layout-paddingHorizontal-medium);
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
 `
 
 const StyledHeading = styled(TitleBlockRenderer)`
@@ -28,11 +23,18 @@ const StyledHeading = styled(TitleBlockRenderer)`
 `
 
 const Intro = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  --max-width: 40rem;
+  padding: 0 var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
+  /* While I don't love this, we need to restrict the width of the paragraph */
+  & p {
+    max-width: var(--layout-maxContent-narrow);
+  }
 `
+
+const TOCList = styled.div``
 
 type LandingPageProps = {
   data: LandingPageSchema
@@ -98,11 +100,12 @@ const LandingPage = ({ data }: LandingPageProps) => {
             ></SimpleBlockContent>
           </Intro>
         )}
-
-        {groupWithReference &&
-          groupWithReference.topicPageGroup.subGroups.map((group) => {
-            return <ContentGroup key={group.id} group={group} />
-          })}
+        <TOCList>
+          {groupWithReference &&
+            groupWithReference.topicPageGroup.subGroups.map((group) => {
+              return <ContentGroup key={group.id} group={group} />
+            })}
+        </TOCList>
       </LandingPageLayout>
     </>
   )
