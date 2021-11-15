@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Card, Heading } from '@components'
 import type { SubMenuGroupData } from '../../types/types'
 
-const { Title, Header, Action, Arrow, CardLink } = Card
+const { Header, Action, Arrow, CardLink } = Card
 
 const StyledContentGroup = styled.div`
   margin: var(--space-3xLarge) 0;
@@ -49,7 +49,7 @@ const ContentGroup = ({ group }: ContentGroupType) => {
             <CardLink key={link.id}>
               <Card>
                 <Header>
-                  <Title>{link.label}</Title>
+                  <Heading size="sm">{link.label}</Heading>
                 </Header>
                 <Action>
                   <Arrow />
