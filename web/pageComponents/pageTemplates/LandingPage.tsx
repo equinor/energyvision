@@ -31,6 +31,8 @@ const TempGroup = styled.div`
   grid-column-gap: 2rem;
 `
 
+const ContentGroup = styled.div``
+
 const StyledHeading = styled(TitleBlockRenderer)`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
@@ -108,7 +110,7 @@ const TopicPage = ({ data }: LandingPageProps) => {
         {data?.groupsWithReference.topLevelGroups[0].topicPageGroups.map((item) => {
           console.log(item)
           return (
-            <>
+            <ContentGroup key={item.id}>
               {item.label && <h2>{item.label}</h2>}
               <TempGroup>
                 {item.links.map((link) => {
@@ -127,7 +129,7 @@ const TopicPage = ({ data }: LandingPageProps) => {
                   )
                 })}
               </TempGroup>
-            </>
+            </ContentGroup>
           )
         })}
       </LandingPageLayout>
