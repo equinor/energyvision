@@ -13,6 +13,8 @@ const TempGroup = styled.div`
   --row-gap: 2rem;
   --column-gap: 1rem;
   padding: 0 var(--layout-paddingHorizontal-small);
+  margin: 0 auto;
+  max-width: var(--maxViewportWidth);
   display: grid;
   /* grid-template-columns: repeat(auto-fit, min); */
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--min)), 1fr));
