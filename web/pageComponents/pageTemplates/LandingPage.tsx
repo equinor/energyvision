@@ -51,6 +51,9 @@ type LandingPageProps = {
 }
 
 const TopicPage = ({ data }: LandingPageProps) => {
+  if (!data?.groupWithReference) {
+    console.warn('Missing link content for landing page', data?.title)
+  }
   const { pathname } = useRouter()
   const slug = data?.slug
 
@@ -107,31 +110,33 @@ const TopicPage = ({ data }: LandingPageProps) => {
             ></SimpleBlockContent>
           </Intro>
         )}
-        {data?.groupsWithReference.topLevelGroups[0].topicPageGroups.map((item) => {
-          console.log(item)
-          return (
-            <ContentGroup key={item.id}>
-              {item.label && <h2>{item.label}</h2>}
-              <TempGroup>
-                {item.links.map((link) => {
-                  return (
-                    <CardLink key={link.id}>
-                      <Card>
-                        <Header>
-                          <Title>{link.label}</Title>
-                        </Header>
 
-                        <Action>
-                          <Arrow />
-                        </Action>
-                      </Card>
-                    </CardLink>
-                  )
-                })}
-              </TempGroup>
-            </ContentGroup>
-          )
-        })}
+        {data?.groupWithReference &&
+          data?.groupWithReference.topicPageGroup.subGroups.map((item) => {
+            console.log(item)
+            return (
+              <ContentGroup key={item.id}>
+                {item.label && <h2>{item.label}</h2>}
+                <TempGroup>
+                  {item.links.map((link) => {
+                    return (
+                      <CardLink key={link.id}>
+                        <Card>
+                          <Header>
+                            <Title>{link.label}</Title>
+                          </Header>
+
+                          <Action>
+                            <Arrow />
+                          </Action>
+                        </Card>
+                      </CardLink>
+                    )
+                  })}
+                </TempGroup>
+              </ContentGroup>
+            )
+          })}
       </LandingPageLayout>
     </>
   )

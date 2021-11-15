@@ -105,8 +105,11 @@ export type LandingPageSchema = {
   slug: string
   title: BlockNode[]
   ingress: BlockNode[]
-  groupsWithReference: any[]
-
+  groupWithReference?: {
+    topicPageGroup: {
+      subGroups: SubMenuGroupData[]
+    }
+  }
   template: Templates
   seoAndSome: {
     documentTitle?: string

@@ -2,11 +2,11 @@ import pageContentFields from './common/pageContentFields'
 
 // Or "topLevelGroups": group[reference._ref == ^.^._id]
 const landingPageContentFields = /* groq */ `
-  "ingress": content->ingress,
+ "ingress": content->ingress,
   "id": _id,
-  "groupsWithReference": *[_type == "siteMenu" && references(^._id)]{
-    "topLevelGroups": group[reference->.slug.current match $slug]{
-      "topicPageGroups": group[]{
+  "groupWithReference": *[_type == "siteMenu" && references(^._id)]{ // Verify that the menu has a reference to this landing page
+    "topicPageGroup": group[reference->.slug.current match $slug]{ // Find the menu group with the top level link as this slug
+      "subGroups": group[]{
         "links": links[]{
           "id": _key,
           ...,
@@ -14,7 +14,7 @@ const landingPageContentFields = /* groq */ `
         "id": _key,
         label,
       },
-    }
+    }[0] // There should only be one
  }[0]
 `
 const localizedSlugsFromEnglish = /* groq */ `
