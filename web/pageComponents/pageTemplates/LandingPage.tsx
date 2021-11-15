@@ -5,12 +5,9 @@ import { useRouter } from 'next/router'
 import getConfig from 'next/config'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
-
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers/blocksToText'
-import { Card } from '@components'
-
-const { Title, Header, Action, Arrow, Media, CardLink, Text } = Card
+import ContentGroup from '../landingPages/ContentGroup'
 
 const LandingPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -23,15 +20,6 @@ const HeroBanner = styled.div`
     var(--layout-paddingHorizontal-medium);
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
 `
-
-const TempGroup = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 15rem);
-  grid-row-gap: 4rem;
-  grid-column-gap: 2rem;
-`
-
-const ContentGroup = styled.div``
 
 const StyledHeading = styled(TitleBlockRenderer)`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -50,19 +38,19 @@ type LandingPageProps = {
   data: LandingPageSchema
 }
 
-const TopicPage = ({ data }: LandingPageProps) => {
+const LandingPage = ({ data }: LandingPageProps) => {
   if (!data?.groupWithReference) {
     console.warn('Missing link content for landing page', data?.title)
   }
   const { pathname } = useRouter()
-  const slug = data?.slug
+  const { slug, title, ingress, groupWithReference } = data
 
   const { publicRuntimeConfig } = getConfig()
 
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
 
-  const pageTitle = data?.title ? blocksToText(data.title) : ''
+  const pageTitle = blocksToText(title) || ''
 
   return (
     <>
@@ -87,9 +75,9 @@ const TopicPage = ({ data }: LandingPageProps) => {
       ></NextSeo>
       <LandingPageLayout>
         <HeroBanner>
-          {data?.title && (
+          {title && (
             <SimpleBlockContent
-              blocks={data?.title}
+              blocks={title}
               serializers={{
                 types: {
                   block: (props) => <StyledHeading level="h1" size="2xl" {...props} />,
@@ -98,10 +86,10 @@ const TopicPage = ({ data }: LandingPageProps) => {
             />
           )}
         </HeroBanner>
-        {data?.ingress && (
+        {ingress && (
           <Intro>
             <SimpleBlockContent
-              blocks={data?.ingress}
+              blocks={ingress}
               serializers={{
                 types: {
                   block: IngressBlockRenderer,
@@ -111,35 +99,13 @@ const TopicPage = ({ data }: LandingPageProps) => {
           </Intro>
         )}
 
-        {data?.groupWithReference &&
-          data?.groupWithReference.topicPageGroup.subGroups.map((item) => {
-            console.log(item)
-            return (
-              <ContentGroup key={item.id}>
-                {item.label && <h2>{item.label}</h2>}
-                <TempGroup>
-                  {item.links.map((link) => {
-                    return (
-                      <CardLink key={link.id}>
-                        <Card>
-                          <Header>
-                            <Title>{link.label}</Title>
-                          </Header>
-
-                          <Action>
-                            <Arrow />
-                          </Action>
-                        </Card>
-                      </CardLink>
-                    )
-                  })}
-                </TempGroup>
-              </ContentGroup>
-            )
+        {groupWithReference &&
+          groupWithReference.topicPageGroup.subGroups.map((group) => {
+            return <ContentGroup key={group.id} group={group} />
           })}
       </LandingPageLayout>
     </>
   )
 }
 
-export default TopicPage
+export default LandingPage

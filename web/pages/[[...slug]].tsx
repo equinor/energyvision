@@ -22,7 +22,8 @@ const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTo
 
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
-   */ const router = useRouter()
+   */
+  const router = useRouter()
   const slug = data?.pageData?.slug
   const { data: pageData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
