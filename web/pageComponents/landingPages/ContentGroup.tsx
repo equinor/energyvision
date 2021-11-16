@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { Card, Heading } from '@components'
+import Image from '../shared/Image'
+
 import type { SubMenuGroupData } from '../../types/types'
 
 const { Header, Action, Arrow, CardLink, Media } = Card
@@ -67,16 +69,28 @@ const ContentGroup = ({ group }: ContentGroupType) => {
       )}
       <TempGroup>
         {links.map((link) => {
+          const { id, label, image } = link
           return (
-            <CardLink key={link.id}>
+            <CardLink key={id}>
               <StyledCard>
                 <Media>
-                  <RatioBox>
-                    <AspectImagePlaceholder />
-                  </RatioBox>
+                  {image ? (
+                    <Image
+                      image={image}
+                      maxWidth={400}
+                      aspectRatio={0.475}
+                      layout="responsive"
+                      /* @TODO Fine tune this when the design is finished */
+                      sizes="(max-width: 360px) 330px,270px"
+                    />
+                  ) : (
+                    <RatioBox>
+                      <AspectImagePlaceholder />
+                    </RatioBox>
+                  )}
                 </Media>
                 <Header>
-                  <Heading size="xs">{link.label}</Heading>
+                  <Heading size="xs">{label}</Heading>
                 </Header>
                 <Action>
                   <Arrow />

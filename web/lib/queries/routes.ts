@@ -9,7 +9,16 @@ const landingPageContentFields = /* groq */ `
       "subGroups": group[]{
         "links": links[]{
           "id": _key,
-          ...,
+          label,
+          isStatic,
+          href,
+          staticUrl,
+          "link": route->{
+            "type": _type,
+           "slug": slug.current,            
+         },
+           "image": route->content->
+              heroFigure.image,
         },
         "id": _key,
         label,

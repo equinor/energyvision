@@ -233,10 +233,14 @@ export type MenuLinkData = {
   }
 }
 
+export type SubMenuGroupLinkData = MenuLinkData & {
+  image: ImageWithAlt
+}
+
 export type SubMenuGroupData = {
   id: string
   label: string
-  links: MenuLinkData[]
+  links: SubMenuGroupLinkData[]
 }
 
 export type SubMenuData = {
