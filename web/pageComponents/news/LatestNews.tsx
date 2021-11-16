@@ -1,6 +1,6 @@
 import { Heading } from '@components'
 import styled from 'styled-components'
-import NewsCard from './NewsCard'
+import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 
 const Wrapper = styled.div`
