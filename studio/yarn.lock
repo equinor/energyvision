@@ -9382,10 +9382,10 @@ sanity-plugin-documents-pane@^1.0.5:
     react-query "^3.19.1"
     styled-components "^5.3.0"
 
-sanity-plugin-intl-input@^5.5.0:
-  version "5.5.0"
-  resolved "https://registry.npmjs.org/sanity-plugin-intl-input/-/sanity-plugin-intl-input-5.5.0.tgz#e608dac07c7dd9aef96d300bd9ebd016d07eb904"
-  integrity sha512-L/tMPK99eZ3IAcOE/DIU/crIS8qcg5NCHhegP+ubrRjF7cY1VuvKhNcdcIT+TulMryWAKSAgkZEv/V5k2dDRXA==
+sanity-plugin-intl-input@^5.6.0:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-intl-input/-/sanity-plugin-intl-input-5.6.0.tgz#51e7c3f5db7cf5d186417b9d7ba1528fe99b8bc6"
+  integrity sha512-bufkRqL6fxIAJe7bkzP9uq8P9aC6svJ3AphJeN8AqptNmLkuTUC/cAxY0qvFoOfI5D1VRJJ7SqDOZCwrJqND6g==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@cprecioso/country-flag-emoji" "^1.0.0"
