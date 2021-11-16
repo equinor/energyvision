@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Heading } from '@components'
-import SimpleCard from './SimpleCard'
+import SimpleCard from '../cards/SimpleCard'
 
 import type { SubMenuGroupData } from '../../types/types'
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import NewsCard from '../../news/NewsCard'
-import TopicPageCard from '../../topicPages/TopicPageCard'
+import NewsCard from '../../cards/NewsCard'
+import TopicPageCard from '../../cards/TopicPageCard'
 import { CardData } from '../../../types/types'
 
 const Promoted = styled.div`
