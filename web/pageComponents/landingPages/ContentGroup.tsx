@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { Card, Heading } from '@components'
+import { default as NextLink } from 'next/link'
 import Image from '../shared/Image'
 
-import type { SubMenuGroupData } from '../../types/types'
+import type { SubMenuGroupData, MenuLinkData } from '../../types/types'
 
 const { Header, Action, Arrow, CardLink, Media } = Card
 
@@ -56,6 +57,23 @@ type ContentGroupType = {
   group: SubMenuGroupData
 }
 
+function getLink(linkData: MenuLinkData, label: string) {
+  // Fallback to home page, if this happens it is an error somewhere
+
+  // Sanity should take care of the validation here, and this is temp. until
+  // the static pages are migrated
+  if (!linkData) {
+    console.warn('Missing link data for', label)
+    return 'something-wrong'
+  }
+  const { isStatic, link, staticUrl } = linkData
+  if (isStatic) {
+    return staticUrl || '/'
+  } else {
+    return (link && link.slug) || '/'
+  }
+}
+
 const ContentGroup = ({ group }: ContentGroupType) => {
   const { label, links } = group
   return (
@@ -71,32 +89,34 @@ const ContentGroup = ({ group }: ContentGroupType) => {
         {links.map((link) => {
           const { id, label, image } = link
           return (
-            <CardLink key={id}>
-              <StyledCard>
-                <Media>
-                  {image ? (
-                    <Image
-                      image={image}
-                      maxWidth={400}
-                      aspectRatio={0.475}
-                      layout="responsive"
-                      /* @TODO Fine tune this when the design is finished */
-                      sizes="(max-width: 360px) 330px,270px"
-                    />
-                  ) : (
-                    <RatioBox>
-                      <AspectImagePlaceholder />
-                    </RatioBox>
-                  )}
-                </Media>
-                <Header>
-                  <Heading size="xs">{label}</Heading>
-                </Header>
-                <Action>
-                  <Arrow />
-                </Action>
-              </StyledCard>
-            </CardLink>
+            <NextLink key={id} href={getLink(link, label)} passHref>
+              <CardLink>
+                <StyledCard>
+                  <Media>
+                    {image ? (
+                      <Image
+                        image={image}
+                        maxWidth={400}
+                        aspectRatio={0.475}
+                        layout="responsive"
+                        /* @TODO Fine tune this when the design is finished */
+                        sizes="(max-width: 360px) 330px,270px"
+                      />
+                    ) : (
+                      <RatioBox>
+                        <AspectImagePlaceholder />
+                      </RatioBox>
+                    )}
+                  </Media>
+                  <Header>
+                    <Heading size="xs">{label}</Heading>
+                  </Header>
+                  <Action>
+                    <Arrow />
+                  </Action>
+                </StyledCard>
+              </CardLink>
+            </NextLink>
           )
         })}
       </TempGroup>
