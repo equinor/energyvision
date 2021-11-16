@@ -216,7 +216,9 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
             modifiedTime: modifiedDate,
           },
           url: fullUrl,
-          images: getOpenGraphImages(news.openGraphImage || news.heroImage?.image),
+          images: getOpenGraphImages(
+            (news.openGraphImage?.asset ? news.openGraphImage : null) || news.heroImage?.image,
+          ),
         }}
         twitter={{
           handle: '@handle',
