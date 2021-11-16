@@ -5,7 +5,7 @@ import type { ImageWithAlt } from '../../types/types'
 const builder = imageUrlBuilder(sanityClient)
 
 const getOpenGraphImages = (image: ImageWithAlt) => {
-  return image
+  return image.asset
     ? [
         {
           url: builder.image(image).width(800).height(600).url() || '',
