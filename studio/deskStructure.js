@@ -157,7 +157,10 @@ export const getDefaultDocumentNode = (props) => {
       S.view.component(NewsPreview).title('News preview'),
     ])
   } else if (schemaType === 'landingPage') {
-    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(PagePreview).title('Preview'),
+    ])
   } else if (schemaType === 'page') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),

@@ -1,6 +1,6 @@
 import { newsQuery } from './queries/news'
 import { pageQuery } from './queries/routes'
-import { pageQueryById } from './queries/pages'
+import { contentQueryById } from './queries/contentById'
 import { mapLocaleToLang } from './localization'
 
 const isSlugID = (slug: string): boolean => {
@@ -13,9 +13,11 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
   if (isSlugID(slugStart)) {
     // We are in preview mode for content that has currently no slug (no routes)
+    console.log(`It's an id`)
+    //We need to figure out of which type
     return {
       queryParams: { id: slugStart.replace('drafts.', ''), lang: mapLocaleToLang(locale) },
-      query: pageQueryById,
+      query: contentQueryById,
     }
   }
 
