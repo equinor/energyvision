@@ -12,7 +12,7 @@ const StyledContentGroup = styled.div`
 `
 
 const TempGroup = styled.div`
-  --min: 15ch;
+  --min: 200px;
   --row-gap: 2rem;
   --column-gap: 1rem;
   padding: 0 var(--layout-paddingHorizontal-small);
