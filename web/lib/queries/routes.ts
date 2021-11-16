@@ -1,31 +1,6 @@
 import pageContentFields from './common/pageContentFields'
+import { landingPageContentFields } from './common/landingPageContentFields'
 
-// Or "topLevelGroups": group[reference._ref == ^.^._id]
-const landingPageContentFields = /* groq */ `
- "ingress": content->ingress,
-  "id": _id,
-  "groupWithReference": *[_type == "siteMenu" && references(^._id)]{ // Verify that the menu has a reference to this landing page
-    "topicPageGroup": group[reference->.slug.current match $slug]{ // Find the menu group with the top level link as this slug
-      "subGroups": group[]{
-        "links": links[]{
-          "id": _key,
-          label,
-          isStatic,
-          href,
-          staticUrl,
-          "link": route->{
-            "type": _type,
-           "slug": slug.current,            
-         },
-           "image": route->content->
-              heroFigure.image,
-        },
-        "id": _key,
-        label,
-      },
-    }[0] // There should only be one
- }[0]
-`
 const localizedSlugsFromEnglish = /* groq */ `
   "allSlugs": {
     "en_GB": slug.current,

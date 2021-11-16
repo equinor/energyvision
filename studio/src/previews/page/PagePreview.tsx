@@ -13,7 +13,7 @@ export default function PagePreview(props: any) {
   }
 
   const url = `${baseUrl}/${displayed?._id}?preview`
-
+  console.log('preview url', url)
   return (
     <Wrapper>
       <Frame src={url} title="preview" frameBorder={'0'} />
