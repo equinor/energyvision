@@ -26,7 +26,7 @@
     "@sanity/base": "^2.21.7",
     "@sanity/cli": "^2.21.7",
     "@sanity/components": "^2.14.0",
-    "@sanity/core": "^2.21.7",
+    "@sanity/core": "^2.21.10",
     "@sanity/data-aspects": "^2.18.0",
     "@sanity/default-layout": "^2.21.7",
     "@sanity/default-login": "^2.21.7",
@@ -44,7 +44,7 @@
     "sanity-plugin-color-list": "^2.0.2",
     "sanity-plugin-documents-pane": "^1.0.5",
     "sanity-plugin-intl-input": "^5.5.0",
-    "sanity-plugin-media": "^1.4.2",
+    "sanity-plugin-media": "^1.4.4",
     "slugify": "^1.6.0",
     "styled-components": "^5.3.0"
   },
