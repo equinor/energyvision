@@ -3,8 +3,9 @@ import { EdsIcon } from '../../icons'
 import { Rule } from '@sanity/types'
 
 export type SubscribeForm = {
-  _type: 'subscribeForm'
-  formType?: string
+  _type: 'subscribeForm',
+  heading?: string
+  formType: string
 }
 
 export default {
