@@ -58,6 +58,21 @@ export default () => {
             return params.type === 'landingPage'
           }),
       ),
+    S.listItem()
+      .title('Event')
+      .icon(TopicDocuments)
+      .schemaType('event')
+      .child(
+        S.documentTypeList('event')
+          .id('events')
+          .title('Events')
+          .filter('_type == "event" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'event'
+          }),
+      ),
     S.divider(),
     parentChild('route'),
     S.divider(),
