@@ -102,7 +102,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
         )}
         <TOCList>
           {groupWithReference &&
-            groupWithReference.topicPageGroup.subGroups.map((group) => {
+            groupWithReference.topicPageGroup?.subGroups.map((group) => {
               return <ContentGroup key={group.id} group={group} />
             })}
         </TOCList>
