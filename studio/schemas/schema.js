@@ -17,6 +17,7 @@ import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
 import tag from './documents/tag'
 import countryTag from './documents/countryTag'
+import event from './documents/event'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -48,7 +49,7 @@ import tagReference from './objects/tagReference'
 import promotion from './objects/promotion/promotion'
 import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
-import subscribeForm  from './objects/subscribeForm'
+import subscribeForm from './objects/subscribeForm'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -101,5 +102,6 @@ export default createSchema({
     promoteTopics,
     countryTag,
     subscribeForm,
+    event,
   ]),
 })
