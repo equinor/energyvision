@@ -366,3 +366,10 @@ export type Message = {
   Version: number
   IsPlannedEvent: boolean
 }
+
+export type SubscribeFormData ={
+  id?: string
+  type?: string
+  heading?: string
+  formType: string
+}

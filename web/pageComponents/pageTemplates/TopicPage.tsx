@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
-import type { PageSchema, RemitTableData } from '../../types/types'
+import type { PageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
 import getConfig from 'next/config'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
@@ -19,6 +19,7 @@ import Promotion from '../topicPages/Promotion'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
+import SubscribeForm from '../shared/SubscribeForm'
 
 import {
   TeaserData,
@@ -32,7 +33,10 @@ import {
   PromoTileArrayData,
   IFrameData,
   PromotionData,
+  RemitTableData,
+  SubscribeFormData
 } from '../../types/types'
+
 
 const TopicPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -81,6 +85,7 @@ type ComponentProps =
   | IFrameData
   | RemitTableData
   | PromotionData
+  | SubscribeFormData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -117,6 +122,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <RemitTable key={c.id} />
       case 'promotion':
         return <Promotion key={c.id} data={c as PromotionData} />
+      case 'subscribeForm':
+        return <SubscribeForm key={c.id} data={c as SubscribeFormData} />
       default:
         return null
     }
