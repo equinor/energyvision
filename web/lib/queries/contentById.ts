@@ -17,7 +17,7 @@ import { landingPageById } from './common/landingPageContentFields'
 ` */
 
 export const contentQueryById = /* groq */ ` 
-  *[_id == $id ][0] {
+  *[_id == $id][0] {
     "title": title,
     "seoAndSome": {
       "documentTitle": seo.documentTitle,
