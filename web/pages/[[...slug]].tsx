@@ -88,7 +88,6 @@ Page.getLayout = (page: AppProps) => {
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
-  console.log(queryParams)
   const pageData = query && (await getClient(preview).fetch(query, queryParams))
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
