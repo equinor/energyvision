@@ -48,6 +48,7 @@ import tagReference from './objects/tagReference'
 import promotion from './objects/promotion/promotion'
 import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
+import subscribeForm  from './objects/subscribeForm'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -99,5 +100,6 @@ export default createSchema({
     promoteNews,
     promoteTopics,
     countryTag,
+    subscribeForm,
   ]),
 })
