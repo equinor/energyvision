@@ -266,7 +266,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
 
               {news.iframe && <StyledIFrame data={news.iframe} />}
 
-              {news.relatedLinks.links && news.relatedLinks.links.length > 0 && (
+              {news.relatedLinks?.links && news.relatedLinks.links.length > 0 && (
                 <Related>
                   <RelatedContent data={news.relatedLinks} />
                 </Related>
