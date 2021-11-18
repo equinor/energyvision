@@ -221,7 +221,13 @@ const pageContentFields = /* groq */ `
     "designOptions": {
       "background": coalesce(background.title, 'none'),
     },
-  }
+  },
+  _type == "subscribeForm" => {
+    "type": _type,
+    "id": _key,
+    title,
+    formType
+  },
 `
 
 export default pageContentFields
