@@ -6,6 +6,9 @@ import type { SubMenuGroupData } from '../../types/types'
 
 const GroupWrapper = styled.div`
   margin: var(--space-3xLarge) 0;
+  @media (min-width: 750px) {
+    margin: var(--space-4xLarge) 0;
+  }
 `
 
 const LinkGroup = styled.div`
@@ -22,7 +25,7 @@ const LinkGroup = styled.div`
   grid-column-gap: var(--column-gap);
 `
 const ContentGroupHeader = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-medium) var(--space-large);
+  padding: 0 var(--layout-paddingHorizontal-medium) var(--space-xLarge);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
