@@ -5,15 +5,6 @@ import blocksToText from '../../../helpers/blocksToText'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
 import type { Block, Rule, Image } from '@sanity/types'
-import type { ColorListValue } from 'sanity-plugin-color-list'
-
-export type Promotion = {
-  _type: 'promotion'
-  type: 'news' | 'topic'
-  title?: Block[]
-  ingress?: Block[]
-  background?: ColorListValue
-}
 
 const introBlockContentType = configureBlockContent({
   h1: false,

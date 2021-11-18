@@ -10,13 +10,13 @@ import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Promotion = {
   _type: 'promotion'
-  type: 'news' | 'topic'
+  type: 'news' | 'topic' | 'people'
   title?: Block[]
   ingress?: Block[]
   background?: ColorListValue
 }
 
-type PromotionType = 'promoteTopics' | 'promoteNews'
+type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -67,6 +67,7 @@ export default {
       of: [
         { type: 'promoteNews', title: 'Promote news' },
         { type: 'promoteTopics', title: 'Promote topic' },
+        { type: 'promotePeople', title: 'Promote people' },
       ],
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
@@ -99,6 +100,8 @@ export default {
       const getPromotionType = (type: PromotionType) => {
         if (type === 'promoteTopics') {
           return 'Topic page promotion'
+        } else if (type == 'promotePeople') {
+          return 'People promotion'
         }
         return 'News promotions'
       }
