@@ -370,6 +370,6 @@ export type Message = {
 export type SubscribeFormData ={
   id?: string
   type?: string
-  heading?: string
+  title?: PortableTextEntry[]
   formType: string
 }

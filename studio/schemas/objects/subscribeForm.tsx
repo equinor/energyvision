@@ -1,10 +1,15 @@
 import { file_description } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Rule } from '@sanity/types'
+import { configureTitleBlockContent } from '../editors'
+import type { Block } from '@sanity/types'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+
+const titleContentType = configureTitleBlockContent()
 
 export type SubscribeForm = {
   _type: 'subscribeForm',
-  heading?: string
+  title?: Block[]
   formType: string
 }
 
@@ -15,9 +20,12 @@ export default {
     description: 'This component shows subscription form for subscribing to news,magazines, crude oil assays.',
     fields: [
       {
-        name: 'heading',
-        type: 'string',
-        title: 'Heading',
+        name: 'title',
+        type: 'array',
+        title: 'Title',
+        description: 'The (optional) title/heading shown above the subscription form.',
+        inputComponent: CompactBlockEditor,
+        of: [titleContentType],
       },
       {
         name: 'formType',
