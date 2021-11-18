@@ -1,15 +1,6 @@
 import React from 'react'
 
-import type { Block, Rule } from '@sanity/types'
-import type { ColorListValue } from 'sanity-plugin-color-list'
-
-export type Promotion = {
-  _type: 'promotion'
-  type: 'news' | 'topic'
-  title?: Block[]
-  ingress?: Block[]
-  background?: ColorListValue
-}
+import type { Rule } from '@sanity/types'
 
 export default {
   title: 'News promotion',
