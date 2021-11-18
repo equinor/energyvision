@@ -60,7 +60,7 @@ export const newsQuery = /* groq */ `
           "alt": alt
         }
       },
-      ${markDefs}, 
+      ${markDefs},
     },
     "relatedLinks": relatedLinks{
       title,
