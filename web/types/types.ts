@@ -279,28 +279,15 @@ export type Tag = {
   }
 }
 
-export type TopicCardData = {
-  ingress?: BlockNode[]
-  reference: {
-    id: string
-    type: string
-    slug: string
-    content: {
-      title: BlockNode[]
-      heroImage: ImageWithCaptionData
-    }
-  }
-}
-
 export type PromotionData = {
   id: string
   type: string
   title: PortableTextEntry[]
   ingress?: PortableTextEntry[]
-  promotion: {
+  content: {
+    // Do we really need the tags here?
     tags?: Tag[]
-    articles?: CardData[]
-    pages?: TopicCardData[]
+    promotions: CardData[]
   }
   designOptions: DesignOptions
 }
@@ -367,7 +354,7 @@ export type Message = {
   IsPlannedEvent: boolean
 }
 
-export type SubscribeFormData ={
+export type SubscribeFormData = {
   id?: string
   type?: string
   title?: PortableTextEntry[]
