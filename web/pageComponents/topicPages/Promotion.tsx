@@ -4,8 +4,7 @@ import NewsCard from '../cards/NewsCard'
 import TopicPageCard from '../cards/TopicPageCard'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
-import { blocksToText } from '../../common/helpers'
-import type { PromotionData, CardData, TopicCardData } from '../../types/types'
+import type { PromotionData, CardData } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--space-3xLarge) var(--space-xxLarge);
@@ -49,41 +48,23 @@ const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
 
-const getCards = (articles: CardData[], pages: TopicCardData[]) => {
-  if (articles && articles.length > 0) {
-    return articles.map((article) => <StyledNewsCard data={article} key={article.id} />)
-  }
-
-  if (pages && pages.length > 0) {
-    return pages.map(({ reference, ingress }) => {
-      return (
-        <StyledTopicPageCard
-          data={{
-            id: reference.id,
-            slug: reference.slug,
-            ingress: ingress,
-            title: blocksToText(reference.content.title),
-            heroImage: reference.content.heroImage,
-          }}
-          key={reference.id}
-        />
-      )
-    })
-  }
-
-  return false
-}
-
 const Promotion = ({ data }: { data: PromotionData }) => {
-  const { title, ingress } = data
-  const { articles = [], pages = [] } = data.promotion
+  const { title, ingress, content, designOptions } = data
+  // const { articles = [], pages = [] } = data.promotion
+  const promotions = content?.promotions || []
 
-  const cards = getCards(articles, pages)
-
-  if (!cards) return null
-
+  const getCard = (data: CardData) => {
+    switch (data.type) {
+      case 'news':
+        return <StyledNewsCard data={data} />
+      case 'topics':
+        return <StyledTopicPageCard data={data} />
+      default:
+        return console.warn('Missing card type for ', data)
+    }
+  }
   return (
-    <BackgroundContainer background={data.designOptions.background}>
+    <BackgroundContainer background={designOptions.background}>
       <Wrapper>
         {title && (
           <SimpleBlockContent
@@ -105,7 +86,13 @@ const Promotion = ({ data }: { data: PromotionData }) => {
             }}
           ></SimpleBlockContent>
         )}
-        {cards && <CardsWrapper>{cards}</CardsWrapper>}
+        {promotions.length > 0 && (
+          <CardsWrapper>
+            {promotions.map((item) => {
+              return getCard(item)
+            })}
+          </CardsWrapper>
+        )}
       </Wrapper>
     </BackgroundContainer>
   )
