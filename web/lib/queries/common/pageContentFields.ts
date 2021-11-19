@@ -3,7 +3,6 @@ import markDefs from './blockEditorMarks'
 import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import { newsFields } from '../news'
 
 const pageContentFields = /* groq */ `
   _type == "teaser"=>{
@@ -184,7 +183,7 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs}, 
     },
-    "promotion": promotion[0]{
+    "content": promotion[0]{
       "id": _key,
       "type": _type,
       _type == "promoteNews" => {
@@ -193,30 +192,32 @@ const pageContentFields = /* groq */ `
           key,
           title,
         },
-        "articles": *[_type == "news" && _lang == $lang && count(tags[_ref in ^.^.tags[]._ref]) > 0] | order(publishDateTime desc, _updatedAt desc)[0...3]{
-          ${newsFields}
-        },
-      },
-      _type == "promoteTopics" => {
-        "pages": references[]{
+        "promotions": *[_type == "news" && _lang == $lang && count(tags[_ref in ^.^.tags[]._ref]) > 0] | order(publishDateTime desc, _updatedAt desc)[0...3]{
+          "type": _type,
+          "id": _id,
+          "updatedAt": _updatedAt,
+          title,
+          heroImage,
+          "publishDateTime": coalesce(publishDateTime, _createdAt),
+          "slug": slug.current,
           ingress[]{
             ...,
             ${markDefs}, 
           },
-          "reference": reference->{
-            "id": _id,
-            "type": _type,
-            "slug": ${slugReference},
-            "content": *[_type == "page" && _id == ^.content._ref][0]{
-              title[]{
-                ...,
-                ${markDefs}, 
-              },
-              "heroImage": heroFigure
-            },
-          },
         },
-      }
+      },
+      _type == "promoteTopics" => {
+        "promotions": references[]{
+         "id": _key,
+          ingress[]{
+            ...,
+            ${markDefs}, 
+          },
+         "slug": reference->slug.current,
+         "title": reference->content->title,
+         "heroImage": reference->content->heroFigure,
+       },
+      },
     },
     "designOptions": {
       "background": coalesce(background.title, 'none'),
