@@ -46,10 +46,10 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
           ref={ref}
           style={
             {
-              ...style,
               '--card-shadow': '0px 6px 20px rgba(0, 0, 0, 0.2)',
               '--card-background': 'var(--ui-background-default)',
               '--card-padding': '0 0 var(--space-small) 0',
+              ...style,
             } as CSSProperties
           }
           {...rest}
