@@ -48,6 +48,9 @@ const StyledNewsCard = styled(NewsCard)`
 const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
+const StyledPeopleCard = styled(PeopleCard)`
+  ${CardStyle}
+`
 
 type CardProps = CardData | PeopleCardData
 
@@ -63,7 +66,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
       case 'topics':
         return <StyledTopicPageCard data={data as CardData} key={data.id} />
       case 'people':
-        return <PeopleCard data={data as PeopleCardData} key={data.id} />
+        return <StyledPeopleCard data={data as PeopleCardData} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }
