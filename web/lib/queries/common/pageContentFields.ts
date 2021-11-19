@@ -219,6 +219,13 @@ const pageContentFields = /* groq */ `
          "heroImage": reference->content->heroFigure,
        },
       },
+      _type == "promotePeople" => {
+        "promotions": peopleList[]{
+          "id": _key,
+          "type": _type,
+          ...,
+        }
+      },
     },
     "designOptions": {
       "background": coalesce(background.title, 'none'),

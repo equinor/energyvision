@@ -2,9 +2,10 @@ import styled, { css } from 'styled-components'
 import { BackgroundContainer } from '@components'
 import NewsCard from '../cards/NewsCard'
 import TopicPageCard from '../cards/TopicPageCard'
+import PeopleCard from '../cards/PeopleCard'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
-import type { PromotionData, CardData } from '../../types/types'
+import type { PromotionData, CardData, PeopleCardData } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--space-3xLarge) var(--space-xxLarge);
@@ -48,17 +49,21 @@ const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
 
+type CardProps = CardData | PeopleCardData
+
 const Promotion = ({ data }: { data: PromotionData }) => {
   const { title, ingress, content, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
 
-  const getCard = (data: CardData) => {
+  const getCard = (data: CardProps) => {
     switch (data.type) {
       case 'news':
-        return <StyledNewsCard data={data} key={data.id} />
+        return <StyledNewsCard data={data as CardData} key={data.id} />
       case 'topics':
-        return <StyledTopicPageCard data={data} key={data.id} />
+        return <StyledTopicPageCard data={data as CardData} key={data.id} />
+      case 'people':
+        return <PeopleCard data={data as PeopleCardData} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }

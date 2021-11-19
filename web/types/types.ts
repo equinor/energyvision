@@ -42,12 +42,19 @@ export type ImageWithAlt = {
 
 export type CardData = {
   type?: string
+  id: string
   slug: string
   title: string | BlockNode[]
-  id: string
   publishDateTime?: string
   heroImage: ImageWithCaptionData
   ingress?: PortableTextEntry[]
+}
+
+export type PeopleCardData = {
+  type?: string
+  id: string
+  image: ImageWithAlt
+  name: string
 }
 
 export type NewsSchema = {
@@ -287,7 +294,7 @@ export type PromotionData = {
   content: {
     // Do we really need the tags here?
     tags?: Tag[]
-    promotions: CardData[]
+    promotions: CardData[] | PeopleCardData[]
   }
   designOptions: DesignOptions
 }
