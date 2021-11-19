@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@equinor/eds-core-react': ^0.14.2
+  '@equinor/eds-core-react': ^0.15.0-dev.20211118
   '@equinor/eds-icons': ^0.8.0
   '@equinor/eds-tokens': ^0.7.0
   '@microsoft/applicationinsights-react-js': ^3.2.1
@@ -51,7 +51,7 @@ specifiers:
   typescript: 4.4.4
 
 dependencies:
-  '@equinor/eds-core-react': 0.14.2_7a082f7d10047d47195aea793f958a14
+  '@equinor/eds-core-react': 0.15.0-dev.20211118_7a082f7d10047d47195aea793f958a14
   '@equinor/eds-icons': 0.8.0
   '@equinor/eds-tokens': 0.7.0
   '@microsoft/applicationinsights-react-js': 3.2.1_react@17.0.2
@@ -2542,28 +2542,26 @@ packages:
     resolution: {integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==}
     dev: true
 
-  /@equinor/eds-core-react/0.14.2_7a082f7d10047d47195aea793f958a14:
-    resolution: {integrity: sha512-upp46xX601fhhqnWkq4TB4IKbK0QRmEjRUqPnDkHISPgId+e0TXixCB4OwdO3IxJHBdTwD1MW8Z66H5EpqyxZw==}
+  /@equinor/eds-core-react/0.15.0-dev.20211118_7a082f7d10047d47195aea793f958a14:
+    resolution: {integrity: sha512-7WEX/BGpZIXmgjkx49iiHd7gPJ1f0kttifRwhy5+pUZDDKP5OWJnrtuII070vpd3HaONy97ZwcPCsAwfzSlStQ==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
       styled-components: '>=4.2'
     dependencies:
-      '@equinor/eds-icons': 0.7.0
+      '@babel/runtime': 7.16.3
+      '@equinor/eds-icons': 0.8.0
       '@equinor/eds-tokens': 0.7.0
       '@popperjs/core': 2.9.2
       downshift: 6.1.7_react@17.0.2
+      focus-visible: 5.2.0
+      ramda: 0.27.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-fast-compare: 3.2.0
       react-popper: 2.2.5_a16f30364266ce234ee1188a6d27cb60
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
-    dev: false
-
-  /@equinor/eds-icons/0.7.0:
-    resolution: {integrity: sha512-DjbZjsKKxvsXoZV+hRO/Gg5tXH9tbq/ekrymL8YJR9tE73Wt8TbsDnjLZPWocs/Oj61xJUcY+yCoDmidSJVZ6w==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
   /@equinor/eds-icons/0.8.0:
@@ -7983,6 +7981,10 @@ packages:
       tslib: 2.3.1
     dev: false
 
+  /focus-visible/5.2.0:
+    resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
+    dev: false
+
   /follow-redirects/1.14.5_debug@2.6.9:
     resolution: {integrity: sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==}
     engines: {node: '>=4.0'}
@@ -11727,6 +11729,10 @@ packages:
   /ramda/0.21.0:
     resolution: {integrity: sha1-oAGr7bP/YQd9T/HVd9RN536NCjU=}
     dev: true
+
+  /ramda/0.27.1:
+    resolution: {integrity: sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==}
+    dev: false
 
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
