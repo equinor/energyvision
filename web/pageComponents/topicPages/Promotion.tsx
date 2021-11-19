@@ -66,7 +66,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
       case 'topics':
         return <StyledTopicPageCard data={data as CardData} key={data.id} />
       case 'people':
-        return <StyledPeopleCard data={data as PeopleCardData} key={data.id} />
+        return <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={!!title} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }
