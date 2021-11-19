@@ -16,6 +16,7 @@ type PeopleCardProp = {
 }
 
 const PeopleCard = ({ data, fitToContent = false }: PeopleCardProp) => {
+  console.log(data)
   const { name, image } = data
 
   return (

@@ -53,8 +53,14 @@ export type CardData = {
 export type PeopleCardData = {
   type?: string
   id: string
-  image: ImageWithAlt
+  image?: ImageWithAlt
   name: string
+  title?: string
+  department?: string
+  email?: string
+  phone?: string
+  isLink: boolean
+  cv?: LinkData[]
 }
 
 export type NewsSchema = {
