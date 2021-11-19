@@ -41,21 +41,27 @@ const ContactLink = styled.a`
 const RoundedImage = styled(Image)`
   border-radius: 50%;
 `
-const Test = styled.div`
-  max-width: 50%;
+const ImageContainer = styled.div`
+  max-width: 200px;
   margin: var(--space-medium) auto 0 auto;
+`
+
+const StyledMedia = styled(Media)`
+  flex-basis: var(--media-width, auto);
 `
 
 type PeopleCardProp = {
   data: PeopleCardData
   hasSectionTitle: boolean
+  direction?: 'portrait' | 'landscape'
 }
 
-const PeopleCard = ({ data, hasSectionTitle, ...rest }: PeopleCardProp) => {
+const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: PeopleCardProp) => {
   const { name, image, title, department, isLink, phone, email } = data
 
   return (
     <StyledCard
+      orientation={direction}
       style={
         {
           '--height': 'auto',
@@ -64,12 +70,12 @@ const PeopleCard = ({ data, hasSectionTitle, ...rest }: PeopleCardProp) => {
       }
       {...rest}
     >
-      <Media>
-        <Test>
+      <StyledMedia style={{ '--media-width': '200px' } as CSSProperties}>
+        <ImageContainer>
           {/*   @TODO Final size adjustments */}
           {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout="responsive" sizes="200px" />}
-        </Test>
-      </Media>
+        </ImageContainer>
+      </StyledMedia>
       <Text>
         <div>
           <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>

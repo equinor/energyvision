@@ -74,35 +74,40 @@ const Promotion = ({ data }: { data: PromotionData }) => {
   }
   return (
     <BackgroundContainer background={designOptions.background}>
-      <Wrapper>
-        {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: (props) => <StyledHeading level="h2" size="xl" {...props} />,
-              },
-            }}
-          />
-        )}
-        {ingress && (
-          <SimpleBlockContent
-            blocks={ingress}
-            serializers={{
-              types: {
-                block: (props) => <IngressBlockRenderer centered={true} {...props} />,
-              },
-            }}
-          ></SimpleBlockContent>
-        )}
-        {promotions.length > 0 && (
-          <CardsWrapper>
-            {promotions.map((item) => {
-              return getCard(item)
-            })}
-          </CardsWrapper>
-        )}
-      </Wrapper>
+      {promotions?.length === 1 ? (
+        /*  TODO: More than just people */
+        <PeopleCard direction="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
+      ) : (
+        <Wrapper>
+          {title && (
+            <SimpleBlockContent
+              blocks={title}
+              serializers={{
+                types: {
+                  block: (props) => <StyledHeading level="h2" size="xl" {...props} />,
+                },
+              }}
+            />
+          )}
+          {ingress && (
+            <SimpleBlockContent
+              blocks={ingress}
+              serializers={{
+                types: {
+                  block: (props) => <IngressBlockRenderer centered={true} {...props} />,
+                },
+              }}
+            ></SimpleBlockContent>
+          )}
+          {promotions.length > 1 && (
+            <CardsWrapper>
+              {promotions.map((item) => {
+                return getCard(item)
+              })}
+            </CardsWrapper>
+          )}
+        </Wrapper>
+      )}
     </BackgroundContainer>
   )
 }
