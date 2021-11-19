@@ -56,9 +56,9 @@ const Promotion = ({ data }: { data: PromotionData }) => {
   const getCard = (data: CardData) => {
     switch (data.type) {
       case 'news':
-        return <StyledNewsCard data={data} />
+        return <StyledNewsCard data={data} key={data.id} />
       case 'topics':
-        return <StyledTopicPageCard data={data} />
+        return <StyledTopicPageCard data={data} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }
