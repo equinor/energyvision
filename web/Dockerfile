@@ -8,7 +8,7 @@ WORKDIR /opt/app
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
-COPY ./pnpm-workspaces.yaml ./
+COPY ./pnpm-workspace.yaml ./
 
 COPY ./web ./web
 COPY ./legacy ./legacy
