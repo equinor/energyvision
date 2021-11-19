@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react'
 import { Card, Heading, Button } from '@components'
-import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import type { PeopleCardData } from '../../types/types'
 import Image from '../shared/Image'
@@ -45,11 +44,10 @@ const Test = styled.div`
 
 type PeopleCardProp = {
   data: PeopleCardData
-  fitToContent?: boolean
+  hasSectionTitle: boolean
 }
 
-const PeopleCard = ({ data, ...rest }: PeopleCardProp) => {
-  console.log(data)
+const PeopleCard = ({ data, hasSectionTitle, ...rest }: PeopleCardProp) => {
   const { name, image, title, department, isLink, phone, email } = data
 
   return (
@@ -77,7 +75,9 @@ const PeopleCard = ({ data, ...rest }: PeopleCardProp) => {
       </Media>
       <Text>
         <div>
-          <Name size="sm">{name}</Name>
+          <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>
+            {name}
+          </Name>
           {title && <Detail>{title}</Detail>}
           {department && <Detail>{department}</Detail>}
           {isLink ? (
