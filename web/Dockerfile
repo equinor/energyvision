@@ -17,7 +17,7 @@ COPY ./legacy ./legacy
 # RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
 #  jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
 #  ./web/package.json | sponge ./web/package.json
-  
+
 RUN rm -rf ./legacy
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
@@ -54,7 +54,7 @@ COPY --from=builder /opt/app/web/package.json ./web
 COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
 COPY --from=builder /opt/app/web/public ./web/public
 COPY --from=builder /opt/app/package.json ./
-COPY --from=builder /opt/app/pnpm-workspaces.yaml ./
+COPY --from=builder /opt/app/pnpm-workspace.yaml ./
 
 RUN chown -R "$USER":"$USER" .
 USER "$UID"
