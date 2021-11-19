@@ -13,18 +13,22 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.defaultProfile.linux": "zsh",
-    "git.rebaseWhenSync": true
+    "git.rebaseWhenSync": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
   },
 
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "dbaeumer.vscode-eslint",
-    "coenraads.bracket-pair-colorizer",
     "airyshift.spaces-inside-braces",
     "pflannery.vscode-versionlens",
     "jpoissonnier.vscode-styled-components",
     "redhat.vscode-yaml",
-    "2gua.rainbow-brackets",
     "esbenp.prettier-vscode",
     "ms-vsliveshare.vsliveshare-pack",
     "ms-vsliveshare.vsliveshare-audio",
