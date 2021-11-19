@@ -223,8 +223,31 @@ const pageContentFields = /* groq */ `
         "promotions": peopleList[]{
           "id": _key,
           "type": _type,
-          ...,
-        }
+          image,
+          name,
+          title,
+          department,
+          isLink,
+          !isLink => {
+            email,
+            phone,
+          },
+          isLink => {
+            "cv": {
+              "id": _key,
+              "type": select(
+                defined(url) => "externalUrl", "internalUrl"
+              ),
+              label,
+              ariaLabel,
+              "link": reference-> {
+                "type": _type,
+                "slug": slug.current,
+              },
+              "href": url,
+            },
+          },
+        },
       },
     },
     "designOptions": {
