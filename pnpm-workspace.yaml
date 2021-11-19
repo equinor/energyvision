@@ -1,0 +1,7 @@
+packages:
+  - 'web'
+  - 'e2e'
+  - 'legacy/css'
+  - 'legacy/js'
+  - 'search'
+  - '!studio'
