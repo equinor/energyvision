@@ -209,6 +209,7 @@ const pageContentFields = /* groq */ `
       _type == "promoteTopics" => {
         "promotions": references[]{
          "id": _key,
+         "type": _type,
           ingress[]{
             ...,
             ${markDefs}, 
