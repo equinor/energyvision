@@ -9,7 +9,6 @@ import type { PromotionData, CardData, PeopleCardData } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--space-3xLarge) var(--space-xxLarge);
-
   --card-maxWidth: 400px;
   --card-minWidth: 200px;
 `
@@ -50,6 +49,8 @@ const StyledTopicPageCard = styled(TopicPageCard)`
 `
 const StyledPeopleCard = styled(PeopleCard)`
   ${CardStyle}
+  /* Not the best approach, should be improved */
+  --card-maxWidth: 300px;
 `
 
 type CardProps = CardData | PeopleCardData

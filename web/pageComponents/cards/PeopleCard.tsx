@@ -27,11 +27,15 @@ const Contact = styled.div`
   text-align: center;
 `
 const ContactLink = styled.a`
+  padding: var(--space-4) 0;
   color: var(--moss-green-100);
   font-size: var(--typeScale-0);
   font-weight: var(--fontWeight-medium);
   text-decoration: none;
   display: block;
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 const RoundedImage = styled(Image)`
