@@ -8,7 +8,6 @@ export type CardProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const StyledCard = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   box-shadow: var(--card-shadow, none);
