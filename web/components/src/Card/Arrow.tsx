@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { StyledCard } from './Card'
+/* @TODO:Is it enough with the arrow link for the portrait card only? Or make this more flexible */
+import { StyledCard } from './PortraitCard'
 
 /* const AnimatedSVG = styled.svg`
   will-change: transform;
