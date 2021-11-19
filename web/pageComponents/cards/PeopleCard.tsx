@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import type { PeopleCardData } from '../../types/types'
 import Image from '../shared/Image'
 
-const { Header, Media, Text } = Card
+const { Media, Text } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
@@ -66,15 +66,8 @@ const PeopleCard = ({ data, hasSectionTitle, ...rest }: PeopleCardProp) => {
     >
       <Media>
         <Test>
-          {image && (
-            <RoundedImage
-              image={image}
-              maxWidth={400}
-              aspectRatio={1}
-              layout="responsive"
-              sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-            />
-          )}
+          {/*   @TODO Final size adjustments */}
+          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout="responsive" sizes="200px" />}
         </Test>
       </Media>
       <Text>
