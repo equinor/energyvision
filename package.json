@@ -11,7 +11,7 @@
     "lint:studio": "eslint ./studio/ --ext .js,.jsx,.ts,.tsx",
     "lint:search": "eslint ./search/ --ext .ts",
     "lint": "pnpm lint:web && pnpm lint:studio && pnpm lint:search",
-    "studio": "pnpm --filter ./studio",
+    "studio": "yarn --cwd ./studio",
     "web": "pnpm --filter ./web",
     "e2e": "pnpm --filter ./e2e",
     "search-indexers": "pnpm --filter ./search",
