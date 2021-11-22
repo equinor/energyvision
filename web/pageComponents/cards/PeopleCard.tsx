@@ -46,7 +46,6 @@ const ImageContainer = styled.div`
   max-width: 200px;
   /*  Somewhat complicated, but we need slightly different styles here,
   and the images don't calculate correct if we use grid or flex */
-
   ${StyledLandscapeCard} & {
     /*  Don't set padding on the landscape card because of the Event card */
     margin-top: var(--space-medium);
@@ -63,7 +62,6 @@ const ImageContainer = styled.div`
 const TextContent = styled(Text)`
   ${StyledLandscapeCard} & {
     margin-bottom: var(--space-medium);
-    flex-grow: 2;
     display: grid;
     place-content: center;
     @media (min-width: 450px) {
