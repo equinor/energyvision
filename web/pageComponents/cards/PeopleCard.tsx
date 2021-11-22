@@ -98,7 +98,7 @@ const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: 
       }
       {...rest}
     >
-      <StyledMedia style={{ '--media-width': '200px' } as CSSProperties}>
+      <StyledMedia>
         <ImageContainer>
           {/*   @TODO Final size adjustments */}
 
