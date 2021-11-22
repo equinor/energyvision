@@ -373,3 +373,17 @@ export type SubscribeFormData = {
   title?: PortableTextEntry[]
   formType: string
 }
+
+export type EventSchema = {
+  slug: string
+  documentTitle?: string
+  metaDescription?: string
+  openGraphImage?: ImageWithAlt
+  id: string
+  title: PortableTextEntry[]
+  location?: string
+  ingress?: PortableTextEntry[]
+  content?: PortableTextEntry[]
+  iframe?: IFrameData
+  relatedLinks?: RelatedLinksData
+}
