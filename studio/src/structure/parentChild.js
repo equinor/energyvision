@@ -52,7 +52,7 @@ function routeStructure(schema, isoCode) {
                   .title('Topic Categories')
                   .schemaType(documentName)
                   .filter(categoryParents)
-                  .child((id) => S.document().documentId(id).views(views)),
+                  .child((id) => S.document().documentId(id).views(views).schemaType(documentName)),
               ),
             S.divider(),
             ...parents.map((parent) =>
@@ -73,7 +73,7 @@ function routeStructure(schema, isoCode) {
                         parentId: parent._id,
                       }),
                     ])
-                    .child((id) => S.document().documentId(id).views(views)),
+                    .child((id) => S.document().documentId(id).views(views).schemaType(documentName)),
                 ),
             ),
           ]),
