@@ -4,15 +4,19 @@ import styled from 'styled-components'
 export type CardProps = HTMLAttributes<HTMLDivElement>
 
 export const StyledLandscapeCard = styled.div`
-  display: inline-flex;
-  flex-direction: row;
+  display: grid;
+
   box-shadow: var(--card-shadow, none);
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));
-  padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
   justify-content: center;
+  width: 100%;
+
   &:hover {
     cursor: inherit;
+  }
+  @media (min-width: 450px) {
+    grid-template-columns: auto 1fr;
   }
 `
 

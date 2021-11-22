@@ -42,20 +42,40 @@ const RoundedImage = styled(Image)`
   border-radius: 50%;
 `
 const ImageContainer = styled.div`
+  max-height: 200px;
   max-width: 200px;
   /*  Somewhat complicated, but we need slightly different styles here,
   and the images don't calculate correct if we use grid or flex */
+
   ${StyledLandscapeCard} & {
-    margin: 50% auto;
-    padding-left: var(--space-medium);
+    /*  Don't set padding on the landscape card because of the Event card */
+    margin-top: var(--space-medium);
+    @media (min-width: 450px) {
+      margin: var(--space-medium);
+      margin-right: 0;
+    }
   }
   ${StyledPortraitCard} & {
     margin: var(--space-medium) auto 0 auto;
   }
 `
 
+const TextContent = styled(Text)`
+  ${StyledLandscapeCard} & {
+    margin-bottom: var(--space-medium);
+    flex-grow: 2;
+    display: grid;
+    place-content: center;
+    @media (min-width: 450px) {
+      margin: var(--space-medium) 0;
+    }
+  }
+`
 const StyledMedia = styled(Media)`
-  flex-basis: var(--media-width, auto);
+  ${StyledLandscapeCard} & {
+    display: grid;
+    place-content: center;
+  }
 `
 
 type PeopleCardProp = {
@@ -81,10 +101,11 @@ const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: 
       <StyledMedia style={{ '--media-width': '200px' } as CSSProperties}>
         <ImageContainer>
           {/*   @TODO Final size adjustments */}
-          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout="responsive" sizes="200px" />}
+
+          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />}
         </ImageContainer>
       </StyledMedia>
-      <Text>
+      <TextContent>
         <div>
           <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>
             {name}
@@ -102,7 +123,7 @@ const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: 
             </Contact>
           )}
         </div>
-      </Text>
+      </TextContent>
     </StyledCard>
   )
 }

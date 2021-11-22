@@ -53,6 +53,12 @@ const StyledPeopleCard = styled(PeopleCard)`
   --card-maxWidth: 300px;
 `
 
+const LandscapeWrapper = styled(Wrapper)`
+  max-width: calc(712px + calc(2 * var(--space-xxLarge)));
+  margin-left: auto;
+  margin-right: auto;
+`
+
 type CardProps = CardData | PeopleCardData
 
 const Promotion = ({ data }: { data: PromotionData }) => {
@@ -76,7 +82,9 @@ const Promotion = ({ data }: { data: PromotionData }) => {
     <BackgroundContainer background={designOptions.background}>
       {promotions?.length === 1 ? (
         /*  TODO: More than just people */
-        <PeopleCard direction="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
+        <LandscapeWrapper>
+          <PeopleCard direction="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
+        </LandscapeWrapper>
       ) : (
         <Wrapper>
           {title && (
