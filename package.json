@@ -23,7 +23,7 @@
     "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm",
-    "start:studio": "pnpm studio dev",
+    "start:studio": "yarn --cwd ./studio dev",
     "start:storybook": "pnpm web storybook",
     "start:web": "pnpm web dev"
   },
