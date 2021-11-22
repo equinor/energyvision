@@ -14,38 +14,45 @@ export const eventFields = /* groq */ `
 `
 
 export const eventQuery = /* groq */ `
- *[_type == "event" && _lang == $lang][0] {
-    "documentTitle": seo.documentTitle,
-    "metaDescription": seo.metaDescription,
-    openGraphImage,
+  {
+    "event": *[_type == "event" && _lang == $lang][0]{
+      "documentTitle": seo.documentTitle,
+      "metaDescription": seo.metaDescription,
+      openGraphImage,
 
-    ${eventFields}
+      ${eventFields}
 
-    ingress[]{
-      ...,
-      ${markDefs},
-    },
-    content[]{
-      ...,
-      ${markDefs},
-    },
-    "iframe": iframe{
-      title,
-      frameTitle,
-      url,
-      "designOptions": {
-        "aspectRatio": coalesce(aspectRatio, '16:9'),
-        "background": coalesce(background.title, 'none'),
-        height,
+      ingress[]{
+        ...,
+        ${markDefs},
       },
-    },
-    "relatedLinks": relatedLinks{
-      title,
-      heroImage,
-      "links": links[]{
-       ${linkSelectorFields},
-       ${downloadableFileFields},
-       ${downloadableImageFields},
+      content[]{
+        ...,
+        ${markDefs},
+      },
+      "iframe": iframe{
+        title,
+        frameTitle,
+        url,
+        "designOptions": {
+          "aspectRatio": coalesce(aspectRatio, '16:9'),
+          "background": coalesce(background.title, 'none'),
+          height,
+        },
+      },
+      "relatedLinks": relatedLinks{
+        title,
+        heroImage,
+        "links": links[]{
+          ${linkSelectorFields},
+          ${downloadableFileFields},
+          ${downloadableImageFields},
+        }
+      }
     }
-	}
+  }
+`
+
+export const eventSlugsQuery = /* groq */ `
+*[_type == "event" && defined(slug.current)][].slug.current
 `
