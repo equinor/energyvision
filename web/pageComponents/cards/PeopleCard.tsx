@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import type { PeopleCardData } from '../../types/types'
 import Image from '../shared/Image'
 
-const { Media, Text } = Card
+const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
@@ -43,7 +43,15 @@ const RoundedImage = styled(Image)`
 `
 const ImageContainer = styled.div`
   max-width: 200px;
-  margin: var(--space-medium) auto 0 auto;
+  /*  Somewhat complicated, but we need slightly different styles here,
+  and the images don't calculate correct if we use grid or flex */
+  ${StyledLandscapeCard} & {
+    margin: 50% auto;
+    padding-left: var(--space-medium);
+  }
+  ${StyledPortraitCard} & {
+    margin: var(--space-medium) auto 0 auto;
+  }
 `
 
 const StyledMedia = styled(Media)`
