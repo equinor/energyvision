@@ -7,7 +7,7 @@ export type CardProps = {
   textOnly?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export const StyledCard = styled.div`
+export const StyledPortraitCard = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: var(--card-shadow, none);
@@ -27,7 +27,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
   return (
     <>
       {type === 'news' ? (
-        <StyledCard
+        <StyledPortraitCard
           ref={ref}
           style={
             {
@@ -40,9 +40,9 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
           {...rest}
         >
           {children}
-        </StyledCard>
+        </StyledPortraitCard>
       ) : (
-        <StyledCard
+        <StyledPortraitCard
           ref={ref}
           style={
             {
@@ -54,7 +54,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
           {...rest}
         >
           {children}
-        </StyledCard>
+        </StyledPortraitCard>
       )}
     </>
   )

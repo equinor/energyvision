@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 export type CardProps = HTMLAttributes<HTMLDivElement>
 
-export const StyledCard = styled.div`
+export const StyledLandscapeCard = styled.div`
   display: inline-flex;
   flex-direction: row;
   box-shadow: var(--card-shadow, none);
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));
   padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
-
+  justify-content: center;
   &:hover {
     cursor: inherit;
   }
@@ -18,7 +18,7 @@ export const StyledCard = styled.div`
 
 export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card({ style, children, ...rest }, ref) {
   return (
-    <StyledCard
+    <StyledLandscapeCard
       ref={ref}
       style={
         {
@@ -31,6 +31,6 @@ export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card
       {...rest}
     >
       {children}
-    </StyledCard>
+    </StyledLandscapeCard>
   )
 })

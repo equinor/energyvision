@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 /* @TODO:Is it enough with the arrow link for the portrait card only? Or make this more flexible */
-import { StyledCard } from './PortraitCard'
+import { StyledPortraitCard } from './PortraitCard'
 
 /* const AnimatedSVG = styled.svg`
   will-change: transform;
@@ -41,7 +41,7 @@ const AnimatedArrow = styled.span`
     position: absolute;
     right: 2px;
   }
-  ${StyledCard}:hover & {
+  ${StyledPortraitCard}:hover & {
     cursor: pointer;
     &:before {
       width: 40px;
