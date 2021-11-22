@@ -3,19 +3,19 @@ lockfileVersion: 5.3
 specifiers:
   '@equinor/eds-icons': ^0.7.0
   '@reach/auto-id': ^0.16.0
-  '@sanity/base': ^2.21.10
-  '@sanity/cli': ^2.21.10
+  '@sanity/base': ^2.21.7
+  '@sanity/cli': ^2.21.7
   '@sanity/components': ^2.14.0
-  '@sanity/core': ^2.21.11
+  '@sanity/core': ^2.21.7
   '@sanity/data-aspects': ^2.18.0
-  '@sanity/default-layout': ^2.21.10
-  '@sanity/default-login': ^2.21.10
-  '@sanity/desk-tool': ^2.21.10
-  '@sanity/form-builder': ^2.21.10
+  '@sanity/default-layout': ^2.21.7
+  '@sanity/default-login': ^2.21.7
+  '@sanity/desk-tool': ^2.21.7
+  '@sanity/form-builder': ^2.21.7
   '@sanity/icons': ^1.2.1
-  '@sanity/types': ^2.21.10
+  '@sanity/types': ^2.21.7
   '@sanity/ui': ^0.36.1
-  '@sanity/vision': ^2.21.10
+  '@sanity/vision': ^2.21.7
   '@types/styled-components': ^5.1.12
   only-allow: ^1.0.0
   prop-types: ^15.7.2
@@ -2556,7 +2556,7 @@ packages:
       styled-components: ^5.2.0
     dependencies:
       '@juggle/resize-observer': 3.3.1
-      '@popperjs/core': 2.10.1
+      '@popperjs/core': 2.10.2
       '@reach/auto-id': 0.13.2_react-dom@17.0.2+react@17.0.2
       '@sanity/bifur-client': 0.0.8
       '@sanity/client': 2.21.10
@@ -2590,7 +2590,7 @@ packages:
       observable-callback: 1.0.1_rxjs@6.6.7
       pluralize: 7.0.0
       polished: 4.1.3
-      popper-max-size-modifier: 0.2.0_@popperjs+core@2.10.1
+      popper-max-size-modifier: 0.2.0_@popperjs+core@2.10.2
       prop-types: 15.7.2
       raf: 3.4.1
       react: 17.0.2
@@ -2600,7 +2600,7 @@ packages:
       react-icon-base: 2.1.2_prop-types@15.7.2+react@17.0.2
       react-intersection-observer: 8.32.1_react@17.0.2
       react-is: 17.0.2
-      react-popper: 2.2.5_c34cdefc274ed34b0288250ea1cef189
+      react-popper: 2.2.5_838acf1c84808345430cf17171f87518
       react-props-stream: 1.0.1_react@17.0.2+rxjs@6.6.7
       react-refractor: 2.1.5_react@17.0.2
       react-rx: 1.0.0-beta.6_react@17.0.2+rxjs@6.6.7
@@ -3909,11 +3909,6 @@ packages:
   /ansi-regex/4.1.0:
     resolution: {integrity: sha512-1apePfXM1UOSqw0o9IiFAovVz9M5S1Dg+4TrDwfMewQ6p/rmMueb7tWZjQ1rx4Loy1ArBggoqGpfqqdI4rondg==}
     engines: {node: '>=6'}
-    dev: false
-
-  /ansi-regex/5.0.0:
-    resolution: {integrity: sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==}
-    engines: {node: '>=8'}
     dev: false
 
   /ansi-regex/5.0.1:
@@ -11416,7 +11411,7 @@ packages:
     dependencies:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
-      strip-ansi: 6.0.0
+      strip-ansi: 6.0.1
     dev: false
 
   /string.prototype.trimend/1.0.4:
@@ -11468,13 +11463,6 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       ansi-regex: 4.1.0
-    dev: false
-
-  /strip-ansi/6.0.0:
-    resolution: {integrity: sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==}
-    engines: {node: '>=8'}
-    dependencies:
-      ansi-regex: 5.0.0
     dev: false
 
   /strip-ansi/6.0.1:
