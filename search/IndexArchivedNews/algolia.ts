@@ -1,35 +1,27 @@
-import algoliasearch, { SearchClient, SearchIndex } from 'algoliasearch'
-import * as O from 'fp-ts/lib/Option'
+import algoliasearch, { SearchIndex } from 'algoliasearch'
 import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
 import { flow, pipe } from 'fp-ts/lib/function'
 
-const getAlgoliaAppId: IO.IO<O.Option<string>> = () => O.fromNullable(process.env.ALGOLIA_APP_ID)
-const getAlgoliaAPIKey: IO.IO<O.Option<string>> = () => O.fromNullable(process.env.ALGOLIA_API_KEY)
-//const getAlgoliaIndexName: IO.IO<O.Option<string>> = () => O.fromNullable(process.env.ALGOLIA_INDEX_NAME)
+const algoliaSearchCurried = (appId: string) => (apiKey: string) => algoliasearch(appId, apiKey)
 
-type ProceedWithApiKeyType = (appId: string) => E.Either<string, SearchClient>
-const proceedWithAPIKey: ProceedWithApiKeyType = (appId) =>
-  pipe(
-    getAlgoliaAPIKey(),
-    O.match(
-      () => E.left('No API key available'),
-      (apiKey) => E.right(algoliasearch(appId, apiKey)),
-    ),
-  )
+type GetProcessEnvType = IO.IO<E.Either<string, string>>
+const getAlgoliaAppId: GetProcessEnvType = () =>
+  pipe(E.fromNullable('Unable to find app id'), (fromNullable) => fromNullable(process.env.ALGOLIA_APP_ID))
+const getAlgoliaApiKey: GetProcessEnvType = () =>
+  pipe(E.fromNullable('Un2able to find API key'), (fromNullable) => fromNullable(process.env.ALGOLIA_API_KEY))
+const getAlgoliaIndexName: GetProcessEnvType = () =>
+  pipe(E.fromNullable('Unable to find index name'), (fromNullable) => fromNullable(process.env.ALGOLIA_INDEX_NAME))
 
-type GetClientType = IO.IO<E.Either<string, SearchClient>>
-const getClient: GetClientType = flow(
+type InitFuncType = IO.IO<E.Either<string, SearchIndex>>
+export const initFunc: InitFuncType = flow(
   getAlgoliaAppId,
-  O.match(() => E.left('No App ID available'), proceedWithAPIKey),
+  E.map(algoliaSearchCurried),
+  E.chain((algoliaSearch) => pipe(getAlgoliaApiKey(), E.map(algoliaSearch))),
+  E.chain((client) => pipe(getAlgoliaIndexName(), E.map(client.initIndex))),
 )
 
-// API for Algolia stuff
-/* type InitType = () => SearchIndex
-export const init: InitType = () => flow (
-  getClient,
-  E.match()
- )*/
+//export const initOrDie = () => E.getOrElse(initFunc(), throw new Error())
 
 // Push to Algolia index
 type UpdateType = (indexName: string, value: string) => boolean
