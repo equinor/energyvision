@@ -16,7 +16,7 @@ import IFrame from '../../pageComponents/shared/IFrame'
 import RelatedContent from '../../pageComponents/news/RelatedContent'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
-import Lead from '../../pageComponents/news/Lead'
+import Lead from '../../pageComponents/shared/Lead'
 import type { AppProps } from 'next/app'
 import type { EventSchema } from '../../types/types'
 
