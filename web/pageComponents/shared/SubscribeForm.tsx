@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { Button, TextField, Checkbox, Icon } from '@equinor/eds-core-react'
-import { authenticate } from '../../components/utils/subscribeForm'
+//import { authenticate } from '../../components/utils/subscription' // need it...
 import { Heading } from '@components'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
@@ -61,6 +61,7 @@ const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData 
             />
           )}
         </div>
+        {formType}
         <form onSubmit={handleSubmit((data) => console.log(data))}>
           <Heading level="h6">Categories:</Heading>
           <UnstyledList>
@@ -80,10 +81,27 @@ const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData 
               <Checkbox label="Loop stories" name="loop-stories" value="third" />
             </li>
           </UnstyledList>
-
-          <TextFieldWrapper>
-            <TextField id="firstName" label="First Name" />
-          </TextFieldWrapper>
+          <Controller
+            name="firstName"
+            control={control}
+            rules={{
+              required: 'Required',
+            }}
+            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+              <TextFieldWrapper>
+                <TextField
+                  {...props}
+                  id={props.name}
+                  label="First Name"
+                  inputRef={ref}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  helperIcon={<Icon data={error_filled} title="error" />}
+                  variant={invalid ? 'error' : 'default'}
+                />
+              </TextFieldWrapper>
+            )}
+          />
           <Controller
             name="email"
             control={control}

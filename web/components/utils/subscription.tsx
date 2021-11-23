@@ -25,6 +25,7 @@ export const authenticate = async () => {
   const { body } = response
 
   xml2js.parseString(body, function (err, result) {
+    if (err != null) console.error(err)
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
     if (soapBody['SOAP-ENV:Fault'] != undefined) {
       console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
@@ -33,26 +34,26 @@ export const authenticate = async () => {
     const loginResult = soapBody['v1:Authentication___LoginResponse']['0']['v1:Result']['0']
     const apiSecret = loginResult['v1:apiSecret']['0']
     const instId = loginResult['v1:instId']['0']
-    const formParameters = {
-      subscribeToStockMarketAnnouncements: 'y',
-      subscribeToCompanyNews: 'n',
-      subscribeToCrudeOilAssays: 'n',
-      subscribeToLoopArticles: 'n',
-      language_code: 'en',
-    }
-    createSignUpRequest({ apiSecret, instId }, formParameters)
+    createSignUpRequest({ apiSecret, instId })
   })
 }
 
-export const createSignUpRequest = async (
-  { apiSecret, instId }: { apiSecret: string; instId: string },
-  formParameters: any,
-) => {
+export const createSignUpRequest = async ({ apiSecret, instId }: { apiSecret: string; instId: string }) => {
   // check if form has valid language code...
   /*if(!formParameters["language_code"] == "en" && !formParameters["language_code"] == "no"){
     console.error("Invalid language code.")
-  }*/
-
+  }
+  ....... WIP .......
+  */
+  const formParameters = {
+    subscribeToStockMarketAnnouncements: 'y',
+    subscribeToCompanyNews: 'n',
+    subscribeToCrudeOilAssays: 'n',
+    subscribeToLoopArticles: 'n',
+    language_code: 'en',
+    firstName: 'firstname',
+    email: 'email',
+  }
   const additionalParameters = `
   {
     "stock_market": "${formParameters['subscribeToStockMarketAnnouncements']}",
