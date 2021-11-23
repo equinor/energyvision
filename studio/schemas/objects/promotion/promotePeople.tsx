@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { validateInternalOrExternalUrl } from '../../validations/validateInternalOrExternalUrl'
+import { validateRequiredIfVisible } from '../../validations/validateRequiredIfVisible'
 
 import type { Block, Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
@@ -47,6 +48,7 @@ export default {
           type: 'object',
           name: 'people',
           title: 'People',
+
           fields: [
             {
               title: 'Image',
@@ -77,6 +79,7 @@ export default {
               options: {
                 isHighlighted: true,
               },
+
               initialValue: false,
             },
             {
@@ -131,6 +134,25 @@ export default {
                     return validateInternalOrExternalUrl(!parent?.isLink, value, parent.reference)
                   },
                 ),
+              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
+            },
+            {
+              name: 'label',
+              title: 'Visible label',
+              description: 'The visible text on the link/button.',
+              type: 'string',
+              validation: (Rule: Rule) =>
+                Rule.custom((value: string, context: ValidationContext) => {
+                  const { parent } = context as { parent: Promotion }
+                  return validateRequiredIfVisible(parent.isLink, value, 'You must add a label')
+                }),
+              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
+            },
+            {
+              name: 'ariaLabel',
+              title: '♿ Screenreader label',
+              description: 'A text used for providing screen readers with additional information',
+              type: 'string',
               hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
             },
             {
