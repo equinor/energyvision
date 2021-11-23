@@ -3,6 +3,7 @@ import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { formatDate } from '../../helpers/formatDate'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -86,7 +87,12 @@ export default {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      options: {
+        isUnique: isUniqueWithinLocale,
+      },
+
       description: "Danger zone! Be sure that you know what you're doing!",
+
       validation: (Rule) =>
         Rule.required().custom((slug) => {
           if (slug && slug.current.match(/[A-Z]/g)) {
