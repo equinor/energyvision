@@ -1,20 +1,18 @@
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
 
-export const isUniqueWithinLocale = (slug, options) => {
-    const {document} = options
-  
-    const id = document._id.replace(/^drafts\./, '')
-    const params = {
-      draft: `drafts.${id}`,
-      published: id,
-      lang: document._lang,
-      slug
-    }
-  
-    const query = `!defined(*[!(_id in [$draft, $published]) &&
-                    _lang == $lang &&
-                    slug.current == $slug][0]._id)`
-  
-    return client.fetch(query, params)
-  }
+export const isUniqueWithinLocale = async (slug, options) => {
+  const { document: sanityDocument } = options
+
+  const baseId = sanityDocument._id
+    .split(`.`)
+    .filter((idPart) => ![`drafts`, `i18n`, sanityDocument.__i18n_lang].includes(idPart))
+    .join(`.`)
+  const type = sanityDocument._type
+
+  const query = `*[_type == $type && slug.current == $slug && !(_id match $baseId)]`
+  const params = { slug, type, baseId }
+  const matchingSlugs = await client.fetch(query, params)
+
+  return !matchingSlugs.length
+}
