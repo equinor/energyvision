@@ -83,7 +83,7 @@ type PeopleCardProp = {
 }
 
 const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: PeopleCardProp) => {
-  const { name, image, title, department, isLink, phone, email } = data
+  const { name, image, title, department, isLink, phone, email, cv } = data
 
   return (
     <StyledCard
@@ -112,7 +112,9 @@ const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: 
           {department && <Detail>{department}</Detail>}
           {isLink ? (
             <Contact>
-              <Button variant="outlined">A link wip</Button>
+              <Button variant="outlined" aria-label={cv?.ariaLabel}>
+                {cv?.label}
+              </Button>
             </Contact>
           ) : (
             <Contact>

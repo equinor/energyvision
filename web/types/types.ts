@@ -60,7 +60,7 @@ export type PeopleCardData = {
   email?: string
   phone?: string
   isLink: boolean
-  cv?: LinkData[]
+  cv?: LinkData
 }
 
 export type NewsSchema = {
