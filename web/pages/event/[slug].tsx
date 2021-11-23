@@ -14,8 +14,58 @@ import { TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import IFrame from '../../pageComponents/shared/IFrame'
 import RelatedContent from '../../pageComponents/news/RelatedContent'
+import styled from 'styled-components'
+import { BackgroundContainer } from '@components'
+import Lead from '../../pageComponents/news/Lead'
 import type { AppProps } from 'next/app'
 import type { EventSchema } from '../../types/types'
+
+const EventLayout = styled.article`
+  --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
+  --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+`
+
+const Header = styled.div`
+  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium);
+  max-width: 1186px; /* 1920 - (2 * 367) */
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const ContentWrapper = styled.div`
+  margin: var(--space-3xLarge) 0;
+`
+
+const LeadParagraph = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
+  margin: 0 auto var(--space-3xLarge) 0;
+
+  & > p {
+    margin-bottom: 0;
+  }
+`
+
+const Content = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
+
+  > div > aside:last-child,
+  > div > div:last-child {
+    margin-bottom: 0;
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+`
+
+const Related = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: 1700px;
+  margin: var(--space-4xLarge) auto;
+`
 
 type EventProps = {
   data: {
@@ -57,44 +107,43 @@ export default function Event({ data, preview }: EventProps): JSX.Element {
         <p>Loading…</p>
       ) : (
         <main>
-          <article>
-            {title && (
-              <SimpleBlockContent
-                blocks={title}
-                serializers={{
-                  types: {
-                    block: (props) => <TitleBlockRenderer level="h1" size="2xl" {...props} />,
-                  },
-                }}
-              />
-            )}
-
-            {location && (
-              <div>
-                <p>{location}</p>
-              </div>
-            )}
-
-            {ingress && (
-              <div>
-                <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-              </div>
-            )}
-
-            {content && (
-              <div>
-                <SimpleBlockContent blocks={content}></SimpleBlockContent>
-              </div>
-            )}
+          <EventLayout>
+            <BackgroundContainer background="Moss Green Light">
+              <Header>
+                {title && (
+                  <SimpleBlockContent
+                    blocks={title}
+                    serializers={{
+                      types: {
+                        block: (props) => <TitleBlockRenderer level="h1" size="2xl" {...props} />,
+                      },
+                    }}
+                  />
+                )}
+                {location && <p>{location}</p>}
+              </Header>
+            </BackgroundContainer>
+            <ContentWrapper>
+              {ingress && (
+                <LeadParagraph>
+                  <Lead blocks={ingress}></Lead>
+                </LeadParagraph>
+              )}
+              {content && (
+                <Content>
+                  <SimpleBlockContent blocks={content}></SimpleBlockContent>
+                </Content>
+              )}
+            </ContentWrapper>
 
             {iframe && <IFrame data={iframe} />}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <div>
+              <Related>
                 <RelatedContent data={relatedLinks} />
-              </div>
+              </Related>
             )}
-          </article>
+          </EventLayout>
         </main>
       )}
     </>
