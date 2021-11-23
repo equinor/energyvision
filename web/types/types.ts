@@ -380,7 +380,7 @@ export type EventSchema = {
   metaDescription?: string
   openGraphImage?: ImageWithAlt
   id: string
-  title: PortableTextEntry[]
+  title: BlockNode[]
   location?: string
   ingress?: PortableTextEntry[]
   content?: PortableTextEntry[]

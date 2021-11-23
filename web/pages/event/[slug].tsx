@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import { GetStaticProps, GetStaticPaths } from 'next'
+import { NextSeo } from 'next-seo'
+import getConfig from 'next/config'
 import styled from 'styled-components'
 import { SkipNavContent } from '@reach/skip-nav'
 import { eventQuery, eventSlugsQuery } from '../../lib/queries/event'
@@ -17,8 +19,12 @@ import Lead from '../../pageComponents/shared/Lead'
 import { BackgroundContainer } from '@components'
 import { TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
+import { blocksToText } from '../../common/helpers'
+import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { AppProps } from 'next/app'
 import type { EventSchema } from '../../types/types'
+
+const { publicRuntimeConfig } = getConfig()
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -101,8 +107,26 @@ export default function Event({ data, preview }: EventProps): JSX.Element {
 
   const { title, location, ingress, content, iframe, relatedLinks } = data.event
 
+  const plainTitle = title ? blocksToText(title) : ''
+
+  const { pathname } = router
+  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
+  const fullUrl = fullUrlDyn.replace('[slug]', slug)
+
   return (
     <>
+      <NextSeo
+        title={event.documentTitle || plainTitle}
+        description={event.metaDescription}
+        openGraph={{
+          title: plainTitle,
+          description: event.metaDescription,
+          type: 'website',
+          url: fullUrl,
+          images: event.openGraphImage?.asset && getOpenGraphImages(event.openGraphImage),
+        }}
+      ></NextSeo>
+
       {router.isFallback ? (
         <p>Loading…</p>
       ) : (
