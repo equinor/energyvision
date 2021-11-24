@@ -8,17 +8,12 @@ type CVProps = {
   data: LinkData
 }
 
-const Contact = styled.div`
-  margin-top: var(--space-medium);
-  text-align: center;
-`
-
 const CV = ({ data }: CVProps) => {
   const { type, label, ariaLabel } = data
 
   const url = getUrlFromAction(data) || ''
   return (
-    <Contact>
+    <>
       {type === 'internalUrl' ? (
         <NextLink href={url || ''} passHref>
           <Link variant="buttonLink" type={type} aria-label={ariaLabel}>
@@ -30,7 +25,7 @@ const CV = ({ data }: CVProps) => {
           {label}
         </Link>
       )}
-    </Contact>
+    </>
   )
 }
 

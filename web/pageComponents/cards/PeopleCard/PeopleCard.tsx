@@ -62,6 +62,7 @@ const ImageContainer = styled.div`
 `
 
 const TextContent = styled(Text)`
+  height: var(--text-height, auto);
   ${StyledLandscapeCard} & {
     margin-bottom: var(--space-medium);
     display: grid;
@@ -78,18 +79,25 @@ const StyledMedia = styled(Media)`
   }
 `
 
+const CardContent = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
 type PeopleCardProp = {
   data: PeopleCardData
   hasSectionTitle: boolean
-  direction?: 'portrait' | 'landscape'
+  orientation?: 'portrait' | 'landscape'
 }
 
-const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: PeopleCardProp) => {
+const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: PeopleCardProp) => {
   const { name, image, title, department, isLink, phone, email, cv } = data
 
   return (
     <StyledCard
-      orientation={direction}
+      orientation={orientation}
       style={
         {
           '--height': 'auto',
@@ -105,22 +113,27 @@ const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: 
           {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />}
         </ImageContainer>
       </StyledMedia>
-      <TextContent>
-        <div>
-          <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>
-            {name}
-          </Name>
-          {title && <Detail>{title}</Detail>}
-          {department && <Detail>{department}</Detail>}
-          {isLink && cv ? (
-            <CV data={cv} />
-          ) : (
-            <Contact>
-              {email && <ContactLink href={`mailto:${email}`}>{email}</ContactLink>}
-              {phone && <ContactLink href={`tel:${phone}`}>{phone}</ContactLink>}
-            </Contact>
-          )}
-        </div>
+      <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>
+        <CardContent>
+          <div>
+            <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>
+              {name}
+            </Name>
+
+            {title && <Detail>{title}</Detail>}
+            {department && <Detail>{department}</Detail>}
+          </div>
+          <Contact>
+            {isLink && cv ? (
+              <CV data={cv} />
+            ) : (
+              <>
+                {email && <ContactLink href={`mailto:${email}`}>{email}</ContactLink>}
+                {phone && <ContactLink href={`tel:${phone}`}>{phone}</ContactLink>}
+              </>
+            )}
+          </Contact>
+        </CardContent>
       </TextContent>
     </StyledCard>
   )

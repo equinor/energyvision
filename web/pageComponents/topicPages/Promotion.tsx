@@ -105,7 +105,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
         {promotions?.length === 1 && (
           /*  TODO: More than just people */
           <LandscapeWrapper>
-            <PeopleCard direction="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
+            <PeopleCard orientation="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
           </LandscapeWrapper>
         )}
         {promotions.length > 1 && (
