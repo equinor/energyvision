@@ -117,6 +117,11 @@ export default {
       },
     },
     {
+      title: 'People and contacts',
+      name: 'promotedPeople',
+      type: 'promotePeople',
+    },
+    {
       name: 'relatedLinks',
       title: 'Links and downloads',
       description: 'Optional list of related links to this event.',
