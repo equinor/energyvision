@@ -295,14 +295,14 @@ export type Tag = {
 export type PromotionData = {
   id: string
   type: string
-  title: PortableTextEntry[]
+  title?: PortableTextEntry[]
   ingress?: PortableTextEntry[]
   content: {
     // Do we really need the tags here?
     tags?: Tag[]
     promotions: CardData[] | PeopleCardData[]
   }
-  designOptions: DesignOptions
+  designOptions?: DesignOptions
 }
 
 export type FooterColumns = {
@@ -385,5 +385,6 @@ export type EventSchema = {
   ingress?: PortableTextEntry[]
   content?: PortableTextEntry[]
   iframe?: IFrameData
+  promotedPeople?: PeopleCardData[]
   relatedLinks?: RelatedLinksData
 }
