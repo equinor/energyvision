@@ -32,7 +32,11 @@ const EventLayout = styled.article`
 `
 
 const Header = styled.div`
+  background: var(--moss-green-50);
   padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium);
+`
+
+const HeaderInner = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
@@ -132,8 +136,8 @@ export default function Event({ data, preview }: EventProps): JSX.Element {
       ) : (
         <main>
           <EventLayout>
-            <BackgroundContainer background="Moss Green Light">
-              <Header>
+            <Header>
+              <HeaderInner>
                 {title && (
                   <SimpleBlockContent
                     blocks={title}
@@ -145,8 +149,8 @@ export default function Event({ data, preview }: EventProps): JSX.Element {
                   />
                 )}
                 {location && <p>{location}</p>}
-              </Header>
-            </BackgroundContainer>
+              </HeaderInner>
+            </Header>
             <ContentWrapper>
               {ingress && (
                 <LeadParagraph>
