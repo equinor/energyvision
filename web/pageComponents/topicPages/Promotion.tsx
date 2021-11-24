@@ -80,7 +80,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
     }
   }
   return (
-    <BackgroundContainer background={designOptions.background}>
+    <BackgroundContainer background={designOptions?.background}>
       <Wrapper>
         {title && (
           <SimpleBlockContent
