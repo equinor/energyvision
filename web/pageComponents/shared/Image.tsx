@@ -17,6 +17,7 @@ type ImgProps = Omit<
   aspectRatio?: number
   placeholder?: 'empty' | 'blur'
   unoptimized?: boolean
+  priority?: boolean
 }
 
 // Couldn't make it work with ...props due to TypesScript
@@ -28,6 +29,7 @@ const Image = ({
   aspectRatio,
   placeholder,
   unoptimized = false,
+
   ...rest
 }: ImgProps) => {
   const imageProps = useNextSanityImage(sanityClient, image, {

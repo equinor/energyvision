@@ -31,6 +31,7 @@ const HeroImage = ({ data }: HeroImageProps) => {
           1420px
         "
         layout="responsive"
+        priority
       />
       {caption || attribution ? (
         <FigureCaption>
