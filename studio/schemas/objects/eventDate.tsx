@@ -3,7 +3,7 @@ import type { Rule, ValidationContext } from '@sanity/types'
 
 export type EventDate = {
   _type: 'eventDate'
-  preciseTime: boolean
+  precise: boolean
   date?: string
   startDate?: string
   endDate?: string
@@ -15,10 +15,11 @@ export default {
   type: 'object',
   fields: [
     {
-      name: 'preciseTime',
+      name: 'precise',
       description: 'Check if the event has an exact start and end time',
       title: 'Precise time',
       type: 'boolean',
+      initialValue: false,
     },
     {
       name: 'date',
@@ -27,11 +28,11 @@ export default {
       options: {
         dateFormat: 'DD-MM-YYYY',
       },
-      hidden: ({ parent }: { parent: EventDate }) => parent.preciseTime,
+      hidden: ({ parent }: { parent: EventDate }) => parent.precise,
       validation: (Rule: Rule) =>
         Rule.custom((field, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
-          return !parent.preciseTime && field === undefined ? 'Date is required' : true
+          return !parent.precise && field === undefined ? 'Date is required' : true
         }),
     },
     {
@@ -44,11 +45,11 @@ export default {
         timeStep: 5,
         tiimezone: '',
       },
-      hidden: ({ parent }: { parent: EventDate }) => !parent.preciseTime,
+      hidden: ({ parent }: { parent: EventDate }) => !parent.precise,
       validation: (Rule: Rule) =>
         Rule.custom((field: string, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
-          return parent.preciseTime && field === undefined ? 'Start date is required' : true
+          return parent.precise && field === undefined ? 'Start date is required' : true
         }),
     },
     {
@@ -61,13 +62,13 @@ export default {
         timeStep: 5,
         tiimezone: '',
       },
-      hidden: ({ parent }: { parent: EventDate }) => !parent.preciseTime,
+      hidden: ({ parent }: { parent: EventDate }) => !parent.precise,
       validation: (Rule: Rule) =>
         Rule.custom((field: string, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
-          if (parent.preciseTime && field === undefined) {
+          if (parent.precise && field === undefined) {
             return 'End date is required'
-          } else if (parent.preciseTime && parent.startDate && field <= parent.startDate) {
+          } else if (parent.precise && parent.startDate && field <= parent.startDate) {
             return 'End date must be greater than start date'
           } else {
             return true
