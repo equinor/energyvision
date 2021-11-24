@@ -40,8 +40,10 @@ export type ImageWithAlt = {
   extension?: string
 }
 
+export type CardTypes = 'news' | 'topics' | 'people' | 'event'
+
 export type CardData = {
-  type?: string
+  type?: 'news' | 'topics'
   id: string
   slug: string
   title: string | BlockNode[]
@@ -51,7 +53,7 @@ export type CardData = {
 }
 
 export type PeopleCardData = {
-  type?: string
+  type?: 'people'
   id: string
   image?: ImageWithAlt
   name: string

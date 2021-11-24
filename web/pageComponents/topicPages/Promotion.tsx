@@ -5,7 +5,7 @@ import TopicPageCard from '../cards/TopicPageCard'
 import PeopleCard from '../cards/PeopleCard/PeopleCard'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
-import type { PromotionData, CardData, PeopleCardData } from '../../types/types'
+import type { PromotionData, CardData, PeopleCardData, CardTypes } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--space-3xLarge) var(--space-xxLarge);
