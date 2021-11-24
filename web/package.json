@@ -33,10 +33,9 @@
     "@sanity/client": "^2.21.10",
     "@sanity/image-url": "^1.0.1",
     "@types/easy-soap-request": "^4.1.1",
+    "@types/xml2js": "^0.4.9",
     "easy-soap-request": "^4.4.0",
-    "xml2js":"^0.4.23",
-    "@types/xml2js":"^0.4.9",
-    "react-hook-form": "7.20.2",
+    "focus-visible": "^5.2.0",
     "next": "^12.0.3",
     "next-circular-dependency": "^1.0.1",
     "next-sanity": "^0.4.0",
@@ -48,11 +47,13 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-focus-lock": "^2.6.0",
+    "react-hook-form": "7.20.2",
     "react-intl": "^5.21.2",
     "react-remove-scroll": "^2.4.3",
     "styled-components": "^5.3.3",
     "styled-jsx": "^4.0.1",
-    "styled-normalize": "^8.0.7"
+    "styled-normalize": "^8.0.7",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.0.3",
