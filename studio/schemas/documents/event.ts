@@ -43,6 +43,14 @@ export default {
         collapsed: true,
       },
     },
+    {
+      title: 'Event date',
+      name: 'dateOfEvent',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
   ],
   fields: [
     {
@@ -70,6 +78,12 @@ export default {
       name: 'location',
       type: 'string',
       title: 'Location',
+    },
+    {
+      title: 'Date information',
+      name: 'eventDate',
+      type: 'eventDate',
+      fieldset: 'dateOfEvent',
     },
     {
       // TODO: Figure out a way to run a slugify function before publish
