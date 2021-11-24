@@ -48,7 +48,7 @@ const Image = ({
       {...rest}
       {...imageProps}
       alt={altTag}
-      sizes={sizes || ''}
+      sizes={sizes}
       layout={layout}
       placeholder={placeholder}
       unoptimized={unoptimized}

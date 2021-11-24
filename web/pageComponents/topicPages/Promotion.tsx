@@ -102,13 +102,12 @@ const Promotion = ({ data }: { data: PromotionData }) => {
             }}
           ></SimpleBlockContent>
         )}
-        {promotions?.length === 1 && (
+        {promotions?.length === 1 && promotions[0].type === 'people' ? (
           /*  TODO: More than just people */
           <LandscapeWrapper>
             <PeopleCard orientation="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
           </LandscapeWrapper>
-        )}
-        {promotions.length > 1 && (
+        ) : (
           <CardsWrapper>
             {promotions.map((item) => {
               return getCard(item)

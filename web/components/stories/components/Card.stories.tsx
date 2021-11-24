@@ -1,6 +1,7 @@
 /* eslint-disable */
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { Story, Meta } from '@storybook/react'
+import styled from 'styled-components'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
 import { Card, CardProps, Text, Link, BackgroundContainer } from '@components'
 
@@ -150,6 +151,44 @@ PromoTile.parameters = {
   docs: {
     storyDescription: `A promo tile should always be in pairs. <br />
     ⚠️ &nbsp; Showcases the issue of too long texts in buttons`,
+  },
+}
+
+export const Landscape: Story<CardProps> = () => {
+  const FakeImage = styled.div`
+    height: 200px;
+    width: 200px;
+    background-color: grey;
+  `
+  return (
+    <Wrapper>
+      <Card
+        orientation="landscape"
+        style={
+          {
+            '--height': 'auto',
+            '--card-padding': '0 0 var(--space-medium) 0',
+          } as CSSProperties
+        }
+      >
+        <Card.Media>
+          <FakeImage />
+        </Card.Media>
+
+        <Card.Text>Text Text Text Text Text</Card.Text>
+      </Card>
+    </Wrapper>
+  )
+}
+
+Landscape.storyName = 'Landscape mode'
+
+Landscape.parameters = {
+  docs: {
+    storyDescription: `Cards for event and people could be in landscape mode. <br />
+    The people and event cards don't have a header. They consists of two children (image + text/text + text)
+    so the landscape mode doesn't work with news and promo cards.
+    `,
   },
 }
 export const PromoTileWithDifferentLength: Story<CardProps> = () => (

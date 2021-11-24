@@ -1,6 +1,5 @@
 import { default as NextLink } from 'next/link'
 import { Link } from '@components'
-import styled from 'styled-components'
 import type { LinkData } from '../../../types/types'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 
