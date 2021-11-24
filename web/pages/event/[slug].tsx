@@ -21,6 +21,8 @@ import { TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
+import Promotion from '../../pageComponents/topicPages/Promotion'
+
 import type { AppProps } from 'next/app'
 import type { EventSchema } from '../../types/types'
 
@@ -109,7 +111,7 @@ export default function Event({ data, preview }: EventProps): JSX.Element {
     return <ErrorPage statusCode={404} />
   }
 
-  const { title, location, ingress, content, iframe, relatedLinks } = data.event
+  const { title, location, ingress, content, iframe, promotedPeople, relatedLinks } = data.event
 
   const plainTitle = title ? blocksToText(title) : ''
 
@@ -165,6 +167,16 @@ export default function Event({ data, preview }: EventProps): JSX.Element {
             </ContentWrapper>
 
             {iframe && <IFrame data={iframe} />}
+
+            {promotedPeople && promotedPeople.length > 0 && (
+              <Promotion
+                data={{
+                  id: 'promotedPeople',
+                  type: 'people',
+                  content: { promotions: promotedPeople },
+                }}
+              />
+            )}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
               <Related>
