@@ -11,9 +11,10 @@ The project is licensed under the [MIT license](https://github.com/equinor/energ
 ```
     $ git clone git@github.com:equinor/energyvision.git
     $ cd energyvision
-    $ pnpm m i
-    $ pnpm studio yarn
+    $ pnpm setup-project
 ```
+
+This will install the dependencies for the Sanity studio (which uses Yarn for compatibility reasons) as well as the dependencies for the workspace packages listed in `pnpm-workspace.yaml`
 
 Remember to add the .env files as described in the .env.template files for the web and studio folders.
 
@@ -46,16 +47,18 @@ When adding arguments to scripts, such as `--force` or `--dev` to force a re-ins
     pnpm web install -- --force
     pnpm web add chalk -- --save-dev
 
-Since Sanity Studio doesn't work well with pnpm, we use yarn as package manager inside that folder. You can still run command from root using pnpm
+Since Sanity Studio doesn't work well with pnpm, we use yarn as package manager inside that folder instead. You can still run command from root using pnpm using the `studio` alias, but adding/updating/removing packages from the root may work unexpectedly.
 
     ```
     # Start studio in dev mode
     pnpm studio dev
     ```
 
-## Archive news pages
+## Legacy packages
 
-To test the news archive, run `pnpm m i`, then `pnpm legacy-css build` and finally `pnpm legacy-content serve` + `pnpm web dev`. You’ll find the archive by going to **Newsroom** and then **News archive**.
+The `legacy` folder contains packages related to static content from the AEM based equinor.com website and the legacy CSS/JavaScript needed to run this static content. These packages are rarely updated and rely on outdated and/or deprecated dependencies. This causes issues when using a node version higher than node v14 on certain platforms (for example node-sass does not compile). When working on these packages, be sure to switch to node v14 to build the packages.
+
+The legacy packages are currently excluded from the pnpm workspace (see `pnpm-workspace.yaml`) so will not have their dependencies installed when running `pnpm m i` / `pnpm recursive install` from the root.
 
 ## Storybook
 
