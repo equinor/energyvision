@@ -14,6 +14,8 @@ export const getUrlFromAction = ({ link, href = '', staticUrl = '', type, isStat
 
     return link?.slug || ''
   }
-
-  return href
+  if (!href) {
+    console.warn('Missing external url in action')
+  }
+  return href || '/'
 }

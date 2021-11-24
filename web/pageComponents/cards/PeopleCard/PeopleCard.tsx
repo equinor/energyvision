@@ -1,8 +1,9 @@
 import { CSSProperties } from 'react'
 import { Card, Heading, Button } from '@components'
 import styled from 'styled-components'
-import type { PeopleCardData } from '../../types/types'
-import Image from '../shared/Image'
+import type { PeopleCardData } from '../../../types/types'
+import Image from '../../shared/Image'
+import CV from './CV'
 
 const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 
@@ -26,6 +27,7 @@ const Contact = styled.div`
   margin-top: var(--space-medium);
   text-align: center;
 `
+
 const ContactLink = styled.a`
   padding: var(--space-4) 0;
   color: var(--moss-green-100);
@@ -110,12 +112,8 @@ const PeopleCard = ({ data, hasSectionTitle, direction = 'portrait', ...rest }: 
           </Name>
           {title && <Detail>{title}</Detail>}
           {department && <Detail>{department}</Detail>}
-          {isLink ? (
-            <Contact>
-              <Button variant="outlined" aria-label={cv?.ariaLabel}>
-                {cv?.label}
-              </Button>
-            </Contact>
+          {isLink && cv ? (
+            <CV data={cv} />
           ) : (
             <Contact>
               {email && <ContactLink href={`mailto:${email}`}>{email}</ContactLink>}
