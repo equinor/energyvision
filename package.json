@@ -5,6 +5,7 @@
     "pnpm": ">=6"
   },
   "scripts": {
+    "setup-project": "pnpm m i && pnpm studio install",
     "lint:notworking": "eslint ./ --ext .js,.jsx,.ts,.tsx",
     "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
     "lint:web": "eslint ./web/ --ext .js,.jsx,.ts,.tsx",
