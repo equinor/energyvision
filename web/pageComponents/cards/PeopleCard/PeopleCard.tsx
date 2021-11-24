@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react'
-import { Card, Heading, Button } from '@components'
+import { Card, Heading } from '@components'
 import styled from 'styled-components'
 import type { PeopleCardData } from '../../../types/types'
 import Image from '../../shared/Image'

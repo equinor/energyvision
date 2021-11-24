@@ -35,6 +35,13 @@ const CardsWrapper = styled.div`
   }
 `
 
+const LandscapeWrapper = styled.div`
+  max-width: calc(712px + calc(2 * var(--space-xxLarge)));
+  margin-top: var(--space-xLarge);
+  margin-left: auto;
+  margin-right: auto;
+`
+
 const CardStyle = css`
   min-width: var(--card-minWidth);
   max-width: var(--card-maxWidth);
@@ -51,12 +58,6 @@ const StyledPeopleCard = styled(PeopleCard)`
   ${CardStyle}
   /* Not the best approach, should be improved */
   --card-maxWidth: 300px;
-`
-
-const LandscapeWrapper = styled(Wrapper)`
-  max-width: calc(712px + calc(2 * var(--space-xxLarge)));
-  margin-left: auto;
-  margin-right: auto;
 `
 
 type CardProps = CardData | PeopleCardData
@@ -80,42 +81,41 @@ const Promotion = ({ data }: { data: PromotionData }) => {
   }
   return (
     <BackgroundContainer background={designOptions.background}>
-      {promotions?.length === 1 ? (
-        /*  TODO: More than just people */
-        <LandscapeWrapper>
-          <PeopleCard direction="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
-        </LandscapeWrapper>
-      ) : (
-        <Wrapper>
-          {title && (
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: (props) => <StyledHeading level="h2" size="xl" {...props} />,
-                },
-              }}
-            />
-          )}
-          {ingress && (
-            <SimpleBlockContent
-              blocks={ingress}
-              serializers={{
-                types: {
-                  block: (props) => <IngressBlockRenderer centered={true} {...props} />,
-                },
-              }}
-            ></SimpleBlockContent>
-          )}
-          {promotions.length > 1 && (
-            <CardsWrapper>
-              {promotions.map((item) => {
-                return getCard(item)
-              })}
-            </CardsWrapper>
-          )}
-        </Wrapper>
-      )}
+      <Wrapper>
+        {title && (
+          <SimpleBlockContent
+            blocks={title}
+            serializers={{
+              types: {
+                block: (props) => <StyledHeading level="h2" size="xl" {...props} />,
+              },
+            }}
+          />
+        )}
+        {ingress && (
+          <SimpleBlockContent
+            blocks={ingress}
+            serializers={{
+              types: {
+                block: (props) => <IngressBlockRenderer centered={true} {...props} />,
+              },
+            }}
+          ></SimpleBlockContent>
+        )}
+        {promotions?.length === 1 && (
+          /*  TODO: More than just people */
+          <LandscapeWrapper>
+            <PeopleCard direction="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
+          </LandscapeWrapper>
+        )}
+        {promotions.length > 1 && (
+          <CardsWrapper>
+            {promotions.map((item) => {
+              return getCard(item)
+            })}
+          </CardsWrapper>
+        )}
+      </Wrapper>
     </BackgroundContainer>
   )
 }

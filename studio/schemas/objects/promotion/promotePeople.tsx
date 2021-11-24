@@ -3,9 +3,8 @@ import React from 'react'
 import { validateInternalOrExternalUrl } from '../../validations/validateInternalOrExternalUrl'
 import { validateRequiredIfVisible } from '../../validations/validateRequiredIfVisible'
 
-import type { Block, Rule, Reference, ValidationContext } from '@sanity/types'
+import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
-import { image } from '@equinor/eds-icons'
 
 export type Promotion = {
   image?: ImageWithAlt
