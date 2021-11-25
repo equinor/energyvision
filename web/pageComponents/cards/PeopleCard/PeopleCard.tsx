@@ -44,8 +44,9 @@ const RoundedImage = styled(Image)`
   border-radius: 50%;
 `
 const ImageContainer = styled.div`
-  max-height: 200px;
-  max-width: 200px;
+  box-sizing: content-box;
+  height: 120px;
+  width: 120px;
   /*  Somewhat complicated, but we need slightly different styles here,
   and the images don't calculate correct if we use grid or flex */
   ${StyledLandscapeCard} & {
@@ -57,7 +58,19 @@ const ImageContainer = styled.div`
     }
   }
   ${StyledPortraitCard} & {
-    margin: var(--space-medium) auto 0 auto;
+    padding: var(--space-medium) var(--space-medium) 0 var(--space-medium);
+    margin: 0 auto;
+    @media (min-width: 450px) {
+      margin: var(--space-medium);
+      margin-right: 0;
+      height: 150px;
+      width: 150px;
+    }
+  }
+
+  @media (min-width: 850px) {
+    height: 200px;
+    width: 200px;
   }
 `
 
