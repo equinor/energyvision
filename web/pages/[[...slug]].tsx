@@ -75,10 +75,11 @@ Page.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data, preview } = props
+  const { allSlugs, template } = data.pageData || null
 
   const slugs = {
-    en_GB: data?.pageData?.allSlugs?.en_GB,
-    nb_NO: data?.pageData?.allSlugs?.nb_NO,
+    en_GB: template === 'event' && allSlugs?.en_GB ? `event/${allSlugs?.en_GB}` : '',
+    nb_NO: template === 'event' && allSlugs?.nb_NO ? `event/${allSlugs?.nb_NO}` : '',
   }
   return (
     <Layout footerData={data?.footerData} preview={preview}>

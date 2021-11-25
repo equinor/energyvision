@@ -33,11 +33,15 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
         queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
         query: newsQuery,
       }
-    case 'event':
+    case 'event': {
       return {
-        queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
+        queryParams: {
+          slug: slugArray.length > 1 ? slugArray.slice(1).join('/') : slugArray[0],
+          lang: mapLocaleToLang(locale),
+        },
         query: eventQuery,
       }
+    }
     default:
       return {
         queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
