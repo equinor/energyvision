@@ -54,3 +54,6 @@ output
 __azurite*
 __blobstorage*
 __queuestorage*
+
+# tsc
+tsconfig.tsbuildinfo
