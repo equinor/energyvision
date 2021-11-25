@@ -34,7 +34,7 @@ export const eventFields = /* groq */ `
 `
 
 export const eventQuery = /* groq */ `
-  *[_type == "event" && _lang == $lang][0]{
+  *[_type == "event" && slug.current == $slug && _lang == $lang][0]{
     "template": "event",
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
