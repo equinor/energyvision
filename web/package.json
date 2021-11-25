@@ -17,8 +17,7 @@
     "build-storybook": "build-storybook -s ./components/stories/public",
     "storybook": "pnpm dev-storybook",
     "preinstall": "npx only-allow pnpm",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "postinstall": "husky install"
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
     "@equinor/eds-core-react": "^0.15.0-dev.20211118",
