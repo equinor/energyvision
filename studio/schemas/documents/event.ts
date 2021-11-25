@@ -2,6 +2,7 @@ import { i18n } from '../documentTranslation'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent, configureBlockContent } from '../editors'
+import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
 import type { Rule, Slug, ValidationContext } from '@sanity/types'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
 
@@ -82,6 +83,9 @@ export default {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      options: {
+        isUnique: isUniqueWithinLocale,
+      },
       description: "Danger zone! Be sure that you know what you're doing!",
       validation: (Rule: Rule) =>
         Rule.required().custom((slug: Slug) => {
