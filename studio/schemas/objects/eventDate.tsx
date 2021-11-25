@@ -43,7 +43,6 @@ export default {
         dateFormat: 'DD-MM-YYYY',
         timeFormat: 'HH:mm',
         timeStep: 5,
-        tiimezone: '',
       },
       hidden: ({ parent }: { parent: EventDate }) => !parent.precise,
       validation: (Rule: Rule) =>
@@ -60,7 +59,6 @@ export default {
         dateFormat: 'DD-MM-YYYY',
         timeFormat: 'HH:mm',
         timeStep: 5,
-        tiimezone: '',
       },
       hidden: ({ parent }: { parent: EventDate }) => !parent.precise,
       validation: (Rule: Rule) =>
