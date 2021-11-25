@@ -11,8 +11,8 @@ const getAlgoliaApiKey: GetProcessEnvType = () => E.fromNullable('Un2able to fin
 const getAlgoliaIndexName: GetProcessEnvType = () =>
   E.fromNullable('Unable to find index name')(process.env.ALGOLIA_INDEX_NAME)
 
-type InitFuncType = IO.IO<E.Either<string, SearchIndex>>
-export const initFunc: InitFuncType = flow(
+type InitType = IO.IO<E.Either<string, SearchIndex>>
+export const init: InitType = flow(
   getAlgoliaAppId,
   E.map(algoliaSearchCurried),
   E.chain((algoliaSearch) => pipe(getAlgoliaApiKey(), E.map(algoliaSearch))),
