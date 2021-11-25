@@ -5,7 +5,7 @@ export type CardTextProps = HTMLAttributes<HTMLDivElement>
 
 const StyledText = styled.div<CardTextProps>`
   /** Spacing */
-  padding: 0 var(--space-medium);
+  padding: var(--text-spacing, 0 var(--space-medium));
 `
 export const Text = forwardRef<HTMLDivElement, CardTextProps>(function CardMedia({ children, ...rest }, ref) {
   return (

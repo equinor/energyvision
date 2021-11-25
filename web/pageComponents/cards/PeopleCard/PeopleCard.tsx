@@ -61,8 +61,6 @@ const ImageContainer = styled.div`
     padding: var(--space-medium) var(--space-medium) 0 var(--space-medium);
     margin: 0 auto;
     @media (min-width: 450px) {
-      margin: var(--space-medium);
-      margin-right: 0;
       height: 150px;
       width: 150px;
     }
@@ -77,11 +75,14 @@ const ImageContainer = styled.div`
 const TextContent = styled(Text)`
   height: var(--text-height, auto);
   ${StyledLandscapeCard} & {
+    /* Turn off the default padding in the Text component */
+    --text-spacing: 0;
     margin-bottom: var(--space-medium);
     display: grid;
+
     place-content: center;
     @media (min-width: 450px) {
-      margin: var(--space-medium) 0;
+      margin: var(--space-medium) var(--space-medium) var(--space-medium) 0;
     }
   }
 `
