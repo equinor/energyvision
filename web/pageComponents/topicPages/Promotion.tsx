@@ -36,10 +36,13 @@ const CardsWrapper = styled.div`
 `
 
 const LandscapeWrapper = styled.div`
-  max-width: calc(712px + calc(2 * var(--space-xxLarge)));
+  max-width: 250px;
   margin-top: var(--space-xLarge);
   margin-left: auto;
   margin-right: auto;
+  @media (min-width: 450px) {
+    max-width: var(--layout-maxContent-narrow);
+  }
 `
 
 const CardStyle = css`
