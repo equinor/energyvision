@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react'
 import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import Image from '../shared/Image'
@@ -54,7 +55,13 @@ const SimpleCard = ({ data }: SimpleCardData) => {
   return (
     <NextLink key={id} href={getLink(data, label)} passHref>
       <CardLink>
-        <StyledCard>
+        <StyledCard
+          style={
+            {
+              '--card-height': '100%',
+            } as CSSProperties
+          }
+        >
           <Media>
             {/*  If this i static content, we don't have an image so we will just add an empty placeholder instead */}
             {image ? (
