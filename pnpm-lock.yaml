@@ -14,6 +14,7 @@ importers:
       eslint-plugin-react: ^7.27.0
       eslint-plugin-react-hooks: ^4.3.0
       husky: ^7.0.4
+      is-ci: ^3.0.1
       only-allow: ^1.0.0
       typescript: 4.4.4
     devDependencies:
@@ -27,6 +28,7 @@ importers:
       eslint-plugin-react: 7.27.0_eslint@8.2.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.2.0
       husky: 7.0.4
+      is-ci: 3.0.1
       only-allow: 1.0.0
       typescript: 4.4.4
 
@@ -10448,6 +10450,13 @@ packages:
     hasBin: true
     dependencies:
       ci-info: 2.0.0
+    dev: true
+
+  /is-ci/3.0.1:
+    resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
+    hasBin: true
+    dependencies:
+      ci-info: 3.2.0
     dev: true
 
   /is-core-module/2.8.0:
