@@ -27,7 +27,8 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
-
+const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
+const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
 export default {
   title: 'Promotion',
   name: 'promotion',
@@ -83,10 +84,10 @@ export default {
           inner: '100%',
         },
         tooltip: true,
-        list: Colors,
+        list: backgroundColors,
       },
       fieldset: 'design',
-      initialValue: Colors[0],
+      initialValue: backgroundColors[0],
     },
   ],
   preview: {
