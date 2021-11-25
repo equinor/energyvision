@@ -8,6 +8,7 @@ export type CardProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const StyledPortraitCard = styled.div`
+  height: var(--card-height, auto);
   display: flex;
   flex-direction: column;
   box-shadow: var(--card-shadow, none);
