@@ -22,7 +22,7 @@
     "docker:build": "docker build --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=h61q9gi9 --build-arg NEXT_PUBLIC_SANITY_DATASET=production -t envis/web -f web/Dockerfile .",
     "docker:run": "docker run -p 3000:3000 --env-file=web/.env.local envis/web",
     "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "preinstall": "npx only-allow pnpm",
     "start:studio": "yarn --cwd ./studio dev",
     "start:storybook": "pnpm web storybook",
@@ -39,6 +39,7 @@
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^7.0.4",
+    "is-ci": "^3.0.1",
     "only-allow": "^1.0.0",
     "typescript": "4.4.4"
   },
