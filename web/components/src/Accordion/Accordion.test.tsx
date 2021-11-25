@@ -43,8 +43,8 @@ const StyledAccordion = styled(Accordion)`
 describe('Accordion', () => {
   it('Can extend the css for the component', () => {
     const { container } = render(
-      <StyledAccordion>
-        <Item>
+      <StyledAccordion id="1">
+        <Item id={0}>
           <Header>Header 1</Header>
           <Panel>Content 1</Panel>
         </Item>
@@ -55,8 +55,8 @@ describe('Accordion', () => {
   it('Can have a title', () => {
     const title = 'Accordion item title'
     render(
-      <Accordion>
-        <Item>
+      <Accordion id="1">
+        <Item id={0}>
           <Header>{title}</Header>
           <Panel>Content 1</Panel>
         </Item>
@@ -68,8 +68,8 @@ describe('Accordion', () => {
   it('Can have text content', () => {
     const content = 'Accordion content'
     render(
-      <Accordion>
-        <Item>
+      <Accordion id="1">
+        <Item id={0}>
           <Header>Header</Header>
           <Panel>{content}</Panel>
         </Item>
@@ -82,8 +82,8 @@ describe('Accordion', () => {
     const header = 'Accordion item title'
 
     render(
-      <Accordion>
-        <Item>
+      <Accordion id="1">
+        <Item id={0}>
           <Header>{header}</Header>
           <Panel>Panel content</Panel>
         </Item>
@@ -98,8 +98,8 @@ describe('Accordion', () => {
     const header = 'Accordion item title'
 
     render(
-      <Accordion>
-        <Item>
+      <Accordion id="1">
+        <Item id={0}>
           <Header headingLevel="h2">{header}</Header>
           <Panel>Panel content</Panel>
         </Item>
