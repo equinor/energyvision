@@ -14,68 +14,67 @@ export const eventFields = /* groq */ `
 `
 
 export const eventQuery = /* groq */ `
-  {
-    "event": *[_type == "event" && _lang == $lang][0]{
-      "documentTitle": seo.documentTitle,
-      "metaDescription": seo.metaDescription,
-      openGraphImage,
+  *[_type == "event" && _lang == $lang][0]{
+    "template": "event",
+    "documentTitle": seo.documentTitle,
+    "metaDescription": seo.metaDescription,
+    openGraphImage,
 
-      ${eventFields}
+    ${eventFields}
 
-      ingress[]{
-        ...,
-        ${markDefs},
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
+    content[]{
+      ...,
+      ${markDefs},
+    },
+    "iframe": iframe{
+      title,
+      frameTitle,
+      url,
+      "designOptions": {
+        "aspectRatio": coalesce(aspectRatio, '16:9'),
+        "background": coalesce(background.title, 'none'),
+        height,
       },
-      content[]{
-        ...,
-        ${markDefs},
-      },
-      "iframe": iframe{
+    },
+    "promotedPeople": promotedPeople.peopleList[]{
+        "id": _key,
+        "type": _type,
+        image,
+        name,
         title,
-        frameTitle,
-        url,
-        "designOptions": {
-          "aspectRatio": coalesce(aspectRatio, '16:9'),
-          "background": coalesce(background.title, 'none'),
-          height,
+        department,
+        isLink,
+        !isLink => {
+          email,
+          phone,
         },
-      },
-      "promotedPeople": promotedPeople.peopleList[]{
-          "id": _key,
-          "type": _type,
-          image,
-          name,
-          title,
-          department,
-          isLink,
-          !isLink => {
-            email,
-            phone,
-          },
-          isLink => {
-            "cv": {
-              "id": _key,
-              "type": select(
-                defined(url) => "externalUrl", "internalUrl"
-              ),
-              label,
-              ariaLabel,
-              "link": reference-> {
-                "type": _type,
-                "slug": slug.current,
-              },
-              "href": url,
+        isLink => {
+          "cv": {
+            "id": _key,
+            "type": select(
+              defined(url) => "externalUrl", "internalUrl"
+            ),
+            label,
+            ariaLabel,
+            "link": reference-> {
+              "type": _type,
+              "slug": slug.current,
             },
+            "href": url,
           },
-      },
-      "relatedLinks": relatedLinks{
-        title,
-        heroImage,
-        "links": links[]{
-          ${linkSelectorFields},
-          ${downloadableFileFields},
-          ${downloadableImageFields},
-        }
+        },
+    },
+    "relatedLinks": relatedLinks{
+      title,
+      heroImage,
+      "links": links[]{
+        ${linkSelectorFields},
+        ${downloadableFileFields},
+        ${downloadableImageFields},
       }
     }
   }

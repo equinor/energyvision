@@ -19,6 +19,7 @@ import Header from '../pageComponents/shared/Header'
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
+const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
@@ -46,15 +47,18 @@ export default function Page({ data, preview }: any) {
   // @TODO: How should we handle this in the best possible way?
   if (!template) console.warn('Missing template for', slug)
 
-  return (
-    <>
-      {router.isFallback ? (
-        <p>Loading…</p>
-      ) : (
-        <>{template === 'landingPage' ? <LandingPage data={pageData} /> : <TopicPage data={pageData} />}</>
-      )}
-    </>
-  )
+  if (router.isFallback) {
+    return <p>Loading...</p>
+  }
+
+  switch (template) {
+    case 'landingPage':
+      return <LandingPage data={pageData} />
+    case 'event':
+      return <EventPage data={pageData} />
+    default:
+      return <TopicPage data={pageData} />
+  }
 }
 
 // eslint-disable-next-line react/display-name

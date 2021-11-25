@@ -1,5 +1,6 @@
 import { newsQuery } from './queries/news'
 import { pageQuery } from './queries/routes'
+import { eventQuery } from './queries/event'
 import { contentQueryById } from './queries/contentById'
 import { mapLocaleToLang } from './localization'
 
@@ -31,6 +32,11 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
       return {
         queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
         query: newsQuery,
+      }
+    case 'event':
+      return {
+        queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
+        query: eventQuery,
       }
     default:
       return {
