@@ -176,6 +176,11 @@ export const getDefaultDocumentNode = (props) => {
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
     ])
+  } else if (schemaType === 'event') {
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(PagePreview).title('Preview'),
+    ])
   } else if (schemaType === 'page') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
