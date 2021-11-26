@@ -29,10 +29,14 @@ const Detail = styled.span`
     @media (min-width: 650px) {
       /* If we have two details, one for title and one for department, 
       put them on one line, separate with comma */
-      display: inline-block;
-      :nth-of-type(2):before {
+      display: inline;
+      :not(:only-of-type):after {
         content: ',';
         margin-right: var(--space-xSmall);
+      }
+      :last-of-type:after {
+        content: '';
+        margin-right: 0;
       }
     }
   }
@@ -67,11 +71,11 @@ const ImageContainer = styled.div`
     /*  Don't set padding on the landscape card itself because of the Event card */
     padding-top: var(--space-medium);
     @media (min-width: 450px) {
-      padding: var(--space-medium) 0 var(--space-medium) var(--space-medium);
+      padding: var(--space-medium) 0 var(--space-medium) var(--space-large);
     }
   }
   ${StyledPortraitCard} & {
-    padding: var(--space-medium) var(--space-medium) 0 var(--space-medium);
+    padding: var(--space-medium) var(--space-large) 0 var(--space-medium);
     margin: 0 auto;
     @media (min-width: 450px) {
       height: 150px;

@@ -48,7 +48,8 @@ const LandscapeWrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
   @media (min-width: 450px) {
-    max-width: var(--layout-maxContent-narrow);
+    padding: 0 var(--layout-paddingHorizontal-large);
+    max-width: var(--maxViewportWidth);
   }
 `
 
