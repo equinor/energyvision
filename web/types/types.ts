@@ -376,6 +376,22 @@ export type SubscribeFormData = {
   formType: string
 }
 
+export type LoginResult = {
+  apiSecret: string
+  instId: string
+}
+
+export type SubscribeFormParmeters = {
+  firstName : string
+  email: string
+  crudeOilAssays? : boolean
+  generalNews? : boolean
+  loopStories?: boolean
+  magazineStories?: boolean
+  stockMarketAnnouncements?: boolean  
+  languageCode: string
+}
+
 export type EventSchema = {
   slug: string
   documentTitle?: string
