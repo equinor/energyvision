@@ -1,12 +1,13 @@
-import type { SubscribeFormData } from '../../types/types'
+import type { SubscribeFormData, SubscribeFormParmeters } from '../../types/types'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { Button, TextField, Checkbox, Icon } from '@equinor/eds-core-react'
-//import { authenticate } from '../../components/utils/subscription' // need it...
-import { Heading } from '@components'
+import { signUp } from '../../components/utils/subscription'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
@@ -24,6 +25,13 @@ const ButtonWrapper = styled.div`
 const TextFieldWrapper = styled.div`
   padding: 16px 0px 16px 0px;
 `
+
+const StyledFieldset = styled.fieldset`
+  border: 0;
+`
+const StyledLegend = styled.legend`
+  font-weight: 500;
+`
 const UnstyledList = styled.ul`
   margin: 0;
   padding: 0 0 16px 0px;
@@ -37,15 +45,38 @@ const UnstyledList = styled.ul`
   -moz-column-count: 3;
   column-count: 3;
 `
+const StyledButton = styled(Button)`
+  padding-left: 32px;
+  padding-right: 32px;
+`
 
 const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData }) => {
-  /*const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault() // to prevent navigation from storybook
-    //action('onSubmit')(e)
-    authenticate()
-  }*/
+  const router = useRouter()
+  const locale = router.locale == 'no-nb' ? 'no' : 'en'
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const onSubmit = (data: SubscribeFormParmeters) => {
+    data.languageCode = locale
+    signUp(data).then((isSuccessful) => {
+      setSubmitSuccess(isSuccessful)
+    })
+  }
 
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control, reset } = useForm({
+    defaultValues: {
+      firstName: '',
+      email: '',
+      generalNews: false,
+      magazineStories: false,
+      stockMarketAnnouncements: false,
+      crudeOilAssays: false,
+      loopStories: false,
+    },
+  })
+
+  useEffect(() => {
+    if (submitSuccess) reset({})
+  }, [submitSuccess, reset])
+
   return (
     <>
       <Container>
@@ -62,25 +93,57 @@ const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData 
           )}
         </div>
         {formType}
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
-          <Heading level="h6">Categories:</Heading>
-          <UnstyledList>
-            <li>
-              <Checkbox label="General news" name="general-news" value="first" />
-            </li>
-            <li>
-              <Checkbox label="Magazine stories" name="magazine-stories" value="third" />
-            </li>
-            <li>
-              <Checkbox label="Stock market announcements" name="stock-market-announcements" value="second" />
-            </li>
-            <li>
-              <Checkbox label="Crude oil assays" name="crude-oil-assays" value="third" />
-            </li>
-            <li>
-              <Checkbox label="Loop stories" name="loop-stories" value="third" />
-            </li>
-          </UnstyledList>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <StyledFieldset>
+            <StyledLegend> Categories: </StyledLegend>
+            <UnstyledList>
+              <li>
+                <Controller
+                  name="generalNews"
+                  control={control}
+                  render={({ field: { ...props } }) => (
+                    <Checkbox label="General news" {...props} id={props.name} value="first" />
+                  )}
+                />
+              </li>
+              <li>
+                <Controller
+                  name="magazineStories"
+                  control={control}
+                  render={({ field: { ...props } }) => (
+                    <Checkbox {...props} id={props.name} label="Magazine stories" value="third" />
+                  )}
+                />
+              </li>
+              <li>
+                <Controller
+                  name="stockMarketAnnouncements"
+                  control={control}
+                  render={({ field: { ...props } }) => (
+                    <Checkbox {...props} id={props.name} label="Stock market announcements" value="second" />
+                  )}
+                />
+              </li>
+              <li>
+                <Controller
+                  name="crudeOilAssays"
+                  control={control}
+                  render={({ field: { ...props } }) => (
+                    <Checkbox {...props} id={props.name} label="Crude oil assays" value="third" />
+                  )}
+                />
+              </li>
+              <li>
+                <Controller
+                  name="loopStories"
+                  control={control}
+                  render={({ field: { ...props } }) => (
+                    <Checkbox {...props} id={props.name} label="Loop stories" value="third" />
+                  )}
+                />
+              </li>
+            </UnstyledList>
+          </StyledFieldset>
           <Controller
             name="firstName"
             control={control}
@@ -128,7 +191,7 @@ const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData 
             )}
           />
           <ButtonWrapper>
-            <Button type="submit">Subscribe</Button>
+            <StyledButton type="submit">Subscribe</StyledButton>
           </ButtonWrapper>
         </form>
       </Container>
