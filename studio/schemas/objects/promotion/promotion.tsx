@@ -16,7 +16,7 @@ export type Promotion = {
   background?: ColorListValue
 }
 
-type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople'
+type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -69,6 +69,7 @@ export default {
         { type: 'promoteNews', title: 'Promote news' },
         { type: 'promoteTopics', title: 'Promote topic' },
         { type: 'promotePeople', title: 'Promote people' },
+        { type: 'promoteEvents', title: 'Promote events' },
       ],
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),

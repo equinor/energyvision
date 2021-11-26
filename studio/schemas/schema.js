@@ -50,6 +50,7 @@ import promotion from './objects/promotion/promotion'
 import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
 import promotePeople from './objects/promotion/promotePeople'
+import promoteEvents from './objects/promotion/promoteEvents'
 import subscribeForm from './objects/subscribeForm'
 
 const routeSchemas = languages.map(({ name, title }) => {
@@ -101,6 +102,7 @@ export default createSchema({
     promotion,
     promoteNews,
     promoteTopics,
+    promoteEvents,
     promotePeople,
     countryTag,
     subscribeForm,
