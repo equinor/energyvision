@@ -180,6 +180,14 @@ export const getDefaultDocumentNode = (props) => {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
+      S.view
+        .component(DocumentsPane)
+        .options({
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type match "route_*"]`,
+          params: { id: `_id` },
+          useDraft: false,
+        })
+        .title('Connected routes'),
     ])
   } else if (schemaType === 'page') {
     return S.document().views([
