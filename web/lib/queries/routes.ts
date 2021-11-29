@@ -1,5 +1,6 @@
 import pageContentFields from './common/pageContentFields'
 import { landingPageContentFields } from './common/landingPageContentFields'
+import { eventContentFields } from './common/eventContentFields'
 
 const localizedSlugsFromEnglish = /* groq */ `
   "allSlugs": {
@@ -15,7 +16,7 @@ const localizedSlugsFromNorwegian = /* groq */ `
   }
 `
 
-export const pageQuery = /* groq */ ` 
+export const pageQuery = /* groq */ `
   *[_type == "route_" + $lang && slug.current == $slug][0] {
     "slug": slug.current,
     $lang == "en_GB" => {
@@ -40,5 +41,10 @@ export const pageQuery = /* groq */ `
           ${pageContentFields}
       },
     },
+    content->_type == "event"=>{
+      "content": content->{
+        ${eventContentFields}
+      }
+    }
   }
 `

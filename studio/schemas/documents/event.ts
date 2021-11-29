@@ -2,9 +2,11 @@ import { i18n } from '../documentTranslation'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent, configureBlockContent } from '../editors'
-import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
-import type { Rule, Slug, ValidationContext } from '@sanity/types'
+import type { Rule, ValidationContext, Block } from '@sanity/types'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
+import { calendar_event } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
+import blocksToText from '../../helpers/blocksToText'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -73,26 +75,6 @@ export default {
       title: 'Location',
     },
     {
-      // TODO: Figure out a way to run a slugify function before publish
-      // so that users don't have to add hyphens and such themselves
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        isUnique: isUniqueWithinLocale,
-      },
-      description: "Danger zone! Be sure that you know what you're doing!",
-      validation: (Rule: Rule) =>
-        Rule.required().custom((slug: Slug) => {
-          if (slug && slug.current.match(/[A-Z]/g)) {
-            return 'No uppercase letters are allowed'
-          } else if (slug && slug.current.match(/\s+/g)) {
-            return 'No spaces are allowed, use "-" instead'
-          }
-          return true
-        }),
-    },
-    {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
@@ -141,4 +123,16 @@ export default {
       ],
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+    },
+    prepare({ title }: { title: Block[] }) {
+      return {
+        title: blocksToText(title),
+        subtitle: `Event date: ...`,
+        media: EdsIcon(calendar_event),
+      }
+    },
+  },
 }

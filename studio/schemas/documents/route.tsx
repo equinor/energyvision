@@ -33,6 +33,9 @@ export default (isoCode: string, title: string) => {
           {
             type: 'landingPage',
           },
+          {
+            type: 'event',
+          },
         ],
         options: {
           filter: '_lang == $lang',

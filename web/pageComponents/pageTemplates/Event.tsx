@@ -67,9 +67,9 @@ const Related = styled.div`
 `
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
-  const slug = data?.slug
-
-  const { title, location, ingress, content, iframe, promotedPeople, relatedLinks } = data
+  const { title, slug } = data
+  const { location, ingress, content, iframe, promotedPeople, relatedLinks } = data.content
+  const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
   const plainTitle = title ? blocksToText(title) : ''
 
@@ -80,14 +80,14 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   return (
     <>
       <NextSeo
-        title={data.documentTitle || plainTitle}
-        description={data.metaDescription}
+        title={documentTitle || plainTitle}
+        description={metaDescription}
         openGraph={{
           title: plainTitle,
-          description: data.metaDescription,
+          description: metaDescription,
           type: 'website',
           url: fullUrl,
-          images: data.openGraphImage?.asset && getOpenGraphImages(data.openGraphImage),
+          images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
         }}
       ></NextSeo>
 
