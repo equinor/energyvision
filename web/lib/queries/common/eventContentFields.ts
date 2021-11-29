@@ -1,0 +1,63 @@
+import markDefs from './blockEditorMarks'
+import linkSelectorFields from './actions/linkSelectorFields'
+import downloadableFileFields from './actions/downloadableFileFields'
+import downloadableImageFields from './actions/downloadableImageFields'
+
+export const eventContentFields = /* groq */ `
+  location,
+  ingress[]{
+    ...,
+    ${markDefs},
+  },
+  content[]{
+    ...,
+    ${markDefs},
+  },
+  "iframe": iframe{
+    title,
+    frameTitle,
+    url,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
+      "background": coalesce(background.title, 'none'),
+      height,
+    },
+  },
+  "promotedPeople": promotedPeople.peopleList[]{
+      "id": _key,
+      "type": _type,
+      image,
+      name,
+      title,
+      department,
+      isLink,
+      !isLink => {
+        email,
+        phone,
+      },
+      isLink => {
+        "cv": {
+          "id": _key,
+          "type": select(
+            defined(url) => "externalUrl", "internalUrl"
+          ),
+          label,
+          ariaLabel,
+          "link": reference-> {
+            "type": _type,
+            "slug": slug.current,
+          },
+          "href": url,
+        },
+      },
+  },
+  "relatedLinks": relatedLinks{
+    title,
+    heroImage,
+    "links": links[]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    }
+  }
+`

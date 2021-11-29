@@ -393,16 +393,20 @@ export type SubscribeFormParmeters = {
 }
 
 export type EventSchema = {
-  slug: string
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
   id: string
   title: BlockNode[]
-  location?: string
-  ingress?: PortableTextEntry[]
-  content?: PortableTextEntry[]
-  iframe?: IFrameData
-  promotedPeople?: PeopleCardData[]
-  relatedLinks?: RelatedLinksData
+  slug: string
+  seoAndSome: {
+    documentTitle?: string
+    metaDescription?: string
+    openGraphImage?: ImageWithAlt
+  }
+  content: {
+    location?: string
+    ingress?: PortableTextEntry[]
+    content?: PortableTextEntry[]
+    iframe?: IFrameData
+    promotedPeople?: PeopleCardData[]
+    relatedLinks?: RelatedLinksData
+  }
 }
