@@ -2,16 +2,15 @@ import soapRequest from 'easy-soap-request'
 import * as xml2js from 'xml2js'
 import { LoginResult, SubscribeFormParmeters } from '../../types/types'
 
-const subscriptionUrl = 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
-const authenticationUrl =
-  'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+const subscriptionUrl = process.env.SUBSCRIPTION_URL || ''
+const authenticationUrl = process.env.AUTHENTICATION_URL || ''
+const clientSecret = process.env.CLIENT_SECRET
+const password = process.env.PASSWORD
+const apnId = process.env.APN_ID
+const otyId = process.env.OTY_ID
+const ptlId = process.env.PTL_ID
 
-const clientSecret = ''
-const password = ''
-const apnId = '32'
-const otyId = '114961'
-const ptlId = '14414'
-
+console.log(authenticationUrl)
 const sampleHeaders = {
   'Content-Type': 'text/xml;charset=UTF-8',
 }
