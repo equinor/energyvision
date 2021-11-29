@@ -108,6 +108,7 @@ export default {
 
       return {
         title: plainTitle,
+        subtitle: 'Topic content',
         media,
       }
     },

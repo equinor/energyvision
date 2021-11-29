@@ -4,7 +4,10 @@ import { configureBlockContent } from '../editors/blockContentType'
 import { configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import type { Rule } from '@sanity/types'
+import blocksToText from '../../helpers/blocksToText'
+import { flight_land } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
+import type { Rule, Block } from '@sanity/types'
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -54,4 +57,18 @@ export default {
       of: [ingressContentType],
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+    },
+    prepare({ title }: { title: Block[] }) {
+      const plainTitle = title ? blocksToText(title) : ''
+
+      return {
+        title: plainTitle,
+        subtitle: 'Landing page',
+        media: EdsIcon(flight_land),
+      }
+    },
+  },
 }
