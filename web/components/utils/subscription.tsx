@@ -6,8 +6,8 @@ const subscriptionUrl = 'https://stage.brandmaster.com/apigateway/apigateway.dll
 const authenticationUrl =
   'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
 
-const clientSecret = '436A925B124666CCE053F210630A046C'
-const password = 'df823HISD!io8Hnsdf'
+const clientSecret = ''
+const password = ''
 const apnId = '32'
 const otyId = '114961'
 const ptlId = '14414'
