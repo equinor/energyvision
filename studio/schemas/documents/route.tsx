@@ -1,6 +1,8 @@
 import { slugWithRef } from '../objects/slugWithRef'
 import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
+import { calendar_event } from '@equinor/eds-icons'
+import { EdsIcon, TopicDocuments } from '../../icons'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -74,15 +76,18 @@ export default (isoCode: string, title: string) => {
         title: 'content.title',
         slug: 'slug.current',
         media: 'content.heroFigure.image',
+        type: 'content._type',
       },
       prepare(selection: any) {
-        const { title, slug, media } = selection
+        const { title, slug, media, type } = selection
         const plainTitle = title ? blocksToText(title) : ''
+
+        const thumbnail = media ? media : type === 'event' ? EdsIcon(calendar_event) : TopicDocuments
 
         return {
           title: plainTitle,
           subtitle: slug,
-          media,
+          media: thumbnail,
         }
       },
     },
