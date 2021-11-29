@@ -18,8 +18,9 @@ import { eventContentFields } from './common/eventContentFields'
   }
 ` */
 
-export const contentQueryById = /* groq */ `
-  *[_id == $id][0] {
+export const contentQueryById = /* groq */ ` 
+  *[_id in $id] {
+    _id,
     "title": title,
     "seoAndSome": {
       "documentTitle": seo.documentTitle,

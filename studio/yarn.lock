@@ -1699,6 +1699,11 @@
     lodash "^4.17.15"
     slate "^0.58.4"
 
+"@sanity/production-preview@^2.15.0":
+  version "2.15.0"
+  resolved "https://registry.npmjs.org/@sanity/production-preview/-/production-preview-2.15.0.tgz#95e1b554876105be970166c71f96e0e4ac1ce76d"
+  integrity sha512-qwhxogxfXeKmWLf4gqh0XEhLD+zEzX3YYHunJqVnT0K1SvRgSQce81zF7Zau8mZI1vPuNaUO+g+DzHs3p/wYTg==
+
 "@sanity/react-hooks@2.21.7":
   version "2.21.7"
   resolved "https://registry.npmjs.org/@sanity/react-hooks/-/react-hooks-2.21.7.tgz#da05dbb2d41d311d32f470e1cd99d21ad135fb07"
@@ -9382,6 +9387,16 @@ sanity-plugin-documents-pane@^1.0.5:
     react-query "^3.19.1"
     styled-components "^5.3.0"
 
+sanity-plugin-iframe-pane@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-iframe-pane/-/sanity-plugin-iframe-pane-1.0.14.tgz#6f73cfe253f601675676d9d4486f009491def48b"
+  integrity sha512-SEA0JIrn5rHM/2QlkfvrD6jHkEgAKx+aZtq9w5/6tuuloiHq7F9987lHko5Y7x7l2IZJsaV8/QSRtM/giLSaJw==
+  dependencies:
+    "@sanity/icons" "^1.2.1"
+    "@sanity/ui" "^0.36.12"
+    prop-types "15.7.2"
+    usehooks-ts "^1.2.0"
+
 sanity-plugin-intl-input@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/sanity-plugin-intl-input/-/sanity-plugin-intl-input-5.6.0.tgz#51e7c3f5db7cf5d186417b9d7ba1528fe99b8bc6"
@@ -10709,6 +10724,11 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+usehooks-ts@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-1.2.0.tgz#e69ccf47e4d13367eec5577e888691d3d870cace"
+  integrity sha512-9FuA+AEkmv7Je+EGJbclkMjkI892Ijcvfv8btt5z8tTZu4EL/ebDVnqz6LPgYBSC+RONJkdly6ZxFb3oKb8QcQ==
 
 user-home@^2.0.0:
   version "2.0.0"

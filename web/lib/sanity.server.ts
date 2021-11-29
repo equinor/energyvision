@@ -10,10 +10,12 @@ export const sanityClient = createClient(sanityConfig)
 
 export const previewClient = createClient({
   ...sanityConfig,
+  token: process.env.SANITY_API_TOKEN,
   useCdn: false,
 })
 
 export const getClient = (preview: boolean) => (preview ? previewClient : sanityClient)
+// export const getClient = (preview: boolean) => (preview ? previewClient : previewClient)
 
 /* export function overlayDrafts(docs) {
   const documents = docs || []
