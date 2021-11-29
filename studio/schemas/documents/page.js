@@ -86,7 +86,7 @@ export default {
         { type: 'stockValuesApi' },
         { type: 'iframe' },
         { type: 'remitTable' },
-        { type: 'subscribeForm'},
+        { type: 'subscribeForm' },
       ],
     },
   ],
@@ -94,9 +94,7 @@ export default {
     {
       title: 'Title ',
       name: 'titleAsc',
-      by: [
-        {field: 'title[0].children[0].text', direction: 'asc'}
-      ]
+      by: [{ field: 'title[0].children[0].text', direction: 'asc' }],
     },
   ],
   preview: {
