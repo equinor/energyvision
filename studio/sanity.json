@@ -16,7 +16,8 @@
     "color-list",
     "intl-input",
     "asset-source-brandmaster",
-    "media"
+    "media",
+    "@sanity/production-preview"
   ],
   "env": {
     "development": {
@@ -43,6 +44,10 @@
     {
       "name": "part:@sanity/base/initial-value-templates",
       "path": "./initialValueTemplates.js"
+    },
+    {
+      "implements": "part:@sanity/production-preview/resolve-production-url",
+      "path": "./resolveProductionUrl.js"
     }
   ]
 }

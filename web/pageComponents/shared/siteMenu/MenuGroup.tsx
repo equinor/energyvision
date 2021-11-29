@@ -116,7 +116,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                         </SubMenuGroupHeading>
                       )}
                       <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
-                        {groupItem.links.map((link: MenuLinkData) => (
+                        {groupItem.links?.map((link: MenuLinkData) => (
                           <StyledItem key={link.id}>
                             <NextLink href={getLink(link)} passHref>
                               <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>

@@ -14,8 +14,18 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   if (isSlugID(slugStart)) {
     // We are in preview mode for content that has currently no slug (no routes)
     //We need to figure out of which type
+
+    const publishedAndDraftIds = slugStart.startsWith('drafts.')
+      ? [slugStart, slugStart.replace('drafts.', '')]
+      : [slugStart, 'drafts.${slugStart']
+
+    // console.log(publishedAndDraftIds)
+
     return {
-      queryParams: { id: slugStart.replace('drafts.', ''), lang: mapLocaleToLang(locale) },
+      queryParams: {
+        id: publishedAndDraftIds,
+        lang: mapLocaleToLang(locale),
+      },
       query: contentQueryById,
     }
   }
