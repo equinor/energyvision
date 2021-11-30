@@ -26,6 +26,8 @@ spec:
               memory: '1Gi'
               cpu: '2000m'
           imageTagName: main-latest
+      secrets:
+        - SANITY_API_TOKEN
   dnsAppAlias:
     environment: dev
     component: web
