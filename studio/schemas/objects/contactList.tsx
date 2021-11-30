@@ -2,8 +2,8 @@ import type { Rule } from '@sanity/types'
 
 export type ContactList = {
   _type: 'contactList'
-  title: string
-  ingress: string
+  title?: string
+  ingress?: string
   contacts?: Contact[]
 }
 
