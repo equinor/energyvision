@@ -31,7 +31,7 @@
     "@sanity/default-layout": "^2.21.7",
     "@sanity/default-login": "^2.21.7",
     "@sanity/desk-tool": "^2.21.7",
-    "@sanity/form-builder": "^2.21.7",
+    "@sanity/form-builder": "^2.21.10",
     "@sanity/icons": "^1.2.1",
     "@sanity/production-preview": "^2.15.0",
     "@sanity/types": "^2.21.7",
