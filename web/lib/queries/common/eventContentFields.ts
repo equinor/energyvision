@@ -23,7 +23,12 @@ export const eventContentFields = /* groq */ `
       height,
     },
   },
-  "promotedPeople": promotedPeople.peopleList[]{
+  "promotedPeople": {
+    "title": promotedPeopleTitle[]{
+      ...,
+      ${markDefs},
+    },
+    "people": promotedPeople.peopleList[]{
       "id": _key,
       "type": _type,
       image,
@@ -50,6 +55,7 @@ export const eventContentFields = /* groq */ `
           "href": url,
         },
       },
+    },
   },
   "relatedLinks": relatedLinks{
     title,

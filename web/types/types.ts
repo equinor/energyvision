@@ -382,13 +382,13 @@ export type LoginResult = {
 }
 
 export type SubscribeFormParmeters = {
-  firstName : string
+  firstName: string
   email: string
-  crudeOilAssays? : boolean
-  generalNews? : boolean
+  crudeOilAssays?: boolean
+  generalNews?: boolean
   loopStories?: boolean
   magazineStories?: boolean
-  stockMarketAnnouncements?: boolean  
+  stockMarketAnnouncements?: boolean
   languageCode: string
 }
 
@@ -406,7 +406,10 @@ export type EventSchema = {
     ingress?: PortableTextEntry[]
     content?: PortableTextEntry[]
     iframe?: IFrameData
-    promotedPeople?: PeopleCardData[]
+    promotedPeople?: {
+      title?: PortableTextEntry[]
+      people?: PeopleCardData[]
+    }
     relatedLinks?: RelatedLinksData
   }
 }

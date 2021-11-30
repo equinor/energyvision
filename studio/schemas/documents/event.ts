@@ -46,6 +46,14 @@ export default {
         collapsed: true,
       },
     },
+    {
+      title: 'People and contacts',
+      name: 'people',
+      options: {
+        collapsible: false,
+        collapsed: false,
+      },
+    },
   ],
   fields: [
     {
@@ -98,9 +106,18 @@ export default {
       },
     },
     {
-      title: 'People and contacts',
+      title: 'Title',
+      name: 'promotedPeopleTitle',
+      type: 'array',
+      fieldset: 'people',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
+    },
+    {
+      title: ' ',
       name: 'promotedPeople',
       type: 'promotePeople',
+      fieldset: 'people',
     },
     { title: 'Contact list', type: 'contactList', name: 'contactList' },
     {

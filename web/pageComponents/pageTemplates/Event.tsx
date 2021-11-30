@@ -123,12 +123,13 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
           {iframe && <IFrame data={iframe} />}
 
-          {promotedPeople && promotedPeople.length > 0 && (
+          {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
               data={{
                 id: 'promotedPeople',
                 type: 'people',
-                content: { promotions: promotedPeople },
+                title: promotedPeople.title,
+                content: { promotions: promotedPeople.people },
               }}
             />
           )}
