@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Rule, ValidationContext } from '@sanity/types'
 import TimeInput, { EMPTY, INVALID_TIME_FORMAT } from '../components/TimeInput'
+import TimezoneInput from '../components/TimezoneInput'
 
 export type EventDate = {
   _type: 'eventDate'
@@ -23,6 +24,7 @@ export default {
       name: 'date',
       type: 'date',
       title: 'Date',
+      description: 'DD-MM-YYYY',
       options: {
         dateFormat: 'DD-MM-YYYY',
       },
@@ -39,7 +41,7 @@ export default {
             return INVALID_TIME_FORMAT
           } else if (!field && parent.endTime) {
             return 'Start time must not be empty'
-          } else if (!parent.date) {
+          } else if (field && !parent.date) {
             return 'Date must be defined'
           } else {
             return true
@@ -60,12 +62,20 @@ export default {
             return 'End time must not be empty'
           } else if (parent.startTime && field && field <= parent.startTime) {
             return 'End time must be greather than start time'
-          } else if (!parent.date) {
+          } else if (field && !parent.date) {
             return 'Date must be defined'
           } else {
             return true
           }
         }),
+    },
+    {
+      title: 'Timezone',
+      description: 'Timezone in which the event will be held',
+      name: 'timezone',
+      type: 'string',
+      inputComponent: TimezoneInput,
+      initialValue: Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   ],
 }
