@@ -12,20 +12,38 @@ const StyledCard = styled(Card)`
 `
 
 const Name = styled(Heading)`
-  text-align: center;
   font-weight: var(--fontWeight-medium);
   margin-bottom: var(--space-small);
+  text-align: center;
+  ${StyledLandscapeCard} & {
+    @media (min-width: 450px) {
+      text-align: left;
+    }
+  }
 `
 
 const Detail = styled.span`
   font-size: var(--typeScale-0);
-  text-align: center;
   display: block;
+  ${StyledLandscapeCard} & {
+    @media (min-width: 650px) {
+      /* If we have two details, one for title and one for department, 
+      put them on one line, separate with comma */
+      display: inline;
+      :not(:only-of-type):after {
+        content: ',';
+        margin-right: var(--space-xSmall);
+      }
+      :last-of-type:after {
+        content: '';
+        margin-right: 0;
+      }
+    }
+  }
 `
 
 const Contact = styled.div`
   margin-top: var(--space-medium);
-  text-align: center;
 `
 
 const ContactLink = styled.a`
@@ -44,31 +62,43 @@ const RoundedImage = styled(Image)`
   border-radius: 50%;
 `
 const ImageContainer = styled.div`
-  max-height: 200px;
-  max-width: 200px;
+  box-sizing: content-box;
+  height: 120px;
+  width: 120px;
   /*  Somewhat complicated, but we need slightly different styles here,
   and the images don't calculate correct if we use grid or flex */
   ${StyledLandscapeCard} & {
-    /*  Don't set padding on the landscape card because of the Event card */
-    margin-top: var(--space-medium);
+    /*  Don't set padding on the landscape card itself because of the Event card */
+    padding-top: var(--space-medium);
     @media (min-width: 450px) {
-      margin: var(--space-medium);
-      margin-right: 0;
+      padding: var(--space-medium) 0 var(--space-medium) var(--space-large);
     }
   }
   ${StyledPortraitCard} & {
-    margin: var(--space-medium) auto 0 auto;
+    padding: var(--space-medium) var(--space-large) 0 var(--space-medium);
+    margin: 0 auto;
+    @media (min-width: 450px) {
+      height: 150px;
+      width: 150px;
+    }
+  }
+
+  @media (min-width: 850px) {
+    height: 200px;
+    width: 200px;
   }
 `
 
 const TextContent = styled(Text)`
   height: var(--text-height, auto);
   ${StyledLandscapeCard} & {
+    /* Turn off the default padding in the Text component */
+    --text-spacing: 0;
     margin-bottom: var(--space-medium);
     display: grid;
-    place-content: center;
+    align-content: center;
     @media (min-width: 450px) {
-      margin: var(--space-medium) 0;
+      margin: var(--space-medium) var(--space-medium) var(--space-medium) 0;
     }
   }
 `
@@ -84,6 +114,12 @@ const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: center;
+  ${StyledLandscapeCard} & {
+    @media (min-width: 450px) {
+      text-align: left;
+    }
+  }
 `
 
 type PeopleCardProp = {

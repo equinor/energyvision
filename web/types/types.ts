@@ -40,8 +40,10 @@ export type ImageWithAlt = {
   extension?: string
 }
 
+export type CardTypes = 'news' | 'topics' | 'people' | 'event'
+
 export type CardData = {
-  type?: string
+  type?: 'news' | 'topics'
   id: string
   slug: string
   title: string | BlockNode[]
@@ -51,7 +53,7 @@ export type CardData = {
 }
 
 export type PeopleCardData = {
-  type?: string
+  type?: 'people'
   id: string
   image?: ImageWithAlt
   name: string
@@ -295,14 +297,14 @@ export type Tag = {
 export type PromotionData = {
   id: string
   type: string
-  title: PortableTextEntry[]
+  title?: PortableTextEntry[]
   ingress?: PortableTextEntry[]
   content: {
     // Do we really need the tags here?
     tags?: Tag[]
     promotions: CardData[] | PeopleCardData[]
   }
-  designOptions: DesignOptions
+  designOptions?: DesignOptions
 }
 
 export type FooterColumns = {
@@ -374,16 +376,37 @@ export type SubscribeFormData = {
   formType: string
 }
 
+export type LoginResult = {
+  apiSecret: string
+  instId: string
+}
+
+export type SubscribeFormParmeters = {
+  firstName : string
+  email: string
+  crudeOilAssays? : boolean
+  generalNews? : boolean
+  loopStories?: boolean
+  magazineStories?: boolean
+  stockMarketAnnouncements?: boolean  
+  languageCode: string
+}
+
 export type EventSchema = {
-  slug: string
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
   id: string
   title: BlockNode[]
-  location?: string
-  ingress?: PortableTextEntry[]
-  content?: PortableTextEntry[]
-  iframe?: IFrameData
-  relatedLinks?: RelatedLinksData
+  slug: string
+  seoAndSome: {
+    documentTitle?: string
+    metaDescription?: string
+    openGraphImage?: ImageWithAlt
+  }
+  content: {
+    location?: string
+    ingress?: PortableTextEntry[]
+    content?: PortableTextEntry[]
+    iframe?: IFrameData
+    promotedPeople?: PeopleCardData[]
+    relatedLinks?: RelatedLinksData
+  }
 }

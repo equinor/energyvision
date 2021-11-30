@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { sanityClient, getClient } from '../lib/sanity.server'
+import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { menuQuery } from '../lib/queries/menu'
 import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
@@ -19,17 +20,22 @@ import Header from '../pageComponents/shared/Header'
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
+const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
    */
   const router = useRouter()
-  const slug = data?.pageData?.slug
-  const { data: pageData } = usePreviewSubscription(data?.query, {
+
+  const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
+
+  const pageData = filterDataToSingleItem(previewData, preview)
+
+  const slug = pageData?.slug
 
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
@@ -38,23 +44,26 @@ export default function Page({ data, preview }: any) {
   //appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
 
   if (data?.isArchivedFallback) {
-    return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={data.pageData} />}</>
+    return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={pageData} />}</>
   }
 
-  const template = data?.pageData.template || null
+  const template = pageData.template || null
 
   // @TODO: How should we handle this in the best possible way?
   if (!template) console.warn('Missing template for', slug)
 
-  return (
-    <>
-      {router.isFallback ? (
-        <p>Loading…</p>
-      ) : (
-        <>{template === 'landingPage' ? <LandingPage data={pageData} /> : <TopicPage data={pageData} />}</>
-      )}
-    </>
-  )
+  if (router.isFallback) {
+    return <p>Loading...</p>
+  }
+
+  switch (template) {
+    case 'landingPage':
+      return <LandingPage data={pageData} />
+    case 'event':
+      return <EventPage data={pageData} />
+    default:
+      return <TopicPage data={pageData} />
+  }
 }
 
 // eslint-disable-next-line react/display-name
@@ -71,10 +80,11 @@ Page.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data, preview } = props
+  const { allSlugs, template } = data.pageData || null
 
   const slugs = {
-    en_GB: data?.pageData?.allSlugs?.en_GB,
-    nb_NO: data?.pageData?.allSlugs?.nb_NO,
+    en_GB: template === 'event' && allSlugs?.en_GB ? `event/${allSlugs?.en_GB}` : '',
+    nb_NO: template === 'event' && allSlugs?.nb_NO ? `event/${allSlugs?.nb_NO}` : '',
   }
   return (
     <Layout footerData={data?.footerData} preview={preview}>
@@ -88,13 +98,18 @@ Page.getLayout = (page: AppProps) => {
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
-  const pageData = query && (await getClient(preview).fetch(query, queryParams))
+  const data = query && (await getClient(preview).fetch(query, queryParams))
+  /*   console.log('Returning data', data, queryParams, preview) */
+
+  const pageData = filterDataToSingleItem(data, preview)
+  /*   console.log('filtered data', pageData) */
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
 
   // Don't do this at home! Temp. hack to see the static version of all news
-  if (!pageData || (params?.slug === 'news' && !pageData.news)) {
+
+  if (!pageData /* && !queryParams?.id */ || (params?.slug === 'news' && !pageData.news)) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'

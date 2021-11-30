@@ -22,7 +22,7 @@ describe('Menu', () => {
   it('Can extend the css for the component', () => {
     const { container } = render(
       <StyledMenu>
-        <SubMenu>
+        <SubMenu id={0}>
           <SubMenuHeader>{header}</SubMenuHeader>
           <SubMenuPanel>
             <SubMenuGroups>{content}</SubMenuGroups>
@@ -35,7 +35,7 @@ describe('Menu', () => {
   it('Can have a top level title', () => {
     const { getByText } = render(
       <StyledMenu>
-        <SubMenu>
+        <SubMenu id={0}>
           <SubMenuHeader>{header}</SubMenuHeader>
           <SubMenuPanel>
             <SubMenuGroups>{content}</SubMenuGroups>
@@ -49,7 +49,7 @@ describe('Menu', () => {
   it('Can have content for the sub menu panels', () => {
     const { getByText } = render(
       <StyledMenu>
-        <SubMenu>
+        <SubMenu id={0}>
           <SubMenuHeader>{header}</SubMenuHeader>
           <SubMenuPanel>
             <SubMenuGroups>{content}</SubMenuGroups>

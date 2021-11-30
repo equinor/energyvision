@@ -1,21 +1,21 @@
 import soapRequest from 'easy-soap-request'
 import * as xml2js from 'xml2js'
+import { LoginResult, SubscribeFormParmeters } from '../../types/types'
 
-const subscriptionUrl = 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
-const authenticationUrl =
-  'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+const subscriptionUrl = process.env.SUBSCRIPTION_URL || ''
+const authenticationUrl = process.env.AUTHENTICATION_URL || ''
+const clientSecret = process.env.CLIENT_SECRET
+const password = process.env.PASSWORD
+const apnId = process.env.APN_ID
+const otyId = process.env.OTY_ID
+const ptlId = process.env.PTL_ID
 
-const clientSecret = 'clientSecret'
-const password = 'password'
-const apnId = '32'
-const otyId = '114961'
-const ptlId = '14414'
-
+console.log(authenticationUrl)
 const sampleHeaders = {
   'Content-Type': 'text/xml;charset=UTF-8',
 }
 const xml = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Authentication___Login xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><userName>SUBSCRIPTIONAPI</userName><password>${password}</password><comId>34</comId><ptlId>${ptlId}</ptlId><otyId>${otyId}</otyId><laeId>1</laeId><apnId>${apnId}</apnId></Authentication___Login></s:Body></s:Envelope>`
-export const authenticate = async () => {
+const authenticate = async () => {
   const { response } = await soapRequest({
     url: authenticationUrl,
     headers: sampleHeaders,
@@ -24,6 +24,8 @@ export const authenticate = async () => {
   })
   const { body } = response
 
+  let apiSecret = ''
+  let instId = ''
   xml2js.parseString(body, function (err, result) {
     if (err != null) console.error(err)
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
@@ -32,40 +34,25 @@ export const authenticate = async () => {
       return null
     }
     const loginResult = soapBody['v1:Authentication___LoginResponse']['0']['v1:Result']['0']
-    const apiSecret = loginResult['v1:apiSecret']['0']
-    const instId = loginResult['v1:instId']['0']
-    createSignUpRequest({ apiSecret, instId })
+    apiSecret = loginResult['v1:apiSecret']['0']
+    instId = loginResult['v1:instId']['0']
   })
+  return { apiSecret, instId }
 }
 
-export const createSignUpRequest = async ({ apiSecret, instId }: { apiSecret: string; instId: string }) => {
-  // check if form has valid language code...
-  /*if(!formParameters["language_code"] == "en" && !formParameters["language_code"] == "no"){
-    console.error("Invalid language code.")
-  }
-  ....... WIP .......
-  */
-  const formParameters = {
-    subscribeToStockMarketAnnouncements: 'y',
-    subscribeToCompanyNews: 'n',
-    subscribeToCrudeOilAssays: 'n',
-    subscribeToLoopArticles: 'n',
-    language_code: 'en',
-    firstName: 'firstname',
-    email: 'email',
-  }
+const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParmeters) => {
   const additionalParameters = `
   {
-    "stock_market": "${formParameters['subscribeToStockMarketAnnouncements']}",
-    "company_news": "${formParameters['subscribeToCompanyNews']}",
-    "crude_oil_assays":  "${formParameters['subscribeToCrudeOilAssays']}",
-    "magazine": "${formParameters['subscribeToCrudeOilAssays']}",
-    "magazine_people": "${formParameters['subscribeToCrudeOilAssays']}",
-    "loop": "${formParameters['subscribeToLoopArticles']}",
-    "lang": "${formParameters['language_code']}",
-    "type": "Investor"
+    "stock_market": "${formParameters.stockMarketAnnouncements ? 'y' : 'n'}",
+    "company_news": "${formParameters.generalNews ? 'y' : 'n'}",
+    "crude_oil_assays":  "${formParameters.crudeOilAssays ? 'y' : 'n'}",
+    "magazine": "${formParameters.magazineStories ? 'y' : 'n'}",
+    "loop": "${formParameters.loopStories ? 'y' : 'n'}",
+    "type": "Investor",
+    "lang": "${formParameters.languageCode}",
   }`
-  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___SignUp xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${apiSecret}</apiSecret><instId>${instId}</instId><firstName>${formParameters['firstName']}</firstName><email>${formParameters['email']}</email><additionalParams>${additionalParameters}</additionalParams></Subscription___SignUp></s:Body></s:Envelope>`
+
+  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___SignUp xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><firstName>${formParameters.firstName}</firstName><email>${formParameters.email}</email><additionalParams>${additionalParameters}</additionalParams></Subscription___SignUp></s:Body></s:Envelope>`
   const { response } = await soapRequest({
     url: subscriptionUrl,
     headers: sampleHeaders,
@@ -74,4 +61,10 @@ export const createSignUpRequest = async ({ apiSecret, instId }: { apiSecret: st
   })
 
   console.log(response)
+  return response.statusCode == 200
+}
+
+export const signUp = async (formParameters: SubscribeFormParmeters) => {
+  const loginResult = await authenticate()
+  return createSignUpRequest(loginResult, formParameters)
 }

@@ -16,7 +16,7 @@ export type Promotion = {
   background?: ColorListValue
 }
 
-type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople'
+type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -27,7 +27,8 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
-
+const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
+const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
 export default {
   title: 'Promotion',
   name: 'promotion',
@@ -68,6 +69,7 @@ export default {
         { type: 'promoteNews', title: 'Promote news' },
         { type: 'promoteTopics', title: 'Promote topic' },
         { type: 'promotePeople', title: 'Promote people' },
+        { type: 'promoteEvents', title: 'Promote events' },
       ],
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
@@ -83,10 +85,10 @@ export default {
           inner: '100%',
         },
         tooltip: true,
-        list: Colors,
+        list: backgroundColors,
       },
       fieldset: 'design',
-      initialValue: Colors[0],
+      initialValue: backgroundColors[0],
     },
   ],
   preview: {

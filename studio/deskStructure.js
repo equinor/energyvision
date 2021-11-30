@@ -9,6 +9,9 @@ import parentChild from './src/structure/parentChild'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+// import Iframe from 'sanity-plugin-iframe-pane'
+
+// import resolveProductionUrl from './resolveProductionUrl'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
@@ -176,10 +179,29 @@ export const getDefaultDocumentNode = (props) => {
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
     ])
+  } else if (schemaType === 'event') {
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(PagePreview).title('Preview'),
+      S.view
+        .component(DocumentsPane)
+        .options({
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type match "route_*"]`,
+          params: { id: `_id` },
+          useDraft: false,
+        })
+        .title('Connected routes'),
+    ])
   } else if (schemaType === 'page') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
+      /* S.view
+        .component(Iframe)
+        .options({
+          url: (doc) => resolveProductionUrl(doc),
+        })
+        .title('Preview'), */
       S.view
         .component(DocumentsPane)
         .options({

@@ -4,6 +4,7 @@ import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 
 export const newsFields = /* groq */ `
+ 
   "id": _id,
   "updatedAt": _updatedAt,
   title,
@@ -34,6 +35,7 @@ export const allNewsQuery = /* groq */ `
 export const newsQuery = /* groq */ `
 {
   "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc)[0] {
+    _id, //used for data filtering
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     openGraphImage,

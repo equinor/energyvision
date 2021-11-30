@@ -1,5 +1,7 @@
 import pageContentFields from './common/pageContentFields'
 import { landingPageById } from './common/landingPageContentFields'
+import { eventContentFields } from './common/eventContentFields'
+
 /* export const pageQueryById =  `
   *[_type == "page" && _id == $id][0] {
     "title": title,
@@ -10,14 +12,15 @@ import { landingPageById } from './common/landingPageContentFields'
     },
     "heroImage": heroFigure,
     "content": content[]{
-        
+
       ${pageContentFields}
     }
   }
 ` */
 
 export const contentQueryById = /* groq */ ` 
-  *[_id == $id][0] {
+  *[_id in $id] {
+    _id,
     "title": title,
     "seoAndSome": {
       "documentTitle": seo.documentTitle,
@@ -34,5 +37,10 @@ export const contentQueryById = /* groq */ `
           ${pageContentFields}
       },
     },
+    _type == "event"=>{
+      "content": {
+        ${eventContentFields}
+      }
+    }
   }
 `
