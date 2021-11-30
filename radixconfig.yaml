@@ -28,6 +28,7 @@ spec:
           imageTagName: main-latest
       secrets:
         - SANITY_API_TOKEN
+        - SANITY_PREVIEW_SECRET
   dnsAppAlias:
     environment: dev
     component: web
