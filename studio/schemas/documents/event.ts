@@ -2,7 +2,7 @@ import { i18n } from '../documentTranslation'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent, configureBlockContent } from '../editors'
-import type { Rule, Slug, Block, ValidationContext } from '@sanity/types'
+import type { Rule, Slug, ValidationContext } from '@sanity/types'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
 
 const titleContentType = configureTitleBlockContent()
@@ -43,14 +43,6 @@ export default {
         collapsed: true,
       },
     },
-    {
-      title: 'Event date',
-      name: 'dateOfEvent',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
-    },
   ],
   fields: [
     {
@@ -83,7 +75,6 @@ export default {
       title: 'Date information',
       name: 'eventDate',
       type: 'eventDate',
-      fieldset: 'dateOfEvent',
     },
     {
       // TODO: Figure out a way to run a slugify function before publish
