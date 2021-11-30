@@ -29,7 +29,7 @@
     "@sanity/core": "^2.21.7",
     "@sanity/data-aspects": "^2.18.0",
     "@sanity/default-layout": "^2.21.7",
-    "@sanity/default-login": "^2.21.7",
+    "@sanity/default-login": "^2.21.10",
     "@sanity/desk-tool": "^2.21.7",
     "@sanity/form-builder": "^2.21.7",
     "@sanity/icons": "^1.2.1",
