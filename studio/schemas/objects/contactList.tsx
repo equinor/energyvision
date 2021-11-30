@@ -1,5 +1,17 @@
 import type { Rule } from '@sanity/types'
 
+export type ContactList = {
+  _type: 'contactList'
+  title: string
+  ingress: string
+  contacts?: Contact[]
+}
+
+export type Contact = {
+  location: string
+  phone: string
+}
+
 export default {
   name: 'contactList',
   type: 'object',
