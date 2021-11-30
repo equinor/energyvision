@@ -102,6 +102,7 @@ export default {
       name: 'promotedPeople',
       type: 'promotePeople',
     },
+    { title: 'Contact list', type: 'contactList', name: 'contactList' },
     {
       name: 'relatedLinks',
       title: 'Links and downloads',
