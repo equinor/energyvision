@@ -58,6 +58,17 @@ export const eventContentFields = /* groq */ `
       ${linkSelectorFields},
       ${downloadableFileFields},
       ${downloadableImageFields},
+    },
+    "contactList": contactList{
+      _type, 
+      title, 
+      ingress, 
+      "contacts": contacts[]{
+        _key, 
+        _type, 
+        phone, 
+        location}
     }
+    
   }
 `
