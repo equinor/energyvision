@@ -130,7 +130,7 @@ export default {
     },
     prepare({ title }: { title: Block[] }) {
       return {
-        title: blocksToText(title),
+        title: title ? blocksToText(title) : 'Untitled event',
         subtitle: `Event date: ...`,
         media: EdsIcon(calendar_event),
       }
