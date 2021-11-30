@@ -44,7 +44,7 @@ const TimezoneInput = forwardRef((props: Props, forwardedRef: React.ForwardedRef
       {readOnly ? (
         <TextInput readOnly value={value} />
       ) : (
-        <Select readOnly={readOnly} id={id} value={value} ref={ref} onChange={handleChange}>
+        <Select id={id} value={value} ref={ref} onChange={handleChange}>
           {timezones.map((tz) => (
             <option key={tz} value={tz}>
               {tz.replace(/_/g, ' ')}
