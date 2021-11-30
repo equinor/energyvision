@@ -1,12 +1,17 @@
 import React from 'react'
 import type { Rule, ValidationContext } from '@sanity/types'
+import TimeInput, { EMPTY, INVALID_TIME_FORMAT } from '../components/TimeInput'
 
 export type EventDate = {
   _type: 'eventDate'
-  precise: boolean
   date?: string
-  startDate?: string
-  endDate?: string
+  startTime?: string
+  endTime?: string
+}
+
+const isValid = (field: string | undefined) => {
+  const time = field?.split(':') ?? [EMPTY, EMPTY]
+  return !(time.includes(EMPTY) && time[0] !== time[1])
 }
 
 export default {
@@ -15,59 +20,48 @@ export default {
   type: 'object',
   fields: [
     {
-      name: 'precise',
-      description: 'Check if the event has an exact start and end time',
-      title: 'Precise time',
-      type: 'boolean',
-      initialValue: false,
-    },
-    {
       name: 'date',
       type: 'date',
       title: 'Date',
       options: {
         dateFormat: 'DD-MM-YYYY',
       },
-      hidden: ({ parent }: { parent: EventDate }) => parent.precise,
+    },
+    {
+      title: 'Start time',
+      name: 'startTime',
+      type: 'string',
+      inputComponent: TimeInput,
       validation: (Rule: Rule) =>
-        Rule.custom((field, context: ValidationContext) => {
+        Rule.custom((field: string | undefined, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
-          return !parent.precise && field === undefined ? 'Date is required' : true
+          if (!isValid(field)) {
+            return INVALID_TIME_FORMAT
+          } else if (!field && parent.endTime) {
+            return 'Start time must not be empty'
+          } else if (!parent.date) {
+            return 'Date must be defined'
+          } else {
+            return true
+          }
         }),
     },
     {
-      name: 'startDate',
-      type: 'datetime',
-      title: 'Start date',
-      options: {
-        dateFormat: 'DD-MM-YYYY',
-        timeFormat: 'HH:mm',
-        timeStep: 5,
-      },
-      hidden: ({ parent }: { parent: EventDate }) => !parent.precise,
+      title: 'End time',
+      name: 'endTime',
+      type: 'string',
+      inputComponent: TimeInput,
       validation: (Rule: Rule) =>
-        Rule.custom((field: string, context: ValidationContext) => {
+        Rule.custom((field: string | undefined, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
-          return parent.precise && field === undefined ? 'Start date is required' : true
-        }),
-    },
-    {
-      name: 'endDate',
-      type: 'datetime',
-      title: 'End date',
-      options: {
-        dateFormat: 'DD-MM-YYYY',
-        timeFormat: 'HH:mm',
-        timeStep: 5,
-      },
-      hidden: ({ parent }: { parent: EventDate }) => !parent.precise,
-      validation: (Rule: Rule) =>
-        Rule.custom((field: string, context: ValidationContext) => {
-          const { parent } = context as { parent: EventDate }
-          if (parent.precise && field === undefined) {
-            return 'End date is required'
-          } else if (parent.precise && parent.startDate && field <= parent.startDate) {
-            return 'End date must be greater than start date'
+          if (!isValid(field)) {
+            return INVALID_TIME_FORMAT
+          } else if (!field && parent.startTime) {
+            return 'End time must not be empty'
+          } else if (parent.startTime && field && field <= parent.startTime) {
+            return 'End time must be greather than start time'
+          } else if (!parent.date) {
+            return 'Date must be defined'
           } else {
             return true
           }
