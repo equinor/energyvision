@@ -94,7 +94,7 @@ export default {
     {
       title: 'Title ',
       name: 'titleAsc',
-      by: [{ field: 'title.children[0].text', direction: 'asc' }],
+      by: [{ field: 'title[0].children[0].text', direction: 'asc' }],
     },
   ],
   preview: {
