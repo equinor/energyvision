@@ -2,7 +2,7 @@ import type { Rule } from '@sanity/types'
 
 export type ContactList = {
   _type: 'contactList'
-  title?: string
+  title: string
   ingress?: string
   contacts?: Contact[]
 }
@@ -17,7 +17,7 @@ export default {
   type: 'object',
   title: 'Contact list',
   fields: [
-    { title: 'Title', type: 'string', name: 'title' },
+    { title: 'Title', type: 'string', name: 'title', validation: (Rule: Rule) => Rule.required() },
     { type: 'text', name: 'ingress', title: 'Ingress' },
     {
       name: 'contacts',
