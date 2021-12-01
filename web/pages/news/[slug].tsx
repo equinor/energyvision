@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { newsQuery, newsSlugsQuery, queryLocalizedNewsById } from '../../lib/queries/news'
 import { usePreviewSubscription } from '../../lib/sanity'
 import { sanityClient, getClient } from '../../lib/sanity.server'
+import { filterDataToSingleItem } from '../../lib/filterDataToSingleItem'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import { menuQuery } from '../../lib/queries/menu'
 import { footerQuery } from '../../lib/queries/footer'
@@ -180,14 +181,17 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   }
 
   // @TODO: Since data can be undefined, the rules of hooks fails. Why is data undefined
-  const {
+  // Temp. disable the preview hook due to serious performance issues
+  /*   const {
     data: { news, latestNews },
     // eslint-disable-next-line react-hooks/rules-of-hooks
   } = usePreviewSubscription(newsQuery, {
     params: { slug },
     initialData: data,
     enabled: preview || router.query.preview !== null,
-  })
+  }) */
+  const newsData = filterDataToSingleItem(data.news, preview)
+  const { latestNews } = data
 
   const { pathname } = router
 
@@ -198,27 +202,39 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
 
-  const modifiedDate = isDateAfter(news.publishDateTime, news.updatedAt) ? news.publishDateTime : news.updatedAt
+  const {
+    publishDateTime,
+    updatedAt,
+    documentTitle,
+    title,
+    metaDescription,
+    openGraphImage,
+    heroImage,
+    ingress,
+    content,
+    iframe,
+    relatedLinks,
+  } = newsData
+
+  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
 
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
 
   return (
     <>
       <NextSeo
-        title={news.documentTitle || news.title}
-        description={news.metaDescription}
+        title={documentTitle || title}
+        description={metaDescription}
         openGraph={{
-          title: news.title,
-          description: news.metaDescription,
+          title: title,
+          description: metaDescription,
           type: 'article',
           article: {
-            publishedTime: news.publishDateTime,
+            publishedTime: publishDateTime,
             modifiedTime: modifiedDate,
           },
           url: fullUrl,
-          images: getOpenGraphImages(
-            (news.openGraphImage?.asset ? news.openGraphImage : null) || news.heroImage?.image,
-          ),
+          images: getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image),
         }}
         twitter={{
           handle: '@handle',
@@ -236,13 +252,13 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
               <Header>
                 <HeaderInner>
                   <StyledHeading level="h1" size="2xl" inverted>
-                    {news.title}
+                    {title}
                   </StyledHeading>
                   <DateWrapper>
                     <Icon data={calendar} />
                     <DateContainer>
-                      <FormattedDateTime datetime={news.publishDateTime} />
-                      {isDateAfter(modifiedDate, news.publishDateTime) && (
+                      <FormattedDateTime datetime={publishDateTime} />
+                      {isDateAfter(modifiedDate, publishDateTime) && (
                         <>
                           <LastModifiedLabel>Last modified</LastModifiedLabel>
                           <FormattedDateTime datetime={modifiedDate} />
@@ -252,23 +268,23 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   </DateWrapper>
                 </HeaderInner>
               </Header>
-              <Image>{news.heroImage && <HeroImage data={news.heroImage} />}</Image>
-              {news.ingress && (
+              <Image>{heroImage && <HeroImage data={heroImage} />}</Image>
+              {ingress && (
                 <LeadParagraph>
-                  <Lead blocks={news.ingress} />
+                  <Lead blocks={ingress} />
                 </LeadParagraph>
               )}
-              {news.content && (
+              {content && (
                 <Content>
-                  <NewsBlockContent blocks={news.content}></NewsBlockContent>
+                  <NewsBlockContent blocks={content}></NewsBlockContent>
                 </Content>
               )}
 
-              {news.iframe && <StyledIFrame data={news.iframe} />}
+              {iframe && <StyledIFrame data={iframe} />}
 
-              {news.relatedLinks?.links && news.relatedLinks.links.length > 0 && (
+              {relatedLinks?.links && relatedLinks.links.length > 0 && (
                 <Related>
-                  <RelatedContent data={news.relatedLinks} />
+                  <RelatedContent data={relatedLinks} />
                 </Related>
               )}
 
@@ -313,7 +329,10 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     slug: params?.slug,
     lang: mapLocaleToLang(locale),
   })
+  console.log(params?.slug, locale, news)
 
+  const newsData = filterDataToSingleItem(news, preview) || null
+  console.log('This is the news data', news, preview)
   const allSlugs = await getLocalizedNewsSlugs(news, preview)
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
@@ -323,7 +342,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     props: {
       preview,
       data: {
-        news,
+        news: newsData,
         latestNews,
         slugs: allSlugs,
         menuData,

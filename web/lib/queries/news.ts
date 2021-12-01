@@ -34,7 +34,7 @@ export const allNewsQuery = /* groq */ `
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc)[0] {
+  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc) {
     _id, //used for data filtering
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
