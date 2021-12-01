@@ -28,12 +28,14 @@ const defaultSerializers = {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const NewsBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => (
-  <PortableText
-    blocks={blocks && removeEmptyBlocks(blocks)}
-    serializers={{ ...defaultSerializers, ...serializers }}
-    {...props}
-  />
-)
+const NewsBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextProps) => {
+  return (
+    <PortableText
+      blocks={blocks && removeEmptyBlocks(blocks)}
+      serializers={{ ...defaultSerializers, ...serializers }}
+      {...props}
+    />
+  )
+}
 
 export default NewsBlockContent
