@@ -12,7 +12,7 @@ import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { menuQuery } from '../lib/queries/menu'
 import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
-import { usePreviewSubscription } from '../lib/sanity'
+/* import { usePreviewSubscription } from '../lib/sanity' */
 import { Layout } from '../pageComponents/shared/Layout'
 import { mapLocaleToLang } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
@@ -25,15 +25,17 @@ const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
    */
+
   const router = useRouter()
 
-  const { data: previewData } = usePreviewSubscription(data?.query, {
+  // Let's nuke the preview hook temporarily for performance reasons
+  /* const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
-
-  const pageData = filterDataToSingleItem(previewData, preview)
+ */
+  const pageData = filterDataToSingleItem(data.pageData, preview)
 
   const slug = pageData?.slug
 
@@ -104,16 +106,12 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
   const data = query && (await getClient(preview).fetch(query, queryParams))
-  //console.log('Returning data', data, queryParams, preview)
 
   const pageData = filterDataToSingleItem(data, preview) || null
-  //console.log('page data', pageData)
-  /*   console.log('filtered data', pageData) */
-  // Let's do it simple stupid and iterate later on
+
+  // @TODO Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
-
-  // Don't do this at home! Temp. hack to see the static version of all news
 
   if ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news)) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
