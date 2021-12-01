@@ -7,6 +7,7 @@ import type { RelatedLinksArray } from '../objects/relatedLinks'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import blocksToText from '../../helpers/blocksToText'
+import { FilteredIFrame } from '../objects/iframe'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -95,16 +96,12 @@ export default {
       type: 'array',
       of: [blockContentType],
     },
-    {
+    FilteredIFrame({
       name: 'iframe',
       title: 'IFrame',
       description: 'Use this to add an iframe to this event. This could for example be a livestream, video, or map.',
-      type: 'iframe',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
-    },
+      filters: ['background'],
+    }),
     {
       title: 'Title',
       name: 'promotedPeopleTitle',
