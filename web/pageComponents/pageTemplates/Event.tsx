@@ -10,6 +10,7 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../../pageComponents/topicPages/Promotion'
+import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
 
 import type { EventSchema } from '../../types/types'
 
@@ -106,6 +107,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 />
               )}
               {location && <p>{location}</p>}
+              <AddToCalendar event={data} />
             </HeaderInner>
           </Header>
           <ContentWrapper>
