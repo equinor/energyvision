@@ -13,7 +13,7 @@ export default function PagePreview(props: any) {
     return <div>The content needs an id before it can be previewed.</div>
   }
 
-  const url = `${baseUrl}/${displayed?._id}?preview`
+  const url = `${baseUrl}/${displayed?._id}`
   // const url = resolveProductionUrl(displayed)
   console.log('preview url', url)
   return (

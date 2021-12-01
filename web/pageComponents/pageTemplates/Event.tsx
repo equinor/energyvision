@@ -10,6 +10,7 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../../pageComponents/topicPages/Promotion'
+import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
 
 import type { EventSchema } from '../../types/types'
 
@@ -106,6 +107,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 />
               )}
               {location && <p>{location}</p>}
+              <AddToCalendar event={data} />
             </HeaderInner>
           </Header>
           <ContentWrapper>
@@ -123,12 +125,13 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
           {iframe && <IFrame data={iframe} />}
 
-          {promotedPeople && promotedPeople.length > 0 && (
+          {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
               data={{
                 id: 'promotedPeople',
                 type: 'people',
-                content: { promotions: promotedPeople },
+                title: promotedPeople.title,
+                content: { promotions: promotedPeople.people },
               }}
             />
           )}

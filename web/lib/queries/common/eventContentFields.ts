@@ -23,7 +23,12 @@ export const eventContentFields = /* groq */ `
       height,
     },
   },
-  "promotedPeople": promotedPeople.peopleList[]{
+  "promotedPeople": {
+    "title": promotedPeopleTitle[]{
+      ...,
+      ${markDefs},
+    },
+    "people": promotedPeople.peopleList[]{
       "id": _key,
       "type": _type,
       image,
@@ -50,6 +55,7 @@ export const eventContentFields = /* groq */ `
           "href": url,
         },
       },
+    },
   },
   "relatedLinks": relatedLinks{
     title,
@@ -58,6 +64,17 @@ export const eventContentFields = /* groq */ `
       ${linkSelectorFields},
       ${downloadableFileFields},
       ${downloadableImageFields},
+    },
+    "contactList": contactList{
+      _type, 
+      title, 
+      ingress, 
+      "contacts": contacts[]{
+        _key, 
+        _type, 
+        phone, 
+        location}
     }
+    
   }
 `

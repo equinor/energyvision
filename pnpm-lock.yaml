@@ -103,8 +103,11 @@ importers:
       '@types/xml2js': ^0.4.9
       babel-jest: ^27.3.1
       babel-plugin-styled-components: ^1.13.3
+      date-fns: ^2.27.0
+      date-fns-tz: ^1.1.6
       easy-soap-request: ^4.4.0
       focus-visible: ^5.2.0
+      ics: ^2.31.0
       jest: ^27.3.1
       jest-styled-components: ^7.0.6
       next: ^12.0.3
@@ -144,8 +147,11 @@ importers:
       '@sanity/image-url': 1.0.1
       '@types/easy-soap-request': 4.1.1
       '@types/xml2js': 0.4.9
+      date-fns: 2.27.0
+      date-fns-tz: 1.1.6_date-fns@2.27.0
       easy-soap-request: 4.4.0
       focus-visible: 5.2.0
+      ics: 2.31.0
       next: 12.0.4_react-dom@17.0.2+react@17.0.2
       next-circular-dependency: 1.0.1
       next-sanity: 0.4.0_react@17.0.2
@@ -5840,6 +5846,10 @@ packages:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
     dev: true
 
+  /@types/lodash/4.14.177:
+    resolution: {integrity: sha512-0fDwydE2clKe9MNfvXHBHF9WEahRuj+msTuQqOmAApNORFvhMYZKNGGJdCzuhheVjMps/ti0Ak/iJPACMaevvw==}
+    dev: false
+
   /@types/markdown-to-jsx/6.11.3:
     resolution: {integrity: sha512-30nFYpceM/ZEvhGiqWjm5quLUxNeld0HCzJEXMZZDpq53FPkS85mTwkWtCXzCqq8s5JYLgM5W392a02xn8Bdaw==}
     dependencies:
@@ -8169,6 +8179,19 @@ packages:
       whatwg-url: 8.7.0
     dev: true
 
+  /date-fns-tz/1.1.6_date-fns@2.27.0:
+    resolution: {integrity: sha512-nyy+URfFI3KUY7udEJozcoftju+KduaqkVfwyTIE0traBiVye09QnyWKLZK7drRr5h9B7sPJITmQnS3U6YOdQg==}
+    peerDependencies:
+      date-fns: '>=2.0.0-alpha.13'
+    dependencies:
+      date-fns: 2.27.0
+    dev: false
+
+  /date-fns/2.27.0:
+    resolution: {integrity: sha512-sj+J0Mo2p2X1e306MHq282WS4/A8Pz/95GIFcsPNMPMZVI3EUrAdSv90al1k+p74WGLCruMXk23bfEDZa71X9Q==}
+    engines: {node: '>=0.11'}
+    dev: false
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     dependencies:
@@ -9468,7 +9491,7 @@ packages:
     resolution: {integrity: sha512-DUxuQaKoqfNne8iikd14SAkh5uw4+8vNifp6gmA73yYNS6ywLIWSLD/n/mBzHQRpW3J7rbATEakmiA8JvkTyZw==}
     engines: {node: '>=6.11.5', yarn: '>=1.0.0'}
     dependencies:
-      '@babel/code-frame': 7.10.4
+      '@babel/code-frame': 7.16.0
       chalk: 2.4.2
       micromatch: 3.1.10
       minimatch: 3.0.4
@@ -10292,6 +10315,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
+    dev: false
+
+  /ics/2.31.0:
+    resolution: {integrity: sha512-3pW62uD097nl6LfFXIt92eBZtbwDESXsaRcgZPn3NO01zpUUM+L2G6fjf6qXhiyFcGIrJjsGuNB/y3AV58CvFg==}
+    dependencies:
+      nanoid: 3.1.30
+      yup: 0.32.11
     dev: false
 
   /icss-utils/4.1.1:
@@ -11805,6 +11835,10 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
+
   /lodash.debounce/4.0.8:
     resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
     dev: true
@@ -12262,6 +12296,10 @@ packages:
 
   /nano-pubsub/1.0.2:
     resolution: {integrity: sha1-NM53b3r5WZFbj3rP6N1rnGbzvek=}
+    dev: false
+
+  /nanoclone/0.2.1:
+    resolution: {integrity: sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA==}
     dev: false
 
   /nanoid/3.1.30:
@@ -13371,6 +13409,10 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+
+  /property-expr/2.0.4:
+    resolution: {integrity: sha512-sFPkHQjVKheDNnPvotjQmm3KD3uk1fWKUN7CrpdbwmUx3CrG3QiM8QpTSimvig5vTXmTvjz7+TDvXOI9+4rkcg==}
+    dev: false
 
   /property-information/5.6.0:
     resolution: {integrity: sha512-YUHSPk+A30YPv+0Qf8i9Mbfe/C0hdPXk1s1jPVToV8pk8BQtpw10ct89Eo7OWkutrwqvT0eicAxlOg3dOAu8JA==}
@@ -15411,6 +15453,10 @@ packages:
     resolution: {integrity: sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==}
     engines: {node: '>=0.6'}
 
+  /toposort/2.0.2:
+    resolution: {integrity: sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=}
+    dev: false
+
   /totalist/1.1.0:
     resolution: {integrity: sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==}
     engines: {node: '>=6'}
@@ -16417,6 +16463,19 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /yup/0.32.11:
+    resolution: {integrity: sha512-Z2Fe1bn+eLstG8DRR6FTavGD+MeAwyfmouhHsIUgaADz8jvFKbO/fXc2trJKZg+5EBjh4gGm3iU/t3onKlXHIg==}
+    engines: {node: '>=10'}
+    dependencies:
+      '@babel/runtime': 7.16.3
+      '@types/lodash': 4.14.177
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      nanoclone: 0.2.1
+      property-expr: 2.0.4
+      toposort: 2.0.2
+    dev: false
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}

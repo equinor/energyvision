@@ -12,7 +12,7 @@ import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { menuQuery } from '../lib/queries/menu'
 import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
-import { usePreviewSubscription } from '../lib/sanity'
+/* import { usePreviewSubscription } from '../lib/sanity' */
 import { Layout } from '../pageComponents/shared/Layout'
 import { mapLocaleToLang } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
@@ -25,15 +25,17 @@ const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
    */
+
   const router = useRouter()
 
-  const { data: previewData } = usePreviewSubscription(data?.query, {
+  // Let's nuke the preview hook temporarily for performance reasons
+  /* const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
   })
-
-  const pageData = filterDataToSingleItem(previewData, preview)
+ */
+  const pageData = filterDataToSingleItem(data.pageData, preview)
 
   const slug = pageData?.slug
 
@@ -47,7 +49,7 @@ export default function Page({ data, preview }: any) {
     return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={pageData} />}</>
   }
 
-  const template = pageData.template || null
+  const template = pageData?.template || null
 
   // @TODO: How should we handle this in the best possible way?
   if (!template) console.warn('Missing template for', slug)
@@ -80,11 +82,16 @@ Page.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data, preview } = props
-  const { allSlugs, template } = data.pageData || null
-
   const slugs = {
-    en_GB: template === 'event' && allSlugs?.en_GB ? `event/${allSlugs?.en_GB}` : '',
-    nb_NO: template === 'event' && allSlugs?.nb_NO ? `event/${allSlugs?.nb_NO}` : '',
+    en_GB: '',
+    nb_NO: '',
+  }
+
+  if (data?.pageData) {
+    const { allSlugs, template } = data?.pageData || null
+
+    slugs.en_GB = template === 'event' && allSlugs?.en_GB ? `event/${allSlugs?.en_GB}` : ''
+    slugs.nb_NO = template === 'event' && allSlugs?.nb_NO ? `event/${allSlugs?.nb_NO}` : ''
   }
   return (
     <Layout footerData={data?.footerData} preview={preview}>
@@ -99,17 +106,14 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
   const data = query && (await getClient(preview).fetch(query, queryParams))
-  /*   console.log('Returning data', data, queryParams, preview) */
 
-  const pageData = filterDataToSingleItem(data, preview)
-  /*   console.log('filtered data', pageData) */
-  // Let's do it simple stupid and iterate later on
+  const pageData = filterDataToSingleItem(data, preview) || null
+
+  // @TODO Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
 
-  // Don't do this at home! Temp. hack to see the static version of all news
-
-  if (!pageData /* && !queryParams?.id */ || (params?.slug === 'news' && !pageData.news)) {
+  if ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news)) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'

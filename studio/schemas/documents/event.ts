@@ -7,6 +7,7 @@ import type { RelatedLinksArray } from '../objects/relatedLinks'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import blocksToText from '../../helpers/blocksToText'
+import { FilteredIFrame } from '../objects/iframe'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -44,6 +45,14 @@ export default {
       options: {
         collapsible: true,
         collapsed: true,
+      },
+    },
+    {
+      title: 'People and contacts',
+      name: 'people',
+      options: {
+        collapsible: false,
+        collapsed: false,
       },
     },
   ],
@@ -92,21 +101,27 @@ export default {
       type: 'array',
       of: [blockContentType],
     },
-    {
+    FilteredIFrame({
       name: 'iframe',
       title: 'IFrame',
       description: 'Use this to add an iframe to this event. This could for example be a livestream, video, or map.',
-      type: 'iframe',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
+      filters: ['background'],
+    }),
+    {
+      title: 'Title',
+      name: 'promotedPeopleTitle',
+      type: 'array',
+      fieldset: 'people',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
     },
     {
-      title: 'People and contacts',
+      title: ' ',
       name: 'promotedPeople',
       type: 'promotePeople',
+      fieldset: 'people',
     },
+    { title: 'Contact list', type: 'contactList', name: 'contactList' },
     {
       name: 'relatedLinks',
       title: 'Links and downloads',
@@ -134,7 +149,7 @@ export default {
     },
     prepare({ title }: { title: Block[] }) {
       return {
-        title: blocksToText(title),
+        title: title ? blocksToText(title) : 'Untitled event',
         subtitle: `Event date: ...`,
         media: EdsIcon(calendar_event),
       }

@@ -20,9 +20,22 @@ export type IFrame = {
   background?: ColorListValue
 }
 
-export default {
-  title: 'IFrame',
-  name: 'iframe',
+type FilteredIFrameProps = {
+  name?: string
+  title?: string
+  description?: string
+  filters?: string[]
+}
+
+export const FilteredIFrame = ({
+  name = 'iframe',
+  title = 'IFrame',
+  description = '',
+  filters = [],
+}: FilteredIFrameProps) => ({
+  title: title,
+  description: description,
+  name: name,
   type: 'object',
   fieldsets: [
     {
@@ -105,6 +118,7 @@ export default {
       },
       fieldset: 'design',
       initialValue: Colors[0],
+      hidden: () => filters.includes('background'),
     },
   ],
   preview: {
@@ -122,4 +136,8 @@ export default {
       }
     },
   },
-}
+})
+
+const defaultIFrame = FilteredIFrame({})
+
+export default defaultIFrame
