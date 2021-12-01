@@ -5,9 +5,10 @@ import TimezoneInput from '../components/TimezoneInput'
 
 export type EventDate = {
   _type: 'eventDate'
-  date?: string
+  date: string
   startTime?: string
   endTime?: string
+  timezone: string
 }
 
 const isValid = (field: string | undefined) => {
@@ -28,6 +29,7 @@ export default {
       options: {
         dateFormat: 'DD-MM-YYYY',
       },
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Start time',
@@ -76,6 +78,7 @@ export default {
       type: 'string',
       inputComponent: TimezoneInput,
       initialValue: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
 }
