@@ -104,6 +104,8 @@ export default {
           return 'Topic page promotion'
         } else if (type == 'promotePeople') {
           return 'People promotion'
+        } else if (type == 'promoteEvents') {
+          return 'Events promotion'
         }
         return 'News promotions'
       }

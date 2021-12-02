@@ -11,6 +11,7 @@ const eventTags = [
 export type Event = {
   noTags: boolean
   tags: string[]
+  selectEvents: boolean
 }
 
 export default {
@@ -25,8 +26,15 @@ export default {
   ],
   fields: [
     {
+      name: 'selectEvents',
+      type: 'boolean',
+      title: 'Manually select events',
+      description: `Use this option if you want to manually select the events to promote`,
+      initialValue: false,
+    },
+    {
       // Pick events from a list
-      // Choose events by tags
+
       // Use as switch to choose between selected and automated?
 
       // @TODO
@@ -50,6 +58,20 @@ export default {
       },
       initialValue: false,
       fieldset: 'tag',
+    },
+    {
+      title: 'Events to be promoted',
+      name: 'reference',
+      description: 'Select the events you want to promote',
+      type: 'reference',
+      to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+      options: {
+        filter: ({ document }: { document: any }) => ({
+          filter: `_type == $routeLang && content->_type == "event"`,
+          params: { routeLang: `route_${document._lang}` },
+        }),
+      },
+      hidden: ({ parent }: { parent: Event }) => parent?.selectEvents === false,
     },
   ],
   preview: {
