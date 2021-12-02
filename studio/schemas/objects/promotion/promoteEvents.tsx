@@ -18,12 +18,7 @@ export default {
   title: 'Events promotion',
   name: 'promoteEvents',
   type: 'object',
-  fieldsets: [
-    {
-      title: 'Filter based on',
-      name: 'tag',
-    },
-  ],
+
   fields: [
     {
       name: 'selectEvents',
@@ -33,10 +28,6 @@ export default {
       initialValue: false,
     },
     {
-      // Pick events from a list
-
-      // Use as switch to choose between selected and automated?
-
       // @TODO
       // I guess we need some separate tags for the event? Or? Fernando to do something here #628
       title: 'Tags',
@@ -46,8 +37,7 @@ export default {
       description: 'Feed in all the upcoming events that satisfies the tags',
       validation: (Rule: Rule) => Rule.unique(),
       options: { list: eventTags },
-      hidden: ({ parent }: { parent: Event }) => parent?.noTags === true,
-      fieldset: 'tag',
+      hidden: ({ parent }: { parent: Event }) => parent?.noTags === true || parent?.selectEvents === true,
     },
     {
       name: 'noTags',
@@ -57,7 +47,7 @@ export default {
         isHighlighted: true,
       },
       initialValue: false,
-      fieldset: 'tag',
+      hidden: ({ parent }: { parent: Event }) => parent?.selectEvents === true,
     },
     {
       title: 'Events to be promoted',
