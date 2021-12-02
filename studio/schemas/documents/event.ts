@@ -84,6 +84,11 @@ export default {
       title: 'Location',
     },
     {
+      title: 'Date information',
+      name: 'eventDate',
+      type: 'eventDate',
+    },
+    {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
