@@ -72,7 +72,7 @@ export const FactRenderer = (child: { node: FactboxNodeProps }) => {
     listItem: ListItemRenderer,
   }
 
-  const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
+  const imageSrc = image && image.asset ? urlFor(image).size(1200, 800).auto('format').toString() : false
   const plainText = blocksToText(content)
   const hasColumns = !imageSrc && plainText.length > 800
   const hasImage = imageSrc ? true : false
