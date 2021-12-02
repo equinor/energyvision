@@ -2,24 +2,54 @@ import React from 'react'
 
 import type { Rule } from '@sanity/types'
 
+// @TODO: How to do tags
+const eventTags = [
+  { value: 'tag1', title: 'Tag one' },
+  { value: 'tag2', title: 'Tag two' },
+]
+
+export type Event = {
+  noTags: boolean
+  tags: string[]
+}
+
 export default {
   title: 'Events promotion',
   name: 'promoteEvents',
   type: 'object',
-
+  fieldsets: [
+    {
+      title: 'Filter based on',
+      name: 'tag',
+    },
+  ],
   fields: [
     {
       // Pick events from a list
       // Choose events by tags
       // Use as switch to choose between selected and automated?
 
-      // I guess we need some separate tags for the event? Or?
+      // @TODO
+      // I guess we need some separate tags for the event? Or? Fernando to do something here #628
       title: 'Tags',
       name: 'tags',
-      type: 'tagReference',
-      description: 'Feed in the latest 3 news that satisfies the tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Feed in all the upcoming events that satisfies the tags',
       validation: (Rule: Rule) => Rule.unique(),
-      options: { sortable: false },
+      options: { list: eventTags },
+      hidden: ({ parent }: { parent: Event }) => parent?.noTags === true,
+      fieldset: 'tag',
+    },
+    {
+      name: 'noTags',
+      type: 'boolean',
+      title: `Don't filter based on tags`,
+      options: {
+        isHighlighted: true,
+      },
+      initialValue: false,
+      fieldset: 'tag',
     },
   ],
   preview: {
