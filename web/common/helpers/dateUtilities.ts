@@ -10,3 +10,14 @@ export const toDateParts = (datetime: Date): number[] => {
     getSeconds(datetime),
   ]
 }
+
+export const toUTCDateParts = (datetime: Date): number[] => {
+  return [
+    datetime.getUTCFullYear(),
+    datetime.getUTCMonth(),
+    datetime.getUTCDate(),
+    datetime.getUTCHours(),
+    datetime.getUTCMinutes(),
+    datetime.getUTCSeconds(),
+  ]
+}
