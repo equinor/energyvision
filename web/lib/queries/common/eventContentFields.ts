@@ -5,6 +5,7 @@ import downloadableImageFields from './actions/downloadableImageFields'
 
 export const eventContentFields = /* groq */ `
   location,
+  eventDate,
   ingress[]{
     ...,
     ${markDefs},
@@ -66,15 +67,15 @@ export const eventContentFields = /* groq */ `
       ${downloadableImageFields},
     },
     "contactList": contactList{
-      _type, 
-      title, 
-      ingress, 
+      _type,
+      title,
+      ingress,
       "contacts": contacts[]{
-        _key, 
-        _type, 
-        phone, 
+        _key,
+        _type,
+        phone,
         location}
     }
-    
+
   }
 `

@@ -12,7 +12,9 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../../pageComponents/topicPages/Promotion'
 import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
 
-import type { EventSchema } from '../../types/types'
+import type { EventDateType, EventSchema } from '../../types/types'
+import { zonedTimeToUtc } from 'date-fns-tz'
+import { Heading } from '@components'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -30,6 +32,10 @@ const HeaderInner = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
+
+  & > h2 {
+    color: var(--moss-green-100);
+  }
 `
 
 const ContentWrapper = styled.div`
@@ -67,17 +73,47 @@ const Related = styled.div`
   margin: var(--space-4xLarge) auto;
 `
 
+const getFormattedDate = ({
+  date: dateString,
+  startTime: startTimeString,
+  endTime: endTimeString,
+  timezone,
+}: EventDateType) => {
+  const getDateFields = (date: Date) => ({
+    day: date.getDate(),
+    month: date.toLocaleString('default', { month: 'short' }),
+    year: date.getFullYear().toString(),
+    zone: date.toLocaleTimeString('es-NO', { timeZoneName: 'short' }).split(' ')[1],
+  })
+
+  if (startTimeString && endTimeString) {
+    const [hours, minutes] = startTimeString.split(':')
+    const startDate = zonedTimeToUtc(new Date(dateString).setHours(Number(hours), Number(minutes)), timezone)
+    const { day, month, year, zone } = getDateFields(startDate)
+    const dateResult = `${day} ${month} ${year}`
+    const timeResult = `${startTimeString.replace(':', '.')} - ${endTimeString.replace(':', '.')} ${zone}`
+
+    return { date: dateResult, time: timeResult }
+  } else {
+    const { day, month, year } = getDateFields(new Date(dateString))
+    const dateResult = `${day} ${month} ${year}`
+
+    return { date: dateResult, time: null }
+  }
+}
+
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
-  const { location, ingress, content, iframe, promotedPeople, relatedLinks } = data.content
+  const { location, ingress, content, iframe, promotedPeople, relatedLinks, eventDate } = data.content
   const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
   const plainTitle = title ? blocksToText(title) : ''
 
   const { pathname } = useRouter()
+  const { date, time } = getFormattedDate(eventDate)
+
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
-
   return (
     <>
       <NextSeo
@@ -106,6 +142,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   }}
                 />
               )}
+              <Heading level="h2" size="xl">
+                {date}
+              </Heading>
+              {time && <p>{time}</p>}
               {location && <p>{location}</p>}
               <AddToCalendar event={data} />
             </HeaderInner>

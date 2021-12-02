@@ -391,6 +391,13 @@ export type SubscribeFormParmeters = {
   languageCode: string
 }
 
+export type EventDateType = {
+  date: string
+  startTime?: string
+  endTime?: string
+  timezone: string
+}
+
 export type EventSchema = {
   id: string
   title: BlockNode[]
@@ -402,6 +409,7 @@ export type EventSchema = {
   }
   content: {
     location?: string
+    eventDate: EventDateType
     ingress?: PortableTextEntry[]
     content?: PortableTextEntry[]
     iframe?: IFrameData
