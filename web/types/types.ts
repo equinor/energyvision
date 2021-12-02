@@ -373,7 +373,6 @@ export type SubscribeFormData = {
   id?: string
   type?: string
   title?: PortableTextEntry[]
-  formType: string
 }
 
 export type LoginResult = {

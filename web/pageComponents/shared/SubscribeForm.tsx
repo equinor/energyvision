@@ -50,7 +50,7 @@ const StyledButton = styled(Button)`
   padding-right: 32px;
 `
 
-const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData }) => {
+const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
   const router = useRouter()
   const locale = router.locale == 'no-nb' ? 'no' : 'en'
   const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -92,7 +92,6 @@ const SubscribeForm = ({ data: { title, formType } }: { data: SubscribeFormData 
             />
           )}
         </div>
-        {formType}
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFieldset>
             <StyledLegend> Categories: </StyledLegend>
