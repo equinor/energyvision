@@ -329,10 +329,9 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     slug: params?.slug,
     lang: mapLocaleToLang(locale),
   })
-  console.log(params?.slug, locale, news)
 
   const newsData = filterDataToSingleItem(news, preview) || null
-  console.log('This is the news data', news, preview)
+
   const allSlugs = await getLocalizedNewsSlugs(news, preview)
   // Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
