@@ -52,6 +52,7 @@ const createICS = (eventData: ICSProps): string | boolean => {
 
 const AddToCalendar = ({ event }: AddToCalendarProps) => {
   const [fileData, setFileData] = useState<string | boolean>(false)
+  const eventTitle = blocksToText(event.title)
 
   useEffect(() => {
     const date = new Date() // placeholder
@@ -65,18 +66,18 @@ const AddToCalendar = ({ event }: AddToCalendarProps) => {
         startInputType: 'utc',
         end: padMonth(toUTCDateParts(end)),
         endInputType: 'utc',
-        title: blocksToText(event.title),
+        title: eventTitle,
         location: event.content.location,
       }
 
       setFileData(createICS(eventData))
     }
-  }, [event])
+  }, [event, eventTitle])
 
   if (!fileData) return null
 
   return (
-    <Button {...(fileData && { href: fileData as string, download: 'event.ics' })}>
+    <Button {...(fileData && { href: fileData as string, download: `${eventTitle.replace(/ /g, '_')}.ics` })}>
       <Icon data={add} />
       Add to Calendar
     </Button>
