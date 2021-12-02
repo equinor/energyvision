@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
+import { Heading } from '@components'
 
 const Wrapper = styled.div`
   margin-top: var(--space-medium);
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
   border-left: 1px solid var(--grey-30);
 `
 
-const Header = styled(Typography)``
+const Header = styled(Heading)``
 
 const ContactList = () => {
   return (
