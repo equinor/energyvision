@@ -256,6 +256,12 @@ const pageContentFields = /* groq */ `
         },
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{
+            "type": "events",
+            "id": _key,
+            "slug": slug.current,
+            "title": content->title,
+            "location": content->location,
+            "eventDate": content->eventDate, 
             ...,
           },
         },

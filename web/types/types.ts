@@ -42,6 +42,13 @@ export type ImageWithAlt = {
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
 
+export type EventDateType = {
+  date: string
+  startTime?: string
+  endTime?: string
+  timezone: string
+}
+
 export type CardData = {
   type?: 'news' | 'topics'
   id: string
@@ -67,6 +74,11 @@ export type PeopleCardData = {
 
 export type EventCardData = {
   type: 'events'
+  title: BlockNode[]
+  manuallySelectEvents: boolean
+  slug: string
+  location?: string
+  eventDate?: EventDateType
 }
 
 export type NewsSchema = {
@@ -393,13 +405,6 @@ export type SubscribeFormParmeters = {
   magazineStories?: boolean
   stockMarketAnnouncements?: boolean
   languageCode: string
-}
-
-export type EventDateType = {
-  date: string
-  startTime?: string
-  endTime?: string
-  timezone: string
 }
 
 export type EventSchema = {
