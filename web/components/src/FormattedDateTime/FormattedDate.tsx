@@ -12,10 +12,11 @@ export const FormattedDate = ({
   month = 'long',
   day = '2-digit',
   icon = false,
+  ...rest
 }: DateProps): JSX.Element => {
   if (icon) {
     return (
-      <StyledDate>
+      <StyledDate {...rest}>
         <DateIcon />
         <time dateTime={datetime}>
           <ReactIntlDate value={new Date(datetime)} year={year} month={month} day={day} />
