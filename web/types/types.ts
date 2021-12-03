@@ -3,6 +3,7 @@ import { SanityImageObject, SanityImageCrop, SanityImageHotspot } from '@sanity/
 import { PortableTextEntry } from '@sanity/block-content-to-react'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import type { BlockNode } from '@sanity/block-content-to-react'
+import { type } from 'os'
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
@@ -358,6 +359,19 @@ export type Remit = {
   StatusMessage: string
   Data: Data
 }
+
+export type ContactList = {
+  title: string
+  ingress: string
+  contacts?: Contacts[]
+}
+
+export type Contacts = {
+  _key: string
+  _type: string
+  location: string
+  phone: string
+}
 export type Data = {
   List?: ListEntity[] | null
 }
@@ -427,6 +441,8 @@ export type EventSchema = {
       title?: PortableTextEntry[]
       people?: PeopleCardData[]
     }
+    contactList?: ContactList
+
     relatedLinks?: RelatedLinksData
   }
 }
