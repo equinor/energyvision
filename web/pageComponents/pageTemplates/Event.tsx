@@ -106,7 +106,7 @@ const getFormattedDate = ({
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
-  const { location, ingress, content, iframe, promotedPeople, relatedLinks, eventDate } = data.content
+  const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
   const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
   const plainTitle = title ? blocksToText(title) : ''
@@ -177,7 +177,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-          <ContactList />
+          {contactList && <ContactList data={contactList} />}
+
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <Related>
               <RelatedContent data={relatedLinks} />

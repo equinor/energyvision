@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import { forwardRef } from 'react'
-import { Typography } from '@equinor/eds-core-react'
-import { Heading, HeadingProps } from '@components'
+import type { ContactListData } from '../../types/types'
+import { Heading } from '@components'
 
 const Wrapper = styled.div`
   margin: var(--space-4xLarge) auto;
@@ -15,47 +14,51 @@ const Contacts = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: space-between;
 `
 const Contact = styled.div`
   display: flex;
   padding: var(--space-small) 0;
-  flex-basis: calc(50% - 1rem);
-  justify-content: center;
+  flex-basis: 35%;
+  justify-content: left;
   flex-direction: column;
 `
 const Phone = styled.p`
   margin: var(--space-xSmall) 0;
+  color: var(--grey-70);
+  font-size: var(--typeScale-0);
 `
 
 const Location = styled.p`
   margin: var(--space-xSmall) 0;
+  font-size: var(--typeScale-1);
 `
 const Header = styled(Heading)``
 
-const ContactList = () => {
+type ContactListProps = {
+  data: ContactListData
+}
+
+const ContactList = ({ data }: ContactListProps) => {
   return (
     <Wrapper>
-      <Header size="lg" level="h2">
-        Phone numbers for Q&A
-      </Header>
-      <Contacts>
-        <Contact>
-          <Location>Norway </Location>
-          <Phone>+47 239 600 36</Phone>
-        </Contact>
-        <Contact>
-          <Location>Norway </Location>
-          <Phone>+47 239 600 36</Phone>
-        </Contact>
-        <Contact>
-          <Location>Norway </Location>
-          <Phone>+47 239 600 36</Phone>
-        </Contact>
-        <Contact>
-          <Location>Norway </Location>
-          <Phone>+47 239 600 36</Phone>
-        </Contact>
-      </Contacts>
+      {data.title && (
+        <Header size="lg" level="h2">
+          {data.title}
+        </Header>
+      )}
+      {data?.contacts && data?.contacts.length > 0 && (
+        <Contacts>
+          {data.contacts.map((contact) => {
+            return (
+              <Contact key={contact._key}>
+                <Location>{contact.location} </Location>
+                <Phone>{contact.phone}</Phone>
+              </Contact>
+            )
+          })}
+        </Contacts>
+      )}
     </Wrapper>
   )
 }

@@ -360,7 +360,7 @@ export type Remit = {
   Data: Data
 }
 
-export type ContactList = {
+export type ContactListData = {
   title: string
   ingress: string
   contacts?: Contacts[]
@@ -441,7 +441,7 @@ export type EventSchema = {
       title?: PortableTextEntry[]
       people?: PeopleCardData[]
     }
-    contactList?: ContactList
+    contactList?: ContactListData
 
     relatedLinks?: RelatedLinksData
   }
