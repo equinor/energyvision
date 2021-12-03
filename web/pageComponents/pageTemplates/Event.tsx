@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import IFrame from '../../pageComponents/shared/IFrame'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Lead from '../../pageComponents/shared/Lead'
+
+import ContactList from '../../pageComponents/shared/ContactList'
 import { TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers'
@@ -175,7 +177,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-
+          <ContactList />
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <Related>
               <RelatedContent data={relatedLinks} />
