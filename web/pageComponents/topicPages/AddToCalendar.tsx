@@ -31,7 +31,7 @@ const padMonth = (dateParts: number[]): number[] => {
   return dateParts
 }
 
-const isUpcomming = (eventDate: Date): boolean => {
+const isUpcoming = (eventDate: Date): boolean => {
   if (isAfter(eventDate, new Date())) {
     return true
   }
@@ -77,7 +77,7 @@ const AddToCalendar = ({ event }: AddToCalendarProps) => {
     const start = zonedTimeToUtc(convertDateTime(date, startTime), timezone)
     const end = zonedTimeToUtc(convertDateTime(date, endTime), timezone)
 
-    if (isUpcomming(end)) {
+    if (isUpcoming(end)) {
       const eventData = {
         start: padMonth(toUTCDateParts(start)), // ICS lib expects start & end to be an array
         startInputType: 'utc',
