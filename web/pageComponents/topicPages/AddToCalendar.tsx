@@ -38,6 +38,22 @@ const isUpcomming = (eventDate: Date): boolean => {
   return false
 }
 
+const splitToIntArray = (input: string, delimiter: string): number[] => input.split(delimiter).map(Number)
+
+// Might be overengineering this, but better to be on the safe side when dealing with dates?
+const convertDateTime = (date: string, time: string | undefined = undefined) => {
+  const dateParts = splitToIntArray(date, '-')
+  const output = new Date(dateParts[0], dateParts[1], dateParts[2])
+
+  if (time) {
+    const timeParts = splitToIntArray(time, ':')
+    output.setHours(timeParts[0])
+    output.setMinutes(timeParts[1])
+  }
+
+  return output
+}
+
 const createICS = (eventData: ICSProps): string | boolean => {
   return ics.createEvent(eventData, (error: any, value: string) => {
     if (error) {
@@ -55,19 +71,20 @@ const AddToCalendar = ({ event }: AddToCalendarProps) => {
   const eventTitle = blocksToText(event.title)
 
   useEffect(() => {
-    const date = new Date() // placeholder
-    const tz = 'Europe/Oslo' // TODO: use timezone passed by event
-    const start = zonedTimeToUtc(date, tz) // TODO: use start date passed by event
-    const end = zonedTimeToUtc(date.setHours(date.getHours() + 1), tz) // TODO: use end date passed by event
+    const { eventDate, location } = event.content
+    const { date, timezone, startTime, endTime } = eventDate
+
+    const start = zonedTimeToUtc(convertDateTime(date, startTime), timezone)
+    const end = zonedTimeToUtc(convertDateTime(date, endTime), timezone)
 
     if (isUpcomming(end)) {
       const eventData = {
-        start: padMonth(toUTCDateParts(start)),
+        start: padMonth(toUTCDateParts(start)), // ICS lib expects start & end to be an array
         startInputType: 'utc',
-        end: padMonth(toUTCDateParts(end)),
+        end: padMonth(toUTCDateParts(end)), // ICS lib expects start & end to be an array
         endInputType: 'utc',
         title: eventTitle,
-        location: event.content.location,
+        location: location,
       }
 
       setFileData(createICS(eventData))
