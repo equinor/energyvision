@@ -249,7 +249,18 @@ const pageContentFields = /* groq */ `
           },
         },
       },
-    },
+      _type == "promoteEvents" => {
+        manuallySelectEvents,
+        !manuallySelectEvents => {
+          tags,
+        },
+        manuallySelectEvents => {
+          "promotions": promotedEvents[]->{
+            ...,
+          },
+        },
+      },
+    },  
     "designOptions": {
       "background": coalesce(background.title, 'none'),
     },

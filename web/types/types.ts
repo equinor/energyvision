@@ -40,7 +40,7 @@ export type ImageWithAlt = {
   extension?: string
 }
 
-export type CardTypes = 'news' | 'topics' | 'people' | 'event'
+export type CardTypes = 'news' | 'topics' | 'people' | 'events'
 
 export type CardData = {
   type?: 'news' | 'topics'
@@ -63,6 +63,10 @@ export type PeopleCardData = {
   phone?: string
   isLink: boolean
   cv?: LinkData
+}
+
+export type EventCardData = {
+  type: 'events'
 }
 
 export type NewsSchema = {

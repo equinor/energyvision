@@ -3,9 +3,10 @@ import { BackgroundContainer } from '@components'
 import NewsCard from '../cards/NewsCard'
 import TopicPageCard from '../cards/TopicPageCard'
 import PeopleCard from '../cards/PeopleCard/PeopleCard'
+import SinglePromotion from './SinglePromotion'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
-import type { PromotionData, CardData, PeopleCardData } from '../../types/types'
+import type { PromotionData, CardData, PeopleCardData, EventCardData } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--space-3xLarge) 0;
@@ -42,17 +43,6 @@ const CardsWrapper = styled.div`
   }
 `
 
-const LandscapeWrapper = styled.div`
-  max-width: 250px;
-  margin-top: var(--space-xLarge);
-  margin-left: auto;
-  margin-right: auto;
-  @media (min-width: 450px) {
-    padding: 0 var(--layout-paddingHorizontal-large);
-    max-width: var(--maxViewportWidth);
-  }
-`
-
 const CardStyle = css`
   min-width: var(--card-minWidth);
   max-width: var(--card-maxWidth);
@@ -71,7 +61,7 @@ const StyledPeopleCard = styled(PeopleCard)`
   --card-maxWidth: 300px;
 `
 
-type CardProps = CardData | PeopleCardData
+type CardProps = CardData | PeopleCardData | EventCardData
 
 const Promotion = ({ data }: { data: PromotionData }) => {
   const { title, ingress, content, designOptions } = data
@@ -86,6 +76,8 @@ const Promotion = ({ data }: { data: PromotionData }) => {
         return <StyledTopicPageCard data={data as CardData} key={data.id} />
       case 'people':
         return <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={!!title} key={data.id} />
+      case 'events':
+        return <div>Event</div>
       default:
         return console.warn('Missing card type for ', data)
     }
@@ -115,11 +107,9 @@ const Promotion = ({ data }: { data: PromotionData }) => {
             ></SimpleBlockContent>
           )}
         </Intro>
-        {promotions?.length === 1 && promotions[0].type === 'people' ? (
+        {promotions?.length === 1 ? (
           /*  TODO: More than just people */
-          <LandscapeWrapper>
-            <PeopleCard orientation="landscape" data={promotions[0] as PeopleCardData} hasSectionTitle={!!title} />
-          </LandscapeWrapper>
+          <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <CardsWrapper>
             {promotions.map((item) => {
