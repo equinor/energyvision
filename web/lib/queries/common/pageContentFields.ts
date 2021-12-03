@@ -250,9 +250,16 @@ const pageContentFields = /* groq */ `
         },
       },
       _type == "promoteEvents" => {
+        "id": _key,
+        
         manuallySelectEvents,
         !manuallySelectEvents => {
           tags,
+         // @TODO: This query is not done yet
+          "promotions": *[_type == "route_" + $lang && content->_type == "event" ]{
+            "type": "events",
+            ...,
+          },
         },
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{

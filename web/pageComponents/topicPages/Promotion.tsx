@@ -3,6 +3,7 @@ import { BackgroundContainer } from '@components'
 import NewsCard from '../cards/NewsCard'
 import TopicPageCard from '../cards/TopicPageCard'
 import PeopleCard from '../cards/PeopleCard/PeopleCard'
+import EventsCard from '../cards/EventsCard'
 import SinglePromotion from './SinglePromotion'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
@@ -77,7 +78,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
       case 'people':
         return <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={!!title} key={data.id} />
       case 'events':
-        return <div>Event</div>
+        return <EventsCard data={data as EventCardData} hasSectionTitle={!!title} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }

@@ -1,12 +1,12 @@
 import { CSSProperties } from 'react'
-import { Card, Heading } from '@components'
+import { Card } from '@components'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 
-const { Text, StyledPortraitCard, StyledLandscapeCard } = Card
+const { Text } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);

@@ -73,6 +73,7 @@ export type PeopleCardData = {
 }
 
 export type EventCardData = {
+  id: string
   type: 'events'
   title: BlockNode[]
   manuallySelectEvents: boolean
