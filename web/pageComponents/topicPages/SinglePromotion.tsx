@@ -24,10 +24,7 @@ type SinglePromotionData = {
 }
 
 const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotionData) => {
-  console.log('promotion', promotion)
-
   const getCard = (data: CardProps) => {
-    console.log(data.type)
     switch (data.type) {
       case 'news':
         return <NewsCard data={data as CardData} />
