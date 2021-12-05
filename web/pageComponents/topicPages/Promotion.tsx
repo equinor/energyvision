@@ -109,7 +109,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
           )}
         </Intro>
         {promotions?.length === 1 ? (
-          /*  TODO: More than just people */
+          /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <CardsWrapper>

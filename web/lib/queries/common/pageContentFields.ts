@@ -258,18 +258,22 @@ const pageContentFields = /* groq */ `
          // @TODO: This query is not done yet
           "promotions": *[_type == "route_" + $lang && content->_type == "event" ]{
             "type": "events",
-            ...,
+            "id": _id,
+            "slug": slug.current,
+            "title": content->title,
+            "location": content->location,
+            "eventDate": content->eventDate, 
           },
         },
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{
             "type": "events",
-            "id": _key,
+            "id": _id,
             "slug": slug.current,
             "title": content->title,
             "location": content->location,
             "eventDate": content->eventDate, 
-            ...,
+         
           },
         },
       },

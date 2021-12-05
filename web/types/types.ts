@@ -80,7 +80,7 @@ export type EventCardData = {
   manuallySelectEvents: boolean
   slug: string
   location?: string
-  eventDate?: EventDateType
+  eventDate: EventDateType
 }
 
 export type NewsSchema = {

@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react'
-import { Card } from '@components'
+import { Card, FormattedDate, FormattedTime } from '@components'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
-import AddToCalendar from '../topicPages/AddToCalendar'
+// import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 
 const { Text } = Card
@@ -19,7 +19,24 @@ type EventCardProps = {
 }
 
 const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
-  const { title, location /* eventDate */ } = data
+  const { title, location, eventDate } = data
+
+  // @TODO: This is crap. :) We need to reuse the date and time across event and event card,
+  // possible also the add to calendar
+  const { date, startTime, endTime /* timezone */ } = eventDate
+
+  const start = new Date(date)
+  const end = new Date(date)
+  if (startTime) {
+    const timeParts = startTime.split(':').map(Number)
+    start.setHours(timeParts[0])
+    start.setMinutes(timeParts[1])
+  }
+  if (endTime) {
+    const timeParts = endTime.split(':').map(Number)
+    start.setHours(timeParts[0])
+    start.setMinutes(timeParts[1])
+  }
 
   return (
     <StyledCard
@@ -45,8 +62,20 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             />
           )}
           {/*   @TODO: Reuse the date from the event template somehow */}
-          {/*  {eventDate && <span>{eventDate}</span>} */}
-          {location && <span>{location}</span>}
+          {date && (
+            <div>
+              <FormattedDate icon datetime={start.toString()}></FormattedDate>
+            </div>
+          )}
+          <div>{location && <span>{location}</span>}</div>
+          <div>
+            {startTime && <FormattedTime icon datetime={start.toString()} />}
+            {endTime && (
+              <>
+                <span style={{ lineHeight: '24px' }}> - </span> <FormattedTime icon datetime={end.toString()} />
+              </>
+            )}
+          </div>
           {/*   <AddToCalendar event={data} /> */}
         </div>
       </Text>
