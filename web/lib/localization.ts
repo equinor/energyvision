@@ -1,5 +1,6 @@
 type Locale = 'en' | 'no'
 type Lang = 'en_GB' | 'nb_NO'
+type LangWithRegion = 'en-GB' | 'nb-NO'
 
 export const mapLocaleToLang = (locale: string): Lang => {
   switch (locale) {
@@ -9,6 +10,18 @@ export const mapLocaleToLang = (locale: string): Lang => {
       return 'nb_NO'
     default:
       return 'en_GB'
+  }
+}
+
+// Because react-intl only supports with -
+export const mapLocaleWithRegion = (locale: string): LangWithRegion => {
+  switch (locale) {
+    case 'en':
+      return 'en-GB'
+    case 'no':
+      return 'nb-NO'
+    default:
+      return 'en-GB'
   }
 }
 

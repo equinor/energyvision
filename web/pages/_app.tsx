@@ -7,6 +7,7 @@ import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
 import { SkipNavLink } from '@reach/skip-nav'
 import 'focus-visible'
+import { mapLocaleWithRegion } from '../lib/localization'
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
@@ -33,8 +34,9 @@ type CustomAppProps<P = {}> = AppProps<P> & {
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
-  const defaultLocale = router.defaultLocale || 'en'
-  const locale = router.locale || defaultLocale
+  // Add region part for react-intl
+  const defaultLocale = router.defaultLocale ? mapLocaleWithRegion(router.defaultLocale) : 'en_GB'
+  const locale = router.locale ? mapLocaleWithRegion(router.locale) : defaultLocale
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
 
   return (
