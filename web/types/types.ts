@@ -3,7 +3,6 @@ import { SanityImageObject, SanityImageCrop, SanityImageHotspot } from '@sanity/
 import { PortableTextEntry } from '@sanity/block-content-to-react'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import type { BlockNode } from '@sanity/block-content-to-react'
-import { type } from 'os'
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'

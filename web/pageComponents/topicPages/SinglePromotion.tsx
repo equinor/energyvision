@@ -33,7 +33,7 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
       case 'people':
         return <PeopleCard orientation="landscape" data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
       case 'events':
-        return <EventCard data={data as EventCardData} hasSectionTitle={hasSectionTitle} />
+        return <EventCard data={data as EventCardData} orientation="landscape" hasSectionTitle={hasSectionTitle} />
       default:
         console.warn('Missing card type for ', data)
         return <div />

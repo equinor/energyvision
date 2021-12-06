@@ -7,11 +7,13 @@ import { world } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
-import { blocksToText } from 'common/helpers'
+import { blocksToText } from '../../common/helpers/blocksToText'
+
 //import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
+import type { BlockNode } from '@sanity/block-content-to-react'
 
-const { Text, Media, Action } = Card
+const { Text, Media, Action, StyledPortraitCard, StyledLandscapeCard } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
@@ -24,6 +26,9 @@ const StyledCard = styled(Card)`
 
 const StyledMedia = styled(Media)`
   padding: var(--space-xxLarge) var(--space-large) 0 var(--space-large);
+  ${StyledLandscapeCard} & {
+    background-color: var(--moss-green-50);
+  }
 `
 
 const StyledText = styled(Text)`
@@ -82,8 +87,6 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
   }
 
   return (
-    /*  <NextLink href={slug} passHref>
-      <CardLink> */
     <StyledCard
       orientation={orientation}
       style={
@@ -142,24 +145,37 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
               )}
             </Detail>
           )}
+          {orientation === 'landscape' && <Actions slug={slug} title={title} />}
         </div>
       </StyledText>
-      <Action>
-        {/* @TODO Use the real AddToCalendar */}
-        {/*   <AddToCalendar event={data} /> */}
-        <ActionContainer>
-          <Button>Add to calendar</Button>
-          <NextLink href={slug} passHref>
-            {/*  @TODO: Language string for Details */}
-            <Link variant="buttonLink" type="internalUrl" aria-label={`Details ${title ? blocksToText(title) : ''}`}>
-              Details
-            </Link>
-          </NextLink>
-        </ActionContainer>
-      </Action>
+      {orientation == 'portrait' && (
+        <Action>
+          <Actions slug={slug} title={title} />
+        </Action>
+      )}
     </StyledCard>
-    /*      </CardLink>
-    </NextLink> */
+  )
+}
+
+// The design for the landscape mode breaks the Card behaviour for the action container,
+// so we need to add some sparkles here
+const Actions = ({ slug, title }: { slug: string; title?: BlockNode[] }) => {
+  {
+    /* @TODO Use the real AddToCalendar */
+  }
+  {
+    /*   <AddToCalendar event={data} /> */
+  }
+  return (
+    <ActionContainer>
+      <Button>+ Add to calendar</Button>
+      <NextLink href={slug} passHref>
+        {/*  @TODO: Language string for Details */}
+        <Link variant="buttonLink" type="internalUrl" aria-label={`Details ${title ? blocksToText(title) : ''}`}>
+          Details
+        </Link>
+      </NextLink>
+    </ActionContainer>
   )
 }
 
