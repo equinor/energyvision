@@ -6,7 +6,7 @@ import { TitleBlockRenderer } from '../../common/serializers'
 // import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 
-const { Text } = Card
+const { Text, Media } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
@@ -49,18 +49,20 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
       }
       {...rest}
     >
+      <Media>
+        {title && (
+          <SimpleBlockContent
+            blocks={title}
+            serializers={{
+              types: {
+                block: (props) => <TitleBlockRenderer level={hasSectionTitle ? 'h3' : 'h2'} size="lg" {...props} />,
+              },
+            }}
+          />
+        )}
+      </Media>
       <Text>
         <div>
-          {title && (
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: (props) => <TitleBlockRenderer level={hasSectionTitle ? 'h3' : 'h2'} size="lg" {...props} />,
-                },
-              }}
-            />
-          )}
           {/*   @TODO: Reuse the date from the event template somehow */}
           {date && (
             <div>
