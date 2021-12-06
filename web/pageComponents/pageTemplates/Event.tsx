@@ -14,9 +14,9 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../../pageComponents/topicPages/Promotion'
 import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
 
-import type { EventDateType, EventSchema } from '../../types/types'
-import { zonedTimeToUtc } from 'date-fns-tz'
+import type { EventSchema } from '../../types/types'
 import { FormattedDate, FormattedTime } from '@components'
+import { getEventDates } from '../../common/helpers/dateUtilities'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -95,19 +95,6 @@ const StyledLocation = styled.div`
   font-weight: var(--fontWeight-light);
 `
 
-const getDates = ({ date, startTime, endTime, timezone }: EventDateType) => {
-  if (startTime && endTime) {
-    const startDate = zonedTimeToUtc(new Date(date + ' ' + startTime), timezone).toString()
-    const endDate = zonedTimeToUtc(new Date(date + ' ' + endTime), timezone).toString()
-
-    return { startDate: startDate, endDate: endDate }
-  } else {
-    const startDate = new Date(date).toString()
-
-    return { startDate: startDate, endDate: null }
-  }
-}
-
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
@@ -117,7 +104,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
   const { pathname } = useRouter()
 
-  const { startDate, endDate } = eventDate.date ? getDates(eventDate) : { startDate: null, endDate: null }
+  const { start, end } = getEventDates(eventDate)
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
   return (
@@ -147,16 +134,16 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   }}
                 />
               )}
-              {startDate && (
+              {start && (
                 <StyledDate>
-                  <FormattedDate datetime={startDate} />
+                  <FormattedDate datetime={start} />
                 </StyledDate>
               )}
-              {startDate && endDate && (
+              {start && end && (
                 <StyledTime>
-                  <FormattedTime datetime={startDate} />
+                  <FormattedTime datetime={start} />
                   <span>-</span>
-                  <FormattedTime datetime={endDate} timezone />
+                  <FormattedTime datetime={end} timezone />
                 </StyledTime>
               )}
               {location && <StyledLocation>{location}</StyledLocation>}

@@ -4,8 +4,7 @@ import { blocksToText } from '../../common/helpers'
 import { Icon } from '@equinor/eds-core-react'
 import { add } from '@equinor/eds-icons'
 import { isAfter } from 'date-fns'
-import { zonedTimeToUtc } from 'date-fns-tz'
-import { toUTCDateParts } from '../../common/helpers/dateUtilities'
+import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 import type { EventSchema } from '../../types/types'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -38,22 +37,6 @@ const isUpcoming = (eventDate: Date): boolean => {
   return false
 }
 
-const splitToIntArray = (input: string, delimiter: string): number[] => input.split(delimiter).map(Number)
-
-// Might be overengineering this, but better to be on the safe side when dealing with dates?
-const convertDateTime = (date: string, time: string | undefined = undefined) => {
-  const dateParts = splitToIntArray(date, '-')
-  const output = new Date(dateParts[0], dateParts[1], dateParts[2])
-
-  if (time) {
-    const timeParts = splitToIntArray(time, ':')
-    output.setHours(timeParts[0])
-    output.setMinutes(timeParts[1])
-  }
-
-  return output
-}
-
 const createICS = (eventData: ICSProps): string | boolean => {
   return ics.createEvent(eventData, (error: any, value: string) => {
     if (error) {
@@ -72,10 +55,22 @@ const AddToCalendar = ({ event }: AddToCalendarProps) => {
 
   useEffect(() => {
     const { eventDate, location } = event.content
-    const { date, timezone, startTime, endTime } = eventDate
 
-    const start = zonedTimeToUtc(convertDateTime(date, startTime), timezone)
-    const end = zonedTimeToUtc(convertDateTime(date, endTime), timezone)
+    const { start: startString, end: endString } = getEventDates(eventDate)
+
+    if (!startString) return
+
+    const start = new Date(startString)
+
+    let end: Date
+    if (!endString) {
+      /* If time is not specified add to calendar as a full day */
+      end = new Date(startString)
+      start.setHours(0, 0, 0)
+      end.setHours(23, 59, 59)
+    } else {
+      end = new Date(endString)
+    }
 
     if (isUpcoming(end)) {
       const eventData = {

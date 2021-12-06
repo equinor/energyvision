@@ -12,6 +12,8 @@ import { blocksToText } from '../../common/helpers/blocksToText'
 //import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 import type { BlockNode } from '@sanity/block-content-to-react'
+import { getEventDates } from '../../common/helpers/dateUtilities'
+import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 
 const { Text, Media, Action, StyledPortraitCard, StyledLandscapeCard } = Card
 
@@ -34,12 +36,18 @@ const StyledMedia = styled(Media)`
 const StyledText = styled(Text)`
   padding: 0 var(--space-large);
 `
-const Detail = styled.div`
+const Detail = styled.div<{ uppercase?: boolean }>`
   padding: var(--space-small) 0;
   border-bottom: 1px solid var(--moss-green-90);
   &:first-of-type {
     border-top: 1px solid var(--moss-green-90);
   }
+  display: flex;
+  align-items: center;
+  & > * ~ * {
+    margin-left: 0.3em;
+  }
+  ${({ uppercase }) => uppercase && 'text-transform: uppercase;'}
 `
 
 const Center = styled.div`
@@ -69,22 +77,7 @@ type EventCardProps = {
 const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
   const { title, location, eventDate, slug } = data
 
-  // @TODO: This is crap. :) We need to reuse the date and time across event and event card,
-  // possible also the add to calendar
-  const { date, startTime, endTime /* timezone */ } = eventDate
-
-  const start = new Date(date)
-  const end = new Date(date)
-  if (startTime) {
-    const timeParts = startTime.split(':').map(Number)
-    start.setHours(timeParts[0])
-    start.setMinutes(timeParts[1])
-  }
-  if (endTime) {
-    const timeParts = endTime.split(':').map(Number)
-    start.setHours(timeParts[0])
-    start.setMinutes(timeParts[1])
-  }
+  const { start, end } = getEventDates(eventDate)
 
   return (
     <StyledCard
@@ -114,13 +107,9 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           {/*   @TODO: Reuse the date from the event template somehow */}
           {/*  @TODO Just added some inline styles atm, but it is an issue that the font sizes here
           for the date and timing are different than the rest of the occurences */}
-          {date && (
-            <Detail>
-              <FormattedDate
-                icon
-                datetime={start.toString()}
-                style={{ fontSize: 'var(--typeScale-2)' }}
-              ></FormattedDate>
+          {start && (
+            <Detail uppercase>
+              <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-2)' }} />
             </Detail>
           )}
           {location && (
@@ -131,20 +120,22 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             </Detail>
           )}
 
-          {startTime && (
-            <Detail>
-              {/* @TODO Rewrite into one StartEndTime-component? */}
-              {/* @TODO The time component doesn't allow inline styling */}
-              {startTime && (
-                <FormattedTime /* style={{ fontSize: 'var(--typeScale-0)' }} */ icon datetime={start.toString()} />
-              )}
-              {endTime && (
-                <>
-                  <span style={{ lineHeight: '24px' }}> - </span> <FormattedTime icon datetime={end.toString()} />
-                </>
-              )}
-            </Detail>
-          )}
+          <Detail uppercase>
+            {start && end ? (
+              <>
+                <FormattedTime icon datetime={start} />
+                <span>-</span>
+                <FormattedTime datetime={end} timezone />
+              </>
+            ) : (
+              <>
+                <TimeIcon />
+                {/* @TODO: Add field to sanity or find a better way of handling this */}
+                <span style={{ marginLeft: '0.5em' }}>To be announced</span>
+              </>
+            )}
+          </Detail>
+
           {orientation === 'landscape' && <Actions slug={slug} title={title} />}
         </div>
       </StyledText>
