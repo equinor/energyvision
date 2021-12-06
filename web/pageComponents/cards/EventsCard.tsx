@@ -1,12 +1,13 @@
 import { CSSProperties } from 'react'
-//import { default as NextLink } from 'next/link'
-import { Card, FormattedDate, FormattedTime, Button } from '@components'
+import { default as NextLink } from 'next/link'
+import { Card, FormattedDate, FormattedTime, Button, Link } from '@components'
 /* @TODO Is it OK with the deps on the Icon component here? */
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
+import { blocksToText } from 'common/helpers'
 //import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 
@@ -47,6 +48,11 @@ const Center = styled.div`
 
 const SmallText = styled.span`
   font-size: var(--typeScale-0);
+`
+
+const ActionContainer = styled.div`
+  display: flex;
+  gap: var(--space-small);
 `
 
 type EventCardProps = {
@@ -139,8 +145,17 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
         </div>
       </StyledText>
       <Action>
+        {/* @TODO Use the real AddToCalendar */}
         {/*   <AddToCalendar event={data} /> */}
-        <Button>Add to calendar</Button>
+        <ActionContainer>
+          <Button>Add to calendar</Button>
+          <NextLink href={slug} passHref>
+            {/*  @TODO: Language string for Details */}
+            <Link variant="buttonLink" type="internalUrl" aria-label={`Details ${title ? blocksToText(title) : ''}`}>
+              Details
+            </Link>
+          </NextLink>
+        </ActionContainer>
       </Action>
     </StyledCard>
     /*      </CardLink>
