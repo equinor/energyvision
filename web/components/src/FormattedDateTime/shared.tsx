@@ -13,18 +13,15 @@ export type DateProps = {
 
 export const StyledDate = styled.span`
   display: inline-flex;
-  flex-direction: row;
   align-items: center;
-  text-transform: uppercase;
 
   & > svg {
     flex-shrink: 0;
     box-sizing: content-box;
-    padding-right: 0.5em;
   }
 
-  & time:first-of-type {
-    margin-right: 0.5em;
+  & > :not([hidden]) ~ :not([hidden]) {
+    margin-left: 0.5em;
   }
 `
 

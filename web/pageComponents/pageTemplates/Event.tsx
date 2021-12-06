@@ -16,7 +16,7 @@ import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
 
 import type { EventDateType, EventSchema } from '../../types/types'
 import { zonedTimeToUtc } from 'date-fns-tz'
-import { Heading } from '@components'
+import { FormattedDate, FormattedTime } from '@components'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -34,10 +34,6 @@ const HeaderInner = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
-
-  & > h2 {
-    color: var(--moss-green-100);
-  }
 `
 
 const ContentWrapper = styled.div`
@@ -75,32 +71,40 @@ const Related = styled.div`
   margin: var(--space-4xLarge) auto;
 `
 
-const getFormattedDate = ({
-  date: dateString,
-  startTime: startTimeString,
-  endTime: endTimeString,
-  timezone,
-}: EventDateType) => {
-  const getDateFields = (date: Date) => ({
-    day: date.getDate(),
-    month: date.toLocaleString('default', { month: 'short' }),
-    year: date.getFullYear().toString(),
-    zone: date.toLocaleTimeString('es-NO', { timeZoneName: 'short' }).split(' ')[1],
-  })
+const StyledDate = styled.div`
+  font-size: var(--typeScale-4);
+  color: var(--moss-green-100);
+  margin-top: var(--space-large);
+  margin-bottom: var(--space-medium);
+`
 
-  if (startTimeString && endTimeString) {
-    const [hours, minutes] = startTimeString.split(':')
-    const startDate = zonedTimeToUtc(new Date(dateString).setHours(Number(hours), Number(minutes)), timezone)
-    const { day, month, year, zone } = getDateFields(startDate)
-    const dateResult = `${day} ${month} ${year}`
-    const timeResult = `${startTimeString.replace(':', '.')} - ${endTimeString.replace(':', '.')} ${zone}`
+const StyledTime = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-xSmall);
+  color: var(--moss-green-100);
+  font-weight: var(--fontWeight-light);
+  & > :not([hidden]) ~ :not([hidden]) {
+    margin-left: 0.3em;
+  }
+`
 
-    return { date: dateResult, time: timeResult }
+const StyledLocation = styled.div`
+  color: var(--moss-green-100);
+  margin-bottom: var(--space-medium);
+  font-weight: var(--fontWeight-light);
+`
+
+const getDates = ({ date, startTime, endTime, timezone }: EventDateType) => {
+  if (startTime && endTime) {
+    const startDate = zonedTimeToUtc(new Date(date + ' ' + startTime), timezone).toString()
+    const endDate = zonedTimeToUtc(new Date(date + ' ' + endTime), timezone).toString()
+
+    return { startDate: startDate, endDate: endDate }
   } else {
-    const { day, month, year } = getDateFields(new Date(dateString))
-    const dateResult = `${day} ${month} ${year}`
+    const startDate = new Date(date).toString()
 
-    return { date: dateResult, time: null }
+    return { startDate: startDate, endDate: null }
   }
 }
 
@@ -112,8 +116,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const plainTitle = title ? blocksToText(title) : ''
 
   const { pathname } = useRouter()
-  const { date, time } = getFormattedDate(eventDate)
 
+  const { startDate, endDate } = eventDate.date ? getDates(eventDate) : { startDate: null, endDate: null }
   const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
   return (
@@ -128,8 +132,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           url: fullUrl,
           images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
         }}
-      ></NextSeo>
-
+      />
       <main>
         <EventLayout>
           <Header>
@@ -144,12 +147,20 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   }}
                 />
               )}
-              <Heading level="h2" size="xl">
-                {date}
-              </Heading>
-              {time && <p>{time}</p>}
-              {location && <p>{location}</p>}
-              {eventDate?.date && <AddToCalendar event={data} />}
+              {startDate && (
+                <StyledDate>
+                  <FormattedDate datetime={startDate} />
+                </StyledDate>
+              )}
+              {startDate && endDate && (
+                <StyledTime>
+                  <FormattedTime datetime={startDate} />
+                  <span>-</span>
+                  <FormattedTime datetime={endDate} timezone />
+                </StyledTime>
+              )}
+              {location && <StyledLocation>{location}</StyledLocation>}
+              <AddToCalendar event={data} />
             </HeaderInner>
           </Header>
           <ContentWrapper>

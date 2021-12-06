@@ -1,5 +1,5 @@
 import { FormattedDate } from './FormattedDate'
-import { FormattedTime } from './FormattedTime'
+import { FormattedTime, FormattedTimeProps } from './FormattedTime'
 import { DateProps, StyledDate, DateIcon } from './shared'
 
 export const FormattedDateTime = ({
@@ -8,21 +8,14 @@ export const FormattedDateTime = ({
   month = 'long',
   day = '2-digit',
   icon = false,
+  timezone,
   ...rest
-}: DateProps): JSX.Element => {
-  if (!icon) {
-    return (
-      <StyledDate {...rest}>
-        <FormattedDate datetime={datetime} year={year} month={month} day={day} />
-        <FormattedTime datetime={datetime} />
-      </StyledDate>
-    )
-  }
-
+}: DateProps & FormattedTimeProps): JSX.Element => {
   return (
     <StyledDate {...rest}>
-      <DateIcon />
-      <FormattedDate datetime={datetime} year={year} month={month} day={day} /> <FormattedTime datetime={datetime} />
+      {icon && <DateIcon />}
+      <FormattedDate datetime={datetime} year={year} month={month} day={day} />
+      <FormattedTime datetime={datetime} timezone={timezone} />
     </StyledDate>
   )
 }

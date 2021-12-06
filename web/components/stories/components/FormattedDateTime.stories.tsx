@@ -4,10 +4,11 @@ import styled from 'styled-components'
 import { FormattedDate, FormattedTime, FormattedDateTime, DateTimeProps, FormattedTimeProps } from '@components'
 
 const Wrapper = styled.div`
-  margin: 32px;
-  display: grid;
-  grid-gap: 32px;
-  grid-template-columns: repeat(4, fit-content(100%));
+  display: flex;
+  flex-direction: column;
+  & > * ~ * {
+    margin-top: 0.5em;
+  }
 `
 
 export default {
@@ -47,7 +48,8 @@ export const DateTime: Story<DateTimeProps> = () => {
   return (
     <Wrapper>
       <FormattedDateTime datetime={datetime.toString()} />
-      <FormattedDateTime datetime={datetime.toString()} icon={true} />
+      <FormattedDateTime datetime={datetime.toString()} icon />
+      <FormattedDateTime datetime={datetime.toString()} icon timezone />
     </Wrapper>
   )
 }
@@ -64,7 +66,7 @@ export const JustDate: Story<DateTimeProps> = () => {
   return (
     <Wrapper>
       <FormattedDate datetime={datetime.toString()} />
-      <FormattedDate datetime={datetime.toString()} icon={true} />
+      <FormattedDate datetime={datetime.toString()} icon />
     </Wrapper>
   )
 }
@@ -81,7 +83,8 @@ export const JustTime: Story<FormattedTimeProps> = () => {
   return (
     <Wrapper>
       <FormattedTime datetime={datetime.toString()} />
-      <FormattedTime datetime={datetime.toString()} icon={true} />
+      <FormattedTime datetime={datetime.toString()} icon />
+      <FormattedTime datetime={datetime.toString()} icon timezone />
     </Wrapper>
   )
 }

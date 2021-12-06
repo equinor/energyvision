@@ -4,23 +4,18 @@ import { StyledDate, TimeIcon } from './shared'
 export type FormattedTimeProps = {
   datetime: string
   icon?: boolean
+  timezone?: boolean
 }
 
-export const FormattedTime = ({ datetime, icon = false }: FormattedTimeProps): JSX.Element => {
-  if (icon) {
-    return (
-      <StyledDate>
-        <TimeIcon />
-        <time dateTime={datetime}>
-          <ReactIntlTime value={new Date(datetime)} />
-        </time>
-      </StyledDate>
-    )
-  }
-
+export const FormattedTime = ({ datetime, icon = false, timezone }: FormattedTimeProps): JSX.Element => {
+  const date = new Date(datetime)
   return (
-    <time dateTime={datetime}>
-      <ReactIntlTime value={new Date(datetime)} />
-    </time>
+    <StyledDate>
+      {icon && <TimeIcon />}
+      <time dateTime={datetime}>
+        <ReactIntlTime value={date} />
+      </time>
+      {timezone && <span>({date.toLocaleTimeString('es-NO', { timeZoneName: 'short' }).split(' ')[1]})</span>}
+    </StyledDate>
   )
 }
