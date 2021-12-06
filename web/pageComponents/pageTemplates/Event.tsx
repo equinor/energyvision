@@ -70,8 +70,8 @@ const Content = styled.div`
 `
 
 const Related = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: 1700px;
+  padding: 0 var(--space-large);
+  max-width: var(--layout-maxContent-narrow);
   margin: var(--space-4xLarge) auto;
 `
 
