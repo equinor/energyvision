@@ -1,33 +1,52 @@
 import { CSSProperties } from 'react'
-import { default as NextLink } from 'next/link'
-import { Card, FormattedDate, FormattedTime } from '@components'
+//import { default as NextLink } from 'next/link'
+import { Card, FormattedDate, FormattedTime, Button } from '@components'
+/* @TODO Is it OK with the deps on the Icon component here? */
+import { Icon } from '@equinor/eds-core-react'
+import { world } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
-// import AddToCalendar from '../topicPages/AddToCalendar'
+//import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 
-const { Text, Media, CardLink } = Card
+const { Text, Media, Action } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
   width: 100%;
-  display: inline-block;
+
   /* For the event it's easier with the padding on the card itself,
   since we have horizontal lines */
-  padding: var(--space-xxLarge) var(--space-xLarge);
+  /* padding: var(--space-xxLarge) var(--space-xLarge); */
 `
 
 const StyledMedia = styled(Media)`
-  padding-bottom: var(--space-xLarge);
-  border-bottom: 1px solid var(--moss-green-90);
+  padding: var(--space-xxLarge) var(--space-large) 0 var(--space-large);
 `
 
 const StyledText = styled(Text)`
-  padding: 0;
+  padding: 0 var(--space-large);
 `
 const Detail = styled.div`
+  padding: var(--space-small) 0;
   border-bottom: 1px solid var(--moss-green-90);
+  &:first-of-type {
+    border-top: 1px solid var(--moss-green-90);
+  }
+`
+
+const Center = styled.div`
+  display: flex;
+  align-items: center;
+  & svg {
+    flex-shrink: 0;
+    margin-right: var(--space-small);
+  }
+`
+
+const SmallText = styled.span`
+  font-size: var(--typeScale-0);
 `
 
 type EventCardProps = {
@@ -84,23 +103,45 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
       <StyledText>
         <div>
           {/*   @TODO: Reuse the date from the event template somehow */}
+          {/*  @TODO Just added some inline styles atm, but it is an issue that the font sizes here
+          for the date and timing are different than the rest of the occurences */}
           {date && (
-            <div>
-              <FormattedDate icon datetime={start.toString()}></FormattedDate>
-            </div>
+            <Detail>
+              <FormattedDate
+                icon
+                datetime={start.toString()}
+                style={{ fontSize: 'var(--typeScale-2)' }}
+              ></FormattedDate>
+            </Detail>
           )}
-          <div>{location && <span>{location}</span>}</div>
-          <div>
-            {startTime && <FormattedTime icon datetime={start.toString()} />}
-            {endTime && (
-              <>
-                <span style={{ lineHeight: '24px' }}> - </span> <FormattedTime icon datetime={end.toString()} />
-              </>
-            )}
-          </div>
-          {/*   <AddToCalendar event={data} /> */}
+          {location && (
+            <Detail>
+              <Center>
+                <Icon data={world} /> <SmallText>{location}</SmallText>
+              </Center>
+            </Detail>
+          )}
+
+          {startTime && (
+            <Detail>
+              {/* @TODO Rewrite into one StartEndTime-component? */}
+              {/* @TODO The time component doesn't allow inline styling */}
+              {startTime && (
+                <FormattedTime /* style={{ fontSize: 'var(--typeScale-0)' }} */ icon datetime={start.toString()} />
+              )}
+              {endTime && (
+                <>
+                  <span style={{ lineHeight: '24px' }}> - </span> <FormattedTime icon datetime={end.toString()} />
+                </>
+              )}
+            </Detail>
+          )}
         </div>
       </StyledText>
+      <Action>
+        {/*   <AddToCalendar event={data} /> */}
+        <Button>Add to calendar</Button>
+      </Action>
     </StyledCard>
     /*      </CardLink>
     </NextLink> */
