@@ -62,6 +62,12 @@ const StyledPeopleCard = styled(PeopleCard)`
   --card-maxWidth: 300px;
 `
 
+const StyledEventsCard = styled(EventsCard)`
+  ${CardStyle}
+  --card-maxWidth: 520px;
+  --card-minWidth: 300px;
+`
+
 type CardProps = CardData | PeopleCardData | EventCardData
 
 const Promotion = ({ data }: { data: PromotionData }) => {
@@ -78,7 +84,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
       case 'people':
         return <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={!!title} key={data.id} />
       case 'events':
-        return <EventsCard data={data as EventCardData} hasSectionTitle={!!title} key={data.id} />
+        return <StyledEventsCard data={data as EventCardData} hasSectionTitle={!!title} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }

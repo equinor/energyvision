@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react'
+import { default as NextLink } from 'next/link'
 import { Card, FormattedDate, FormattedTime } from '@components'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
@@ -6,10 +7,27 @@ import { TitleBlockRenderer } from '../../common/serializers'
 // import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData } from '../../types/types'
 
-const { Text, Media } = Card
+const { Text, Media, CardLink } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
+  width: 100%;
+  display: inline-block;
+  /* For the event it's easier with the padding on the card itself,
+  since we have horizontal lines */
+  padding: var(--space-xxLarge) var(--space-xLarge);
+`
+
+const StyledMedia = styled(Media)`
+  padding-bottom: var(--space-xLarge);
+  border-bottom: 1px solid var(--moss-green-90);
+`
+
+const StyledText = styled(Text)`
+  padding: 0;
+`
+const Detail = styled.div`
+  border-bottom: 1px solid var(--moss-green-90);
 `
 
 type EventCardProps = {
@@ -19,7 +37,7 @@ type EventCardProps = {
 }
 
 const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
-  const { title, location, eventDate } = data
+  const { title, location, eventDate, slug } = data
 
   // @TODO: This is crap. :) We need to reuse the date and time across event and event card,
   // possible also the add to calendar
@@ -39,6 +57,8 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
   }
 
   return (
+    /*  <NextLink href={slug} passHref>
+      <CardLink> */
     <StyledCard
       orientation={orientation}
       style={
@@ -49,7 +69,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
       }
       {...rest}
     >
-      <Media>
+      <StyledMedia>
         {title && (
           <SimpleBlockContent
             blocks={title}
@@ -60,8 +80,8 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             }}
           />
         )}
-      </Media>
-      <Text>
+      </StyledMedia>
+      <StyledText>
         <div>
           {/*   @TODO: Reuse the date from the event template somehow */}
           {date && (
@@ -80,8 +100,10 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           </div>
           {/*   <AddToCalendar event={data} /> */}
         </div>
-      </Text>
+      </StyledText>
     </StyledCard>
+    /*      </CardLink>
+    </NextLink> */
   )
 }
 
