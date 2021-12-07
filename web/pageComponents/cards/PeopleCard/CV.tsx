@@ -1,5 +1,5 @@
 import { default as NextLink } from 'next/link'
-import { Link } from '@components'
+import { ButtonLink } from '@components'
 import type { LinkData } from '../../../types/types'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 
@@ -15,14 +15,12 @@ const CV = ({ data }: CVProps) => {
     <>
       {type === 'internalUrl' ? (
         <NextLink href={url || ''} passHref>
-          <Link variant="buttonLink" type={type} aria-label={ariaLabel}>
-            {label}
-          </Link>
+          <ButtonLink aria-label={ariaLabel}>{label}</ButtonLink>
         </NextLink>
       ) : (
-        <Link variant="buttonLink" type={type} href={url} aria-label={ariaLabel}>
+        <ButtonLink href={url} aria-label={ariaLabel}>
           {label}
-        </Link>
+        </ButtonLink>
       )}
     </>
   )

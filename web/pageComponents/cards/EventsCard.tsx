@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 import { default as NextLink } from 'next/link'
-import { Card, FormattedDate, FormattedTime, Link } from '@components'
+import { Card, FormattedDate, FormattedTime, ButtonLink } from '@components'
 /* @TODO Is it OK with the deps on the Icon component here? */
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
@@ -165,9 +165,7 @@ const Actions = ({
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
       <NextLink href={slug} passHref>
         {/*  @TODO: Language string for Details */}
-        <Link variant="buttonLink" type="internalUrl" aria-label={`Details ${title ? blocksToText(title) : ''}`}>
-          Details
-        </Link>
+        <ButtonLink aria-label={`Details ${title ? blocksToText(title) : ''}`}>Details</ButtonLink>
       </NextLink>
     </ActionContainer>
   )

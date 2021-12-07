@@ -1,5 +1,5 @@
 import NextLink from 'next/link'
-import { Link } from '@components'
+import { ButtonLink as Link } from '@components'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import type { LinkData } from '../../types/types'
 
@@ -16,15 +16,13 @@ export const ButtonLink = ({ action }: { action: LinkData }) => {
   if (type === 'internalUrl' || isStatic) {
     return (
       <NextLink passHref href={url}>
-        <Link variant="buttonLink" aria-label={ariaLabel}>
-          {label}
-        </Link>
+        <Link aria-label={ariaLabel}>{label}</Link>
       </NextLink>
     )
   }
 
   return (
-    <Link href={url} variant="buttonLink" aria-label={ariaLabel}>
+    <Link href={url} aria-label={ariaLabel}>
       {label} {extension && `(${extension.toUpperCase()})`}
     </Link>
   )

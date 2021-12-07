@@ -1,5 +1,5 @@
 import { Story, Meta } from '@storybook/react/types-6-0'
-import { Link, LinkProps } from '@components'
+import { Link, LinkProps, ButtonLink } from '@components'
 
 export default {
   title: 'Components/Link',
@@ -101,12 +101,10 @@ LinkWithoutUnderline.parameters = {
   },
 }
 
-export const ButtonLink: Story = () => (
-  <Link variant="buttonLink" href="/">
-    Check out our exciting career opportunities
-  </Link>
+export const ButtonLinkExample: Story = () => (
+  <ButtonLink href="/">Check out our exciting career opportunities</ButtonLink>
 )
-ButtonLink.parameters = {
+ButtonLinkExample.parameters = {
   docs: {
     storyDescription: `A link with a button look. `,
   },

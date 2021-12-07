@@ -3,7 +3,7 @@ import React, { CSSProperties } from 'react'
 import { Story, Meta } from '@storybook/react'
 import styled from 'styled-components'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from './helpers/styles'
-import { Card, CardProps, Text, Link, BackgroundContainer } from '@components'
+import { Card, CardProps, Text, Link, ButtonLink, BackgroundContainer } from '@components'
 
 export default {
   title: 'Components/Card',
@@ -125,7 +125,7 @@ export const PromoTile: Story<CardProps> = () => (
         <Card.Title>Find out what its like to work in Equinor</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">Find out more about Equinor work life</Link>
+        <ButtonLink>Find out more</ButtonLink>
       </Card.Action>
     </Card>
 
@@ -139,7 +139,7 @@ export const PromoTile: Story<CardProps> = () => (
         <Card.Title level="h3">Are you a student? Check out your future dream job</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">Check it out</Link>
+        <ButtonLink>Check it out</ButtonLink>
       </Card.Action>
     </Card>
   </Wrapper>
@@ -203,7 +203,7 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
         <Card.Title>Find out what its like to work in Equinor and what we can offer</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">More about Equinor work life</Link>
+        <ButtonLink>More about Equinor work life</ButtonLink>
       </Card.Action>
     </Card>
 
@@ -217,7 +217,7 @@ export const PromoTileWithDifferentLength: Story<CardProps> = () => (
         <Card.Title level="h3">Check out your future dream job</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">Check it out</Link>
+        <ButtonLink>Check it out</ButtonLink>
       </Card.Action>
     </Card>
   </Wrapper>
@@ -237,7 +237,7 @@ export const PromoTileWithoutImage: Story<CardProps> = () => (
         <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">Find out more</Link>
+        <ButtonLink>Find out more</ButtonLink>
       </Card.Action>
     </Card>
 
@@ -251,7 +251,7 @@ export const PromoTileWithoutImage: Story<CardProps> = () => (
         <Card.Title level="h3">Check out your future dream job</Card.Title>
       </Card.Header>
       <Card.Action>
-        <Link variant="buttonLink">Check it out</Link>
+        <ButtonLink>Check it out</ButtonLink>
       </Card.Action>
     </Card>
   </Wrapper>
@@ -272,7 +272,7 @@ export const CardWithBackground: Story<CardProps> = () => (
           <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
         </Card.Header>
         <Card.Action>
-          <Link variant="buttonLink">Find out more</Link>
+          <ButtonLink>Find out more</ButtonLink>
         </Card.Action>
       </Card>
     </BackgroundContainer>
@@ -282,7 +282,7 @@ export const CardWithBackground: Story<CardProps> = () => (
           <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
         </Card.Header>
         <Card.Action>
-          <Link variant="buttonLink">Find out more</Link>
+          <ButtonLink>Find out more</ButtonLink>
         </Card.Action>
       </Card>
     </BackgroundContainer>
@@ -292,7 +292,7 @@ export const CardWithBackground: Story<CardProps> = () => (
           <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
         </Card.Header>
         <Card.Action>
-          <Link variant="buttonLink">Find out more</Link>
+          <ButtonLink>Find out more</ButtonLink>
         </Card.Action>
       </Card>
     </BackgroundContainer>
@@ -302,7 +302,7 @@ export const CardWithBackground: Story<CardProps> = () => (
           <Card.Title>Our summer internship Shaping the future of energy - and your future too!</Card.Title>
         </Card.Header>
         <Card.Action>
-          <Link variant="buttonLink">Find out more</Link>
+          <ButtonLink>Find out more</ButtonLink>
         </Card.Action>
       </Card>
     </BackgroundContainer>
@@ -312,7 +312,7 @@ export const CardWithBackground: Story<CardProps> = () => (
           <Card.Title level="h3">Check out your future dream job</Card.Title>
         </Card.Header>
         <Card.Action>
-          <Link variant="buttonLink">Check it out</Link>
+          <ButtonLink>Check it out</ButtonLink>
         </Card.Action>
       </Card>
     </BackgroundContainer>

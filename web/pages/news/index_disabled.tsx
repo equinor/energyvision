@@ -2,7 +2,7 @@ import Head from 'next/head'
 import NextLink from 'next/link'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { BackgroundContainer, Card, Link } from '@components'
+import { BackgroundContainer, Card, ButtonLink } from '@components'
 import { Layout } from '../../pageComponents/shared/Layout'
 import styled from 'styled-components'
 import { allNewsQuery } from '../../lib/queries/news'
@@ -58,9 +58,7 @@ export default function AllNews({ data }: AllNewsProps): JSX.Element {
 
             <Action>
               <NextLink passHref href={`/${locale}/news/archive`}>
-                <Link variant="buttonLink" aria-label="Go to archived news">
-                  Take me there!
-                </Link>
+                <ButtonLink aria-label="Go to archived news">Take me there!</ButtonLink>
               </NextLink>
             </Action>
           </Card>
