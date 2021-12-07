@@ -147,7 +147,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 </StyledTime>
               )}
               {location && <StyledLocation>{location}</StyledLocation>}
-              <AddToCalendar event={data} />
+              <AddToCalendar eventDate={eventDate} location={location} title={title} />
             </HeaderInner>
           </Header>
           <ContentWrapper>

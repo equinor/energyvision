@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 import { default as NextLink } from 'next/link'
-import { Card, FormattedDate, FormattedTime, Button, Link } from '@components'
+import { Card, FormattedDate, FormattedTime, Link } from '@components'
 /* @TODO Is it OK with the deps on the Icon component here? */
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
@@ -8,9 +8,8 @@ import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
-
-//import AddToCalendar from '../topicPages/AddToCalendar'
-import type { EventCardData } from '../../types/types'
+import AddToCalendar from '../topicPages/AddToCalendar'
+import type { EventCardData, EventDateType } from '../../types/types'
 import type { BlockNode } from '@sanity/block-content-to-react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
@@ -103,7 +102,6 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
       </StyledMedia>
       <StyledText>
         <div>
-          {/*   @TODO: Reuse the date from the event template somehow */}
           {/*  @TODO Just added some inline styles atm, but it is an issue that the font sizes here
           for the date and timing are different than the rest of the occurences */}
           {start && (
@@ -135,12 +133,14 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             )}
           </Detail>
 
-          {orientation === 'landscape' && <Actions slug={slug} title={title} />}
+          {orientation === 'landscape' && (
+            <Actions slug={slug} title={title} location={location} eventDate={eventDate} />
+          )}
         </div>
       </StyledText>
       {orientation == 'portrait' && (
         <Action>
-          <Actions slug={slug} title={title} />
+          <Actions slug={slug} title={title} location={location} eventDate={eventDate} />
         </Action>
       )}
     </StyledCard>
@@ -149,16 +149,20 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
 
 // The design for the landscape mode breaks the Card behaviour for the action container,
 // so we need to add some sparkles here
-const Actions = ({ slug, title }: { slug: string; title?: BlockNode[] }) => {
-  {
-    /* @TODO Use the real AddToCalendar */
-  }
-  {
-    /*   <AddToCalendar event={data} /> */
-  }
+const Actions = ({
+  slug,
+  title,
+  eventDate,
+  location,
+}: {
+  slug: string
+  title: BlockNode[]
+  location?: string
+  eventDate: EventDateType
+}) => {
   return (
     <ActionContainer>
-      <Button>+ Add to calendar</Button>
+      <AddToCalendar eventDate={eventDate} location={location} title={title} />
       <NextLink href={slug} passHref>
         {/*  @TODO: Language string for Details */}
         <Link variant="buttonLink" type="internalUrl" aria-label={`Details ${title ? blocksToText(title) : ''}`}>

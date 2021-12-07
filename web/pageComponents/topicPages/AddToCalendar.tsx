@@ -5,13 +5,17 @@ import { Icon } from '@equinor/eds-core-react'
 import { add } from '@equinor/eds-icons'
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
-import type { EventSchema } from '../../types/types'
+
+import type { EventDateType } from '../../types/types'
+import type { BlockNode } from '@sanity/block-content-to-react'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')
 
 type AddToCalendarProps = {
-  event: EventSchema
+  eventDate: EventDateType
+  location?: string
+  title: BlockNode[]
 }
 
 type ICSProps = {
@@ -49,13 +53,11 @@ const createICS = (eventData: ICSProps): string | boolean => {
   })
 }
 
-const AddToCalendar = ({ event }: AddToCalendarProps) => {
+const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   const [fileData, setFileData] = useState<string | boolean>(false)
-  const eventTitle = blocksToText(event.title)
+  const eventTitle = blocksToText(title)
 
   useEffect(() => {
-    const { eventDate, location } = event.content
-
     const { start: startString, end: endString } = getEventDates(eventDate)
 
     if (!startString) return
@@ -84,7 +86,7 @@ const AddToCalendar = ({ event }: AddToCalendarProps) => {
 
       setFileData(createICS(eventData))
     }
-  }, [event, eventTitle])
+  }, [eventDate, location, eventTitle])
 
   if (!fileData) return null
 
