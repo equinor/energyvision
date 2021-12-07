@@ -103,6 +103,13 @@ const StyledPromotion = styled(Promotion)`
   }
 `
 
+const StyledIframe = styled(IFrame)`
+  --iframe-maxWidth: var(--topbar-innerMaxWidth);
+  --iframe-innerPadding: var(--space-3xLarge) 0;
+
+  padding: 0 var(--layout-paddingHorizontal-small);
+`
+
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
@@ -171,7 +178,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             )}
           </ContentWrapper>
 
-          {iframe && <IFrame data={iframe} />}
+          {iframe && <StyledIframe data={iframe} />}
 
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion
