@@ -7,10 +7,11 @@ export const FormattedDate = ({
   month = 'long',
   day = '2-digit',
   icon = false,
+  uppercase = false,
   ...rest
 }: DateProps): JSX.Element => {
   return (
-    <StyledDate {...rest}>
+    <StyledDate uppercase={uppercase} {...rest}>
       {icon && <DateIcon />}
       <time dateTime={datetime}>
         <ReactIntlDate value={new Date(datetime)} day={day} year={year} month={month} />

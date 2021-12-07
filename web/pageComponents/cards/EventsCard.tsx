@@ -36,7 +36,7 @@ const StyledMedia = styled(Media)`
 const StyledText = styled(Text)`
   padding: 0 var(--space-large);
 `
-const Detail = styled.div<{ uppercase?: boolean }>`
+const Detail = styled.div`
   padding: var(--space-small) 0;
   border-bottom: 1px solid var(--moss-green-90);
   &:first-of-type {
@@ -47,7 +47,6 @@ const Detail = styled.div<{ uppercase?: boolean }>`
   & > * ~ * {
     margin-left: 0.3em;
   }
-  ${({ uppercase }) => uppercase && 'text-transform: uppercase;'}
 `
 
 const Center = styled.div`
@@ -108,7 +107,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           {/*  @TODO Just added some inline styles atm, but it is an issue that the font sizes here
           for the date and timing are different than the rest of the occurences */}
           {start && (
-            <Detail uppercase>
+            <Detail>
               <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-2)' }} />
             </Detail>
           )}
@@ -120,7 +119,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             </Detail>
           )}
 
-          <Detail uppercase>
+          <Detail>
             {start && end ? (
               <>
                 <FormattedTime icon datetime={start} />

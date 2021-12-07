@@ -257,11 +257,11 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                   <DateWrapper>
                     <Icon data={calendar} />
                     <DateContainer>
-                      <FormattedDateTime datetime={publishDateTime} />
+                      <FormattedDateTime uppercase datetime={publishDateTime} />
                       {isDateAfter(modifiedDate, publishDateTime) && (
                         <>
                           <LastModifiedLabel>Last modified</LastModifiedLabel>
-                          <FormattedDateTime datetime={modifiedDate} />
+                          <FormattedDateTime uppercase datetime={modifiedDate} />
                         </>
                       )}
                     </DateContainer>

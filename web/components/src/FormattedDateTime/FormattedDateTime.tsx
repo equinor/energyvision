@@ -9,12 +9,13 @@ export const FormattedDateTime = ({
   day = '2-digit',
   icon = false,
   timezone,
+  uppercase = false,
   ...rest
 }: DateProps & FormattedTimeProps): JSX.Element => {
   return (
     <StyledDate {...rest}>
       {icon && <DateIcon />}
-      <FormattedDate datetime={datetime} year={year} month={month} day={day} />
+      <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />
       <FormattedTime datetime={datetime} timezone={timezone} />
     </StyledDate>
   )

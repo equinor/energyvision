@@ -41,6 +41,20 @@ export const Default: Story<DateTimeProps> = (args) => {
     </>
   )
 }
+export const Uppercase: Story<DateTimeProps> = () => {
+  const datetime = new Date()
+
+  return (
+    <>
+      <FormattedDateTime uppercase datetime={datetime.toString()} />
+    </>
+  )
+}
+Uppercase.parameters = {
+  docs: {
+    storyDescription: `In the news articles, the dates should be uppercase`,
+  },
+}
 
 export const DateTime: Story<DateTimeProps> = () => {
   const datetime = new Date()
