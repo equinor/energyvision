@@ -2,6 +2,9 @@ import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
+import { Card } from '../Card'
+
+const { StyledLandscapeCard, StyledPortraitCard } = Card
 
 export type DateProps = {
   datetime: string
@@ -27,5 +30,14 @@ export const StyledDate = styled.span<{ uppercase?: boolean }>`
   }
 `
 
-export const DateIcon = (): JSX.Element => <Icon data={calendar} />
-export const TimeIcon = (): JSX.Element => <Icon data={time} />
+const StyledIcon = styled(Icon)`
+  /* If the icons are inside a card they should be green */
+  ${StyledLandscapeCard} &,
+  ${StyledPortraitCard} & {
+    /* EDS Icon uses current color for fill */
+    color: var(--moss-green-100);
+  }
+`
+
+export const DateIcon = (): JSX.Element => <StyledIcon data={calendar} />
+export const TimeIcon = (): JSX.Element => <StyledIcon data={time} />

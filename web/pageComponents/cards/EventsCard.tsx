@@ -112,7 +112,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           {location && (
             <Detail>
               <Center>
-                <Icon data={world} /> <SmallText>{location}</SmallText>
+                <Icon data={world} color={'var(--moss-green-100)'} /> <SmallText>{location}</SmallText>
               </Center>
             </Detail>
           )}
