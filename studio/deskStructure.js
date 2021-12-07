@@ -145,16 +145,6 @@ export default () => {
       .title('Country tags')
       .schemaType('countryTag')
       .child(S.documentTypeList('countryTag').title('Country tag')),
-    S.divider(),
-    S.listItem()
-      .title('News by tag(experimental)')
-      .child(
-        S.documentTypeList('tag')
-          .title('News by tag')
-          .child((tagId) =>
-            S.documentList().title('News').filter('_type == "news" && $tagId in tags[]._ref').params({ tagId }),
-          ),
-      ),
   ]
 
   return S.list().title('Content').items(listItems)
