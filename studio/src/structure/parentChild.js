@@ -2,7 +2,7 @@ import S from '@sanity/desk-tool/structure-builder'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
 import RoutePreview from '../previews/page/RoutePreview'
-import { map, publishReplay, refCount } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../icons'
 import GreatBritain from '../../icons/GreatBritain'
 import Norway from '../../icons/Norway'
@@ -41,10 +41,6 @@ function routeStructure(schema, isoCode) {
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
   return () =>
     documentStore.listenQuery(`*[${categoryParents}]`).pipe(
-      // The following two lines are a temp. performance fix, can be removed
-      // when Sanity releases their fix
-      publishReplay(1),
-      refCount(),
       map((parents) =>
         S.list()
           .title('All Routes')

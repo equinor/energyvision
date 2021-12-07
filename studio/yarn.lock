@@ -1346,10 +1346,15 @@
     make-error "^1.3.0"
     object-assign "^4.1.1"
 
-"@sanity/color@2.1.5", "@sanity/color@^2.1.4", "@sanity/color@^2.1.5":
+"@sanity/color@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@sanity/color/-/color-2.1.5.tgz#63579cf729a42cc004fa850b46b674510a700bda"
   integrity sha512-miq04+tp9I0/k8TooM/iB1ifpjVaWke9Pg+GD4SbrZ+YQkqaMqQFvzu4JjPr55lMkBrzOjE4JHrwBO/bzgottw==
+
+"@sanity/color@^2.1.4", "@sanity/color@^2.1.5", "@sanity/color@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/@sanity/color/-/color-2.1.6.tgz#0dbd7d9b343a4a93ed54bcf3ae42d735112aaf30"
+  integrity sha512-iXCGgMkfY111RISOHnpwp6OmQz+N+UVOJ1YMhIGoesQdjm31ybeTkLP5yy1kkI8ffbxZkmmfbl9rjfR0OiwC8g==
 
 "@sanity/components@^2.14.0":
   version "2.14.0"
@@ -1435,10 +1440,10 @@
     "@sanity/generate-help-url" "2.18.0"
     lodash "^4.17.15"
 
-"@sanity/default-layout@^2.22.4":
-  version "2.22.4"
-  resolved "https://registry.npmjs.org/@sanity/default-layout/-/default-layout-2.22.4.tgz#6381ea4136bdfe7797240c4642f8fc3df10d8a08"
-  integrity sha512-u46c7t7xFqDbdoYioOeGA2ZNxJ8c3iM+WjJIxvoEpu4p4kw8qJp3dxDMgAP93TdjsmhlucYc5OHX/k66zcIQtw==
+"@sanity/default-layout@^2.22.5":
+  version "2.22.5"
+  resolved "https://registry.npmjs.org/@sanity/default-layout/-/default-layout-2.22.5.tgz#02ba42f550dec34a778d180250a29558e8f9f5c2"
+  integrity sha512-f7kgJL5/uj8JGrLP8D+XQ5ZYx5nY75b084w6AwL6Ie8tc0aEOxNYXn3y/4sXZiPLZvXTujV3d+QooqiA0cuk3Q==
   dependencies:
     "@reach/auto-id" "^0.13.2"
     "@sanity/base" "2.22.3"
@@ -1462,10 +1467,10 @@
     prop-types "^15.6.0"
     rxjs "^6.5.3"
 
-"@sanity/desk-tool@^2.22.3":
-  version "2.22.3"
-  resolved "https://registry.npmjs.org/@sanity/desk-tool/-/desk-tool-2.22.3.tgz#a56e260d1d0c2af405f714bd8b772374806c1180"
-  integrity sha512-26pFo7yNDPATcwZZkci/boWQWL+ckN1k6PRYK60O+0o57qetlhNCZqcM0NrqArk7/MqqZzzlHyN41kvLV6HrfA==
+"@sanity/desk-tool@^2.22.5":
+  version "2.22.5"
+  resolved "https://registry.npmjs.org/@sanity/desk-tool/-/desk-tool-2.22.5.tgz#9c4a328bb4f2463a20652863f1c6ee986a0b3ad7"
+  integrity sha512-GahzmlKAq5XvN5p0nfMkPkq+1l40dhALodd9FRDsKlrlnVqHaFBQKPSIfRCGrq9HUnFckVRojk4CrNbHMebcIw==
   dependencies:
     "@reach/auto-id" "^0.13.2"
     "@sanity/client" "2.22.3"
@@ -1595,10 +1600,10 @@
   resolved "https://registry.npmjs.org/@sanity/icons/-/icons-1.1.7.tgz#f2b6f2d9b68965b6f26975c0d5528ae75e1472d8"
   integrity sha512-5KbAhNowjO94UjIrsaaKCGNLdHs+ek+RF5Bc+XRELOi1TFR0GBG3Wo7LK30df2ajA7TW6HwERLbPQB3sJyMRMQ==
 
-"@sanity/icons@^1.1.4", "@sanity/icons@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/@sanity/icons/-/icons-1.2.1.tgz#0dcef7d0c0ea965acffbccb825d9da6ccaa53330"
-  integrity sha512-dDXvyRIppU6OD8dNPBdd8LVBaIw5n5TrVOZ6AvT5pCoDswXlFQinoea5Fe4Huk26C+IZfe8d++P4tctnQPG8Vw==
+"@sanity/icons@^1.1.4", "@sanity/icons@^1.2.1", "@sanity/icons@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@sanity/icons/-/icons-1.2.2.tgz#6fe5cb74cf75757aee864ea13c2740329046b615"
+  integrity sha512-lhA6f/K5r8ajL8PrrCftJe6ry/6VGSD1JZSwZiEodVZgkuZOZLs1mU8E0LXUXEyj8QRlvKpifv2xRbY7rWimQg==
 
 "@sanity/image-url@^1.0.1":
   version "1.0.1"
@@ -1650,9 +1655,9 @@
     oneline "^1.0.3"
 
 "@sanity/logos@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.npmjs.org/@sanity/logos/-/logos-1.1.6.tgz#10bd44f945543cd9efbbfda61bb9ce87b7899c43"
-  integrity sha512-IgX2e7OvvYl/5fArPl1VxyXCLxBYiA5a6kUHKXeT5WFxsuD7f71hLxFT7DcGWXADOMsuy7l99YdkrfnHHj1ayw==
+  version "1.1.7"
+  resolved "https://registry.npmjs.org/@sanity/logos/-/logos-1.1.7.tgz#fbd7a2b2a032f83e163727867ee80e80e8db9dd5"
+  integrity sha512-AJMt90c7zdST0yhDZNS6k5qf8aSDVw8Y8ukQ8FGtVbur0LKfKSHsM3Y5UkAXlMOEbn0/R/1pvGRrghsyg2Hv9w==
 
 "@sanity/mutator@2.21.0":
   version "2.21.0"
@@ -1834,16 +1839,16 @@
     rxjs "^6.5.3"
 
 "@sanity/ui@>=0.36.6", "@sanity/ui@^0.36.1", "@sanity/ui@^0.36.12", "@sanity/ui@^0.36.15":
-  version "0.36.15"
-  resolved "https://registry.npmjs.org/@sanity/ui/-/ui-0.36.15.tgz#fd378890983b7f1332a389d4eb954993c1c146b7"
-  integrity sha512-4IuyCpfJycfVB2PtWyUbD1bWvrTadH1fko3mmhbttggVXOSeclh0DIUP1595ckgZhjYVrM7QqxUn0wdSfRBnjQ==
+  version "0.36.17"
+  resolved "https://registry.npmjs.org/@sanity/ui/-/ui-0.36.17.tgz#2c7674e0d28da0bc2daa605c6dc2b194e5eb23d5"
+  integrity sha512-5U2NPxjCsxmzv3p58wMczfwIaJVa3UCjNGs7CCK2RoLo0G0nyT+swMBLRmXiDA3WnCt/o5oaYYqesfL8Rgkchg==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@popperjs/core" "^2.10.2"
     "@reach/auto-id" "^0.16.0"
-    "@sanity/color" "^2.1.5"
-    "@sanity/icons" "^1.2.1"
-    framer-motion "^5.0.0"
+    "@sanity/color" "^2.1.6"
+    "@sanity/icons" "^1.2.2"
+    framer-motion "5.3.3"
     lodash "^4.17.21"
     popper-max-size-modifier "^0.2.0"
     react-is "^17.0.2"
@@ -2185,9 +2190,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/node@*":
-  version "16.11.11"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.11.11.tgz#6ea7342dfb379ea1210835bada87b3c512120234"
-  integrity sha512-KB0sixD67CeecHC33MYn+eYARkqTheIRNuu97y2XMjR7Wu3XibO1vaY6VBV6O/a89SPI81cEUIYT87UqUWlZNw==
+  version "16.11.12"
+  resolved "https://registry.npmjs.org/@types/node/-/node-16.11.12.tgz#ac7fb693ac587ee182c3780c26eb65546a1a3c10"
+  integrity sha512-+2Iggwg7PxoO5Kyhvsq9VarmPbIelXP070HMImEpbtGCoyWNINQj4wzjbQCXzdHTRXnqufutJb5KAURZANNBAw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -2224,9 +2229,9 @@
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
 "@types/styled-components@^5.1.12":
-  version "5.1.16"
-  resolved "https://registry.npmjs.org/@types/styled-components/-/styled-components-5.1.16.tgz#e6cb31301ff8d6b99e25502d2bea754069c1efc9"
-  integrity sha512-pj5zI2VvK86VB9vS5exwXpIvQxiiwVfBTmMYcfMzwQAhB6s+x0a7o2JKzsGviWgjjosuwfYlOyf3JrEvmLPhtg==
+  version "5.1.17"
+  resolved "https://registry.npmjs.org/@types/styled-components/-/styled-components-5.1.17.tgz#0b5ecf748eb5fb81db4b4115b168a162379c181b"
+  integrity sha512-niMaIan3C2LYCGEPntljGrkxLBfz1RZf4WTTv7w9GJygMsCOl226/UoSwXC8dIHCHs4sQKFQUs5JtdL2hj7k0g==
   dependencies:
     "@types/hoist-non-react-statics" "*"
     "@types/react" "*"
@@ -4309,9 +4314,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.896:
-  version "1.4.11"
-  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.11.tgz#303c9deebbe90c68bf5c2c81a88a3bf4522c8810"
-  integrity sha512-2OhsaYgsWGhWjx2et8kaUcdktPbBGjKM2X0BReUCKcSCPttEY+hz2zie820JLbttU8jwL92+JJysWwkut3wZgA==
+  version "1.4.12"
+  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.12.tgz#5f73d1278c6205fc41d7a0ebd75563046b77c5d8"
+  integrity sha512-zjfhG9Us/hIy8AlQ5OzfbR/C4aBv1Dg/ak4GX35CELYlJ4tDAtoEcQivXvyBdqdNQ+R6PhlgQqV8UNPJmhkJog==
 
 element-resize-detector@^1.1.14:
   version "1.2.3"
@@ -5022,6 +5027,19 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
+framer-motion@5.3.3:
+  version "5.3.3"
+  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-5.3.3.tgz#366fa11512de4e79e061eb09a68278dad92b4419"
+  integrity sha512-s4mz0E4/TPTKXqKnpb578S0Jp/0JhAyvDpULFe95kHnWs1lOCKf2+EEl6yAX+1wfPLUYokZzudiK9jam0ZAVdQ==
+  dependencies:
+    framesync "6.0.1"
+    hey-listen "^1.0.8"
+    popmotion "11.0.0"
+    style-value-types "5.0.0"
+    tslib "^2.1.0"
+  optionalDependencies:
+    "@emotion/is-prop-valid" "^0.8.2"
+
 framer-motion@^4.1.17:
   version "4.1.17"
   resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-4.1.17.tgz#4029469252a62ea599902e5a92b537120cc89721"
@@ -5031,19 +5049,6 @@ framer-motion@^4.1.17:
     hey-listen "^1.0.8"
     popmotion "9.3.6"
     style-value-types "4.1.4"
-    tslib "^2.1.0"
-  optionalDependencies:
-    "@emotion/is-prop-valid" "^0.8.2"
-
-framer-motion@^5.0.0:
-  version "5.3.3"
-  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-5.3.3.tgz#366fa11512de4e79e061eb09a68278dad92b4419"
-  integrity sha512-s4mz0E4/TPTKXqKnpb578S0Jp/0JhAyvDpULFe95kHnWs1lOCKf2+EEl6yAX+1wfPLUYokZzudiK9jam0ZAVdQ==
-  dependencies:
-    framesync "6.0.1"
-    hey-listen "^1.0.8"
-    popmotion "11.0.0"
-    style-value-types "5.0.0"
     tslib "^2.1.0"
   optionalDependencies:
     "@emotion/is-prop-valid" "^0.8.2"
@@ -9271,9 +9276,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     inherits "^2.0.1"
 
 rtl-css-js@^1.14.0:
-  version "1.14.5"
-  resolved "https://registry.npmjs.org/rtl-css-js/-/rtl-css-js-1.14.5.tgz#fd92685acd024e688dda899a28c5fb9270b79974"
-  integrity sha512-+ng7LWVvPjQUdgDVviR6vKi2X4JiBtlw5rdY0UM5/Cj39c2/KDUsY/VxEzGE25m4KR5g0dvuKfrDq7DaoDooIA==
+  version "1.15.0"
+  resolved "https://registry.npmjs.org/rtl-css-js/-/rtl-css-js-1.15.0.tgz#680ed816e570a9ebccba9e1cd0f202c6a8bb2dc0"
+  integrity sha512-99Cu4wNNIhrI10xxUaABHsdDqzalrSRTie4GeCmbGVuehm4oj+fIy8fTzB+16pmKe8Bv9rl+hxIBez6KxExTew==
   dependencies:
     "@babel/runtime" "^7.1.2"
 
