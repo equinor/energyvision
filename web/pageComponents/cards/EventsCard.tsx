@@ -33,7 +33,12 @@ const StyledMedia = styled(Media)`
 `
 
 const StyledText = styled(Text)`
-  padding: 0 var(--space-large);
+  ${StyledLandscapeCard} & {
+    padding: var(--space-xLarge) var(--space-large) var(--space-large) 0;
+  }
+  ${StyledPortraitCard} & {
+    padding: 0 var(--space-large);
+  }
 `
 const Detail = styled.div`
   padding: var(--space-small) 0;
@@ -66,6 +71,10 @@ const SmallText = styled.span`
 const ActionContainer = styled.div`
   display: flex;
   gap: var(--space-small);
+  ${StyledLandscapeCard} & {
+    margin-top: var(--space-large);
+    justify-content: flex-end;
+  }
 `
 
 type EventCardProps = {
