@@ -37,13 +37,13 @@ const HeaderInner = styled.div`
 `
 
 const ContentWrapper = styled.div`
-  margin: var(--space-3xLarge) 0;
+  margin: var(--space-3xLarge) 0 0 0;
 `
 
 const LeadParagraph = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
-  margin: 0 auto var(--space-3xLarge) auto;
+  margin: 0 auto var(--space-xxLarge) auto;
 
   & > p {
     margin-bottom: 0;
@@ -93,6 +93,14 @@ const StyledLocation = styled.div`
   color: var(--moss-green-100);
   margin-bottom: var(--space-medium);
   font-weight: var(--fontWeight-light);
+`
+
+const StyledPromotion = styled(Promotion)`
+  padding: var(--space-xxLarge) 0;
+
+  h2 {
+    text-align: left;
+  }
 `
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
@@ -166,7 +174,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {iframe && <IFrame data={iframe} />}
 
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
-            <Promotion
+            <StyledPromotion
               data={{
                 id: 'promotedPeople',
                 type: 'people',
