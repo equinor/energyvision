@@ -31,9 +31,13 @@ export const getEventDates = ({ date, startTime, endTime, timezone }: EventDateT
     const end = zonedTimeToUtc(new Date(date + ' ' + endTime), timezone).toString()
     return { start: start, end: end }
   } else {
-    /* Setting time to 11:30 ensures that the day will always be the same.
-      This happens because timezones range from -11 to +12. */
-    const start = zonedTimeToUtc(new Date(date + ' 11:30'), timezone).toString()
-    return { start: start, end: null }
+    const [YYYY, MM, DD] = date.split('-').map(Number)
+    const start = new Date()
+    start.setDate(DD)
+    start.setMonth(MM - 1)
+    start.setFullYear(YYYY)
+    start.setHours(12)
+    start.setMinutes(0)
+    return { start: start.toString(), end: null }
   }
 }
