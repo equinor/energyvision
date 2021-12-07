@@ -53,12 +53,14 @@ const Center = styled.div`
   align-items: center;
   & svg {
     flex-shrink: 0;
-    margin-right: var(--space-small);
+    margin-right: 0.5em;
   }
 `
 
 const SmallText = styled.span`
+  display: inline-block;
   font-size: var(--typeScale-0);
+  margin-top: var(--space-3);
 `
 
 const ActionContainer = styled.div`
@@ -120,15 +122,15 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           <Detail>
             {start && end ? (
               <>
-                <FormattedTime icon datetime={start} />
+                <FormattedTime icon datetime={start} small />
                 <span>-</span>
-                <FormattedTime datetime={end} timezone />
+                <FormattedTime datetime={end} timezone small />
               </>
             ) : (
               <>
                 <TimeIcon />
                 {/* @TODO: Add field to sanity or find a better way of handling this */}
-                <span style={{ marginLeft: '0.5em' }}>To be announced</span>
+                <SmallText style={{ marginLeft: '0.5em' }}>To be announced</SmallText>
               </>
             )}
           </Detail>

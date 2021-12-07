@@ -36,6 +36,8 @@ const StyledIcon = styled(Icon)`
   ${StyledPortraitCard} & {
     /* EDS Icon uses current color for fill */
     color: var(--moss-green-100);
+    /* We need to trick the eye here */
+    /*   margin-bottom: var(--space-4); */
   }
 `
 
