@@ -26,7 +26,7 @@ export const StyledDate = styled.span<{ uppercase?: boolean }>`
   }
 
   & > :not([hidden]) ~ :not([hidden]) {
-    margin-left: 0.5em;
+    margin-left: var(--space-small);
   }
 `
 

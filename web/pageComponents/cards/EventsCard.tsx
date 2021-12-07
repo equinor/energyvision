@@ -44,7 +44,7 @@ const Detail = styled.div`
   display: flex;
   align-items: center;
   & > * ~ * {
-    margin-left: 0.3em;
+    margin-left: var(--space-3);
   }
 `
 
@@ -53,7 +53,7 @@ const Center = styled.div`
   align-items: center;
   & svg {
     flex-shrink: 0;
-    margin-right: 0.5em;
+    margin-right: var(--space-small);
   }
 `
 
@@ -108,7 +108,11 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           for the date and timing are different than the rest of the occurences */}
           {start && (
             <Detail>
-              <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-2)' }} />
+              <FormattedDate
+                icon
+                datetime={start}
+                style={{ fontSize: 'var(--typeScale-2)', lineHeight: 'var(--lineHeight-2)' }}
+              />
             </Detail>
           )}
           {location && (
@@ -130,7 +134,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
               <>
                 <TimeIcon />
                 {/* @TODO: Add field to sanity or find a better way of handling this */}
-                <SmallText style={{ marginLeft: '0.5em' }}>To be announced</SmallText>
+                <SmallText style={{ marginLeft: 'var(--space-small)' }}>To be announced</SmallText>
               </>
             )}
           </Detail>
