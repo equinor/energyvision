@@ -36,8 +36,7 @@ export const getEventDates = ({ date, startTime, endTime, timezone }: EventDateT
     start.setDate(DD)
     start.setMonth(MM - 1)
     start.setFullYear(YYYY)
-    start.setHours(12)
-    start.setMinutes(0)
+    start.setHours(12, 0, 0, 0)
     return { start: start.toString(), end: null }
   }
 }
