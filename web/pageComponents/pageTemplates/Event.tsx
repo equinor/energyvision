@@ -154,13 +154,19 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   <FormattedDate datetime={start} />
                 </StyledDate>
               )}
-              {start && end && (
-                <StyledTime>
-                  <FormattedTime datetime={start} />
-                  <span>-</span>
-                  <FormattedTime datetime={end} timezone />
-                </StyledTime>
-              )}
+
+              <StyledTime>
+                {start && end ? (
+                  <>
+                    <FormattedTime datetime={start} />
+                    <span>-</span>
+                    <FormattedTime datetime={end} timezone />
+                  </>
+                ) : (
+                  <span>Time to be announced</span>
+                )}
+              </StyledTime>
+
               {location && <StyledLocation>{location}</StyledLocation>}
               <AddToCalendar eventDate={eventDate} location={location} title={title} />
             </HeaderInner>
