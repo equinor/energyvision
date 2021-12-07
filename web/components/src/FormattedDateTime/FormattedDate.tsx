@@ -3,11 +3,11 @@ import { DateProps, StyledDate, DateIcon } from './shared'
 import styled from 'styled-components'
 
 const StyledTime = styled.time`
+  /* Better alignment with the icon */
   svg + & {
     margin-bottom: -2px;
   }
 `
-
 export const FormattedDate = ({
   datetime,
   year = 'numeric',

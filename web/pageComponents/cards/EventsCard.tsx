@@ -38,7 +38,7 @@ const StyledText = styled(Text)`
 const Detail = styled.div`
   padding: var(--space-small) 0;
   border-bottom: 1px solid var(--moss-green-90);
-  &:first-of-type {
+  ${StyledPortraitCard} &:first-of-type {
     border-top: 1px solid var(--moss-green-90);
   }
   display: flex;
