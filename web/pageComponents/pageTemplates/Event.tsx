@@ -43,7 +43,7 @@ const ContentWrapper = styled.div`
 const LeadParagraph = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
-  margin: 0 auto var(--space-3xLarge) 0;
+  margin: 0 auto var(--space-3xLarge) auto;
 
   & > p {
     margin-bottom: 0;
