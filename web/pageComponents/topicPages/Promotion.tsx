@@ -70,7 +70,7 @@ const StyledEventsCard = styled(EventsCard)`
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
-const Promotion = ({ data }: { data: PromotionData }) => {
+const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
   const { title, ingress, content, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
@@ -91,7 +91,7 @@ const Promotion = ({ data }: { data: PromotionData }) => {
   }
   return (
     <BackgroundContainer background={designOptions?.background}>
-      <Wrapper>
+      <Wrapper {...rest}>
         <Intro>
           {title && (
             <SimpleBlockContent
