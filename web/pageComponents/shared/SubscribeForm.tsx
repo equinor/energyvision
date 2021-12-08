@@ -1,13 +1,13 @@
-import type { SubscribeFormData, SubscribeFormParmeters } from '../../types/types'
+import type { SubscribeFormData } from '../../types/types'
+//import type {SubscribeFormParmeters} from '../../types/types'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { Button, TextField, Checkbox, Icon } from '@equinor/eds-core-react'
-import { signUp } from '../../components/utils/subscription'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+//import { useRouter } from 'next/router'
+//import { useEffect, useState } from 'react'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
@@ -20,175 +20,194 @@ const Container = styled.div`
 
 const ButtonWrapper = styled.div`
   float: right;
-  padding: 16px 0px 16px 0px;
+  padding: var(--space-medium) 0px var(--space-medium) 0px;
 `
 const TextFieldWrapper = styled.div`
-  padding: 16px 0px 16px 0px;
+  padding: var(--space-small) 0px var(--space-medium) 0px;
 `
 
 const StyledFieldset = styled.fieldset`
   border: 0;
 `
 const StyledLegend = styled.legend`
-  font-weight: 500;
+  font-weight: var(--fontWeight-regular);
+  font-size: var(--typeScale-2);
+  padding: 0 0 var(--space-small) 0;
 `
 const UnstyledList = styled.ul`
   margin: 0;
-  padding: 0 0 16px 0px;
+  padding: var(--space-medium) 0 var(--space-large) 0px;
   list-style-type: none;
-  @media (max-width: 750px) {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
+  @media (max-width: 920px) {
     column-count: 2;
   }
-  -webkit-column-count: 3;
-  -moz-column-count: 3;
   column-count: 3;
 `
 const StyledButton = styled(Button)`
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-left: var(--space-xLarge);
+  padding-right: var(--space-xLarge);
 `
 
+const StyledSpan = styled.span`
+  font-weight: var(--fontWeight-regular);
+  font-size: var(--typeScale-1);
+`
+const ErrorStyledDiv = styled.div`
+  font-weight: var(--fontWeight-regular);
+  font-size: var(--typeScale-1);
+  color: var(--clear-red-100);
+  align-items: center;
+  display: flex;
+`
+const StyledIcon = styled(Icon)`
+  margin-left: var(--space-small);
+`
+
+type FormValues = {
+  firstName: string
+  email: string
+  categories: string[]
+}
+
 const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
-  const router = useRouter()
-  const locale = router.locale == 'no-nb' ? 'no' : 'en'
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const onSubmit = (data: SubscribeFormParmeters) => {
-    data.languageCode = locale
-    signUp(data).then((isSuccessful) => {
-      setSubmitSuccess(isSuccessful)
-    })
+  //const router = useRouter()
+  //  const locale = router.locale == 'no-nb' ? 'no' : 'en'
+  //const [submitSuccess, setSubmitSuccess] = useState(false)
+  const onSubmit = (data: FormValues) => {
+    //   data.languageCode = locale
+    /*const res = await fetch('/api/subscribe-form', {
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })*/
+    // const result = await res.json()
+    //setSubmitSuccess(result.statusCode == 200)
+    console.log(data)
+    // setSubmitSuccess(true)
+
+    console.log(data)
+    reset()
   }
 
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: {
-      firstName: '',
-      email: '',
-      generalNews: false,
-      magazineStories: false,
-      stockMarketAnnouncements: false,
-      crudeOilAssays: false,
-      loopStories: false,
-    },
-  })
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>()
 
-  useEffect(() => {
-    if (submitSuccess) reset({})
-  }, [submitSuccess, reset])
+  /* useEffect(() => {
+    if (!submitSuccess) console.error('Failed to submit form')
+    reset()
+  }, [submitSuccess, reset])*/
 
   return (
     <>
       <Container>
-        <div>
-          {title && (
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: (props) => <StyledHeading {...props} />,
-                },
-              }}
-            />
-          )}
-        </div>
+        {title && (
+          <SimpleBlockContent
+            blocks={title}
+            serializers={{
+              types: {
+                block: (props) => <StyledHeading {...props} />,
+              },
+            }}
+          />
+        )}
+        {/* @TODO Norwegian translations for labels and button text*/}
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFieldset>
-            <StyledLegend> Categories: </StyledLegend>
+            <StyledLegend> Categories </StyledLegend>
+            {!errors.categories && <StyledSpan>Please select the category you want to subscribe to</StyledSpan>}
+
+            {errors.categories && (
+              <ErrorStyledDiv>
+                <span>Please select the category you want to subscribe to</span>
+                <StyledIcon data={error_filled} />
+              </ErrorStyledDiv>
+            )}
+
             <UnstyledList>
               <li>
-                <Controller
-                  name="generalNews"
-                  control={control}
-                  render={({ field: { ...props } }) => (
-                    <Checkbox label="General news" {...props} id={props.name} value="first" />
-                  )}
+                <Checkbox
+                  label="General news"
+                  value="generalNews"
+                  {...register('categories', {
+                    validate: (values) => values.length > 0,
+                  })}
                 />
               </li>
               <li>
-                <Controller
-                  name="magazineStories"
-                  control={control}
-                  render={({ field: { ...props } }) => (
-                    <Checkbox {...props} id={props.name} label="Magazine stories" value="third" />
-                  )}
+                <Checkbox label="Magazine stories" value="magazineStories" {...register('categories')} />
+              </li>
+              <li>
+                <Checkbox
+                  label="Stock Market Announcements"
+                  value="stockMarketAnnouncements"
+                  {...register('categories')}
                 />
               </li>
               <li>
-                <Controller
-                  name="stockMarketAnnouncements"
-                  control={control}
-                  render={({ field: { ...props } }) => (
-                    <Checkbox {...props} id={props.name} label="Stock market announcements" value="second" />
-                  )}
-                />
+                <Checkbox label="Crude Oil Assays" value="crudeOilAssays" {...register('categories')} />
               </li>
               <li>
-                <Controller
-                  name="crudeOilAssays"
-                  control={control}
-                  render={({ field: { ...props } }) => (
-                    <Checkbox {...props} id={props.name} label="Crude oil assays" value="third" />
-                  )}
-                />
-              </li>
-              <li>
-                <Controller
-                  name="loopStories"
-                  control={control}
-                  render={({ field: { ...props } }) => (
-                    <Checkbox {...props} id={props.name} label="Loop stories" value="third" />
-                  )}
-                />
+                <Checkbox label="Loop stories" value="loopStories" {...register('categories')} />
               </li>
             </UnstyledList>
           </StyledFieldset>
-          <Controller
-            name="firstName"
-            control={control}
-            rules={{
-              required: 'Required',
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <TextFieldWrapper>
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label="First Name"
-                  inputRef={ref}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  helperIcon={<Icon data={error_filled} title="error" />}
-                  variant={invalid ? 'error' : 'default'}
-                />
-              </TextFieldWrapper>
-            )}
-          />
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: 'Required',
-              pattern: {
-                value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                message: 'Not a valid email',
-              },
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <TextFieldWrapper>
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label="Email"
-                  inputRef={ref}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  helperIcon={<Icon data={error_filled} title="error" />}
-                  variant={invalid ? 'error' : 'default'}
-                />
-              </TextFieldWrapper>
-            )}
-          />
+
+          <StyledFieldset>
+            <StyledLegend> Contact information </StyledLegend>
+            <Controller
+              name="firstName"
+              control={control}
+              rules={{
+                required: 'Required',
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <TextFieldWrapper>
+                  <TextField
+                    {...props}
+                    id={props.name}
+                    label="First Name"
+                    inputRef={ref}
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    helperIcon={<Icon data={error_filled} title="error" />}
+                    variant={invalid ? 'error' : 'default'}
+                  />
+                </TextFieldWrapper>
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: 'Required',
+                pattern: {
+                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
+                  message: 'Not a valid email',
+                },
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <TextFieldWrapper>
+                  <TextField
+                    {...props}
+                    id={props.name}
+                    label="Email"
+                    inputRef={ref}
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    helperIcon={<Icon data={error_filled} title="error" />}
+                    variant={invalid ? 'error' : 'default'}
+                  />
+                </TextFieldWrapper>
+              )}
+            />
+          </StyledFieldset>
           <ButtonWrapper>
             <StyledButton type="submit">Subscribe</StyledButton>
           </ButtonWrapper>

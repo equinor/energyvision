@@ -31,7 +31,7 @@ const authenticate = async () => {
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
     if (soapBody['SOAP-ENV:Fault'] != undefined) {
       console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
-      return null
+      return
     }
     const loginResult = soapBody['v1:Authentication___LoginResponse']['0']['v1:Result']['0']
     apiSecret = loginResult['v1:apiSecret']['0']
@@ -45,7 +45,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
   {
     "stock_market": "${formParameters.stockMarketAnnouncements ? 'y' : 'n'}",
     "company_news": "${formParameters.generalNews ? 'y' : 'n'}",
-    "crude_oil_assays":  "${formParameters.crudeOilAssays ? 'y' : 'n'}",
+    "crude_oil_assays": "${formParameters.crudeOilAssays ? 'y' : 'n'}",
     "magazine": "${formParameters.magazineStories ? 'y' : 'n'}",
     "loop": "${formParameters.loopStories ? 'y' : 'n'}",
     "type": "Investor",
@@ -59,12 +59,13 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     xml: envelope,
     timeout: 5000,
   })
-
   console.log(response)
   return response.statusCode == 200
 }
 
 export const signUp = async (formParameters: SubscribeFormParmeters) => {
+  console.log(formParameters)
   const loginResult = await authenticate()
-  return createSignUpRequest(loginResult, formParameters)
+  if (loginResult.apiSecret != '' && loginResult.instId != '') return createSignUpRequest(loginResult, formParameters)
+  else return false
 }
