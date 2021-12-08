@@ -104,10 +104,11 @@ const StyledLocation = styled.div`
 `
 
 const StyledPromotion = styled(Promotion)`
-  padding: var(--space-xxLarge) 0;
+  --promotion-padding: var(--space-xxLarge) 0;
+  --promotion-titleAlign: center;
 
-  h2 {
-    text-align: left;
+  @media (min-width: 450px) {
+    --promotion-titleAlign: left;
   }
 `
 
