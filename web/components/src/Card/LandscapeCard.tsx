@@ -15,7 +15,7 @@ export const StyledLandscapeCard = styled.div`
   &:hover {
     cursor: inherit;
   }
-  @media (min-width: 450px) {
+  @media (min-width: 520px) {
     grid-template-columns: auto 1fr;
   }
 `

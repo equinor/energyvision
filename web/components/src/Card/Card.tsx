@@ -31,7 +31,15 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   return (
     <>
       {orientation === 'landscape' ? (
-        <LandscapeCard>{children}</LandscapeCard>
+        <LandscapeCard
+          style={{
+            ...style,
+          }}
+          {...rest}
+          ref={ref}
+        >
+          {children}
+        </LandscapeCard>
       ) : (
         <PortraitCard
           type={type}

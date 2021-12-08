@@ -23,8 +23,11 @@ const StyledCard = styled(Card)`
 
 const StyledMedia = styled(Media)`
   padding: var(--space-xxLarge) var(--space-large) 0 var(--space-large);
+  word-break: break-word;
+  /* Hyphens doesn't work with the Equinor font 
+  hyphens: auto; */
   ${StyledLandscapeCard} & {
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       background-color: var(--moss-green-50);
     }
   }
@@ -33,7 +36,7 @@ const StyledMedia = styled(Media)`
 const StyledText = styled(Text)`
   padding: 0 var(--space-large);
   ${StyledLandscapeCard} & {
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       padding: var(--space-xLarge) var(--space-large) var(--space-large) 0;
     }
   }
@@ -46,7 +49,7 @@ const Detail = styled.div`
   }
   /* No top border for landscape card */
   ${StyledLandscapeCard} &:first-of-type {
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       border-top: none;
     }
   }

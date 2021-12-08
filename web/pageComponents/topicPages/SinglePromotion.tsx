@@ -12,7 +12,7 @@ const LandscapeWrapper = styled.div`
   padding: 0 var(--space-xLarge);
   margin-left: auto;
   margin-right: auto;
-  @media (min-width: 450px) {
+  @media (min-width: 700px) {
     padding: 0 var(--layout-paddingHorizontal-large);
     max-width: var(--maxViewportWidth);
   }

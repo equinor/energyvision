@@ -9,6 +9,17 @@ const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
+  ${StyledLandscapeCard}& {
+    /*  A litte bit messy, but the landscape version for people
+  doesn't look good before it actually breaks into to columns
+  if we doesn't restrict the width */
+    max-width: 300px;
+    margin: 0 auto;
+    /* 520 is where it breaks into an actual landscape layout */
+    @media (min-width: 520px) {
+      max-width: none;
+    }
+  }
 `
 
 const Name = styled(Heading)`
@@ -16,7 +27,7 @@ const Name = styled(Heading)`
   margin-bottom: var(--space-small);
   text-align: center;
   ${StyledLandscapeCard} & {
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       text-align: left;
     }
   }
@@ -70,7 +81,7 @@ const ImageContainer = styled.div`
   ${StyledLandscapeCard} & {
     /*  Don't set padding on the landscape card itself because of the Event card */
     padding-top: var(--space-medium);
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       padding: var(--space-medium) 0 var(--space-medium) var(--space-large);
     }
   }
@@ -95,7 +106,7 @@ const TextContent = styled(Text)`
     margin-bottom: var(--space-medium);
     display: grid;
     align-content: center;
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       /* Turn off the default padding in the Text component */
       --text-spacing: 0;
       margin: var(--space-medium) var(--space-medium) var(--space-medium) 0;
@@ -116,7 +127,7 @@ const CardContent = styled.div`
   justify-content: space-between;
   text-align: center;
   ${StyledLandscapeCard} & {
-    @media (min-width: 450px) {
+    @media (min-width: 520px) {
       text-align: left;
     }
   }
