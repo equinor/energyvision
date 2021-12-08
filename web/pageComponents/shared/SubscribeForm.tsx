@@ -39,6 +39,9 @@ const UnstyledList = styled.ul`
   padding: var(--space-medium) 0 var(--space-large) 0px;
   list-style-type: none;
   @media (max-width: 920px) {
+    column-count: 1;
+  }
+  @media (max-width: 1184px) {
     column-count: 2;
   }
   column-count: 3;
@@ -124,9 +127,9 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
             {!errors.categories && <StyledSpan>Please select the category you want to subscribe to</StyledSpan>}
 
             {errors.categories && (
-              <ErrorStyledDiv>
+              <ErrorStyledDiv role="alert" id="atleast-one-category-required">
                 <span>Please select the category you want to subscribe to</span>
-                <StyledIcon data={error_filled} />
+                <StyledIcon data={error_filled} aria-hidden="true" />
               </ErrorStyledDiv>
             )}
 
@@ -135,26 +138,48 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 <Checkbox
                   label="General news"
                   value="generalNews"
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
                   {...register('categories', {
                     validate: (values) => values.length > 0,
                   })}
                 />
               </li>
               <li>
-                <Checkbox label="Magazine stories" value="magazineStories" {...register('categories')} />
+                <Checkbox
+                  label="Magazine stories"
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  value="magazineStories"
+                  {...register('categories')}
+                />
               </li>
               <li>
                 <Checkbox
                   label="Stock Market Announcements"
                   value="stockMarketAnnouncements"
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
                   {...register('categories')}
                 />
               </li>
               <li>
-                <Checkbox label="Crude Oil Assays" value="crudeOilAssays" {...register('categories')} />
+                <Checkbox
+                  label="Crude Oil Assays"
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  value="crudeOilAssays"
+                  {...register('categories')}
+                />
               </li>
               <li>
-                <Checkbox label="Loop stories" value="loopStories" {...register('categories')} />
+                <Checkbox
+                  label="Loop stories"
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  value="loopStories"
+                  {...register('categories')}
+                />
               </li>
             </UnstyledList>
           </StyledFieldset>
@@ -178,6 +203,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                     helperText={error?.message}
                     helperIcon={<Icon data={error_filled} title="error" />}
                     variant={invalid ? 'error' : 'default'}
+                    aria-invalid={invalid ? 'true' : 'false'}
                   />
                 </TextFieldWrapper>
               )}
@@ -203,6 +229,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                     helperText={error?.message}
                     helperIcon={<Icon data={error_filled} title="error" />}
                     variant={invalid ? 'error' : 'default'}
+                    aria-invalid={invalid ? 'true' : 'false'}
                   />
                 </TextFieldWrapper>
               )}
