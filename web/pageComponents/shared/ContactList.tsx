@@ -39,6 +39,7 @@ const Location = styled.p`
 `
 const Header = styled(Heading)`
   text-align: var(--contactList-titleAlign, left);
+  margin: var(--contactList-titleMargin, 0 0 var(--space-xLarge) 0);
 `
 
 type ContactListProps = {
