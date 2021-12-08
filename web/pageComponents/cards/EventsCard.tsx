@@ -29,6 +29,7 @@ const StyledMedia = styled(Media)`
   ${StyledLandscapeCard} & {
     @media (min-width: 520px) {
       background-color: var(--moss-green-50);
+      padding: var(--space-xxLarge) var(--space-large) var(--space-medium) var(--space-large);
     }
   }
 `
@@ -36,8 +37,10 @@ const StyledMedia = styled(Media)`
 const StyledText = styled(Text)`
   padding: 0 var(--space-large);
   ${StyledLandscapeCard} & {
+    /*  Because we repositioned the button container for the landscape version */
+    padding-bottom: var(--space-medium);
     @media (min-width: 520px) {
-      padding: var(--space-xLarge) var(--space-large) var(--space-large) 0;
+      padding: var(--space-xLarge) var(--space-large) var(--space-medium) 0;
     }
   }
 `
@@ -80,7 +83,7 @@ const ActionContainer = styled.div`
   gap: var(--space-small);
   ${StyledLandscapeCard} & {
     margin-top: var(--space-large);
-    padding-bottom: var(--space-medium);
+    /* padding-bottom: var(--space-medium); */
   }
 `
 
