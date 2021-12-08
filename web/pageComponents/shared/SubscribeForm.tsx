@@ -28,6 +28,7 @@ const TextFieldWrapper = styled.div`
 
 const StyledFieldset = styled.fieldset`
   border: 0;
+  padding: 0;
 `
 const StyledLegend = styled.legend`
   font-weight: var(--fontWeight-regular);
