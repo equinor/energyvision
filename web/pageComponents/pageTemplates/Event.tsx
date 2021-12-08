@@ -71,6 +71,14 @@ const Related = styled.div`
   margin: var(--space-4xLarge) auto;
 `
 
+const StyledRelatedContent = styled(RelatedContent)`
+  --related-titleAlign: center;
+
+  @media (min-width: 450px) {
+    --related-titleAlign: left;
+  }
+`
+
 const StyledDate = styled.div`
   font-size: var(--typeScale-4);
   color: var(--moss-green-100);
@@ -200,7 +208,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <Related>
-              <RelatedContent data={relatedLinks} />
+              <StyledRelatedContent data={relatedLinks} />
             </Related>
           )}
         </EventLayout>
