@@ -125,6 +125,14 @@ const StyledIframe = styled(IFrame)`
   padding: 0 var(--layout-paddingHorizontal-small);
 `
 
+const StyledContactList = styled(ContactList)`
+  --contactList-titleAlign: center;
+
+  @media (min-width: 450px) {
+    --contactList-titleAlign: left;
+  }
+`
+
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
@@ -211,7 +219,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-          {contactList && <ContactList data={contactList} />}
+          {contactList && <StyledContactList data={contactList} />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <Related>
