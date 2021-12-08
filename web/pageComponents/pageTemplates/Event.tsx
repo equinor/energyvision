@@ -116,6 +116,12 @@ const StyledIframe = styled(IFrame)`
   --iframe-maxWidth: var(--topbar-innerMaxWidth);
   --iframe-innerPadding: var(--space-3xLarge) 0;
 
+  --iframe-titleAlign: center;
+
+  @media (min-width: 450px) {
+    --iframe-titleAlign: left;
+  }
+
   padding: 0 var(--layout-paddingHorizontal-small);
 `
 
