@@ -5,7 +5,7 @@ export type CardProps = HTMLAttributes<HTMLDivElement>
 
 export const StyledLandscapeCard = styled.div`
   display: grid;
-
+  grid-template-columns: 1fr;
   box-shadow: var(--card-shadow, none);
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));

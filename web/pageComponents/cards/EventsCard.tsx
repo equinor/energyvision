@@ -19,32 +19,36 @@ const { Text, Media, Action, StyledPortraitCard, StyledLandscapeCard } = Card
 const StyledCard = styled(Card)`
   height: var(--height);
   width: 100%;
-
-  /* For the event it's easier with the padding on the card itself,
-  since we have horizontal lines */
-  /* padding: var(--space-xxLarge) var(--space-xLarge); */
 `
 
 const StyledMedia = styled(Media)`
   padding: var(--space-xxLarge) var(--space-large) 0 var(--space-large);
   ${StyledLandscapeCard} & {
-    background-color: var(--moss-green-50);
+    @media (min-width: 450px) {
+      background-color: var(--moss-green-50);
+    }
   }
 `
 
 const StyledText = styled(Text)`
+  padding: 0 var(--space-large);
   ${StyledLandscapeCard} & {
-    padding: var(--space-xLarge) var(--space-large) var(--space-large) 0;
-  }
-  ${StyledPortraitCard} & {
-    padding: 0 var(--space-large);
+    @media (min-width: 450px) {
+      padding: var(--space-xLarge) var(--space-large) var(--space-large) 0;
+    }
   }
 `
 const Detail = styled.div`
   padding: var(--space-small) 0;
   border-bottom: 1px solid var(--moss-green-90);
-  ${StyledPortraitCard} &:first-of-type {
+  &:first-of-type {
     border-top: 1px solid var(--moss-green-90);
+  }
+  /* No top border for landscape card */
+  ${StyledLandscapeCard} &:first-of-type {
+    @media (min-width: 450px) {
+      border-top: none;
+    }
   }
   display: flex;
   align-items: center;
@@ -73,7 +77,7 @@ const ActionContainer = styled.div`
   gap: var(--space-small);
   ${StyledLandscapeCard} & {
     margin-top: var(--space-large);
-    justify-content: flex-end;
+    padding-bottom: var(--space-medium);
   }
 `
 
