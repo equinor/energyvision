@@ -37,10 +37,15 @@ const StyledMedia = styled(Media)`
 const StyledText = styled(Text)`
   padding: 0 var(--space-large);
   ${StyledLandscapeCard} & {
-    /*  Because we repositioned the button container for the landscape version */
     padding-bottom: var(--space-medium);
     @media (min-width: 520px) {
+      /*  Because we repositioned the button container for the landscape version */
       padding: var(--space-xLarge) var(--space-large) var(--space-medium) 0;
+      /* And the plot thickens... We need to push the button container to the end
+       to make it look good even with a long title */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 `
@@ -87,6 +92,8 @@ const ActionContainer = styled.div`
   }
 `
 
+const TextInfoWrapper = styled.div``
+
 type EventCardProps = {
   data: EventCardData
   hasSectionTitle: boolean
@@ -122,7 +129,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
         )}
       </StyledMedia>
       <StyledText>
-        <div>
+        <TextInfoWrapper>
           {/*  @TODO Just added some inline styles atm, but it is an issue that the font sizes here
           for the date and timing are different than the rest of the occurences */}
           {start && (
@@ -157,11 +164,8 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
               </>
             )}
           </Detail>
-
-          {orientation === 'landscape' && (
-            <Actions slug={slug} title={title} location={location} eventDate={eventDate} />
-          )}
-        </div>
+        </TextInfoWrapper>
+        {orientation === 'landscape' && <Actions slug={slug} title={title} location={location} eventDate={eventDate} />}
       </StyledText>
       {orientation == 'portrait' && (
         <Action>
