@@ -10,7 +10,7 @@ import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serialize
 import type { PromotionData, CardData, PeopleCardData, EventCardData } from '../../types/types'
 
 const Wrapper = styled.div`
-  padding: var(--space-3xLarge) 0;
+  padding: var(--promotion-padding, var(--space-3xLarge) 0);
   --card-maxWidth: 400px;
   --card-minWidth: 200px;
 `
@@ -22,7 +22,7 @@ const Intro = styled.div`
 `
 
 const StyledHeading = styled(TitleBlockRenderer)`
-  text-align: center;
+  text-align: var(--promotion-titleAlign, center);
   margin-bottom: var(--space-xLarge);
 `
 
