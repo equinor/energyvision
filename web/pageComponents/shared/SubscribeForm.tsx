@@ -29,6 +29,12 @@ const TextFieldWrapper = styled.div`
 const StyledFieldset = styled.fieldset`
   border: 0;
   padding: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-block-start: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  padding-block-end: 0;
 `
 const StyledLegend = styled.legend`
   font-weight: var(--fontWeight-regular);
@@ -39,13 +45,13 @@ const UnstyledList = styled.ul`
   margin: 0;
   padding: var(--space-medium) 0 var(--space-large) 0px;
   list-style-type: none;
-  @media (max-width: 920px) {
-    column-count: 1;
-  }
+  column-count: 3;
   @media (max-width: 1184px) {
     column-count: 2;
   }
-  column-count: 3;
+  @media (max-width: 920px) {
+    column-count: 1;
+  }
 `
 const StyledButton = styled(Button)`
   padding-left: var(--space-xLarge);
