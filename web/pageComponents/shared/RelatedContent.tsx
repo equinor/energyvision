@@ -3,6 +3,12 @@ import { Heading, Link, List } from '@components'
 import type { RelatedLinksData, LinkData } from '../../types/types'
 import { default as NextLink } from 'next/link'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
+import styled from 'styled-components'
+
+const StyledHeading = styled(Heading)`
+  margin: var(--related-titleMargin, 0 0 var(--space-xLarge) 0);
+  text-align: var(--related-titleAlign, left);
+`
 
 const { Item } = List
 
@@ -10,12 +16,12 @@ type RelatedContentProps = {
   data: RelatedLinksData
 }
 
-const RelatedContent = ({ data }: RelatedContentProps) => {
+const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
   return (
-    <aside>
-      <Heading size="lg" level="h2">
+    <aside {...rest}>
+      <StyledHeading size="lg" level="h2">
         {data.title}
-      </Heading>
+      </StyledHeading>
       <List unstyled>
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
