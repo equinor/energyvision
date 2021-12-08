@@ -28,6 +28,9 @@ const Phone = styled.a`
   margin: var(--space-xSmall) 0;
   color: var(--grey-70);
   font-size: var(--typeScale-0);
+  &:hover {
+    color: var(--moss-green-100);
+  }
 `
 
 const Location = styled.p`
