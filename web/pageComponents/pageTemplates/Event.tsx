@@ -22,7 +22,7 @@ const { publicRuntimeConfig } = getConfig()
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-  --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+  --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 130px);
 `
 
 const Header = styled.div`
