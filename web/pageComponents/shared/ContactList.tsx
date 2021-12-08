@@ -37,15 +37,17 @@ const Location = styled.p`
   margin: var(--space-xSmall) 0;
   font-size: var(--typeScale-1);
 `
-const Header = styled(Heading)``
+const Header = styled(Heading)`
+  text-align: var(--contactList-titleAlign, left);
+`
 
 type ContactListProps = {
   data: ContactListData
 }
 
-const ContactList = ({ data }: ContactListProps) => {
+const ContactList = ({ data, ...rest }: ContactListProps) => {
   return (
-    <Wrapper>
+    <Wrapper {...rest}>
       {data.title && (
         <Header size="lg" level="h2">
           {data.title}
