@@ -103,6 +103,13 @@ const StyledPromotion = styled(Promotion)`
   }
 `
 
+const StyledIframe = styled(IFrame)`
+  --iframe-maxWidth: var(--topbar-innerMaxWidth);
+  --iframe-innerPadding: var(--space-3xLarge) 0;
+
+  padding: 0 var(--layout-paddingHorizontal-small);
+`
+
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
@@ -147,13 +154,19 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   <FormattedDate datetime={start} />
                 </StyledDate>
               )}
-              {start && end && (
-                <StyledTime>
-                  <FormattedTime datetime={start} />
-                  <span>-</span>
-                  <FormattedTime datetime={end} timezone />
-                </StyledTime>
-              )}
+
+              <StyledTime>
+                {start && end ? (
+                  <>
+                    <FormattedTime datetime={start} />
+                    <span>-</span>
+                    <FormattedTime datetime={end} timezone />
+                  </>
+                ) : (
+                  <span>Time to be announced</span>
+                )}
+              </StyledTime>
+
               {location && <StyledLocation>{location}</StyledLocation>}
               <AddToCalendar eventDate={eventDate} location={location} title={title} />
             </HeaderInner>
@@ -171,7 +184,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             )}
           </ContentWrapper>
 
-          {iframe && <IFrame data={iframe} />}
+          {iframe && <StyledIframe data={iframe} />}
 
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion

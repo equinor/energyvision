@@ -7,8 +7,9 @@ import TopicPageCard from '../cards/TopicPageCard'
 import type { PeopleCardData, EventCardData, CardData } from '../../types/types'
 
 const LandscapeWrapper = styled.div`
-  max-width: 250px;
+  /* max-width: 350px; */
   margin-top: var(--space-xLarge);
+  padding: 0 var(--space-xLarge);
   margin-left: auto;
   margin-right: auto;
   @media (min-width: 450px) {

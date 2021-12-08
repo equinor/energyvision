@@ -65,7 +65,10 @@ const StyledPeopleCard = styled(PeopleCard)`
 const StyledEventsCard = styled(EventsCard)`
   ${CardStyle}
   --card-maxWidth: 520px;
-  --card-minWidth: 380px;
+  --card-minWidth: 250px;
+  @media (min-width: 400px) {
+    --card-minWidth: 380px;
+  }
 `
 
 type CardProps = CardData | PeopleCardData | EventCardData

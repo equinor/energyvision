@@ -20,7 +20,7 @@ import Norway from '../../icons/Norway'
 const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview).title('Preview')]
 // Original version without preview pane
 // const views = [S.view.form()]
-export default function parentChild(schema = 'category') {
+export default function parentChild(schema = 'route') {
   return S.listItem()
     .title('Topic Routes')
     .icon(RouteDocuments)
@@ -37,8 +37,8 @@ export default function parentChild(schema = 'category') {
 
 function routeStructure(schema, isoCode) {
   const documentName = `${schema}_${isoCode}`
-
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
+
   return () =>
     documentStore.listenQuery(`*[${categoryParents}]`).pipe(
       map((parents) =>
@@ -68,12 +68,14 @@ function routeStructure(schema, isoCode) {
                     .filter(`_type == "${documentName}" && parent._ref == $parentId`)
                     .params({ parentId: parent._id })
                     .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem('category-child', {
+                    .child((id) =>
+                      S.documentWithInitialValueTemplate(`parent-route-${isoCode}`, {
                         parentId: parent._id,
-                      }),
-                    ])
-                    .child((id) => S.document().documentId(id).views(views).schemaType(documentName)),
+                      })
+                        .documentId(id)
+                        .views(views)
+                        .schemaType(documentName),
+                    ),
                 ),
             ),
           ]),

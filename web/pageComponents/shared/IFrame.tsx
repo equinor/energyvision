@@ -5,12 +5,13 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 
 const StyledHeading = styled(TitleBlockRenderer)`
-  padding: 0 0 var(--space-large) 0;
+  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
+  text-align: var(--iframe-titleAlign, left);
 `
 
 const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
+  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
   margin: auto;
 `
 

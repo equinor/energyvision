@@ -92,12 +92,12 @@ const ImageContainer = styled.div`
 const TextContent = styled(Text)`
   height: var(--text-height, auto);
   ${StyledLandscapeCard} & {
-    /* Turn off the default padding in the Text component */
-    --text-spacing: 0;
     margin-bottom: var(--space-medium);
     display: grid;
     align-content: center;
     @media (min-width: 450px) {
+      /* Turn off the default padding in the Text component */
+      --text-spacing: 0;
       margin: var(--space-medium) var(--space-medium) var(--space-medium) 0;
     }
   }

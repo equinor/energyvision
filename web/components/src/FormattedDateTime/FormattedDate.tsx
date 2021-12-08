@@ -1,6 +1,13 @@
 import { FormattedDate as ReactIntlDate } from 'react-intl'
 import { DateProps, StyledDate, DateIcon } from './shared'
+import styled from 'styled-components'
 
+const StyledTime = styled.time`
+  /* Better alignment with the icon */
+  svg + & {
+    margin-bottom: -2px;
+  }
+`
 export const FormattedDate = ({
   datetime,
   year = 'numeric',
@@ -13,9 +20,9 @@ export const FormattedDate = ({
   return (
     <StyledDate uppercase={uppercase} {...rest}>
       {icon && <DateIcon />}
-      <time dateTime={datetime}>
+      <StyledTime dateTime={datetime}>
         <ReactIntlDate value={new Date(datetime)} day={day} year={year} month={month} />
-      </time>
+      </StyledTime>
     </StyledDate>
   )
 }
