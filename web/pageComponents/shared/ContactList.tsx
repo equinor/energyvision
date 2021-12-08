@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import type { ContactListData } from '../../types/types'
 import { Heading } from '@components'
+import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
 
 const Wrapper = styled.div`
   margin: var(--space-4xLarge) auto;
@@ -23,7 +24,7 @@ const Contact = styled.div`
   justify-content: left;
   flex-direction: column;
 `
-const Phone = styled.p`
+const Phone = styled.a`
   margin: var(--space-xSmall) 0;
   color: var(--grey-70);
   font-size: var(--typeScale-0);
@@ -53,7 +54,7 @@ const ContactList = ({ data }: ContactListProps) => {
             return (
               <Contact key={contact._key}>
                 <Location>{contact.location} </Location>
-                <Phone>{contact.phone}</Phone>
+                <Phone href={`tel:${removeWhiteSpace(contact.phone)}`}>{contact.phone}</Phone>
               </Contact>
             )
           })}
