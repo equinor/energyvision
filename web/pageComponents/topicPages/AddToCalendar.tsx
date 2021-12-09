@@ -92,7 +92,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
 
   return (
     <Button {...(fileData && { href: fileData as string, download: `${eventTitle.replace(/ /g, '_')}.ics` })}>
-      <Icon data={add} />
+      {/*  <Icon data={add} /> */}
       Add to Calendar
     </Button>
   )

@@ -20,12 +20,12 @@ const StyledCard = styled(Card)`
   height: var(--height);
   width: 100%;
   /* For the landscape variant, we don't want the title
-  column to be to wide */
+  column to be too wid*/
   --column-sizes: 40% 1fr;
 `
 
 const StyledMedia = styled(Media)`
-  padding: var(--space-xxLarge) var(--space-large) 0 var(--space-large);
+  padding: var(--space-large) var(--space-large) 0 var(--space-large);
   word-break: break-word;
   /* Hyphens doesn't work with the Equinor font 
   hyphens: auto; */
@@ -91,7 +91,6 @@ const ActionContainer = styled.div`
   gap: var(--space-small);
   ${StyledLandscapeCard} & {
     margin-top: var(--space-large);
-    /* padding-bottom: var(--space-medium); */
   }
 `
 
@@ -125,7 +124,14 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             blocks={title}
             serializers={{
               types: {
-                block: (props) => <TitleBlockRenderer level={hasSectionTitle ? 'h3' : 'h2'} size="lg" {...props} />,
+                block: (props) => (
+                  <TitleBlockRenderer
+                    level={hasSectionTitle ? 'h3' : 'h2'}
+                    style={{ fontWeight: '500' }}
+                    size="md"
+                    {...props}
+                  />
+                ),
               },
             }}
           />
@@ -137,11 +143,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
           for the date and timing are different than the rest of the occurences */}
           {start && (
             <Detail>
-              <FormattedDate
-                icon
-                datetime={start}
-                style={{ fontSize: 'var(--typeScale-2)', lineHeight: 'var(--lineHeight-2)' }}
-              />
+              <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-0)' }} />
             </Detail>
           )}
           {location && (

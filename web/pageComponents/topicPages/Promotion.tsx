@@ -1,13 +1,11 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
-import NewsCard from '../cards/NewsCard'
-import TopicPageCard from '../cards/TopicPageCard'
-import PeopleCard from '../cards/PeopleCard/PeopleCard'
-import EventsCard from '../cards/EventsCard'
+
 import SinglePromotion from './SinglePromotion'
+import MultiplePromotions from './MultiplePromotions'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
-import type { PromotionData, CardData, PeopleCardData, EventCardData } from '../../types/types'
+import type { PromotionData } from '../../types/types'
 
 const Wrapper = styled.div`
   padding: var(--promotion-padding, var(--space-3xLarge) 0);
@@ -26,72 +24,12 @@ const StyledHeading = styled(TitleBlockRenderer)`
   margin-bottom: var(--space-xLarge);
 `
 
-const CardsWrapper = styled.div`
-  width: 100%;
-  max-width: calc(var(--card-maxWidth) * 3 + var(--space-large) * 2);
-  padding: 0 var(--space-xxLarge);
-  margin: auto;
-  margin-top: var(--space-xLarge);
-  display: flex;
-  gap: var(--space-large);
-  justify-content: center;
-  align-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-
-  @media (min-width: 750px) {
-    flex-direction: row;
-  }
-`
-
-const CardStyle = css`
-  min-width: var(--card-minWidth);
-  max-width: var(--card-maxWidth);
-  flex-basis: 0;
-  flex-grow: 1;
-`
-const StyledNewsCard = styled(NewsCard)`
-  ${CardStyle}
-`
-const StyledTopicPageCard = styled(TopicPageCard)`
-  ${CardStyle}
-`
-const StyledPeopleCard = styled(PeopleCard)`
-  ${CardStyle}
-  /* Not the best approach, should be improved */
-  --card-maxWidth: 300px;
-`
-
-const StyledEventsCard = styled(EventsCard)`
-  ${CardStyle}
-  --card-maxWidth: 520px;
-  --card-minWidth: 250px;
-  @media (min-width: 400px) {
-    --card-minWidth: 380px;
-  }
-`
-
-type CardProps = CardData | PeopleCardData | EventCardData
-
 const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
   const { title, ingress, content, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
+  const variant = data.content?.type
 
-  const getCard = (data: CardProps) => {
-    switch (data.type) {
-      case 'news':
-        return <StyledNewsCard data={data as CardData} key={data.id} />
-      case 'topics':
-        return <StyledTopicPageCard data={data as CardData} key={data.id} />
-      case 'people':
-        return <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={!!title} key={data.id} />
-      case 'events':
-        return <StyledEventsCard data={data as EventCardData} hasSectionTitle={!!title} key={data.id} />
-      default:
-        return console.warn('Missing card type for ', data)
-    }
-  }
   return (
     <BackgroundContainer background={designOptions?.background}>
       <Wrapper {...rest}>
@@ -121,11 +59,7 @@ const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
           /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
-          <CardsWrapper>
-            {promotions.map((item) => {
-              return getCard(item)
-            })}
-          </CardsWrapper>
+          <MultiplePromotions data={promotions} variant={variant} hasSectionTitle={!!title} />
         )}
       </Wrapper>
     </BackgroundContainer>

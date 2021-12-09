@@ -311,6 +311,9 @@ export type Tag = {
   }
 }
 
+// Do we have a way to share types between studio and web?
+export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents'
+
 export type PromotionData = {
   id: string
   type: string
@@ -319,7 +322,8 @@ export type PromotionData = {
   content: {
     // Do we really need the tags here?
     tags?: Tag[]
-    promotions: CardData[] | PeopleCardData[]
+    promotions: CardData[] | PeopleCardData[] | EventCardData[]
+    type: PromotionType
   }
   designOptions?: DesignOptions
 }
