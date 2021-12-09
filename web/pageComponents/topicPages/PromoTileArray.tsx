@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { Card, BackgroundContainer } from '@components'
 import { tokens } from '@equinor/eds-tokens'
@@ -43,7 +44,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
 
         return (
           <StyledBackgroundContainer background={background} key={id}>
-            <Card type="promo" textOnly={!image}>
+            <Card type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
               {image && (
                 <Media>
                   <ImageWithRoundedUpperCorners
