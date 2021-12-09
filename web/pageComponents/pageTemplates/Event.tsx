@@ -66,8 +66,8 @@ const Content = styled.div`
 `
 
 const Related = styled.div`
-  padding: 0 var(--space-large);
-  max-width: var(--layout-maxContent-narrow);
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
   margin: var(--space-4xLarge) auto;
 `
 
@@ -127,6 +127,9 @@ const StyledIframe = styled(IFrame)`
 
 const StyledContactList = styled(ContactList)`
   --contactList-titleAlign: center;
+
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
 
   @media (min-width: 450px) {
     --contactList-titleAlign: left;
