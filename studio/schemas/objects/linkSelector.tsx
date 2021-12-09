@@ -3,6 +3,7 @@ import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
+import { routes } from '../languages'
 
 export type ReferenceTarget = {
   type: string
@@ -21,8 +22,7 @@ const defaultReferenceTargets: ReferenceTarget[] = [
   {
     type: 'news',
   },
-  { type: 'route_en_GB' },
-  { type: 'route_nb_NO' },
+  ...routes,
 ]
 
 const LinkField = {
@@ -41,7 +41,7 @@ const LinkField = {
     {
       name: 'isStatic',
       title: 'Is static page',
-      description: `While migrating, content can be available as static pages generated from the old CMS. If this is 
+      description: `While migrating, content can be available as static pages generated from the old CMS. If this is
       the case for this menu item, it's important to register the url in the static input field`,
       type: 'boolean',
       initialValue: false,

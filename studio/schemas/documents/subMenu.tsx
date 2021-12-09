@@ -7,6 +7,7 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
+import { routes } from '../languages'
 
 export type SubMenu = {
   _type: 'subMenu'
@@ -56,7 +57,7 @@ export default {
     {
       name: 'isStatic',
       title: 'Is static page',
-      description: `While migrating, content can be available as static pages generated from the old CMS. If this is 
+      description: `While migrating, content can be available as static pages generated from the old CMS. If this is
       the case for this menu item, it's important to register the url in the static input field`,
       type: 'boolean',
       initialValue: false,
@@ -73,7 +74,7 @@ export default {
           const { parent } = context as { parent: SubMenu }
           return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
         }),
-      to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+      to: routes,
       options: {
         filter: ({ document }: { document: any }) => ({
           filter: `_type == $routeLang`,
@@ -99,7 +100,7 @@ export default {
       name: 'staticUrl',
       title: 'Static URL',
       type: 'string',
-      description: `The URL for the static page. Don't add language information (no/en)`,
+      description: `The URL for the static page. Don't add language information`,
       placeholder: '/careers/experienced-professionals',
       fieldset: 'link',
       validation: (Rule: Rule) =>
@@ -124,7 +125,7 @@ export default {
       type: 'reference',
       title: 'Featured content',
 
-      to: [{ type: 'news' }, { type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+      to: [{ type: 'news' }, ...routes],
       options: {
         filter: ({ document: { _lang, title: title = '' } }: any): ReferenceFilterSearchOptions => ({
           filter: `title != $title && (_type == $routeLang || _type == 'news')`,
@@ -147,13 +148,12 @@ export default {
       label: 'label',
       group: 'group',
       url: 'url',
-      reference: 'reference.slug',
     },
     prepare(selection: any) {
-      const { label, group = [], url, reference } = selection
+      const { label, group = [], url } = selection
       return {
         title: label || 'No label added yet',
-        subtitle: reference?.en_GB?.current || url || `Menu groups: ${group.length}`,
+        subtitle: url || `Menu groups: ${group.length}`,
         media: EdsIcon(format_line_spacing),
       }
     },

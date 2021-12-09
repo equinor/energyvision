@@ -4,6 +4,7 @@ import { SchemaType } from '../../types'
 import { link, attach_file, external_link } from '@equinor/eds-icons'
 import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
 import type { BlockFieldType } from '../../types/schemaTypes'
+import { routes } from '../languages'
 
 export type BlockContentProps = {
   h1?: boolean
@@ -99,8 +100,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           {
             type: 'news',
           },
-          { type: 'route_en_GB' },
-          { type: 'route_nb_NO' },
+          ...routes,
         ],
         options: {
           filter: ({ document }: { document: any }) => ({

@@ -9,9 +9,21 @@ import parentChild from './src/structure/parentChild'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+import { languages } from './schemas/languages'
 // import Iframe from 'sanity-plugin-iframe-pane'
 
 // import resolveProductionUrl from './resolveProductionUrl'
+
+const menus = languages.map((lang) =>
+  S.listItem({
+    title: `${lang.title} menu`,
+    id: `${lang.name}-menu`,
+    child: () =>
+      S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
+        .title(`${lang.title}site menu`)
+        .views([S.view.form()]),
+  }),
+)
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
@@ -79,36 +91,7 @@ export default () => {
     S.divider(),
     parentChild('route'),
     S.divider(),
-    S.listItem()
-      .title('Menu')
-      .icon(MenuIcon)
-      .child(
-        S.list('menu')
-          .id('menu')
-          .title('Menus')
-          .items([
-            S.listItem({
-              title: 'English menu',
-              id: 'menu-english',
-              icon: GreatBritain,
-              child: () =>
-                S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: 'en_GB' })
-                  .id('english-menu')
-                  .title('English site menu')
-                  .views([S.view.form()]),
-            }),
-            S.listItem({
-              title: 'Norwegian menu',
-              id: 'menu-norwegian',
-              icon: Norway,
-              child: () =>
-                S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: 'nb_NO' })
-                  .title('Norwegian site menu')
-                  .id('norwegian-menu')
-                  .views([S.view.form()]),
-            }),
-          ]),
-      ),
+    S.listItem().title('Menu').icon(MenuIcon).child(S.list('menu').id('menu').title('Menus').items(menus)),
     S.divider(),
     S.listItem()
       .title('Footer')
