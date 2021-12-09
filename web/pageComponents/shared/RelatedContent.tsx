@@ -19,7 +19,7 @@ type RelatedContentProps = {
 const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
   return (
     <aside {...rest}>
-      <StyledHeading size="lg" level="h2">
+      <StyledHeading size="xl" level="h2">
         {data.title}
       </StyledHeading>
       <List unstyled>

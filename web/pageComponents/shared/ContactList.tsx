@@ -50,7 +50,7 @@ const ContactList = ({ data, ...rest }: ContactListProps) => {
   return (
     <Wrapper {...rest}>
       {data.title && (
-        <Header size="lg" level="h2">
+        <Header size="xl" level="h2">
           {data.title}
         </Header>
       )}
