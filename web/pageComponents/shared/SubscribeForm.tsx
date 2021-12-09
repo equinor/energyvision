@@ -80,17 +80,17 @@ type FormValues = {
 const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
   const router = useRouter()
   const onSubmit = async (data: FormValues) => {
+    const allCategories = data.categories.includes('all')
     const subscribeFormParamers: SubscribeFormParmeters = {
       firstName: data.firstName,
       email: data.email,
-      crudeOilAssays: data.categories.includes('crudeOilAssays'),
-      generalNews: data.categories.includes('generalNews'),
-      stockMarketAnnouncements: data.categories.includes('stockMarketAnnouncements'),
-      magazineStories: data.categories.includes('magazineStories'),
-      loopStories: data.categories.includes('loopStories'),
+      crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
+      generalNews: allCategories || data.categories.includes('generalNews'),
+      stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
+      magazineStories: allCategories || data.categories.includes('magazineStories'),
+      loopStories: allCategories || data.categories.includes('loopStories'),
       languageCode: router.locale == 'no-nb' ? 'no' : 'en',
     }
-
     const res = await fetch('/api/subscribe-form', {
       body: JSON.stringify(subscribeFormParamers),
       headers: {
