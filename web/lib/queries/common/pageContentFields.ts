@@ -256,7 +256,7 @@ const pageContentFields = /* groq */ `
         !manuallySelectEvents => {
           tags,
          // @TODO: This query is not done yet
-          "promotions": *[_type == "route_" + $lang && content->_type == "event"   ]{
+          "promotions": *[_type == "route_" + $lang && content->_type == "event"  && content->eventDate.date >= $date ]{
             "type": "events",
             "id": _id,
             "slug": slug.current,
