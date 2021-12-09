@@ -14,11 +14,14 @@ import type { BlockNode } from '@sanity/block-content-to-react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 
-const { Text, Media, Action, StyledPortraitCard, StyledLandscapeCard } = Card
+const { Text, Media, Action, StyledLandscapeCard } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
   width: 100%;
+  /* For the landscape variant, we don't want the title
+  column to be to wide */
+  --column-sizes: 40% 1fr;
 `
 
 const StyledMedia = styled(Media)`

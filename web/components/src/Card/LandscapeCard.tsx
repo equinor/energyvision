@@ -16,7 +16,7 @@ export const StyledLandscapeCard = styled.div`
     cursor: inherit;
   }
   @media (min-width: 520px) {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: var(--column-sizes, auto 1fr);
   }
 `
 
