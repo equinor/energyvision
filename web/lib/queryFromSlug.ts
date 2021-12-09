@@ -10,6 +10,10 @@ const isSlugID = (slug: string): boolean => {
 
 export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   const [slugStart] = slugArray.filter((part: string) => part !== locale)
+  // This is used for the event query in order to filter past events
+  // This is an easy and simple approach, is it too easy and naive?
+  // We don't use the time information atm
+  const currentDate = new Date().toISOString().substring(0, 10)
 
   if (isSlugID(slugStart)) {
     // We are in preview mode for content that has currently no slug (no routes)
@@ -25,6 +29,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
       queryParams: {
         id: publishedAndDraftIds,
         lang: mapLocaleToLang(locale),
+        date: currentDate,
       },
       query: contentQueryById,
     }
@@ -34,17 +39,17 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   switch (slugStart) {
     case '':
       return {
-        queryParams: { slug: [], lang: mapLocaleToLang(locale) },
+        queryParams: { slug: [], lang: mapLocaleToLang(locale), date: currentDate },
         query: '',
       }
     case 'news':
       return {
-        queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
+        queryParams: { slug: slug, lang: mapLocaleToLang(locale), date: currentDate },
         query: newsQuery,
       }
     default:
       return {
-        queryParams: { slug: slug, lang: mapLocaleToLang(locale) },
+        queryParams: { slug: slug, lang: mapLocaleToLang(locale), date: currentDate },
         query: pageQuery,
       }
   }
