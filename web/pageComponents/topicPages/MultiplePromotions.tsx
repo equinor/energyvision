@@ -17,11 +17,29 @@ const FlexibleWrapper = styled.div`
   margin: var(--space-xLarge) auto 0 auto;
   max-width: var(--maxViewportWidth);
   display: grid;
-  justify-content: center;
-
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 520px));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
   grid-row-gap: var(--row-gap);
   grid-column-gap: var(--column-gap);
+`
+
+const PairWrapper = styled.div`
+  --card-minWidth: 250px;
+  --row-gap: 2rem;
+  --column-gap: 1rem;
+
+  padding: 0 var(--layout-paddingHorizontal-small);
+  margin: var(--space-xLarge) auto 0 auto;
+  max-width: var(--maxViewportWidth);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
+  grid-row-gap: var(--row-gap);
+  grid-column-gap: var(--column-gap);
+
+  @media (min-width: 990px) {
+    padding: 0 var(--layout-paddingHorizontal-medium);
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px));
+  }
 `
 
 const CardsWrapper = styled.div`
@@ -86,14 +104,31 @@ const MultiplePromotions = ({
         return console.warn('Missing card type for ', data)
     }
   }
-  return (
-    <>
-      {variant === 'promoteEvents' ? (
+
+  const eventCards = (data: EventCardData[]) => {
+    if (data.length === 2) {
+      return (
+        <PairWrapper>
+          {data.map((item) => {
+            return getCard(item)
+          })}
+        </PairWrapper>
+      )
+    } else {
+      return (
         <FlexibleWrapper>
           {data.map((item) => {
             return getCard(item)
           })}
         </FlexibleWrapper>
+      )
+    }
+  }
+
+  return (
+    <>
+      {variant === 'promoteEvents' ? (
+        <>{eventCards(data as EventCardData[])}</>
       ) : (
         <CardsWrapper>
           {data.map((item) => {
