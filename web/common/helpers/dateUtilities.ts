@@ -1,4 +1,3 @@
-import { dateNow } from '.pnpm/@microsoft+applicationinsights-core-js@2.7.1/node_modules/@microsoft/applicationinsights-core-js'
 import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import { EventDateType } from '../../../web/types/types'
