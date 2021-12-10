@@ -8,6 +8,7 @@ import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import blocksToText from '../../helpers/blocksToText'
 import { FilteredIFrame } from '../objects/iframe'
+import type { EventDate } from '../objects/eventDate'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -146,11 +147,13 @@ export default {
   preview: {
     select: {
       title: 'title',
+      date: 'eventDate',
     },
-    prepare({ title }: { title: Block[] }) {
+    prepare({ title, date }: { title: Block[]; date: EventDate }) {
+      const eventDate = date?.date ? `${date.date} ${date?.timezone}` : 'No date set'
       return {
         title: title ? blocksToText(title) : 'Untitled event',
-        subtitle: `Event date: ...`,
+        subtitle: eventDate,
         media: EdsIcon(calendar_event),
       }
     },
