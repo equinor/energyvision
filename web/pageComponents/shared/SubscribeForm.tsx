@@ -38,11 +38,7 @@ const StyledFieldset = styled.fieldset`
   padding-inline-end: 0;
   padding-block-end: 0;
 `
-const StyledLegend = styled.legend`
-  font-weight: var(--fontWeight-regular);
-  font-size: var(--typeScale-2);
-  padding: 0 0 var(--space-small) 0;
-`
+
 const UnstyledList = styled.ul`
   margin: -12px;
   padding: var(--space-medium) 0 var(--space-large) 0px;
@@ -58,7 +54,7 @@ const StyledButton = styled(Button)`
 `
 const ErrorStyledDiv = styled.div`
   font-weight: var(--fontWeight-regular);
-  font-size: var(--typeScale-1);
+  font-size: var(--typeScale-2);
   color: var(--clear-red-100);
   align-items: center;
   display: flex;
@@ -66,9 +62,9 @@ const ErrorStyledDiv = styled.div`
 const StyledIcon = styled(Icon)`
   margin-left: var(--space-small);
 `
-
-const StyledCheckbox = styled(Checkbox)`
-  margin: 8px 0;
+const StyledSpan = styled.span`
+  font-weight: var(--fontWeight-regular);
+  font-size: var(--typeScale-2);
 `
 
 type FormValues = {
@@ -110,7 +106,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
     register,
     reset,
     formState: { errors },
-  } = useForm()
+  } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
 
   return (
     <>
@@ -128,18 +124,17 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
         {/* @TODO Norwegian translations for labels and button text*/}
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFieldset>
-            <StyledLegend>Let us know what you’re interested in</StyledLegend>
-
+            {!errors.categories && <StyledSpan>Please choose one or more of the following </StyledSpan>}
             {errors.categories && (
               <ErrorStyledDiv role="alert" id="atleast-one-category-required">
-                <span>Please select at least one category</span>
+                <span>Please choose one or more of the following</span>
                 <StyledIcon data={error_filled} aria-hidden="true" />
               </ErrorStyledDiv>
             )}
 
             <UnstyledList>
               <li>
-                <StyledCheckbox
+                <Checkbox
                   label="General news"
                   value="generalNews"
                   aria-describedby="atleast-one-category-required"
@@ -150,7 +145,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 />
               </li>
               <li>
-                <StyledCheckbox
+                <Checkbox
                   label="Magazine stories"
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
@@ -159,7 +154,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 />
               </li>
               <li>
-                <StyledCheckbox
+                <Checkbox
                   label="Stock market announcements"
                   value="stockMarketAnnouncements"
                   aria-invalid={errors.categories ? 'true' : 'false'}
@@ -168,7 +163,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 />
               </li>
               <li>
-                <StyledCheckbox
+                <Checkbox
                   label="Crude oil assays"
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
@@ -177,7 +172,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 />
               </li>
               <li>
-                <StyledCheckbox
+                <Checkbox
                   label="Loop stories"
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
@@ -186,7 +181,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 />
               </li>
               <li>
-                <StyledCheckbox
+                <Checkbox
                   label="All"
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
