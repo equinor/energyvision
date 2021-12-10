@@ -41,7 +41,7 @@ const StyledFieldset = styled.fieldset`
 
 const UnstyledList = styled.ul`
   margin: -12px;
-  padding: var(--space-medium) 0 var(--space-large) 0px;
+  padding: var(--space-large) 0 var(--space-large) 0px;
   list-style-type: none;
   column-count: 2;
   @media (max-width: 920px) {
