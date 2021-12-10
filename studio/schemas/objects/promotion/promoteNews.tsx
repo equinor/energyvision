@@ -29,7 +29,6 @@ export default {
       const tags = [tags1, tags2, tags3].filter(Boolean)
       const hasMoreTags = Boolean(tags4)
       const title = tags.length > 0 ? `Tags: ${tags.join(', ')}` : ''
-      /* @TODO: Make preview lang agnostic */
       return {
         title: hasMoreTags ? `${title}…` : title,
         subtitle: `News promotion.`,
