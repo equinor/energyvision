@@ -1,3 +1,4 @@
+import { dateNow } from '.pnpm/@microsoft+applicationinsights-core-js@2.7.1/node_modules/@microsoft/applicationinsights-core-js'
 import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import { EventDateType } from '../../../web/types/types'
@@ -24,8 +25,16 @@ export const toUTCDateParts = (datetime: Date): number[] => {
   ]
 }
 
-export const getEventDates = ({ date, startTime, endTime, timezone }: EventDateType) => {
+export const getEventDates = (eventDate: EventDateType) => {
+  if (!eventDate) {
+    console.warn('Missing eventDate object for event')
+    // This is indeed not optimal
+    return { start: null, end: null }
+  }
+  const { date, startTime, endTime, timezone } = eventDate
+
   if (!date) return { start: null, end: null }
+
   if (startTime && endTime) {
     const start = zonedTimeToUtc(new Date(date + ' ' + startTime), timezone).toString()
     const end = zonedTimeToUtc(new Date(date + ' ' + endTime), timezone).toString()

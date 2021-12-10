@@ -17,7 +17,9 @@ const FlexibleWrapper = styled.div`
   margin: var(--space-xLarge) auto 0 auto;
   max-width: var(--maxViewportWidth);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr));
+  justify-content: center;
+
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 520px));
   grid-row-gap: var(--row-gap);
   grid-column-gap: var(--column-gap);
 `

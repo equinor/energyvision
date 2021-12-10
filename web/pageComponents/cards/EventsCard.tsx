@@ -102,7 +102,7 @@ type EventCardProps = {
   orientation?: 'portrait' | 'landscape'
 }
 
-const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
+const EventsCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
   const { title, location, eventDate, slug } = data
 
   const { start, end } = getEventDates(eventDate)
@@ -205,4 +205,4 @@ const Actions = ({
   )
 }
 
-export default PeopleCard
+export default EventsCard
