@@ -91,7 +91,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
       loopStories: allCategories || data.categories.includes('loopStories'),
       languageCode: router.locale == 'no-nb' ? 'no' : 'en',
     }
-    const res = await fetch('/api/subscribe-form', {
+    /*const res = await fetch('/api/subscribe-form', {
       body: JSON.stringify(subscribeFormParamers),
       headers: {
         'Content-Type': 'application/json',
@@ -99,7 +99,8 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
       method: 'POST',
     })
     const result = await res.json()
-    if (result.statusCode != 200) console.error(result)
+    if (result.statusCode != 200) console.error(result)*/
+    console.log(subscribeFormParamers)
     reset()
   }
 
