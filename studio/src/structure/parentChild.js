@@ -52,6 +52,7 @@ function routeStructure(schema, isoCode) {
                   .title('Topic Categories')
                   .schemaType(documentName)
                   .filter(categoryParents)
+                  .canHandleIntent((intent, { type }) => type === documentName && ['create', 'edit'].includes(intent))
                   .child((id) => S.document().documentId(id).views(views).schemaType(documentName)),
               ),
             S.divider(),
