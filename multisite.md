@@ -13,14 +13,14 @@ Duplication
 -------------
 
 In this solution, one would make multiple instances of the same codebase, both for the web application and the Sanity Studio. 
-One would make use of enviroment variables and configurations to have each instance of the application query different datasets at runetime, which would each belong to one website.
+One would make use of enviroment variables and configurations to have each instance of the application query different datasets at runtime, which would each belong to one website.
 
 
 Strengths: 
 
 + Same codebase everywhere. 
-+ No need to update code several places during maintanance and further development phase.
-+ Excact same functionality in every app and Sanity editor. 
++ No need to update code several places during maintenance and further development phase.
++ Exact same functionality in every app and Sanity editor. 
 + Easy to give editors access to specific sites when needed (roles/permissions control). 
 
 Unknowns: 
@@ -32,7 +32,7 @@ Some changes in how languages are handled in the both the web application and th
 Weaknesses:
 
 + Need to host studios ourselves. 
-+ Harder to share content accross datasets if ever needed.
++ Harder to share content across datasets if ever needed.
 
 Costs:
 
