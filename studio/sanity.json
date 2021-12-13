@@ -3,6 +3,33 @@
   "project": {
     "name": "Equinor"
   },
+  "__experimental_spaces": [
+    {
+      "name": "production",
+      "title": "Original content",
+      "default": true,
+      "api": {
+        "projectId": "h61q9gi9",
+        "dataset": "production"
+      }
+    },
+    {
+      "name": "development",
+      "title": "Test with no history (development)",
+      "api": {
+        "projectId": "h61q9gi9",
+        "dataset": "development"
+      }
+    },
+    {
+      "name": "production_global",
+      "title": "Global production, empty",
+      "api": {
+        "projectId": "h61q9gi9",
+        "dataset": "production_global"
+      }
+    }
+  ],
   "api": {
     "projectId": "h61q9gi9",
     "dataset": "production"
