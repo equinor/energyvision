@@ -28,6 +28,10 @@ Unknowns:
 We do not know for certain what can be included in the current contract we have with Sanity at the moment. This solution would require six more studios, which is an instance of the editor interface, and parhaps double or triple the amount of datasets. 
 
 Some changes in how languages are handled in the both the web application and the Sanity Studio would be required, but most of the code base would remain the same. 
+
+Weaknesses:
+
++ Need to host studios ourselves. 
   
 Estimate: 5-7 days. 
 
