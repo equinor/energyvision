@@ -20,7 +20,7 @@ const menus = languages.map((lang) =>
     id: `${lang.name}-menu`,
     child: () =>
       S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
-        .title(`${lang.title}site menu`)
+        .title(`${lang.title} site menu`)
         .views([S.view.form()]),
   }),
 )
