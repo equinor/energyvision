@@ -48,7 +48,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
           style={
             {
               ...style,
-              '--card-gap': textOnly && 'var(--space-3xLarge)',
+              '--card-gap': textOnly ? 'var(--space-3xLarge)' : 'var(--space-large)',
               '--card-padding': textOnly ? 'var(--space-3xLarge) 0 var(--space-xLarge) 0' : '0 0 var(--space-xLarge) 0',
             } as CSSProperties
           }
