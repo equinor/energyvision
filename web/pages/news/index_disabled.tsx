@@ -12,8 +12,9 @@ import { getClient } from '../../lib/sanity.server'
 import type { NewsSchema, MenuData } from '../../types/types'
 import NewsCard from '../../pageComponents/cards/NewsCard'
 import PageHeader from '../../pageComponents/shared/Header'
-import { mapLocaleToLang } from '../../lib/localization'
+import { getNameFromLocale } from '../../lib/localization'
 import { SkipNavContent } from '@reach/skip-nav'
+import { newsSlugs } from './archive/index'
 
 const { Title, Header, Action } = Card
 
@@ -88,10 +89,7 @@ AllNews.getLayout = (page: AppProps) => {
     <Layout footerData={data?.footerData} preview={preview}>
       <PageHeader
         /*  @TODO: Fetch in a proper way */
-        slugs={{
-          en_GB: '/en/news',
-          nb_NO: '/no/nyheter',
-        }}
+        slugs={newsSlugs}
         data={data?.menuData}
       />
 
@@ -103,9 +101,10 @@ AllNews.getLayout = (page: AppProps) => {
 
 export async function getStaticProps({ preview = false, locale = 'en' }) {
   // const allPosts = overlayDrafts(await getClient(preview).fetch(indexQuery))
-  const allNews = await getClient(preview).fetch(allNewsQuery, { lang: mapLocaleToLang(locale) })
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
+  const langName = getNameFromLocale(locale)
+  const allNews = await getClient(preview).fetch(allNewsQuery, { lang: langName })
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: langName })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: langName })
   return {
     props: {
       preview,

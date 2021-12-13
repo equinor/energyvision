@@ -9,7 +9,7 @@ import { Heading, Link, List } from '@components'
 import { menuQuery } from '../../../lib/queries/menu'
 import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
-import { mapLocaleToLang } from '../../../lib/localization'
+import { getNameFromLocale } from '../../../lib/localization'
 import styled from 'styled-components'
 import Header from '../../../pageComponents/shared/Header'
 import { Layout } from '../../../pageComponents/shared/Layout'
@@ -30,6 +30,12 @@ type AllArchivedNewsProps = {
     menuData: MenuData
   }
 }
+
+/* TODO: Implement dynamic routes for news */
+export const newsSlugs = [
+  { slug: '/en/news/archive', lang: 'en_GB' },
+  { slug: '/no/nyheter/arkiv', lang: 'nb_NO' },
+]
 
 export default function AllArchivedNews({ data }: AllArchivedNewsProps) {
   const router = useRouter()
@@ -85,14 +91,10 @@ AllArchivedNews.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data } = props
-  const slugs = {
-    en_GB: '/en/news/archive',
-    nb_NO: '/no/nyheter/arkiv',
-  }
+
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={slugs} data={data?.menuData} />
-
+      <Header slugs={newsSlugs} data={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>
@@ -120,8 +122,11 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     // @TODO: Revisit with i18n
     .filter((pagePath) => pagePath.startsWith(`/${locale}`))
     .map((pagePath) => sanitizeNewsURL(pagePath))
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
+
+  const langName = getNameFromLocale(locale)
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: langName })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: langName })
+
   return {
     props: {
       data: { newsList, menuData, footerData },

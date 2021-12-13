@@ -11,7 +11,7 @@ import { menuQuery } from '../../../lib/queries/menu'
 import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
-import { mapLocaleToLang } from '../../../lib/localization'
+import { getNameFromLocale } from '../../../lib/localization'
 import Header from '../../../pageComponents/shared/Header'
 
 import type { MenuData } from '../../../types/types'
@@ -20,6 +20,7 @@ import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
+import { newsSlugs } from './index'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -125,21 +126,16 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data } = props
-  const slugs = {
-    en_GB: '/en/news/archive',
-    nb_NO: '/no/nyheter/arkiv',
-  }
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={slugs} data={data?.menuData} />
-
+      <Header slugs={newsSlugs} data={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale = 'en' }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale }) => {
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
@@ -157,8 +153,9 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
     pageData = null
   }
 
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
+
   return {
     props: {
       data: {

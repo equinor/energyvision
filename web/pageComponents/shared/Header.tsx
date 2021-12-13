@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Topbar, Button, LogoSecondary } from '@components'
-import { LocalizationSwitch } from './LocalizationSwitch'
+import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import { Icon } from '@equinor/eds-core-react'
@@ -69,10 +69,7 @@ const StyledButton = styled(Button)`
 
 export type HeaderProps = {
   data?: MenuData
-  slugs?: {
-    en_GB: string
-    nb_NO: string
-  }
+  slugs: AllSlugsType
 }
 
 const Header = ({ slugs, data }: HeaderProps) => {
@@ -102,7 +99,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
               </StyledButton>
             </NextLink>
 
-            {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} {...slugs} />}
+            {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
             <SiteMenu data={data} />
           </ControlsContainer>

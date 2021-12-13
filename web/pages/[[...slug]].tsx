@@ -14,7 +14,7 @@ import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 /* import { usePreviewSubscription } from '../lib/sanity' */
 import { Layout } from '../pageComponents/shared/Layout'
-import { mapLocaleToLang } from '../lib/localization'
+import { getNameFromLocale, DEFAULT_LANGUAGE } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -82,31 +82,24 @@ Page.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data, preview } = props
-
-  const slugs = {
-    en_GB: data?.pageData?.allSlugs?.en_GB,
-    nb_NO: data?.pageData?.allSlugs?.nb_NO,
-  }
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={slugs} data={data?.menuData} />
-
+      <Header slugs={data?.pageData?.allSlugs} data={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
+export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = DEFAULT_LANGUAGE.locale }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
   const data = query && (await getClient(preview).fetch(query, queryParams))
 
   const pageData = filterDataToSingleItem(data, preview) || null
 
   // @TODO Let's do it simple stupid and iterate later on
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
-
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
   if ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news)) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
@@ -144,10 +137,11 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 }
 
 export const getTopicRoutesForLocale = async (locale: string) => {
-  const lang = mapLocaleToLang(locale)
+  const lang = getNameFromLocale(locale)
   const data = await sanityClient.fetch(groq`*[_type == "route_" + $lang && defined(slug.current)][].slug.current`, {
     lang,
   })
+  // console.log(data)
   return data
 }
 

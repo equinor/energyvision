@@ -2,10 +2,16 @@ import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
 import { outlineTemplate, Tokens } from '@utils'
 import { useWindowSize } from '@reach/window-size'
+import { LANGUAGES } from '../../lib/localization'
 
 const { outline } = Tokens
 
 const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const StyledDiv = styled.div`
   display: flex;
   align-items: center;
 `
@@ -64,9 +70,10 @@ const StyledLink = styled.a`
   }
 `
 
+export type AllSlugsType = { slug: string; lang: string }[]
+
 export type LocalizationSwitchProps = {
-  en_GB: string
-  nb_NO: string
+  allSlugs: AllSlugsType
   activeLocale: string
 }
 
@@ -98,20 +105,32 @@ const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, wi
 
 // @TODO: how to handle cases where no translation available
 // should this redirect to front page? should there be a message in that case?
-export const LocalizationSwitch = ({ en_GB, nb_NO, activeLocale, ...rest }: LocalizationSwitchProps) => {
+export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
   const { width } = useWindowSize()
 
-  if (!en_GB || !nb_NO) return null
+  if (allSlugs.length === 0) return null
 
   return (
     <Wrapper {...rest}>
-      <LocaleLink href={en_GB} title="Switch to English" locale="en" active={activeLocale === 'en'} width={width}>
-        EN
-      </LocaleLink>
-      {width > BREAKPOINT ? '|' : null}
-      <LocaleLink href={nb_NO} title="Switch to Norwegian" locale="no" active={activeLocale === 'no'} width={width}>
-        NO
-      </LocaleLink>
+      <>
+        {allSlugs.map((obj, key) => {
+          const languageObj = LANGUAGES.find((language) => language.name === obj.lang)
+          return (
+            <StyledDiv key={obj.lang}>
+              <LocaleLink
+                href={obj.slug}
+                title={`Switch to ${languageObj?.title}`}
+                locale={`${languageObj?.locale}`}
+                active={activeLocale === `${languageObj?.locale}`}
+                width={width}
+              >
+                <span style={{ textTransform: 'uppercase' }}>{languageObj?.locale}</span>
+              </LocaleLink>
+              {key + 1 < allSlugs.length && width > BREAKPOINT && '|'}
+            </StyledDiv>
+          )
+        })}
+      </>
     </Wrapper>
   )
 }

@@ -1,4 +1,5 @@
 import getConfig from 'next/config'
+import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 
 const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
@@ -10,7 +11,7 @@ const getContentUrl = (locale: string, slug: string) => {
   return `${archiveSeverURL}/${locale}/${slug.replace(/\/$/, '')}.json`
 }
 
-const getLocalizedSlugs = async (locale: string, slug: string) => {
+const getLocalizedSlugs = async (locale: string, slug: string): Promise<AllSlugsType> => {
   const localePath = locale === 'en' ? 'no' : 'en'
   const contentUrl = getContentUrl(localePath, slug)
   const response = await fetch(contentUrl)
@@ -22,20 +23,29 @@ const getLocalizedSlugs = async (locale: string, slug: string) => {
       .join('/')
 
     if (!path)
-      return {
-        en_GB: `en`,
-        nb_NO: `no`,
-      }
-    return {
-      en_GB: `en/${path}`,
-      nb_NO: `no/${path}`,
-    }
+      return [
+        {
+          slug: 'en',
+          lang: 'en_GB',
+        },
+        {
+          slug: 'no',
+          lang: 'nb_NO',
+        },
+      ]
+    return [
+      {
+        slug: `en/${path}`,
+        lang: 'en_GB',
+      },
+      {
+        slug: `no/${path}`,
+        lang: 'nb_NO',
+      },
+    ]
   }
 
-  return {
-    en_GB: null,
-    nb_NO: null,
-  }
+  return []
 }
 
 export const getArchivedPageData = async (locale: string, slug: string) => {

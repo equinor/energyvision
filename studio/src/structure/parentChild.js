@@ -23,7 +23,7 @@ const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview)
 
 export default function parentChild(schema = 'route') {
   const topicRoutes = languages.map((lang) =>
-    S.listItem().title(`${lang.title} routes`).child(routeStructure(schema, lang.name)),
+    S.listItem().title(`${lang.title} routes`).icon(lang.flag).child(routeStructure(schema, lang.name)),
   )
 
   return S.listItem()
