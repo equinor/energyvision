@@ -15,7 +15,6 @@ export const previewClient = createClient({
 })
 
 export const getClient = (preview: boolean) => (preview ? previewClient : sanityClient)
-// export const getClient = (preview: boolean) => (preview ? previewClient : previewClient)
 
 /* export function overlayDrafts(docs) {
   const documents = docs || []
