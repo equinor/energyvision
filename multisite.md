@@ -37,6 +37,7 @@ Weaknesses:
 Costs:
 
 Extra datasets: 20 USD per dataset.
+
 Deployment costs (8 production studios + 8 production apps) + ? testing environments: Unknown
 
 
