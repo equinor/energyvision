@@ -28,6 +28,14 @@
         "projectId": "h61q9gi9",
         "dataset": "production_global"
       }
+    },
+    {
+      "name": "production-export",
+      "title": "Export from production",
+      "api": {
+        "projectId": "h61q9gi9",
+        "dataset": "production-export"
+      }
     }
   ],
   "api": {
