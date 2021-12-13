@@ -17,10 +17,11 @@ import { languages } from './schemas/languages'
 const menus = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} menu`,
-    id: `${lang.name}-menu`,
+    id: `menu-${lang.id}`,
     child: () =>
       S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
         .title(`${lang.title} site menu`)
+        .id(`${lang.id}-menu`)
         .views([S.view.form()]),
   }),
 )
