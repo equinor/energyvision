@@ -141,7 +141,7 @@ export const getTopicRoutesForLocale = async (locale: string) => {
   const data = await sanityClient.fetch(groq`*[_type == "route_" + $lang && defined(slug.current)][].slug.current`, {
     lang,
   })
-  // console.log(data)
+
   return data
 }
 
