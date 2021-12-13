@@ -4,8 +4,8 @@ import documentStore from 'part:@sanity/base/datastore/document'
 import RoutePreview from '../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../icons'
-import GreatBritain from '../../icons/GreatBritain'
-import Norway from '../../icons/Norway'
+
+import { languages } from '../../schemas/languages'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -20,19 +20,16 @@ import Norway from '../../icons/Norway'
 const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview).title('Preview')]
 // Original version without preview pane
 // const views = [S.view.form()]
+
 export default function parentChild(schema = 'route') {
+  const topicRoutes = languages.map((lang) =>
+    S.listItem().title(`${lang.title} routes`).child(routeStructure(schema, lang.name)),
+  )
+
   return S.listItem()
     .title('Topic Routes')
     .icon(RouteDocuments)
-    .child(
-      S.list()
-        .id('routes')
-        .title('Routes')
-        .items([
-          S.listItem().title('English routes').icon(GreatBritain).child(routeStructure(schema, 'en_GB')),
-          S.listItem().title('Norwegian routes').icon(Norway).child(routeStructure(schema, 'nb_NO')),
-        ]),
-    )
+    .child(S.list().id('routes').title('Routes').items(topicRoutes))
 }
 
 function routeStructure(schema, isoCode) {

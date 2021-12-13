@@ -5,6 +5,7 @@ import { validateRequiredIfVisible } from '../../validations/validateRequiredIfV
 
 import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
+import { routes } from '../../languages'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -29,8 +30,7 @@ const defaultReferenceTargets: ReferenceTarget[] = [
   {
     type: 'news',
   },
-  { type: 'route_en_GB' },
-  { type: 'route_nb_NO' },
+  ...routes,
 ]
 
 export default {

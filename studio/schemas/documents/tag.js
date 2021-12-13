@@ -1,28 +1,25 @@
-import { languages } from "../languages"
-
+import { languages } from '../languages'
 
 //takes every allowed language and makes a string field for each
-const localeStrings = languages.map(lang => ({
+const localeStrings = languages.map((lang) => ({
   name: lang.name,
-  type: "string",
+  type: 'string',
   title: lang.title,
   validation: (Rule) => Rule.required(),
-}));
+}))
 
-
+const title = `title.${languages[0].name}`
 
 export default {
   type: 'document',
   name: `tag`,
   title: `Tag`,
   fields: [
-   
-   
     {
       type: 'object',
       name: 'title',
       title: 'Title',
-      fields: localeStrings
+      fields: localeStrings,
     },
     {
       title: 'Key',
@@ -32,44 +29,27 @@ export default {
       validation: (Rule) => Rule.required(),
 
       options: {
-        source: 'title.en_GB',
-        slugify: input => input
-                             .toLowerCase()
-                             .replace(/\s+/g, '-')
-                             
-      }
-    }
+        source: title,
+        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-'),
+      },
+    },
   ],
   orderings: [
     {
       title: 'Title descending',
       name: 'titleDesc',
-      by: [
-        {field: 'title.en_GB', direction: 'desc'}
-      ]
+      by: [{ field: title, direction: 'desc' }],
     },
     {
       title: 'Title ascending',
       name: 'titleDesc',
-      by: [
-        {field: 'title.en_GB', direction: 'asc'}
-      ]
+      by: [{ field: title, direction: 'asc' }],
     },
-  
-    
   ],
 
   preview: {
     select: {
-      title: 'title.en_GB',
-      subtitle: 'title.nb_NO'
+      title: title,
     },
-    prepare(selection) {
-      const {title, subtitle} = selection
-      return {
-        title: title,
-        subtitle: `Norwegian: ${subtitle }`
-      }
-    }
-  }
+  },
 }

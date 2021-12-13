@@ -5,6 +5,7 @@ import blocksToText from '../../../helpers/blocksToText'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
 import type { Block, Rule, Image } from '@sanity/types'
+import { routes } from '../../languages'
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -37,7 +38,7 @@ export default {
               name: 'reference',
               description: 'Select the topic you want to promote',
               type: 'reference',
-              to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+              to: routes,
               options: {
                 filter: ({ document }: { document: any }) => ({
                   filter: `_type == $routeLang `,

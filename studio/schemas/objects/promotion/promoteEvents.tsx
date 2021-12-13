@@ -2,6 +2,7 @@ import React from 'react'
 
 import type { Rule, Reference, ValidationContext, Block } from '@sanity/types'
 import blocksToText from '../../../helpers/blocksToText'
+import { routes } from '../../languages'
 
 // @TODO: How to do tags
 const eventTags = [
@@ -52,7 +53,7 @@ export default {
         {
           title: 'Add event',
           type: 'reference',
-          to: [{ type: 'route_en_GB' }, { type: 'route_nb_NO' }],
+          to: routes,
           options: {
             filter: ({ document }: { document: any }) => ({
               filter: `_type == $routeLang && content->_type == "event"`,
