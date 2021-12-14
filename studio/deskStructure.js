@@ -20,19 +20,19 @@ const menus = languages.map((lang) =>
     icon: lang.flag,
     child: () =>
       S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
-        .title(`${lang.title} site menu`)
-        .id(`${lang.id}-menu`),
+        .id(`${lang.id}-menu`)
+        .title(`${lang.title} site menu`),
   }),
 )
 
 const footers = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} footer`,
-    id: `${lang.name}-footer-list-item`,
+    id: `footer-${lang.id}`,
     icon: lang.flag,
     child: () =>
       S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
-        .id(`${lang.name}-footer`)
+        .id(`${lang.id}-footer`)
         .title(`${lang.title} footer`)
         .views([S.view.form()]),
   }),
