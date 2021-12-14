@@ -62,6 +62,7 @@ const LinkField = {
           filter: `_type == $routeLang || _type == 'news'`,
           params: { routeLang: `route_${document._lang}` },
         }),
+        disableNew: true,
       },
       hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === true,
     },
