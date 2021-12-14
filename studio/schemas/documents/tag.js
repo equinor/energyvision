@@ -50,12 +50,10 @@ export default {
   preview: {
     select: {
       title: title,
-      test: 'title',
     },
     prepare(selection) {
-      const { title, test } = selection
+      const { title } = selection
       // For debugging purposes
-      console.log('title', title, test)
       return {
         title: title,
       }
