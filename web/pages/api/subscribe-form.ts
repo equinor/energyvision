@@ -1,6 +1,7 @@
 import { signUp } from '../../components/utils/subscription'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default function handler(req, res) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const data = req.body
   signUp(data).then((isSuccessful) => {
     if (!isSuccessful) {

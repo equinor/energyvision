@@ -62,7 +62,7 @@ const ErrorStyledDiv = styled.div`
 const StyledIcon = styled(Icon)`
   margin-left: var(--space-small);
 `
-const StyledSpan = styled.span`
+const StyledLegend = styled.legend`
   font-weight: var(--fontWeight-regular);
   font-size: var(--typeScale-2);
 `
@@ -124,10 +124,14 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
         {/* @TODO Norwegian translations for labels and button text*/}
         <form onSubmit={handleSubmit(onSubmit)}>
           <StyledFieldset>
-            {!errors.categories && <StyledSpan>Please choose one or more of the following </StyledSpan>}
+            {!errors.categories && (
+              <StyledLegend id="atleast-one-category-required">
+                Please choose one or more of the following{' '}
+              </StyledLegend>
+            )}
             {errors.categories && (
               <ErrorStyledDiv role="alert" id="atleast-one-category-required">
-                <span>Please choose one or more of the following</span>
+                <StyledLegend>Please choose one or more of the following</StyledLegend>
                 <StyledIcon data={error_filled} aria-hidden="true" />
               </ErrorStyledDiv>
             )}
@@ -141,6 +145,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   {...register('categories', {
                     validate: (values) => values.length > 0,
                   })}
+                  aria-required
                   aria-invalid={errors.categories ? 'true' : 'false'}
                 />
               </li>
@@ -150,6 +155,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="magazineStories"
+                  aria-required
                   {...register('categories')}
                 />
               </li>
@@ -159,6 +165,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   value="stockMarketAnnouncements"
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
+                  aria-required
                   {...register('categories')}
                 />
               </li>
@@ -168,6 +175,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="crudeOilAssays"
+                  aria-required
                   {...register('categories')}
                 />
               </li>
@@ -177,6 +185,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="loopStories"
+                  aria-required
                   {...register('categories')}
                 />
               </li>
@@ -186,6 +195,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="all"
+                  aria-required
                   {...register('categories')}
                 />
               </li>
@@ -204,6 +214,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   id={props.name}
                   label="First Name"
                   inputRef={ref}
+                  aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   variant={invalid ? 'error' : 'default'}
@@ -231,6 +242,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
+                  aria-required="true"
                   variant={invalid ? 'error' : 'default'}
                   aria-invalid={invalid ? 'true' : 'false'}
                 />
