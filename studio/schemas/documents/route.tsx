@@ -57,6 +57,7 @@ export default (isoCode: string, title: string) => {
         // Two level url structure only for the time being?
         options: {
           filter: '!defined(parent)',
+          disableNew: true,
         },
       },
       {

@@ -80,6 +80,7 @@ export default {
           filter: `_type == $routeLang`,
           params: { routeLang: `route_${document._lang}` },
         }),
+        disableNew: true,
       },
       hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === true,
     },
@@ -131,6 +132,7 @@ export default {
           filter: `title != $title && (_type == $routeLang || _type == 'news')`,
           params: { routeLang: `route_${_lang}`, title, lang: _lang },
         }),
+        disableNew: true,
       },
     },
     {
