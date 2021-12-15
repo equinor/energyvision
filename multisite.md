@@ -13,7 +13,7 @@ Duplication
 -------------
 
 In this solution, one would make multiple instances of the same codebase, both for the web application and the Sanity Studio. 
-One would make use of enviroment variables and configurations to have each instance of the application query different datasets at runtime, which would each belong to one website.
+One would make use of environment variables and configurations to have each instance of the application query different datasets at runtime, which would each belong to one website.
 
 
 Strengths: 
