@@ -44,6 +44,7 @@ export default {
                   filter: `_type == $routeLang `,
                   params: { routeLang: `route_${document._lang}` },
                 }),
+                disableNew: true,
               },
             },
             {

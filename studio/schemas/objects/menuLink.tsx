@@ -43,6 +43,7 @@ export default {
           filter: `_type == $routeLang`,
           params: { routeLang: `route_${document._lang}` },
         }),
+        disableNew: true,
       },
       validation: (Rule: Rule) =>
         Rule.custom((route: Reference, context: ValidationContext) => {

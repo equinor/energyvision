@@ -2,6 +2,7 @@ const defaults = { nonTextBehavior: 'remove' }
 
 const blocksToText = (blocks: any[], opts = {}): string => {
   const options = Object.assign({}, defaults, opts)
+  if (!blocks) return ''
   return blocks
     .map((block) => {
       if (block._type !== 'block' || !block.children) {

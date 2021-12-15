@@ -51,5 +51,12 @@ export default {
     select: {
       title: title,
     },
+    prepare(selection) {
+      const { title } = selection
+      // For debugging purposes
+      return {
+        title: title,
+      }
+    },
   },
 }

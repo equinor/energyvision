@@ -7,11 +7,14 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
+/* @TODO: See #634 This should use a background container */
 
 const PageQuote = ({ data }: { data: QuoteData }) => (
-  <Container>
-    <Quote data={data} />
-  </Container>
+  <div className="background-none">
+    <Container>
+      <Quote data={data} />
+    </Container>
+  </div>
 )
 
 export default PageQuote

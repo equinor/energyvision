@@ -59,6 +59,7 @@ export default {
               filter: `_type == $routeLang && content->_type == "event"`,
               params: { routeLang: `route_${document._lang}` },
             }),
+            disableNew: true,
           },
         },
       ],

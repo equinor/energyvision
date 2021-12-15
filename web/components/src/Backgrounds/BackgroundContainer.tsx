@@ -6,24 +6,29 @@ import type { BackgroundColours } from '../../../types/types'
 
 export type BackgroundContainerProps = {
   background?: BackgroundColours
+  disableContainerWrapper?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 type ColourContainerProps = {
   styleVariant?: StyleVariants
   isInverted: boolean
+  colourWrapper: string
 }
 
-const ColourContainer = styled.div.attrs<ColourContainerProps>(
-  ({ isInverted }) =>
-    isInverted && {
-      className: 'inverted-background',
-    },
+const ColourContainer = styled.div.attrs<ColourContainerProps>(({ isInverted, colourWrapper }) =>
+  isInverted
+    ? {
+        className: `inverted-background ${colourWrapper}`,
+      }
+    : {
+        className: colourWrapper,
+      },
 )<ColourContainerProps>`
   background-color: var(--background-color);
 `
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background = 'White', style, children, ...rest },
+  { background = 'White', disableContainerWrapper = false, style, children, ...rest },
   ref,
 ) {
   // @TODO: Find a better way with task #334
@@ -43,6 +48,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   return (
     <ColourContainer
       isInverted={isInverted}
+      colourWrapper={disableContainerWrapper ? '' : `background-${styleVariant}`}
       style={{ ...style, '--background-color': backgrounds[styleVariant] } as CSSProperties}
       ref={ref}
       {...rest}

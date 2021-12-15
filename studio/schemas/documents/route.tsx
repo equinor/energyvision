@@ -42,6 +42,7 @@ export default (isoCode: string, title: string) => {
         options: {
           filter: '_lang == $lang',
           filterParams: { lang: `${isoCode}` },
+          disableNew: true,
         },
       },
 
@@ -56,6 +57,7 @@ export default (isoCode: string, title: string) => {
         // Two level url structure only for the time being?
         options: {
           filter: '!defined(parent)',
+          disableNew: true,
         },
       },
       {
