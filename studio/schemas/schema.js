@@ -54,6 +54,7 @@ import promoteEvents from './objects/promotion/promoteEvents'
 import subscribeForm from './objects/subscribeForm'
 import contactList from './objects/contactList'
 import eventDate from './objects/eventDate'
+import table from './objects/table'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -111,5 +112,6 @@ export default createSchema({
     event,
     eventDate,
     contactList,
+    table,
   ]),
 })
