@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@components'
 import { blocksToText } from '../../common/helpers'
-import { Icon } from '@equinor/eds-core-react'
-import { add } from '@equinor/eds-icons'
+
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 
