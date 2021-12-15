@@ -31,6 +31,8 @@ Some changes in how languages are handled in the both the web application and th
 
 While the global site is using a complex menu structure to fit its needs, the satellite pages will probably need a simpler solution to navigation, which will be a difference between the two solutions. 
 
+The global site has static, archived content, which will be automatically included in the satellite pages as well, with todays code base. We would need a way to hide or not load that type of content for satellites.  
+
 Weaknesses:
 
 + Need to host studios ourselves. 
@@ -40,6 +42,7 @@ Costs:
 
 Extra datasets: 20 USD per dataset.
 
+The price of several Radix deployments
 Deployment costs (8 production studios + 8 production apps) + ? testing environments: Unknown
 
 
