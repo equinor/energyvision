@@ -5,7 +5,7 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import CharCounterEditor from '../components/CharCounterEditor'
 
-import type { Rule, Block } from '@sanity/types'
+import { Rule, Block, isTitledListValue } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Table = {
@@ -24,6 +24,26 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
+
+const headerCellContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  attachment: false,
+  lists: false,
+})
+const tableCellContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  lists: false,
+  attachment: true,
+})
+
 const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
 const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
 export default {
@@ -57,7 +77,90 @@ export default {
       inputComponent: CharCounterEditor,
       of: [ingressContentType],
     },
+    {
+      name: 'tableHeaders',
+      title: 'Table headers',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          title: 'Header cell',
+          fields: [
+            {
+              name: 'headerCell',
+              type: 'array',
+              inputComponent: CharCounterEditor,
+              of: [headerCellContentType],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'tableRows',
+      title: 'Table rows',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          title: 'Table row',
 
+          fields: [
+            {
+              name: 'row',
+              type: 'array',
+              of: [
+                { type: 'linkSelector', title: 'Link' },
+                { type: 'downloadableFile', title: 'Downloadable file' },
+              ],
+            },
+          ],
+          preview: {
+            select: {
+              cellOne: 'row.0',
+              cellTwo: 'row.1',
+              cellThree: 'row.2',
+              cellFour: 'row.3',
+              numberOfCells: 'row.length',
+            },
+            prepare({
+              cellOne,
+              cellTwo,
+              cellThree,
+              cellFour,
+              numberOfCells,
+            }: {
+              cellOne: any
+              cellTwo: any
+              cellThree: any
+              cellFour: any
+              numberOfCells: number
+            }) {
+              const getText = (cellContent: any) => {
+                if (cellContent._type === 'linkSelector') {
+                  return cellContent.label
+                } else if (cellContent._type === 'downloadableFile') {
+                  return cellContent.filename
+                }
+              }
+
+              const plainTitleOne = cellOne ? getText(cellOne) : undefined
+              const plainTitleTwo = cellTwo ? getText(cellTwo) : undefined
+              const plainTitleThree = cellThree ? getText(cellThree) : undefined
+              const plainTitleFour = cellFour ? getText(cellFour) : undefined
+              const hasMoreCells = Boolean(plainTitleFour)
+              const titles = [plainTitleOne, plainTitleTwo, plainTitleThree].filter(Boolean)
+              const titleTexts = titles.length > 0 ? `${titles.join(' | ')}` : ''
+              const title = hasMoreCells ? `${titleTexts}...` : titleTexts
+              return {
+                title: title,
+                subtitle: `Row with ${numberOfCells} table cells`,
+              }
+            },
+          },
+        },
+      ],
+    },
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

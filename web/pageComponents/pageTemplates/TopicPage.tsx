@@ -16,6 +16,7 @@ import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../shared/IFrame'
 import RemitTable from '../shared/RemitTable'
 import Promotion from '../topicPages/Promotion'
+import Table from '../topicPages/Table'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
@@ -35,6 +36,7 @@ import {
   PromotionData,
   RemitTableData,
   SubscribeFormData,
+  TableData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -100,6 +102,7 @@ type ComponentProps =
   | RemitTableData
   | PromotionData
   | SubscribeFormData
+  | TableData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -138,6 +141,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <Promotion key={c.id} data={c as PromotionData} />
       case 'subscribeForm':
         return <SubscribeForm key={c.id} data={c as SubscribeFormData} />
+      case 'table':
+        return <Table key={c.id} data={c as TableData} />
       default:
         return null
     }
