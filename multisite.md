@@ -29,6 +29,8 @@ We do not know for certain what can be included in the current contract we have 
 
 Some changes in how languages are handled in the both the web application and the Sanity Studio would be required, but most of the code base would remain the same. 
 
+While the global site is using a complex menu structure to fit its needs, the satellite pages will probably need a simpler solution to navigation, which will be a difference between the two solutions. 
+
 Weaknesses:
 
 + Need to host studios ourselves. 
@@ -39,6 +41,8 @@ Costs:
 Extra datasets: 20 USD per dataset.
 
 Deployment costs (8 production studios + 8 production apps) + ? testing environments: Unknown
+
+
 
 
 
