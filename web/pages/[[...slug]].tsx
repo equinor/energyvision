@@ -84,7 +84,7 @@ Page.getLayout = (page: AppProps) => {
   const { data, preview } = props
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={data?.pageData?.allSlugs} data={data?.menuData} />
+      <Header slugs={data?.pageData?.slugs?.allSlugs} data={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>

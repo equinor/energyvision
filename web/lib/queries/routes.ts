@@ -3,9 +3,11 @@ import { landingPageContentFields } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
 
 const allSlugsQuery = /* groq */ `
-  "allSlugs": *[_type in ['page', 'landingPage', 'event'] && (_id match ^.content._ref + "*" || ^.content._ref match _id + "*")] {
-     "slug": *[_type match "route*" && content._ref == ^._id][0].slug.current,
-     "lang": *[_type match "route*" && content._ref == ^._id][0].content->_lang
+  "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
+    "allSlugs": *[_type in ['page', 'landingPage', 'event'] && _id match ^._id + "*"] {
+       "slug": *[_type match "route*" && content._ref == ^._id][0].slug.current,
+       "lang": *[_type match "route*" && content._ref == ^._id][0].content->_lang
+    }
   }`
 
 export const pageQuery = /* groq */ `
