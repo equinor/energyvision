@@ -37,6 +37,18 @@ export default {
         accept: '.pdf,.xls,.xlsx,.csv',
       },
     },
+    {
+      title: 'Tags',
+      name: 'tagReference',
+      type: 'array',
+      description: 'Adds tags to asset file',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'assetTag' }],
+        },
+      ],
+    },
   ],
   preview: {
     select: {

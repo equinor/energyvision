@@ -19,6 +19,7 @@ import tag from './documents/tag'
 import countryTag from './documents/countryTag'
 import event from './documents/event'
 import assetFile from './documents/assetFile'
+import assetTag from './documents/assetTag'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -115,5 +116,6 @@ export default createSchema({
     contactList,
     table,
     assetFile,
+    assetTag,
   ]),
 })

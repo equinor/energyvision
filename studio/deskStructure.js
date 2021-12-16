@@ -1,9 +1,19 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { TopicDocuments, NewsDocuments, MenuIcon, LibraryIcon, PdfIcon, ExcelIcon, FileIcon } from './icons'
+import {
+  TopicDocuments,
+  NewsDocuments,
+  MenuIcon,
+  LibraryIcon,
+  PdfIcon,
+  ExcelIcon,
+  FileIcon,
+  TagMoreIcon,
+} from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
+import assetTagFilters from './src/structure/assetTagFilters'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
@@ -61,6 +71,12 @@ const AssetLibrary = [
         .title('All Excel files')
         .filter('_type == "assetFile" && asset.asset->extension in ["xls", "xlsx", "csv"]'),
     ),
+  assetTagFilters(),
+  S.divider(),
+  S.listItem()
+    .title('Manage file tags')
+    .icon(TagMoreIcon)
+    .child(S.documentTypeList('assetTag').id('manageAssetTags').title('Manage asset tags')),
 ]
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -198,6 +214,30 @@ export const getDefaultDocumentNode = (props) => {
           useDraft: false,
         })
         .title('Connected routes'),
+    ])
+  } else if (schemaType === 'assetFile') {
+    return S.document().views([
+      S.view.form(),
+      S.view
+        .component(DocumentsPane)
+        .options({
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type in ["news", "event", "page"]]`,
+          params: { id: `_id` },
+          useDraft: false,
+        })
+        .title('References'),
+    ])
+  } else if (schemaType === 'assetTag') {
+    return S.document().views([
+      S.view.form(),
+      S.view
+        .component(DocumentsPane)
+        .options({
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type match "assetFile"]`,
+          params: { id: `_id` },
+          useDraft: false,
+        })
+        .title('References'),
     ])
   }
 
