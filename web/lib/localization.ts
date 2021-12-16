@@ -13,6 +13,12 @@ export const LANGUAGES = [
     title: 'Norwegian',
     locale: 'no',
   },
+  {
+    iso: 'pt-BR',
+    name: 'pt_BR',
+    title: 'Portuguese',
+    locale: 'pt',
+  },
 ]
 
 export const getNameFromLocale = (locale: string | undefined): string => {

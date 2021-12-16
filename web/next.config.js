@@ -18,7 +18,7 @@ module.exports = withBundleAnalyzer({
     domains: ['cdn.sanity.io'],
   },
   i18n: {
-    locales: ['no', 'en'],
+    locales: ['no', 'en', 'pt'],
     defaultLocale: 'en',
     localeDetection: false,
   },

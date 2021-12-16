@@ -34,6 +34,7 @@ type CustomAppProps<P = {}> = AppProps<P> & {
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
+
   // Add region part for react-intl
   const defaultLocale = getIsoFromLocale(router.defaultLocale)
   const locale = getIsoFromLocale(router.locale)
