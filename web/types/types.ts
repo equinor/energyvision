@@ -315,8 +315,7 @@ export type Tag = {
     current: string
   }
   title: {
-    en_GB: string
-    nb_NO: string
+    [key: string]: string
   }
 }
 
