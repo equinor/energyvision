@@ -83,6 +83,7 @@ export default {
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
+        { type: 'table' },
         { type: 'stockValuesApi' },
         { type: 'iframe' },
         { type: 'remitTable' },

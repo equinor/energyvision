@@ -282,6 +282,25 @@ const pageContentFields = /* groq */ `
       "background": coalesce(background.title, 'none'),
     },
   },
+  _type == "table" => {
+    "type": _type,
+    "id": _key,
+    title[]{
+      ...,
+      ${markDefs}, 
+    },
+    ingress[]{
+      ...,
+      ${markDefs}, 
+    },
+    tableHeaders,
+    tableRows,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
+      "background": coalesce(background.title, 'none'),
+      height,
+    },
+  },
   _type == "subscribeForm" => {
     "type": _type,
     "id": _key,

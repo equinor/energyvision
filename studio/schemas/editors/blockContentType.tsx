@@ -109,6 +109,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
             filter: `_type == $routeLang || _type == 'news'`,
             params: { routeLang: `route_${document._lang}` },
           }),
+          disableNew: true,
         },
         validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
       },
@@ -126,7 +127,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
       {
         name: 'reference',
         type: 'reference',
-        to: [{ type: 'fileUpload' }],
+        to: [{ type: 'downloadableFile' }],
       },
     ],
   }

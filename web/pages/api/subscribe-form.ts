@@ -1,4 +1,4 @@
-import { signUp } from '../../components/utils/subscription'
+import { signUp } from './subscription'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

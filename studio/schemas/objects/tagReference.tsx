@@ -16,6 +16,7 @@ export default {
     {
       type: 'reference',
       to: [{ type: 'tag' }, { type: 'countryTag' }],
+      options: { disableNew: true },
     },
   ],
 }

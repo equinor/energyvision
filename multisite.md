@@ -29,6 +29,10 @@ We do not know for certain what can be included in the current contract we have 
 
 Some changes in how languages are handled in the both the web application and the Sanity Studio would be required, but most of the code base would remain the same. 
 
+While the global site is using a complex menu structure to fit its needs, the satellite pages will probably need a simpler solution to navigation, which will be a difference between the two solutions. 
+
+The global site has static, archived content, which will be automatically included in the satellite pages as well, with todays code base. We would need a way to hide or not load that type of content for satellites.  
+
 Weaknesses:
 
 + Need to host studios ourselves. 
@@ -38,7 +42,10 @@ Costs:
 
 Extra datasets: 20 USD per dataset.
 
+The price of several Radix deployments
 Deployment costs (8 production studios + 8 production apps) + ? testing environments: Unknown
+
+
 
 
 
@@ -48,7 +55,7 @@ One solution for global site, one for satellites
 The other solution we have drawn up is to make one studio and one web application for all the satellite pages. 
 This solution would have one Sanity Studio url for all the different satellite sites. New sites would be created in the Studio interface and added as a configuration to the web application. All the pages would also share web application. The application would listen for the url the user is coming from, and serve content based on that. Said web application would also, if needed, have the same functionality and components as the "global" page equinor.com .
 
-Strenghts: 
+Strengths: 
 
 + One interface and one login/url for all satellites. 
 + Possibly cheaper dataplan, if first solution makes the the contract with Sanity more expensive. 

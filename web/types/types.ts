@@ -186,6 +186,15 @@ export type TeaserData = {
   action: LinkData
   designOptions: DesignOptions
 }
+export type TableData = {
+  type: string
+  id: string
+  title: PortableTextEntry[]
+  ingress: PortableTextEntry[]
+  tableHeaders: any[]
+  tableRows: any[]
+  designOptions: DesignOptions
+}
 
 export type FullWidthImageData = {
   type: string
@@ -306,8 +315,7 @@ export type Tag = {
     current: string
   }
   title: {
-    en_GB: string
-    nb_NO: string
+    [key: string]: string
   }
 }
 

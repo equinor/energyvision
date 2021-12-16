@@ -268,3 +268,39 @@ export const MenuIcon = () => (
     <path fillRule="evenodd" clipRule="evenodd" d="M3 8V6h18v2H3zm0 5h18v-2H3v2zm0 5h18v-2H3v2z" />
   </svg>
 )
+
+export const LibraryIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M16 5.225c0 2.21-1.79 4-4 4s-4-1.79-4-4 1.79-4 4-4 4 1.79 4 4zm-2 0c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm-2 6.55c-2.36-2.2-5.52-3.55-9-3.55v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55v-11c-3.48 0-6.64 1.35-9 3.55zm0 8.4c2.07-1.52 4.47-2.48 7-2.82v-6.95c-2.1.38-4.05 1.35-5.64 2.83L12 14.505l-1.36-1.28A11.18 11.18 0 0 0 5 10.395v6.95a15.2 15.2 0 0 1 7 2.83z"
+    />
+  </svg>
+)
+
+export const PdfIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M8 2h12c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm0 14h12V4H8v12zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm12 3v3c0 .55-.45 1-1 1h-2V8h2c.55 0 1 .45 1 1zm-2 0h1v3h-1V9zm5 2h-1v2h-1V8h2v1h-1v1h1v1zm-9 0h1c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1H9v5h1v-2zm1-2h-1v1h1V9z"
+    />
+  </svg>
+)
+
+export const ExcelIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 3 2 5v14l12 2v-2h7a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-7V3zm-2 2.361V18.64l-8-1.332V6.693l8-1.332zM14 7h2v2h-2V7zm4 0h2v2h-2V7zM5.176 8.297l1.885 3.697L5 15.704h1.736l1.123-2.395c.075-.23.126-.4.15-.514h.016c.041.238.091.407.133.492l1.113 2.414H11l-1.994-3.734 1.937-3.67h-1.62l-1.03 2.197c-.1.285-.167.505-.201.647h-.026a4.519 4.519 0 0 0-.19-.63l-.923-2.214H5.176zM14 11h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2z" />
+  </svg>
+)
+
+export const FileIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M8 2h12c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zM2 6h2v14h14v2H4c-1.1 0-2-.9-2-2V6zm6 10V4h12v12H8zm10-7h-8v2h8V9zm-8 3h4v2h-4v-2zm8-6h-8v2h8V6z"
+    />
+  </svg>
+)

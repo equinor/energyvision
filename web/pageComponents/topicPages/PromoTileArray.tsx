@@ -37,38 +37,41 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
   if (!data.group) return null
 
   return (
-    <Container>
-      {data.group.map((tile: PromoTileData) => {
-        const { id, designOptions, image, title, action } = tile
-        const { background } = designOptions
+    <div className="background-none">
+      <Container>
+        {data.group.map((tile: PromoTileData) => {
+          const { id, designOptions, image, title, action } = tile
+          const { background } = designOptions
 
-        return (
-          <StyledBackgroundContainer background={background} key={id}>
-            <Card type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
-              {image && (
-                <Media>
-                  <ImageWithRoundedUpperCorners
-                    image={image}
-                    alt={image.alt}
-                    maxWidth={400}
-                    aspectRatio={0.8}
-                    layout="responsive"
-                  />
-                </Media>
-              )}
-              <Header>
-                <Title>{title}</Title>
-              </Header>
-              {action.label && (
-                <Action>
-                  <ButtonLink action={action} />
-                </Action>
-              )}
-            </Card>
-          </StyledBackgroundContainer>
-        )
-      })}
-    </Container>
+          return (
+            /* Sneaky little hack to make it work with the bg colour See #667 */
+            <StyledBackgroundContainer disableContainerWrapper={true} background={background} key={id}>
+              <Card type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
+                {image && (
+                  <Media>
+                    <ImageWithRoundedUpperCorners
+                      image={image}
+                      alt={image.alt}
+                      maxWidth={400}
+                      aspectRatio={0.8}
+                      layout="responsive"
+                    />
+                  </Media>
+                )}
+                <Header>
+                  <Title>{title}</Title>
+                </Header>
+                {action.label && (
+                  <Action>
+                    <ButtonLink action={action} />
+                  </Action>
+                )}
+              </Card>
+            </StyledBackgroundContainer>
+          )
+        })}
+      </Container>
+    </div>
   )
 }
 

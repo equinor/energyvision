@@ -16,6 +16,7 @@ import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../shared/IFrame'
 import RemitTable from '../shared/RemitTable'
 import Promotion from '../topicPages/Promotion'
+import Table from '../topicPages/Table'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
@@ -34,14 +35,29 @@ import {
   IFrameData,
   PromotionData,
   RemitTableData,
-  SubscribeFormData
+  SubscribeFormData,
+  TableData,
 } from '../../types/types'
-
 
 const TopicPageLayout = styled.main`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   /* @TODO: Find a good value here */
   --banner-paddingVertical: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
+
+  .background-one + .background-one,
+  .background-two + .background-two,
+  .background-three + .background-three,
+  .background-four + .background-four,
+  .background-five + .background-five,
+  .background-none + .background-none {
+    /* The teaser component uses an article element, so lets avoid that.
+    Would be more robust if we add a container for the padding :/ */
+    > section,
+    > figure,
+    > div:first-child {
+      padding-top: calc(var(--space-3xLarge) / 2);
+    }
+  }
 `
 
 const HeroBanner = styled.div`
@@ -86,6 +102,7 @@ type ComponentProps =
   | RemitTableData
   | PromotionData
   | SubscribeFormData
+  | TableData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -124,6 +141,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <Promotion key={c.id} data={c as PromotionData} />
       case 'subscribeForm':
         return <SubscribeForm key={c.id} data={c as SubscribeFormData} />
+      case 'table':
+        return <Table key={c.id} data={c as TableData} />
       default:
         return null
     }
