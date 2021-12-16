@@ -4,7 +4,7 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
 import styled from 'styled-components'
 
-const { Head, Row, Cell } = EnvisTable
+const { Head, Row, Cell, Body } = EnvisTable
 
 export const StyledTableWrapper = styled(BackgroundContainer)``
 
@@ -67,17 +67,17 @@ const Table = ({ data }: TableProps) => {
             </Row>
           </Head>
 
-          <tbody>
+          <Body>
             {tableRows.map((row) => {
               return (
-                <tr key={row._idx}>
+                <Row key={row._idx}>
                   {row?.row?.map((cell: any) => {
-                    return <td key={cell._key}>cell hei</td>
+                    return <Cell key={cell._key}>cell hei</Cell>
                   })}
-                </tr>
+                </Row>
               )
             })}
-          </tbody>
+          </Body>
         </EnvisTable>
       </TableContainer>
     </StyledTableWrapper>
