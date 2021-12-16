@@ -154,7 +154,7 @@ export default {
               const title = hasMoreCells ? `${titleTexts}...` : titleTexts
               return {
                 title: title,
-                subtitle: `Row with ${numberOfCells} table cells`,
+                subtitle: `Row with ${numberOfCells || '0'} table cells`,
               }
             },
           },

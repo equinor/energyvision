@@ -67,20 +67,8 @@ const Table = ({ data }: TableProps) => {
             {tableRows.map((row) => {
               return (
                 <tr key={row._idx}>
-                  {row.row.map((cell: any) => {
-                    console.log('cell', cell)
-                    return (
-                      <td key={cell._key}>
-                        <SimpleBlockContent
-                          blocks={cell.tableCell}
-                          serializers={{
-                            types: {
-                              block: BlockRenderer,
-                            },
-                          }}
-                        />
-                      </td>
-                    )
+                  {row?.row?.map((cell: any) => {
+                    return <td key={cell._key}>cell hei</td>
                   })}
                 </tr>
               )
