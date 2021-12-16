@@ -18,6 +18,7 @@ import footer from './documents/footer'
 import tag from './documents/tag'
 import countryTag from './documents/countryTag'
 import event from './documents/event'
+import assetFile from './documents/assetFile'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -113,5 +114,6 @@ export default createSchema({
     eventDate,
     contactList,
     table,
+    assetFile,
   ]),
 })

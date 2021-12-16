@@ -1,6 +1,6 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { TopicDocuments, NewsDocuments, MenuIcon } from './icons'
+import { TopicDocuments, NewsDocuments, MenuIcon, LibraryIcon, PdfIcon, ExcelIcon, FileIcon } from './icons'
 import GreatBritain from './icons/GreatBritain'
 import Norway from './icons/Norway'
 import NewsPreview from './src/previews/news/NewsPreview'
@@ -25,6 +25,32 @@ const menus = languages.map((lang) =>
         .views([S.view.form()]),
   }),
 )
+
+const AssetLibrary = [
+  S.listItem()
+    .title('All files')
+    .icon(FileIcon)
+    .child(S.documentTypeList('assetFile').id('allFiles').title('All files')),
+  S.divider(),
+  S.listItem()
+    .title('Show all PDF files')
+    .icon(PdfIcon)
+    .child(
+      S.documentTypeList('assetFile')
+        .id('pdfFiles')
+        .title('All PDF files')
+        .filter('_type == "assetFile" && asset.asset->extension == "pdf"'),
+    ),
+  S.listItem()
+    .title('Show all Excel files')
+    .icon(ExcelIcon)
+    .child(
+      S.documentTypeList('assetFile')
+        .id('excelFiles')
+        .title('All Excel files')
+        .filter('_type == "assetFile" && asset.asset->extension in ["xls", "xlsx", "csv"]'),
+    ),
+]
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default () => {
@@ -123,6 +149,11 @@ export default () => {
             }),
           ]),
       ),
+    S.divider(),
+    S.listItem()
+      .title('Asset library')
+      .icon(LibraryIcon)
+      .child(S.list('assets').id('assets').title('Asset library').items(AssetLibrary)),
     S.divider(),
     S.listItem().title('Tags').schemaType('tag').child(S.documentTypeList('tag').title('Tags')),
     S.listItem()
