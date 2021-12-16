@@ -1,8 +1,10 @@
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer, Table as EnvisTable } from '@components'
 import { IngressBlockRenderer, BlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
 import styled from 'styled-components'
+
+const { Head, Row, Cell } = EnvisTable
 
 export const StyledTableWrapper = styled(BackgroundContainer)``
 
@@ -45,23 +47,25 @@ const Table = ({ data }: TableProps) => {
           />
         )}
 
-        <table>
-          <thead>
-            {tableHeaders.map((header) => {
-              return (
-                <th key={header._key}>
-                  <SimpleBlockContent
-                    blocks={header.headerCell}
-                    serializers={{
-                      types: {
-                        block: IngressBlockRenderer,
-                      },
-                    }}
-                  />
-                </th>
-              )
-            })}
-          </thead>
+        <EnvisTable>
+          <Head>
+            <Row>
+              {tableHeaders.map((header) => {
+                return (
+                  <Cell key={header._key}>
+                    <SimpleBlockContent
+                      blocks={header.headerCell}
+                      serializers={{
+                        types: {
+                          block: IngressBlockRenderer,
+                        },
+                      }}
+                    />
+                  </Cell>
+                )
+              })}
+            </Row>
+          </Head>
 
           <tbody>
             {tableRows.map((row) => {
@@ -74,7 +78,7 @@ const Table = ({ data }: TableProps) => {
               )
             })}
           </tbody>
-        </table>
+        </EnvisTable>
       </TableContainer>
     </StyledTableWrapper>
   )
