@@ -24,9 +24,10 @@ import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { CardData, NewsSchema } from '../../types/types'
 import PageHeader from '../../pageComponents/shared/Header'
-import { mapLocaleToLang } from '../../lib/localization'
+import { getNameFromLocale } from '../../lib/localization'
 import IFrame from '../../pageComponents/shared/IFrame'
 import { SkipNavContent } from '@reach/skip-nav'
+import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -163,10 +164,7 @@ type ArticleProps = {
   data: {
     news: NewsSchema
     latestNews: CardData[]
-    slugs: {
-      en_GB: string
-      nb_NO: string
-    }
+    slugs: AllSlugsType
   }
   preview: boolean
 }
@@ -327,15 +325,15 @@ News.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
   const { news, latestNews } = await getClient(preview).fetch(newsQuery, {
     slug: params?.slug,
-    lang: mapLocaleToLang(locale),
+    lang: getNameFromLocale(locale),
   })
 
   const newsData = filterDataToSingleItem(news, preview) || null
 
   const allSlugs = await getLocalizedNewsSlugs(news, preview)
   // Let's do it simple stupid and iterate later on
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: mapLocaleToLang(locale) })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: mapLocaleToLang(locale) })
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
 
   return {
     props: {
@@ -360,7 +358,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-const getLocalizedNewsSlugs = async (record: any, preview: boolean) => {
+const getLocalizedNewsSlugs = async (record: { id: string }, preview: boolean) => {
   if (!record || !record.id) return null
 
   // @TODO: why does the 'match' filter in groq not work here?

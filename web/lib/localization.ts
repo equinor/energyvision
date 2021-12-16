@@ -1,37 +1,30 @@
-type Locale = 'en' | 'no'
-type Lang = 'en_GB' | 'nb_NO'
-type LangWithRegion = 'en-GB' | 'nb-NO'
-
-export const mapLocaleToLang = (locale: string): Lang => {
-  switch (locale) {
-    case 'en':
-      return 'en_GB'
-    case 'no':
-      return 'nb_NO'
-    default:
-      return 'en_GB'
-  }
+export const DEFAULT_LANGUAGE = {
+  iso: 'en-GB',
+  name: 'en_GB',
+  title: 'English',
+  locale: 'en',
 }
 
-// Because react-intl only supports with -
-export const mapLocaleWithRegion = (locale: string): LangWithRegion => {
-  switch (locale) {
-    case 'en':
-      return 'en-GB'
-    case 'no':
-      return 'nb-NO'
-    default:
-      return 'en-GB'
-  }
+export const LANGUAGES = [
+  DEFAULT_LANGUAGE,
+  {
+    iso: 'nb-NO',
+    name: 'nb_NO',
+    title: 'Norwegian',
+    locale: 'no',
+  },
+  {
+    iso: 'pt-BR',
+    name: 'pt_BR',
+    title: 'Portuguese',
+    locale: 'pt',
+  },
+]
+
+export const getNameFromLocale = (locale: string | undefined): string => {
+  return LANGUAGES.find((language) => language.locale === locale)?.name || DEFAULT_LANGUAGE.name
 }
 
-export const mapLangTolocale = (lang: string): Locale => {
-  switch (lang) {
-    case 'en_GB':
-      return 'en'
-    case 'nb_NO':
-      return 'no'
-    default:
-      return 'en'
-  }
+export const getIsoFromLocale = (locale: string | undefined): string => {
+  return LANGUAGES.find((language) => language.locale === locale)?.iso || DEFAULT_LANGUAGE.iso
 }

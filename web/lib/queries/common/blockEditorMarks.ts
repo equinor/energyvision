@@ -8,7 +8,7 @@ const markDefs = `
         name,
         "id": ${slugReference},
         "type": _type,
-        "lang": coalesce(_lang, 'en_GB'),
+        "lang": _lang,
       },
     },
   }

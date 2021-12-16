@@ -1,8 +1,6 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
 import { TopicDocuments, NewsDocuments, MenuIcon, LibraryIcon, PdfIcon, ExcelIcon, FileIcon } from './icons'
-import GreatBritain from './icons/GreatBritain'
-import Norway from './icons/Norway'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import parentChild from './src/structure/parentChild'
@@ -18,10 +16,23 @@ const menus = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} menu`,
     id: `menu-${lang.id}`,
+    icon: lang.flag,
     child: () =>
       S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
-        .title(`${lang.title} site menu`)
         .id(`${lang.id}-menu`)
+        .title(`${lang.title} site menu`),
+  }),
+)
+
+const footers = languages.map((lang) =>
+  S.listItem({
+    title: `${lang.title} footer`,
+    id: `footer-${lang.id}`,
+    icon: lang.flag,
+    child: () =>
+      S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
+        .id(`${lang.id}-footer`)
+        .title(`${lang.title} footer`)
         .views([S.view.form()]),
   }),
 )
@@ -120,35 +131,7 @@ export default () => {
     S.divider(),
     S.listItem().title('Menu').icon(MenuIcon).child(S.list('menu').id('menu').title('Menus').items(menus)),
     S.divider(),
-    S.listItem()
-      .title('Footer')
-      .child(
-        S.list('footer')
-          .id('footer')
-          .title('Footers')
-          .items([
-            S.listItem({
-              title: 'English footer',
-              id: 'footer-english',
-              icon: GreatBritain,
-              child: () =>
-                S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: 'en_GB' })
-                  .id('english-footer')
-                  .title('English footer')
-                  .views([S.view.form()]),
-            }),
-            S.listItem({
-              title: 'Norwegian footer',
-              id: 'footer-norwegian',
-              icon: Norway,
-              child: () =>
-                S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: 'nb_NO' })
-                  .title('Norwegian footer')
-                  .id('norwegian-footer')
-                  .views([S.view.form()]),
-            }),
-          ]),
-      ),
+    S.listItem().title('Footer').child(S.list('footer').id('footer').title('Footers').items(footers)),
     S.divider(),
     S.listItem()
       .title('Asset library')
