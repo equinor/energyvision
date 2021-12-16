@@ -10,7 +10,6 @@ const apnId = process.env.APN_ID
 const otyId = process.env.OTY_ID
 const ptlId = process.env.PTL_ID
 
-console.log(authenticationUrl)
 const sampleHeaders = {
   'Content-Type': 'text/xml;charset=UTF-8',
 }
@@ -59,7 +58,6 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     xml: envelope,
     timeout: 5000,
   })
-  console.log(response)
   return response.statusCode == 200
 }
 
