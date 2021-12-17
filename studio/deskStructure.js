@@ -12,6 +12,7 @@ import {
 } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
+import FilePreview from './src/previews/file/filePreview'
 import parentChild from './src/structure/parentChild'
 import assetTagFilters from './src/structure/assetTagFilters'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
@@ -226,6 +227,7 @@ export const getDefaultDocumentNode = (props) => {
           useDraft: false,
         })
         .title('References'),
+      S.view.component(FilePreview).title('Preview'),
     ])
   } else if (schemaType === 'assetTag') {
     return S.document().views([
