@@ -24,7 +24,8 @@ export default {
       title: 'Title',
       name: 'title',
       type: 'string',
-      description: 'For internal use',
+      description:
+        'The title of the asset file document. This title is used internally and has no impact on the actual file.',
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -41,7 +42,7 @@ export default {
       title: 'Tags',
       name: 'tagReference',
       type: 'array',
-      description: 'Adds tags to asset file',
+      description: 'Adds tags to asset file. These tags are used for internal filtering only.',
       of: [
         {
           type: 'reference',

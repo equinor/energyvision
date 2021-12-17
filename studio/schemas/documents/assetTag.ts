@@ -10,6 +10,7 @@ export default {
   fields: [
     {
       title: 'Title',
+      description: 'Name of the tag used for internal filtering.',
       name: 'title',
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
