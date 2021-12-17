@@ -16,6 +16,7 @@ import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { Layout } from '../pageComponents/shared/Layout'
 import { getNameFromLocale, DEFAULT_LANGUAGE } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
+import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -82,9 +83,12 @@ Page.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data, preview } = props
+
+  const slugs = data?.pageData?.slugs?.allSlugs as AllSlugsType
+
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={data?.pageData?.slugs?.allSlugs} data={data?.menuData} />
+      <Header slugs={slugs} data={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>

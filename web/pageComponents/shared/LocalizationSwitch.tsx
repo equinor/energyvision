@@ -108,12 +108,15 @@ const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, wi
 export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
   const { width } = useWindowSize()
 
-  if (allSlugs.length === 0) return null
+  /* Filter objects that have translations but no routes */
+  const slugs = allSlugs.filter((obj) => obj.slug)
+
+  if (slugs.length === 0) return null
 
   return (
     <Wrapper {...rest}>
       <>
-        {allSlugs.map((obj, key) => {
+        {slugs.map((obj, key) => {
           const languageObj = LANGUAGES.find((language) => language.name === obj.lang)
           return (
             <StyledDiv key={obj.lang}>
@@ -126,7 +129,7 @@ export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: Localiza
               >
                 <span style={{ textTransform: 'uppercase' }}>{languageObj?.locale}</span>
               </LocaleLink>
-              {key + 1 < allSlugs.length && width > BREAKPOINT && '|'}
+              {key + 1 < slugs.length && width > BREAKPOINT && '|'}
             </StyledDiv>
           )
         })}

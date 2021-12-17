@@ -6,7 +6,7 @@ const allSlugsQuery = /* groq */ `
   "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
     "allSlugs": *[_type in ['page', 'landingPage', 'event'] && _id match ^._id + "*"] {
        "slug": *[_type match "route*" && content._ref == ^._id][0].slug.current,
-       "lang": *[_type match "route*" && content._ref == ^._id][0].content->_lang
+       "lang": _lang
     }
   }`
 
