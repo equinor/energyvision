@@ -34,7 +34,7 @@ type AllArchivedNewsProps = {
 /* TODO: Implement dynamic routes for news */
 export const newsSlugs = [
   { slug: '/en/news/archive', lang: 'en_GB' },
-  { slug: '/no/nyheter/arkiv', lang: 'nb_NO' },
+  { slug: '/no/news/archive', lang: 'nb_NO' },
 ]
 
 export default function AllArchivedNews({ data }: AllArchivedNewsProps) {
