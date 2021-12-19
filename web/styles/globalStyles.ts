@@ -62,7 +62,7 @@ export const GlobalFontStyle = createGlobalStyle`
   font-style: normal;
   font-weight: 1 999;
   font-display: fallback;
-  src: local('ðŸ˜Š'),
+  src: local('😊'),
         url(/fonts/equinor/EquinorVariable-VF.woff2) format('woff2-variations'),
         url(/fonts/equinor/EquinorVariable-VF.woff) format('woff-variations'),
         url(/fonts/equinor/Equinor-Regular.woff) format('woff');
