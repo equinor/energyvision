@@ -11,6 +11,7 @@
     "watch": "tsc -w",
     "lint": "eslint ./**/*.ts",
     "lint:fix": "eslint --fix ./**/*.ts",
+    "azurite": "azurite",
     "prestart": "npm run build",
     "start": "func start",
     "test": "jest"
