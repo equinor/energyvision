@@ -24,8 +24,8 @@ export const init: InitType = flow(
   ),
 )
 
-type GetDocumentsType = (config: BlobConfiguration) => ContainerClient
-export const getClient: GetDocumentsType = ({ client, container }) => client.getContainerClient(container)
+type GetClientType = (config: BlobConfiguration) => ContainerClient
+export const getClient: GetClientType = ({ client, container }) => client.getContainerClient(container)
 
 type GetDocumentsFromBlobType = (containerClient: ContainerClient) => Promise<BlobItem[]>
 const getDocumentsFromBlob: GetDocumentsFromBlobType = async (containerClient) => {
@@ -35,6 +35,6 @@ const getDocumentsFromBlob: GetDocumentsFromBlobType = async (containerClient) =
   return result
 }
 
-type GetDocumentType = (containerClient: ContainerClient) => TE.TaskEither<Error, BlobItem[]>
-export const getDocuments: GetDocumentType = (containerClient) =>
+type GetDocumentsType = (containerClient: ContainerClient) => TE.TaskEither<Error, BlobItem[]>
+export const getDocuments: GetDocumentsType = (containerClient) =>
   TE.tryCatch(() => getDocumentsFromBlob(containerClient), E.toError)
