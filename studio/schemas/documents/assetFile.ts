@@ -46,6 +46,7 @@ export default {
       of: [
         {
           type: 'reference',
+          title: 'File tag',
           to: [{ type: 'assetTag' }],
         },
       ],
