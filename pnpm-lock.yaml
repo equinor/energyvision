@@ -112,7 +112,7 @@ importers:
       jest-styled-components: ^7.0.8
       next: ^12.0.7
       next-circular-dependency: ^1.0.1
-      next-sanity: ^0.4.0
+      next-sanity: ^0.4.1-beta.0
       next-sanity-image: ^3.2.1
       next-seo: ^4.28.1
       only-allow: ^1.0.0
@@ -154,7 +154,7 @@ importers:
       ics: 2.35.0
       next: 12.0.7_react-dom@17.0.2+react@17.0.2
       next-circular-dependency: 1.0.1
-      next-sanity: 0.4.0_react@17.0.2
+      next-sanity: 0.4.1-beta.0_react@17.0.2
       next-sanity-image: 3.2.1_3741b0cac7b3f21bea6fbaaf71e0d2fa
       next-seo: 4.28.1_d837ce8f3acb2f60f8b7454672a9bcea
       only-allow: 1.0.0
@@ -3656,12 +3656,31 @@ packages:
       object-assign: 4.1.1
     dev: false
 
+  /@sanity/client/2.23.2:
+    resolution: {integrity: sha512-t0IbBYTLAWs5U3bi0pCcIcaQay6IakS+EVSoX6/zcGoEEgxj1KdLWx7ozXMPj9O/IGztRRifyNEWLkclazmqyQ==}
+    dependencies:
+      '@sanity/eventsource': 2.23.0
+      '@sanity/generate-help-url': 2.18.0
+      '@sanity/observable': 2.0.9
+      deep-assign: 2.0.0
+      get-it: 5.2.1
+      make-error: 1.3.6
+      object-assign: 4.1.1
+    dev: false
+
   /@sanity/color/2.1.6:
     resolution: {integrity: sha512-iXCGgMkfY111RISOHnpwp6OmQz+N+UVOJ1YMhIGoesQdjm31ybeTkLP5yy1kkI8ffbxZkmmfbl9rjfR0OiwC8g==}
     dev: false
 
   /@sanity/eventsource/2.14.0:
     resolution: {integrity: sha512-U1FgPUwB9//bGT5OO1VgtamSCM2Z3vpWP3mCgN8vPmEUJ0cofAWO+turDbOILahuicH8u7Xnmd+GSB33p4Mg9A==}
+    dependencies:
+      '@rexxars/eventsource-polyfill': 1.0.0
+      eventsource: 1.1.0
+    dev: false
+
+  /@sanity/eventsource/2.23.0:
+    resolution: {integrity: sha512-MpQoV8FqnwnfBPQ29qcI1WA6MPZI1Z8rACFky5yU/8hol/Vv9g38PJbvHsGXsDkDartRXN5Wx5OjFk2imG4QPQ==}
     dependencies:
       '@rexxars/eventsource-polyfill': 1.0.0
       eventsource: 1.1.0
@@ -3675,8 +3694,8 @@ packages:
     resolution: {integrity: sha512-If8Qkw32LWPes16UzqwUsTLgfxF5d4ACdUvCLMl6grJc/5G8LKPAGCQUuA/d1F4W16yCJVV7Zv31HDRDXJSJkg==}
     dev: false
 
-  /@sanity/groq-store/0.2.2:
-    resolution: {integrity: sha512-wC9RPtWC4+dTFywq7aVa0Px+ZTOw0KSXm9qmRG21+H/EgvjQB9A7iuRywN1CZ78Q/KpBqX89OwrQosqHydSuRQ==}
+  /@sanity/groq-store/0.3.0-beta.0:
+    resolution: {integrity: sha512-J7q+AjF80NKTHPU6gkwyd/UStYa0GWjzMN6mcZB3w+B/oh6+mwqpP63XCZnivQbYU/HgITrVIx/ioWqOjExatA==}
     engines: {node: '>=10'}
     dependencies:
       '@sanity/types': 2.22.3
@@ -3684,6 +3703,7 @@ packages:
       fast-deep-equal: 3.1.3
       groq: 2.15.0
       groq-js: 0.3.0
+      groq-js-beta: /groq-js/0.4.0-beta.0
       mendoza: 2.1.1
       simple-get: 4.0.0
       split2: 3.2.2
@@ -9370,6 +9390,30 @@ packages:
       url-parse: 1.5.3
     dev: false
 
+  /get-it/5.2.1:
+    resolution: {integrity: sha512-KDR5lTKmxKd/XyP3egZ8ieIdKLxKrQPKUFxk86MSoytGjxX4STigaFuwtFGmGx/lBPc1YSpi9wyuQJ5uP8WcRA==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      '@sanity/timed-out': 4.0.2
+      create-error-class: 3.0.2
+      debug: 2.6.9
+      decompress-response: 3.3.0
+      follow-redirects: 1.14.5
+      form-urlencoded: 2.0.9
+      into-stream: 3.1.0
+      is-plain-object: 2.0.4
+      is-retry-allowed: 1.2.0
+      is-stream: 1.1.0
+      nano-pubsub: 1.0.2
+      object-assign: 4.1.1
+      parse-headers: 2.0.4
+      progress-stream: 2.0.0
+      same-origin: 0.1.1
+      simple-concat: 1.0.1
+      tunnel-agent: 0.6.0
+      url-parse: 1.5.3
+    dev: false
+
   /get-nonce/1.0.1:
     resolution: {integrity: sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==}
     engines: {node: '>=6'}
@@ -9573,6 +9617,10 @@ packages:
 
   /groq-js/0.3.0:
     resolution: {integrity: sha512-aMV+X2rWmrp7Zb63OcXr6X0ItfpAg/fiZbTeQeVLAyPwoGVnvQKNEi32rhziuLHJLIJeWjtJm7IKjwDwhyLhFA==}
+    dev: false
+
+  /groq-js/0.4.0-beta.0:
+    resolution: {integrity: sha512-quBGIJRAxtUfKrK0+98UsxLuCLks7WyUXv6uNbW5UaoPZCQrgxDlSmVTJ0LcXeKH57KDHsI7JP2P9NhREoRuzg==}
     dev: false
 
   /groq/2.15.0:
@@ -12463,16 +12511,16 @@ packages:
       react: 17.0.2
     dev: false
 
-  /next-sanity/0.4.0_react@17.0.2:
-    resolution: {integrity: sha512-Z3OG0Z/ORrDPhR5zM8ySIF7z6LynfNqWBTEFksKMOg54RjKV0zfSMAK60Lfbm4U/3u4Nldu96dmVhUkHFkSerw==}
+  /next-sanity/0.4.1-beta.0_react@17.0.2:
+    resolution: {integrity: sha512-DXq2yQ8Ygmce8kikgxVgZvGMr6Dxb2jwm5TKN8/qYkhN7rCip9gvVfguISnGAZxDl5+mjp38j0Guzu2ptTkk6Q==}
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=16.3.0'
     dependencies:
       '@sanity/block-content-to-react': 3.0.0_react@17.0.2
-      '@sanity/client': 2.22.3
-      '@sanity/groq-store': 0.2.2
-      '@sanity/image-url': 0.140.22
+      '@sanity/client': 2.23.2
+      '@sanity/groq-store': 0.3.0-beta.0
+      '@sanity/image-url': 1.0.1
       groq: 2.15.0
       react: 17.0.2
       use-deep-compare-effect: 1.8.1_react@17.0.2
