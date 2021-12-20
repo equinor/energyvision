@@ -1,7 +1,7 @@
-import { languages, baseLanguage } from './languages'
+import languages from './languages'
 
 export const i18n = {
-  base: baseLanguage.name,
+  base: languages[0].name,
   languages,
   fieldNames: {
     lang: '_lang',

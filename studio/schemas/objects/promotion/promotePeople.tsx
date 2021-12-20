@@ -5,7 +5,7 @@ import { validateRequiredIfVisible } from '../../validations/validateRequiredIfV
 
 import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
-import { routes } from '../../languages'
+import routes from '../../routes'
 
 export type Promotion = {
   image?: ImageWithAlt

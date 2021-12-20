@@ -3,7 +3,7 @@ import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
-import { routes } from '../languages'
+import routes from '../routes'
 
 export type ReferenceTarget = {
   type: string

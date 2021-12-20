@@ -5,7 +5,7 @@ import blocksToText from '../../../helpers/blocksToText'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
 import type { Block, Rule, Image } from '@sanity/types'
-import { routes } from '../../languages'
+import routes from '../../routes'
 
 const introBlockContentType = configureBlockContent({
   h1: false,

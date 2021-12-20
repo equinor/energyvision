@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+
+const languages = require('./lib/languages')
+
+const locales = languages.map((lang) => lang.locale)
 
 module.exports = withBundleAnalyzer({
   eslint: {
@@ -18,8 +23,8 @@ module.exports = withBundleAnalyzer({
     domains: ['cdn.sanity.io'],
   },
   i18n: {
-    locales: ['no', 'en', 'pt'],
-    defaultLocale: 'en',
+    locales: locales,
+    defaultLocale: locales[0],
     localeDetection: false,
   },
   async rewrites() {

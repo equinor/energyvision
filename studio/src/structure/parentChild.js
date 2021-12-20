@@ -5,7 +5,7 @@ import RoutePreview from '../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../icons'
 
-import { languages } from '../../schemas/languages'
+import languages from '../../schemas/languages'
 
 /**
  * This is an example of a Structure Builder list item that:

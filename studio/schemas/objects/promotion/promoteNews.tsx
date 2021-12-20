@@ -1,7 +1,7 @@
 import React from 'react'
 
 import type { Rule } from '@sanity/types'
-import { languages } from '../../languages'
+import languages from '../../languages'
 
 export default {
   title: 'News promotion',

@@ -2,7 +2,7 @@ import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import type { Rule, ValidationContext, Reference, SanityDocument } from '@sanity/types'
-import { routes } from '../languages'
+import routes from '../routes'
 
 export type MenuLink = {
   _type: 'menuLink'

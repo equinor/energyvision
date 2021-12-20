@@ -14,15 +14,21 @@ import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'
-import { getNameFromLocale, DEFAULT_LANGUAGE } from '../lib/localization'
+import { getNameFromLocale, defaultLanguage } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
+import languages from '../lib/languages'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 
+const getValidSlugs = (allSlugs: AllSlugsType) => {
+  if (!allSlugs) return []
+  const validLanguages = languages.map((lang) => lang.name)
+  return allSlugs.filter((slug) => validLanguages.includes(slug.lang))
+}
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
    */
@@ -88,7 +94,7 @@ Page.getLayout = (page: AppProps) => {
 
   const { data, preview } = props
 
-  const slugs = data?.pageData?.slugs?.allSlugs as AllSlugsType
+  const slugs = getValidSlugs((data?.pageData?.slugs?.allSlugs as AllSlugsType) || [])
 
   return (
     <Layout footerData={data?.footerData} preview={preview}>
@@ -99,7 +105,7 @@ Page.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = DEFAULT_LANGUAGE.locale }) => {
+export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
   const data = query && (await getClient(preview).fetch(query, queryParams))
 

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
 import { outlineTemplate, Tokens } from '@utils'
 import { useWindowSize } from '@reach/window-size'
-import { LANGUAGES } from '../../lib/localization'
+import languages from '../../lib/languages'
 
 const { outline } = Tokens
 
@@ -117,17 +117,17 @@ export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: Localiza
     <Wrapper {...rest}>
       <>
         {slugs.map((obj, key) => {
-          const languageObj = LANGUAGES.find((language) => language.name === obj.lang)
+          const language = languages.find((lang) => lang.name === obj.lang)
           return (
             <StyledDiv key={obj.lang}>
               <LocaleLink
                 href={obj.slug}
-                title={`Switch to ${languageObj?.title}`}
-                locale={`${languageObj?.locale}`}
-                active={activeLocale === `${languageObj?.locale}`}
+                title={`Switch to ${language?.title}`}
+                locale={`${language?.locale}`}
+                active={activeLocale === `${language?.locale}`}
                 width={width}
               >
-                <span style={{ textTransform: 'uppercase' }}>{languageObj?.locale}</span>
+                <span style={{ textTransform: 'uppercase' }}>{language?.locale}</span>
               </LocaleLink>
               {key + 1 < slugs.length && width > BREAKPOINT && '|'}
             </StyledDiv>

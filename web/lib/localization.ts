@@ -1,30 +1,11 @@
-export const DEFAULT_LANGUAGE = {
-  iso: 'en-GB',
-  name: 'en_GB',
-  title: 'English',
-  locale: 'en',
-}
+import languages from './languages'
 
-export const LANGUAGES = [
-  DEFAULT_LANGUAGE,
-  {
-    iso: 'nb-NO',
-    name: 'nb_NO',
-    title: 'Norwegian',
-    locale: 'no',
-  },
-  {
-    iso: 'pt-BR',
-    name: 'pt_BR',
-    title: 'Portuguese',
-    locale: 'pt',
-  },
-]
+export const defaultLanguage = languages[0]
 
 export const getNameFromLocale = (locale: string | undefined): string => {
-  return LANGUAGES.find((language) => language.locale === locale)?.name || DEFAULT_LANGUAGE.name
+  return languages.find((lang) => lang.locale === locale)?.name || defaultLanguage.iso
 }
 
 export const getIsoFromLocale = (locale: string | undefined): string => {
-  return LANGUAGES.find((language) => language.locale === locale)?.iso || DEFAULT_LANGUAGE.iso
+  return languages.find((lang) => lang.locale === locale)?.iso || defaultLanguage.iso
 }

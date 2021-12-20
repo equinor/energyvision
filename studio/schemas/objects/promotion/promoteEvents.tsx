@@ -2,7 +2,7 @@ import React from 'react'
 
 import type { Rule, Reference, ValidationContext, Block } from '@sanity/types'
 import blocksToText from '../../../helpers/blocksToText'
-import { routes } from '../../languages'
+import routes from '../../routes'
 
 // @TODO: How to do tags
 const eventTags = [

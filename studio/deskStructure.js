@@ -18,7 +18,7 @@ import assetTagFilters from './src/structure/assetTagFilters'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import { languages } from './schemas/languages'
+import languages from './schemas/languages'
 // import Iframe from 'sanity-plugin-iframe-pane'
 
 // import resolveProductionUrl from './resolveProductionUrl'

@@ -1,4 +1,4 @@
-import { languages } from '../languages'
+import languages from '../languages'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({

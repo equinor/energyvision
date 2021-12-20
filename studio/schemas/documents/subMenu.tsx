@@ -7,7 +7,7 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
-import { routes } from '../languages'
+import routes from '../routes'
 
 export type SubMenu = {
   _type: 'subMenu'
