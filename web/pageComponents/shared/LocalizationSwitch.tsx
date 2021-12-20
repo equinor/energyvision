@@ -111,7 +111,7 @@ export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: Localiza
   /* Filter objects that have translations but no routes */
   const slugs = allSlugs.filter((obj) => obj.slug)
 
-  if (slugs.length === 0) return null
+  if (slugs.length < 2) return null
 
   return (
     <Wrapper {...rest}>
