@@ -12,7 +12,7 @@ import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { menuQuery } from '../lib/queries/menu'
 import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
-/* import { usePreviewSubscription } from '../lib/sanity' */
+import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'
 import { getNameFromLocale, DEFAULT_LANGUAGE } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
@@ -30,13 +30,17 @@ export default function Page({ data, preview }: any) {
   const router = useRouter()
 
   // Let's nuke the preview hook temporarily for performance reasons
-  /* const { data: previewData } = usePreviewSubscription(data?.query, {
+  const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
+    //  sanity types not updated to beta yet
+    // eslint-disable-next-line
+    // @ts-ignore
+    useGroqBeta: true,
   })
- */
-  const pageData = filterDataToSingleItem(data.pageData, preview)
+
+  const pageData = filterDataToSingleItem(previewData, preview)
 
   const slug = pageData?.slug
 
