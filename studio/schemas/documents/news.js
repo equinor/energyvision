@@ -82,6 +82,20 @@ export default {
       description: 'Adds tags to news article',
     },
     {
+      title: 'News Subscription Type',
+      name: 'subscriptionType',
+      type: 'string',
+      description: 'This news article will be sent to all the users who subscribed to below selected type.',
+      options: {
+        list: [
+          { title: 'General News', value: 'general-news' },
+          { title: 'Stock Market Announcements', value: 'stock-market-announcements' },
+          { title: 'Crude Oil Assays', value: 'crude-oil-assays' },
+        ],
+        layout: 'dropdown',
+      },
+    },
+    {
       // TODO: Figure out a way to run a slugify function before publish
       // so that users don't have to add hyphens and such themselves
       name: 'slug',
