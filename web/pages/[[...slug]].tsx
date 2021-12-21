@@ -17,7 +17,7 @@ import { Layout } from '../pageComponents/shared/Layout'
 import { getNameFromLocale, defaultLanguage } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
-import languages from '../lib/languages'
+import languages from '../languages'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))

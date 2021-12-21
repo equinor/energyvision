@@ -22,7 +22,7 @@ let languages = [
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 
 if (dataset === 'production') {
-  languages = languages.filter((lang) => lang.locale === 'en' || lang.locale === 'no' || lang.locale === 'pt')
+  languages = languages.filter((lang) => lang.locale === 'en' || lang.locale === 'no')
 } else {
   languages = languages.filter((lang) => lang.locale === 'pt')
 }

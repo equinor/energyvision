@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
 import { outlineTemplate, Tokens } from '@utils'
 import { useWindowSize } from '@reach/window-size'
-import languages from '../../lib/languages'
+import languages from '../../languages'
 
 const { outline } = Tokens
 
