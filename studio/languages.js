@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
-import GreatBritain from '../icons/GreatBritain'
-import Norway from '../icons/Norway'
-import Brazil from '../icons/Brazil'
+import GreatBritain from './icons/GreatBritain'
+import Norway from './icons/Norway'
+import Brazil from './icons/Brazil'
 
 let languages = [
   { id: 'english', name: 'en_GB', title: 'English (UK)', locale: 'en', flag: GreatBritain },
