@@ -36,7 +36,7 @@ export default function Page({ data, preview }: any) {
   const router = useRouter()
 
   // Let's nuke the preview hook temporarily for performance reasons
-  const { data: previewData } = usePreviewSubscription(data?.query, {
+  /*   const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     initialData: data?.pageData,
     enabled: preview || router.query.preview !== null,
@@ -44,9 +44,9 @@ export default function Page({ data, preview }: any) {
     // eslint-disable-next-line
     // @ts-ignore
     useGroqBeta: true,
-  })
+  }) */
 
-  const pageData = filterDataToSingleItem(previewData, preview)
+  const pageData = filterDataToSingleItem(data.pageData, preview)
 
   const slug = pageData?.slug
 
