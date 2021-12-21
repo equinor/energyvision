@@ -1,38 +1,47 @@
-FROM mhart/alpine-node:16 AS builder
-
-RUN apk add --no-cache libc6-compat jq moreutils && \
-  npm install -g pnpm@6.11.5
+# Dependecies
+FROM node:lts-alpine AS deps
 
 WORKDIR /opt/app
 
-COPY ./package.json ./
-COPY ./pnpm-lock.yaml ./
-COPY ./tsconfig.base.json ./
-# COPY ./pnpm-workspace.yaml ./
+RUN npm install -g pnpm@6.11.5
+
+COPY package.json pnpm-lock.yaml web/package.json web/pnpm-lock.yaml ./
+
+RUN pnpm install
+
+
+# Build
+FROM node:lts-alpine AS builder
+
+RUN npm install -g pnpm@6.11.5
+
+ENV NODE_ENV production
+
+WORKDIR /opt/app
 
 COPY ./web ./web
-COPY ./legacy ./legacy
 
-# Replace workspace:* with the actual versions | Load css from public folder atm
-# RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
-#  jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
-#  ./web/package.json | sponge ./web/package.json
+COPY package.json pnpm-lock.yaml tsconfig.base.json ./
 
-RUN rm -rf ./legacy
+COPY --from=deps /opt/app/node_modules ./node_modules
+
+RUN pnpm web build
+
+
+# Run
+FROM node:lts-alpine AS runner
+
+RUN npm install -g pnpm@6.11.5
+
+WORKDIR /opt/app
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
-RUN pnpm install --recursive
-RUN pnpm web build
 
-FROM mhart/alpine-node:16
+ENV NODE_ENV=production
 
-RUN apk add --no-cache libc6-compat && \
-  npm install -g pnpm@6.11.5
+COPY --from=builder /opt/app/ .
 
-WORKDIR /opt/app
-
-ENV NODE_ENV production
 ENV PORT 3000
 ENV USER nextjs
 ENV UID 12345
@@ -48,23 +57,10 @@ RUN addgroup -S "$USER" && \
   --uid "$UID" \
   "$USER"
 
-COPY --from=builder /opt/app/web/.next ./web/.next
-COPY --from=builder /opt/app/web/next.config.js ./web
-COPY --from=builder /opt/app/web/package.json ./web
-COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
-COPY --from=builder /opt/app/web/public ./web/public
-COPY --from=builder /opt/app/package.json ./
-# COPY --from=builder /opt/app/pnpm-workspace.yaml ./
-
 RUN chown -R "$USER":"$USER" .
+
 USER "$UID"
 
-ARG NEXT_PUBLIC_SANITY_PROJECT_ID
-ARG NEXT_PUBLIC_SANITY_DATASET
-RUN pnpm web install -- --frozen-lockfile
-
-RUN rm ./web/pnpm-lock.yaml
-RUN rm -rf .pnpm-store
-
 EXPOSE "$PORT"
+
 CMD ["pnpm", "web", "start"]
