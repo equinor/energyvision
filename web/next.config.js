@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-const languages = require('./languages')
+const languages = require('./languages.js')
 
 const locales = languages.map((lang) => lang.locale)
 
