@@ -10,6 +10,10 @@
     }
   },
 
+  "runArgs": ["--init", "--privileged"],
+  "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
+	"overrideCommand": false,
+
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.defaultProfile.linux": "zsh",
