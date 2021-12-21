@@ -6,6 +6,10 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 
 ENV TZ Europe/Oslo
 
+# [Option] Install zsh. False as it is already installed I believe. Byt needed for script.
+ARG INSTALL_ZSH="false"
+# [Option] Upgrade OS packages to their latest versions
+ARG UPGRADE_PACKAGES="false"
 ARG ENABLE_NONROOT_DOCKER="true"
 # [Option] Use the OSS Moby Engine instead of the licensed Docker Engine
 ARG USE_MOBY="true"
@@ -22,7 +26,7 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 COPY library-scripts/*.sh /tmp/library-scripts/
 RUN apt-get update \
-    && /bin/bash /tmp/library-scripts/common-debian.sh "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
+    && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
     # Use Docker script from script library to set things up
     && /bin/bash /tmp/library-scripts/docker-in-docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "${USERNAME}" "${USE_MOBY}" "${DOCKER_VERSION}" \
     # Clean up
