@@ -7,6 +7,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!isSuccessful) {
       return res.status(500).json({ msg: 'Subscribe failed' })
     }
-    res.status(200).json({ msg: 'Successfully distributed.' })
+    res.status(200).json({ msg: `Successfully distributed. ${data}` })
   })
 }
