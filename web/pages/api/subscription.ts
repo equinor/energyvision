@@ -2,13 +2,13 @@ import soapRequest from 'easy-soap-request'
 import * as xml2js from 'xml2js'
 import { LoginResult, SubscribeFormParmeters, NewsDistributionParameters } from '../../types/types'
 
-const subscriptionUrl = process.env.SUBSCRIPTION_URL || ''
-const authenticationUrl = process.env.AUTHENTICATION_URL || ''
-const clientSecret = process.env.CLIENT_SECRET
-const password = process.env.PASSWORD
-const apnId = process.env.APN_ID
-const otyId = process.env.OTY_ID
-const ptlId = process.env.PTL_ID
+const subscriptionUrl = process.env.BRANDMASTER_EMAIL_SUBSCRIPTION_URL || ''
+const authenticationUrl = process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || ''
+const clientSecret = process.env.BRANDMASTER_EMAIL_CLIENT_SECRET
+const password = process.env.BRANDMASTER_EMAIL_PASSWORD
+const apnId = process.env.BRANDMASTER_EMAIL_APN_ID
+const otyId = process.env.BRANDMASTER_EMAIL_OTY_ID
+const ptlId = process.env.BRANDMASTER_EMAIL_PTL_ID
 
 const sampleHeaders = {
   'Content-Type': 'text/xml;charset=UTF-8',
@@ -58,6 +58,13 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     xml: envelope,
     timeout: 5000,
   })
+  xml2js.parseString(response, function (err, result) {
+    if (err != null) console.error(err)
+    const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
+    if (soapBody['SOAP-ENV:Fault'] != undefined) {
+      console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
+    }
+  })
   return response.statusCode == 200
 }
 
@@ -81,10 +88,9 @@ export const signUp = async (formParameters: SubscribeFormParmeters) => {
 }
 
 export const distribute = async (parameters:NewsDistributionParameters) => {
-  console.log("Distributing... "+parameters)
-  return true
- /* const loginResult = await authenticate()
+  console.log("distribute")
+  const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createDistributeRequest(loginResult, parameters)
-  else return false*/
+  else return false
 }
 
