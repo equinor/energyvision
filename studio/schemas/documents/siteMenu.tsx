@@ -5,7 +5,7 @@ export default {
   title: `Site menu`,
   name: `siteMenu`,
   __experimental_actions: ['update', 'publish'],
-  fieldsets: [],
+
   fields: [
     {
       title: 'Menu items',
