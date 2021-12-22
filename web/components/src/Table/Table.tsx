@@ -4,9 +4,7 @@ import styled from 'styled-components'
 
 export type TableProps = EdsTableProps
 
-const StyledTable = styled(EdsTable)`
-  background-color: transparent;
-`
+const StyledTable = styled(EdsTable)``
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(function List({ children, style, ...rest }, ref) {
   return (
