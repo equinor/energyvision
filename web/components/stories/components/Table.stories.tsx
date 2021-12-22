@@ -21,7 +21,11 @@ const Grid = styled.div`
   display: grid;
   gap: 1rem;
 `
-
+const TableWrapper = styled.div`
+  padding: 1rem;
+  display: flex;
+  place-content: center;
+`
 export const Default: Story<TableProps> = (args) => (
   <Table {...args}>
     <Table.Caption>Table caption</Table.Caption>
@@ -90,120 +94,128 @@ WithDifferentInputs.parameters = {
 export const WithDifferentBackgrounds: Story<TableProps> = ({}) => (
   <Grid>
     <BackgroundContainer background="Moss Green Light">
-      <Table>
-        <Table.Caption>Table caption</Table.Caption>
-        <Table.Head>
-          <Table.Row>
-            <Table.Cell>Header one</Table.Cell>
-            <Table.Cell>Header two</Table.Cell>
-            <Table.Cell>Header three</Table.Cell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <TableWrapper>
+        <Table>
+          <Table.Caption>Table caption</Table.Caption>
+          <Table.Head>
+            <Table.Row>
+              <Table.Cell>Header one</Table.Cell>
+              <Table.Cell>Header two</Table.Cell>
+              <Table.Cell>Header three</Table.Cell>
+            </Table.Row>
+          </Table.Head>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </TableWrapper>
     </BackgroundContainer>
     <BackgroundContainer background="Slate Blue">
-      <Table>
-        <Table.Caption>Table caption</Table.Caption>
-        <Table.Head>
-          <Table.Row>
-            <Table.Cell>Header one</Table.Cell>
-            <Table.Cell>Header two</Table.Cell>
-            <Table.Cell>Header three</Table.Cell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <TableWrapper>
+        <Table>
+          <Table.Caption>Table caption</Table.Caption>
+          <Table.Head>
+            <Table.Row>
+              <Table.Cell>Header one</Table.Cell>
+              <Table.Cell>Header two</Table.Cell>
+              <Table.Cell>Header three</Table.Cell>
+            </Table.Row>
+          </Table.Head>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </TableWrapper>
     </BackgroundContainer>
     <BackgroundContainer background="Moss Green">
-      <Table>
-        <Table.Caption>Table caption</Table.Caption>
-        <Table.Head>
-          <Table.Row>
-            <Table.Cell>Header one</Table.Cell>
-            <Table.Cell>Header two</Table.Cell>
-            <Table.Cell>Header three</Table.Cell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <TableWrapper>
+        <Table>
+          <Table.Caption>Table caption</Table.Caption>
+          <Table.Head>
+            <Table.Row>
+              <Table.Cell>Header one</Table.Cell>
+              <Table.Cell>Header two</Table.Cell>
+              <Table.Cell>Header three</Table.Cell>
+            </Table.Row>
+          </Table.Head>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </TableWrapper>
     </BackgroundContainer>
     <BackgroundContainer background="Spruce Wood">
-      <Table>
-        <Table.Caption>Table caption</Table.Caption>
-        <Table.Head>
-          <Table.Row>
-            <Table.Cell>Header one</Table.Cell>
-            <Table.Cell>Header two</Table.Cell>
-            <Table.Cell>Header three</Table.Cell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Content one</Table.Cell>
-            <Table.Cell>Content two</Table.Cell>
-            <Table.Cell>Content three</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <TableWrapper>
+        <Table>
+          <Table.Caption>Table caption</Table.Caption>
+          <Table.Head>
+            <Table.Row>
+              <Table.Cell>Header one</Table.Cell>
+              <Table.Cell>Header two</Table.Cell>
+              <Table.Cell>Header three</Table.Cell>
+            </Table.Row>
+          </Table.Head>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Content one</Table.Cell>
+              <Table.Cell>Content two</Table.Cell>
+              <Table.Cell>Content three</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </TableWrapper>
     </BackgroundContainer>
   </Grid>
 )

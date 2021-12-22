@@ -4,7 +4,9 @@ import styled from 'styled-components'
 
 const { Cell: EdsCell } = EdsTable
 
-const StyledCellItem = styled(EdsCell)``
+const StyledCellItem = styled(EdsCell)`
+  /*  font-size: var(--typeScale-0); */
+`
 
 export type TableCellProps = CellProps
 
