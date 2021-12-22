@@ -20,6 +20,7 @@ import countryTag from './documents/countryTag'
 import event from './documents/event'
 import assetFile from './documents/assetFile'
 import assetTag from './documents/assetTag'
+import simpleMenu from './documents/simpleMenu'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -117,5 +118,6 @@ export default createSchema({
     table,
     assetFile,
     assetTag,
+    simpleMenu,
   ]),
 })

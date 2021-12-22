@@ -5,7 +5,6 @@ export default {
   title: `Site menu(simple)`,
   name: `simpleMenu`,
   __experimental_actions: ['update', 'publish'],
-
   fields: [
     {
       title: 'Placeholder',
