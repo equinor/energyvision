@@ -457,3 +457,12 @@ export type EventSchema = {
     relatedLinks?: RelatedLinksData
   }
 }
+
+export type NewsDistributionParameters = {
+  timeStamp: string
+  title: string
+  ingress: string
+  link: string
+  newsType:string
+  languageCode: string
+}

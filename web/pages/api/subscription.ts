@@ -1,6 +1,6 @@
 import soapRequest from 'easy-soap-request'
 import * as xml2js from 'xml2js'
-import { LoginResult, SubscribeFormParmeters } from '../../types/types'
+import { LoginResult, SubscribeFormParmeters, NewsDistributionParameters } from '../../types/types'
 
 const subscriptionUrl = process.env.SUBSCRIPTION_URL || ''
 const authenticationUrl = process.env.AUTHENTICATION_URL || ''
@@ -61,9 +61,30 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
   return response.statusCode == 200
 }
 
+const createDistributeRequest = async (loginResult: LoginResult,parameters: NewsDistributionParameters) => {
+  
+  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL>${parameters.link}</newsURL><newsType>${parameters.newsType}</newsType><language>${parameters.languageCode}</language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
+  const { response } = await soapRequest({
+    url: subscriptionUrl,
+    headers: sampleHeaders,
+    xml: envelope,
+    timeout: 5000,
+  })
+  return response.statusCode == 200
+}
+
 export const signUp = async (formParameters: SubscribeFormParmeters) => {
   console.log(formParameters)
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createSignUpRequest(loginResult, formParameters)
   else return false
 }
+
+export const distribute = async (parameters:NewsDistributionParameters) => {
+  console.log("Distributing... "+parameters)
+  return true
+ /* const loginResult = await authenticate()
+  if (loginResult.apiSecret != '' && loginResult.instId != '') return createDistributeRequest(loginResult, parameters)
+  else return false*/
+}
+
