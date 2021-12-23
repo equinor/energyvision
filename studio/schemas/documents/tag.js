@@ -25,7 +25,7 @@ export default {
       title: 'Key',
       name: 'key',
       type: 'slug',
-      description: "This is a datapoint, no need to alter it beyond 'generate'",
+      description: "This is a data point, no need to alter it beyond 'generate'",
       validation: (Rule) => Rule.required(),
 
       options: {
