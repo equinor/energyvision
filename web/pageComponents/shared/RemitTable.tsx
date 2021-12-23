@@ -26,7 +26,6 @@ const RemitTable = () => {
   }, [])
 
   const rowItem = (message: Message) => {
-    console.log(message.MessagePublishedTime)
     return (
       <Table.Row key={message.MessagePublishedTime}>
         <Table.Cell>{message.ID}</Table.Cell>
