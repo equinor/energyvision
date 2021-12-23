@@ -43,6 +43,10 @@ module.exports = withBundleAnalyzer({
         source: '/legacy/:slug*',
         destination: `${archiveServerHostname}/:slug*`,
       },
+      {
+        source: `/services/remit`,
+        destination: `${archiveServerHostname}/remit.json`,
+      },
     ]
   },
   /*   webpack(config, { defaultLoaders }) {

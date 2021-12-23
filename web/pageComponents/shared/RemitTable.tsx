@@ -2,9 +2,6 @@ import { Table, BackgroundContainer } from '@components'
 import { useEffect, useState } from 'react'
 import { Remit, Message } from '../../types/types'
 import styled from 'styled-components'
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
 
 const Container = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
@@ -16,7 +13,7 @@ const RemitTable = () => {
   const [remitData, setRemitData] = useState<Remit>()
   const fetchData = async () => {
     try {
-      const url = `${publicRuntimeConfig.archiveStorageURL}/remit.json`
+      const url = `/services/remit`
       const response = await fetch(url)
       const json: Remit = await response.json()
       setRemitData(json)
@@ -29,8 +26,9 @@ const RemitTable = () => {
   }, [])
 
   const rowItem = (message: Message) => {
+    console.log(message.MessagePublishedTime)
     return (
-      <Table.Row key={message.ID}>
+      <Table.Row key={message.MessagePublishedTime}>
         <Table.Cell>{message.ID}</Table.Cell>
         <Table.Cell>
           {message.MessagePublishedDateLocal}
