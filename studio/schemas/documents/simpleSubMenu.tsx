@@ -15,7 +15,7 @@ export default {
   title: 'Menu item',
 
   fields: [
-    { type: 'string', name: 'placeholder', title: 'placeholder' },
+    { type: 'string', name: 'label', title: 'Label', description: 'Label for menu item' },
     {
       name: 'isStatic',
       title: 'Is static page',
