@@ -45,7 +45,7 @@ module.exports = withBundleAnalyzer({
       },
       {
         source: `/services/remit`,
-        destination: `${archiveServerHostname}/remit.json`,
+        destination: `https://envis-legacy.azureedge.net/equinor-archive-content-stage/RemitJson.json`,
       },
     ]
   },
