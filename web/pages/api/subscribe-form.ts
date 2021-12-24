@@ -1,12 +1,16 @@
 import { signUp } from './subscription'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const data = req.body
-  signUp(data).then((isSuccessful) => {
+  await signUp(data).then((isSuccessful) => {
     if (!isSuccessful) {
-      return res.status(500).json({ msg: 'Subscribe failed' })
+      res.status(500).json({ msg: 'Subscribe failed' })
     }
-    res.status(200).json({ msg: 'Successfully subscribed.' })
+    else
+     res.status(200).json({ msg: 'Successfully subscribed.' })
+  })
+  .catch((error)=>{
+    res.status(500).json({ msg: `Subscribe failed ${error}` })
   })
 }

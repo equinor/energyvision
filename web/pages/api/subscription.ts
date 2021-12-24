@@ -88,7 +88,6 @@ export const signUp = async (formParameters: SubscribeFormParmeters) => {
 }
 
 export const distribute = async (parameters:NewsDistributionParameters) => {
-  console.log("distribute")
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createDistributeRequest(loginResult, parameters)
   else return false
