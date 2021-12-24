@@ -28,6 +28,7 @@ import { getNameFromLocale } from '../../lib/localization'
 import IFrame from '../../pageComponents/shared/IFrame'
 import { SkipNavContent } from '@reach/skip-nav'
 import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
+import { hasNews } from '../../common/helpers/datasetHelpers'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -323,6 +324,8 @@ News.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
+  if (!hasNews) return { notFound: true }
+
   const { news, latestNews } = await getClient(preview).fetch(newsQuery, {
     slug: params?.slug,
     lang: getNameFromLocale(locale),

@@ -21,6 +21,7 @@ import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
 import { newsSlugs } from './index'
+import { hasArchivedNews } from '../../../common/helpers/datasetHelpers'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -136,6 +137,8 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale }) => {
+  if (!hasArchivedNews) return { notFound: true }
+
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
