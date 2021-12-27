@@ -1,0 +1,54 @@
+# Build
+FROM node:lts-alpine AS builder
+
+ENV NODE_OPTIONS="--max_old_space_size=8192"
+RUN npm install -g pnpm@6.11.5
+
+WORKDIR /opt/app
+
+COPY ./package.json ./
+COPY ./pnpm-lock.yaml ./
+COPY ./tsconfig.base.json ./
+COPY ./studio ./studio
+COPY ./legacy ./legacy
+
+ARG SANITY_STUDIO_API_DATASET
+
+RUN pnpm install
+RUN pnpm studio
+RUN pnpm studio build
+
+# Run
+FROM node:lts-alpine AS runner
+
+WORKDIR /opt/app
+
+ENV PORT 3333
+ENV USER sanity
+ENV UID 12345
+ENV GID 23456
+
+RUN addgroup -S "$USER" && \
+  adduser -S \
+  --disabled-password \
+  --gecos "" \
+  --home "/opt/app" \
+  --ingroup "$USER" \
+  --no-create-home \
+  --uid "$UID" \
+  "$USER"
+
+RUN chown -R "$USER":"$USER" .
+
+USER "$UID"
+
+RUN mkdir dist
+
+COPY --from=builder ./opt/app/studio/dist ./dist
+COPY --from=builder ./opt/app/studio/server.js .
+
+RUN npm install express@4.16.3 express-history-api-fallback@2.2.1
+
+EXPOSE "$PORT"
+
+CMD ["npm", "start"]
