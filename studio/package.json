@@ -32,7 +32,7 @@
     "@sanity/default-login": "2.23.1-next.10",
     "@sanity/desk-tool": "2.23.1-next.10",
     "@sanity/form-builder": "2.23.1-next.10",
-    "@sanity/icons": "1.2.2-next.27",
+    "@sanity/icons": "1.2.2",
     "@sanity/production-preview": "2.23.1-next.10",
     "@sanity/types": "2.23.1-next.10",
     "@sanity/ui": "^0.36.1",
