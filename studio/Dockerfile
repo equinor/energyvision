@@ -12,7 +12,9 @@ COPY ./tsconfig.base.json ./
 COPY ./studio ./studio
 COPY ./legacy ./legacy
 
-ARG SANITY_STUDIO_API_DATASET
+ARG ARG_SANITY_DATASET
+
+ENV SANITY_STUDIO_API_DATASET ${ARG_SANITY_DATASET}
 
 RUN pnpm install
 RUN pnpm studio
