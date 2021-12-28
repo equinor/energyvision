@@ -27,17 +27,29 @@ spec:
               cpu: '2000m'
           imageTagName: main-latest
           variables:
-            BRANDMASTER_EMAIL_APN_ID: '32'
             BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
             BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
-            BRANDMASTER_EMAIL_OTY_ID: '114961'
-            BRANDMASTER_EMAIL_PTL_ID: '14414'
-
+      variables:
+        BRANDMASTER_EMAIL_APN_ID: '32'
+        BRANDMASTER_EMAIL_OTY_ID: '114961'
+        BRANDMASTER_EMAIL_PTL_ID: '14414'
       secrets:
         - SANITY_API_TOKEN
         - SANITY_PREVIEW_SECRET
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
+
+    - name: studio-brazil
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-brazil:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
   dnsAppAlias:
     environment: dev
     component: web
