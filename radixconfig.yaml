@@ -50,6 +50,17 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
+    - name: studio-germany
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-germany:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
   dnsAppAlias:
     environment: dev
     component: web
