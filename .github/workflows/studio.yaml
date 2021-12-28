@@ -61,7 +61,6 @@ jobs:
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SANITY_STUDIO_API_DATASET: brazil
     steps:
       - uses: actions/checkout@v1
       - name: Set default image tag 🏷
@@ -71,7 +70,7 @@ jobs:
       - name: Build sanity container ⚙️
         id: build
         run: |
-          docker build . --build-arg SANITY_STUDIO_API_DATASET=${{SANITY_STUDIO_API_DATASET}} --file studio/Dockerfile --tag ghcr.io/equinor/energyvision/studio-brazil:${{ env.IMAGE_TAG }}
+          docker build . --build-arg SANITY_STUDIO_API_DATASET=brazil --file studio/Dockerfile --tag ghcr.io/equinor/energyvision/studio-brazil:${{ env.IMAGE_TAG }}
       - name: Push the image to GHCR ☁
         id: push-to-ghcr
         run: |
