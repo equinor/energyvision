@@ -35,6 +35,7 @@ export default {
       name: 'description',
       type: 'string',
       inputComponent: ApiDescription,
+      initialValue: 'Remit Table',
     },
   ],
   preview: {
