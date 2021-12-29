@@ -67,6 +67,10 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
       - name: Set default image tag 🏷
         id: set-default-image-tag
         run: |
@@ -125,6 +129,8 @@ jobs:
         uses: ./.github/workflows/deploy-satellite/
         with:
           imageName: ghcr.io/equinor/energyvision/studio-germany
+          datasetName: germany
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
       # - name: Set default image tag 🏷
       #   id: set-default-image-tag
       #   run: |
