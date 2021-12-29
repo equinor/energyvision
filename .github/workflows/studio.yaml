@@ -19,15 +19,11 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - name: Cache pnpm modules 💾
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-modules
+      - uses: actions/setup-node@v2
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
