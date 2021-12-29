@@ -63,10 +63,10 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - id: deploy-${{ toJson(matrix.dataset) }}
+      - id: deploy-'${{ toJson(matrix.dataset) }}'
         uses: ./.github/workflows/deploy-satellite/
         with:
-          imageName: ghcr.io/equinor/energyvision/studio-${{ toJson(matrix.dataset) }}
+          imageName: ghcr.io/equinor/energyvision/studio-'${{ toJson(matrix.dataset) }}'
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
