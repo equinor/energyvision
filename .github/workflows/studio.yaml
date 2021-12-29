@@ -119,7 +119,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - id: deploy-germany
-        uses: deploy-satellite
+        uses: ./deploy-satellite
         with:
           imageName: ghcr.io/equinor/energyvision/studio-germany
       # - uses: actions/checkout@v1
