@@ -1,0 +1,72 @@
+name: 'Deploy satellite studio'
+description: 'Steps needed to deploy a satellite studio to Radix'
+inputs:
+  imageName:
+    description: 'The path to where the image is to be copied'
+    required: true
+  datasetName:
+    description: 'Name of dataset to be used for Sanity'
+    required: true
+  githubToken:
+    description: 'GitHub token'
+    required: true
+outputs:
+  copied-files:
+    description: 'Number of files copied'
+    value: ${{ steps.random-number-generator.outputs.filesNo }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        cache: yarn
+        cache-dependency-path: 'studio/yarn.lock'
+    - name: Set default image tag 🏷
+      id: set-default-image-tag
+      shell: bash
+      run: |
+        echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
+    - name: Build sanity container ⚙️
+      id: build
+      shell: bash
+      run: |
+        docker build . \
+          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
+          --file studio/Dockerfile \
+          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --build-arg BUILDKIT_INLINE_CACHE=1
+    - name: Push the image to GHCR ☁
+      id: push-to-ghcr
+      shell: bash
+      run: |
+        echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push ${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+    - name: Get environment from branch 🦞
+      id: get-environment
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          get config branch-environment
+          --from-config
+          -b ${GITHUB_REF##*/}
+    - name: Deploy API on Radix 🚀
+      id: deploy
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          create job
+          deploy
+          --token-environment
+          --from-config
+          -e ${{ steps.get-environment.outputs.result }}
+          -f
+    - name: log-errors-to-slack 📄
+      uses: act10ns/slack@v1
+      with:
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+      if: failure()

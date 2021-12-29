@@ -21,7 +21,10 @@ COPY ./legacy ./legacy
 RUN rm -rf ./legacy
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
-ARG NEXT_PUBLIC_SANITY_DATASET
+ARG ARG_SANITY_DATASET
+
+ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
+
 RUN pnpm install --recursive
 RUN pnpm web build
 
@@ -61,7 +64,7 @@ RUN chown -R "$USER":"$USER" .
 USER "$UID"
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
-ARG NEXT_PUBLIC_SANITY_DATASET
+ARG ARG_SANITY_DATASET
 RUN pnpm web install -- --frozen-lockfile
 
 RUN rm ./web/pnpm-lock.yaml
