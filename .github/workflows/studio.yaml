@@ -52,7 +52,11 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-brazil:
+  deploy-satellites:
+    strategy:
+      fail-fast: true
+      matrix:
+        dataset: ['brazil', 'germany']
     needs: deploy
     runs-on: ubuntu-latest
     env:
@@ -60,40 +64,11 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - id: deploy-brazil
+      - id: deploy-${{ matrix.dataset }}
         uses: ./.github/workflows/deploy-satellite/
         with:
-          imageName: ghcr.io/equinor/energyvision/studio-brazil
-          datasetName: brazil
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
 
-  deploy-germany:
-    needs: deploy
-    runs-on: ubuntu-latest
-    env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - id: deploy-germany
-        uses: ./.github/workflows/deploy-satellite/
-        with:
-          imageName: ghcr.io/equinor/energyvision/studio-germany
-          datasetName: germany
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
+

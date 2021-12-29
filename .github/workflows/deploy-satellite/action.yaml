@@ -17,7 +17,8 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
+    - name: Checkout 🛎️
+      uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
         node-version: 16
@@ -63,3 +64,9 @@ runs:
           --from-config
           -e ${{ steps.get-environment.outputs.result }}
           -f
+    - name: log-errors-to-slack 📄
+      uses: act10ns/slack@v1
+      with:
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+      if: failure()
