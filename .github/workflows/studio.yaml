@@ -118,7 +118,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - id: deploy-germany
-        uses: .github/workflows/deploy-satellite
+        uses: ./.github/workflows/deploy-satellite
         with:
           imageName: ghcr.io/equinor/energyvision/studio-germany
       # - name: Set default image tag 🏷
