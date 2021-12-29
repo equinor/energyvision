@@ -65,10 +65,10 @@ jobs:
     steps:
       - name: Get matrix
         run: echo ${{ matrix.dataset }}
-      - id: deploy-${{ matrix.dataset }}
+      - id: deploy-${{ toJSON(matrix.dataset) }}
         uses: ./.github/workflows/deploy-satellite/
         with:
-          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          imageName: ghcr.io/equinor/energyvision/studio-${{ toJSON(matrix.dataset) }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
