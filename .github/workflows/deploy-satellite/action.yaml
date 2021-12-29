@@ -1,0 +1,54 @@
+name: 'Deploy satellite site'
+description: 'Steps needed to deply a satellite site to Radix'
+inputs:
+  imageName:
+    description: 'The path to where the image is to be copied'
+    required: true
+outputs:
+  copied-files:
+    description: 'Number of files copied'
+    value: ${{ steps.random-number-generator.outputs.filesNo }}
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v1
+    - name: Set default image tag 🏷
+      id: set-default-image-tag
+      shell: bash
+      run: |
+        echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
+    - name: Build sanity container ⚙️
+      id: build
+      shell: bash
+      run: |
+        docker build . \
+          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --build-arg ARG_SANITY_DATASET=brazil \
+          --file studio/Dockerfile \
+          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --build-arg BUILDKIT_INLINE_CACHE=1
+    - name: Push the image to GHCR ☁
+      id: push-to-ghcr
+      shell: bash
+      run: |
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push ${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+    - name: Get environment from branch 🦞
+      id: get-environment
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          get config branch-environment
+          --from-config
+          -b ${GITHUB_REF##*/}
+    - name: Deploy API on Radix 🚀
+      id: deploy
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          create job
+          deploy
+          --token-environment
+          --from-config
+          -e ${{ steps.get-environment.outputs.result }}
+          -f
