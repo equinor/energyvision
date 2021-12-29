@@ -53,12 +53,11 @@ jobs:
         if: failure()
 
   deploy-satellites:
-    strategy:
-      fail-fast: true
-      matrix:
-        dataset: ['brazil', 'germany']
     needs: deploy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dataset: ['brazil', 'germany']
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
