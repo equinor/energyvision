@@ -63,8 +63,8 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Get matrix
-        run: echo ${{ matrix.dataset }}
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
       - id: deploy-satellite
         uses: ./.github/workflows/deploy-satellite/
         with:
