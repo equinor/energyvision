@@ -70,7 +70,8 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: npm
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
       - name: Set default image tag 🏷
         id: set-default-image-tag
         run: |
