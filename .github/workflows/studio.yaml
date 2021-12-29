@@ -58,53 +58,16 @@ jobs:
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      IMAGE_NAME: ghcr.io/equinor/energyvision/studio-brazil
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - id: deploy-brazil
+        uses: ./.github/workflows/deploy-satellite/
         with:
-          node-version: 16
-          cache: yarn
-          cache-dependency-path: 'studio/yarn.lock'
-      - name: Set default image tag 🏷
-        id: set-default-image-tag
-        run: |
-          echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-      - name: Build sanity container ⚙️
-        id: build
-        run: |
-          docker build . \
-            --cache-from $IMAGE_NAME:${{ env.IMAGE_TAG }} \
-            --build-arg ARG_SANITY_DATASET=brazil \
-            --file studio/Dockerfile \
-            --tag $IMAGE_NAME:${{ env.IMAGE_TAG }} \
-            --build-arg BUILDKIT_INLINE_CACHE=1
-      - name: Push the image to GHCR ☁
-        id: push-to-ghcr
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker push $IMAGE_NAME:${{ env.IMAGE_TAG }}
-      - name: Get environment from branch 🦞
-        id: get-environment
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            get config branch-environment
-            --from-config
-            -b ${GITHUB_REF##*/}
-      - name: Deploy API on Radix 🚀
-        id: deploy
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --from-config
-            -e ${{ steps.get-environment.outputs.result }}
-            -f
+          imageName: ghcr.io/equinor/energyvision/studio-brazil
+          datasetName: brazil
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
         with:
@@ -128,43 +91,6 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/studio-germany
           datasetName: germany
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Set default image tag 🏷
-      #   id: set-default-image-tag
-      #   run: |
-      #     echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-      # - name: Build sanity container ⚙️
-      #   id: build
-      #   run: |
-      #     docker build . \
-      #       --cache-from ghcr.io/equinor/energyvision/studio-germany:${{ env.IMAGE_TAG }} \
-      #       --build-arg ARG_SANITY_DATASET=germany \
-      #       --file studio/Dockerfile \
-      #       --tag ghcr.io/equinor/energyvision/studio-germany:${{ env.IMAGE_TAG }} \
-      #       --build-arg BUILDKIT_INLINE_CACHE=1
-      # - name: Push the image to GHCR ☁
-      #   id: push-to-ghcr
-      #   run: |
-      #     echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      #     docker push ghcr.io/equinor/energyvision/studio-germany:${{ env.IMAGE_TAG }}
-      # - name: Get environment from branch 🦞
-      #   id: get-environment
-      #   uses: equinor/radix-github-actions@master
-      #   with:
-      #     args: >
-      #       get config branch-environment
-      #       --from-config
-      #       -b ${GITHUB_REF##*/}
-      # - name: Deploy API on Radix 🚀
-      #   id: deploy
-      #   uses: equinor/radix-github-actions@master
-      #   with:
-      #     args: >
-      #       create job
-      #       deploy
-      #       --token-environment
-      #       --from-config
-      #       -e ${{ steps.get-environment.outputs.result }}
-      #       -f
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
         with:
