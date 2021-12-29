@@ -65,6 +65,8 @@ jobs:
       IMAGE_NAME: ghcr.io/equinor/energyvision/studio-brazil
       DOCKER_BUILDKIT: 1
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
       - name: Set default image tag 🏷
         id: set-default-image-tag
         run: |
@@ -117,8 +119,10 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
       - id: deploy-germany
-        uses: ./.github/workflows/deploy-satellite
+        uses: ./.github/workflows/deploy-satellite/
         with:
           imageName: ghcr.io/equinor/energyvision/studio-germany
       # - name: Set default image tag 🏷
