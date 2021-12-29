@@ -22,7 +22,7 @@ runs:
     - uses: actions/setup-node@v2
       with:
         node-version: 16
-        cache: yarn
+        cache: pnpm
         cache-dependency-path: 'web/pnpm-lock.yaml'
     - name: Set default image tag 🏷
       shell: bash
@@ -43,7 +43,7 @@ runs:
       shell: bash
       id: push-to-ghcr
       run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker push ghcr.io/equinor/energyvision/web:${{ env.IMAGE_TAG }}
     - name: Get environment from branch 🦞
       id: get-environment
