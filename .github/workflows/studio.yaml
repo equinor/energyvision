@@ -62,6 +62,7 @@ jobs:
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      IMAGE_NAME: ghcr.io/equinor/energyvision/studio-brazil
       DOCKER_BUILDKIT: 1
     steps:
       - uses: actions/checkout@v1
@@ -73,16 +74,16 @@ jobs:
         id: build
         run: |
           docker build . \
-            --cache-from ghcr.io/equinor/energyvision/studio-brazil:${{ env.IMAGE_TAG }} \
+            --cache-from $IMAGE_NAME:${{ env.IMAGE_TAG }} \
             --build-arg ARG_SANITY_DATASET=brazil \
             --file studio/Dockerfile \
-            --tag ghcr.io/equinor/energyvision/studio-brazil:${{ env.IMAGE_TAG }} \
+            --tag $IMAGE_NAME:${{ env.IMAGE_TAG }} \
             --build-arg BUILDKIT_INLINE_CACHE=1
       - name: Push the image to GHCR ☁
         id: push-to-ghcr
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker push ghcr.io/equinor/energyvision/studio-brazil:${{ env.IMAGE_TAG }}
+          docker push $IMAGE_NAME:${{ env.IMAGE_TAG }}
       - name: Get environment from branch 🦞
         id: get-environment
         uses: equinor/radix-github-actions@master
@@ -125,7 +126,12 @@ jobs:
       - name: Build sanity container ⚙️
         id: build
         run: |
-          docker build . --build-arg ARG_SANITY_DATASET=germany --file studio/Dockerfile --tag ghcr.io/equinor/energyvision/studio-germany:${{ env.IMAGE_TAG }}
+          docker build . \
+            --cache-from ghcr.io/equinor/energyvision/studio-germany:${{ env.IMAGE_TAG }} \
+            --build-arg ARG_SANITY_DATASET=germany \
+            --file studio/Dockerfile \
+            --tag ghcr.io/equinor/energyvision/studio-germany:${{ env.IMAGE_TAG }}
+            --build-arg BUILDKIT_INLINE_CACHE=1
       - name: Push the image to GHCR ☁
         id: push-to-ghcr
         run: |
