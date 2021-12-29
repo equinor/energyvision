@@ -57,16 +57,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dataset: [brazil, germany]
+        dataset: ['brazil', 'germany']
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - id: deploy-${{ matrix.dataset }}
+      - name: Get matrix
+        run: echo "${{ matrix.dataset }}"
+      - id: deploy-"${{ matrix.dataset }}"
         uses: ./.github/workflows/deploy-satellite/
         with:
-          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          imageName: ghcr.io/equinor/energyvision/studio-"${{ matrix.dataset }}"
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
