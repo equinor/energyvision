@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:16 AS builder
+FROM node:lts-alpine AS builder
 
 RUN apk add --no-cache libc6-compat jq moreutils && \
   npm install -g pnpm@6.11.5
@@ -28,7 +28,7 @@ ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
 RUN pnpm install --recursive
 RUN pnpm web build
 
-FROM mhart/alpine-node:16
+FROM node:lts-alpine
 
 RUN apk add --no-cache libc6-compat && \
   npm install -g pnpm@6.11.5
@@ -65,6 +65,8 @@ USER "$UID"
 
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG ARG_SANITY_DATASET
+ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
+
 RUN pnpm web install -- --frozen-lockfile
 
 RUN rm ./web/pnpm-lock.yaml

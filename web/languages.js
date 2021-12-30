@@ -34,7 +34,7 @@ if (dataset === 'production') {
 } else if (dataset === 'germany') {
   languages = languages.filter((lang) => lang.locale === 'de')
 } else {
-  languages = languages.filter((lang) => lang.locale === 'en' || lang.locale === 'no' || lang.locale === 'pt')
+  languages = languages.filter((lang) => lang.locale === 'en')
 }
 
 module.exports = languages
