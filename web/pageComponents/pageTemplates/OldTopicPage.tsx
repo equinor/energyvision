@@ -1,5 +1,4 @@
 import { NextSeo } from 'next-seo'
-import Script from 'next/script'
 import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -22,7 +21,7 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
     scriptTag.src = '/legacy/legacy.minified.js'
     scriptTag.id = 'legacyScript'
     document.body.appendChild(scriptTag)
-  },[router.asPath])
+  }, [router.asPath])
 
   const onLinkClicked = (e: React.MouseEvent<HTMLDivElement>) => {
     anchorClick(e, router)
@@ -46,13 +45,6 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
         {/*  eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/styles/legacy.minified.test.css" />
       </Head>
-      {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
-      <Script
-        src="https://consent.cookiebot.com/uc.js"
-        id="Cookiebot"
-        data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-        strategy="afterInteractive"
-      ></Script>
 
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div

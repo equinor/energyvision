@@ -18,6 +18,7 @@ import { getNameFromLocale, defaultLanguage } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
 import languages from '../languages'
+import Script from 'next/script'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -100,6 +101,14 @@ Page.getLayout = (page: AppProps) => {
     <Layout footerData={data?.footerData} preview={preview}>
       <Header slugs={slugs} data={data?.menuData} />
       <SkipNavContent />
+      {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
+      <Script
+        src="https://consent.cookiebot.com/uc.js"
+        id="Cookiebot"
+        data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+        strategy="afterInteractive"
+        data-culture={defaultLanguage.locale}
+      ></Script>
       {page}
     </Layout>
   )

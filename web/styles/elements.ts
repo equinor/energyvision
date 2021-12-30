@@ -9,7 +9,7 @@ export const elements = css`
     color: var(--default-text);
   }
   body {
-    background-color: var(--moss-green-95);
+    background-color: var(--theme-background-primary);
     min-height: 100vh;
   }
 
