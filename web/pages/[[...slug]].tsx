@@ -107,7 +107,7 @@ Page.getLayout = (page: AppProps) => {
         id="Cookiebot"
         data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
         strategy="afterInteractive"
-        data-culture={defaultLanguage.locale}
+        data-culture={data?.locale == 'no' ? 'nb' : data?.locale}
       ></Script>
       {page}
     </Layout>
@@ -134,6 +134,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         preview: false,
         data: {
           isArchivedFallback: true,
+          locale,
           pageData: { slug: slug, ...archivedData },
           menuData,
           footerData,
@@ -150,6 +151,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         isArchivedFallback: false,
         query,
         queryParams,
+        locale,
         pageData,
         menuData,
         footerData,
