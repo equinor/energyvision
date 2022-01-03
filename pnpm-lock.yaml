@@ -75,7 +75,7 @@ importers:
   web:
     specifiers:
       '@equinor/eds-core-react': ^0.17.0
-      '@equinor/eds-icons': ^0.8.0
+      '@equinor/eds-icons': ^0.10.0
       '@equinor/eds-tokens': ^0.7.0
       '@microsoft/applicationinsights-react-js': ^3.2.2
       '@microsoft/applicationinsights-web': ^2.7.2
@@ -133,7 +133,7 @@ importers:
       xml2js: ^0.4.23
     dependencies:
       '@equinor/eds-core-react': 0.17.0_7a082f7d10047d47195aea793f958a14
-      '@equinor/eds-icons': 0.8.0
+      '@equinor/eds-icons': 0.10.0
       '@equinor/eds-tokens': 0.7.0
       '@microsoft/applicationinsights-react-js': 3.2.2_react@17.0.2
       '@microsoft/applicationinsights-web': 2.7.2
@@ -2599,11 +2599,6 @@ packages:
 
   /@equinor/eds-icons/0.10.0:
     resolution: {integrity: sha512-oYnbMtBLiwp30TzN8Q/MEJdqhyAQs87oD/x/mHFQ+BpFGlbbrcsWeTOD+rNY6JhxtJl5qfi9mAhJQgRMtauXsA==}
-    engines: {node: '>=10.0.0', pnpm: '>=4'}
-    dev: false
-
-  /@equinor/eds-icons/0.8.0:
-    resolution: {integrity: sha512-ck9+mrgezpx4TIHls4hFuDqcz7tDVqkNbzwKa/W3hZMLZ/VDvQZZ+8JeMzx45w+/OMgqMMWiRVMkdmWh1oFqfw==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
