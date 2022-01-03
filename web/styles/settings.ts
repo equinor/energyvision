@@ -140,11 +140,14 @@ export const spacings = css`
     --layout-maxContent-medium: calc(1920px - 368px * 2); /* 1184 */
     --layout-maxContent-wide: calc(1920px - 250px * 2); /* 1420 */
   }
+`
 
+export const componentSettings = css`
+  /* Topbar */
   :root {
+    --topBar-box-shadow: 0 0 15px 10px rgba(41, 62, 64, 0.15);
     --topbar-innerMaxWidth: calc(1920px - (var(--layout-paddingHorizontal-small) * 2));
   }
-
   /* Menu */
   :root {
     --menu-height-lg: 598px;
@@ -154,11 +157,6 @@ export const spacings = css`
   /** Because Jest hates you when you do an import style in the component */
   :root {
     --reach-accordion: 1;
-  }
-`
-
-export const utility = css`
-  :root {
-    --topBar-box-shadow: 0 0 15px 10px rgba(41, 62, 64, 0.15);
+    --reach-skip-nav: 1;
   }
 `

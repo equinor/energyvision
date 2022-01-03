@@ -6,5 +6,8 @@ export const generic = css`
   *:after {
     box-sizing: inherit;
   }
-  -webkit-overflow-scrolling: touch;
+
+  * {
+    font-family: Equinor, 'Open Sans', sans-serif;
+  }
 `
