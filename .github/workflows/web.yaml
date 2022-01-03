@@ -56,12 +56,33 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-websites:
+  deploy-global:
     needs: check_code
     runs-on: ubuntu-latest
     strategy:
+      # The matrix approach is needed to re-use code created for satellites
       matrix:
-        dataset: ["production", "brazil", "germany"]
+        dataset: ["production"]
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - id: deploy-global
+        uses: ./.github/workflows/deploy-websites/
+        with:
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-satellites:
+    needs: deploy-global
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dataset: ["brazil", "germany"]
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
