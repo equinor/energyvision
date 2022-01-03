@@ -5,6 +5,7 @@ import { generic } from './generic'
 import { elements } from './elements'
 import { skipNavLink, cookieBot } from './components'
 
+/* We use ITCSS to structure the (few) global styles we need */
 export const GlobalStyle = createGlobalStyle`
   /* Settings */
   ${colors}
