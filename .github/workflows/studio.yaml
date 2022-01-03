@@ -53,7 +53,6 @@ jobs:
         if: failure()
 
   read-satellites:
-    needs: deploy
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -62,10 +61,12 @@ jobs:
         - id: set-matrix
           name: Read from satellites.json
           run: |
-            echo "::set-output name=matrix::$(cat satellites.json)"
+            MATRIX=$(cat satellites.json)
+            echo "${MATRIX}"
+            echo "::set-output name=matrix::${MATRIX}"
 
   deploy-satellites:
-    needs: read-satellites
+    needs: [deploy, read-satellites]
     runs-on: ubuntu-latest
     strategy:
       matrix:
