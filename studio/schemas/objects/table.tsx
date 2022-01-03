@@ -5,7 +5,7 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import CharCounterEditor from '../components/CharCounterEditor'
 
-import { Rule, Block, isTitledListValue } from '@sanity/types'
+import { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type Table = {
@@ -35,7 +35,7 @@ const headerCellContentType = configureBlockContent({
   attachment: false,
   lists: false,
 })
-const tableCellContentType = configureBlockContent({
+/* const tableCellContentType = configureBlockContent({
   h1: false,
   h2: false,
   h3: false,
@@ -43,7 +43,7 @@ const tableCellContentType = configureBlockContent({
   lists: false,
   attachment: true,
 })
-
+ */
 const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
 const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
 export default {

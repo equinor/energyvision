@@ -1,8 +1,7 @@
 import Img from 'next/image'
-import { useNextSanityImage } from 'next-sanity-image'
+import { useNextSanityImage, UseNextSanityImageBuilderOptions, ImageUrlBuilder } from 'next-sanity-image'
 import { sanityClient } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/types'
-import { UseNextSanityImageBuilderOptions, ImageUrlBuilder } from 'next-sanity-image'
 
 declare const VALID_LAYOUT_VALUES: readonly ['fill', 'fixed', 'intrinsic', 'responsive', undefined]
 declare type LayoutValue = typeof VALID_LAYOUT_VALUES[number]

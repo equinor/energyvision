@@ -1,5 +1,5 @@
 import { BackgroundContainer, Table as EnvisTable } from '@components'
-import { IngressBlockRenderer, BlockRenderer, TitleBlockRenderer } from '../../common/serializers'
+import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
 import styled from 'styled-components'
