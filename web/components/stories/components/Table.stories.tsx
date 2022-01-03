@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
-import { Table, TableProps, BackgroundContainer } from '@components'
+import { Table, TableProps, BackgroundContainer, Link } from '@components'
 import styled from 'styled-components'
 
 export default {
@@ -71,13 +71,13 @@ export const WithDifferentInputs: Story<TableProps> = ({}) => (
       <Table.Row>
         <Table.Cell variant="numeric">1234</Table.Cell>
         <Table.Cell>
-          <a href="#">A link</a>
+          <Link href="#">A link</Link>
         </Table.Cell>
       </Table.Row>
       <Table.Row>
         <Table.Cell variant="numeric">5678</Table.Cell>
         <Table.Cell>
-          <a href="#">Another link</a>
+          <Link href="#">Another link</Link>
         </Table.Cell>
       </Table.Row>
     </Table.Body>
