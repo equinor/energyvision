@@ -218,7 +218,6 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   variant={invalid ? 'error' : 'default'}
-                  aria-invalid={invalid ? 'true' : 'false'}
                 />
               </TextFieldWrapper>
             )}
@@ -244,7 +243,6 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   helperText={error?.message}
                   aria-required="true"
                   variant={invalid ? 'error' : 'default'}
-                  aria-invalid={invalid ? 'true' : 'false'}
                 />
               </TextFieldWrapper>
             )}
