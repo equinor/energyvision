@@ -62,11 +62,10 @@ jobs:
           name: Read from satellites.json
           run: |
             MATRIX=$(cat satellites.json)
-            echo "${MATRIX}"
             echo "::set-output name=matrix::${MATRIX}"
 
   deploy-satellites:
-    needs: [deploy, read-satellites]
+    needs: [read-satellites]
     runs-on: ubuntu-latest
     strategy:
       matrix:
