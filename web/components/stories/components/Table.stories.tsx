@@ -87,7 +87,9 @@ export const WithDifferentInputs: Story<TableProps> = ({}) => (
 WithDifferentInputs.storyName = 'With different inputs'
 WithDifferentInputs.parameters = {
   docs: {
-    storyDescription: `We need a way to define different variants of input`,
+    description: {
+      story: `We need a way to define different variants of input`,
+    },
   },
 }
 
