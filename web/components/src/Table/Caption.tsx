@@ -4,7 +4,12 @@ import styled from 'styled-components'
 
 const { Caption: EdsCaption } = EdsTable
 
-const StyledCaption = styled(EdsCaption)``
+const StyledCaption = styled(EdsCaption)`
+  /* If the text is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
+    color: var(--inverted-text);
+  }
+`
 
 export type TableCaptionProps = CaptionProps
 
