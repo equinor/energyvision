@@ -65,11 +65,11 @@ jobs:
             echo "::set-output name=matrix::${MATRIX}"
 
   deploy-satellites:
-    needs: [read-satellites]
+    needs: [deploy, read-satellites]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: ${{ needs.read-satellites.outputs.matrix }}
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
