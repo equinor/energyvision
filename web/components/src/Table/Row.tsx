@@ -4,7 +4,11 @@ import styled from 'styled-components'
 
 const { Row: EdsRow } = EdsTable
 
-const StyledRowItem = styled(EdsRow)``
+const StyledRowItem = styled(EdsRow)`
+  &:hover {
+    background-color: transparent;
+  }
+`
 
 export type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>
 
