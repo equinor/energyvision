@@ -92,6 +92,63 @@ WithDifferentInputs.parameters = {
     },
   },
 }
+export const OnSmallScreens: Story<TableProps> = ({}) => (
+  <Table>
+    <Table.Caption>Table caption</Table.Caption>
+    <Table.Head>
+      <Table.Row>
+        <Table.Cell>Header one</Table.Cell>
+        <Table.Cell>Header two</Table.Cell>
+        <Table.Cell>Header three</Table.Cell>
+        <Table.Cell>Header four</Table.Cell>
+        <Table.Cell>Header five</Table.Cell>
+        <Table.Cell>Header six</Table.Cell>
+        <Table.Cell>Header seven</Table.Cell>
+        <Table.Cell>Header eight</Table.Cell>
+        <Table.Cell>Header nine</Table.Cell>
+        <Table.Cell>Header ten</Table.Cell>
+        <Table.Cell>Header eleven</Table.Cell>
+      </Table.Row>
+    </Table.Head>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>Content one</Table.Cell>
+        <Table.Cell>Content two</Table.Cell>
+        <Table.Cell>Content three</Table.Cell>
+        <Table.Cell>Content four</Table.Cell>
+        <Table.Cell>Content five</Table.Cell>
+        <Table.Cell>Content six</Table.Cell>
+        <Table.Cell>Content seven</Table.Cell>
+        <Table.Cell>Content eight</Table.Cell>
+        <Table.Cell>Content nine</Table.Cell>
+        <Table.Cell>Content ten</Table.Cell>
+        <Table.Cell>Content eleven</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Content one</Table.Cell>
+        <Table.Cell>Content two</Table.Cell>
+        <Table.Cell>Content three</Table.Cell>
+        <Table.Cell>Content four</Table.Cell>
+        <Table.Cell>Content five</Table.Cell>
+        <Table.Cell>Content six</Table.Cell>
+        <Table.Cell>Content seven</Table.Cell>
+        <Table.Cell>Content eight</Table.Cell>
+        <Table.Cell>Content nine</Table.Cell>
+        <Table.Cell>Content ten</Table.Cell>
+        <Table.Cell>Content eleven</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table>
+)
+
+OnSmallScreens.storyName = 'On small screens'
+OnSmallScreens.parameters = {
+  docs: {
+    description: {
+      story: `If the table is to wide for the available space, it should scroll horizontally`,
+    },
+  },
+}
 
 export const WithDifferentBackgrounds: Story<TableProps> = ({}) => (
   <Grid>
