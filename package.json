@@ -26,7 +26,10 @@
     "preinstall": "npx only-allow pnpm",
     "start:studio": "yarn --cwd ./studio dev",
     "start:storybook": "pnpm web storybook",
-    "start:web": "pnpm web dev"
+    "start:web": "pnpm web dev",
+    "docker-studio:build": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=production -t envis/studio -f studio/Dockerfile .",
+    "docker-studio:run": "docker run -p 3333:3333 envis/studio",
+    "docker-studio:inspect": "docker run -p 3333:3333 -it envis/studio /bin/sh"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.8.1",

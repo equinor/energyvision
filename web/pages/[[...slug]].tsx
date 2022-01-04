@@ -19,6 +19,13 @@ import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
 import languages from '../languages'
 import Script from 'next/script'
+import { useEffect } from 'react'
+
+declare global {
+  interface Window {
+    Cookiebot: any
+  }
+}
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -36,6 +43,9 @@ export default function Page({ data, preview }: any) {
 
   const router = useRouter()
 
+  useEffect(() => {
+    window.Cookiebot.runScripts()
+  }, [router.asPath])
   // Let's nuke the preview hook temporarily for performance reasons
   /*   const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
@@ -102,13 +112,16 @@ Page.getLayout = (page: AppProps) => {
       <Header slugs={slugs} data={data?.menuData} />
       <SkipNavContent />
       {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
-      <Script
-        src="https://consent.cookiebot.com/uc.js"
-        id="Cookiebot"
-        data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-        strategy="afterInteractive"
-        data-culture={data?.locale == 'no' ? 'nb' : data?.locale}
-      ></Script>
+      {
+        <Script
+          src="https://consent.cookiebot.com/uc.js"
+          id="Cookiebot"
+          data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+          strategy="beforeInteractive"
+          data-blockingmode="auto"
+          data-culture={data?.locale == 'no' ? 'nb' : data?.locale}
+        ></Script>
+      }
       {page}
     </Layout>
   )

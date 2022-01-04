@@ -18,22 +18,22 @@ export default {
       name: 'filename',
       type: 'string',
       title: 'Name',
+      description: 'The label used for the link',
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: 'file',
-      type: 'file',
-      title: 'File',
-      options: {
-        accept: '.pdf,.xls,.xlsx',
-      },
+      name: 'fileReference',
+      type: 'reference',
+      title: 'File asset',
+      description: 'Select the asset you want to link to. These can be managed/created in the asset library.',
+      to: [{ type: 'assetFile' }],
       validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {
     select: {
       title: `filename`,
-      extension: 'file.asset.extension',
+      extension: 'fileReference.asset.asset.extension',
     },
     prepare({ title = '', extension }: { title: string; extension: string }) {
       let Icon

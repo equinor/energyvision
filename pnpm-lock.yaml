@@ -49,7 +49,7 @@ importers:
 
   search:
     specifiers:
-      '@azure/functions': ^1.2.3
+      '@azure/functions': ^3.0.0
       '@azure/storage-blob': ^12.8.0
       '@types/jest': ^27.0.2
       '@types/node': ^16.11.6
@@ -65,7 +65,7 @@ importers:
       dotenv-azure: 2.0.0
       fp-ts: 2.11.5
     devDependencies:
-      '@azure/functions': 1.2.3
+      '@azure/functions': 3.0.0
       '@types/jest': 27.0.3
       '@types/node': 16.11.9
       jest: 27.3.1
@@ -109,6 +109,7 @@ importers:
       focus-visible: ^5.2.0
       ics: ^2.35.0
       jest: ^27.4.5
+      jest-environment-jsdom: ^27.4.4
       jest-styled-components: ^7.0.8
       next: ^12.0.7
       next-circular-dependency: ^1.0.1
@@ -186,6 +187,7 @@ importers:
       babel-jest: 27.4.5
       babel-plugin-styled-components: 1.13.3_styled-components@5.3.3
       jest: 27.4.5
+      jest-environment-jsdom: 27.4.4
       jest-styled-components: 7.0.8_styled-components@5.3.3
       prettier: 2.5.1
       storybook-css-modules-preset: 1.1.1
@@ -418,8 +420,8 @@ packages:
       tslib: 2.3.1
     dev: false
 
-  /@azure/functions/1.2.3:
-    resolution: {integrity: sha512-dZITbYPNg6ay6ngcCOjRUh1wDhlFITS0zIkqplyH5KfKEAVPooaoaye5mUFnR+WP9WdGRjlNXyl/y2tgWKHcRg==}
+  /@azure/functions/3.0.0:
+    resolution: {integrity: sha512-nxOdQdYoy9JEdAPsQlBWavsRvbH5qT2fpwMcY64s1sLIT8QwtW7ebh/MJNgzeAac+JaC6IED7plDiizq8oZUNw==}
     dev: true
 
   /@azure/identity/1.1.0:
@@ -9515,7 +9517,7 @@ packages:
     resolution: {integrity: sha512-DUxuQaKoqfNne8iikd14SAkh5uw4+8vNifp6gmA73yYNS6ywLIWSLD/n/mBzHQRpW3J7rbATEakmiA8JvkTyZw==}
     engines: {node: '>=6.11.5', yarn: '>=1.0.0'}
     dependencies:
-      '@babel/code-frame': 7.10.4
+      '@babel/code-frame': 7.16.7
       chalk: 2.4.2
       micromatch: 3.1.10
       minimatch: 3.0.4

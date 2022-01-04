@@ -8,36 +8,36 @@ import * as T from 'fp-ts/lib/Task'
 import { init, getClient, getDocuments } from './blobStorage'
 import { BlobItem } from '@azure/storage-blob'
 
+type GetBlobsType = () => TE.TaskEither<string | Error, BlobItem[]>
+const getBlobs: GetBlobsType = flow(init, E.map(getClient), TE.fromEither, TE.chainW(getDocuments))
+
+const test = flow(
+  getBlobs,
+  T.map(
+    E.fold(
+      (error) => console.log('Error happened!', error),
+      (blobItems) => console.log(`Number of blob items: ${blobItems.length}`),
+    ),
+  ),
+)
+
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
 
-  await new DotenvAzure().config()
+  await new DotenvAzure().config({
+    allowEmptyValues: true,
+    debug: true,
+  })
 
   if (myTimer.isPastDue) {
     context.log('Timer function is running late!')
   }
   context.log('Timer trigger function ran!', timeStamp)
+
   // Check that we have connection to Azure blob
-  test().catch((error) => console.log(error.toString()))
+  console.log('Testing blob connection…')
+  await test()().catch((error) => console.log(error.toString()))
+  console.log('Test function called!')
 }
-
-type GetBlobsType = () => TE.TaskEither<string | Error, BlobItem[]>
-const getBlobs: GetBlobsType = flow(
-  init,
-  E.map(getClient),
-  TE.fromEither,
-  TE.chainW(getDocuments),
-)
-
-const test =
-  flow(
-    getBlobs,
-    T.map(
-      E.fold(
-        (_) => console.log('Error happened'),
-        (blobItems) => console.log(`Number of blob items: ${blobItems.length}`),
-      ),
-    ),
-  )()
 
 export default timerTrigger
