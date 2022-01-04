@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dataset: ${{ needs.read-satellites.outputs.matrix }}
+        dataset: ["brazil"]
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -78,6 +78,11 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
+      - name: Debug
+        run: |
+          echo ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+          echo ${{ needs.read-satellites.outputs.matrix }}
+
       - id: deploy-satellite
         uses: ./.github/workflows/deploy-studios/
         with:
