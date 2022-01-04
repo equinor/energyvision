@@ -7,59 +7,59 @@ on:
     paths:
       - 'studio/**/*'
 jobs:
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #     SANITY_STUDIO_PROJECT_URL: ${{secrets.SANITY_STUDIO_PROJECT_URL}}
-  #     SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
-  #     SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE}}
-  #     SANITY_STUDIO_PREVIEW_SECRET: ${{secrets.SANITY_STUDIO_PREVIEW_SECRET}}
-  #     DOCKER_BUILDKIT: 1
-  #   steps:
-  #     - name: Checkout 🛎️
-  #       uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: 16
-  #         cache: yarn
-  #         cache-dependency-path: 'studio/yarn.lock'
-  #     - name: Cache pnpm modules 💾
-  #       uses: actions/cache@v2
-  #       env:
-  #         cache-name: cache-pnpm-modules
-  #       with:
-  #         path: ~/.pnpm-store
-  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-  #     - name: Install pnpm 📦
-  #       id: install-pnpm
-  #       uses: pnpm/action-setup@v2.0.0
-  #       with:
-  #         version: latest
-  #     - name: Install dependencies 🔧
-  #       id: install-dependencies
-  #       run: |
-  #         pnpm install
-  #         pnpm studio yarn
-  #     - name: Run ESLint 🔎
-  #       id: lint
-  #       run: |
-  #         pnpm lint:studio
-  #     - name: Deploy 🚀
-  #       id: deploy
-  #       working-directory: ./studio
-  #       run: |
-  #         pnpm deploy
-  #       env:
-  #         SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SANITY_STUDIO_PROJECT_URL: ${{secrets.SANITY_STUDIO_PROJECT_URL}}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE}}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{secrets.SANITY_STUDIO_PREVIEW_SECRET}}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
+      - name: Cache pnpm modules 💾
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-modules
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: latest
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm studio yarn
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:studio
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./studio
+        run: |
+          pnpm deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
 
-  #     - uses: act10ns/slack@v1
-  #       with:
-  #         status: ${{ job.status }}
-  #         steps: ${{ toJson(steps) }}
-  #       if: failure()
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
   read-satellites:
     runs-on: ubuntu-latest
@@ -74,16 +74,6 @@ jobs:
             echo ::set-output name=matrix::${MATRIX}
 
 
-  debug:
-    needs: [read-satellites]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - name: Debug
-        run: |
-          echo ${{ fromJson(needs.read-satellites.outputs.matrix) }}
-
   debug2:
     needs: [read-satellites]
     runs-on: ubuntu-latest
@@ -94,31 +84,29 @@ jobs:
         run: |
           echo ${{ needs.read-satellites.outputs.matrix }}
 
+  deploy-satellites:
+    needs: [deploy, read-satellites]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dataset: ${{ needs.read-satellites.outputs.matrix }}
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Debug
+        run: |
+          echo ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+          echo ${{ needs.read-satellites.outputs.matrix }}
 
-
-  # deploy-satellites:
-  #   needs: [deploy, read-satellites]
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       dataset: ["brazil"]
-  #   env:
-  #     APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
-  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #     DOCKER_BUILDKIT: 1
-  #   steps:
-  #     - name: Checkout 🛎️
-  #       uses: actions/checkout@v2
-  #     - name: Debug
-  #       run: |
-  #         echo ${{ fromJson(needs.read-satellites.outputs.matrix) }}
-  #         echo ${{ needs.read-satellites.outputs.matrix }}
-
-  #     - id: deploy-satellite
-  #       uses: ./.github/workflows/deploy-studios/
-  #       with:
-  #         imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
-  #         datasetName: ${{ matrix.dataset }}
-  #         githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - id: deploy-satellite
+        uses: ./.github/workflows/deploy-studios/
+        with:
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
 
