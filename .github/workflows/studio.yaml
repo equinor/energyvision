@@ -70,12 +70,8 @@ jobs:
         - id: set-matrix
           name: Read from satellites.json
           run: |
-            MATRIX=$(satellites.json)
+            MATRIX=$(cat satellites.json)
             echo ::set-output name=matrix::${MATRIX}
-            MATRIX2=$(satellites.json)
-            echo ::set-output name=matrix2::${MATRIX2}
-            MATRIX3=$(cat satellites.json)
-            echo ::set-output name=matrix3::${MATRIX3}
 
 
   debug:
@@ -87,8 +83,6 @@ jobs:
       - name: Debug
         run: |
           echo ${{ fromJson(needs.read-satellites.outputs.matrix) }}
-          echo ${{ fromJson(needs.read-satellites.outputs.matrix2) }}
-          echo ${{ fromJson(needs.read-satellites.outputs.matrix3) }}
 
   debug2:
     needs: [read-satellites]
@@ -99,8 +93,7 @@ jobs:
       - name: Debug
         run: |
           echo ${{ needs.read-satellites.outputs.matrix }}
-          echo ${{ needs.read-satellites.outputs.matrix2 }}
-          echo ${{ needs.read-satellites.outputs.matrix3 }}
+
 
 
   # deploy-satellites:
