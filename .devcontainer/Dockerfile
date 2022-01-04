@@ -21,5 +21,5 @@ RUN fish install --noninteractive
 # [Optional] Uncomment if you want to install more global node packages
 RUN su node -c "npm install -g pnpm"
 RUN su node -c "npm install -g gitmoji-cli"
-RUN su node -c "npm install -g azure-functions-core-tools@3 --unsafe-perm true"
+RUN su node -c "npm install -g azure-functions-core-tools@4 --unsafe-perm true"
 RUN su node -c "npm install -g azurite"
