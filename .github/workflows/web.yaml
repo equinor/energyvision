@@ -77,12 +77,24 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
+  read-satellites:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+        - uses: actions/checkout@v2
+        - id: set-matrix
+          name: Read from satellites.json
+          run: |
+            MATRIX=$(cat satellites.json)
+            echo ::set-output name=matrix::${MATRIX}
+
   deploy-satellites:
-    needs: deploy-global
+    needs: [deploy-global, read-satellites]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dataset: ["brazil", "germany"]
+        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
