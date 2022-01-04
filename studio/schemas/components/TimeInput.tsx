@@ -1,6 +1,5 @@
 import React, { forwardRef, useCallback, useEffect, useState } from 'react'
 
-import { range } from 'lodash'
 import { useId } from '@reach/auto-id'
 
 import { ResetIcon } from '@sanity/icons'
@@ -12,6 +11,11 @@ import PatchEvent, { set, unset } from 'part:@sanity/form-builder/patch-event'
 
 export const EMPTY = '--'
 export const INVALID_TIME_FORMAT = 'Invalid time format'
+
+const range = (start: number, stop: number, step = 1) =>
+  Array(Math.ceil((stop - start) / step))
+    .fill(start)
+    .map((x: number, y: number) => x + y * step)
 
 const TIMESTEP = 5
 const MINUTES = range(0, 60, TIMESTEP)

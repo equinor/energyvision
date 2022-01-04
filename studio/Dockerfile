@@ -10,7 +10,6 @@ COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
 COPY ./studio ./studio
-COPY ./legacy ./legacy
 
 ARG ARG_SANITY_DATASET
 
