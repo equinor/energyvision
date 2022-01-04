@@ -33,7 +33,7 @@ export default {
   preview: {
     select: {
       title: `filename`,
-      extension: 'file.asset.extension',
+      extension: 'fileReference.asset.asset.extension',
     },
     prepare({ title = '', extension }: { title: string; extension: string }) {
       let Icon
