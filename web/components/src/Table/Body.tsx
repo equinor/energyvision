@@ -4,7 +4,9 @@ import styled from 'styled-components'
 
 const { Body: EdsBody } = EdsTable
 
-const StyledBodyItem = styled(EdsBody)``
+const StyledBodyItem = styled(EdsBody)`
+  background-color: var(--white-100);
+`
 
 export type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>
 
