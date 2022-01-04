@@ -62,6 +62,7 @@ jobs:
           name: Read from satellites.json
           run: |
             MATRIX=$(cat satellites.json)
+            echo ${MATRIX}
             echo "::set-output name=matrix::${MATRIX}"
 
   deploy-satellites:
