@@ -72,4 +72,19 @@ export default {
       hidden: ({ parent }: { parent: any }) => parent?.isStatic === false,
     },
   ],
+  preview: {
+    select: {
+      label: 'label',
+
+      url: 'url',
+    },
+    prepare(selection: any) {
+      const { label, url } = selection
+      return {
+        title: label || 'No label added yet',
+        subtitle: url || ``,
+        media: EdsIcon(format_line_spacing),
+      }
+    },
+  },
 }
