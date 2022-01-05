@@ -23,6 +23,15 @@ export default [
     }),
   }),
   T.template({
+    id: 'simple-menu-with-locale',
+    title: 'Site menu(simple)',
+    schemaType: 'simpleMenu',
+    parameters: [{ name: 'isoCode', type: 'string' }],
+    value: (params) => ({
+      _lang: params.isoCode,
+    }),
+  }),
+  T.template({
     id: 'footer-with-locale',
     title: 'Footer',
     schemaType: 'footer',
