@@ -1,10 +1,7 @@
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { configureBlockContent } from '../editors/blockContentType'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
 import routes from '../routes'
