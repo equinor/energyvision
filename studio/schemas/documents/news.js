@@ -88,9 +88,9 @@ export default {
       description: 'This news article will be sent to all the users who subscribed to below selected type.',
       options: {
         list: [
-          { title: 'General News', value: 'general-news' },
-          { title: 'Stock Market Announcements', value: 'stock-market-announcements' },
-          { title: 'Crude Oil Assays', value: 'crude-oil-assays' },
+          { title: 'General News', value: 'Company' },
+          { title: 'Stock Market Announcements', value: 'Stock' },
+          { title: 'Crude Oil Assays', value: 'Crude' },
         ],
         layout: 'dropdown',
       },
