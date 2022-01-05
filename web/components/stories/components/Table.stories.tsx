@@ -150,6 +150,45 @@ OnSmallScreens.parameters = {
   },
 }
 
+export const WithCenteredCaption: Story<TableProps> = ({}) => (
+  <Table>
+    <Table.Caption center>Table caption</Table.Caption>
+    <Table.Head>
+      <Table.Row>
+        <Table.Cell>Header one</Table.Cell>
+        <Table.Cell>Header two</Table.Cell>
+        <Table.Cell>Header three</Table.Cell>
+      </Table.Row>
+    </Table.Head>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>Content one</Table.Cell>
+        <Table.Cell>Content two</Table.Cell>
+        <Table.Cell>Content three</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Content one</Table.Cell>
+        <Table.Cell>Content two</Table.Cell>
+        <Table.Cell>Content three</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Content one</Table.Cell>
+        <Table.Cell>Content two</Table.Cell>
+        <Table.Cell>Content three</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table>
+)
+
+WithCenteredCaption.storyName = 'With centered caption'
+WithCenteredCaption.parameters = {
+  docs: {
+    description: {
+      story: `The caption can be centered`,
+    },
+  },
+}
+
 export const WithDifferentBackgrounds: Story<TableProps> = ({}) => (
   <Grid>
     <BackgroundContainer background="Moss Green Light">

@@ -4,19 +4,34 @@ import styled from 'styled-components'
 
 const { Caption: EdsCaption } = EdsTable
 
-const StyledCaption = styled(EdsCaption)`
+const StyledCaption = styled(EdsCaption)<{ center: boolean }>`
+  padding: var(--space-small) 0;
+  font-size: var(--typeScale-1);
+  line-height: var(--lineHeight-1);
+  text-align: left;
+  ${({ center }) =>
+    center && {
+      textAlign: 'center',
+    }}
+
   /* If the text is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
     color: var(--inverted-text);
   }
 `
 
-export type TableCaptionProps = CaptionProps
+export type TableCaptionProps = {
+  center?: boolean
+} & CaptionProps
 
-export const Caption = forwardRef<HTMLTableCellElement, CaptionProps>(function Cell({ style, children, ...rest }, ref) {
+export const Caption = forwardRef<HTMLTableCellElement, TableCaptionProps>(function Cell(
+  { center = false, style, children, ...rest },
+  ref,
+) {
   return (
     <StyledCaption
       ref={ref}
+      center={center}
       style={
         {
           ...style,
