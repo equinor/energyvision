@@ -9,7 +9,7 @@ import { SkipNavLink } from '@reach/skip-nav'
 import 'focus-visible'
 import { getIsoFromLocale } from '../lib/localization'
 import Script from 'next/script'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
@@ -46,10 +46,12 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   // Add region part for react-intl
   const defaultLocale = getIsoFromLocale(router.defaultLocale)
   const locale = getIsoFromLocale(router.locale)
+  const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false)
 
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
 
   useEffect(() => {
+    setIsPreviewMode(window.self === window.top)
     if (window.self !== window.top) window.Cookiebot.runScripts()
   }, [router.asPath])
 
@@ -63,7 +65,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
         <SkipNavLink />
         {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
-        {
+        {!isPreviewMode && (
           <Script
             src="https://consent.cookiebot.com/uc.js"
             id="Cookiebot"
@@ -72,7 +74,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
             data-blockingmode="auto"
             data-culture={router.locale == 'no' ? 'nb' : router.locale}
           ></Script>
-        }
+        )}
         {getLayout(<Component {...pageProps} />)}
       </IntlProvider>
     </>
