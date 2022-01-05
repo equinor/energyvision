@@ -50,7 +50,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
 
   useEffect(() => {
-    window.Cookiebot.runScripts()
+    if (window.self !== window.top) window.Cookiebot.runScripts()
   }, [router.asPath])
 
   return (
@@ -70,7 +70,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
             data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
             strategy="beforeInteractive"
             data-blockingmode="auto"
-            data-culture={router.locale == 'no' ? 'nb' : locale}
+            data-culture={router.locale == 'no' ? 'nb' : router.locale}
           ></Script>
         }
         {getLayout(<Component {...pageProps} />)}

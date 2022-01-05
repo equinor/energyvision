@@ -3,6 +3,7 @@ import type { IFrameData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
+import RequestConsentContainer from './RequestConsentContainer'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -59,9 +60,13 @@ const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { 
             }}
           />
         )}
-        <IFrameContainer aspectRatioPadding={containerPadding}>
+
+        <IFrameContainer className="cookieconsent-optin-marketing" aspectRatioPadding={containerPadding}>
           <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
         </IFrameContainer>
+        <div className="cookieconsent-optout-marketing">
+          <RequestConsentContainer consentType="marketing" />
+        </div>
       </Container>
     </BackgroundContainer>
   )
