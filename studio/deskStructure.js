@@ -160,6 +160,10 @@ export default () => {
       .title('Country tags')
       .schemaType('countryTag')
       .child(S.documentTypeList('countryTag').title('Country tag')),
+    S.listItem()
+      .title('SimpleMenu')
+      .schemaType('simpleMenu')
+      .child(S.documentTypeList('simpleMenu').title('Simple Menu')),
   ]
 
   return S.list().title('Content').items(listItems)
