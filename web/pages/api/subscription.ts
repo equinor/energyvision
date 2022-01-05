@@ -42,13 +42,13 @@ const authenticate = async () => {
 const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParmeters) => {
   const additionalParameters = `
   {
-    "stock_market": "${formParameters.stockMarketAnnouncements ? 'y' : 'n'}",
-    "company_news": "${formParameters.generalNews ? 'y' : 'n'}",
-    "crude_oil_assays": "${formParameters.crudeOilAssays ? 'y' : 'n'}",
-    "magazine": "${formParameters.magazineStories ? 'y' : 'n'}",
-    "loop": "${formParameters.loopStories ? 'y' : 'n'}",
+    "stock_market": "${formParameters.stockMarketAnnouncements ? 'Y' : 'N'}",
+    "company_news": "${formParameters.generalNews ? 'Y' : 'N'}",
+    "crude_oil_assays": "${formParameters.crudeOilAssays ? 'Y' : 'N'}",
+    "magazine": "${formParameters.magazineStories ? 'Y' : 'N'}",
+    "loop": "${formParameters.loopStories ? 'Y' : 'N'}",
     "type": "Investor",
-    "lang": "${formParameters.languageCode}",
+    "lang": "${formParameters.languageCode}"
   }`
 
   const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___SignUp xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><firstName>${formParameters.firstName}</firstName><email>${formParameters.email}</email><additionalParams>${additionalParameters}</additionalParams></Subscription___SignUp></s:Body></s:Envelope>`
@@ -58,7 +58,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     xml: envelope,
     timeout: 5000,
   })
-  xml2js.parseString(response, function (err, result) {
+  xml2js.parseString(response.body, function (err, result) {
     if (err != null) console.error(err)
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
     if (soapBody['SOAP-ENV:Fault'] != undefined) {

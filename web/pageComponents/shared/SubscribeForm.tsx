@@ -96,7 +96,6 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
     })
     const result = await res.json()
     if (result.statusCode != 200) console.error(result)
-    console.log(subscribeFormParamers)
     reset()
   }
 
