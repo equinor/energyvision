@@ -41,8 +41,9 @@ const LinkField = {
     {
       name: 'isStatic',
       title: 'Is static page',
-      description: `While migrating, content can be available as static pages generated from the old CMS. If this is
-      the case for this menu item, it's important to register the url in the static input field`,
+      description: `While migrating, content can be available as static pages generated from the old CMS.
+      This is a temporary solution and should be avoided whenever possible. Links using this should be 
+      updated when this content/page has been published in Sanity.`,
       type: 'boolean',
       initialValue: false,
     },
