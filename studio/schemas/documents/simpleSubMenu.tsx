@@ -6,6 +6,8 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
 import routes from '../routes'
 
+//todo: add types
+
 export default {
   type: 'document',
   name: 'simpleSubMenu',
