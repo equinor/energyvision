@@ -3,6 +3,7 @@ import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
+import { done } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -83,7 +84,9 @@ export default {
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
-        { type: 'table' },
+        /*
+        The table is just done done, it's just a poc
+         { type: 'table' }, */
         { type: 'stockValuesApi' },
         { type: 'iframe' },
         { type: 'remitTable' },
