@@ -4,15 +4,15 @@ import { NewsDistributionParameters } from '../../types/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import getConfig from 'next/config'
 
+const { publicRuntimeConfig } = getConfig()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const data = req.body
   const locale = languages.find((lang)=> lang.name == data.languageCode)?.locale || "en"
-
   const newsDistributionParameters : NewsDistributionParameters ={
     timeStamp: data.timeStamp,
     title: data.title,
     ingress: data.ingress,
-    link: `${getConfig().domain}/${locale}/${data.link}`,
+    link: `${publicRuntimeConfig.domain}/${locale}/${data.link}`,
     newsType: data.newsType,
     languageCode: locale
   }
