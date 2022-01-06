@@ -15,6 +15,10 @@ module.exports = withBundleAnalyzer({
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // Enables the styled-components SWC transform
+    styledComponents: true,
+  },
   publicRuntimeConfig: {
     domain: 'https://energyvision.app.radix.equinor.com',
     archiveStorageURL: archiveServerHostname,
