@@ -9,6 +9,7 @@ import SiteMenu from './siteMenu/SiteMenu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
+import { isGlobal } from '../../common/helpers/datasetHelpers'
 
 const { outline } = Tokens
 
@@ -82,6 +83,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
   return (
     <HeaderRelative>
       <TopbarOffset />
+
       <Topbar>
         {/* @TODO: Localize strings */}
         <TopbarContainer>
@@ -101,7 +103,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
-            <SiteMenu data={data} />
+            {isGlobal && <SiteMenu data={data} />}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>
