@@ -8,8 +8,8 @@ import { DefaultSeo } from 'next-seo'
 import { SkipNavLink } from '@reach/skip-nav'
 import 'focus-visible'
 import { getIsoFromLocale } from '../lib/localization'
-import Script from 'next/script'
-import { useEffect, useState } from 'react'
+//import Script from 'next/script'
+//import { useEffect, useState } from 'react'
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
@@ -34,11 +34,12 @@ type CustomAppProps<P = {}> = AppProps<P> & {
   Component: Page<P>
 }
 
+/* //COOKIEBOT 
 declare global {
   interface Window {
     Cookiebot: any
   }
-}
+}*/
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
@@ -46,14 +47,14 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   // Add region part for react-intl
   const defaultLocale = getIsoFromLocale(router.defaultLocale)
   const locale = getIsoFromLocale(router.locale)
-  const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false)
+  //const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false)
 
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
 
-  useEffect(() => {
+  /*useEffect(() => {
     setIsPreviewMode(window.self === window.top)
     if (window.self !== window.top) window.Cookiebot.runScripts()
-  }, [router.asPath])
+  }, [router.asPath])*/
 
   return (
     <>
@@ -64,7 +65,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
         <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
 
         <SkipNavLink />
-        {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
+        {/* Cookie bot script should be the first in the document. Let it be here for now.
         {!isPreviewMode && (
           <Script
             src="https://consent.cookiebot.com/uc.js"
@@ -74,7 +75,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
             data-blockingmode="auto"
             data-culture={router.locale == 'no' ? 'nb' : router.locale}
           ></Script>
-        )}
+        ) */}
         {getLayout(<Component {...pageProps} />)}
       </IntlProvider>
     </>
