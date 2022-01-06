@@ -3,6 +3,7 @@ import languages from '../../languages'
 import { NewsDistributionParameters } from '../../types/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import getConfig from 'next/config'
+import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
 const { publicRuntimeConfig } = getConfig()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -18,8 +19,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   await distribute(newsDistributionParameters).then((isSuccessful) => {
     if (!isSuccessful) {
-      return res.status(500).json({ msg: `Subscribe failed ${newsDistributionParameters}` })
+      const appInsights = useAppInsightsContext()
+      appInsights.trackEvent({name:"News Distribution Failure"})
+      return res.status(500).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
     }
-    res.status(200).json({ msg: `Successfully distributed. ${newsDistributionParameters}` })
+
+    const appInsights = useAppInsightsContext()
+    appInsights.trackEvent({name:"News Distribution Success"})
+    res.status(200).json({ msg: `Successfully distributed ${newsDistributionParameters.link}` })
   })
 }
