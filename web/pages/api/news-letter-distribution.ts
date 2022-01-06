@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     timeStamp: data.timeStamp,
     title: data.title,
     ingress: data.ingress,
-    link: `${publicRuntimeConfig.domain}/${locale}/${data.link}`,
+    link: `${publicRuntimeConfig.domain}/${locale}/news/${data.link}`,
     newsType: data.newsType,
     languageCode: locale
   }
