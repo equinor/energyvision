@@ -7,7 +7,20 @@ const ParentRoutesTemplates = languages.map(({ name, title }) =>
     title: `Parent route - ${title}`,
     schemaType: `route_${name}`,
     parameters: [{ name: 'parentId', type: 'string' }],
-    value: (params) => ({ parent: { _type: 'reference', _ref: params.parentId } }),
+    value: (params) => ({
+      parent: { _type: 'reference', _ref: params.parentId },
+    }),
+  }),
+)
+const HomePageRoutesTemplates = languages.map(({ name, title }) =>
+  T.template({
+    id: `home-page-route-${name}`,
+    title: `Home page route - ${title}`,
+    schemaType: `route_${name}`,
+    parameters: [{ name: 'isHomePage', type: 'boolean' }],
+    value: (params) => ({
+      isHomePage: params.isHomePage,
+    }),
   }),
 )
 
@@ -41,4 +54,5 @@ export default [
     }),
   }),
   ...ParentRoutesTemplates,
+  ...HomePageRoutesTemplates,
 ]

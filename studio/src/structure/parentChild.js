@@ -76,6 +76,16 @@ function routeStructure(schema, isoCode) {
                     ),
                 ),
             ),
+            S.listItem()
+              .title('Home Page')
+              .child(() =>
+                S.documentWithInitialValueTemplate(`home-page-route-${isoCode}`, {
+                  isHomePage: true,
+                })
+                  .documentId('homePage')
+                  .title('Home Page')
+                  .schemaType(documentName),
+              ),
           ]),
       ),
     )

@@ -46,11 +46,15 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     name: 'slug',
     type: 'slug',
     fieldset: fieldset,
+    readOnly: ({ document }: any) => document?.isHomePage,
     options: {
       source: (doc: any) => getPrefix(doc, source, ref),
       slugify: (value: any) => formatSlug(value),
     },
-    validation: (Rule: Rule) => Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
+    validation: (Rule: Rule) =>
+      Rule.required().custom(({ current }: { current: any }, { document }: any) =>
+        document.isHomePage ? true : SlugValidation(current),
+      ),
   }
 }
 
