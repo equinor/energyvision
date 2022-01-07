@@ -19,9 +19,12 @@ import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import languages from './languages'
+// eslint-disable-next-line import/no-unresolved
+import client from 'part:@sanity/base/client'
 // import Iframe from 'sanity-plugin-iframe-pane'
 
 // import resolveProductionUrl from './resolveProductionUrl'
+const dataSet = client.clientConfig.dataset
 
 const menus = languages.map((lang) =>
   S.listItem({
@@ -29,7 +32,9 @@ const menus = languages.map((lang) =>
     id: `menu-${lang.id}`,
     icon: lang.flag,
     child: () =>
-      S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
+      S.documentWithInitialValueTemplate(dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale', {
+        isoCode: `${lang.name}`,
+      })
         .id(`${lang.id}-menu`)
         .title(`${lang.title} site menu`),
   }),
