@@ -14,7 +14,7 @@ import { useCompare } from './hooks/useCompare'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
 
-/* This is not finalised */
+/* This is not finalized */
 const AllSitesLink = styled(Link)`
   display: none;
   @media (min-width: 1300px) {
