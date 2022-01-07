@@ -22,16 +22,16 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'pnpm'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
           version: latest
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
