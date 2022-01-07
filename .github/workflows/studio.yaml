@@ -33,7 +33,7 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm studio yarn
+          yarn --cwd studio install
       - name: Run ESLint 🔎
         id: lint
         run: |
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: [ "brazil" ]
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

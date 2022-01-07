@@ -20,14 +20,10 @@ runs:
     - name: Checkout 🛎️
       uses: actions/checkout@v2
     - name: Cache pnpm modules 💾
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-pnpm-modules
+      uses: actions/setup-node@v2
       with:
-        path: ~/.pnpm-store
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+        node-version: 16
+        cache: 'pnpm'
     - name: Set default image tag 🏷
       shell: bash
       id: set-default-image-tag
@@ -48,7 +44,7 @@ runs:
       id: push-to-ghcr
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName  }}:${{ env.IMAGE_TAG }}
+        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}:${{ env.IMAGE_TAG }}
     - name: Get environment from branch 🦞
       id: get-environment
       uses: equinor/radix-github-actions@master
