@@ -29,16 +29,11 @@ jobs:
         uses: pnpm/action-setup@v2.0.0
         with:
           version: latest
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          yarn --cwd studio install
+          pnpm studio yarn
       - name: Run ESLint 🔎
         id: lint
         run: |
@@ -74,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dataset: [ "brazil" ]
+        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
