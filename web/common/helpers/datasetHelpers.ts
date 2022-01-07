@@ -5,7 +5,7 @@ const EQUINOR_COM_NAME = 'global'
 
 export const getDataset = () => dataset
 
-export const isGlobal = dataset === EQUINOR_COM_NAME
+export const isGlobal = dataset === EQUINOR_COM_NAME || dataset === 'production'
 
 export const hasNews = dataset === EQUINOR_COM_NAME || dataset === 'germany'
 
