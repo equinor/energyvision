@@ -11,7 +11,7 @@ spec:
   components:
     - name: web
       publicPort: http
-      image: ghcr.io/equinor/energyvision/web-production:{imageTagName}
+      image: ghcr.io/equinor/energyvision/web-global:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
