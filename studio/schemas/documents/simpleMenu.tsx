@@ -8,7 +8,7 @@ export default {
   fields: [
     {
       title: 'Menu items',
-      name: 'menuItems',
+      name: 'group',
       type: 'array',
       of: [
         {
