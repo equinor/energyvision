@@ -2,7 +2,9 @@
 import client from 'part:@sanity/base/client'
 import GreatBritain from './icons/GreatBritain'
 import Norway from './icons/Norway'
+// eslint-disable-next-line import/no-duplicates
 import Brazil from './icons/Brazil'
+// eslint-disable-next-line import/no-duplicates
 import Germany from './icons/Brazil' // TODO: Replace
 
 type Datasets = {
@@ -10,7 +12,9 @@ type Datasets = {
 }
 
 const datasets: Datasets = {
+  // Leave this as is for now. Should be replaced by development for global
   production: ['english', 'norwegian'],
+  global: ['english', 'norwegian'],
   brazil: ['portuguese'],
   germany: ['german'],
 }
