@@ -32,11 +32,40 @@ const menus = languages.map((lang) =>
     id: `menu-${lang.id}`,
     icon: lang.flag,
     child: () =>
-      S.documentWithInitialValueTemplate(dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale', {
+      /*   S.documentWithInitialValueTemplate(dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale', {
         isoCode: `${lang.name}`,
       })
         .id(`${lang.id}-menu`)
-        .title(`${lang.title} site menu`),
+        .title(`${lang.title} site menu`), */
+      S.list({
+        id: 'testing',
+        items: [
+          S.listItem({
+            title: 'The menu itself',
+            id: `main-m`,
+            child: () =>
+              S.documentWithInitialValueTemplate(
+                dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
+                { isoCode: `${lang.name}` },
+              )
+                .id(`${lang.id}-menu`)
+                .title(`${lang.title} site menu`),
+          }),
+          S.listItem({
+            title: 'Sub menus',
+            id: 'subMenuTest',
+            child: () =>
+              S.documentTypeList('subMenu')
+                .title('Sub menu')
+                .filter('_type == "subMenu" && _lang == $baseLang')
+                .params({ baseLang: lang.name })
+                //.params({ isoCode: `${lang.name}` })
+                .initialValueTemplates([
+                  S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` }),
+                ]),
+          }),
+        ],
+      }),
   }),
 )
 
