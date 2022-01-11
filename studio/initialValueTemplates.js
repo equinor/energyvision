@@ -29,6 +29,7 @@ export default [
     parameters: [{ name: 'isoCode', type: 'string' }],
     value: (params) => ({
       _lang: params.isoCode,
+      isStatic: false,
     }),
   }),
   T.template({
