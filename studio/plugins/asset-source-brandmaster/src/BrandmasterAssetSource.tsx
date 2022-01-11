@@ -43,9 +43,9 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
               id: file.uniqueId,
               name: 'brandmaster',
             },
-            title: file.title,
-            description: file.description,
-            creditLine: file.photographer,
+            ...(file?.title && { title: file.title }),
+            ...(file?.description && { description: file.description }),
+            ...(file?.photographer && { creditLine: file.photographer }),
           },
         },
       ])
