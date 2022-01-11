@@ -37,11 +37,6 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
   const slug = `/${slugArray.join('/')}` || ''
   switch (slugStart) {
-    case '':
-      return {
-        queryParams: { slug: [], lang: getNameFromLocale(locale), date: currentDate },
-        query: '',
-      }
     case 'news':
       return {
         queryParams: { slug: slug, lang: getNameFromLocale(locale), date: currentDate },

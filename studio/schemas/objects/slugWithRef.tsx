@@ -59,7 +59,7 @@ const SlugValidation = (current: any) => {
     return true
   }
 
-  if (current) {
+  if (current && current.length > 1) {
     if (current.endsWith('/')) {
       return `Slug cannot end with "/"`
     }
