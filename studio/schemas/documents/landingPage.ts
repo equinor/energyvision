@@ -56,6 +56,20 @@ export default {
       inputComponent: CharCounterEditor,
       of: [ingressContentType],
     },
+    {
+      title: 'Landing page content',
+      name: 'content',
+      description: 'Reference the sub menu you want to populate this landing page with',
+      type: 'reference',
+      to: [{ type: 'subMenu' }],
+      options: {
+        filter: ({ document }: { document: any }) => ({
+          filter: `_lang == $lang`,
+          params: { lang: document._lang },
+        }),
+        disableNew: true,
+      },
+    },
   ],
   preview: {
     select: {
