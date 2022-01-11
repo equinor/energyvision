@@ -42,7 +42,7 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
   return {
     title: 'Complete URL for this page',
     description:
-      'Danger zone! Do not edit this field directly, use the "Generate" button. We will make if more fool proof with issue #308',
+      'Danger zone! Do not edit this field directly, use the "Generate" button or "/" for the Home Page. We will make if more fool proof with issue #308',
     name: 'slug',
     type: 'slug',
     fieldset: fieldset,
