@@ -33,11 +33,12 @@ const menus = languages.map((lang) =>
     icon: lang.flag,
     child: () =>
       S.list({
-        id: 'testing',
+        id: 'menu-list',
         items: [
           S.listItem({
-            title: 'The menu itself',
-            id: `main-m`,
+            title: 'Main menu',
+            id: `main-menu`,
+            icon: MenuIcon,
             child: () =>
               S.documentWithInitialValueTemplate(
                 dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
