@@ -33,7 +33,9 @@ export default {
               filter: `_lang == $lang`,
               params: { lang: document._lang },
             }),
+            //disableNew: true,
           },
+          // This doesn't work, it's just a dream
           initialValue: (document: any) => {
             return {
               _lang: document._lang,
