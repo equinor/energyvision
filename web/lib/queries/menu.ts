@@ -1,6 +1,6 @@
 export const menuQuery = /* groq */ `
   *[_type == "siteMenu" && _lang == $lang][0] {
-	"subMenus": group[]{
+	"subMenus": menuGroups[]->{
   	"id": _key,
     "topLevelLink": {
       label,

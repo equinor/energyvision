@@ -10,16 +10,6 @@ export default {
   fields: [
     {
       title: 'Menu items',
-      name: 'group',
-      type: 'array',
-      of: [
-        {
-          type: 'subMenu',
-        },
-      ],
-    },
-    {
-      title: 'Work in progress! Menu items',
       name: 'menuGroups',
       description: 'Place the sub menus in the correct order',
       type: 'array',
