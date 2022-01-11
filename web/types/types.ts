@@ -137,11 +137,7 @@ export type LandingPageSchema = {
   slug: string
   title: BlockNode[]
   ingress: BlockNode[]
-  groupWithReference?: {
-    topicPageGroup: {
-      subGroups: SubMenuGroupData[]
-    }
-  }
+  subGroups: SubMenuGroupData[]
   template: Templates
   seoAndSome: {
     documentTitle?: string
@@ -463,6 +459,6 @@ export type NewsDistributionParameters = {
   title: string
   ingress: string
   link: string
-  newsType:string
+  newsType: string
   languageCode: string
 }

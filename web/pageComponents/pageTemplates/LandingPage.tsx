@@ -41,11 +41,8 @@ type LandingPageProps = {
 }
 
 const LandingPage = ({ data }: LandingPageProps) => {
-  if (!data?.groupWithReference) {
-    console.warn('Missing link content for landing page', data?.title)
-  }
   const { pathname } = useRouter()
-  const { slug, title, ingress, groupWithReference } = data
+  const { slug, title, ingress, subGroups = [] } = data
 
   const { publicRuntimeConfig } = getConfig()
 
@@ -101,10 +98,9 @@ const LandingPage = ({ data }: LandingPageProps) => {
           </Intro>
         )}
         <TOCList>
-          {groupWithReference &&
-            groupWithReference.topicPageGroup?.subGroups.map((group) => {
-              return <ContentGroup key={group.id} group={group} />
-            })}
+          {subGroups?.map((group) => {
+            return <ContentGroup key={group.id} group={group} />
+          })}
         </TOCList>
       </LandingPageLayout>
     </>
