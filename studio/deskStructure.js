@@ -25,6 +25,13 @@ import client from 'part:@sanity/base/client'
 
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
+const menuId = (lang) => {
+  if (dataSet === 'global') {
+    return lang.id + '-menu'
+  } else {
+    return lang.id + '-simple-menu'
+  }
+}
 
 const menus = languages.map((lang) =>
   S.listItem({
@@ -44,7 +51,7 @@ const menus = languages.map((lang) =>
                 dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
                 { isoCode: `${lang.name}` },
               )
-                .id(`${lang.id}-menu`)
+                .id(menuId(lang))
                 .title(`${lang.title} site menu`),
           }),
           S.listItem({
