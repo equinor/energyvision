@@ -1,9 +1,9 @@
 import React from 'react'
 import { Wrapper, Frame } from './styles/shared'
 // import resolveProductionUrl from '../../../resolveProductionUrl'
+import { baseUrl } from '../../../resolveProductionUrl'
 
 export default function PagePreview(props: any) {
-  const baseUrl = process.env.SANITY_STUDIO_PROJECT_URL
   const {
     document: { displayed },
   } = props

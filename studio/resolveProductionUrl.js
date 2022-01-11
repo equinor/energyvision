@@ -1,13 +1,18 @@
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
 const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 
-// Replace `remoteUrl` with your deployed Next.js site
-const remoteUrl = 'https://energyvision.app.radix.equinor.com/'
+const dataset = process.env.SANITY_STUDIO_API_DATASET
+
+const remoteUrl =
+  dataset === 'global'
+    ? 'https://web-energyvision-dev.radix.equinor.com/'
+    : `https://web-${dataset}-energyvision-dev.radix.equinor.com`
+
 const localUrl = process.env.SANITY_STUDIO_PROJECT_URL
 
-export default function resolveProductionUrl(doc) {
-  const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl
+export const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl
 
+export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
 
   previewUrl.pathname = '/api/preview'
