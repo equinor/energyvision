@@ -32,11 +32,6 @@ const menus = languages.map((lang) =>
     id: `menu-${lang.id}`,
     icon: lang.flag,
     child: () =>
-      /*   S.documentWithInitialValueTemplate(dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale', {
-        isoCode: `${lang.name}`,
-      })
-        .id(`${lang.id}-menu`)
-        .title(`${lang.title} site menu`), */
       S.list({
         id: 'testing',
         items: [
@@ -45,7 +40,7 @@ const menus = languages.map((lang) =>
             id: `main-m`,
             child: () =>
               S.documentWithInitialValueTemplate(
-                dataSet === ('production' || 'global') ? 'menu-with-locale' : 'simple-menu-with-locale',
+                dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
                 { isoCode: `${lang.name}` },
               )
                 .id(`${lang.id}-menu`)
