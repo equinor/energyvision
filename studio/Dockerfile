@@ -9,6 +9,7 @@ WORKDIR /opt/app
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
+COPY ./satellitesConfig.js ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_DATASET
