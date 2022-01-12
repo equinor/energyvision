@@ -64,7 +64,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
     try {
       pageData = await response.json()
       const allSlugs = await getLocalizedSlugs(locale, slug)
-      pageData = { ...pageData, allSlugs }
+      pageData = { ...pageData, slugs: { allSlugs } }
     } catch (err) {
       console.log('error', err)
       pageData = null
