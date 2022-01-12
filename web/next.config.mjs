@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import languages from './languages.js'
+import withBundleAnalyzer from '@next/bundle-analyzer'
+
+const withBundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
-const languages = require('./languages.js')
-
 const locales = languages.map((lang) => lang.locale)
 
-module.exports = withBundleAnalyzer({
+export default withBundle({
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.
@@ -49,7 +50,7 @@ module.exports = withBundleAnalyzer({
       },
       {
         source: `/services/remit`,
-        destination: `${archiveServerHostname}/RemitJson.json`,
+        destination: `https://envis-legacy.azureedge.net/equinor-archive-content-stage/RemitJson.json`,
       },
     ]
   },

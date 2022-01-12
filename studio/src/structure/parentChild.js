@@ -7,6 +7,10 @@ import { RouteDocuments } from '../../icons'
 
 import languages from '../../languages'
 
+import Brazil from '../../icons/countries/Brazil'
+import GreatBritain from '../../icons/countries/GreatBritain'
+import Norway from '../../icons/countries/Norway'
+
 /**
  * This is an example of a Structure Builder list item that:
  *
@@ -21,9 +25,15 @@ const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview)
 // Original version without preview pane
 // const views = [S.view.form()]
 
+const icons = {
+  norway: Norway,
+  english: GreatBritain,
+  portuguese: Brazil,
+}
+
 export default function parentChild(schema = 'route') {
   const topicRoutes = languages.map((lang) =>
-    S.listItem().title(`${lang.title} routes`).icon(lang.flag).child(routeStructure(schema, lang.name)),
+    S.listItem().title(`${lang.title} routes`).icon(icons[lang.id]).child(routeStructure(schema, lang.name)),
   )
 
   return S.listItem()
