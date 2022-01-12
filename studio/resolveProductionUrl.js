@@ -1,6 +1,8 @@
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
 const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 
+// No worries, these are not "real" secrets
+const mySecret = process.env.TEST_SECRET
 const dataset = process.env.SANITY_STUDIO_API_DATASET
 
 const remoteUrl =

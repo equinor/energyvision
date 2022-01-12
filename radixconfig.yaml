@@ -110,6 +110,7 @@ spec:
           imageTagName: main-latest
       secrets:
         - SANITY_STUDIO_PREVIEW_SECRET
+        - TEST_SECRET
 
   dnsAppAlias:
     environment: dev
