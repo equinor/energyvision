@@ -96,7 +96,7 @@ spec:
         - environment: dev
           imageTagName: main-latest
       secrets:
-        - SANITY_PREVIEW_SECRET
+        - SANITY_STUDIO_PREVIEW_SECRET
 
     - name: studio-germany
       publicPort: http
@@ -109,7 +109,7 @@ spec:
         - environment: dev
           imageTagName: main-latest
       secrets:
-        - SANITY_PREVIEW_SECRET
+        - SANITY_STUDIO_PREVIEW_SECRET
 
   dnsAppAlias:
     environment: dev
