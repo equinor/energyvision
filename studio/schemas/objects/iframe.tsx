@@ -80,6 +80,22 @@ export const FilteredIFrame = ({
         }),
     },
     {
+      name: 'cookiePolicy',
+      type: 'string',
+      title: 'Cookie policy',
+      description: 'Select which cookie policy applies to this iframe.',
+      options: {
+        list: [
+          { title: 'None', value: 'none' },
+          { title: 'Marketing', value: 'marketing' },
+          { title: 'Statistics', value: 'statistics' },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
       name: 'aspectRatio',
       type: 'string',
       title: 'Aspect ratio',
