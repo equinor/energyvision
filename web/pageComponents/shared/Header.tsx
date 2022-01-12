@@ -103,7 +103,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
-            {isGlobal && <SiteMenu data={data} />}
+            {isGlobal && data && <SiteMenu data={data} />}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>
