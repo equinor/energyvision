@@ -50,7 +50,7 @@ export default withBundle({
       },
       {
         source: `/services/remit`,
-        destination: `https://envis-legacy.azureedge.net/equinor-archive-content-stage/RemitJson.json`,
+        destination: `${archiveServerHostname}/RemitJson.json`,
       },
     ]
   },
