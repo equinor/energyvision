@@ -33,6 +33,8 @@ const menuId = (lang) => {
   }
 }
 
+// @todo add a isGlobal function
+// @todo remove subMenu on non global datasets
 const menus = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} menu`,
