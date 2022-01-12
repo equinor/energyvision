@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Rule, ValidationContext } from '@sanity/types'
+import type { Rule } from '@sanity/types'
 
 export default {
   type: 'document',
@@ -35,10 +35,7 @@ export default {
           }, */
         },
       ],
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string, context: ValidationContext) => {
-          return true
-        }).unique(),
+      validation: (Rule: Rule) => Rule.unique(),
     },
   ],
 }

@@ -3,7 +3,7 @@ import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
-import { done } from '@equinor/eds-icons'
+// import { done } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
 
