@@ -23,14 +23,16 @@ export default {
               filter: `_lang == $lang`,
               params: { lang: document._lang },
             }),
-            //disableNew: true,
+            // Disable new since this button does not work with dynamic initial
+            // values  :(
+            disableNew: true,
           },
           // This doesn't work, it's just a dream
-          initialValue: (document: any) => {
+          /* initialValue: (document: any) => {
             return {
               _lang: document._lang,
             }
-          },
+          }, */
         },
       ],
       validation: (Rule: Rule) =>
