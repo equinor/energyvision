@@ -87,6 +87,7 @@ export const colors = css`
 `
 export const typography = css`
   :root {
+    /* When 1rem == clamp(16px, calc(14.3125px + 0.4531vw), 23px) */
     --typeScale-base: 1rem;
     --typeScale-multiplier: 1.2;
     --typeScale-small: calc(var(--typeScale-0) / var(--typeScale-multiplier));
@@ -97,6 +98,15 @@ export const typography = css`
     --typeScale-5: calc(var(--typeScale-4) * var(--typeScale-multiplier));
     --typeScale-6: calc(var(--typeScale-5) * var(--typeScale-multiplier));
     --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
+
+    /* When 1rem == 16px */
+    --typeScale-0: clamp(0.83rem, 0.38vw + 0.74rem, 1.2rem);
+    --typeScale-1: clamp(1rem, 0.45vw + 0.89rem, 1.44rem);
+    --typeScale-2: clamp(1.2rem, 0.54vw + 1.07rem, 1.72rem);
+    --typeScale-3: clamp(1.44rem, 0.65vw + 1.29rem, 2.07rem);
+    --typeScale-4: clamp(1.73rem, 0.78vw + 1.54rem, 2.48rem);
+    --typeScale-5: clamp(2.07rem, 0.94vw + 1.85rem, 2.98rem);
+    --typeScale-6: clamp(2.49rem, 1.13vw + 2.22rem, 3.58rem);
 
     /* Should probably do something more clever here */
     --lineHeight-1: inherit;
