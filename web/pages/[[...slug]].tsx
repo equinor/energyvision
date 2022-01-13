@@ -99,7 +99,7 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={slugs} menuData={data?.menuData} />
+      <Header slugs={slugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData || {}} />
       {/*console.log(data?.simpleMenuData) */}
       <SkipNavContent />
       {page}

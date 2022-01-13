@@ -14,6 +14,7 @@ import styled from 'styled-components'
 import Header from '../../../pageComponents/shared/Header'
 import { Layout } from '../../../pageComponents/shared/Layout'
 import type { MenuData } from '../../../types/types'
+import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 
 import { default as NextLink } from 'next/link'
 
@@ -27,7 +28,8 @@ const Container = styled.div`
 type AllArchivedNewsProps = {
   data: {
     newsList: any
-    menuData: MenuData
+    menuData?: MenuData
+    simpleMenuData?: any
   }
 }
 
@@ -94,7 +96,7 @@ AllArchivedNews.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={newsSlugs} menuData={data?.menuData} />
+      <Header slugs={newsSlugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData || {}} />
       <SkipNavContent />
       {page}
     </Layout>
@@ -126,10 +128,11 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   const langName = getNameFromLocale(locale)
   const menuData = await getClient(preview).fetch(menuQuery, { lang: langName })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: langName })
+  const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
 
   return {
     props: {
-      data: { newsList, menuData, footerData },
+      data: { newsList, menuData, footerData, simpleMenuData },
     },
   }
 }

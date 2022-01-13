@@ -8,6 +8,7 @@ import ErrorPage from 'next/error'
 import getConfig from 'next/config'
 import { Layout } from '../../../pageComponents/shared/Layout'
 import { menuQuery } from '../../../lib/queries/menu'
+import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
@@ -35,7 +36,8 @@ type PageResponseData = {
 type OldArchivedNewsPageProps = {
   data: {
     news: PageResponseData
-    menuData: MenuData
+    menuData?: MenuData
+    simpleMenuData?: any
   }
 }
 
@@ -129,7 +131,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   const { data } = props
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={newsSlugs} menuData={data?.menuData} />
+      <Header slugs={newsSlugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData} />
       <SkipNavContent />
       {page}
     </Layout>
@@ -158,12 +160,13 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
 
   const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
-
+  const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
   return {
     props: {
       data: {
         menuData,
         footerData,
+        simpleMenuData,
         news: {
           ...pageData,
           slug: pagePath,
