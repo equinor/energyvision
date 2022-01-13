@@ -129,7 +129,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   const { data } = props
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={newsSlugs} data={data?.menuData} />
+      <Header slugs={newsSlugs} menuData={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>

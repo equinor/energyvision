@@ -94,7 +94,7 @@ AllArchivedNews.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={newsSlugs} data={data?.menuData} />
+      <Header slugs={newsSlugs} menuData={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>

@@ -90,7 +90,7 @@ AllNews.getLayout = (page: AppProps) => {
       <PageHeader
         /*  @TODO: Fetch in a proper way */
         slugs={newsSlugs}
-        data={data?.menuData}
+        menuData={data?.menuData}
       />
 
       <SkipNavContent />

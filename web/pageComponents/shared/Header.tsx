@@ -69,11 +69,11 @@ const StyledButton = styled(Button)`
 `
 
 export type HeaderProps = {
-  data?: MenuData
+  menuData?: MenuData
   slugs: AllSlugsType
 }
 
-const Header = ({ slugs, data }: HeaderProps) => {
+const Header = ({ slugs, menuData }: HeaderProps) => {
   const router = useRouter()
 
   const localization = {
@@ -103,7 +103,7 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
-            {isGlobal && data && <SiteMenu data={data} />}
+            {isGlobal && menuData && <SiteMenu data={menuData} />}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>

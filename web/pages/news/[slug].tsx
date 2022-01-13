@@ -315,7 +315,7 @@ News.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <PageHeader slugs={slugs} data={data?.menuData} />
+      <PageHeader slugs={slugs} menuData={data?.menuData} />
 
       <SkipNavContent />
       {page}
