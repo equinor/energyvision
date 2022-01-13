@@ -298,6 +298,7 @@ export type IFrameData = {
   title?: PortableTextEntry[]
   frameTitle: string
   url: string
+  cookiePolicy: string
   designOptions: {
     aspectRatio: string
     height?: number

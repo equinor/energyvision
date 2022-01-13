@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import RequestConsentContainer from './RequestConsentContainer'
+import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -41,7 +43,18 @@ const calculatePadding = (aspectRatio: string): string => {
   return `${percentage}%`
 }
 
-const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { data: IFrameData }) => {
+const IFrame = ({
+  data: { title, frameTitle, url, cookiePolicy = 'none', designOptions },
+  ...rest
+}: {
+  data: IFrameData
+}) => {
+  const [consent, setConsent] = useState(false)
+
+  useEffect(() => {
+    setConsent(checkCookieConsent(cookiePolicy))
+  }, [cookiePolicy])
+
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions
@@ -61,12 +74,15 @@ const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { 
           />
         )}
 
-        <IFrameContainer className="cookieconsent-optin-marketing" aspectRatioPadding={containerPadding}>
-          <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
-        </IFrameContainer>
-        <div className="cookieconsent-optout-marketing">
-          <RequestConsentContainer consentType="marketing" />
-        </div>
+        {consent ? (
+          <IFrameContainer aspectRatioPadding={containerPadding}>
+            <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
+          </IFrameContainer>
+        ) : (
+          <div className={`cookieconsent-optout-${cookiePolicy}`}>
+            <RequestConsentContainer consentType={cookiePolicy} />
+          </div>
+        )}
       </Container>
     </BackgroundContainer>
   )
