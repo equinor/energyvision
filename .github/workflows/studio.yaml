@@ -83,5 +83,6 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
 
 

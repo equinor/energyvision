@@ -26,7 +26,7 @@ const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview)
 // const views = [S.view.form()]
 
 const icons = {
-  norway: Norway,
+  norwegian: Norway,
   english: GreatBritain,
   portuguese: Brazil,
 }

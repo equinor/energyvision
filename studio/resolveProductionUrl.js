@@ -16,7 +16,7 @@ export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
 
   previewUrl.pathname = '/api/preview'
-  previewUrl.searchParams.append(`secret`, previewSecret)
+  previewUrl.searchParams.append('secret', previewSecret)
 
   if (doc?.slug?.current) {
     previewUrl.searchParams.append('slug', doc?.slug?.current)
