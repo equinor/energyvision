@@ -65,7 +65,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     anchorClick(e, router)
   }
 
-  const onLinkClikedKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const onLinkClickedKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.which == 32 || e.which == 13) {
       anchorClick(e, router)
     }
@@ -103,7 +103,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <div
             className="legacyStyles"
             onClick={onLinkClicked}
-            onKeyDown={onLinkClikedKeyHandler}
+            onKeyDown={onLinkClickedKeyHandler}
             dangerouslySetInnerHTML={{
               __html: data?.news?.content,
             }}
