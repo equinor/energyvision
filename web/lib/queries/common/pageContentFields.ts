@@ -12,7 +12,7 @@ const pageContentFields = /* groq */ `
     title,
     text[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
@@ -22,7 +22,7 @@ const pageContentFields = /* groq */ `
     "image": image{
       ...,
       "extension": asset-> extension
-    },  
+    },
     "action": action[0]{
       ${linkSelectorFields},
       ${downloadableFileFields},
@@ -36,11 +36,11 @@ const pageContentFields = /* groq */ `
     title,
     ingress[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     text[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     "callToActions": action[]{
       ${linkSelectorFields},
@@ -82,7 +82,7 @@ const pageContentFields = /* groq */ `
       title,
       text[]{
         ...,
-        ${markDefs}, 
+        ${markDefs},
       },
       icon
     },
@@ -108,14 +108,14 @@ const pageContentFields = /* groq */ `
     title,
     ingress[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     "accordion": accordion[]{
       "id": _key,
       title,
       content[]{
         ...,
-        ${markDefs}, 
+        ${markDefs},
       }
     },
     "designOptions": {
@@ -177,11 +177,11 @@ const pageContentFields = /* groq */ `
     "id": _key,
     title[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     ingress[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     "content": promotion[0]{
       "id": _key,
@@ -202,7 +202,7 @@ const pageContentFields = /* groq */ `
           "slug": slug.current,
           ingress[]{
             ...,
-            ${markDefs}, 
+            ${markDefs},
           },
         },
       },
@@ -212,7 +212,7 @@ const pageContentFields = /* groq */ `
          "type": _type,
           ingress[]{
             ...,
-            ${markDefs}, 
+            ${markDefs},
           },
          "slug": reference->slug.current,
          "title": reference->content->title,
@@ -251,7 +251,7 @@ const pageContentFields = /* groq */ `
       },
       _type == "promoteEvents" => {
         "id": _key,
-        
+
         manuallySelectEvents,
         !manuallySelectEvents => {
           tags,
@@ -262,7 +262,7 @@ const pageContentFields = /* groq */ `
             "slug": slug.current,
             "title": content->title,
             "location": content->location,
-            "eventDate": content->eventDate, 
+            "eventDate": content->eventDate,
           },
         },
         manuallySelectEvents => {
@@ -272,12 +272,12 @@ const pageContentFields = /* groq */ `
             "slug": slug.current,
             "title": content->title,
             "location": content->location,
-            "eventDate": content->eventDate, 
-         
+            "eventDate": content->eventDate,
+
           },
         },
       },
-    },  
+    },
     "designOptions": {
       "background": coalesce(background.title, 'none'),
     },
@@ -287,11 +287,11 @@ const pageContentFields = /* groq */ `
     "id": _key,
     title[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     ingress[]{
       ...,
-      ${markDefs}, 
+      ${markDefs},
     },
     tableHeaders,
     tableRows,
