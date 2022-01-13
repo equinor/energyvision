@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import RequestConsentContainer from './RequestConsentContainer'
-import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -49,12 +47,6 @@ const IFrame = ({
 }: {
   data: IFrameData
 }) => {
-  const [consent, setConsent] = useState(false)
-
-  useEffect(() => {
-    setConsent(checkCookieConsent(cookiePolicy))
-  }, [cookiePolicy])
-
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions
@@ -74,11 +66,13 @@ const IFrame = ({
           />
         )}
 
-        {consent ? (
-          <IFrameContainer aspectRatioPadding={containerPadding}>
-            <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
-          </IFrameContainer>
-        ) : (
+        <IFrameContainer
+          className={cookiePolicy === 'none' ? '' : `cookieconsent-optin-marketing-${cookiePolicy}`}
+          aspectRatioPadding={containerPadding}
+        >
+          <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
+        </IFrameContainer>
+        {cookiePolicy !== 'none' && (
           <div className={`cookieconsent-optout-${cookiePolicy}`}>
             <RequestConsentContainer consentType={cookiePolicy} />
           </div>
