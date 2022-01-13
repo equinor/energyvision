@@ -107,6 +107,17 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
+    - name: studio-production
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-production:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
   dnsAppAlias:
     environment: dev
     component: web
