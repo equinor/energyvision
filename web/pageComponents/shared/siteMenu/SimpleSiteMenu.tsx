@@ -84,7 +84,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
               </NavTopbar>
               <MenuContainer>
                 <SimpleMenuWrapper index={indices} onChange={toggleItem}>
-                  {menuItems?.groups.map((item: any, idx: number) => {
+                  {menuItems?.groups?.map((item: any, idx: number) => {
                     return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
                   })}
                 </SimpleMenuWrapper>
