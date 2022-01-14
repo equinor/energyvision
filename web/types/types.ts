@@ -292,13 +292,15 @@ export type MenuData = {
   subMenus: SubMenuData[]
 }
 
+export type CookiePolicy = 'none' | 'marketing' | 'statistics'
+
 export type IFrameData = {
   id?: string
   type?: string
   title?: PortableTextEntry[]
   frameTitle: string
   url: string
-  cookiePolicy: string
+  cookiePolicy: CookiePolicy
   designOptions: {
     aspectRatio: string
     height?: number

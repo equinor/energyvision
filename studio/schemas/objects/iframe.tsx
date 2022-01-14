@@ -18,6 +18,7 @@ export type IFrame = {
   aspectRatio: string
   height?: number
   background?: ColorListValue
+  cookiePolicy: 'none' | 'marketing' | 'statistics'
 }
 
 type FilteredIFrameProps = {
