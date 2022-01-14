@@ -22,6 +22,7 @@ import languages from './languages'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
 // import Iframe from 'sanity-plugin-iframe-pane'
+import flags from './icons/countries'
 
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
@@ -39,7 +40,7 @@ const menus = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} menu`,
     id: `menu-${lang.id}`,
-    icon: lang.flag,
+    icon: flags[lang.id],
     child: () =>
       S.list({
         id: 'menu-list',
@@ -78,7 +79,7 @@ const footers = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} footer`,
     id: `footer-${lang.id}`,
-    icon: lang.flag,
+    icon: flags[lang.id],
     child: () =>
       S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
         .id(`${lang.id}-footer`)
