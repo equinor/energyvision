@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
   }
   render() {
     return (
-      <Html>
+      <Html data-dynamic-typography-version={ process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? 'v2' : 'v1' }>
         <Head>
           {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" /> */}
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
