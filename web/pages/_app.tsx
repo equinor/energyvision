@@ -50,11 +50,11 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
 
-  // useEffect(() => {
-  //   if (window.self === window.top) {
-  //     window.Cookiebot.runScripts()
-  //   }
-  // }, [router.asPath])
+  useEffect(() => {
+    if (window.self === window.top) {
+      window.Cookiebot.runScripts()
+    }
+  }, [router.asPath])
 
   return (
     <>
