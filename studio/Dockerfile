@@ -9,11 +9,14 @@ WORKDIR /opt/app
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
+COPY ./satellitesConfig.js ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_DATASET
-
 ENV SANITY_STUDIO_API_DATASET ${ARG_SANITY_DATASET}
+
+ARG ARG_SANITY_PREVIEW
+ENV SANITY_STUDIO_PREVIEW_SECRET ${ARG_SANITY_PREVIEW}
 
 RUN pnpm install
 RUN pnpm studio

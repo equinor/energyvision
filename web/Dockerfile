@@ -8,6 +8,7 @@ WORKDIR /opt/app
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
+COPY ./satellitesConfig.js ./
 # COPY ./pnpm-workspace.yaml ./
 
 COPY ./web ./web
@@ -52,12 +53,13 @@ RUN addgroup -S "$USER" && \
   "$USER"
 
 COPY --from=builder /opt/app/web/.next ./web/.next
-COPY --from=builder /opt/app/web/next.config.js ./web
+COPY --from=builder /opt/app/web/next.config.mjs ./web
 COPY --from=builder /opt/app/web/package.json ./web
 COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
 COPY --from=builder /opt/app/web/languages.js ./web
 COPY --from=builder /opt/app/web/public ./web/public
 COPY --from=builder /opt/app/package.json ./
+COPY --from=builder /opt/app/satellitesConfig.js ./
 # COPY --from=builder /opt/app/pnpm-workspace.yaml ./
 
 RUN chown -R "$USER":"$USER" .

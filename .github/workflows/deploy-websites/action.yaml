@@ -19,15 +19,6 @@ runs:
   steps:
     - name: Checkout 🛎️
       uses: actions/checkout@v2
-    - name: Cache pnpm modules 💾
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-pnpm-modules
-      with:
-        path: ~/.pnpm-store
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
     - name: Set default image tag 🏷
       shell: bash
       id: set-default-image-tag

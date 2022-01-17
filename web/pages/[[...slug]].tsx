@@ -10,6 +10,7 @@ import { SkipNavContent } from '@reach/skip-nav'
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { menuQuery } from '../lib/queries/menu'
+import { simpleMenuQuery } from '../lib/queries/simpleMenu'
 import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 // import { usePreviewSubscription } from '../lib/sanity'
@@ -98,7 +99,8 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={slugs} data={data?.menuData} />
+      <Header slugs={slugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData || {}} />
+      {/*console.log(data?.simpleMenuData) */}
       <SkipNavContent />
       {page}
     </Layout>
@@ -113,6 +115,8 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
   // @TODO Let's do it simple stupid and iterate later on
   const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+  const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
+
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
   if ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news)) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
@@ -127,6 +131,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           isArchivedFallback: true,
           pageData: { slug: slug, ...archivedData },
           menuData,
+          simpleMenuData,
           footerData,
         },
       },
@@ -143,6 +148,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         queryParams,
         pageData,
         menuData,
+        simpleMenuData,
         footerData,
       },
     },

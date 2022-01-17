@@ -46,16 +46,6 @@ export const SanityImgLoader = (
     .quality(70)
 }
 
-//Test
-/* const customImageUrlBuilder = (imageUrlBuilder, options) => {
-  return imageUrlBuilder
-    .width(options.width || Math.min(options.originalImageDimensions.width, 800))
-    .blur(20)
-    .flipHorizontal()
-    .saturation(-100)
-    .fit('clip')
-} */
-
 // Couldn't make it work with ...props due to TypesScript
 const Image = ({
   image,
@@ -80,6 +70,10 @@ const Image = ({
 
   const altTag = image?.isDecorative ? '' : image?.alt || ''
 
+  // This is just a hack to remove the annoying image warning. In theory,
+  // this shouldn't actually effect the image from Sanity and it satisfies Next
+  imageProps.src = imageProps.src + `&width=1000`
+
   // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
   if (layout === 'fill') {
     return <Img src={imageProps.src} alt={altTag} sizes={sizes} layout={layout} placeholder={placeholder} />
@@ -98,10 +92,4 @@ const Image = ({
   )
 }
 
-/* const Image = (image) => {
-  const imageProps = useNextSanityImage(sanityClient, image.image)
-
-  return <Img {...imageProps} layout="responsive" sizes="(max-width: 800px) 100vw, 800px" />
-}
- */
 export default Image

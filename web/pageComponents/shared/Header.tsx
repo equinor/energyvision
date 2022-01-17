@@ -6,6 +6,7 @@ import { Topbar, Button, LogoSecondary } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
+import SimpleSiteMenu from './siteMenu/SimpleSiteMenu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
@@ -69,11 +70,12 @@ const StyledButton = styled(Button)`
 `
 
 export type HeaderProps = {
-  data?: MenuData
+  menuData?: MenuData
+  simpleMenuData?: any
   slugs: AllSlugsType
 }
 
-const Header = ({ slugs, data }: HeaderProps) => {
+const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
   const router = useRouter()
 
   const localization = {
@@ -103,7 +105,8 @@ const Header = ({ slugs, data }: HeaderProps) => {
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
-            {isGlobal && <SiteMenu data={data} />}
+            {isGlobal === true && menuData && <SiteMenu data={menuData} />}
+            {isGlobal === false && simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>

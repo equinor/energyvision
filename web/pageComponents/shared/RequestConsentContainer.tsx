@@ -1,4 +1,7 @@
 import styled from 'styled-components'
+import { Text, Button } from '@components'
+
+import type { CookiePolicy } from '../../types/types'
 
 declare global {
   interface Window {
@@ -7,34 +10,29 @@ declare global {
 }
 
 const StyledDiv = styled.div`
-  background-color: var(--clear-red-60);
-  border-radius: 4px;
-  font-weight: 500;
-  color: var(--slate-blue-100);
+  border: 1px solid var(--slate-blue-100);
+  padding: var(--space-medium) var(--space-large);
+  background-color: var(--white-100);
   text-align: center;
 `
-const StyledButton = styled.button`
-  text-decoration: underline;
-`
-const StyledParagraph = styled.p`
-  padding: var(--space-medium);
-`
-const RequestConsentContainer = ({ consentType }: { consentType: string }) => {
+
+const RequestConsentContainer = ({ consentType }: { consentType: CookiePolicy }) => {
   return (
     <StyledDiv>
-      <StyledParagraph>
-        Want the full picture? We’d love to share this content with you, but you must accept cookies before we can.
-        Click the{' '}
-        <StyledButton
-          onClick={() => {
-            window.Cookiebot.renew()
-          }}
-        >
-          Cookie settings
-        </StyledButton>{' '}
-        link to enable
-        {consentType} cookies
-      </StyledParagraph>
+      <Text centered>
+        {/* @TODO Add this text in Sanity and translate it */}
+        Want the full picture? We’d love to share this content with you, but first you must accept additional cookies by
+        enabling them in our cookie settings. [Missing: {consentType}]
+      </Text>
+      <Button
+        onClick={() => {
+          window.Cookiebot.renew()
+        }}
+        color="secondary"
+        variant="outlined"
+      >
+        Cookie settings
+      </Button>
     </StyledDiv>
   )
 }

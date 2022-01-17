@@ -1,7 +1,7 @@
 export const menuQuery = /* groq */ `
   *[_type == "siteMenu" && _lang == $lang][0] {
-	"subMenus": group[]{
-  	"id": _key,
+	"subMenus": menuGroups[]->{
+  	"id": _id,
     "topLevelLink": {
       label,
       "isStatic": coalesce(isStatic, false),

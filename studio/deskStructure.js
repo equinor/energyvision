@@ -19,19 +19,60 @@ import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import languages from './languages'
+// eslint-disable-next-line import/no-unresolved
+import client from 'part:@sanity/base/client'
 // import Iframe from 'sanity-plugin-iframe-pane'
+import flags from './icons/countries'
 
 // import resolveProductionUrl from './resolveProductionUrl'
+const dataSet = client.clientConfig.dataset
+const isGlobal = dataSet === 'global'
 
+const menuId = (lang) => {
+  if (isGlobal) {
+    return lang.id + '-menu'
+  } else {
+    return lang.id + '-simple-menu'
+  }
+}
+
+// @todo add a isGlobal function
+// @todo remove subMenu on non global datasets
 const menus = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} menu`,
     id: `menu-${lang.id}`,
-    icon: lang.flag,
+    icon: flags[lang.id],
     child: () =>
-      S.documentWithInitialValueTemplate('menu-with-locale', { isoCode: `${lang.name}` })
-        .id(`${lang.id}-menu`)
-        .title(`${lang.title} site menu`),
+      S.list({
+        id: 'menu-list',
+        items: [
+          S.listItem({
+            title: 'Main menu',
+            id: `main-menu`,
+            icon: MenuIcon,
+            child: () =>
+              S.documentWithInitialValueTemplate(isGlobal == true ? 'menu-with-locale' : 'simple-menu-with-locale', {
+                isoCode: `${lang.name}`,
+              })
+                .id(menuId(lang))
+                .title(`${lang.title} site menu`),
+          }),
+          S.listItem({
+            title: 'Sub menus',
+            id: 'subMenuTest',
+            child: () =>
+              S.documentTypeList('subMenu')
+                .title('Sub menu')
+                .filter('_type == "subMenu" && _lang == $baseLang')
+                .params({ baseLang: lang.name })
+                //.params({ isoCode: `${lang.name}` })
+                .initialValueTemplates([
+                  S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` }),
+                ]),
+          }),
+        ],
+      }),
   }),
 )
 
@@ -39,7 +80,7 @@ const footers = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} footer`,
     id: `footer-${lang.id}`,
-    icon: lang.flag,
+    icon: flags[lang.id],
     child: () =>
       S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
         .id(`${lang.id}-footer`)
@@ -160,10 +201,6 @@ export default () => {
       .title('Country tags')
       .schemaType('countryTag')
       .child(S.documentTypeList('countryTag').title('Country tag')),
-    S.listItem()
-      .title('SimpleMenu')
-      .schemaType('simpleMenu')
-      .child(S.documentTypeList('simpleMenu').title('Simple Menu')),
   ]
 
   return S.list().title('Content').items(listItems)

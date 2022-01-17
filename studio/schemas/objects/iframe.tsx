@@ -2,13 +2,22 @@ import React from 'react'
 import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Colors } from '../../helpers/ColorListValues'
-import { configureTitleBlockContent } from '../editors'
+import { configureTitleBlockContent, configureBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import CharCounterEditor from '../components/CharCounterEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule, ValidationContext, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const titleContentType = configureTitleBlockContent()
+
+const descriptionContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  attachment: false,
+})
 
 export type IFrame = {
   _type: 'iframe'
@@ -18,6 +27,7 @@ export type IFrame = {
   aspectRatio: string
   height?: number
   background?: ColorListValue
+  cookiePolicy: 'none' | 'marketing' | 'statistics'
 }
 
 type FilteredIFrameProps = {
@@ -47,6 +57,23 @@ export const FilteredIFrame = ({
         collapsed: false,
       },
     },
+    {
+      title: 'IFrame settings',
+      name: 'iframe',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+    {
+      title: 'Call to action / link',
+      name: 'link',
+      description: 'If you need a separate link, you may add it here //Work in progress',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
   ],
   fields: [
     {
@@ -58,9 +85,25 @@ export const FilteredIFrame = ({
       of: [titleContentType],
     },
     {
+      name: 'description',
+      title: 'Description/caption',
+      description: 'Work in progress: Name this field',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [descriptionContentType],
+    },
+    {
+      name: 'action',
+      type: 'linkSelector',
+      title: 'Call to action',
+      fieldset: 'link',
+    },
+    {
       name: 'frameTitle',
       type: 'string',
       title: 'Frame title',
+      fieldset: 'iframe',
+
       description: 'The title of the iframe. This value is not visible on the page but is required for accessibility.',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
@@ -71,13 +114,32 @@ export const FilteredIFrame = ({
     {
       name: 'url',
       type: 'url',
-      title: 'URL',
+      title: 'Frame URL',
       description: 'Link to the content to be loaded inside the iframe.',
+      fieldset: 'iframe',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: IFrame }
           return (parent?.title || parent?.frameTitle) && value === undefined ? 'Required' : true
         }),
+    },
+    {
+      name: 'cookiePolicy',
+      type: 'string',
+      title: 'Cookie policy',
+      description: 'Select which cookie policy applies to this iframe.',
+      fieldset: 'iframe',
+
+      options: {
+        list: [
+          { title: 'None', value: 'none' },
+          { title: 'Marketing', value: 'marketing' },
+          { title: 'Statistics', value: 'statistics' },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'aspectRatio',

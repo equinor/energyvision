@@ -36,6 +36,16 @@ export default [
     }),
   }),
   T.template({
+    id: 'submenu-with-locale',
+    title: 'Sub menu',
+    schemaType: 'siteMenu',
+    parameters: [{ name: 'isoCode', type: 'string' }],
+    value: (params) => ({
+      _lang: params.isoCode,
+      isStatic: false,
+    }),
+  }),
+  T.template({
     id: 'simple-menu-with-locale',
     title: 'Site menu(simple)',
     schemaType: 'simpleMenu',

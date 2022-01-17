@@ -137,11 +137,7 @@ export type LandingPageSchema = {
   slug: string
   title: BlockNode[]
   ingress: BlockNode[]
-  groupWithReference?: {
-    topicPageGroup: {
-      subGroups: SubMenuGroupData[]
-    }
-  }
+  subGroups: SubMenuGroupData[]
   template: Templates
   seoAndSome: {
     documentTitle?: string
@@ -296,12 +292,15 @@ export type MenuData = {
   subMenus: SubMenuData[]
 }
 
+export type CookiePolicy = 'none' | 'marketing' | 'statistics'
+
 export type IFrameData = {
   id?: string
   type?: string
   title?: PortableTextEntry[]
   frameTitle: string
   url: string
+  cookiePolicy: CookiePolicy
   designOptions: {
     aspectRatio: string
     height?: number
@@ -463,6 +462,6 @@ export type NewsDistributionParameters = {
   title: string
   ingress: string
   link: string
-  newsType:string
+  newsType: string
   languageCode: string
 }

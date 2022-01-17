@@ -1,9 +1,8 @@
 import React from 'react'
 import styles from './IframePreview.module.css'
+import { baseUrl } from '../../../resolveProductionUrl'
 
-export default function NewsPreview(props) {
-  const baseUrl = process.env.SANITY_STUDIO_PROJECT_URL
-
+export default function NewsPreview(props: any) {
   const { document } = props
   const { displayed } = document
   if (!displayed?.slug?.current) {

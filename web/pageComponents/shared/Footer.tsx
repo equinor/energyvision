@@ -146,7 +146,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
   return (
     <StyledFooter ref={ref} {...rest}>
       <FooterTop>
-        {footerData?.footerColumns.map(({ header, linkList }) => {
+        {footerData?.footerColumns?.map(({ header, linkList }) => {
           return (
             <LinkWrapper key={header}>
               <LinkHeader>{header}</LinkHeader>

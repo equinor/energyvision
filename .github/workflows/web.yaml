@@ -22,20 +22,16 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - name: Cache pnpm modules 💾
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-modules
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
           version: latest
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -62,7 +58,7 @@ jobs:
     strategy:
       # The matrix approach is needed to re-use code created for satellites
       matrix:
-        dataset: ["production"]
+        dataset: ['global']
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -82,12 +78,12 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-        - uses: actions/checkout@v2
-        - id: set-matrix
-          name: Read from satellites.json
-          run: |
-            MATRIX=$(cat satellites.json)
-            echo ::set-output name=matrix::${MATRIX}
+      - uses: actions/checkout@v2
+      - id: set-matrix
+        name: Read from satellites.json
+        run: |
+          MATRIX=$(cat satellites.json)
+          echo ::set-output name=matrix::${MATRIX}
 
   deploy-satellites:
     needs: [deploy-global, read-satellites]

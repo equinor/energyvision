@@ -36,6 +36,7 @@ runs:
         docker build . \
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
+          --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg BUILDKIT_INLINE_CACHE=1

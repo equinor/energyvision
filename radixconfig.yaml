@@ -11,7 +11,7 @@ spec:
   components:
     - name: web
       publicPort: http
-      image: ghcr.io/equinor/energyvision/web-production:{imageTagName}
+      image: ghcr.io/equinor/energyvision/web-global:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
@@ -85,6 +85,29 @@ spec:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
 
+    - name: web-production
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-production:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+          variables:
+            BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+            BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
+      variables:
+        BRANDMASTER_EMAIL_APN_ID: '32'
+        BRANDMASTER_EMAIL_OTY_ID: '114961'
+        BRANDMASTER_EMAIL_PTL_ID: '14414'
+      secrets:
+        - SANITY_API_TOKEN
+        - SANITY_PREVIEW_SECRET
+        - BRANDMASTER_EMAIL_CLIENT_SECRET
+        - BRANDMASTER_EMAIL_PASSWORD
+
     - name: studio-brazil
       publicPort: http
       image: ghcr.io/equinor/energyvision/studio-brazil:{imageTagName}
@@ -99,6 +122,17 @@ spec:
     - name: studio-germany
       publicPort: http
       image: ghcr.io/equinor/energyvision/studio-germany:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
+    - name: studio-production
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-production:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http

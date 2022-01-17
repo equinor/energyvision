@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SANITY_STUDIO_PROJECT_URL: ${{secrets.SANITY_STUDIO_PROJECT_URL}}
       SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE}}
       SANITY_STUDIO_PREVIEW_SECRET: ${{secrets.SANITY_STUDIO_PREVIEW_SECRET}}
+      SANITY_STUDIO_API_DATASET: global
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
@@ -83,5 +83,6 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
 
 

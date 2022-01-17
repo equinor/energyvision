@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const { Head: EdsHead } = EdsTable
 
-const StyledHeadItem = styled(EdsHead)``
+export const StyledHeadItem = styled(EdsHead)``
 
 export type TableHeadProps = React.HTMLAttributes<HTMLTableSectionElement>
 

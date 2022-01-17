@@ -41,7 +41,12 @@ const calculatePadding = (aspectRatio: string): string => {
   return `${percentage}%`
 }
 
-const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { data: IFrameData }) => {
+const IFrame = ({
+  data: { title, frameTitle, url, cookiePolicy = 'none', designOptions },
+  ...rest
+}: {
+  data: IFrameData
+}) => {
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions
@@ -61,12 +66,17 @@ const IFrame = ({ data: { title, frameTitle, url, designOptions }, ...rest }: { 
           />
         )}
 
-        <IFrameContainer className="cookieconsent-optin-marketing" aspectRatioPadding={containerPadding}>
+        <IFrameContainer
+          className={cookiePolicy === 'none' ? '' : `cookieconsent-optin-${cookiePolicy}`}
+          aspectRatioPadding={containerPadding}
+        >
           <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
         </IFrameContainer>
-        <div className="cookieconsent-optout-marketing">
-          <RequestConsentContainer consentType="marketing" />
-        </div>
+        {cookiePolicy !== 'none' && (
+          <div className={`cookieconsent-optout-${cookiePolicy}`}>
+            <RequestConsentContainer consentType={cookiePolicy} />
+          </div>
+        )}
       </Container>
     </BackgroundContainer>
   )

@@ -26,7 +26,7 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
   const onLinkClicked = (e: React.MouseEvent<HTMLDivElement>) => {
     anchorClick(e, router)
   }
-  const onLinkClikedKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const onLinkClickedKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.which == 32 || e.which == 13) {
       anchorClick(e, router)
     }
@@ -50,7 +50,7 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
       <div
         className="legacyStyles"
         onClick={onLinkClicked}
-        onKeyDown={onLinkClikedKeyHandler}
+        onKeyDown={onLinkClickedKeyHandler}
         dangerouslySetInnerHTML={{
           __html: data?.content,
         }}
