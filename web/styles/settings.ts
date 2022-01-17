@@ -185,10 +185,11 @@ export const componentSettings = css`
     --eds_button__font_size: calc(14 / 16 * 1rem);
     --eds_button__radius: calc(4 / 14 * 1em);
     --eds_button__height: auto;
+    --eds_button__height_compact: auto;
     --eds_button__gap: calc(8 / 14 * 1em);
     --eds_button__border_width: 1px;
-    --eds_button__padding_y: calc(10 / 14 * 1em - var(---eds_button__border_width));
-    --eds_button__padding_y_compact: calc(4 / 14 * 1em - var(---eds_button__border_width));
+    --eds_button__padding_y: calc(10 / 14 * 1em - var(--eds_button__border_width));
+    --eds_button__padding_y_compact: calc(4 / 14 * 1em - var(--eds_button__border_width));
     --eds_button__padding_x: calc(16 / 14 * 1em);
     --eds_button__icon__size: 24px;
     --eds_button__icon__margin_y: -4px; // icon = 24px, line-height: 16px, (24 - 16) / 2 = 4px
