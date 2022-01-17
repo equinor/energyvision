@@ -26,8 +26,10 @@ import flags from './icons/countries'
 
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
+const isGlobal = dataSet === 'global'
+
 const menuId = (lang) => {
-  if (dataSet === 'global') {
+  if (isGlobal) {
     return lang.id + '-menu'
   } else {
     return lang.id + '-simple-menu'
@@ -50,10 +52,9 @@ const menus = languages.map((lang) =>
             id: `main-menu`,
             icon: MenuIcon,
             child: () =>
-              S.documentWithInitialValueTemplate(
-                dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
-                { isoCode: `${lang.name}` },
-              )
+              S.documentWithInitialValueTemplate(isGlobal == true ? 'menu-with-locale' : 'simple-menu-with-locale', {
+                isoCode: `${lang.name}`,
+              })
                 .id(menuId(lang))
                 .title(`${lang.title} site menu`),
           }),
