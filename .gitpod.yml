@@ -26,7 +26,7 @@ ports:
     onOpen: open-preview
   - port: 9000
     onOpen: ignore
-  
+
 gitConfig:
   alias.co: checkout
   alias.br: branch
@@ -40,6 +40,6 @@ vscode:
     - esbenp.prettier-vscode
     - stylelint.vscode-stylelint
     - eamodio.gitlens
-    - coenraads.bracket-pair-colorizer-2
     - dbaeumer.vscode-eslint
     - pflannery.vscode-versionlens
+    - jpoissonnier.vscode-styled-components
