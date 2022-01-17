@@ -27,7 +27,7 @@ import flags from './icons/countries'
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
 const menuId = (lang) => {
-  if (dataSet === 'production') {
+  if (dataSet === 'global') {
     return lang.id + '-menu'
   } else {
     return lang.id + '-simple-menu'
@@ -51,7 +51,7 @@ const menus = languages.map((lang) =>
             icon: MenuIcon,
             child: () =>
               S.documentWithInitialValueTemplate(
-                dataSet === 'production' ? 'menu-with-locale' : 'simple-menu-with-locale',
+                dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
                 { isoCode: `${lang.name}` },
               )
                 .id(menuId(lang))
