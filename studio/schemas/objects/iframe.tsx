@@ -2,13 +2,22 @@ import React from 'react'
 import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Colors } from '../../helpers/ColorListValues'
-import { configureTitleBlockContent } from '../editors'
+import { configureTitleBlockContent, configureBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import CharCounterEditor from '../components/CharCounterEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule, ValidationContext, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const titleContentType = configureTitleBlockContent()
+
+const descriptionContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  attachment: false,
+})
 
 export type IFrame = {
   _type: 'iframe'
@@ -48,6 +57,14 @@ export const FilteredIFrame = ({
         collapsed: false,
       },
     },
+    {
+      title: 'IFrame settings',
+      name: 'iframe',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
   ],
   fields: [
     {
@@ -59,9 +76,19 @@ export const FilteredIFrame = ({
       of: [titleContentType],
     },
     {
+      name: 'description',
+      title: 'Description/caption',
+      description: 'TODO: Name this field',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [descriptionContentType],
+    },
+    {
       name: 'frameTitle',
       type: 'string',
       title: 'Frame title',
+      fieldset: 'iframe',
+
       description: 'The title of the iframe. This value is not visible on the page but is required for accessibility.',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
@@ -72,8 +99,9 @@ export const FilteredIFrame = ({
     {
       name: 'url',
       type: 'url',
-      title: 'URL',
+      title: 'Frame URL',
       description: 'Link to the content to be loaded inside the iframe.',
+      fieldset: 'iframe',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: IFrame }
@@ -85,6 +113,8 @@ export const FilteredIFrame = ({
       type: 'string',
       title: 'Cookie policy',
       description: 'Select which cookie policy applies to this iframe.',
+      fieldset: 'iframe',
+
       options: {
         list: [
           { title: 'None', value: 'none' },
