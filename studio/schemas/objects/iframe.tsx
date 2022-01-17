@@ -65,6 +65,15 @@ export const FilteredIFrame = ({
         collapsed: false,
       },
     },
+    {
+      title: 'Call to action / link',
+      name: 'link',
+      description: 'If you need a separate link, you may add it here //Work in progress',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
   ],
   fields: [
     {
@@ -78,10 +87,16 @@ export const FilteredIFrame = ({
     {
       name: 'description',
       title: 'Description/caption',
-      description: 'TODO: Name this field',
+      description: 'Work in progress: Name this field',
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [descriptionContentType],
+    },
+    {
+      name: 'action',
+      type: 'linkSelector',
+      title: 'Call to action',
+      fieldset: 'link',
     },
     {
       name: 'frameTitle',
