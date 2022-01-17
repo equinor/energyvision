@@ -173,4 +173,26 @@ export const componentSettings = css`
     --reach-accordion: 1;
     --reach-skip-nav: 1;
   }
+  /* Use relative units in EDS Table */
+  ${`:root['data-eds-flexible-height']`} {
+    --eds_table__font_size: calc(14 / 16 * 1rem);
+    --eds_table__cell__height: auto;
+    --eds_table__cell__padding_y: calc(14 / 14 * 1em);
+    --eds_table__cell__vertical_align: top;
+  }
+  /* Use relative units in EDS Button */
+  ${`:root['data-eds-flexible-height']`} {
+    --eds_button__font_size: calc(14 / 16 * 1rem);
+    --eds_button__radius: calc(4 / 14 * 1em);
+    --eds_button__height: auto;
+    --eds_button__gap: calc(8 / 14 * 1em);
+    --eds_button__border_width: 1px;
+    --eds_button__padding_y: calc(10 / 14 * 1em - var(---eds_button__border_width));
+    --eds_button__padding_y_compact: calc(4 / 14 * 1em - var(---eds_button__border_width));
+    --eds_button__padding_x: calc(16 / 14 * 1em);
+    --eds_button__icon__size: 24px;
+    --eds_button__icon__margin_y: -4px; // icon = 24px, line-height: 16px, (24 - 16) / 2 = 4px
+    --eds_button__fullwidth__icon__margin_x: calc(8 / 14 * 1em);
+    --eds_button__fullwidth__label__margin_x: calc(32 / 14  * 1em);
+  }
 `
