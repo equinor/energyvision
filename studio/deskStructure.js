@@ -27,7 +27,7 @@ import flags from './icons/countries'
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
 const menuId = (lang) => {
-  if (dataSet === 'global') {
+  if (dataSet === 'production') {
     return lang.id + '-menu'
   } else {
     return lang.id + '-simple-menu'
@@ -51,7 +51,7 @@ const menus = languages.map((lang) =>
             icon: MenuIcon,
             child: () =>
               S.documentWithInitialValueTemplate(
-                dataSet === 'global' ? 'menu-with-locale' : 'simple-menu-with-locale',
+                dataSet === 'production' ? 'menu-with-locale' : 'simple-menu-with-locale',
                 { isoCode: `${lang.name}` },
               )
                 .id(menuId(lang))
@@ -200,10 +200,6 @@ export default () => {
       .title('Country tags')
       .schemaType('countryTag')
       .child(S.documentTypeList('countryTag').title('Country tag')),
-    S.listItem()
-      .title('SimpleMenu')
-      .schemaType('simpleMenu')
-      .child(S.documentTypeList('simpleMenu').title('Simple Menu')),
   ]
 
   return S.list().title('Content').items(listItems)
