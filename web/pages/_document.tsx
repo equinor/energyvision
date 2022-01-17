@@ -28,8 +28,22 @@ export default class MyDocument extends Document {
     }
   }
   render() {
+
+    type FeatureFlagsProps = {
+      'data-dynamic-typography-version': 'v1' | 'v2',
+      'data-eds-flexible-height'? : Boolean
+    }
+
+    const featureFlags: FeatureFlagsProps = {
+      'data-dynamic-typography-version': process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? 'v2' : 'v1',
+    }
+
+    if (process.env.NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT === 'true') {
+      featureFlags['data-eds-flexible-height'] = true
+    }
+
     return (
-      <Html data-dynamic-typography-version={ process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? 'v2' : 'v1' }>
+      <Html {...featureFlags}>
         <Head>
           {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" /> */}
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
