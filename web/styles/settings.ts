@@ -97,7 +97,6 @@ export const typography = css`
     --typeScale-5: calc(var(--typeScale-4) * var(--typeScale-multiplier));
     --typeScale-6: calc(var(--typeScale-5) * var(--typeScale-multiplier));
     --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
-    ]
   }
 
   :root[data-dynamic-typography-version="v2"] {
@@ -162,26 +161,30 @@ export const componentSettings = css`
     --topBar-box-shadow: 0 0 15px 10px rgba(41, 62, 64, 0.15);
     --topbar-innerMaxWidth: calc(1920px - (var(--layout-paddingHorizontal-small) * 2));
   }
+
   /* Menu */
   :root {
     --menu-height-lg: 598px;
     --menu-paddingHorizontal: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
     --menu-paddingVertical: calc(8rem - var(--topbar-height));
   }
-  /** Because Jest hates you when you do an import style in the component */
+
+  /* Because Jest hates you when you do an import style in the component */
   :root {
-    --reach-accordion: 1;
-    --reach-skip-nav: 1;
+      --reach-accordion: 1;
+      --reach-skip-nav: 1;
   }
+
   /* Use relative units in EDS Table */
-  ${`:root['data-eds-flexible-height']`} {
+  :root[data-eds-flexible-height] {
     --eds_table__font_size: calc(14 / 16 * 1rem);
     --eds_table__cell__height: auto;
     --eds_table__cell__padding_y: calc(14 / 14 * 1em);
     --eds_table__cell__vertical_align: top;
   }
+
   /* Use relative units in EDS Button */
-  ${`:root['data-eds-flexible-height']`} {
+  :root[data-eds-flexible-height] {
     --eds_button__font_size: calc(14 / 16 * 1rem);
     --eds_button__radius: calc(4 / 14 * 1em);
     --eds_button__height: auto;
