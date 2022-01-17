@@ -6,10 +6,16 @@ const languages = [
 ]
 
 /*
-  The first language will be set as the default language
+  The first language will be set as the default language. The default language is used as
+  1. The main language in Sanity studio for translations (base language)
+  2. The default language with Next.js localization support
   Example:
     norway: ['norwegian', 'english']
-  Norwegian will be the default language for the dataset norway
+  Norwegian will be the default language for the dataset norway.
+  
+  In Sanity Norwegian will be the base language and English a translation of that
+  In Next.js, the Norwegian version will be available as [site]/no and [site] where Next.js will
+  redirect /no to /
   */
 const datasets = {
   // Leave this as is for now. Should be replaced by development for global
