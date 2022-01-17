@@ -1,8 +1,18 @@
+/*
+  {
+    id: The key for this language
+    title: The title as it will be labeled in Sanity studio
+    iso: Iso version of the language, used by Next.js localisation and react-intl
+    name: Name as used in the Sanity localisation feature (this one is hard to explain :sweat_smile:)
+    locale: The actual locale name as used by Next.js and locale folders/structure ([site]/locale)
+  }
+*/
+
 const languages = [
-  { id: 'english', iso: 'en-GB', name: 'en_GB', title: 'English (UK)', locale: 'en' },
-  { id: 'norwegian', iso: 'nb-NO', name: 'nb_NO', title: 'Norwegian', locale: 'no' },
-  { id: 'portuguese', iso: 'pt-BR', name: 'pt_BR', title: 'Portuguese (BR)', locale: 'pt' },
-  { id: 'german', iso: 'de-DE', name: 'de_DE', title: 'German', locale: 'de' },
+  { id: 'english', title: 'English (UK)', iso: 'en-GB', name: 'en_GB', locale: 'en' },
+  { id: 'norwegian', title: 'Norwegian', iso: 'nb-NO', name: 'nb_NO', locale: 'no' },
+  { id: 'portuguese', title: 'Portuguese (BR)', iso: 'pt-BR', name: 'pt_BR', locale: 'pt' },
+  { id: 'german', title: 'German', iso: 'de-DE', name: 'de_DE', locale: 'de' },
 ]
 
 /*
