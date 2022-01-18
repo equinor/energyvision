@@ -18,6 +18,7 @@ const HomePageRoutesTemplates = languages.map(({ name, title }) =>
     title: `Home Page Route ${title}`,
     schemaType: `route_${name}`,
     value: () => ({
+      _id: 'homePage',
       slug: { current: '/', _type: 'slug' },
     }),
   }),
