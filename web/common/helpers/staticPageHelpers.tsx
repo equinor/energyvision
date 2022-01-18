@@ -1,4 +1,5 @@
 import getConfig from 'next/config'
+import { NextRouter } from 'next/router'
 import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 
 const getContentUrl = (locale: string, slug: string) => {
@@ -86,7 +87,7 @@ export const getPagePaths = async (path: string): Promise<string[]> => {
   return []
 }
 
-export const anchorClick = (e: any, router: any) => {
+export const anchorClick = (e: any, router: NextRouter) => {
   if (e != null) {
     const targetLink = e.target.closest('a')
     if (!targetLink) return
