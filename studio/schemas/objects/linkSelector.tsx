@@ -42,7 +42,7 @@ const LinkField = {
       name: 'isStatic',
       title: 'Is static page',
       description: `While migrating, content can be available as static pages generated from the old CMS.
-      This is a temporary solution and should be avoided whenever possible. Links using this should be 
+      This is a temporary solution and should be avoided whenever possible. Links using this should be
       updated when this content/page has been published in Sanity.`,
       type: 'boolean',
       initialValue: false,
@@ -60,7 +60,7 @@ const LinkField = {
       to: defaultReferenceTargets,
       options: {
         filter: ({ document }: { document: any }) => ({
-          filter: `_type == $routeLang || _type == 'news'`,
+          filter: `_type == $routeLang || _type == 'route_homepage' || _type == 'news'`,
           params: { routeLang: `route_${document._lang}` },
         }),
         disableNew: true,

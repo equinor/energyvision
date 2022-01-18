@@ -1,3 +1,5 @@
 import languages from '../languages'
 
-export default languages.map((lang) => ({ type: `route_${lang.name}` }))
+const routes = languages.map((lang) => ({ type: `route_${lang.name}` }))
+
+export default [...routes, { type: 'route_homepage' }]

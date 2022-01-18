@@ -74,7 +74,7 @@ export default {
                       to: routes,
                       options: {
                         filter: ({ document }: { document: any }) => ({
-                          filter: `_type == $routeLang`,
+                          filter: `_type == $routeLang || _type == 'route_homepage'`,
                           params: { routeLang: `route_${document._lang}` },
                         }),
                       },

@@ -77,7 +77,7 @@ export default {
       to: routes,
       options: {
         filter: ({ document }: { document: any }) => ({
-          filter: `_type == $routeLang`,
+          filter: `_type == $routeLang || _type == 'route_homepage'`,
           params: { routeLang: `route_${document._lang}` },
         }),
         disableNew: true,
@@ -129,7 +129,7 @@ export default {
       to: [{ type: 'news' }, ...routes],
       options: {
         filter: ({ document: { _lang, title: title = '' } }: any): ReferenceFilterSearchOptions => ({
-          filter: `title != $title && (_type == $routeLang || _type == 'news')`,
+          filter: `title != $title && (_type == $routeLang || _type == 'route_homepage' || _type == 'news')`,
           params: { routeLang: `route_${_lang}`, title, lang: _lang },
         }),
         disableNew: true,

@@ -115,7 +115,7 @@ export default {
               to: defaultReferenceTargets,
               options: {
                 filter: ({ document }: { document: any }) => ({
-                  filter: `_type == $routeLang || _type == 'news'`,
+                  filter: `_type == $routeLang || _type == 'route_homepage' || _type == 'news'`,
                   params: { routeLang: `route_${document._lang}` },
                 }),
                 disableNew: true,

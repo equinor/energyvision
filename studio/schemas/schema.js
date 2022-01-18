@@ -12,6 +12,7 @@ import news from './documents/news'
 import page from './documents/page'
 import landingPage from './documents/landingPage'
 import route from './documents/route'
+import routeHomepage from './documents/routeHomepage'
 import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
@@ -76,6 +77,7 @@ export default createSchema({
     landingPage,
     subMenu,
     ...routeSchemas,
+    routeHomepage,
     siteMenu,
     imageWithAlt,
     imageWithAltAndCaption,
