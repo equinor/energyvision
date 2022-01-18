@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import { Text, Button, Heading } from '@components'
 
-import type { CookiePolicy } from '../../types/types'
-
 declare global {
   interface Window {
     Cookiebot: any
@@ -61,12 +59,12 @@ const LeftAlignedButton = styled(Button)`
   text-align: left;
 `
 
-const RequestConsentContainer = ({ consentType }: { consentType: CookiePolicy }) => {
+const RequestConsentContainer = () => {
   return (
     <StyledDiv>
       <CookieHeader>
         <Heading inverted size="lg" level="h3">
-          Accept cookies
+          Accept Cookies
         </Heading>
       </CookieHeader>
       <Icon>
@@ -108,7 +106,7 @@ const RequestConsentContainer = ({ consentType }: { consentType: CookiePolicy })
         <Text>
           {/* @TODO Add this text in Sanity and translate it */}
           Want the full picture? We’d love to share this content with you, but first you must accept additional cookies
-          by enabling them in our cookie settings. [Missing: {consentType}]
+          by enabling them in our cookie settings.
         </Text>
 
         <LeftAlignedButton

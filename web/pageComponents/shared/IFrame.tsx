@@ -74,7 +74,7 @@ const IFrame = ({
         </IFrameContainer>
         {cookiePolicy !== 'none' && (
           <div className={`cookieconsent-optout-${cookiePolicy}`}>
-            <RequestConsentContainer consentType={cookiePolicy} />
+            <RequestConsentContainer />
           </div>
         )}
       </Container>
