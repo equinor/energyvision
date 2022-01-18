@@ -52,7 +52,7 @@ const menus = languages.map((lang) =>
             id: `main-menu`,
             icon: MenuIcon,
             child: () =>
-              S.documentWithInitialValueTemplate(isGlobal == true ? 'menu-with-locale' : 'simple-menu-with-locale', {
+              S.documentWithInitialValueTemplate(isGlobal ? 'menu-with-locale' : 'simple-menu-with-locale', {
                 isoCode: `${lang.name}`,
               })
                 .id(menuId(lang))
