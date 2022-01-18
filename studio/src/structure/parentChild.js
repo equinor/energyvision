@@ -3,7 +3,7 @@ import S from '@sanity/desk-tool/structure-builder'
 import documentStore from 'part:@sanity/base/datastore/document'
 import RoutePreview from '../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
-import { RouteDocuments } from '../../icons'
+import { TopicDocuments, RouteDocuments } from '../../icons'
 
 import languages from '../../languages'
 
@@ -36,7 +36,7 @@ export default function parentChild(schema = 'route') {
 
 function routeStructure(schema, isoCode) {
   const documentName = `${schema}_${isoCode}`
-  const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
+  const categoryParents = `_id != 'homePage' && _type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
 
   return () =>
     documentStore.listenQuery(`*[${categoryParents}]`).pipe(
@@ -44,6 +44,16 @@ function routeStructure(schema, isoCode) {
         S.list()
           .title('All Routes')
           .items([
+            S.listItem()
+              .title('Home Page')
+              .icon(TopicDocuments)
+              .child(() =>
+                S.documentWithInitialValueTemplate(`home-page-route-${isoCode}`)
+                  .documentId('homePage')
+                  .title('Home Page')
+                  .schemaType(documentName),
+              ),
+            S.divider(),
             S.listItem()
               .title('Top Level Routes')
               .child(() =>
@@ -55,38 +65,30 @@ function routeStructure(schema, isoCode) {
                   .child((id) => S.document().documentId(id).views(views).schemaType(documentName)),
               ),
             S.divider(),
-            ...parents.map((parent) =>
-              S.listItem(`{documentName}`)
-                // Fix to avoid multiple list items with the same id
-                .id(`${parent._id}`)
-                .title(`${parent.slug?.current || 'Missing slug'}`)
-                .icon(RouteDocuments)
-                .child(() =>
-                  S.documentList()
-                    .title('Child Routes')
-                    .schemaType(documentName)
-                    .filter(`_type == "${documentName}" && parent._ref == $parentId`)
-                    .params({ parentId: parent._id })
-                    .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
-                    .child((id) =>
-                      S.documentWithInitialValueTemplate(`parent-route-${isoCode}`, {
-                        parentId: parent._id,
-                      })
-                        .documentId(id)
-                        .views(views)
-                        .schemaType(documentName),
-                    ),
-                ),
-            ),
-            S.listItem()
-              .title('Home Page')
-              .child(() =>
-                S.documentWithInitialValueTemplate(`home-page-route-${isoCode}`, {
-                  isHomePage: true,
-                })
-                  .documentId('homePage')
-                  .title('Home Page')
-                  .schemaType(documentName),
+            ...parents
+              .filter((e) => e._id !== 'homePage')
+              .map((parent) =>
+                S.listItem(`{documentName}`)
+                  // Fix to avoid multiple list items with the same id
+                  .id(`${parent._id}`)
+                  .title(`${parent.slug?.current || 'Missing slug'}`)
+                  .icon(RouteDocuments)
+                  .child(() =>
+                    S.documentList()
+                      .title('Child Routes')
+                      .schemaType(documentName)
+                      .filter(`_type == "${documentName}" && parent._ref == $parentId`)
+                      .params({ parentId: parent._id })
+                      .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
+                      .child((id) =>
+                        S.documentWithInitialValueTemplate(`parent-route-${isoCode}`, {
+                          parentId: parent._id,
+                        })
+                          .documentId(id)
+                          .views(views)
+                          .schemaType(documentName),
+                      ),
+                  ),
               ),
           ]),
       ),

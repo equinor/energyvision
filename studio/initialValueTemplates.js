@@ -15,11 +15,10 @@ const ParentRoutesTemplates = languages.map(({ name, title }) =>
 const HomePageRoutesTemplates = languages.map(({ name, title }) =>
   T.template({
     id: `home-page-route-${name}`,
-    title: `Home page route - ${title}`,
+    title: `Home Page Route ${title}`,
     schemaType: `route_${name}`,
-    parameters: [{ name: 'isHomePage', type: 'boolean' }],
-    value: (params) => ({
-      isHomePage: params.isHomePage,
+    value: () => ({
+      slug: { current: '/', _type: 'slug' },
     }),
   }),
 )

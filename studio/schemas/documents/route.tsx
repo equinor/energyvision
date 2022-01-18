@@ -23,13 +23,6 @@ export default (isoCode: string, title: string) => {
     // @TODO: Temp. solution aka 1. iteration.
     fields: [
       {
-        title: 'IsHomePage',
-        name: 'isHomePage',
-        description: 'Flag indicating if document is the home page',
-        type: 'boolean',
-        hidden: true,
-      },
-      {
         title: 'Content',
         name: 'content',
         description: 'The content you want to appear at this path. Remember it needs to be published.',
@@ -66,7 +59,7 @@ export default (isoCode: string, title: string) => {
           filter: '!defined(parent)',
           disableNew: true,
         },
-        hidden: ({ document }: { document: any }) => document?.isHomePage,
+        hidden: ({ document }: { document: any }) => document?._id.includes('homePage'),
       },
       {
         name: 'topicSlug',
@@ -77,16 +70,9 @@ export default (isoCode: string, title: string) => {
           'The unique part of the URL for this topic page. Should probably be something like the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
-        readOnly: ({ document }: any) => document?.isHomePage,
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
     ],
-    initialValue: (document: any) => {
-      return {
-        topicSlug: document?.isHomePage ? 'Home Page' : undefined,
-        slug: document?.isHomePage ? { current: '/', _type: 'slug' } : undefined,
-      }
-    },
     preview: {
       select: {
         title: 'content.title',
