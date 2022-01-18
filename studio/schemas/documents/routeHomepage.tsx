@@ -1,4 +1,3 @@
-import { slugWithRef } from '../objects/slugWithRef'
 import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
