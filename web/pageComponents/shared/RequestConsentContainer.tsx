@@ -59,11 +59,15 @@ const LeftAlignedButton = styled(Button)`
   text-align: left;
 `
 
-const RequestConsentContainer = () => {
+type RequestConsentContainerProps = {
+  hasSectionTitle?: boolean
+}
+
+const RequestConsentContainer = ({ hasSectionTitle = true }: RequestConsentContainerProps) => {
   return (
     <StyledDiv>
       <CookieHeader>
-        <Heading inverted size="lg" level="h3">
+        <Heading inverted size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
           Accept Cookies
         </Heading>
       </CookieHeader>
