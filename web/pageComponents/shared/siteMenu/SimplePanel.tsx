@@ -10,9 +10,7 @@ const StyledPanel = styled(RAccordionPanel)`
   }
 `
 
-const PanelContainer = styled.div`
-  padding-bottom: var(--space-xLarge);
-`
+const PanelContainer = styled.div``
 export type SimplePanelProps = RAccordionPanelProps & HTMLAttributes<HTMLDivElement>
 
 export const SimplePanel = forwardRef<HTMLDivElement, SimplePanelProps>(function SubMenuPanel(
