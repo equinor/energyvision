@@ -32,10 +32,7 @@ const StyledIcon = styled(Icon)``
 
 const StyledHeader = styled(Typography)``
 const StyledTypography = styled(Typography)`
-  font-weight: var(--font-weight);
-  @media (min-width: 1300px) {
-    font-weight: 400;
-  }
+  font-weight: 400;
 `
 
 export type SubMenuHeaderProps = TypographyProps & RAccordionButtonProps
