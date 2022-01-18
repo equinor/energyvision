@@ -36,8 +36,6 @@ const menuId = (lang) => {
   }
 }
 
-// @todo add a isGlobal function
-// @todo remove subMenu on non global datasets
 const menus = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} menu`,
@@ -58,20 +56,22 @@ const menus = languages.map((lang) =>
                 .id(menuId(lang))
                 .title(`${lang.title} site menu`),
           }),
-          S.listItem({
-            title: 'Sub menus',
-            id: 'subMenuTest',
-            child: () =>
-              S.documentTypeList('subMenu')
-                .title('Sub menu')
-                .filter('_type == "subMenu" && _lang == $baseLang')
-                .params({ baseLang: lang.name })
-                //.params({ isoCode: `${lang.name}` })
-                .initialValueTemplates([
-                  S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` }),
-                ]),
-          }),
-        ],
+          isGlobal
+            ? S.listItem({
+                title: 'Sub menus',
+                id: 'subMenuTest',
+                child: () =>
+                  S.documentTypeList('subMenu')
+                    .title('Sub menu')
+                    .filter('_type == "subMenu" && _lang == $baseLang')
+                    .params({ baseLang: lang.name })
+                    //.params({ isoCode: `${lang.name}` })
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` }),
+                    ]),
+              })
+            : null,
+        ].filter(Boolean),
       }),
   }),
 )
