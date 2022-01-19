@@ -14,6 +14,7 @@ export default {
         {
           type: 'simpleMenuGroup',
         },
+        { type: 'simpleMenuLink' },
       ],
     },
   ],
