@@ -43,7 +43,8 @@ export default class MyDocument extends Document {
       featureFlags['data-eds-flexible-height'] = true
     }
 
-    const linkList: Array<{ title: string; url: URL }> = [
+    {
+      /* const linkList: Array<{ title: string; url: URL }> = [
       {
         title: 'Natural Gas',
         url: new URL(`${process.env.NEXT_PUBLIC_LOCALHOST}/energy/natural-gas`),
@@ -65,7 +66,8 @@ export default class MyDocument extends Document {
         url: new URL(`${process.env.NEXT_PUBLIC_LOCALHOST}/careers/professionals`),
       },
     ]
-
+  */
+    }
     return (
       <Html {...featureFlags}>
         <Head>
@@ -90,13 +92,13 @@ export default class MyDocument extends Document {
                 width: '100vw',
               }}
             >
-              {linkList.map(({ title, url }) => (
+              {/*linkList.map(({ title, url }) => (
                 <li key={url.href}>
                   <a style={{ textDecoration: 'none', color: '#333' }} href={url.href}>
                     {title}
                   </a>
                 </li>
-              ))}
+              )) */}
             </ul>
           )}
           <Main />
