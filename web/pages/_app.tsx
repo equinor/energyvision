@@ -49,12 +49,13 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const locale = getIsoFromLocale(router.locale)
 
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
+  const isLocalhost = process.env.NEXT_PUBLIC_LOCALHOST
 
   useEffect(() => {
-    if (window.self === window.top) {
+    if (window.self === window.top && !isLocalhost) {
       window.Cookiebot.runScripts()
     }
-  }, [router.asPath])
+  }, [router.asPath, isLocalhost])
 
   return (
     <>
