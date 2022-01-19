@@ -19,6 +19,7 @@ export default {
       name: 'label',
       description: 'The label that appears above the links.',
       type: 'string',
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Links',
