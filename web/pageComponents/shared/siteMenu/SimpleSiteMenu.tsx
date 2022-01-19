@@ -24,6 +24,9 @@ const MenuLink = styled(Link)`
   svg {
     display: none;
   }
+  &:hover {
+    background-color: var(--grey-10);
+  }
 `
 
 export type MenuProps = {
@@ -105,9 +108,6 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                     if (item?.type === 'simpleMenuGroup') {
                       return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
                     } else if (item?.type === 'simpleMenuLink') {
-                      {
-                        console.log(item)
-                      }
                       return (
                         <NextLink href={getLink(item.link)} key={item.id} passHref>
                           <MenuLink variant="contentLink"> {item.label} </MenuLink>
