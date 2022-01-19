@@ -1,12 +1,12 @@
 import { list } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule } from '@sanity/types'
-import type { MenuLink } from './menuLink'
+import type { SimpleMenuLink } from './simpleMenuLink'
 
 export type MenuGroup = {
   _type: 'simpleMenuGroup'
   label?: string
-  links?: MenuLink[]
+  links?: SimpleMenuLink[]
 }
 
 export default {
