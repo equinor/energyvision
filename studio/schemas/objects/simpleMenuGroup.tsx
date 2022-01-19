@@ -38,7 +38,7 @@ export default {
       label: 'label',
       links: 'links',
     },
-    prepare(selection: { label: string; links: MenuLink[] }) {
+    prepare(selection: { label: string; links: SimpleMenuLink[] }) {
       const { label = 'Unlabeled group', links = [] } = selection
       return {
         title: label,
