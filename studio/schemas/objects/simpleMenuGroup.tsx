@@ -4,7 +4,7 @@ import type { Rule } from '@sanity/types'
 import type { MenuLink } from './menuLink'
 
 export type MenuGroup = {
-  _type: 'menuGroup'
+  _type: 'simpleMenuGroup'
   label?: string
   links?: MenuLink[]
 }
