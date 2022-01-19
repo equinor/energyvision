@@ -7,7 +7,6 @@ import routes from '../routes'
 export type SimpleMenuLink = {
   _type: 'simpleMenuLink'
   label: string
-
   route?: Reference
 }
 

@@ -2,13 +2,19 @@ import { list } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
 import type { SimpleMenuLink } from './simpleMenuLink'
-import type { Rule, SanityDocument } from '@sanity/types'
+import type { Rule, SanityDocument, Reference } from '@sanity/types'
 import routes from '../routes'
 
 export type MenuGroup = {
   _type: 'simpleMenuGroup'
   label?: string
   links?: SimpleMenuLink[]
+  readMoreLink?: ReadMoreLink
+}
+export type ReadMoreLink = {
+  _type: 'readMoreLink'
+  label: string
+  route: Reference
 }
 
 export default {
