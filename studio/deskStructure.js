@@ -88,6 +88,17 @@ const footers = languages.map((lang) =>
         .views([S.view.form()]),
   }),
 )
+const homepages = languages.map((lang) =>
+  S.listItem({
+    title: `${lang.title} Homepage`,
+    id: `homepage-${lang.id}`,
+    icon: flags[lang.id],
+    child: () =>
+      S.documentTypeList(`route_${lang.name}_homepage`)
+        .id(`${lang.id}-homepage`)
+        .title(`Homepage route - ${lang.title}`),
+  }),
+)
 
 const AssetLibrary = [
   S.listItem()
@@ -188,7 +199,7 @@ export default () => {
     S.listItem()
       .title('Home Page')
       .icon(TopicDocuments)
-      .child(() => S.document().documentId('homepage').schemaType('route_homepage').title('Home Page')),
+      .child(() => S.list('homepage').id('homepage').title('Homepages').items(homepages)),
     S.divider(),
     parentChild('route'),
     S.divider(),

@@ -56,8 +56,8 @@ export default {
           to: routes,
           options: {
             filter: ({ document }: { document: any }) => ({
-              filter: `_type == $routeLang || _type == 'route_homepage' && content->_type == "event"`,
-              params: { routeLang: `route_${document._lang}` },
+              filter: `_type match $routeLang && content->_type == "event"`,
+              params: { routeLang: `route_${document._lang}*` },
             }),
             disableNew: true,
           },

@@ -3,10 +3,10 @@ import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 
-export default {
+export default (isoCode: string, title: string) => ({
   type: 'document',
-  title: 'Home Page Route',
-  name: 'route_homepage',
+  title: `Home Page Route ${title}`,
+  name: `route_${isoCode}_homepage`,
   fields: [
     {
       title: 'Content',
@@ -26,6 +26,8 @@ export default {
         },
       ],
       options: {
+        filter: '_lang == $lang',
+        filterParams: { lang: `${isoCode}` },
         disableNew: true,
       },
     },
@@ -58,4 +60,4 @@ export default {
       }
     },
   },
-}
+})

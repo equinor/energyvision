@@ -64,6 +64,10 @@ const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
 })
 
+const routeHomepageSchemas = languages.map(({ name, title }) => {
+  return routeHomepage(name, title)
+})
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -77,7 +81,7 @@ export default createSchema({
     landingPage,
     subMenu,
     ...routeSchemas,
-    routeHomepage,
+    ...routeHomepageSchemas,
     siteMenu,
     imageWithAlt,
     imageWithAltAndCaption,

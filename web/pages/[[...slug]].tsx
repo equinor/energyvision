@@ -48,7 +48,6 @@ export default function Page({ data, preview }: any) {
   }) */
 
   const pageData = filterDataToSingleItem(data.pageData, preview)
-
   const slug = pageData?.slug
 
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
@@ -158,9 +157,12 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
 export const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
-  const data = await sanityClient.fetch(groq`*[_type == "route_" + $lang && defined(slug.current)][].slug.current`, {
-    lang,
-  })
+  const data = await sanityClient.fetch(
+    groq`*[_type match "route_" + $lang + "*" && defined(slug.current)][].slug.current`,
+    {
+      lang,
+    },
+  )
 
   return data
 }
