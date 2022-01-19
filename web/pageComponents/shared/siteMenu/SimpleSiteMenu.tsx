@@ -106,7 +106,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                 <SimpleMenuWrapper index={indices} onChange={toggleItem}>
                   {menuItems?.groups?.map((item: any, idx: number) => {
                     if (item?.type === 'simpleMenuGroup') {
-                      return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
+                      return <SimpleMenuItem item={item} key={item.id} index={idx} />
                     } else if (item?.type === 'simpleMenuLink') {
                       return (
                         <NextLink href={getLink(item.link)} key={item.id} passHref>

@@ -4,7 +4,7 @@ export const simpleMenuQuery = /* groq */ `
       "id": _key,
       label,
       "type": _type,
-      "readMoreLink": readMoreLink{label, route-> {"type":_type, "slug": slug.current }},
+      "readMoreLink": readMoreLink{label, "link":route-> {"type":_type, "slug": slug.current }},
       "links": links[]{
           label,
          "id": _key,

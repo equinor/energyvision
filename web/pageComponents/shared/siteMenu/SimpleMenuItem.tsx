@@ -27,6 +27,9 @@ const StyledSubMenuGroupLink = styled(Link)`
     background-color: var(--grey-10);
   }
 `
+const ReadMore = styled(Link)`
+  padding: calc(var(--space-small) + var(--space-xSmall)) 0;
+`
 
 function getLink(linkData: any) {
   // Fallback to home page, if this happens it is an error somewhere
@@ -42,12 +45,12 @@ function getLink(linkData: any) {
 }
 
 type MenuGroupType = {
-  topLevelItem: any
+  item: any
   index: number
 }
 
-export const SimpleMenuItem = ({ topLevelItem, index }: MenuGroupType) => {
-  const { label = '', links = [] } = topLevelItem
+export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
+  const { label = '', links = [], readMoreLink } = item
 
   return (
     <SimpleSubMenu id={index}>
@@ -55,6 +58,11 @@ export const SimpleMenuItem = ({ topLevelItem, index }: MenuGroupType) => {
       <SimplePanel>
         <div>
           <SubMenuGroups>
+            {readMoreLink && (
+              <NextLink href={getLink(readMoreLink)} passHref>
+                <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
+              </NextLink>
+            )}
             <SubMenuGroupList aria-label={label} unstyled>
               {links?.map((link: any) => (
                 <StyledItem key={link.id}>
