@@ -5,14 +5,17 @@ import { useWindowSize } from '@reach/window-size'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import NextLink from 'next/link'
-import { Menu, MenuButton, Link } from '@components'
+import { Menu, MenuButton, Link, LogoSecondary } from '@components'
 import { MenuGroup } from './MenuGroup'
 import { TopbarDropdown } from './TopbarDropdown'
 import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
+import { outlineTemplate, Tokens } from '@utils'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
+
+const { outline } = Tokens
 
 /* This is not finalized */
 const AllSitesLink = styled(Link)`
@@ -28,6 +31,21 @@ const AllSitesLink = styled(Link)`
 export type MenuProps = {
   data?: MenuData
 }
+const StyledLogoLink = styled.a`
+  grid-area: logo;
+  justify-content: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
+
+  > svg {
+    margin-top: -12%;
+  }
+`
 
 const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
@@ -88,6 +106,11 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
+                <NextLink href="/" passHref>
+                  <StyledLogoLink aria-label="Equinor home page">
+                    <LogoSecondary />
+                  </StyledLogoLink>
+                </NextLink>
                 {/*  @TODO: Translations of string */}
                 <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>

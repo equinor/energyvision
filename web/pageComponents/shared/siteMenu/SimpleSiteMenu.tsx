@@ -5,15 +5,16 @@ import { useWindowSize } from '@reach/window-size'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
-import { MenuButton, Link } from '@components'
+import { MenuButton, Link, LogoSecondary } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import NextLink from 'next/link'
-
+import { outlineTemplate, Tokens } from '@utils'
 import { TopbarDropdown } from './TopbarDropdown'
 
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
 
+const { outline } = Tokens
 const MenuContainer = styled.div`
   background-color: transparent;
   padding: 0 var(--space-large);
@@ -26,6 +27,21 @@ const MenuLink = styled(Link)`
   }
   &:hover {
     background-color: var(--grey-10);
+  }
+`
+const StyledLogoLink = styled.a`
+  grid-area: logo;
+  justify-content: left;
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
+  }
+
+  > svg {
+    margin-top: -12%;
   }
 `
 
@@ -100,6 +116,11 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
+                <NextLink href="/" passHref>
+                  <StyledLogoLink aria-label="Equinor home page">
+                    <LogoSecondary />
+                  </StyledLogoLink>
+                </NextLink>
                 <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
