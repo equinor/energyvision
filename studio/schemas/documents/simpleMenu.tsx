@@ -12,7 +12,7 @@ export default {
       type: 'array',
       of: [
         {
-          type: 'menuGroup',
+          type: 'simpleMenuGroup',
         },
       ],
     },

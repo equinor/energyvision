@@ -27,7 +27,7 @@ export default {
       type: 'array',
       of: [
         {
-          type: 'menuLink',
+          type: 'simpleMenuLink',
         },
       ],
       validation: (Rule: Rule) => Rule.required().min(1),

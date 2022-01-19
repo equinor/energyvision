@@ -1,10 +1,10 @@
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
-import type { Rule, ValidationContext, Reference, SanityDocument } from '@sanity/types'
+import type { Rule, Reference, SanityDocument } from '@sanity/types'
 import routes from '../routes'
 
-export type MenuLink = {
+export type SimpleMenuLink = {
   _type: 'simpleMenuLink'
   label: string
 
@@ -23,14 +23,7 @@ export default {
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
     },
-    {
-      name: 'isStatic',
-      title: 'Is static page',
-      description: `While migrating, content can be available as static pages generated from the old CMS. If this is
-      the case for this menu item, it's important to register the url in the static input field`,
-      type: 'boolean',
-      initialValue: false,
-    },
+
     {
       title: 'Route',
       name: 'route',
@@ -44,12 +37,6 @@ export default {
         }),
         disableNew: true,
       },
-      validation: (Rule: Rule) =>
-        Rule.custom((route: Reference, context: ValidationContext) => {
-          const { parent } = context as { parent: MenuLink }
-          return !parent?.isStatic && route === undefined ? 'Required' : true
-        }),
-      hidden: ({ parent }: { parent: MenuLink }) => parent?.isStatic === true,
     },
   ],
   preview: {
