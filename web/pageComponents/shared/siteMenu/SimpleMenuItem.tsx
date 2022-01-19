@@ -28,13 +28,6 @@ const StyledSubMenuGroupLink = styled(Link)`
   }
 `
 
-const Grid = styled.div`
-  @media (min-width: 1300px) {
-    display: grid;
-    grid-template-columns: 1fr min-content;
-  }
-`
-
 function getLink(linkData: any) {
   // Fallback to home page, if this happens it is an error somewhere
   // Sanity should take care of the validation here, and this is temp. until
@@ -60,21 +53,19 @@ export const SimpleMenuItem = ({ topLevelItem, index }: MenuGroupType) => {
     <SimpleSubMenu id={index}>
       {label && <SimpleSubMenuHeader> {label}</SimpleSubMenuHeader>}
       <SimplePanel>
-        <Grid>
-          <div>
-            <SubMenuGroups>
-              <SubMenuGroupList aria-label={label} unstyled>
-                {links?.map((link: any) => (
-                  <StyledItem key={link.id}>
-                    <NextLink href={getLink(link)} passHref>
-                      <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
-                    </NextLink>
-                  </StyledItem>
-                ))}
-              </SubMenuGroupList>
-            </SubMenuGroups>
-          </div>
-        </Grid>
+        <div>
+          <SubMenuGroups>
+            <SubMenuGroupList aria-label={label} unstyled>
+              {links?.map((link: any) => (
+                <StyledItem key={link.id}>
+                  <NextLink href={getLink(link)} passHref>
+                    <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
+                  </NextLink>
+                </StyledItem>
+              ))}
+            </SubMenuGroupList>
+          </SubMenuGroups>
+        </div>
       </SimplePanel>
     </SimpleSubMenu>
   )
