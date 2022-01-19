@@ -5,14 +5,13 @@ export const simpleMenuQuery = /* groq */ `
       label,   
       "links": links[]{
           label,
-          "isStatic": coalesce(isStatic, false),
          "id": _key,
          "link": route-> {
             "type": _type,
            "slug": slug.current,
          },
          
-         "staticUrl": staticUrl,
+        
        }
     },
 }
