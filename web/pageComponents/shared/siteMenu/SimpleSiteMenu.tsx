@@ -109,7 +109,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                         console.log(item)
                       }
                       return (
-                        <NextLink href={getLink(item.link)} passHref>
+                        <NextLink href={getLink(item.link)} key={item.id} passHref>
                           <MenuLink variant="contentLink"> {item.label} </MenuLink>
                         </NextLink>
                       )
