@@ -45,3 +45,4 @@ vscode:
     - dbaeumer.vscode-eslint
     - pflannery.vscode-versionlens
     - jpoissonnier.vscode-styled-components
+    - jock.svg
