@@ -7,6 +7,7 @@ import FocusLock from 'react-focus-lock'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
 import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
+import NextLink from 'next/link'
 
 import { TopbarDropdown } from './TopbarDropdown'
 
@@ -35,9 +36,8 @@ function getLink(linkData: any) {
   // Sanity should take care of the validation here, and this is temp. until
   // the static pages are migrated
   if (!linkData) return 'something-wrong'
-  const { link } = linkData
 
-  return (link && link.slug) || '/'
+  return (linkData && linkData.slug) || '/'
 }
 
 const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
@@ -108,7 +108,11 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       {
                         console.log(item)
                       }
-                      return <MenuLink variant="contentLink"> {item.label} </MenuLink>
+                      return (
+                        <NextLink href={getLink(item.link)} passHref>
+                          <MenuLink variant="contentLink"> {item.label} </MenuLink>
+                        </NextLink>
+                      )
                     }
                   })}
                 </SimpleMenuWrapper>

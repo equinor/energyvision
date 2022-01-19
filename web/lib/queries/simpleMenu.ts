@@ -11,9 +11,11 @@ export const simpleMenuQuery = /* groq */ `
             "type": _type,
            "slug": slug.current,
          },
-         
-        
-       }
+      },
+      "link": route-> {
+            "type": _type,
+           "slug": slug.current,
+         },
     },
 }
 `
