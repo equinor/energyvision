@@ -85,7 +85,11 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
               <MenuContainer>
                 <SimpleMenuWrapper index={indices} onChange={toggleItem}>
                   {menuItems?.groups?.map((item: any, idx: number) => {
-                    return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
+                    if (item?.type === 'simpleMenuGroup') {
+                      return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
+                    } else if (item?.type === 'simpleMenuLink') {
+                      return <p> link </p>
+                    }
                   })}
                 </SimpleMenuWrapper>
               </MenuContainer>
