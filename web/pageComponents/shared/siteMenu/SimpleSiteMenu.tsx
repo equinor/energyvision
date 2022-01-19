@@ -5,7 +5,7 @@ import { useWindowSize } from '@reach/window-size'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
-import { MenuButton } from '@components'
+import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
 
 import { TopbarDropdown } from './TopbarDropdown'
@@ -18,9 +18,26 @@ const MenuContainer = styled.div`
   padding: 0 var(--space-large);
 `
 
+const MenuLink = styled(Link)`
+  padding: calc(var(--space-small) + var(--space-small)) 0;
+  svg {
+    display: none;
+  }
+`
+
 export type MenuProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function getLink(linkData: any) {
+  // Fallback to home page, if this happens it is an error somewhere
+  // Sanity should take care of the validation here, and this is temp. until
+  // the static pages are migrated
+  if (!linkData) return 'something-wrong'
+  const { link } = linkData
+
+  return (link && link.slug) || '/'
 }
 
 const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
@@ -88,7 +105,10 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                     if (item?.type === 'simpleMenuGroup') {
                       return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
                     } else if (item?.type === 'simpleMenuLink') {
-                      return <p> link </p>
+                      {
+                        console.log(item)
+                      }
+                      return <MenuLink variant="contentLink"> {item.label} </MenuLink>
                     }
                   })}
                 </SimpleMenuWrapper>
