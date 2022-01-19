@@ -1,7 +1,9 @@
 import { list } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import type { Rule } from '@sanity/types'
+
 import type { SimpleMenuLink } from './simpleMenuLink'
+import type { Rule, SanityDocument } from '@sanity/types'
+import routes from '../routes'
 
 export type MenuGroup = {
   _type: 'simpleMenuGroup'
@@ -20,6 +22,34 @@ export default {
       description: 'The label that appears above the links.',
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      title: 'Read more link',
+      name: 'readMoreLink',
+      type: 'object',
+      fields: [
+        {
+          title: 'Label',
+          name: 'label',
+          description: 'The visible label of the link.',
+          type: 'string',
+        },
+
+        {
+          title: 'Route',
+          name: 'route',
+          description: 'The content you want to appear at this path. Remember that it needs to be published first.',
+          type: 'reference',
+          to: routes,
+          options: {
+            filter: ({ document }: { document: SanityDocument }) => ({
+              filter: `_type == $routeLang`,
+              params: { routeLang: `route_${document._lang}` },
+            }),
+            disableNew: true,
+          },
+        },
+      ],
     },
     {
       title: 'Links',
