@@ -11,6 +11,8 @@ on:
       - '!web/.gitignore'
       - '!web/jest.config.js'
       - '!web/jest.setup.ts'
+      - 'satellites.json'
+      - 'satellitesConfig.js'
   repository_dispatch:
     types: [sanity_publish]
 jobs:
