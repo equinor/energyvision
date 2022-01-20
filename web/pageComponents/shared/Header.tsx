@@ -104,9 +104,9 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
             </NextLink>
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
-
-            {isGlobal && menuData && <SiteMenu data={menuData} />}
-            {!isGlobal && simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
+            {isGlobal
+              ? menuData && <SiteMenu data={menuData} />
+              : simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>
