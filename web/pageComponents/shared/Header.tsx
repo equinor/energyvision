@@ -53,14 +53,10 @@ const ControlsContainer = styled.div`
   justify-self: right;
   align-items: center;
   display: flex;
-  & > * ~ * {
-    margin-left: var(--space-small);
-  }
+  gap: var(--space-small);
 
   @media (min-width: 600px) {
-    & > * ~ * {
-      margin-left: var(--space-medium);
-    }
+    gap: var(--space-medium);
   }
 `
 
