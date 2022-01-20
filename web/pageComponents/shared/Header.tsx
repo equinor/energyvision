@@ -105,8 +105,8 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
-            {isGlobal === true && menuData && <SiteMenu data={menuData} />}
-            {isGlobal === false && simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
+            {isGlobal && menuData && <SiteMenu data={menuData} />}
+            {!isGlobal && simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>
