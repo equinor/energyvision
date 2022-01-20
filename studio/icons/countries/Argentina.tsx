@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Brazil = ({ width = 30, height = 30 }: { width: number; height: number }) => {
+const Argentina = ({ width = 30, height = 30 }: { width: number; height: number }) => {
   return (
     <svg width={width} xmlns="http://www.w3.org/2000/svg" version="1.0" height={height}>
       <rect width="800" fill="#74acdf" height="500" />
@@ -79,4 +79,4 @@ const Brazil = ({ width = 30, height = 30 }: { width: number; height: number }) 
   )
 }
 
-export default Brazil
+export default Argentina
