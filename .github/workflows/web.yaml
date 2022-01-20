@@ -19,7 +19,6 @@ jobs:
   check_code:
     runs-on: ubuntu-latest
     env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
@@ -47,12 +46,6 @@ jobs:
         id: test
         run: |
           pnpm test --filter energy-vision-web
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
 
   deploy-global:
     needs: check_code
@@ -63,7 +56,6 @@ jobs:
         dataset: ['global']
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
@@ -74,16 +66,9 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
 
   read-satellites:
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -93,11 +78,6 @@ jobs:
         run: |
           MATRIX=$(cat satellites.json)
           echo ::set-output name=matrix::${MATRIX}
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
 
   deploy-satellites:
     needs: [deploy-global, read-satellites]
