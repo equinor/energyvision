@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'studio/**/*'
+      - 'satellites.json'
+      - 'satellitesConfig.js'
 jobs:
   deploy:
     runs-on: ubuntu-latest
