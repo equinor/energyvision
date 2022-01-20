@@ -50,17 +50,17 @@ const StyledLogoLink = styled.a`
 `
 
 const ControlsContainer = styled.div`
-  grid-area: menu;
   justify-self: right;
-  display: grid;
-  grid-template-columns: repeat(3, min-content);
-  grid-column-gap: var(--space-small);
-  column-gap: var(--space-small);
   align-items: center;
+  display: flex;
+  & > * ~ * {
+    margin-left: var(--space-small);
+  }
 
   @media (min-width: 600px) {
-    grid-column-gap: var(--space-medium);
-    column-gap: var(--space-medium);
+    & > * ~ * {
+      margin-left: var(--space-medium);
+    }
   }
 `
 
@@ -105,8 +105,16 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
             {isGlobal
-              ? menuData && <SiteMenu data={menuData} />
-              : simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
+              ? menuData && (
+                  <div>
+                    <SiteMenu data={menuData} />
+                  </div>
+                )
+              : simpleMenuData && (
+                  <div>
+                    <SimpleSiteMenu data={simpleMenuData} />
+                  </div>
+                )}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>
