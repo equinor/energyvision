@@ -40,8 +40,8 @@ export default {
       to: routes,
       options: {
         filter: ({ document }: { document: SanityDocument }) => ({
-          filter: `_type == $routeLang`,
-          params: { routeLang: `route_${document._lang}` },
+          filter: `_type match $routeLang`,
+          params: { routeLang: `route_${document._lang}*` },
         }),
         disableNew: true,
       },

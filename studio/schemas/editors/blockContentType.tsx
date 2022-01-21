@@ -106,8 +106,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           filter: ({ document }: { document: any }) => ({
             // @TODO: Fix _lang for English version. Atm we can't link to
             // English topic pages and can't filter for news articles in the same language
-            filter: `_type == $routeLang || _type == 'news'`,
-            params: { routeLang: `route_${document._lang}` },
+            filter: `_type match $routeLang || _type == 'news'`,
+            params: { routeLang: `route_${document._lang}*` },
           }),
           disableNew: true,
         },

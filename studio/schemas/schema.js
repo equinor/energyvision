@@ -12,6 +12,7 @@ import news from './documents/news'
 import page from './documents/page'
 import landingPage from './documents/landingPage'
 import route from './documents/route'
+import routeHomepage from './documents/routeHomepage'
 import subMenu from './documents/subMenu'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
@@ -65,6 +66,10 @@ const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
 })
 
+const routeHomepageSchemas = languages.map(({ name, title }) => {
+  return routeHomepage(name, title)
+})
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -78,6 +83,7 @@ export default createSchema({
     landingPage,
     subMenu,
     ...routeSchemas,
+    ...routeHomepageSchemas,
     siteMenu,
     imageWithAlt,
     imageWithAltAndCaption,
