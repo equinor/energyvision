@@ -18,25 +18,12 @@ export default (isoCode: string, title: string) => ({
         {
           type: 'page',
         },
-        {
-          type: 'landingPage',
-        },
-        {
-          type: 'event',
-        },
       ],
       options: {
         filter: '_lang == $lang',
         filterParams: { lang: `${isoCode}` },
         disableNew: true,
       },
-    },
-    {
-      name: 'topicSlug',
-      title: 'Topic slug',
-      type: 'string',
-      placeholder: 'For example "Home"',
-      description: 'The unique part of the URL for the home page. Should probably be something like the page title.',
     },
     {
       title: 'Home page URL',
