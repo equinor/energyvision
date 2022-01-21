@@ -6,26 +6,29 @@ import NextLink from 'next/link'
 const { outline } = Tokens
 
 const StyledLogoLink = styled.a`
-  grid-area: logo;
-  justify-content: left;
+  justify-self: left;
   display: flex;
-  height: 100%;
   align-items: center;
+  height: 100%;
 
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
+`
 
-  > svg {
-    margin-top: -12%;
-  }
+const AlignedLogoSecondary = styled(LogoSecondary)`
+  /*  Magic number coming up! Need to align the logo as good as possible.
+  Since this is just a positioning things it's added here and not in the Logo component
+  */
+  margin-top: -12%;
 `
 
 export const LogoLink = () => {
   return (
     <NextLink href="/" passHref>
+      {/*  Localize text */}
       <StyledLogoLink aria-label="Equinor home page">
-        <LogoSecondary />
+        <AlignedLogoSecondary />
       </StyledLogoLink>
     </NextLink>
   )

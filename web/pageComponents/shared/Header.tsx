@@ -2,17 +2,15 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { Topbar, Button, LogoSecondary } from '@components'
+import { Topbar, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/SimpleSiteMenu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
-import { outlineTemplate, Tokens } from '@utils'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
-
-const { outline } = Tokens
+import { LogoLink } from './LogoLink'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -32,21 +30,8 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   grid-column-gap: var(--space-large);
   column-gap: var(--space-large);
 `
-
-const StyledLogoLink = styled.a`
+const LogoLinkInGrid = styled(LogoLink)`
   grid-area: logo;
-  justify-self: left;
-  display: flex;
-  height: 100%;
-  align-items: center;
-
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-
-  > svg {
-    margin-top: -12%;
-  }
 `
 
 const ControlsContainer = styled.div`
@@ -83,14 +68,8 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
       <TopbarOffset />
 
       <Topbar>
-        {/* @TODO: Localize strings */}
         <TopbarContainer>
-          <NextLink href="/" passHref>
-            <StyledLogoLink aria-label="Equinor home page">
-              <LogoSecondary />
-            </StyledLogoLink>
-          </NextLink>
-
+          <LogoLinkInGrid />
           <ControlsContainer>
             {/* @TODO: search page */}
             <NextLink href="/" passHref>
