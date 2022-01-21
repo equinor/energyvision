@@ -66,15 +66,14 @@ const IFrame = ({
           />
         )}
 
-        <IFrameContainer
-          className={cookiePolicy === 'none' ? '' : `cookieconsent-optin-${cookiePolicy}`}
-          aspectRatioPadding={containerPadding}
-        >
-          <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
-        </IFrameContainer>
+        <div className={`cookieconsent-optin-${cookiePolicy}`}>
+          <IFrameContainer aspectRatioPadding={containerPadding}>
+            <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
+          </IFrameContainer>
+        </div>
         {cookiePolicy !== 'none' && (
           <div className={`cookieconsent-optout-${cookiePolicy}`}>
-            <RequestConsentContainer consentType={cookiePolicy} />
+            <RequestConsentContainer hasSectionTitle={!!title} />
           </div>
         )}
       </Container>

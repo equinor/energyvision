@@ -27,12 +27,8 @@ const StyledSubMenuGroupLink = styled(Link)`
     background-color: var(--grey-10);
   }
 `
-
-const Grid = styled.div`
-  @media (min-width: 1300px) {
-    display: grid;
-    grid-template-columns: 1fr min-content;
-  }
+const ReadMore = styled(Link)`
+  padding: calc(var(--space-small) + var(--space-xSmall)) 0;
 `
 
 function getLink(linkData: any) {
@@ -49,32 +45,35 @@ function getLink(linkData: any) {
 }
 
 type MenuGroupType = {
-  topLevelItem: any
+  item: any
   index: number
 }
 
-export const SimpleMenuItem = ({ topLevelItem, index }: MenuGroupType) => {
-  const { label = '', links = [] } = topLevelItem
+export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
+  const { label = '', links = [], readMoreLink } = item
 
   return (
     <SimpleSubMenu id={index}>
       {label && <SimpleSubMenuHeader> {label}</SimpleSubMenuHeader>}
       <SimplePanel>
-        <Grid>
-          <div>
-            <SubMenuGroups>
-              <SubMenuGroupList aria-label={label} unstyled>
-                {links?.map((link: any) => (
-                  <StyledItem key={link.id}>
-                    <NextLink href={getLink(link)} passHref>
-                      <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
-                    </NextLink>
-                  </StyledItem>
-                ))}
-              </SubMenuGroupList>
-            </SubMenuGroups>
-          </div>
-        </Grid>
+        <div>
+          <SubMenuGroups>
+            {readMoreLink && (
+              <NextLink href={getLink(readMoreLink)} passHref>
+                <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
+              </NextLink>
+            )}
+            <SubMenuGroupList aria-label={label} unstyled>
+              {links?.map((link: any) => (
+                <StyledItem key={link.id}>
+                  <NextLink href={getLink(link)} passHref>
+                    <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
+                  </NextLink>
+                </StyledItem>
+              ))}
+            </SubMenuGroupList>
+          </SubMenuGroups>
+        </div>
       </SimplePanel>
     </SimpleSubMenu>
   )

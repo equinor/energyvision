@@ -19,6 +19,7 @@ import { getNameFromLocale, defaultLanguage } from '../lib/localization'
 import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
 import languages from '../languages'
+import { isGlobal } from '../common/helpers/datasetHelpers'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -117,12 +118,15 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
 
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
-  if ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news)) {
+
+  // If global, fetch static content in case data is not found or trying to access news
+  if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'
 
     const archivedData = await getArchivedPageData(locale, slug)
+
     return {
       props: {
         preview: false,

@@ -107,7 +107,6 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.required().max(1),
     },
     {
       name: 'image',

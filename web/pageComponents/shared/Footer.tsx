@@ -171,7 +171,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
       </FooterTop>
       <FooterBottom>
         {/*  @TODO How should we do this */}
-        <CompanyName>Copyright 2021 Equinor ASA</CompanyName>
+        <CompanyName>Copyright 2022 Equinor ASA</CompanyName>
       </FooterBottom>
     </StyledFooter>
   )

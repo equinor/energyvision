@@ -11,6 +11,8 @@ on:
       - '!web/.gitignore'
       - '!web/jest.config.js'
       - '!web/jest.setup.ts'
+      - 'satellites.json'
+      - 'satellitesConfig.js'
   repository_dispatch:
     types: [sanity_publish]
 jobs:
@@ -72,9 +74,16 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
   read-satellites:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -84,6 +93,11 @@ jobs:
         run: |
           MATRIX=$(cat satellites.json)
           echo ::set-output name=matrix::${MATRIX}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
   deploy-satellites:
     needs: [deploy-global, read-satellites]
@@ -104,3 +118,8 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

@@ -20,6 +20,8 @@ tasks:
     init: gp sync-await install
     command: pnpm web test
     openMode: split-right
+  - name: Get proxied localhost url
+    command: gp env NEXT_PUBLIC_LOCALHOST=$(gp url 3000)
 
 ports:
   - port: 3000
@@ -43,3 +45,4 @@ vscode:
     - dbaeumer.vscode-eslint
     - pflannery.vscode-versionlens
     - jpoissonnier.vscode-styled-components
+    - jock.svg

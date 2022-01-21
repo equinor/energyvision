@@ -59,6 +59,8 @@ import subscribeForm from './objects/subscribeForm'
 import contactList from './objects/contactList'
 import eventDate from './objects/eventDate'
 import table from './objects/table'
+import simpleMenuGroup from './objects/simpleMenuGroup'
+import simpleMenuLink from './objects/simpleMenuLink'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -125,5 +127,7 @@ export default createSchema({
     assetFile,
     assetTag,
     simpleMenu,
+    simpleMenuGroup,
+    simpleMenuLink,
   ]),
 })

@@ -49,10 +49,11 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const locale = getIsoFromLocale(router.locale)
 
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
+  const isLocalhost = !!process.env.NEXT_PUBLIC_LOCALHOST
 
   useEffect(() => {
     if (window.self === window.top) {
-      window.Cookiebot.runScripts()
+      window.Cookiebot?.runScripts()
     }
   }, [router.asPath])
 
@@ -66,14 +67,16 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
         <SkipNavLink />
         {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
-        <Script
-          src="https://consent.cookiebot.com/uc.js"
-          id="Cookiebot"
-          data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-          strategy="beforeInteractive"
-          data-blockingmode="auto"
-          data-culture={router.locale == 'no' ? 'nb' : router.locale}
-        ></Script>
+        {!isLocalhost && (
+          <Script
+            src="https://consent.cookiebot.com/uc.js"
+            id="Cookiebot"
+            data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+            strategy="beforeInteractive"
+            data-blockingmode="auto"
+            data-culture={router.locale == 'no' ? 'nb' : router.locale}
+          />
+        )}
         {getLayout(<Component {...pageProps} />)}
       </IntlProvider>
     </>

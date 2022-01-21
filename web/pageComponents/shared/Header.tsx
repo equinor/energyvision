@@ -2,17 +2,15 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { Topbar, Button, LogoSecondary } from '@components'
+import { Topbar, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/SimpleSiteMenu'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
-import { outlineTemplate, Tokens } from '@utils'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
-
-const { outline } = Tokens
+import { LogoLink } from './LogoLink'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -32,35 +30,18 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   grid-column-gap: var(--space-large);
   column-gap: var(--space-large);
 `
-
-const StyledLogoLink = styled.a`
+const LogoLinkInGrid = styled(LogoLink)`
   grid-area: logo;
-  justify-self: left;
-  display: flex;
-  height: 100%;
-  align-items: center;
-
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-
-  > svg {
-    margin-top: -12%;
-  }
 `
 
 const ControlsContainer = styled.div`
-  grid-area: menu;
   justify-self: right;
-  display: grid;
-  grid-template-columns: repeat(3, min-content);
-  grid-column-gap: var(--space-small);
-  column-gap: var(--space-small);
   align-items: center;
+  display: flex;
+  gap: var(--space-small);
 
   @media (min-width: 600px) {
-    grid-column-gap: var(--space-medium);
-    column-gap: var(--space-medium);
+    gap: var(--space-medium);
   }
 `
 
@@ -87,14 +68,8 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
       <TopbarOffset />
 
       <Topbar>
-        {/* @TODO: Localize strings */}
         <TopbarContainer>
-          <NextLink href="/" passHref>
-            <StyledLogoLink aria-label="Equinor home page">
-              <LogoSecondary />
-            </StyledLogoLink>
-          </NextLink>
-
+          <LogoLinkInGrid />
           <ControlsContainer>
             {/* @TODO: search page */}
             <NextLink href="/" passHref>
@@ -104,9 +79,17 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
             </NextLink>
 
             {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
-
-            {isGlobal === true && menuData && <SiteMenu data={menuData} />}
-            {isGlobal === false && simpleMenuData && <SimpleSiteMenu data={simpleMenuData} />}
+            {isGlobal
+              ? menuData && (
+                  <div>
+                    <SiteMenu data={menuData} />
+                  </div>
+                )
+              : simpleMenuData && (
+                  <div>
+                    <SimpleSiteMenu data={simpleMenuData} />
+                  </div>
+                )}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>

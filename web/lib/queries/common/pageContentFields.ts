@@ -162,7 +162,7 @@ const pageContentFields = /* groq */ `
     title,
     frameTitle,
     url,
-    cookiePolicy,
+    "cookiePolicy": coalesce(cookiePolicy, 'none'),
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       "background": coalesce(background.title, 'none'),

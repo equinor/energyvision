@@ -5,11 +5,12 @@ import { useWindowSize } from '@reach/window-size'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
-import { MenuButton } from '@components'
+import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
+import NextLink from 'next/link'
 
 import { TopbarDropdown } from './TopbarDropdown'
-
+import { LogoLink } from '../LogoLink'
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
 
@@ -18,9 +19,28 @@ const MenuContainer = styled.div`
   padding: 0 var(--space-large);
 `
 
+const MenuLink = styled(Link)`
+  padding: calc(var(--space-small) + var(--space-small)) 0;
+  svg {
+    display: none;
+  }
+  &:hover {
+    background-color: var(--grey-10);
+  }
+`
+
 export type MenuProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function getLink(linkData: any) {
+  // Fallback to home page, if this happens it is an error somewhere
+  // Sanity should take care of the validation here, and this is temp. until
+  // the static pages are migrated
+  if (!linkData) return 'something-wrong'
+
+  return (linkData && linkData.slug) || '/'
 }
 
 const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
@@ -80,12 +100,23 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
+                <LogoLink />
                 <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
                 <SimpleMenuWrapper index={indices} onChange={toggleItem}>
                   {menuItems?.groups?.map((item: any, idx: number) => {
-                    return <SimpleMenuItem topLevelItem={item} key={item.id} index={idx} />
+                    if (item?.type === 'simpleMenuGroup') {
+                      return <SimpleMenuItem item={item} key={item.id} index={idx} />
+                    } else if (item?.type === 'simpleMenuLink') {
+                      return (
+                        <li key={item.id}>
+                          <NextLink href={getLink(item.link)} passHref>
+                            <MenuLink variant="contentLink"> {item.label} </MenuLink>
+                          </NextLink>
+                        </li>
+                      )
+                    }
                   })}
                 </SimpleMenuWrapper>
               </MenuContainer>

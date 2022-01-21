@@ -9,7 +9,7 @@ const StyledNavTopbar = styled.div`
   padding: var(--space-small) var(--layout-paddingHorizontal-small);
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: space-between;
 `
 
 type Props = {

@@ -12,16 +12,18 @@ import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
 
+import { LogoLink } from '../LogoLink'
+
 import type { MenuData, SubMenuData } from '../../../types/types'
 
 /* This is not finalized */
 const AllSitesLink = styled(Link)`
+  text-decoration: none;
   display: none;
   @media (min-width: 1300px) {
     display: inline-flex;
     border-left: 2px solid var(--white-100);
     padding: var(--space-large) var(--space-large);
-    text-decoration: none;
   }
 `
 
@@ -88,6 +90,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
+                <LogoLink />
                 {/*  @TODO: Translations of string */}
                 <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>

@@ -13,6 +13,8 @@ const languages = [
   { id: 'norwegian', title: 'Norwegian', iso: 'nb-NO', name: 'nb_NO', locale: 'no' },
   { id: 'portuguese', title: 'Portuguese (BR)', iso: 'pt-BR', name: 'pt_BR', locale: 'pt' },
   { id: 'german', title: 'German', iso: 'de-DE', name: 'de_DE', locale: 'de' },
+  { id: 'spanish-ar', title: 'Spanish', iso: 'es-AR', name: 'es_AR', locale: 'es' },
+  { id: 'english-ar', title: 'English', iso: 'en-AR', name: 'en_AR', locale: 'en' },
 ]
 
 /*
@@ -30,9 +32,11 @@ const languages = [
 const datasets = {
   // Leave this as is for now. Should be replaced by development for global
   production: ['english', 'norwegian'],
+  // The  equinor.com dataset
   global: ['english', 'norwegian'],
   brazil: ['portuguese'],
   germany: ['german'],
+  argentina: ['spanish-ar', 'english-ar'],
 }
 
 const filterLanguages = (dataset) => languages.filter((lang) => dataset.includes(lang.id))

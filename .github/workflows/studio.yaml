@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'studio/**/*'
+      - 'satellites.json'
+      - 'satellitesConfig.js'
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -54,15 +56,23 @@ jobs:
 
   read-satellites:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-        - uses: actions/checkout@v2
-        - id: set-matrix
-          name: Read from satellites.json
-          run: |
-            MATRIX=$(cat satellites.json)
-            echo ::set-output name=matrix::${MATRIX}
+      - uses: actions/checkout@v2
+      - id: set-matrix
+        name: Read from satellites.json
+        run: |
+          MATRIX=$(cat satellites.json)
+          echo ::set-output name=matrix::${MATRIX}
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
   deploy-satellites:
     needs: [deploy, read-satellites]
@@ -85,4 +95,9 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
 
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 

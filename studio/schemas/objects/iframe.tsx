@@ -65,15 +65,6 @@ export const FilteredIFrame = ({
         collapsed: false,
       },
     },
-    {
-      title: 'Call to action / link',
-      name: 'link',
-      description: 'If you need a separate link, you may add it here //Work in progress',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
-    },
   ],
   fields: [
     {
@@ -94,9 +85,11 @@ export const FilteredIFrame = ({
     },
     {
       name: 'action',
-      type: 'linkSelector',
-      title: 'Call to action',
-      fieldset: 'link',
+      title: 'Link/action',
+      description: 'If you need a separate link, you may add it here //Work in progress',
+      type: 'array',
+      of: [{ type: 'linkSelector', title: 'Link' }],
+      validation: (Rule: Rule) => Rule.max(1),
     },
     {
       name: 'frameTitle',
