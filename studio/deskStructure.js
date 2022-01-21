@@ -196,11 +196,11 @@ export default () => {
           }),
       ),
     S.divider(),
-    S.listItem()
-      .title('Home Page')
-      .icon(TopicDocuments)
-      .child(() => S.list('homepage').id('homepage').title('Homepages').items(homepages)),
-    S.divider(),
+    // S.listItem()
+    //   .title('Home Page')
+    //   .icon(TopicDocuments)
+    //   .child(() => S.list('homepage').id('homepage').title('Homepages').items(homepages)),
+    // S.divider(),
     parentChild('route'),
     S.divider(),
     S.listItem().title('Menu').icon(MenuIcon).child(S.list('menu').id('menu').title('Menus').items(menus)),
