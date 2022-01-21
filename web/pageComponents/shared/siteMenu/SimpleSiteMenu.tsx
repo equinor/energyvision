@@ -110,8 +110,8 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       return <SimpleMenuItem item={item} key={item.id} index={idx} />
                     } else if (item?.type === 'simpleMenuLink') {
                       return (
-                        <li>
-                          <NextLink href={getLink(item.link)} key={item.id} passHref>
+                        <li key={item.id}>
+                          <NextLink href={getLink(item.link)} passHref>
                             <MenuLink variant="contentLink"> {item.label} </MenuLink>
                           </NextLink>
                         </li>
