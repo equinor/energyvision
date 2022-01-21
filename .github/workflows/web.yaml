@@ -81,7 +81,7 @@ jobs:
         if: failure()
 
   deploy-vnys:
-    needs: deploy_global
+    needs: deploy-global
     runs-on: ubuntu-latest
     strategy:
       matrix:
