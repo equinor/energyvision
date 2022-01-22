@@ -9,6 +9,8 @@ spec:
         from: main
     - name: test
     - name: vnys
+      build:
+        from: main
   components:
     - name: web
       publicPort: http
@@ -30,6 +32,21 @@ spec:
           variables:
             BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
             BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
+        - environment: vnys
+          resources:
+            requests:
+              memory: '512Mi'
+              cpu: '100m'
+            limits:
+              memory: '1Gi'
+              cpu: '2000m'
+          imageTagName: main-latest
+          variables:
+            BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+            BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
+            NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY: true
+            NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT: true
+            NEXT_PUBLIC_LOCALHOST: 'https://web-energyvision-vnys.radix.equinor.com'
       variables:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
