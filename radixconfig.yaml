@@ -8,6 +8,7 @@ spec:
       build:
         from: main
     - name: test
+    - name: vnys
   components:
     - name: web
       publicPort: http
