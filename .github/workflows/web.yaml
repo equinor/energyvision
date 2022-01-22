@@ -80,31 +80,6 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-vnys:
-    needs: deploy_global
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dataset: ['production']
-    env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - id: deploy-global
-        uses: ./.github/workflows/deploy-websites/
-        with:
-          imageName: ghcr.io/equinor/energyvision/web-vnys
-          datasetName: ${{ matrix.dataset }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
   read-satellites:
     runs-on: ubuntu-latest
     env:
