@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Topbar, Button } from '@components'
@@ -35,13 +35,17 @@ const LogoLinkInGrid = styled(LogoLink)`
 `
 
 const ControlsContainer = styled.div`
+  grid-area: menu;
   justify-self: right;
+  display: grid;
+  grid-template-columns: repeat(var(--columns), min-content);
+  grid-column-gap: var(--space-small);
+  column-gap: var(--space-small);
   align-items: center;
-  display: flex;
-  gap: var(--space-small);
 
   @media (min-width: 600px) {
-    gap: var(--space-medium);
+    grid-column-gap: var(--space-medium);
+    column-gap: var(--space-medium);
   }
 `
 
@@ -70,15 +74,14 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
       <Topbar>
         <TopbarContainer>
           <LogoLinkInGrid />
-          <ControlsContainer>
+          <ControlsContainer style={{ '--columns': slugs?.length > 1 ? 3 : 2 } as CSSProperties}>
             {/* @TODO: search page */}
             <NextLink href="/" passHref>
               <StyledButton variant="ghost_icon" href="" aria-label="Search">
                 <Icon size={32} data={search} />
               </StyledButton>
             </NextLink>
-
-            {slugs?.length > 0 && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
+            <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />
             {isGlobal
               ? menuData && (
                   <div>
