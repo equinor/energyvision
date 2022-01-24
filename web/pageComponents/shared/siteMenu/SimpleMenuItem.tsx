@@ -5,8 +5,9 @@ import { Link, List, Menu } from '@components'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
 import { SubMenuGroupList } from './SubMenuGroup'
+import { SimpleSubMenuGroups } from '../simpleSiteMenu/SimpleSubMenuGroups'
 
-const { SubMenu, SubMenuGroups } = Menu
+const { SubMenu } = Menu
 const { Item } = List
 
 const StyledItem = styled(Item)``
@@ -57,7 +58,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
       {label && <SimpleSubMenuHeader> {label}</SimpleSubMenuHeader>}
       <SimplePanel>
         <div>
-          <SubMenuGroups>
+          <SimpleSubMenuGroups>
             {readMoreLink && (
               <NextLink href={getLink(readMoreLink)} passHref>
                 <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
@@ -72,7 +73,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
                 </StyledItem>
               ))}
             </SubMenuGroupList>
-          </SubMenuGroups>
+          </SimpleSubMenuGroups>
         </div>
       </SimplePanel>
     </SimpleSubMenu>
