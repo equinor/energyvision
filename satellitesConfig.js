@@ -24,7 +24,7 @@ const languages = [
   Example:
     norway: ['norwegian', 'english']
   Norwegian will be the default language for the dataset norway.
-  
+
   In Sanity Norwegian will be the base language and English a translation of that
   In Next.js, the Norwegian version will be available as [site]/no and [site] where Next.js will
   redirect /no to /
@@ -41,6 +41,14 @@ const datasets = {
 
 const filterLanguages = (dataset) => languages.filter((lang) => dataset.includes(lang.id))
 
-const getLanguages = (dataset) => filterLanguages(datasets[dataset])
+const logAndFallback = (dataset) => {
+  console.error(`Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`)
+  return filterLanguages(Object.values(datasets)[0])
+}
+
+const getLanguages = (dataset) =>
+  Object.keys(datasets).some((name) => name === dataset)
+    ? filterLanguages(datasets[dataset])
+    : logAndFallback(dataset)
 
 module.exports = getLanguages
