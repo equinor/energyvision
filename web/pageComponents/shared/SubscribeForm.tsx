@@ -1,4 +1,4 @@
-import type { SubscribeFormParmeters, SubscribeFormData } from '../../types/types'
+import type { SubscribeFormParameters, SubscribeFormData } from '../../types/types'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
@@ -77,7 +77,7 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
   const router = useRouter()
   const onSubmit = async (data: FormValues) => {
     const allCategories = data.categories.includes('all')
-    const subscribeFormParamers: SubscribeFormParmeters = {
+    const subscribeFormParamers: SubscribeFormParameters = {
       firstName: data.firstName,
       email: data.email,
       crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),

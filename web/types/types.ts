@@ -421,7 +421,7 @@ export type LoginResult = {
   instId: string
 }
 
-export type SubscribeFormParmeters = {
+export type SubscribeFormParameters = {
   firstName: string
   email: string
   crudeOilAssays?: boolean

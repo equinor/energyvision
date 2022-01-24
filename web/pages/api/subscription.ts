@@ -1,6 +1,6 @@
 import soapRequest from 'easy-soap-request'
 import * as xml2js from 'xml2js'
-import { LoginResult, SubscribeFormParmeters, NewsDistributionParameters } from '../../types/types'
+import { LoginResult, SubscribeFormParameters, NewsDistributionParameters } from '../../types/types'
 
 const subscriptionUrl = process.env.BRANDMASTER_EMAIL_SUBSCRIPTION_URL || ''
 const authenticationUrl = process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || ''
@@ -39,7 +39,7 @@ const authenticate = async () => {
   return { apiSecret, instId }
 }
 
-const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParmeters) => {
+const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParameters) => {
   const additionalParameters = `
   {
     "stock_market": "${formParameters.stockMarketAnnouncements ? 'Y' : 'N'}",
@@ -68,8 +68,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
   return response.statusCode == 200
 }
 
-const createDistributeRequest = async (loginResult: LoginResult,parameters: NewsDistributionParameters) => {
-  
+const createDistributeRequest = async (loginResult: LoginResult, parameters: NewsDistributionParameters) => {
   const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL>${parameters.link}</newsURL><newsType>${parameters.newsType}</newsType><language>${parameters.languageCode}</language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
   const { response } = await soapRequest({
     url: subscriptionUrl,
@@ -80,16 +79,15 @@ const createDistributeRequest = async (loginResult: LoginResult,parameters: News
   return response.statusCode == 200
 }
 
-export const signUp = async (formParameters: SubscribeFormParmeters) => {
+export const signUp = async (formParameters: SubscribeFormParameters) => {
   console.log(formParameters)
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createSignUpRequest(loginResult, formParameters)
   else return false
 }
 
-export const distribute = async (parameters:NewsDistributionParameters) => {
+export const distribute = async (parameters: NewsDistributionParameters) => {
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createDistributeRequest(loginResult, parameters)
   else return false
 }
-
