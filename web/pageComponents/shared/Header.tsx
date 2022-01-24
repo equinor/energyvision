@@ -81,7 +81,7 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
                 <Icon size={32} data={search} />
               </StyledButton>
             </NextLink>
-            <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />
+            {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
             {isGlobal
               ? menuData && (
                   <div>
