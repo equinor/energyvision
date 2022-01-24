@@ -114,6 +114,11 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
       },
     ],
+    options: {
+      modal: {
+        width: 'medium',
+      },
+    },
   }
 
   const attachmentConfig = {
