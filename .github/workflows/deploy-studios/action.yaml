@@ -10,6 +10,10 @@ inputs:
   githubToken:
     description: 'GitHub token'
     required: true
+  sanityPreviewToken:
+    description: 'Sanity Preview token'
+    required: true
+
 outputs:
   copied-files:
     description: 'Number of files copied'
