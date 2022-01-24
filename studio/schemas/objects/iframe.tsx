@@ -19,6 +19,14 @@ const descriptionContentType = configureBlockContent({
   attachment: false,
 })
 
+const ingressContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  attachment: false,
+})
+
 export type IFrame = {
   _type: 'iframe'
   title?: Block[]
@@ -74,6 +82,13 @@ export const FilteredIFrame = ({
       description: 'The (optional) title/heading shown above the iframe.',
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
+    },
+    {
+      name: 'ingress',
+      title: 'Ingress',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [ingressContentType],
     },
     {
       name: 'description',
