@@ -179,7 +179,7 @@ export type TeaserData = {
   text: PortableTextEntry[]
   overline?: string
   image: ImageWithAlt
-  action: LinkData
+  action?: LinkData
   designOptions: DesignOptions
 }
 export type TableData = {

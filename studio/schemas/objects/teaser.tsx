@@ -44,7 +44,7 @@ export type Teaser = {
   overline?: string
   title?: Block[]
   text?: Block[]
-  action: (LinkSelector | DownloadableFile | DownloadableImage)[]
+  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   image: ImageWithAlt
   imagePosition?: string
   imageSize?: string
