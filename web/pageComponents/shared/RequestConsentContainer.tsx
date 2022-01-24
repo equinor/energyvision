@@ -39,6 +39,8 @@ const CookieHeader = styled.div`
 const Icon = styled.div`
   grid-area: icon;
   padding: 0 var(--space-medium);
+  /* Firefox has a bug related to grids, svg and the width of a div */
+  width: max-content;
 `
 
 const SVG = styled.svg`
