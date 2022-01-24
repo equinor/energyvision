@@ -10,6 +10,12 @@ import { SimpleSubMenuGroups } from '../simpleSiteMenu/SimpleSubMenuGroups'
 const { SubMenu } = Menu
 const { Item } = List
 
+const SimpleSubMenuGroupList = styled(SubMenuGroupList)`
+  @media (min-width: 1300px) {
+    max-width: 20rem;
+  }
+`
+
 const StyledItem = styled(Item)``
 
 const SimpleSubMenuHeader = styled(SimpleHeader)``
@@ -64,7 +70,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
                 <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
               </NextLink>
             )}
-            <SubMenuGroupList aria-label={label} unstyled>
+            <SimpleSubMenuGroupList aria-label={label} unstyled>
               {links?.map((link: any) => (
                 <StyledItem key={link.id}>
                   <NextLink href={getLink(link)} passHref>
@@ -72,7 +78,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
                   </NextLink>
                 </StyledItem>
               ))}
-            </SubMenuGroupList>
+            </SimpleSubMenuGroupList>
           </SimpleSubMenuGroups>
         </div>
       </SimplePanel>
