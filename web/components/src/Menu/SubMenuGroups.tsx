@@ -6,8 +6,6 @@ export type SubMenuGroupsProps = HTMLAttributes<HTMLDivElement>
 const StyledSubMenuGroups = styled.div`
   padding-bottom: var(--spacing-large);
   @media (min-width: 1300px) {
-    /* display: flex;
-    flex-wrap: wrap; */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(8em, 11rem));
     grid-template-rows: repeat(2, min-content);
