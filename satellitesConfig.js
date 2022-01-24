@@ -15,6 +15,7 @@ const languages = [
   { id: 'german', title: 'German', iso: 'de-DE', name: 'de_DE', locale: 'de' },
   { id: 'spanish-ar', title: 'Spanish', iso: 'es-AR', name: 'es_AR', locale: 'es' },
   { id: 'english-ar', title: 'English', iso: 'en-AR', name: 'en_AR', locale: 'en' },
+  { id: 'polish', title: 'Polish', iso: 'pl-PL', name: 'pl_PL', locale: 'pl' },
 ]
 
 /*
@@ -37,18 +38,19 @@ const datasets = {
   brazil: ['portuguese'],
   germany: ['german'],
   argentina: ['spanish-ar', 'english-ar'],
+  poland: ['polish'],
 }
 
 const filterLanguages = (dataset) => languages.filter((lang) => dataset.includes(lang.id))
 
 const logAndFallback = (dataset) => {
-  console.error(`Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`)
+  console.error(
+    `Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`,
+  )
   return filterLanguages(Object.values(datasets)[0])
 }
 
 const getLanguages = (dataset) =>
-  Object.keys(datasets).some((name) => name === dataset)
-    ? filterLanguages(datasets[dataset])
-    : logAndFallback(dataset)
+  Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
 
 module.exports = getLanguages
