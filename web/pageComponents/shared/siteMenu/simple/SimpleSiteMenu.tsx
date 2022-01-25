@@ -3,7 +3,6 @@
 import { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import { useWindowSize } from '@reach/window-size'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
@@ -16,7 +15,6 @@ import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
 import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
-import { useCompare } from '../hooks/useCompare'
 
 const MenuContainer = styled.div`
   background-color: transparent;
@@ -39,7 +37,6 @@ export type MenuProps = {
 
 const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
-  const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
   const menuItems = (data && data.groups) || []
