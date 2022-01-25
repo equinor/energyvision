@@ -137,7 +137,7 @@ export const FilteredIFrame = ({
     {
       name: 'description',
       title: 'Description/caption',
-      description: `Here you can write a short description of the iframe's content. This text will show up as a caption text right below the iframe.`,
+      description: `Here you can write a short description of the iframes content. This text will show up as a caption text right below the iframe.`,
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [descriptionContentType],

@@ -13,7 +13,7 @@ import { getNameFromLocale } from '../../../lib/localization'
 import styled from 'styled-components'
 import Header from '../../../pageComponents/shared/Header'
 import { Layout } from '../../../pageComponents/shared/Layout'
-import type { MenuData } from '../../../types/types'
+import type { MenuData, SimpleMenuData } from '../../../types/types'
 import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 
 import { default as NextLink } from 'next/link'
@@ -27,9 +27,9 @@ const Container = styled.div`
 
 type AllArchivedNewsProps = {
   data: {
+    // @TODO: We should be able to add types for this as we use more types for Sanity now
     newsList: any
-    menuData?: MenuData
-    simpleMenuData?: any
+    menuData?: MenuData | SimpleMenuData
   }
 }
 
@@ -96,7 +96,7 @@ AllArchivedNews.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData}>
-      <Header slugs={newsSlugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData || {}} />
+      <Header slugs={newsSlugs} menuData={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>

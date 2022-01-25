@@ -21,6 +21,7 @@ const MenuContainer = styled.div`
   padding: 0 var(--space-large);
 `
 
+// TODO: This needs to be looked at. Not optimal solution.
 const MenuLink = styled(Link)`
   padding: calc(var(--space-small) + var(--space-small)) 0;
   svg {

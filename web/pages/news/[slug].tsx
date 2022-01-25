@@ -13,7 +13,7 @@ import { newsQuery, newsSlugsQuery, queryLocalizedNewsById } from '../../lib/que
 import { sanityClient, getClient } from '../../lib/sanity.server'
 import { filterDataToSingleItem } from '../../lib/filterDataToSingleItem'
 import NewsBlockContent from '../../common/NewsBlockContent'
-import { menuQuery } from '../../lib/queries/menu'
+import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
 import { footerQuery } from '../../lib/queries/footer'
 import HeroImage from '../../pageComponents/shared/HeroImage'
 import Lead from '../../pageComponents/shared/Lead'
@@ -28,7 +28,7 @@ import { getNameFromLocale } from '../../lib/localization'
 import IFrame from '../../pageComponents/shared/IFrame'
 import { SkipNavContent } from '@reach/skip-nav'
 import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
-import { hasNews } from '../../common/helpers/datasetHelpers'
+import { hasNews, isGlobal } from '../../common/helpers/datasetHelpers'
 import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
 
 const { publicRuntimeConfig } = getConfig()
@@ -316,7 +316,7 @@ News.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <PageHeader slugs={slugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData || {}} />
+      <PageHeader slugs={slugs} menuData={data?.menuData} />
 
       <SkipNavContent />
       {page}
@@ -335,9 +335,10 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const newsData = filterDataToSingleItem(news, preview) || null
 
   const allSlugs = await getLocalizedNewsSlugs(news, preview)
-  // Let's do it simple stupid and iterate later on
-  const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
+
+  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
 
   return {
@@ -348,8 +349,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         latestNews,
         slugs: allSlugs,
         menuData,
-        simpleMenuData,
-
         footerData,
       },
     },

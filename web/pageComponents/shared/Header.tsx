@@ -55,12 +55,11 @@ const StyledButton = styled(Button)`
 `
 
 export type HeaderProps = {
-  menuData?: MenuData
-  simpleMenuData?: SimpleMenuData
+  menuData?: MenuData | SimpleMenuData
   slugs: AllSlugsType
 }
 
-const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
+const Header = ({ slugs, menuData }: HeaderProps) => {
   const router = useRouter()
 
   const localization = {
@@ -82,17 +81,16 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
               </StyledButton>
             </NextLink>
             {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
-            {isGlobal
-              ? menuData && (
-                  <div>
-                    <SiteMenu data={menuData} />
-                  </div>
-                )
-              : simpleMenuData?.groups && (
-                  <div>
-                    <SimpleSiteMenu data={simpleMenuData} />
-                  </div>
-                )}
+
+            {menuData && isGlobal ? (
+              <div>
+                <SiteMenu data={menuData as MenuData} />
+              </div>
+            ) : (
+              <div>
+                <SimpleSiteMenu data={menuData as SimpleMenuData} />
+              </div>
+            )}
           </ControlsContainer>
         </TopbarContainer>
       </Topbar>

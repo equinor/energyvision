@@ -9,7 +9,7 @@ import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { sanityClient, getClient } from '../lib/sanity.server'
 import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
-import { menuQuery } from '../lib/queries/menu'
+import { menuQuery as globalMenuQuery } from '../lib/queries/menu'
 import { simpleMenuQuery } from '../lib/queries/simpleMenu'
 import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
@@ -31,6 +31,7 @@ const getValidSlugs = (allSlugs: AllSlugsType) => {
   const validLanguages = languages.map((lang) => lang.name)
   return allSlugs.filter((slug) => validLanguages.includes(slug.lang))
 }
+// @TODO Improve types here, don't use any
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
    */
@@ -99,8 +100,7 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={slugs} menuData={data?.menuData} simpleMenuData={data?.simpleMenuData || {}} />
-      {/*console.log(data?.simpleMenuData) */}
+      <Header slugs={slugs} menuData={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>
@@ -113,9 +113,8 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 
   const pageData = filterDataToSingleItem(data, preview) || null
 
-  // @TODO Let's do it simple stupid and iterate later on
+  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
-  const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
 
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
 
@@ -134,7 +133,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           isArchivedFallback: true,
           pageData: { slug: slug, ...archivedData },
           menuData,
-          simpleMenuData,
           footerData,
         },
       },
@@ -151,7 +149,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         queryParams,
         pageData,
         menuData,
-        simpleMenuData,
         footerData,
       },
     },
