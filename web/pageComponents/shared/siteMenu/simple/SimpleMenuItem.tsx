@@ -4,8 +4,8 @@ import NextLink from 'next/link'
 import { Link, List, Menu } from '@components'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
-import { SubMenuGroupList } from './SubMenuGroup'
-import { SimpleSubMenuGroups } from '../simpleSiteMenu/SimpleSubMenuGroups'
+import { SubMenuGroupList } from '../SubMenuGroup'
+import { SimpleSubMenuGroups } from './SimpleSubMenuGroups'
 
 const { SubMenu } = Menu
 const { Item } = List

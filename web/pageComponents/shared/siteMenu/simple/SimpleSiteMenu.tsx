@@ -1,3 +1,5 @@
+// The simple variant for the menu is used by the satellite sites
+
 import { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
@@ -9,10 +11,10 @@ import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import NextLink from 'next/link'
 
-import { TopbarDropdown } from './TopbarDropdown'
-import { LogoLink } from '../LogoLink'
-import { NavTopbar } from './NavTopbar'
-import { useCompare } from './hooks/useCompare'
+import { TopbarDropdown } from '../TopbarDropdown'
+import { LogoLink } from '../../LogoLink'
+import { NavTopbar } from '../NavTopbar'
+import { useCompare } from '../hooks/useCompare'
 
 const MenuContainer = styled.div`
   background-color: transparent;
