@@ -88,7 +88,7 @@ const Header = ({ slugs, menuData, simpleMenuData }: HeaderProps) => {
                     <SiteMenu data={menuData} />
                   </div>
                 )
-              : simpleMenuData && (
+              : simpleMenuData?.groups && (
                   <div>
                     <SimpleSiteMenu data={simpleMenuData} />
                   </div>
