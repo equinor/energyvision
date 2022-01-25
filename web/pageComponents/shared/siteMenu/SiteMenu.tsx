@@ -36,12 +36,14 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
-  const menuItems = (data && data.subMenus) || []
   const hasWidthChanged = useCompare(width)
+  const DESKTOP_MIN_WIDTH = 1300
+
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
     //setIndices([])
   }, [])
+  const menuItems = (data && data.subMenus) || []
 
   useEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange)
@@ -53,7 +55,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   device and then resize their window size to above the breakpoint for the desktop
   version where only one items is allowed */
     if (hasWidthChanged) {
-      if (width > 1299 && indices.length > 1) setIndices([])
+      if (width >= DESKTOP_MIN_WIDTH && indices.length > 1) setIndices([])
     }
   }, [width, indices.length, hasWidthChanged])
 
@@ -63,7 +65,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
 
   function toggleItem(toggledIndex: number) {
     // @TODO Mobile or desktop first
-    if (width && width > 1299) {
+    if (width && width >= DESKTOP_MIN_WIDTH) {
       // This menu item is  open, so let's close the menu by removing it from the list
       if (indices[0] === toggledIndex) {
         return setIndices([])
