@@ -1,4 +1,3 @@
-import { forwardRef } from 'react'
 import styled from 'styled-components'
 import { Accordion as RAccordion, AccordionProps as RAccordionProps } from '@reach/accordion'
 
@@ -14,7 +13,7 @@ const StyledAccordion = styled(RAccordion)`
   }
 `
 
-export const SimpleMenuWrapper = forwardRef<HTMLUListElement, MenuProps>(function Menu({ children, ...rest }, ref) {
+export const SimpleMenuWrapper = ({ children, ...rest }: RAccordionProps) => {
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: @TODO: Lets look into this at some point
@@ -22,4 +21,4 @@ export const SimpleMenuWrapper = forwardRef<HTMLUListElement, MenuProps>(functio
       {children}
     </StyledAccordion>
   )
-})
+}
