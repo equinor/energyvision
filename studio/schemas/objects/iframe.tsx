@@ -38,11 +38,13 @@ export type IFrame = {
   cookiePolicy: 'none' | 'marketing' | 'statistics'
 }
 
+type FilterOptions = 'description' | 'ingress' | 'background' | 'action'
+
 type FilteredIFrameProps = {
   name?: string
   title?: string
   description?: string
-  filters?: string[]
+  filters?: FilterOptions[]
 }
 
 export const FilteredIFrame = ({
@@ -89,6 +91,7 @@ export const FilteredIFrame = ({
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [ingressContentType],
+      hidden: () => filters.includes('ingress'),
     },
 
     {
@@ -141,6 +144,7 @@ export const FilteredIFrame = ({
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [descriptionContentType],
+      hidden: () => filters.includes('description'),
     },
     {
       name: 'action',
@@ -150,6 +154,7 @@ export const FilteredIFrame = ({
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
       validation: (Rule: Rule) => Rule.max(1),
+      hidden: () => filters.includes('action'),
     },
     {
       name: 'aspectRatio',

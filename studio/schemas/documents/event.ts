@@ -107,7 +107,7 @@ export default {
       name: 'iframe',
       title: 'IFrame',
       description: 'Use this to add an iframe to this event. This could for example be a livestream, video, or map.',
-      filters: ['background'],
+      filters: ['background', 'ingress', 'description', 'action'],
     }),
     {
       title: 'Title',
