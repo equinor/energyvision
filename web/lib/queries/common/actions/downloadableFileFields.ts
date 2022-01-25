@@ -5,6 +5,7 @@ _type == "downloadableFile" => {
     "label": filename,
     "href": fileReference->asset.asset->url,
     "extension": fileReference->asset.asset->extension,
+    "fileName": fileReference->asset.asset->originalFilename
   }
 `
 

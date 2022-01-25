@@ -1,6 +1,13 @@
 import type { LinkData } from '../../types/types'
 
-export const getUrlFromAction = ({ link, href = '', staticUrl = '', type, isStatic }: LinkData): string | false => {
+export const getUrlFromAction = ({
+  link,
+  href = '',
+  staticUrl = '',
+  type,
+  isStatic,
+  fileName,
+}: LinkData): string | false => {
   if (!type && !href && !staticUrl) return false
 
   // @TODO: Remove this when the static AEM content is gone
@@ -17,5 +24,10 @@ export const getUrlFromAction = ({ link, href = '', staticUrl = '', type, isStat
   if (!href) {
     console.warn('Missing external url in action')
   }
+
+  if (type === 'downloadableFile' && fileName) {
+    return href + '?' + fileName.replace(/ /g, '-')
+  }
+
   return href || '/'
 }

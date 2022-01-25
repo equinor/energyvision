@@ -23,6 +23,7 @@ export type LinkData = {
   extension?: string
   isStatic?: boolean
   staticUrl?: string
+  fileName?: string
 }
 
 export type RelatedLinksData = {
