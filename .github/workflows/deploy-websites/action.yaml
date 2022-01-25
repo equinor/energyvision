@@ -10,6 +10,18 @@ inputs:
   githubToken:
     description: 'GitHub token'
     required: true
+  sanityApiToken:
+    description: 'Sanity API token'
+    required: true
+  sanityPreviewSecret:
+    description: 'Sanity Preview Secret'
+    required: true
+  brandmasterEmailClientSecret:
+    description: 'Brandmaster Email Client Secret'
+    required: true
+  brandmasterEmailPassword:
+    description: 'Brandmaster Email Password'
+    required: true
 outputs:
   copied-files:
     description: 'Number of files copied'
@@ -30,10 +42,14 @@ runs:
       run: |
         docker build . \
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG}} \
-          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
+          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
+          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }}
+          --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }}
+          --build-arg ARG_BRANDMASTER_EMAIL_CLIENT_SECRET=${{ inputs.brandmasterEmailClientSecret }}
+          --build-arg ARG_BRANDMASTER_EMAIL_PASSWORD=${{ inputs.BRANDMASTER_EMAIL_PASSWORD }}
     - name: Push the image to GHCR ☁
       shell: bash
       id: push-to-ghcr

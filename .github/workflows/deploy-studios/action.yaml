@@ -13,6 +13,12 @@ inputs:
   sanityPreviewToken:
     description: 'Sanity Preview token'
     required: true
+  brandmasterUrl:
+    description: 'Sanity Studio Brandmaster Url'
+    required: true
+  brandmasterPluginSource:
+    description: 'Sanity Studio Brandmaster Plugin Source'
+    required: true
 
 outputs:
   copied-files:
@@ -39,10 +45,12 @@ runs:
       run: |
         docker build . \
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
-          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
-          --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
+          --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
+          --build-arg ARG_SANITY_STUDIO_PREVIEW_SECRET=${{ inputs.brandmasterUrl }} \
+          --build-arg ARG_SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE=${{ inputs.brandmasterPluginSource }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
     - name: Push the image to GHCR ☁
       id: push-to-ghcr
