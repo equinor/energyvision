@@ -7,7 +7,7 @@ import { SimpleHeader } from './SimpleHeader'
 import { SubMenuGroupList } from '../SubMenuGroup'
 import { SimpleSubMenuGroups } from './SimpleSubMenuGroups'
 
-import type { SimpleMenuLink, SimpleGroupData } from '../../../../types/types'
+import type { SimpleGroupData } from '../../../../types/types'
 
 const { SubMenu } = Menu
 const { Item } = List
@@ -17,8 +17,6 @@ const SimpleSubMenuGroupList = styled(SubMenuGroupList)`
     max-width: 20rem;
   }
 `
-
-const StyledItem = styled(Item)``
 
 const SimpleSubMenuHeader = styled(SimpleHeader)``
 
@@ -40,16 +38,6 @@ const ReadMore = styled(Link)`
   padding: calc(var(--space-small) + var(--space-xSmall)) 0;
 `
 
-function getLink(linkData: SimpleMenuLink) {
-  // Fallback to home page, if this happens it is an error somewhere
-  // Sanity should take care of the validation here, and this is temp. until
-  // the static pages are migrated
-  if (!linkData) return 'something-wrong'
-  const { link } = linkData
-
-  return (link && link.slug) || '/'
-}
-
 type MenuGroupType = {
   item: SimpleGroupData
   index: number
@@ -65,17 +53,17 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
         <div>
           <SimpleSubMenuGroups>
             {readMoreLink && (
-              <NextLink href={getLink(readMoreLink)} passHref>
+              <NextLink href={readMoreLink.link?.slug} passHref>
                 <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
               </NextLink>
             )}
             <SimpleSubMenuGroupList aria-label={label} unstyled>
               {links?.map((link) => (
-                <StyledItem key={link.id}>
-                  <NextLink href={getLink(link)} passHref>
+                <Item key={link.id}>
+                  <NextLink href={link?.link?.slug} passHref>
                     <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
                   </NextLink>
-                </StyledItem>
+                </Item>
               ))}
             </SimpleSubMenuGroupList>
           </SimpleSubMenuGroups>
