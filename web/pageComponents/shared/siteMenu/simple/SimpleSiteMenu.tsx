@@ -11,6 +11,8 @@ import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import NextLink from 'next/link'
 
+import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
+
 import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
@@ -32,17 +34,7 @@ const MenuLink = styled(Link)`
 `
 
 export type MenuProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: any
-}
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function getLink(linkData: any) {
-  // Fallback to home page, if this happens it is an error somewhere
-  // Sanity should take care of the validation here, and this is temp. until
-  // the static pages are migrated
-  if (!linkData) return 'something-wrong'
-
-  return (linkData && linkData.slug) || '/'
+  data?: SimpleMenuData
 }
 
 const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
@@ -50,8 +42,9 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
   const { width } = useWindowSize()
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
-  const menuItems = data || []
+  const menuItems = (data && data.groups) || []
   const hasWidthChanged = useCompare(width)
+
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
   }, [])
@@ -107,13 +100,17 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
               </NavTopbar>
               <MenuContainer>
                 <SimpleMenuWrapper index={indices} onChange={toggleItem}>
-                  {menuItems?.groups?.map((item: any, idx: number) => {
+                  {menuItems?.map((item: SimpleGroupData, idx: number) => {
                     if (item?.type === 'simpleMenuGroup') {
                       return <SimpleMenuItem item={item} key={item.id} index={idx} />
                     } else if (item?.type === 'simpleMenuLink') {
+                      // Is this really necessary?
+                      if (item.link && !item.link.slug) {
+                        console.warn('Missing slug for simple menu link')
+                      }
                       return (
                         <li key={item.id}>
-                          <NextLink href={getLink(item.link)} passHref>
+                          <NextLink href={(item.link && item.link.slug) || '/'} passHref>
                             <MenuLink variant="contentLink"> {item.label} </MenuLink>
                           </NextLink>
                         </li>

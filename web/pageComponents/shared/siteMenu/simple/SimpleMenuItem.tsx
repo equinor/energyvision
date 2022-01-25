@@ -7,6 +7,8 @@ import { SimpleHeader } from './SimpleHeader'
 import { SubMenuGroupList } from '../SubMenuGroup'
 import { SimpleSubMenuGroups } from './SimpleSubMenuGroups'
 
+import type { SimpleMenuLink, SimpleGroupData } from '../../../../types/types'
+
 const { SubMenu } = Menu
 const { Item } = List
 
@@ -38,21 +40,18 @@ const ReadMore = styled(Link)`
   padding: calc(var(--space-small) + var(--space-xSmall)) 0;
 `
 
-function getLink(linkData: any) {
+function getLink(linkData: SimpleMenuLink) {
   // Fallback to home page, if this happens it is an error somewhere
   // Sanity should take care of the validation here, and this is temp. until
   // the static pages are migrated
   if (!linkData) return 'something-wrong'
-  const { isStatic, link, staticUrl } = linkData
-  if (isStatic) {
-    return staticUrl || '/'
-  } else {
-    return (link && link.slug) || '/'
-  }
+  const { link } = linkData
+
+  return (link && link.slug) || '/'
 }
 
 type MenuGroupType = {
-  item: any
+  item: SimpleGroupData
   index: number
 }
 
@@ -71,7 +70,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
               </NextLink>
             )}
             <SimpleSubMenuGroupList aria-label={label} unstyled>
-              {links?.map((link: any) => (
+              {links?.map((link) => (
                 <StyledItem key={link.id}>
                   <NextLink href={getLink(link)} passHref>
                     <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>

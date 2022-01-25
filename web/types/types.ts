@@ -293,6 +293,31 @@ export type MenuData = {
   subMenus: SubMenuData[]
 }
 
+export type SimpleMenuLink = {
+  id?: string
+  label: string
+  link: {
+    slug: string
+    type: string
+  }
+}
+
+export type SimpleGroupData = {
+  id: string
+  label: string
+  type: 'simpleMenuGroup' | 'simpleMenuLink'
+  readMoreLink?: SimpleMenuLink
+  links?: SimpleMenuLink[]
+  link?: {
+    slug: string
+    type: string
+  }
+}
+
+export type SimpleMenuData = {
+  groups: SimpleGroupData[]
+}
+
 export type CookiePolicy = 'none' | 'marketing' | 'statistics'
 
 export type IFrameData = {
