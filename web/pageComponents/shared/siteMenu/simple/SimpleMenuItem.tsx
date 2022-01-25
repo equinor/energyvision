@@ -45,7 +45,7 @@ const StyledSimpleHeader = styled(SimpleHeader)`
   color: green;
 `
 export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
-  const { label = '', links = [], readMoreLink } = item
+  const { label, links = [], readMoreLink } = item
 
   return (
     <SimpleSubMenu id={index}>
