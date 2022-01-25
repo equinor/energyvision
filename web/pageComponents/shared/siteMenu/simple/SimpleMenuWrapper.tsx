@@ -17,7 +17,7 @@ export const SimpleMenuWrapper = ({ children, ...rest }: RAccordionProps) => {
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore: @TODO: Lets look into this at some point
-    <StyledAccordion forwardedAs="ul" ref={ref} {...rest} id="menu-accordion">
+    <StyledAccordion forwardedAs="ul" {...rest} id="menu-accordion">
       {children}
     </StyledAccordion>
   )
