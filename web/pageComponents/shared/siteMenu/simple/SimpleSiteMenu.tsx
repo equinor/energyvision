@@ -58,23 +58,14 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
   }
 
   function toggleItem(toggledIndex: number) {
-    if (width && width > 1299) {
-      // This menu item is  open, so let's close the menu by removing it from the list
-      if (indices[0] === toggledIndex) {
-        return setIndices([])
-      }
-      // Otherwise let's swap the current one with the new
-      setIndices([toggledIndex])
-    } else {
-      // Small devices version
-      if (indices.includes(toggledIndex)) {
-        // This menu item is already open, so let's close it by removing it from the list
-        const expandedItems = indices.filter((currentIndex) => currentIndex !== toggledIndex)
-        return setIndices(expandedItems)
-      }
-      // Otherwise add it to the list
-      setIndices([...indices, toggledIndex])
+    // Small devices version
+    if (indices.includes(toggledIndex)) {
+      // This menu item is already open, so let's close it by removing it from the list
+      const expandedItems = indices.filter((currentIndex) => currentIndex !== toggledIndex)
+      return setIndices(expandedItems)
     }
+    // Otherwise add it to the list
+    setIndices([...indices, toggledIndex])
   }
 
   return (
