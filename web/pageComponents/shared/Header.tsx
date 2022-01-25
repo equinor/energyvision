@@ -4,7 +4,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Topbar, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
-import type { MenuData } from '../../types/types'
+import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Icon } from '@equinor/eds-core-react'
@@ -56,7 +56,7 @@ const StyledButton = styled(Button)`
 
 export type HeaderProps = {
   menuData?: MenuData
-  simpleMenuData?: any
+  simpleMenuData?: SimpleMenuData
   slugs: AllSlugsType
 }
 
