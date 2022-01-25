@@ -154,6 +154,60 @@ spec:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
 
+    - name: web-japan
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-japan:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+          variables:
+            BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+            BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
+      variables:
+        BRANDMASTER_EMAIL_APN_ID: '32'
+        BRANDMASTER_EMAIL_OTY_ID: '114961'
+        BRANDMASTER_EMAIL_PTL_ID: '14414'
+
+    - name: web-storage
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-storage:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+          variables:
+            BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+            BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
+      variables:
+        BRANDMASTER_EMAIL_APN_ID: '32'
+        BRANDMASTER_EMAIL_OTY_ID: '114961'
+        BRANDMASTER_EMAIL_PTL_ID: '14414'
+
+    - name: web-techstars
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-techstars:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+          variables:
+            BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
+            BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
+      variables:
+        BRANDMASTER_EMAIL_APN_ID: '32'
+        BRANDMASTER_EMAIL_OTY_ID: '114961'
+        BRANDMASTER_EMAIL_PTL_ID: '14414'
+
     - name: web-typography
       publicPort: http
       image: ghcr.io/equinor/energyvision/web-production:{imageTagName}
@@ -226,6 +280,39 @@ spec:
     - name: studio-poland
       publicPort: http
       image: ghcr.io/equinor/energyvision/studio-poland:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
+    - name: studio-japan
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-japan:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
+    - name: studio-storage
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-storage:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
+    - name: studio-techstars
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-techstars:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
