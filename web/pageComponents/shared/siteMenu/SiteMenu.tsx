@@ -19,7 +19,15 @@ import type { MenuData, SubMenuData } from '../../../types/types'
 /* This is not finalized */
 const AllSitesLink = styled(Link)`
   text-decoration: none;
-  display: none;
+  color: var(--grey-80);
+
+  @media (max-width: 699px) {
+    margin: var(--space-large) 0 0 0;
+    width: var(--minViewportWidth);
+  }
+  @media (min-width: 700px) and (max-width: 1299px) {
+    margin: var(--space-large) 0 0 var(--menu-paddingHorizontal);
+  }
   @media (min-width: 1300px) {
     display: inline-flex;
     border-left: 2px solid var(--white-100);
