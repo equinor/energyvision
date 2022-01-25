@@ -18,6 +18,10 @@ const StyledItem = styled(Item)`
   }
 `
 
+const PositionedSubMenuPanel = styled(SubMenuPanel)`
+  top: 265px;
+`
+
 const StyledSubMenuGroupLink = styled(Link)`
   display: flex;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
@@ -33,6 +37,7 @@ const StyledSubMenuGroupLink = styled(Link)`
 const ReadMore = styled(Link)`
   padding: calc(var(--space-small) + var(--space-xSmall)) 0;
 `
+
 const TextContainer = styled.div`
   @media (max-width: 1299px) {
     p:last-child {
@@ -83,8 +88,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
   return (
     <SubMenu id={index}>
       <SubMenuHeader> {topLevelLink?.label}</SubMenuHeader>
-      {/* @TODO: Should we allow external links at top level? */}
-      <SubMenuPanel>
+      <PositionedSubMenuPanel>
         <Grid>
           <div>
             <StyledSection>
@@ -132,7 +136,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
           </div>
           {featuredContent && <FeaturedContent data={featuredContent} />}
         </Grid>
-      </SubMenuPanel>
+      </PositionedSubMenuPanel>
     </SubMenu>
   )
 }
