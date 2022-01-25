@@ -18,8 +18,6 @@ const SimpleSubMenuGroupList = styled(SubMenuGroupList)`
   }
 `
 
-const SimpleSubMenuHeader = styled(SimpleHeader)``
-
 const SimpleSubMenu = styled(SubMenu)`
   @media (min-width: 1300px) {
     border-bottom: 1px solid var(--grey-40);
@@ -43,12 +41,15 @@ type MenuGroupType = {
   index: number
 }
 
+const StyledSimpleHeader = styled(SimpleHeader)`
+  color: green;
+`
 export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
   const { label = '', links = [], readMoreLink } = item
 
   return (
     <SimpleSubMenu id={index}>
-      {label && <SimpleSubMenuHeader> {label}</SimpleSubMenuHeader>}
+      {label && <StyledSimpleHeader>{label}</StyledSimpleHeader>}
       <SimplePanel>
         <div>
           <SimpleSubMenuGroups>

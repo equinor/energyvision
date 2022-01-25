@@ -1,10 +1,6 @@
-import { forwardRef, CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import {
-  AccordionButton as RAccordionButton,
-  AccordionButtonProps as RAccordionButtonProps,
-  useAccordionItemContext,
-} from '@reach/accordion'
+import { AccordionButton as RAccordionButton, useAccordionItemContext } from '@reach/accordion'
 import { Icon, Typography, TypographyProps } from '@equinor/eds-core-react'
 import { add, minimize } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
@@ -28,31 +24,18 @@ const StyledButton = styled(RAccordionButton)`
   }
 `
 
-const StyledIcon = styled(Icon)``
-
-const StyledHeader = styled(Typography)``
 const StyledTypography = styled(Typography)`
   font-weight: 400;
 `
 
-export type SubMenuHeaderProps = TypographyProps & RAccordionButtonProps
+type SimpleHeaderProps = TypographyProps
 
-export const SimpleHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(function SubMenuHeader(
-  { children, style, ...rest },
-  ref,
-) {
+export const SimpleHeader = ({ children, ...rest }: SimpleHeaderProps) => {
   const context = useAccordionItemContext()
   const isExpanded = context.isExpanded
   return (
-    <StyledHeader
-      forwardedAs="h2"
-      style={
-        {
-          ...style,
-        } as CSSProperties
-      }
-    >
-      <StyledButton ref={ref} {...rest}>
+    <Typography as="h2" {...rest}>
+      <StyledButton>
         <StyledTypography
           forwardedAs="span"
           style={
@@ -63,8 +46,8 @@ export const SimpleHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(fu
         >
           {children}
         </StyledTypography>
-        {isExpanded ? <StyledIcon data={minimize} /> : <StyledIcon data={add} />}
+        {isExpanded ? <Icon data={minimize} /> : <Icon data={add} />}
       </StyledButton>
-    </StyledHeader>
+    </Typography>
   )
-})
+}
