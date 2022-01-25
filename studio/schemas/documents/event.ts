@@ -79,12 +79,7 @@ export default {
       of: [titleContentType],
       validation: (Rule: Rule) => Rule.required(),
     },
-    {
-      title: 'Tags',
-      name: 'tags',
-      type: 'tagReference',
-      description: 'Adds tags to event',
-    },
+
     {
       name: 'location',
       type: 'string',
