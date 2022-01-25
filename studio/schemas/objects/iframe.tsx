@@ -90,22 +90,7 @@ export const FilteredIFrame = ({
       inputComponent: CharCounterEditor,
       of: [ingressContentType],
     },
-    {
-      name: 'description',
-      title: 'Description/caption',
-      description: 'Work in progress: Name this field',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [descriptionContentType],
-    },
-    {
-      name: 'action',
-      title: 'Link/action',
-      description: 'If you need a separate link, you may add it here //Work in progress',
-      type: 'array',
-      of: [{ type: 'linkSelector', title: 'Link' }],
-      validation: (Rule: Rule) => Rule.max(1),
-    },
+
     {
       name: 'frameTitle',
       type: 'string',
@@ -148,6 +133,23 @@ export const FilteredIFrame = ({
       },
       initialValue: 'none',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'description',
+      title: 'Description/caption',
+      description: `Here you can write a short description of the iframe's content. This text will show up as a caption text right below the iframe.`,
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [descriptionContentType],
+    },
+    {
+      name: 'action',
+      title: 'Link/action',
+      description:
+        'You can add one separate link if you need. The link will show up at the bottom of the component, below the iframe, as a button style link.',
+      type: 'array',
+      of: [{ type: 'linkSelector', title: 'Link' }],
+      validation: (Rule: Rule) => Rule.max(1),
     },
     {
       name: 'aspectRatio',
