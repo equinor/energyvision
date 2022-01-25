@@ -160,6 +160,14 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
     title,
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
+    description[]{
+      ...,
+      ${markDefs},
+    },
     frameTitle,
     url,
     "cookiePolicy": coalesce(cookiePolicy, 'none'),
