@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer, FigureCaption } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import CoreIFrame from '../shared/iframe/IFrame'
@@ -19,6 +19,9 @@ const Container = styled.div`
 
 const DescriptionContainer = styled.div`
   margin-top: var(--space-medium);
+`
+const Figure = styled.figure`
+  margin: 0;
 `
 
 const IFrame = ({
@@ -54,24 +57,36 @@ const IFrame = ({
             }}
           />
         )}
-        <CoreIFrame
-          frameTitle={frameTitle}
-          url={url}
-          cookiePolicy={cookiePolicy}
-          aspectRatio={aspectRatio}
-          height={height}
-          hasSectionTitle={!!title}
-        />
-        {description && (
-          <SimpleBlockContent
-            blocks={description}
-            serializers={{
-              types: {
-                block: BlockRenderer,
-              },
-              container: DescriptionContainer,
-            }}
-            renderContainerOnSingleChild
+        {description ? (
+          <Figure>
+            <CoreIFrame
+              frameTitle={frameTitle}
+              url={url}
+              cookiePolicy={cookiePolicy}
+              aspectRatio={aspectRatio}
+              height={height}
+              hasSectionTitle={!!title}
+            />
+            <FigureCaption size="medium">
+              <SimpleBlockContent
+                blocks={description}
+                serializers={{
+                  types: {
+                    block: BlockRenderer,
+                  },
+                  container: DescriptionContainer,
+                }}
+              />
+            </FigureCaption>
+          </Figure>
+        ) : (
+          <CoreIFrame
+            frameTitle={frameTitle}
+            url={url}
+            cookiePolicy={cookiePolicy}
+            aspectRatio={aspectRatio}
+            height={height}
+            hasSectionTitle={!!title}
           />
         )}
         {action && action.label && <ButtonLink action={action} />}

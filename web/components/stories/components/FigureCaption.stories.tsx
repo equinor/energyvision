@@ -21,3 +21,9 @@ export const Default: Story<FigureCaptionProps> = (args) => (
 )
 
 Default.storyName = 'Default'
+
+export const Medium: Story<FigureCaptionProps> = () => (
+  <FigureCaption size="medium">Exciting opportunities abroad Photo: Carl Oscar von der Linné</FigureCaption>
+)
+
+Medium.storyName = 'With larger font size'

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import type { IFrameData } from '../../../types/types'
 import RequestConsentContainer from './RequestConsentContainer'
 
 const IFrameContainer = styled.div<{ aspectRatioPadding: string }>`
