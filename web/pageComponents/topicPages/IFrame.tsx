@@ -24,6 +24,10 @@ const Figure = styled.figure`
   margin: 0;
 `
 
+const StyledButtonLink = styled(ButtonLink)`
+  margin-top: var(--space-large);
+`
+
 const IFrame = ({
   data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action },
   ...rest
@@ -89,7 +93,7 @@ const IFrame = ({
             hasSectionTitle={!!title}
           />
         )}
-        {action && action.label && <ButtonLink action={action} />}
+        {action && action.label && <StyledButtonLink action={action} />}
       </Container>
     </BackgroundContainer>
   )

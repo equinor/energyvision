@@ -3,7 +3,7 @@ import { ButtonLink as Link } from '@components'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import type { LinkData } from '../../types/types'
 
-export const ButtonLink = ({ action }: { action: LinkData }) => {
+export const ButtonLink = ({ action, ...rest }: { action: LinkData }) => {
   const { label, ariaLabel, extension, type, isStatic } = action
 
   const url = getUrlFromAction(action)
@@ -16,13 +16,15 @@ export const ButtonLink = ({ action }: { action: LinkData }) => {
   if (type === 'internalUrl' || isStatic) {
     return (
       <NextLink passHref href={url}>
-        <Link aria-label={ariaLabel}>{label}</Link>
+        <Link aria-label={ariaLabel} {...rest}>
+          {label}
+        </Link>
       </NextLink>
     )
   }
 
   return (
-    <Link href={url} aria-label={ariaLabel}>
+    <Link href={url} aria-label={ariaLabel} {...rest}>
       {label} {extension && `(${extension.toUpperCase()})`}
     </Link>
   )
