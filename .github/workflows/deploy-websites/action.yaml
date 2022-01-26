@@ -36,12 +36,12 @@ runs:
       run: |
         docker build . \
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG}} \
+          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
+          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
+          --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
-          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
-          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }}
-          --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }}
     - name: Push the image to GHCR ☁
       shell: bash
       id: push-to-ghcr
