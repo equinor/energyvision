@@ -1,20 +1,12 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import {
-  TopicDocuments,
-  NewsDocuments,
-  MenuIcon,
-  LibraryIcon,
-  PdfIcon,
-  ExcelIcon,
-  FileIcon,
-  TagMoreIcon,
-} from './icons'
+import { TopicDocuments, NewsDocuments, MenuIcon, LibraryIcon, FileIcon, TagMoreIcon } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import FilePreview from './src/previews/file/filePreview'
 import parentChild from './src/structure/parentChild'
 import assetTagFilters from './src/structure/assetTagFilters'
+import extensionFilters from './src/structure/assetExtensionFilters'
 import * as I18nS from 'sanity-plugin-intl-input/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
@@ -102,28 +94,11 @@ const homepages = languages.map((lang) =>
 
 const AssetLibrary = [
   S.listItem()
-    .title('All files')
+    .title('Show all asset files')
     .icon(FileIcon)
     .child(S.documentTypeList('assetFile').id('allFiles').title('All files')),
   S.divider(),
-  S.listItem()
-    .title('Show all PDF files')
-    .icon(PdfIcon)
-    .child(
-      S.documentTypeList('assetFile')
-        .id('pdfFiles')
-        .title('All PDF files')
-        .filter('_type == "assetFile" && asset.asset->extension == "pdf"'),
-    ),
-  S.listItem()
-    .title('Show all Excel files')
-    .icon(ExcelIcon)
-    .child(
-      S.documentTypeList('assetFile')
-        .id('excelFiles')
-        .title('All Excel files')
-        .filter('_type == "assetFile" && asset.asset->extension in ["xls", "xlsx", "csv"]'),
-    ),
+  extensionFilters(),
   assetTagFilters(),
   S.divider(),
   S.listItem()
