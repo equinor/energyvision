@@ -44,8 +44,11 @@ runs:
       shell: bash
       run: |
         docker build . \
+          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
+          --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
+          --build-arg ARG_BRANDMASTER_PLUGIN=${{ inputs.brandmasterPluginSource }} \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
