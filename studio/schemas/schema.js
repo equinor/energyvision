@@ -47,6 +47,7 @@ import promoTileArray from './objects/promoTileArray'
 import stockValuesApi from './objects/stockValuesApi'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
+import basicIframe from './objects/basicIframe'
 import iframe from './objects/iframe'
 import remitTable from './objects/remitTable'
 import tagReference from './objects/tagReference'
@@ -109,6 +110,7 @@ export default createSchema({
     menuGroup,
     menuLink,
     iframe,
+    basicIframe,
     footer,
     remitTable,
     tag,

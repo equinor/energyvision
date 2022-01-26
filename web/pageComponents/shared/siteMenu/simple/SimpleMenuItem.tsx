@@ -52,7 +52,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
           <List aria-label={label} unstyled>
             {links?.map((link) => (
               <Item key={link.id}>
-                <NextLink href={link?.link?.slug} passHref>
+                <NextLink href={link?.link?.slug || '/'} passHref>
                   <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
                 </NextLink>
               </Item>

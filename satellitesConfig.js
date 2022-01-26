@@ -38,11 +38,12 @@ const datasets = {
   global: ['english', 'norwegian'],
   brazil: ['portuguese'],
   germany: ['german'],
-  argentina: ['english-ar', 'spanish-ar'],
+  argentina: ['spanish-ar', 'english-ar'],
   poland: ['polish'],
   japan: ['english', 'japanese'],
   storage: ['english', 'german'],
   techstars: ['english'],
+  equinorfunds: ['norwegian'],
 }
 
 const filterLanguages = (dataset) => languages.filter((lang) => dataset.includes(lang.id))
