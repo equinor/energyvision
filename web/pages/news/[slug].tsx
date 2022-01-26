@@ -25,7 +25,7 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { CardData, NewsSchema } from '../../types/types'
 import PageHeader from '../../pageComponents/shared/Header'
 import { getNameFromLocale } from '../../lib/localization'
-import IFrame from '../../pageComponents/shared/IFrame'
+import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
 import { SkipNavContent } from '@reach/skip-nav'
 import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 import { hasNews, isGlobal } from '../../common/helpers/datasetHelpers'
@@ -151,7 +151,7 @@ const Latest = styled.div`
   max-width: 1700px;
 `
 
-const StyledIFrame = styled(IFrame)`
+const StyledBasicIFrame = styled(BasicIFrame)`
   margin-top: var(--space-3xLarge);
 `
 
@@ -280,7 +280,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
                 </Content>
               )}
 
-              {iframe && <StyledIFrame data={iframe} />}
+              {iframe && <StyledBasicIFrame data={iframe} />}
 
               {relatedLinks?.links && relatedLinks.links.length > 0 && (
                 <Related>

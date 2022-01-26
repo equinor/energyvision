@@ -3,8 +3,8 @@ import type { IFrameData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
-import RequestConsentContainer from './RequestConsentContainer'
-import { ButtonLink } from './ButtonLink'
+import CoreIFrame from '../shared/iframe/IFrame'
+import { ButtonLink } from '../shared/ButtonLink'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -21,33 +21,8 @@ const DescriptionContainer = styled.div`
   margin-top: var(--space-medium);
 `
 
-const IFrameContainer = styled.div<{ aspectRatioPadding: string }>`
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  padding-bottom: ${({ aspectRatioPadding }) => aspectRatioPadding};
-`
-
-const StyledIFrame = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-`
-
-const calculatePadding = (aspectRatio: string): string => {
-  const ratio = aspectRatio.split(':')
-  const percentage = (parseInt(ratio[1]) / parseInt(ratio[0])) * 100
-
-  return `${percentage}%`
-}
-
 const IFrame = ({
-  data: { title, ingress, description, action, frameTitle, url, cookiePolicy = 'none', designOptions },
+  data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action },
   ...rest
 }: {
   data: IFrameData
@@ -55,9 +30,6 @@ const IFrame = ({
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions
-  const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
-
-  console.log('action', action)
 
   return (
     <BackgroundContainer background={background} {...rest}>
@@ -82,16 +54,14 @@ const IFrame = ({
             }}
           />
         )}
-        <div className={`cookieconsent-optin-${cookiePolicy}`}>
-          <IFrameContainer aspectRatioPadding={containerPadding}>
-            <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
-          </IFrameContainer>
-        </div>
-        {cookiePolicy !== 'none' && (
-          <div className={`cookieconsent-optout-${cookiePolicy}`}>
-            <RequestConsentContainer hasSectionTitle={!!title} />
-          </div>
-        )}
+        <CoreIFrame
+          frameTitle={frameTitle}
+          url={url}
+          cookiePolicy={cookiePolicy}
+          aspectRatio={aspectRatio}
+          height={height}
+          hasSectionTitle={!!title}
+        />
         {description && (
           <SimpleBlockContent
             blocks={description}

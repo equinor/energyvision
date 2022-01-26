@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import getConfig from 'next/config'
 import styled from 'styled-components'
-import IFrame from '../../pageComponents/shared/IFrame'
+import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Lead from '../../pageComponents/shared/Lead'
 
@@ -112,7 +112,7 @@ const StyledPromotion = styled(Promotion)`
   }
 `
 
-const StyledIframe = styled(IFrame)`
+const StyledBasicIFrame = styled(BasicIFrame)`
   --iframe-maxWidth: var(--topbar-innerMaxWidth);
   --iframe-innerPadding: var(--space-3xLarge) 0;
 
@@ -210,7 +210,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             )}
           </ContentWrapper>
 
-          {iframe && <StyledIframe data={iframe} />}
+          {iframe && <StyledBasicIFrame data={iframe} />}
 
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion
