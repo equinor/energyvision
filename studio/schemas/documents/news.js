@@ -146,10 +146,10 @@ export default {
         }),
     },
     {
-      name: 'iframe',
       title: 'IFrame',
+      name: 'iframe',
       description: 'Use this to add an iframe to this article. This could for example be a livestream, video, or map.',
-      type: 'iframe',
+      type: 'basicIframe',
       options: {
         collapsible: true,
         collapsed: true,
