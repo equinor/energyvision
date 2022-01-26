@@ -61,6 +61,13 @@ const LeftAlignedButton = styled(Button)`
   text-align: left;
 `
 
+const StyledText = styled(Text)`
+  /*  We don't want this text to be white even when the background container is dark because the text is still on white background */
+  .inverted-background & {
+    color: var(--default-text);
+  }
+`
+
 type RequestConsentContainerProps = {
   hasSectionTitle?: boolean
 }
@@ -116,11 +123,11 @@ const RequestConsentContainer = ({ hasSectionTitle = true }: RequestConsentConta
         </SVG>
       </Icon>
       <Content>
-        <Text>
+        <StyledText>
           {/* @TODO Add this text in Sanity and translate it */}
           Want the full picture? We’d love to share this content with you, but first you must accept additional cookies
           by enabling them in our cookie settings.
-        </Text>
+        </StyledText>
 
         <LeftAlignedButton
           onClick={() => {
