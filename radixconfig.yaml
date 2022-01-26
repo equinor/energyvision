@@ -146,11 +146,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-typography
       publicPort: http
