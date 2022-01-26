@@ -4,6 +4,7 @@ import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import RequestConsentContainer from './RequestConsentContainer'
+import { ButtonLink } from './ButtonLink'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -46,7 +47,7 @@ const calculatePadding = (aspectRatio: string): string => {
 }
 
 const IFrame = ({
-  data: { title, ingress, description, frameTitle, url, cookiePolicy = 'none', designOptions },
+  data: { title, ingress, description, action, frameTitle, url, cookiePolicy = 'none', designOptions },
   ...rest
 }: {
   data: IFrameData
@@ -55,6 +56,8 @@ const IFrame = ({
 
   const { height, aspectRatio, background } = designOptions
   const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
+
+  console.log('action', action)
 
   return (
     <BackgroundContainer background={background} {...rest}>
@@ -101,6 +104,7 @@ const IFrame = ({
             renderContainerOnSingleChild
           />
         )}
+        {action && action.label && <ButtonLink action={action} />}
       </Container>
     </BackgroundContainer>
   )

@@ -6,6 +6,7 @@ const StyledText = styled(Typography)<{ centered?: boolean }>`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
   /* @TODO: Let's consider to move all the margin woo to the article layout */
+
   margin-bottom: var(--space-medium);
   & + & {
     margin: var(--space-medium) 0;

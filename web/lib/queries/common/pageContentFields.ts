@@ -131,8 +131,8 @@ const pageContentFields = /* groq */ `
       "image": {
         "asset": image.asset,
         "alt": image.alt,
-        },
-        "action": {
+      },
+      "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
         "isStatic": coalesce(link.isStatic, false),
@@ -169,6 +169,9 @@ const pageContentFields = /* groq */ `
       ${markDefs},
     },
     frameTitle,
+    "action": action[0]{
+      ${linkSelectorFields},
+    },
     url,
     "cookiePolicy": coalesce(cookiePolicy, 'none'),
     "designOptions": {
