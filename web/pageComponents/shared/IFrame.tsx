@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer, IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
 import RequestConsentContainer from './RequestConsentContainer'
 
 const StyledHeading = styled(TitleBlockRenderer)`
@@ -14,6 +14,10 @@ const Container = styled.div`
   padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
   max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
   margin: auto;
+`
+
+const DescriptionContainer = styled.div`
+  margin-top: var(--space-medium);
 `
 
 const IFrameContainer = styled.div<{ aspectRatioPadding: string }>`
@@ -42,7 +46,7 @@ const calculatePadding = (aspectRatio: string): string => {
 }
 
 const IFrame = ({
-  data: { title, ingress, frameTitle, url, cookiePolicy = 'none', designOptions },
+  data: { title, ingress, description, frameTitle, url, cookiePolicy = 'none', designOptions },
   ...rest
 }: {
   data: IFrameData
@@ -84,6 +88,18 @@ const IFrame = ({
           <div className={`cookieconsent-optout-${cookiePolicy}`}>
             <RequestConsentContainer hasSectionTitle={!!title} />
           </div>
+        )}
+        {description && (
+          <SimpleBlockContent
+            blocks={description}
+            serializers={{
+              types: {
+                block: BlockRenderer,
+              },
+              container: DescriptionContainer,
+            }}
+            renderContainerOnSingleChild
+          />
         )}
       </Container>
     </BackgroundContainer>

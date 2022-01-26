@@ -325,6 +325,7 @@ export type IFrameData = {
   type?: string
   title?: PortableTextEntry[]
   ingress?: PortableTextEntry[]
+  description?: PortableTextEntry[]
   frameTitle: string
   url: string
   cookiePolicy: CookiePolicy
