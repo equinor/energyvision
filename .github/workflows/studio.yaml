@@ -75,7 +75,7 @@ jobs:
         if: failure()
 
   deploy-satellites:
-    needs: [read-satellites]
+    needs: [deploy, read-satellites]
     runs-on: ubuntu-latest
     strategy:
       matrix:
