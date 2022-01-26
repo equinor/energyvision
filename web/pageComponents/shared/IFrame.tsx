@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
 import RequestConsentContainer from './RequestConsentContainer'
 
 const StyledHeading = styled(TitleBlockRenderer)`
@@ -42,7 +42,7 @@ const calculatePadding = (aspectRatio: string): string => {
 }
 
 const IFrame = ({
-  data: { title, frameTitle, url, cookiePolicy = 'none', designOptions },
+  data: { title, ingress, frameTitle, url, cookiePolicy = 'none', designOptions },
   ...rest
 }: {
   data: IFrameData
@@ -65,7 +65,16 @@ const IFrame = ({
             }}
           />
         )}
-
+        {ingress && (
+          <SimpleBlockContent
+            blocks={ingress}
+            serializers={{
+              types: {
+                block: IngressBlockRenderer,
+              },
+            }}
+          />
+        )}
         <div className={`cookieconsent-optin-${cookiePolicy}`}>
           <IFrameContainer aspectRatioPadding={containerPadding}>
             <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
