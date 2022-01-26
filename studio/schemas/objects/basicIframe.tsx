@@ -1,37 +1,19 @@
-// This version of the iframe is used by Topic Pages
-// It features description, ingress and c2a in addition to the basic iframe fields
+// This version of the iframe is used by the Event and News templates
 
 import React from 'react'
 import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { Colors } from '../../helpers/ColorListValues'
-import { configureTitleBlockContent, configureBlockContent } from '../editors'
+
+import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import CharCounterEditor from '../components/CharCounterEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule, ValidationContext, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const titleContentType = configureTitleBlockContent()
 
-const descriptionContentType = configureBlockContent({
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
-
-const ingressContentType = configureBlockContent({
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
-
 export type IFrame = {
-  _type: 'iframe'
+  _type: 'basicIframe'
   title?: Block[]
   frameTitle: string
   url: string
@@ -42,19 +24,10 @@ export type IFrame = {
 }
 
 export default {
+  name: 'basicIframe',
   title: 'Iframe',
-  name: 'iframe',
   type: 'object',
   fieldsets: [
-    {
-      title: 'Design options',
-      name: 'design',
-      description: 'Some options for design',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
     {
       title: 'IFrame settings',
       name: 'iframe',
@@ -73,13 +46,7 @@ export default {
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
     },
-    {
-      name: 'ingress',
-      title: 'Ingress',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [ingressContentType],
-    },
+
     {
       name: 'frameTitle',
       type: 'string',
@@ -147,41 +114,6 @@ export default {
       description: 'Set a fixed height in pixels for the iframe. Note: this will override the aspect ratio setting.',
       fieldset: 'iframe',
       validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
-    },
-
-    {
-      name: 'description',
-      title: 'Description/caption',
-      description: `Here you can write a short description of the iframes content. This text will show up as a caption text right below the iframe.`,
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [descriptionContentType],
-    },
-    {
-      name: 'action',
-      title: 'Link/action',
-      description:
-        'You can add one separate link if you need. The link will show up at the bottom of the component, below the iframe, as a button style link.',
-      type: 'array',
-      of: [{ type: 'linkSelector', title: 'Link' }],
-      validation: (Rule: Rule) => Rule.max(1),
-    },
-
-    {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
-      fieldset: 'design',
-      initialValue: Colors[0],
     },
   ],
   preview: {
