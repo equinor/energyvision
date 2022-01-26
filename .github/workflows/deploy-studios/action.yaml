@@ -44,7 +44,6 @@ runs:
       shell: bash
       run: |
         docker build . \
-          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
           --build-arg ARG_SANITY_STUDIO_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
