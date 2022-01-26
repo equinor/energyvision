@@ -35,6 +35,9 @@ spec:
         BRANDMASTER_EMAIL_PTL_ID: '14414'
         NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY: false
         NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT: false
+      secrets:
+        - BRANDMASTER_EMAIL_CLIENT_SECRET
+        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-brazil
       publicPort: http

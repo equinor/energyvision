@@ -16,12 +16,6 @@ inputs:
   sanityPreviewSecret:
     description: 'Sanity Preview Secret'
     required: true
-  brandmasterEmailClientSecret:
-    description: 'Brandmaster Email Client Secret'
-    required: true
-  brandmasterEmailPassword:
-    description: 'Brandmaster Email Password'
-    required: true
 outputs:
   copied-files:
     description: 'Number of files copied'
@@ -48,8 +42,6 @@ runs:
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName  }} \
           --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }}
           --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }}
-          --build-arg ARG_BRANDMASTER_EMAIL_CLIENT_SECRET=${{ inputs.brandmasterEmailClientSecret }}
-          --build-arg ARG_BRANDMASTER_EMAIL_PASSWORD=${{ inputs.BRANDMASTER_EMAIL_PASSWORD }}
     - name: Push the image to GHCR ☁
       shell: bash
       id: push-to-ghcr
