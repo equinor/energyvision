@@ -16,6 +16,7 @@ const languages = [
   { id: 'spanish-ar', title: 'Spanish', iso: 'es-AR', name: 'es_AR', locale: 'es' },
   { id: 'english-ar', title: 'English', iso: 'en-AR', name: 'en_AR', locale: 'en' },
   { id: 'polish', title: 'Polish', iso: 'pl-PL', name: 'pl_PL', locale: 'pl' },
+  { id: 'japanese', title: 'Japanese', iso: 'ja-JP', name: 'ja_JP', locale: 'ja' },
 ]
 
 /*
@@ -39,6 +40,9 @@ const datasets = {
   germany: ['german'],
   argentina: ['spanish-ar', 'english-ar'],
   poland: ['polish'],
+  japan: ['english', 'japanese'],
+  storage: ['english', 'german'],
+  techstars: ['english'],
   equinorfunds: ['norwegian'],
 }
 
