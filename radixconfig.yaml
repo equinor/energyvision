@@ -131,7 +131,7 @@ spec:
 
     - name: web-equinorfunds
       publicPort: http
-      image: ghcr.io/equinor/energyvision/equinorfunds:{imageTagName}
+      image: ghcr.io/equinor/energyvision/web-equinorfunds:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
