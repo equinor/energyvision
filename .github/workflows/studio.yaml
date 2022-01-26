@@ -94,7 +94,8 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
-
+          brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+          brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}

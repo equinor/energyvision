@@ -36,8 +36,6 @@ spec:
         NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY: false
         NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT: false
       secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
 
@@ -58,11 +56,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-germany
       publicPort: http
@@ -81,11 +74,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-argentina
       publicPort: http
@@ -104,9 +92,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
 
     - name: web-production
       publicPort: http
@@ -125,11 +110,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-poland
       publicPort: http
@@ -148,11 +128,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-equinorfunds
       publicPort: http
@@ -171,11 +146,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: web-typography
       publicPort: http
@@ -196,11 +166,6 @@ spec:
         BRANDMASTER_EMAIL_PTL_ID: '14414'
         NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY: true
         NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT: true
-      secrets:
-        - SANITY_API_TOKEN
-        - SANITY_PREVIEW_SECRET
-        - BRANDMASTER_EMAIL_CLIENT_SECRET
-        - BRANDMASTER_EMAIL_PASSWORD
 
     - name: studio-brazil
       publicPort: http
