@@ -1,18 +1,35 @@
 import { EdsIcon } from '../../icons'
-import { microsoft_excel, library_pdf, file, library_books } from '@equinor/eds-icons'
+import {
+  microsoft_excel,
+  microsoft_word,
+  microsoft_powerpoint,
+  library_pdf,
+  file,
+  library_books,
+  calendar_event,
+} from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
 
-const fileIcon = (extension: string) => {
+export const fileIcon = (extension: string) => {
   switch (extension) {
     case 'pdf':
       return EdsIcon(library_pdf)
     case 'xls':
     case 'xlsx':
       return EdsIcon(microsoft_excel)
+    case 'doc':
+    case 'docx':
+      return EdsIcon(microsoft_word)
+    case 'pptx':
+      return EdsIcon(microsoft_powerpoint)
+    case 'ics':
+      return EdsIcon(calendar_event)
     default:
       return EdsIcon(file)
   }
 }
+
+const acceptedFileTypes = ['.pdf', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.pptx', '.txt', '.zip', '.asc', '.ics']
 
 export default {
   title: 'File',
@@ -35,7 +52,7 @@ export default {
       description:
         'Add the file attachment here. You can replace this file at a later point and all references to this file document will be updated automatically.',
       options: {
-        accept: '.pdf,.xls,.xlsx,.csv',
+        accept: acceptedFileTypes.join(','),
       },
     },
     {
