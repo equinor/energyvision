@@ -15,10 +15,6 @@ type TeaserProps = {
   data: TeaserData
 }
 
-const StyledTeaser = styled(EnvisTeaser)`
-  /* margin: var(--space-xLarge) 0; */
-`
-
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   const imageSrc =
     image.extension === 'svg' ? urlFor(image).toString() : urlFor(image).size(1200, 800).auto('format').toString()
@@ -67,7 +63,7 @@ const Teaser = ({ data }: TeaserProps) => {
   const isSvg = image?.extension === 'svg'
   return (
     <BackgroundContainer background={background}>
-      <StyledTeaser imagePosition={imagePosition}>
+      <EnvisTeaser imagePosition={imagePosition}>
         <Media
           size={isSvg && imageSize === 'small' ? 'small' : 'full'}
           center={isSvg ? true : false}
@@ -101,7 +97,7 @@ const Teaser = ({ data }: TeaserProps) => {
           )}
           {action && <TeaserAction action={action} />}
         </Content>
-      </StyledTeaser>
+      </EnvisTeaser>
     </BackgroundContainer>
   )
 }
