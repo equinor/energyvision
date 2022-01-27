@@ -163,8 +163,7 @@ export default {
     {
       name: 'action',
       title: 'Link/action',
-      description:
-        'You can add one separate link if you need. The link will show up at the bottom of the component, below the iframe, as a button style link.',
+      description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
       validation: (Rule: Rule) => Rule.max(1),
