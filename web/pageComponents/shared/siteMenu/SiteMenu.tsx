@@ -16,17 +16,23 @@ import { LogoLink } from '../LogoLink'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
 
-/* This is not finalized */
 const AllSitesLink = styled(Link)`
   text-decoration: none;
-  color: var(--grey-80);
-
   @media (max-width: 699px) {
-    margin: var(--space-large) 0 0 0;
-    width: var(--minViewportWidth);
+    margin: 0 0 0 0;
+    width: 100%;
+    margin: var(--space-small) 0 0 0;
   }
   @media (min-width: 700px) and (max-width: 1299px) {
-    margin: var(--space-large) 0 0 var(--menu-paddingHorizontal);
+    margin: var(--space-small) 0 0 var(--menu-paddingHorizontal);
+    width: var(--minViewportWidth);
+  }
+  @media (max-width: 1299px) {
+    &:hover {
+      background-color: var(--grey-10);
+    }
+    padding: calc(var(--space-small) + var(--space-xSmall)) 0;
+    color: var(--grey-80);
   }
   @media (min-width: 1300px) {
     display: inline-flex;
