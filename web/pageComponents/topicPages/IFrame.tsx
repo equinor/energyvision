@@ -23,7 +23,11 @@ const Figure = styled.figure`
 `
 
 const StyledButtonLink = styled(ButtonLink)`
-  margin-top: var(--space-large);
+  margin-top: var(--space-xLarge);
+`
+
+const Ingress = styled.div`
+  margin-bottom: var(--space-large);
 `
 
 const IFrame = ({
@@ -49,7 +53,11 @@ const IFrame = ({
             }}
           />
         )}
-        {ingress && <Lead blocks={ingress}></Lead>}
+        {ingress && (
+          <Ingress>
+            <Lead blocks={ingress}></Lead>
+          </Ingress>
+        )}
         {description ? (
           <Figure>
             <CoreIFrame
