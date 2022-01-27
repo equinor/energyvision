@@ -1,6 +1,7 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { Typography, TypographyProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
+import { StyledFigcaption } from '../FigureCaption'
 
 const StyledText = styled(Typography)<{ centered?: boolean }>`
   font-size: var(--size);
@@ -10,6 +11,11 @@ const StyledText = styled(Typography)<{ centered?: boolean }>`
   margin-bottom: var(--space-medium);
   & + & {
     margin: var(--space-medium) 0;
+  }
+
+  /* If the text block is within a figcaption, we don't want the bottom margin */
+  ${StyledFigcaption} &:last-child {
+    margin-bottom: 0;
   }
 
   ${({ centered }) =>

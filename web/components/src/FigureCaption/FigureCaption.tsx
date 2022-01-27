@@ -3,7 +3,7 @@ import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { style } from '@equinor/eds-icons'
 
-const StyledTypography = styled(Typography)`
+export const StyledFigcaption = styled(Typography)`
   font-size: var(--size);
   margin-top: var(--space-small);
 
@@ -21,7 +21,7 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(functio
   ref,
 ) {
   return (
-    <StyledTypography
+    <StyledFigcaption
       forwardedAs="figcaption"
       style={
         {
@@ -33,6 +33,6 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(functio
       {...rest}
     >
       {children}
-    </StyledTypography>
+    </StyledFigcaption>
   )
 })
