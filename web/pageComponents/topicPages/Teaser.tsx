@@ -20,12 +20,13 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
     image.extension === 'svg' ? urlFor(image).toString() : urlFor(image).size(1200, 800).auto('format').toString()
 
   if (!imageSrc) return null
+  const altTag = image?.isDecorative ? '' : image?.alt || ''
   return (
     <>
       {image.extension === 'svg' ? (
         <Image image={image} maxWidth={720} layout="responsive" />
       ) : (
-        <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
+        <Img src={imageSrc} alt={altTag} objectFit="cover" layout="fill" unoptimized />
       )}
     </>
   )
