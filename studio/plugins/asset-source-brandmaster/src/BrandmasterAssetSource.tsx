@@ -29,23 +29,23 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       if (!data.eventName || data.eventName !== BM_EVENT_NAME) return false
 
-      const file = data.eventData.selected[0]
-      // @TODO: get this to work with brandmaster provided download URLs (cors issue)
-      const downloadUrl = BM_URL + file.arrayfiles[0].file_ref
+      const selectedFile = data.eventData.selected[0]
+      // link to the origial, non-resized, version of the file
+      const downloadUrl = BM_URL + selectedFile.file.fileURL
 
       onSelect([
         {
           kind: 'url',
           value: downloadUrl,
           assetDocumentProps: {
-            originalFileName: file.uniqueId,
+            originalFileName: selectedFile.uniqueId,
             source: {
-              id: file.uniqueId,
+              id: selectedFile.uniqueId,
               name: 'brandmaster',
             },
-            ...(file?.title && { title: file.title }),
-            ...(file?.description && { description: file.description }),
-            ...(file?.photographer && { creditLine: file.photographer }),
+            ...(selectedFile?.title && { title: selectedFile.title }),
+            ...(selectedFile?.description && { description: selectedFile.description }),
+            ...(selectedFile?.photographer && { creditLine: selectedFile.photographer }),
           },
         },
       ])
