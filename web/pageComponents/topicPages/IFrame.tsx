@@ -2,9 +2,10 @@ import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer, FigureCaption } from '@components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer, IngressBlockRenderer, BlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer, BlockRenderer } from '../../common/serializers'
 import CoreIFrame from '../shared/iframe/IFrame'
 import { ButtonLink } from '../shared/ButtonLink'
+import Lead from '../shared/Lead'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -51,16 +52,7 @@ const IFrame = ({
             }}
           />
         )}
-        {ingress && (
-          <SimpleBlockContent
-            blocks={ingress}
-            serializers={{
-              types: {
-                block: IngressBlockRenderer,
-              },
-            }}
-          />
-        )}
+        {ingress && <Lead blocks={ingress}></Lead>}
         {description ? (
           <Figure>
             <CoreIFrame
