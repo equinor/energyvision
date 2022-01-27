@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
-// @ts-ignore
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 
@@ -80,7 +78,7 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   return (
     <Dialog id="brandmasterAssetSource" header="Select image from Brandmaster" onClose={onClose} ref={ref}>
-      {container && ReactDOM.createPortal(props.children, container)}
+      {container && createPortal(props.children, container)}
 
       {BM_SOURCE ? (
         <Content>
