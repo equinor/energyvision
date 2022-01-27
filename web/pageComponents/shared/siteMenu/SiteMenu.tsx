@@ -18,25 +18,24 @@ import type { MenuData, SubMenuData } from '../../../types/types'
 
 const AllSitesLink = styled(Link)`
   text-decoration: none;
-  @media (max-width: 699px) {
-    width: 100%;
-    margin: var(--space-small) 0 0 0;
+  width: 100%;
+  margin: var(--space-small) 0 0 0;
+  color: var(--grey-80);
+  &:hover {
+    background-color: var(--grey-10);
   }
-  @media (min-width: 700px) and (max-width: 1299px) {
+  padding: calc(var(--space-small) + var(--space-xSmall)) 0;
+  @media (min-width: 700px) {
     margin: var(--space-small) 0 0 var(--menu-paddingHorizontal);
     width: var(--minViewportWidth);
   }
-  @media (max-width: 1299px) {
-    &:hover {
-      background-color: var(--grey-10);
-    }
-    padding: calc(var(--space-small) + var(--space-xSmall)) 0;
-    color: var(--grey-80);
-  }
+
   @media (min-width: 1300px) {
     display: inline-flex;
     border-left: 2px solid var(--white-100);
     padding: var(--space-large) var(--space-large);
+    width: fit-content;
+    margin: 0;
   }
 `
 
