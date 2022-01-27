@@ -18,9 +18,6 @@ const Container = styled.div`
   margin: auto;
 `
 
-const DescriptionContainer = styled.div`
-  margin-top: var(--space-medium);
-`
 const Figure = styled.figure`
   margin: 0;
 `
@@ -70,7 +67,6 @@ const IFrame = ({
                   types: {
                     block: BlockRenderer,
                   },
-                  container: DescriptionContainer,
                 }}
               />
             </FigureCaption>
