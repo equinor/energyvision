@@ -19,7 +19,6 @@ import type { MenuData, SubMenuData } from '../../../types/types'
 const AllSitesLink = styled(Link)`
   text-decoration: none;
   @media (max-width: 699px) {
-    margin: 0 0 0 0;
     width: 100%;
     margin: var(--space-small) 0 0 0;
   }
