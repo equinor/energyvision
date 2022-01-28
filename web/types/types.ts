@@ -494,3 +494,8 @@ export type NewsDistributionParameters = {
   newsType: string
   languageCode: string
 }
+
+export type CookieDeclaration = {
+  id?: string
+  type?: string
+}

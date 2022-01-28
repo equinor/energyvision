@@ -62,6 +62,7 @@ import eventDate from './objects/eventDate'
 import table from './objects/table'
 import simpleMenuGroup from './objects/simpleMenuGroup'
 import simpleMenuLink from './objects/simpleMenuLink'
+import cookieDeclaration from './objects/cookieDeclaration'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -131,5 +132,6 @@ export default createSchema({
     simpleMenu,
     simpleMenuGroup,
     simpleMenuLink,
+    cookieDeclaration,
   ]),
 })

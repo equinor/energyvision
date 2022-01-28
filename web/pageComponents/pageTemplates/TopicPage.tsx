@@ -21,6 +21,7 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import SubscribeForm from '../shared/SubscribeForm'
+import CookieDeclaration from '../topicPages/CookieDeclaration'
 
 import {
   TeaserData,
@@ -143,6 +144,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <SubscribeForm key={c.id} data={c as SubscribeFormData} />
       case 'table':
         return <Table key={c.id} data={c as TableData} />
+      case 'cookieDeclaration':
+        return <CookieDeclaration key={c.id} />
       default:
         return null
     }
