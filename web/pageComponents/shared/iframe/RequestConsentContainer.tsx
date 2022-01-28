@@ -62,9 +62,11 @@ const LeftAlignedButton = styled(Button)`
 `
 
 const StyledText = styled(Text)`
-  /*  We don't want this text to be white even when the background container is dark because the text is still on white background */
+  /*  We don't want this text to be white even when the background container is
+  dark because the text is still on white background. It's an override, so a good use
+  case for important */
   .inverted-background & {
-    color: var(--default-text);
+    color: var(--default-text) !important;
   }
 `
 
