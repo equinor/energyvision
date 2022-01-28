@@ -45,7 +45,16 @@ const datasets = {
   equinorfunds: ['norwegian'],
 }
 
-const filterLanguages = (dataset) => languages.filter((lang) => dataset.includes(lang.id))
+/**
+ * @returns {{
+ *  id: string
+ *  title: string
+ *  iso: string
+ *  name: string
+ *  locale: string
+ * }[]}
+ */
+const filterLanguages = (dataset) => dataset.map((lang) => languages.find((e) => e.id === lang)).filter((e) => e)
 
 const logAndFallback = (dataset) => {
   console.error(
