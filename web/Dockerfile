@@ -1,6 +1,6 @@
 FROM node:lts-alpine AS builder
 
-RUN npm install -g pnpm@^6.11.5
+RUN npm install -g pnpm
 
 WORKDIR /opt/app
 
