@@ -1,7 +1,6 @@
 FROM node:lts-alpine AS builder
 
-RUN apk add --no-cache libc6-compat jq moreutils && \
-  npm install -g pnpm@6.11.5
+RUN npm install -g pnpm@^6.11.5
 
 WORKDIR /opt/app
 
