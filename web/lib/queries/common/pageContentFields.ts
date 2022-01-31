@@ -318,6 +318,10 @@ const pageContentFields = /* groq */ `
     "id": _key,
     title,
   },
+  _type == "cookieDeclaration" => {
+    "type": _type,
+    "id": _key,
+  },
 `
 
 export default pageContentFields
