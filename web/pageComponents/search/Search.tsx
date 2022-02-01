@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { InstantSearch, Configure /* InstantSearchProps */ } from 'react-instantsearch-dom'
+import { InstantSearch, Configure, InstantSearchProps } from 'react-instantsearch-dom'
 import { searchClient } from '../../lib/algolia'
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
