@@ -1,16 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
-import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { Topbar, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
-import { Icon } from '@equinor/eds-core-react'
-import { search } from '@equinor/eds-icons'
+
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
+import SearchOverlay from '../search/SearchOverlay'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -49,11 +48,6 @@ const ControlsContainer = styled.div`
   }
 `
 
-const StyledButton = styled(Button)`
-  color: var(--default-text);
-  fill: var(--default-text);
-`
-
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
   slugs: AllSlugsType
@@ -74,12 +68,8 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
         <TopbarContainer>
           <LogoLinkInGrid />
           <ControlsContainer style={{ '--columns': slugs?.length > 1 ? 3 : 2 } as CSSProperties}>
-            {/* @TODO: search page */}
-            <NextLink href="/" passHref>
-              <StyledButton variant="ghost_icon" href="" aria-label="Search">
-                <Icon size={32} data={search} />
-              </StyledButton>
-            </NextLink>
+            <SearchOverlay />
+
             {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
             {menuData && isGlobal ? (
