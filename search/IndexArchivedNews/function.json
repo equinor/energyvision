@@ -3,8 +3,7 @@
     {
       "name": "myArchivedNewsTimer",
       "type": "timerTrigger",
-      "direction": "in",
-      "schedule": "15 * * * * *"
+      "direction": "in"
     }
   ],
   "scriptFile": "../dist/IndexArchivedNews/index.js"

@@ -7,10 +7,12 @@ import { GetProcessEnvType  } from './types'
 const algoliaSearchCurried = (appId: string) => (apiKey: string) => algoliasearch(appId, apiKey)
 
 const getAlgoliaAppId: GetProcessEnvType = () => E.fromNullable('Unable to find app id')(process.env.ALGOLIA_APP_ID)
-const getAlgoliaApiKey: GetProcessEnvType = () => E.fromNullable('Un2able to find API key')(process.env.ALGOLIA_API_KEY)
+const getAlgoliaApiKey: GetProcessEnvType = () => E.fromNullable('Unable to find API key')(process.env.ALGOLIA_API_KEY)
 const getAlgoliaIndexName: GetProcessEnvType = () =>
   E.fromNullable('Unable to find index name')(process.env.ALGOLIA_INDEX_NAME)
 
+// Init one particular index
+// TODO: If we are using multiple indexes, this needs to be refactored
 type InitType = IO.IO<E.Either<string, SearchIndex>>
 export const init: InitType = flow(
   getAlgoliaAppId,
