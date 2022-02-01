@@ -59,6 +59,11 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      name: 'anchor',
+      type: 'anchorReferenceField',
+      title: 'Anchor reference',
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
