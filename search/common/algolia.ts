@@ -1,6 +1,7 @@
 import algoliasearch, { SearchIndex } from 'algoliasearch'
 import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
+import * as TE from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
 import { GetProcessEnvType } from './types'
 
@@ -22,5 +23,11 @@ export const init: InitType = flow(
 )
 
 // Push to Algolia index
-type UpdateType = (data: readonly Readonly<Record<string, string>>[]) => (index: SearchIndex) => void
-export const update: UpdateType = (data) => (index) => index.saveObjects(data).then((res) => console.log(res))
+type UpdateType = (
+  data: readonly Readonly<Record<string, string>>[],
+) => (index: SearchIndex) => TE.TaskEither<Error, string>
+export const update: UpdateType = (data) => (index) =>
+  pipe(
+    TE.tryCatch(() => index.saveObjects(data), E.toError),
+    TE.map((response) => `Number of objects updated: ${response.objectIDs.length}`),
+  )

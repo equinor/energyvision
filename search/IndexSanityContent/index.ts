@@ -2,6 +2,8 @@ import { AzureFunction, Context } from '@azure/functions'
 import { flow } from 'fp-ts/lib/function'
 //import { reduce } from 'fp-ts/lib/Array'
 import * as E from 'fp-ts/lib/Either'
+import * as T from 'fp-ts/lib/Task'
+import * as TE from 'fp-ts/lib/TaskEither'
 import { initIndex, sanityClient, updateIndex } from '../common/'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
@@ -72,15 +74,17 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
 
   const updateMyData = flow(
     initIndex,
-    E.map(updateIndex(mappedData)),
-    E.fold(
-      (error) => console.error(error),
-      () => console.log("Hurrah!")
-    )
-  )
+    TE.fromEither,
+    TE.chainW(updateIndex(mappedData)),
+    T.map(
+      E.fold(
+        (error) => console.error(error),
+        (res) => console.log('Hurrah!', res),
+      ),
+    ),
+  )()
 
-  updateMyData()
+  updateMyData().catch(console.error)
 }
-
 
 export default timerTrigger
