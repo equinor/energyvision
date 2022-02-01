@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import type { QuoteData } from '../../../types/types'
 import Quote from '../../../pageComponents/shared/Quote'
+import { BackgroundContainer } from '@components'
 
 const Container = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-small) 0 var(--layout-paddingHorizontal-medium);
+  padding: var(--space-medium) var(--layout-paddingHorizontal-small) var(--space-medium)
+    var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin: var(--space-xxLarge) auto;
   clear: both;
@@ -22,10 +24,14 @@ export const QuoteRenderer = (child: { node: QuoteRendererNode }): JSX.Element =
     type: node._type,
     id: node._key,
   }
+  const { designOptions } = data
+  const { background } = designOptions
 
   return (
-    <Container>
-      <Quote data={data} />
-    </Container>
+    <BackgroundContainer background={background}>
+      <Container>
+        <Quote data={data} />
+      </Container>
+    </BackgroundContainer>
   )
 }
