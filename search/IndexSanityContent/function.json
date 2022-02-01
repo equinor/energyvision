@@ -1,11 +1,12 @@
+
 {
   "bindings": [
     {
-      "name": "myArchivedNewsTimer",
+      "name": "mySanityTimer",
       "type": "timerTrigger",
       "direction": "in",
       "schedule": "15 * * * * *"
     }
   ],
-  "scriptFile": "../dist/IndexArchivedNews/index.js"
+  "scriptFile": "../dist/IndexSanityContent/index.js"
 }
