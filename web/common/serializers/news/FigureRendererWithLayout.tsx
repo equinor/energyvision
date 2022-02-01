@@ -1,3 +1,4 @@
+import { FigureCaption } from '@components'
 import styled from 'styled-components'
 import Image from '../../../pageComponents/shared/Image'
 import type { ImageWithAlt } from '../../../types/types'
@@ -35,11 +36,6 @@ const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
         float: 'left',
       }}
   }
-`
-
-const FigCaption = styled.figcaption`
-  font-size: var(--typeScale-0);
-  margin-top: var(--space-small);
 `
 
 type FigureNode = {
@@ -91,9 +87,9 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
         />
       )}
       {caption || attribution ? (
-        <FigCaption>
+        <FigureCaption>
           {caption} {attribution}
-        </FigCaption>
+        </FigureCaption>
       ) : null}
     </FigureTest>
   )

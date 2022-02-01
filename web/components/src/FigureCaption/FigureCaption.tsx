@@ -11,6 +11,14 @@ export const StyledFigcaption = styled(Typography)`
   .inverted-background & {
     color: var(--inverted-text);
   }
+
+  @media (min-width: 800px) {
+    max-width: 560px;
+  }
+
+  @media (min-width: 1300px) {
+    max-width: 635px;
+  }
 `
 export type FigureCaptionProps = {
   size?: 'small' | 'medium'
