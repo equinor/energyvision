@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "^12.8.0",
+    "@sanity/client": "^2.23.2",
     "algoliasearch": "^4.11.0",
     "dotenv-azure": "^2.0.0",
     "fp-ts": "^2.11.5"

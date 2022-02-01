@@ -51,6 +51,7 @@ importers:
     specifiers:
       '@azure/functions': ^3.0.0
       '@azure/storage-blob': ^12.8.0
+      '@sanity/client': ^2.23.2
       '@types/jest': ^27.0.2
       '@types/node': ^16.11.6
       algoliasearch: ^4.11.0
@@ -61,6 +62,7 @@ importers:
       typescript: 4.4.4
     dependencies:
       '@azure/storage-blob': 12.8.0
+      '@sanity/client': 2.23.2
       algoliasearch: 4.11.0
       dotenv-azure: 2.0.0
       fp-ts: 2.11.5
@@ -661,7 +663,7 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
     dependencies:
-      '@babel/compat-data': 7.16.8
+      '@babel/compat-data': 7.16.4
       '@babel/core': 7.16.12
       '@babel/helper-validator-option': 7.16.7
       browserslist: 4.19.1
@@ -9427,6 +9429,18 @@ packages:
         optional: true
     dev: false
 
+  /follow-redirects/1.14.7_debug@2.6.9:
+    resolution: {integrity: sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dependencies:
+      debug: 2.6.9
+    dev: false
+
   /for-in/1.0.2:
     resolution: {integrity: sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=}
     engines: {node: '>=0.10.0'}
@@ -9695,7 +9709,7 @@ packages:
       create-error-class: 3.0.2
       debug: 2.6.9
       decompress-response: 3.3.0
-      follow-redirects: 1.14.7
+      follow-redirects: 1.14.7_debug@2.6.9
       form-urlencoded: 2.0.9
       into-stream: 3.1.0
       is-plain-object: 2.0.4
