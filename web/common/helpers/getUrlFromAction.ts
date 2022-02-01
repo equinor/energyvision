@@ -7,19 +7,22 @@ export const getUrlFromAction = ({
   type,
   isStatic,
   fileName,
+  anchorReference,
 }: LinkData): string | false => {
   if (!type && !href && !staticUrl) return false
 
+  const anchor = anchorReference ? `#${anchorReference}` : ''
+
   // @TODO: Remove this when the static AEM content is gone
   if (isStatic) {
-    return staticUrl
+    return staticUrl + anchor
   }
 
   if (type === 'internalUrl') {
     // @TODO: Update Will there be more cases in the future?
     if (link?.type === 'news') return `/news/${link?.slug}`
 
-    return link?.slug || ''
+    return link?.slug + anchor || ''
   }
   if (!href) {
     console.warn('Missing external url in action')
@@ -29,5 +32,5 @@ export const getUrlFromAction = ({
     return href + '?' + fileName.replace(/ /g, '-')
   }
 
-  return href || '/'
+  return href + anchor || '/'
 }
