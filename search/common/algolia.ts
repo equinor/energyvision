@@ -25,9 +25,19 @@ export const init: InitType = flow(
 // Push to Algolia index
 type UpdateType = (
   data: readonly Readonly<Record<string, string>>[],
-) => (index: SearchIndex) => TE.TaskEither<Error, string>
+) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 export const update: UpdateType = (data) => (index) =>
   pipe(
     TE.tryCatch(() => index.saveObjects(data), E.toError),
-    TE.map((response) => `Number of objects updated: ${response.objectIDs.length}`),
+    //TE.map((response) => `Number of objects updated: ${response.objectIDs.length}`),
+    TE.map(() => index)
+  )
+
+//type UpdateSettingsType = (
+//  settings: Settings,
+//) => (index: SearchIndex) => TE.TaskEither<Error, string>
+export const updateSettings/*: UpdateSettingsType*/ = (settings: object) => (index: SearchIndex) =>
+  pipe(
+    TE.tryCatch(() => index.setSettings(settings), E.toError),
+    TE.map(() => index),
   )

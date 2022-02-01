@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { initIndex, sanityClient, updateIndex } from '../common/'
+import { initIndex, sanityClient, updateIndex, updateSettings } from '../common/'
 import { mapData, fetchData } from './sanity'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
@@ -20,6 +20,13 @@ const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type
 `
 const queryParams = { lang: 'en_GB' }
 
+const indexSettings = {
+  searchableAttributes: ['title', 'ingress'],
+  attributesToSnippet: ['ingress'],
+  attributeForDistinct: 'slug',
+  distinct: 1,
+}
+
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
 
@@ -33,15 +40,20 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
   }
   context.log('Timer trigger function ran!', timeStamp)
 
-  type UpdateMyDataType = (mappedData: Readonly<Record<string, string>>[]) => TE.TaskEither<string | Error, string>
-  const updateMyData: UpdateMyDataType = (mappedData: Readonly<Record<string, string>>[]) =>
-    pipe(initIndex(), TE.fromEither, TE.chainW(updateIndex(mappedData)))
+  type UpdateAlgoliaType = (mappedData: Readonly<Record<string, string>>[]) => TE.TaskEither<string | Error, string>
+  const updateAlgolia: UpdateAlgoliaType = (mappedData: Readonly<Record<string, string>>[]) =>
+    pipe(initIndex(),
+    TE.fromEither,
+    TE.chainW(updateIndex(mappedData)),
+    TE.chainW(updateSettings(indexSettings)),
+    TE.map(() => 'Halleluja')
+  )
+
 
   const getSanityDataAndUpdateAlgolia = pipe(
-    fetchData(query)(queryParams)(sanityClient),
+    fetchData(query)(queryParams)(sanityClient), // TODO: Make these parameters to make this function reusable
     TE.map((events) => events.map(mapData)),
-    TE.map(updateMyData),
-    TE.flatten,
+    TE.chain(updateAlgolia),
     T.map(E.fold(console.error, console.log)),
   )
 

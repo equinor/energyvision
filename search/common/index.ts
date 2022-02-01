@@ -1,3 +1,2 @@
-export { init as initIndex } from './algolia'
-export { update as updateIndex } from './algolia'
+export { init as initIndex, update as updateIndex, updateSettings } from './algolia'
 export { sanityClient } from './sanity'
