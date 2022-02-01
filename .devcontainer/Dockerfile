@@ -34,7 +34,7 @@ RUN apt-get update \
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-     && apt-get -y install --no-install-recommends fish curl silversearcher-ag fzf fonts-powerline
+     && apt-get -y install --no-install-recommends fish curl silversearcher-ag fzf fonts-powerline fonts-firacode
 
 # This does not work for some reason
 RUN curl -L https://github.com/oh-my-fish/oh-my-fish/raw/master/bin/install > install
