@@ -13,7 +13,8 @@ const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type
   "slug": slug.current,
   _id,
   "content": content->{
-    "title": pt::text(title)
+    "title": pt::text(title),
+    "ingress": pt::text(ingress)
   }
 }
 `

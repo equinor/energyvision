@@ -7,6 +7,7 @@ type Event = {
   slug: string
   content: {
     title: string
+    ingress: string
   }
   _id: string
 }
