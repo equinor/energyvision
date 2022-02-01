@@ -4,7 +4,7 @@ import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
-import { BlobConfiguration, GetProcessEnvType } from './types'
+import { BlobConfiguration, GetProcessEnvType } from '../common/types'
 
 const getAzureConnectionString: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Azure connection string')(process.env.AZ_CONNECTION_STRING)
