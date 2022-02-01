@@ -9,7 +9,7 @@ const StyledSpan = styled.span`
   margin-top: 0.3em;
 `
 
-const description = () => (
+export const AnchorComponentDescription = () => (
   <>
     <StyledSpan>Add an optional anchor reference that can be used to link directly to this component.</StyledSpan>
     <StyledSpan>
@@ -17,12 +17,18 @@ const description = () => (
     </StyledSpan>
   </>
 )
+export const AnchorLinkDescription = () => (
+  <>
+    <StyledSpan>Optional: add the anchor reference of the component/section you want to link directly to.</StyledSpan>
+    <StyledSpan>Results cannot be guaranteed for external URLs.</StyledSpan>
+  </>
+)
 
 export default {
   name: 'anchorReferenceField',
   title: 'Anchor reference',
-  description: description(),
   type: 'string',
+  description: AnchorComponentDescription(),
   // @ts-ignore - possible error in @sanity/types with CustomValidatorResult
   validation: (Rule: Rule) => Rule.custom((value: string) => validateAnchorReference(value)),
 }

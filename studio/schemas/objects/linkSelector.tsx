@@ -4,6 +4,7 @@ import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
+import { AnchorLinkDescription } from './anchorReferenceField'
 
 export type ReferenceTarget = {
   type: string
@@ -91,6 +92,12 @@ const LinkField = {
           return validateStaticUrl(value, context)
         }),
       hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === false || parent?.isStatic === undefined,
+    },
+    {
+      name: 'anchorReference',
+      title: 'Anchor reference',
+      type: 'anchorReferenceField',
+      description: AnchorLinkDescription(),
     },
     {
       name: 'label',
