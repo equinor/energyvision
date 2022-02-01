@@ -2,7 +2,7 @@ import algoliasearch, { SearchIndex } from 'algoliasearch'
 import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
 import { flow, pipe } from 'fp-ts/lib/function'
-import { GetProcessEnvType  } from './types'
+import { GetProcessEnvType } from './types'
 
 const algoliaSearchCurried = (appId: string) => (apiKey: string) => algoliasearch(appId, apiKey)
 
