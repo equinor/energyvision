@@ -3,6 +3,7 @@ import React from 'react'
 import { format_quote } from '@equinor/eds-icons'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
+import { Colors } from '../../helpers/ColorListValues'
 import type { Rule } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
 
@@ -85,6 +86,22 @@ export default {
           />
         )
       },
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        borderradius: {
+          outer: '100%',
+          inner: '100%',
+        },
+        tooltip: true,
+        list: Colors,
+      },
+      fieldset: 'design',
+      initialValue: Colors[0],
     },
   ],
   preview: {
