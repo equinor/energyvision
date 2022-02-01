@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
 import { useRouter } from 'next/router'
-import { Topbar, Button } from '@components'
+import { Topbar } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
