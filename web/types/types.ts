@@ -151,7 +151,7 @@ export type LandingPageSchema = {
 export type BackgroundColours = 'White' | 'Moss Green' | 'Moss Green Light' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
 
 export type DesignOptions = {
-  background: BackgroundColours
+  background?: BackgroundColours
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
@@ -226,9 +226,9 @@ export type QuoteData = {
   type: string
   id: string
   author: string
-  authorTitle: string
+  authorTitle?: string
   quote: string
-  image: ImageWithAlt
+  image?: ImageWithAlt
   designOptions: DesignOptions
 }
 
