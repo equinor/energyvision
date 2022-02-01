@@ -1,4 +1,8 @@
 export const validateAnchorReference = (value: string): string | true => {
+  if (/^#/.test(value)) {
+    return 'Anchor reference should not start with the # symbol.'
+  }
+
   // No whitespace allowed
   if (/\s/.test(value)) {
     return 'Anchor reference may not contain whitespace. Use hyphens (-) to separate words.'
