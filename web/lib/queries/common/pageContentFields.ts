@@ -100,6 +100,7 @@ const pageContentFields = /* groq */ `
     image,
     quote,
     "designOptions": {
+      "background": coalesce(background.title, 'White'),
       "imagePosition": coalesce(imagePosition, 'right'),
     }
   },
