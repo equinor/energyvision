@@ -19,6 +19,12 @@ const Text = styled(BaseText)`
 
 const Container = styled.div`
   grid-area: quote;
+
+  .inverted-background & {
+    > svg {
+      fill: var(--inverted-text);
+    }
+  }
 `
 
 const textBoldLimit = 160

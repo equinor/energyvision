@@ -22,6 +22,9 @@ const AuthorWrapper = styled(Typography)`
   display: inline-flex;
   flex-direction: column;
   margin-right: auto;
+  .inverted-background & {
+    color: var(--inverted-text);
+  }
 
   @media (min-width: 800px) {
     margin-left: auto;
