@@ -24,6 +24,7 @@ export type LinkData = {
   isStatic?: boolean
   staticUrl?: string
   fileName?: string
+  anchorReference?: string
 }
 
 export type RelatedLinksData = {
@@ -163,6 +164,7 @@ export type TextBlockData = {
   text: PortableTextEntry[]
   ingress: PortableTextEntry[]
   callToActions?: LinkData[]
+  anchor?: string
   designOptions: DesignOptions
 }
 
@@ -242,6 +244,7 @@ export type AccordionData = {
   title: PortableTextEntry[]
   ingress: PortableTextEntry[]
   accordion: AccordionListData[]
+  anchor?: string
   designOptions: DesignOptions
 }
 

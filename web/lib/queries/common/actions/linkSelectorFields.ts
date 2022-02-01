@@ -15,6 +15,7 @@ _type == "linkSelector" => {
   },
   "href": url,
   "staticUrl": staticUrl,
+  anchorReference,
 }
 `
 

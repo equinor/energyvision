@@ -47,6 +47,7 @@ const pageContentFields = /* groq */ `
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
+    anchor,
     "designOptions": {
       "background": coalesce(background.title, 'White'),
     },
@@ -118,6 +119,7 @@ const pageContentFields = /* groq */ `
         ${markDefs},
       }
     },
+    anchor,
     "designOptions": {
       "background": coalesce(background.title, 'none'),
     }
