@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react'
 import { validateAnchorReference } from '../validations/validateAnchorReference'
 import styled from 'styled-components'
@@ -22,5 +23,6 @@ export default {
   title: 'Anchor reference',
   description: description(),
   type: 'string',
+  // @ts-ignore - possible error in @sanity/types with CustomValidatorResult
   validation: (Rule: Rule) => Rule.custom((value: string) => validateAnchorReference(value)),
 }
