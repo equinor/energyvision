@@ -14,6 +14,7 @@ export type LinkSelector = {
   isStatic: boolean
   reference?: Reference
   url?: string
+  staticUrl?: string
   label?: string
   ariaLabel?: string
 }
