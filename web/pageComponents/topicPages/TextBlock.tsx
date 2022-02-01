@@ -36,13 +36,13 @@ type TextBlockProps = {
 }
 
 const TextBlock = ({ data }: TextBlockProps) => {
-  const { overline, title, ingress, text, designOptions, callToActions } = data
+  const { overline, title, ingress, text, designOptions, callToActions, anchor } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text) return null
   const { background } = designOptions
 
   return (
-    <StyledTextBlockWrapper background={background}>
+    <StyledTextBlockWrapper background={background} id={anchor}>
       <StyledTextBlock>
         {overline && <Eyebrow>{overline}</Eyebrow>}
         {title && (

@@ -23,11 +23,11 @@ type AccordionBlockProps = {
 }
 
 const AccordionBlock = ({ data }: AccordionBlockProps) => {
-  const { title, ingress, designOptions, accordion, id } = data
+  const { title, ingress, designOptions, accordion, id, anchor } = data
 
   const { background } = designOptions
   return (
-    <StyledTextBlockWrapper background={background}>
+    <StyledTextBlockWrapper background={background} id={anchor}>
       <StyledTextBlock>
         {title && (
           <SimpleBlockContent
