@@ -1,4 +1,5 @@
 import algoliasearch, { SearchIndex } from 'algoliasearch'
+import { Settings } from '@algolia/client-search'
 import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
@@ -33,10 +34,10 @@ export const update: UpdateType = (data) => (index) =>
     TE.map(() => index)
   )
 
-//type UpdateSettingsType = (
-//  settings: Settings,
-//) => (index: SearchIndex) => TE.TaskEither<Error, string>
-export const updateSettings/*: UpdateSettingsType*/ = (settings: object) => (index: SearchIndex) =>
+type UpdateSettingsType = (
+  settings: Settings,
+) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
+export const updateSettings: UpdateSettingsType = (settings) => (index) =>
   pipe(
     TE.tryCatch(() => index.setSettings(settings), E.toError),
     TE.map(() => index),
