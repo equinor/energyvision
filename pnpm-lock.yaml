@@ -103,6 +103,7 @@ importers:
       '@types/react-dom': ^17.0.11
       '@types/styled-components': ^5.1.21
       '@types/xml2js': ^0.4.9
+      algoliasearch: ^4.11.0
       babel-jest: ^27.4.6
       babel-plugin-styled-components: ^1.13.3
       date-fns: ^2.28.0
@@ -126,6 +127,8 @@ importers:
       react-dom: ^17.0.2
       react-focus-lock: ^2.7.1
       react-hook-form: 7.25.0
+      react-instantsearch: ^6.22.0
+      react-instantsearch-dom: ^6.22.0
       react-intl: ^5.24.4
       react-remove-scroll: ^2.4.3
       storybook-css-modules-preset: ^1.1.1
@@ -150,6 +153,7 @@ importers:
       '@sanity/image-url': 1.0.1
       '@types/easy-soap-request': 4.1.1
       '@types/xml2js': 0.4.9
+      algoliasearch: 4.11.0
       date-fns: 2.28.0
       date-fns-tz: 1.2.2_date-fns@2.28.0
       easy-soap-request: 4.6.0
@@ -167,6 +171,8 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       react-focus-lock: 2.7.1_b08e3c15324cbe90a6ff8fcd416c932c
       react-hook-form: 7.25.0_react@17.0.2
+      react-instantsearch: 6.22.0_9c61a37bce6c0496634c2178214848ce
+      react-instantsearch-dom: 6.22.0_9c61a37bce6c0496634c2178214848ce
       react-intl: 5.24.4_react@17.0.2+typescript@4.5.5
       react-remove-scroll: 2.4.3_b08e3c15324cbe90a6ff8fcd416c932c
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
@@ -251,6 +257,10 @@ packages:
       '@algolia/client-common': 4.11.0
       '@algolia/requester-common': 4.11.0
       '@algolia/transporter': 4.11.0
+    dev: false
+
+  /@algolia/events/4.0.1:
+    resolution: {integrity: sha512-FQzvOCgoFXAbf5Y6mYozw2aj5KCJoA3m4heImceldzPSMbdyS4atVjJzXKMsfX3wnZTFYwkkt8/z8UesLHlSBQ==}
     dev: false
 
   /@algolia/logger-common/4.11.0:
@@ -6425,6 +6435,15 @@ packages:
       uri-js: 4.4.1
     dev: true
 
+  /algoliasearch-helper/3.7.0_algoliasearch@4.11.0:
+    resolution: {integrity: sha512-XJ3QfERBLfeVCyTVx80gon7r3/rgm/CE8Ha1H7cbablRe/X7SfYQ14g/eO+MhjVKIQp+gy9oC6G5ilmLwS1k6w==}
+    peerDependencies:
+      algoliasearch: '>= 3.1 < 5'
+    dependencies:
+      '@algolia/events': 4.0.1
+      algoliasearch: 4.11.0
+    dev: false
+
   /algoliasearch/4.11.0:
     resolution: {integrity: sha512-IXRj8kAP2WrMmj+eoPqPc6P7Ncq1yZkFiyDrjTBObV1ADNL8Z/KdZ+dWC5MmYcBLAbcB/mMCpak5N/D1UIZvsA==}
     dependencies:
@@ -7654,6 +7673,10 @@ packages:
       isobject: 3.0.1
       static-extend: 0.1.2
     dev: true
+
+  /classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
+    dev: false
 
   /clean-css/4.2.4:
     resolution: {integrity: sha512-EJUDT7nDVFDvaQgAo2G/PJvxmp1o/c6iXLbswsBbUFXi1Nr+AjA2cKmfbKDMjMvzEe75g3P6JkaDDAKk96A85A==}
@@ -9429,18 +9452,6 @@ packages:
         optional: true
     dev: false
 
-  /follow-redirects/1.14.7_debug@2.6.9:
-    resolution: {integrity: sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dependencies:
-      debug: 2.6.9
-    dev: false
-
   /for-in/1.0.2:
     resolution: {integrity: sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=}
     engines: {node: '>=0.10.0'}
@@ -9709,7 +9720,7 @@ packages:
       create-error-class: 3.0.2
       debug: 2.6.9
       decompress-response: 3.3.0
-      follow-redirects: 1.14.7_debug@2.6.9
+      follow-redirects: 1.14.7
       form-urlencoded: 2.0.9
       into-stream: 3.1.0
       is-plain-object: 2.0.4
@@ -14119,6 +14130,64 @@ packages:
       prop-types: 15.8.1
       react: 17.0.2
     dev: true
+
+  /react-instantsearch-core/6.22.0_7ce4838e463d1525dea7855d64eb110e:
+    resolution: {integrity: sha512-K4GpydrStAGmUFYaV86eU65cvy0ZM97jKtNCF63sznhgYS1mJ3IaKO8HJV56/NP8dPKbr+HbdoD2GOnD1OaLlQ==}
+    peerDependencies:
+      algoliasearch: '>= 3.1 < 5'
+      react: '>= 16.3.0 < 18'
+    dependencies:
+      '@babel/runtime': 7.16.7
+      algoliasearch: 4.11.0
+      algoliasearch-helper: 3.7.0_algoliasearch@4.11.0
+      prop-types: 15.8.1
+      react: 17.0.2
+      react-fast-compare: 3.2.0
+    dev: false
+
+  /react-instantsearch-dom/6.22.0_9c61a37bce6c0496634c2178214848ce:
+    resolution: {integrity: sha512-geXYTQqGsLggbf7MMuSPgXjuZ3yWtWjjPRWEbXmAHZ4oodbdYiKIuieTDoadYM+m+Y90WXpwn+hMi0EDTffeRA==}
+    peerDependencies:
+      react: '>= 16.3.0 < 18'
+      react-dom: '>= 16.3.0 < 18'
+    dependencies:
+      '@babel/runtime': 7.16.7
+      algoliasearch-helper: 3.7.0_algoliasearch@4.11.0
+      classnames: 2.3.1
+      prop-types: 15.8.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-fast-compare: 3.2.0
+      react-instantsearch-core: 6.22.0_7ce4838e463d1525dea7855d64eb110e
+    transitivePeerDependencies:
+      - algoliasearch
+    dev: false
+
+  /react-instantsearch-native/6.22.0_react@17.0.2:
+    resolution: {integrity: sha512-entSMBKEsksES0eLDYJ4PJ+MUqKOfW9ZuRozjiTnF/FD6I1jMpXBDDGZAzGTxXAgyD5ICCsPjHK3vjzUMYOOgg==}
+    peerDependencies:
+      react: '>= 16.3.0 < 18'
+      react-native: '>= 0.54.0'
+    dependencies:
+      '@babel/runtime': 7.16.7
+      algoliasearch: 4.11.0
+      react: 17.0.2
+      react-instantsearch-core: 6.22.0_7ce4838e463d1525dea7855d64eb110e
+    dev: false
+
+  /react-instantsearch/6.22.0_9c61a37bce6c0496634c2178214848ce:
+    resolution: {integrity: sha512-V+5b5SmCFsH+jtKkaEqi7VKQ21R3wbQmW4tBFGlTrixxuj8aCCCS9xZMwH5H+c0E7ZiqZs4pYB3PXeYQifEaqA==}
+    dependencies:
+      '@babel/runtime': 7.16.7
+      react-instantsearch-core: 6.22.0_7ce4838e463d1525dea7855d64eb110e
+      react-instantsearch-dom: 6.22.0_9c61a37bce6c0496634c2178214848ce
+      react-instantsearch-native: 6.22.0_react@17.0.2
+    transitivePeerDependencies:
+      - algoliasearch
+      - react
+      - react-dom
+      - react-native
+    dev: false
 
   /react-intl/5.24.4_react@17.0.2+typescript@4.5.5:
     resolution: {integrity: sha512-c3OaJNZUt8CqqjVge+YPof76xRp6HrxmfKtiEB3LOBu466ISliGLPiy3goOdNs9Vj/0+jGagcAk8jqh/pAscAw==}
