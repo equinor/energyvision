@@ -2,9 +2,10 @@ import { AzureFunction, Context } from '@azure/functions'
 import { flow } from 'fp-ts/lib/function'
 //import { reduce } from 'fp-ts/lib/Array'
 import * as E from 'fp-ts/lib/Either'
-import { initIndex, sanityClient /* updateIndex */ } from '../common/'
+import { initIndex, sanityClient, updateIndex } from '../common/'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
+import { update } from '../common/algolia'
 
 // Jada, bare dumper det her så lenge
 const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event"] {
@@ -55,15 +56,6 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
   }
   context.log('Timer trigger function ran!', timeStamp)
 
-  const test = flow(
-    initIndex,
-    E.fold(
-      (error) => console.log(error),
-      (index) => console.log('Connected successfully to index. Index name=', index.indexName),
-    ),
-  )
-
-  test()
   const data = await getData()
 
   console.log(`Found ${data.length} events`)
@@ -77,7 +69,18 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
   })
 
   console.log('Mapped data', mappedData)
-  // updateAlgolia(mappedData)
+
+  const updateMyData = flow(
+    initIndex,
+    E.map(updateIndex(mappedData)),
+    E.fold(
+      (error) => console.error(error),
+      () => console.log("Hurrah!")
+    )
+  )
+
+  updateMyData()
 }
+
 
 export default timerTrigger

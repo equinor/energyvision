@@ -22,5 +22,5 @@ export const init: InitType = flow(
 )
 
 // Push to Algolia index
-type UpdateType = (index: SearchIndex) => (data: readonly Readonly<Record<string, never>>[]) => void
-export const update: UpdateType = (index) => (data) => index.saveObjects(data).then((res) => console.log(res))
+type UpdateType = (data: readonly Readonly<Record<string, string>>[]) => (index: SearchIndex) => void
+export const update: UpdateType = (data) => (index) => index.saveObjects(data).then((res) => console.log(res))
