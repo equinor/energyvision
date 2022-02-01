@@ -6,6 +6,7 @@ import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
 import type { Rule } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
+import type { ColorListValue } from 'sanity-plugin-color-list'
 
 export type PullQuote = {
   _type: 'pullQuote'
@@ -14,6 +15,7 @@ export type PullQuote = {
   authorTitle?: string
   image?: ImageWithAlt
   imagePosition?: string
+  background?: ColorListValue
 }
 
 const imageAlignmentOptions = [
