@@ -5,7 +5,12 @@ import type { AccordionData } from '../../../types/types'
 import styled from 'styled-components'
 import Accordion from './Accordion'
 
-export const StyledTextBlockWrapper = styled(BackgroundContainer)``
+export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
+  ${({ id }) =>
+    id && {
+      scrollMarginTop: 'var(--topbar-height)',
+    }}
+`
 
 const StyledTextBlock = styled.section`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);

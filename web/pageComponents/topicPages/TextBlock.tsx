@@ -5,7 +5,12 @@ import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
 import CallToActions from './CallToActions'
 
-export const StyledTextBlockWrapper = styled(BackgroundContainer)``
+export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
+  ${({ id }) =>
+    id && {
+      scrollMarginTop: 'var(--topbar-height)',
+    }}
+`
 
 const StyledTextBlock = styled.section`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
