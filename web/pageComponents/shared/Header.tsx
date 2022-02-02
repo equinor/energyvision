@@ -33,6 +33,10 @@ const LogoLinkInGrid = styled(LogoLink)`
   grid-area: logo;
 `
 
+/* This div is needed because of the grid layout to wrap focus lock panes.
+  We might look into to improve this at some point. */
+const ControlChild = styled.div``
+
 const ControlsContainer = styled.div`
   grid-area: menu;
   justify-self: right;
@@ -69,20 +73,20 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           <LogoLinkInGrid />
           <ControlsContainer style={{ '--columns': slugs?.length > 1 ? 3 : 2 } as CSSProperties}>
             {isGlobal && (
-              <div>
+              <ControlChild>
                 <SearchOverlay />
-              </div>
+              </ControlChild>
             )}
             {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
             {menuData && isGlobal ? (
-              <div>
+              <ControlChild>
                 <SiteMenu data={menuData as MenuData} />
-              </div>
+              </ControlChild>
             ) : (
-              <div>
+              <ControlChild>
                 <SimpleSiteMenu data={menuData as SimpleMenuData} />
-              </div>
+              </ControlChild>
             )}
           </ControlsContainer>
         </TopbarContainer>
