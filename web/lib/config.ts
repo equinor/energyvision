@@ -6,3 +6,8 @@ export const sanityConfig: ClientConfig = {
   useCdn: process.env.NODE_ENV === 'production',
   apiVersion: '2021-12-17',
 }
+
+export const algolia = {
+  applicationId: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
+  searchApiKey: process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || '',
+}

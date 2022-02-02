@@ -1,4 +1,4 @@
 import algoliasearch from 'algoliasearch/lite'
+import { algolia } from './config'
 
-// @TODO Add the config variables here
-export const searchClient = algoliasearch('', '')
+export const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
