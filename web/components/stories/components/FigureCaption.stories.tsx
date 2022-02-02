@@ -9,7 +9,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: `A FigureCaption component is used to display caption and attribution in a figure.
+        component: `A FigureCaption component is used to display caption and credit in a figure.
         `,
       },
     },

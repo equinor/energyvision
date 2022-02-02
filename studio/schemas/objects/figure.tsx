@@ -13,7 +13,7 @@ export default {
   name: 'figure',
   title: 'Image',
   type: 'object',
-  description: 'Image with optional caption and attribution.',
+  description: 'Image with optional caption and credit.',
   fieldsets: [
     {
       name: 'design',
