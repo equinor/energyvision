@@ -86,7 +86,7 @@ const homepages = languages.map((lang) =>
     id: `homepage-${lang.id}`,
     icon: flags[lang.id],
     child: () =>
-      S.documentTypeList(`route_${lang.name}_homepage`)
+      S.documentWithInitialValueTemplate(`route_${lang.name}_homepage`)
         .id(`${lang.id}-homepage`)
         .title(`Homepage route - ${lang.title}`),
   }),
