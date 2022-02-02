@@ -68,7 +68,11 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
         <TopbarContainer>
           <LogoLinkInGrid />
           <ControlsContainer style={{ '--columns': slugs?.length > 1 ? 3 : 2 } as CSSProperties}>
-            {isGlobal && <SearchOverlay />}
+            {isGlobal && (
+              <div>
+                <SearchOverlay />
+              </div>
+            )}
             {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
             {menuData && isGlobal ? (
