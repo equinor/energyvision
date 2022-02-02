@@ -35,8 +35,8 @@ export default {
     },
     {
       name: 'attribution',
-      type: 'string',
       title: 'Attribution',
+      type: 'string',
     },
     {
       name: 'layout',

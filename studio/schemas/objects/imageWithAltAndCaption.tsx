@@ -26,7 +26,7 @@ export default {
     {
       name: 'attribution',
       type: 'string',
-      title: 'Attribution',
+      title: 'Credit',
     },
   ],
   preview: {
