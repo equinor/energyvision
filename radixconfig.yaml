@@ -127,6 +127,17 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
+    - name: web-loop
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-loop:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
     - name: web-techstars
       publicPort: http
       image: ghcr.io/equinor/energyvision/web-techstars:{imageTagName}
@@ -243,6 +254,17 @@ spec:
     - name: studio-equinorfunds
       publicPort: http
       image: ghcr.io/equinor/energyvision/studio-equinorfunds:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
+    - name: studio-loop
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-loop:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http

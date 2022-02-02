@@ -43,6 +43,7 @@ const datasets = {
   storage: ['english', 'german'],
   techstars: ['english'],
   equinorfunds: ['norwegian'],
+  loop: ['english'],
 }
 
 /**
