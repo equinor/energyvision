@@ -35,7 +35,7 @@ export default {
     },
     {
       name: 'attribution',
-      title: 'Attribution',
+      title: 'Credit',
       type: 'string',
     },
     {
