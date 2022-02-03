@@ -1,4 +1,4 @@
-name: Lint, Test and Deploy all the webs
+name: Lint, Test and Deploy only equinor.com
 on:
   workflow_dispatch:
   push:

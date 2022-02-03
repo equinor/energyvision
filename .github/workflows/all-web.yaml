@@ -1,4 +1,4 @@
-name: Lint, Test and Deploy web for equinor.com
+name: Lint, Test and Deploy all the webs
 on:
   workflow_dispatch:
   schedule:
