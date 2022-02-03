@@ -93,7 +93,6 @@ const SiteMenu = () => {
             </NavTopbar>
             <SearchContainer>
               <Heading inverted>Search</Heading>
-              <Text style={{ color: 'white' }}>Does not work in production yet, stay tuned...</Text>
               <Search setSearchState={setSearchState} searchState={searchState} />
             </SearchContainer>
           </DarkTopbarDropdown>
