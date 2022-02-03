@@ -2,6 +2,7 @@ import { FigureCaption } from '@components'
 import styled from 'styled-components'
 import Image from '../../../pageComponents/shared/Image'
 import type { ImageWithAlt } from '../../../types/types'
+import { StyledAttribution } from '../../../pageComponents/topicPages/Figure'
 
 type Layout = 'full' | 'left' | 'right'
 
@@ -88,7 +89,8 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
       )}
       {caption || attribution ? (
         <FigureCaption>
-          {caption} {attribution}
+          {caption}
+          <StyledAttribution>{attribution}</StyledAttribution>
         </FigureCaption>
       ) : null}
     </FigureTest>
