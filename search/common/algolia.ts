@@ -51,7 +51,7 @@ export const update: UpdateType = (indexName) => (indexSettings) => (mappedData:
   )
 
 type PrefixEnvType = (environment: string) => string
-const prefixEnv: PrefixEnvType = (environment) => environment.slice(4) // Not very sophisticated. Perhaps make more robust at some point.
+export const prefixEnv: PrefixEnvType = (environment) => environment.slice(0, 3) // Not very sophisticated. Perhaps make more robust at some point.
 
 type GenerateIndexNameType = (identifier: string) => (language: string) => (environment: string) => string
 export const generateIndexName: GenerateIndexNameType = (identifier) => (language) => (environment) =>
