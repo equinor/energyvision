@@ -24,10 +24,10 @@ const test = flow(
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
 
-  await new DotenvAzure().config({
+  /*await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: true,
-  })
+  })*/
 
   if (myTimer.isPastDue) {
     context.log('Timer function is running late!')
