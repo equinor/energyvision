@@ -3,12 +3,9 @@ import { Settings } from '@algolia/client-search'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { GetProcessEnvType } from './types'
+import { getAlgoliaApiKey, getAlgoliaAppId } from './env'
 
 const algoliaSearchCurried = (appId: string) => (apiKey: string) => algoliasearch(appId, apiKey)
-
-const getAlgoliaAppId: GetProcessEnvType = () => E.fromNullable('Unable to find app id')(process.env.ALGOLIA_APP_ID)
-const getAlgoliaApiKey: GetProcessEnvType = () => E.fromNullable('Unable to find API key')(process.env.ALGOLIA_API_KEY)
 
 // Init one particular index
 // TODO: If we are using multiple indexes, this needs to be refactored
@@ -44,12 +41,18 @@ type UpdateType = (
 ) => (
   indexSettings: Settings,
 ) => (mappedData: Readonly<Record<string, string>>[]) => TE.TaskEither<string | Error, string>
-export const update: UpdateType =
-  (indexName) => (indexSettings) => (mappedData: Readonly<Record<string, string>>[]) =>
-    pipe(
-      init(indexName),
-      TE.fromEither,
-      TE.chainW(updateIndex(mappedData)),
-      TE.chainW(updateSettings(indexSettings)),
-      TE.map(() => 'Halleluja'),
-    )
+export const update: UpdateType = (indexName) => (indexSettings) => (mappedData: Readonly<Record<string, string>>[]) =>
+  pipe(
+    init(indexName),
+    TE.fromEither,
+    TE.chainW(updateIndex(mappedData)),
+    TE.chainW(updateSettings(indexSettings)),
+    TE.map(() => 'Halleluja'),
+  )
+
+type PrefixEnvType = (environment: string) => string
+const prefixEnv: PrefixEnvType = (environment) => environment.slice(4) // Not very sophisticated. Perhaps make more robust at some point.
+
+type GenerateIndexNameType = (identifier: string) => (language: string) => (environment: string) => string
+export const generateIndexName: GenerateIndexNameType = (identifier) => (language) => (environment) =>
+  pipe(prefixEnv(environment), (prefixedEnv) => `${prefixedEnv}_${identifier}_${language}`)
