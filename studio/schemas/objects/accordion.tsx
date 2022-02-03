@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { AccordionComponent } from '../../icons'
@@ -7,6 +8,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
+import { validateComponentAnchor } from '../validations/validateAnchorReference'
 
 export type Accordion = {
   _type: 'accordion'
@@ -62,6 +64,9 @@ export default {
       name: 'anchor',
       type: 'anchorReferenceField',
       title: 'Anchor reference',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
     },
     {
       title: 'Background',

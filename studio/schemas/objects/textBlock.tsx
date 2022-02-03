@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
@@ -6,6 +7,8 @@ import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
+import { validateComponentAnchor } from '../validations/validateAnchorReference'
+import type { Rule } from '@sanity/types'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -84,6 +87,9 @@ export default {
       name: 'anchor',
       type: 'anchorReferenceField',
       title: 'Anchor reference',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
     },
     {
       title: 'Background',
