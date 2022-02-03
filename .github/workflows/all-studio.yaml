@@ -1,13 +1,8 @@
-name: Build & deploy studio
+name: Build & deploy all studios
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'studio/**/*'
-      - 'satellites.json'
-      - 'satellitesConfig.js'
+  schedule:
+    - cron: '0 20 * * *'
 jobs:
   deploy:
     runs-on: ubuntu-latest
