@@ -4,4 +4,5 @@
 pnpm lint
 pnpm web type-check
 pnpm web test
+pnpm search-indexers test
 
