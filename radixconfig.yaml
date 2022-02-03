@@ -38,8 +38,6 @@ spec:
       secrets:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
-        - NEXT_PUBLIC_ALGOLIA_APP_ID
-        - NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY
     - name: web-brazil
       publicPort: http
       image: ghcr.io/equinor/energyvision/web-brazil:{imageTagName}
