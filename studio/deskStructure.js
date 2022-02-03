@@ -18,7 +18,9 @@ import flags from './icons/countries'
 
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
-const isGlobal = dataSet === 'global'
+const EQUINOR_COM_NAME = 'global'
+const EQUINOR_COM_DEV = 'production' || 'global_development'
+const isGlobal = dataSet === EQUINOR_COM_NAME || dataSet === EQUINOR_COM_DEV
 
 const menuId = (lang) => {
   if (isGlobal) {
