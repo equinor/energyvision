@@ -6,8 +6,8 @@ const path = require('path')
 module.exports = {
   stories: [
     '../components/stories/docs/*.stories.mdx',
-    '../components/stories/components/**/*.stories.@(ts|tsx|mdx)',
     '../components/stories/typography/**/*.stories.@(ts|tsx|mdx)',
+    '../components/src/**/*.stories.@(ts|tsx|mdx)',
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials', 'storybook-css-modules-preset'],
   previewMainTemplate: path.resolve(__dirname, 'template.ejs'),
@@ -15,6 +15,7 @@ module.exports = {
     // Respect the baseUrl from tsconfig
     config.resolve.modules.push(path.resolve(__dirname, '../components'))
     config.resolve.alias['@components'] = path.resolve(__dirname, '../components/src')
+    config.resolve.alias['@stories'] = path.resolve(__dirname, '../components/stories')
     config.resolve.alias['@utils'] = path.resolve(__dirname, '../components/utils')
 
     const envVars = {

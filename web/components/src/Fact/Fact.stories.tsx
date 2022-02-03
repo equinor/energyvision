@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
 import { FactBox, FactProps, Heading, Text, List } from '@components'
-import { AspectImagePlaceholder } from './helpers/styles'
+import { AspectImagePlaceholder } from '@stories'
 
 export default {
   title: 'Components/Fact',
@@ -225,7 +225,7 @@ export const WithLongText: Story<WithImageProps> = ({ background = 'warm', dynam
 
 WithLongText.parameters = {
   docs: {
-    storyDescription: `If the text contains more than 800 characters and has no image, it will split into two columns. 
+    storyDescription: `If the text contains more than 800 characters and has no image, it will split into two columns.
     Remember to set this using the hasColumns prop.`,
   },
 }

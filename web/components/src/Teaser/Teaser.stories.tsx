@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Story, Meta } from '@storybook/react'
 import { Teaser, TeaserProps, Heading, Text, Link, Eyebrow, BackgroundContainer } from '@components'
-import { ImagePlaceholder, RatioBox, AspectImagePlaceholder } from './helpers/styles'
+import { ImagePlaceholder, RatioBox, AspectImagePlaceholder } from '@stories'
 import styled from 'styled-components'
 
 const SmallImageContainer = styled.div`
