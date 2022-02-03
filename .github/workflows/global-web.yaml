@@ -1,4 +1,4 @@
-name: Lint, Test and Deploy web
+name: Lint, Test and Deploy all the webs
 on:
   workflow_dispatch:
   push:
@@ -11,8 +11,6 @@ on:
       - '!web/.gitignore'
       - '!web/jest.config.js'
       - '!web/jest.setup.ts'
-      - 'satellites.json'
-      - 'satellitesConfig.js'
   repository_dispatch:
     types: [sanity_publish]
 jobs:
@@ -78,52 +76,6 @@ jobs:
           sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-  read-satellites:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v2
-      - id: set-matrix
-        name: Read from satellites.json
-        run: |
-          MATRIX=$(cat satellites.json)
-          echo ::set-output name=matrix::${MATRIX}
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-  deploy-satellites:
-    needs: [deploy-global, read-satellites]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
-    env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - id: deploy-website
-        uses: ./.github/workflows/deploy-websites/
-        with:
-          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
-          datasetName: ${{ matrix.dataset }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}

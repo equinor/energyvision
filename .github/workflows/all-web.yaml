@@ -1,0 +1,119 @@
+name: Lint, Test and Deploy web for equinor.com
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 20 * * *'
+jobs:
+  check_code:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: latest
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm install --filter energy-vision-web
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:web
+      - name: Run tests 🔍
+        id: test
+        run: |
+          pnpm test --filter energy-vision-web
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-global:
+    needs: check_code
+    runs-on: ubuntu-latest
+    strategy:
+      # The matrix approach is needed to re-use code created for satellites
+      matrix:
+        dataset: ['global']
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - id: deploy-global
+        uses: ./.github/workflows/deploy-websites/
+        with:
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
+          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  read-satellites:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: set-matrix
+        name: Read from satellites.json
+        run: |
+          MATRIX=$(cat satellites.json)
+          echo ::set-output name=matrix::${MATRIX}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-satellites:
+    needs: [deploy-global, read-satellites]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - id: deploy-website
+        uses: ./.github/workflows/deploy-websites/
+        with:
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
