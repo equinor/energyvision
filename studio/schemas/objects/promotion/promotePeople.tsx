@@ -6,6 +6,7 @@ import { validateRequiredIfVisible } from '../../validations/validateRequiredIfV
 import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
 import routes from '../../routes'
+import { AnchorLinkDescription } from '../anchorReferenceField'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -137,6 +138,13 @@ export default {
               hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
             },
             {
+              name: 'anchorReference',
+              title: 'Anchor reference',
+              type: 'anchorReferenceField',
+              description: AnchorLinkDescription(),
+              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
+            },
+            {
               name: 'label',
               title: 'Visible label',
               description: 'The visible text on the link/button.',
@@ -153,13 +161,6 @@ export default {
               title: '♿ Screenreader label',
               description: 'A text used for providing screen readers with additional information',
               type: 'string',
-              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
-            },
-            {
-              title: 'Anchor',
-              name: 'anchor',
-              type: 'string',
-              description: 'This is not ready yet',
               hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
             },
           ],

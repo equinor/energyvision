@@ -260,6 +260,7 @@ const pageContentFields = /* groq */ `
                 "slug": slug.current,
               },
               "href": url,
+              anchorReference,
             },
           },
         },
