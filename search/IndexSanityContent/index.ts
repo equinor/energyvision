@@ -6,11 +6,9 @@ import { indexEvents } from './events'
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
 
-  // NML workaround because of codespace. To be deleted
-  delete process.env.AZURE_APP_CONFIG_CONNECTION_STRING
   await new DotenvAzure().config({
     allowEmptyValues: true,
-    debug: true
+    debug: false
   })
 
   if (myTimer.isPastDue) {
