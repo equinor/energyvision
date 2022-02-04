@@ -23,9 +23,9 @@ const imageAlignmentOptions = [
   { value: 'right', icon: RightAlignedImage },
 ]
 
-export default {
-  name: 'pullQuote',
-  title: 'Quote',
+export const FilteredPullQuote = ({ name = 'pullQuote', title = 'Quote', filters = [] }: any) => ({
+  title: title,
+  name: name,
   type: 'object',
   localize: true,
   fieldsets: [
@@ -94,6 +94,12 @@ export default {
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
+      /* The background colour formattings should not be visible on the news document */
+      /*     hidden: ({ document }: { document: any }) => {
+        console.log(document)
+        return document._type === 'news'
+      }, */
+      hidden: () => filters.includes('backgroundColour'),
       options: {
         borderradius: {
           outer: '100%',
@@ -119,4 +125,8 @@ export default {
       }
     },
   },
-}
+})
+
+const defaultPullQuote = FilteredPullQuote({})
+
+export default defaultPullQuote
