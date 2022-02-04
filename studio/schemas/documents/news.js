@@ -4,7 +4,6 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import { formatDate } from '../../helpers/formatDate'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
-import { FilteredPullQuote } from '../objects/pullQuote'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -137,12 +136,7 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [
-        blockContentType,
-        FilteredPullQuote({ name: 'pullQuote', filters: ['backgroundColour'] }) /* { type: 'pullQuote' } */,
-        { type: 'positionedInlineImage' },
-        { type: 'factbox' },
-      ],
+      of: [blockContentType, { type: 'pullQuote' }, { type: 'positionedInlineImage' }, { type: 'factbox' }],
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value || value.length === 0) {
