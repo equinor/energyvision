@@ -95,10 +95,7 @@ export default {
       name: 'background',
       type: 'colorlist',
       /* The background colour formattings should not be visible on the news document */
-      hidden: ({ document }: { document: any }) => {
-        console.log(document)
-        return document._type === 'news'
-      },
+      hidden: ({ document }: { document: any }) => document._type === 'news',
       options: {
         borderradius: {
           outer: '100%',
