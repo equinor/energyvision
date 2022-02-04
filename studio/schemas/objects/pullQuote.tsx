@@ -49,13 +49,13 @@ export default {
       title: 'Quote',
       description: 'Highlighted quote from the article.',
       rows: 5,
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required().error('Quote text is required'),
     },
     {
       name: 'author',
       type: 'string',
       title: 'Name',
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required().error('Author name is required'),
     },
     {
       name: 'authorTitle',
