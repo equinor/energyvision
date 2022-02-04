@@ -21,7 +21,6 @@ export const newsFields = /* groq */ `
     url,
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
-      "background": coalesce(background.title, 'none'),
       height,
     },
   },
@@ -49,7 +48,6 @@ export const newsQuery = /* groq */ `
         image,
         quote,
         "designOptions": {
-          "background": coalesce(background.title, 'White'),
           "imagePosition": coalesce(imagePosition, 'right'),
         }
       },
