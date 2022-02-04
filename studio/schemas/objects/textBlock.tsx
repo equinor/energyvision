@@ -44,6 +44,14 @@ export default {
       name: 'design',
       title: 'Design options',
     },
+    {
+      name: 'anchor',
+      title: 'Additional anchor point reference',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
   ],
   fields: [
     {
@@ -58,6 +66,15 @@ export default {
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
+    },
+    {
+      name: 'anchor',
+      type: 'anchorReferenceField',
+      title: 'Anchor reference',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
+      fieldset: 'anchor',
     },
     {
       name: 'ingress',
@@ -82,14 +99,6 @@ export default {
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
-    },
-    {
-      name: 'anchor',
-      type: 'anchorReferenceField',
-      title: 'Anchor reference',
-      validation: (Rule: Rule) =>
-        // @ts-ignore
-        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
     },
     {
       title: 'Background',

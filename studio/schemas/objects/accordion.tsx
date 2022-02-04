@@ -36,6 +36,14 @@ export default {
       name: 'design',
       title: 'Design options',
     },
+    {
+      name: 'anchor',
+      title: 'Additional anchor point reference',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
   ],
   fields: [
     {
@@ -45,6 +53,15 @@ export default {
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
       validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
+    },
+    {
+      name: 'anchor',
+      type: 'anchorReferenceField',
+      title: 'Anchor reference',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
+      fieldset: 'anchor',
     },
     {
       title: 'Ingress',
@@ -59,14 +76,6 @@ export default {
       type: 'array',
       of: [{ type: 'accordionItem' }],
       validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: 'anchor',
-      type: 'anchorReferenceField',
-      title: 'Anchor reference',
-      validation: (Rule: Rule) =>
-        // @ts-ignore
-        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
     },
     {
       title: 'Background',
