@@ -86,7 +86,7 @@ export const colors = css`
   }
 `
 export const typography = css`
-  :root[data-dynamic-typography-version="v1"] {
+  :root[data-dynamic-typography-version='v1'] {
     --typeScale-base: 1rem;
     --typeScale-multiplier: 1.2;
     --typeScale-small: calc(var(--typeScale-0) / var(--typeScale-multiplier));
@@ -99,15 +99,17 @@ export const typography = css`
     --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
   }
 
-  :root[data-dynamic-typography-version="v2"] {
-    /* TODO: Add small */
-    --typeScale-0: clamp(0.83rem, 0.38vw + 0.74rem, 1.2rem);
-    --typeScale-1: clamp(1rem, 0.45vw + 0.89rem, 1.44rem);
-    --typeScale-2: clamp(1.2rem, 0.54vw + 1.07rem, 1.72rem);
-    --typeScale-3: clamp(1.44rem, 0.65vw + 1.29rem, 2.07rem);
-    --typeScale-4: clamp(1.73rem, 0.78vw + 1.54rem, 2.48rem);
-    --typeScale-5: clamp(2.07rem, 0.94vw + 1.85rem, 2.98rem);
-    --typeScale-6: clamp(2.49rem, 1.13vw + 2.22rem, 3.58rem);
+  // prettier-ignore
+  :root[data-dynamic-typography-version='v2'] {
+    --typeScale-00: clamp(calc(11.11 / 16 * 1rem), 0.12vw + 0.67rem, calc(12.94 / 16 * 1rem));
+    --typeScale-0 : clamp(calc(13.33 / 16 * 1rem), 0.25vw + 0.77rem, calc(17.25 / 16 * 1rem));
+    --typeScale-05: clamp(calc(14.61 / 16 * 1rem), 0.34vw + 0.83rem, calc(19.92 / 16 * 1rem));
+    --typeScale-1 : clamp(calc(16.00 / 16 * 1rem), 0.45vw + 0.89rem, calc(23.00 / 16 * 1rem));
+    --typeScale-2 : clamp(calc(19.20 / 16 * 1rem), 0.74vw + 1.03rem, calc(30.66 / 16 * 1rem));
+    --typeScale-3 : clamp(calc(23.04 / 16 * 1rem), 1.15vw + 1.17rem, calc(40.87 / 16 * 1rem));
+    --typeScale-4 : clamp(calc(27.65 / 16 * 1rem), 1.74vw + 1.32rem, calc(54.48 / 16 * 1rem));
+    --typeScale-5 : clamp(calc(33.18 / 16 * 1rem), 2.55vw + 1.48rem, calc(72.62 / 16 * 1rem));
+    --typeScale-small: var(--typeScale-00);
   }
 
   :root {
@@ -171,8 +173,8 @@ export const componentSettings = css`
 
   /* Because Jest hates you when you do an import style in the component */
   :root {
-      --reach-accordion: 1;
-      --reach-skip-nav: 1;
+    --reach-accordion: 1;
+    --reach-skip-nav: 1;
   }
 
   /* Use relative units in EDS Table */
@@ -195,6 +197,6 @@ export const componentSettings = css`
     --eds_button__icon__size: 24px;
     --eds_button__icon__margin_y: -4px; // icon = 24px, line-height: 16px, (24 - 16) / 2 = 4px
     --eds_button__fullwidth__icon__margin_x: calc(8 / 14 * 1em);
-    --eds_button__fullwidth__label__margin_x: calc(32 / 14  * 1em);
+    --eds_button__fullwidth__label__margin_x: calc(32 / 14 * 1em);
   }
 `
