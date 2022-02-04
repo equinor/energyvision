@@ -8,7 +8,6 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
-/* @TODO: See #634 This should use a background container */
 
 const PageQuote = ({ data }: { data: QuoteData }) => {
   const { designOptions } = data
