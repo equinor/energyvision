@@ -4,7 +4,7 @@ import { format_quote } from '@equinor/eds-icons'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import { Colors } from '../../helpers/ColorListValues'
-import type { Rule } from '@sanity/types'
+import type { Rule, SanityDocument } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 
@@ -95,7 +95,7 @@ export default {
       name: 'background',
       type: 'colorlist',
       /* The background colour formattings should not be visible on the news document */
-      hidden: ({ document }: { document: any }) => document._type === 'news',
+      hidden: ({ document }: { document: SanityDocument }) => document._type === 'news',
       options: {
         borderradius: {
           outer: '100%',
