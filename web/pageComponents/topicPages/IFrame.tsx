@@ -68,16 +68,19 @@ const IFrame = ({
               height={height}
               hasSectionTitle={!!title}
             />
-            <FigureCaption size="medium">
-              <SimpleBlockContent
-                blocks={description}
-                serializers={{
-                  types: {
-                    block: BlockRenderer,
-                  },
-                }}
-              />
-            </FigureCaption>
+            <FigureCaption
+              size="medium"
+              caption={
+                <SimpleBlockContent
+                  blocks={description}
+                  serializers={{
+                    types: {
+                      block: BlockRenderer,
+                    },
+                  }}
+                />
+              }
+            />
           </Figure>
         ) : (
           <CoreIFrame

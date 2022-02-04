@@ -19,7 +19,7 @@ describe('FigureCaption', () => {
   })
   it('Can render a text', () => {
     const text = 'My test title'
-    render(<FigureCaption>{text}</FigureCaption>)
+    render(<FigureCaption caption={text} />)
     const inputNode = screen.getByText(text)
     expect(inputNode).toBeDefined()
   })

@@ -17,13 +17,13 @@ export default {
 } as Meta
 
 export const Default: Story<FigureCaptionProps> = (args) => (
-  <FigureCaption {...args}>Exciting opportunities abroad Photo: Carl Oscar von der Linné</FigureCaption>
+  <FigureCaption {...args} caption="Exciting opportunities abroad" attribution="Photo: Carl Oscar von der Linné" />
 )
 
 Default.storyName = 'Default'
 
 export const Medium: Story<FigureCaptionProps> = () => (
-  <FigureCaption size="medium">Exciting opportunities abroad Photo: Carl Oscar von der Linné</FigureCaption>
+  <FigureCaption size="medium" caption="Exciting opportunities abroad" attribution="Photo: Carl Oscar von der Linné" />
 )
 
 Medium.storyName = 'With larger font size'

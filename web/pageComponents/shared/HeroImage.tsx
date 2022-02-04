@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { FigureCaption } from '@components'
 import type { ImageWithCaptionData } from '../../types/types'
 import Image from './Image'
-import { StyledAttribution } from '../topicPages/Figure'
 
 type HeroImageProps = {
   data: ImageWithCaptionData
@@ -34,11 +33,7 @@ const HeroImage = ({ data }: HeroImageProps) => {
         layout="responsive"
         priority
       />
-      {caption || attribution ? (
-        <FigureCaption>
-          {caption && caption} {attribution && <StyledAttribution>{attribution}</StyledAttribution>}
-        </FigureCaption>
-      ) : null}
+      {(caption || attribution) && <FigureCaption caption={caption} attribution={attribution} />}
     </StyledFigure>
   )
 }

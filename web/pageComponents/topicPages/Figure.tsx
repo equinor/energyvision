@@ -27,19 +27,6 @@ const StyledFigureWrapper = styled(BackgroundContainer)`
   } */
 `
 
-export const StyledAttribution = styled.span<{ bgColor?: string }>`
-  white-space: nowrap;
-  ${({ bgColor }) =>
-    bgColor === 'Slate Blue'
-      ? {
-          color: 'var(--grey-40)',
-        }
-      : {
-          color: 'var(--grey-60)',
-        }}
-};
-`
-
 const FullWidthImage = ({ data }: TeaserProps) => {
   const { figure, designOptions } = data
 
@@ -65,11 +52,13 @@ const FullWidthImage = ({ data }: TeaserProps) => {
           "
           layout="responsive"
         />
-        {caption || attribution ? (
-          <FigureCaption>
-            {caption} <StyledAttribution bgColor={designOptions?.background}>{attribution}</StyledAttribution>
-          </FigureCaption>
-        ) : null}
+        {(caption || attribution) && (
+          <FigureCaption
+            caption={caption}
+            attribution={attribution}
+            lightAttributionColor={designOptions?.background === 'Slate Blue'}
+          />
+        )}
       </StyledFigure>
     </StyledFigureWrapper>
   )

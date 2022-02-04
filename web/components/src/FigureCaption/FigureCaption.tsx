@@ -20,12 +20,24 @@ export const StyledFigcaption = styled(Typography)`
     max-width: 635px;
   }
 `
+export const StyledAttribution = styled.span<{ lightAttributionColor: boolean }>`
+  white-space: nowrap;
+  color: var(--grey-60);
+  ${({ lightAttributionColor }) =>
+    lightAttributionColor && {
+      color: 'var(--grey-40)',
+    }};
+`
+
 export type FigureCaptionProps = {
   size?: 'small' | 'medium'
+  caption?: string | JSX.Element
+  attribution?: string
+  lightAttributionColor?: boolean
 } & HTMLAttributes<HTMLElement>
 
 export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(function FigureCaption(
-  { size = 'small', children, ...rest },
+  { size = 'small', caption, attribution, lightAttributionColor = false, ...rest },
   ref,
 ) {
   return (
@@ -40,7 +52,10 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(functio
       ref={ref}
       {...rest}
     >
-      {children}
+      {caption && caption + ' '}
+      {attribution && (
+        <StyledAttribution lightAttributionColor={lightAttributionColor}>{attribution}</StyledAttribution>
+      )}
     </StyledFigcaption>
   )
 })
