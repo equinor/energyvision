@@ -105,7 +105,6 @@ export default {
         list: Colors,
       },
       fieldset: 'design',
-      initialValue: Colors[0],
     },
   ],
   preview: {

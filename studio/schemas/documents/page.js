@@ -3,6 +3,7 @@ import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
+import { Colors } from '../../helpers/ColorListValues'
 // import { done } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
@@ -80,7 +81,7 @@ export default {
         { type: 'fullWidthImage' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'pullQuote' },
+        { type: 'pullQuote', initialValue: { background: Colors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
