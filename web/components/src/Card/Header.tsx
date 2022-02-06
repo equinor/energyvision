@@ -6,11 +6,11 @@ const StyledHeader = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  :root[data-dynamic-typography-version='v1'] & {
+  [data-dynamic-typography-version='v1'] & {
     padding: 0 1rem;
   }
 
-  :root[data-dynamic-typography-version='v2'] & {
+  [data-dynamic-typography-version='v2'] & {
     padding: 0 var(--space-medium);
   }
 `

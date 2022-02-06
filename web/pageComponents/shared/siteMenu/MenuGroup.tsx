@@ -14,7 +14,13 @@ const { Item } = List
 const StyledItem = styled(Item)`
   @media (min-width: 1300px) {
     /*  We want a slightly smaller font size here, em on purpose */
-    font-size: 0.9em;
+    [data-dynamic-typography-version='v1'] & {
+      font-size: 0.9em;
+    }
+
+    [data-dynamic-typography-version='v2'] & {
+      font-size: var(--typeScale-05);
+    }
   }
 `
 
@@ -27,7 +33,14 @@ const StyledSubMenuGroupLink = styled(Link)`
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
   @media (min-width: 1300px) {
     /*  We want a slightly smaller padding here, em on purpose */
-    padding: 0.45em 0;
+    [data-dynamic-typography-version='v1'] & {
+      padding: 0.45em 0;
+    }
+
+    [data-dynamic-typography-version='v2'] & {
+      font-size: var(--typeScale-1); // TODO: For stor?
+      padding: var(--space-small) 0;
+    }
   }
   :hover {
     background-color: var(--grey-10);

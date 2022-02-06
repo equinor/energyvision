@@ -27,7 +27,7 @@ const StyledCard = styled(Card)`
 const StyledMedia = styled(Media)`
   padding: var(--space-large) var(--space-large) 0 var(--space-large);
   word-break: break-word;
-  /* Hyphens doesn't work with the Equinor font 
+  /* Hyphens doesn't work with the Equinor font
   hyphens: auto; */
   ${StyledLandscapeCard} & {
     @media (min-width: 520px) {
@@ -199,7 +199,21 @@ const Actions = ({
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
       <NextLink href={slug} passHref>
         {/*  @TODO: Language string for Details */}
-        <ButtonLink aria-label={`Details ${title ? blocksToText(title) : ''}`}>Details</ButtonLink>
+        {process.env.NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT === 'true' ? (
+          <ButtonLink
+            style={
+              {
+                '--eds_button__font_size': 'var(--typeScale-0)',
+                '--eds_button__padding_y': 'var(--space-xSmall)',
+              } as CSSProperties
+            }
+            aria-label={`Details ${title ? blocksToText(title) : ''}`}
+          >
+            Details
+          </ButtonLink>
+        ) : (
+          <ButtonLink aria-label={`Details ${title ? blocksToText(title) : ''}`}>Details</ButtonLink>
+        )}
       </NextLink>
     </ActionContainer>
   )

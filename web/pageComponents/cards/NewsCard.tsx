@@ -10,6 +10,9 @@ const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
+  [data-dynamic-typography-version='v2'] & {
+    --card-gap: var(--space-large);
+  }
 `
 const StyledLink = styled(CardLink)`
   display: inline-block;
@@ -49,14 +52,29 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
           <Header>
             {publishDateTime && (
               <Eyebrow>
-                <FormattedDate datetime={publishDateTime} />
+                {process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+                  <FormattedDate
+                    datetime={publishDateTime}
+                    style={{ textTransform: 'uppercase', marginBottom: 'var(--space-xSmall)' }}
+                  />
+                ) : (
+                  <FormattedDate datetime={publishDateTime} />
+                )}
               </Eyebrow>
             )}
             <Title>{title}</Title>
           </Header>
-          <Text>
-            <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-          </Text>
+
+          {process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+            <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
+              <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
+            </Text>
+          ) : (
+            <Text>
+              <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
+            </Text>
+          )}
+
           <Action>
             <Arrow />
           </Action>

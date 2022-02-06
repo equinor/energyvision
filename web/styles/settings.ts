@@ -126,7 +126,7 @@ export const typography = css`
 `
 
 export const spacings = css`
-  :root {
+  :root[data-dynamic-typography-version='v1'] {
     --space-xSmall: calc(1rem / 4); /* 4 */
     --space-small: calc(1rem / 2); /* 8 */
     --space-medium: 1rem; /* 16 */
@@ -137,14 +137,35 @@ export const spacings = css`
     --space-4xLarge: calc(1rem * 6); /* 96 */
   }
 
+  :root[data-dynamic-typography-version='v2'] {
+    --space-xSmall: calc(var(--typeScale-1) / 4); /* 4 */
+    --space-small: calc(var(--typeScale-1) / 2); /* 8 */
+    --space-medium: var(--typeScale-1); /* 16 */
+    --space-mediumPlus: calc(var(--typeScale-1) * 1.25); /* 16 */
+    --space-large: calc(var(--typeScale-1) * 1.5); /* 24 */
+    --space-xLarge: calc(var(--typeScale-1) * 2); /* 32 */
+    --space-xxLarge: calc(var(--typeScale-1) * 2.5); /* 40 */
+    --space-3xLarge: calc(var(--typeScale-1) * 3.5); /* 56 */
+    --space-4xLarge: calc(var(--typeScale-1) * 6); /* 96 */
+  }
+
   /** space units for borders, border-radius etc. */
-  :root {
+  :root[data-dynamic-typography-version='v1'] {
     --space-1: calc(1rem / 16); /* 1 */
     --space-2: calc(1rem / 8); /* 2 */
     --space-3: calc(1rem / 16 * 3); /* 3 */
     --space-4: calc(1rem / 4); /* 4 */
     --space-5: calc(1rem / 16 * 5); /* 5 */
   }
+
+  :root[data-dynamic-typography-version='v2'] {
+    --space-1: calc(var(--typeScale-1) / 16); /* 1 */
+    --space-2: calc(var(--typeScale-1) / 8); /* 2 */
+    --space-3: calc(var(--typeScale-1) / 16 * 3); /* 3 */
+    --space-4: calc(var(--typeScale-1) / 4); /* 4 */
+    --space-5: calc(var(--typeScale-1) / 16 * 5); /* 5 */
+  }
+
   :root {
     --minViewportWidth: 375px;
     --maxViewportWidth: 1920px;

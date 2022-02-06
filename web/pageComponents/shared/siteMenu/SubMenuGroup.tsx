@@ -3,10 +3,21 @@ import styled from 'styled-components'
 import { List, Heading, HeadingProps, ListProps } from '@components'
 
 const StyledSubMenuGroupHeading = styled(Heading)`
-  font-weight: 600;
+  [data-dynamic-typography-version='v1'] & {
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  [data-dynamic-typography-version='v2'] & {
+    font-weight: 650;
+    letter-spacing: 0.15em;
+    font-size: var(--typeScale-05) !important; // TODO: Eliminate the need for !important
+    line-height: var(--lineHeight-2) !important;
+  }
+
   padding: var(--space-xLarge) var(--space-medium) calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
   @media (min-width: 1300px) {
-    letter-spacing: 2px;
+    font-weight: 600;
     font-size: var(--typeScale-0);
     padding: 0;
   }

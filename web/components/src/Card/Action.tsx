@@ -8,11 +8,11 @@ const StyledAction = styled.div`
   grid-auto-columns: auto;
   display: flex;
 
-  :root[data-dynamic-typography-version='v1'] & {
+  [data-dynamic-typography-version='v1'] & {
     padding: 0 1rem;
   }
 
-  :root[data-dynamic-typography-version='v2'] & {
+  [data-dynamic-typography-version='v2'] & {
     padding: 0 var(--space-medium);
   }
 `

@@ -5,6 +5,10 @@ import { Accordion as RAccordion, AccordionProps as RAccordionProps } from '@rea
 export type MenuProps = RAccordionProps
 
 const StyledAccordion = styled(RAccordion)`
+  [data-dynamic-typography-version='v2'] & {
+    font-size: var(--typeScale-1); // needed for components that inherit font-size
+  }
+
   margin: 0;
   padding: 0;
   list-style: none;

@@ -72,6 +72,12 @@ export default class MyDocument extends Document {
             title: 'Typography',
             url: new URL(`${process.env.NEXT_PUBLIC_LOCALHOST}/typography`),
           },
+          {
+            title: 'News',
+            url: new URL(
+              `${process.env.NEXT_PUBLIC_LOCALHOST}/news/20210323-hywind-scotland-uk-best-performing-offshore-wind-farm`,
+            ),
+          },
         ],
       )
     }

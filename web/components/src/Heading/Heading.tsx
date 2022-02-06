@@ -11,11 +11,11 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
   line-height: var(--line-height);
 
-  :root[data-dynamic-typography-version='v1'] & {
+  [data-dynamic-typography-version='v1'] & {
     font-weight: var(--font-weight);
   }
 
-  :root[data-dynamic-typography-version='v2'] & {
+  [data-dynamic-typography-version='v2'] & {
     font-weight: var(--font-weight, var(--fontWeight-regular));
   }
 

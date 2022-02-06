@@ -5,19 +5,19 @@ import styled from 'styled-components'
 const StyledButtonLink = styled(Button)`
   [data-eds-flexible-height] & {
     --eds_button__height: auto;
-
-    :root[data-dynamic-typography-version='v1'] & {
-      --eds_button__font_size: var(--typeScale-1);
-      --eds_button__radius: calc(4 / 14 * 1em);
-    }
-
-    :root[data-dynamic-typography-version='v2'] & {
-      --eds_button__font_size: var(--typeScale-0);
-      --eds_button__radius: calc(4 / var(--typeScale-0));
-    }
   }
 
-  :root[data-dynamic-typography-version='v1'] {
+  [data-dynamic-typography-version='v1'][data-eds-flexible-height] & {
+    --eds_button__font_size: var(--typeScale-1);
+    --eds_button__radius: calc(4 / 14 * 1em);
+  }
+
+  [data-dynamic-typography-version='v2'][data-eds-flexible-height] & {
+    --eds_button__font_size: var(--typeScale-0);
+    --eds_button__radius: calc(4 / var(--typeScale-0));
+  }
+
+  [data-dynamic-typography-version='v1'] & {
     padding: var(--space-xSmall) var(--space-medium);
   }
 

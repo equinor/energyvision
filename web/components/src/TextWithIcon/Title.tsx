@@ -10,7 +10,11 @@ const StyledTitle = styled(Heading)`
 `
 
 export const Title = ({ children, ...rest }: TitleProps) => {
-  return (
+  return process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+    <StyledTitle size="xl" regular {...rest}>
+      {children}
+    </StyledTitle>
+  ) : (
     <StyledTitle size="2xl" regular {...rest}>
       {children}
     </StyledTitle>

@@ -1,5 +1,5 @@
 import { Teaser as EnvisTeaser, Link, Eyebrow, BackgroundContainer } from '@components'
-
+import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
@@ -14,6 +14,12 @@ const { Content, Media } = EnvisTeaser
 type TeaserProps = {
   data: TeaserData
 }
+
+const StyledEnvisTeaser = styled(EnvisTeaser)`
+  [data-dynamic-typography-version='v2'] & {
+    font-size: var(--typeScale-1);
+  }
+`
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   const imageSrc =
@@ -64,7 +70,7 @@ const Teaser = ({ data }: TeaserProps) => {
   const isSvg = image?.extension === 'svg'
   return (
     <BackgroundContainer background={background}>
-      <EnvisTeaser imagePosition={imagePosition}>
+      <StyledEnvisTeaser imagePosition={imagePosition}>
         <Media
           size={isSvg && imageSize === 'small' ? 'small' : 'full'}
           center={isSvg ? true : false}
@@ -98,7 +104,7 @@ const Teaser = ({ data }: TeaserProps) => {
           )}
           {action && <TeaserAction action={action} />}
         </Content>
-      </EnvisTeaser>
+      </StyledEnvisTeaser>
     </BackgroundContainer>
   )
 }

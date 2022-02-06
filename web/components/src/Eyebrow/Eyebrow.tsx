@@ -6,11 +6,11 @@ const StyledTypography = styled(Typography)`
   font-size: var(--typeScale-2);
   line-height: var(--lineHeight-3);
 
-  :root[data-dynamic-typography-version='v1'] & {
+  [data-dynamic-typography-version='v1'] & {
     margin-bottom: -1rem;
   }
 
-  :root[data-dynamic-typography-version='v2'] & {
+  [data-dynamic-typography-version='v2'] & {
     margin-bottom: calc(var(--space-medium) * -1);
   }
 

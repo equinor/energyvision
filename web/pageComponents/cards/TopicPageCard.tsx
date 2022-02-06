@@ -12,6 +12,10 @@ const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
+
+  [data-dynamic-typography-version='v2'] & {
+    --card-gap: var(--space-large);
+  }
 `
 
 const StyledLink = styled(CardLink)`
@@ -56,7 +60,13 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
             <Title>{pageTitle}</Title>
           </Header>
           {ingress && (
-            <Text>
+            <Text
+              style={
+                process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true'
+                  ? { marginTop: 'calc(var(--space-small) * -1)' }
+                  : {}
+              }
+            >
               <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
             </Text>
           )}

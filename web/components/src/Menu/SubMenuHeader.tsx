@@ -77,9 +77,14 @@ export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(f
         <StyledTypography
           forwardedAs="span"
           style={
-            {
-              '--font-weight': isExpanded ? '700' : '400',
-            } as CSSProperties
+            process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true'
+              ? ({
+                  '--font-weight': isExpanded ? '700' : '400',
+                  fontSize: 'var(--typeScale-1)', // TODO: Update EDS Typography component
+                } as CSSProperties)
+              : ({
+                  '--font-weight': isExpanded ? '700' : '400',
+                } as CSSProperties)
           }
         >
           {children}
