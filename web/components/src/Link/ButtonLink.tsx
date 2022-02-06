@@ -4,14 +4,25 @@ import styled from 'styled-components'
 
 const StyledButtonLink = styled(Button)`
   [data-eds-flexible-height] & {
-    --eds_button__font_size: var(--typeScale-1);
-    --eds_button__radius: calc(4 / 14 * 1em);
     --eds_button__height: auto;
+
+    :root[data-dynamic-typography-version='v1'] & {
+      --eds_button__font_size: var(--typeScale-1);
+      --eds_button__radius: calc(4 / 14 * 1em);
+    }
+
+    :root[data-dynamic-typography-version='v2'] & {
+      --eds_button__font_size: var(--typeScale-0);
+      --eds_button__radius: calc(4 / var(--typeScale-0));
+    }
+  }
+
+  :root[data-dynamic-typography-version='v1'] {
+    padding: var(--space-xSmall) var(--space-medium);
   }
 
   color: var(--slate-blue-95);
   text-decoration: none;
-  padding: var(--space-xSmall) var(--space-medium);
   display: inline-block;
 
   /* If the button link is used inside a inverted component, the text colour must also be inverted */

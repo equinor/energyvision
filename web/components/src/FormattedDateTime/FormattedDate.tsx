@@ -2,6 +2,7 @@ import { FormattedDate as ReactIntlDate } from 'react-intl'
 import { DateProps, StyledDate, DateIcon } from './shared'
 import styled from 'styled-components'
 
+// TODO: Add component to storybook
 const StyledTime = styled.time`
   /* Better alignment with the icon */
   svg + & {

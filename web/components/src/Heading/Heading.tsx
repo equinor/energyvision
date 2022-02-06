@@ -10,7 +10,15 @@ type StyledHeadingProps = {
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
   line-height: var(--line-height);
-  font-weight: var(--font-weight);
+
+  :root[data-dynamic-typography-version='v1'] & {
+    font-weight: var(--font-weight);
+  }
+
+  :root[data-dynamic-typography-version='v2'] & {
+    font-weight: var(--font-weight, var(--fontWeight-regular));
+  }
+
   text-transform: var(--text-transform);
   ${({ center }) =>
     center && {
@@ -21,7 +29,7 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
     inverted && {
       color: 'var(--inverted-text)',
     }}
-  
+
   /* If the heading is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
     color: var(--inverted-text);
@@ -32,6 +40,7 @@ export type HeadingProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
+  weight?: number
   center?: boolean
   inverted?: boolean
   uppercase?: boolean
@@ -86,13 +95,20 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
       center={center}
       inverted={inverted}
       style={
-        {
-          ...style,
-          '--size': sizes[size],
-          '--line-height': lineHeights[size],
-          '--font-weight': size === '2xl' && regular ? 'var(--fontWeight-regular)' : fontWeights[size],
-          '--text-transform': uppercase ? 'uppercase' : 'none',
-        } as CSSProperties
+        process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true'
+          ? ({
+              ...style,
+              '--size': sizes[size],
+              '--line-height': lineHeights[size],
+              '--text-transform': uppercase ? 'uppercase' : 'none',
+            } as CSSProperties)
+          : ({
+              ...style,
+              '--size': sizes[size],
+              '--line-height': lineHeights[size],
+              '--font-weight': size === '2xl' && regular ? 'var(--fontWeight-regular)' : fontWeights[size],
+              '--text-transform': uppercase ? 'uppercase' : 'none',
+            } as CSSProperties)
       }
       {...rest}
     >

@@ -4,10 +4,17 @@ import styled from 'styled-components'
 export type CardActionProps = HTMLAttributes<HTMLDivElement>
 
 const StyledAction = styled.div`
-  padding: 0 1rem;
   flex-grow: 1;
   grid-auto-columns: auto;
   display: flex;
+
+  :root[data-dynamic-typography-version='v1'] & {
+    padding: 0 1rem;
+  }
+
+  :root[data-dynamic-typography-version='v2'] & {
+    padding: 0 var(--space-medium);
+  }
 `
 
 const Children = styled.div`

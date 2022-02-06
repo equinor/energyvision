@@ -9,6 +9,12 @@ const StyledTitle = styled.div`
 
 const StyledHeading = styled(Heading)`
   margin-bottom: 0;
+
+  :root[data-dynamic-typography-version='v2'] & {
+    // TODO: Don’t use !important.
+    font-size: var(--card-title-fontSize, var(--typeScale-2)) !important;
+    font-weight: var(--card-title-fontWeight, var(--fontWeight-regular)) !important;
+  }
 `
 
 export type TitleProps = {
@@ -17,7 +23,11 @@ export type TitleProps = {
 } & HTMLAttributes<HTMLHeadingElement>
 
 export const Title = forwardRef<HTMLDivElement, TitleProps>(function Title({ level = 'h3', children, ...rest }, ref) {
-  return (
+  return process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+    <StyledTitle ref={ref} {...rest}>
+      <StyledHeading level={level}>{children}</StyledHeading>
+    </StyledTitle>
+  ) : (
     <StyledTitle ref={ref} {...rest}>
       <StyledHeading level={level} size="lg">
         {children}

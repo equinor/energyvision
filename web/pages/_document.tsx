@@ -68,6 +68,10 @@ export default class MyDocument extends Document {
             title: 'Professionals',
             url: new URL(`${process.env.NEXT_PUBLIC_LOCALHOST}/careers/professionals`),
           },
+          {
+            title: 'Typography',
+            url: new URL(`${process.env.NEXT_PUBLIC_LOCALHOST}/typography`),
+          },
         ],
       )
     }
