@@ -27,7 +27,7 @@ const Container = styled.figure<ContainerProps>`
       'quote quote quote'
     `
       : `
-      'quote quote quote'
+      'quote quote quote '
       'author author author'
     `};
 
@@ -60,8 +60,6 @@ export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function Pul
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Media)
   return (
     <Container imagePosition={imagePosition} hasImage={hasImage} ref={ref}>
-      {console.log('hasImage? ', hasImage)}
-
       {children}
     </Container>
   )
