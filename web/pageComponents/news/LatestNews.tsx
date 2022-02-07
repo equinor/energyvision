@@ -1,5 +1,6 @@
 import { Heading } from '@components'
 import styled from 'styled-components'
+import Head from 'next/head'
 import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 
@@ -24,6 +25,10 @@ type LatestNewsProp = {
 const LatestNews = ({ data }: LatestNewsProp) => {
   return (
     <>
+      <Head>
+        {/* eslint-disable jsx-a11y/html-has-lang */}
+        <html data-template="news" />
+      </Head>
       <Heading size="xl" level="h2" center>
         {/* @TODO: Localization, where does this text come from */}
         Latest news
