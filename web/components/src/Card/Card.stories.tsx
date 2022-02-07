@@ -3,7 +3,7 @@ import React, { CSSProperties } from 'react'
 import { Story, Meta } from '@storybook/react'
 import styled from 'styled-components'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from '@stories'
-import { Card, CardProps, Text, Link, ButtonLink, BackgroundContainer } from '@components'
+import { Card, CardProps, Text, ButtonLink, BackgroundContainer } from '@components'
 
 export default {
   title: 'Components/Card',

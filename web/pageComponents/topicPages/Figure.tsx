@@ -53,11 +53,13 @@ const FullWidthImage = ({ data }: TeaserProps) => {
           layout="responsive"
         />
         {(caption || attribution) && (
-          <FigureCaption
-            caption={caption}
-            attribution={attribution}
-            lightAttributionColor={designOptions?.background === 'Slate Blue'}
-          />
+          <FigureCaption>
+            caption && <FigureCaption.Caption>{caption + ' '}</FigureCaption.Caption>
+            attribution &&
+            <FigureCaption.Attribution color={designOptions?.background === 'Slate Blue' ? 'light' : 'default'}>
+              {attribution}
+            </FigureCaption.Attribution>
+          </FigureCaption>
         )}
       </StyledFigure>
     </StyledFigureWrapper>

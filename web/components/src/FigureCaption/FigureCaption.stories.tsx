@@ -5,7 +5,10 @@ import { FigureCaption, FigureCaptionProps } from '@components'
 export default {
   title: 'Components/FigureCaption',
   component: FigureCaption,
-
+  subcomponents: {
+    Caption: FigureCaption.Caption,
+    Attribution: FigureCaption.Attribution,
+  },
   parameters: {
     docs: {
       description: {
@@ -17,13 +20,19 @@ export default {
 } as Meta
 
 export const Default: Story<FigureCaptionProps> = (args) => (
-  <FigureCaption {...args} caption="Exciting opportunities abroad" attribution="Photo: Carl Oscar von der Linné" />
+  <FigureCaption {...args}>
+    <FigureCaption.Caption>Exciting opportunities abroad </FigureCaption.Caption>
+    <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
+  </FigureCaption>
 )
 
 Default.storyName = 'Default'
 
 export const Medium: Story<FigureCaptionProps> = () => (
-  <FigureCaption size="medium" caption="Exciting opportunities abroad" attribution="Photo: Carl Oscar von der Linné" />
+  <FigureCaption size="medium">
+    <FigureCaption.Caption>Exciting opportunities abroad </FigureCaption.Caption>
+    <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
+  </FigureCaption>
 )
 
 Medium.storyName = 'With larger font size'

@@ -33,7 +33,12 @@ const HeroImage = ({ data }: HeroImageProps) => {
         layout="responsive"
         priority
       />
-      {(caption || attribution) && <FigureCaption caption={caption} attribution={attribution} />}
+      {(caption || attribution) && (
+        <FigureCaption>
+          caption && <FigureCaption.Caption>{caption + ' '}</FigureCaption.Caption>
+          attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>
+        </FigureCaption>
+      )}
     </StyledFigure>
   )
 }

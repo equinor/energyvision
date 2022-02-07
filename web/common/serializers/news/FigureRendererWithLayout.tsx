@@ -86,7 +86,12 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
           maxWidth={570}
         />
       )}
-      {(caption || attribution) && <FigureCaption caption={caption} attribution={attribution} />}
+      {(caption || attribution) && (
+        <FigureCaption>
+          caption && <FigureCaption.Caption>{caption + ' '}</FigureCaption.Caption>
+          attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>
+        </FigureCaption>
+      )}
     </FigureTest>
   )
 }

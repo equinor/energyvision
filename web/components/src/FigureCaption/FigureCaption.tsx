@@ -3,7 +3,7 @@ import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { style } from '@equinor/eds-icons'
 
-export const StyledFigcaption = styled(Typography)`
+export const StyledFigCaption = styled(Typography)`
   font-size: var(--size);
   margin-top: var(--space-small);
 
@@ -20,28 +20,17 @@ export const StyledFigcaption = styled(Typography)`
     max-width: 635px;
   }
 `
-export const StyledAttribution = styled.span<{ lightAttributionColor: boolean }>`
-  white-space: nowrap;
-  color: var(--grey-60);
-  ${({ lightAttributionColor }) =>
-    lightAttributionColor && {
-      color: 'var(--grey-40)',
-    }};
-`
 
 export type FigureCaptionProps = {
   size?: 'small' | 'medium'
-  caption?: string | JSX.Element
-  attribution?: string
-  lightAttributionColor?: boolean
 } & HTMLAttributes<HTMLElement>
 
 export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(function FigureCaption(
-  { size = 'small', caption, attribution, lightAttributionColor = false, ...rest },
+  { size = 'small', children, ...rest },
   ref,
 ) {
   return (
-    <StyledFigcaption
+    <StyledFigCaption
       forwardedAs="figcaption"
       style={
         {
@@ -52,10 +41,7 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(functio
       ref={ref}
       {...rest}
     >
-      {caption && caption + ' '}
-      {attribution && (
-        <StyledAttribution lightAttributionColor={lightAttributionColor}>{attribution}</StyledAttribution>
-      )}
-    </StyledFigcaption>
+      {children}
+    </StyledFigCaption>
   )
 })
