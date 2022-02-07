@@ -88,7 +88,7 @@ export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
       )}
       {(caption || attribution) && (
         <FigureCaption>
-          caption && <FigureCaption.Caption>{caption + ' '}</FigureCaption.Caption>
+          caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>
           attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>
         </FigureCaption>
       )}

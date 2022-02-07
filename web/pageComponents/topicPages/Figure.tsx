@@ -54,7 +54,7 @@ const FullWidthImage = ({ data }: TeaserProps) => {
         />
         {(caption || attribution) && (
           <FigureCaption>
-            caption && <FigureCaption.Caption>{caption + ' '}</FigureCaption.Caption>
+            caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>
             attribution &&
             <FigureCaption.Attribution color={designOptions?.background === 'Slate Blue' ? 'light' : 'default'}>
               {attribution}

@@ -21,7 +21,7 @@ export default {
 
 export const Default: Story<FigureCaptionProps> = (args) => (
   <FigureCaption {...args}>
-    <FigureCaption.Caption>Exciting opportunities abroad </FigureCaption.Caption>
+    <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
     <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
   </FigureCaption>
 )
@@ -30,9 +30,25 @@ Default.storyName = 'Default'
 
 export const Medium: Story<FigureCaptionProps> = () => (
   <FigureCaption size="medium">
-    <FigureCaption.Caption>Exciting opportunities abroad </FigureCaption.Caption>
-    <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
+    <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
+    <FigureCaption.Attribution color="light">Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
   </FigureCaption>
 )
 
 Medium.storyName = 'With larger font size'
+
+export const WithCaptionOnly: Story<FigureCaptionProps> = () => (
+  <FigureCaption>
+    <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
+  </FigureCaption>
+)
+
+WithCaptionOnly.storyName = 'With just caption'
+
+export const WithAttributionOnly: Story<FigureCaptionProps> = () => (
+  <FigureCaption>
+    <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
+  </FigureCaption>
+)
+
+WithAttributionOnly.storyName = 'With just credit'
