@@ -55,4 +55,4 @@ export const prefixEnv: PrefixEnvType = (environment) => environment.slice(0, 3)
 
 type GenerateIndexNameType = (identifier: string) => (language: string) => (environment: string) => string
 export const generateIndexName: GenerateIndexNameType = (identifier) => (language) => (environment) =>
-  pipe(prefixEnv(environment), (prefixedEnv) => `${prefixedEnv}_${identifier}_${language}`)
+  pipe(prefixEnv(environment), (prefixedEnv) => `${prefixedEnv.toLowerCase()}_${identifier}_${language}`)

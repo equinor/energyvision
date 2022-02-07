@@ -6,7 +6,7 @@ import { update, sanityClient, generateIndexName, getEnvironment } from '../../c
 import { mapData, fetchData } from '../sanity'
 
 const indexIdentifier = 'EVENTS'
-const language = 'en-UK' // From where to get?
+const language = 'en-GB' // From where to get?
 
 const indexName = pipe(getEnvironment(), E.map(generateIndexName(indexIdentifier)(language)))
 
