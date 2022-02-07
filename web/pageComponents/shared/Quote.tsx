@@ -8,7 +8,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
     {authorTitle && <PullQuote.Author title={authorTitle}>{author}</PullQuote.Author>}
 
-    {image && (
+    {image?.asset && (
       <PullQuote.Media>
         <Image
           maxWidth={220}
