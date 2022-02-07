@@ -32,18 +32,24 @@ const Container = styled.figure<ContainerProps>`
     `};
 
   @media (min-width: 800px) {
-    grid-template-columns: ${({ imagePosition }) =>
-      imagePosition === 'left' ? `11rem var(--space-medium) 1fr` : `1fr var(--space-medium) 11rem`};
-    grid-template-areas: ${({ imagePosition }) =>
-      imagePosition === 'left'
+    grid-template-columns: ${({ imagePosition, hasImage }) =>
+      hasImage && imagePosition === 'left'
+        ? `11rem var(--space-medium) 1fr`
+        : hasImage
+        ? `1fr var(--space-medium) 11rem`
+        : ``};
+    grid-template-areas: ${({ imagePosition, hasImage }) =>
+      hasImage && imagePosition === 'left'
         ? `
         'media spacing quote'
         'media spacing author'
         `
-        : `
+        : hasImage
+        ? `
         'quote spacing media'
         'author spacing media'
-        `};
+        `
+        : ``};
   }
 `
 
@@ -54,6 +60,8 @@ export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function Pul
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Media)
   return (
     <Container imagePosition={imagePosition} hasImage={hasImage} ref={ref}>
+      {console.log('hasImage? ', hasImage)}
+
       {children}
     </Container>
   )
