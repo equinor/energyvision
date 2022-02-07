@@ -28,6 +28,8 @@ export default function Home(): JSX.Element {
         <Head>
           <title>EnergyVision</title>
           <link rel="icon" href="/favicon.ico" />
+          {/* eslint-disable jsx-a11y/html-has-lang */}
+          <html data-template="home" />
         </Head>
         <Title>
           MVP 2 is all about{' '}

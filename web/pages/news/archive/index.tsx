@@ -55,6 +55,8 @@ export default function AllArchivedNews({ data }: AllArchivedNewsProps) {
       ></NextSeo>
       <Head>
         <title>Archived news</title>
+        {/* eslint-disable jsx-a11y/html-has-lang */}
+        <html data-template="news" />
       </Head>
       <Container>
         <Heading level="h1" size="2xl" style={{ margin: '1rem 0' }}>
