@@ -10,7 +10,6 @@ const Search = () => {
     console.warn('You need to add an app id for Algolia search')
     return null
   }
-  console.log(searchClient)
   const testIndex = `dev_EVENTS_en-GB`
 
   return (
