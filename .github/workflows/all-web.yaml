@@ -112,6 +112,8 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
           sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
+          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
