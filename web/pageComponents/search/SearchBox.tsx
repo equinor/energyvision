@@ -4,7 +4,7 @@ const SearchBox = () => {
   return (
     <InstantSearchBox
       // eslint-disable-next-line jsx-a11y/no-autofocus
-      autoFocus={true}
+      autoFocus={false}
       translations={{ placeholder: '' }}
     />
   )
