@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks'
+import styled from 'styled-components'
 
+const Input = styled.input`
+  background-color: var(--slate-blue-95);
+  border-style: 1px solid var(--moss-green-50);
+`
 export type SearchBoxProps = UseSearchBoxProps
 
 const SearchBox = (props: SearchBoxProps) => {
-  const { query, refine, isSearchStalled } = useSearchBox(props)
+  // @TODO Cannot figure out exactly what this isSearchStalled is supposed to do
+  const { query, refine /* isSearchStalled */ } = useSearchBox(props)
   const [inputValue, setInputValue] = useState(query)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -34,7 +40,7 @@ const SearchBox = (props: SearchBoxProps) => {
     if (query !== inputValue) {
       refine(inputValue)
     }
-  }, [inputValue, refine])
+  }, [inputValue, refine, query])
 
   // Track when the InstantSearch query changes to synchronize it with
   // the React state.
@@ -44,12 +50,12 @@ const SearchBox = (props: SearchBoxProps) => {
     if (document.activeElement !== inputRef.current && query !== inputValue) {
       setInputValue(query)
     }
-  }, [query])
+  }, [query, inputValue])
 
   return (
-    <div className="ais-SearchBox">
+    <div>
       <form action="" className="ais-SearchBox-form" noValidate onSubmit={handleSubmit} onReset={handleReset}>
-        <input
+        <Input
           ref={inputRef}
           className="ais-SearchBox-input"
           autoComplete="off"
