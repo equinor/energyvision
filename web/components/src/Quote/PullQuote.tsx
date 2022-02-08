@@ -27,7 +27,7 @@ const Container = styled.figure<ContainerProps>`
       'quote quote quote'
     `
       : `
-      'quote quote quote '
+      'quote quote quote'
       'author author author'
     `};
 
@@ -37,7 +37,7 @@ const Container = styled.figure<ContainerProps>`
         ? `11rem var(--space-medium) 1fr`
         : hasImage
         ? `1fr var(--space-medium) 11rem`
-        : ``};
+        : `1fr 6rem 12rem`};
     grid-template-areas: ${({ imagePosition, hasImage }) =>
       hasImage && imagePosition === 'left'
         ? `
@@ -49,7 +49,10 @@ const Container = styled.figure<ContainerProps>`
         'quote spacing media'
         'author spacing media'
         `
-        : ``};
+        : `
+          'quote quote .'
+          '. author author'
+        `};
   }
 `
 
