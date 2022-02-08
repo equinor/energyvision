@@ -9,7 +9,7 @@ const { outline } = Tokens
 const Input = styled.input`
   background-color: var(--slate-blue-95);
   border: 1px solid var(--moss-green-50);
-  padding: var(--space-medium) var(--space-medium) var(--space-medium) var(--space-xLarge);
+  padding: var(--space-medium) var(--space-medium) var(--space-medium) var(--space-xxLarge);
   width: 100%;
   color: var(--white-100);
   /* Assuming this is not a real button */
