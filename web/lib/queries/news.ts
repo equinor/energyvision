@@ -4,7 +4,7 @@ import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 
 export const newsFields = /* groq */ `
- 
+
   "id": _id,
   "updatedAt": _updatedAt,
   title,
@@ -74,7 +74,13 @@ export const newsQuery = /* groq */ `
   },
     ${newsFields}
   },
-  "latestNews": *[_type == "news" && slug.current != $slug] | order(publishDateTime desc, _updatedAt desc)[0...3] {
+  "latestNews": *[
+      _type == "news" &&
+      slug.current != $slug &&
+      heroImage.image.asset != null &&
+      // ok to hardcode because news' langs are not dynamic
+      ($lang == 'en_GB' && length(_id) == 36 || _id match 'nb_NO')
+    ] | order(publishDateTime desc, _updatedAt desc)[0...3] {
     ${newsFields}
   }
 }`
