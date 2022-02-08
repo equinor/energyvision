@@ -6,7 +6,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
   <PullQuote imagePosition={designOptions?.imagePosition || 'left'}>
     <PullQuote.Quote>{quote}</PullQuote.Quote>
 
-    {authorTitle && <PullQuote.Author title={authorTitle}>{author}</PullQuote.Author>}
+    {author && <PullQuote.Author title={authorTitle}>{author}</PullQuote.Author>}
 
     {image?.asset && (
       <PullQuote.Media>
