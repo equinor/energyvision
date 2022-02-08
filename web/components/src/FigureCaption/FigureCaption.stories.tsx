@@ -31,7 +31,7 @@ Default.storyName = 'Default'
 export const Medium: Story<FigureCaptionProps> = () => (
   <FigureCaption size="medium">
     <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
-    <FigureCaption.Attribution color="light">Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
+    <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
   </FigureCaption>
 )
 
