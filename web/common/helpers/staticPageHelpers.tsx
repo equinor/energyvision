@@ -56,7 +56,16 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
    * because AEM also has archived pages which has 'archive' the page path */
   const contentUrl = getContentUrl(locale, slug)
   const response = await fetch(contentUrl)
-
+  console.log(
+    'Response code ' +
+      response.status +
+      ' ' +
+      contentUrl +
+      ' ' +
+      response.headers.get('x-cache') +
+      ' ' +
+      response.headers.get('etag'),
+  )
   if (response && response.status === 200) {
     const contentUrl = getContentUrl(locale, slug)
     const response = await fetch(contentUrl)
