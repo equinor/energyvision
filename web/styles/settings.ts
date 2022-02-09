@@ -101,14 +101,17 @@ export const typography = css`
 
   // prettier-ignore
   :root[data-dynamic-typography-version='v2'] {
-    --typeScale-00: clamp(calc(11.11 / 16 * 1rem), 0.12vw + 0.67rem, calc(12.94 / 16 * 1rem));
-    --typeScale-0 : clamp(calc(13.33 / 16 * 1rem), 0.25vw + 0.77rem, calc(17.25 / 16 * 1rem));
-    --typeScale-05: clamp(calc(14.61 / 16 * 1rem), 0.34vw + 0.83rem, calc(19.92 / 16 * 1rem));
-    --typeScale-1 : clamp(calc(16.00 / 16 * 1rem), 0.45vw + 0.89rem, calc(23.00 / 16 * 1rem));
-    --typeScale-2 : clamp(calc(19.20 / 16 * 1rem), 0.74vw + 1.03rem, calc(30.66 / 16 * 1rem));
-    --typeScale-3 : clamp(calc(23.04 / 16 * 1rem), 1.15vw + 1.17rem, calc(40.87 / 16 * 1rem));
-    --typeScale-4 : clamp(calc(27.65 / 16 * 1rem), 1.74vw + 1.32rem, calc(54.48 / 16 * 1rem));
-    --typeScale-5 : clamp(calc(33.18 / 16 * 1rem), 2.55vw + 1.48rem, calc(72.62 / 16 * 1rem));
+    /*                         mobile                                     desktop */
+    --typeScale-00: clamp(calc(11.11 / 16 * 1rem), 0.08vw + 0.68rem, calc(12.38 / 16 * 1rem));
+    --typeScale-0 : clamp(calc(13.33 / 16 * 1rem), 0.21vw + 0.79rem, calc(16.50 / 16 * 1rem));
+    --typeScale-05: clamp(calc(14.61 / 16 * 1rem), 0.29vw + 0.85rem, calc(19.05 / 16 * 1rem));
+    --typeScale-1 : clamp(calc(16.00 / 16 * 1rem), 0.39vw + 0.91rem, calc(22.00 / 16 * 1rem));
+    --typeScale-2 : clamp(calc(19.20 / 16 * 1rem), 0.66vw + 1.05rem, calc(29.33 / 16 * 1rem));
+    --typeScale-3 : clamp(calc(23.04 / 16 * 1rem), 1.04vw + 1.20rem, calc(39.09 / 16 * 1rem));
+    --typeScale-4 : clamp(calc(27.65 / 16 * 1rem), 1.58vw + 1.36rem, calc(52.11 / 16 * 1rem));
+    --typeScale-5 : clamp(calc(33.18 / 16 * 1rem), 2.35vw + 1.52rem, calc(69.46 / 16 * 1rem));
+
+     // search and replace, then remove
     --typeScale-small: var(--typeScale-00);
   }
 
@@ -137,16 +140,16 @@ export const spacings = css`
     --space-4xLarge: calc(1rem * 6); /* 96 */
   }
 
+  // prettier-ignore
   :root[data-dynamic-typography-version='v2'] {
-    --space-xSmall: calc(var(--typeScale-1) / 4); /* 4 */
-    --space-small: calc(var(--typeScale-1) / 2); /* 8 */
-    --space-medium: var(--typeScale-1); /* 16 */
-    --space-mediumPlus: calc(var(--typeScale-1) * 1.25); /* 16 */
-    --space-large: calc(var(--typeScale-1) * 1.5); /* 24 */
-    --space-xLarge: calc(var(--typeScale-1) * 2); /* 32 */
-    --space-xxLarge: calc(var(--typeScale-1) * 2.5); /* 40 */
-    --space-3xLarge: calc(var(--typeScale-1) * 3.5); /* 56 */
-    --space-4xLarge: calc(var(--typeScale-1) * 6); /* 96 */
+    --space-xSmall : calc( 4 / 16 * var(--typeScale-1));
+    --space-small  : calc( 8 / 16 * var(--typeScale-1));
+    --space-medium : calc(16 / 16 * var(--typeScale-1));
+    --space-large  : calc(24 / 16 * var(--typeScale-1));
+    --space-xLarge : calc(32 / 16 * var(--typeScale-1));
+    --space-xxLarge: calc(40 / 16 * var(--typeScale-1));
+    --space-3xLarge: calc(56 / 16 * var(--typeScale-1));
+    --space-4xLarge: calc(96 / 16 * var(--typeScale-1));
   }
 
   /** space units for borders, border-radius etc. */
@@ -158,12 +161,12 @@ export const spacings = css`
     --space-5: calc(1rem / 16 * 5); /* 5 */
   }
 
+  /** space units for borders, border-radius etc. */
   :root[data-dynamic-typography-version='v2'] {
-    --space-1: calc(var(--typeScale-1) / 16); /* 1 */
-    --space-2: calc(var(--typeScale-1) / 8); /* 2 */
-    --space-3: calc(var(--typeScale-1) / 16 * 3); /* 3 */
-    --space-4: calc(var(--typeScale-1) / 4); /* 4 */
-    --space-5: calc(var(--typeScale-1) / 16 * 5); /* 5 */
+    --space-1: calc(1 / 16 * var(--typeScale-1));
+    --space-2: calc(2 / 16 * var(--typeScale-1));
+    --space-3: calc(3 / 16 * var(--typeScale-1));
+    --space-4: calc(4 / 16 * var(--typeScale-1));
   }
 
   :root {
