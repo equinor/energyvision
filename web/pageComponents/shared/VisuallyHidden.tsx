@@ -1,3 +1,4 @@
+import { ElementType, LabelHTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 const Hidden = styled.label`
@@ -10,10 +11,16 @@ const Hidden = styled.label`
 `
 type Props = {
   children: React.ReactNode
-}
+  /** Change html element. Label is default*/
+  as?: ElementType
+} & LabelHTMLAttributes<HTMLLabelElement>
 
-const VisuallyHidden = ({ children }: Props) => {
-  return <Hidden>{children}</Hidden>
+const VisuallyHidden = ({ children, as = 'label', ...rest }: Props) => {
+  return (
+    <Hidden as={as} {...rest}>
+      {children}
+    </Hidden>
+  )
 }
 
 export default VisuallyHidden

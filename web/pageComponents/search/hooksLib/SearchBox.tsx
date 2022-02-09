@@ -101,8 +101,11 @@ const SearchBox = (props: SearchBoxProps) => {
     <div>
       <form action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
         {/* @TODO Language strings */}
-        <VisuallyHidden>Search</VisuallyHidden>
+        <VisuallyHidden as="label" htmlFor="site-search">
+          Search
+        </VisuallyHidden>
         <Input
+          id="site-search"
           ref={inputRef}
           autoComplete="off"
           autoCorrect="off"
