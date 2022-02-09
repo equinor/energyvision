@@ -36,13 +36,8 @@ const Container = styled.figure<ContainerProps>`
       hasImage && imagePosition === 'left'
         ? `calc(11 * var(--space-medium)) var(--space-medium) 1fr`
         : hasImage
-<<<<<<< HEAD
-        ? `1fr var(--space-medium) 11rem`
-        : `1fr 6rem 5rem`};
-=======
         ? `1fr var(--space-medium) calc(11 * var(--space-medium))`
-        : `1fr var(--space-4xLarge) calc(12 * var(--space-medium))`};
->>>>>>> 95d41b1a (💄 Use variables instead of rem values (#717))
+        : `1fr var(--space-4xLarge) calc(5 * var(--space-medium))`};
     grid-template-areas: ${({ imagePosition, hasImage }) =>
       hasImage && imagePosition === 'left'
         ? `
