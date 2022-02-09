@@ -15,7 +15,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 5rem;
+    width: calc(5 * var(--space-medium));
     height: 100%;
     color: #bbb;
     border-left: 1px solid #ccc;
@@ -60,23 +60,23 @@
     background: #fff0;
     border: 0px solid #ccc;
     appearance: none;
-    font-size: 1.4rem;
+    font-size: calc(1.4 * var(--space-medium));
     color: #666;
-    height: 3rem;
+    height: calc(3 * var(--space-medium));
     font-style: inherit;
-    line-height: 3.2rem;
-    padding-left: 1rem;
+    line-height: calc(3.2 * var(--space-medium));
+    padding-left: var(--space-medium);
     display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 1.4rem;
+    font-size: calc(1.4 * var(--space-medium));
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     cursor:pointer;
-    padding-right: 3.8rem;
+    padding-right: calc(3.8 * var(--space-medium));
 }
 
 

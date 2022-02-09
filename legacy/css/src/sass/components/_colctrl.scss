@@ -4,13 +4,13 @@
 $section-background-color-dark: #efefef;
 $section-border-color-dark: #dedede;
 
-$xs-padding:calc(3rem / 1.6);
-$sm-padding:calc(5rem / 1.6);
-$md-padding:calc(5rem / 1.6);
-$lg-padding:calc(5rem / 1.6);
+$xs-padding:calc(calc(3 * var(--space-medium)) / 1.6);
+$sm-padding:calc(calc(5 * var(--space-medium)) / 1.6);
+$md-padding:calc(calc(5 * var(--space-medium)) / 1.6);
+$lg-padding:calc(calc(5 * var(--space-medium)) / 1.6);
 
-$sm-base-padding:calc(5rem / 1.6);
-$md-base-padding:calc(10rem / 1.6);
+$sm-base-padding:calc(calc(5 * var(--space-medium)) / 1.6);
+$md-base-padding:calc(calc(10 * var(--space-medium)) / 1.6);
 
 
 //  Outer wrapper for all colctrl components
@@ -26,7 +26,7 @@ $md-base-padding:calc(10rem / 1.6);
 
 .page-container {
   @include span(12 nest);
-  min-height: calc(38rem / 1.6);
+  min-height: calc(calc(38 * var(--space-medium)) / 1.6);
 
   @include susy-breakpoint($screen-xl, $susy) {
     max-width: 100%;
@@ -43,7 +43,7 @@ $md-base-padding:calc(10rem / 1.6);
     .parsys_column.colctrl-6c
      {
 
-      max-width: calc(140rem / 1.6);
+      max-width: calc(calc(140 * var(--space-medium)) / 1.6);
       margin: 0 auto;
       padding-left: 0;
       padding-right: 0;
@@ -55,13 +55,13 @@ $md-base-padding:calc(10rem / 1.6);
         			overflow: auto;
         			padding-left: 0;
         			padding-right: 0;
-        			margin-left: calc(3rem / 1.6);
-        			margin-right: calc(3rem / 1.6);
+        			margin-left: calc(calc(3 * var(--space-medium)) / 1.6);
+        			margin-right: calc(calc(3 * var(--space-medium)) / 1.6);
         			&>div{
         				flex: none;
         				width: 45%;
         				&:not(:first-child){
-                            margin-left: calc(1.5rem / 1.6);
+                            margin-left: calc(calc(1.5 * var(--space-medium)) / 1.6);
                         }
         			}
         		}
@@ -77,18 +77,18 @@ $md-base-padding:calc(10rem / 1.6);
 
       // Add padding on each side
       @include susy-breakpoint($screen-xs, $susy) {
-        padding-left: calc(3rem / 1.6);
-        padding-right: calc(3rem / 1.6);
+        padding-left: calc(calc(3 * var(--space-medium)) / 1.6);
+        padding-right: calc(calc(3 * var(--space-medium)) / 1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        padding-left: calc(10rem / 1.6);
-        padding-right: calc(10rem / 1.6);
+        padding-left: calc(calc(10 * var(--space-medium)) / 1.6);
+        padding-right: calc(calc(10 * var(--space-medium)) / 1.6);
       }
 
       @include susy-breakpoint($screen-md, $susy) {
-        padding-left: calc(15rem/1.6);
-        padding-right: calc(15rem/1.6);
+        padding-left: calc(calc(15 * var(--space-medium))/1.6);
+        padding-right: calc(calc(15 * var(--space-medium))/1.6);
       }
 
     }
@@ -106,7 +106,7 @@ $md-base-padding:calc(10rem / 1.6);
 
     @include susy-breakpoint($screen-sm, $susy) {
       @include span(8);
-      margin: calc(1rem / 1.6) 0;
+      margin: calc(var(--space-medium) / 1.6) 0;
     }
 
 }
@@ -119,7 +119,7 @@ $md-base-padding:calc(10rem / 1.6);
 
       @include susy-breakpoint($screen-sm, $susy) {
          @include span(4);
-         margin: calc(1rem / 1.6) 0;
+         margin: calc(var(--space-medium) / 1.6) 0;
       }
 }
 
@@ -132,7 +132,7 @@ $md-base-padding:calc(10rem / 1.6);
 
     @include susy-breakpoint($screen-sm, $susy) {
        @include span(4);
-       margin: calc(1rem / 1.6) 0;
+       margin: calc(var(--space-medium) / 1.6) 0;
     }
 }
 
@@ -145,7 +145,7 @@ $md-base-padding:calc(10rem / 1.6);
 
     @include susy-breakpoint($screen-sm, $susy) {
        @include span(8);
-       margin: calc(1rem / 1.6) 0;
+       margin: calc(var(--space-medium) / 1.6) 0;
 
     }
 }
@@ -162,7 +162,7 @@ $md-base-padding:calc(10rem / 1.6);
 
   @include susy-breakpoint($screen-sm, $susy) {
     @include span(3);
-    margin: calc(1rem / 1.6) 0;
+    margin: calc(var(--space-medium) / 1.6) 0;
   }
 }
 
@@ -172,7 +172,7 @@ $md-base-padding:calc(10rem / 1.6);
   }
 
   @include susy-breakpoint($screen-sm, $susy) {
-    margin: calc(1rem / 1.6) 0;
+    margin: calc(var(--space-medium) / 1.6) 0;
     @include span(6);
   }
 
@@ -192,7 +192,7 @@ $md-base-padding:calc(10rem / 1.6);
 
   @include susy-breakpoint($screen-sm, $susy) {
     @include span(4);
-    margin: calc(1rem / 1.6) 0;
+    margin: calc(var(--space-medium) / 1.6) 0;
   }
 
   @include susy-breakpoint($screen-md, $susy) {
@@ -224,7 +224,7 @@ $md-base-padding:calc(10rem / 1.6);
 
   @include susy-breakpoint($screen-sm, $susy) {
     @include span(4);
-    margin: calc(1rem / 1.6) 0;
+    margin: calc(var(--space-medium) / 1.6) 0;
     float: none
   }
 
@@ -249,7 +249,7 @@ $md-base-padding:calc(10rem / 1.6);
     @include susy-breakpoint($screen-sm,
     $susy) {
         @include span(1.7);
-      margin: calc(1rem / 1.6) 0;
+      margin: calc(var(--space-medium) / 1.6) 0;
     }
 }
 
@@ -262,8 +262,8 @@ $md-base-padding:calc(10rem / 1.6);
 
 
   .cq-colctrl-default-c0 {
-    padding-left: calc(3rem / 1.6);
-    padding-right: calc(3rem / 1.6);
+    padding-left: calc(calc(3 * var(--space-medium)) / 1.6);
+    padding-right: calc(calc(3 * var(--space-medium)) / 1.6);
 
     /*> div {
       @include susy-breakpoint($screen-sm, $susy) {
@@ -325,23 +325,23 @@ $md-base-padding:calc(10rem / 1.6);
   &.colctrl-2c-wideright,
   &.cq-colctrl-default {
 
-    &.top-spacing { padding-top: calc(4rem / 1.6); }
-    &.bottom-spacing { margin-bottom: calc(4rem / 1.6); }
-    &.top-half-spacing { padding-top: calc(2rem / 1.6); }
-    &.bottom-half-spacing { margin-bottom: calc(2rem / 1.6); }
+    &.top-spacing { padding-top: calc(calc(4 * var(--space-medium)) / 1.6); }
+    &.bottom-spacing { margin-bottom: calc(calc(4 * var(--space-medium)) / 1.6); }
+    &.top-half-spacing { padding-top: calc(calc(2 * var(--space-medium)) / 1.6); }
+    &.bottom-half-spacing { margin-bottom: calc(calc(2 * var(--space-medium)) / 1.6); }
 
     @include susy-breakpoint($screen-sm, $susy) {
-      &.top-spacing { padding-top: calc(6rem / 1.6); }
-      &.bottom-spacing { margin-bottom: calc(6rem / 1.6); }
-      &.top-half-spacing { padding-top: calc(4.5rem / 1.6); }
-      &.bottom-half-spacing { margin-bottom: calc(4.5rem / 1.6); }
+      &.top-spacing { padding-top: calc(calc(6 * var(--space-medium)) / 1.6); }
+      &.bottom-spacing { margin-bottom: calc(calc(6 * var(--space-medium)) / 1.6); }
+      &.top-half-spacing { padding-top: calc(calc(4.5 * var(--space-medium)) / 1.6); }
+      &.bottom-half-spacing { margin-bottom: calc(calc(4.5 * var(--space-medium)) / 1.6); }
     }
 
     @include susy-breakpoint($screen-sm, $susy) {
-      &.top-spacing { padding-top: calc(8rem / 1.6); }
-      &.bottom-spacing { margin-bottom: calc(8rem / 1.6); }
-      &.top-half-spacing { padding-top: calc(6rem / 1.6); }
-      &.bottom-half-spacing { margin-bottom: calc(6rem / 1.6); }
+      &.top-spacing { padding-top: calc(calc(8 * var(--space-medium)) / 1.6); }
+      &.bottom-spacing { margin-bottom: calc(calc(8 * var(--space-medium)) / 1.6); }
+      &.top-half-spacing { padding-top: calc(calc(6 * var(--space-medium)) / 1.6); }
+      &.bottom-half-spacing { margin-bottom: calc(calc(6 * var(--space-medium)) / 1.6); }
     }
 
   }
@@ -352,7 +352,7 @@ $md-base-padding:calc(10rem / 1.6);
   &.top-angle {
     img {
       position: relative;
-      bottom: calc(-0.5rem / 1.6);
+      bottom: calc(calc(-0.5 * var(--space-medium)) / 1.6);
     }
   }
   img {
@@ -366,17 +366,17 @@ $md-base-padding:calc(10rem / 1.6);
 // When the align buttons option is selected, set the padding directly on the container
 
 @include susy-breakpoint($screen-xs, $susy) {
-  .colctrl.wrapper.align-buttons.top-spacing { padding-top: calc(6rem / 1.6); }
-  .colctrl.wrapper.align-buttons.top-half-spacing { padding-top: calc(4.5rem / 1.6); }
-  .colctrl.wrapper.align-buttons.bottom-spacing { padding-bottom: calc(6rem / 1.6); }
-  .colctrl.wrapper.align-buttons.bottom-half-spacing { padding-bottom: calc(4.5rem / 1.6); }
+  .colctrl.wrapper.align-buttons.top-spacing { padding-top: calc(calc(6 * var(--space-medium)) / 1.6); }
+  .colctrl.wrapper.align-buttons.top-half-spacing { padding-top: calc(calc(4.5 * var(--space-medium)) / 1.6); }
+  .colctrl.wrapper.align-buttons.bottom-spacing { padding-bottom: calc(calc(6 * var(--space-medium)) / 1.6); }
+  .colctrl.wrapper.align-buttons.bottom-half-spacing { padding-bottom: calc(calc(4.5 * var(--space-medium)) / 1.6); }
 }
 
 @include susy-breakpoint($screen-sm, $susy) {
-  .colctrl.wrapper.align-buttons.top-spacing { padding-top: calc(8rem / 1.6); }
-  .colctrl.wrapper.align-buttons.top-half-spacing { padding-top: calc(6rem / 1.6); }
-  .colctrl.wrapper.align-buttons.bottom-spacing { padding-bottom: calc(8rem / 1.6); }
-  .colctrl.wrapper.align-buttons.bottom-half-spacing { padding-bottom: calc(6rem / 1.6); }
+  .colctrl.wrapper.align-buttons.top-spacing { padding-top: calc(calc(8 * var(--space-medium)) / 1.6); }
+  .colctrl.wrapper.align-buttons.top-half-spacing { padding-top: calc(calc(6 * var(--space-medium)) / 1.6); }
+  .colctrl.wrapper.align-buttons.bottom-spacing { padding-bottom: calc(calc(8 * var(--space-medium)) / 1.6); }
+  .colctrl.wrapper.align-buttons.bottom-half-spacing { padding-bottom: calc(calc(6 * var(--space-medium)) / 1.6); }
 }
 
 

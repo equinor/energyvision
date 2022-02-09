@@ -21,9 +21,9 @@
 
 .tabs-title > a {
   display: block;
-  padding: 1.55rem;
+  padding: calc(1.55 * var(--space-medium));
   line-height: 1.5;
-  font-size: 1.5rem;
+  font-size: calc(1.5 * var(--space-medium));
   &:hover { background: #fefefe; }
   &:focus, .tabs-title > a[aria-selected='true'] { background: #e6e6e6; }
 }
@@ -35,6 +35,6 @@
 
 .tabs-panel {
   display: none;
-  padding: 1rem;
+  padding: var(--space-medium);
   &.is-active { display: block; }
 }

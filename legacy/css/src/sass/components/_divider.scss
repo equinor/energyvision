@@ -4,8 +4,8 @@
     padding: 0 5%;
 
     .page-content-divider {
-        margin: 1rem;
-        border-bottom: 0.1rem solid black;
+        margin: var(--space-medium);
+        border-bottom: calc(0.1 * var(--space-medium)) solid black;
     }
 
 

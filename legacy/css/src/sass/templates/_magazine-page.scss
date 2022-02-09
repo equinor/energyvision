@@ -5,10 +5,10 @@ $statoil-highlight-blue:#E9EEF1;
 
 .magazine-content {
 
-  
+
   .filter-options1 {
     text-align:center;
-    
+
     .filter {
       border: 1px solid #41547C;
       background-color:#E9EEF1;
@@ -25,13 +25,13 @@ $statoil-highlight-blue:#E9EEF1;
    .carousel {
     .prev,.next {
       z-index:1;
-      font-size: 8rem;
+      font-size: calc(8 * var(--space-medium));
       color:white;
     }
 
      h2,h3 {
        color: $white;
-       text-shadow: .1rem .1rem 0 rgba(0,0,0,.75);
+       text-shadow: calc(.1 * var(--space-medium)) calc(.1 * var(--space-medium)) 0 rgba(0,0,0,.75);
      }
 
     .carousel-wrap {
@@ -48,7 +48,7 @@ $statoil-highlight-blue:#E9EEF1;
 
        figcaption {
          position:absolute;
-         right:7rem;
+         right:calc(7 * var(--space-medium));
          width:80%;
          height:60%;
 
@@ -62,7 +62,7 @@ $statoil-highlight-blue:#E9EEF1;
            @include susy-breakpoint($screen-md, $susy) { top:35%; }
 
         h3 {
-          font-size: 1.6rem;
+          font-size: calc(1.6 * var(--space-medium));
           text-align:right;
         }
 
@@ -78,16 +78,16 @@ $statoil-highlight-blue:#E9EEF1;
             margin:0;
             text-align: right;
             float: right;
-            margin-bottom:1.5rem;
-            @include susy-breakpoint($screen-xs, $susy) { font-size:2.5rem; }
-            @include susy-breakpoint($screen-sm, $susy) { font-size:3rem; }
-            @include susy-breakpoint($screen-md, $susy) { font-size:5rem; }
+            margin-bottom:calc(1.5 * var(--space-medium));
+            @include susy-breakpoint($screen-xs, $susy) { font-size:calc(2.5 * var(--space-medium)); }
+            @include susy-breakpoint($screen-sm, $susy) { font-size:calc(3 * var(--space-medium)); }
+            @include susy-breakpoint($screen-md, $susy) { font-size:calc(5 * var(--space-medium)); }
           }
         }
 
         p {
           color: white;
-          text-shadow: .1rem .1rem 0 rgba(0,0,0,.75);
+          text-shadow: calc(.1 * var(--space-medium)) calc(.1 * var(--space-medium)) 0 rgba(0,0,0,.75);
           text-align:right;
           padding: 0;
           display: inline-block;
@@ -97,7 +97,7 @@ $statoil-highlight-blue:#E9EEF1;
 
            @include susy-breakpoint($screen-sm, $susy) {
              max-width: 65%;
-             font-size:2.1rem;
+             font-size:calc(2.1 * var(--space-medium));
              display:block;
             }
 

@@ -32,7 +32,7 @@
 .text {
   @include span(12 nest);
   float: none;
-  max-width: calc(140rem / 1.6);
+  max-width: calc(calc(140 * var(--space-medium)) / 1.6);
   margin: 0 auto;
   ul{
     li{
@@ -41,9 +41,9 @@
   }
   p{
     span{
-      &.ingress{ 
-        font-size: calc(1.8rem / 1.6);
-        line-height: calc(2.8rem / 1.6);
+      &.ingress{
+        font-size: calc(calc(1.8 * var(--space-medium)) / 1.6);
+        line-height: calc(calc(2.8 * var(--space-medium)) / 1.6);
       }
     }
   }
@@ -54,9 +54,9 @@
       margin-block-start: 0;
       margin-block-end: 0;
     }
-  
+
     > *{
-      padding-bottom: calc(3.2rem / 1.6);
+      padding-bottom: calc(calc(3.2 * var(--space-medium)) / 1.6);
 	  }
     > *:last-child{
         padding-bottom: 0;
@@ -67,12 +67,12 @@
     color:#809EB0;
 
     p {
-      font-size: calc(3.2rem / 1.6);
-      line-height: calc(3.2rem / 1.6);
-      padding-bottom: calc(3.2rem / 1.6);
+      font-size: calc(calc(3.2 * var(--space-medium)) / 1.6);
+      line-height: calc(calc(3.2 * var(--space-medium)) / 1.6);
+      padding-bottom: calc(calc(3.2 * var(--space-medium)) / 1.6);
     }
   }
-    
+
     .moss-green{
         @include font-color($secondary-color);
     }
@@ -83,7 +83,7 @@
     // Do only apply a narrower width for tablet size and up
     @include susy-breakpoint($screen-sm, $susy) {
       width:75%;
-      max-width: 105rem; // 75% of 140rem (100%) //TODO check how this works with clamp
+      max-width: calc(105 * var(--space-medium)); // 75% of calc(140 * var(--space-medium)) (100%) //TODO check how this works with clamp
       margin:0 auto;
     }
   }
@@ -91,21 +91,21 @@
   .quote {
 
     h1, h2, h3, h4, h5 {
-      font-size: calc(2rem / 1.6); // the quote text
-      padding-bottom: calc(2.5rem / 1.6);
+      font-size: calc(calc(2 * var(--space-medium)) / 1.6); // the quote text
+      padding-bottom: calc(calc(2.5 * var(--space-medium)) / 1.6);
       text-transform: none;
     }
 
     p {
       &:first-child {
         @include Equinor-Medium;
-        font-size: calc(2.5rem / 1.6); // the quote text
+        font-size: calc(calc(2.5 * var(--space-medium)) / 1.6); // the quote text
         padding-bottom: 0;
         text-transform: none;
 
         i {
-          font-size: calc(2rem / 1.6); // the quote text
-          padding-bottom: calc(2.5rem / 1.6);
+          font-size: calc(calc(2 * var(--space-medium)) / 1.6); // the quote text
+          padding-bottom: calc(calc(2.5 * var(--space-medium)) / 1.6);
           text-transform: none;
         }
       }
@@ -113,8 +113,8 @@
 
     p:not(:first-child) {
       @include Equinor-Bold-italic;
-      font-size: calc(1.5rem / 1.6); // make the signature a bit smaller than the quote text
-      padding-bottom: calc(1rem / 1.6);
+      font-size: calc(calc(1.5 * var(--space-medium)) / 1.6); // make the signature a bit smaller than the quote text
+      padding-bottom: calc(var(--space-medium) / 1.6);
       font-style: normal;
       &:before {
         content: '- ';
@@ -123,7 +123,7 @@
 
     &.right:before {
       left: auto;
-      right: calc(-0.7rem / 1.6);
+      right: calc(calc(-0.7 * var(--space-medium)) / 1.6);
       text-align: right;
     }
   }
@@ -131,7 +131,7 @@
   @include susy-breakpoint($screen-sm, $susy) {
     .textcolumns2 {
       column-count: 2;
-      column-gap: calc(2rem / 1.6); // TODO check clamp here
+      column-gap: calc(calc(2 * var(--space-medium)) / 1.6); // TODO check clamp here
     }
   }
   .number { color:#9C9C9C; }
@@ -141,24 +141,24 @@
       margin-right: auto;
       width:auto;
       text-align:center;
-      max-width:calc(40rem / 1.6);
+      max-width:calc(calc(40 * var(--space-medium)) / 1.6);
       background: #EFEFEF;
       background-color: #eee;
-      border-bottom: 0.01rem solid #999;
-      font-size: calc(2.4rem / 1.6);
-      line-height: calc(2.4rem / 1.6);
-      padding-bottom: calc(1rem / 1.6);
-      padding: calc(1.2rem / 1.6) calc(2.4rem / 1.6);
+      border-bottom: calc(0.01 * var(--space-medium)) solid #999;
+      font-size: calc(calc(2.4 * var(--space-medium)) / 1.6);
+      line-height: calc(calc(2.4 * var(--space-medium)) / 1.6);
+      padding-bottom: calc(var(--space-medium) / 1.6);
+      padding: calc(calc(1.2 * var(--space-medium)) / 1.6) calc(calc(2.4 * var(--space-medium)) / 1.6);
       position: relative;
       display: block;
-      margin-bottom: 2rem;
+      margin-bottom: calc(2 * var(--space-medium));
 
     &:after {
         color:#EFEFEF;
-        border-left: 1rem solid transparent;
-        border-right: 1rem solid transparent;
-        border-top: 1rem solid #eee;
-        bottom: -1rem;
+        border-left: var(--space-medium) solid transparent;
+        border-right: var(--space-medium) solid transparent;
+        border-top: var(--space-medium) solid #eee;
+        bottom: calc(-1 * var(--space-medium));
         content: '';
         left: 50%;
         margin-left: -10px;

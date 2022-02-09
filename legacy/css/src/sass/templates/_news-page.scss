@@ -1,34 +1,34 @@
 .news-content {
   .news-page {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: calc(1.5 * var(--space-medium));
+    padding-bottom: calc(1.5 * var(--space-medium));
 
     .header {
       margin: 0 auto;
 
       // Add padding on each side
       @include susy-breakpoint($screen-xs, $susy) {
-        padding-left: calc(3rem / 1.6);
-        padding-right: calc(3rem / 1.6);
+        padding-left: calc(calc(3 * var(--space-medium)) / 1.6);
+        padding-right: calc(calc(3 * var(--space-medium)) / 1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        padding-left: calc(10rem / 1.6);
-        padding-right: calc(10rem / 1.6);
+        padding-left: calc(calc(10 * var(--space-medium)) / 1.6);
+        padding-right: calc(calc(10 * var(--space-medium)) / 1.6);
       }
 
       @include susy-breakpoint($screen-md, $susy) {
-        padding-left: 15rem;
-        padding-right: 15rem;
+        padding-left: calc(15 * var(--space-medium));
+        padding-right: calc(15 * var(--space-medium));
       }
 
       h1 {
         text-align: left;
-        padding: 0rem 1.66666%;
+        padding: 0 1.66666%;
       }
 
       .date {
-        padding: 0 1.66666% 0.5rem;
+        padding: 0 1.66666% calc(0.5 * var(--space-medium));
       }
     }
 
@@ -49,23 +49,23 @@
 
       // Add padding on each side
       @include susy-breakpoint($screen-xs, $susy) {
-        padding-left: calc(3rem / 1.6);
-        padding-right: calc(3rem / 1.6);
+        padding-left: calc(calc(3 * var(--space-medium)) / 1.6);
+        padding-right: calc(calc(3 * var(--space-medium)) / 1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        padding-left: calc(10rem / 1.6);
-        padding-right: calc(10rem / 1.6);
+        padding-left: calc(calc(10 * var(--space-medium)) / 1.6);
+        padding-right: calc(calc(10 * var(--space-medium)) / 1.6);
       }
 
       @include susy-breakpoint($screen-md, $susy) {
-        padding-left: 15rem;
-        padding-right: 15rem;
+        padding-left: calc(15 * var(--space-medium));
+        padding-right: calc(15 * var(--space-medium));
       }
 
     }
 
-    .image .figure-module { margin-bottom: 3rem; }
+    .image .figure-module { margin-bottom: calc(3 * var(--space-medium)); }
 
   }
 }

@@ -4,16 +4,16 @@
     .date-module {
       @include span(12 nest);
       float:left;
-      font-size: 0.75rem;
-      line-height: 1rem;
+      font-size: calc(0.75 * var(--space-medium));
+      line-height: var(--space-medium);
       @include Equinor-Light;
       color: #565656;
-      margin-top:calc(1rem / 1.6);
+      margin-top:calc(var(--space-medium) / 1.6);
 
       .date_module-icon {
         color:$primary-color;
-        font-size:calc(2rem / 2);
-        margin-right: calc(1rem / 1.6);
+        font-size:calc(calc(2 * var(--space-medium)) / 2);
+        margin-right: calc(var(--space-medium) / 1.6);
       }
     }
 }

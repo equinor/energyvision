@@ -2,16 +2,16 @@
     background: none;
     .cmp-accordion{
         &__item {
-            padding-bottom: calc(3rem/1.6);
+            padding-bottom: calc(calc(3 * var(--space-medium))/1.6);
             position: relative;
             &:not(:first-child) {
-                margin-top: calc(2rem/1.6);
+                margin-top: calc(calc(2 * var(--space-medium))/1.6);
             }
         }
         &__icon {
             position: absolute;
             bottom: 0px;
-            font-size: calc(2.5rem/1.6);
+            font-size: calc(calc(2.5 * var(--space-medium))/1.6);
             vertical-align: bottom;
             color: $slate-blue;
             .slate-blue &, .heritage-red &, .primary-100 &  {
@@ -50,7 +50,7 @@
             }
         }
         &__panel {
-            padding: calc(1.5rem/1.6) 0;
+            padding: calc(calc(1.5 * var(--space-medium))/1.6) 0;
             & > * :last-child {
                 margin-bottom: 0;
             }

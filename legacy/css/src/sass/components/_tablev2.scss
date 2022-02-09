@@ -1,27 +1,27 @@
 .tablev2 {
   table {
-    border-spacing: calc(0.2rem/1.6);
+    border-spacing: calc(calc(0.2 * var(--space-medium))/1.6);
     border-collapse: unset;
     padding: 0;
   }
   .tablev2__smallfont {
     tr {
       td {
-        font-size: calc(1.8rem/1.6);
+        font-size: calc(calc(1.8 * var(--space-medium))/1.6);
       }
     }
   }
   .tablev2__mediumfont {
     tr {
       td {
-        font-size: calc(2rem/1.6);
+        font-size: calc(calc(2 * var(--space-medium))/1.6);
       }
     }
   }
   .tablev2__largefont {
     tr {
       td {
-        font-size: calc(2.2rem/1.6);
+        font-size: calc(calc(2.2 * var(--space-medium))/1.6);
       }
     }
   }
@@ -31,11 +31,11 @@
   }
 
   td {
-    line-height:calc( 2rem/1.6);
-    padding:calc( 1rem/1.6) calc( 2rem/1.6);
+    line-height:calc( calc(2 * var(--space-medium))/1.6);
+    padding:calc( var(--space-medium)/1.6) calc( calc(2 * var(--space-medium))/1.6);
     p {
       font-size: inherit;
-      line-height: calc(2.5rem/1.6);
+      line-height: calc(calc(2.5 * var(--space-medium))/1.6);
     }
     b {
       font-size: inherit;
@@ -55,28 +55,28 @@
         color: $primary-color;
       }
       &.small-text {
-        font-size: calc(1.8rem/1.6);
+        font-size: calc(calc(1.8 * var(--space-medium))/1.6);
       }
       &.medium-text {
-        font-size:calc( 2rem/1.6);
+        font-size:calc( calc(2 * var(--space-medium))/1.6);
       }
       &.large-text {
-        font-size: calc(2.2rem/1.6);
+        font-size: calc(calc(2.2 * var(--space-medium))/1.6);
       }
     }
   }
 
   .tablev2-container {
-    margin-bottom: calc(2.5rem/1.6);
+    margin-bottom: calc(calc(2.5 * var(--space-medium))/1.6);
     overflow-x: auto;
     &.space-below_none {
       margin-bottom: 0;
     }
     &.space-below_normal {
-      margin-bottom: calc(1.5rem/1.6);
+      margin-bottom: calc(calc(1.5 * var(--space-medium))/1.6);
     }
     &.space-below_big {
-      margin-bottom: calc(4.5rem/1.6);
+      margin-bottom: calc(calc(4.5 * var(--space-medium))/1.6);
     }
   }
 }
@@ -100,21 +100,21 @@
   }
 
   &.primary-5,
-  &.primary-15,  
-  &.primary-100, 
-  &.secondary-50, 
-  &.secondary-100, 
-  &.dark-blue-magazine,  
-  &.light-blue-magazine, 
-  &.slate-blue, 
-  &.heritage-red, 
-  &.spruce-wood { 
+  &.primary-15,
+  &.primary-100,
+  &.secondary-50,
+  &.secondary-100,
+  &.dark-blue-magazine,
+  &.light-blue-magazine,
+  &.slate-blue,
+  &.heritage-red,
+  &.spruce-wood {
     .text {
       &.tablev2 {
         tr {
           background-color:  white !important;
-        } 
+        }
       }
     }
-  } 
+  }
 }

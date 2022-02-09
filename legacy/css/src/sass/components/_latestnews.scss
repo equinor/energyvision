@@ -4,7 +4,7 @@
       display: flex;
       flex-direction: row-reverse;
       align-items: baseline;
-      padding: 0 0 1.5rem 0;
+      padding: 0 0 calc(1.5 * var(--space-medium)) 0;
 
       h2 {
         flex-grow: 1;
@@ -17,13 +17,13 @@
 
       .more-link {
         float:right;
-        font-size: 1.5rem;
+        font-size: calc(1.5 * var(--space-medium));
         text-decoration: none;
         line-height: 1.5em;
         white-space: nowrap;
 
         @include susy-breakpoint($screen-sm, $susy) {
-          width: 15rem;
+          width: calc(15 * var(--space-medium));
           text-align: right;
         }
       }
@@ -36,7 +36,7 @@
         }
 
         @include susy-breakpoint($screen-sm, $susy) {
-          padding-left: 15rem;
+          padding-left: calc(15 * var(--space-medium));
           text-align: center;
         }
 
@@ -47,7 +47,7 @@
 
   ul.list-container.tiles {
     .list-content {
-      padding-bottom: 0rem;
+      padding-bottom: 0;
       .item-meta .item-read-more {
         display: none;
       }

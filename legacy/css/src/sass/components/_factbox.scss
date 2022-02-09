@@ -25,14 +25,14 @@
 
   .factbox-content {
 
-    @include susy-breakpoint($screen-xs, $susy) { padding: calc(1.75rem/1.6); }
-    @include susy-breakpoint($screen-sm, $susy) { padding: calc(3.5rem/1.6); }
+    @include susy-breakpoint($screen-xs, $susy) { padding: calc(calc(1.75 * var(--space-medium))/1.6); }
+    @include susy-breakpoint($screen-sm, $susy) { padding: calc(calc(3.5 * var(--space-medium))/1.6); }
 
     :last-child { padding-bottom: 0; margin-bottom: 0; } // No padding and margin on the last child item in the factbox
 
       h4 {
         @include Equinor-Medium;
-        padding-bottom: calc(1.5rem/1.6);
+        padding-bottom: calc(calc(1.5 * var(--space-medium))/1.6);
         text-align: center;
       }
 
@@ -72,17 +72,17 @@
 
   .reduce-width {
     margin:0 auto;
-    @include susy-breakpoint($screen-xs, $susy) { padding: calc(3.5rem/1.6) calc(3rem/1.6); }
-    @include susy-breakpoint($screen-sm, $susy) { padding: calc(3.5rem/1.6) calc(10rem/1.6); }
-    @include susy-breakpoint($screen-lg, $susy) { padding: calc(3.5rem/2.02) calc(15rem/2.02); }
+    @include susy-breakpoint($screen-xs, $susy) { padding: calc(calc(3.5 * var(--space-medium))/1.6) calc(calc(3 * var(--space-medium))/1.6); }
+    @include susy-breakpoint($screen-sm, $susy) { padding: calc(calc(3.5 * var(--space-medium))/1.6) calc(calc(10 * var(--space-medium))/1.6); }
+    @include susy-breakpoint($screen-lg, $susy) { padding: calc(calc(3.5 * var(--space-medium))/2.02) calc(calc(15 * var(--space-medium))/2.02); }
   }
 
   .textcolumns2 {
       -webkit-column-count: 2; /* Chrome, Safari, Opera */
       -moz-column-count: 2; /* Firefox */
       column-count: 2;
-      -webkit-column-gap: calc(2rem/1.6); /* Chrome, Safari, Opera */
-      -moz-column-gap: calc(2rem/1.6); /* Firefox */
-      column-gap: calc(2rem/1.6);
+      -webkit-column-gap: calc(calc(2 * var(--space-medium))/1.6); /* Chrome, Safari, Opera */
+      -moz-column-gap: calc(calc(2 * var(--space-medium))/1.6); /* Firefox */
+      column-gap: calc(calc(2 * var(--space-medium))/1.6);
   }
 }

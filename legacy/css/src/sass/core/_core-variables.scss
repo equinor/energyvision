@@ -1,9 +1,9 @@
 $font-default: 'sans serif';
 $default-font-weight: normal;
 $default-font-percentage: 62.5%;
-$default-font-size: 1rem;
+$default-font-size: var(--space-medium);
 $default-font-text-color: #333333;
-$default-font-line-height: 1.5rem;
+$default-font-line-height: calc(1.5 * var(--space-medium));
 $default-font-text-transform: none;
 $z-index-popout: 100;
 

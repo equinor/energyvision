@@ -8,14 +8,14 @@ $banner-color: #FFF;
   .banner {
     height: auto;
     min-width: 100%;
-    margin-bottom:0rem;
+    margin-bottom:0;
 
-    @include susy-breakpoint($screen-xs, $susy) { 
-      min-height: calc(30rem/1.6);
+    @include susy-breakpoint($screen-xs, $susy) {
+      min-height: calc(calc(30 * var(--space-medium))/1.6);
     }
 
     @include susy-breakpoint($screen-sm, $susy) {
-      min-height: calc(30rem/2.01);
+      min-height: calc(calc(30 * var(--space-medium))/2.01);
     }
 
     a { text-decoration: none; }
@@ -23,20 +23,20 @@ $banner-color: #FFF;
     h1, h2, h3, h4, span {
       color: $banner-color;
       @include Equinor-Medium;
-      &.shadow { 
+      &.shadow {
         @include susy-breakpoint($screen-xs, $susy) {
-        text-shadow: calc(.1rem/1.6) calc(.1rem/1.6) 0 rgba(0,0,0,.75); 
+        text-shadow: calc(calc(.1 * var(--space-medium))/1.6) calc(calc(.1 * var(--space-medium))/1.6) 0 rgba(0,0,0,.75);
         }
         @include susy-breakpoint($screen-sm, $susy) {
-          text-shadow: calc(.1rem/2.01) calc(.1rem/2.01) 0 rgba(0,0,0,.75); 
+          text-shadow: calc(calc(.1 * var(--space-medium))/2.01) calc(calc(.1 * var(--space-medium))/2.01) 0 rgba(0,0,0,.75);
         }
       }
-      &.light-shadow { 
+      &.light-shadow {
         @include susy-breakpoint($screen-xs, $susy) {
-          text-shadow: calc(.1rem/1.6) calc(.1rem/1.6) 0 rgba(225,225,225,.75); 
+          text-shadow: calc(calc(.1 * var(--space-medium))/1.6) calc(calc(.1 * var(--space-medium))/1.6) 0 rgba(225,225,225,.75);
           }
           @include susy-breakpoint($screen-sm, $susy) {
-            text-shadow: calc(.1rem/2.01) calc(.1rem/2.01) 0 rgba(225,225,225,.75); 
+            text-shadow: calc(calc(.1 * var(--space-medium))/2.01) calc(calc(.1 * var(--space-medium))/2.01) 0 rgba(225,225,225,.75);
           }
       }
       &.alternate { color: $alternate-color; }
@@ -45,17 +45,17 @@ $banner-color: #FFF;
 
     span {
       display: block;
-     
-      @include susy-breakpoint($screen-xs, $susy) { 
-        margin-bottom: $default-margin-bottom-xs; 
-        font-size: calc(2rem/1.6);
-        line-height: calc(2rem/1.6);
+
+      @include susy-breakpoint($screen-xs, $susy) {
+        margin-bottom: $default-margin-bottom-xs;
+        font-size: calc(calc(2 * var(--space-medium))/1.6);
+        line-height: calc(calc(2 * var(--space-medium))/1.6);
       }
-      @include susy-breakpoint($screen-sm, $susy) { 
-        font-size: calc(2rem/2.01);
-        line-height: calc(2rem/2.01);
+      @include susy-breakpoint($screen-sm, $susy) {
+        font-size: calc(calc(2 * var(--space-medium))/2.01);
+        line-height: calc(calc(2 * var(--space-medium))/2.01);
       }
-    
+
       @include susy-breakpoint($screen-md, $susy) { margin-bottom: $default-margin-bottom-md; }
     }
 
@@ -70,15 +70,15 @@ $banner-color: #FFF;
       vertical-align: middle;
 
       @include susy-breakpoint($screen-xs, $susy) {
-        min-height: calc(30rem/1.6);
-        height: calc(30rem/1.6); // IE treats height how min-height is supposed to be treated.
-        max-height: calc(30rem/1.6); // IE needs a max-height in order to prevent the image from getting huge
+        min-height: calc(calc(30 * var(--space-medium))/1.6);
+        height: calc(calc(30 * var(--space-medium))/1.6); // IE treats height how min-height is supposed to be treated.
+        max-height: calc(calc(30 * var(--space-medium))/1.6); // IE needs a max-height in order to prevent the image from getting huge
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        min-height: calc(45rem/2.01);
-        height: calc(45rem/2.01); // IE treats height how min-height is supposed to be treated.
-        max-height: (45rem/2.01); // IE needs a max-height in order to prevent the image from getting huge
+        min-height: calc(calc(45 * var(--space-medium))/2.01);
+        height: calc(calc(45 * var(--space-medium))/2.01); // IE treats height how min-height is supposed to be treated.
+        max-height: (calc(45 * var(--space-medium))/2.01); // IE needs a max-height in order to prevent the image from getting huge
       }
 
     }
@@ -105,8 +105,8 @@ $banner-color: #FFF;
         height: 100%;
         text-align: center;
 
-        @include susy-breakpoint($screen-xs, $susy) { padding: 0 calc(1rem/1.6); }
-        @include susy-breakpoint($screen-sm, $susy) { padding: 0 calc(5rem/2.01); }
+        @include susy-breakpoint($screen-xs, $susy) { padding: 0 calc(var(--space-medium)/1.6); }
+        @include susy-breakpoint($screen-sm, $susy) { padding: 0 calc(calc(5 * var(--space-medium))/2.01); }
 
         .banner-content-wrapper {
           width: 100%;

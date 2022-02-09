@@ -3,7 +3,7 @@
   .text,
   .parsys_column
    {
-    max-width: 140rem;
+    max-width: calc(140 * var(--space-medium));
     margin: 0 auto;
   }
 

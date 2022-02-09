@@ -2,8 +2,8 @@
 //    - requires extends from file: _core-font.scss
 //  ---------------------------------------------------------------------------------------
 
-$default-margin-bottom-xs: calc(1rem / 1.6);
-$default-margin-bottom-md: calc(1.5rem / 1.6);
+$default-margin-bottom-xs: calc(var(--space-medium) / 1.6);
+$default-margin-bottom-md: calc(calc(1.5 * var(--space-medium)) / 1.6);
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -16,24 +16,24 @@ h1, .h1, h2, .h2, h3 .h3, h4 .h4 {
 }
 
 h1, .h1 {
-  font-size: calc(3.2rem / 1.6);
-  line-height: calc(3.6rem / 1.6);
+  font-size: calc(calc(3.2 * var(--space-medium)) / 1.6);
+  line-height: calc(calc(3.6 * var(--space-medium)) / 1.6);
 }
 
 h2, .h2 {
-  font-size: calc(2.4rem / 1.6);
-  line-height: calc(3.0rem / 1.6);
+  font-size: calc(calc(2.4 * var(--space-medium)) / 1.6);
+  line-height: calc(calc(3.0 * var(--space-medium)) / 1.6);
 }
 
 h3, .h3 {
-  font-size: calc(1.8rem / 1.6);
-  line-height: calc(2.8rem / 1.6);
+  font-size: calc(calc(1.8 * var(--space-medium)) / 1.6);
+  line-height: calc(calc(2.8 * var(--space-medium)) / 1.6);
 }
 
 h4, .h4 {
   text-transform: uppercase;
-  font-size: calc(1.6rem / 1.6);
-  line-height: calc(2.4rem / 1.6);
+  font-size: calc(calc(1.6 * var(--space-medium)) / 1.6);
+  line-height: calc(calc(2.4 * var(--space-medium)) / 1.6);
 }
 
 h1, .h1, h2, .h2, h3, .h3{
@@ -42,16 +42,16 @@ h1, .h1, h2, .h2, h3, .h3{
 }
 
 p, ul, ol, li, tr, td, .base, .text, .factbox {
-  font-size: calc(1.6rem / 1.6);
-  line-height: calc(2.4rem / 1.6);
+  font-size: calc(calc(1.6 * var(--space-medium)) / 1.6);
+  line-height: calc(calc(2.4 * var(--space-medium)) / 1.6);
 }
 p, tr, td {
-  padding-bottom: calc(2.4rem / 1.6);
+  padding-bottom: calc(calc(2.4 * var(--space-medium)) / 1.6);
 }
 .base p + ul, .base p + ol {
-  margin-top: calc(-1.8rem / 1.6);
+  margin-top: calc(calc(-1.8 * var(--space-medium)) / 1.6);
   @include susy-breakpoint($screen-md, $susy) {
-    margin-top: calc(-2.2rem / 1.6);
+    margin-top: calc(calc(-2.2 * var(--space-medium)) / 1.6);
   }
 }
 .base ul li {
@@ -59,7 +59,7 @@ p, tr, td {
   background-size: 6px;
   background-repeat: no-repeat;
   background-position: 12px .6em;
-  padding-left: calc(2.5rem / 1.6);
+  padding-left: calc(calc(2.5 * var(--space-medium)) / 1.6);
   list-style: none;
   @include susy-breakpoint($screen-md, $susy) {
     background-position: 12px .8em;
@@ -70,7 +70,7 @@ p, tr, td {
   @at-root .signal-red#{&} {
     background-image: url('/legacy/images/graphics/bullet-red.png');
   }
-  
+
 }
 
 .primary-100 ,
@@ -82,8 +82,8 @@ p, tr, td {
 }
 
 .small, small {
-  font-size: calc(1.4rem / 1.8);
-  line-height: calc(1.8rem / 1.8);
+  font-size: calc(calc(1.4 * var(--space-medium)) / 1.8);
+  line-height: calc(calc(1.8 * var(--space-medium)) / 1.8);
 }
 .alternative {
   font-feature-settings: "ss01";

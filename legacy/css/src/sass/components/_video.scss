@@ -15,35 +15,35 @@
     top: 50%;
     left: 50%;
 
-    @include susy-breakpoint($screen-xs, $susy) { margin: -6rem 0 0 -6rem; }
-    @include susy-breakpoint($screen-sm, $susy) { margin: -7rem 0 0 -7rem; }
-    @include susy-breakpoint($screen-lg, $susy) { margin: -10rem 0 0 -10rem; }
+    @include susy-breakpoint($screen-xs, $susy) { margin: calc(-6 * var(--space-medium)) 0 0 calc(-6 * var(--space-medium)); }
+    @include susy-breakpoint($screen-sm, $susy) { margin: calc(-7 * var(--space-medium)) 0 0 calc(-7 * var(--space-medium)); }
+    @include susy-breakpoint($screen-lg, $susy) { margin: calc(-10 * var(--space-medium)) 0 0 calc(-10 * var(--space-medium)); }
 
-    
+
 
     svg {
       @include susy-breakpoint($screen-xs, $susy) {
         cursor: pointer;
-        width: 12rem;
-        height: 12rem;
+        width: calc(12 * var(--space-medium));
+        height: calc(12 * var(--space-medium));
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
         cursor: pointer;
-        width: 14rem;
-        height: 14rem;
+        width: calc(14 * var(--space-medium));
+        height: calc(14 * var(--space-medium));
       }
 
       @include susy-breakpoint($screen-lg, $susy) {
         cursor: pointer;
-        width: 20rem;
-        height: 20rem;
+        width: calc(20 * var(--space-medium));
+        height: calc(20 * var(--space-medium));
       }
       }
 
       circle {
         stroke-opacity: 0.4;
-        stroke-width: 2.5rem;
+        stroke-width: calc(2.5 * var(--space-medium));
         fill: transparent;
         stroke: #ffffff;
         stroke-linecap: round;
@@ -61,22 +61,22 @@
   .colctrl-2c .videoplayer_play .svg{
     @include susy-breakpoint($screen-lg, $susy) {
       cursor: pointer;
-      width: 15rem;
-      height: 15rem;
+      width: calc(15 * var(--space-medium));
+      height: calc(15 * var(--space-medium));
     }
   }
   .colctrl-3c .videoplayer_play .svg{
     @include susy-breakpoint($screen-lg, $susy) {
       cursor: pointer;
-      width: 12rem;
-      height: 12rem;
+      width: calc(12 * var(--space-medium));
+      height: calc(12 * var(--space-medium));
     }
 
   .colctrl-2c .videoplayer_play{
-    @include susy-breakpoint($screen-lg, $susy) { margin: -8rem 0 0 -8rem; }
+    @include susy-breakpoint($screen-lg, $susy) { margin: calc(-8 * var(--space-medium)) 0 0 calc(-8 * var(--space-medium)); }
   }
   .colctrl-3c .videoplayer_play{
-    @include susy-breakpoint($screen-lg, $susy) { margin: -6rem 0 0 -6rem; }
+    @include susy-breakpoint($screen-lg, $susy) { margin: calc(-6 * var(--space-medium)) 0 0 calc(-6 * var(--space-medium)); }
   }
 }
 
@@ -118,7 +118,7 @@
         stroke-linejoin: round;
         stroke-miterlimit: 20;
         stroke-opacity: 0.4;
-        stroke-width: calc(1rem/1.6);
+        stroke-width: calc(var(--space-medium)/1.6);
     }
 
     polygon {

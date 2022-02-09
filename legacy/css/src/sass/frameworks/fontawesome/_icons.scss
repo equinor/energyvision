@@ -31,7 +31,7 @@
 .#{$fa-css-prefix}-th:before { content: $fa-var-th; }
 .#{$fa-css-prefix}-th-list:before { content: $fa-var-th-list; }
 .#{$fa-css-prefix}-check:before { content: $fa-var-check; }
-.#{$fa-css-prefix}-remove:before,
+.#{$fa-css-prefix}calc(- * var(--space-medium))ove:before,
 .#{$fa-css-prefix}-close:before,
 .#{$fa-css-prefix}-times:before { content: $fa-var-times; }
 .#{$fa-css-prefix}-search-plus:before { content: $fa-var-search-plus; }

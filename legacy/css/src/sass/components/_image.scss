@@ -1,10 +1,10 @@
 //  Figure module
 //  ---------------------------------------------------------------------------------------
 .image {
-  min-height: 5rem;
+  min-height: calc(5 * var(--space-medium));
   width: 100%;
   figcaption {
-    margin-top: 1rem;
+    margin-top: var(--space-medium);
   }
   .figure-module {
     @include susy-breakpoint($screen-xs, $susy) {
@@ -56,13 +56,13 @@
           width: 50%;
           height: 100%;
           position: static;
-          min-width: calc(12rem / 1.6);
-          min-height: calc(12rem / 1.6);
+          min-width: calc(calc(12 * var(--space-medium)) / 1.6);
+          min-height: calc(calc(12 * var(--space-medium)) / 1.6);
         }
     }
 
     &.portrait{
-      .figure-module_image,img { width:1.6rem; }
+      .figure-module_image,img { width:calc(1.6 * var(--space-medium)); }
       .figure-module_reference-icon { display: none; }
     }
   }

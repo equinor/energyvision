@@ -18,9 +18,9 @@
     }
   }
 
-  .small { width:calc(5rem/1.6); }
-  .normal { width:calc(10rem/1.6); }
-  .medium { width:calc(15rem/1.6); }
+  .small { width:calc(calc(5 * var(--space-medium))/1.6); }
+  .normal { width:calc(calc(10 * var(--space-medium))/1.6); }
+  .medium { width:calc(calc(15 * var(--space-medium))/1.6); }
   .large { @include span(12 nest); }
 
   .responsive-small{
@@ -43,15 +43,15 @@
   .figure-module_reference {
     @include span(12 nest);
     float:left;
-    font-size: calc(1.5rem/1.6);
-    line-height: calc(2.6rem/1.6);
+    font-size: calc(calc(1.5 * var(--space-medium))/1.6);
+    line-height: calc(calc(2.6 * var(--space-medium))/1.6);
     color: #B8B8B8;
-    margin-top:calc(1rem/1.6);
+    margin-top:calc(var(--space-medium)/1.6);
 
     .figure-module_reference-icon {
       color:$primary-color;
-      font-size:calc(1.7rem/1.6);
-      margin-right:calc(0.4rem/1.6);
+      font-size:calc(calc(1.7 * var(--space-medium))/1.6);
+      margin-right:calc(calc(0.4 * var(--space-medium))/1.6);
     }
   }
 
@@ -59,8 +59,8 @@
     @include span(12 nest);
     @include Equinor-Light;
     float: left;
-    font-size: calc(1.5rem/1.6);
-    line-height: calc(2.6rem/1.6);
+    font-size: calc(calc(1.5 * var(--space-medium))/1.6);
+    line-height: calc(calc(2.6 * var(--space-medium))/1.6);
     color: #333;
   }
 }

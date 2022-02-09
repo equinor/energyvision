@@ -5,8 +5,8 @@ $expandwidth: 50%;
 .carousel:not(.banner-top){
   @include susy-breakpoint($screen-sm, $susy) {
     h1 {
-      font-size: 3.2rem;
-      line-height: 4rem;
+      font-size: calc(3.2 * var(--space-medium));
+      line-height: calc(4 * var(--space-medium));
     }
     .slick-slider{
       .slick-slide{
@@ -57,12 +57,12 @@ body:not([data-whatinput=keyboard]) {
     @include Equinor-Medium;
   }
   .slide-information {
-    margin-top: 1rem;
+    margin-top: var(--space-medium);
     font-size: 16px;
 	line-height: 20px;
     width: 100%;
   }
- 
+
   .slick-dots{
     position:absolute;
     bottom: 20px;
@@ -112,9 +112,9 @@ body:not([data-whatinput=keyboard]) {
       position: relative;
       width: 100%;
       .slide-title {
-        margin-bottom: 1.9rem;
-        font-size: 3.2rem;
-        line-height: 4rem;
+        margin-bottom: calc(1.9 * var(--space-medium));
+        font-size: calc(3.2 * var(--space-medium));
+        line-height: calc(4 * var(--space-medium));
         font-weight: 500;
       }
       a.btn {
@@ -182,12 +182,12 @@ body:not([data-whatinput=keyboard]) {
     }
 
     h1 {
-      margin-bottom: 1.9rem;
+      margin-bottom: calc(1.9 * var(--space-medium));
     }
     .slide-description{
-      font-size: 2.5rem;
-      line-height: 3.5rem;
-      margin-bottom: 3rem;
+      font-size: calc(2.5 * var(--space-medium));
+      line-height: calc(3.5 * var(--space-medium));
+      margin-bottom: calc(3 * var(--space-medium));
     }
 
     .backplate {
@@ -286,7 +286,7 @@ $s: '.slick-slider';
         width: 100%;
       }
       .slide-text {
-        padding: 2rem 1rem 1rem 1rem;
+        padding: calc(2 * var(--space-medium)) var(--space-medium) var(--space-medium) var(--space-medium);
         width: 100%;
         min-height: 30%;
         order: 2;
@@ -299,18 +299,18 @@ $s: '.slick-slider';
           display: none;
         }
         h1{
-          margin-bottom: 1rem;
+          margin-bottom: var(--space-medium);
         }
         a.btn:before {
-          left: -1rem;
+          left: calc(-1 * var(--space-medium));
         }
       }
     }
   }
 
   .page-container .parsys_column.cq-colctrl-default-c0 .slick-slider{
-    margin-left: -3rem;
-    margin-right: -3rem;
+    margin-left: calc(-3 * var(--space-medium));
+    margin-right: calc(-3 * var(--space-medium));
   }
 
 }
@@ -342,14 +342,14 @@ $s: '.slick-slider';
     margin-bottom: 0 !important;
   }
   &.space-below_normal{
-    margin-bottom: 1.5rem !important;
+    margin-bottom: calc(1.5 * var(--space-medium)) !important;
   }
   &.space-below_big{
-    margin-bottom: 4.5rem !important;
+    margin-bottom: calc(4.5 * var(--space-medium)) !important;
   }
 }
 
 .carousel-placeholder-height{
-	height: 50rem !important;
+	height: calc(50 * var(--space-medium)) !important;
 }
 

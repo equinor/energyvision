@@ -100,11 +100,11 @@ $white-color-hover: rgba(255,255,255,0.5);
 
 .basicaccordion {
     .basicaccordionitem {
-        border-bottom: calc(0.1rem/1.6) solid $black_light;
-        padding: calc(0.2rem/1.6) 0;
+        border-bottom: calc(calc(0.1 * var(--space-medium))/1.6) solid $black_light;
+        padding: calc(calc(0.2 * var(--space-medium))/1.6) 0;
 
         &:first-child {
-            border-top: calc(0.1rem/1.6) solid $black_light;
+            border-top: calc(calc(0.1 * var(--space-medium))/1.6) solid $black_light;
         }
 
         .basicaccordion-header {
@@ -112,14 +112,14 @@ $white-color-hover: rgba(255,255,255,0.5);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: calc(1.2rem/1.6) calc(2rem/1.6) calc(1.2rem/1.6) calc(2rem/1.6);
+            padding: calc(calc(1.2 * var(--space-medium))/1.6) calc(calc(2 * var(--space-medium))/1.6) calc(calc(1.2 * var(--space-medium))/1.6) calc(calc(2 * var(--space-medium))/1.6);
 
             h2,h3,h4,p {
                 width: 95%;
                 padding-bottom: 0;
                 text-align: left;
-                font-size: calc(2rem/1.6);
-                line-height: calc(3.2rem/1.6);
+                font-size: calc(calc(2 * var(--space-medium))/1.6);
+                line-height: calc(calc(3.2 * var(--space-medium))/1.6);
                 margin-bottom: 0;
                 text-transform: none;
             }
@@ -128,10 +128,10 @@ $white-color-hover: rgba(255,255,255,0.5);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                height: calc(2rem/1.6);
-                width: calc(2rem/1.6);
-                font-size: calc(2rem/1.6);
-                line-height: calc(2.8rem/1.6);
+                height: calc(calc(2 * var(--space-medium))/1.6);
+                width: calc(calc(2 * var(--space-medium))/1.6);
+                font-size: calc(calc(2 * var(--space-medium))/1.6);
+                line-height: calc(calc(2.8 * var(--space-medium))/1.6);
 
                 &::before {
                     display: flex;
@@ -148,10 +148,10 @@ $white-color-hover: rgba(255,255,255,0.5);
         .basicaccordion-body {
             display: none;
             position: relative;
-            bottom: calc(1.2rem/1.6);
+            bottom: calc(calc(1.2 * var(--space-medium))/1.6);
 
             p {
-                padding: 0 calc(4rem/1.6) 0 calc(2rem/1.6);
+                padding: 0 calc(calc(4 * var(--space-medium))/1.6) 0 calc(calc(2 * var(--space-medium))/1.6);
 
                 .red-text {
                     color: $primary-color;
@@ -162,7 +162,7 @@ $white-color-hover: rgba(255,255,255,0.5);
                 }
             }
             ul,ol{
-                padding-left: calc(4rem/1.6);
+                padding-left: calc(calc(4 * var(--space-medium))/1.6);
             }
         }
 
@@ -178,15 +178,15 @@ $white-color-hover: rgba(255,255,255,0.5);
     }
 
     .cmp-container {
-        margin-bottom: calc(2.5rem/1.6);
+        margin-bottom: calc(calc(2.5 * var(--space-medium))/1.6);
         &.space-below_none {
             margin-bottom: 0;
         }
         &.space-below_normal {
-            margin-bottom: calc(1.5rem/1.6);
+            margin-bottom: calc(calc(1.5 * var(--space-medium))/1.6);
         }
         &.space-below_big {
-            margin-bottom: calc(4.5rem/1.6);
+            margin-bottom: calc(calc(4.5 * var(--space-medium))/1.6);
         }
     }
 }
@@ -194,7 +194,7 @@ $white-color-hover: rgba(255,255,255,0.5);
 @media (max-width: $screen-s) {
     .basicaccordion {
         max-width: none;
-        margin: 0 calc(-3rem/1.6);
+        margin: 0 calc(calc(-3 * var(--space-medium))/1.6);
     }
 }
 

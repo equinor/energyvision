@@ -55,7 +55,7 @@ html {
   }
 
   @include susy-breakpoint($screen-lg, $susy) {
-    margin-top: 0rem;
+    margin-top: 0;
   }
 }
 @include susy-breakpoint($screen-lg, $susy) {

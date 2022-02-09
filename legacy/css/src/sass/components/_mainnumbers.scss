@@ -18,34 +18,34 @@
   .component-container {
 
     text-align: center;
-    margin-top: calc(2rem/1.6);
-    padding-left:calc(0.5rem/1.6);
-    padding-right:calc(0.5rem/1.6);
-    
+    margin-top: calc(calc(2 * var(--space-medium))/1.6);
+    padding-left:calc(calc(0.5 * var(--space-medium))/1.6);
+    padding-right:calc(calc(0.5 * var(--space-medium))/1.6);
+
     > .number {
       display: inline-block;
-      font-size: 5rem;
+      font-size: calc(5 * var(--space-medium));
       @include susy-breakpoint($screen-xs, $susy) {
-        font-size: calc(5rem/1.6);
+        font-size: calc(calc(5 * var(--space-medium))/1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        font-size: calc(2.8rem/1.6);
+        font-size: calc(calc(2.8 * var(--space-medium))/1.6);
       }
       @include susy-breakpoint($screen-md, $susy) {
-        font-size: calc(3.9rem/1.6);
+        font-size: calc(calc(3.9 * var(--space-medium))/1.6);
       }
       @include susy-breakpoint($screen-lg, $susy) {
-        font-size: calc(4.0rem/2.06);
-        line-height: calc(5rem/2.06);
+        font-size: calc(calc(4.0 * var(--space-medium))/2.06);
+        line-height: calc(calc(5 * var(--space-medium))/2.06);
       }
       @include susy-breakpoint($screen-xl, $susy) {
-        font-size: calc(5rem/2.06);
-        line-height: calc(5rem/2.06);
+        font-size: calc(calc(5 * var(--space-medium))/2.06);
+        line-height: calc(calc(5 * var(--space-medium))/2.06);
       }
 
       max-width: 95%;
-      line-height: calc(5rem/1.6);
+      line-height: calc(calc(5 * var(--space-medium))/1.6);
       word-wrap: break-word;
       &.cyan {
         color: $secondary-color;
@@ -59,8 +59,8 @@
     }
 
     > .sub {
-      margin-top: calc(1rem/1.6);
-      font-size: calc(1.5rem/1.6);
+      margin-top: calc(var(--space-medium)/1.6);
+      font-size: calc(calc(1.5 * var(--space-medium))/1.6);
       display: block;
       width: 100%;
       @include Equinor-Medium-italic;
@@ -71,7 +71,7 @@
       &.secondary-color{
         color: $secondary-color;
       }
-      
+
     }
 
   }

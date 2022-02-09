@@ -6,12 +6,12 @@ $list-bottom-border-color: #ddd;
     text-align: center;
     display: none;
     @include susy-breakpoint($screen-xs, $susy) {
-    padding-top: calc(4rem/1.6);
-    padding-bottom: calc(15rem/1.6);
+    padding-top: calc(calc(4 * var(--space-medium))/1.6);
+    padding-bottom: calc(calc(15 * var(--space-medium))/1.6);
     }
     @include susy-breakpoint($screen-sm, $susy) {
-      padding-top: calc(4rem/2.01);
-      padding-bottom: calc(15rem/2.01);
+      padding-top: calc(calc(4 * var(--space-medium))/2.01);
+      padding-bottom: calc(calc(15 * var(--space-medium))/2.01);
       }
     .no-result-heading{
         display: inline-block;
@@ -21,10 +21,10 @@ $list-bottom-border-color: #ddd;
 
 .section.list {
   @include susy-breakpoint($screen-xs, $susy) {
-    margin-top: calc(1rem/1.6);
+    margin-top: calc(var(--space-medium)/1.6);
     }
     @include susy-breakpoint($screen-xs, $susy) {
-      margin-top: calc(1rem/2.01);
+      margin-top: calc(var(--space-medium)/2.01);
       }
 }
 
@@ -46,12 +46,12 @@ $list-bottom-border-color: #ddd;
     display: none;
     width: 10%;
     @include susy-breakpoint($screen-xs, $susy) {
-      font-size: calc(3.5rem/1.6);
-      margin: 0 auto calc(1rem/1.6) auto;
+      font-size: calc(calc(3.5 * var(--space-medium))/1.6);
+      margin: 0 auto calc(var(--space-medium)/1.6) auto;
     }
     @include susy-breakpoint($screen-sm, $susy) {
-      font-size: calc(3.5rem/2.01);
-      margin: 0 auto calc(1rem/2.01) auto;
+      font-size: calc(calc(3.5 * var(--space-medium))/2.01);
+      margin: 0 auto calc(var(--space-medium)/2.01) auto;
     }
   }
 
@@ -61,24 +61,24 @@ $list-bottom-border-color: #ddd;
 
     @include susy-breakpoint($screen-xs, $susy) {
       padding-left: 0;
-      padding-top: calc(2rem/1.6);
-      height: calc(7.5rem/1.6);
+      padding-top: calc(calc(2 * var(--space-medium))/1.6);
+      height: calc(calc(7.5 * var(--space-medium))/1.6);
     }
     @include susy-breakpoint($screen-sm, $susy) {
       padding-left: 50%;
-      padding-top: calc(2rem/2.01);
-      height: calc(7.5rem/2.01);
+      padding-top: calc(calc(2 * var(--space-medium))/2.01);
+      height: calc(calc(7.5 * var(--space-medium))/2.01);
     }
 
     .list-search-container {
       width: 50%;
       float: right;
       @include susy-breakpoint($screen-xs, $susy) {
-      padding-bottom: calc(2rem/1.6);
+      padding-bottom: calc(calc(2 * var(--space-medium))/1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        padding-bottom: calc(2rem/2.01);
+        padding-bottom: calc(calc(2 * var(--space-medium))/2.01);
         }
 
       label {
@@ -97,12 +97,12 @@ $list-bottom-border-color: #ddd;
       float: right;
 
       @include susy-breakpoint($screen-xs, $susy) {
-        padding-left: calc(2rem/1.6);
-        padding-bottom: calc(2rem/1.6);
+        padding-left: calc(calc(2 * var(--space-medium))/1.6);
+        padding-bottom: calc(calc(2 * var(--space-medium))/1.6);
       }
       @include susy-breakpoint($screen-sm, $susy) {
-        padding-left: calc(2rem/2.01);
-        padding-bottom: calc(2rem/2.01);
+        padding-left: calc(calc(2 * var(--space-medium))/2.01);
+        padding-bottom: calc(calc(2 * var(--space-medium))/2.01);
       }
 
       .selectric-wrapper {
@@ -117,10 +117,10 @@ $list-bottom-border-color: #ddd;
 
       .custom-dropdown-items{
         @include susy-breakpoint($screen-xs, $susy) {
-        height: calc(4.2rem/1.6);
+        height: calc(calc(4.2 * var(--space-medium))/1.6);
         }
         @include susy-breakpoint($screen-sm, $susy) {
-          height: calc(4.2rem/2.01);
+          height: calc(calc(4.2 * var(--space-medium))/2.01);
           }
       }
     }
@@ -128,9 +128,9 @@ $list-bottom-border-color: #ddd;
 
   .queried {
     @include Equinor-Medium-italic;
-    @include susy-breakpoint($screen-xs, $susy) { font-size: calc(1.5rem/1.6); }
-    @include susy-breakpoint($screen-sm, $susy) { font-size: calc(1.5rem/2.01); }
-    
+    @include susy-breakpoint($screen-xs, $susy) { font-size: calc(calc(1.5 * var(--space-medium))/1.6); }
+    @include susy-breakpoint($screen-sm, $susy) { font-size: calc(calc(1.5 * var(--space-medium))/2.01); }
+
   }
 
   > h2 {
@@ -144,11 +144,11 @@ $list-bottom-border-color: #ddd;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: calc(2 * var(--space-medium));
 
     .tag-filter {
         &-count {
-            margin-left: 0.5rem;
+            margin-left: calc(0.5 * var(--space-medium));
         }
     }
   }
@@ -157,11 +157,11 @@ $list-bottom-border-color: #ddd;
     text-align: center;
     &-btn {
       background: transparent;
-      font-size: 2rem;
+      font-size: calc(2 * var(--space-medium));
       color: $black_normal;
       margin-top: 20px;
       margin-bottom: 40px;
-      padding: 0.5rem 1rem 0.5rem 1rem;
+      padding: calc(0.5 * var(--space-medium)) var(--space-medium) calc(0.5 * var(--space-medium)) var(--space-medium);
       cursor: pointer;
       border: 0;
       transition: color 0.2s ease-in-out;
@@ -178,7 +178,7 @@ $list-bottom-border-color: #ddd;
   .loading-indicator-wrapper .loading-indicator {
   color: $slate-blue;
   }
-  
+
 }
 
 // Apply a white bg for on lists in news-page, due to the light-gray background-color on this page
@@ -227,7 +227,7 @@ $list-bottom-border-color: #ddd;
     flex-direction: column;
     @include susy-breakpoint($screen-sm, $susy) {
       flex-direction: row;
-      padding: calc(2rem/2.01);
+      padding: calc(calc(2 * var(--space-medium))/2.01);
     }
     //}
 
@@ -265,15 +265,15 @@ $list-bottom-border-color: #ddd;
 
     .item-text {
       @include susy-breakpoint($screen-xs, $susy) {
-      padding-top: calc(2rem/1.6);
-      padding-left: calc(2.5rem/1.6);
-      padding-right: calc(2.5rem/1.6);
+      padding-top: calc(calc(2 * var(--space-medium))/1.6);
+      padding-left: calc(calc(2.5 * var(--space-medium))/1.6);
+      padding-right: calc(calc(2.5 * var(--space-medium))/1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
-        padding-top: calc(2rem/2.01);
-        padding-left: calc(2.5rem/2.01);
-        padding-right: calc(2.5rem/2.01);
+        padding-top: calc(calc(2 * var(--space-medium))/2.01);
+        padding-left: calc(calc(2.5 * var(--space-medium))/2.01);
+        padding-right: calc(calc(2.5 * var(--space-medium))/2.01);
         width: 54%;
         padding-top: 0;
         flex-grow: 1;
@@ -290,9 +290,9 @@ $list-bottom-border-color: #ddd;
       .item-date {
         @include susy-breakpoint($screen-xs, $susy) {
           display: block;
-          margin-bottom: calc(1.5rem/1.6);
+          margin-bottom: calc(calc(1.5 * var(--space-medium))/1.6);
           text-transform: uppercase;
-          font-size: calc(1.5rem/1.6);
+          font-size: calc(calc(1.5 * var(--space-medium))/1.6);
           color: $newsdate-color;
         }
 
@@ -306,7 +306,7 @@ $list-bottom-border-color: #ddd;
       @include susy-breakpoint($screen-xs, $susy) {
         width: 100%;
         text-align: center;
-        margin-bottom: calc(1rem/1.6);
+        margin-bottom: calc(var(--space-medium)/1.6);
       }
 
       @include susy-breakpoint($screen-sm, $susy) {
@@ -316,7 +316,7 @@ $list-bottom-border-color: #ddd;
 
       @include susy-breakpoint($screen-lg, $susy) {
           >.btn{
-            padding: calc(1rem / 2.02) calc(3.5rem /3);
+            padding: calc(var(--space-medium) / 2.02) calc(calc(3.5 * var(--space-medium)) /3);
           }
       }
 
@@ -340,9 +340,9 @@ $list-bottom-border-color: #ddd;
 
         @include susy-breakpoint($screen-sm, $susy) {
           display: block;
-          margin-bottom: calc(1.5rem/2.01);
+          margin-bottom: calc(calc(1.5 * var(--space-medium))/2.01);
           text-transform: uppercase;
-          font-size: calc(1.5rem/2.01);
+          font-size: calc(calc(1.5 * var(--space-medium))/2.01);
           color: $newsdate-color;
         }
       }

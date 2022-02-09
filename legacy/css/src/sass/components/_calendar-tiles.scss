@@ -39,7 +39,7 @@
         }
 
         border-bottom: 2px solid #e1e2e3;
-        margin-bottom: 3rem;
+        margin-bottom: calc(3 * var(--space-medium));
 
         header {
           background-color: $secondary-color-light-bg;
@@ -55,7 +55,7 @@
               display: flex;
               background-color: $secondary-color;
               width: 100%;
-              height: 13rem;
+              height: calc(13 * var(--space-medium));
               position: relative;
             }
 
@@ -67,11 +67,11 @@
                 width: 0;
                 height: 0;
                 position: absolute;
-                left: calc(50% - 1rem);
+                left: calc(50% - var(--space-medium));
                 bottom: 0;
-                border-left: 1.5rem solid transparent;
-                border-right: 1.5rem solid transparent;
-                border-bottom: 2rem solid $secondary-color-light-bg;
+                border-left: calc(1.5 * var(--space-medium)) solid transparent;
+                border-right: calc(1.5 * var(--space-medium)) solid transparent;
+                border-bottom: calc(2 * var(--space-medium)) solid $secondary-color-light-bg;
 
               }
 
@@ -81,28 +81,28 @@
               width: 100%;
               text-align: center;
               align-self: center;
-              padding: 0 2rem;
-              font-size: 4rem;
+              padding: 0 calc(2 * var(--space-medium));
+              font-size: calc(4 * var(--space-medium));
             }
 
             span {
               color: #fff;
               @include Equinor-Light;
-              font-size: 3rem;
+              font-size: calc(3 * var(--space-medium));
             }
           }
 
           .event-title {
             flex-direction: row;
             flex-grow: 2;
-            padding: 2rem;
+            padding: calc(2 * var(--space-medium));
             width: 100%;
 
             h2 {
               @include Equinor-Bold;
-              font-size: 1.8rem;
+              font-size: calc(1.8 * var(--space-medium));
               line-height: 1.4;
-              margin-bottom: 1rem;
+              margin-bottom: var(--space-medium);
               width: 100%;
             }
 
@@ -112,7 +112,7 @@
 
               .eventtype {
                 width: 100%;
-                font-size: 1.6rem;
+                font-size: calc(1.6 * var(--space-medium));
                 float: left;
               }
 
@@ -123,8 +123,8 @@
 
         .fa, .si {
           color: $primary-color;
-          padding-right: 1rem;
-          min-width: 2.5rem;
+          padding-right: var(--space-medium);
+          min-width: calc(2.5 * var(--space-medium));
           text-align: center;
           &:before{
             font-weight: inherit;
@@ -134,7 +134,7 @@
         footer {
           display: flex;
           flex-direction: column;
-          padding: 2rem;
+          padding: calc(2 * var(--space-medium));
           background-color: $secondary-color-light-bg;
 
           @include susy-breakpoint($screen-xs, $susy) {
@@ -146,9 +146,9 @@
         .location, .time, .add-event {
           @include Equinor-Bold;
           display: flex;
-          font-size: 1.5rem;
+          font-size: calc(1.5 * var(--space-medium));
           line-height: 1.2;
-          padding-bottom: 1rem;
+          padding-bottom: var(--space-medium);
         }
 
         .location, .time, .add-event {
@@ -172,7 +172,7 @@
         .read-more {
           width: 100%;
           text-align: center;
-          margin: 2rem 0 0 0;
+          margin: calc(2 * var(--space-medium)) 0 0 0;
           .btn.list { background-color: #fff; }
         }
       }

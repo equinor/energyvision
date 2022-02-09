@@ -10,7 +10,7 @@
     width: calc((100%)/3);
     flex-grow: 0;
     flex-shrink: 0;
-    font-size: 2.2rem;
+    font-size: calc(2.2 * var(--space-medium));
     font-weight: 500;
     line-height: 1.4em;
     border: 1.5px solid transparent;
@@ -62,7 +62,7 @@
     }
 
     a {
-      font-size: 1.6rem;
+      font-size: calc(1.6 * var(--space-medium));
       color: white;
       margin-top: 24px;
       text-decoration-color: $primary-color;

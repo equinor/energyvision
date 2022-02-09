@@ -70,37 +70,37 @@ $filter-button-color: #d2d2d2;
 $filter-button-active-text-color: #ffffff;
 $filter-button-active-color: #808080;
 
-$xs-medium-font-size: calc(1.3rem / 2.02);
+$xs-medium-font-size: calc(calc(1.3 * var(--space-medium)) / 2.02);
 $xs-medium-height: 2px;
-$xs-medium-padding-sides: calc(2.5rem / 2.02);
-$xs-medium-chevron-size: calc(1.45rem / 2.02);
+$xs-medium-padding-sides: calc(calc(2.5 * var(--space-medium)) / 2.02);
+$xs-medium-chevron-size: calc(calc(1.45 * var(--space-medium)) / 2.02);
 
-$xs-large-font-size: calc(1.4rem / 1.6);
+$xs-large-font-size: calc(calc(1.4 * var(--space-medium)) / 1.6);
 $xs-large-height: 2px;
-$xs-large-padding-sides: calc(2.5rem / 1.6);
-$xs-large-chevron-size: calc(1.6rem / 1.6);
+$xs-large-padding-sides: calc(calc(2.5 * var(--space-medium)) / 1.6);
+$xs-large-chevron-size: calc(calc(1.6 * var(--space-medium)) / 1.6);
 
-$sm-medium-font-size: calc(1.4rem / 2.02);
+$sm-medium-font-size: calc(calc(1.4 * var(--space-medium)) / 2.02);
 $sm-medium-height: 3px;
-$sm-medium-padding-sides: calc(2.5rem / 2.02);
-$sm-medium-chevron-size: calc(1.45rem / 2.02);
+$sm-medium-padding-sides: calc(calc(2.5 * var(--space-medium)) / 2.02);
+$sm-medium-chevron-size: calc(calc(1.45 * var(--space-medium)) / 2.02);
 
-$sm-large-font-size: calc(1.6rem / 2.02);
+$sm-large-font-size: calc(calc(1.6 * var(--space-medium)) / 2.02);
 $sm-large-height: 3px;
-$sm-large-padding-sides: calc(3rem / 2.02);
-$sm-large-chevron-size: calc(1.85rem / 2.02);
+$sm-large-padding-sides: calc(calc(3 * var(--space-medium)) / 2.02);
+$sm-large-chevron-size: calc(calc(1.85 * var(--space-medium)) / 2.02);
 
-$lg-medium-font-size: calc(1.6rem / 2.02);
+$lg-medium-font-size: calc(calc(1.6 * var(--space-medium)) / 2.02);
 $lg-medium-height: 4px;
-$lg-medium-padding-sides: calc(2.5rem / 2.02);
-$lg-medium-chevron-size: calc(1.45rem / 2.02);
+$lg-medium-padding-sides: calc(calc(2.5 * var(--space-medium)) / 2.02);
+$lg-medium-chevron-size: calc(calc(1.45 * var(--space-medium)) / 2.02);
 
-$lg-large-font-size: calc(1.8rem / 2.02);
+$lg-large-font-size: calc(calc(1.8 * var(--space-medium)) / 2.02);
 $lg-large-height: 4px;
-$lg-large-padding-sides: calc(3.5rem / 2.02);
-$lg-large-chevron-size: calc(2rem / 2.02);
+$lg-large-padding-sides: calc(calc(3.5 * var(--space-medium)) / 2.02);
+$lg-large-chevron-size: calc(calc(2 * var(--space-medium)) / 2.02);
 
-$line-height: calc(1.8rem / 1.6);
+$line-height: calc(calc(1.8 * var(--space-medium)) / 1.6);
 $size-factor-xs: 1.6;
 $size-factor-sm: 2.02;
 
@@ -113,7 +113,7 @@ $size-factor-sm: 2.02;
   height: auto;
   line-height: $line-height;
   border-radius: $height;
-  padding: calc(1rem / #{$size-factor}) $padding;
+  padding: calc(var(--space-medium) / #{$size-factor}) $padding;
 
   &.filter {
     padding-right: $padding;
@@ -164,12 +164,12 @@ $size-factor-sm: 2.02;
   text-align: center;
   display: inline-block;
   text-decoration: none;
-  -webkit-border-radius: calc(2rem / 1.6); // TODO check how clamp works
-  -moz-border-radius: calc(2rem / 1.6);
-  border-radius: calc(2rem / 1.6);
+  -webkit-border-radius: calc(calc(2 * var(--space-medium)) / 1.6); // TODO check how clamp works
+  -moz-border-radius: calc(calc(2 * var(--space-medium)) / 1.6);
+  border-radius: calc(calc(2 * var(--space-medium)) / 1.6);
   text-shadow: none;
   white-space: normal;
-  margin: 0 auto calc(1rem / 2.02);
+  margin: 0 auto calc(var(--space-medium) / 2.02);
   cursor: pointer;
 
   // Animated buttons start
@@ -195,8 +195,8 @@ $size-factor-sm: 2.02;
   // Animated buttons end
 
   &.medium.narrow, &.large.narrow {
-    padding-top: calc(.5rem / 1.6);
-    padding-bottom: calc(.5rem / 1.6);
+    padding-top: calc(calc(.5 * var(--space-medium)) / 1.6);
+    padding-bottom: calc(calc(.5 * var(--space-medium)) / 1.6);
   }
 
   &.large {
@@ -218,7 +218,7 @@ $size-factor-sm: 2.02;
 
     .meta {
       display: inline-block;
-      height: calc(1.8rem / 1.6);
+      height: calc(calc(1.8 * var(--space-medium)) / 1.6);
       position: relative;
       white-space: nowrap;
     }
@@ -231,11 +231,11 @@ $size-factor-sm: 2.02;
 
     .icon {
       vertical-align: top;
-      padding-left: calc(.3rem / 1.6);
-      padding-right: calc(.3rem / 1.6);
+      padding-left: calc(calc(.3 * var(--space-medium)) / 1.6);
+      padding-right: calc(calc(.3 * var(--space-medium)) / 1.6);
       top: 0;
-      left: calc(-2.2rem / 1.6);
-      font-size: calc(1.4rem / 1.6);
+      left: calc(calc(-2.2 * var(--space-medium)) / 1.6);
+      font-size: calc(calc(1.4 * var(--space-medium)) / 1.6);
     }
 
     .button-text {
@@ -371,14 +371,14 @@ $size-factor-sm: 2.02;
     background-color: $primary-color-dark;
   }
 
-  &.space-below_normal { margin-bottom: calc(1.5rem / 1.6); }
-  &.space-below_big { margin-bottom:calc(4.5rem / 1.6); }
+  &.space-below_normal { margin-bottom: calc(calc(1.5 * var(--space-medium)) / 1.6); }
+  &.space-below_big { margin-bottom:calc(calc(4.5 * var(--space-medium)) / 1.6); }
 
   &:after {
     content: unquote('"\f133"');
     font-family: 'FontAwesome';
-    margin-left: calc(1rem / 1.6);
-    padding-left: calc(1rem / 1.6);
+    margin-left: calc(var(--space-medium) / 1.6);
+    padding-left: calc(var(--space-medium) / 1.6);
     border-left: 1px solid $grey;
     color: $white;
   }

@@ -20,11 +20,11 @@
 
 .section.title {
   @include span(12 nest);
-  max-width: 140rem;
+  max-width: calc(140 * var(--space-medium));
   margin: 0 auto;
   float:none;
 
-  .component-container > h1,h2,h3,h4,h5,h6 { margin-bottom: 0.25rem; }
+  .component-container > h1,h2,h3,h4,h5,h6 { margin-bottom: calc(0.25 * var(--space-medium)); }
 
 }
 

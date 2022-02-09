@@ -19,9 +19,9 @@
 
 .accordion-title {
   display: block;
-  padding: 0 0 2rem 1rem;
+  padding: 0 0 calc(2 * var(--space-medium)) var(--space-medium);
   line-height: 1;
-  font-size: 1.5rem;
+  font-size: calc(1.5 * var(--space-medium));
   position: relative;
   border: 1px solid #e6e6e6;
   border-bottom: 0;
@@ -39,9 +39,9 @@
 .accordion-title::before {
   content: '+';
   position: absolute;
-  right: 1rem;
+  right: var(--space-medium);
   top: 50%;
-  margin-top: -0.5rem;
+  margin-top: calc(-0.5 * var(--space-medium));
 }
 
 .is-active > .accordion-title::before {

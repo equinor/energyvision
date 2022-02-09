@@ -1,4 +1,4 @@
-$blureffect: 0.8rem;
+$blureffect: calc(0.8 * var(--space-medium));
 $blur-duration: 0.3s;
 
 @mixin blur-mixin($rems) {

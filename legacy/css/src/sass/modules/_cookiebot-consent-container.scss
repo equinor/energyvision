@@ -7,9 +7,9 @@
 
   p {
     &.request-consent-text {
-      padding: calc(1.5rem/1.6) calc(1.5rem/1.6);
+      padding: calc(calc(1.5 * var(--space-medium))/1.6) calc(calc(1.5 * var(--space-medium))/1.6);
       @include susy-breakpoint($screen-md, $susy) {
-        padding: calc(1.5rem/1.6) calc(6.5rem/1.6);
+        padding: calc(calc(1.5 * var(--space-medium))/1.6) calc(calc(6.5 * var(--space-medium))/1.6);
       }
     }
   }
@@ -27,9 +27,9 @@
     p {
       &.request-consent-text {
         @include susy-breakpoint($screen-md, $susy) {
-          font-size: calc(1.8rem/1.6);
-          line-height: calc(2.8rem/1.6);
-          padding: calc(1.5rem/1.6) calc(1.5rem/1.6);
+          font-size: calc(calc(1.8 * var(--space-medium))/1.6);
+          line-height: calc(calc(2.8 * var(--space-medium))/1.6);
+          padding: calc(calc(1.5 * var(--space-medium))/1.6) calc(calc(1.5 * var(--space-medium))/1.6);
         }
       }
     }
@@ -39,9 +39,9 @@
     p {
       &.request-consent-text {
         @include susy-breakpoint($screen-md, $susy) {
-          font-size: calc(1.6rem/1.6);
-          line-height: calc(2.5rem/1.6);
-          padding: calc(1.5rem/1.6) calc(1.5rem/1.6);
+          font-size: calc(calc(1.6 * var(--space-medium))/1.6);
+          line-height: calc(calc(2.5 * var(--space-medium))/1.6);
+          padding: calc(calc(1.5 * var(--space-medium))/1.6) calc(calc(1.5 * var(--space-medium))/1.6);
         }
       }
     }
