@@ -1,5 +1,6 @@
 import React from 'react'
 import type { Rule } from '@sanity/types'
+import { filterByLang } from '../../helpers/referenceFilters'
 
 export default {
   type: 'document',
@@ -19,10 +20,7 @@ export default {
           type: 'reference',
           to: [{ type: 'subMenu' }],
           options: {
-            filter: ({ document }: { document: any }) => ({
-              filter: `_lang == $lang`,
-              params: { lang: document._lang },
-            }),
+            filter: filterByLang,
             // Disable new since this button does not work with dynamic initial
             // values  :(
             disableNew: true,

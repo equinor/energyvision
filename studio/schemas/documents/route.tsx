@@ -45,7 +45,6 @@ export default (isoCode: string, title: string) => {
           disableNew: true,
         },
       },
-
       {
         title: 'Parent',
         name: 'parent',

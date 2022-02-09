@@ -7,6 +7,7 @@ import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
 import routes from '../../routes'
 import { AnchorLinkDescription } from '../anchorReferenceField'
+import { filterByRouteAndNews } from '../../../helpers/referenceFilters'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -115,10 +116,7 @@ export default {
                 }),
               to: defaultReferenceTargets,
               options: {
-                filter: ({ document }: { document: any }) => ({
-                  filter: `_type match $routeLang || _type == 'news'`,
-                  params: { routeLang: `route_${document._lang}*` },
-                }),
+                filter: filterByRouteAndNews,
                 disableNew: true,
               },
               hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,

@@ -2,8 +2,9 @@ import { list } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
 import type { SimpleMenuLink } from './simpleMenuLink'
-import type { Rule, SanityDocument, Reference } from '@sanity/types'
+import type { Rule, Reference } from '@sanity/types'
 import routes from '../routes'
+import { filterByRoute } from '../../helpers/referenceFilters'
 
 export type MenuGroup = {
   _type: 'simpleMenuGroup'
@@ -48,10 +49,7 @@ export default {
           type: 'reference',
           to: routes,
           options: {
-            filter: ({ document }: { document: SanityDocument }) => ({
-              filter: `_type == $routeLang`,
-              params: { routeLang: `route_${document._lang}` },
-            }),
+            filter: filterByRoute,
             disableNew: true,
           },
         },

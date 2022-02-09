@@ -2,6 +2,7 @@ import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
+import { filterByRoute } from '../../helpers/referenceFilters'
 
 export type ColumnLink = {
   _type: 'link'
@@ -73,10 +74,7 @@ export default {
                         }),
                       to: routes,
                       options: {
-                        filter: ({ document }: { document: any }) => ({
-                          filter: `_type match $routeLang`,
-                          params: { routeLang: `route_${document._lang}*` },
-                        }),
+                        filter: filterByRoute,
                       },
                       hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === true,
                     },

@@ -6,6 +6,7 @@ import { validateCharCounterEditor } from '../../validations/validateCharCounter
 
 import type { Block, Rule, Image } from '@sanity/types'
 import routes from '../../routes'
+import { filterByRoute } from '../../../helpers/referenceFilters'
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -40,10 +41,7 @@ export default {
               type: 'reference',
               to: routes,
               options: {
-                filter: ({ document }: { document: any }) => ({
-                  filter: `_type match $routeLang`,
-                  params: { routeLang: `route_${document._lang}*` },
-                }),
+                filter: filterByRoute,
                 disableNew: true,
               },
             },

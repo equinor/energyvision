@@ -8,7 +8,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { flight_land } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule, Block } from '@sanity/types'
-import languages from '../../languages'
+import { filterByLang } from '../../helpers/referenceFilters'
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -64,12 +64,7 @@ export default {
       type: 'reference',
       to: [{ type: 'subMenu' }],
       options: {
-        filter: ({ document }: { document: any }) => ({
-          filter: `_lang == $lang`,
-          // @TODO: Improve the languages[0] when we have a mechanism
-          // for base language in place
-          params: { lang: document._lang || languages[0].name },
-        }),
+        filter: filterByLang,
         disableNew: true,
       },
       validation: (Rule: Rule) => Rule.required(),

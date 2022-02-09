@@ -5,6 +5,7 @@ import { link, attach_file, external_link } from '@equinor/eds-icons'
 import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
 import type { BlockFieldType } from '../../types/schemaTypes'
 import routes from '../routes'
+import { filterByRouteAndNews } from '../../helpers/referenceFilters'
 
 export type BlockContentProps = {
   h1?: boolean
@@ -103,12 +104,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           ...routes,
         ],
         options: {
-          filter: ({ document }: { document: any }) => ({
-            // @TODO: Fix _lang for English version. Atm we can't link to
-            // English topic pages and can't filter for news articles in the same language
-            filter: `_type match $routeLang || _type == 'news'`,
-            params: { routeLang: `route_${document._lang}*` },
-          }),
+          filter: filterByRouteAndNews,
           disableNew: true,
         },
         validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),

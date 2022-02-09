@@ -5,6 +5,7 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
 import { AnchorLinkDescription } from './anchorReferenceField'
+import { filterByRouteAndNews } from '../../helpers/referenceFilters'
 
 export type ReferenceTarget = {
   type: string
@@ -61,10 +62,7 @@ const LinkField = {
         }),
       to: defaultReferenceTargets,
       options: {
-        filter: ({ document }: { document: any }) => ({
-          filter: `_type match $routeLang || _type == 'news'`,
-          params: { routeLang: `route_${document._lang}*` },
-        }),
+        filter: filterByRouteAndNews,
         disableNew: true,
       },
       hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === true,

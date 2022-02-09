@@ -6,8 +6,9 @@ import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
-import type { Rule, ValidationContext, Reference, ReferenceFilterSearchOptions } from '@sanity/types'
+import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
+import { filterByRoute, filterByRouteNewsAndTitle } from '../../helpers/referenceFilters'
 
 export type SubMenu = {
   _type: 'subMenu'
@@ -76,10 +77,7 @@ export default {
         }),
       to: routes,
       options: {
-        filter: ({ document }: { document: any }) => ({
-          filter: `_type match $routeLang`,
-          params: { routeLang: `route_${document._lang}*` },
-        }),
+        filter: filterByRoute,
         disableNew: true,
       },
       hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === true,
@@ -125,13 +123,9 @@ export default {
       name: 'featuredContent',
       type: 'reference',
       title: 'Featured content',
-
       to: [{ type: 'news' }, ...routes],
       options: {
-        filter: ({ document: { _lang, title: title = '' } }: any): ReferenceFilterSearchOptions => ({
-          filter: `title != $title && (_type match $routeLang || _type == 'news')`,
-          params: { routeLang: `route_${_lang}*`, title, lang: _lang },
-        }),
+        filter: filterByRouteNewsAndTitle,
         disableNew: true,
       },
     },

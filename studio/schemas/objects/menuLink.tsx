@@ -1,8 +1,9 @@
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { validateStaticUrl } from '../validations/validateStaticUrl'
-import type { Rule, ValidationContext, Reference, SanityDocument } from '@sanity/types'
+import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
+import { filterByRoute } from '../../helpers/referenceFilters'
 
 export type MenuLink = {
   _type: 'menuLink'
@@ -39,10 +40,7 @@ export default {
       type: 'reference',
       to: routes,
       options: {
-        filter: ({ document }: { document: SanityDocument }) => ({
-          filter: `_type match $routeLang`,
-          params: { routeLang: `route_${document._lang}*` },
-        }),
+        filter: filterByRoute,
         disableNew: true,
       },
       validation: (Rule: Rule) =>
