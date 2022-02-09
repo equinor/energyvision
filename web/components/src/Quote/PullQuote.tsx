@@ -37,7 +37,7 @@ const Container = styled.figure<ContainerProps>`
         ? `11rem var(--space-medium) 1fr`
         : hasImage
         ? `1fr var(--space-medium) 11rem`
-        : `1fr 6rem 6rem`};
+        : `1fr 6rem 5rem`};
     grid-template-areas: ${({ imagePosition, hasImage }) =>
       hasImage && imagePosition === 'left'
         ? `
