@@ -4,9 +4,7 @@ import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 
 const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-medium) var(--space-3xLarge)
-    var(--layout-paddingHorizontal-medium);
-
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
