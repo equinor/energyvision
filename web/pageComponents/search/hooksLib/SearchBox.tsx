@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks'
 import styled from 'styled-components'
+import VisuallyHidden from '../../shared/VisuallyHidden'
 
 import { outlineTemplate, Tokens } from '@utils'
 
@@ -99,6 +100,8 @@ const SearchBox = (props: SearchBoxProps) => {
   return (
     <div>
       <form action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
+        {/* @TODO Language strings */}
+        <VisuallyHidden>Search</VisuallyHidden>
         <Input
           ref={inputRef}
           autoComplete="off"
