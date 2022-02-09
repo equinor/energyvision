@@ -55,7 +55,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
   /** Check if the required page is old archived AEM page or not
    * because AEM also has archived pages which has 'archive' the page path */
   const contentUrl = getContentUrl(locale, slug)
-  const response = await fetch(contentUrl)
+  const response = await fetch(contentUrl, { cache: 'no-cache' })
   console.log(
     'Response code ' +
       response.status +
@@ -68,7 +68,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
   )
   if (response && response.status === 200) {
     const contentUrl = getContentUrl(locale, slug)
-    const response = await fetch(contentUrl)
+    const response = await fetch(contentUrl, { cache: 'no-cache' })
 
     let pageData
     try {
