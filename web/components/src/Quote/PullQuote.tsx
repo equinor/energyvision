@@ -51,7 +51,7 @@ const Container = styled.figure<ContainerProps>`
         `
         : `
           'quote quote .'
-          '. author author'
+          'author author .'
         `};
   }
 `
