@@ -78,11 +78,11 @@ export const Numbered: Story<ListProps> = () => (
 export const Unstyled: Story<ListProps> = () => {
   const Box = styled.li`
     border: 1px solid grey;
-    padding: 1rem;
+    padding: var(--space-medium);
   `
   const StyledList = styled(List)`
     display: grid;
-    grid-gap: 32px;
+    grid-gap: var(--space-xLarge);
     grid-template-columns: repeat(4, fit-content(100%));
   `
 

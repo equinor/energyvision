@@ -10,7 +10,7 @@ const Promoted = styled.div`
   display: none;
   @media (min-width: 1300px) {
     display: block;
-    width: 18rem;
+    width: calc(18 * var(--space-medium));
     margin-top: 0;
     padding-left: var(--space-medium);
     border-left: 1px solid var(--grey-30);

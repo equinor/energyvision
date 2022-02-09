@@ -19,10 +19,10 @@ export default {
 
 const Grid = styled.div`
   display: grid;
-  gap: 1rem;
+  gap: var(--space-medium);
 `
 const TableWrapper = styled.div`
-  padding: 1rem;
+  padding: var(--space-medium);
   display: flex;
   place-content: center;
 `

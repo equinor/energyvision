@@ -83,7 +83,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
         </FactBox.Text>
       </FactBox.Content>
     </FactBox>
-    <FactBox background="warm" style={{ marginTop: '1rem' }}>
+    <FactBox background="warm" style={{ marginTop: 'var(--space-medium)' }}>
       <FactBox.Content>
         <Heading size="xl" level="h3">
           Dolor sit amet
@@ -97,7 +97,7 @@ export const WithDifferentBackgrounds: Story<FactProps> = () => (
         </FactBox.Text>
       </FactBox.Content>
     </FactBox>
-    <FactBox background="cold" style={{ marginTop: '1rem' }}>
+    <FactBox background="cold" style={{ marginTop: 'var(--space-medium)' }}>
       <FactBox.Content>
         <Heading size="xl" level="h3">
           Dolor sit amet
@@ -194,7 +194,7 @@ export const WithLongText: Story<WithImageProps> = ({ background = 'warm', dynam
         </FactBox.Text>
       </FactBox.Content>
     </FactBox>
-    <FactBox background={background} style={{ marginTop: '1rem' }}>
+    <FactBox background={background} style={{ marginTop: 'var(--space-medium)' }}>
       <FactBox.Content dynamicHeight={dynamicHeight}>
         <Heading size="xl" level="h3">
           Dolor sit amet

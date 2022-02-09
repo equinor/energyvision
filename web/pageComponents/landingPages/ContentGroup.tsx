@@ -13,8 +13,8 @@ const GroupWrapper = styled.div`
 
 const LinkGroup = styled.div`
   --min: 220px;
-  --row-gap: 2rem;
-  --column-gap: 1rem;
+  --row-gap: var(--space-xLarge);
+  --column-gap: var(--space-medium);
 
   padding: 0 var(--layout-paddingHorizontal-small);
   margin: 0 auto;

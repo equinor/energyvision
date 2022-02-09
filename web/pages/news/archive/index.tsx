@@ -59,7 +59,7 @@ export default function AllArchivedNews({ data }: AllArchivedNewsProps) {
         <html data-template="news-archived" />
       </Head>
       <Container>
-        <Heading level="h1" size="2xl" style={{ margin: '1rem 0' }}>
+        <Heading level="h1" size="2xl" style={{ margin: 'var(--space-medium) 0' }}>
           {/* @TODO Language strings */}
           {locale === 'no' ? 'Arkiverte nyheter fra 2016 til 2018' : '2016 to 2018 archived news page list'}
         </Heading>

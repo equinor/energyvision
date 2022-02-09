@@ -7,8 +7,8 @@ import EventsCard from '../cards/EventsCard'
 
 const FlexibleWrapper = styled.div`
   --card-minWidth: 250px;
-  --row-gap: 2rem;
-  --column-gap: 1rem;
+  --row-gap: var(--space-xLarge);
+  --column-gap: var(--space-medium);
   @media (min-width: 1000px) {
     --card-minWidth: 340px;
   }
@@ -24,8 +24,8 @@ const FlexibleWrapper = styled.div`
 
 const PairWrapper = styled.div`
   --card-minWidth: 250px;
-  --row-gap: 2rem;
-  --column-gap: 1rem;
+  --row-gap: var(--space-xLarge);
+  --column-gap: var(--space-medium);
 
   padding: 0 var(--layout-paddingHorizontal-small);
   margin: var(--space-xLarge) auto 0 auto;

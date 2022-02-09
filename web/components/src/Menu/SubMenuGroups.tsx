@@ -13,7 +13,7 @@ const StyledSubMenuGroups = styled.div`
     grid-auto-flow: column;
 
     [data-dynamic-typography-version='v1'] & {
-      grid-template-columns: repeat(auto-fill, minmax(8em, 11rem));
+      grid-template-columns: repeat(auto-fill, minmax(8em, calc(11 * var(--space-medium))));
     }
 
     [data-dynamic-typography-version='v2'] & {

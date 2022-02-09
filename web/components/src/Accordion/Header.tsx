@@ -57,7 +57,7 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-2);
   display: inline-block;
-  padding-top: 2px;
+  padding-top: var(--space-2);
   text-align: left;
   @media (prefers-reduced-motion: no-preference) {
     transition: font-weight 0.1s ease-in-out;

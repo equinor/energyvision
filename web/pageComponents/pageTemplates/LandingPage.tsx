@@ -24,7 +24,7 @@ const StyledHeading = styled(TitleBlockRenderer)`
 `
 
 const Intro = styled.div`
-  --max-width: 40rem;
+  --max-width: calc(40 * var(--space-medium));
   padding: 0 var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
   margin-left: auto;

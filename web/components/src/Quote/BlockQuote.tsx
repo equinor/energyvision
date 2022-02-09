@@ -13,7 +13,7 @@ const Quote = styled.blockquote`
 
 const Author = styled.figcaption`
   text-align: right;
-  margin-top: 1rem;
+  margin-top: var(--space-medium);
   font-style: italic;
 `
 

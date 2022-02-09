@@ -5,9 +5,9 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, help_outline } from '@equinor/eds-icons'
 
 const Wrapper = styled.div`
-  margin: 32px;
+  margin: var(--space-xLarge);
   display: grid;
-  grid-gap: 32px;
+  grid-gap: var(--space-xLarge);
   grid-template-columns: repeat(4, fit-content(100%));
 `
 

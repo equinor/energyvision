@@ -11,7 +11,7 @@ const Container = styled.div<{ items: number }>`
 
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 18rem));
+  grid-template-columns: repeat(auto-fit, minmax(calc(13 * var(--space-medium)), calc(18 * var(--space-medium))));
   grid-gap: var(--space-xxLarge);
   padding: var(--space-xxLarge) var(--space-large);
   margin: auto;

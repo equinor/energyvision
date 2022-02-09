@@ -29,7 +29,7 @@ const StyledSubMenuGroupList = styled(List)`
     flex-direction: column;
     flex-wrap: wrap;
     height: 100%;
-    max-width: 13rem;
+    max-width: calc(13 * var(--space-medium));
   }
 `
 

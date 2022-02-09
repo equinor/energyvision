@@ -151,7 +151,7 @@ export const WithTheme: Story<TeaserProps> = (args) => (
       </Teaser>
     </BackgroundContainer>
     <BackgroundContainer background="Spruce Wood">
-      <Teaser style={{ marginTop: '1rem' }}>
+      <Teaser style={{ marginTop: 'var(--space-medium)' }}>
         <Teaser.Media>
           <ImagePlaceholder height="150px" />
         </Teaser.Media>

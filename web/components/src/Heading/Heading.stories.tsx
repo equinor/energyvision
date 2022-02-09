@@ -17,7 +17,7 @@ export default {
 } as Meta
 
 const Wrapper = styled.div`
-  margin: 32px;
+  margin: var(--space-xLarge);
   display: grid;
   grid-template-columns: 1fr;
 `

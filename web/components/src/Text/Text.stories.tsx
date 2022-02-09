@@ -4,9 +4,9 @@ import { Text, TextProps } from '@components'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin: 32px;
+  margin: var(--spacing-xLarge);
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: var(--space-medium);
   grid-template-columns: 1fr;
 `
 

@@ -6,12 +6,12 @@ import type { CardData } from '../../types/types'
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  grid-row-gap: 4rem;
-  grid-column-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(calc(15 * var(--space-medium)), 1fr));
+  grid-row-gap: calc(4 * var(--space-medium));
+  grid-column-gap: var(--space-xLarge);
   /** @TODO: Clamp? */
   @media (min-width: 1300px) {
-    grid-column-gap: 4rem;
+    grid-column-gap: calc(4 * var(--space-medium)); // TODO: 64 Missing from spacings, try 56 (--space-3xLarge)
   }
   @media (min-width: 1900px) {
     grid-column-gap: var(--space-4xLarge);

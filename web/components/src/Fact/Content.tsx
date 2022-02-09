@@ -15,7 +15,7 @@ export const Container = styled.div<ContainerProps>`
   }
   ul,
   ol {
-    padding-left: 1rem;
+    padding-left: var(--space-medium);
   }
 
   li {

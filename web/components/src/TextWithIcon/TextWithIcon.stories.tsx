@@ -4,16 +4,16 @@ import { TextWithIcon } from '@components'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin: 32px;
+  margin: var(--space-xLarge);
   display: grid;
-  grid-gap: 6rem;
+  grid-gap: var(--spacing-4xLarge);
   grid-template-columns: 1fr;
 `
 
 const Group = styled.div`
   display: grid;
-  grid-gap: 3rem;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 18rem));
+  grid-gap: calc(3 * var(--space-medium));
+  grid-template-columns: repeat(auto-fit, minmax(calc(13 * var(--space-medium)), calc(18 * var(--space-medium))));
   justify-content: center;
 `
 

@@ -60,7 +60,7 @@ const TextContainer = styled.div`
 `
 
 const StyledSection = styled.div`
-  max-width: 35rem;
+  max-width: calc(35 * var(--space-medium));
 
   @media (min-width: 1300px) {
     display: block;

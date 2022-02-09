@@ -65,7 +65,7 @@ const FooterLink = styled(Link)`
   text-decoration: none;
   display: flex;
   flex-direction: row;
-  height: 2rem;
+  height: var(--space-xLarge);
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       color: var(--moss-green-90);
@@ -78,7 +78,7 @@ const FooterLink = styled(Link)`
   }
   @media (max-width: 750px) {
     flex: 0 0 40%;
-    max-width: 6rem;
+    max-width: var(--space-4xLarge);
   }
 `
 const FooterBottom = styled.div`

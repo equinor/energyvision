@@ -184,7 +184,7 @@ export const WithBackgroundColours: Story<AccordionProps> = () => (
         </Accordion.Item>
       </Accordion>
     </BackgroundContainer>
-    <BackgroundContainer background="Slate Blue" style={{ marginTop: '1rem' }}>
+    <BackgroundContainer background="Slate Blue" style={{ marginTop: 'var(--space-medium)' }}>
       <Accordion multiple collapsible>
         <Accordion.Item>
           <Accordion.Header>Header 1</Accordion.Header>
