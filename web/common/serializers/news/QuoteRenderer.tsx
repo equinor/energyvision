@@ -3,7 +3,7 @@ import type { QuoteData } from '../../../types/types'
 import Quote from '../../../pageComponents/shared/Quote'
 
 const Container = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-medium) 0 var(--layout-paddingHorizontal-medium);
+  padding: 0 var(--layout-paddingHorizontal-medium);
   margin: var(--space-xxLarge) auto;
   clear: both;
 `
