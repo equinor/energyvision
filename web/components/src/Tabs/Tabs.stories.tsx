@@ -100,3 +100,26 @@ ControlledTabs.parameters = {
     storyDescription: `An tabs could be controlled and have items open by default`,
   },
 }
+
+export const WithLongNames: Story<TabsProps> = () => (
+  <Tabs>
+    <Tabs.TabList>
+      <Tabs.Tab>My tab number one</Tabs.Tab>
+      <Tabs.Tab>My tab number two</Tabs.Tab>
+      <Tabs.Tab>My tab number three</Tabs.Tab>
+    </Tabs.TabList>
+    <Tabs.TabPanels>
+      <Tabs.TabPanel>
+        <Text>One content</Text>
+      </Tabs.TabPanel>
+      <Tabs.TabPanel>
+        <Text>Two content</Text>
+      </Tabs.TabPanel>
+      <Tabs.TabPanel>
+        <Text>Three content</Text>
+      </Tabs.TabPanel>
+    </Tabs.TabPanels>
+  </Tabs>
+)
+
+WithLongNames.storyName = 'With long names'

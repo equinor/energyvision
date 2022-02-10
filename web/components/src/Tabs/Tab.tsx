@@ -8,8 +8,10 @@ const StyledTab = styled(RTab)`
   border: none;
   border-bottom: 2px solid;
   padding: var(--space-xSmall) 0;
-  :not(:first-child) {
-    margin-left: var(--space-medium);
+  /* Not sure about this one, but some spaces for tab components that wrap multiple lines */
+  margin-bottom: var(--space-small);
+  :not(:last-child) {
+    margin-right: var(--space-medium);
   }
 
   /* If the text is used inside a inverted component, the text colour must also be inverted */
