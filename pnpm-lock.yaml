@@ -78,6 +78,7 @@ importers:
 
   web:
     specifiers:
+      '@algolia/client-search': ^4.12.1
       '@equinor/eds-core-react': 0.18.0-envis.2
       '@equinor/eds-icons': ^0.10.0
       '@equinor/eds-tokens': ^0.7.0
@@ -116,6 +117,7 @@ importers:
       easy-soap-request: ^4.6.0
       focus-visible: ^5.2.0
       ics: ^2.35.0
+      instantsearch.js: ^4.38.1
       jest: ^27.4.7
       jest-environment-jsdom: ^27.4.6
       jest-styled-components: ^7.0.8
@@ -166,6 +168,7 @@ importers:
       easy-soap-request: 4.6.0
       focus-visible: 5.2.0
       ics: 2.35.0
+      instantsearch.js: 4.38.1_algoliasearch@4.11.0
       next: 12.0.8_react-dom@17.0.2+react@17.0.2
       next-circular-dependency: 1.0.1
       next-sanity: 0.4.0_react@17.0.2
@@ -188,6 +191,7 @@ importers:
       styled-normalize: 8.0.7_styled-components@5.3.3
       xml2js: 0.4.23
     devDependencies:
+      '@algolia/client-search': 4.12.1
       '@next/eslint-plugin-next': 12.0.8
       '@storybook/addon-essentials': 6.4.14_3cc2eed3b6444a0b7d8731a31abfeab1
       '@storybook/addon-links': 6.4.14_react-dom@17.0.2+react@17.0.2
@@ -10477,8 +10481,8 @@ packages:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
     dev: true
 
-  /instantsearch.js/4.38.0_algoliasearch@4.11.0:
-    resolution: {integrity: sha512-klqHc8Vh/kAGmAPlNfdKFlw7WwsPP38Qmd460G4S9FxVyg8Ixfz/AyT5pawy+pTvBtw8e2nKUdqcazmIK/sJgw==}
+  /instantsearch.js/4.38.1_algoliasearch@4.11.0:
+    resolution: {integrity: sha512-cy77CUtWOGOouTpt56dRGRgxQ7FWVODTq9g5RGrjLwzIp1gEyu1LV7EeSfOgrCh7RY4Y6ulqBUeNBzeq/eM2Pg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
     dependencies:
@@ -14298,7 +14302,7 @@ packages:
       algoliasearch: 4.11.0
       algoliasearch-helper: 3.7.0_algoliasearch@4.11.0
       dequal: 2.0.2
-      instantsearch.js: 4.38.0_algoliasearch@4.11.0
+      instantsearch.js: 4.38.1_algoliasearch@4.11.0
       react: 17.0.2
     dev: false
 
