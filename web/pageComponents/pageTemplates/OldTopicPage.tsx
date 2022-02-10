@@ -43,7 +43,7 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
         {/*   This is the old stuff and it's important that we only load it for the static
         page. This is not an optimal solution but how much time should we spend on this... */}
         {/*  eslint-disable-next-line @next/next/no-css-tags */}
-        <link rel="stylesheet" href="/styles/legacy.minified.test.css" />
+        <link rel="stylesheet" href="/styles/legacy.minified.css" />
         {/* eslint-disable jsx-a11y/html-has-lang */}
         <html data-template="topic-old" />
       </Head>
