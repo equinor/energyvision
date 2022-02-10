@@ -1,8 +1,7 @@
 import { InstantSearch } from 'react-instantsearch-hooks'
 import { searchClient } from '../../../lib/algolia'
 import SearchBox from './SearchBox'
-import Hits from './Hits'
-import Hit from './Hit'
+import SearchResults from './SearchResults'
 
 const Search = () => {
   // @TODO: Don't hard code it like this
@@ -17,7 +16,7 @@ const Search = () => {
       {/*  <Configure hitsPerPage={5} snippetEllipsisText=" ..." /> */}
 
       <SearchBox />
-      <Hits hitComponent={Hit} />
+      <SearchResults />
     </InstantSearch>
   )
 }
