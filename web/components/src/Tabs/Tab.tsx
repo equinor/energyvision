@@ -9,7 +9,12 @@ const StyledTab = styled(RTab)`
   border-bottom: 2px solid;
   padding: var(--space-xSmall) 0;
   :not(:first-child) {
-    margin-left: var(--space-small);
+    margin-left: var(--space-medium);
+  }
+
+  /* If the text is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
+    color: var(--inverted-text);
   }
 `
 
