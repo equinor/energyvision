@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr;
 `
 
+const DarkBackground = styled.div`
+  background: hsl(206, 34%, 14%);
+  padding: 2rem;
+`
+
 export default {
   title: 'Components/Text',
   component: Text,
@@ -67,5 +72,22 @@ MultipleParagraphs.storyName = 'Multiple paragraphs'
 MultipleParagraphs.parameters = {
   docs: {
     storyDescription: `A paragraph followed by another paragraph should have some margins. How should this look?`,
+  },
+}
+
+export const InvertedText: Story<TextProps> = () => (
+  <DarkBackground>
+    <Text inverted>
+      This text has its color inverted by manually setting the inverted prop to true. Perfect for use on darker
+      backgrounds.
+    </Text>
+    <Text inverted>Note that this is handled automatically when using a BackgroundContainer.</Text>
+  </DarkBackground>
+)
+
+InvertedText.storyName = 'Inverted text color'
+InvertedText.parameters = {
+  docs: {
+    storyDescription: `You can manually set the text color to be white using the inverted prop.`,
   },
 }

@@ -3,7 +3,12 @@ import { Typography, TypographyProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { StyledFigCaption } from '../FigureCaption'
 
-const StyledText = styled(Typography)<{ centered?: boolean }>`
+type StyledTextProps = {
+  centered?: boolean
+  inverted?: boolean
+}
+
+const StyledText = styled(Typography)<StyledTextProps>`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
   /* @TODO: Let's consider to move all the margin woo to the article layout */
@@ -23,6 +28,11 @@ const StyledText = styled(Typography)<{ centered?: boolean }>`
       textAlign: 'center',
     }}
 
+  ${({ inverted }) =>
+    inverted && {
+      color: 'var(--inverted-text)',
+    }}
+
   /* If the text is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
     color: var(--inverted-text);
@@ -34,6 +44,7 @@ export type TextProps = {
   bold?: boolean
   italic?: boolean
   centered?: boolean
+  inverted?: boolean
 } & HTMLAttributes<HTMLHeadingElement> &
   TypographyProps
 
@@ -44,12 +55,13 @@ const sizes = {
 }
 
 export const Text = forwardRef<HTMLDivElement, TextProps>(function Text(
-  { size = 'regular', style, children, ...rest },
+  { size = 'regular', style, children, inverted = false, ...rest },
   ref,
 ) {
   return (
     <StyledText
       ref={ref}
+      inverted={inverted}
       style={
         {
           ...style,
