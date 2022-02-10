@@ -23,7 +23,7 @@ export const Row = styled.div`
   `}
 `
 
-export const Cell = styled.input`
+export const Cell = styled.button`
   display: block;
   width: 100%;
   box-sizing: border-box;

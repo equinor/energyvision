@@ -137,6 +137,10 @@ class Container extends Component {
    */
 
   handleCellChange(e, row, column) {
+    // trigger a pop up
+    // select the object we want to add to the cell
+    // create the object (with a preview?)
+    // store the value of that object
     const { value: input } = e.target
 
     const { onChange, value, type: { name } = {} } = this.props
@@ -198,7 +202,7 @@ class Container extends Component {
      * Add Sanity patch
      */
 
-    onChange(PatchEvent.from([setIfMissing({ _type: 'table' }), updatedData ? set(updatedData) : unset(name)]))
+    onChange(PatchEvent.from([setIfMissing({ _type: 'datatable' }), updatedData ? set(updatedData) : unset(name)]))
   }
 
   render() {

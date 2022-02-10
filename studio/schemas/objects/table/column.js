@@ -6,7 +6,7 @@ export default {
     {
       type: 'array',
       name: 'cells',
-      of: [{ type: 'string' }],
+      of: [{ type: 'number' }, { type: 'anchorReferenceField' }],
     },
   ],
 }

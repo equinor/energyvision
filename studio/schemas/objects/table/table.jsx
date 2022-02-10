@@ -19,7 +19,7 @@ const Table = (props) => {
       {range(columns).map((columnIndex) => (
         <Cell
           key={columnIndex}
-          type="text"
+          type="button"
           value={(data[rowIndex] || [])[columnIndex] || ''}
           onChange={(e) => handleChange(e, rowIndex, columnIndex)}
         />
