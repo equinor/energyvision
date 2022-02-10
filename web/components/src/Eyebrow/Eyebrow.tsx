@@ -5,14 +5,7 @@ import styled from 'styled-components'
 const StyledTypography = styled(Typography)`
   font-size: var(--typeScale-2);
   line-height: var(--lineHeight-3);
-
-  [data-dynamic-typography-version='v1'] & {
-    margin-bottom: -1rem;
-  }
-
-  [data-dynamic-typography-version='v2'] & {
-    margin-bottom: calc(var(--space-medium) * -1);
-  }
+  margin-bottom: calc(var(--space-medium) * -1);
 
   /* If the text is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {

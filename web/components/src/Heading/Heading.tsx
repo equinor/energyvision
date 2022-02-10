@@ -10,14 +10,7 @@ type StyledHeadingProps = {
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
   line-height: var(--line-height);
-
-  [data-dynamic-typography-version='v1'] & {
-    font-weight: var(--font-weight);
-  }
-
-  [data-dynamic-typography-version='v2'] & {
-    font-weight: var(--font-weight, var(--fontWeight-regular));
-  }
+  font-weight: var(--font-weight, var(--fontWeight-regular));
 
   text-transform: var(--text-transform);
   ${({ center }) =>

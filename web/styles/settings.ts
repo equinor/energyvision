@@ -86,21 +86,8 @@ export const colors = css`
   }
 `
 export const typography = css`
-  :root[data-dynamic-typography-version='v1'] {
-    --typeScale-base: 1rem;
-    --typeScale-multiplier: 1.2;
-    --typeScale-small: calc(var(--typeScale-0) / var(--typeScale-multiplier));
-    --typeScale-1: var(--typeScale-base);
-    --typeScale-2: calc(var(--typeScale-1) * var(--typeScale-multiplier));
-    --typeScale-3: calc(var(--typeScale-2) * var(--typeScale-multiplier));
-    --typeScale-4: calc(var(--typeScale-3) * var(--typeScale-multiplier));
-    --typeScale-5: calc(var(--typeScale-4) * var(--typeScale-multiplier));
-    --typeScale-6: calc(var(--typeScale-5) * var(--typeScale-multiplier));
-    --typeScale-0: calc(var(--typeScale-1) / var(--typeScale-multiplier));
-  }
-
   // prettier-ignore
-  :root[data-dynamic-typography-version='v2'] {
+  :root {
     /*                         mobile                                     desktop */
     --typeScale-00: clamp(calc(11.11 / 16 * 1rem), 0.08vw + 0.68rem, calc(12.38 / 16 * 1rem));
     --typeScale-0 : clamp(calc(13.33 / 16 * 1rem), 0.21vw + 0.79rem, calc(16.50 / 16 * 1rem));
@@ -129,19 +116,8 @@ export const typography = css`
 `
 
 export const spacings = css`
-  :root[data-dynamic-typography-version='v1'] {
-    --space-xSmall: calc(1rem / 4); /* 4 */
-    --space-small: calc(1rem / 2); /* 8 */
-    --space-medium: 1rem; /* 16 */
-    --space-large: calc(1rem * 1.5); /* 24 */
-    --space-xLarge: calc(1rem * 2); /* 32 */
-    --space-xxLarge: calc(1rem * 2.5); /* 40 */
-    --space-3xLarge: calc(1rem * 3.5); /* 56 */
-    --space-4xLarge: calc(1rem * 6); /* 96 */
-  }
-
   // prettier-ignore
-  :root[data-dynamic-typography-version='v2'] {
+  :root {
     --space-xSmall : calc( 4 / 16 * var(--typeScale-1));
     --space-small  : calc( 8 / 16 * var(--typeScale-1));
     --space-medium : calc(16 / 16 * var(--typeScale-1));
@@ -153,20 +129,23 @@ export const spacings = css`
   }
 
   /** space units for borders, border-radius etc. */
-  :root[data-dynamic-typography-version='v1'] {
-    --space-1: calc(1rem / 16); /* 1 */
-    --space-2: calc(1rem / 8); /* 2 */
-    --space-3: calc(1rem / 16 * 3); /* 3 */
-    --space-4: calc(1rem / 4); /* 4 */
-    --space-5: calc(1rem / 16 * 5); /* 5 */
-  }
-
-  /** space units for borders, border-radius etc. */
-  :root[data-dynamic-typography-version='v2'] {
-    --space-1: calc(1 / 16 * var(--typeScale-1));
-    --space-2: calc(2 / 16 * var(--typeScale-1));
-    --space-3: calc(3 / 16 * var(--typeScale-1));
-    --space-4: calc(4 / 16 * var(--typeScale-1));
+  // prettier-ignore
+  :root {
+    --space-1 : calc( 1 / 16 * var(--typeScale-1)); // 375:  1px, 1440:   1.26px, 1920:   1.26px
+    --space-2 : calc( 2 / 16 * var(--typeScale-1)); // 375:  2px, 1440:   2.52px, 1920:   2.52px
+    --space-3 : calc( 3 / 16 * var(--typeScale-1)); // 375:  3px, 1440:   3.78px, 1920:   3.78px
+    --space-4 : calc( 4 / 16 * var(--typeScale-1)); // 375:  4px, 1440:   5.04px, 1920:   5.04px
+    --space-8 : calc( 8 / 16 * var(--typeScale-1)); // 375:  8px, 1440:  10.07px, 1920:  10.07px
+    --space-12: calc(12 / 16 * var(--typeScale-1)); // 375: 12px, 1440:  15.10px, 1920:  15.10px
+    --space-16: calc(16 / 16 * var(--typeScale-1)); // 375: 16px, 1440:  20.13px, 1920:  20.13px
+    --space-24: calc(24 / 16 * var(--typeScale-1)); // 375: 24px, 1440:  30.21px, 1920:  30.21px
+    --space-32: calc(32 / 16 * var(--typeScale-1)); // 375: 32px, 1440:  40.27px, 1920:  40.27px
+    --space-40: calc(40 / 16 * var(--typeScale-1)); // 375: 40px, 1440:  50.34px, 1920:  50.34px
+    --space-48: calc(48 / 16 * var(--typeScale-1)); // 375: 48px, 1440:  60.41px, 1920:  60.41px
+    --space-56: calc(56 / 16 * var(--typeScale-1)); // 375: 56px, 1440:  70.47px, 1920:  70.47px
+    --space-64: calc(64 / 16 * var(--typeScale-1)); // 375: 64px, 1440:  80.54px, 1920:  80.54px
+    --space-80: calc(80 / 16 * var(--typeScale-1)); // 375: 80px, 1440: 100.68px, 1920: 100.68px
+    --space-96: calc(96 / 16 * var(--typeScale-1)); // 375: 96px, 1440: 120.81px, 1920: 120.81px
   }
 
   :root {
@@ -202,15 +181,15 @@ export const componentSettings = css`
   }
 
   /* Use relative units in EDS Table */
-  :root[data-eds-flexible-height] {
-    --eds_table__font_size: calc(14 / 16 * 1rem);
+  :root {
+    --eds_table__font_size: calc(14 / 16 * 1rem); // TODO: Override
     --eds_table__cell__height: auto;
     --eds_table__cell__padding_y: calc(14 / 14 * 1em);
     --eds_table__cell__vertical_align: top;
   }
 
   /* Use relative units in EDS Button */
-  :root[data-eds-flexible-height] {
+  :root {
     --eds_button__font_size: calc(14 / 16 * 1rem);
     --eds_button__radius: calc(4 / 14 * 1em);
     --eds_button__height: auto;

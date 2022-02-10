@@ -2,9 +2,7 @@ import { ReactNode } from 'react'
 import styled from 'styled-components'
 
 const StyledMenuContainer = styled.div`
-  [data-dynamic-typography-version='v2'] & {
-    font-size: var(--typeScale-1);
-  }
+  font-size: var(--typeScale-1);
   background-color: transparent;
   padding: 0 var(--space-large);
   @media (min-width: 1300px) {

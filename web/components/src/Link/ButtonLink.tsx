@@ -3,23 +3,9 @@ import { Button, ButtonProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 
 const StyledButtonLink = styled(Button)`
-  [data-eds-flexible-height] & {
-    --eds_button__height: auto;
-  }
-
-  [data-dynamic-typography-version='v1'][data-eds-flexible-height] & {
-    --eds_button__font_size: var(--typeScale-1);
-    --eds_button__radius: calc(4 / 14 * 1em);
-  }
-
-  [data-dynamic-typography-version='v2'][data-eds-flexible-height] & {
-    --eds_button__font_size: var(--typeScale-0);
-    --eds_button__radius: calc(4 / var(--typeScale-0));
-  }
-
-  [data-dynamic-typography-version='v1'] & {
-    padding: var(--space-xSmall) var(--space-medium);
-  }
+  --eds_button__height: auto;
+  --eds_button__font_size: var(--typeScale-0);
+  --eds_button__radius: calc(4 / var(--typeScale-0));
 
   color: var(--slate-blue-95);
   text-decoration: none;

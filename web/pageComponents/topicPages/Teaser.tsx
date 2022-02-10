@@ -16,9 +16,7 @@ type TeaserProps = {
 }
 
 const StyledEnvisTeaser = styled(EnvisTeaser)`
-  [data-dynamic-typography-version='v2'] & {
-    font-size: var(--typeScale-1);
-  }
+  font-size: var(--typeScale-1);
 `
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {

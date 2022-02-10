@@ -20,11 +20,6 @@ module.exports = {
 
     const envVars = {
       STORYBOOK_BUILT_AT: Date.now(),
-      VNYS_717_IMPROVED_TYPOGRAPHY: process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? 'v2' : 'v1',
-    }
-
-    if (process.env.NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT === 'true') {
-      envVars['VNYS_653_EDS_FLEXIBLE_HEIGHT'] = true
     }
 
     config.plugins.push(new webpack.EnvironmentPlugin(envVars))

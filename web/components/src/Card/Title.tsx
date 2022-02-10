@@ -10,11 +10,9 @@ const StyledTitle = styled.div`
 const StyledHeading = styled(Heading)`
   margin-bottom: 0;
 
-  [data-dynamic-typography-version='v2'] & {
-    // TODO: Don’t use !important.
-    font-size: var(--card-title-fontSize, var(--typeScale-2)) !important;
-    font-weight: var(--card-title-fontWeight, var(--fontWeight-regular)) !important;
-  }
+  // TODO: Don’t use !important.
+  font-size: var(--card-title-fontSize, var(--typeScale-2)) !important;
+  font-weight: var(--card-title-fontWeight, var(--fontWeight-regular)) !important;
 `
 
 export type TitleProps = {

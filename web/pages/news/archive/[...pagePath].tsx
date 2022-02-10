@@ -83,7 +83,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
               async
             />
             {/*  eslint-disable-next-line @next/next/no-css-tags */}
-            <link rel="stylesheet" href="/styles/legacy.minified.test.css" />
+            <link rel="stylesheet" href="/styles/legacy.minified.css" />
             {/* eslint-disable jsx-a11y/html-has-lang */}
             <html data-template="news-legacy" />
           </Head>

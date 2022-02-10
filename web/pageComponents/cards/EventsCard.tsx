@@ -199,21 +199,17 @@ const Actions = ({
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
       <NextLink href={slug} passHref>
         {/*  @TODO: Language string for Details */}
-        {process.env.NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT === 'true' ? (
-          <ButtonLink
-            style={
-              {
-                '--eds_button__font_size': 'var(--typeScale-0)',
-                '--eds_button__padding_y': 'var(--space-xSmall)',
-              } as CSSProperties
-            }
-            aria-label={`Details ${title ? blocksToText(title) : ''}`}
-          >
-            Details
-          </ButtonLink>
-        ) : (
-          <ButtonLink aria-label={`Details ${title ? blocksToText(title) : ''}`}>Details</ButtonLink>
-        )}
+        <ButtonLink
+          style={
+            {
+              '--eds_button__font_size': 'var(--typeScale-0)',
+              '--eds_button__padding_y': 'var(--space-xSmall)',
+            } as CSSProperties
+          }
+          aria-label={`Details ${title ? blocksToText(title) : ''}`}
+        >
+          Details
+        </ButtonLink>
       </NextLink>
     </ActionContainer>
   )

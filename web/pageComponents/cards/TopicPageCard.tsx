@@ -12,10 +12,7 @@ const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
-
-  [data-dynamic-typography-version='v2'] & {
-    --card-gap: var(--space-large);
-  }
+  --card-gap: var(--space-large);
 `
 
 const StyledLink = styled(CardLink)`
