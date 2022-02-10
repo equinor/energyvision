@@ -10,6 +10,8 @@ export const StyledTableWrapper = styled(BackgroundContainer)``
 
 const TableContainer = styled.div`
   margin: 0 auto var(--space-medium);
+  max-width: var(--maxViewportWidth);
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
 `
 
 type TableProps = {
