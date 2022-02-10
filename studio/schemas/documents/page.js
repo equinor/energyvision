@@ -85,9 +85,8 @@ export default {
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
-        /*
-        The table is just done done, it's just a poc
-         { type: 'table' }, */
+
+        { type: 'table' },
         { type: 'stockValuesApi' },
         { type: 'iframe' },
         { type: 'remitTable' },
