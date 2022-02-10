@@ -19,7 +19,7 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
 
 export const queryParams = { lang: 'en_GB' }
 
-type TopicPage = {
+export type TopicPage = {
   slug: string
   textBlocks: {
     title: string
@@ -28,16 +28,6 @@ type TopicPage = {
   }[]
   _id: string
 }
-
-export const mapData = (page: TopicPage) =>
-  page.textBlocks?.map(({ title, ingress, text }) => ({
-    slug: page.slug,
-    objectID: page._id,
-    type: 'page',
-    title,
-    ingress,
-    text
-  }))
 
 type FetchDataType = (
   query: string,
