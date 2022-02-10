@@ -14,7 +14,7 @@ export default {
 
 export const Default: Story<AccordionProps> = (args) => (
   <Accordion {...args} multiple collapsible>
-    <Accordion.Item>
+    <Accordion.Item id={2}>
       <Accordion.Header>Produced and processed water</Accordion.Header>
       <Accordion.Panel>
         <Text>
@@ -29,8 +29,8 @@ export const Default: Story<AccordionProps> = (args) => (
 )
 
 export const WithMultipleItems: Story<AccordionProps> = () => (
-  <Accordion multiple collapsible>
-    <Accordion.Item>
+  <Accordion multiple collapsible id="accordion">
+    <Accordion.Item id={1}>
       <Accordion.Header>Produced and processed water</Accordion.Header>
       <Accordion.Panel>
         <Text>
@@ -41,7 +41,7 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
         </Text>
       </Accordion.Panel>
     </Accordion.Item>
-    <Accordion.Item>
+    <Accordion.Item id={2}>
       <Accordion.Header>NOx Emissions</Accordion.Header>
       <Accordion.Panel>
         <Text>
@@ -52,7 +52,7 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
         </Text>
       </Accordion.Panel>
     </Accordion.Item>
-    <Accordion.Item>
+    <Accordion.Item id={3}>
       <Accordion.Header>
         Waste handling and a loong title over several lines and even more and more and more
       </Accordion.Header>
@@ -65,7 +65,7 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
         </Text>
       </Accordion.Panel>
     </Accordion.Item>
-    <Accordion.Item>
+    <Accordion.Item id={4}>
       <Accordion.Header>Fresh water</Accordion.Header>
       <Accordion.Panel>
         <Text>
@@ -79,8 +79,8 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
   </Accordion>
 )
 export const WithAnotherHeaderLevel: Story<AccordionProps> = () => (
-  <Accordion multiple collapsible>
-    <Accordion.Item>
+  <Accordion multiple collapsible id="header">
+    <Accordion.Item id={2}>
       <Accordion.Header headingLevel="h2">Produced and processed water</Accordion.Header>
       <Accordion.Panel>
         <Text>
@@ -108,8 +108,8 @@ export const ControlledAccordion: Story<AccordionProps> = () => {
   }
 
   return (
-    <Accordion index={indices} onChange={toggleItem}>
-      <Accordion.Item>
+    <Accordion index={indices} onChange={toggleItem} id="controlled">
+      <Accordion.Item id={1}>
         <Accordion.Header>Produced and processed water</Accordion.Header>
         <Accordion.Panel>
           <Text>
@@ -120,7 +120,7 @@ export const ControlledAccordion: Story<AccordionProps> = () => {
           </Text>
         </Accordion.Panel>
       </Accordion.Item>
-      <Accordion.Item>
+      <Accordion.Item id={2}>
         <Accordion.Header>NOx Emissions</Accordion.Header>
         <Accordion.Panel>
           <Text>
@@ -131,7 +131,7 @@ export const ControlledAccordion: Story<AccordionProps> = () => {
           </Text>
         </Accordion.Panel>
       </Accordion.Item>
-      <Accordion.Item>
+      <Accordion.Item id={3}>
         <Accordion.Header>
           Waste handling and a loong title over several lines and even more and more and more
         </Accordion.Header>
@@ -144,7 +144,7 @@ export const ControlledAccordion: Story<AccordionProps> = () => {
           </Text>
         </Accordion.Panel>
       </Accordion.Item>
-      <Accordion.Item>
+      <Accordion.Item id={4}>
         <Accordion.Header>Fresh water</Accordion.Header>
         <Accordion.Panel>
           <Text>
@@ -169,14 +169,14 @@ ControlledAccordion.parameters = {
 export const WithBackgroundColours: Story<AccordionProps> = () => (
   <>
     <BackgroundContainer background="Moss Green">
-      <Accordion multiple collapsible>
-        <Accordion.Item>
+      <Accordion multiple collapsible id="bg">
+        <Accordion.Item id={1}>
           <Accordion.Header>Header 1</Accordion.Header>
           <Accordion.Panel>
             <Text>Content 1</Text>
           </Accordion.Panel>
         </Accordion.Item>
-        <Accordion.Item>
+        <Accordion.Item id={2}>
           <Accordion.Header>Header 2</Accordion.Header>
           <Accordion.Panel>
             <Text>Content 2</Text>
@@ -185,14 +185,14 @@ export const WithBackgroundColours: Story<AccordionProps> = () => (
       </Accordion>
     </BackgroundContainer>
     <BackgroundContainer background="Slate Blue" style={{ marginTop: 'var(--space-medium)' }}>
-      <Accordion multiple collapsible>
-        <Accordion.Item>
+      <Accordion multiple collapsible id="blue">
+        <Accordion.Item id={1}>
           <Accordion.Header>Header 1</Accordion.Header>
           <Accordion.Panel>
             <Text>Content 1</Text>
           </Accordion.Panel>
         </Accordion.Item>
-        <Accordion.Item>
+        <Accordion.Item id={2}>
           <Accordion.Header>Header 2</Accordion.Header>
           <Accordion.Panel>
             <Text>Content 2</Text>
