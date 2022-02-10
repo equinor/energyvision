@@ -1,28 +1,19 @@
 import { pipe } from 'fp-ts/lib/function'
+import { flatten } from 'fp-ts/Array'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { update, sanityClient, generateIndexName, getEnvironment } from '../../common'
-import { mapData, fetchData } from '../sanity'
+import { query, queryParams, mapData, fetchData } from './sanity'
 
 const indexIdentifier = 'TOPIC'
 const language = 'en-GB' // From where to get?
 
 const indexName = pipe(getEnvironment(), E.map(generateIndexName(indexIdentifier)(language)))
 
-const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "topic"] {
-  "slug": slug.current,
-  _id,
-  "content": content->{
-    "title": pt::text(title),
-    "ingress": pt::text(ingress)
-  }
-}
-`
-const queryParams = { lang: 'en_GB' }
 
 const indexSettings = {
-  searchableAttributes: ['title', 'ingress'],
+  searchableAttributes: ['title', 'ingress', 'text'],
   attributesToSnippet: ['ingress'],
   attributeForDistinct: 'slug',
   distinct: 1,
@@ -33,7 +24,7 @@ const updateAlgolia = update(E.getOrElse(() => 'TOPIC')(indexName))(indexSetting
 
 export const indexTopic = pipe(
   fetchData(query)(queryParams)(sanityClient), // TODO: Make these parameters to make this function reusable
-  TE.map((pages) => pages.map(mapData)),
+  TE.map((pages) => pipe(pages.map(mapData), flatten)),
   TE.chain(updateAlgolia),
   T.map(E.fold(console.error, console.log)),
 )

@@ -32,7 +32,7 @@ const NewsBlockContent = ({ blocks, serializers = {}, ...props }: PortableTextPr
   return (
     <PortableText
       blocks={blocks && removeEmptyBlocks(blocks)}
-      serializers={{ ...defaultSerializers, ...serializers }}
+      serializers={{...defaultSerializers, ...serializers }}
       {...props}
     />
   )

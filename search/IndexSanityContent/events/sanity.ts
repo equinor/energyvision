@@ -1,3 +1,4 @@
+// TODO: Refactor - This file is only concerned with events. Should not be a "global" file for search
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'

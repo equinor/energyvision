@@ -3,7 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { update, sanityClient, generateIndexName, getEnvironment } from '../../common'
-import { mapData, fetchData } from '../sanity'
+import { mapData, fetchData } from './sanity'
 
 const indexIdentifier = 'EVENTS'
 const language = 'en-GB' // From where to get?

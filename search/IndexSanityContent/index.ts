@@ -2,6 +2,7 @@ import { AzureFunction, Context } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
 import { indexEvents } from './events'
+import { indexTopic } from './topic'
 
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
@@ -18,6 +19,7 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
 
 
   await indexEvents().catch(console.error)
+  await indexTopic().catch(console.error)
 
   console.log('DONE!')
 }
