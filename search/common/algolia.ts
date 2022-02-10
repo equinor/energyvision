@@ -47,7 +47,7 @@ export const update: UpdateType = (indexName) => (indexSettings) => (mappedData:
     TE.fromEither,
     TE.chainW(updateIndex(mappedData)),
     TE.chainW(updateSettings(indexSettings)),
-    TE.map(() => 'Halleluja'),
+    TE.map(() => `Index ${indexName} successfully updated`),
   )
 
 type PrefixEnvType = (environment: string) => string

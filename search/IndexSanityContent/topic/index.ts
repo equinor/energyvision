@@ -10,11 +10,9 @@ import { mapData } from './mapper'
 
 const indexIdentifier = 'TOPICS'
 // TODO: From where to get language?
-const language = pipe(languageFromIso('nb-NO'), languageOrDefault)
+const language = pipe(languageFromIso('en-GB'), languageOrDefault)
 
 const indexName = pipe(getEnvironment(), E.map(generateIndexName(indexIdentifier)(language.isoCode)))
-
-// TODO: Using EVENTS as default name for now. To be changed
 const updateAlgolia = update(E.getOrElse(() => indexIdentifier)(indexName))(indexSettings)
 
 export const indexTopic = pipe(

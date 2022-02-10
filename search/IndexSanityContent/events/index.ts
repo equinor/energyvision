@@ -9,7 +9,7 @@ import { indexSettings } from './algolia'
 
 const indexIdentifier = 'EVENTS'
 // TODO: From where to get language?
-const language = pipe(languageFromIso('nb-NO'), languageOrDefault)
+const language = pipe(languageFromIso('en-GB'), languageOrDefault)
 
 const indexName = pipe(getEnvironment(), E.map(generateIndexName(indexIdentifier)(language.isoCode)))
 const updateAlgolia = update(E.getOrElse(() => indexIdentifier)(indexName))(indexSettings)
