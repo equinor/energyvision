@@ -87,6 +87,7 @@ importers:
       '@next/eslint-plugin-next': ^12.0.8
       '@reach/accordion': ^0.16.1
       '@reach/skip-nav': ^0.16.0
+      '@reach/tabs': ^0.16.4
       '@reach/window-size': ^0.16.0
       '@react-spring/web': ^9.4.2
       '@sanity/block-content-to-react': ^3.0.0
@@ -151,6 +152,7 @@ importers:
       '@next/bundle-analyzer': 12.0.8
       '@reach/accordion': 0.16.1_react-dom@17.0.2+react@17.0.2
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/tabs': 0.16.4_react-dom@17.0.2+react@17.0.2
       '@reach/window-size': 0.16.0_react-dom@17.0.2+react@17.0.2
       '@react-spring/web': 9.4.2_react-dom@17.0.2+react@17.0.2
       '@sanity/block-content-to-react': 3.0.0_react@17.0.2
@@ -3956,6 +3958,21 @@ packages:
       react-dom: ^16.8.0 || 17.x
     dependencies:
       '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      tslib: 2.3.1
+    dev: false
+
+  /@reach/tabs/0.16.4_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-4EK+1U0OoLfg2tJ1BSZf6/tx0hF5vlXKxY7qB//bPWtlIh9Xfp/aSDIdspFf3xS8MjtKeb6IVmo5UAxDMq85ZA==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/auto-id': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/descendants': 0.16.1_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       tslib: 2.3.1
