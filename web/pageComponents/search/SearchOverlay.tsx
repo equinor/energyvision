@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useRouter, NextRouter } from 'next/router'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
-import { Button, Heading } from '@components'
+import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { search, close } from '@equinor/eds-icons'
 import Search from './Search'
@@ -93,7 +93,6 @@ const SiteMenu = () => {
               </InvertedButton>
             </NavTopbar>
             <SearchContainer>
-              <Heading inverted>Search</Heading>
               <NewSearch />
               <Search setSearchState={setSearchState} searchState={searchState} />
             </SearchContainer>
