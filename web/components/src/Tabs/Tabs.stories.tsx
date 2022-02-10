@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 import { Tabs, TabsProps, Text, BackgroundContainer } from '@components'
 
@@ -55,3 +56,47 @@ export const WithDarkBackground: Story<TabsProps> = () => (
     </Tabs>
   </BackgroundContainer>
 )
+
+WithDarkBackground.storyName = 'With a dark background'
+
+export const ControlledAccordion: Story<TabsProps> = () => {
+  const [tabIndex, setTabIndex] = useState(1)
+
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTabIndex(parseInt(event.target.value, 10))
+  }
+  function handleTabsChange(index: number) {
+    setTabIndex(index)
+  }
+
+  return (
+    <>
+      <input type="range" min="0" max="2" value={tabIndex} onChange={handleSliderChange} />
+      <Tabs index={tabIndex} onChange={handleTabsChange}>
+        <Tabs.TabList>
+          <Tabs.Tab>One</Tabs.Tab>
+          <Tabs.Tab>Two</Tabs.Tab>
+          <Tabs.Tab>Three</Tabs.Tab>
+        </Tabs.TabList>
+        <Tabs.TabPanels>
+          <Tabs.TabPanel>
+            <Text>One content</Text>
+          </Tabs.TabPanel>
+          <Tabs.TabPanel>
+            <Text>Two content</Text>
+          </Tabs.TabPanel>
+          <Tabs.TabPanel>
+            <Text>Three content</Text>
+          </Tabs.TabPanel>
+        </Tabs.TabPanels>
+      </Tabs>
+    </>
+  )
+}
+
+ControlledAccordion.storyName = 'Controlled accordion'
+ControlledAccordion.parameters = {
+  docs: {
+    storyDescription: `An accordion could be controlled and have items open by default`,
+  },
+}
