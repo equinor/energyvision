@@ -108,7 +108,6 @@ importers:
       '@types/react-instantsearch': ^6.10.1
       '@types/react-instantsearch-dom': ^6.12.2
       '@types/styled-components': ^5.1.21
-      '@types/uuid': ^8.3.4
       '@types/xml2js': ^0.4.9
       algoliasearch: ^4.11.0
       babel-jest: ^27.4.6
@@ -145,7 +144,6 @@ importers:
       styled-jsx: ^4.0.1
       styled-normalize: ^8.0.7
       typescript: 4.5.5
-      uuid: ^8.3.2
       xml2js: ^0.4.23
     dependencies:
       '@equinor/eds-core-react': 0.18.0-envis.2_7a082f7d10047d47195aea793f958a14
@@ -208,7 +206,6 @@ importers:
       '@types/react-instantsearch': 6.10.1
       '@types/react-instantsearch-dom': 6.12.2
       '@types/styled-components': 5.1.21
-      '@types/uuid': 8.3.4
       babel-jest: 27.4.6
       babel-plugin-styled-components: 1.13.3_styled-components@5.3.3
       jest: 27.4.7
@@ -217,7 +214,6 @@ importers:
       prettier: 2.5.1
       storybook-css-modules-preset: 1.1.1
       typescript: 4.5.5
-      uuid: 8.3.2
 
 packages:
 
@@ -6069,10 +6065,6 @@ packages:
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
-    dev: true
-
-  /@types/uuid/8.3.4:
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
     dev: true
 
   /@types/webpack-env/1.16.3:
@@ -16531,6 +16523,7 @@ packages:
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+    dev: false
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}

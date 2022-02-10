@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 import { getHighlightedParts, getPropertyByPath } from 'instantsearch.js/es/lib/utils/index.js'
 import styled from 'styled-components'
-import { v4 as uuidv4 } from 'uuid'
 import type { Hit } from './Hit'
 
 const StyledSpan = styled.span`
@@ -21,13 +20,11 @@ export const Highlight: React.FC<Highlight> = ({ hit, path }) => {
   return (
     <>
       {parts.map((part) => {
-        const key = uuidv4()
-
         if (part.isHighlighted) {
-          return <StyledSpan key={key}>{part.value}</StyledSpan>
+          return <StyledSpan key={`${hit.objectID}-${path}-${part.value}`}>{part.value}</StyledSpan>
         }
 
-        return <Fragment key={key}>{part.value}</Fragment>
+        return <Fragment key={`${hit.objectID}-${path}-${part.value}`}>{part.value}</Fragment>
       })}
     </>
   )
