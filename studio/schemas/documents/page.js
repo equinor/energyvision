@@ -85,7 +85,7 @@ export default {
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
-
+        { type: 'datatable' },
         { type: 'table' },
         { type: 'stockValuesApi' },
         { type: 'iframe' },

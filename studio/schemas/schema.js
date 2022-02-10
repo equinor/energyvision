@@ -64,6 +64,8 @@ import simpleMenuGroup from './objects/simpleMenuGroup'
 import simpleMenuLink from './objects/simpleMenuLink'
 import cookieDeclaration from './objects/cookieDeclaration'
 import anchorReferenceField from './objects/anchorReferenceField'
+import datatable from './objects/table/datatable'
+import column from './objects/table/column'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -135,5 +137,7 @@ export default createSchema({
     simpleMenuLink,
     cookieDeclaration,
     anchorReferenceField,
+    column,
+    datatable,
   ]),
 })
