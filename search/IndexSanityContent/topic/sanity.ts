@@ -3,6 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
+import { Language } from '../../common'
 
 export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page"] {
   "slug": slug.current,
@@ -17,13 +18,15 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
 }
 `
 
-export const queryParams = { lang: 'en_GB' }
+const getQueryParams = (language: Language) => ({
+  lang: language.internalCode,
+})
 
 export type TopicPage = {
   slug: string
   textBlocks: {
     title: string
-    ingress: string,
+    ingress: string
     text: string
   }[]
   _id: string
@@ -32,7 +35,10 @@ export type TopicPage = {
 type FetchDataType = (
   query: string,
 ) => (
-  queryparams: Readonly<Record<string, string>>,
-) => (sanityClient: SanityClient) => TE.TaskEither<Error, TopicPage[]>
-export const fetchData: FetchDataType = (query) => (queryParams) => (sanityClient) =>
-  pipe(TE.tryCatch(() => sanityClient.fetch(query, queryParams), E.toError))
+  getQueryparams: (language: Language) => Readonly<Record<string, string>>,
+) => (sanityClient: SanityClient) => (language: Language) => TE.TaskEither<Error, TopicPage[]>
+
+const fetch: FetchDataType = (query) => (getQueryParams) => (sanityClient) => (language) =>
+  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language)), E.toError))
+
+export const fetchData = fetch(query)(getQueryParams)
