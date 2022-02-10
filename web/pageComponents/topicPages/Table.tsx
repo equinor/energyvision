@@ -9,7 +9,7 @@ const { Head, Row, Cell, Body } = EnvisTable
 export const StyledTableWrapper = styled(BackgroundContainer)``
 
 const TableContainer = styled.div`
-  margin-bottom: var(--space-medium);
+  margin: 0 auto var(--space-medium);
 `
 
 type TableProps = {
