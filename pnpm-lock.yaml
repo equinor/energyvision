@@ -144,6 +144,7 @@ importers:
       styled-jsx: ^4.0.1
       styled-normalize: ^8.0.7
       typescript: 4.5.5
+      uuid: ^8.3.2
       xml2js: ^0.4.23
     dependencies:
       '@equinor/eds-core-react': 0.18.0-envis.2_7a082f7d10047d47195aea793f958a14
@@ -189,6 +190,7 @@ importers:
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
       styled-jsx: 4.0.1_react@17.0.2
       styled-normalize: 8.0.7_styled-components@5.3.3
+      uuid: 8.3.2
       xml2js: 0.4.23
     devDependencies:
       '@algolia/client-search': 4.12.1
