@@ -1,7 +1,7 @@
 import Table from './container'
 
 export default {
-  title: 'Table',
+  title: 'Data Table',
   name: 'datatable',
   type: 'object',
   fields: [
