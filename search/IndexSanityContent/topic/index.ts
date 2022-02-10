@@ -8,13 +8,13 @@ import { query, queryParams, fetchData } from './sanity'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
 
-const indexIdentifier = 'TOPIC'
+const indexIdentifier = 'TOPICS'
 const language = 'en-GB' // From where to get?
 
 const indexName = pipe(getEnvironment(), E.map(generateIndexName(indexIdentifier)(language)))
 
 // TODO: Using EVENTS as default name for now. To be changed
-const updateAlgolia = update(E.getOrElse(() => 'TOPIC')(indexName))(indexSettings)
+const updateAlgolia = update(E.getOrElse(() => indexIdentifier)(indexName))(indexSettings)
 
 export const indexTopic = pipe(
   fetchData(query)(queryParams)(sanityClient), // TODO: Make these parameters to make this function reusable

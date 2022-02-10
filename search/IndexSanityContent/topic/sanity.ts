@@ -12,7 +12,7 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
   "textBlocks": content->content[_type == "textBlock"]{
     "title": pt::text(title),
     "ingress": pt::text(ingress),
-    "text": pt::text(text)
+    "text": pt::text(text)  // TODO: Do this manually to cover all cases
   }
 }
 `

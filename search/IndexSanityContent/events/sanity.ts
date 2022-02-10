@@ -4,7 +4,19 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 
-type Event = {
+export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event"] {
+  "slug": slug.current,
+  _id,
+  "content": content->{
+    "title": pt::text(title),
+    "ingress": pt::text(ingress)
+  }
+}
+`
+
+export const queryParams = { lang: 'en_GB' }
+
+export type Event = {
   slug: string
   content: {
     title: string
@@ -12,13 +24,6 @@ type Event = {
   }
   _id: string
 }
-
-export const mapData = (event: Event) => ({
-  ...event.content,
-  slug: event.slug,
-  objectID: event._id,
-  type: 'event',
-})
 
 type FetchDataType = (
   query: string,
