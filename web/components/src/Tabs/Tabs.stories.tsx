@@ -59,7 +59,7 @@ export const WithDarkBackground: Story<TabsProps> = () => (
 
 WithDarkBackground.storyName = 'With a dark background'
 
-export const ControlledAccordion: Story<TabsProps> = () => {
+export const ControlledTabs: Story<TabsProps> = () => {
   const [tabIndex, setTabIndex] = useState(1)
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,9 +94,9 @@ export const ControlledAccordion: Story<TabsProps> = () => {
   )
 }
 
-ControlledAccordion.storyName = 'Controlled accordion'
-ControlledAccordion.parameters = {
+ControlledTabs.storyName = 'Controlled tabs'
+ControlledTabs.parameters = {
   docs: {
-    storyDescription: `An accordion could be controlled and have items open by default`,
+    storyDescription: `An tabs could be controlled and have items open by default`,
   },
 }
