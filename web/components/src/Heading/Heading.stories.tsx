@@ -22,6 +22,13 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr;
 `
 
+const DarkBackground = styled.div`
+  background: hsl(206, 34%, 14%);
+  padding: 2rem;
+  display: grid;
+  grid-gap: 1rem;
+`
+
 export const Default: Story<HeadingProps> = (args) => <Heading {...args}>Have a nice day</Heading>
 
 Default.storyName = 'Default'
@@ -128,3 +135,18 @@ export const Uppercase: Story<HeadingProps> = () => (
     I'm uppercase
   </Heading>
 )
+
+export const InvertedHeading: Story<HeadingProps> = () => (
+  <DarkBackground>
+    <Heading inverted>This Heading has its color inverted by manually setting the inverted prop to true.</Heading>
+    <Heading inverted>Perfect for use on darker backgrounds.</Heading>
+    <Heading inverted>Note that this is handled automatically when using a BackgroundContainer.</Heading>
+  </DarkBackground>
+)
+
+InvertedHeading.storyName = 'Inverted text color'
+InvertedHeading.parameters = {
+  docs: {
+    storyDescription: `You can manually set the text color to be white using the inverted prop.`,
+  },
+}
