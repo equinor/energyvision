@@ -78,8 +78,10 @@ export const newsQuery = /* groq */ `
       _type == "news" &&
       slug.current != $slug &&
       heroImage.image.asset != null &&
+      // filter drafts so it works similarly in sanity preview
+      !(_id in path("drafts.**")) &&
       // ok to hardcode because news' langs are not dynamic
-      ($lang == 'en_GB' && length(_id) == 36 || _id match 'nb_NO')
+      ($lang == 'en_GB' && length(_id) == 36 || _lang == 'nb_NO')
     ] | order(publishDateTime desc, _updatedAt desc)[0...3] {
     ${newsFields}
   }
