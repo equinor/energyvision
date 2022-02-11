@@ -309,7 +309,10 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
-    tableHeaders,
+    tableHeaders[]{
+      "id": _key,
+      ...
+    },
     tableRows,
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),

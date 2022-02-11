@@ -187,7 +187,7 @@ export type TeaserData = {
 }
 
 export type TableHeaderData = {
-  _key: string
+  id: string
   headerCell: PortableTextEntry[]
 }
 

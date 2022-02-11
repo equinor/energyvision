@@ -54,7 +54,7 @@ const Table = ({ data }: TableProps) => {
             <Row>
               {tableHeaders.map((header) => {
                 return (
-                  <Cell key={header._key}>
+                  <Cell key={header.id}>
                     <SimpleBlockContent
                       blocks={header.headerCell}
                       serializers={{
