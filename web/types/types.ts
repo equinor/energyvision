@@ -185,12 +185,18 @@ export type TeaserData = {
   action?: LinkData
   designOptions: DesignOptions
 }
+
+export type TableHeaderData = {
+  _key: string
+  headerCell: PortableTextEntry[]
+}
+
 export type TableData = {
   type: string
   id: string
   title: PortableTextEntry[]
   ingress: PortableTextEntry[]
-  tableHeaders: any[]
+  tableHeaders: TableHeaderData[]
   tableRows: any[]
   designOptions: DesignOptions
 }
