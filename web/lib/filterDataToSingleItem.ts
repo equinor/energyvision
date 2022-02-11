@@ -5,7 +5,6 @@ export function filterDataToSingleItem(data: any, preview: any) {
 
   return data.length > 1 && preview
     ? data.filter((item) => {
-        console.log(item)
         return item._id.startsWith('drafts.')
       })[0]
     : data[0]
