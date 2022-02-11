@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import useRouterReplace from '../hooks/useRouterReplace'
+import useRouterReplace from '../../hooks/useRouterReplace'
 import { Accordion as EnvisAccordion } from '@components'
 import { BlockRenderer } from '../../../common/serializers'
 import SimpleBlockContent from '../../../common/SimpleBlockContent'

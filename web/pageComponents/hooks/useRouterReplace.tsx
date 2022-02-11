@@ -5,7 +5,9 @@ const useRouterReplace = () => {
   const router = useRouter()
 
   return (queryParams = {}, routerOptions = {}) => {
-    let originalQuery
+    // We can't remember why we need this "slug" as a separate thing,
+    // we will try and see if it's safe to remove
+    /* let originalQuery
     // @TODO: Look at how we should make this more general if we have more than slug
     if ('slug' in router.query) {
       // eslint-disable-next-line no-unused-vars
@@ -13,9 +15,11 @@ const useRouterReplace = () => {
       originalQuery = rest
     } else {
       originalQuery = router.query
-    }
+    } 
 
-    const query = { ...originalQuery, ...queryParams }
+    const query = { ...originalQuery, ...queryParams } */
+
+    const query = { ...router.query, ...queryParams }
     const href = { pathname: router.pathname, query }
 
     const urlParts = router.asPath.split('?')
