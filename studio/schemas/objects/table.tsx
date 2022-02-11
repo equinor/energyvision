@@ -118,6 +118,22 @@ export default {
                   name: 'textField',
                   fields: [{ type: 'string', name: 'text', title: 'Text' }],
                 },
+                {
+                  type: 'object',
+                  title: 'Date Field',
+                  name: 'dateField',
+                  fields: [
+                    {
+                      title: 'Date',
+                      name: 'date',
+                      type: 'date',
+                      options: {
+                        dateFormat: 'YYYY-MM-DD',
+                        calendarTodayLabel: 'Today',
+                      },
+                    },
+                  ],
+                },
               ],
             },
           ],
