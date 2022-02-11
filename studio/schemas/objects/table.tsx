@@ -7,6 +7,7 @@ import CharCounterEditor from '../components/CharCounterEditor'
 
 import { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
+import { string } from 'prop-types'
 
 export type Table = {
   _type: 'promotion'
@@ -104,7 +105,6 @@ export default {
         {
           type: 'object',
           title: 'Table row',
-
           fields: [
             {
               name: 'row',
@@ -112,6 +112,12 @@ export default {
               of: [
                 { type: 'linkSelector', title: 'Link' },
                 { type: 'downloadableFile', title: 'Downloadable file' },
+                {
+                  type: 'object',
+                  title: 'Text Field',
+                  name: 'textField',
+                  fields: [{ type: 'string', name: 'text', title: 'Text' }],
+                },
               ],
             },
           ],
