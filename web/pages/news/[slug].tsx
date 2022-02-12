@@ -70,6 +70,7 @@ const DateWrapper = styled.div`
 
 const DateContainer = styled.div`
   overflow-wrap: break-word;
+  font-size: var(--typeScale-1);
   line-height: var(--lineHeight-3);
 `
 
