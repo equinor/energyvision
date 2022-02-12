@@ -33,8 +33,6 @@ spec:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-        NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY: false
-        NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT: false
       secrets:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
@@ -158,9 +156,6 @@ spec:
       environmentConfig:
         - environment: dev
           imageTagName: main-latest
-      variables:
-        NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY: true
-        NEXT_PUBLIC_VNYS_653_EDS_FLEXIBLE_HEIGHT: true
 
     - name: studio-brazil
       publicPort: http

@@ -21,15 +21,9 @@ export type TitleProps = {
 } & HTMLAttributes<HTMLHeadingElement>
 
 export const Title = forwardRef<HTMLDivElement, TitleProps>(function Title({ level = 'h3', children, ...rest }, ref) {
-  return process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+  return (
     <StyledTitle ref={ref} {...rest}>
       <StyledHeading level={level}>{children}</StyledHeading>
-    </StyledTitle>
-  ) : (
-    <StyledTitle ref={ref} {...rest}>
-      <StyledHeading level={level} size="lg">
-        {children}
-      </StyledHeading>
     </StyledTitle>
   )
 })

@@ -14,12 +14,8 @@ export const BlockRenderer = (props: { children: string[]; node: PortableTextBlo
     )
   }
   if (style === 'h3') {
-    return process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+    return (
       <Heading level="h3" size="sm" style={{ fontWeight: '600', lineHeight: 'var(--lineHeight-3)' }}>
-        {children}
-      </Heading>
-    ) : (
-      <Heading level="h3" size="md">
         {children}
       </Heading>
     )

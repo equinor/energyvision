@@ -59,7 +59,7 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
                   </Media>
                 )}
                 <Header>
-                  {image && process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
+                  {image ? (
                     <Title style={{ '--card-title-fontWeight': '400' } as CSSProperties}>{title}</Title>
                   ) : (
                     <Title

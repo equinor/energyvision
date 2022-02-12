@@ -50,29 +50,17 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
           <Header>
             {publishDateTime && (
               <Eyebrow>
-                {process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
-                  <FormattedDate
-                    datetime={publishDateTime}
-                    style={{ textTransform: 'uppercase', marginBottom: 'var(--space-xSmall)' }}
-                  />
-                ) : (
-                  <FormattedDate datetime={publishDateTime} />
-                )}
+                <FormattedDate
+                  datetime={publishDateTime}
+                  style={{ textTransform: 'uppercase', marginBottom: 'var(--space-xSmall)' }}
+                />
               </Eyebrow>
             )}
             <Title>{title}</Title>
           </Header>
-
-          {process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true' ? (
-            <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-              <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-            </Text>
-          ) : (
-            <Text>
-              <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-            </Text>
-          )}
-
+          <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
+            <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
+          </Text>
           <Action>
             <Arrow />
           </Action>

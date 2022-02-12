@@ -57,13 +57,7 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
             <Title>{pageTitle}</Title>
           </Header>
           {ingress && (
-            <Text
-              style={
-                process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true'
-                  ? { marginTop: 'calc(var(--space-small) * -1)' }
-                  : {}
-              }
-            >
+            <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
               <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
             </Text>
           )}

@@ -20,8 +20,6 @@ tasks:
     init: gp sync-await install
     command: pnpm web test
     openMode: split-right
-  - name: Get proxied localhost url
-    command: gp env NEXT_PUBLIC_LOCALHOST=$(gp url 3000)
 
 ports:
   - port: 3000

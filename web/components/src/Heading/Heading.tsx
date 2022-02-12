@@ -10,7 +10,7 @@ type StyledHeadingProps = {
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
   line-height: var(--line-height);
-  font-weight: var(--font-weight, var(--fontWeight-regular));
+  font-weight: var(--font-weight);
 
   text-transform: var(--text-transform);
   ${({ center }) =>
@@ -62,9 +62,9 @@ const fontWeights = {
   xs: 'var(--fontWeight-regular)',
   sm: 'var(--fontWeight-regular)',
   md: 'var(--fontWeight-regular)',
-  lg: 'var(--fontWeight-medium)',
-  xl: 'var(--fontWeight-medium)',
-  '2xl': 'var(--fontWeight-bold)',
+  lg: 'var(--fontWeight-regular)',
+  xl: 'var(--fontWeight-regular)',
+  '2xl': 'var(--fontWeight-regular)',
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
@@ -88,20 +88,13 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
       center={center}
       inverted={inverted}
       style={
-        process.env.NEXT_PUBLIC_VNYS_717_IMPROVED_TYPOGRAPHY === 'true'
-          ? ({
-              ...style,
-              '--size': sizes[size],
-              '--line-height': lineHeights[size],
-              '--text-transform': uppercase ? 'uppercase' : 'none',
-            } as CSSProperties)
-          : ({
-              ...style,
-              '--size': sizes[size],
-              '--line-height': lineHeights[size],
-              '--font-weight': size === '2xl' && regular ? 'var(--fontWeight-regular)' : fontWeights[size],
-              '--text-transform': uppercase ? 'uppercase' : 'none',
-            } as CSSProperties)
+        {
+          '--size': sizes[size],
+          '--line-height': lineHeights[size],
+          '--text-transform': uppercase ? 'uppercase' : 'none',
+          '--font-weight': regular ? 'var(--fontWeight-regular)' : fontWeights[size],
+          ...style,
+        } as CSSProperties
       }
       {...rest}
     >
