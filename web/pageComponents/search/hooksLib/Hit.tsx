@@ -6,6 +6,11 @@ import styled from 'styled-components'
 
 const TempLink = styled.a`
   text-decoration: none;
+  display: block;
+  border: 2px solid transparent;
+  &:hover {
+    border-color: var(--energy-red-90);
+  }
 `
 
 type SearchResultHit = {
