@@ -60,15 +60,6 @@ export default {
       fieldset: 'header',
     },
 
-    //This is no longer in use, but will it make sense to be more explicit about this? Dunno
-    // Keeping this field as a reminder
-    /*  {
-      title: 'Is the landing page?',
-      description: 'This is the landing page and should not have a unique part in the url',
-      name: 'isLandingPage',
-      type: 'boolean',
-      fieldset: 'slug',
-    }, */
     // @TODO: Write a new function
     //slugWithRef('topicSlug', 'parent', 'slug'),
     {
