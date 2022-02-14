@@ -2,7 +2,14 @@ import { pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { update, sanityClient, generateIndexName, getEnvironment, languageFromIso, languageOrDefault } from '../../common'
+import {
+  update,
+  sanityClient,
+  generateIndexName,
+  getEnvironment,
+  languageFromIso,
+  languageOrDefault,
+} from '../../common'
 import { fetchData } from './sanity'
 import { mapData } from './mapper'
 import { indexSettings } from './algolia'

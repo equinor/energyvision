@@ -6,5 +6,5 @@ export const mapData: MapDataType = (event) => ({
   ...event.content,
   slug: event.slug,
   objectID: event._id,
-  type: 'event'
+  type: 'event',
 })

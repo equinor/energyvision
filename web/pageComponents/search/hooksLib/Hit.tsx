@@ -1,8 +1,8 @@
 import { Highlight } from './Highlight'
 import { Heading, Text } from '@components'
-import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
+import type { Hit as AlgoliaHit } from '@algolia/client-search'
 
 const TempLink = styled.a`
   text-decoration: none;
