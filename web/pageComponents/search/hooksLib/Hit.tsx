@@ -44,6 +44,8 @@ const Hit = ({ hit, setIsOpen }: HitProps) => {
           {eventDate && <FormattedDate datetime={eventDate}></FormattedDate>}
           <Text inverted>
             <Highlight hit={hit} path="ingress" />
+          </Text>
+          <Text inverted>
             <Highlight hit={hit} path="eventDescription" />
           </Text>
         </TempLink>
