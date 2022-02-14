@@ -2,8 +2,9 @@ import { useHits } from 'react-instantsearch-hooks'
 
 const Stats = () => {
   const { results } = useHits()
-
-  return <span>({results?.nbHits || 0})</span>
+  const noQuery = !results || results.query === ''
+  if (noQuery) return null
+  return <span>({results?.nbHits})</span>
 }
 
 export default Stats
