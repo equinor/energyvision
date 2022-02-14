@@ -134,6 +134,19 @@ export default {
                     },
                   ],
                 },
+                //Number field should maybe be a string instead
+                {
+                  type: 'object',
+                  title: 'Number Field',
+                  name: 'numberField',
+                  fields: [
+                    {
+                      title: 'Number',
+                      name: 'number',
+                      type: 'number',
+                    },
+                  ],
+                },
               ],
             },
           ],
