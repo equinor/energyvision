@@ -11,7 +11,8 @@ const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type
   "content": content->{
     "title": pt::text(title),
     "ingress": pt::text(ingress),
-    "eventDate": eventDate.date, 
+    "eventDate": eventDate.date,
+    "eventDescription": pt::text(content), 
   }
 }
 `
@@ -25,6 +26,7 @@ export type Event = {
   content: {
     title: string
     ingress: string
+    eventDescription: string
     eventDate: string
   }
   _id: string
