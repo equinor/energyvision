@@ -7,6 +7,7 @@ import useRouterReplace from '../../hooks/useRouterReplace'
 import Stats from './Stats'
 import Hits from './Hits'
 import Hit from './Hit'
+import { getIsoFromLocale } from './../../../lib/localization' // grrr ../
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -40,6 +41,7 @@ type SearchResultsProps = {
 const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
   const router = useRouter()
   const replaceUrl = useRouterReplace()
+  const isoCode = getIsoFromLocale(router.locale)
 
   const [activeTabIndex, setActiveTabIndex] = useState(getInitialTabIndex(router))
 
@@ -56,25 +58,25 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
       <Tabs index={activeTabIndex} onChange={handleTabChange}>
         <TabList>
           <Tab inverted>
-            <Index indexName="dev_TOPICS_en-GB">
+            <Index indexName={`dev_TOPICS_${isoCode}`}>
               Topic
               <Stats />
             </Index>
           </Tab>
           <Tab inverted>
-            <Index indexName="dev_EVENTS_en-GB">
+            <Index indexName={`dev_EVENTS_${isoCode}`}>
               Event <Stats />
             </Index>
           </Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Index indexName="dev_TOPICS_en-GB">
+            <Index indexName={`dev_TOPICS_${isoCode}`}>
               <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
             </Index>
           </TabPanel>
           <TabPanel>
-            <Index indexName="dev_EVENTS_en-GB">
+            <Index indexName={`dev_EVENTS_${isoCode}`}>
               <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
             </Index>
           </TabPanel>
