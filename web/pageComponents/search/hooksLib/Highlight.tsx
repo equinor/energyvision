@@ -15,7 +15,10 @@ type Highlight = {
 }
 
 export const Highlight: React.FC<Highlight> = ({ hit, path }) => {
-  const { value: attributeValue = '' } = getPropertyByPath(hit._highlightResult, path) || {}
+  // Only ingress is currently available as snippet
+  const property = path === 'ingress' ? hit._snippetResult : hit._highlightResult
+
+  const { value: attributeValue = '' } = getPropertyByPath(property, path) || {}
   const parts = getHighlightedParts(attributeValue)
 
   return (

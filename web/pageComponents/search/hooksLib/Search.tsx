@@ -1,4 +1,4 @@
-import { InstantSearch } from 'react-instantsearch-hooks'
+import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { searchClient } from '../../../lib/algolia'
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
@@ -17,7 +17,7 @@ const Search = ({ setIsOpen }: SearchProps) => {
 
   return (
     <InstantSearch searchClient={searchClient} indexName={testIndex}>
-      {/*  <Configure hitsPerPage={5} snippetEllipsisText=" ..." /> */}
+      <Configure hitsPerPage={5} snippetEllipsisText="..." />
 
       <SearchBox />
       <SearchResults setIsOpen={setIsOpen} />
