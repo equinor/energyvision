@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react'
+import { /* useEffect, useCallback, */ useState } from 'react'
 import styled from 'styled-components'
 import { useRouter, NextRouter } from 'next/router'
 import { RemoveScroll } from 'react-remove-scroll'
@@ -55,21 +55,20 @@ const SiteMenu = () => {
 
   const searchState = getSearchState(router)
 
-  const handleRouteChange = useCallback((url) => {
-    console.log('Route changed will change to', url)
-    // @TODO: Maybe we should not listen to router.events in this case
-    // since we will do a lot with the query params. I think it's a better approach
-    // to change the setIsOpen only when somebody clicks the X button or click a link
-    // in a hit. But in that case, we need to do something clever to restore the
-    // state on browser back
-    // setIsOpen(false)
-  }, [])
+  //const handleRouteChange = useCallback((url) => {
+  // console.log('Route changed will change to', url, router.pathname)
+  // @TODO: Maybe we should not listen to router.events in this case
+  // since we will do a lot with the query params. I think it's a better approach
+  // to change the setIsOpen only when somebody clicks the X button or click a link
+  // in a hit. But in that case, we need to do something clever to restore the
+  // state on browser back
+  // }, [])
 
-  useEffect(() => {
+  /*  useEffect(() => {
     router.events.on('routeChangeStart', handleRouteChange)
     return () => router.events.off('routeChangeStart', handleRouteChange)
   }, [router.events, handleRouteChange])
-
+ */
   function onCloseButtonClick() {
     setIsOpen(!isOpen)
   }
@@ -99,7 +98,7 @@ const SiteMenu = () => {
               </InvertedButton>
             </NavTopbar>
             <SearchContainer>
-              <NewSearch />
+              <NewSearch setIsOpen={setIsOpen} />
               <Search setSearchState={setSearchState} searchState={searchState} />
             </SearchContainer>
           </DarkTopbarDropdown>

@@ -3,7 +3,11 @@ import { searchClient } from '../../../lib/algolia'
 import SearchBox from './SearchBox'
 import SearchResults from './SearchResults'
 
-const Search = () => {
+type SearchProps = {
+  setIsOpen: (arg0: boolean) => void
+}
+
+const Search = ({ setIsOpen }: SearchProps) => {
   // @TODO: Don't hard code it like this
   if (searchClient.appId === '') {
     console.warn('You need to add an app id for Algolia search')
@@ -16,7 +20,7 @@ const Search = () => {
       {/*  <Configure hitsPerPage={5} snippetEllipsisText=" ..." /> */}
 
       <SearchBox />
-      <SearchResults />
+      <SearchResults setIsOpen={setIsOpen} />
     </InstantSearch>
   )
 }

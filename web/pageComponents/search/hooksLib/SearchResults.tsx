@@ -33,7 +33,11 @@ const tabMap = [
   { id: 1, name: 'events' },
 ]
 
-const SearchResults = () => {
+type SearchResultsProps = {
+  setIsOpen: (arg0: boolean) => void
+}
+
+const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
   const router = useRouter()
   const replaceUrl = useRouterReplace()
 
@@ -66,12 +70,12 @@ const SearchResults = () => {
         <TabPanels>
           <TabPanel>
             <Index indexName="dev_TOPICS_en-GB">
-              <Hits hitComponent={Hit} />
+              <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
             </Index>
           </TabPanel>
           <TabPanel>
             <Index indexName="dev_EVENTS_en-GB">
-              <Hits hitComponent={Hit} />
+              <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
             </Index>
           </TabPanel>
         </TabPanels>

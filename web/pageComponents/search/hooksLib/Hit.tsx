@@ -24,16 +24,17 @@ export type Hit = AlgoliaHit<SearchResultHit>
 
 type HitProps = {
   hit: Hit
+  setIsOpen: (arg0: boolean) => void
 }
 
-const Hit = ({ hit }: HitProps) => {
+const Hit = ({ hit, setIsOpen }: HitProps) => {
   // Shouldn't be empty string, but this is work in progress
   const { slug = '' } = hit
 
   return (
     <article>
       <NextLink href={slug} passHref>
-        <TempLink>
+        <TempLink onClick={() => setIsOpen(false)}>
           <Heading inverted>
             <Highlight hit={hit} path="title" />
           </Heading>
