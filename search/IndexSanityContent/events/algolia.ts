@@ -12,7 +12,7 @@ export type EventIndex = {
 
 export const indexSettings: Settings = {
   searchableAttributes: ['title', 'ingress', 'eventDescription'], // date should not be searchable?
-  attributesToSnippet: ['ingress'], // I don't know if this is relevant with the hooks lib?
+  attributesToSnippet: ['ingress', 'eventDescription'], // I don't know if this is relevant with the hooks lib?
   attributeForDistinct: 'slug',
   distinct: 1,
 }
