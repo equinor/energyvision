@@ -1,4 +1,4 @@
-import { useHits, UseHitsProps } from 'react-instantsearch-hooks'
+import { useHits } from 'react-instantsearch-hooks'
 
 const Stats = () => {
   const { hits } = useHits()

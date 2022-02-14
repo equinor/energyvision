@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 /* eslint-disable no-undef */
-import { render, cleanup, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import 'jest-styled-components'
 import styled from 'styled-components'
 import { Tabs } from './index'
