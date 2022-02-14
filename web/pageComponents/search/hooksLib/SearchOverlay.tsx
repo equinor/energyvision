@@ -6,14 +6,14 @@ import FocusLock from 'react-focus-lock'
 import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { search, close } from '@equinor/eds-icons'
-import Search from './Search'
-import NewSearch from './hooksLib/Search'
+import Search from '../Search'
+import NewSearch from './Search'
 
 /** @TODO Move and refactor */
-import { TopbarDropdown } from '../shared/siteMenu/TopbarDropdown'
-import { NavTopbar } from '../shared/siteMenu//NavTopbar'
+import { TopbarDropdown } from '../../shared/siteMenu/TopbarDropdown'
+import { NavTopbar } from '../../shared/siteMenu/NavTopbar'
 
-import { LogoLink } from '../shared/LogoLink'
+import { LogoLink } from '../../shared/LogoLink'
 
 const StyledButton = styled(Button)`
   color: var(--default-text);
