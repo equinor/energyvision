@@ -28,6 +28,20 @@ type TableProps = {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getLink = (linkData: any) => {
+  // Fallback to home page, if this happens it is an error somewhere
+  // Sanity should take care of the validation here, and this is temp. until
+  // the static pages are migrated  {link.image && <FooterIcon image={link.image} />}
+  if (!linkData) return 'something-wrong'
+  const { isStatic, link, staticUrl, url } = linkData
+  if (isStatic) {
+    return staticUrl || '/'
+  } else {
+    return (link && link.slug) || (url && url) || '/'
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const renderCellByType = (type: any) => {
   switch (type) {
     case 'text':
