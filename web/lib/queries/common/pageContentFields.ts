@@ -317,7 +317,11 @@ const pageContentFields = /* groq */ `
       }
       
     },
-    tableRows,
+    tableRows[]{
+      "id": _key,
+       row[]{"id": _key, "type": _type, ...},
+     
+    },
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       "background": coalesce(background.title, 'none'),
