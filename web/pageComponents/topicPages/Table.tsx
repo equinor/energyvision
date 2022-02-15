@@ -27,6 +27,18 @@ type TableProps = {
   data: TableData
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const renderCellByType = (type: any) => {
+  switch (type) {
+    case 'text':
+      return <p>text </p>
+    case 'date':
+      return <p>date </p>
+    default:
+      return console.log('unknown type')
+  }
+}
+
 const Table = ({ data }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
