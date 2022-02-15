@@ -1,33 +1,9 @@
-// This is the actual typescript version from the docs
-
-/* import { Hit as AlgoliaHit } from '@algolia/client-search';
-import { useHits, UseHitsProps } from 'react-instantsearch-hooks';
-
-export type HitsProps<THit> = React.ComponentProps<'div'> &
-  UseHitsProps & {
-    hitComponent: (props: { hit: THit }) => JSX.Element;
-  };
-
-export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({
-  hitComponent: Hit,
-}: HitsProps<THit>) {
-  const { hits } = useHits();
-
-  return (
-    <div className="ais-Hits">
-      <ol className="ais-Hits-list">
-        {hits.map((hit) => (
-          <li key={hit.objectID} className="ais-Hits-item">
-            <Hit hit={hit as unknown as THit} />
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-} */
-
 import { useHits } from 'react-instantsearch-hooks'
+import { List } from '@components'
+import styled from 'styled-components'
 import type { HitProps } from './Hit'
+
+const { Item } = List
 
 type HitsProps = {
   // Let's consider to create a compound component instead of this Algolia example way of doing it
@@ -35,19 +11,36 @@ type HitsProps = {
   setIsOpen: (arg0: boolean) => void
 }
 
+const HitItem = styled(Item)`
+  &:after {
+    content: '';
+    height: 1px;
+    width: 100%;
+    border-bottom: 1px solid var(--grey-20);
+    /* Doesn't work in FF https://bugzilla.mozilla.org/show_bug.cgi?id=1481307 */
+    transform: scaleY(0.5);
+    position: absolute;
+    border-radius: 0.01px;
+  }
+`
+
+const HitsContainer = styled.div`
+  position: relative;
+`
+
 const Hits = ({ hitComponent: Hit, setIsOpen }: HitsProps) => {
   const { hits } = useHits()
 
   return (
-    <div>
-      <ol>
+    <HitsContainer>
+      <List variant="numbered" unstyled>
         {hits.map((hit) => (
-          <li key={hit.objectID}>
+          <HitItem key={hit.objectID}>
             <Hit setIsOpen={setIsOpen} hit={hit} />
-          </li>
+          </HitItem>
         ))}
-      </ol>
-    </div>
+      </List>
+    </HitsContainer>
   )
 }
 

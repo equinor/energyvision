@@ -11,8 +11,9 @@ type StyledTextProps = {
 const StyledText = styled(Typography)<StyledTextProps>`
   font-size: var(--size);
   line-height: var(--lineHeight-3);
-  /* @TODO: Let's consider to move all the margin woo to the article layout */
-
+  /* @TODO: Let's consider to move all the margin woo to the article layout
+  We should. Not move, but scope. For both news and topic pages. But this will 
+  require a lot of retest, since in some of the uses cases we will need to reintroduce the margin */
   margin-bottom: var(--space-medium);
   & + & {
     margin: var(--space-medium) 0;
@@ -40,7 +41,7 @@ const StyledText = styled(Typography)<StyledTextProps>`
 `
 
 export type TextProps = {
-  size?: 'sm' | 'regular' | 'md'
+  size?: 'regular' | 'md'
   bold?: boolean
   italic?: boolean
   centered?: boolean
@@ -50,7 +51,6 @@ export type TextProps = {
 
 /* Should be easy enough to change later on */
 const sizes = {
-  sm: 'var(--typeScale-0',
   regular: 'var(--typeScale-1)',
   md: 'var(--typeScale-2)',
 }
