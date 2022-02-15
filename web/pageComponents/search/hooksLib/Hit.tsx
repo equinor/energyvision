@@ -46,7 +46,7 @@ const Hit = ({ hit, setIsOpen }: HitProps) => {
             <Highlight hit={hit} attribute="ingress" />
           </Text>
           <Text inverted>
-            <Highlight hit={hit} path="eventDescription" />
+            <Highlight hit={hit} attribute="eventDescription" />
           </Text>
         </TempLink>
       </NextLink>
