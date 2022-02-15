@@ -23,17 +23,18 @@ const DisplayLink = styled.p`
 `
 
 type SearchResultHit = {
-  ingress: string
-  slug: string
-  title: string
-  eventDescription: string
-  type: string // @TODO: be more specific, like "news", "page", "event"?
-  eventDate: string
+  ingress?: string
+  text?: string
+  slug?: string
+  title?: string
+  eventDescription?: string
+  eventDate?: string
+  type?: string // @TODO: be more specific, like "news", "page", "event"?
 }
 
 export type Hit = AlgoliaHit<SearchResultHit>
 
-type HitProps = {
+export type HitProps = {
   hit: Hit
   setIsOpen: (arg0: boolean) => void
 }

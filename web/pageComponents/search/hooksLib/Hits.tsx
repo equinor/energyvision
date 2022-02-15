@@ -27,10 +27,11 @@ export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({
 } */
 
 import { useHits } from 'react-instantsearch-hooks'
+import type { HitProps } from './Hit'
 
 type HitsProps = {
   // Let's consider to create a compound component instead of this Algolia example way of doing it
-  hitComponent: any
+  hitComponent: React.FC<HitProps>
   setIsOpen: (arg0: boolean) => void
 }
 
