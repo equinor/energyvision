@@ -17,6 +17,7 @@ const TableContainer = styled.div`
 const StyledIngress = styled.div`
   padding: var(--space-medium) 0;
 `
+const StyledHeaderCell = styled(Typography)``
 
 type TableProps = {
   data: TableData
@@ -61,14 +62,16 @@ const Table = ({ data }: TableProps) => {
               {tableHeaders.map((header) => {
                 return (
                   <Cell key={header.id}>
-                    <SimpleBlockContent
-                      blocks={header.headerCell}
-                      serializers={{
-                        types: {
-                          block: IngressBlockRenderer,
-                        },
-                      }}
-                    />
+                    <StyledHeaderCell>
+                      <SimpleBlockContent
+                        blocks={header.headerCell}
+                        serializers={{
+                          types: {
+                            block: IngressBlockRenderer,
+                          },
+                        }}
+                      />
+                    </StyledHeaderCell>
                   </Cell>
                 )
               })}
@@ -80,7 +83,6 @@ const Table = ({ data }: TableProps) => {
             {tableRows.map((row) => {
               return (
                 <Row key={row._idx}>
-                  {console.log('row ', row)}
                   {row?.row?.map((cell: any) => {
                     return <Cell key={cell._key}>cell hei</Cell>
                   })}
