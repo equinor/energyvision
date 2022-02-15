@@ -39,11 +39,11 @@ const Hit = ({ hit, setIsOpen }: HitProps) => {
       <NextLink href={slug} passHref>
         <TempLink onClick={() => setIsOpen(false)}>
           <Heading inverted>
-            <Highlight hit={hit} path="title" />
+            <Highlight hit={hit} attribute="title" />
           </Heading>
           {eventDate && <FormattedDate datetime={eventDate}></FormattedDate>}
           <Text inverted>
-            <Highlight hit={hit} path="ingress" />
+            <Highlight hit={hit} attribute="ingress" />
           </Text>
           <Text inverted>
             <Highlight hit={hit} path="eventDescription" />

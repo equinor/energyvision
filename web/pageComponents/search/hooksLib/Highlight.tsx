@@ -11,13 +11,13 @@ const StyledSpan = styled.span`
 
 type Highlight = {
   hit: Hit
-  path: string
+  attribute: string
 }
 
-export const Highlight: React.FC<Highlight> = ({ hit, path }) => {
-  const property = hit._snippetResult && attribute in hit._snippetResult ? hit._snippetResult : hit._highlightResult
+export const Highlight: React.FC<Highlight> = ({ hit, attribute }) => {
+  const result = hit._snippetResult && attribute in hit._snippetResult ? hit._snippetResult : hit._highlightResult
 
-  const { value: attributeValue = '' } = getPropertyByPath(property, path) || {}
+  const { value: attributeValue = '' } = getPropertyByPath(result, attribute) || {}
   const parts = getHighlightedParts(attributeValue)
 
   return (
