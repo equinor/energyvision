@@ -3,7 +3,6 @@ import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serialize
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
 import styled from 'styled-components'
-import { Typography } from '@equinor/eds-core-react'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
@@ -17,7 +16,12 @@ const TableContainer = styled.div`
 const StyledIngress = styled.div`
   padding: var(--space-medium) 0;
 `
-const StyledHeaderCell = styled(Typography)``
+const StyledHeaderCell = styled(Cell)`
+  p {
+    font-size: var(--typeScale-1);
+    margin-bottom: 0;
+  }
+`
 
 type TableProps = {
   data: TableData
@@ -61,18 +65,16 @@ const Table = ({ data }: TableProps) => {
             <Row>
               {tableHeaders.map((header) => {
                 return (
-                  <Cell key={header.id}>
-                    <StyledHeaderCell>
-                      <SimpleBlockContent
-                        blocks={header.headerCell}
-                        serializers={{
-                          types: {
-                            block: IngressBlockRenderer,
-                          },
-                        }}
-                      />
-                    </StyledHeaderCell>
-                  </Cell>
+                  <StyledHeaderCell key={header.id}>
+                    <SimpleBlockContent
+                      blocks={header.headerCell}
+                      serializers={{
+                        types: {
+                          block: IngressBlockRenderer,
+                        },
+                      }}
+                    />
+                  </StyledHeaderCell>
                 )
               })}
             </Row>
