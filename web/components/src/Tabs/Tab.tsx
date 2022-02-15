@@ -13,7 +13,9 @@ const StyledTab = styled(RTab)`
   :not(:last-child) {
     margin-right: var(--space-medium);
   }
-
+  &:hover {
+    cursor: pointer;
+  }
   /* If the text is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
     color: var(--inverted-text);
