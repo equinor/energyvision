@@ -311,7 +311,11 @@ const pageContentFields = /* groq */ `
     },
     tableHeaders[]{
       "id": _key,
-      ...
+      headerCell[]{
+        ...,
+        ${markDefs},
+      }
+      
     },
     tableRows,
     "designOptions": {
