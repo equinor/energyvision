@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import getConfig from 'next/config'
-import Head from 'next/head'
 import styled from 'styled-components'
 import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
@@ -151,10 +150,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const fullUrl = fullUrlDyn.replace('[slug]', slug)
   return (
     <>
-      <Head>
-        {/* eslint-disable jsx-a11y/html-has-lang */}
-        <html data-template="event" />
-      </Head>
       <NextSeo
         title={documentTitle || plainTitle}
         description={metaDescription}

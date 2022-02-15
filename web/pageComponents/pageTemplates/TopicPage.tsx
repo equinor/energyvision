@@ -3,7 +3,6 @@ import { NextSeo } from 'next-seo'
 import type { PageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
 import getConfig from 'next/config'
-import Head from 'next/head'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
 import Teaser from '../topicPages/Teaser'
@@ -153,10 +152,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
   })
   return (
     <>
-      <Head>
-        {/* eslint-disable jsx-a11y/html-has-lang */}
-        <html data-template="topic" />
-      </Head>
       <NextSeo
         title={data?.seoAndSome?.documentTitle || pageTitle}
         description={data?.seoAndSome?.metaDescription}
