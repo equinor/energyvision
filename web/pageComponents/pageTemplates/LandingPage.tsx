@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
 import type { LandingPageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
-import getConfig from 'next/config'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import ContentGroup from '../landingPages/ContentGroup'
+import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 const LandingPageLayout = styled.main``
 
@@ -44,10 +44,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
   const { pathname } = useRouter()
   const { slug, title, ingress, subGroups = [] } = data
 
-  const { publicRuntimeConfig } = getConfig()
-
-  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
-  const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
+  const fullUrl = getFullUrl(pathname, slug)
 
   const pageTitle = blocksToText(title) || ''
 

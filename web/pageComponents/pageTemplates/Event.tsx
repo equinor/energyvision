@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
-import getConfig from 'next/config'
 import styled from 'styled-components'
 import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
@@ -17,8 +16,7 @@ import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
 import type { EventSchema } from '../../types/types'
 import { FormattedDate, FormattedTime } from '@components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
-
-const { publicRuntimeConfig } = getConfig()
+import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -146,8 +144,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { pathname } = useRouter()
 
   const { start, end } = getEventDates(eventDate)
-  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
-  const fullUrl = fullUrlDyn.replace('[slug]', slug)
+  const fullUrl = getFullUrl(pathname, slug)
+
   return (
     <>
       <NextSeo

@@ -3,7 +3,6 @@ import type { AppProps } from 'next/app'
 import ErrorPage from 'next/error'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
  */ import { GetStaticProps, GetStaticPaths } from 'next'
-import getConfig from 'next/config'
 import { NextSeo } from 'next-seo'
 import { Layout } from '../../pageComponents/shared/Layout'
 import { Heading, FormattedDateTime } from '@components'
@@ -30,8 +29,7 @@ import { SkipNavContent } from '@reach/skip-nav'
 import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 import { hasNews, isGlobal } from '../../common/helpers/datasetHelpers'
 import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
-
-const { publicRuntimeConfig } = getConfig()
+import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -200,8 +198,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     return <ErrorPage statusCode={404} />
   }
 
-  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
-  const fullUrl = fullUrlDyn.replace('[slug]', slug)
+  const fullUrl = getFullUrl(pathname, slug)
 
   const {
     publishDateTime,

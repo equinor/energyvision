@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
 import type { PageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
-import getConfig from 'next/config'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
 import Teaser from '../topicPages/Teaser'
@@ -22,6 +21,7 @@ import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import SubscribeForm from '../shared/SubscribeForm'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
+import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 import {
   TeaserData,
@@ -109,10 +109,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
   const slug = data?.slug
 
-  const { publicRuntimeConfig } = getConfig()
-
-  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
-  const fullUrl = fullUrlDyn.replace('/[[...slug]]', slug)
+  const fullUrl = getFullUrl(pathname, slug)
 
   const pageTitle = data?.title ? blocksToText(data.title) : ''
 

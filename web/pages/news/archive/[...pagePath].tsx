@@ -19,6 +19,7 @@ import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
 import { newsSlugs } from './index'
 import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
+import { getFullUrl } from '../../../common/helpers/getFullUrl'
 
 import type { MenuData, SimpleMenuData } from '../../../types/types'
 
@@ -56,8 +57,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     setIsArchivePage(false)
     return <ErrorPage statusCode={404} />
   }
-  const fullUrlDyn = pathname.indexOf('http') === -1 ? `${publicRuntimeConfig.domain}${pathname}` : pathname
-  const fullUrl = fullUrlDyn.replace('[...pagePath]', data?.news?.slug)
+  const fullUrl = getFullUrl(pathname, data?.news?.slug)
   const onLinkClicked = (e: React.MouseEvent<HTMLDivElement>) => {
     anchorClick(e, router)
   }
