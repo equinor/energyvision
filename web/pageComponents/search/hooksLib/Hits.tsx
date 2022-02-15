@@ -35,22 +35,17 @@ type HitsProps = {
 }
 
 const Hits = ({ hitComponent: Hit, setIsOpen }: HitsProps) => {
-  const { hits, results } = useHits()
-  const hasQuery = results && results.query !== ''
+  const { hits } = useHits()
 
   return (
     <div>
-      {hasQuery ? (
-        <ol>
-          {hits.map((hit) => (
-            <li key={hit.objectID} className="ais-Hits-item">
-              <Hit setIsOpen={setIsOpen} hit={hit} />
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <span>No query yet</span>
-      )}
+      <ol>
+        {hits.map((hit) => (
+          <li key={hit.objectID}>
+            <Hit setIsOpen={setIsOpen} hit={hit} />
+          </li>
+        ))}
+      </ol>
     </div>
   )
 }

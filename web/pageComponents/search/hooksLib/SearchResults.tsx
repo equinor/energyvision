@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Tabs } from '@components'
-import { Index } from 'react-instantsearch-hooks'
+import { Index, useHits } from 'react-instantsearch-hooks'
 import styled from 'styled-components'
 import { useRouter, NextRouter } from 'next/router'
 import useRouterReplace from '../../hooks/useRouterReplace'
@@ -41,6 +41,7 @@ type SearchResultsProps = {
 const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
   const router = useRouter()
   const replaceUrl = useRouterReplace()
+  const { results } = useHits()
   const isoCode = getIsoFromLocale(router.locale)
 
   const [activeTabIndex, setActiveTabIndex] = useState(getInitialTabIndex(router))
@@ -53,36 +54,42 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
     }
   }
 
+  const hasQuery = results && results.query !== ''
+
   return (
-    <Results>
-      <Tabs index={activeTabIndex} onChange={handleTabChange}>
-        <TabList>
-          <Tab inverted>
-            <Index indexName={`dev_TOPICS_${isoCode}`}>
-              Topic
-              <Stats />
-            </Index>
-          </Tab>
-          <Tab inverted>
-            <Index indexName={`dev_EVENTS_${isoCode}`}>
-              Event <Stats />
-            </Index>
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <Index indexName={`dev_TOPICS_${isoCode}`}>
-              <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
-            </Index>
-          </TabPanel>
-          <TabPanel>
-            <Index indexName={`dev_EVENTS_${isoCode}`}>
-              <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
-            </Index>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Results>
+    <>
+      {hasQuery && (
+        <Results>
+          <Tabs index={activeTabIndex} onChange={handleTabChange}>
+            <TabList>
+              <Tab inverted>
+                <Index indexName={`dev_TOPICS_${isoCode}`}>
+                  Topic
+                  <Stats />
+                </Index>
+              </Tab>
+              <Tab inverted>
+                <Index indexName={`dev_EVENTS_${isoCode}`}>
+                  Event <Stats />
+                </Index>
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Index indexName={`dev_TOPICS_${isoCode}`}>
+                  <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
+                </Index>
+              </TabPanel>
+              <TabPanel>
+                <Index indexName={`dev_EVENTS_${isoCode}`}>
+                  <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
+                </Index>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Results>
+      )}
+    </>
   )
 }
 
