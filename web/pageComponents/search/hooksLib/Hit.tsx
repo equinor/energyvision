@@ -3,6 +3,8 @@ import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { Heading, Text, FormattedDate } from '@components'
+import { useRouter } from 'next/router'
+import { getFullUrl } from '../../../common/helpers/getFullUrl'
 
 const TempLink = styled.a`
   text-decoration: none;
@@ -12,6 +14,12 @@ const TempLink = styled.a`
   &:hover {
     border-color: var(--energy-red-90);
   }
+`
+
+const DisplayLink = styled.p`
+  color: var(--slate-blue-70);
+  font-size: var(--typeScale-0);
+  margin: var(--space-xSmall) 0 var(--space-medium) 0;
 `
 
 type SearchResultHit = {
@@ -34,6 +42,9 @@ const Hit = ({ hit, setIsOpen }: HitProps) => {
   // Shouldn't be empty string, but this is work in progress
   const { slug = '', eventDate } = hit
 
+  const { pathname } = useRouter()
+  const fullUrl = getFullUrl(pathname, slug)
+
   return (
     <article>
       <NextLink href={slug} passHref>
@@ -41,6 +52,7 @@ const Hit = ({ hit, setIsOpen }: HitProps) => {
           <Heading inverted>
             <Highlight hit={hit} attribute="title" />
           </Heading>
+          <DisplayLink>{fullUrl}</DisplayLink>
           {eventDate && <FormattedDate datetime={eventDate}></FormattedDate>}
           <Text inverted>
             <Highlight hit={hit} attribute="ingress" />
