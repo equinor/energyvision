@@ -40,7 +40,7 @@ const StyledText = styled(Typography)<StyledTextProps>`
 `
 
 export type TextProps = {
-  size?: 'regular' | 'md'
+  size?: 'sm' | 'regular' | 'md'
   bold?: boolean
   italic?: boolean
   centered?: boolean
@@ -50,6 +50,7 @@ export type TextProps = {
 
 /* Should be easy enough to change later on */
 const sizes = {
+  sm: 'var(--typeScale-0',
   regular: 'var(--typeScale-1)',
   md: 'var(--typeScale-2)',
 }
