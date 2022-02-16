@@ -29,9 +29,6 @@ type TableProps = {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getLink = (linkData: any) => {
-  // Fallback to home page, if this happens it is an error somewhere
-  // Sanity should take care of the validation here, and this is temp. until
-  // the static pages are migrated  {link.image && <FooterIcon image={link.image} />}
   if (!linkData) return 'something-wrong'
   const { isStatic, link, staticUrl, url } = linkData
   if (isStatic) {
@@ -44,12 +41,14 @@ const getLink = (linkData: any) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const renderCellByType = (type: any) => {
   switch (type) {
-    case 'text':
+    case 'textField':
       return <p>text </p>
-    case 'date':
+    case 'dateField':
       return <p>date </p>
+    case 'numberField':
+      return <p>number </p>
     default:
-      return console.log('unknown type')
+      return <p> default </p>
   }
 }
 
@@ -107,12 +106,13 @@ const Table = ({ data }: TableProps) => {
           </Head>
 
           <Body>
-            {console.log('tableRows ', tableRows)}
+            {/*console.log('tableRows ', tableRows) */}
             {tableRows.map((row) => {
               return (
-                <Row key={row._idx}>
+                <Row key={row.id}>
+                  {/*console.log('row ', row) */}
                   {row?.row?.map((cell: any) => {
-                    return <Cell key={cell._key}>cell hei</Cell>
+                    return <Cell key={cell.id}>{renderCellByType(cell.type)} </Cell>
                   })}
                 </Row>
               )
