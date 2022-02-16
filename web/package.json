@@ -84,7 +84,7 @@
     "@types/react-instantsearch-dom": "^6.12.2",
     "@types/styled-components": "^5.1.22",
     "babel-jest": "^27.5.1",
-    "babel-plugin-styled-components": "^1.13.3",
+    "babel-plugin-styled-components": "^2.0.2",
     "jest": "^27.5.1",
     "jest-environment-jsdom": "^27.5.1",
     "jest-styled-components": "^7.0.8",
