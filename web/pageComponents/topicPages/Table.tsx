@@ -46,7 +46,7 @@ const getLink = (linkData: any) => {
 const renderCellByType = (cellData: any) => {
   switch (cellData.type) {
     case 'textField':
-      return <p>text </p>
+      return <>{cellData.text}</>
     case 'dateField':
       return <StyledFormattedDate datetime={cellData.date} />
     case 'numberField':
@@ -120,7 +120,7 @@ const Table = ({ data }: TableProps) => {
             {tableRows.map((row) => {
               return (
                 <Row key={row.id}>
-                  {console.log('row ', row)}
+                  {/*console.log('row ', row) */}
                   {row?.row?.map((cell: any) => {
                     return <Cell key={cell.id}>{renderCellByType(cell)} </Cell>
                   })}
