@@ -28,7 +28,7 @@
     "@sanity/components": "^2.14.0",
     "@sanity/core": "^2.25.0",
     "@sanity/data-aspects": "2.23.1-next.10",
-    "@sanity/default-layout": "^2.25.0",
+    "@sanity/default-layout": "^2.25.1",
     "@sanity/default-login": "^2.24.1",
     "@sanity/desk-tool": "^2.25.0",
     "@sanity/form-builder": "^2.25.0",
