@@ -4,6 +4,7 @@ export type TopicIndex = {
   slug: string
   objectID: string
   type: string
+  pageTitle: string
   title: string
   ingress: string
   text: string

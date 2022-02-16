@@ -15,6 +15,11 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
     "title": pt::text(title),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
+  },
+  "accordions": content->content[_type == "accordion"] {
+    "_key": _key,
+    "title": pt::text(title),
+    "ingress": pt::text(ingress)
   }
 }
 `
@@ -25,12 +30,19 @@ const getQueryParams = (language: Language) => ({
 
 export type TopicPage = {
   slug: string
+  title: string
   textBlocks: {
-    _key: string,
+    _key: string
     title: string
     ingress: string
     text: string
-  }[]
+  }[],
+  accordions : {
+    _key: string
+    title: string
+    ingress: string
+    text: string
+  }[],
   _id: string
 }
 
