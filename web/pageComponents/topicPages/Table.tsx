@@ -1,4 +1,4 @@
-import { BackgroundContainer, Table as EnvisTable } from '@components'
+import { FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
@@ -22,6 +22,7 @@ const StyledHeaderCell = styled(Cell)`
     margin-bottom: 0;
   }
 `
+const StyledFormattedDate = styled(FormattedDate)``
 
 type TableProps = {
   data: TableData
@@ -39,13 +40,15 @@ const getLink = (linkData: any) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const renderCellByType = (type: any) => {
-  switch (type) {
+const renderCellByType = (cell: any) => {
+  switch (cell.type) {
     case 'textField':
       return <p>text </p>
     case 'dateField':
-      return <p>date </p>
+      return <StyledFormattedDate datetime={cell.date} />
     case 'numberField':
+      return <p>number </p>
+    case 'linkSelector':
       return <p>number </p>
     default:
       return <p> default </p>
@@ -110,9 +113,9 @@ const Table = ({ data }: TableProps) => {
             {tableRows.map((row) => {
               return (
                 <Row key={row.id}>
-                  {/*console.log('row ', row) */}
+                  {console.log('row ', row)}
                   {row?.row?.map((cell: any) => {
-                    return <Cell key={cell.id}>{renderCellByType(cell.type)} </Cell>
+                    return <Cell key={cell.id}>{renderCellByType(cell)} </Cell>
                   })}
                 </Row>
               )
