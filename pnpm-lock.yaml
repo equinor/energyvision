@@ -126,7 +126,7 @@ importers:
       next-circular-dependency: ^1.0.1
       next-sanity: 0.4.0
       next-sanity-image: ^3.2.1
-      next-seo: ^4.29.0
+      next-seo: ^5.1.0
       only-allow: ^1.0.0
       prettier: 2.5.1
       prom-client: ^13.2.0
@@ -176,7 +176,7 @@ importers:
       next-circular-dependency: 1.0.1
       next-sanity: 0.4.0_react@17.0.2
       next-sanity-image: 3.2.1_7bb8232441acae4695bb88dda8f836bf
-      next-seo: 4.29.0_61390be992b634a688f7c2555547b55b
+      next-seo: 5.1.0_61390be992b634a688f7c2555547b55b
       only-allow: 1.0.0
       prom-client: 13.2.0
       query-string: 7.1.1
@@ -13144,8 +13144,8 @@ packages:
       use-deep-compare-effect: 1.8.1_react@17.0.2
     dev: false
 
-  /next-seo/4.29.0_61390be992b634a688f7c2555547b55b:
-    resolution: {integrity: sha512-xmwzcz4uHaYJ8glbuhs6FSBQ7z3irmdPYdJJ5saWm72Uy3o+mPKGaPCXQetTCE6/xxVnpoDV4yFtFlEjUcljSg==}
+  /next-seo/5.1.0_61390be992b634a688f7c2555547b55b:
+    resolution: {integrity: sha512-ampuQfNTOi1x+xtRIb6CZGunIo6rQXtMo2Tyu861d5GjJFIwfOXsA4lzCa4+e2rLkyXDyVpavNNUZWa3US9ELw==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
