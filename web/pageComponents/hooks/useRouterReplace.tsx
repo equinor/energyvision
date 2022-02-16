@@ -5,27 +5,30 @@ const useRouterReplace = () => {
   const router = useRouter()
 
   return (queryParams = {}, routerOptions = {}) => {
-    // We can't remember why we need this "slug" as a separate thing,
-    // we will try and see if it's safe to remove
-    /* let originalQuery
+    let originalQuery
     // @TODO: Look at how we should make this more general if we have more than slug
+    // The slug is something next.js adds with dynamic routes
     if ('slug' in router.query) {
       // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { slug, ...rest } = router.query
       originalQuery = rest
     } else {
       originalQuery = router.query
-    } 
+    }
 
-    const query = { ...originalQuery, ...queryParams } */
+    const query = { ...originalQuery, ...queryParams }
 
-    const query = { ...router.query, ...queryParams }
     const href = { pathname: router.pathname, query }
-
     const urlParts = router.asPath.split('?')
+
+    // Check to see if this has a hash
+    // We probably don't want the # part of an url when we replace an url
+    const plainUrl = urlParts[0].split('#')[0] || urlParts[0]
+
     const hasQueryParams = Object.keys(query).length > 0
 
-    router.replace(href, `${urlParts[0]}${hasQueryParams ? `?${stringify(query)}` : ''}`, {
+    router.replace(href, `${plainUrl}${hasQueryParams ? `?${stringify(query)}` : ''}`, {
       shallow: true,
       ...routerOptions,
     })
