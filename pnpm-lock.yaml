@@ -92,7 +92,7 @@ importers:
       '@reach/window-size': ^0.16.0
       '@react-spring/web': ^9.4.3
       '@sanity/block-content-to-react': ^3.0.0
-      '@sanity/client': ^2.23.2
+      '@sanity/client': ^3.0.6
       '@sanity/image-url': ^1.0.1
       '@storybook/addon-essentials': ^6.4.19
       '@storybook/addon-links': ^6.4.19
@@ -160,7 +160,7 @@ importers:
       '@reach/window-size': 0.16.0_react-dom@17.0.2+react@17.0.2
       '@react-spring/web': 9.4.3_react-dom@17.0.2+react@17.0.2
       '@sanity/block-content-to-react': 3.0.0_react@17.0.2
-      '@sanity/client': 2.23.2
+      '@sanity/client': 3.0.6
       '@sanity/image-url': 1.0.1
       '@types/easy-soap-request': 4.1.1
       '@types/uuid': 8.3.4
@@ -175,7 +175,7 @@ importers:
       next: 12.0.10_react-dom@17.0.2+react@17.0.2
       next-circular-dependency: 1.0.1
       next-sanity: 0.4.0_react@17.0.2
-      next-sanity-image: 3.2.1_01a69695840ef51ff56f04bb2d7c8f0f
+      next-sanity-image: 3.2.1_7bb8232441acae4695bb88dda8f836bf
       next-seo: 4.29.0_61390be992b634a688f7c2555547b55b
       only-allow: 1.0.0
       prom-client: 13.2.0
@@ -13116,14 +13116,14 @@ packages:
       - webpack
     dev: false
 
-  /next-sanity-image/3.2.1_01a69695840ef51ff56f04bb2d7c8f0f:
+  /next-sanity-image/3.2.1_7bb8232441acae4695bb88dda8f836bf:
     resolution: {integrity: sha512-lnynR/h7kD5ueVxQoam8ElKXb+bGWuU1cP+PCwx1NzIiBUHM2wBMnvmpt+emubGocMaIURT/iwPU46VnmB9rsQ==}
     peerDependencies:
       '@sanity/client': ^2.11.0
       next: ^11.0.0 || ^12.0.0
       react: ^17.0.2
     dependencies:
-      '@sanity/client': 2.23.2
+      '@sanity/client': 3.0.6
       '@sanity/image-url': 0.140.22
       next: 12.0.10_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
