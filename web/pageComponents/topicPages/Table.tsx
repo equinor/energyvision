@@ -25,6 +25,8 @@ const StyledHeaderCell = styled(Cell)`
 `
 const StyledFormattedDate = styled(FormattedDate)``
 
+const StyledTableLink = styled.a``
+
 type TableProps = {
   data: TableData
 }
@@ -50,7 +52,11 @@ const renderCellByType = (cellData: any) => {
     case 'numberField':
       return <>{cellData.number}</>
     case 'linkSelector':
-      return <p>link </p>
+      return (
+        <NextLink href={getLink(cellData)} passHref>
+          <StyledTableLink>{cellData.label}</StyledTableLink>
+        </NextLink>
+      )
     default:
       return <p> default </p>
   }
