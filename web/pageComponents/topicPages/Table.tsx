@@ -51,6 +51,12 @@ const renderCellByType = (cellData: any) => {
       return <StyledFormattedDate datetime={cellData.date} />
     case 'numberField':
       return <>{cellData.number}</>
+    case 'downloadableFile':
+      return (
+        <NextLink href={cellData.href} passHref>
+          <StyledTableLink>{cellData.filename}</StyledTableLink>
+        </NextLink>
+      )
     case 'linkSelector':
       return (
         <NextLink href={getLink(cellData)} passHref>
@@ -58,7 +64,7 @@ const renderCellByType = (cellData: any) => {
         </NextLink>
       )
     default:
-      return <p> default </p>
+      return <>default</>
   }
 }
 
