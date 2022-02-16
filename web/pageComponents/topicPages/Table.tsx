@@ -1,4 +1,4 @@
-import { FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
+import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
@@ -19,13 +19,13 @@ const StyledIngress = styled.div`
 `
 const StyledHeaderCell = styled(Cell)`
   p {
-    font-size: var(--typeScale-1);
+    font-size: var(--typeScale-0);
     margin-bottom: 0;
   }
 `
 const StyledFormattedDate = styled(FormattedDate)``
 
-const StyledTableLink = styled.a``
+const StyledTableLink = styled(Link)``
 
 type TableProps = {
   data: TableData
