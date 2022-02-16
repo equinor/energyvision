@@ -36,7 +36,7 @@
     "@sanity/production-preview": "2.23.1-next.10",
     "@sanity/types": "^2.24.0",
     "@sanity/ui": "^0.37.2",
-    "@sanity/vision": "^2.25.0",
+    "@sanity/vision": "^2.25.1",
     "only-allow": "^1.0.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
