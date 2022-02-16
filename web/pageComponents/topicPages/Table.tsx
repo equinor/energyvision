@@ -3,6 +3,7 @@ import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serialize
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData } from '../../types/types'
 import styled from 'styled-components'
+import { default as NextLink } from 'next/link'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
@@ -40,16 +41,16 @@ const getLink = (linkData: any) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const renderCellByType = (cell: any) => {
-  switch (cell.type) {
+const renderCellByType = (cellData: any) => {
+  switch (cellData.type) {
     case 'textField':
       return <p>text </p>
     case 'dateField':
-      return <StyledFormattedDate datetime={cell.date} />
+      return <StyledFormattedDate datetime={cellData.date} />
     case 'numberField':
-      return <p>number </p>
+      return <>{cellData.number}</>
     case 'linkSelector':
-      return <p>number </p>
+      return <p>link </p>
     default:
       return <p> default </p>
   }
