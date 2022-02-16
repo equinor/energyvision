@@ -16,12 +16,13 @@ const indexName = pipe(getEnvironment(), E.map(generateIndexName(indexIdentifier
 const updateAlgolia = update(E.getOrElse(() => indexIdentifier)(indexName))(indexSettings)
 
 const logSanity = (items: TopicPage[]) => {
-  console.log('items from Sanity: ', items)
+  const numberOfItems = items.reduce((acc, curr) => acc + (curr?.textBlocks?.length || 0), 0)
+  console.log('items from Sanity: ', numberOfItems)
   return items
 }
 
 const logMapper = (items: Readonly<Record<string, string>>[]) => {
-  console.log('items from Sanity: ', items)
+  console.log('Number of fields being sent to Algolia', items.length)
   return items
 }
 
@@ -31,5 +32,5 @@ export const indexTopic = pipe(
   TE.map((pages) => pipe(pages.map(mapData), flatten)),
   TE.map(logMapper),  // Log what we got from Mapper
   TE.chain(updateAlgolia),
-  T.map(E.fold(console.error, console.log)),
+  T.map(E.fold((error) => console.error('Achtung:', error), console.log)),
 )

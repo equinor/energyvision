@@ -11,6 +11,7 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
   "title": pt::text(content->title),
   "type": content->_type,
   "textBlocks": content->content[_type == "textBlock"]{
+    "_key": _key,
     "title": pt::text(title),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
@@ -25,6 +26,7 @@ const getQueryParams = (language: Language) => ({
 export type TopicPage = {
   slug: string
   textBlocks: {
+    _key: string,
     title: string
     ingress: string
     text: string

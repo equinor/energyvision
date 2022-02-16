@@ -24,7 +24,7 @@ type UpdateIndexType = (
 ) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 const updateIndex: UpdateIndexType = (data) => (index) =>
   pipe(
-    TE.tryCatch(() => index.saveObjects(data), E.toError),
+    TE.tryCatch(() => index.saveObjects(data), (error) => new Error(`Unable to update index. Error message: ${JSON.stringify(error)}`)),
     //TE.map((response) => `Number of objects updated: ${response.objectIDs.length}`),
     TE.map(() => index),
   )
@@ -32,7 +32,7 @@ const updateIndex: UpdateIndexType = (data) => (index) =>
 type UpdateSettingsType = (settings: Settings) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 export const updateSettings: UpdateSettingsType = (settings) => (index) =>
   pipe(
-    TE.tryCatch(() => index.setSettings(settings), E.toError),
+    TE.tryCatch(() => index.setSettings(settings), (error) => new Error(`Unable to update settings: Error message: ${JSON.stringify(error)}`)),
     TE.map(() => index),
   )
 
