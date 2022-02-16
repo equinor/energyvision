@@ -1,4 +1,4 @@
-const linkSelectorFields = /* groq */ `
+const downloadableFileFields = /* groq */ `
 _type == "downloadableFile" => {
     "id": _key,
     "type": _type,
@@ -9,4 +9,4 @@ _type == "downloadableFile" => {
   }
 `
 
-export default linkSelectorFields
+export default downloadableFileFields
