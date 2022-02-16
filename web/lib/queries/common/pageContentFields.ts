@@ -320,7 +320,7 @@ const pageContentFields = /* groq */ `
     tableRows[]{
       "id": _key,
        row[]{"id": _key, "type": _type, 
-      ${linkSelectorFields},
+     
       ${downloadableFileFields},
       ${downloadableImageFields}, ...},
      
