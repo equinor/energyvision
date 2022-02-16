@@ -8,8 +8,13 @@ import Stats from './Stats'
 import Hits from './Hits'
 import Hit from './Hit'
 import { getIsoFromLocale } from './../../../lib/localization' // grrr ../
+import { Pagination } from './Pagination'
 
 const Results = styled.div`
+  margin-top: var(--space-xLarge);
+`
+
+const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
 `
 
@@ -78,11 +83,13 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
               <TabPanel>
                 <Index indexName={`dev_TOPICS_${isoCode}`}>
                   <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
+                  <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`dev_EVENTS_${isoCode}`}>
                   <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
+                  <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>
             </TabPanels>
