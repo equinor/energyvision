@@ -32,5 +32,5 @@ export const indexTopic = pipe(
   TE.map((pages) => pipe(pages.map(mapData), flatten)),
   TE.map(logMapper),  // Log what we got from Mapper
   TE.chain(updateAlgolia),
-  T.map(E.fold((error) => console.error('Achtung:', error), console.log)),
+  T.map(E.fold(console.error, console.log)),
 )
