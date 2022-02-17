@@ -1,7 +1,7 @@
 import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import type { TableData, LinkData } from '../../types/types'
+import type { TableData, LinkData, CellData } from '../../types/types'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 
@@ -27,9 +27,11 @@ const StyledFormattedDate = styled(FormattedDate)``
 
 const StyledCell = styled(Cell)`
   font-size: var(--typeScale-0);
+  font-weight: var(--fontWeight-regular);
 `
 
 const StyledTableLink = styled(Link)`
+  font-size: var(--typeScale-0);
   &:hover {
     color: var(--moss-green-90);
     cursor: pointer;
@@ -63,7 +65,7 @@ const renderCellByType = (cellData: any) => {
     case 'downloadableFile':
       return (
         <NextLink href={cellData.href} passHref>
-          <StyledTableLink>{cellData.filename}</StyledTableLink>
+          <StyledTableLink download>{cellData.filename}</StyledTableLink>
         </NextLink>
       )
     case 'linkSelector':
@@ -82,7 +84,6 @@ const Table = ({ data }: TableProps) => {
 
   const { background } = designOptions
 
-  // @TODO: New serializer for cell content, don't use p tags
   // Should the headers just be a plain text field?
   return (
     <StyledTableWrapper background={background}>
@@ -136,10 +137,10 @@ const Table = ({ data }: TableProps) => {
               return (
                 <Row key={row.id}>
                   {/*console.log('row ', row) */}
-                  {row?.row?.map((cell: any) => {
+                  {row?.row?.map((cell: CellData) => {
                     return (
                       <StyledCell key={cell.id}>
-                        {/*console.log(cell)*/}
+                        {/*console.log(cell) */}
                         {renderCellByType(cell)}{' '}
                       </StyledCell>
                     )
