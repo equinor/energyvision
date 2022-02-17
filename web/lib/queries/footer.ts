@@ -14,7 +14,8 @@ export const footerQuery = /* groq */ `
         "slug": slug.current,
       },
        url,
-      "staticUrl": staticUrl,} 
+      "staticUrl": staticUrl,
+      } 
     }
 	}
 `
