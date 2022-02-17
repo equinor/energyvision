@@ -19,7 +19,7 @@ const TextSnippetsTemplates = textSnippets.map(({ key, title }) =>
     schemaType: `textSnippet`,
     parameters: [{ name: 'defaultValue', type: 'string' }],
     value: (params) => {
-      const fields = languages.map(({ locale }) => ({ [locale]: params.defaultValue }))
+      const fields = languages.map(({ name }) => ({ [name]: params.defaultValue }))
       return Object.assign({}, ...fields)
     },
   }),

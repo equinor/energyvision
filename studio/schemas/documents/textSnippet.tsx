@@ -2,7 +2,7 @@ import languages from '../../languages'
 
 const fields = languages.map((lang) => ({
   title: `${lang.title} value`,
-  name: lang.locale,
+  name: lang.name,
   description: `The ${lang.id} translation`,
   type: 'string',
 }))

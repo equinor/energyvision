@@ -7,18 +7,18 @@ const getFormattedSnippets = (lang: string, snippets: any) => {
     ...snippets.map((snippet: any) => {
       const key = snippet._id.replace('text_snippet_', '')
       return {
-        [key]: snippet[lang],
+        [key]: snippet[lang] || '',
       }
     }),
   )
 }
 
 const formatTextSnippets = (snippets: any): Record<string, Record<string, string>> => {
-  const locales = languages.map((e) => e.locale)
-  return locales.reduce(
-    (o, locale) => ({
+  const langs = languages.map((e) => e.name)
+  return langs.reduce(
+    (o, lang) => ({
       ...o,
-      [locale]: getFormattedSnippets(locale, snippets),
+      [lang]: getFormattedSnippets(lang, snippets),
     }),
     {},
   )
