@@ -2,7 +2,7 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 
 // What is the dataset name for global production site
 const EQUINOR_COM_NAME = 'global'
-const EQUINOR_COM_DEV = 'global_development'
+const EQUINOR_COM_DEV = 'global-development'
 
 export const getDataset = () => dataset
 

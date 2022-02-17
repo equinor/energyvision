@@ -29,8 +29,8 @@ const HitsContainer = styled.div`
 `
 
 const Hits = ({ hitComponent: Hit, setIsOpen }: HitsProps) => {
-  const { hits } = useHits()
-
+  const { hits, results } = useHits()
+  console.log(results)
   return (
     <HitsContainer>
       <List variant="numbered" unstyled>

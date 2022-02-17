@@ -44,7 +44,7 @@ const datasets = {
   equinorfunds: ['norwegian'],
   loop: ['english'],
   // Test datasets
-  global_development: ['english', 'norwegian'],
+  'global-development': ['english', 'norwegian'],
 }
 
 /**

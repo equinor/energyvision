@@ -19,7 +19,7 @@ import flags from './icons/countries'
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
 const EQUINOR_COM_NAME = 'global'
-const EQUINOR_COM_DEV = 'global_development'
+const EQUINOR_COM_DEV = 'global-development'
 const isGlobal = dataSet === EQUINOR_COM_NAME || dataSet === EQUINOR_COM_DEV
 
 const menuId = (lang) => {

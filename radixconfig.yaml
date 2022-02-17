@@ -69,9 +69,9 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
-    - name: web-global_development
+    - name: web-global-development
       publicPort: http
-      image: ghcr.io/equinor/energyvision/web-global_development:{imageTagName}
+      image: ghcr.io/equinor/energyvision/web-global-development:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
@@ -190,9 +190,9 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
-    - name: studio-global_development
+    - name: studio-global-development
       publicPort: http
-      image: ghcr.io/equinor/energyvision/studio-global_development:{imageTagName}
+      image: ghcr.io/equinor/energyvision/studio-global-development:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
