@@ -11,7 +11,15 @@ export type ImageWithCaptionData = {
   image: ImageWithAlt
 }
 
-export type LinkType = 'internalUrl' | 'externalUrl' | 'downloadableFile' | 'downloadableImage'
+export type LinkType =
+  | 'internalUrl'
+  | 'externalUrl'
+  | 'downloadableFile'
+  | 'downloadableImage'
+  | 'dateField'
+  | 'textField'
+  | 'numberField'
+  | 'linkSelector'
 
 export type LinkData = {
   type?: LinkType
@@ -25,6 +33,7 @@ export type LinkData = {
   staticUrl?: string
   fileName?: string
   anchorReference?: string
+  filename?: string
 }
 
 export type RelatedLinksData = {
@@ -190,12 +199,15 @@ export type TableHeaderData = {
   id: string
   headerCell: PortableTextEntry[]
 }
-export type CellProps = {
+
+export type CellData = {
   id: string
   type: string
   date?: string
   number?: number
+  text?: string
 } & LinkData
+
 export type TableData = {
   type: string
   id: string
