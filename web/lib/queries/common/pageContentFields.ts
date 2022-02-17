@@ -319,7 +319,17 @@ const pageContentFields = /* groq */ `
     },
     tableRows[]{
       "id": _key,
-       row[]{"id": _key, "type": _type, 
+       row[]{  
+         "type": _type,
+        "id": _key,
+        label,
+        "isStatic": coalesce(isStatic, false),
+  	    "link": reference-> {
+        "type": _type,
+        "slug": slug.current,
+      },
+       "url": href,
+      "staticUrl": staticUrl,
      
       ${downloadableFileFields},
       ${downloadableImageFields}, ...},
