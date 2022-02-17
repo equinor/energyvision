@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import VisuallyHidden from '../../shared/VisuallyHidden'
 
 import { outlineTemplate, Tokens } from '@utils'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const { outline } = Tokens
 
@@ -57,6 +58,7 @@ const SearchBox = (props: SearchBoxProps) => {
   const { query, refine /* isSearchStalled */ } = useSearchBox(props)
   const [inputValue, setInputValue] = useState(query)
   const inputRef = useRef<HTMLInputElement>(null)
+  const intl = useIntl()
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -96,12 +98,13 @@ const SearchBox = (props: SearchBoxProps) => {
     }
   }, [query, inputValue])
 
+  const search = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
+
   return (
     <div>
       <form action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
-        {/* @TODO Language strings */}
         <VisuallyHidden as="label" htmlFor="site-search">
-          Search
+          {search}
         </VisuallyHidden>
         <Input
           id="site-search"
@@ -110,7 +113,7 @@ const SearchBox = (props: SearchBoxProps) => {
           autoCorrect="off"
           autoCapitalize="off"
           /* @TODO: Text snippet */
-          placeholder="Search"
+          placeholder={search}
           spellCheck={false}
           maxLength={512}
           type="search"

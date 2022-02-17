@@ -13,6 +13,7 @@ import type { EventCardData, EventDateType } from '../../types/types'
 import type { BlockNode } from '@sanity/block-content-to-react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const { Text, Media, Action, StyledLandscapeCard } = Card
 
@@ -164,8 +165,9 @@ const EventsCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             ) : (
               <>
                 <TimeIcon />
-                {/* @TODO: Add field to sanity or find a better way of handling this */}
-                <SmallText style={{ marginLeft: 'var(--space-small)' }}>To be announced</SmallText>
+                <SmallText style={{ marginLeft: 'var(--space-small)' }}>
+                  <FormattedMessage id="tba" defaultMessage="To be announced" />
+                </SmallText>
               </>
             )}
           </Detail>
@@ -194,6 +196,8 @@ const Actions = ({
   location?: string
   eventDate: EventDateType
 }) => {
+  const intl = useIntl()
+  const details = intl.formatMessage({ id: 'details', defaultMessage: 'Details' })
   return (
     <ActionContainer>
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
@@ -206,9 +210,9 @@ const Actions = ({
               '--eds_button__padding_y': 'var(--space-xSmall)',
             } as CSSProperties
           }
-          aria-label={`Details ${title ? blocksToText(title) : ''}`}
+          aria-label={`${details} ${title ? blocksToText(title) : ''}`}
         >
-          Details
+          {details}
         </ButtonLink>
       </NextLink>
     </ActionContainer>

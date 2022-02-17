@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Head from 'next/head'
 import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
+import { FormattedMessage } from 'react-intl'
 
 const Wrapper = styled.div`
   display: grid;
@@ -30,8 +31,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
         <html data-template="news" />
       </Head>
       <Heading size="xl" level="h2" center>
-        {/* @TODO: Localization, where does this text come from */}
-        Latest news
+        <FormattedMessage id="latest_news" defaultMessage="Latest News" />
       </Heading>
       <Wrapper>
         {data.map((newsItem: CardData) => {

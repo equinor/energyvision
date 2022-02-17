@@ -30,6 +30,8 @@ import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 import { hasNews, isGlobal } from '../../common/helpers/datasetHelpers'
 import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import getIntl from '../../common/helpers/getIntl'
+import { IntlProvider } from 'react-intl'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -313,12 +315,14 @@ News.getLayout = (page: AppProps) => {
   const slugs = data?.slugs
 
   return (
-    <Layout footerData={data?.footerData} preview={preview}>
-      <PageHeader slugs={slugs} menuData={data?.menuData} />
+    <IntlProvider locale={data.intl.locale} defaultLocale={data.intl.defaultLocale} messages={data.intl.messages}>
+      <Layout footerData={data?.footerData} preview={preview}>
+        <PageHeader slugs={slugs} menuData={data?.menuData} />
 
-      <SkipNavContent />
-      {page}
-    </Layout>
+        <SkipNavContent />
+        {page}
+      </Layout>
+    </IntlProvider>
   )
 }
 
@@ -338,6 +342,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
 
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
+  const intl = await getIntl(locale, preview)
 
   return {
     props: {
@@ -348,6 +353,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         slugs: allSlugs,
         menuData,
         footerData,
+        intl,
       },
     },
     revalidate: 1,

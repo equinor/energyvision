@@ -12,7 +12,7 @@ import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
-import { getNameFromLocale } from '../../../lib/localization'
+import { defaultLanguage, getNameFromLocale } from '../../../lib/localization'
 import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
@@ -22,6 +22,8 @@ import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelper
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 
 import type { MenuData, SimpleMenuData } from '../../../types/types'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import getIntl from '../../../common/helpers/getIntl'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -70,7 +72,9 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
   return (
     <>
       {router.isFallback ? (
-        <p>Loading…</p>
+        <p>
+          <FormattedMessage id="loading" defaultMessage="Loading..." />
+        </p>
       ) : (
         // @TODO: SEO stuffs
         // @TODO: Menu
@@ -129,15 +133,17 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
 
   const { data } = props
   return (
-    <Layout footerData={data?.footerData}>
-      <Header slugs={newsSlugs} menuData={data?.menuData} />
-      <SkipNavContent />
-      {page}
-    </Layout>
+    <IntlProvider locale={data.intl.locale} defaultLocale={data.intl.defaultLocale} messages={data.intl.messages}>
+      <Layout footerData={data?.footerData}>
+        <Header slugs={newsSlugs} menuData={data?.menuData} />
+        <SkipNavContent />
+        {page}
+      </Layout>
+    </IntlProvider>
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale = defaultLanguage.locale }) => {
   if (!hasArchivedNews) return { notFound: true }
 
   const pagePathArray = params?.pagePath as string[]
@@ -159,8 +165,9 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
-
   const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
+  const intl = await getIntl(locale, preview)
+
   return {
     props: {
       data: {
@@ -170,6 +177,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
           ...pageData,
           slug: pagePath,
         },
+        intl,
       },
     },
     revalidate: 1,

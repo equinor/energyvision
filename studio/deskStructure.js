@@ -15,6 +15,7 @@ import languages from './languages'
 import client from 'part:@sanity/base/client'
 // import Iframe from 'sanity-plugin-iframe-pane'
 import flags from './icons/countries'
+import textSnippets from './schemas/textSnippets'
 
 // import resolveProductionUrl from './resolveProductionUrl'
 const dataSet = client.clientConfig.dataset
@@ -91,6 +92,20 @@ const homepages = languages.map((lang) =>
       S.documentWithInitialValueTemplate(`route_${lang.name}_homepage`)
         .id(`${lang.id}-homepage`)
         .title(`Homepage route - ${lang.title}`),
+  }),
+)
+
+const textSnippetItems = textSnippets.map(({ key, title, defaultValue }) =>
+  S.listItem({
+    title: title,
+    id: `snippet-${key}`,
+    child: () =>
+      S.documentWithInitialValueTemplate(`text-snippet-${key}`, {
+        defaultValue: defaultValue,
+      })
+        .documentId(`text_snippet_${key}`)
+        .title(`Text Snippet: ${key} `)
+        .schemaType('textSnippet'),
   }),
 )
 
@@ -194,6 +209,10 @@ export default () => {
       .title('Country tags')
       .schemaType('countryTag')
       .child(S.documentTypeList('countryTag').title('Country tag')),
+    S.divider(),
+    S.listItem()
+      .title('Text Snippets')
+      .child(() => S.list('textSnippet').id('textSnippet').title('Text Snippets').items(textSnippetItems)),
   ]
 
   return S.list().title('Content').items(listItems)

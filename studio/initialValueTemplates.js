@@ -1,5 +1,6 @@
 import T from '@sanity/base/initial-value-template-builder'
 import languages from './languages'
+import textSnippets from './schemas/textSnippets'
 
 const ParentRoutesTemplates = languages.map(({ name, title }) =>
   T.template({
@@ -8,6 +9,19 @@ const ParentRoutesTemplates = languages.map(({ name, title }) =>
     schemaType: `route_${name}`,
     parameters: [{ name: 'parentId', type: 'string' }],
     value: (params) => ({ parent: { _type: 'reference', _ref: params.parentId } }),
+  }),
+)
+
+const TextSnippetsTemplates = textSnippets.map(({ key, title }) =>
+  T.template({
+    id: `text-snippet-${key}`,
+    title: `Text Snippet - ${title}`,
+    schemaType: `textSnippet`,
+    parameters: [{ name: 'defaultValue', type: 'string' }],
+    value: (params) => {
+      const fields = languages.map(({ locale }) => ({ [locale]: params.defaultValue }))
+      return Object.assign({}, ...fields)
+    },
   }),
 )
 
@@ -51,4 +65,5 @@ export default [
     }),
   }),
   ...ParentRoutesTemplates,
+  ...TextSnippetsTemplates,
 ]

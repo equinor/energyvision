@@ -15,6 +15,7 @@ import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
 import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
+import { useIntl } from 'react-intl'
 
 const MenuContainer = styled.div`
   background-color: transparent;
@@ -41,7 +42,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
   const menuItems = (data && data.groups) || []
-
+  const intl = useIntl()
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
   }, [])
@@ -66,16 +67,18 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
     setIndices([...indices, toggledIndex])
   }
 
+  const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
+
   return (
     <>
-      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
+      <MenuButton title={title} aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
                 <LogoLink />
-                <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
+                <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
                 <SimpleMenuWrapper index={indices} onChange={toggleItem}>

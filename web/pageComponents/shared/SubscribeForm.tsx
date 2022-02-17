@@ -6,6 +6,7 @@ import { Button, TextField, Checkbox, Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
@@ -75,6 +76,7 @@ type FormValues = {
 
 const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
   const router = useRouter()
+  const intl = useIntl()
   const onSubmit = async (data: FormValues) => {
     const allCategories = data.categories.includes('all')
     const subscribeFormParamers: SubscribeFormParameters = {
@@ -125,12 +127,20 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
           <StyledFieldset>
             {!errors.categories && (
               <StyledLegend id="atleast-one-category-required">
-                Please choose one or more of the following{' '}
+                <FormattedMessage
+                  id="subscribe_form_choose"
+                  defaultMessage="Please choose one or more of the following"
+                />
               </StyledLegend>
             )}
             {errors.categories && (
               <ErrorStyledDiv role="alert" id="atleast-one-category-required">
-                <StyledLegend>Please choose one or more of the following</StyledLegend>
+                <StyledLegend>
+                  <FormattedMessage
+                    id="subscribe_form_choose"
+                    defaultMessage="Please choose one or more of the following"
+                  />
+                </StyledLegend>
                 <StyledIcon data={error_filled} aria-hidden="true" />
               </ErrorStyledDiv>
             )}
@@ -150,7 +160,10 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
               </li>
               <li>
                 <Checkbox
-                  label="Magazine stories"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_magazine_stories',
+                    defaultMessage: 'Magazine stories',
+                  })}
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="magazineStories"
@@ -160,7 +173,10 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
               </li>
               <li>
                 <Checkbox
-                  label="Stock market announcements"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_stock_market',
+                    defaultMessage: 'Stock market announcements',
+                  })}
                   value="stockMarketAnnouncements"
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
@@ -170,7 +186,10 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
               </li>
               <li>
                 <Checkbox
-                  label="Crude oil assays"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_cruide_oil',
+                    defaultMessage: 'Crude oil assays',
+                  })}
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="crudeOilAssays"
@@ -180,7 +199,10 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
               </li>
               <li>
                 <Checkbox
-                  label="Loop stories"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_loop_stories',
+                    defaultMessage: 'Loop stories',
+                  })}
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="loopStories"
@@ -190,7 +212,10 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
               </li>
               <li>
                 <Checkbox
-                  label="All"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_all',
+                    defaultMessage: 'All',
+                  })}
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="all"
@@ -204,14 +229,20 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
             name="firstName"
             control={control}
             rules={{
-              required: 'Please fill out your name',
+              required: intl.formatMessage({
+                id: 'subscribe_form_name_validation',
+                defaultMessage: 'Please fill out your name',
+              }),
             }}
             render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
               <TextFieldWrapper>
                 <TextField
                   {...props}
                   id={props.name}
-                  label="First Name"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_first_name',
+                    defaultMessage: 'First name',
+                  })}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -225,10 +256,16 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
             name="email"
             control={control}
             rules={{
-              required: 'Please fill out a valid email address',
+              required: intl.formatMessage({
+                id: 'subscribe_form_email_validation',
+                defaultMessage: 'Please fill out a valid email address',
+              }),
               pattern: {
                 value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                message: 'Please fill out a valid email address',
+                message: intl.formatMessage({
+                  id: 'subscribe_form_email_validation',
+                  defaultMessage: 'Please fill out a valid email address',
+                }),
               },
             }}
             render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
@@ -236,7 +273,10 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                 <TextField
                   {...props}
                   id={props.name}
-                  label="Email"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_email',
+                    defaultMessage: 'Email',
+                  })}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -247,7 +287,9 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
             )}
           />
           <ButtonWrapper>
-            <StyledButton type="submit">Subscribe</StyledButton>
+            <StyledButton type="submit">
+              <FormattedMessage id="subscribe_form_cta" defaultMessage="Subscribe" />
+            </StyledButton>
           </ButtonWrapper>
         </form>
       </Container>

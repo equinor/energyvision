@@ -15,6 +15,7 @@ import { useCompare } from './hooks/useCompare'
 import { LogoLink } from '../LogoLink'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
+import { FormattedMessage } from 'react-intl'
 
 const AllSitesLink = styled(Link)`
   text-decoration: none;
@@ -115,8 +116,9 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                   })}
                 </Menu>
                 <NextLink href="/" passHref>
-                  {/* @TODO Language strings */}
-                  <AllSitesLink>All sites</AllSitesLink>
+                  <AllSitesLink>
+                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                  </AllSitesLink>
                 </NextLink>
               </MenuContainer>
             </nav>

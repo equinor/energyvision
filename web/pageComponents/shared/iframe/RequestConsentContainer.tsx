@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Text, Button, Heading } from '@components'
+import { FormattedMessage } from 'react-intl'
 
 declare global {
   interface Window {
@@ -126,9 +127,10 @@ const RequestConsentContainer = ({ hasSectionTitle = true }: RequestConsentConta
       </Icon>
       <Content>
         <StyledText>
-          {/* @TODO Add this text in Sanity and translate it */}
-          Want the full picture? We’d love to share this content with you, but first you must accept additional cookies
-          by enabling them in our cookie settings.
+          <FormattedMessage
+            id="cookie_consent"
+            defaultMessage="Want the full picture? We’d love to share this content with you, but first you must accept additional cookies by enabling them in our cookie settings."
+          />
         </StyledText>
 
         <LeftAlignedButton
@@ -138,7 +140,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true }: RequestConsentConta
           color="secondary"
           variant="outlined"
         >
-          Cookie settings
+          <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
         </LeftAlignedButton>
       </Content>
     </StyledDiv>

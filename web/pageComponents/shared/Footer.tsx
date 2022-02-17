@@ -10,6 +10,7 @@ import Twitter from '../icons/Twitter'
 import Youtube from '../icons/Youtube'
 
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
+import { FormattedMessage } from 'react-intl'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -170,7 +171,9 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
         })}
       </FooterTop>
       <FooterBottom>
-        <CompanyName>Copyright 2022 Equinor ASA</CompanyName>
+        <CompanyName>
+          <FormattedMessage id="copyright" defaultMessage="Copyright 2022 Equinor ASA" />
+        </CompanyName>
       </FooterBottom>
     </StyledFooter>
   )

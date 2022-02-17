@@ -20,6 +20,8 @@ import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
 import languages from '../languages'
 import { isGlobal } from '../common/helpers/datasetHelpers'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import getIntl from '../common/helpers/getIntl'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -68,7 +70,11 @@ export default function Page({ data, preview }: any) {
   if (!template) console.warn('Missing template for', slug)
 
   if (router.isFallback) {
-    return <p>Loading...</p>
+    return (
+      <p>
+        <FormattedMessage id="loading" defaultMessage="Loading..." />
+      </p>
+    )
   }
 
   switch (template) {
@@ -99,11 +105,13 @@ Page.getLayout = (page: AppProps) => {
   const slugs = getValidSlugs((data?.pageData?.slugs?.allSlugs as AllSlugsType) || [])
 
   return (
-    <Layout footerData={data?.footerData} preview={preview}>
-      <Header slugs={slugs} menuData={data?.menuData} />
-      <SkipNavContent />
-      {page}
-    </Layout>
+    <IntlProvider locale={data.intl.locale} defaultLocale={data.intl.defaultLocale} messages={data.intl.messages}>
+      <Layout footerData={data?.footerData} preview={preview}>
+        <Header slugs={slugs} menuData={data?.menuData} />
+        <SkipNavContent />
+        {page}
+      </Layout>
+    </IntlProvider>
   )
 }
 
@@ -114,9 +122,14 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const pageData = filterDataToSingleItem(data, preview) || null
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
 
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
+  const lang = getNameFromLocale(locale)
+
+  const menuData = await getClient(preview).fetch(menuQuery, { lang: lang })
+
+  const footerData = await getClient(preview).fetch(footerQuery, { lang: lang })
+
+  const intl = await getIntl(locale, preview)
 
   // If global, fetch static content in case data is not found or trying to access news
   if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
@@ -134,6 +147,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           pageData: { slug: slug, ...archivedData },
           menuData,
           footerData,
+          intl,
         },
       },
       revalidate: 300,
@@ -150,6 +164,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         pageData,
         menuData,
         footerData,
+        intl,
       },
     },
     revalidate: 120,

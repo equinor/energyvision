@@ -17,6 +17,7 @@ import type { EventSchema } from '../../types/types'
 import { FormattedDate, FormattedTime } from '@components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { FormattedMessage } from 'react-intl'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -187,7 +188,9 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                     <FormattedTime datetime={end} timezone />
                   </>
                 ) : (
-                  <span>Time to be announced</span>
+                  <span>
+                    <FormattedMessage id="tba" defaultMessage="To be announced" />
+                  </span>
                 )}
               </StyledTime>
 
