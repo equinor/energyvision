@@ -15,4 +15,5 @@ export const indexSettings: Settings = {
   attributesToSnippet: ['ingress'],
   attributeForDistinct: 'slug',
   distinct: 1,
+  ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
 }

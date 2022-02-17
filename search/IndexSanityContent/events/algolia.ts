@@ -15,4 +15,7 @@ export const indexSettings: Settings = {
   attributesToSnippet: ['ingress', 'eventDescription'], // I don't know if this is relevant with the hooks lib?
   attributeForDistinct: 'slug',
   distinct: 1,
+  // This is the default ranking. Does it make sense to sort on date somehow? I think we need to
+  // convert it to an iso date in that case
+  ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
 }
