@@ -17,6 +17,7 @@ import type { MenuData, SimpleMenuData } from '../../../types/types'
 import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 
 import { default as NextLink } from 'next/link'
+import getIntl from '../../../common/helpers/getIntl'
 
 const Container = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
@@ -97,7 +98,7 @@ AllArchivedNews.getLayout = (page: AppProps) => {
   const { data } = props
 
   return (
-    <Layout footerData={data?.footerData}>
+    <Layout intl={data?.intl} footerData={data?.footerData}>
       <Header slugs={newsSlugs} menuData={data?.menuData} />
       <SkipNavContent />
       {page}
@@ -131,10 +132,10 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   const menuData = await getClient(preview).fetch(menuQuery, { lang: langName })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: langName })
   const simpleMenuData = await getClient(preview).fetch(simpleMenuQuery, { lang: getNameFromLocale(locale) })
-
+  const intl = await getIntl(locale, preview)
   return {
     props: {
-      data: { newsList, menuData, footerData, simpleMenuData },
+      data: { newsList, menuData, footerData, simpleMenuData, intl },
     },
   }
 }

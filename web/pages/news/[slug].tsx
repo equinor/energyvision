@@ -31,7 +31,6 @@ import { hasNews, isGlobal } from '../../common/helpers/datasetHelpers'
 import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import getIntl from '../../common/helpers/getIntl'
-import { IntlProvider } from 'react-intl'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -315,14 +314,11 @@ News.getLayout = (page: AppProps) => {
   const slugs = data?.slugs
 
   return (
-    <IntlProvider locale={data.intl.locale} defaultLocale={data.intl.defaultLocale} messages={data.intl.messages}>
-      <Layout footerData={data?.footerData} preview={preview}>
-        <PageHeader slugs={slugs} menuData={data?.menuData} />
-
-        <SkipNavContent />
-        {page}
-      </Layout>
-    </IntlProvider>
+    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
+      <PageHeader slugs={slugs} menuData={data?.menuData} />
+      <SkipNavContent />
+      {page}
+    </Layout>
   )
 }
 

@@ -15,6 +15,7 @@ import PageHeader from '../../pageComponents/shared/Header'
 import { getNameFromLocale } from '../../lib/localization'
 import { SkipNavContent } from '@reach/skip-nav'
 import { newsSlugs } from './archive/index'
+import getIntl from '../../common/helpers/getIntl'
 
 const { Title, Header, Action } = Card
 
@@ -86,7 +87,7 @@ AllNews.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   return (
-    <Layout footerData={data?.footerData} preview={preview}>
+    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
       <PageHeader
         /*  @TODO: Fetch in a proper way */
         slugs={newsSlugs}
@@ -105,10 +106,12 @@ export async function getStaticProps({ preview = false, locale = 'en' }) {
   const allNews = await getClient(preview).fetch(allNewsQuery, { lang: langName })
   const menuData = await getClient(preview).fetch(menuQuery, { lang: langName })
   const footerData = await getClient(preview).fetch(footerQuery, { lang: langName })
+  const intl = await getIntl(locale, preview)
+
   return {
     props: {
       preview,
-      data: { allNews, menuData, footerData },
+      data: { allNews, menuData, footerData, intl },
     },
     revalidate: 1,
   }

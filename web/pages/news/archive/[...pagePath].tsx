@@ -22,7 +22,7 @@ import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelper
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 
 import type { MenuData, SimpleMenuData } from '../../../types/types'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import getIntl from '../../../common/helpers/getIntl'
 
 const { publicRuntimeConfig } = getConfig()
@@ -133,13 +133,11 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
 
   const { data } = props
   return (
-    <IntlProvider locale={data.intl.locale} defaultLocale={data.intl.defaultLocale} messages={data.intl.messages}>
-      <Layout footerData={data?.footerData}>
-        <Header slugs={newsSlugs} menuData={data?.menuData} />
-        <SkipNavContent />
-        {page}
-      </Layout>
-    </IntlProvider>
+    <Layout intl={data?.intl} footerData={data?.footerData}>
+      <Header slugs={newsSlugs} menuData={data?.menuData} />
+      <SkipNavContent />
+      {page}
+    </Layout>
   )
 }
 

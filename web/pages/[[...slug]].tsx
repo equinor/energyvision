@@ -20,7 +20,7 @@ import Header from '../pageComponents/shared/Header'
 import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
 import languages from '../languages'
 import { isGlobal } from '../common/helpers/datasetHelpers'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -105,13 +105,11 @@ Page.getLayout = (page: AppProps) => {
   const slugs = getValidSlugs((data?.pageData?.slugs?.allSlugs as AllSlugsType) || [])
 
   return (
-    <IntlProvider locale={data.intl.locale} defaultLocale={data.intl.defaultLocale} messages={data.intl.messages}>
-      <Layout footerData={data?.footerData} preview={preview}>
-        <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
-        {page}
-      </Layout>
-    </IntlProvider>
+    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
+      <Header slugs={slugs} menuData={data?.menuData} />
+      <SkipNavContent />
+      {page}
+    </Layout>
   )
 }
 
