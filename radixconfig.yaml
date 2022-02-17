@@ -71,7 +71,7 @@ spec:
 
     - name: web-production
       publicPort: http
-      image: ghcr.io/equinor/energyvision/web-production:{imageTagName}
+      image: ghcr.io/equinor/energyvision/web-global_development:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
@@ -192,7 +192,7 @@ spec:
 
     - name: studio-production
       publicPort: http
-      image: ghcr.io/equinor/energyvision/studio-production:{imageTagName}
+      image: ghcr.io/equinor/energyvision/studio-global_development:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http

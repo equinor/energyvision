@@ -31,10 +31,9 @@ const languages = [
   redirect /no to /
   */
 const datasets = {
-  // Leave this as is for now. Should be replaced by development for global
-  production: ['english', 'norwegian'],
   // The  equinor.com dataset
   global: ['english', 'norwegian'],
+  // Satellite pages
   brazil: ['portuguese'],
   germany: ['german'],
   argentina: ['english', 'spanish-ar'],
@@ -44,6 +43,8 @@ const datasets = {
   techstars: ['english'],
   equinorfunds: ['norwegian'],
   loop: ['english'],
+  // Test datasets
+  global_development: ['english', 'norwegian'],
 }
 
 /**
