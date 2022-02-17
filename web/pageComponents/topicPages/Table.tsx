@@ -25,7 +25,12 @@ const StyledHeaderCell = styled(Cell)`
 `
 const StyledFormattedDate = styled(FormattedDate)``
 
-const StyledTableLink = styled(Link)``
+const StyledTableLink = styled(Link)`
+  &:hover {
+    color: var(--moss-green-90);
+    cursor: pointer;
+  }
+`
 
 type TableProps = {
   data: TableData
