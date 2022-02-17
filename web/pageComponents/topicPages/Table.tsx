@@ -1,7 +1,7 @@
 import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
 import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import type { TableData } from '../../types/types'
+import type { TableData, LinkData } from '../../types/types'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 
@@ -46,13 +46,13 @@ type CellProps = {
   number?: number
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getLink = (linkData: any) => {
+const getLink = (linkData: LinkData) => {
   if (!linkData) return 'something-wrong'
-  const { isStatic, link, staticUrl, url } = linkData
+  const { isStatic, link, staticUrl, href } = linkData
   if (isStatic) {
     return staticUrl || '/'
   } else {
-    return (link && link.slug) || (url && url) || '/'
+    return (link && link.slug) || (href && href) || '/'
   }
 }
 

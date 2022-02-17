@@ -328,7 +328,7 @@ const pageContentFields = /* groq */ `
         "type": _type,
         "slug": slug.current,
       },
-       "url": href,
+       "href": url,
       "staticUrl": staticUrl,
      
       ${downloadableFileFields},
