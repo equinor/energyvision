@@ -8,6 +8,10 @@ export const getDataset = () => dataset
 
 export const isGlobal = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
 
+// Used to map to correct indices for search
+export const isGlobalProduction = dataset === EQUINOR_COM_NAME
+export const isGlobalDevelopment = dataset === EQUINOR_COM_DEV
+
 export const hasNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV || dataset === 'germany'
 
 export const hasArchivedNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV

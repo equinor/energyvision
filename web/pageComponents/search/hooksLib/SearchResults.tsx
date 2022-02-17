@@ -9,6 +9,7 @@ import Hits from './Hits'
 import Hit from './Hit'
 import { getIsoFromLocale } from './../../../lib/localization' // grrr ../
 import { Pagination } from './Pagination'
+import { isGlobalProduction } from '../../../common/helpers/datasetHelpers'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -61,6 +62,9 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
 
   const hasQuery = results && results.query !== ''
 
+  // @TODO How can we make this robust?
+  const envPrefix = isGlobalProduction ? 'prod' : 'dev'
+
   return (
     <>
       {hasQuery && (
@@ -68,26 +72,26 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
           <Tabs index={activeTabIndex} onChange={handleTabChange}>
             <TabList>
               <Tab inverted>
-                <Index indexName={`dev_TOPICS_${isoCode}`}>
+                <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
                   Topic
                   <Stats />
                 </Index>
               </Tab>
               <Tab inverted>
-                <Index indexName={`dev_EVENTS_${isoCode}`}>
+                <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
                   Event <Stats />
                 </Index>
               </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <Index indexName={`dev_TOPICS_${isoCode}`}>
+                <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
                   <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
                   <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>
               <TabPanel>
-                <Index indexName={`dev_EVENTS_${isoCode}`}>
+                <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
                   <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
                   <StyledPagination numberPerPage={5} />
                 </Index>
