@@ -19,11 +19,15 @@ const StyledIngress = styled.div`
 `
 const StyledHeaderCell = styled(Cell)`
   p {
-    font-size: var(--typeScale-0);
+    font-size: var(--typeScale-05);
     margin-bottom: 0;
   }
 `
 const StyledFormattedDate = styled(FormattedDate)``
+
+const StyledCell = styled(Cell)`
+  font-size: var(--typeScale-0);
+`
 
 const StyledTableLink = styled(Link)`
   &:hover {
@@ -133,7 +137,7 @@ const Table = ({ data }: TableProps) => {
                 <Row key={row.id}>
                   {/*console.log('row ', row) */}
                   {row?.row?.map((cell: any) => {
-                    return <Cell key={cell.id}>{renderCellByType(cell)} </Cell>
+                    return <StyledCell key={cell.id}>{renderCellByType(cell)} </StyledCell>
                   })}
                 </Row>
               )
