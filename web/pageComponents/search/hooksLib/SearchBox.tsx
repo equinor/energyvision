@@ -112,7 +112,6 @@ const SearchBox = (props: SearchBoxProps) => {
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
-          /* @TODO: Text snippet */
           placeholder={search}
           spellCheck={false}
           maxLength={512}
