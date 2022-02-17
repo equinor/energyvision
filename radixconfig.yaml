@@ -69,7 +69,7 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
-    - name: web-production
+    - name: web-global_development
       publicPort: http
       image: ghcr.io/equinor/energyvision/web-global_development:{imageTagName}
       alwaysPullImageOnDeploy: true
@@ -190,7 +190,7 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
-    - name: studio-production
+    - name: studio-global_development
       publicPort: http
       image: ghcr.io/equinor/energyvision/studio-global_development:{imageTagName}
       alwaysPullImageOnDeploy: true
