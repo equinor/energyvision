@@ -15,7 +15,7 @@ import { useCompare } from './hooks/useCompare'
 import { LogoLink } from '../LogoLink'
 
 import type { MenuData, SubMenuData } from '../../../types/types'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const AllSitesLink = styled(Link)`
   text-decoration: none;
@@ -51,6 +51,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const [indices, setIndices] = useState<number[]>([])
   const hasWidthChanged = useCompare(width)
   const DESKTOP_MIN_WIDTH = 1300
+  const intl = useIntl()
 
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
@@ -97,17 +98,18 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
     }
   }
 
+  const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
+
   return (
     <>
-      <MenuButton title="Menu" aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
+      <MenuButton title={title} aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
             <nav>
               <NavTopbar>
                 <LogoLink />
-                {/*  @TODO: Translations of string */}
-                <MenuButton title="Menu" aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
+                <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
                 <Menu index={indices} onChange={toggleItem}>
