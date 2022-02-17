@@ -176,6 +176,10 @@ export default {
                   return cellContent.label
                 } else if (cellContent._type === 'downloadableFile') {
                   return cellContent.filename
+                } else if (cellContent._type === 'textField') {
+                  return cellContent.text
+                } else if (cellContent._type === 'dateField') {
+                  return cellContent.date
                 }
               }
 
