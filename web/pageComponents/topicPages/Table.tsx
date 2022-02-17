@@ -39,7 +39,12 @@ const StyledTableLink = styled(Link)`
 type TableProps = {
   data: TableData
 }
-
+type CellProps = {
+  id: string
+  type: string
+  date?: string
+  number?: number
+}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getLink = (linkData: any) => {
   if (!linkData) return 'something-wrong'
@@ -137,7 +142,12 @@ const Table = ({ data }: TableProps) => {
                 <Row key={row.id}>
                   {/*console.log('row ', row) */}
                   {row?.row?.map((cell: any) => {
-                    return <StyledCell key={cell.id}>{renderCellByType(cell)} </StyledCell>
+                    return (
+                      <StyledCell key={cell.id}>
+                        {/*console.log(cell)*/}
+                        {renderCellByType(cell)}{' '}
+                      </StyledCell>
+                    )
                   })}
                 </Row>
               )
