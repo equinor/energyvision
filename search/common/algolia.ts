@@ -50,9 +50,6 @@ export const update: UpdateType = (indexName) => (indexSettings) => (mappedData:
     TE.map(() => `Index ${indexName} successfully updated`),
   )
 
-type PrefixEnvType = (environment: string) => string
-export const prefixEnv: PrefixEnvType = (environment) => environment.slice(0, 3) // Not very sophisticated. Perhaps make more robust at some point.
-
 type GenerateIndexNameType = (identifier: string) => (language: string) => (environment: string) => string
 export const generateIndexName: GenerateIndexNameType = (identifier) => (language) => (environment) =>
-  pipe(prefixEnv(environment), (prefixedEnv) => `${prefixedEnv.toLowerCase()}_${identifier}_${language}`)
+  pipe(environment, (env) => `${env.toLowerCase()}_${identifier}_${language}`)
