@@ -20,9 +20,10 @@ export const Pagination = ({ numberPerPage, totalPages, padding, ...rest }: Pagi
           event.preventDefault()
         }
 
-        refine(page)
+        // EDS page index starts at 1, Algolia page index starts at 0
+        // Added conditional in case this gets changed in EDS without us knowing
+        refine(page > 0 ? page - 1 : page)
       }}
-      withItemIndicator
       {...rest}
     />
   )
