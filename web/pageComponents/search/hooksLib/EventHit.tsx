@@ -36,9 +36,8 @@ const StyledFormattedDate = styled(FormattedDate)`
   letter-spacing: 1px;
 `
 
-type SearchResultHit = {
+type EventResultHit = {
   ingress?: string
-  text?: string
   slug?: string
   title?: string
   eventDescription?: string
@@ -46,14 +45,14 @@ type SearchResultHit = {
   type?: string // @TODO: be more specific, like "news", "page", "event"?
 }
 
-export type Hit = AlgoliaHit<SearchResultHit>
+export type EventHit = AlgoliaHit<EventResultHit>
 
 export type HitProps = {
-  hit: Hit
+  hit: EventHit
   setIsOpen: (arg0: boolean) => void
 }
 
-const Hit = ({ hit, setIsOpen }: HitProps) => {
+const EventHit = ({ hit, setIsOpen }: HitProps) => {
   // Shouldn't be empty string, but this is work in progress
   const { slug = '', eventDate } = hit
 
@@ -82,4 +81,4 @@ const Hit = ({ hit, setIsOpen }: HitProps) => {
   )
 }
 
-export default Hit
+export default EventHit

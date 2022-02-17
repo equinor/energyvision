@@ -2,7 +2,8 @@ import { Fragment } from 'react'
 import { getHighlightedParts, getPropertyByPath } from 'instantsearch.js/es/lib/utils/index.js'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
-import type { Hit } from './Hit'
+import type { EventHit } from './EventHit'
+import type { TopicHit } from './TopicHit'
 
 const StyledSpan = styled.span`
   color: var(--lichen-green-100);
@@ -10,7 +11,7 @@ const StyledSpan = styled.span`
 `
 
 type Highlight = {
-  hit: Hit
+  hit: EventHit | TopicHit
   attribute: string
 }
 

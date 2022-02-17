@@ -6,7 +6,8 @@ import { useRouter, NextRouter } from 'next/router'
 import useRouterReplace from '../../hooks/useRouterReplace'
 import Stats from './Stats'
 import Hits from './Hits'
-import Hit from './Hit'
+import EventHit from './EventHit'
+import TopicHit from './TopicHit'
 import { getIsoFromLocale } from './../../../lib/localization' // grrr ../
 import { Pagination } from './Pagination'
 import { isGlobalProduction } from '../../../common/helpers/datasetHelpers'
@@ -86,13 +87,13 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
             <TabPanels>
               <TabPanel>
                 <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
-                  <Hits hitComponent={Hit} setIsOpen={setIsOpen} />
+                  <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} />
                   <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
-                  <Hits setIsOpen={setIsOpen} hitComponent={Hit} />
+                  <Hits setIsOpen={setIsOpen} hitComponent={EventHit} />
                   <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>

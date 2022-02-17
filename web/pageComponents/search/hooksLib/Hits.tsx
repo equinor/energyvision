@@ -1,7 +1,7 @@
 import { useHits } from 'react-instantsearch-hooks'
 import { List } from '@components'
 import styled from 'styled-components'
-import type { HitProps } from './Hit'
+import type { HitProps } from './EventHit'
 
 const { Item } = List
 
