@@ -190,7 +190,12 @@ export type TableHeaderData = {
   id: string
   headerCell: PortableTextEntry[]
 }
-
+export type CellProps = {
+  id: string
+  type: string
+  date?: string
+  number?: number
+} & LinkData
 export type TableData = {
   type: string
   id: string
