@@ -54,20 +54,22 @@ const getLink = (linkData: LinkData) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const renderCellByType = (cellData: any) => {
+const renderCellByType = (cellData: CellData) => {
   switch (cellData.type) {
     case 'textField':
       return <>{cellData.text}</>
     case 'dateField':
-      return <StyledFormattedDate datetime={cellData.date?.toString()} />
+      return <>{cellData.date ? <StyledFormattedDate datetime={cellData.date.toString()} /> : null}</>
     case 'numberField':
       return <>{cellData.number}</>
     case 'downloadableFile':
       return (
         <>
-          <NextLink href={cellData.href} passHref>
-            <StyledTableLink download>{cellData.filename}</StyledTableLink>
-          </NextLink>
+          {cellData.href ? (
+            <NextLink href={cellData.href} passHref>
+              <StyledTableLink download>{cellData.filename}</StyledTableLink>
+            </NextLink>
+          ) : null}
         </>
       )
     case 'linkSelector':
