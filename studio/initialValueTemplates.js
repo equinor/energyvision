@@ -12,10 +12,10 @@ const ParentRoutesTemplates = languages.map(({ name, title }) =>
   }),
 )
 
-const TextSnippetsTemplates = textSnippets.map(({ key, title }) =>
+const TextSnippetsTemplates = Object.keys(textSnippets).map((key) =>
   T.template({
     id: `text-snippet-${key}`,
-    title: `Text Snippet - ${title}`,
+    title: `Text Snippet - ${textSnippets[key].title}`,
     schemaType: `textSnippet`,
     parameters: [{ name: 'defaultValue', type: 'string' }],
     value: (params) => {

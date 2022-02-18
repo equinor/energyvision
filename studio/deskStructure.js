@@ -95,13 +95,13 @@ const homepages = languages.map((lang) =>
   }),
 )
 
-const textSnippetItems = textSnippets.map(({ key, title, defaultValue }) =>
+const textSnippetItems = Object.keys(textSnippets).map((key) =>
   S.listItem({
-    title: title,
+    title: textSnippets[key].title,
     id: `snippet-${key}`,
     child: () =>
       S.documentWithInitialValueTemplate(`text-snippet-${key}`, {
-        defaultValue: defaultValue,
+        defaultValue: textSnippets[key].defaultValue,
       })
         .documentId(`text_snippet_${key}`)
         .title(`Text Snippet: ${key} `)
