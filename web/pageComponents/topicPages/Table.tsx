@@ -42,7 +42,6 @@ type TableProps = {
   data: TableData
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getLink = (linkData: LinkData) => {
   if (!linkData) return 'something-wrong'
   const { isStatic, link, staticUrl, href } = linkData
@@ -53,7 +52,6 @@ const getLink = (linkData: LinkData) => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const renderCellByType = (cellData: CellData) => {
   switch (cellData.type) {
     case 'textField':
