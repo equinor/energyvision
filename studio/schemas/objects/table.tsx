@@ -7,7 +7,6 @@ import CharCounterEditor from '../components/CharCounterEditor'
 
 import { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { string } from 'prop-types'
 
 export type Table = {
   _type: 'promotion'
