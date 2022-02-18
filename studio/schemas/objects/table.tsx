@@ -133,7 +133,7 @@ export default {
                     },
                   ],
                 },
-                //Number field should maybe be a string instead
+
                 {
                   type: 'object',
                   title: 'Number Field',
@@ -142,7 +142,7 @@ export default {
                     {
                       title: 'Number',
                       name: 'number',
-                      type: 'number',
+                      type: 'string',
                     },
                   ],
                 },

@@ -204,7 +204,7 @@ export type CellData = {
   id: string
   type: string
   date?: string
-  number?: number
+  number?: string
   text?: string
 } & LinkData
 
