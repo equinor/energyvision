@@ -8,6 +8,8 @@ type PaginationProps = {
 export const Pagination = ({ numberPerPage, totalPages, padding, ...rest }: PaginationProps) => {
   const { refine, nbHits } = usePagination({ totalPages, padding })
 
+  if (nbHits <= numberPerPage) return null
+
   return (
     <EdsPagination
       totalItems={nbHits}
