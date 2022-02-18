@@ -23,11 +23,11 @@ const AlignedLogoSecondary = styled(LogoSecondary)`
   margin-top: -12%;
 `
 
-export const LogoLink = () => {
+export const LogoLink = ({ ...rest }) => {
   return (
     <NextLink href="/" passHref>
       {/*  Localize text */}
-      <StyledLogoLink aria-label="Equinor home page">
+      <StyledLogoLink aria-label="Equinor home page" {...rest}>
         <AlignedLogoSecondary />
       </StyledLogoLink>
     </NextLink>
