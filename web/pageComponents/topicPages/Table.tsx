@@ -116,7 +116,7 @@ const Table = ({ data }: TableProps) => {
         <EnvisTable>
           <Head>
             <Row>
-              {tableHeaders.map((header) => {
+              {tableHeaders?.map((header) => {
                 return (
                   <StyledHeaderCell key={header.id}>
                     <SimpleBlockContent
@@ -134,7 +134,7 @@ const Table = ({ data }: TableProps) => {
           </Head>
 
           <Body>
-            {tableRows.map((row) => {
+            {tableRows?.map((row) => {
               return (
                 <Row key={row.id}>
                   {row?.row?.map((cell: CellData) => {
