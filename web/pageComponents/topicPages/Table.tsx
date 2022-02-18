@@ -59,14 +59,16 @@ const renderCellByType = (cellData: any) => {
     case 'textField':
       return <>{cellData.text}</>
     case 'dateField':
-      return <StyledFormattedDate datetime={cellData.date} />
+      return <StyledFormattedDate datetime={cellData.date?.toString()} />
     case 'numberField':
       return <>{cellData.number}</>
     case 'downloadableFile':
       return (
-        <NextLink href={cellData.href} passHref>
-          <StyledTableLink download>{cellData.filename}</StyledTableLink>
-        </NextLink>
+        <>
+          <NextLink href={cellData.href} passHref>
+            <StyledTableLink download>{cellData.filename}</StyledTableLink>
+          </NextLink>
+        </>
       )
     case 'linkSelector':
       return (
@@ -132,18 +134,11 @@ const Table = ({ data }: TableProps) => {
           </Head>
 
           <Body>
-            {/*console.log('tableRows ', tableRows) */}
             {tableRows.map((row) => {
               return (
                 <Row key={row.id}>
-                  {/*console.log('row ', row) */}
                   {row?.row?.map((cell: CellData) => {
-                    return (
-                      <StyledCell key={cell.id}>
-                        {/*console.log(cell) */}
-                        {renderCellByType(cell)}{' '}
-                      </StyledCell>
-                    )
+                    return <StyledCell key={cell.id}>{renderCellByType(cell)} </StyledCell>
                   })}
                 </Row>
               )
