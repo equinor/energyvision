@@ -5,7 +5,7 @@ import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { update, sanityClient, generateIndexName, getEnvironment, languageFromIso, languageOrDefault } from '../../common'
-import { fetchData, TopicPage } from './sanity'
+import { fetchData } from './sanity'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
 
@@ -16,22 +16,9 @@ const language = pipe(languageFromIso('en-GB'), languageOrDefault)
 const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
 const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
-const logSanity = (items: TopicPage[]) => {
-  const numberOfItems = items.reduce((acc, curr) => acc + (curr?.textBlocks?.length || 0), 0)
-  console.log('items from Sanity: ', numberOfItems)
-  return items
-}
-
-const logMapper = (items: Readonly<Record<string, string>>[]) => {
-  console.log('Number of fields being sent to Algolia', items.length)
-  return items
-}
-
 export const indexTopic = pipe(
   fetchData(sanityClient)(language),
-  TE.map(logSanity),  // Log what we got from Sanity
   TE.map((pages) => pipe(pages.map(mapData), flatten)),
-  TE.map(logMapper),  // Log what we got from Mapper
   TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
   TE.flatten,
   T.map(E.fold(console.error, console.log)),
