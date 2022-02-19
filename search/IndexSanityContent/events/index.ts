@@ -1,4 +1,5 @@
 import { flow, pipe } from 'fp-ts/lib/function'
+import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
@@ -19,11 +20,12 @@ const indexIdentifier = 'EVENTS'
 const language = pipe(languageFromIso('en-GB'), languageOrDefault)
 
 const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
-const updateAlgolia = () => update(E.getOrElse(() => indexIdentifier)(indexName()))(indexSettings)
+const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
 export const indexEvents = pipe(
   fetchData(sanityClient)(language),
   TE.map((events) => events.map(mapData)),
-  TE.chain(updateAlgolia()),
+  TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
+  TE.flatten,
   T.map(E.fold(console.error, console.log)),
 )
