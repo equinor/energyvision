@@ -27,6 +27,10 @@ const snippets: textSnippet = {
     title: 'Search',
     defaultValue: 'Search',
   },
+  search_no_results: {
+    title: 'No search results',
+    defaultValue: 'No results were found for your search query.',
+  },
   copyright: {
     title: 'Copyright',
     defaultValue: 'Copyright 2022 Equinor ASA',

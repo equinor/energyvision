@@ -87,13 +87,13 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
             <TabPanels>
               <TabPanel>
                 <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
-                  <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} />
+                  <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} category="Topic" />
                   <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
-                  <Hits setIsOpen={setIsOpen} hitComponent={EventHit} />
+                  <Hits setIsOpen={setIsOpen} hitComponent={EventHit} category="Event" />
                   <StyledPagination numberPerPage={5} />
                 </Index>
               </TabPanel>
