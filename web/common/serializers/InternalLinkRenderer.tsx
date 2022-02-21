@@ -1,6 +1,6 @@
 import { Link } from '@components'
 import { default as NextLink } from 'next/link'
-import { getIsoFromLocale } from '../../lib/localization'
+import { getLocaleFromName } from '../../lib/localization'
 
 type InternalLinkMark = {
   _key: string
@@ -30,8 +30,7 @@ export const InternalLinkRenderer = (child: Child) => {
   try {
     const { mark, children } = child
     const { id, type, lang } = mark.internalLink
-
-    const linkLocale = getIsoFromLocale(lang)
+    const linkLocale = getLocaleFromName(lang)
     const href = type === 'news' ? `/news/${id}` : id
 
     return (
