@@ -34,7 +34,7 @@ export const InternalLinkRenderer = (child: Child) => {
     const href = type === 'news' ? `/news/${id}` : id
 
     return (
-      <NextLink passHref href={href} locale={linkLocale}>
+      <NextLink passHref href={`${linkLocale}/${href}`}>
         <Link>{children}</Link>
       </NextLink>
     )
