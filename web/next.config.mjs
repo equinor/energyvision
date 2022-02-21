@@ -28,8 +28,10 @@ export default withBundle({
     domains: ['cdn.sanity.io'],
   },
   i18n: {
-    locales: locales,
-    defaultLocale: locales[0],
+    // Use 'default' locale in order to prefix default locale in the url
+    // https://github.com/vercel/next.js/discussions/18419#discussioncomment-1561577
+    locales: ['default', ...locales],
+    defaultLocale: 'default',
     localeDetection: false,
   },
   async rewrites() {
