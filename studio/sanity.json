@@ -14,10 +14,10 @@
     "@sanity/default-login",
     "@sanity/desk-tool",
     "color-list",
-    "intl-input",
     "asset-source-brandmaster",
     "media",
-    "@sanity/production-preview"
+    "@sanity/production-preview",
+    "@sanity/document-internationalization"
   ],
   "env": {
     "development": {

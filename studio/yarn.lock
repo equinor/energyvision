@@ -1541,6 +1541,23 @@
   dependencies:
     diff-match-patch "^1.0.4"
 
+"@sanity/document-internationalization@^0.0.1-beta.8":
+  version "0.0.1-beta.8"
+  resolved "https://registry.npmjs.org/@sanity/document-internationalization/-/document-internationalization-0.0.1-beta.8.tgz#ab610138d1e8f59a847db34c6a6984720172c615"
+  integrity sha512-VyZ0UzuRCfYk8itpom9wV2pv3Sbb/qeuduMcUvQj6hiDiqu856Mop9dvepsi4m3RBr+MijZHPvOJtap18z4Bhw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@cprecioso/country-flag-emoji" "^1.0.0"
+    a11y-react-emoji "^1.1.3"
+    classnames "^2.2.6"
+    just-omit "^2.0.1"
+    just-safe-get "^4.0.1"
+    just-split "^3.0.1"
+    moment "^2.29.1"
+    pinst "^2.1.6"
+    regenerator-runtime "^0.13.7"
+    slugify "^1.4.6"
+
 "@sanity/eventsource@2.23.0", "@sanity/eventsource@^2.23.0":
   version "2.23.0"
   resolved "https://registry.npmjs.org/@sanity/eventsource/-/eventsource-2.23.0.tgz#5c8b5dcc7aa440588c96f3e86ac97b5fe76360da"
@@ -5212,6 +5229,11 @@ from2@^2.1.0, from2@^2.1.1:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
+fromentries@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.npmjs.org/fromentries/-/fromentries-1.3.2.tgz#e4bca6808816bf8f93b52750f1127f5a6fd86e3a"
+  integrity sha512-cHEpEQHUg0f8XdtZCc2ZAhrHzKzT0MrFUTcvx+hfxYu7rGMDc5SKoXFh+n4YigxsHXRzc6OrCshdR1bWH6HHyg==
+
 fs-constants@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
@@ -6403,6 +6425,21 @@ jsprim@^1.2.2:
     json-schema "0.4.0"
     verror "1.10.0"
 
+just-omit@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/just-omit/-/just-omit-2.0.1.tgz#25d5967424cc69a2ef4faa315ede1d5b7be3168c"
+  integrity sha512-gmMf9DSGjx+PJFr7P7zcZk4hpKvb/iLTmXjArvtvr2zg8JvcXyAjPtJItX4Lx8BCUk3UAtJiacu4no9h9mv6mg==
+
+just-safe-get@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/just-safe-get/-/just-safe-get-4.0.1.tgz#b89db1d82e1df27723a4c679ba913474cfaa3cb6"
+  integrity sha512-Yet2Cf1s0h8Jh0A1CMBkR/C4nIN+pCJ4vN7aNk0Eo3d/QhnpWWPEMaxlIxAiH4bUdRCfdJonFabClf21Ls5NMA==
+
+just-split@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/just-split/-/just-split-3.0.1.tgz#e9e9475afc70c72078eea5da08632e1425928467"
+  integrity sha512-KAB4lfodDbN5CkOKMni21qzjqPYvUMYxehl+Dw+onqqNZ+r7NWcY5RHOi0Nj36fEoWXNktDngXDEcUlRYjZLUA==
+
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -6572,11 +6609,6 @@ lodash.camelcase@^4.3.0:
   resolved "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
   integrity sha1-soqmKIorn8ZRA1x3EfZathkDMaY=
 
-lodash.chunk@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.npmjs.org/lodash.chunk/-/lodash.chunk-4.2.0.tgz#66e5ce1f76ed27b4303d8c6512e8d1216e8106bc"
-  integrity sha1-ZuXOH3btJ7QwPYxlEujRIW6BBrw=
-
 lodash.curry@^4.0.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
@@ -6616,11 +6648,6 @@ lodash.foreach@^3.0.3:
     lodash._baseeach "^3.0.0"
     lodash._bindcallback "^3.0.0"
     lodash.isarray "^3.0.0"
-
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
 lodash.isarguments@^3.0.0:
   version "3.1.0"
@@ -7673,6 +7700,13 @@ pify@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
+
+pinst@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/pinst/-/pinst-2.1.6.tgz#8d968b8ec1dac5dddcfc976c735592dbec58b42c"
+  integrity sha512-B4dYmf6nEXg1NpDSB+orYWvKa5Kfmz5KzWC29U59dpVM4S/+xp0ak/JMEsw04UQTNNKps7klu0BUalr343Gt9g==
+  dependencies:
+    fromentries "^1.3.2"
 
 pirates@^4.0.0:
   version "4.0.4"
@@ -9548,21 +9582,6 @@ sanity-plugin-iframe-pane@^1.0.14:
     "@sanity/ui" "^0.36.12"
     prop-types "15.7.2"
     usehooks-ts "^1.2.0"
-
-sanity-plugin-intl-input@^5.6.0:
-  version "5.6.3"
-  resolved "https://registry.npmjs.org/sanity-plugin-intl-input/-/sanity-plugin-intl-input-5.6.3.tgz#a2a6d1e3752d229d330a1ab0ffce565f9aa2417c"
-  integrity sha512-ATCZxhKnD8J+QCxAhC0eACBHRRgds+TmUsewyenTFbUFMftOsnRk85ZNlUFTy2ddC257UzlnMrfaN+wrUKORtA==
-  dependencies:
-    "@babel/runtime" "^7.12.5"
-    "@cprecioso/country-flag-emoji" "^1.0.0"
-    a11y-react-emoji "^1.1.3"
-    classnames "^2.2.6"
-    lodash.chunk "^4.2.0"
-    lodash.get "^4.4.2"
-    moment "^2.29.1"
-    regenerator-runtime "^0.13.7"
-    slugify "^1.4.6"
 
 sanity-plugin-media@^1.4.4:
   version "1.4.4"
