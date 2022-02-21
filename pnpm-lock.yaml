@@ -117,6 +117,7 @@ importers:
       date-fns-tz: ^1.2.2
       easy-soap-request: ^4.6.0
       focus-visible: ^5.2.0
+      html-entities: ^2.3.2
       ics: ^2.35.0
       instantsearch.js: ^4.38.1
       jest: ^27.5.1
@@ -170,6 +171,7 @@ importers:
       date-fns-tz: 1.2.2_date-fns@2.28.0
       easy-soap-request: 4.6.0
       focus-visible: 5.2.0
+      html-entities: 2.3.2
       ics: 2.35.0
       instantsearch.js: 4.38.1_algoliasearch@4.12.1
       next: 12.0.10_react-dom@17.0.2+react@17.0.2
@@ -10468,7 +10470,6 @@ packages:
 
   /html-entities/2.3.2:
     resolution: {integrity: sha512-c3Ab/url5ksaT0WyleslpBEthOzWhrjQbg75y7XUsfSzi3Dgzt0l8w5e7DylRn15MTlMMD58dTfzddNS2kcAjQ==}
-    dev: true
 
   /html-escaper/2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
