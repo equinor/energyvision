@@ -57,7 +57,6 @@ const SiteMenu = () => {
   /* const searchState = getSearchState(router) */
 
   function onCloseButtonClick() {
-    console.log('trykket for og lukke')
     setIsOpen(!isOpen)
   }
 
@@ -74,7 +73,7 @@ const SiteMenu = () => {
         <RemoveScroll enabled={isOpen}>
           <DarkTopbarDropdown isOpen={isOpen}>
             <NavTopbar>
-              <LogoLink onClick={onCloseButtonClick} />
+              <LogoLink onClick={onCloseButtonClick} inverted />
               <InvertedButton
                 variant="ghost_icon"
                 aria-expanded={isOpen}
