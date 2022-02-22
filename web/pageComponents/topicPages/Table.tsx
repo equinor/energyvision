@@ -15,8 +15,12 @@ const TableContainer = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
 `
 const StyledIngress = styled.div`
-  padding: var(--space-medium) 0;
+  padding: var(--space-small) 0 var(--space-medium);
 `
+const StyledTitle = styled.div`
+  padding: var(--space-small) 0 var(--space-small);
+`
+
 const StyledHeaderCell = styled(Cell)`
   p {
     font-size: var(--typeScale-05);
@@ -91,14 +95,16 @@ const Table = ({ data }: TableProps) => {
     <StyledTableWrapper background={background}>
       <TableContainer>
         {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: TitleBlockRenderer,
-              },
-            }}
-          />
+          <StyledTitle>
+            <SimpleBlockContent
+              blocks={title}
+              serializers={{
+                types: {
+                  block: TitleBlockRenderer,
+                },
+              }}
+            />
+          </StyledTitle>
         )}
         {ingress && (
           <StyledIngress>
