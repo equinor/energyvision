@@ -18,7 +18,7 @@ const TempLink = styled.a`
 `
 
 const DisplayLink = styled.p`
-  color: var(--slate-blue-70);
+  color: var(--mist-blue-100);
   font-size: var(--typeScale-0);
   margin: var(--space-xSmall) 0 var(--space-medium) 0;
 `
