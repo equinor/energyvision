@@ -50,8 +50,8 @@ const Container = styled.figure<ContainerProps>`
         'author spacing media'
         `
         : `
-          'quote quote .'
-          'author author .'
+          'quote quote quote'
+          'author author author'
         `};
   }
 `
