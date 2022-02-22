@@ -1,5 +1,5 @@
 import { useHits } from 'react-instantsearch-hooks'
-import { List } from '@components'
+import { List, Heading } from '@components'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import type { HitProps } from './EventHit'
@@ -42,28 +42,37 @@ const HitsContainer = styled.div`
   position: relative;
 `
 
-const WarningText = styled.p`
-  padding: var(--space-medium) 0;
+const WarningContainer = styled.div`
+  padding: var(--space-xxLarge) 0;
 `
+
+const WarningText = styled.p``
 
 const Hits = ({ hitComponent: Hit, setIsOpen, category = '' }: HitsProps) => {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
     const defaultMessage = category
-      ? 'No results were found in {category} for your search query. Please try again.'
-      : 'No results were found for your search query. Please try again.'
+      ? 'Sorry, no results were found in {category}. Please try again with some different keywords.'
+      : 'Sorry, no results were found. Please try again with some different keywords.'
+
+    const messageId = !category || category === 'all' ? 'search_no_results_generic' : 'search_no_results_category'
 
     return (
-      <WarningText>
-        <FormattedMessage
-          id="search_no_results"
-          defaultMessage={defaultMessage}
-          values={{
-            category: <FormattedMessage id={mapSearchCategoryToId(category)} defaultMessage={category} />,
-          }}
-        />
-      </WarningText>
+      <WarningContainer>
+        <Heading level="h2" size="sm" inverted>
+          <FormattedMessage id="search_no_results_heading" defaultMessage="NOTHING FOUND" />
+        </Heading>
+        <WarningText>
+          <FormattedMessage
+            id={messageId}
+            defaultMessage={defaultMessage}
+            values={{
+              category: <FormattedMessage id={mapSearchCategoryToId(category)} defaultMessage={category} />,
+            }}
+          />
+        </WarningText>
+      </WarningContainer>
     )
   }
 

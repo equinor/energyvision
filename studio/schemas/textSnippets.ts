@@ -27,9 +27,17 @@ const snippets: textSnippet = {
     title: 'Search',
     defaultValue: 'Search',
   },
-  search_no_results: {
-    title: 'No search results',
-    defaultValue: 'No results were found for your search query.',
+  search_no_results_heading: {
+    title: 'Search: no results title',
+    defaultValue: 'NOTHING FOUND',
+  },
+  search_no_results_category: {
+    title: 'Search: no results, category',
+    defaultValue: 'Sorry, no results were found in {category}. Please try again with some different keywords.',
+  },
+  search_no_results_generic: {
+    title: 'Search: no search results, generic',
+    defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
   },
   copyright: {
     title: 'Copyright',
