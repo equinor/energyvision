@@ -107,6 +107,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
+      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
     },
     {
       name: 'image',
