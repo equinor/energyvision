@@ -68,13 +68,13 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
           <Heading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="title" />
           </Heading>
-          <DisplayLink>{fullUrl}</DisplayLink>
           <TextSnippet>
             <Highlight hit={hit} attribute="ingress" />
           </TextSnippet>
           <TextSnippet>
             <Highlight hit={hit} attribute="eventDescription" />
           </TextSnippet>
+          <DisplayLink>{fullUrl}</DisplayLink>
         </TempLink>
       </NextLink>
     </article>
