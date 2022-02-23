@@ -20,8 +20,7 @@ const Input = styled.input`
     no-repeat var(--space-small) center;
 
   &[type='search']::placeholder {
-    /* I'm not 100% convinced that the placeholder color should be the same as the color */
-    color: var(--white-100);
+    color: var(--grey-40);
   }
 
   /* So, according to the spec, text input will always have focus no matter which device */
