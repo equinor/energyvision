@@ -61,7 +61,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
   headers.set('Cache-Control', 'no-cache')
   headers.set('Pragma', 'no-cache')
   headers.set('Expires', '0')
-  const response = await fetch(contentUrl, { cache: 'no-cache', headers: headers })
+  const response = await fetch(contentUrl)
   console.log(
     'Response code ' +
       response.status +
@@ -72,11 +72,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
       ' ' +
       response.headers.get('etag'),
   )
-  if (response && response.status === 200) {
-    const contentUrl = getContentUrl(locale, slug)
-
-    const response = await fetch(contentUrl, { cache: 'no-cache', headers: headers })
-
+  if (response.status === 200) {
     let pageData
     try {
       pageData = await response.json()
