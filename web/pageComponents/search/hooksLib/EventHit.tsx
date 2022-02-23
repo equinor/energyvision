@@ -22,8 +22,23 @@ const TextSnippet = styled.p`
 `
 
 const HitHeading = styled(Heading)`
-  ${StyledHitLink}:hover & {
-    text-decoration: underline;
+  position: relative;
+  &:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 1px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+
+  ${StyledHitLink}:hover &:after {
+    width: 100%;
+    left: 0;
   }
 `
 
