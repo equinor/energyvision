@@ -9,22 +9,9 @@ const StyledHitHeading = styled(Heading)`
   position: relative;
   display: inline-block;
   margin-bottom: var(--space-xSmall);
-  &:after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: '';
-    display: block;
-    height: 1px;
-    left: 50%;
-    position: absolute;
-    background: var(--white-100);
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-  }
 
-  ${StyledHitLink}:hover &:after {
-    width: 100%;
-    left: 0;
+  ${StyledHitLink}:hover & {
+    text-decoration: underline;
   }
 
   ${StyledHitLink}:focus-visible & {
