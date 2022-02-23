@@ -17,7 +17,7 @@ export type HitLinkProps = {
 
 const HitLink = forwardRef<HTMLAnchorElement, HitLinkProps>(function HitLink({ setIsOpen, children, ...rest }, ref) {
   return (
-    <StyledHitLink onClick={() => setIsOpen(false)} ref={ref} {...rest}>
+    <StyledHitLink ref={ref} {...rest} onClick={() => setIsOpen(false)}>
       {children}
     </StyledHitLink>
   )

@@ -47,7 +47,7 @@ const TopicHit = ({ hit, setIsOpen }: HitProps) => {
   return (
     <article>
       <NextLink href={slug} passHref>
-        <HitLink setIsOpen={() => setIsOpen(false)}>
+        <HitLink setIsOpen={setIsOpen}>
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="title" />
           </HitHeading>

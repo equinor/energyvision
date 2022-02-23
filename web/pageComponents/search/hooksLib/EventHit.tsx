@@ -56,7 +56,7 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
   return (
     <article>
       <NextLink href={slug} passHref>
-        <HitLink setIsOpen={() => setIsOpen(false)}>
+        <HitLink setIsOpen={setIsOpen}>
           {eventDate && <StyledFormattedDate datetime={eventDate} uppercase></StyledFormattedDate>}
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="title" />
