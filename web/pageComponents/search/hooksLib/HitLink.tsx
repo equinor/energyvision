@@ -8,15 +8,16 @@ export const StyledHitLink = styled.a`
   border: 2px solid transparent;
   color: var(--inverted-text);
   cursor: pointer;
+  outline: none;
 `
 
 export type HitLinkProps = {
   setIsOpen: (arg0: boolean) => void
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const HitLink = forwardRef<HTMLAnchorElement, HitLinkProps>(function HitLink({ setIsOpen, children }, ref) {
+const HitLink = forwardRef<HTMLAnchorElement, HitLinkProps>(function HitLink({ setIsOpen, children, ...rest }, ref) {
   return (
-    <StyledHitLink ref={ref} onClick={() => setIsOpen(false)}>
+    <StyledHitLink onClick={() => setIsOpen(false)} ref={ref} {...rest}>
       {children}
     </StyledHitLink>
   )

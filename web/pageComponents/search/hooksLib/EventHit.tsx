@@ -6,6 +6,9 @@ import { Heading, FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 import HitLink, { StyledHitLink } from './HitLink'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 const DisplayLink = styled.p`
   color: var(--mist-blue-100);
@@ -23,6 +26,7 @@ const TextSnippet = styled.p`
 
 const HitHeading = styled(Heading)`
   position: relative;
+  display: inline-block;
   &:after {
     background: none repeat scroll 0 0 transparent;
     bottom: 0;
@@ -40,11 +44,18 @@ const HitHeading = styled(Heading)`
     width: 100%;
     left: 0;
   }
+
+  ${StyledHitLink}:focus-visible & {
+    outline: none;
+    ${outlineTemplate(outline)}
+    outline-color: var(--mist-blue-100);
+  }
 `
 
 const StyledFormattedDate = styled(FormattedDate)`
   font-size: var(--typeScale-0);
   letter-spacing: 1px;
+  display: block;
 `
 
 type EventResultHit = {
@@ -69,6 +80,8 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
 
   const { pathname } = useRouter()
   const fullUrl = getFullUrl(pathname, slug)
+
+  console.log('slug er ', slug)
 
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (
