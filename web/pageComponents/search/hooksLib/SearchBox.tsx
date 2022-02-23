@@ -24,13 +24,14 @@ const Input = styled.input`
   }
 
   /* So, according to the spec, text input will always have focus no matter which device */
-  &:focus-visible {
+  /*  &:focus-visible {
     ${outlineTemplate(outline)}
     outline-color: var(--energy-red-90);
-  }
+  } */
   /* /* Is the blinking cursor enough */
   &:focus {
     outline: none;
+    box-shadow: 0 0 0 1px var(--white-100);
   }
 
   &:focus::-webkit-search-cancel-button {
