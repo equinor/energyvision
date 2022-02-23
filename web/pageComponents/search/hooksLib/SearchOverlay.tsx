@@ -21,7 +21,11 @@ const StyledButton = styled(Button)`
 `
 
 const InvertedButton = styled(Button)`
-  fill: var(--inverted-text);
+  color: var(--white-100);
+  &:hover {
+    color: var(--slate-blue-95);
+    background-color: var(--moss-green-60);
+  }
 `
 
 const DarkTopbarDropdown = styled(TopbarDropdown)`
