@@ -17,7 +17,7 @@ const StyledHitHeading = styled(Heading)`
     height: 1px;
     left: 50%;
     position: absolute;
-    background: #fff;
+    background: var(--white-100);
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
   }
