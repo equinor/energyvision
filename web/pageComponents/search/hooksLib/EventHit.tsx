@@ -2,13 +2,12 @@ import { Highlight } from './Highlight'
 import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import { Heading, FormattedDate } from '@components'
+import { FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
-import HitLink, { StyledHitLink } from './HitLink'
-import { outlineTemplate, Tokens } from '@utils'
+import HitLink from './hit/HitLink'
 
-const { outline } = Tokens
+import HitHeading from './hit/HitHeading'
 
 const DisplayLink = styled.p`
   color: var(--mist-blue-100);
@@ -22,34 +21,6 @@ const TextSnippet = styled.p`
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
   color: var(--inverted-text);
-`
-
-const HitHeading = styled(Heading)`
-  position: relative;
-  display: inline-block;
-  &:after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: '';
-    display: block;
-    height: 1px;
-    left: 50%;
-    position: absolute;
-    background: #fff;
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-  }
-
-  ${StyledHitLink}:hover &:after {
-    width: 100%;
-    left: 0;
-  }
-
-  ${StyledHitLink}:focus-visible & {
-    outline: none;
-    ${outlineTemplate(outline)}
-    outline-color: var(--mist-blue-100);
-  }
 `
 
 const StyledFormattedDate = styled(FormattedDate)`
@@ -80,8 +51,6 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
 
   const { pathname } = useRouter()
   const fullUrl = getFullUrl(pathname, slug)
-
-  console.log('slug er ', slug)
 
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (

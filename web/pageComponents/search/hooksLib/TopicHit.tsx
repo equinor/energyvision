@@ -2,10 +2,10 @@ import { Highlight } from './Highlight'
 import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import { Heading } from '@components'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
-import HitLink, { StyledHitLink } from './HitLink'
+import HitLink from './hit/HitLink'
+import HitHeading from './hit/HitHeading'
 
 const DisplayLink = styled.p`
   color: var(--mist-blue-100);
@@ -19,12 +19,6 @@ const TextSnippet = styled.p`
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
   color: var(--inverted-text);
-`
-
-const HitHeading = styled(Heading)`
-  ${StyledHitLink}:hover & {
-    text-decoration: underline;
-  }
 `
 
 type TopicResultHit = {
