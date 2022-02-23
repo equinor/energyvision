@@ -203,7 +203,7 @@ export type TableHeaderData = {
 export type CellData = {
   id: string
   type: string
-  date?: string
+  date?: Date
   number?: string
   text?: string
 } & LinkData
