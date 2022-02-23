@@ -5,17 +5,7 @@ import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { Heading, FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
-
-const TempLink = styled.a`
-  padding: var(--space-medium) 0;
-  text-decoration: none;
-  display: block;
-  border: 2px solid transparent;
-  color: var(--inverted-text);
-  &:hover {
-    border-color: var(--energy-red-90);
-  }
-`
+import HitLink, { StyledHitLink } from './HitLink'
 
 const DisplayLink = styled.p`
   color: var(--mist-blue-100);
@@ -29,6 +19,12 @@ const TextSnippet = styled.p`
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
   color: var(--inverted-text);
+`
+
+const HitHeading = styled(Heading)`
+  ${StyledHitLink}:hover & {
+    text-decoration: underline;
+  }
 `
 
 const StyledFormattedDate = styled(FormattedDate)`
@@ -63,11 +59,11 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
   return (
     <article>
       <NextLink href={slug} passHref>
-        <TempLink onClick={() => setIsOpen(false)}>
+        <HitLink setIsOpen={() => setIsOpen(false)}>
           {eventDate && <StyledFormattedDate datetime={eventDate} uppercase></StyledFormattedDate>}
-          <Heading level="h2" size="sm" inverted>
+          <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="title" />
-          </Heading>
+          </HitHeading>
           <TextSnippet>
             <Highlight hit={hit} attribute="ingress" />
           </TextSnippet>
@@ -75,7 +71,7 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
             <Highlight hit={hit} attribute="eventDescription" />
           </TextSnippet>
           <DisplayLink>{fullUrl}</DisplayLink>
-        </TempLink>
+        </HitLink>
       </NextLink>
     </article>
   )
