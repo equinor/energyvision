@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes } from 'react'
+import { AnchorHTMLAttributes, forwardRef } from 'react'
 import styled from 'styled-components'
 
 export const StyledHitLink = styled.a`
@@ -7,14 +7,19 @@ export const StyledHitLink = styled.a`
   display: block;
   border: 2px solid transparent;
   color: var(--inverted-text);
+  cursor: pointer;
 `
 
 export type HitLinkProps = {
   setIsOpen: (arg0: boolean) => void
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const HitLink = ({ setIsOpen, children }: HitLinkProps) => {
-  return <StyledHitLink onClick={() => setIsOpen(false)}>{children}</StyledHitLink>
-}
+const HitLink = forwardRef<HTMLAnchorElement, HitLinkProps>(function HitLink({ setIsOpen, children }, ref) {
+  return (
+    <StyledHitLink ref={ref} onClick={() => setIsOpen(false)}>
+      {children}
+    </StyledHitLink>
+  )
+})
 
 export default HitLink
