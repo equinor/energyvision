@@ -184,6 +184,17 @@ export const getTopicRoutesForLocale = async (locale: string) => {
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const fetchPaths = locales.map(async (locale) => {
     const pages = await getTopicRoutesForLocale(locale)
+    // below static pages contain latestnews component which should be updated.
+    const staticPages = [
+      '/what-we-do/johan-sverdrup',
+      '/media-centre',
+      '/where-we-are/united-states',
+      '/what-we-do/floating-wind',
+      '/where-we-are/european-union',
+      '/what-we-do/renewables-us',
+      '/',
+    ]
+    pages.concat(staticPages)
     return pages.map((slug: string) => ({
       params: { slug: slug.split('/').filter((p) => p) },
       locale,
