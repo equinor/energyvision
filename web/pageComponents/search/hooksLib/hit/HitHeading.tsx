@@ -8,6 +8,7 @@ const { outline } = Tokens
 const StyledHitHeading = styled(Heading)`
   position: relative;
   display: inline-block;
+  margin-bottom: var(--space-xSmall);
   &:after {
     background: none repeat scroll 0 0 transparent;
     bottom: 0;
