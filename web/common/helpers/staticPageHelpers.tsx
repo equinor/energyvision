@@ -5,12 +5,17 @@ import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
-  console.log('Slug: ', slug)
-  if (slug === '/') {
+
+  if (slug === '/' || slug === 'no' || slug === 'en') {
     return `${archiveSeverURL}/${locale}.json`
   }
 
-  return `${archiveSeverURL}/${locale}/${slug.replace(/\/$/, '')}.json`
+  // @TODO: Investigate weird slug behaviour
+  // When in a docker container, en/ and no/ are
+  // prefixed to the slug when using the language switch
+  const finalSlug = slug.replace('en/', '').replace('no/', '').replace(/\/$/, '')
+
+  return `${archiveSeverURL}/${locale}/${finalSlug}.json`
 }
 
 const getLocalizedSlugs = async (locale: string, slug: string): Promise<AllSlugsType> => {
