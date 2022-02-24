@@ -69,7 +69,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
   headers.set('Cache-Control', 'no-cache')
   headers.set('Pragma', 'no-cache')
   headers.set('Expires', '0')
-  const response = await fetch(contentUrl)
+  const response = await fetch(contentUrl, { cache: 'no-cache' })
   console.log(
     'Response code ' +
       response.status +
