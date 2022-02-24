@@ -5,10 +5,11 @@ import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
 const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
-
-  if (slug === '/' || slug === '/en' || slug === '/no') {
+  console.log('Slug: ', slug)
+  if (slug === '/') {
     return `${archiveSeverURL}/${locale}.json`
   }
+
   return `${archiveSeverURL}/${locale}/${slug.replace(/\/$/, '')}.json`
 }
 
@@ -55,6 +56,8 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
   /** Check if the required page is old archived AEM page or not
    * because AEM also has archived pages which has 'archive' the page path */
   const contentUrl = getContentUrl(locale, slug)
+  console.log('Content url: ', contentUrl)
+
   const headers = new Headers()
   headers.set('Accept', 'application/json')
   headers.set('Content-Type', 'application/json')
