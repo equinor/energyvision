@@ -6,7 +6,7 @@ const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
 
-  if (slug === '/') {
+  if (slug === '/' || slug === '/en' || slug === '/no') {
     return `${archiveSeverURL}/${locale}.json`
   }
   return `${archiveSeverURL}/${locale}/${slug.replace(/\/$/, '')}.json`
