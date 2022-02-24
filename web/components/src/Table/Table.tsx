@@ -12,6 +12,10 @@ const StyledTable = styled(EdsTable)`
   /* Because of caption and display block, re add the background colour
   to the body to prevent white background for the caption */
   background: transparent;
+  @media (min-width: 750px) {
+    width: 100%;
+    display: table;
+  }
 `
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(function List({ children, style, ...rest }, ref) {
