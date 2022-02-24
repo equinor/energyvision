@@ -36,6 +36,17 @@ spec:
       secrets:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
+    - name: web-test
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-global:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
     - name: web-brazil
       publicPort: http
       image: ghcr.io/equinor/energyvision/web-brazil:{imageTagName}
