@@ -6,14 +6,8 @@ import { FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 import HitLink from './hit/HitLink'
-
+import DisplayLink from './hit/DisplayLink'
 import HitHeading from './hit/HitHeading'
-
-const DisplayLink = styled.p`
-  color: var(--mist-blue-100);
-  font-size: var(--typeScale-0);
-  margin: var(--space-xSmall) 0 var(--space-medium) 0;
-`
 
 /* @TODO: Let's use the Text component if the margin is removed */
 const TextSnippet = styled.p`
