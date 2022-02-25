@@ -44,7 +44,7 @@ const datasets = {
   techstars: ['english'],
   equinorfunds: ['norwegian'],
   loop: ['english'],
-  southkorea: ['english, korean'],
+  southkorea: ['english', 'korean'],
   // Test datasets
   'global-development': ['english', 'norwegian'],
 }
