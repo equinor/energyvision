@@ -16,6 +16,7 @@ const languages = [
   { id: 'spanish-ar', title: 'Spanish', iso: 'es-AR', name: 'es_AR', locale: 'es' },
   { id: 'polish', title: 'Polish', iso: 'pl-PL', name: 'pl_PL', locale: 'pl' },
   { id: 'japanese', title: 'Japanese', iso: 'ja-JP', name: 'ja_JP', locale: 'ja' },
+  { id: 'korean', title: 'Korean', iso: 'ko-KR', name: 'ko_KR', locale: 'ko' },
 ]
 
 /*
@@ -43,6 +44,7 @@ const datasets = {
   techstars: ['english'],
   equinorfunds: ['norwegian'],
   loop: ['english'],
+  southkorea: ['english, korean'],
   // Test datasets
   'global-development': ['english', 'norwegian'],
 }
@@ -65,6 +67,9 @@ const logAndFallback = (dataset) => {
   return filterLanguages(Object.values(datasets)[0])
 }
 
+/**
+ * @param {string} dataset
+ */
 const getLanguages = (dataset) =>
   Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
 

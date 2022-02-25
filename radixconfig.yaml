@@ -36,16 +36,6 @@ spec:
       secrets:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
-    - name: web-test
-      publicPort: http
-      image: ghcr.io/equinor/energyvision/web-global:{imageTagName}
-      alwaysPullImageOnDeploy: true
-      ports:
-        - name: http
-          port: 3000
-      environmentConfig:
-        - environment: dev
-          imageTagName: main-latest
 
     - name: web-brazil
       publicPort: http
@@ -157,9 +147,20 @@ spec:
         - environment: dev
           imageTagName: main-latest
 
+    - name: web-southkorea
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/web-southkorea:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3000
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
     - name: web-typography
       publicPort: http
-      image: ghcr.io/equinor/energyvision/web-production:{imageTagName}
+      image: ghcr.io/equinor/energyvision/web-global-development:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
@@ -270,6 +271,17 @@ spec:
     - name: studio-loop
       publicPort: http
       image: ghcr.io/equinor/energyvision/studio-loop:{imageTagName}
+      alwaysPullImageOnDeploy: true
+      ports:
+        - name: http
+          port: 3333
+      environmentConfig:
+        - environment: dev
+          imageTagName: main-latest
+
+    - name: studio-southkorea
+      publicPort: http
+      image: ghcr.io/equinor/energyvision/studio-southkorea:{imageTagName}
       alwaysPullImageOnDeploy: true
       ports:
         - name: http
