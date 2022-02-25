@@ -4,12 +4,13 @@ import { Index, useHits } from 'react-instantsearch-hooks'
 import styled from 'styled-components'
 import { useRouter, NextRouter } from 'next/router'
 import useRouterReplace from '../../hooks/useRouterReplace'
-import Stats from './Stats'
+import Stats from './NumberOfHits'
 import Hits from './Hits'
 import EventHit from './EventHit'
 import TopicHit from './TopicHit'
 import { getIsoFromLocale } from './../../../lib/localization' // grrr ../
 import { Pagination } from './Pagination'
+import TotalResultsStat from './TotalResultsStat'
 import { isGlobalProduction } from '../../../common/helpers/datasetHelpers'
 
 const Results = styled.div`
@@ -32,6 +33,10 @@ const getInitialTabIndex = (router: NextRouter) => {
   }
   return 0
 }
+
+// Sven: I don't understand how we can revieve this number, it's configured
+// in the Configure component, so how could we get it from there
+const HITS_PER_PAGE = 5
 
 // @TODO How should we do this
 // What  about translations if we have Norwegian urls
@@ -87,14 +92,16 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
             <TabPanels>
               <TabPanel>
                 <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
+                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} category="Topic" />
-                  <StyledPagination numberPerPage={5} />
+                  <StyledPagination numberPerPage={HITS_PER_PAGE} />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
+                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setIsOpen={setIsOpen} hitComponent={EventHit} category="Event" />
-                  <StyledPagination numberPerPage={5} />
+                  <StyledPagination numberPerPage={HITS_PER_PAGE} />
                 </Index>
               </TabPanel>
             </TabPanels>

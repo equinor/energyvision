@@ -35,6 +35,10 @@ const snippets: textSnippet = {
     title: 'Search: no results, category',
     defaultValue: 'Sorry, no results were found in {category}. Please try again with some different keywords.',
   },
+  search_showing_results_number: {
+    title: 'Search: Showing X of Y results',
+    defaultValue: '{currentlyShowing} of {nbHits} results',
+  },
   search_no_results_generic: {
     title: 'Search: no search results, generic',
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
