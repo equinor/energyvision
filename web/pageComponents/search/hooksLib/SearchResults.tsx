@@ -3,8 +3,9 @@ import { Tabs } from '@components'
 import { Index, useHits } from 'react-instantsearch-hooks'
 import styled from 'styled-components'
 import { useRouter, NextRouter } from 'next/router'
+import { FormattedMessage } from 'react-intl'
 import useRouterReplace from '../../hooks/useRouterReplace'
-import Stats from './NumberOfHits'
+import NumberOfHits from './NumberOfHits'
 import Hits from './Hits'
 import EventHit from './EventHit'
 import TopicHit from './TopicHit'
@@ -40,7 +41,8 @@ const HITS_PER_PAGE = 5
 
 // @TODO How should we do this
 // What  about translations if we have Norwegian urls
-// is it better to use like tc and e instead
+// is it better to use like tc and e instead? Doesn't feel safe to use text snippet that
+// can be changed here
 const tabMap = [
   { id: 0, name: 'topic-content' },
   { id: 1, name: 'events' },
@@ -79,13 +81,14 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
             <TabList>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
-                  Topic
-                  <Stats />
+                  <FormattedMessage id="search_topics_tab" />
+                  <NumberOfHits />
                 </Index>
               </Tab>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
-                  Event <Stats />
+                  <FormattedMessage id="search_events_tab" />
+                  <NumberOfHits />
                 </Index>
               </Tab>
             </TabList>

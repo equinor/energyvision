@@ -27,6 +27,14 @@ const snippets: textSnippet = {
     title: 'Search',
     defaultValue: 'Search',
   },
+  search_events_tab: {
+    title: 'Search: Events tab name',
+    defaultValue: 'Events',
+  },
+  search_topics_tab: {
+    title: 'Search: Topics tab name',
+    defaultValue: 'Topics',
+  },
   search_no_results_heading: {
     title: 'Search: no results title',
     defaultValue: 'NOTHING FOUND',
