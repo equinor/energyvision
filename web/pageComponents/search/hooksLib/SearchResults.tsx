@@ -81,13 +81,13 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
             <TabList>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_TOPICS_${isoCode}`}>
-                  <FormattedMessage id="search_topics_tab" />
+                  <FormattedMessage id="search_topics_tab" defaultMessage="Topics" />
                   <NumberOfHits />
                 </Index>
               </Tab>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`}>
-                  <FormattedMessage id="search_events_tab" />
+                  <FormattedMessage id="search_events_tab" defaultMessage="Events" />
                   <NumberOfHits />
                 </Index>
               </Tab>

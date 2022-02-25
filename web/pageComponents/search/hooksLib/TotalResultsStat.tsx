@@ -16,11 +16,13 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
   const currentLowestNumber = currentRefinement * hitsPerPage + 1
   const potentialHighestNumber = currentRefinement * hitsPerPage + 5
   const currentHighestNumber = Math.min(potentialHighestNumber, nbHits)
+
+  const defaultMessage = '{currentlyShowing} of {nbHits} results'
   return (
     <Container>
       <FormattedMessage
         id="search_showing_results_number"
-        defaultMessage="Missing translation"
+        defaultMessage={defaultMessage}
         values={{
           nbHits: nbHits,
           currentlyShowing: `${currentLowestNumber} - ${currentHighestNumber}`,
