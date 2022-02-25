@@ -26,6 +26,10 @@ const InvertedButton = styled(Button)`
     color: var(--slate-blue-95);
     background-color: var(--moss-green-60);
   }
+  &:focus-visible,
+  &[data-focus-visible-added]:focus {
+    outline-color: var(--mist-blue-100);
+  }
 `
 
 const DarkTopbarDropdown = styled(TopbarDropdown)`

@@ -1,3 +1,4 @@
+import { CSSProperties, AnchorHTMLAttributes } from 'react'
 import { LogoSecondary } from '@components'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
@@ -5,14 +6,20 @@ import NextLink from 'next/link'
 
 const { outline } = Tokens
 
-const StyledLogoLink = styled.a`
+const StyledLogoLink = styled.a<LogoLinkProps>`
   justify-self: left;
   display: flex;
   align-items: center;
   height: 100%;
 
   &[data-focus-visible-added]:focus {
+    outline: none;
     ${outlineTemplate(outline)}
+
+    ${({ inverted }) =>
+      inverted && {
+        outlineColor: 'var(--mist-blue-100)',
+      }}
   }
 `
 
@@ -23,11 +30,15 @@ const AlignedLogoSecondary = styled(LogoSecondary)`
   margin-top: -12%;
 `
 
-export const LogoLink = ({ inverted = false, ...rest }) => {
+type LogoLinkProps = {
+  inverted?: boolean
+} & AnchorHTMLAttributes<HTMLAnchorElement>
+
+export const LogoLink = ({ inverted = false, style, ...rest }: LogoLinkProps) => {
   return (
     <NextLink href="/" passHref>
       {/*  Localize text */}
-      <StyledLogoLink aria-label="Equinor home page" {...rest}>
+      <StyledLogoLink inverted={inverted} aria-label="Equinor home page" {...rest}>
         <AlignedLogoSecondary inverted={inverted} />
       </StyledLogoLink>
     </NextLink>
