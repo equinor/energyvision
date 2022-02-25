@@ -42,6 +42,10 @@ const HitsContainer = styled.div`
   position: relative;
 `
 
+const UppercaseHeading = styled(Heading)`
+  text-transform: uppercase;
+`
+
 const WarningContainer = styled.div`
   padding: var(--space-xxLarge) 0;
 `
@@ -60,9 +64,9 @@ const Hits = ({ hitComponent: Hit, setIsOpen, category = '' }: HitsProps) => {
 
     return (
       <WarningContainer>
-        <Heading level="h2" size="sm" inverted>
+        <UppercaseHeading level="h2" size="sm" inverted>
           <FormattedMessage id="search_no_results_heading" defaultMessage="NOTHING FOUND" />
-        </Heading>
+        </UppercaseHeading>
         <WarningText>
           <FormattedMessage
             id={messageId}
