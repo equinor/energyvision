@@ -9,3 +9,18 @@ export type BlobConfiguration = {
   client: BlobServiceClient,
   container: string
 }
+
+export type BlockChildNode = {
+    _key: string
+    _type: string
+    marks: string[]
+    text: string
+}
+
+export type BlockNode = {
+  _key: string
+  _type: string
+  children: BlockChildNode[]
+  markDefs: string[]
+  style: string
+}

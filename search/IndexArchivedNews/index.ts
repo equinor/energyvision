@@ -1,7 +1,7 @@
 import { AzureFunction, Context } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
-import { flow } from 'fp-ts/lib/function'
+import { flow, pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as T from 'fp-ts/lib/Task'
@@ -11,8 +11,8 @@ import { BlobItem } from '@azure/storage-blob'
 type GetBlobsType = () => TE.TaskEither<string | Error, BlobItem[]>
 const getBlobs: GetBlobsType = flow(init, E.map(getClient), TE.fromEither, TE.chainW(getDocuments))
 
-const test = flow(
-  getBlobs,
+const test = pipe(
+  getBlobs(),
   T.map(
     E.fold(
       (error) => console.log('Error happened!', error),
@@ -21,6 +21,7 @@ const test = flow(
   ),
 )
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
 
@@ -36,7 +37,7 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
 
   // Check that we have connection to Azure blob
   console.log('Testing blob connection…')
-  await test()().catch((error) => console.log(error.toString()))
+  await test().catch((error) => console.log(error.toString()))
   console.log('Test function called!')
 }
 

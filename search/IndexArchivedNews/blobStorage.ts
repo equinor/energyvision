@@ -32,6 +32,11 @@ const getDocumentsFromBlob: GetDocumentsFromBlobType = async (containerClient) =
   const iter = containerClient.listBlobsFlat()
   const result: BlobItem[] = []
   for await (const blob of iter) result.push(blob)
+  // TODO: Need to handle parallel download ourselves
+  // Use sequence and task to do it. But need to be clever. Don't want to do it often.
+  /*const foo = containerClient.getBlockBlobClient('name')
+  const bar = await foo.downloadToBuffer()*/
+
   return result
 }
 
