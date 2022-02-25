@@ -13,6 +13,7 @@ type TotalResultsStatProps = {
 
 const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) => {
   const { nbHits, currentRefinement } = usePagination({ totalPages })
+  if (nbHits === 0) return null
   const currentLowestNumber = currentRefinement * hitsPerPage + 1
   const potentialHighestNumber = currentRefinement * hitsPerPage + 5
   const currentHighestNumber = Math.min(potentialHighestNumber, nbHits)
