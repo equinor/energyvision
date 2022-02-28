@@ -5,7 +5,7 @@ import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
-import HitLink from './hit/HitLink'
+import { StyledHitLink } from './hit/HitLink'
 import DisplayLink from './hit/DisplayLink'
 import HitHeading from './hit/HitHeading'
 
@@ -50,7 +50,7 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
   return (
     <article>
       <NextLink href={slug} passHref>
-        <HitLink setIsOpen={setIsOpen}>
+        <StyledHitLink onClick={() => setIsOpen(false)}>
           {eventDate && <StyledFormattedDate datetime={eventDate} uppercase></StyledFormattedDate>}
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="title" />
@@ -62,7 +62,7 @@ const EventHit = ({ hit, setIsOpen }: HitProps) => {
             <Highlight hit={hit} attribute="eventDescription" />
           </TextSnippet>
           <DisplayLink>{fullUrl}</DisplayLink>
-        </HitLink>
+        </StyledHitLink>
       </NextLink>
     </article>
   )

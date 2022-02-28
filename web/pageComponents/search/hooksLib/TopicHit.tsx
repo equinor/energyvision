@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { useRouter } from 'next/router'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
-import HitLink from './hit/HitLink'
+import { StyledHitLink } from './hit/HitLink'
 import HitHeading from './hit/HitHeading'
 import DisplayLink from './hit/DisplayLink'
 
@@ -14,6 +14,12 @@ const TextSnippet = styled.p`
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
   color: var(--inverted-text);
+`
+
+const StyledLink = styled.a`
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
 `
 
 type TopicResultHit = {
@@ -42,7 +48,7 @@ const TopicHit = ({ hit, setIsOpen }: HitProps) => {
   return (
     <article>
       <NextLink href={slug} passHref>
-        <HitLink setIsOpen={setIsOpen}>
+        <StyledHitLink onClick={() => setIsOpen(false)}>
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="pageTitle" />
           </HitHeading>
@@ -53,7 +59,7 @@ const TopicHit = ({ hit, setIsOpen }: HitProps) => {
             <Highlight hit={hit} attribute="text" />
           </TextSnippet>
           <DisplayLink>{fullUrl}</DisplayLink>
-        </HitLink>
+        </StyledHitLink>
       </NextLink>
     </article>
   )
