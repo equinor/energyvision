@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { getHighlightedParts, getPropertyByPath } from 'instantsearch.js/es/lib/utils/index.js'
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
+import { decode } from 'html-entities'
 import type { EventHit } from './EventHit'
 import type { TopicHit } from './TopicHit'
 
@@ -26,12 +27,12 @@ export const Highlight: React.FC<Highlight> = ({ hit, attribute }) => {
       {parts.map((part) => {
         // Using index as key is a bad practise, and we need accuracy here to avoid problems with duplication
         const key = uuidv4()
-
+        const value = decode(part.value)
         if (part.isHighlighted) {
-          return <StyledSpan key={key}>{part.value}</StyledSpan>
+          return <StyledSpan key={key}>{value}</StyledSpan>
         }
 
-        return <Fragment key={key}>{part.value}</Fragment>
+        return <Fragment key={key}>{value}</Fragment>
       })}
     </>
   )
