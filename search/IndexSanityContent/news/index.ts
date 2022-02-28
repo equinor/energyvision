@@ -17,7 +17,7 @@ const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(
 const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
 // TODO: Change to work with news articles
-export const indexTopic = pipe(
+export const indexNews = pipe(
   fetchData(sanityClient)(language),
   TE.map((pages) => pipe(pages.map(mapData), flatten)),
   TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),

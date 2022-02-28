@@ -5,13 +5,12 @@ export type NewsIndex = {
   objectID: string
   type: string
   pageTitle: string
-  title: string
-  ingress: string
+  text: string
 }
 
 export const indexSettings: Settings = {
-  searchableAttributes: ['title', 'ingress', 'text', 'pageTitle'],
-  attributesToSnippet: ['ingress', 'text'],
+  searchableAttributes: ['title', 'text'],
+  attributesToSnippet: ['text'],
   attributeForDistinct: 'slug',
   distinct: 1,
   ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],

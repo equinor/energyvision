@@ -1,11 +1,11 @@
 //import * as A from 'fp-ts/lib/Array'
-import { nonEmptyArray as A } from 'fp-ts'
-import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray'
+//import { nonEmptyArray as A } from 'fp-ts'
+//import { NonEmptyArray } from 'fp-ts/lib/NonEmptyArray'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
-import { BlockNode, Language } from '../../common'
+import { Language } from '../../common'
 
 /*
 const defaults = { nonTextBehavior: 'remove' };
@@ -26,7 +26,7 @@ const blocksToArray = (blocks, opts = {}) => {
 */
 
 // Move to mapper or create decoder
-const getBlockText = (blocks: NonEmptyArray<BlockNode>) =>
+/* const getBlockText = (blocks: NonEmptyArray<BlockNode>) =>
   pipe(
     blocks,
     A.map((block) =>
@@ -42,18 +42,19 @@ const getBlockText = (blocks: NonEmptyArray<BlockNode>) =>
         ),
       ),
     ),
-  )
+  ) */
 
-export const query = /* groq */ `*content->_type == "news"] {
+export const query = /* groq */ `*[_type == "news" && _lang == $lang] {
   "slug": slug.current,
   _id,
-  "title": pt::text(content->title),
-  "type": content->_type,
-  "textBlocks": content->content[_type == "block"]{
-    "_key": _key,
-    "title": pt::text(title),
-    "ingress": pt::text(ingress),
-    "text": ${getBlockText}
+  "title": title,
+  "type": _type,
+  "blocks": content[_type == "block"] {
+    "blockKey": _key,
+    "children": children[text match "*"] {
+      "childKey": _key,
+      "text": text
+    }
   },
 }
 `
@@ -65,11 +66,12 @@ const getQueryParams = (language: Language) => ({
 export type NewsArticle = {
   slug: string
   title: string
-  textBlocks: {
-    _key: string
-    title: string
-    ingress: string
-    text: string
+  blocks: {
+    blockKey: string
+    children: {
+      childKey: string,
+      text: string
+    }[]
   }[]
   _id: string
 }

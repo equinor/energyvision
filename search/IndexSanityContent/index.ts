@@ -3,6 +3,7 @@ import { AzureFunction, Context } from '@azure/functions'
 import DotenvAzure from 'dotenv-azure'
 import { indexEvents } from './events'
 import { indexTopic } from './topic'
+import { indexNews } from './news'
 
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
   const timeStamp = new Date().toISOString()
@@ -20,6 +21,7 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
 
   await indexEvents().catch(console.error)
   await indexTopic().catch(console.error)
+  await indexNews().catch(console.error)
 
   console.log('DONE!')
 }
