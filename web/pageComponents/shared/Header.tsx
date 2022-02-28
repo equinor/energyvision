@@ -9,7 +9,7 @@ import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
-import SearchOverlay from '../search/hooksLib/SearchOverlay'
+import SearchOverlay from '../search/SearchOverlay'
 
 const TopbarOffset = createGlobalStyle`
   body {
