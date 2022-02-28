@@ -6,7 +6,7 @@ import type { EventHit } from './EventHit'
 import type { TopicHit } from './TopicHit'
 
 const StyledSpan = styled.span`
-  color: var(--lichen-green-100);
+  color: var(--spruce-wood-100);
   font-weight: var(--fontWeight-bold);
 `
 
