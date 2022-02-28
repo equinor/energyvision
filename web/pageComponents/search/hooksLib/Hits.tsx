@@ -4,18 +4,6 @@ import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import type { HitProps } from './EventHit'
 
-const mapSearchCategoryToId = (category: string): string => {
-  // @TODO: update IDs when they get added for tabs
-  switch (category.toLowerCase()) {
-    case 'topic':
-      return 'search_category_topic'
-    case 'event':
-      return 'search_category_event'
-    default:
-      return 'search_results'
-  }
-}
-
 const { Item } = List
 
 type HitsProps = {
@@ -52,28 +40,19 @@ const WarningContainer = styled.div`
 
 const WarningText = styled.p``
 
-const Hits = ({ hitComponent: Hit, setIsOpen, category = '' }: HitsProps) => {
+const Hits = ({ hitComponent: Hit, setIsOpen }: HitsProps) => {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
-    const defaultMessage = category
-      ? 'Sorry, no results were found in {category}. Please try again with some different keywords.'
-      : 'Sorry, no results were found. Please try again with some different keywords.'
-
-    const messageId = !category || category === 'all' ? 'search_no_results_generic' : 'search_no_results_category'
-
     return (
       <WarningContainer>
         <UppercaseHeading level="h2" size="sm" inverted>
-          <FormattedMessage id="search_no_results_heading" defaultMessage="NOTHING FOUND" />
+          <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
         </UppercaseHeading>
         <WarningText>
           <FormattedMessage
-            id={messageId}
-            defaultMessage={defaultMessage}
-            values={{
-              category: <FormattedMessage id={mapSearchCategoryToId(category)} defaultMessage={category} />,
-            }}
+            id="search_no_results_generic"
+            defaultMessage="Sorry, no results were found. Please try again with some different keywords."
           />
         </WarningText>
       </WarningContainer>

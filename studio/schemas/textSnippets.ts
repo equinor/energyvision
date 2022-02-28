@@ -39,18 +39,6 @@ const snippets: textSnippet = {
     title: 'Search: no results title',
     defaultValue: 'NOTHING FOUND',
   },
-  search_no_results_category: {
-    title: 'Search: no results, category',
-    defaultValue: 'Sorry, no results were found in {category}. Please try again with some different keywords.',
-  },
-  search_category_topic: {
-    title: 'Search: no results, category topic',
-    defaultValue: 'Topic',
-  },
-  search_category_event: {
-    title: 'Search: no results, category event',
-    defaultValue: 'Event',
-  },
   search_showing_results_number: {
     title: 'Search: Showing X of Y results',
     defaultValue: '{currentlyShowing} of {nbHits} results',
