@@ -52,12 +52,21 @@ const TopicHit = ({ hit, setIsOpen }: HitProps) => {
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="pageTitle" />
           </HitHeading>
-          <TextSnippet>
-            <Highlight hit={hit} attribute="ingress" />
-          </TextSnippet>
-          <TextSnippet>
-            <Highlight hit={hit} attribute="text" />
-          </TextSnippet>
+          {hit.title && (
+            <TextSnippet>
+              <Highlight hit={hit} attribute="title" />
+            </TextSnippet>
+          )}
+          {hit.ingress && (
+            <TextSnippet>
+              <Highlight hit={hit} attribute="ingress" />
+            </TextSnippet>
+          )}
+          {hit.text && (
+            <TextSnippet>
+              <Highlight hit={hit} attribute="text" />
+            </TextSnippet>
+          )}
           <DisplayLink>{fullUrl}</DisplayLink>
         </StyledHitLink>
       </NextLink>
