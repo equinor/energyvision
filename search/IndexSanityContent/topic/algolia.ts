@@ -11,7 +11,7 @@ export type TopicIndex = {
 }
 
 export const indexSettings: Settings = {
-  searchableAttributes: ['title', 'ingress', 'text', 'pageTitle'],
+  searchableAttributes: ['pageTitle', 'title', 'ingress', 'text'],
   attributesToSnippet: ['ingress', 'text'],
   attributeForDistinct: 'slug',
   distinct: 1,
