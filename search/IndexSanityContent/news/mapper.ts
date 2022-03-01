@@ -3,7 +3,6 @@ import * as A from 'fp-ts/lib/Array'
 import { NewsArticle } from './sanity'
 import { NewsIndex } from './algolia'
 
-
 type MapDataType = (article: NewsArticle) => NewsIndex[]
 export const mapData: MapDataType = (article) =>
   pipe(
