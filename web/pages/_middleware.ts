@@ -5,7 +5,7 @@ const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname, origin } = request.nextUrl
   const isDotHtml = pathname.slice(-5) === DOT_HTML
 
   // Check if pathname is valid
@@ -15,6 +15,6 @@ export function middleware(request: NextRequest) {
 
   // Check if pathname ends with .html
   if (isDotHtml) {
-    return NextResponse.redirect(pathname.replace(DOT_HTML, ''), PERMANENT_REDIRECT)
+    return NextResponse.redirect(`${origin}${pathname.replace(DOT_HTML, '')}`, PERMANENT_REDIRECT)
   }
 }
