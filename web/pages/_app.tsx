@@ -70,6 +70,14 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           data-culture={router.locale == 'no' ? 'nb' : router.locale}
         />
       )}
+      <Script
+        id="Siteimprove"
+        dangerouslySetInnerHTML={{
+          __html: `
+          https://siteimproveanalytics.com/js/siteanalyze_6003171.js
+          `,
+        }}
+      />
       {getLayout(<Component {...pageProps} />)}
     </>
   )
