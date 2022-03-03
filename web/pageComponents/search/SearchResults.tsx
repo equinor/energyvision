@@ -25,49 +25,21 @@ const StyledPagination = styled(Pagination)`
 
 const { Tab, TabList, TabPanel, TabPanels } = Tabs
 
-const getInitialTabIndex = (router: NextRouter) => {
-  const paramName = 'tab'
-  if (router.query[paramName]) {
-    const activeTab = tabMap.find((tab) => tab.name === router.query[paramName])
-    if (activeTab) {
-      return activeTab.id
-    }
-  }
-  return 0
-}
-
 // Sven: I don't understand how we can revieve this number, it's configured
 // in the Configure component, so how could we get it from there
 const HITS_PER_PAGE = 5
 
-// @TODO How should we do this
-// What  about translations if we have Norwegian urls
-// is it better to use like tc and e instead? Doesn't feel safe to use text snippet that
-// can be changed here
-const tabMap = [
-  { id: 0, name: 'topic-content' },
-  { id: 1, name: 'events' },
-]
-
 type SearchResultsProps = {
   setIsOpen: (arg0: boolean) => void
+  handleTabChange: (arg0: number) => void
+  activeTabIndex: number
 }
 
-const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
+const SearchResults = ({ setIsOpen, handleTabChange, activeTabIndex }: SearchResultsProps) => {
   const router = useRouter()
   const replaceUrl = useRouterReplace()
   const { results } = useHits()
   const isoCode = getIsoFromLocale(router.locale)
-
-  const [activeTabIndex, setActiveTabIndex] = useState(getInitialTabIndex(router))
-
-  const handleTabChange = (index: number) => {
-    const activeTab = tabMap.find((tab) => tab.id === index)
-    if (activeTab) {
-      replaceUrl({ tab: activeTab.name })
-      setActiveTabIndex(index)
-    }
-  }
 
   const hasQuery = results && results.query !== ''
 

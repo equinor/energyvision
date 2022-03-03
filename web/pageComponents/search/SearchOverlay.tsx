@@ -6,8 +6,7 @@ import FocusLock from 'react-focus-lock'
 import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { search, close } from '@equinor/eds-icons'
-/* import Search from '../Search' */
-import NewSearch from './Search'
+import Search from './Search'
 
 /** @TODO Move and refactor */
 import { TopbarDropdown } from '../shared/siteMenu/TopbarDropdown'
@@ -42,21 +41,6 @@ const SearchContainer = styled.div`
   max-width: 700px;
   margin: 0 auto;
 `
-// Temp.! Refactor, rethink, whatever
-// We will probably need this at some point, so I didn't delete it
-/* const getSearchState = (router: NextRouter) => {
-  const { query: routerQuery } = router
-  const { query, page } = routerQuery
-
-  if (!query || Array.isArray(query)) {
-    return {}
-  }
-
-  return {
-    page,
-    query,
-  }
-} */
 
 const SiteMenu = () => {
   /* const router = useRouter() */
@@ -91,10 +75,7 @@ const SiteMenu = () => {
                 <Icon size={32} data={close} />
               </InvertedButton>
             </NavTopbar>
-            <SearchContainer>
-              <NewSearch setIsOpen={setIsOpen} />
-              {/*  <Search setSearchState={setSearchState} searchState={searchState} /> */}
-            </SearchContainer>
+            <SearchContainer>{isOpen && <Search setIsOpen={setIsOpen} />}</SearchContainer>
           </DarkTopbarDropdown>
         </RemoveScroll>
       </FocusLock>

@@ -17,6 +17,8 @@ const useRouterReplace = () => {
       originalQuery = router.query
     }
 
+    console.log('query params', queryParams)
+
     const query = { ...originalQuery, ...queryParams }
 
     const href = { pathname: router.pathname, query }
