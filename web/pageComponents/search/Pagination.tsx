@@ -1,32 +1,87 @@
 import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks'
-import { Pagination as EdsPagination } from '@equinor/eds-core-react'
+import { PaginationItem } from './pagination/PaginationItem'
+import { Icon } from '@equinor/eds-core-react'
+import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
+import styled from 'styled-components'
 
-type PaginationProps = {
-  numberPerPage: number
-} & UsePaginationProps
+// Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
-export const Pagination = ({ numberPerPage, totalPages, padding, ...rest }: PaginationProps) => {
-  const { refine, nbHits } = usePagination({ totalPages, padding })
+const PaginationList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-gap: 8px;
+  grid-auto-columns: min-content;
+  grid-auto-flow: column;
+`
 
-  if (nbHits <= numberPerPage) return null
+export type PaginationProps = UsePaginationProps
+
+export const Pagination = ({ totalPages, padding, ...rest }: PaginationProps) => {
+  const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages } = usePagination({
+    totalPages,
+    padding,
+  })
 
   return (
-    <EdsPagination
-      totalItems={nbHits}
-      itemsPerPage={numberPerPage}
-      onChange={(
-        event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element> | null,
-        page: number,
-      ): void => {
-        if (event) {
-          event.preventDefault()
-        }
+    <PaginationList {...rest}>
+      <PaginationItem
+        ariaLabel="First page"
+        value={0}
+        isCurrent={false}
+        isDisabled={isFirstPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={first_page} />
+      </PaginationItem>
+      <PaginationItem
+        ariaLabel="Previous"
+        value={currentRefinement - 1}
+        isCurrent={false}
+        isDisabled={isFirstPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={chevron_left} />
+      </PaginationItem>
 
-        // EDS page index starts at 1, Algolia page index starts at 0
-        // Added conditional in case this gets changed in EDS without us knowing
-        refine(page > 0 ? page - 1 : page)
-      }}
-      {...rest}
-    />
+      {pages.map((page) => (
+        <PaginationItem
+          key={page}
+          ariaLabel={String(page)}
+          value={page}
+          isCurrent={page === currentRefinement}
+          isDisabled={false}
+          createURL={createURL}
+          refine={refine}
+        >
+          {page + 1}
+        </PaginationItem>
+      ))}
+
+      <PaginationItem
+        ariaLabel="Next"
+        value={currentRefinement + 1}
+        isCurrent={false}
+        isDisabled={isLastPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={chevron_right} />
+      </PaginationItem>
+
+      <PaginationItem
+        ariaLabel="Last page"
+        value={nbPages - 1}
+        isCurrent={false}
+        isDisabled={isLastPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={last_page} />
+      </PaginationItem>
+    </PaginationList>
   )
 }

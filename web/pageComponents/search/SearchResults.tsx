@@ -10,7 +10,7 @@ import Hits from './Hits'
 import EventHit from './EventHit'
 import TopicHit from './TopicHit'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
-import { Pagination } from './NewPagination'
+import { Pagination } from './Pagination'
 import TotalResultsStat from './TotalResultsStat'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
