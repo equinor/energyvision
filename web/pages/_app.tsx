@@ -64,9 +64,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     <>
       <GlobalStyle />
       <GlobalFontStyle />
-
       <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
-
       <SkipNavLink />
       {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
       {!isLocalhost && (
@@ -79,14 +77,18 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           data-culture={router.locale == 'no' ? 'nb' : router.locale}
         />
       )}
-      {/* !isLocalhost && (<Script
-        id="Siteimprove"
-        dangerouslySetInnerHTML={{
-          __html: `
+
+      {!isLocalhost && (
+        <Script
+          strategy="afterInteractive"
+          id="Siteimprove"
+          dangerouslySetInnerHTML={{
+            __html: `
           https://siteimproveanalytics.com/js/siteanalyze_6003171.js
           `,
-        }}
-      />) */}
+          }}
+        />
+      )}
       {/* GTM */}
       {/* <Script
         id="GTM"
