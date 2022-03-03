@@ -1,8 +1,10 @@
 import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks'
 import { PaginationItem } from './pagination/PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
-import { chevron_left, chevron_right } from '@equinor/eds-icons'
+import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import styled from 'styled-components'
+
+// Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
 const PaginationList = styled.ul`
   list-style: none;
@@ -14,53 +16,72 @@ const PaginationList = styled.ul`
   grid-auto-flow: column;
 `
 
-export type PaginationProps = React.ComponentProps<'div'> & UsePaginationProps
+export type PaginationProps = UsePaginationProps
 
 export const Pagination = ({ totalPages, padding, ...rest }: PaginationProps) => {
-  const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage } = usePagination({
+  const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages } = usePagination({
     totalPages,
     padding,
   })
 
   return (
-    <div {...rest}>
-      <PaginationList>
+    <PaginationList {...rest}>
+      <PaginationItem
+        ariaLabel="First page"
+        value={0}
+        isCurrent={false}
+        isDisabled={isFirstPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={first_page} />
+      </PaginationItem>
+      <PaginationItem
+        ariaLabel="Previous"
+        value={currentRefinement - 1}
+        isCurrent={false}
+        isDisabled={isFirstPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={chevron_left} />
+      </PaginationItem>
+
+      {pages.map((page) => (
         <PaginationItem
-          ariaLabel="Previous"
-          value={currentRefinement - 1}
-          isCurrent={false}
-          isDisabled={isFirstPage}
+          key={page}
+          ariaLabel={String(page)}
+          value={page}
+          isCurrent={page === currentRefinement}
+          isDisabled={false}
           createURL={createURL}
           refine={refine}
         >
-          <Icon data={chevron_left} />
+          {page + 1}
         </PaginationItem>
+      ))}
 
-        {pages.map((page) => (
-          <PaginationItem
-            key={page}
-            ariaLabel={String(page)}
-            value={page}
-            isCurrent={page === currentRefinement}
-            isDisabled={false}
-            createURL={createURL}
-            refine={refine}
-          >
-            {page + 1}
-          </PaginationItem>
-        ))}
+      <PaginationItem
+        ariaLabel="Next"
+        value={currentRefinement + 1}
+        isCurrent={false}
+        isDisabled={isLastPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={chevron_right} />
+      </PaginationItem>
 
-        <PaginationItem
-          ariaLabel="Next"
-          value={currentRefinement + 1}
-          isCurrent={false}
-          isDisabled={isLastPage}
-          createURL={createURL}
-          refine={refine}
-        >
-          <Icon data={chevron_right} />
-        </PaginationItem>
-      </PaginationList>
-    </div>
+      <PaginationItem
+        ariaLabel="Last page"
+        value={nbPages - 1}
+        isCurrent={false}
+        isDisabled={isLastPage}
+        createURL={createURL}
+        refine={refine}
+      >
+        <Icon data={last_page} />
+      </PaginationItem>
+    </PaginationList>
   )
 }

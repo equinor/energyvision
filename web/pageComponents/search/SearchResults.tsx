@@ -20,6 +20,7 @@ const Results = styled.div`
 
 const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
+  justify-content: center;
 `
 
 const { Tab, TabList, TabPanel, TabPanels } = Tabs
@@ -97,16 +98,14 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
                 {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} category="Topic" />
-                {/* <StyledPagination numberPerPage={HITS_PER_PAGE} /> */}
-                <StyledPagination />
+                <StyledPagination padding={1} />
                 {/*   </Index> */}
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setIsOpen={setIsOpen} hitComponent={EventHit} category="Event" />
-                  {/* <StyledPagination numberPerPage={HITS_PER_PAGE} /> */}
-                  <StyledPagination />
+                  <StyledPagination padding={1} />
                 </Index>
               </TabPanel>
             </TabPanels>
