@@ -60,6 +60,18 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
+  useEffect(() => {
+    const script = document.createElement('script')
+
+    script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
+    script.async = true
+
+    document.head.appendChild(script)
+
+    return () => {
+      document.head.removeChild(script)
+    }
+  }, [router.asPath])
   return (
     <>
       <GlobalStyle />
@@ -78,17 +90,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
         />
       )}
 
-      {!isLocalhost && (
-        <Script
-          strategy="afterInteractive"
-          id="Siteimprove"
-          dangerouslySetInnerHTML={{
-            __html: `
-          https://siteimproveanalytics.com/js/siteanalyze_6003171.js
-          `,
-          }}
-        />
-      )}
       {/* GTM */}
       {/* <Script
         id="GTM"
