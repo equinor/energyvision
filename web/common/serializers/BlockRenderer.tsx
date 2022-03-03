@@ -20,6 +20,9 @@ export const BlockRenderer = (props: { children: string[]; node: PortableTextBlo
       </Heading>
     )
   }
+  if (style === 'smallText') {
+    return <Text size="small">{children}</Text>
+  }
 
   if (style === 'normal') {
     return <Text> {children}</Text>

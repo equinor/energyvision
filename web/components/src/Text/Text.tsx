@@ -53,7 +53,7 @@ export type TextProps = {
 const sizes = {
   regular: 'var(--typeScale-1)',
   md: 'var(--typeScale-2)',
-  small: 'var(--typeScale-00)',
+  small: 'var(--typeScale-0)',
 }
 
 export const Text = forwardRef<HTMLDivElement, TextProps>(function Text(
