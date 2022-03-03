@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
-
+import { GTM_ID } from '../lib/gtm'
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
@@ -36,6 +36,14 @@ export default class MyDocument extends Document {
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
         </Head>
         <body>
+          {/*  <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+       </noscript> */}
           <Main />
           <NextScript />
         </body>
