@@ -16,6 +16,7 @@ export type BlockContentProps = {
   externalLink?: boolean
   attachment?: boolean
   lists?: boolean
+  smallText?: boolean
 }
 
 export const configureBlockContent = (options: BlockContentProps = {}): BlockFieldType => {
@@ -28,6 +29,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     externalLink = true,
     attachment = false,
     lists = true,
+    smallText = true,
   } = options
 
   const config: BlockFieldType = {
@@ -67,7 +69,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
   const h1Config = { title: 'Title (h1)', value: 'h1' }
   const h2Config = { title: 'Title (h2)', value: 'h2' }
   const h3Config = { title: 'Subtitle (h3)', value: 'h3' }
-  const h4Config = { title: 'Subsubtitle (h4)', value: 'h4' }
+  const h4Config = { title: 'Subtitle (h4)', value: 'h4' }
+  const smallTextConfig = { title: 'Small text', value: 'smallText' }
 
   const externalLinkConfig = {
     name: 'link',
@@ -147,6 +150,9 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
 
   if (h4) {
     config.styles.push(h4Config)
+  }
+  if (smallText) {
+    config.styles.push(smallTextConfig)
   }
 
   if (externalLink) {
