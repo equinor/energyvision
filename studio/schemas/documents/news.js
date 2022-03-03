@@ -21,7 +21,6 @@ const ingressBlockContentType = configureBlockContent({
   externalLink: false,
   attachment: false,
   lists: false,
-  smallText: false,
 })
 
 const validateRelatedLinksTitle = (value, context) => {
