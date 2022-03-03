@@ -4,6 +4,12 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import { formatDate } from '../../helpers/formatDate'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
+import SlugInput from '../components/SlugInput/index'
+
+/*
+import { news } from '../../../satellitesTranslations'
+import languages from '../../languages'
+*/
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -42,6 +48,15 @@ export default {
       options: {
         collapsible: true,
         collapsed: true,
+      },
+    },
+    {
+      title: 'Slug',
+      name: 'slug',
+      description: '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
+      options: {
+        collapsible: true,
+        collapsed: false,
       },
     },
   ],
@@ -96,17 +111,42 @@ export default {
       },
     },
     {
+      name: 'newsSlug',
+      title: 'News slug',
+      type: 'string',
+      placeholder: 'For example "Experienced professionals"',
+      description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
+      // validation: (Rule) => Rule.max(200),
+      fieldset: 'slug',
+    },
+    {
       // TODO: Figure out a way to run a slugify function before publish
       // so that users don't have to add hyphens and such themselves
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      fieldset: 'slug',
+      inputComponent: SlugInput,
       options: {
         isUnique: isUniqueWithinLocale,
+        source: async (doc) => {
+          const docSlug = doc.newsSlug?.toLowerCase().split(' ').join('-') || ''
+          return docSlug || ''
+
+          /* @TODO: use the code below when refactoring the web part.
+           * @TODO: move satellitesTranslation.ts to the dockerfile.
+           */
+
+          /*
+          //translated document ids end with _i18n__lang while base documents don't
+          const lastFiveCharacters = doc._id.slice(-5)
+          const translatedNews = news[lastFiveCharacters] || news[languages[0].name]
+          return docSlug ? `/${translatedNews}/${docSlug}` : ''
+          */
+        },
+        slugify: (value) => value,
       },
-
-      description: "Danger zone! Be sure that you know what you're doing!",
-
+      description: '⚠️ Double check the for typos and get it right on the first time! ⚠️',
       validation: (Rule) =>
         Rule.required().custom((slug) => {
           if (slug && slug.current.match(/[A-Z]/g)) {

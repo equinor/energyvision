@@ -1543,7 +1543,7 @@
 
 "@sanity/document-internationalization@^0.0.1-beta.8":
   version "0.0.1-beta.8"
-  resolved "https://registry.npmjs.org/@sanity/document-internationalization/-/document-internationalization-0.0.1-beta.8.tgz#ab610138d1e8f59a847db34c6a6984720172c615"
+  resolved "https://registry.yarnpkg.com/@sanity/document-internationalization/-/document-internationalization-0.0.1-beta.8.tgz#ab610138d1e8f59a847db34c6a6984720172c615"
   integrity sha512-VyZ0UzuRCfYk8itpom9wV2pv3Sbb/qeuduMcUvQj6hiDiqu856Mop9dvepsi4m3RBr+MijZHPvOJtap18z4Bhw==
   dependencies:
     "@babel/runtime" "^7.12.5"
@@ -2335,6 +2335,11 @@
   version "0.16.2"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/speakingurl@^13.0.3":
+  version "13.0.3"
+  resolved "https://registry.yarnpkg.com/@types/speakingurl/-/speakingurl-13.0.3.tgz#cbfe3d0182c7af92ebac7e587bb9228472e05133"
+  integrity sha512-nBHZAaNTEw1YG3ROL7HtTp7HjW8HD7DuFYbWoonUKTZHj7eyOt4vPzyMcc3+xgWNv7xi2rziaiBXHIq6wBeyrw==
 
 "@types/styled-components@^5.1.23":
   version "5.1.23"
@@ -9990,6 +9995,11 @@ speakingurl@^13.0.0:
   version "13.0.0"
   resolved "https://registry.npmjs.org/speakingurl/-/speakingurl-13.0.0.tgz#266c52d2b47585375af058e4783c8d1097a2d3db"
   integrity sha1-JmxS0rR1hTda8FjkeDyNEJei09s=
+
+speakingurl@^14.0.1:
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/speakingurl/-/speakingurl-14.0.1.tgz#f37ec8ddc4ab98e9600c1c9ec324a8c48d772a53"
+  integrity sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==
 
 speedometer@~1.0.0:
   version "1.0.0"

@@ -3,6 +3,7 @@ import slugify from 'slugify'
 //eslint-disable-next-line
 import sanityClient from 'part:@sanity/base/client'
 import type { Rule } from '@sanity/types'
+import SlugInput from '../components/SlugInput'
 
 const client = sanityClient.withConfig({ apiVersion: `2021-05-19` })
 const slugifyConfig = { lower: true }
@@ -46,6 +47,7 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     name: 'slug',
     type: 'slug',
     fieldset: fieldset,
+    inputComponent: SlugInput,
     options: {
       source: (doc: any) => getPrefix(doc, source, ref),
       slugify: (value: any) => formatSlug(value),

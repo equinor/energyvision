@@ -48,9 +48,11 @@
     "sanity-plugin-iframe-pane": "^1.0.14",
     "sanity-plugin-media": "^1.4.4",
     "slugify": "^1.6.5",
+    "speakingurl": "^14.0.1",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
+    "@types/speakingurl": "^13.0.3",
     "@types/styled-components": "^5.1.23"
   }
 }
