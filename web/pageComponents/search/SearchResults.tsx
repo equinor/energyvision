@@ -10,7 +10,7 @@ import Hits from './Hits'
 import EventHit from './EventHit'
 import TopicHit from './TopicHit'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
-import { Pagination } from './Pagination'
+import { Pagination } from './NewPagination'
 import TotalResultsStat from './TotalResultsStat'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
@@ -97,14 +97,16 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
                 {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} category="Topic" />
-                <StyledPagination numberPerPage={HITS_PER_PAGE} />
+                {/* <StyledPagination numberPerPage={HITS_PER_PAGE} /> */}
+                <StyledPagination />
                 {/*   </Index> */}
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setIsOpen={setIsOpen} hitComponent={EventHit} category="Event" />
-                  <StyledPagination numberPerPage={HITS_PER_PAGE} />
+                  {/* <StyledPagination numberPerPage={HITS_PER_PAGE} /> */}
+                  <StyledPagination />
                 </Index>
               </TabPanel>
             </TabPanels>
