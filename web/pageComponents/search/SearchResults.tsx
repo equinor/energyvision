@@ -37,7 +37,7 @@ type SearchResultsProps = {
 
 const SearchResults = ({ setIsOpen, handleTabChange, activeTabIndex }: SearchResultsProps) => {
   const router = useRouter()
-  const replaceUrl = useRouterReplace()
+  //const replaceUrl = useRouterReplace()
   const { results } = useHits()
   const isoCode = getIsoFromLocale(router.locale)
 

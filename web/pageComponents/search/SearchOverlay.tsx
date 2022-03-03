@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 /* import { useRouter, NextRouter } from 'next/router' */
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
+import { useRouter, NextRouter } from 'next/router'
 import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { search, close } from '@equinor/eds-icons'
@@ -42,8 +43,8 @@ const SearchContainer = styled.div`
   margin: 0 auto;
 `
 
-const SiteMenu = () => {
-  /* const router = useRouter() */
+const SearchOverlay = () => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
   /* const searchState = getSearchState(router) */
@@ -52,24 +53,52 @@ const SiteMenu = () => {
     setIsOpen(!isOpen)
   }
 
+  const isSearchOpen = useCallback(() => {
+    const { query: routerQuery } = router
+
+    const { query } = routerQuery
+    console.log('Checking to see if the search is open', query, typeof query !== 'undefined')
+
+    setIsOpen(typeof query !== 'undefined')
+  }, [router])
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', isSearchOpen)
+    return () => router.events.off('routeChangeComplete', isSearchOpen)
+  }, [router.events, isSearchOpen])
+
   // @TODO Lot's of todo
   /* const setSearchState = ( newSearchState ) => {
     //_setSearchState(newSearchState, router);
   } */
   return (
     <>
-      <StyledButton variant="ghost_icon" aria-expanded={isOpen} onClick={onCloseButtonClick} aria-label="Search">
+      <StyledButton
+        variant="ghost_icon"
+        aria-expanded={isOpen}
+        onClick={() => {
+          setIsOpen(true)
+        }}
+        aria-label="Search"
+      >
         <Icon size={32} data={search} />
       </StyledButton>
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <DarkTopbarDropdown isOpen={isOpen}>
             <NavTopbar>
-              <LogoLink onClick={onCloseButtonClick} inverted />
+              <LogoLink
+                onClick={() => {
+                  setIsOpen(false)
+                }}
+                inverted
+              />
               <InvertedButton
                 variant="ghost_icon"
                 aria-expanded={isOpen}
-                onClick={onCloseButtonClick}
+                onClick={() => {
+                  setIsOpen(false)
+                }}
                 aria-label="Search"
               >
                 <Icon size={32} data={close} />
@@ -82,4 +111,4 @@ const SiteMenu = () => {
     </>
   )
 }
-export default SiteMenu
+export default SearchOverlay

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { searchClient } from '../../lib/algolia'
 import { useRouter, NextRouter } from 'next/router'
-import { history } from 'instantsearch.js/es/lib/routers/index.js'
+//import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
 import SearchBox from './SearchBox'
@@ -36,8 +36,8 @@ const getInitialTabIndex = (router: NextRouter) => {
 const Search = ({ setIsOpen }: SearchProps) => {
   const router = useRouter()
 
-  //const [activeTabIndex, setActiveTabIndex] = useState(getInitialTabIndex(router))
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const [activeTabIndex, setActiveTabIndex] = useState(getInitialTabIndex(router))
+
   // @TODO: Don't hard code it like this
   if (searchClient.appId === '') {
     console.warn('You need to add an app id for Algolia search')
@@ -47,14 +47,15 @@ const Search = ({ setIsOpen }: SearchProps) => {
   const handleTabChange = (index: number) => {
     const activeTab = tabMap.find((tab) => tab.id === index)
     if (activeTab) {
-      // replaceUrl({ tab: activeTab.name })
-
       setActiveTabIndex(index)
     }
   }
 
   const envPrefix = isGlobalProduction ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(router.locale)
+
+  // Don't know if this is 100% correct
+  //const url = router.asPath
 
   // The main index will be "all" at some point
   const mainIndex = `${envPrefix}_TOPICS_${isoCode}`
@@ -64,7 +65,8 @@ const Search = ({ setIsOpen }: SearchProps) => {
       searchClient={searchClient}
       indexName={mainIndex}
       routing={{
-        /*         router: history({
+        // @TODO If this is enabled, the app will freeze with browser back
+        /* router: history({
           getLocation() {
             if (typeof window === 'undefined') {
               return new URL(url!) as unknown as Location
