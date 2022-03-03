@@ -1,6 +1,7 @@
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { searchClient } from '../../lib/algolia'
 import { useRouter } from 'next/router'
+//import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
 import SearchBox from './SearchBox'
@@ -24,11 +25,41 @@ const Search = ({ setIsOpen }: SearchProps) => {
 
   // The main index will be "all" at some point
   const mainIndex = `${envPrefix}_TOPICS_${isoCode}`
+  const url = router.asPath
 
   return (
-    <InstantSearch searchClient={searchClient} indexName={mainIndex}>
-      <Configure hitsPerPage={5} snippetEllipsisText="..." />
+    <InstantSearch
+      searchClient={searchClient}
+      indexName={mainIndex}
+      /* routing={{
+        router: history({
+          getLocation() {
+            if (typeof window === 'undefined') {
+              return new URL(url!) as unknown as Location
+            }
 
+            return window.location
+          },
+        }),
+
+        stateMapping: {
+          stateToRoute(uiState) {
+            const indexUiState = uiState[mainIndex]
+            return {
+              q: indexUiState.query,
+            }
+          },
+          routeToState(routeState) {
+            return {
+              [mainIndex]: {
+                query: routeState.q,
+              },
+            }
+          },
+        },
+      }} */
+    >
+      <Configure hitsPerPage={5} snippetEllipsisText="..." />
       <SearchBox />
       <SearchResults setIsOpen={setIsOpen} />
     </InstantSearch>
