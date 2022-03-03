@@ -23,6 +23,7 @@ const ingressContentType = configureBlockContent({
   h3: false,
   h4: false,
   attachment: false,
+  smallText: false,
 })
 const titleContentType = configureTitleBlockContent()
 
