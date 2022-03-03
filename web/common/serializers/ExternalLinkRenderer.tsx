@@ -25,7 +25,7 @@ export const ExternalLinkRenderer = (child: Child) => {
       </Link>
     )
   } catch (e) {
-    console.error('Could not render enternal link', e)
+    console.error('Could not render internal link', e)
     return null
   }
 }
