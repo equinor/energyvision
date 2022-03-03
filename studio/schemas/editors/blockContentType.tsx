@@ -18,6 +18,10 @@ export type BlockContentProps = {
   lists?: boolean
   smallText?: boolean
 }
+const SmallTextRender = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: '0.8rem' }}>{children}</span>
+}
 
 export const configureBlockContent = (options: BlockContentProps = {}): BlockFieldType => {
   const {
@@ -43,6 +47,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
       : [],
     marks: {
       decorators: [
+        // @TODO: Strong and Em are built in and not needed
         { title: 'Strong', value: 'strong' },
         { title: 'Emphasis', value: 'em' },
         {
@@ -70,7 +75,13 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
   const h2Config = { title: 'Title (h2)', value: 'h2' }
   const h3Config = { title: 'Subtitle (h3)', value: 'h3' }
   const h4Config = { title: 'Subtitle (h4)', value: 'h4' }
-  const smallTextConfig = { title: 'Small text', value: 'smallText' }
+  const smallTextConfig = {
+    title: 'Small text',
+    value: 'smallText',
+    blockEditor: {
+      render: SmallTextRender,
+    },
+  }
 
   const externalLinkConfig = {
     name: 'link',
