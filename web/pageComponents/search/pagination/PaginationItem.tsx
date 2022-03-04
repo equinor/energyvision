@@ -22,12 +22,13 @@ const PaginationLink = styled(Button)<{ isCurrent?: boolean }>`
     color: var(--black-100);
 
     :disabled {
-      color: var(--moss-green-80);
+      color: var(--slate-blue-90);
     }
   }
 
   :disabled {
     cursor: auto;
+    color: var(--slate-blue-90);
   }
 `
 
