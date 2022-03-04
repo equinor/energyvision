@@ -60,7 +60,15 @@ const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
                 )}
                 <Header>
                   {image ? (
-                    <Title style={{ '--card-title-fontWeight': '400' } as CSSProperties}>{title}</Title>
+                    <Title
+                      style={
+                        {
+                          '--card-title-fontWeight': '450',
+                        } as CSSProperties
+                      }
+                    >
+                      {title}
+                    </Title>
                   ) : (
                     <Title
                       style={

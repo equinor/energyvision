@@ -1,10 +1,21 @@
 import BlockContent from '@sanity/block-content-to-react'
+import styled from 'styled-components'
 import { Text, Heading } from '@components'
 import { PortableTextBlock } from '../../types/types'
 
 export const BlockRenderer = (props: { children: string[]; node: PortableTextBlock }) => {
   const { children, node } = props
   const { style = 'normal' } = node
+
+  const StyledHeading = styled(Heading)`
+    font-weight: 600;
+    line-height: var(--lineHeight-3);
+    margin-bottom: 0.5em;
+
+    &:not(:first-child) {
+      margin-top: 1.5em;
+    }
+  `
 
   if (style === 'h2') {
     return (
@@ -15,9 +26,9 @@ export const BlockRenderer = (props: { children: string[]; node: PortableTextBlo
   }
   if (style === 'h3') {
     return (
-      <Heading level="h3" size="sm" style={{ fontWeight: '600', lineHeight: 'var(--lineHeight-3)' }}>
+      <StyledHeading level="h3" size="sm">
         {children}
-      </Heading>
+      </StyledHeading>
     )
   }
   if (style === 'smallText') {

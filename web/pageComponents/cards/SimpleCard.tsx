@@ -80,7 +80,7 @@ const SimpleCard = ({ data }: SimpleCardData) => {
             )}
           </Media>
           <Header>
-            <Heading size="xs">{label}</Heading>
+            <Heading style={{ '--size': 'var(--typeScale-05)' } as CSSProperties}>{label}</Heading>
           </Header>
           <Action>
             <Arrow />

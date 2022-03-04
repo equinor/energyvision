@@ -89,14 +89,15 @@ export const typography = css`
   // prettier-ignore
   :root {
     /*                         mobile                                     desktop */
-    --typeScale-00: clamp(calc(11.11 / 16 * 1rem), 0.08vw + 0.68rem, calc(12.38 / 16 * 1rem));
-    --typeScale-0 : clamp(calc(13.33 / 16 * 1rem), 0.21vw + 0.79rem, calc(16.50 / 16 * 1rem));
-    --typeScale-05: clamp(calc(14.61 / 16 * 1rem), 0.29vw + 0.85rem, calc(19.05 / 16 * 1rem));
-    --typeScale-1 : clamp(calc(16.00 / 16 * 1rem), 0.39vw + 0.91rem, calc(22.00 / 16 * 1rem));
-    --typeScale-2 : clamp(calc(19.20 / 16 * 1rem), 0.66vw + 1.05rem, calc(29.33 / 16 * 1rem));
-    --typeScale-3 : clamp(calc(23.04 / 16 * 1rem), 1.04vw + 1.20rem, calc(39.09 / 16 * 1rem));
-    --typeScale-4 : clamp(calc(27.65 / 16 * 1rem), 1.58vw + 1.36rem, calc(52.11 / 16 * 1rem));
-    --typeScale-5 : clamp(calc(33.18 / 16 * 1rem), 2.35vw + 1.52rem, calc(69.46 / 16 * 1rem));
+
+    --typeScale-00: clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem));
+    --typeScale-0: clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem));
+    --typeScale-05: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
+    --typeScale-1: clamp(calc(16.00 / 16 * 1rem), 0.39vw + 0.91rem, calc(22.00 / 16 * 1rem));
+    --typeScale-2: clamp(calc(19.20 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.50 / 16 * 1rem));
+    --typeScale-3: clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem));
+    --typeScale-4: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
+    --typeScale-5: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
 
      // search and replace, then remove
     --typeScale-small: var(--typeScale-00);
@@ -190,7 +191,7 @@ export const componentSettings = css`
 
   /* Use relative units in EDS Button */
   :root {
-    --eds_button__font_size: calc(14 / 16 * 1rem);
+    --eds_button__font_size: var(--typeScale-05);
     --eds_button__radius: calc(4 / 14 * 1em);
     --eds_button__height: auto;
     --eds_button__gap: calc(8 / 14 * 1em);

@@ -60,7 +60,7 @@ const LinksList = styled.div`
 `
 
 const FooterLink = styled(Link)`
-  font-size: var(--typeScale-0);
+  font-size: var(--typeScale-05);
   padding: var(--space-xSmall) 0;
   color: var(--white-100);
   text-decoration: none;

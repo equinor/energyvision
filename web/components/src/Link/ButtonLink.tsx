@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 const StyledButtonLink = styled(Button)`
   --eds_button__height: auto;
-  --eds_button__font_size: var(--typeScale-0);
-  --eds_button__radius: calc(4 / var(--typeScale-0));
+  --eds_button__font_size: var(--typeScale-05);
+  --eds_button__radius: var(--space-4);
 
   color: var(--slate-blue-95);
   text-decoration: none;
