@@ -64,9 +64,9 @@ const Search = ({ setIsOpen }: SearchProps) => {
     <InstantSearch
       searchClient={searchClient}
       indexName={mainIndex}
-      routing={{
+      /*  routing={{
         // @TODO If this is enabled, the app will freeze with browser back
-        /* router: history({
+        router: history({
           getLocation() {
             if (typeof window === 'undefined') {
               return new URL(url!) as unknown as Location
@@ -74,7 +74,7 @@ const Search = ({ setIsOpen }: SearchProps) => {
 
             return window.location
           },
-        }), */
+        }), 
 
         stateMapping: {
           // eslint-disable-next-line
@@ -97,7 +97,7 @@ const Search = ({ setIsOpen }: SearchProps) => {
             }
           },
         },
-      }}
+      }} */
     >
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       <SearchBox />
