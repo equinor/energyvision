@@ -19,10 +19,14 @@ const PaginationList = styled.ul`
 export type PaginationProps = UsePaginationProps
 
 export const Pagination = ({ totalPages, padding, ...rest }: PaginationProps) => {
-  const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages } = usePagination({
+  const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
     totalPages,
     padding,
   })
+
+  if (!nbHits || nbHits === 0) {
+    return null
+  }
 
   return (
     <PaginationList {...rest}>
