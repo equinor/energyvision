@@ -106,24 +106,26 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
           <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
-            <nav>
-              <NavTopbar>
-                <LogoLink />
-                <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
-              </NavTopbar>
-              <MenuContainer>
-                <Menu index={indices} onChange={toggleItem}>
-                  {menuItems.map((topLevelItem: SubMenuData, idx) => {
-                    return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
-                  })}
-                </Menu>
-                <NextLink href="/" passHref>
-                  <AllSitesLink>
-                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
-                  </AllSitesLink>
-                </NextLink>
-              </MenuContainer>
-            </nav>
+            {isOpen && (
+              <nav>
+                <NavTopbar>
+                  <LogoLink />
+                  <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
+                </NavTopbar>
+                <MenuContainer>
+                  <Menu index={indices} onChange={toggleItem}>
+                    {menuItems.map((topLevelItem: SubMenuData, idx) => {
+                      return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
+                    })}
+                  </Menu>
+                  <NextLink href="/" passHref>
+                    <AllSitesLink>
+                      <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                    </AllSitesLink>
+                  </NextLink>
+                </MenuContainer>
+              </nav>
+            )}
           </TopbarDropdown>
         </RemoveScroll>
       </FocusLock>
