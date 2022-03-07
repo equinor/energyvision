@@ -105,11 +105,14 @@ Page.getLayout = (page: AppProps) => {
   const slugs = getValidSlugs((data?.pageData?.slugs?.allSlugs as AllSlugsType) || [])
 
   return (
-    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
-      <Header slugs={slugs} menuData={data?.menuData} />
-      <SkipNavContent />
-      {page}
-    </Layout>
+    <>
+      {console.log(process.env.PUBLIC_GOOGLE_TAG_MANAGER_ID || 'no id')}
+      <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
+        <Header slugs={slugs} menuData={data?.menuData} />
+        <SkipNavContent />
+        {page}
+      </Layout>
+    </>
   )
 }
 
