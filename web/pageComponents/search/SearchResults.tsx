@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Tabs } from '@components'
 import { Index, useHits } from 'react-instantsearch-hooks'
 import styled from 'styled-components'
@@ -29,14 +30,48 @@ const HITS_PER_PAGE = 5
 
 type SearchResultsProps = {
   setIsOpen: (arg0: boolean) => void
-  handleTabChange: (arg0: number) => void
-  activeTabIndex: number
 }
 
-const SearchResults = ({ setIsOpen, handleTabChange, activeTabIndex }: SearchResultsProps) => {
+// @TODO How should we do this
+// What  about translations if we have Norwegian urls
+// is it better to use like tc and e instead? Doesn't feel safe to use text snippet that
+// can be changed here
+const tabMap = [
+  { id: 0, name: 'topics' },
+  { id: 1, name: 'events' },
+]
+
+const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
   const router = useRouter()
   //const replaceUrl = useRouterReplace()
   const { results } = useHits()
+  const [currentTab, setCurrentTab] = useState<string>((router.query.tab as string) || 'topics')
+
+  // route to state
+  useEffect(() => {
+    if (router.query.tab) {
+      setCurrentTab(router.query.tab as string)
+    }
+  }, [router.query.tab])
+
+  // state to route
+  useEffect(() => {
+    router.push({
+      query: {
+        ...router.query,
+        tab: currentTab,
+      },
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTab])
+
+  const handleTabChange = (index: number) => {
+    const activeTab = tabMap.find((tab) => tab.id === index)
+    if (activeTab) {
+      setCurrentTab(activeTab.name)
+    }
+  }
+
   const isoCode = getIsoFromLocale(router.locale)
 
   const hasQuery = results && results.query !== ''
@@ -44,11 +79,12 @@ const SearchResults = ({ setIsOpen, handleTabChange, activeTabIndex }: SearchRes
   // @TODO How can we make this robust?
   const envPrefix = isGlobalProduction ? 'prod' : 'dev'
 
+  const activeTab = tabMap.find((tab) => tab.name === currentTab)
   return (
     <>
       {hasQuery && (
         <Results>
-          <Tabs index={activeTabIndex} onChange={handleTabChange}>
+          <Tabs index={activeTab?.id || 0} onChange={handleTabChange}>
             <TabList>
               <Tab inverted>
                 {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}

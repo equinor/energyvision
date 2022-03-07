@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-/* import { useRouter, NextRouter } from 'next/router' */
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
-import { useRouter, NextRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { search, close } from '@equinor/eds-icons'
 import Search from './Search'
+import useRouterRemoveQueryParams from '../hooks/useRouterRemoveQueryParams'
 
 /** @TODO Move and refactor */
 import { TopbarDropdown } from '../shared/siteMenu/TopbarDropdown'
@@ -45,32 +45,23 @@ const SearchContainer = styled.div`
 
 const SearchOverlay = () => {
   const router = useRouter()
+  const removeQueryParams = useRouterRemoveQueryParams()
   const [isOpen, setIsOpen] = useState(false)
 
-  /* const searchState = getSearchState(router) */
+  useEffect(() => {
+    // @TODO Do we want to open the overlay if we have a tab in query?
+    if (router.query.query || router.query.query === '' || router.query.tab) {
+      setIsOpen(true)
+    } else {
+      setIsOpen(false)
+    }
+  }, [router.query])
 
-  function onCloseButtonClick() {
-    setIsOpen(!isOpen)
+  const handleClose = () => {
+    setIsOpen(false)
+    removeQueryParams()
   }
 
-  const isSearchOpen = useCallback(() => {
-    const { query: routerQuery } = router
-
-    const { query } = routerQuery
-    console.log('Checking to see if the search is open', query, typeof query !== 'undefined')
-
-    setIsOpen(typeof query !== 'undefined')
-  }, [router])
-
-  useEffect(() => {
-    router.events.on('routeChangeComplete', isSearchOpen)
-    return () => router.events.off('routeChangeComplete', isSearchOpen)
-  }, [router.events, isSearchOpen])
-
-  // @TODO Lot's of todo
-  /* const setSearchState = ( newSearchState ) => {
-    //_setSearchState(newSearchState, router);
-  } */
   return (
     <>
       <StyledButton
@@ -96,10 +87,8 @@ const SearchOverlay = () => {
               <InvertedButton
                 variant="ghost_icon"
                 aria-expanded={isOpen}
-                onClick={() => {
-                  setIsOpen(false)
-                }}
-                aria-label="Search"
+                onClick={handleClose}
+                aria-label="Close search"
               >
                 <Icon size={32} data={close} />
               </InvertedButton>

@@ -1,127 +1,74 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState, ChangeEvent, ComponentProps } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks'
-import styled from 'styled-components'
-import VisuallyHidden from '../shared/VisuallyHidden'
+import ControlledSearchBox from './ControlledSearchBox'
 
-import { outlineTemplate, Tokens } from '@utils'
-import { FormattedMessage, useIntl } from 'react-intl'
+const DEBOUNCE_TIME = 400
 
-const { outline } = Tokens
+export type SearchBoxProps = ComponentProps<'div'> & UseSearchBoxProps
 
-const Input = styled.input`
-  background-color: var(--slate-blue-95);
-  border: 1px solid var(--moss-green-50);
-  padding: var(--space-medium) var(--space-medium) var(--space-medium) var(--space-xxLarge);
-  width: 100%;
-  color: var(--white-100);
-  /* Assuming this is not a real button */
-  background: transparent
-    url("data:image/svg+xml,%3Csvg height='24px' width='24px' fill='white' viewBox='0 0 24 24' aria-hidden='true' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath data-testid='eds-icon-path' d='M14.966 14.255h.79l4.99 5-1.49 1.49-5-4.99v-.79l-.27-.28a6.471 6.471 0 0 1-4.23 1.57 6.5 6.5 0 1 1 6.5-6.5c0 1.61-.59 3.09-1.57 4.23l.28.27zm-9.71-4.5c0 2.49 2.01 4.5 4.5 4.5s4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5-4.5 2.01-4.5 4.5z' height='24' fill-rule='evenodd' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E")
-    no-repeat var(--space-small) center;
+export function SearchBox(props: SearchBoxProps) {
+  const router = useRouter()
 
-  &[type='search']::placeholder {
-    color: var(--grey-40);
-  }
-
-  /* So, according to the spec, text input will always have focus no matter which device */
-  /*  &:focus-visible {
-    ${outlineTemplate(outline)}
-    outline-color: var(--energy-red-90);
-  } */
-  /* /* Is the blinking cursor enough */
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 1px var(--white-100);
-  }
-
-  &:focus::-webkit-search-cancel-button {
-    opacity: 0.8;
-    pointer-events: all;
-  }
-
-  &::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    height: 1em;
-    width: 1em;
-    background: url("data:image/svg+xml,%0A%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='1.25' y1='-1.25' x2='34.75' y2='-1.25' transform='matrix(0.681232 0.732068 -0.675487 0.737372 2.50415 3.58887)' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='1.25' y1='-1.25' x2='34.75' y2='-1.25' transform='matrix(0.681232 0.732068 -0.675487 0.737372 2.50415 3.58887)' stroke='url(%23paint0_linear_4304_84678)' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='1.25' y1='-1.25' x2='34.7506' y2='-1.25' transform='matrix(0.681238 -0.732062 0.675483 0.737376 4.4751 30.3545)' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='1.25' y1='-1.25' x2='34.7506' y2='-1.25' transform='matrix(0.681238 -0.732062 0.675483 0.737376 4.4751 30.3545)' stroke='url(%23paint1_linear_4304_84678)' stroke-width='2.5' stroke-linecap='round'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear_4304_84678' x1='18' y1='0' x2='18' y2='1' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='white'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='paint1_linear_4304_84678' x1='18.0003' y1='0' x2='18.0003' y2='1' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='white'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E%0A")
-      no-repeat 50% 50%;
-    background-size: contain;
-    opacity: 0;
-    pointer-events: none;
-  }
-`
-
-export type SearchBoxProps = UseSearchBoxProps
-
-const SearchBox = (props: SearchBoxProps) => {
-  // @TODO Cannot figure out exactly what this isSearchStalled is supposed to do
+  // I don't think we need iSearchStalled when we don't have a manual reset button and/or loading
+  // spinner if search is slow? Do we need a spinner if this happens?
   const { query, refine /* isSearchStalled */ } = useSearchBox(props)
-  const [inputValue, setInputValue] = useState(query)
+  const [value, setValue] = useState(query)
   const inputRef = useRef<HTMLInputElement>(null)
-  const intl = useIntl()
 
-  function handleSubmit(event: React.FormEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    if (inputRef.current) {
-      inputRef.current.blur()
-    }
+  function onReset() {
+    setValue('')
+    router.push({
+      query: {
+        ...router.query,
+        query: '',
+      },
+    })
   }
 
-  function handleReset(event: React.FormEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    setInputValue('')
-
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    setValue(event.currentTarget.value)
   }
 
-  // Track when the value coming from the React state changes to synchronize
-  // it with InstantSearch.
+  // route to state
   useEffect(() => {
-    if (query !== inputValue) {
-      refine(inputValue)
-    }
-  }, [inputValue, refine, query])
+    setValue((router.query.query as string) || ``)
+  }, [router.query.query])
 
-  // Track when the InstantSearch query changes to synchronize it with
-  // the React state.
+  // state to route
+  const debounceRef: { current: NodeJS.Timeout | null } = useRef(null)
   useEffect(() => {
-    // Bypass the state update if the input is focused to avoid concurrent
-    // updates when typing.
-    if (document.activeElement !== inputRef.current && query !== inputValue) {
-      setInputValue(query)
+    clearTimeout(debounceRef.current as NodeJS.Timeout)
+    if (query.length > 0 || query === '') {
+      debounceRef.current = setTimeout(() => {
+        router.push({
+          query: {
+            ...router.query,
+            query,
+          },
+        })
+      }, DEBOUNCE_TIME)
     }
-  }, [query, inputValue])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query])
 
-  const search = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
+  useEffect(() => {
+    if (query !== value) {
+      refine(value)
+    }
+    // We want to track when the value coming from the React state changes
+    // to update the InstantSearch.js query, so we don't need to track the
+    // InstantSearch.js query.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, refine])
 
   return (
-    <div>
-      <form action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
-        <VisuallyHidden as="label" htmlFor="site-search">
-          {search}
-        </VisuallyHidden>
-        <Input
-          id="site-search"
-          ref={inputRef}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          placeholder={search}
-          spellCheck={false}
-          maxLength={512}
-          type="search"
-          value={inputValue}
-          onChange={(event) => setInputValue(event.currentTarget.value)}
-        />
-      </form>
-    </div>
+    <ControlledSearchBox
+      inputRef={inputRef}
+      /* isSearchStalled={isSearchStalled} */
+      onChange={onChange}
+      onReset={onReset}
+      value={value}
+    />
   )
 }
-
-export default SearchBox

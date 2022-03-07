@@ -1,11 +1,10 @@
-import { useState } from 'react'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { searchClient } from '../../lib/algolia'
-import { useRouter, NextRouter } from 'next/router'
+import { useRouter } from 'next/router'
 //import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
-import SearchBox from './SearchBox'
+import { SearchBox } from './SearchBox'
 import SearchResults from './SearchResults'
 import { getIsoFromLocale } from '../../lib/localization'
 
@@ -13,42 +12,13 @@ type SearchProps = {
   setIsOpen: (arg0: boolean) => void
 }
 
-// @TODO How should we do this
-// What  about translations if we have Norwegian urls
-// is it better to use like tc and e instead? Doesn't feel safe to use text snippet that
-// can be changed here
-const tabMap = [
-  { id: 0, name: 'topic-content' },
-  { id: 1, name: 'events' },
-]
-
-const getInitialTabIndex = (router: NextRouter) => {
-  const paramName = 'tab'
-  if (router.query[paramName]) {
-    const activeTab = tabMap.find((tab) => tab.name === router.query[paramName])
-    if (activeTab) {
-      return activeTab.id
-    }
-  }
-  return 0
-}
-
 const Search = ({ setIsOpen }: SearchProps) => {
   const router = useRouter()
-
-  const [activeTabIndex, setActiveTabIndex] = useState(getInitialTabIndex(router))
 
   // @TODO: Don't hard code it like this
   if (searchClient.appId === '') {
     console.warn('You need to add an app id for Algolia search')
     return null
-  }
-
-  const handleTabChange = (index: number) => {
-    const activeTab = tabMap.find((tab) => tab.id === index)
-    if (activeTab) {
-      setActiveTabIndex(index)
-    }
   }
 
   const envPrefix = isGlobalProduction ? 'prod' : 'dev'
@@ -101,7 +71,7 @@ const Search = ({ setIsOpen }: SearchProps) => {
     >
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       <SearchBox />
-      <SearchResults setIsOpen={setIsOpen} handleTabChange={handleTabChange} activeTabIndex={activeTabIndex} />
+      <SearchResults setIsOpen={setIsOpen} />
     </InstantSearch>
   )
 }
