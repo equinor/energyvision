@@ -29,7 +29,7 @@ spec:
           variables:
             BRANDMASTER_EMAIL_AUTHENTICATION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Authentication'
             BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
-            
+            PUBLIC_GOOGLE_TAG_MANAGER_ID: 'testStringID'
       variables:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
