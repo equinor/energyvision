@@ -352,6 +352,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         intl,
       },
     },
+    //@TODO: revalidate how often?
     revalidate: 1,
   }
 }

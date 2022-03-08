@@ -150,6 +150,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
           intl,
         },
       },
+      //@TODO: revalidate how often?
       revalidate: 300,
     }
   }
@@ -186,7 +187,7 @@ export const getTopicRoutesForLocale = async (locale: string) => {
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
   const fetchPaths = locales.map(async (locale) => {
     const pages = await getTopicRoutesForLocale(locale)
-    // below static pages contain latestnews component which should be updated.
+    // below static pages contain latest news component which should be updated.
     const staticPages = [
       '/what-we-do/johan-sverdrup',
       '/media-centre',
