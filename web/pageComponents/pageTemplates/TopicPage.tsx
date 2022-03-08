@@ -56,7 +56,8 @@ const TopicPageLayout = styled.main`
     > section,
     > figure,
     > div:first-child {
-      padding-top: calc(var(--space-3xLarge) / 2);
+      /*  padding-top: calc(var(--space-3xLarge) / 2); */
+      padding-top: 0;
     }
   }
 `
