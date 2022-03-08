@@ -106,7 +106,7 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <>
-      {console.log(process.env.PUBLIC_GOOGLE_TAG_MANAGER_ID || 'no id')}
+      {console.log(process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || 'no id')}
       <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
         <Header slugs={slugs} menuData={data?.menuData} />
         <SkipNavContent />
