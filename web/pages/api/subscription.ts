@@ -3,7 +3,7 @@ import * as xml2js from 'xml2js'
 import { LoginResult, SubscribeFormParameters, NewsDistributionParameters } from '../../types/types'
 
 const subscriptionUrl = process.env.BRANDMASTER_EMAIL_SUBSCRIPTION_URL || ''
-const authenticationUrl = process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || ''
+export const authenticationUrl = process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || ''
 const clientSecret = process.env.BRANDMASTER_EMAIL_CLIENT_SECRET
 const password = process.env.BRANDMASTER_EMAIL_PASSWORD
 const apnId = process.env.BRANDMASTER_EMAIL_APN_ID

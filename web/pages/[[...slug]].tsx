@@ -22,7 +22,8 @@ import languages from '../languages'
 import { isGlobal } from '../common/helpers/datasetHelpers'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-import { GTM_ID } from '../lib/gtm'
+//import { GTM_ID } from '../lib/gtm'
+import { authenticationUrl } from '../pages/api/subscription'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -107,7 +108,7 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <>
-      {console.log(GTM_ID || 'no id')}
+      {console.log(authenticationUrl || 'no id')}
       <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
         <Header slugs={slugs} menuData={data?.menuData} />
         <SkipNavContent />
