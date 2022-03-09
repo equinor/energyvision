@@ -1,5 +1,5 @@
 import { distribute } from './subscription'
-import languages from '../../languages'
+import { languages } from '../../languages'
 import { NewsDistributionParameters } from '../../types/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import getConfig from 'next/config'
@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     timeStamp: data.timeStamp,
     title: data.title,
     ingress: data.ingress,
-    link: `${publicRuntimeConfig.domain}/${locale}/news/${data.link}`,
+    link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
   }

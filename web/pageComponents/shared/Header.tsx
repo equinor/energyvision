@@ -10,6 +10,7 @@ import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import SearchOverlay from '../search/SearchOverlay'
+import { languages, defaultLanguage } from '../../languages'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -61,8 +62,16 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const router = useRouter()
 
   const localization = {
-    activeLocale: router.locale || 'en',
+    activeLocale: router.locale || defaultLanguage.locale,
   }
+
+  const hasSearch = isGlobal
+  const hasMoreThanOneLanguage = languages.length > 1
+  const is404 = slugs.length === 0
+
+  let columns = 1
+  if (hasSearch) columns++
+  if (hasMoreThanOneLanguage && !is404) columns++
 
   return (
     <HeaderRelative>
@@ -71,13 +80,19 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
       <Topbar>
         <TopbarContainer>
           <LogoLinkInGrid />
-          <ControlsContainer style={{ '--columns': slugs?.length > 1 ? 3 : 2 } as CSSProperties}>
-            {isGlobal && (
+          <ControlsContainer
+            style={
+              {
+                '--columns': columns,
+              } as CSSProperties
+            }
+          >
+            {hasSearch && (
               <ControlChild>
                 <SearchOverlay />
               </ControlChild>
             )}
-            {slugs && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
+            {hasMoreThanOneLanguage && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
 
             {menuData && isGlobal ? (
               <ControlChild>

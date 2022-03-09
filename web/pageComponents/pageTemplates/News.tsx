@@ -1,19 +1,9 @@
 import { useRouter } from 'next/router'
-import type { AppProps } from 'next/app'
 import ErrorPage from 'next/error'
-/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js'
- */ import { GetStaticProps, GetStaticPaths } from 'next'
 import { NextSeo } from 'next-seo'
-import { Layout } from '../../pageComponents/shared/Layout'
 import { Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
-import { newsQuery, newsSlugsQuery, queryLocalizedNewsById } from '../../lib/queries/news'
-// import { usePreviewSubscription } from '../../lib/sanity'
-import { sanityClient, getClient } from '../../lib/sanity.server'
-import { filterDataToSingleItem } from '../../lib/filterDataToSingleItem'
 import NewsBlockContent from '../../common/NewsBlockContent'
-import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
-import { footerQuery } from '../../lib/queries/footer'
 import HeroImage from '../../pageComponents/shared/HeroImage'
 import Lead from '../../pageComponents/shared/Lead'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
@@ -22,15 +12,8 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { CardData, NewsSchema } from '../../types/types'
-import PageHeader from '../../pageComponents/shared/Header'
-import { getNameFromLocale } from '../../lib/localization'
 import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
-import { SkipNavContent } from '@reach/skip-nav'
-import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
-import { hasNews, isGlobal } from '../../common/helpers/datasetHelpers'
-import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
-import getIntl from '../../common/helpers/getIntl'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -166,12 +149,10 @@ type ArticleProps = {
   data: {
     news: NewsSchema
     latestNews: CardData[]
-    slugs: AllSlugsType
   }
-  preview: boolean
 }
 
-export default function News({ data, preview }: ArticleProps): JSX.Element {
+const NewsPage = ({ data }: ArticleProps) => {
   const router = useRouter()
   /*  const appInsights = useAppInsightsContext() */
   const slug = data?.news?.slug
@@ -179,7 +160,6 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   if (!data) {
     return <ErrorPage statusCode={418} />
   }
-
   // @TODO: Since data can be undefined, the rules of hooks fails. Why is data undefined
   // Temp. disable the preview hook due to serious performance issues
   /*   const {
@@ -190,7 +170,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
     initialData: data,
     enabled: preview || router.query.preview !== null,
   }) */
-  const newsData = filterDataToSingleItem(data.news, preview)
+  const newsData = data.news
   const { latestNews } = data
 
   const { pathname } = router
@@ -218,7 +198,7 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
 
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
-
+  console.log(newsData)
   return (
     <>
       <NextSeo
@@ -300,86 +280,4 @@ export default function News({ data, preview }: ArticleProps): JSX.Element {
   )
 }
 
-// eslint-disable-next-line react/display-name
-News.getLayout = (page: AppProps) => {
-  // This is just an ordinary function
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const { props } = page
-
-  const { preview, data } = props
-
-  // @TODO: Fix slugs for news
-  const slugs = data?.slugs
-
-  return (
-    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
-      <PageHeader slugs={slugs} menuData={data?.menuData} />
-      <SkipNavContent />
-      {page}
-    </Layout>
-  )
-}
-
-export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = 'en' }) => {
-  if (!hasNews) return { notFound: true }
-
-  const { news, latestNews } = await getClient(preview).fetch(newsQuery, {
-    slug: params?.slug,
-    lang: getNameFromLocale(locale),
-  })
-
-  const newsData = filterDataToSingleItem(news, preview) || null
-
-  const allSlugs = await getLocalizedNewsSlugs(news, preview)
-
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
-
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
-  const intl = await getIntl(locale, preview)
-
-  return {
-    props: {
-      preview,
-      data: {
-        news: newsData,
-        latestNews,
-        slugs: allSlugs,
-        menuData,
-        footerData,
-        intl,
-      },
-    },
-    //@TODO: revalidate how often?
-    revalidate: 1,
-  }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = await sanityClient.fetch(newsSlugsQuery)
-  return {
-    paths: paths.map((slug: string) => ({ params: { slug } })),
-    fallback: true,
-  }
-}
-
-const getLocalizedNewsSlugs = async (record: { id: string }, preview: boolean) => {
-  if (!record || !record.id) return null
-
-  // @TODO: why does the 'match' filter in groq not work here?
-  // "&& _id match $id" where $id = the base id without __i18n
-  const id = record.id.replace('drafts.', '').substr(0, 36)
-  const slugs = await getClient(preview).fetch(queryLocalizedNewsById, {
-    id_en: id,
-    id_no: `${id}__i18n_nb_NO`,
-  })
-
-  if (!slugs) return null
-
-  return slugs.reduce((obj: { [key: string]: string }, item: { lang: string; slug: string }) => {
-    obj[item.lang] = item.slug
-    return obj
-  }, {})
-}
+export default NewsPage

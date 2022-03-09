@@ -5,7 +5,7 @@ import RoutePreview from '../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../icons'
 
-import languages from '../../languages'
+import { languages } from '../../languages'
 
 import flags from '../../icons/countries'
 

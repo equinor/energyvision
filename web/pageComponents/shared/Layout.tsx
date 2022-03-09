@@ -1,7 +1,7 @@
 import Footer from './Footer'
 import type { FooterColumns } from '../../types/types'
 import { IntlProvider } from 'react-intl'
-import { defaultLanguage } from '../../lib/localization'
+import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 
 export type LayoutProps = {

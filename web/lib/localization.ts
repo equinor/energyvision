@@ -1,6 +1,4 @@
-import languages from '../languages'
-
-export const defaultLanguage = languages[0]
+import { languages, defaultLanguage } from '../languages'
 
 export const getNameFromLocale = (locale: string | undefined): string => {
   return languages.find((lang) => lang.locale === locale)?.name || defaultLanguage.name

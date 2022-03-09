@@ -2,12 +2,11 @@
 import { GetStaticProps, GetStaticPaths } from 'next'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { groq } from 'next-sanity'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
-import { sanityClient, getClient } from '../lib/sanity.server'
+import { getClient } from '../lib/sanity.server'
 import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { menuQuery as globalMenuQuery } from '../lib/queries/menu'
 import { simpleMenuQuery } from '../lib/queries/simpleMenu'
@@ -15,26 +14,22 @@ import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 // import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'
-import { getNameFromLocale, defaultLanguage } from '../lib/localization'
+import { getNameFromLocale } from '../lib/localization'
+import { defaultLanguage } from '../languages'
 import Header from '../pageComponents/shared/Header'
-import { AllSlugsType } from '../pageComponents/shared/LocalizationSwitch'
-import languages from '../languages'
 import { isGlobal } from '../common/helpers/datasetHelpers'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
 //import { GTM_ID } from '../lib/gtm'
-import { authenticationUrl } from '../pages/api/subscription'
+import getTopicRoutesForLocale from '../common/helpers/getTopicRoutesForLocale'
+import getPageSlugs from '../common/helpers/getPageSlugs'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
+const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 
-const getValidSlugs = (allSlugs: AllSlugsType) => {
-  if (!allSlugs) return []
-  const validLanguages = languages.map((lang) => lang.name)
-  return allSlugs.filter((slug) => validLanguages.includes(slug.lang))
-}
 // @TODO Improve types here, don't use any
 export default function Page({ data, preview }: any) {
   /*   const appInsights = useAppInsightsContext()
@@ -53,9 +48,11 @@ export default function Page({ data, preview }: any) {
     useGroqBeta: true,
   }) */
 
-  const pageData = filterDataToSingleItem(data.pageData, preview)
-  const slug = pageData?.slug
+  const pageData = data?.pageData?.news
+    ? filterDataToSingleItem(data.pageData.news, preview)
+    : filterDataToSingleItem(data.pageData, preview)
 
+  const slug = pageData?.slug
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
   }
@@ -63,7 +60,13 @@ export default function Page({ data, preview }: any) {
   //appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
 
   if (data?.isArchivedFallback) {
-    return <>{router.isFallback ? <p>Loading…</p> : <OldTopicPage data={pageData} />}</>
+    return router.isFallback ? (
+      <p>
+        <FormattedMessage id="loading" defaultMessage="Loading..." />
+      </p>
+    ) : (
+      <OldTopicPage data={pageData} />
+    )
   }
 
   const template = pageData?.template || null
@@ -84,6 +87,8 @@ export default function Page({ data, preview }: any) {
       return <LandingPage data={pageData} />
     case 'event':
       return <EventPage data={pageData} />
+    case 'news':
+      return <NewsPage data={{ news: pageData, latestNews: data.pageData?.latestNews }} />
     default:
       return <TopicPage data={pageData} />
   }
@@ -101,14 +106,11 @@ Page.getLayout = (page: AppProps) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { props } = page
-
   const { data, preview } = props
-
-  const slugs = getValidSlugs((data?.pageData?.slugs?.allSlugs as AllSlugsType) || [])
+  const slugs = getPageSlugs(data)
 
   return (
     <>
-      {console.log(authenticationUrl || 'no id')}
       <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
         <Header slugs={slugs} menuData={data?.menuData} />
         <SkipNavContent />
@@ -121,18 +123,14 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
   const data = query && (await getClient(preview).fetch(query, queryParams))
-
   const pageData = filterDataToSingleItem(data, preview) || null
 
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-
   const lang = getNameFromLocale(locale)
-
+  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(preview).fetch(menuQuery, { lang: lang })
-
   const footerData = await getClient(preview).fetch(footerQuery, { lang: lang })
-
   const intl = await getIntl(locale, preview)
+
   // If global, fetch static content in case data is not found or trying to access news
   if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
@@ -172,18 +170,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     },
     revalidate: 120,
   }
-}
-
-export const getTopicRoutesForLocale = async (locale: string) => {
-  const lang = getNameFromLocale(locale)
-  const data = await sanityClient.fetch(
-    groq`*[_type match "route_" + $lang + "*" && defined(slug.current)][].slug.current`,
-    {
-      lang,
-    },
-  )
-
-  return data
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {

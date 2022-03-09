@@ -1,7 +1,7 @@
 import { SanityDocument } from '@sanity/types'
-import languages from '../languages'
+import { defaultLanguage } from '../languages'
 
-export const langOrDefault = (lang: string | unknown) => lang || languages[0].name
+export const langOrDefault = (lang: string | unknown) => lang || defaultLanguage.name
 
 export const filterByLang = ({ document }: { document: SanityDocument }) => ({
   filter: `_lang == $lang`,

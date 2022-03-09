@@ -7,7 +7,6 @@
     locale: The actual locale name as used by Next.js and locale folders/structure ([site]/locale)
   }
 */
-
 const languages = [
   { id: 'english', title: 'English (UK)', iso: 'en-GB', name: 'en_GB', locale: 'en' },
   { id: 'norwegian', title: 'Norwegian', iso: 'nb-NO', name: 'nb_NO', locale: 'no' },
@@ -19,10 +18,18 @@ const languages = [
   { id: 'korean', title: 'Korean', iso: 'ko-KR', name: 'ko_KR', locale: 'ko' },
 ]
 
+/**
+ * @type {Record<string, string>}
+ */
+const newsSlug = {
+  en_GB: 'news',
+  nb_NO: 'nyheter',
+  pt_BR: 'noticias',
+}
+
 /*
   The first language will be set as the default language. The default language is used as
   1. The main language in Sanity studio for translations (base language)
-  2. The default language with Next.js localization support
   Example:
     norway: ['norwegian', 'english']
   Norwegian will be the default language for the dataset norway.
@@ -50,6 +57,17 @@ const datasets = {
 }
 
 /**
+ * The default language to be used on the website
+ * If not set, the first language of the datasets array will be used
+ * @type {Record<string, string>}
+ */
+const defaultWebLanguage = {
+  argentina: 'spanish-ar',
+  'global-development': 'norwegian',
+  storage: 'german',
+}
+
+/**
  * @returns {{
  *  id: string
  *  title: string
@@ -73,4 +91,8 @@ const logAndFallback = (dataset) => {
 const getLanguages = (dataset) =>
   Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
 
-module.exports = getLanguages
+module.exports = {
+  getLanguages,
+  defaultWebLanguage,
+  newsSlug,
+}

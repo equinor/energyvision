@@ -125,7 +125,7 @@ export type PortableTextChild = {
   text?: string
 }
 
-export type Templates = 'landingPage' | 'page'
+export type Templates = 'landingPage' | 'page' | 'news'
 
 export type PageSchema = {
   slug: string

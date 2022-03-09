@@ -2,7 +2,7 @@
 //eslint-disable-next-line
 import createSchema from 'part:@sanity/base/schema-creator'
 
-import languages from '../languages'
+import { languages } from '../languages'
 // Then import schema types from any plugins that might expose them
 //eslint-disable-next-line
 import schemaTypes from 'all:part:@sanity/base/schema-type'

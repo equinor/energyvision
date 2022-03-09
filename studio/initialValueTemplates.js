@@ -1,5 +1,5 @@
 import T from '@sanity/base/initial-value-template-builder'
-import languages from './languages'
+import { languages } from './languages'
 import textSnippets from './schemas/textSnippets'
 
 const ParentRoutesTemplates = languages.map(({ name, title }) =>

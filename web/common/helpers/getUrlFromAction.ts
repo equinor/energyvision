@@ -19,11 +19,9 @@ export const getUrlFromAction = ({
   }
 
   if (type === 'internalUrl') {
-    // @TODO: Update Will there be more cases in the future?
-    if (link?.type === 'news') return `/news/${link?.slug}`
-
     return link?.slug + anchor || ''
   }
+
   if (!href) {
     console.warn('Missing external url in action')
   }

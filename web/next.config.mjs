@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
-import languages from './languages.js'
+import { languages, defaultLanguage } from './languages.js'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundle = withBundleAnalyzer({
@@ -29,7 +29,7 @@ export default withBundle({
   },
   i18n: {
     locales: locales,
-    defaultLocale: locales[0],
+    defaultLocale: defaultLanguage.locale,
     localeDetection: false,
   },
   async rewrites() {

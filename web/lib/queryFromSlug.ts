@@ -2,6 +2,7 @@ import { newsQuery } from './queries/news'
 import { pageQuery } from './queries/routes'
 import { contentQueryById } from './queries/contentById'
 import { getNameFromLocale } from './localization'
+import { newsSlug } from '../../satellitesConfig'
 
 const isSlugID = (slug: string): boolean => {
   const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
@@ -24,7 +25,9 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
       : [slugStart, 'drafts.${slugStart']
 
     // console.log(publishedAndDraftIds)
-
+    /**
+     * @TODO Fix preview for news
+     */
     return {
       queryParams: {
         id: publishedAndDraftIds,
@@ -36,17 +39,11 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   }
 
   const slug = `/${slugArray.join('/')}` || ''
+  const lang = getNameFromLocale(locale)
+  const isNews = newsSlug[lang] === slugStart
 
-  switch (slugStart) {
-    case 'news':
-      return {
-        queryParams: { slug: slug, lang: getNameFromLocale(locale), date: currentDate },
-        query: newsQuery,
-      }
-    default:
-      return {
-        queryParams: { slug: slug, lang: getNameFromLocale(locale), date: currentDate },
-        query: pageQuery,
-      }
+  return {
+    queryParams: { slug: slug, lang: lang, date: currentDate },
+    query: isNews ? newsQuery : pageQuery,
   }
 }

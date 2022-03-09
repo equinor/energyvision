@@ -10,7 +10,7 @@ import extensionFilters from './src/structure/assetExtensionFilters'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import languages from './languages'
+import { languages } from './languages'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
 // import Iframe from 'sanity-plugin-iframe-pane'

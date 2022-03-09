@@ -29,9 +29,9 @@ type Child = {
 export const InternalLinkRenderer = (child: Child) => {
   try {
     const { mark, children } = child
-    const { id, type, lang } = mark.internalLink
+    const { id, lang } = mark.internalLink
     const linkLocale = getLocaleFromName(lang)
-    const href = type === 'news' ? `/news/${id}` : id
+    const href = id
 
     return (
       <NextLink passHref href={`/${linkLocale}${href}`}>

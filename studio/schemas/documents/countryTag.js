@@ -1,4 +1,4 @@
-import languages from '../../languages'
+import { defaultLanguage, languages } from '../../languages'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -8,7 +8,7 @@ const localeStrings = languages.map((lang) => ({
   validation: (Rule) => Rule.required(),
 }))
 
-const title = `title.${languages[0].name}`
+const title = `title.${defaultLanguage.name}`
 
 export default {
   type: 'document',

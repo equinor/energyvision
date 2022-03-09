@@ -8,7 +8,7 @@ export default function NewsPreview(props: any) {
   if (!displayed?.slug?.current) {
     return <div>The product needs a slug before it can be previewed.</div>
   }
-  const url = `${baseUrl}/news/${displayed?.slug?.current}?preview`
+  const url = `${baseUrl}${displayed?.slug?.current}?preview`
 
   return (
     <div className={styles.componentWrapper}>

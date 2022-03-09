@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import languages from '../../languages'
+import { languages } from '../../languages'
 
 const getFormattedSnippets = (lang: string, snippets: any) => {
   return Object.assign(

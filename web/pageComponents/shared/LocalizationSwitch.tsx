@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
 import { outlineTemplate, Tokens } from '@utils'
 import { useWindowSize } from '@reach/window-size'
-import languages from '../../languages'
+import { languages } from '../../languages'
 
 const { outline } = Tokens
 
@@ -111,7 +111,7 @@ export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: Localiza
   /* Filter objects that have translations but no routes */
   const slugs = allSlugs.filter((obj) => obj.slug)
 
-  if (slugs.length < 2) return null
+  if (slugs.length < 1) return null
 
   return (
     <Wrapper {...rest}>

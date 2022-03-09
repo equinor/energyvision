@@ -6,10 +6,9 @@ import { validateCharCounterEditor } from '../validations/validateCharCounterEdi
 import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
 import SlugInput from '../components/SlugInput/index'
 
-/*
-import { news } from '../../../satellitesTranslations'
-import languages from '../../languages'
-*/
+import { newsSlug } from '../../../satellitesConfig.js'
+import { defaultLanguage } from '../../languages'
+import slugify from 'slugify'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -120,8 +119,6 @@ export default {
       fieldset: 'slug',
     },
     {
-      // TODO: Figure out a way to run a slugify function before publish
-      // so that users don't have to add hyphens and such themselves
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -130,32 +127,15 @@ export default {
       options: {
         isUnique: isUniqueWithinLocale,
         source: async (doc) => {
-          const docSlug = doc.newsSlug?.toLowerCase().split(' ').join('-') || ''
-          return docSlug || ''
-
-          /* @TODO: use the code below when refactoring the web part.
-           * @TODO: move satellitesTranslation.ts to the dockerfile.
-           */
-
-          /*
-          //translated document ids end with _i18n__lang while base documents don't
+          // translated document ids end with _i18n__lang while base documents don't
           const lastFiveCharacters = doc._id.slice(-5)
-          const translatedNews = news[lastFiveCharacters] || news[languages[0].name]
-          return docSlug ? `/${translatedNews}/${docSlug}` : ''
-          */
+          const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
+          return doc.newsSlug ? `/${translatedNews}/${slugify(doc.newsSlug, { lower: true })}` : ''
         },
         slugify: (value) => value,
       },
-      description: '⚠️ Double check the for typos and get it right on the first time! ⚠️',
-      validation: (Rule) =>
-        Rule.required().custom((slug) => {
-          if (slug && slug.current.match(/[A-Z]/g)) {
-            return 'No uppercase letters are allowed'
-          } else if (slug && slug.current.match(/\s+/g)) {
-            return 'No spaces are allowed, use "-" instead'
-          }
-          return true
-        }),
+      description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
+      validation: (Rule) => Rule.required(),
     },
     {
       name: 'heroImage',
