@@ -98,7 +98,7 @@ export default function Page({ data, preview }: any) {
 Page.getLayout = (page: AppProps) => {
   /* The getLayout pattern is a way to preserve state in the layout
   across client side navigation. The downside is that since it's just an
-  ordinary function, we can't use the preview subcscription hook out of the box.
+  ordinary function, we can't use the preview subscription hook out of the box.
   As a consequence, preview for the menu data is not available.
 
   If this is a problem, we need to see if we are able to find another solution  */
