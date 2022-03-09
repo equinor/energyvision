@@ -52,7 +52,6 @@ export default withBundle({
         source: `/services/remit`,
         destination: `${archiveServerHostname}/RemitJson.json`,
       },
-      { source: '/redirecttest', destination: '/about-us' },
     ]
   },
   /*   webpack(config, { defaultLoaders }) {
