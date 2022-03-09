@@ -22,6 +22,7 @@ import languages from '../languages'
 import { isGlobal } from '../common/helpers/datasetHelpers'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
+import { GTM_ID } from '../lib/gtm'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -106,7 +107,7 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <>
-      {console.log(process.env.PUBLIC_GOOGLE_TAG_MANAGER_ID || 'no id')}
+      {console.log(GTM_ID || 'no id')}
       <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
         <Header slugs={slugs} menuData={data?.menuData} />
         <SkipNavContent />
