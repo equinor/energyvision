@@ -81,6 +81,8 @@ spec:
       environmentConfig:
         - environment: dev
           imageTagName: main-latest
+          variables:
+            PUBLIC_GOOGLE_TAG_MANAGER_ID: 'testStringID'
 
     - name: web-poland
       publicPort: http
