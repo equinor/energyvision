@@ -20,7 +20,7 @@ import Header from '../pageComponents/shared/Header'
 import { isGlobal } from '../common/helpers/datasetHelpers'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-//import { GTM_ID } from '../lib/gtm'
+import { GTM_ID } from '../lib/gtm'
 import getTopicRoutesForLocale from '../common/helpers/getTopicRoutesForLocale'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 
@@ -111,6 +111,7 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <>
+      {console.log(GTM_ID || 'no id')}
       <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
         <Header slugs={slugs} menuData={data?.menuData} />
         <SkipNavContent />
