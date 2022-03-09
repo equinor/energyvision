@@ -104,14 +104,14 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
                 {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} category="Topic" />
-                <StyledPagination padding={1} />
+                <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
                 {/*   </Index> */}
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setIsOpen={setIsOpen} hitComponent={EventHit} category="Event" />
-                  <StyledPagination padding={1} />
+                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
                 </Index>
               </TabPanel>
             </TabPanels>

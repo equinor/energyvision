@@ -16,15 +16,17 @@ const PaginationList = styled.ul`
   grid-auto-flow: column;
 `
 
-export type PaginationProps = UsePaginationProps
+export type PaginationProps = {
+  hitsPerPage?: number
+} & UsePaginationProps
 
-export const Pagination = ({ totalPages, padding, ...rest }: PaginationProps) => {
+export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: PaginationProps) => {
   const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
     totalPages,
     padding,
   })
 
-  if (!nbHits || nbHits === 0) {
+  if (!nbHits || nbHits === 0 || nbHits <= hitsPerPage) {
     return null
   }
 
