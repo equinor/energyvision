@@ -3,19 +3,19 @@ import styled from 'styled-components'
 import { Text, Heading } from '@components'
 import { PortableTextBlock } from '../../types/types'
 
+const StyledHeading = styled(Heading)`
+  font-weight: 600;
+  line-height: var(--lineHeight-3);
+  margin-bottom: 0.5em;
+
+  &:not(:first-child) {
+    margin-top: 1.5em;
+  }
+`
+
 export const BlockRenderer = (props: { children: string[]; node: PortableTextBlock }) => {
   const { children, node } = props
   const { style = 'normal' } = node
-
-  const StyledHeading = styled(Heading)`
-    font-weight: 600;
-    line-height: var(--lineHeight-3);
-    margin-bottom: 0.5em;
-
-    &:not(:first-child) {
-      margin-top: 1.5em;
-    }
-  `
 
   if (style === 'h2') {
     return (
