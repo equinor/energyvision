@@ -132,13 +132,16 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const footerData = await getClient(preview).fetch(footerQuery, { lang: lang })
   const intl = await getIntl(locale, preview)
 
+  const notFound = !pageData && !queryParams?.id
   // If global, fetch static content in case data is not found or trying to access news
+  // @TODO This should only be for news at some point
   if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'
 
     const archivedData = await getArchivedPageData(locale, slug)
+    const notFoundInArchived = !archivedData
 
     return {
       props: {
@@ -153,6 +156,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
       },
       //@TODO: revalidate how often?
       revalidate: 300,
+      notFound: notFoundInArchived,
     }
   }
 
@@ -170,6 +174,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
       },
     },
     revalidate: 120,
+    notFound,
   }
 }
 

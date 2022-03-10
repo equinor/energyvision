@@ -41,7 +41,15 @@ export function SearchBox(props: SearchBoxProps) {
     clearTimeout(debounceRef.current as NodeJS.Timeout)
     if (query.length > 0 || query === '') {
       debounceRef.current = setTimeout(() => {
+        //console.log(router.asPath)
+        const urlParts = router.asPath.split('?')[0]
         router.push({
+          // @TODO Add the asPath explicit because of the 404 page and ssr
+          // This might cause bugs, I'm a bit unsure about the best approach here :/
+          // It adds the next.js query params slug :( Look into this
+          // jeeeez, remove the slug query
+          // pathname: router.asPath,
+          pathname: urlParts,
           query: {
             ...router.query,
             query,
