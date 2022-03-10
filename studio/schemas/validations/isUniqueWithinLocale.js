@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
-import client from 'part:@sanity/base/client'
+import sanityClient from 'part:@sanity/base/client'
 
+const client = sanityClient.withConfig({ apiVersion: `2021-05-19` })
 export const isUniqueWithinLocale = async (slug, options) => {
   const { document: sanityDocument } = options
 
