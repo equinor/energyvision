@@ -1,7 +1,7 @@
 import React from 'react'
 import { Wrapper, Frame } from './styles/shared'
-// import resolveProductionUrl from '../../../resolveProductionUrl'
 import { baseUrl } from '../../../resolveProductionUrl'
+import getPreviewLocale from '../helpers/getPreviewLocale'
 
 export default function PagePreview(props: any) {
   const {
@@ -13,7 +13,9 @@ export default function PagePreview(props: any) {
     return <div>The content needs an id before it can be previewed.</div>
   }
 
-  const url = `${baseUrl}/${displayed?._id}`
+  const locale = getPreviewLocale(displayed._lang)
+
+  const url = `${baseUrl}/${locale}/${displayed?._id}`
   // const url = resolveProductionUrl(displayed)
   console.log('preview url', url)
   return (

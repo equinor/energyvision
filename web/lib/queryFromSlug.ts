@@ -22,7 +22,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
     const publishedAndDraftIds = slugStart.startsWith('drafts.')
       ? [slugStart, slugStart.replace('drafts.', '')]
-      : [slugStart, 'drafts.${slugStart']
+      : [slugStart, 'drafts.${slugStart}']
 
     // console.log(publishedAndDraftIds)
     /**

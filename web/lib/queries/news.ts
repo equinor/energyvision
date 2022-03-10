@@ -43,6 +43,7 @@ export const newsQuery = /* groq */ `
 {
   "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc)[0] {
     _id, //used for data filtering
+    "slug": slug.current,
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     "template": _type,

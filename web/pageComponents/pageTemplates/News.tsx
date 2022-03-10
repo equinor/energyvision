@@ -156,10 +156,7 @@ const NewsPage = ({ data }: ArticleProps) => {
   const router = useRouter()
   /*  const appInsights = useAppInsightsContext() */
   const slug = data?.news?.slug
-  /** TODO: Find out why the first time News is called it is without data */
-  if (!data) {
-    return <ErrorPage statusCode={418} />
-  }
+
   // @TODO: Since data can be undefined, the rules of hooks fails. Why is data undefined
   // Temp. disable the preview hook due to serious performance issues
   /*   const {
@@ -172,7 +169,7 @@ const NewsPage = ({ data }: ArticleProps) => {
   }) */
   const newsData = data.news
   const { latestNews } = data
-
+  console.log(newsData)
   const { pathname } = router
 
   if (!router.isFallback && !slug) {
@@ -180,7 +177,6 @@ const NewsPage = ({ data }: ArticleProps) => {
   }
 
   const fullUrl = getFullUrl(pathname, slug)
-
   const {
     publishDateTime,
     updatedAt,
@@ -198,7 +194,6 @@ const NewsPage = ({ data }: ArticleProps) => {
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
 
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
-  console.log(newsData)
   return (
     <>
       <NextSeo
