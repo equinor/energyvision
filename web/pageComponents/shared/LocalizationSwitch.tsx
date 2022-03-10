@@ -103,8 +103,6 @@ const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, wi
   return null
 }
 
-// @TODO: how to handle cases where no translation available
-// should this redirect to front page? should there be a message in that case?
 export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
   const { width } = useWindowSize()
 

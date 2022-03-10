@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { isGlobal } from '../common/helpers/datasetHelpers'
 
 const PERMANENT_REDIRECT = 301
 const PUBLIC_FILE = /\.(.*)$/
@@ -14,7 +15,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Check if pathname ends with .html
-  if (isDotHtml) {
+  if (isDotHtml && isGlobal) {
     return NextResponse.redirect(`${origin}${pathname.replace(DOT_HTML, '')}`, PERMANENT_REDIRECT)
   }
 }
