@@ -104,7 +104,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           `,
         }}
       /> */}
-      {getLayout(<Component locale={router.locale} {...pageProps} />)}
+      {getLayout(<Component {...pageProps} />)}
     </>
   )
 }
