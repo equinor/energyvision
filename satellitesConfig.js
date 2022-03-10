@@ -63,7 +63,6 @@ const datasets = {
  */
 const defaultWebLanguage = {
   argentina: 'spanish-ar',
-  'global-development': 'norwegian',
   storage: 'german',
 }
 
