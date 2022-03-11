@@ -195,14 +195,15 @@ export default () => {
           .id('misc')
           .title('Misc')
           .items([
-            S.listItem()
+            /*  S.listItem()
               .title('404')
               .child(
                 S.document()
                   .schemaType('pageNotFound')
                   .documentId('pageNotFound')
                   .views([...I18nS.getDocumentNodeViewsForSchemaType('pageNotFound')]),
-              ),
+              ), */
+            S.documentTypeListItem('pageNotFound'),
           ]),
       ),
 
