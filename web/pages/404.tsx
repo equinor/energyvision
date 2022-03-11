@@ -47,15 +47,16 @@ const MegaText = styled.span`
 
 const Custom404 = ({ data }: any) => {
   const { pageData } = data
-  const { title, text, backgroundImage } = pageData
+
+  const { title = '', text = '', backgroundImage = null } = pageData
   const imageProps = useNextSanityImage(sanityClient, backgroundImage)
   // @TODO Temp. hack to be able to commit
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const src = imageProps.src
+  const src = imageProps?.src
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const loader = imageProps.loader
+  const loader = imageProps?.loader
   return (
     <>
       <NextSeo></NextSeo>
@@ -141,7 +142,7 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
         menuData,
         footerData,
         intl,
-        pageData,
+        pageData: pageData || {},
       },
     },
   }
