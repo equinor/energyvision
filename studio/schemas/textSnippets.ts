@@ -108,6 +108,58 @@ const snippets: textSnippet = {
     defaultValue:
       'Want the full picture? We’d love to share this content with you, but first you must accept additional cookies by enabling them in our cookie settings.',
   },
+  contact_form_name:{
+    title: 'Contact form: Name',
+    defaultValue: 'Name'
+  },
+  contact_form_email:{
+    title: 'Contact form: Email',
+    defaultValue: 'Email'
+  },
+  contact_form_name_validation: {
+    title: 'Contact form: Name validation',
+    defaultValue: 'Please fill out your name',
+  },
+  contact_form_email_validation: {
+    title: 'Contact form: Email validation',
+    defaultValue: 'Please fill out a valid email address',
+  },
+  contact_form_category:{
+    title: 'Contact form: Category',
+    defaultValue: 'Category'
+  },
+  contact_form_reaching_out:{
+    title: 'Contact form: Who are you trying to reach?',
+    defaultValue: 'Who are you trying to reach?'
+  },
+  contact_form_how_to_help:{
+    title: 'Contact form: How can we help you?',
+    defaultValue: 'How can we help you?'
+  },
+  contact_form_ask_us:{
+    title: 'Contact form: Ask us a question',
+    defaultValue: 'Ask us a question'
+  },
+  contact_form_report_error:{
+    title: 'Contact form: Report an error',
+    defaultValue: 'Report an error'
+  },
+  contact_form_contact_department:{
+    title: 'Contact form: Contact a department or member of staff',
+    defaultValue: 'Contact a department or member of staff'
+  },
+  contact_form_investor_relations:{
+    title: 'Contact form: Investor relations',
+    defaultValue: 'Investor relations'
+  },
+  contact_form_other:{
+    title: 'Contact form: Other',
+    defaultValue: 'Other'
+  },
+  contact_form_cta: {
+    title: 'Contact form: CTA',
+    defaultValue: 'Submit form',
+  },
 }
 
 type textSnippet = Record<
