@@ -43,3 +43,14 @@ export const filterByRouteEvents = ({ document }: { document: SanityDocument }) 
     params: { routeLang: `route_${langOrDefault(document._lang)}*` },
   }
 }
+
+export const filterByRouteAndNewsInOtherLanguages = ({ document }: { document: SanityDocument }) => {
+  const lang = langOrDefault(document._lang)
+  return {
+    filter: `(_type match 'route_*' && !(_type match $routeLang)) || (_type == 'news' && _lang != $newsLang )`,
+    params: {
+      routeLang: `route_${lang}*`,
+      newsLang: lang,
+    },
+  }
+}

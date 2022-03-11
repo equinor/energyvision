@@ -1,11 +1,10 @@
-import React from 'react'
 import { ExternalLinkRenderer, SuperScriptRenderer, SubScriptRenderer } from '../components'
-import { SchemaType } from '../../types'
 import { link, attach_file, external_link } from '@equinor/eds-icons'
 import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
 import type { BlockFieldType } from '../../types/schemaTypes'
 import routes from '../routes'
-import { filterByRouteAndNews } from '../../helpers/referenceFilters'
+import { filterByRouteAndNews, filterByRouteAndNewsInOtherLanguages } from '../../helpers/referenceFilters'
+import type { Rule, ValidationContext } from '@sanity/types'
 
 export type BlockContentProps = {
   h1?: boolean
@@ -100,6 +99,17 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     ],
   }
 
+  type ReferenceType = {
+    _ref: string
+    _type: 'reference'
+  }
+
+  type internalLinkType = {
+    linkToOtherLanguage: boolean
+    reference: ReferenceType
+    referenceToOtherLangs: ReferenceType
+  }
+
   const internalLinkConfig = {
     name: 'internalLink',
     type: 'object',
@@ -109,6 +119,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     },
     fields: [
       {
+        name: 'linkToOtherLanguage',
+        type: 'boolean',
+        title: 'Link to a different language',
+      },
+      {
+        title: 'Reference',
         name: 'reference',
         type: 'reference',
         to: [
@@ -121,7 +137,41 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           filter: filterByRouteAndNews,
           disableNew: true,
         },
-        validation: (Rule: SchemaType.ValidationRule): SchemaType.ValidationRule => Rule.required(),
+        hidden: ({ parent }: { parent: internalLinkType }) => parent.linkToOtherLanguage,
+        validation: (Rule: Rule) =>
+          Rule.custom((value: ReferenceType, context: ValidationContext) => {
+            const { parent } = context as { parent: internalLinkType }
+            if (parent.linkToOtherLanguage || value?._ref) {
+              return true
+            } else {
+              return 'Field is required'
+            }
+          }),
+      },
+      {
+        title: 'Reference',
+        name: 'referenceToOtherLanguange',
+        type: 'reference',
+        to: [
+          {
+            type: 'news',
+          },
+          ...routes,
+        ],
+        options: {
+          filter: filterByRouteAndNewsInOtherLanguages,
+          disableNew: true,
+        },
+        hidden: ({ parent }: { parent: internalLinkType }) => !parent.linkToOtherLanguage,
+        validation: (Rule: Rule) =>
+          Rule.custom((value: ReferenceType, context: ValidationContext) => {
+            const { parent } = context as { parent: internalLinkType }
+            if (!parent.linkToOtherLanguage || value?._ref) {
+              return true
+            } else {
+              return 'Field is required'
+            }
+          }),
       },
     ],
     options: {

@@ -169,7 +169,6 @@ const NewsPage = ({ data }: ArticleProps) => {
   }) */
   const newsData = data.news
   const { latestNews } = data
-  console.log(newsData)
   const { pathname } = router
 
   if (!router.isFallback && !slug) {
@@ -177,6 +176,7 @@ const NewsPage = ({ data }: ArticleProps) => {
   }
 
   const fullUrl = getFullUrl(pathname, slug)
+
   const {
     publishDateTime,
     updatedAt,
