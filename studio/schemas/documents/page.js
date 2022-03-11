@@ -30,7 +30,7 @@ export default {
     },
   ],
   fields: [
-    /*  {
+    {
       title: 'Meta information',
       name: 'seo',
       type: 'titleAndMeta',
@@ -42,7 +42,7 @@ export default {
       type: 'imageWithAlt',
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
-    }, */
+    },
     {
       name: 'title',
       type: 'array',

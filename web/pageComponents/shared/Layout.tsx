@@ -15,6 +15,12 @@ const LayoutWrapper = styled.div<{ useFullPage: boolean }>`
       height: 'calc(100vh - var(--topbar-height))',
     }}
 `
+const ChildrenWrapper = styled.div<{ useFullPage: boolean }>`
+  ${({ useFullPage }) =>
+    useFullPage && {
+      height: '100%',
+    }}
+`
 
 export type LayoutProps = {
   /* Prewiew or not */
@@ -41,7 +47,7 @@ export const Layout = ({ useFullPage = false, children, footerData, intl, ...res
       messages={intl?.messages}
     >
       <LayoutWrapper useFullPage={useFullPage} {...rest}>
-        <div>{children}</div>
+        <ChildrenWrapper useFullPage>{children}</ChildrenWrapper>
         <Footer footerData={footerData} />
       </LayoutWrapper>
     </IntlProvider>
