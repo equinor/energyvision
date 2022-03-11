@@ -187,16 +187,35 @@ export default () => {
             return params.type === 'event'
           }),
       ),
+    S.listItem()
+      .title('Misc')
+      .icon(TopicDocuments)
+      .child(
+        S.list('misc')
+          .id('misc')
+          .title('Misc')
+          .items([
+            S.listItem()
+              .title('404')
+              .child(
+                S.document()
+                  .schemaType('pageNotFound')
+                  .documentId('pageNotFound')
+                  .views([...I18nS.getDocumentNodeViewsForSchemaType('pageNotFound')]),
+              ),
+          ]),
+      ),
+
     S.divider(),
     S.listItem()
       .title('Home Page')
       .icon(TopicDocuments)
       .child(() => S.list('homepage').id('homepage').title('Homepages').items(homepages)),
-    S.divider(),
+
     parentChild('route'),
     S.divider(),
     S.listItem().title('Menu').icon(MenuIcon).child(S.list('menu').id('menu').title('Menus').items(menus)),
-    S.divider(),
+
     S.listItem().title('Footer').child(S.list('footer').id('footer').title('Footers').items(footers)),
     S.divider(),
     S.listItem()
@@ -237,6 +256,9 @@ export const getDefaultDocumentNode = (props) => {
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
     ])
+  } else if (schemaType === 'pageNotFound') {
+    console.log('type 404')
+    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
   } else if (schemaType === 'event') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),

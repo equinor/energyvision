@@ -22,6 +22,7 @@ import event from './documents/event'
 import assetFile from './documents/assetFile'
 import assetTag from './documents/assetTag'
 import simpleMenu from './documents/simpleMenu'
+import pageNotFound from './documents/404'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -90,6 +91,7 @@ export default createSchema({
     ...routeSchemas,
     ...routeHomepageSchemas,
     siteMenu,
+    pageNotFound,
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,

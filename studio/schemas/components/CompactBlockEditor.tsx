@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { BlockEditor } from 'part:@sanity/form-builder'
 import styled from 'styled-components'
@@ -11,11 +11,11 @@ const Wrapper = styled.div`
   }
 `
 
-const SingleLineEditor = (props: any) => {
+const SingleLineEditor = forwardRef((props: any, ref) => {
   return (
     <Wrapper>
-      <BlockEditor {...props} />
+      <BlockEditor ref={ref} {...props} />
     </Wrapper>
   )
-}
+})
 export default SingleLineEditor
