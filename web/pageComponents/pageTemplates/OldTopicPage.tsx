@@ -45,7 +45,6 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
         {/*  eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/styles/legacy.minified.css" />
         {/* eslint-disable jsx-a11y/html-has-lang */}
-        <html data-template="topic-old" />
       </Head>
 
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
