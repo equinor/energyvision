@@ -44,7 +44,6 @@ const OldTopicPage = ({ data }: OldTopicPageProps): JSX.Element => {
         page. This is not an optimal solution but how much time should we spend on this... */}
         {/*  eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/styles/legacy.minified.css" />
-        {/* eslint-disable jsx-a11y/html-has-lang */}
       </Head>
 
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
