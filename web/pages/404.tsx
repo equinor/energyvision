@@ -26,7 +26,7 @@ const TextWrapper = styled.div`
   /* padding: 0 var(--layout-paddingHorizontal-medium);
   position: relative;
   height: 100%; */
-  padding: var(--layout-paddingHorizontal-medium);
+  padding: 5rem var(--layout-paddingHorizontal-medium);
 `
 const TextContainer = styled.div``
 
@@ -93,6 +93,12 @@ const Custom404 = ({ data }: any) => {
   )
 }
 
+const Grid = styled.div`
+  display: grid;
+  height: calc(100vh - var(--topbar-height));
+  grid-template-rows: min-content 1fr min-content;
+`
+
 Custom404.getLayout = (page: AppProps) => {
   /* The getLayout pattern is a way to preserve state in the layout
   across client side navigation. The downside is that since it's just an
@@ -116,9 +122,11 @@ Custom404.getLayout = (page: AppProps) => {
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={data?.intl?.messages}
       >
-        <Header slugs={slugs} menuData={data?.menuData} />
-        {page}
-        <Footer footerData={data?.footerData} />
+        <Grid>
+          <Header slugs={slugs} menuData={data?.menuData} />
+          {page}
+          <Footer footerData={data?.footerData} />
+        </Grid>
       </IntlProvider>
     </>
   )
