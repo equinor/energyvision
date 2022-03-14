@@ -1,12 +1,13 @@
 import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { AppProps } from 'next/app'
-
+import { toPlainText } from '@portabletext/react'
 import Img from 'next/image'
 import { IntlProvider } from 'react-intl'
 import { useNextSanityImage } from 'next-sanity-image'
-import { sanityClient } from '../lib/sanity.server'
+import { sanityClient, getClient } from '../lib/sanity.server'
 import Footer from '../pageComponents/shared/Footer'
+import { Heading } from '@components'
 import Header from '../pageComponents/shared/Header'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { NextSeo } from 'next-seo'
@@ -15,18 +16,16 @@ import { menuQuery as globalMenuQuery } from '../lib/queries/menu'
 import { footerQuery } from '../lib/queries/footer'
 import { simpleMenuQuery } from '../lib/queries/simpleMenu'
 import { pageNotFoundQuery } from '../lib/queries/pageNotFound'
-import { getClient } from '../lib/sanity.server'
 import { getNameFromLocale, getIsoFromLocale } from '../lib/localization'
 import getIntl from '../common/helpers/getIntl'
 import { defaultLanguage } from '../languages'
-import { BlockRenderer } from '../common/serializers'
-import SimpleBlockContent from '../common/SimpleBlockContent'
+import SimpleBlockContent from '../common/portableText/SimpleBlockContent'
 
 const TextWrapper = styled.div`
   /* padding: 0 var(--layout-paddingHorizontal-medium);
   position: relative;
   height: 100%; */
-  padding: 5rem var(--layout-paddingHorizontal-medium);
+  padding: 4rem var(--layout-paddingHorizontal-medium) var(--space-xLarge) var(--layout-paddingHorizontal-medium);
 `
 const TextContainer = styled.div``
 
@@ -39,12 +38,14 @@ const BackgroundWrap = styled.div`
 `
 
 const MegaText = styled.span`
-  font-size: var(--typeScale-5);
+  font-size: 5rem;
   display: block;
   color: var(--slate-blue-100);
   opacity: 0.4;
 `
-
+const StyledHeading = styled(Heading)`
+  margin-bottom: var(--space-xLarge);
+`
 const Custom404 = ({ data }: any) => {
   const { pageData } = data
 
@@ -64,29 +65,14 @@ const Custom404 = ({ data }: any) => {
         {imageProps && src && <Img src={src} loader={loader} layout="fill" objectFit="cover" />}
       </BackgroundWrap>
       <TextWrapper>
-        <h1>
+        <StyledHeading level="h1" size="2xl">
           <MegaText>404</MegaText>
-          {title && (
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: (props) => <span {...props} />,
-                },
-              }}
-            />
-          )}
-        </h1>
+          {title && <span>{toPlainText(title)}</span>}
+        </StyledHeading>
         {text && (
-          <SimpleBlockContent
-            blocks={text}
-            serializers={{
-              types: {
-                block: BlockRenderer,
-              },
-              container: TextContainer,
-            }}
-          />
+          <TextContainer>
+            <SimpleBlockContent value={text} />
+          </TextContainer>
         )}
       </TextWrapper>
     </>
