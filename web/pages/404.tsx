@@ -22,20 +22,10 @@ import { defaultLanguage } from '../languages'
 import SimpleBlockContent from '../common/portableText/SimpleBlockContent'
 
 const TextWrapper = styled.div`
-  /* padding: 0 var(--layout-paddingHorizontal-medium);
   position: relative;
-  height: 100%; */
   padding: 4rem var(--layout-paddingHorizontal-medium) var(--space-xLarge) var(--layout-paddingHorizontal-medium);
 `
 const TextContainer = styled.div``
-
-const BackgroundWrap = styled.div`
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  z-index: -1;
-`
 
 const MegaText = styled.span`
   font-size: 5rem;
@@ -46,6 +36,11 @@ const MegaText = styled.span`
 const StyledHeading = styled(Heading)`
   margin-bottom: var(--space-xLarge);
 `
+
+const BodyContainer = styled.div`
+  position: relative;
+`
+
 const Custom404 = ({ data }: any) => {
   const { pageData } = data
 
@@ -61,20 +56,22 @@ const Custom404 = ({ data }: any) => {
   return (
     <>
       <NextSeo></NextSeo>
-      <BackgroundWrap>
+      <BodyContainer>
+        {/*    <BackgroundWrap> */}
         {imageProps && src && <Img src={src} loader={loader} layout="fill" objectFit="cover" />}
-      </BackgroundWrap>
-      <TextWrapper>
-        <StyledHeading level="h1" size="2xl">
-          <MegaText>404</MegaText>
-          {title && <span>{toPlainText(title)}</span>}
-        </StyledHeading>
-        {text && (
-          <TextContainer>
-            <SimpleBlockContent value={text} />
-          </TextContainer>
-        )}
-      </TextWrapper>
+        {/*     </BackgroundWrap> */}
+        <TextWrapper>
+          <StyledHeading level="h1" size="2xl">
+            <MegaText>404</MegaText>
+            {title && <span>{toPlainText(title)}</span>}
+          </StyledHeading>
+          {text && (
+            <TextContainer>
+              <SimpleBlockContent value={text} />
+            </TextContainer>
+          )}
+        </TextWrapper>
+      </BodyContainer>
     </>
   )
 }
