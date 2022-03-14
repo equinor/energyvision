@@ -19,7 +19,7 @@ type InternalLink = {
 }
 
 export const InternalLink = ({ value, children }: { value: InternalLink; children: React.ReactNode }) => {
-  console.log(value, children)
+  //console.log(value, children)
   try {
     const { id, lang } = value.internalLink
     const linkLocale = getLocaleFromName(lang)
