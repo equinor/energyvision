@@ -51,6 +51,7 @@ RUN su node -c "npm install -g pnpm"
 RUN su node -c "npm install -g gitmoji-cli"
 RUN su node -c "npm install -g azure-functions-core-tools@4 --unsafe-perm true"
 RUN su node -c "npm install -g azurite"
+RUN su node -c "npm install -g @sanity/cli"
 
 # Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine
 # inside the container "overrideCommand": false is set in devcontainer.json.
