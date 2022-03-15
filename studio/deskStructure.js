@@ -1,6 +1,6 @@
 import React from 'react'
 import S from '@sanity/desk-tool/structure-builder'
-import { TopicDocuments, NewsDocuments, MenuIcon, LibraryIcon, FileIcon, TagMoreIcon } from './icons'
+import { TopicDocuments, NewsDocuments, MenuIcon, LibraryIcon, FileIcon, TagMoreIcon, EdsIcon } from './icons'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import FilePreview from './src/previews/file/filePreview'
@@ -12,6 +12,7 @@ import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import { languages } from './languages'
+import { settings, directions, text_field, tag, tag_more, view_stream } from '@equinor/eds-icons'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
 // import Iframe from 'sanity-plugin-iframe-pane'
@@ -31,6 +32,25 @@ const menuId = (lang) => {
     return lang.id + '-simple-menu'
   }
 }
+
+const redirects = languages.map((lang) =>
+  S.listItem()
+    .title(`${lang.title} Redirects`)
+    .id(`redirect-${lang.id}`)
+    .icon(flags[lang.id])
+    .child(() =>
+      S.documentList()
+        .title(`${lang.title} Redirects`)
+        .schemaType('redirect')
+        .filter(`_type == 'redirect' && _lang == '${lang.name}'`)
+        .canHandleIntent(S.documentTypeList('redirect').getCanHandleIntent())
+        .child((id) =>
+          S.documentWithInitialValueTemplate('redirect-with-locale', {
+            isoCode: lang.name,
+          }).documentId(id),
+        ),
+    ),
+)
 
 const menus = languages.map((lang) =>
   S.listItem({
@@ -84,6 +104,7 @@ const footers = languages.map((lang) =>
         .views([S.view.form()]),
   }),
 )
+
 const homepages = languages.map((lang) =>
   S.listItem({
     title: `${lang.title} Homepage`,
@@ -99,6 +120,9 @@ const homepages = languages.map((lang) =>
 const textSnippetItems = Object.keys(textSnippets).map((key) =>
   S.listItem({
     title: textSnippets[key].title,
+    displayOptions: {
+      showIcon: false,
+    },
     id: `snippet-${key}`,
     child: () =>
       S.documentWithInitialValueTemplate(`text-snippet-${key}`, {
@@ -196,27 +220,47 @@ export default () => {
       .title('Home Page')
       .icon(TopicDocuments)
       .child(() => S.list('homepage').id('homepage').title('Homepages').items(homepages)),
-
     parentChild('route'),
     S.divider(),
     S.listItem().title('Menu').icon(MenuIcon).child(S.list('menu').id('menu').title('Menus').items(menus)),
-
-    S.listItem().title('Footer').child(S.list('footer').id('footer').title('Footers').items(footers)),
+    S.listItem()
+      .title('Footer')
+      .icon(() => EdsIcon(view_stream))
+      .child(S.list('footer').id('footer').title('Footers').items(footers)),
     S.divider(),
     S.listItem()
       .title('Asset library')
       .icon(LibraryIcon)
       .child(S.list('assets').id('assets').title('Asset library').items(AssetLibrary)),
     S.divider(),
-    S.listItem().title('Tags').schemaType('tag').child(S.documentTypeList('tag').title('Tags')),
     S.listItem()
-      .title('Country tags')
-      .schemaType('countryTag')
-      .child(S.documentTypeList('countryTag').title('Country tag')),
-    S.divider(),
-    S.listItem()
-      .title('Text Snippets')
-      .child(() => S.list('textSnippet').id('textSnippet').title('Text Snippets').items(textSnippetItems)),
+      .title('Settings')
+      .icon(() => EdsIcon(settings))
+      .child(
+        S.list()
+          .id('settings')
+          .title('Settings')
+          .items([
+            S.listItem()
+              .icon(() => EdsIcon(tag))
+              .title('Tags')
+              .schemaType('tag')
+              .child(S.documentTypeList('tag').title('Tags').showIcons(false)),
+            S.listItem()
+              .icon(() => EdsIcon(tag_more))
+              .title('Country tags')
+              .schemaType('countryTag')
+              .child(S.documentTypeList('countryTag').title('Country tag')),
+            S.listItem()
+              .icon(() => EdsIcon(text_field))
+              .title('Text Snippets')
+              .child(() => S.list('textSnippet').id('textSnippet').title('Text Snippets').items(textSnippetItems)),
+            S.listItem()
+              .icon(() => EdsIcon(directions))
+              .title('Redirects')
+              .child(() => S.list('redirects').id('redirects').title('Redirects').items(redirects)),
+          ]),
+      ),
   ]
 
   return S.list().title('Content').items(listItems)

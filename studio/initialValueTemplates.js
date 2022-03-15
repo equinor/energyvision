@@ -64,6 +64,15 @@ export default [
       _lang: params.isoCode,
     }),
   }),
+  T.template({
+    id: 'redirect-with-locale',
+    title: 'Redirect',
+    schemaType: 'redirect',
+    parameters: [{ name: 'isoCode', type: 'string' }],
+    value: (params) => ({
+      _lang: params.isoCode,
+    }),
+  }),
   ...ParentRoutesTemplates,
   ...TextSnippetsTemplates,
 ]

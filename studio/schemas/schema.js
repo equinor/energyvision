@@ -10,6 +10,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 // Document types
 import news from './documents/news'
 import page from './documents/page'
+import redirect from './documents/redirect'
 import landingPage from './documents/landingPage'
 import route from './documents/route'
 import routeHomepage from './documents/routeHomepage'
@@ -143,5 +144,6 @@ export default createSchema({
     anchorReferenceField,
     textSnippet,
     largeTable,
+    redirect,
   ]),
 })
