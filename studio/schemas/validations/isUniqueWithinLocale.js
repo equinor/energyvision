@@ -2,17 +2,13 @@
 import sanityClient from 'part:@sanity/base/client'
 
 const client = sanityClient.withConfig({ apiVersion: `2021-05-19` })
+
 export const isUniqueWithinLocale = async (slug, options) => {
   const { document: sanityDocument } = options
-
-  const baseId = sanityDocument._id
-    .split(`.`)
-    .filter((idPart) => ![`drafts`, `i18n`, sanityDocument.__i18n_lang].includes(idPart))
-    .join(`.`)
+  const docId = '*' + sanityDocument._id.replace('drafts.', '')
   const type = sanityDocument._type
-
-  const query = `*[_type == $type && slug.current == $slug && !(_id match $baseId)]`
-  const params = { slug, type, baseId }
+  const query = `*[_type == $type && slug.current == $slug && !(_id match $docId)]`
+  const params = { slug, type, docId }
   const matchingSlugs = await client.fetch(query, params)
 
   return !matchingSlugs.length
