@@ -25,6 +25,7 @@ export default {
   type: 'document',
   title: `404 page`,
   name: `pageNotFound`,
+
   i18n,
   fieldsets: [
     {

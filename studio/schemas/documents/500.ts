@@ -78,7 +78,7 @@ export default {
 
       return {
         title: plainTitle,
-        subtitle: 'Page not found',
+        subtitle: 'Internal server error',
         media: EdsIcon(flight_land),
       }
     },

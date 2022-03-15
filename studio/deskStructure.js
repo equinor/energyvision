@@ -5,6 +5,7 @@ import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import FilePreview from './src/previews/file/filePreview'
 import parentChild from './src/structure/parentChild'
+import errorPages from './src/structure/errorPages'
 import assetTagFilters from './src/structure/assetTagFilters'
 import extensionFilters from './src/structure/assetExtensionFilters'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
@@ -188,15 +189,7 @@ export default () => {
           }),
       ),
 
-    S.listItem()
-      .title('Misc')
-      .icon(TopicDocuments)
-      .child(
-        S.list('misc')
-          .id('misc')
-          .title('Misc')
-          .items(I18nS.getFilteredDocumentTypeListItems().filter(({ id }) => id === 'pageNotFound')),
-      ),
+    S.listItem().title('Misc').icon(TopicDocuments).child(S.list('misc').id('misc').title('Misc').items(errorPages)),
 
     S.divider(),
     S.listItem()
