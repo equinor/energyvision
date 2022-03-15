@@ -177,6 +177,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
         intl,
       },
     },
+    notFound: !pageData,
     revalidate: 1,
   }
 }
