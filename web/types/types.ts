@@ -481,7 +481,6 @@ export type SubscribeFormParameters = {
   email: string
   crudeOilAssays?: boolean
   generalNews?: boolean
-  loopStories?: boolean
   magazineStories?: boolean
   stockMarketAnnouncements?: boolean
   languageCode: string

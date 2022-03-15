@@ -87,10 +87,6 @@ const snippets: textSnippet = {
     title: 'Subscribe form: Crude oil assays',
     defaultValue: 'Crude oil assays',
   },
-  subscribe_form_loop_stories: {
-    title: 'Subscribe form: Loop stories',
-    defaultValue: 'Loop stories',
-  },
   subscribe_form_cta: {
     title: 'Subscribe form: CTA',
     defaultValue: 'Subscribe',

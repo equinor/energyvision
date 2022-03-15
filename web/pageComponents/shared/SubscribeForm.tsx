@@ -86,7 +86,6 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
       generalNews: allCategories || data.categories.includes('generalNews'),
       stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
       magazineStories: allCategories || data.categories.includes('magazineStories'),
-      loopStories: allCategories || data.categories.includes('loopStories'),
       languageCode: router.locale == 'no-nb' ? 'no' : 'en',
     }
     const res = await fetch('/api/subscribe-form', {
@@ -193,19 +192,6 @@ const SubscribeForm = ({ data: { title } }: { data: SubscribeFormData }) => {
                   aria-invalid={errors.categories ? 'true' : 'false'}
                   aria-describedby="atleast-one-category-required"
                   value="crudeOilAssays"
-                  aria-required
-                  {...register('categories')}
-                />
-              </li>
-              <li>
-                <Checkbox
-                  label={intl.formatMessage({
-                    id: 'subscribe_form_loop_stories',
-                    defaultMessage: 'Loop stories',
-                  })}
-                  aria-invalid={errors.categories ? 'true' : 'false'}
-                  aria-describedby="atleast-one-category-required"
-                  value="loopStories"
                   aria-required
                   {...register('categories')}
                 />

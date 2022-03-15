@@ -46,7 +46,6 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     "company_news": "${formParameters.generalNews ? 'Y' : 'N'}",
     "crude_oil_assays": "${formParameters.crudeOilAssays ? 'Y' : 'N'}",
     "magazine": "${formParameters.magazineStories ? 'Y' : 'N'}",
-    "loop": "${formParameters.loopStories ? 'Y' : 'N'}",
     "type": "Investor",
     "lang": "${formParameters.languageCode}"
   }`
