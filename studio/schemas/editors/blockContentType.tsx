@@ -1,3 +1,4 @@
+import React from 'react'
 import { ExternalLinkRenderer, SuperScriptRenderer, SubScriptRenderer } from '../components'
 import { link, attach_file, external_link } from '@equinor/eds-icons'
 import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
