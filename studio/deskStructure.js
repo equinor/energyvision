@@ -195,7 +195,7 @@ export default () => {
           .id('misc')
           .title('Misc')
           .items([
-         
+
             S.documentTypeListItem('pageNotFound'),
           ]),
       ), */
@@ -250,12 +250,21 @@ export const getDefaultDocumentNode = (props) => {
    */
   const { schemaType } = props
   if (schemaType === 'news') {
-    return S.document().views([S.view.form(), S.view.component(NewsPreview).title('News preview')])
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(NewsPreview).title('News preview'),
+    ])
   } else if (schemaType === 'landingPage') {
-    return S.document().views([S.view.form(), S.view.component(PagePreview).title('Preview')])
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(PagePreview).title('Preview'),
+    ])
+  } else if (schemaType === 'pageNotFound') {
+    console.log('type 404')
+    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
   } else if (schemaType === 'event') {
     return S.document().views([
-      S.view.form(),
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
       S.view
         .component(DocumentsPane)
@@ -268,7 +277,7 @@ export const getDefaultDocumentNode = (props) => {
     ])
   } else if (schemaType === 'page') {
     return S.document().views([
-      S.view.form(),
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(PagePreview).title('Preview'),
       /* S.view
         .component(Iframe)
