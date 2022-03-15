@@ -23,6 +23,7 @@ import assetFile from './documents/assetFile'
 import assetTag from './documents/assetTag'
 import simpleMenu from './documents/simpleMenu'
 import pageNotFound from './documents/404'
+import internalServerError from './documents/500'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -92,6 +93,7 @@ export default createSchema({
     ...routeHomepageSchemas,
     siteMenu,
     pageNotFound,
+    internalServerError,
     imageWithAlt,
     imageWithAltAndCaption,
     pullQuote,

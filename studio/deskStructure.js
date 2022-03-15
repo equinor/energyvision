@@ -187,18 +187,7 @@ export default () => {
             return params.type === 'event'
           }),
       ),
-    /*  S.listItem()
-      .title('Misc')
-      .icon(TopicDocuments)
-      .child(
-        S.list('misc')
-          .id('misc')
-          .title('Misc')
-          .items([
 
-            S.documentTypeListItem('pageNotFound'),
-          ]),
-      ), */
     S.listItem()
       .title('Misc')
       .icon(TopicDocuments)

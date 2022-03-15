@@ -23,8 +23,8 @@ const textContentType = configureBlockContent({
 
 export default {
   type: 'document',
-  title: `404 page`,
-  name: `pageNotFound`,
+  title: `500 page`,
+  name: `internalServerError`,
   i18n,
   fieldsets: [
     {
@@ -48,7 +48,7 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      description: `Don't add the status code (404). The web will take care of that`,
+      description: `Don't add the status code (500). The web will take care of that`,
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
       validation: (Rule: Rule) => Rule.required(),
