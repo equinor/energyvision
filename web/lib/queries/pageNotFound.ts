@@ -1,5 +1,5 @@
 export const pageNotFoundQuery = /* groq */ `
-  *[_type match "pageNotFound"][0] {
+  *[_type == "pageNotFound"  && _lang == $lang][0] {
     ...,
     }
  `
