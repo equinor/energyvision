@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import { Button, TextField, SingleSelect, Icon } from '@equinor/eds-core-react'
+import { Button, TextField, NativeSelect, Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { useEffect } from 'react'
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -40,17 +39,23 @@ const ContactEquinorForm = () => {
       },
       method: 'POST',
     })
-    const result = await res.json()
-    if (result.statusCode != 200) console.error(result)
+
+    if (res.status != 200) console.error('Error submitting form')
+    reset()
   }
 
-  const { handleSubmit, control, reset, formState } = useForm({
-    defaultValues: { name: '', email: '', receiver: '', message: '', category: '' },
+  const { handleSubmit, control, reset } = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      receiver: '',
+      message: '',
+      category: intl.formatMessage({
+        id: 'contact_form_ask_us',
+        defaultMessage: 'Ask us a question',
+      }),
+    },
   })
-
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) reset()
-  }, [formState, reset])
   return (
     <>
       {/* @TODO Norwegian translations for labels and button text*/}
@@ -119,24 +124,34 @@ const ContactEquinorForm = () => {
         <Controller
           name="category"
           control={control}
-          render={() => (
+          render={({ field: { ref, ...props } }) => (
             <TextFieldWrapper>
-              <SingleSelect
-                items={[
-                  intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' }),
-                  intl.formatMessage({
+              <NativeSelect
+                {...props}
+                selectRef={ref}
+                id={props.name}
+                label={intl.formatMessage({ id: 'contact_form_category', defaultMessage: 'Category' })}
+              >
+                <option>
+                  {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
+                </option>
+                <option>
+                  {intl.formatMessage({
                     id: 'contact_form_report_error',
                     defaultMessage: 'Report an error on our website',
-                  }),
-                  intl.formatMessage({
+                  })}
+                </option>
+                <option>
+                  {intl.formatMessage({
                     id: 'contact_form_contact_department',
                     defaultMessage: 'Contact a department or member of staff',
-                  }),
-                  intl.formatMessage({ id: 'contact_form_investor_relations', defaultMessage: 'Investor relations' }),
-                  intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' }),
-                ]}
-                label={intl.formatMessage({ id: 'contact_form_category', defaultMessage: 'Category' })}
-              />
+                  })}
+                </option>
+                <option>
+                  {intl.formatMessage({ id: 'contact_form_investor_relations', defaultMessage: 'Investor relations' })}
+                </option>
+                <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
+              </NativeSelect>
             </TextFieldWrapper>
           )}
         />
@@ -189,7 +204,7 @@ const ContactEquinorForm = () => {
           )}
         />
         <ButtonWrapper>
-          <StyledButton type="submit" onSubmit={handleSubmit(onSubmit)}>
+          <StyledButton type="submit">
             <FormattedMessage id="contact_form_cta" defaultMessage="Submit Form" />
           </StyledButton>
         </ButtonWrapper>
