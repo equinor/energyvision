@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './IframePreview.module.css'
 import { baseUrl } from '../../../resolveProductionUrl'
-import getPreviewLocale from '../helpers/getPreviewLocale'
+import { getLocaleFromName } from '../../../../web/lib/localization'
 
 export default function NewsPreview(props: any) {
   const { document } = props
@@ -9,8 +9,7 @@ export default function NewsPreview(props: any) {
   if (!displayed?.slug?.current) {
     return <div>The product needs a slug before it can be previewed.</div>
   }
-
-  const locale = getPreviewLocale(displayed._lang)
+  const locale = getLocaleFromName(displayed._lang)
 
   const url = `${baseUrl}/${locale}/${displayed?.slug?.current}?preview`
 
