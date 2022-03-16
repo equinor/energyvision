@@ -9,7 +9,9 @@ export default function NewsPreview(props: any) {
   if (!displayed?.slug?.current) {
     return <div>The product needs a slug before it can be previewed.</div>
   }
+
   const locale = getPreviewLocale(displayed._lang)
+
   const url = `${baseUrl}/${locale}/${displayed?.slug?.current}?preview`
 
   return (
