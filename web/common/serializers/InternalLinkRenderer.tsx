@@ -34,7 +34,7 @@ export const InternalLinkRenderer = (child: Child) => {
     const href = id
 
     return (
-      <NextLink passHref href={`/${linkLocale}${href}`}>
+      <NextLink passHref locale={linkLocale} href={`/${href}`}>
         <Link>{children}</Link>
       </NextLink>
     )
