@@ -78,6 +78,10 @@ const ContactEquinorForm = () => {
                   id: 'contact_form_name',
                   defaultMessage: 'Name',
                 })}
+                placeholder={intl.formatMessage({
+                  id: 'contact_form_name_placeholder',
+                  defaultMessage: 'Jane Doe',
+                })}
                 inputRef={ref}
                 aria-required="true"
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}

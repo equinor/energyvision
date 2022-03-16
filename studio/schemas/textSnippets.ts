@@ -108,6 +108,11 @@ const snippets: textSnippet = {
     title: 'Contact form: Name',
     defaultValue: 'Name'
   },
+
+  contact_form_name_placeholder:{
+    title: 'Contact form: Name Placeholder',
+    defaultValue: 'Jane Doe'
+  },
   contact_form_email:{
     title: 'Contact form: Email',
     defaultValue: 'Email'
