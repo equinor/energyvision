@@ -168,6 +168,21 @@ export default () => {
           }),
       ),
     S.listItem()
+      .title('Local news')
+      .icon(NewsDocuments)
+      .schemaType('localNews')
+      .child(
+        S.documentTypeList('localNews')
+          .id('localNews')
+          .title('Local news articles')
+          .filter('_type == "localNews" && (!defined(_lang) || _lang == $baseLang)')
+          .params({ baseLang: i18n.base })
+          .canHandleIntent((_name, params) => {
+            // Assume we can handle all intents (actions) regarding post documents
+            return params.type === 'localNews'
+          }),
+      ),
+    S.listItem()
       .title('Topic content')
       .icon(TopicDocuments)
       .schemaType('page')
@@ -259,6 +274,11 @@ export default () => {
               .icon(() => EdsIcon(directions))
               .title('Redirects')
               .child(() => S.list('redirects').id('redirects').title('Redirects').items(redirects)),
+            S.listItem()
+              .icon(() => EdsIcon(tag))
+              .title('Local news tags')
+              .schemaType('localNewsTag')
+              .child(S.documentTypeList('localNewsTag').title('Local news tags').showIcons(false)),
           ]),
       ),
   ]

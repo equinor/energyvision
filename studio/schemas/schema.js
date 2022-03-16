@@ -25,6 +25,8 @@ import assetTag from './documents/assetTag'
 import simpleMenu from './documents/simpleMenu'
 import pageNotFound from './documents/404'
 import internalServerError from './documents/500'
+import localNews from './documents/localNews'
+import localNewsTag from './documents/localNewsTag'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -155,5 +157,7 @@ export default createSchema({
     textSnippet,
     largeTable,
     redirect,
+    localNews,
+    localNewsTag,
   ]),
 })
