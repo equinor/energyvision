@@ -123,6 +123,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         name: 'linkToOtherLanguage',
         type: 'boolean',
         title: 'Link to a different language',
+        description: 'Use this if you want to create a link to a page of a different language',
       },
       {
         title: 'Reference',
