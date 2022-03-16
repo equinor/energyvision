@@ -32,9 +32,8 @@ export const InternalLinkRenderer = (child: Child) => {
     const { id, lang } = mark.internalLink
     const linkLocale = getLocaleFromName(lang)
     const href = id
-
     return (
-      <NextLink passHref locale={linkLocale} href={`/${href}`}>
+      <NextLink passHref locale={linkLocale} href={`${href}`}>
         <Link>{children}</Link>
       </NextLink>
     )
