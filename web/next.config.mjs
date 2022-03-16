@@ -16,7 +16,7 @@ export default withBundle({
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  experimental: {
+  compiler: {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },
