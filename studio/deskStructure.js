@@ -286,7 +286,8 @@ export const getDefaultDocumentNode = (props) => {
       S.view.component(PagePreview).title('Preview'),
     ])
   } else if (schemaType === 'pageNotFound') {
-    console.log('type 404')
+    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
+  } else if (schemaType === 'internalServerError') {
     return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
   } else if (schemaType === 'event') {
     return S.document().views([
