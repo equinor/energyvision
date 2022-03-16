@@ -1,6 +1,5 @@
 import { getRedirectUrl } from '../common/helpers/getRedirectUrl'
 import { NextRequest, NextResponse } from 'next/server'
-import { isGlobal } from '../common/helpers/datasetHelpers'
 import { getLocaleFromName } from '../lib/localization'
 
 const PERMANENT_REDIRECT = 301
