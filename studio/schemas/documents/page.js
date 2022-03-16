@@ -81,7 +81,7 @@ export default {
         { type: 'stockValuesApi' },
         { type: 'iframe' },
         { type: 'remitTable' },
-        { type: 'subscribeForm' },
+        { type: 'form' },
         { type: 'cookieDeclaration' },
       ],
     },

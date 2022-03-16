@@ -468,9 +468,24 @@ export type Message = {
 export type SubscribeFormData = {
   id?: string
   type?: string
-  title?: PortableTextEntry[]
 }
 
+export type CareerFairAndVisitsFormData = {
+  id?: string
+  type?: string
+}
+export type CareerContactFormData = {
+  id?: string
+  type?: string
+}
+export type ContactEquinorFormData = {
+  id?: string
+  type?: string
+}
+export type OrderReportsFormData = {
+  id?: string
+  type?: string
+}
 export type LoginResult = {
   apiSecret: string
   instId: string
@@ -523,4 +538,12 @@ export type NewsDistributionParameters = {
 export type CookieDeclaration = {
   id?: string
   type?: string
+}
+
+export type FormData = {
+  id: string
+  type: string
+  title?: PortableTextEntry[]
+  ingress?: PortableTextEntry[]
+  form: ContactEquinorFormData | OrderReportsFormData | CareerFairAndVisitsFormData | CareerContactFormData | SubscribeFormData
 }

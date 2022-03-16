@@ -59,7 +59,8 @@ import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
 import promotePeople from './objects/promotion/promotePeople'
 import promoteEvents from './objects/promotion/promoteEvents'
-import subscribeForm from './objects/subscribeForm'
+import form from './objects/forms/form'
+import subscribeForm from './objects/forms/subscribeForm'
 import contactList from './objects/contactList'
 import eventDate from './objects/eventDate'
 import table from './objects/table'
@@ -69,6 +70,10 @@ import cookieDeclaration from './objects/cookieDeclaration'
 import anchorReferenceField from './objects/anchorReferenceField'
 import textSnippet from './documents/textSnippet'
 import largeTable from './objects/largeTable'
+import careerFairAndVisitsForm from './objects/forms/careerFairAndVisitsForm'
+import careersContactForm from './objects/forms/careersContactForm'
+import contactEquinorForm from './objects/forms/contactEquinorForm'
+import orderReportsForm from './objects/forms/orderReportsForm'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -130,7 +135,12 @@ export default createSchema({
     promoteEvents,
     promotePeople,
     countryTag,
+    form,
     subscribeForm,
+    careerFairAndVisitsForm,
+    careersContactForm,
+    contactEquinorForm,
+    orderReportsForm,
     event,
     eventDate,
     contactList,

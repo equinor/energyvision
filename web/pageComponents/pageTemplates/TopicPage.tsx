@@ -15,11 +15,11 @@ import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../topicPages/IFrame'
 import RemitTable from '../shared/RemitTable'
 import Promotion from '../topicPages/Promotion'
+import Form from '../topicPages/Form'
 import Table from '../topicPages/Table'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
-import SubscribeForm from '../shared/SubscribeForm'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 
@@ -36,7 +36,7 @@ import {
   IFrameData,
   PromotionData,
   RemitTableData,
-  SubscribeFormData,
+  FormData,
   TableData,
 } from '../../types/types'
 
@@ -103,7 +103,7 @@ type ComponentProps =
   | IFrameData
   | RemitTableData
   | PromotionData
-  | SubscribeFormData
+  | FormData
   | TableData
 
 const TopicPage = ({ data }: TopicPageProps) => {
@@ -138,8 +138,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <RemitTable key={c.id} />
       case 'promotion':
         return <Promotion key={c.id} data={c as PromotionData} />
-      case 'subscribeForm':
-        return <SubscribeForm key={c.id} data={c as SubscribeFormData} />
+      case 'form':
+        return <Form key={c.id} data={c as FormData} />
       case 'table':
         return <Table key={c.id} data={c as TableData} />
       case 'cookieDeclaration':

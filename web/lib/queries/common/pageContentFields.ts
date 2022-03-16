@@ -341,15 +341,27 @@ const pageContentFields = /* groq */ `
       height,
     },
   },
-  _type == "subscribeForm" => {
-    "type": _type,
-    "id": _key,
-    title,
-  },
   _type == "cookieDeclaration" => {
     "type": _type,
     "id": _key,
   },
+  _type == "form" => {
+    "type": _type,
+    "id": _key,
+    title[]{
+      ...,
+      ${markDefs},
+    },
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
+    "form": form[0]{
+      'id': _key,
+      'type': _type
+    }
+  },
+
 `
 
 export default pageContentFields
