@@ -55,7 +55,7 @@ const Custom500 = ({ data }: any) => {
   const loader = imageProps?.loader
   return (
     <>
-      <NextSeo></NextSeo>
+      <NextSeo title={pageData?.documentTitle} description={pageData?.metaDescription}></NextSeo>
       <BodyContainer>
         {/*    <BackgroundWrap> */}
         {imageProps && src && <Img src={src} loader={loader} layout="fill" objectFit="cover" />}
