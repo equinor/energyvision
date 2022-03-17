@@ -1,43 +1,29 @@
 import { i18n } from '../documentTranslation'
-import { configureBlockContent } from '../editors/blockContentType'
-import CharCounterEditor from '../components/CharCounterEditor'
-import { formatDate } from '../../helpers/formatDate'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
 import SlugInput from '../components/SlugInput/index'
-
 import { newsSlug } from '../../../satellitesConfig.js'
 import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
-
-const blockContentType = configureBlockContent()
-const ingressBlockContentType = configureBlockContent({
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-})
-
-const validateRelatedLinksTitle = (value, context) => {
-  const links = context.document.relatedLinks.links
-
-  if (!links) return true
-
-  if (!value && links.length > 0) {
-    return 'A title for this component is required if links have been selected.'
-  }
-
-  return true
-}
+import { formatDate } from '../../helpers/formatDate'
+import {
+  seo,
+  openGraphImage,
+  title,
+  publishDateTime,
+  tags,
+  subscriptionType,
+  newsSlugField,
+  heroImage,
+  ingress,
+  content,
+  iframe,
+  relatedLinks,
+} from './news/sharedNewsFields'
 
 export default {
   title: 'News',
-  type: 'document',
   name: 'news',
+  type: 'document',
   i18n,
   fieldsets: [
     {
@@ -61,61 +47,19 @@ export default {
   ],
   fields: [
     {
-      name: 'seo',
-      type: 'titleAndMeta',
-      fieldset: 'metadata',
-      title: 'Meta information',
-    },
-    {
-      name: 'openGraphImage',
-      type: 'imageWithAlt',
-      title: 'Open Graph Image',
-      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      ...seo,
       fieldset: 'metadata',
     },
     {
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => [Rule.required(), Rule.max(100).warning('Title should be max 100 characters')],
+      ...openGraphImage,
+      fieldset: 'metadata',
     },
+    title,
+    publishDateTime,
+    tags,
+    subscriptionType,
     {
-      title: 'Publication date and time',
-      description: 'Date and time of when the article will be published',
-      name: 'publishDateTime',
-      type: 'datetime',
-      options: {
-        timeStep: 15,
-        calendarTodayLabel: 'Today',
-      },
-    },
-    {
-      title: 'Tags',
-      name: 'tags',
-      type: 'tagReference',
-      description: 'Adds tags to news article',
-    },
-    {
-      title: 'News Subscription Type',
-      name: 'subscriptionType',
-      type: 'string',
-      description: 'This news article will be sent to all the users who subscribed to below selected type.',
-      options: {
-        list: [
-          { title: 'General News', value: 'Company' },
-          { title: 'Stock Market Announcements', value: 'Stock' },
-          { title: 'Crude Oil Assays', value: 'Crude' },
-        ],
-        layout: 'dropdown',
-      },
-    },
-    {
-      name: 'newsSlug',
-      title: 'News slug',
-      type: 'string',
-      placeholder: 'For example "Experienced professionals"',
-      description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
-      // validation: (Rule) => Rule.max(200),
+      ...newsSlugField,
       fieldset: 'slug',
     },
     {
@@ -137,71 +81,12 @@ export default {
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule) => Rule.required(),
     },
-    {
-      name: 'heroImage',
-      title: 'Hero image',
-      type: 'imageWithAltAndCaption',
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      name: 'ingress',
-      title: 'Ingress',
-      description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [ingressBlockContentType],
-      validation: (Rule) => Rule.custom((value) => validateCharCounterEditor(value, 400)),
-    },
-    {
-      name: 'content',
-      title: 'Content',
-      type: 'array',
-      of: [blockContentType, { type: 'pullQuote' }, { type: 'positionedInlineImage' }, { type: 'factbox' }],
-      validation: (Rule) =>
-        Rule.custom((value) => {
-          if (!value || value.length === 0) {
-            return 'Required'
-          }
-          return true
-        }),
-    },
-    {
-      title: 'IFrame',
-      name: 'iframe',
-      description: 'Use this to add an iframe to this article. This could for example be a livestream, video, or map.',
-      type: 'basicIframe',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
-    },
-    {
-      name: 'relatedLinks',
-      title: 'More on this topic',
-      description: 'Optional list of related links to this article.',
-      type: 'object',
-      fields: [
-        {
-          name: 'title',
-          type: 'string',
-          title: 'Title',
-          validation: (Rule) => Rule.custom((value, context) => validateRelatedLinksTitle(value, context)),
-        },
-        {
-          name: 'links',
-          title: 'Links and downloads',
-          type: 'relatedLinks',
-        },
-      ],
-    },
+    heroImage,
+    ingress,
+    content,
+    iframe,
+    relatedLinks,
   ],
-  initialValue: {
-    relatedLinks: {
-      _type: 'object',
-      title: 'More on this topic',
-      links: [],
-    },
-  },
   preview: {
     select: {
       title: 'title',
