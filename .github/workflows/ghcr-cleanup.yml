@@ -9,8 +9,11 @@ jobs:
   clean-ghcr:
     name: Delete old unused container images
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Delete containers older than a week
+        id: delete-containers
         uses: snok/container-retention-policy@v1
         with:
           image-names: energyvision/web-global
@@ -20,3 +23,9 @@ jobs:
           keep-at-least: 5
           untagged-only: true
           token: ${{ secrets.NLUN_GITHUB_PAT }}
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
