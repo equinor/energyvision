@@ -136,6 +136,7 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
         pageData: pageData || {},
       },
     },
+    revalidate: 1,
   }
 }
 
