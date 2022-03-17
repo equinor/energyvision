@@ -7,6 +7,7 @@ import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { searchClient } from '../../lib/algolia'
 import { IntlProvider } from 'react-intl'
 import { Hits } from '../../pageComponents/news/newsRoom/Hits'
+import styled from 'styled-components'
 import { getClient } from '../../lib/sanity.server'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
@@ -45,6 +46,12 @@ function Hit({ hit }: any) {
   )
 }
 
+const Wrapper = styled.div`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
+    var(--layout-paddingHorizontal-medium);
+  display: grid;
+`
+
 export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoomProps) {
   if (errorCode && errorCode === 404) {
     return <Error statusCode={404} />
@@ -60,26 +67,36 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
         messages={data?.intl?.messages}
       >
         <InstantSearchSSRProvider {...serverState}>
-          <InstantSearch
-            searchClient={searchClient}
-            indexName="dev_NEWS_en-GB"
-            routing={{
-              router: history({
-                getLocation() {
-                  if (typeof window === 'undefined') {
-                    return new URL(url!) as unknown as Location
-                  }
+          <Wrapper>
+            <Heading size="2xl" level="h1">
+              Newsroom
+            </Heading>
+            <Text>
+              We’re Equinor, a broad energy company with more than 20,000 colleagues committed to developing oil, gas,
+              wind and solar energy in more than 30 countries worldwide. We’re dedicated to safety, equality and
+              sustainability.
+            </Text>
+            <InstantSearch
+              searchClient={searchClient}
+              indexName="dev_NEWS_en-GB"
+              routing={{
+                router: history({
+                  getLocation() {
+                    if (typeof window === 'undefined') {
+                      return new URL(url!) as unknown as Location
+                    }
 
-                  return window.location
-                },
-              }),
-            }}
-          >
-            <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
-              <UncontrolledSearchBox />
-            </div>
-            <Hits hitComponent={Hit} />
-          </InstantSearch>
+                    return window.location
+                  },
+                }),
+              }}
+            >
+              <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
+                <UncontrolledSearchBox />
+              </div>
+              <Hits hitComponent={Hit} />
+            </InstantSearch>
+          </Wrapper>
         </InstantSearchSSRProvider>
       </IntlProvider>
     </>
