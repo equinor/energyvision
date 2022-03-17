@@ -41,6 +41,12 @@ export type RelatedLinksData = {
   links: LinkData[]
 }
 
+export type IntlData = {
+  locale: string
+  defaultLocale: string
+  messages: Record<string, string>
+}
+
 export type ImageWithAlt = {
   isDecorative: boolean
   alt?: string
@@ -545,5 +551,10 @@ export type FormData = {
   type: string
   title?: PortableTextEntry[]
   ingress?: PortableTextEntry[]
-  form: ContactEquinorFormData | OrderReportsFormData | CareerFairAndVisitsFormData | CareerContactFormData | SubscribeFormData
+  form:
+    | ContactEquinorFormData
+    | OrderReportsFormData
+    | CareerFairAndVisitsFormData
+    | CareerContactFormData
+    | SubscribeFormData
 }

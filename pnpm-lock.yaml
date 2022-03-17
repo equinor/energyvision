@@ -139,6 +139,7 @@ importers:
       react-focus-lock: ^2.8.1
       react-hook-form: 7.28.0
       react-instantsearch-hooks: ^6.22.0
+      react-instantsearch-hooks-server: ^6.22.0
       react-intl: ^5.24.7
       react-remove-scroll: ^2.4.4
       storybook-css-modules-preset: ^1.1.1
@@ -189,6 +190,7 @@ importers:
       react-focus-lock: 2.8.1_00d6772dea80510e818fd171caaa025a
       react-hook-form: 7.28.0_react@17.0.2
       react-instantsearch-hooks: 6.22.0_24a9da51e62336c335e8233e10af21bd
+      react-instantsearch-hooks-server: 6.22.0_9b8e18b5cb5fb389e8f0dd6018a41c59
       react-intl: 5.24.7_react@17.0.2+typescript@4.6.2
       react-remove-scroll: 2.4.4_00d6772dea80510e818fd171caaa025a
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
@@ -14585,6 +14587,21 @@ packages:
       prop-types: 15.8.1
       react: 17.0.2
     dev: true
+
+  /react-instantsearch-hooks-server/6.22.0_9b8e18b5cb5fb389e8f0dd6018a41c59:
+    resolution: {integrity: sha512-fKV3tIz/hGkYpPqd1hYjMrCSXRzp7PeOkq8xhZNF4TD/DRuGn0c4/qKTx9gPeYN09g+dAgrijdKN+BoNnSqbeA==}
+    peerDependencies:
+      react: '>= 16.8.0 < 19'
+      react-dom: '>= 16.8.0 < 19'
+    dependencies:
+      '@babel/runtime': 7.17.7
+      instantsearch.js: 4.39.2_algoliasearch@4.13.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-instantsearch-hooks: 6.22.0_24a9da51e62336c335e8233e10af21bd
+    transitivePeerDependencies:
+      - algoliasearch
+    dev: false
 
   /react-instantsearch-hooks/6.22.0_24a9da51e62336c335e8233e10af21bd:
     resolution: {integrity: sha512-h3+SVXsaLG2QmMdAlcoeFnNLVAHIE/8iKD/PJijIYfcgqpLMpdWNZYjjnSDuKi4IDHCFuj4uL+attnjKCqY3ww==}
