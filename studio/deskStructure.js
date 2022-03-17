@@ -8,6 +8,7 @@ import parentChild from './src/structure/parentChild'
 import errorPages from './src/structure/errorPages'
 import assetTagFilters from './src/structure/assetTagFilters'
 import extensionFilters from './src/structure/assetExtensionFilters'
+import localNewsStructure from './src/structure/localNewsStructure'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import { i18n } from './schemas/documentTranslation'
 import DocumentsPane from 'sanity-plugin-documents-pane'
@@ -167,21 +168,7 @@ export default () => {
             return params.type === 'news'
           }),
       ),
-    S.listItem()
-      .title('Local news')
-      .icon(NewsDocuments)
-      .schemaType('localNews')
-      .child(
-        S.documentTypeList('localNews')
-          .id('localNews')
-          .title('Local news articles')
-          .filter('_type == "localNews" && (!defined(_lang) || _lang == $baseLang)')
-          .params({ baseLang: i18n.base })
-          .canHandleIntent((_name, params) => {
-            // Assume we can handle all intents (actions) regarding post documents
-            return params.type === 'localNews'
-          }),
-      ),
+    S.listItem().title('Local news').icon(NewsDocuments).schemaType('localNews').child(localNewsStructure()),
     S.listItem()
       .title('Topic content')
       .icon(TopicDocuments)
