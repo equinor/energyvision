@@ -55,7 +55,7 @@ export default {
       fieldset: 'metadata',
     },
     title,
-    publishDateTime,
+    ...publishDateTime,
     tags,
     subscriptionType,
     {

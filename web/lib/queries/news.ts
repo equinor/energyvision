@@ -11,12 +11,20 @@ const allSlugsQuery = /* groq */ `
     }
   }`
 
+export const publishDateTimeQuery = /* groq */ `
+  select(
+    customPublicationDate == true =>
+      publishDateTime,
+      _createdAt
+  )
+`
+
 export const newsFields = /* groq */ `
   "id": _id,
   "updatedAt": _updatedAt,
   title,
   heroImage,
-  "publishDateTime": coalesce(publishDateTime, _createdAt),
+  "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
   ${allSlugsQuery},
   ingress[]{
@@ -35,13 +43,13 @@ export const newsFields = /* groq */ `
 `
 
 export const allNewsQuery = /* groq */ `
-*[_type == "news"] | order(publishDateTime desc, _updatedAt desc) {
+*[_type == "news"] | order(${publishDateTimeQuery} desc) {
   ${newsFields}
 }`
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug] | order(_updatedAt desc)[0] {
+  "news": *[_type == "news" && slug.current == $slug] | order(${publishDateTimeQuery} desc)[0] {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,
@@ -91,7 +99,7 @@ export const newsQuery = /* groq */ `
       _lang == $lang &&
       // filter drafts so it works similarly in sanity preview
       !(_id in path("drafts.**"))
-    ] | order(publishDateTime desc, _updatedAt desc)[0...3] {
+    ] | order(${publishDateTimeQuery} desc)[0...3] {
     ${newsFields}
   }
 }`

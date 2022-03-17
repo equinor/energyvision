@@ -1,7 +1,7 @@
 import { configureBlockContent } from '../../editors/blockContentType'
 import CharCounterEditor from '../../components/CharCounterEditor'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
-import type { Rule } from '@sanity/types'
+import type { Rule, ValidationContext } from '@sanity/types'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -47,16 +47,39 @@ export const title = {
   validation: (Rule: Rule) => [Rule.required(), Rule.max(100).warning('Title should be max 100 characters')],
 }
 
-export const publishDateTime = {
-  title: 'Publication date and time',
-  description: 'Date and time of when the article will be published',
-  name: 'publishDateTime',
-  type: 'datetime',
-  options: {
-    timeStep: 15,
-    calendarTodayLabel: 'Today',
-  },
+type PublishDateTimeType = {
+  customPublicationDate: boolean
+  publishDateTime: string
 }
+
+export const publishDateTime = [
+  {
+    title: 'Custom publication date and time',
+    name: 'customPublicationDate',
+    description: 'Use this if you want to display a custom publication date',
+    type: 'boolean',
+  },
+  {
+    title: 'Publication date and time',
+    description: 'Date and time of when the article will be published',
+    name: 'publishDateTime',
+    type: 'datetime',
+    options: {
+      timeStep: 15,
+      calendarTodayLabel: 'Today',
+    },
+    hidden: ({ parent }: { parent: PublishDateTimeType }) => !parent.customPublicationDate,
+    validation: (Rule: Rule) =>
+      Rule.custom((value: PublishDateTimeType, context: ValidationContext) => {
+        const { parent } = context as { parent: PublishDateTimeType }
+        if (!parent.customPublicationDate || value) {
+          return true
+        } else {
+          return 'Field is required'
+        }
+      }),
+  },
+]
 
 export const tags = {
   title: 'Tags',

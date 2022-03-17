@@ -105,7 +105,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     _type: 'reference'
   }
 
-  type internalLinkType = {
+  type InternalLinkType = {
     linkToOtherLanguage: boolean
     reference: ReferenceType
     referenceToOtherLangs: ReferenceType
@@ -139,10 +139,10 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           filter: filterByRouteAndNews,
           disableNew: true,
         },
-        hidden: ({ parent }: { parent: internalLinkType }) => parent.linkToOtherLanguage,
+        hidden: ({ parent }: { parent: InternalLinkType }) => parent.linkToOtherLanguage,
         validation: (Rule: Rule) =>
           Rule.custom((value: ReferenceType, context: ValidationContext) => {
-            const { parent } = context as { parent: internalLinkType }
+            const { parent } = context as { parent: InternalLinkType }
             if (parent.linkToOtherLanguage || value?._ref) {
               return true
             } else {
@@ -164,10 +164,10 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
           filter: filterByRouteAndNewsInOtherLanguages,
           disableNew: true,
         },
-        hidden: ({ parent }: { parent: internalLinkType }) => !parent.linkToOtherLanguage,
+        hidden: ({ parent }: { parent: InternalLinkType }) => !parent.linkToOtherLanguage,
         validation: (Rule: Rule) =>
           Rule.custom((value: ReferenceType, context: ValidationContext) => {
-            const { parent } = context as { parent: internalLinkType }
+            const { parent } = context as { parent: InternalLinkType }
             if (!parent.linkToOtherLanguage || value?._ref) {
               return true
             } else {

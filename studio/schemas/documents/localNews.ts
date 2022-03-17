@@ -79,7 +79,7 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
     title,
-    publishDateTime,
+    ...publishDateTime,
     tags,
     subscriptionType,
     {

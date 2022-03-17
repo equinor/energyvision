@@ -3,6 +3,7 @@ import markDefs from './blockEditorMarks'
 import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
+import { publishDateTimeQuery } from '../news'
 
 const pageContentFields = /* groq */ `
   _type == "teaser"=>{
@@ -207,13 +208,13 @@ const pageContentFields = /* groq */ `
           key,
           title,
         },
-        "promotions": *[_type == "news" && _lang == $lang && count(tags[_ref in ^.^.tags[]._ref]) > 0] | order(publishDateTime desc, _updatedAt desc)[0...3]{
+        "promotions": *[_type == "news" && _lang == $lang && count(tags[_ref in ^.^.tags[]._ref]) > 0] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
           "updatedAt": _updatedAt,
           title,
           heroImage,
-          "publishDateTime": coalesce(publishDateTime, _createdAt),
+          "publishDateTime": ${publishDateTimeQuery},
           "slug": slug.current,
           ingress[]{
             ...,
@@ -315,11 +316,11 @@ const pageContentFields = /* groq */ `
         ...,
         ${markDefs},
       }
-      
+
     },
     tableRows[]{
       "id": _key,
-       row[]{  
+       row[]{
          "type": _type,
         "id": _key,
         label,
@@ -330,10 +331,10 @@ const pageContentFields = /* groq */ `
       },
        "href": url,
       "staticUrl": staticUrl,
-     
+
       ${downloadableFileFields},
       ${downloadableImageFields}, ...},
-     
+
     },
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
