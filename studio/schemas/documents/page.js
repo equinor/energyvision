@@ -81,7 +81,6 @@ export default {
         { type: 'iframe' },
         { type: 'remitTable' },
         { type: 'cookieDeclaration' },
-        { type: 'form' },
       ],
     },
   ],
