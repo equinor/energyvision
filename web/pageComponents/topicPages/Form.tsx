@@ -4,6 +4,7 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
+import CareerFairForm from './CareerFairForm'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
@@ -25,9 +26,11 @@ const Form = ({ data }: { data: FormData }) => {
         return <SubscribeForm />
       case 'contactEquinorForm':
         return <ContactEquinorForm />
+      case 'careerFairAndVisitsForm':
+        return <CareerFairForm />
       /* case 'careersContactForm' : return </>
             case 'orderReportsForm' :  return </>
-            case 'careerFairAndVisitsForm' : return </>*/
+        */
     }
   }
   return (

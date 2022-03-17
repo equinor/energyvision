@@ -161,6 +161,79 @@ const snippets: textSnippet = {
     title: 'Contact form: CTA',
     defaultValue: 'Submit form',
   },
+  career_fair_form_organisation: {
+    title: 'Career fair form: Organisation',
+    defaultValue: 'School / Organisation',
+  },
+
+  career_fair_form_organisation_validation:{
+    title: 'Career fair form: Organisation validation',
+    defaultValue: 'Please enter your school or organisation'
+  },
+  career_fair_form_contact_person: {
+    title: 'Career fair form: Contact Person',
+    defaultValue: 'Contact Person',
+  },
+  career_fair_form_contact_person_validation:{
+    title: 'Career fair form: Contact Person validation',
+    defaultValue: 'Please enter a contact person'
+  },
+  career_fair_form_name_placeholder:{
+    title: 'Contact form: Name Placeholder',
+    defaultValue: 'Jane Doe'
+  },
+  career_fair_form_phone: {
+    title: 'Career fair form: Phone number',
+    defaultValue: 'Phone number',
+  },
+  career_fair_form_phone_validation:{
+    title: 'Career fair form: Phone Number validation',
+    defaultValue: 'Please enter your phone number'
+  },
+  career_fair_form_email: {
+    title: 'Career fair form: Email',
+    defaultValue: 'Email',
+  },
+  career_fair_form_email_validation: {
+    title: 'Career fair form: Email validation',
+    defaultValue: 'Please fill out a valid email address',
+  },
+  career_fair_form_event: {
+    title: 'Career fair form: Event',
+    defaultValue: 'Event',
+  },
+  career_fair_form_event_description: {
+    title: 'Career fair form: Event Description',
+    defaultValue: 'Event Description (max 3400 characters)',
+  },
+  career_fair_form_event_description_validation: {
+    title: 'Career fair form: Event Description validation',
+    defaultValue: 'Please enter a description for the event',
+  },
+  career_fair_form_website: {
+    title: 'Career fair form: Link to website',
+    defaultValue: 'Link to website',
+  },
+  career_fair_form_supporting_documents: {
+    title: 'Career fair form: Supporting Documents checkbox',
+    defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
+  },
+  career_fair_form_invite_career_fair: {
+    title: 'Career fair form: Invite to career fair/ student event',
+    defaultValue: 'Invite Equinor to a career fair or student event',
+  },
+  career_fair_form_invite_company_presentation: {
+    title: 'Career fair form: Invite to hold company presentation',
+    defaultValue: 'Invite Equinor to hold a company presentation',
+  },
+  career_fair_form_visit_equinor: {
+    title: 'Career fair form: Visit Equinor office',
+    defaultValue: 'Invite Equinor to a career fair or student event',
+  },
+  career_fair_form_cta: {
+    title: 'Career fair form: CTA',
+    defaultValue: 'Submit form',
+  },
 }
 
 type textSnippet = Record<
