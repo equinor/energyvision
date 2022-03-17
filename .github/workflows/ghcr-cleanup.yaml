@@ -16,7 +16,7 @@ jobs:
         id: delete-containers
         uses: snok/container-retention-policy@v1
         with:
-          image-names: energyvision/web-global,energyvision/web-germany,energyvision/web-brazil,energyvision/web-argentina,energyvision/web-poland,energyvision/web-equinorfunds,energyvision/web-japan,energyvision/web-techstars,energyvision/web-production,energyvision/web,energyvision/web-global-development,energyvision/web-southkorea,energyvision/web-loop,  energyvision/studio-global,energyvision/studio-germany,energyvision/studio-brazil,energyvision/studio-argentina,energyvision/studio-poland,energyvision/studio-equinorfunds,energyvision/studio-japan,energyvision/studio-techstars,energyvision/studio-global-development,energyvision/studio-southkorea,energyvision/studio-loop
+          image-names: energyvision/web-global,energyvision/web-germany,energyvision/web-brazil,energyvision/web-argentina,energyvision/web-poland,energyvision/web-equinorfunds,energyvision/web-japan,energyvision/web-techstars,energyvision/web-production,energyvision/web,energyvision/web-global-development,energyvision/web-southkorea,energyvision/web-loop,energyvision/studio-germany,energyvision/studio-brazil,energyvision/studio-argentina,energyvision/studio-poland,energyvision/studio-equinorfunds,energyvision/studio-japan,energyvision/studio-techstars,energyvision/studio-global-development,energyvision/studio-southkorea,energyvision/studio-loop
           cut-off: A week ago UTC
           account-type: org
           org-name: Equinor
