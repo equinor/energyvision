@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import Error from 'next/error'
 import { InstantSearch, InstantSearchServerState, InstantSearchSSRProvider } from 'react-instantsearch-hooks'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
@@ -29,6 +30,7 @@ type NewsRoomProps = {
     footerData: { footerColumns: FooterColumns[] }
     intl: IntlData
   }
+  errorCode?: number
 }
 
 // @TODO Types
@@ -43,7 +45,10 @@ function Hit({ hit }: any) {
   )
 }
 
-export default function NewsRoom({ serverState, url, data }: NewsRoomProps) {
+export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoomProps) {
+  if (errorCode && errorCode === 404) {
+    return <Error statusCode={404} />
+  }
   const defaultLocale = defaultLanguage.locale
   const locale = data?.intl?.locale || defaultLocale
 
@@ -113,6 +118,13 @@ NewsRoom.getLayout = (page: AppProps) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en' }) => {
+  // For the time being, let's just give 404 for satellites
+  // This will not use the styled 404 page, but whatever
+  if (!isGlobal) {
+    return {
+      props: { errorCode: 404 },
+    }
+  }
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(<NewsRoom url={url} />)
   const lang = getNameFromLocale(locale)
