@@ -1,0 +1,22 @@
+name: Delete old container images
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # every day at midnight
+
+jobs:
+  clean-ghcr:
+    name: Delete old unused container images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete containers older than a week
+        uses: snok/container-retention-policy@v1
+        with:
+          image-names: energyvision/web-global
+          cut-off: A week ago UTC
+          account-type: org
+          org-name: Equinor
+          keep-at-least: 5
+          untagged-only: true
+          token: ${{ secrets.NLUN_GITHUB_PAT }}
