@@ -6,13 +6,6 @@ import blocksToText from '../../../helpers/blocksToText'
 
 const titleContentType = configureTitleBlockContent()
 
-export type form = {
-  _type: 'form'
-  type: 'subscribeForm' | 'contactEquinorForm' | 'careersContactForm' | 'orderReportsForm' | 'careerFairAndVisitsForm'
-  title?: Block[]
-  ingress?: Block[]
-}
-
 type FormType =
   | 'subscribeForm'
   | 'contactEquinorForm'
