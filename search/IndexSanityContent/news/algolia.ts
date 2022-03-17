@@ -7,11 +7,13 @@ export type NewsIndex = {
   pageTitle: string
   text: string
   publishDateTime: string
+  year: number
 }
 
 export const indexSettings: Settings = {
   searchableAttributes: ['pageTitle', 'text'],
   attributesToSnippet: ['text'],
+  attributesForFaceting: ['year'],
   attributeForDistinct: 'slug',
   distinct: 1,
   ranking: ['desc(publishDateTime)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],

@@ -5,11 +5,13 @@ import { mapData } from './mapper'
 describe('News', () => {
   describe('mapper tests', () => {
     describe('Vanilla version works', () => {
-      const newsArticle: NewsArticle = {
+      // Hei fremtids-Nils Magne, vi bør ikke ha en en-til-en type mot Sanity?
+      const newsArticle: NewsArticle & { year: number } = {
         title: 'title',
         slug: '/a/slug',
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
+        year: 2021,
         blocks: [
           {
             blockKey: 'blockKey',
@@ -38,17 +40,18 @@ describe('News', () => {
           type: 'news',
           text: 'Some text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
-          //          publishDateTime: '2022-03-17T10:15:49.309Z',
+          year: 2021,
         } as NewsIndex)
       })
     })
 
     describe('Multiple children works (advanced version)', () => {
-      const newsArticle: NewsArticle = {
+      const newsArticle: NewsArticle & { year: number } = {
         title: 'title',
         slug: '/a/slug',
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
+        year: 2021,
         blocks: [
           {
             blockKey: 'blockKey',
@@ -94,6 +97,7 @@ describe('News', () => {
           type: 'news',
           text: 'Some text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
+          year: 2021,
         } as NewsIndex)
         expect(result[1]).toEqual({
           slug: '/a/slug',
@@ -102,6 +106,7 @@ describe('News', () => {
           type: 'news',
           text: 'Some more text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
+          year: 2021,
         })
         expect(result[2]).toEqual({
           slug: '/a/slug',
@@ -110,6 +115,7 @@ describe('News', () => {
           type: 'news',
           text: 'Some text 3',
           publishDateTime: '2021-11-26T07:00:00.000Z',
+          year: 2021,
         })
         expect(result[3]).toEqual({
           slug: '/a/slug',
@@ -118,6 +124,7 @@ describe('News', () => {
           type: 'news',
           text: 'Some more text 4',
           publishDateTime: '2021-11-26T07:00:00.000Z',
+          year: 2021,
         })
       })
     })

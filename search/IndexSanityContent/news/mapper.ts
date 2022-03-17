@@ -4,8 +4,11 @@ import { NewsArticle } from './sanity'
 import { NewsIndex } from './algolia'
 
 type MapDataType = (article: NewsArticle) => NewsIndex[]
-export const mapData: MapDataType = (article) =>
-  pipe(
+export const mapData: MapDataType = (article) => {
+  const { publishDateTime } = article
+  // Hu hei hvor det går
+  const year = publishDateTime ? new Date(publishDateTime).getFullYear() : ''
+  return pipe(
     A.bindTo('blocks')(article.blocks),
     A.bind('children', ({ blocks }) => blocks.children),
     A.map(
@@ -16,7 +19,9 @@ export const mapData: MapDataType = (article) =>
           type: 'news',
           pageTitle: article.title,
           text: children.text,
-          publishDateTime: article.publishDateTime || null,
+          publishDateTime: publishDateTime || null,
+          year,
         } as NewsIndex),
     ),
   )
+}

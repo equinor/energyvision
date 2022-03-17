@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import Error from 'next/error'
+import { default as NextLink } from 'next/link'
 import { InstantSearch, InstantSearchServerState, InstantSearchSSRProvider } from 'react-instantsearch-hooks'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
@@ -7,6 +8,7 @@ import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { searchClient } from '../../lib/algolia'
 import { IntlProvider } from 'react-intl'
 import { Hits } from '../../pageComponents/news/newsRoom/Hits'
+import { RefinementList } from '../../pageComponents/news/newsRoom/RefinementList'
 import styled from 'styled-components'
 import { getClient } from '../../lib/sanity.server'
 import Footer from '../../pageComponents/shared/Footer'
@@ -32,19 +34,6 @@ type NewsRoomProps = {
     intl: IntlData
   }
   errorCode?: number
-}
-
-// @TODO Types
-function Hit({ hit }: any) {
-  return (
-    <article>
-      {hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}
-      <Heading level="h2" size="lg">
-        {hit.pageTitle}
-      </Heading>
-      <Text>{hit.text}</Text>
-    </article>
-  )
 }
 
 const Wrapper = styled.div`
@@ -84,6 +73,36 @@ const Filters = styled.div`
 const NewsList = styled.div`
   grid-area: list;
 `
+
+const StyledHitLink = styled.a`
+  padding: var(--space-medium) 0;
+  display: block;
+  color: var(--default-text);
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+`
+
+const Refinement = styled.div`
+  padding: var(--space-medium) 0;
+`
+
+// @TODO Types
+function Hit({ hit }: any) {
+  return (
+    <NextLink href={hit.slug} passHref>
+      <StyledHitLink>
+        <article>
+          {hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}
+          <Heading level="h2" size="lg">
+            {hit.pageTitle}
+          </Heading>
+          {/*  <Text>{hit.text}</Text> */}
+        </article>
+      </StyledHitLink>
+    </NextLink>
+  )
+}
 
 export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoomProps) {
   if (errorCode && errorCode === 404) {
@@ -126,15 +145,25 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
                     },
                   }),
                 }}
+                /*   routing={{
+                  router: history({
+                    getLocation: () =>
+                      typeof window === 'undefined' ? url : window.location,
+                  }),
+                }} */
               >
                 <NewsRoomContent>
                   <Filters>
                     <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
                       <UncontrolledSearchBox />
                     </div>
+                    <Refinement>
+                      <span>Year</span>
+                      <RefinementList sortBy={['name:desc']} attribute="year" />
+                    </Refinement>
                   </Filters>
+
                   <NewsList>
-                    {' '}
                     <Hits hitComponent={Hit} />
                   </NewsList>
                 </NewsRoomContent>
@@ -188,6 +217,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
   }
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(<NewsRoom url={url} />)
+  console.log('server', serverState, url)
   const lang = getNameFromLocale(locale)
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
