@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './IframePreview.module.css'
 import { baseUrl } from '../../../resolveProductionUrl'
-import { getLocaleFromName } from '../../helpers/localization'
+import { getLocaleFromName } from '../../lib/localization'
 
 export default function NewsPreview(props: any) {
   const { document } = props

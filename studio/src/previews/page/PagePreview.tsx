@@ -1,7 +1,7 @@
 import React from 'react'
 import { Wrapper, Frame } from './styles/shared'
 import { baseUrl } from '../../../resolveProductionUrl'
-import { getLocaleFromName } from '../../helpers/localization'
+import { getLocaleFromName } from '../../lib/localization'
 
 export default function PagePreview(props: any) {
   const {
