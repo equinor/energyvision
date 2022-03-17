@@ -1,7 +1,7 @@
 import React from 'react'
 import { Wrapper, Frame } from './styles/shared'
 import { baseUrl } from '../../../resolveProductionUrl'
-import { getLocaleFromName } from '../../../../web/lib/localization'
+import { getLocaleFromName } from '../../helpers/localization'
 
 export default function PagePreview(props: any) {
   const {
@@ -17,7 +17,7 @@ export default function PagePreview(props: any) {
 
   const url = `${baseUrl}/${locale}/${displayed?._id}`
   // const url = resolveProductionUrl(displayed)
-  // console.log('preview url', url)
+  console.log('preview url', url)
   return (
     <Wrapper>
       <Frame src={url} title="preview" frameBorder={'0'} />
