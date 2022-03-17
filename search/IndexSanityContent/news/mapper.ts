@@ -16,6 +16,7 @@ export const mapData: MapDataType = (article) =>
           type: 'news',
           pageTitle: article.title,
           text: children.text,
+          publishDateTime: article.publishDateTime || null,
         } as NewsIndex),
     ),
   )

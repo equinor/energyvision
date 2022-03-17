@@ -9,6 +9,7 @@ describe('News', () => {
         title: 'title',
         slug: '/a/slug',
         _id: 'id',
+        publishDateTime: '2021-11-26T07:00:00.000Z',
         blocks: [
           {
             blockKey: 'blockKey',
@@ -36,6 +37,8 @@ describe('News', () => {
           pageTitle: 'title',
           type: 'news',
           text: 'Some text',
+          publishDateTime: '2021-11-26T07:00:00.000Z',
+          //          publishDateTime: '2022-03-17T10:15:49.309Z',
         } as NewsIndex)
       })
     })
@@ -45,6 +48,7 @@ describe('News', () => {
         title: 'title',
         slug: '/a/slug',
         _id: 'id',
+        publishDateTime: '2021-11-26T07:00:00.000Z',
         blocks: [
           {
             blockKey: 'blockKey',
@@ -89,6 +93,7 @@ describe('News', () => {
           pageTitle: 'title',
           type: 'news',
           text: 'Some text',
+          publishDateTime: '2021-11-26T07:00:00.000Z',
         } as NewsIndex)
         expect(result[1]).toEqual({
           slug: '/a/slug',
@@ -96,6 +101,7 @@ describe('News', () => {
           pageTitle: 'title',
           type: 'news',
           text: 'Some more text',
+          publishDateTime: '2021-11-26T07:00:00.000Z',
         })
         expect(result[2]).toEqual({
           slug: '/a/slug',
@@ -103,6 +109,7 @@ describe('News', () => {
           pageTitle: 'title',
           type: 'news',
           text: 'Some text 3',
+          publishDateTime: '2021-11-26T07:00:00.000Z',
         })
         expect(result[3]).toEqual({
           slug: '/a/slug',
@@ -110,6 +117,7 @@ describe('News', () => {
           pageTitle: 'title',
           type: 'news',
           text: 'Some more text 4',
+          publishDateTime: '2021-11-26T07:00:00.000Z',
         })
       })
     })

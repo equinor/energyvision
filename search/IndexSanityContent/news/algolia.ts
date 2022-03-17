@@ -6,6 +6,7 @@ export type NewsIndex = {
   type: string
   pageTitle: string
   text: string
+  publishDateTime: string
 }
 
 export const indexSettings: Settings = {
@@ -13,5 +14,5 @@ export const indexSettings: Settings = {
   attributesToSnippet: ['text'],
   attributeForDistinct: 'slug',
   distinct: 1,
-  ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+  ranking: ['desc(publishDateTime)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
 }

@@ -12,7 +12,7 @@ import { getClient } from '../../lib/sanity.server'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
 import getPageSlugs from '../../common/helpers/getPageSlugs'
-import { Text, Heading } from '@components'
+import { Text, Heading, FormattedDate } from '@components'
 import UncontrolledSearchBox from '../../pageComponents/search/UncontrolledSearchBox'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
@@ -38,6 +38,7 @@ type NewsRoomProps = {
 function Hit({ hit }: any) {
   return (
     <article>
+      {hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}
       <Heading level="h2" size="lg">
         {hit.pageTitle}
       </Heading>
@@ -47,9 +48,41 @@ function Hit({ hit }: any) {
 }
 
 const Wrapper = styled.div`
+  grid-template-areas:
+    'intro intro'
+    'news  news';
+  grid-template-rows: auto auto;
+
+  display: grid;
+`
+const Intro = styled.div`
+  grid-area: intro;
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
     var(--layout-paddingHorizontal-medium);
+`
+
+const News = styled.div`
+  grid-area: news;
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-small) var(--space-xLarge)
+    var(--layout-paddingHorizontal-small);
+`
+
+const NewsRoomContent = styled.div`
   display: grid;
+  grid-template-areas:
+    'filter'
+    'list';
+  @media (min-width: 800px) {
+    grid-template-columns: 70% 30%;
+    grid-template-areas: 'list filter';
+  }
+`
+const Filters = styled.div`
+  grid-area: filter;
+`
+
+const NewsList = styled.div`
+  grid-area: list;
 `
 
 export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoomProps) {
@@ -68,34 +101,45 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
       >
         <InstantSearchSSRProvider {...serverState}>
           <Wrapper>
-            <Heading size="2xl" level="h1">
-              Newsroom
-            </Heading>
-            <Text>
-              We’re Equinor, a broad energy company with more than 20,000 colleagues committed to developing oil, gas,
-              wind and solar energy in more than 30 countries worldwide. We’re dedicated to safety, equality and
-              sustainability.
-            </Text>
-            <InstantSearch
-              searchClient={searchClient}
-              indexName="dev_NEWS_en-GB"
-              routing={{
-                router: history({
-                  getLocation() {
-                    if (typeof window === 'undefined') {
-                      return new URL(url!) as unknown as Location
-                    }
+            <Intro>
+              <Heading size="2xl" level="h1">
+                Newsroom
+              </Heading>
+              <Text>
+                We’re Equinor, a broad energy company with more than 20,000 colleagues committed to developing oil, gas,
+                wind and solar energy in more than 30 countries worldwide. We’re dedicated to safety, equality and
+                sustainability.
+              </Text>
+            </Intro>
+            <News>
+              <InstantSearch
+                searchClient={searchClient}
+                indexName="dev_NEWS_en-GB"
+                routing={{
+                  router: history({
+                    getLocation() {
+                      if (typeof window === 'undefined') {
+                        return new URL(url!) as unknown as Location
+                      }
 
-                    return window.location
-                  },
-                }),
-              }}
-            >
-              <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
-                <UncontrolledSearchBox />
-              </div>
-              <Hits hitComponent={Hit} />
-            </InstantSearch>
+                      return window.location
+                    },
+                  }),
+                }}
+              >
+                <NewsRoomContent>
+                  <Filters>
+                    <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
+                      <UncontrolledSearchBox />
+                    </div>
+                  </Filters>
+                  <NewsList>
+                    {' '}
+                    <Hits hitComponent={Hit} />
+                  </NewsList>
+                </NewsRoomContent>
+              </InstantSearch>
+            </News>
           </Wrapper>
         </InstantSearchSSRProvider>
       </IntlProvider>

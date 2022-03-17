@@ -30,7 +30,7 @@ const blocksToArray = (blocks, opts = {}) => {
   pipe(
     blocks,
     A.map((block) =>
-      pipe(
+      pipe( 
         block,
         E.fromPredicate(
           (block) => block.children.length > 0,
@@ -49,6 +49,7 @@ export const query = /* groq */ `*[_type == "news" && _lang == $lang] {
   _id,
   "title": title,
   "type": _type,
+  publishDateTime,
   "blocks": content[_type == "block"] {
     "blockKey": _key,
     "children": children[text match "*"] {
@@ -66,10 +67,12 @@ const getQueryParams = (language: Language) => ({
 export type NewsArticle = {
   slug: string
   title: string
+  // Enjoy... ISO type
+  publishDateTime?: string
   blocks: {
     blockKey: string
     children: {
-      childKey: string,
+      childKey: string
       text: string
     }[]
   }[]
