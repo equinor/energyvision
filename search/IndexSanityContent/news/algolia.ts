@@ -10,7 +10,7 @@ export type NewsIndex = {
 }
 
 export const indexSettings: Settings = {
-  searchableAttributes: ['title', 'text'],
+  searchableAttributes: ['pageTitle', 'text'],
   attributesToSnippet: ['text'],
   attributeForDistinct: 'slug',
   distinct: 1,
