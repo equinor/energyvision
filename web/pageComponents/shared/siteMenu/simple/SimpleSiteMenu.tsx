@@ -18,12 +18,14 @@ import { NavTopbar } from '../NavTopbar'
 import { useIntl } from 'react-intl'
 
 const MenuContainer = styled.div`
+  font-size: var(--typeScale-1);
   background-color: transparent;
   padding: 0 var(--space-large);
 `
 
 // TODO: This needs to be looked at. Not optimal solution.
 const MenuLink = styled(Link)`
+  font-size: var(--typeScale-1);
   padding: calc(var(--space-small) + var(--space-small)) 0;
   svg {
     display: none;
