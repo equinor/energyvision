@@ -531,4 +531,5 @@ export type FormData = {
   title?: PortableTextEntry[]
   ingress?: PortableTextEntry[]
   form: string
+  downloads: LinkData[]
 }

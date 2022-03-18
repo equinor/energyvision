@@ -357,7 +357,8 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
-    "form": form
+    "form": form,
+    "downloads": downloads[]{${downloadableFileFields}},
   },
 
 `

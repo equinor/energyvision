@@ -5,6 +5,9 @@ import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serialize
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
+import OrderReportsForm from './OrderReportsForm'
+import { List, Link } from '@components'
+import { LinkData } from '../../types/types'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
@@ -14,12 +17,13 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
+const ListStyled = styled.div`
+  padding-bottom: var(--space-large);
+`
 
 const Form = ({ data }: { data: FormData }) => {
-  const { title, ingress } = data
-  // const forms = content?.forms || []
+  const { title, ingress, downloads } = data
   const variant = data.form
-
   const renderForm = (variant: string | undefined) => {
     switch (variant) {
       case 'subscribeForm':
@@ -28,9 +32,35 @@ const Form = ({ data }: { data: FormData }) => {
         return <ContactEquinorForm />
       case 'careerFairAndVisitsForm':
         return <CareerFairForm />
-      /* case 'careersContactForm' : return </>
-            case 'orderReportsForm' :  return </>
-        */
+      //case 'careersContactForm' : return </>
+      case 'orderReportsForm':
+        return (
+          <>
+            <>
+              {downloads && (
+                <ListStyled>
+                  {downloads.length > 0 &&
+                    downloads.map((item: LinkData) => {
+                      console.log(downloads.concat())
+                      const { id, label, type, extension, ariaLabel } = item
+                      const url = item.href + '?' + item.fileName?.replace(/ /g, '-')
+                      if (!url) {
+                        console.warn(`Missing URL on 'Download' link with type: '${type}' and label: '${label}'`)
+                        return null
+                      }
+
+                      return (
+                        <Link key={id} variant="contentLink" type={type} href={url} aria-label={ariaLabel}>
+                          {label} {extension && `(${extension.toUpperCase()})`}
+                        </Link>
+                      )
+                    })}
+                </ListStyled>
+              )}
+            </>
+            <OrderReportsForm />
+          </>
+        )
     }
   }
   return (
@@ -56,6 +86,7 @@ const Form = ({ data }: { data: FormData }) => {
             }}
           ></SimpleBlockContent>
         )}
+
         {renderForm(variant)}
       </Container>
     </>
