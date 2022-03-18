@@ -1,10 +1,20 @@
-import { configureBlockContent, configureTitleBlockContent } from '../../editors'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import CharCounterEditor from '../../components/CharCounterEditor'
-import type { Rule, Block } from '@sanity/types'
-import blocksToText from '../../../helpers/blocksToText'
+import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+import CharCounterEditor from '../components/CharCounterEditor'
+import type { Rule, Block, ValidationContext } from '@sanity/types'
+import blocksToText from '../../helpers/blocksToText'
+import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
+import { DownloadableFile } from './files'
 
 const titleContentType = configureTitleBlockContent()
+
+export type Form = {
+  _type: 'form'
+  form: FormType
+  title?: Block[]
+  ingress?: Block[]
+  downloads: DownloadableFile[]
+}
 
 type FormType =
   | 'subscribeForm'
@@ -58,6 +68,19 @@ export default {
         layout: 'dropdown',
       },
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      type: 'array',
+      name: 'downloads',
+      description: 'Downloadable reports to show in the Order reports form',
+      title: 'Downloadable files',
+      of: [{ type: 'downloadableFile', title: 'Downloadable file' }],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as { parent: Form }
+          return validateRequiredIfVisible(parent?.form === 'orderReportsForm', value, 'You must add reports')
+        }).unique(),
+      hidden: ({ parent }: { parent: Form }) => parent?.form !== 'orderReportsForm',
     },
   ],
   preview: {
