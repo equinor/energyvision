@@ -111,7 +111,6 @@ Page.getLayout = (page: AppProps) => {
 
   return (
     <>
-      {console.log(GTM_ID || 'no id')}
       <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
         <Header slugs={slugs} menuData={data?.menuData} />
         <SkipNavContent />
