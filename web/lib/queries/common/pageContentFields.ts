@@ -357,10 +357,7 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
-    "form": form[0]{
-      'id': _key,
-      'type': _type
-    }
+    "form": form
   },
 
 `

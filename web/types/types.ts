@@ -471,27 +471,6 @@ export type Message = {
   IsPlannedEvent: boolean
 }
 
-export type SubscribeFormData = {
-  id?: string
-  type?: string
-}
-
-export type CareerFairAndVisitsFormData = {
-  id?: string
-  type?: string
-}
-export type CareerContactFormData = {
-  id?: string
-  type?: string
-}
-export type ContactEquinorFormData = {
-  id?: string
-  type?: string
-}
-export type OrderReportsFormData = {
-  id?: string
-  type?: string
-}
 export type LoginResult = {
   apiSecret: string
   instId: string
@@ -551,10 +530,5 @@ export type FormData = {
   type: string
   title?: PortableTextEntry[]
   ingress?: PortableTextEntry[]
-  form:
-    | ContactEquinorFormData
-    | OrderReportsFormData
-    | CareerFairAndVisitsFormData
-    | CareerContactFormData
-    | SubscribeFormData
+  form: string
 }

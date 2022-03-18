@@ -18,7 +18,7 @@ const Container = styled.div`
 const Form = ({ data }: { data: FormData }) => {
   const { title, ingress } = data
   // const forms = content?.forms || []
-  const variant = data.form.type
+  const variant = data.form
 
   const renderForm = (variant: string | undefined) => {
     switch (variant) {
@@ -51,7 +51,7 @@ const Form = ({ data }: { data: FormData }) => {
             blocks={ingress}
             serializers={{
               types: {
-                block: (props) => <IngressBlockRenderer centered={true} {...props} />,
+                block: (props) => <IngressBlockRenderer centered={false} {...props} />,
               },
             }}
           ></SimpleBlockContent>

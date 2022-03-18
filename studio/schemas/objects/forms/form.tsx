@@ -43,25 +43,27 @@ export default {
       of: [ingressContentType],
     },
     {
-      type: 'array',
+      type: 'string',
       name: 'form',
       description: 'Select the type of form to show',
       title: 'Type of form',
-      of: [
-        { type: 'subscribeForm', title: 'Subscribe Form' },
-        { type: 'contactEquinorForm', title: 'Contact Equinor form' },
-        { type: 'careersContactForm', title: 'Careers contact form' },
-        { type: 'orderReportsForm', title: 'Order reports' },
-        { type: 'careerFairAndVisitsForm', title: 'Career fairs and visits' },
-      ],
-      options: { sortable: false },
-      validation: (Rule: Rule) => Rule.required().min(1).max(1),
+      options: {
+        list: [
+          { title: 'Subscribe Form', value: 'subscribeForm' },
+          { title: 'Contact Equinor form', value: 'contactEquinorForm' },
+          { title: 'Careers contact form', value: 'careersContactForm' },
+          { title: 'Order reports', value: 'orderReportsForm' },
+          { title: 'Career fairs and visits', value: 'careerFairAndVisitsForm' },
+        ],
+        layout: 'dropdown',
+      },
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {
     select: {
       title: 'title',
-      type: 'form[0]._type',
+      type: 'form',
     },
     prepare({ title = [], type }: { title: Block[]; type: FormType }) {
       const plainTitle = title ? blocksToText(title) : undefined
