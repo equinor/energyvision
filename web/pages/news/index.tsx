@@ -27,7 +27,7 @@ import type { MenuData, FooterColumns, IntlData } from '../../types/types'
 
 type NewsRoomProps = {
   serverState?: InstantSearchServerState
-  url: string
+  //url: string
   data?: {
     menuData: MenuData
     footerData: { footerColumns: FooterColumns[] }
@@ -104,7 +104,7 @@ function Hit({ hit }: any) {
   )
 }
 
-export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoomProps) {
+export default function NewsRoom({ serverState, /*  url, */ data, errorCode }: NewsRoomProps) {
   if (errorCode && errorCode === 404) {
     return <Error statusCode={404} />
   }
@@ -134,7 +134,7 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
               <InstantSearch
                 searchClient={searchClient}
                 indexName="dev_NEWS_en-GB"
-                routing={{
+                /*  routing={{
                   router: history({
                     getLocation() {
                       if (typeof window === 'undefined') {
@@ -144,7 +144,7 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
                       return window.location
                     },
                   }),
-                }}
+                }} */
                 /*   routing={{
                   router: history({
                     getLocation: () =>
@@ -207,7 +207,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale = 'en' }) => {
   // For the time being, let's just give 404 for satellites
   // This will not use the styled 404 page, but whatever
   if (!isGlobal) {
@@ -215,9 +215,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
       props: { errorCode: 404 },
     }
   }
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const serverState = await getServerState(<NewsRoom url={url} />)
-  console.log('server', serverState, url)
+  console.log('Server generating stuff')
+  // const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const serverState = await getServerState(<NewsRoom /* url={url} */ />)
+  console.log('server', serverState /* url */)
   const lang = getNameFromLocale(locale)
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
@@ -228,7 +229,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
   return {
     props: {
       serverState,
-      url,
+      //url,
       data: {
         menuData,
         footerData,
