@@ -16,6 +16,12 @@ inputs:
   sanityPreviewSecret:
     description: 'Sanity Preview Secret'
     required: true
+  algoliaAppId:
+    description: 'AppID for Algolia'
+    required: true
+  algoliaApiKey:
+    description: 'Api key for Algolia'
+    required: true
 outputs:
   copied-files:
     description: 'Number of files copied'
