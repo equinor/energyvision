@@ -64,19 +64,13 @@ export default {
     {
       title: 'Local market tag',
       name: 'localNewsTag',
-      type: 'array',
+      type: 'reference',
       description: 'Select which local market this article belongs to.',
+      to: [{ type: 'localNewsTag' }],
       options: {
         disableNew: true,
       },
-      of: [
-        {
-          type: 'reference',
-          title: 'Local news tag',
-          to: [{ type: 'localNewsTag' }],
-        },
-      ],
-      validation: (Rule: Rule) => Rule.required().min(1).max(1),
+      validation: (Rule: Rule) => Rule.required(),
     },
     title,
     ...publishDateTime,
