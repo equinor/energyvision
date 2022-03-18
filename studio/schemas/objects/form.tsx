@@ -34,7 +34,7 @@ const ingressContentType = configureBlockContent({
 export default {
   name: 'form',
   type: 'object',
-  title: 'Form',
+  title: 'Forms',
   description: 'This component shows choosen form',
   fields: [
     {
