@@ -228,7 +228,7 @@ const snippets: textSnippet = {
   },
   career_fair_form_visit_equinor: {
     title: 'Career fair form: Visit Equinor office',
-    defaultValue: 'Invite Equinor to a career fair or student event',
+    defaultValue: 'Would like to visit Equinor office or facility',
   },
   career_fair_form_cta: {
     title: 'Career fair form: CTA',

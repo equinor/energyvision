@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { sendRequestToServiceNow } from './../service-now-base'
+import { sendRequestToServiceNow } from './service-now-base'
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -32,7 +32,7 @@ const ContactEquinorForm = () => {
   const intl = useIntl()
 
   const onSubmit = async (data: FormValues) => {
-    const res = await fetch('/api/service-now-contact-us', {
+    const res = await fetch('/api/forms/service-now-contact-us', {
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',

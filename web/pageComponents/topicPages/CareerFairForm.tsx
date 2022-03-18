@@ -222,7 +222,7 @@ const CareerFairForm = () => {
                 <option>
                   {intl.formatMessage({
                     id: 'career_fair_form_visit_equinor',
-                    defaultMessage: 'Invite Equinor to a career fair or student event',
+                    defaultMessage: 'Would like to visit Equinor office or facility',
                   })}
                 </option>
               </NativeSelect>
