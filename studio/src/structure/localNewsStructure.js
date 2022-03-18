@@ -42,7 +42,15 @@ const localNewsStructure = () => {
                     .schemaType(documentName)
                     .filter(`_type == "${documentName}" && references($tagId)`)
                     .params({ tagId: tag._id })
-                    .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent()),
+                    .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
+                    .child((documentId) =>
+                      S.documentWithInitialValueTemplate('localnews-with-tag', {
+                        localNewsTag: {
+                          _ref: tag._id,
+                          _type: 'reference',
+                        },
+                      }).documentId(documentId),
+                    ),
                 ),
             ),
           ]),

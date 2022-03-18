@@ -73,6 +73,15 @@ export default [
       _lang: params.isoCode,
     }),
   }),
+  T.template({
+    id: 'localnews-with-tag',
+    title: 'Local news',
+    schemaType: 'localNews',
+    parameters: [{ name: 'localNewsTag', type: 'reference' }],
+    value: (params) => ({
+      localNewsTag: params.localNewsTag,
+    }),
+  }),
   ...ParentRoutesTemplates,
   ...TextSnippetsTemplates,
 ]
