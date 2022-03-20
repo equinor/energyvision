@@ -21,7 +21,10 @@ inputs:
     required: true
   algoliaApiKey:
     description: 'Api key for Algolia'
-    required: true
+    required: false
+  algoliaApiKeyServer:
+    description: 'Api key for Algolia to be used server side'
+    required: false
 outputs:
   copied-files:
     description: 'Number of files copied'
@@ -47,6 +50,7 @@ runs:
           --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }} \
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
+          --build-arg ARG_ALGOLIA_SEARCH_API_KEY_SERVER=${{ inputs.algoliaApiKeyServer }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg BUILDKIT_INLINE_CACHE=1

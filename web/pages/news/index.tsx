@@ -5,7 +5,7 @@ import { InstantSearch, InstantSearchServerState, InstantSearchSSRProvider } fro
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
 import { history } from 'instantsearch.js/es/lib/routers/index.js'
-import { searchClient } from '../../lib/algolia'
+import { searchClientServer } from '../../lib/algolia'
 import { IntlProvider } from 'react-intl'
 import { Hits } from '../../pageComponents/news/newsRoom/Hits'
 import { RefinementList } from '../../pageComponents/news/newsRoom/RefinementList'
@@ -132,7 +132,7 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
             </Intro>
             <News>
               <InstantSearch
-                searchClient={searchClient}
+                searchClient={searchClientServer}
                 indexName="dev_NEWS_en-GB"
                 routing={{
                   router: history({
