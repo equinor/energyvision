@@ -37,6 +37,7 @@ export default function parentChild(schema = 'route') {
 function routeStructure(schema, isoCode) {
   const documentName = `${schema}_${isoCode}`
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
+  const categoryParentsWithDrafts = `_type == "${documentName}" && !defined(parent)`
 
   return () =>
     documentStore.listenQuery(`*[${categoryParents}]`).pipe(
@@ -50,7 +51,7 @@ function routeStructure(schema, isoCode) {
                 S.documentList()
                   .title('Topic Categories')
                   .schemaType(documentName)
-                  .filter(categoryParents)
+                  .filter(categoryParentsWithDrafts)
                   .canHandleIntent((intent, { type }) => type === documentName && ['create', 'edit'].includes(intent))
                   .child((id) => S.document().documentId(id).views(views).schemaType(documentName)),
               ),
