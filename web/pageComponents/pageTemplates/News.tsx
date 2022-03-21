@@ -24,6 +24,8 @@ const NewsLayout = styled.div`
   & h3 {
     margin: var(--space-small) 0;
   }
+
+  margin-bottom: var(--space-4xLarge);
 `
 
 const Header = styled.div`
@@ -130,7 +132,7 @@ const Related = styled.div`
 
 const Latest = styled.div`
   padding: 0 var(--space-medium);
-  margin: var(--space-4xLarge) auto;
+  margin: var(--space-4xLarge) auto 0;
   max-width: 1700px;
 `
 
