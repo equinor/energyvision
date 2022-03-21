@@ -98,7 +98,9 @@ export default {
           })
           const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
 
-          return doc.newsSlug ? `/${translatedNews}/${localNewsPath}/${slugify(doc.newsSlug, { lower: true })}` : ''
+          return doc.newsSlug
+            ? `/${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slugify(doc.newsSlug, { lower: true })}`
+            : ''
         },
         slugify: (value: string) => value,
       },
