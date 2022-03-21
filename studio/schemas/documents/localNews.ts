@@ -75,7 +75,6 @@ export default {
     title,
     ...publishDateTime,
     tags,
-    subscriptionType,
     {
       ...newsSlugField,
       fieldset: 'slug',
