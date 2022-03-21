@@ -302,7 +302,85 @@ const snippets: textSnippet = {
     title: 'Order annual reports form: CTA',
     defaultValue: 'Order printed copies',
   },
+  careers_contact_form_name:{
+    title: 'Careers contact form: Name',
+    defaultValue: 'Your Name'
+  },
 
+  careers_contact_form_name_placeholder:{
+    title: 'Careers contact form: Name Placeholder',
+    defaultValue: 'Jane Doe'
+  },
+  careers_contact_form_email:{
+    title: 'Careers contact form: Email',
+    defaultValue: 'Email'
+  },
+  careers_contact_form_name_validation: {
+    title: 'Careers contact form: Name validation',
+    defaultValue: 'Please fill out your name',
+  },
+  careers_contact_form_email_validation: {
+    title: 'Careers contact form: Email validation',
+    defaultValue: 'Please fill out a valid email address',
+  },
+  careers_contact_form_category:{
+    title: 'Careers contact form: Category',
+    defaultValue: 'Category'
+  },
+  careers_contact_form_questions:{
+    title: 'Careers contact form: Type your questions',
+    defaultValue: 'Type your questions'
+  },
+  careers_contact_form_location:{
+    title: 'Careers contact form: Location',
+    defaultValue: 'Location'
+  },
+  careers_contact_form_thesis_writing:{
+    title: 'Careers contact form: Thesis writing',
+    defaultValue: 'Thesis writing'
+  },
+  careers_contact_form_questions_related_to_position:{
+    title: 'Careers contact form: Questions related to a specific position',
+    defaultValue: 'Questions related to a specific position'
+  },
+  careers_contact_form_technical_issues:{
+    title: 'Careers contact form: Technical issue when applying for a specific position',
+    defaultValue: 'Technical issue when applying for a specific position'
+  },
+  careers_contact_form_phone: {
+    title: 'Careers contact form: Phone number',
+    defaultValue: 'Phone number',
+  },
+  careers_contact_form_phone_validation:{
+    title: 'Careers contact form: Phone Number validation',
+    defaultValue: 'Please enter your phone number'
+  },
+  careers_contact_form_phone_placeholder:{
+    title: 'Careers contact form: Phone Number placeholder',
+    defaultValue: 'Country code and phone number'
+  },
+
+  careers_contact_form_position:{
+    title: 'Careers contact form: Position Id/ Name',
+    defaultValue: 'Position ID/name'
+  },
+
+  careers_contact_form_cta: {
+    title: 'Careers Contact form: CTA',
+    defaultValue: 'Submit form',
+  },
+  careers_contact_form_location_validation:{
+    title: 'Careers contact form: Location validation',
+    defaultValue: 'Enter a location'
+  },
+  careers_contact_form_location_placeholder:{
+    title: 'Careers contact form: Country/city',
+    defaultValue: 'Country/city'
+  },
+  careers_contact_form_questions_validation:{
+    title: 'Careers contact form: Questions validation',
+    defaultValue: 'Please enter a question'
+  },
 }
 
 type textSnippet = Record<

@@ -6,8 +6,9 @@ import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
-import { List, Link } from '@components'
+import { Link } from '@components'
 import { LinkData } from '../../types/types'
+import CareersContactForm from './CareersContactForm'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: 0 0 var(--space-large) 0;
@@ -32,7 +33,8 @@ const Form = ({ data }: { data: FormData }) => {
         return <ContactEquinorForm />
       case 'careerFairAndVisitsForm':
         return <CareerFairForm />
-      //case 'careersContactForm' : return </>
+      case 'careersContactForm':
+        return <CareersContactForm />
       case 'orderReportsForm':
         return (
           <>
@@ -41,7 +43,6 @@ const Form = ({ data }: { data: FormData }) => {
                 <ListStyled>
                   {downloads.length > 0 &&
                     downloads.map((item: LinkData) => {
-                      console.log(downloads.concat())
                       const { id, label, type, extension, ariaLabel } = item
                       const url = item.href + '?' + item.fileName?.replace(/ /g, '-')
                       if (!url) {
