@@ -94,7 +94,7 @@ export default {
           const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
 
           const localNewsTag = await client.fetch(`*[_id == $id && _type == 'localNewsTag'][0]`, {
-            id: doc.localNewsTag[0]._ref,
+            id: doc.localNewsTag._ref,
           })
           const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
 
