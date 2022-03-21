@@ -27,6 +27,7 @@ const BodyContainer = styled.div`
 `
 
 const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
+  if (!pageData) return null
   const { title = '', text = '', backgroundImage } = pageData
 
   return (
