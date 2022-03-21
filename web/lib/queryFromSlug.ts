@@ -1,4 +1,5 @@
 import { newsQuery } from './queries/news'
+import { localNewsQuery } from './queries/localNews'
 import { pageQuery } from './queries/routes'
 import { contentQueryById } from './queries/contentById'
 import { getNameFromLocale } from './localization'
@@ -44,6 +45,6 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
-    query: isNews ? newsQuery : pageQuery,
+    query: isNews ? (slugArray.length >= 3 ? localNewsQuery : newsQuery) : pageQuery,
   }
 }

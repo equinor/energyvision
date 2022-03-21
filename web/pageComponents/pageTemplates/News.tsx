@@ -262,7 +262,7 @@ const NewsPage = ({ data }: ArticleProps) => {
                 </Related>
               )}
 
-              {latestNews.length > 0 && (
+              {latestNews && latestNews.length > 0 && (
                 <Latest>
                   <LatestNews data={latestNews} />
                 </Latest>
