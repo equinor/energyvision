@@ -17,7 +17,7 @@ export async function middleware(request: NextRequest) {
     return undefined
   }
 
-  // Check if a redirect exist in sanity
+  // Check if a redirect exists in sanity
   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
