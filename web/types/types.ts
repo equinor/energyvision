@@ -1,5 +1,12 @@
 // @TODO Don't know yet where to put this or how to structure it
-import { SanityImageObject, SanityImageCrop, SanityImageHotspot } from '@sanity/image-url/lib/types/types'
+import {
+  SanityImageObject,
+  SanityImageCrop,
+  SanityImageHotspot,
+  SanityImageSource,
+} from '@sanity/image-url/lib/types/types'
+// @TODO: When we port to the new library this one should be used as PortableTextBlock type
+import { PortableTextBlock as SPortableTextBlock } from '@portabletext/types'
 import { PortableTextEntry } from '@sanity/block-content-to-react'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import type { BlockNode } from '@sanity/block-content-to-react'
@@ -55,6 +62,14 @@ export type ImageWithAlt = {
   hotspot?: SanityImageHotspot
   _type: 'imageWithAlt'
   extension?: string
+}
+
+export type ErrorPageData = {
+  documentTitle?: string
+  metaDescription?: string
+  backgroundImage: SanityImageSource
+  title?: SPortableTextBlock[]
+  text?: SPortableTextBlock[]
 }
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
