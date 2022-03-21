@@ -30,7 +30,7 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID ${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
 
 #RUN pnpm install --recursive --frozen-lockfile
-RUN pnpm m i --frozen-lockfile
+RUN pnpm web install --frozen-lockfile
 RUN pnpm web build
 
 FROM node:lts-alpine
@@ -55,12 +55,10 @@ RUN addgroup -S "$USER" && \
   --uid "$UID" \
   "$USER"
 
-COPY --from=builder /opt/app/node_modules ./node_modules
 COPY --from=builder /opt/app/web/.next ./web/.next
 COPY --from=builder /opt/app/web/next.config.mjs ./web
 COPY --from=builder /opt/app/web/package.json ./web
-COPY --from=builder /opt/app/web/node_modules ./web/node_modules
-# COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
+COPY --from=builder /opt/app/pnpm-lock.yaml ./
 COPY --from=builder /opt/app/web/languages.js ./web
 COPY --from=builder /opt/app/web/public ./web/public
 COPY --from=builder /opt/app/package.json ./
@@ -87,9 +85,10 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID ${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
 ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 
-# RUN pnpm web install -- --frozen-lockfile
+RUN pnpm install --frozen-lockfile
+RUN pnpm web install --frozen-lockfile
 
-# RUN rm ./web/pnpm-lock.yaml
+RUN rm ./pnpm-lock.yaml
 RUN rm -rf .pnpm-store
 
 EXPOSE "$PORT"
