@@ -40,8 +40,10 @@ const localNewsStructure = () => {
                   S.documentList()
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
-                    .filter(`_type == "${documentName}" && references($tagId)`)
-                    .params({ tagId: tag._id })
+                    .filter(
+                      `_type == "${documentName}" && references($tagId) && (!defined(_lang) || _lang == $baseLang)`,
+                    )
+                    .params({ tagId: tag._id, baseLang: i18n.base })
                     .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
                     .child((documentId) =>
                       S.documentWithInitialValueTemplate('localnews-with-tag', {
