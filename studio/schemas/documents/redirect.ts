@@ -1,7 +1,11 @@
-import type { Rule } from '@sanity/types'
+import type { Rule, SanityDocument, ValidationContext } from '@sanity/types'
 import routes from '../routes'
 import { filterByRouteAndNews } from '../../helpers/referenceFilters'
 import blocksToText from '../../helpers/blocksToText'
+// eslint-disable-next-line import/no-unresolved
+import sanityClient from 'part:@sanity/base/client'
+
+const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
 export default {
   title: 'Redirect',
@@ -14,12 +18,21 @@ export default {
       name: 'from',
       type: 'string',
       validation: (Rule: Rule) =>
-        Rule.custom((value: string) => {
+        Rule.custom(async (value: string, context: ValidationContext) => {
+          const { document } = context
+          const documentId = document?._id
+          const query = `*[_type == 'redirect' && from == $value && _id != $documentId]`
+          const params = { value, documentId }
+          const redirects = await client.fetch(query, params)
+
           if (!value) {
             return 'Slug is required'
           } else if (value.charAt(0) !== '/') {
             return "Slug must begin with '/'. Do not add https://www.equinor.etc"
+          } else if (redirects.length > 0) {
+            return 'Another redirect from this path already exists'
           }
+
           return true
         }),
     },

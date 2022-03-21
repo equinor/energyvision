@@ -1,8 +1,10 @@
 import { getRedirectUrl } from '../common/helpers/getRedirectUrl'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
+import { isGlobal } from '../common/helpers/datasetHelpers'
 
 const PERMANENT_REDIRECT = 301
+const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 
@@ -15,11 +17,16 @@ export async function middleware(request: NextRequest) {
     return undefined
   }
 
-  // Check if should redirect
+  // Check if a redirect exist in sanity
   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
     return NextResponse.redirect(`${origin}/${locale}${redirect.to}`, PERMANENT_REDIRECT)
+  }
+
+  // Check if has /magazine/ in the url and redirect to a temporary landing page if so
+  if (pathname.includes('/magazine/') && isGlobal) {
+    return NextResponse.redirect(`${origin}/magazine`, TEMPORARY_REDIRECT)
   }
 
   // Check if pathname ends with .html
