@@ -282,7 +282,7 @@ export const getDefaultDocumentNode = (props) => {
    * https://www.sanity.io/docs/structure-builder-reference#getdefaultdocumentnode-97e44ce262c9
    */
   const { schemaType } = props
-  if (schemaType === 'news') {
+  if (schemaType === 'news' || schemaType === 'localNews') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
       S.view.component(NewsPreview).title('News preview'),
