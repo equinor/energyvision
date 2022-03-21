@@ -131,7 +131,8 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const footerData = await getClient(preview).fetch(footerQuery, { lang: lang })
   const intl = await getIntl(locale, preview)
 
-  const notFound = !pageData && !queryParams?.id
+  // @TODO This doesn't feel bullet proof at all this doesn't scale to well.
+  const notFound = (!pageData && !queryParams?.id) || (typeof pageData.news != 'undefined' && !pageData.news)
   // If global, fetch static content in case data is not found or trying to access news
   // @TODO This should only be for news at some point
   if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
