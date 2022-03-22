@@ -11,6 +11,7 @@ on:
       - '!web/.gitignore'
       - '!web/jest.config.js'
       - '!web/jest.setup.ts'
+      - 'pnpm-lock.yaml'
   repository_dispatch:
     types: [sanity_publish]
 jobs:
