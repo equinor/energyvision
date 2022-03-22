@@ -5,6 +5,15 @@ import { contentQueryById } from './queries/contentById'
 import { getNameFromLocale } from './localization'
 import { newsSlug } from '../../satellitesConfig'
 
+export type QueryParams = {
+  id?: string[]
+  slug?: string
+  lang?: string
+  date?: string
+}
+
+export type NewsQuery = { newsQuery: string; localNewsQuery: string }
+
 const isSlugID = (slug: string): boolean => {
   const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
   return regExp.test(slug.replace('drafts.', '').substr(0, 36))
@@ -45,6 +54,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
-    query: isNews ? (slugArray.length >= 3 ? localNewsQuery : newsQuery) : pageQuery,
+    query: isNews ? { newsQuery, localNewsQuery } : pageQuery,
+    isNews,
   }
 }

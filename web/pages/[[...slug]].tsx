@@ -23,6 +23,7 @@ import getIntl from '../common/helpers/getIntl'
 import { GTM_ID } from '../lib/gtm'
 import getTopicRoutesForLocale from '../common/helpers/getTopicRoutesForLocale'
 import getPageSlugs from '../common/helpers/getPageSlugs'
+import { fetchData } from '../lib/fetchData'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -122,8 +123,9 @@ Page.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
-  const { query, queryParams } = getQueryFromSlug(params?.slug as string[], locale)
-  const data = query && (await getClient(preview).fetch(query, queryParams))
+  const { query, queryParams, isNews } = getQueryFromSlug(params?.slug as string[], locale)
+
+  const data = await fetchData(query, queryParams, isNews, preview)
   const pageData = filterDataToSingleItem(data, preview) || null
 
   const lang = getNameFromLocale(locale)
