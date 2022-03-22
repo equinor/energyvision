@@ -33,27 +33,19 @@ const extensions = [
   },
 ]
 
-export default function extensionFilters() {
-  return S.listItem()
-    .title('Filter files by file type')
-    .icon()
-    .child(
-      S.list()
-        .title('Filter by extension')
-        .items([...filterItems()]),
-    )
-}
+export const AssetExtensionFilters = S.listItem()
+  .title('Filter files by file type')
+  .icon()
+  .child(S.list().title('Filter by extension').items(filterItems))
 
-const filterItems = () => {
-  return extensions.map((item) => {
-    return S.listItem()
-      .title(item.title)
-      .child(
-        S.documentTypeList('assetFile')
-          .id(item.id)
-          .title(item.title)
-          .filter(`_type == "assetFile" && asset.asset->extension in $extensions`)
-          .params({ extensions: item.extensions }),
-      )
-  })
-}
+const filterItems = extensions.map((item) => {
+  return S.listItem()
+    .title(item.title)
+    .child(
+      S.documentTypeList('assetFile')
+        .id(item.id)
+        .title(item.title)
+        .filter(`_type == "assetFile" && asset.asset->extension in $extensions`)
+        .params({ extensions: item.extensions }),
+    )
+})

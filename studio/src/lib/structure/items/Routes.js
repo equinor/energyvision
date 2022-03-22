@@ -1,13 +1,13 @@
 import S from '@sanity/desk-tool/structure-builder'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
-import RoutePreview from '../previews/page/RoutePreview'
+import RoutePreview from '../../../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
-import { RouteDocuments } from '../../icons'
+import { RouteDocuments } from '../../../../icons'
 
-import { languages } from '../../languages'
+import { languages } from '../../../../languages'
 
-import flags from '../../icons/countries'
+import flags from '../../../../icons/countries'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -23,16 +23,11 @@ const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview)
 // Original version without preview pane
 // const views = [S.view.form()]
 
-export default function parentChild(schema = 'route') {
-  const topicRoutes = languages.map((lang) =>
-    S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(schema, lang.name)),
-  )
+const schema = 'route'
 
-  return S.listItem()
-    .title('Topic Routes')
-    .icon(RouteDocuments)
-    .child(S.list().id('routes').title('Routes').items(topicRoutes))
-}
+const topicRoutes = languages.map((lang) =>
+  S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(schema, lang.name)),
+)
 
 function routeStructure(schema, isoCode) {
   const documentName = `${schema}_${isoCode}`
@@ -83,3 +78,8 @@ function routeStructure(schema, isoCode) {
       ),
     )
 }
+
+export const Routes = S.listItem()
+  .title('Topic Routes')
+  .icon(RouteDocuments)
+  .child(S.list().id('routes').title('Routes').items(topicRoutes))

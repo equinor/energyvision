@@ -1,9 +1,9 @@
 import S from '@sanity/desk-tool/structure-builder'
+import { NewsDocuments, EdsIcon } from '../../../../icons'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
 import { map } from 'rxjs/operators'
-import { EdsIcon } from '../../icons'
-import { i18n } from '../../schemas/documentTranslation'
+import { i18n } from '../../../../schemas/documentTranslation'
 import { list, tag as tagIcon } from '@equinor/eds-icons'
 
 const localNewsStructure = () => {
@@ -60,4 +60,8 @@ const localNewsStructure = () => {
     )
 }
 
-export default localNewsStructure
+export const LocalNews = S.listItem()
+  .title('Local news')
+  .icon(NewsDocuments)
+  .schemaType('localNews')
+  .child(localNewsStructure())

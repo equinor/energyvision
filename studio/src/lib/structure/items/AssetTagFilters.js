@@ -2,11 +2,9 @@ import S from '@sanity/desk-tool/structure-builder'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
 import { map } from 'rxjs/operators'
-import { TagIcon } from '../../icons'
+import { TagIcon } from '../../../../icons'
 
-export default function tagFilters() {
-  return S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList)
-}
+export const AssetTagFilters = S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList)
 
 const tagFilterList = () => {
   const documentName = 'assetFile'

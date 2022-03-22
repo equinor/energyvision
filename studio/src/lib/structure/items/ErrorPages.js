@@ -1,7 +1,7 @@
 import S from '@sanity/desk-tool/structure-builder'
-import { FileIcon } from '../../icons'
+import { FileIcon } from '../../../../icons'
 
-const errorPages = [
+export const ErrorPages = [
   S.listItem()
     .title('404 - Page not found')
     .icon(FileIcon)
@@ -57,5 +57,3 @@ const errorPages = [
         ]),
     ),
 ]
-
-export default errorPages
