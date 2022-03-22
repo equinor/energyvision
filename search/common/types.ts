@@ -24,3 +24,35 @@ export type BlockNode = {
   markDefs: string[]
   style: string
 }
+
+export type EventIndex = {
+  slug: string
+  objectID: string
+  type: string
+  title: string
+  ingress: string
+  eventDescription: string
+  eventDate: string // does it make sense to use iso or utc
+}
+
+export type TopicIndex = {
+  slug: string
+  objectID: string
+  type: string
+  pageTitle: string
+  title: string
+  ingress: string
+  text: string
+}
+
+export type NewsIndex = {
+  slug: string
+  objectID: string
+  type: string
+  pageTitle: string
+  text: string
+  publishDateTime: string
+  year: number
+}
+
+export type IndexType = EventIndex | TopicIndex | NewsIndex

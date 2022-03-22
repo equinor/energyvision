@@ -1,5 +1,5 @@
 import { Event } from './sanity'
-import { EventIndex } from './algolia'
+import { EventIndex } from '../../common'
 
 type MapDataType = (event: Event) => EventIndex
 export const mapData: MapDataType = (event) => ({

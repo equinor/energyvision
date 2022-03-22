@@ -1,14 +1,5 @@
 import { Settings } from '@algolia/client-search'
 
-export type NewsIndex = {
-  slug: string
-  objectID: string
-  type: string
-  pageTitle: string
-  text: string
-  publishDateTime: string
-  year: number
-}
 
 export const indexSettings: Settings = {
   searchableAttributes: ['pageTitle', 'text'],

@@ -1,14 +1,5 @@
 import { Settings } from '@algolia/client-search'
 
-export type TopicIndex = {
-  slug: string
-  objectID: string
-  type: string
-  pageTitle: string
-  title: string
-  ingress: string
-  text: string
-}
 
 export const indexSettings: Settings = {
   searchableAttributes: ['pageTitle', 'title', 'ingress', 'text'],

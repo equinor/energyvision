@@ -1,5 +1,5 @@
 import { NewsArticle } from './sanity'
-import { NewsIndex } from './algolia'
+import { NewsIndex } from '../../common'
 import { mapData } from './mapper'
 
 describe('News', () => {

@@ -3,7 +3,7 @@ import { ap } from 'fp-ts/lib/Identity'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 import { TopicPage } from './sanity'
-import { TopicIndex } from './algolia'
+import { TopicIndex } from '../../common'
 
 type MappableObjectType = {
   _key: string

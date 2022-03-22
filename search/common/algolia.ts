@@ -4,6 +4,7 @@ import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { getAlgoliaApiKey, getAlgoliaAppId } from './env'
+import { IndexType } from '../common'
 
 const algoliaSearchCurried = (appId: string) => (apiKey: string) => algoliasearch(appId, apiKey)
 
@@ -20,7 +21,7 @@ const init: InitType = (indexName) =>
 
 // Push to Algolia index
 type UpdateIndexType = (
-  data: readonly Readonly<Record<string, string>>[],
+  data: readonly IndexType[],
 ) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 const updateIndex: UpdateIndexType = (data) => (index) =>
   pipe(
@@ -40,8 +41,8 @@ type UpdateType = (
   indexName: string,
 ) => (
   indexSettings: Settings,
-) => (mappedData: Readonly<Record<string, string>>[]) => TE.TaskEither<string | Error, string>
-export const update: UpdateType = (indexName) => (indexSettings) => (mappedData: Readonly<Record<string, string>>[]) =>
+) => (mappedData: IndexType[]) => TE.TaskEither<string | Error, string>
+export const update: UpdateType = (indexName) => (indexSettings) => (mappedData) =>
   pipe(
     init(indexName),
     TE.fromEither,
