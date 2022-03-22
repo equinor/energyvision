@@ -5,12 +5,14 @@ import FilePreview from './src/previews/file/filePreview'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import Structure from './src/lib/structure'
+import { IS_GLOBAL } from './src/lib/datasetHelpers'
+import { hasPermission, PERMISSIONS } from './src/lib/permissions'
 
 const listItems = [
   Structure.News,
-  Structure.LocalNews,
+  IS_GLOBAL && Structure.LocalNews,
   Structure.TopicContent,
-  Structure.LandingPage,
+  IS_GLOBAL && Structure.LandingPage,
   Structure.Event,
   Structure.Misc,
   S.divider(),
@@ -22,8 +24,8 @@ const listItems = [
   S.divider(),
   Structure.AssetLibrary,
   S.divider(),
-  Structure.Settings,
-]
+  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Settings,
+].filter((e) => e)
 
 export default S.list().title('Content').items(listItems)
 

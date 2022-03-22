@@ -1,9 +1,6 @@
-// eslint-disable-next-line import/no-unresolved
-import client from 'part:@sanity/base/client'
-import { getLanguages } from '../satellitesConfig.js'
+import { getLanguages } from '../satellitesConfig'
+import { DATASET } from './src/lib/datasetHelpers'
 
-const dataset = client.clientConfig.dataset
-
-export const languages = getLanguages(dataset)
+export const languages = getLanguages(DATASET)
 
 export const defaultLanguage = languages[0]

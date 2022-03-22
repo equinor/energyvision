@@ -3,16 +3,11 @@ import S from '@sanity/desk-tool/structure-builder'
 import { MenuIcon } from '../../../../icons'
 import { languages } from '../../../../languages'
 // eslint-disable-next-line import/no-unresolved
-import client from 'part:@sanity/base/client'
 import flags from '../../../../icons/countries'
-
-const dataSet = client.clientConfig.dataset
-const EQUINOR_COM_NAME = 'global'
-const EQUINOR_COM_DEV = 'global-development'
-const isGlobal = dataSet === EQUINOR_COM_NAME || dataSet === EQUINOR_COM_DEV
+import { IS_GLOBAL } from '../../datasetHelpers'
 
 const menuId = (lang) => {
-  if (isGlobal) {
+  if (IS_GLOBAL) {
     return lang.id + '-menu'
   } else {
     return lang.id + '-simple-menu'
@@ -25,7 +20,7 @@ const getMenuListItems = (lang) => {
     id: `main-menu`,
     icon: MenuIcon,
     child: () =>
-      S.documentWithInitialValueTemplate(isGlobal ? 'menu-with-locale' : 'simple-menu-with-locale', {
+      S.documentWithInitialValueTemplate(IS_GLOBAL ? 'menu-with-locale' : 'simple-menu-with-locale', {
         isoCode: `${lang.name}`,
       })
         .id(menuId(lang))
@@ -41,10 +36,10 @@ const getMenuListItems = (lang) => {
         .filter('_type == "subMenu" && _lang == $baseLang')
         .params({ baseLang: lang.name })
         //.params({ isoCode: `${lang.name}` })
-        .initialValueTemplates([S.initialValueTemplate('submenu-with-locale', { isoCode: `${lang.name}` })]),
+        .initialValueTemplates([S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` })]),
   })
 
-  return isGlobal ? mainMenu : subMenu
+  return IS_GLOBAL ? [mainMenu, subMenu] : [subMenu]
 }
 
 const menus = languages.map((lang) =>
