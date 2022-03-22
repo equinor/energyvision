@@ -1,5 +1,4 @@
 import SlugInput from '../components/SlugInput/index'
-import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
 import { newsSlug } from '../../../satellitesConfig.js'
 import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
@@ -15,7 +14,6 @@ import {
   title,
   publishDateTime,
   tags,
-  subscriptionType,
   newsSlugField,
   heroImage,
   ingress,
@@ -86,7 +84,6 @@ export default {
       fieldset: 'slug',
       inputComponent: SlugInput,
       options: {
-        isUnique: isUniqueWithinLocale,
         source: async (doc: any) => {
           // translated document ids end with _i18n__lang while base documents don't
           const lastFiveCharacters = doc._id.slice(-5)

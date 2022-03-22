@@ -58,6 +58,7 @@ export const publishDateTime = [
     name: 'customPublicationDate',
     description: 'Use this if you want to display a custom publication date',
     type: 'boolean',
+    initialValue: false,
   },
   {
     title: 'Publication date and time',

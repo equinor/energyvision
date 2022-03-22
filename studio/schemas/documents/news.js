@@ -1,5 +1,4 @@
 import { i18n } from '../documentTranslation'
-import { isUniqueWithinLocale } from '../validations/isUniqueWithinLocale'
 import SlugInput from '../components/SlugInput/index'
 import { newsSlug } from '../../../satellitesConfig.js'
 import { defaultLanguage } from '../../languages'
@@ -69,7 +68,6 @@ export default {
       fieldset: 'slug',
       inputComponent: SlugInput,
       options: {
-        isUnique: isUniqueWithinLocale,
         source: async (doc) => {
           // translated document ids end with _i18n__lang while base documents don't
           const lastFiveCharacters = doc._id.slice(-5)
