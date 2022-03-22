@@ -1,11 +1,11 @@
 import { GetServerSideProps } from 'next'
 import Error from 'next/error'
 import { default as NextLink } from 'next/link'
-import { InstantSearch, InstantSearchServerState, InstantSearchSSRProvider } from 'react-instantsearch-hooks'
+import { InstantSearch, InstantSearchServerState, InstantSearchSSRProvider, Configure } from 'react-instantsearch-hooks'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
 import { history } from 'instantsearch.js/es/lib/routers/index.js'
-import { searchClientServer } from '../../lib/algolia'
+import { searchClientServer, searchClient } from '../../lib/algolia'
 import { IntlProvider } from 'react-intl'
 import { Hits } from '../../pageComponents/news/newsRoom/Hits'
 import { RefinementList } from '../../pageComponents/news/newsRoom/RefinementList'
@@ -28,6 +28,7 @@ import type { MenuData, FooterColumns, IntlData } from '../../types/types'
 type NewsRoomProps = {
   serverState?: InstantSearchServerState
   url: string
+  isServerRendered?: boolean
   data?: {
     menuData: MenuData
     footerData: { footerColumns: FooterColumns[] }
@@ -75,7 +76,7 @@ const NewsList = styled.div`
 `
 
 const StyledHitLink = styled.a`
-  padding: var(--space-medium) 0;
+  padding: var(--space-small) 0;
   display: block;
   color: var(--default-text);
   cursor: pointer;
@@ -87,16 +88,24 @@ const Refinement = styled.div`
   padding: var(--space-medium) 0;
 `
 
+const StyledHeading = styled(Heading)`
+  display: inline-block;
+`
+
+const Date = styled.div`
+  font-size: var(--typeScale-0);
+`
+
 // @TODO Types
 function Hit({ hit }: any) {
   return (
     <NextLink href={hit.slug} passHref>
       <StyledHitLink>
         <article>
-          {hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}
-          <Heading level="h2" size="lg">
+          <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>
+          <StyledHeading level="h2" size="md">
             {hit.pageTitle}
-          </Heading>
+          </StyledHeading>
           {/*  <Text>{hit.text}</Text> */}
         </article>
       </StyledHitLink>
@@ -104,7 +113,8 @@ function Hit({ hit }: any) {
   )
 }
 
-export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoomProps) {
+export default function NewsRoom({ serverState, isServerRendered = false, url, data, errorCode }: NewsRoomProps) {
+  console.log('is server rendered', isServerRendered)
   if (errorCode && errorCode === 404) {
     return <Error statusCode={404} />
   }
@@ -132,7 +142,7 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
             </Intro>
             <News>
               <InstantSearch
-                searchClient={searchClientServer}
+                searchClient={isServerRendered ? searchClientServer : searchClient}
                 indexName="dev_NEWS_en-GB"
                 routing={{
                   router: history({
@@ -152,6 +162,7 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
                   }),
                 }} */
               >
+                <Configure facetingAfterDistinct />
                 <NewsRoomContent>
                   <Filters>
                     <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
@@ -160,6 +171,14 @@ export default function NewsRoom({ serverState, url, data, errorCode }: NewsRoom
                     <Refinement>
                       <span>Year</span>
                       <RefinementList sortBy={['name:desc']} attribute="year" />
+                    </Refinement>
+                    <Refinement>
+                      <span>Country</span>
+                      <RefinementList sortBy={['name:desc']} attribute="countryTags" />
+                    </Refinement>
+                    <Refinement>
+                      <span>Topic</span>
+                      <RefinementList sortBy={['name:desc']} attribute="tags" />
                     </Refinement>
                   </Filters>
 
@@ -216,7 +235,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
     }
   }
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const serverState = await getServerState(<NewsRoom url={url} />)
+  const serverState = await getServerState(<NewsRoom isServerRendered url={url} />)
   console.log('server', serverState, url)
   const lang = getNameFromLocale(locale)
 
@@ -228,6 +247,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
   return {
     props: {
       serverState,
+
       url,
       data: {
         menuData,

@@ -116,6 +116,8 @@ describe('News', () => {
           text: 'Some more text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
           year: 2021,
+          countryTags: ['Germany'],
+          tags: ['Oil'],
         })
         expect(result[2]).toEqual({
           slug: '/a/slug',
