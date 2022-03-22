@@ -50,7 +50,7 @@ runs:
           --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }} \
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
-          --build-arg ARG_ALGOLIA_SEARCH_API_KEY_SERVER=${{ inputs.algoliaApiKeyServer }} \
+          --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
