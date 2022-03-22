@@ -208,7 +208,12 @@ const pageContentFields = /* groq */ `
           key,
           title,
         },
-        "promotions": *[_type == "news" && _lang == $lang && count(tags[_ref in ^.^.tags[]._ref]) > 0] | order(${publishDateTimeQuery} desc)[0...3]{
+        "countryTags": countryTags[]->{
+          "id": _id,
+          _type,
+          title,
+        },
+        "promotions": *[_type == "news" && _lang == $lang && (count(tags[_ref in ^.^.tags[]._ref]) > 0 || count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0)] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
           "updatedAt": _updatedAt,

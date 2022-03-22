@@ -13,7 +13,9 @@ import {
   openGraphImage,
   title,
   publishDateTime,
+  // We have asked Mette if this is relevant
   tags,
+  countryTags,
   newsSlugField,
   heroImage,
   ingress,
@@ -73,6 +75,7 @@ export default {
     title,
     ...publishDateTime,
     tags,
+    countryTags,
     {
       ...newsSlugField,
       fieldset: 'slug',

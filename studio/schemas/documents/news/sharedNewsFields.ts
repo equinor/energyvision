@@ -83,10 +83,31 @@ export const publishDateTime = [
 ]
 
 export const tags = {
-  title: 'Tags',
+  title: 'Topic tags',
   name: 'tags',
-  type: 'tagReference',
-  description: 'Adds tags to news article',
+  type: 'array',
+  description: 'Add tags to describe the content of this news article',
+  of: [
+    {
+      type: 'reference',
+      to: [{ type: 'tag' }],
+      options: { disableNew: true },
+    },
+  ],
+}
+
+export const countryTags = {
+  title: 'Country tags',
+  name: 'countryTags',
+  type: 'array',
+  description: 'Select the country or countries this news article is relevant for',
+  of: [
+    {
+      type: 'reference',
+      to: [{ type: 'countryTag' }],
+      options: { disableNew: true },
+    },
+  ],
 }
 
 export const subscriptionType = {

@@ -10,6 +10,7 @@ import {
   title,
   publishDateTime,
   tags,
+  countryTags,
   subscriptionType,
   newsSlugField,
   heroImage,
@@ -43,6 +44,14 @@ export default {
         collapsed: false,
       },
     },
+    {
+      title: 'Tags',
+      name: 'tagFieldset',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
   ],
   fields: [
     {
@@ -55,7 +64,8 @@ export default {
     },
     title,
     ...publishDateTime,
-    tags,
+    { ...tags, fieldset: 'tagFieldset' },
+    { ...countryTags, fieldset: 'tagFieldset' },
     subscriptionType,
     {
       ...newsSlugField,

@@ -55,7 +55,6 @@ import menuLink from './objects/menuLink'
 import basicIframe from './objects/basicIframe'
 import iframe from './objects/iframe'
 import remitTable from './objects/remitTable'
-import tagReference from './objects/tagReference'
 import promotion from './objects/promotion/promotion'
 import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
@@ -125,13 +124,12 @@ export default createSchema({
     footer,
     remitTable,
     tag,
-    tagReference,
+    countryTag,
     promotion,
     promoteNews,
     promoteTopics,
     promoteEvents,
     promotePeople,
-    countryTag,
     form,
     event,
     eventDate,

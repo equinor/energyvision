@@ -1,4 +1,5 @@
 import { defaultLanguage, languages } from '../../languages'
+import { TagIcon } from '../../icons'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -56,6 +57,7 @@ export default {
       // For debugging purposes
       return {
         title: title,
+        media: TagIcon,
       }
     },
   },
