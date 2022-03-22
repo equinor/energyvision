@@ -12,6 +12,7 @@ describe('News', () => {
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
         year: 2021,
+        // tags: ['Oil', 'Norway'],
         blocks: [
           {
             blockKey: 'blockKey',

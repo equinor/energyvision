@@ -44,12 +44,23 @@ const blocksToArray = (blocks, opts = {}) => {
     ),
   ) */
 
+// NM: Didn't feel good to take this from the web folder since the search
+//is so isolated :/ Copied it
+const publishDateTimeQuery = /* groq */ `
+  select(
+    customPublicationDate == true =>
+      publishDateTime,
+      _createdAt
+  )
+`
+
 export const query = /* groq */ `*[_type == "news" && _lang == $lang] {
   "slug": slug.current,
   _id,
   "title": title,
   "type": _type,
-  publishDateTime,
+  "publishDateTime": ${publishDateTimeQuery},
+  //"tags": tags[]->.title[$lang],
   "blocks": content[_type == "block"] {
     "blockKey": _key,
     "children": children[text match "*"] {
