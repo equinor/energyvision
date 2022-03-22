@@ -9,7 +9,7 @@ export enum PERMISSIONS {
 }
 
 const ROLES: RolesType = {
-  ACCESS_SETTINGS: ['administrator'],
+  ACCESS_SETTINGS: ['administrator, editor'],
   ACCESS_LOCAL_NEWS_TAGS: ['administrator'],
 }
 
