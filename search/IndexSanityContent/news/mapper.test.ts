@@ -11,6 +11,8 @@ describe('News', () => {
         slug: '/a/slug',
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
+        countryTags: ['Germany'],
+        tags: ['Oil'],
         year: 2021,
         // tags: ['Oil', 'Norway'],
         blocks: [
@@ -42,6 +44,8 @@ describe('News', () => {
           text: 'Some text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
           year: 2021,
+          countryTags: ['Germany'],
+          tags: ['Oil'],
         } as NewsIndex)
       })
     })
@@ -53,6 +57,8 @@ describe('News', () => {
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
         year: 2021,
+        countryTags: ['Germany'],
+        tags: ['Oil'],
         blocks: [
           {
             blockKey: 'blockKey',
@@ -99,6 +105,8 @@ describe('News', () => {
           text: 'Some text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
           year: 2021,
+          countryTags: ['Germany'],
+          tags: ['Oil'],
         } as NewsIndex)
         expect(result[1]).toEqual({
           slug: '/a/slug',
@@ -117,6 +125,8 @@ describe('News', () => {
           text: 'Some text 3',
           publishDateTime: '2021-11-26T07:00:00.000Z',
           year: 2021,
+          countryTags: ['Germany'],
+          tags: ['Oil'],
         })
         expect(result[3]).toEqual({
           slug: '/a/slug',
@@ -126,6 +136,8 @@ describe('News', () => {
           text: 'Some more text 4',
           publishDateTime: '2021-11-26T07:00:00.000Z',
           year: 2021,
+          countryTags: ['Germany'],
+          tags: ['Oil'],
         })
       })
     })

@@ -1,11 +1,11 @@
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/lib/Array'
-import { NewsArticle } from './sanity'
 import { NewsIndex } from '../../common'
+import type { NewsArticle } from './sanity'
 
 type MapDataType = (article: NewsArticle) => NewsIndex[]
 export const mapData: MapDataType = (article) => {
-  const { publishDateTime } = article
+  const { publishDateTime, tags, countryTags, title, slug } = article
   // Hu hei hvor det går
   const year = publishDateTime ? new Date(publishDateTime).getFullYear() : ''
   return pipe(
@@ -14,12 +14,14 @@ export const mapData: MapDataType = (article) => {
     A.map(
       ({ blocks, children }) =>
         ({
-          slug: article.slug,
+          slug,
           objectID: `${article._id}-${blocks.blockKey}-${children.childKey}`,
           type: 'news',
-          pageTitle: article.title,
+          pageTitle: title,
           text: children.text,
-          publishDateTime: publishDateTime || null,
+          publishDateTime: publishDateTime,
+          tags,
+          countryTags,
           year,
         } as NewsIndex),
     ),
