@@ -19,7 +19,7 @@ const Container = styled.div`
   margin: auto;
 `
 const ListStyled = styled.div`
-  padding-bottom: var(--space-large);
+  padding-bottom: var(--space-3xLarge);
 `
 
 const Form = ({ data }: { data: FormData }) => {
