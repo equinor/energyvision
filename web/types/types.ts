@@ -548,3 +548,9 @@ export type FormData = {
   form: string
   downloads: LinkData[]
 }
+
+export type NewsListData = {
+  id: string
+  type: string
+  articles: CardData[]
+}

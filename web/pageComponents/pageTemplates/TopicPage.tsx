@@ -17,6 +17,7 @@ import RemitTable from '../shared/RemitTable'
 import Promotion from '../topicPages/Promotion'
 import Form from '../topicPages/Form/Form'
 import Table from '../topicPages/Table'
+import NewsList from '../topicPages/NewsList'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
@@ -38,6 +39,7 @@ import {
   RemitTableData,
   FormData,
   TableData,
+  NewsListData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -144,6 +146,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <Table key={c.id} data={c as TableData} />
       case 'cookieDeclaration':
         return <CookieDeclaration key={c.id} />
+      case 'newsList':
+        return <NewsList key={c.id} data={c as NewsListData} />
       default:
         return null
     }

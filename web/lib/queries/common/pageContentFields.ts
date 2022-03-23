@@ -374,6 +374,40 @@ const pageContentFields = /* groq */ `
     "downloads": downloads[]{${downloadableFileFields}},
   },
 
+  _type == "newsList" => {
+    "type": _type,
+    "id": _key,
+    "tags": selectedTags.tags[]->{
+      "id": _id,
+      key,
+    },
+    "countryTags": selectedTags.countryTags[]->{
+      "id": _id,
+      _type,
+    },
+    "localNewsTags": selectedTags.localNewsTags[]->{
+      "id": _id,
+      _type,
+    },
+    "articles": *[
+      (_type == "news" || _type == "localNews")
+      && _lang == $lang
+      && (count(tags[_ref in ^.tags[]._ref]) > 0 || count(countryTags[_ref in ^.countryTags[]._ref]) > 0 || count(localNewsTags[_ref in ^.localNewsTags[]._ref]) > 0)
+    ] | order(${publishDateTimeQuery} desc)[0...20]{
+      "type": _type,
+      "id": _id,
+      "updatedAt": _updatedAt,
+      title,
+      heroImage,
+      "publishDateTime": ${publishDateTimeQuery},
+      "slug": slug.current,
+      ingress[]{
+        ...,
+        ${markDefs},
+      },
+    },
+  }
+
 `
 
 export default pageContentFields
