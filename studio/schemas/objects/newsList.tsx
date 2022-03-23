@@ -1,5 +1,7 @@
 import React from 'react'
 import { defaultLanguage } from '../../languages'
+import { EdsIcon } from '../../icons'
+import { list } from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
 
 export default {
@@ -58,6 +60,7 @@ export default {
       return {
         title: title,
         subtitle: `News list component`,
+        media: <div>{EdsIcon(list)}</div>,
       }
     },
   },
