@@ -82,6 +82,7 @@ export default {
         { type: 'remitTable' },
         { type: 'cookieDeclaration' },
         { type: 'form' },
+        { type: 'newsList' },
       ],
     },
   ],
