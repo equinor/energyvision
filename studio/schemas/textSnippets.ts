@@ -249,58 +249,63 @@ const snippets: textSnippet = {
     defaultValue: 'Jane Doe',
   },
   
-  order_reports_fair_form_email: {
+  order_reports_form_email: {
     title: 'Order annual reports form: Email',
     defaultValue: 'Email',
   },
-  order_reports_fair_form_email_validation: {
+  order_reports_form_email_validation: {
     title: 'Order annual reports form: Email validation',
     defaultValue: 'Please fill out a valid email address',
   },
-  order_reports_fair_form_company: {
+  order_reports_form_company: {
     title: 'Order annual reports form: Company',
     defaultValue: 'Company',
   },
-  order_reports_fair_form_company_validation: {
+  order_reports_form_company_validation: {
     title: 'Order annual reports form: Company Validation',
     defaultValue: 'Please enter your company',
   },
-  order_reports_fair_form_address: {
+  order_reports_form_address: {
     title: 'Order annual reports form: Address',
     defaultValue: 'Address',
   },
-  order_reports_fair_form_address_validation: {
+  order_reports_form_address_validation: {
     title: 'Order annual reports form: Address Validation',
     defaultValue: 'Please enter your address',
   },
-  order_reports_fair_form_zipcode: {
+  order_reports_form_zipcode: {
     title: 'Order annual reports form: Address',
     defaultValue: 'Post number/Zip code',
   },
-  order_reports_fair_form_zipcode_validation: {
+  order_reports_form_zipcode_validation: {
     title: 'Order annual reports form: zipcode Validation',
     defaultValue: 'Please enter your post number/Zip code',
   },
-  order_reports_fair_form_city: {
+  order_reports_form_city: {
     title: 'Order annual reports form: City',
     defaultValue: 'City',
   },
-  order_reports_fair_form_city_validation: {
+  order_reports_form_city_validation: {
     title: 'Order annual reports form: City Validation',
     defaultValue: 'Please enter your city',
   },
-  order_reports_fair_form_country: {
+  order_reports_form_country: {
     title: 'Order annual reports form: Country',
     defaultValue: 'Country',
   },
-  order_reports_fair_form_country_validation: {
+  order_reports_form_country_validation: {
     title: 'Order annual reports form: Country Validation',
     defaultValue: 'Please enter your country',
   },
 
-  order_reports_fair_form_cta: {
+  order_reports_form_cta: {
     title: 'Order annual reports form: CTA',
     defaultValue: 'Order printed copies',
+  },
+
+  order_reports_form_choose: {
+    title: 'Order reports form: Choose validation',
+    defaultValue: 'Please choose atleast one of the following reports',
   },
   careers_contact_form_name:{
     title: 'Careers contact form: Name',

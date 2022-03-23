@@ -87,7 +87,7 @@ const OrderReportsForm = () => {
           {!errors.reports && (
             <StyledLegend id="atleast-one-report-required">
               <FormattedMessage
-                id="subscribe_form_choose"
+                id="order_reports_form_choose"
                 defaultMessage="Please choose atleast one of the following reports"
               />
             </StyledLegend>
@@ -96,7 +96,7 @@ const OrderReportsForm = () => {
             <ErrorStyledDiv role="alert" id="atleast-one-report-required">
               <StyledLegend>
                 <FormattedMessage
-                  id="subscribe_form_choose"
+                  id="order_reports_form_choose"
                   defaultMessage="Please choose atleast one of the following reports"
                 />
               </StyledLegend>
@@ -161,13 +161,13 @@ const OrderReportsForm = () => {
           control={control}
           rules={{
             required: intl.formatMessage({
-              id: 'order_reports_fair_form_email_validation',
+              id: 'order_reports_form_email_validation',
               defaultMessage: 'Please fill out a valid email address',
             }),
             pattern: {
               value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
               message: intl.formatMessage({
-                id: 'order_reports_fair_form_email_validation',
+                id: 'order_reports_form_email_validation',
                 defaultMessage: 'Please fill out a valid email address',
               }),
             },
@@ -177,7 +177,7 @@ const OrderReportsForm = () => {
               {...props}
               id={props.name}
               label={intl.formatMessage({
-                id: ' order_reports_fair_form_email',
+                id: ' order_reports_form_email',
                 defaultMessage: 'Email',
               })}
               inputRef={ref}
@@ -193,7 +193,7 @@ const OrderReportsForm = () => {
           control={control}
           rules={{
             required: intl.formatMessage({
-              id: 'order_reports_fair_form_company_validation',
+              id: 'order_reports_form_company_validation',
               defaultMessage: 'Please enter your company',
             }),
           }}
@@ -202,7 +202,7 @@ const OrderReportsForm = () => {
               {...props}
               id={props.name}
               label={intl.formatMessage({
-                id: 'order_reports_fair_form_company',
+                id: 'order_reports_form_company',
                 defaultMessage: 'Company',
               })}
               inputRef={ref}
@@ -218,7 +218,7 @@ const OrderReportsForm = () => {
           control={control}
           rules={{
             required: intl.formatMessage({
-              id: 'order_reports_fair_form_address_validation',
+              id: 'order_reports_form_address_validation',
               defaultMessage: 'Please enter your address',
             }),
           }}
@@ -227,7 +227,7 @@ const OrderReportsForm = () => {
               {...props}
               id={props.name}
               label={intl.formatMessage({
-                id: ' order_reports_fair_form_address',
+                id: ' order_reports_form_address',
                 defaultMessage: 'Address',
               })}
               inputRef={ref}
@@ -244,7 +244,7 @@ const OrderReportsForm = () => {
           control={control}
           rules={{
             required: intl.formatMessage({
-              id: 'order_reports_fair_form_zipcode_validation',
+              id: 'order_reports_form_zipcode_validation',
               defaultMessage: 'Please enter your post number/Zip code',
             }),
           }}
@@ -253,7 +253,7 @@ const OrderReportsForm = () => {
               {...props}
               id={props.name}
               label={intl.formatMessage({
-                id: ' order_reports_fair_form_zipcode',
+                id: ' order_reports_form_zipcode',
                 defaultMessage: 'Post number/Zip code',
               })}
               inputRef={ref}
@@ -270,7 +270,7 @@ const OrderReportsForm = () => {
           control={control}
           rules={{
             required: intl.formatMessage({
-              id: 'order_reports_fair_form_city_validation',
+              id: 'order_reports_form_city_validation',
               defaultMessage: 'Please enter your city',
             }),
           }}
@@ -280,7 +280,7 @@ const OrderReportsForm = () => {
               id={props.name}
               aria-required="true"
               label={intl.formatMessage({
-                id: 'order_reports_fair_form_city',
+                id: 'order_reports_form_city',
                 defaultMessage: 'City',
               })}
               inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -295,7 +295,7 @@ const OrderReportsForm = () => {
           control={control}
           rules={{
             required: intl.formatMessage({
-              id: 'order_reports_fair_form_country_validation',
+              id: 'order_reports_form_country_validation',
               defaultMessage: 'Please enter your country',
             }),
           }}
@@ -304,7 +304,7 @@ const OrderReportsForm = () => {
               {...props}
               id={props.name}
               label={intl.formatMessage({
-                id: 'order_reports_fair_form_country',
+                id: 'order_reports_form_country',
                 defaultMessage: 'Country',
               })}
               aria-required="true"
@@ -316,7 +316,7 @@ const OrderReportsForm = () => {
           )}
         />
         <FormButton type="submit">
-          <FormattedMessage id="order_reports_fair_form_cta" defaultMessage="Order printed copies" />
+          <FormattedMessage id="order_reports_form_cta" defaultMessage="Order printed copies" />
         </FormButton>
       </form>
     </>
