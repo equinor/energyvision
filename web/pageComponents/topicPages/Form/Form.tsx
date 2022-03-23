@@ -1,13 +1,13 @@
-import type { FormData } from '../../types/types'
+import type { FormData } from '../../../types/types'
 import styled from 'styled-components'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
+import SimpleBlockContent from '../../../common/SimpleBlockContent'
+import { TitleBlockRenderer, IngressBlockRenderer } from '../../../common/serializers'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
 import { Link } from '@components'
-import { LinkData } from '../../types/types'
+import { LinkData } from '../../../types/types'
 import CareersContactForm from './CareersContactForm'
 
 const StyledHeading = styled(TitleBlockRenderer)`

@@ -1,24 +1,10 @@
 import styled from 'styled-components'
-import { Button, TextField, Icon, Checkbox } from '@equinor/eds-core-react'
+import { Icon, Checkbox } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { FormButton, FormTextField } from '@components'
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: right;
-  padding: var(--space-medium) 0px var(--space-medium) 0px;
-`
-const TextFieldWrapper = styled.div`
-  padding: var(--space-small) 0px var(--space-medium) 0px;
-  p {
-    color: var(--clear-red-100);
-  }
-`
-const StyledButton = styled(Button)`
-  padding-left: var(--space-xLarge);
-  padding-right: var(--space-xLarge);
-`
 const UnstyledList = styled.ul`
   margin: -12px;
   padding: var(--space-large) 0 var(--space-large) 0px;
@@ -96,8 +82,6 @@ const OrderReportsForm = () => {
   })
   return (
     <>
-      {/* @TODO Norwegian translations for labels and button text*/}
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <StyledFieldset>
           {!errors.reports && (
@@ -153,25 +137,23 @@ const OrderReportsForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_name',
-                  defaultMessage: 'Name',
-                })}
-                placeholder={intl.formatMessage({
-                  id: 'order_reports_form_name_placeholder',
-                  defaultMessage: 'Jane Doe',
-                })}
-                inputRef={ref}
-                aria-required="true"
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: 'order_reports_form_name',
+                defaultMessage: 'Name',
+              })}
+              placeholder={intl.formatMessage({
+                id: 'order_reports_form_name_placeholder',
+                defaultMessage: 'Jane Doe',
+              })}
+              inputRef={ref}
+              aria-required="true"
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
         <Controller
@@ -191,21 +173,19 @@ const OrderReportsForm = () => {
             },
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: ' order_reports_fair_form_email',
-                  defaultMessage: 'Email',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: ' order_reports_fair_form_email',
+                defaultMessage: 'Email',
+              })}
+              inputRef={ref}
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              aria-required="true"
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
         <Controller
@@ -218,21 +198,19 @@ const OrderReportsForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_fair_form_company',
-                  defaultMessage: 'Company',
-                })}
-                inputRef={ref}
-                aria-required="true"
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: 'order_reports_fair_form_company',
+                defaultMessage: 'Company',
+              })}
+              inputRef={ref}
+              aria-required="true"
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
         <Controller
@@ -245,21 +223,19 @@ const OrderReportsForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: ' order_reports_fair_form_address',
-                  defaultMessage: 'Address',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: ' order_reports_fair_form_address',
+                defaultMessage: 'Address',
+              })}
+              inputRef={ref}
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              aria-required="true"
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
 
@@ -273,21 +249,19 @@ const OrderReportsForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: ' order_reports_fair_form_zipcode',
-                  defaultMessage: 'Post number/Zip code',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: ' order_reports_fair_form_zipcode',
+                defaultMessage: 'Post number/Zip code',
+              })}
+              inputRef={ref}
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              aria-required="true"
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
 
@@ -301,21 +275,19 @@ const OrderReportsForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                aria-required="true"
-                label={intl.formatMessage({
-                  id: 'order_reports_fair_form_city',
-                  defaultMessage: 'City',
-                })}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                inputRef={ref}
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              aria-required="true"
+              label={intl.formatMessage({
+                id: 'order_reports_fair_form_city',
+                defaultMessage: 'City',
+              })}
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              inputRef={ref}
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
         <Controller
@@ -328,29 +300,24 @@ const OrderReportsForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_fair_form_country',
-                  defaultMessage: 'Country',
-                })}
-                aria-required="true"
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: 'order_reports_fair_form_country',
+                defaultMessage: 'Country',
+              })}
+              aria-required="true"
+              inputRef={ref}
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
-
-        <ButtonWrapper>
-          <StyledButton type="submit">
-            <FormattedMessage id="order_reports_fair_form_cta" defaultMessage="Order printed copies" />
-          </StyledButton>
-        </ButtonWrapper>
+        <FormButton type="submit">
+          <FormattedMessage id="order_reports_fair_form_cta" defaultMessage="Order printed copies" />
+        </FormButton>
       </form>
     </>
   )

@@ -1,22 +1,11 @@
-import type { SubscribeFormParameters } from '../../types/types'
+import type { SubscribeFormParameters } from '../../../types/types'
 import styled from 'styled-components'
-import { Button, TextField, Checkbox, Icon } from '@equinor/eds-core-react'
+import { Checkbox, Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: right;
-  padding: var(--space-medium) 0px var(--space-medium) 0px;
-`
-const TextFieldWrapper = styled.div`
-  padding: var(--space-small) 0px var(--space-medium) 0px;
-  p {
-    color: var(--clear-red-100);
-  }
-`
+import { FormButton, FormTextField } from '@components'
 
 const StyledFieldset = styled.fieldset`
   border: 0;
@@ -37,10 +26,6 @@ const UnstyledList = styled.ul`
   @media (max-width: 920px) {
     column-count: 1;
   }
-`
-const StyledButton = styled(Button)`
-  padding-left: var(--space-xLarge);
-  padding-right: var(--space-xLarge);
 `
 const ErrorStyledDiv = styled.div`
   font-weight: var(--fontWeight-regular);
@@ -99,7 +84,6 @@ const SubscribeForm = () => {
 
   return (
     <>
-      {/* @TODO Norwegian translations for labels and button text*/}
       <form onSubmit={handleSubmit(onSubmit)}>
         <StyledFieldset>
           {!errors.categories && (
@@ -199,21 +183,19 @@ const SubscribeForm = () => {
             }),
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'subscribe_form_first_name',
-                  defaultMessage: 'First name',
-                })}
-                inputRef={ref}
-                aria-required="true"
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: 'subscribe_form_first_name',
+                defaultMessage: 'First name',
+              })}
+              inputRef={ref}
+              aria-required="true"
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
         <Controller
@@ -233,28 +215,25 @@ const SubscribeForm = () => {
             },
           }}
           render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <TextFieldWrapper>
-              <TextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'subscribe_form_email',
-                  defaultMessage: 'Email',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                variant={invalid ? 'error' : 'default'}
-              />
-            </TextFieldWrapper>
+            <FormTextField
+              {...props}
+              id={props.name}
+              label={intl.formatMessage({
+                id: 'subscribe_form_email',
+                defaultMessage: 'Email',
+              })}
+              inputRef={ref}
+              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+              helperText={error?.message}
+              aria-required="true"
+              variant={invalid ? 'error' : 'default'}
+            />
           )}
         />
-        <ButtonWrapper>
-          <StyledButton type="submit">
-            <FormattedMessage id="subscribe_form_cta" defaultMessage="Subscribe" />
-          </StyledButton>
-        </ButtonWrapper>
+
+        <FormButton type="submit">
+          <FormattedMessage id="subscribe_form_cta" defaultMessage="Subscribe" />
+        </FormButton>
       </form>
     </>
   )
