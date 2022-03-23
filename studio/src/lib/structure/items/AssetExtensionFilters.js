@@ -33,10 +33,8 @@ const extensions = [
   },
 ]
 
-export const AssetExtensionFilters = S.listItem()
-  .title('Filter files by file type')
-  .icon()
-  .child(S.list().title('Filter by extension').items(filterItems))
+export const AssetExtensionFilters = () =>
+  S.listItem().title('Filter files by file type').icon().child(S.list().title('Filter by extension').items(filterItems))
 
 const filterItems = extensions.map((item) => {
   return S.listItem()

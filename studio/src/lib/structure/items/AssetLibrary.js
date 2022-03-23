@@ -9,8 +9,8 @@ const assetLibraryItems = [
     .icon(FileIcon)
     .child(S.documentTypeList('assetFile').id('allFiles').title('All files')),
   S.divider(),
-  AssetExtensionFilters,
-  AssetTagFilters,
+  AssetExtensionFilters(),
+  AssetTagFilters(),
   S.divider(),
   S.listItem()
     .title('Manage file tags')

@@ -4,7 +4,7 @@ import documentStore from 'part:@sanity/base/datastore/document'
 import { map } from 'rxjs/operators'
 import { TagIcon } from '../../../../icons'
 
-export const AssetTagFilters = S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList)
+export const AssetTagFilters = () => S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList)
 
 const tagFilterList = () => {
   const documentName = 'assetFile'

@@ -35,7 +35,6 @@ const getMenuListItems = (lang) => {
         .title('Sub menu')
         .filter('_type == "subMenu" && _lang == $baseLang')
         .params({ baseLang: lang.name })
-        //.params({ isoCode: `${lang.name}` })
         .initialValueTemplates([S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` })]),
   })
 
