@@ -93,6 +93,7 @@ const MultiplePromotions = ({
   const getCard = (data: CardProps) => {
     switch (data.type) {
       case 'news':
+      case 'localNews':
         return <StyledNewsCard data={data as CardData} key={data.id} />
       case 'topics':
         return <StyledTopicPageCard data={data as CardData} key={data.id} />

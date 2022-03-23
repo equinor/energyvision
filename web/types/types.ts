@@ -82,7 +82,7 @@ export type EventDateType = {
 }
 
 export type CardData = {
-  type?: 'news' | 'topics'
+  type?: 'news' | 'topics' | 'localNews'
   id: string
   slug: string
   title: string | BlockNode[]

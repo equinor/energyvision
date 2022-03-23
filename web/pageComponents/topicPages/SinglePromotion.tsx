@@ -28,6 +28,7 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
   const getCard = (data: CardProps) => {
     switch (data.type) {
       case 'news':
+      case 'localNews':
         return <NewsCard data={data as CardData} />
       case 'topics':
         return <TopicPageCard data={data as CardData} />
