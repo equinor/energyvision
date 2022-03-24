@@ -16,6 +16,7 @@ import Header from '../../pageComponents/shared/Header'
 import getPageSlugs from '../../common/helpers/getPageSlugs'
 import { Text, Heading, FormattedDate } from '@components'
 import UncontrolledSearchBox from '../../pageComponents/search/UncontrolledSearchBox'
+import { Pagination } from '../../pageComponents/search/Pagination'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
 import { footerQuery } from '../../lib/queries/footer'
@@ -94,6 +95,10 @@ const StyledHeading = styled(Heading)`
 
 const Date = styled.div`
   font-size: var(--typeScale-0);
+`
+
+const StyledPagination = styled(Pagination)`
+  padding-top: var(--space-medium);
 `
 
 // @TODO Types
@@ -184,6 +189,7 @@ export default function NewsRoom({ serverState, isServerRendered = false, url, d
 
                   <NewsList>
                     <Hits hitComponent={Hit} />
+                    <StyledPagination padding={1} hitsPerPage={20} />
                   </NewsList>
                 </NewsRoomContent>
               </InstantSearch>
