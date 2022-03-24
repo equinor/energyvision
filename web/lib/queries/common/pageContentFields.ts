@@ -220,7 +220,13 @@ const pageContentFields = /* groq */ `
         "promotions": *[
           (_type == "news" || _type == "localNews")
           && _lang == $lang
-          && (count(tags[_ref in ^.^.tags[]._ref]) > 0 || count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0 || localNewsTag._ref in ^.localNewsTags[]._ref)
+          && (
+            count(tags[_ref in ^.^.tags[]._ref]) > 0
+            ||
+            count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
+            ||
+            localNewsTag._ref in ^.localNewsTags[]._ref
+          )
         ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
@@ -379,21 +385,24 @@ const pageContentFields = /* groq */ `
     "id": _key,
     "tags": selectedTags.tags[]->{
       "id": _id,
-      key,
     },
     "countryTags": selectedTags.countryTags[]->{
       "id": _id,
-      _type,
     },
     "localNewsTags": selectedTags.localNewsTags[]->{
       "id": _id,
-      _type,
     },
     "articles": *[
       (_type == "news" || _type == "localNews")
       && _lang == $lang
-      && (count(tags[_ref in ^.tags[]._ref]) > 0 || count(countryTags[_ref in ^.countryTags[]._ref]) > 0 || count(localNewsTags[_ref in ^.localNewsTags[]._ref]) > 0)
-    ] | order(${publishDateTimeQuery} desc)[0...20]{
+      && (
+        count(tags[_ref in ^.^.selectedTags.tags[]._ref]) > 0
+      ||
+        count(countryTags[_ref in ^.^.selectedTags.countryTags[]._ref]) > 0
+      ||
+        localNewsTag._ref in ^.selectedTags.localNewsTags[]._ref
+    )
+    ] | order(${publishDateTimeQuery} desc){
       "type": _type,
       "id": _id,
       "updatedAt": _updatedAt,
