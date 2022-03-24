@@ -108,6 +108,7 @@ importers:
       '@types/node': ^16.11.25
       '@types/react': ^17.0.40
       '@types/react-dom': ^17.0.13
+      '@types/react-gtm-module': ^2.0.1
       '@types/react-instantsearch': ^6.10.1
       '@types/react-instantsearch-dom': ^6.12.2
       '@types/styled-components': ^5.1.24
@@ -138,6 +139,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       react-focus-lock: ^2.8.1
+      react-gtm-module: ^2.0.11
       react-hook-form: 7.28.0
       react-instantsearch-hooks: ^6.22.0
       react-instantsearch-hooks-server: ^6.22.0
@@ -189,6 +191,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-focus-lock: 2.8.1_00d6772dea80510e818fd171caaa025a
+      react-gtm-module: 2.0.11
       react-hook-form: 7.28.0_react@17.0.2
       react-instantsearch-hooks: 6.22.0_24a9da51e62336c335e8233e10af21bd
       react-instantsearch-hooks-server: 6.22.0_9b8e18b5cb5fb389e8f0dd6018a41c59
@@ -212,6 +215,7 @@ importers:
       '@types/node': 16.11.25
       '@types/react': 17.0.40
       '@types/react-dom': 17.0.13
+      '@types/react-gtm-module': 2.0.1
       '@types/react-instantsearch': 6.10.1
       '@types/react-instantsearch-dom': 6.12.2
       '@types/styled-components': 5.1.24
@@ -6218,6 +6222,10 @@ packages:
       '@types/react': 17.0.40
     dev: true
 
+  /@types/react-gtm-module/2.0.1:
+    resolution: {integrity: sha512-T/DN9gAbCYk5wJ1nxf4pSwmXz4d1iVjM++OoG+mwMfz9STMAotGjSb65gJHOS5bPvl6vLSsJnuC+y/43OQrltg==}
+    dev: true
+
   /@types/react-instantsearch-core/6.10.7:
     resolution: {integrity: sha512-bG87zLTm5NVzMGVgP6jZtNZxOiHWMp8++MvWeVMg131vXyTpvG5wwuvrOHjWAZ7fq73QQCyCWN7ktKEqj4mqVg==}
     dependencies:
@@ -7108,7 +7116,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.8
+      follow-redirects: 1.14.8_debug@2.6.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7116,7 +7124,7 @@ packages:
   /axios/0.25.0:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
     dependencies:
-      follow-redirects: 1.14.8
+      follow-redirects: 1.14.8_debug@2.6.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9822,7 +9830,7 @@ packages:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
     dev: false
 
-  /follow-redirects/1.14.8:
+  /follow-redirects/1.14.8_debug@2.6.9:
     resolution: {integrity: sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -9830,6 +9838,8 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dependencies:
+      debug: 2.6.9
     dev: false
 
   /follow-redirects/1.14.9_debug@2.6.9:
@@ -10112,7 +10122,7 @@ packages:
       create-error-class: 3.0.2
       debug: 2.6.9
       decompress-response: 3.3.0
-      follow-redirects: 1.14.8
+      follow-redirects: 1.14.8_debug@2.6.9
       form-urlencoded: 2.0.9
       into-stream: 3.1.0
       is-plain-object: 2.0.4
@@ -14562,6 +14572,10 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-gtm-module/2.0.11:
+    resolution: {integrity: sha512-8gyj4TTxeP7eEyc2QKawEuQoAZdjKvMY4pgWfycGmqGByhs17fR+zEBs0JUDq4US/l+vbTl+6zvUIx27iDo/Vw==}
     dev: false
 
   /react-helmet-async/1.2.2_react-dom@17.0.2+react@17.0.2:
