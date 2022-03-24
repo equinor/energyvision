@@ -10,7 +10,6 @@ import Script from 'next/script'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
 import { isGlobal } from '../common/helpers/datasetHelpers'
-import TagManager from 'react-gtm-module'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -47,10 +46,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
   const isLocalhost = !!process.env.NEXT_PUBLIC_LOCALHOST
-
-  useEffect(() => {
-    GTM_ID && TagManager.initialize({ gtmId: GTM_ID })
-  }, [])
 
   useEffect(() => {
     if (!GTM_ID) return
