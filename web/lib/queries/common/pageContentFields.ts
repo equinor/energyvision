@@ -383,6 +383,10 @@ const pageContentFields = /* groq */ `
   _type == "newsList" => {
     "type": _type,
     "id": _key,
+    title[]{
+      ...,
+      ${markDefs},
+    },
     "tags": selectedTags.tags[]->{
       "id": _id,
     },

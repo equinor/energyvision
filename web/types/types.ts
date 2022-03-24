@@ -552,6 +552,7 @@ export type FormData = {
 export type NewsListData = {
   id: string
   type: string
+  title?: PortableTextEntry[]
   articles: CardData[]
   tags?: [id: string]
   countryTags?: [id: string]

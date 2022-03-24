@@ -2,13 +2,25 @@ import React from 'react'
 import { defaultLanguage } from '../../languages'
 import { EdsIcon } from '../../icons'
 import { list } from '@equinor/eds-icons'
+import { configureTitleBlockContent } from '../editors'
+import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { Rule } from '@sanity/types'
+
+const titleContentType = configureTitleBlockContent()
 
 export default {
   title: 'News list',
   name: 'newsList',
   type: 'object',
   fields: [
+    {
+      name: 'title',
+      type: 'array',
+      title: 'Title',
+      description: 'The (optional) title/heading shown above the news list.',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
+    },
     {
       type: 'promoteNews',
       name: 'selectedTags',
