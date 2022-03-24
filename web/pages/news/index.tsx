@@ -178,7 +178,7 @@ export default function NewsRoom({ serverState, isServerRendered = false, url, d
                     </Refinement>
                     <Refinement>
                       <span>Topic</span>
-                      <RefinementList sortBy={['name:desc']} attribute="tags" />
+                      <RefinementList sortBy={['name:desc']} attribute="topicTags" />
                     </Refinement>
                   </Filters>
 
