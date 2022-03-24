@@ -553,4 +553,7 @@ export type NewsListData = {
   id: string
   type: string
   articles: CardData[]
+  tags?: [id: string]
+  countryTags?: [id: string]
+  localNewsTags?: [id: string]
 }
