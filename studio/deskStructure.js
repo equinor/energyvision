@@ -27,7 +27,7 @@ const listItems = [
   hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Settings,
 ].filter((e) => e)
 
-export default S.list().title('Content').items(listItems)
+export default () => S.list().title('Content').items(listItems)
 
 export const getDefaultDocumentNode = (props) => {
   /**

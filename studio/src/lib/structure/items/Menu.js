@@ -38,7 +38,7 @@ const getMenuListItems = (lang) => {
         .initialValueTemplates([S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` })]),
   })
 
-  return IS_GLOBAL ? [mainMenu, subMenu] : [subMenu]
+  return IS_GLOBAL ? [mainMenu, subMenu] : [mainMenu]
 }
 
 const menus = languages.map((lang) =>
