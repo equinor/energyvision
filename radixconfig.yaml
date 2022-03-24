@@ -31,13 +31,11 @@ spec:
             BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
             SERVICE_NOW_FORM_URL: 'https://equinortest.service-now.com'
             SERVICE_NOW_FORM_CATALOG_ITEM: 'e8139ed7db2a6200aa5ff1eabf961987'
-
-            
       variables:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
         BRANDMASTER_EMAIL_PTL_ID: '14414'
-        NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: 'testStringID'
+        NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: 'GTM-KQH8LWW'
       secrets:
         - BRANDMASTER_EMAIL_CLIENT_SECRET
         - BRANDMASTER_EMAIL_PASSWORD
@@ -86,8 +84,8 @@ spec:
       environmentConfig:
         - environment: dev
           imageTagName: main-latest
-          
-           
+
+
 
     - name: web-poland
       publicPort: http
@@ -99,6 +97,8 @@ spec:
       environmentConfig:
         - environment: dev
           imageTagName: main-latest
+      variables:
+        NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: 'GTM-5FW9BN3'
 
     - name: web-equinorfunds
       publicPort: http

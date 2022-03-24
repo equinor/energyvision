@@ -9,6 +9,7 @@ import 'focus-visible'
 import Script from 'next/script'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
+import { isGlobal } from '../common/helpers/datasetHelpers'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -43,16 +44,17 @@ declare global {
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
-  {
-    /* useEffect(() => {
+  const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
+  const isLocalhost = !!process.env.NEXT_PUBLIC_LOCALHOST
+
+  useEffect(() => {
+    if (!GTM_ID) return
+
     router.events.on('routeChangeComplete', pageview)
     return () => {
       router.events.off('routeChangeComplete', pageview)
     }
-  }, [router.events]) */
-  }
-  const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
-  const isLocalhost = !!process.env.NEXT_PUBLIC_LOCALHOST
+  }, [router.events])
 
   useEffect(() => {
     if (window.self === window.top) {
@@ -61,6 +63,8 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   useEffect(() => {
+    if (!isGlobal) return
+
     const script = document.createElement('script')
 
     script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
@@ -89,21 +93,21 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           data-culture={router.locale == 'no' ? 'nb' : router.locale}
         />
       )}
-
-      {/* GTM */}
-      {/* <Script
-        id="GTM"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      {GTM_ID && (
+        <Script
+          id="GTM"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer', '${GTM_ID}');
           `,
-        }}
-      /> */}
+          }}
+        />
+      )}
       {getLayout(<Component {...pageProps} />)}
     </>
   )
