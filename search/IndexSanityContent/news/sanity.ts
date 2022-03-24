@@ -60,7 +60,7 @@ export const query = /* groq */ `*[_type == "news" && _lang == $lang] {
   "title": title,
   "type": _type,
   "publishDateTime": ${publishDateTimeQuery},
-  "tags": tags[]->.title[$lang],
+  "topicTags": tags[]->.title[$lang],
   "countryTags": countryTags[]->.title[$lang],
   "blocks": content[_type == "block"] {
     "blockKey": _key,
@@ -81,7 +81,7 @@ export type NewsArticle = {
   title: string
   // Enjoy... ISO type
   publishDateTime?: string
-  tags?: string[]
+  topicTags?: string[]
   countryTags?: string[]
   blocks: {
     blockKey: string
