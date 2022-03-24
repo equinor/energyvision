@@ -1,6 +1,7 @@
 import T from '@sanity/base/initial-value-template-builder'
 import { languages } from './languages'
 import textSnippets from './schemas/textSnippets'
+import { IS_GLOBAL, HIDDEN_TYPES } from './src/lib/datasetHelpers'
 
 const ParentRoutesTemplates = languages.map(({ name, title }) =>
   T.template({
@@ -25,36 +26,45 @@ const TextSnippetsTemplates = Object.keys(textSnippets).map((key) =>
   }),
 )
 
+const MenuTemplates = IS_GLOBAL
+  ? [
+      T.template({
+        id: 'menu-with-locale',
+        title: 'Site menu',
+        schemaType: 'siteMenu',
+        parameters: [{ name: 'isoCode', type: 'string' }],
+        value: (params) => ({
+          _lang: params.isoCode,
+        }),
+      }),
+      T.template({
+        id: 'submenu-with-locale',
+        title: 'Sub menu',
+        schemaType: 'siteMenu',
+        parameters: [{ name: 'isoCode', type: 'string' }],
+        value: (params) => ({
+          _lang: params.isoCode,
+          isStatic: false,
+        }),
+      }),
+    ]
+  : [
+      T.template({
+        id: 'simple-menu-with-locale',
+        title: 'Site menu (simple)',
+        schemaType: 'simpleMenu',
+        parameters: [{ name: 'isoCode', type: 'string' }],
+        value: (params) => ({
+          _lang: params.isoCode,
+        }),
+      }),
+    ]
+
+const defaults = T.defaults()
+
 export default [
-  ...T.defaults(),
-  T.template({
-    id: 'menu-with-locale',
-    title: 'Site menu',
-    schemaType: 'siteMenu',
-    parameters: [{ name: 'isoCode', type: 'string' }],
-    value: (params) => ({
-      _lang: params.isoCode,
-    }),
-  }),
-  T.template({
-    id: 'submenu-with-locale',
-    title: 'Sub menu',
-    schemaType: 'siteMenu',
-    parameters: [{ name: 'isoCode', type: 'string' }],
-    value: (params) => ({
-      _lang: params.isoCode,
-      isStatic: false,
-    }),
-  }),
-  T.template({
-    id: 'simple-menu-with-locale',
-    title: 'Site menu(simple)',
-    schemaType: 'simpleMenu',
-    parameters: [{ name: 'isoCode', type: 'string' }],
-    value: (params) => ({
-      _lang: params.isoCode,
-    }),
-  }),
+  ...defaults.filter((item) => !HIDDEN_TYPES.includes(item.spec.schemaType)),
+  ...MenuTemplates,
   T.template({
     id: 'footer-with-locale',
     title: 'Footer',

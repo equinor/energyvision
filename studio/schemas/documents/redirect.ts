@@ -1,4 +1,4 @@
-import type { Rule, SanityDocument, ValidationContext } from '@sanity/types'
+import type { Rule, ValidationContext } from '@sanity/types'
 import routes from '../routes'
 import { filterByRouteAndNews } from '../../helpers/referenceFilters'
 import blocksToText from '../../helpers/blocksToText'
