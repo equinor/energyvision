@@ -29,9 +29,9 @@ export default {
   name: 'localNews',
   type: 'document',
   i18n,
-  // temporary restriction
-  readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>
-    !currentUser.roles.find((role) => ['administrator'].includes(role.name)),
+  // @todo: restrict to correct role(s)
+  // readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>
+  //   !currentUser.roles.find((role) => ['administrator'].includes(role.name)),
   fieldsets: [
     {
       title: 'SEO & metadata',
