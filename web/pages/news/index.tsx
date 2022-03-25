@@ -237,7 +237,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale = 'en' }) => {
   // For the time being, let's just give 404 for satellites
   // This will not use the styled 404 page, but whatever
   if (!isGlobal) {
