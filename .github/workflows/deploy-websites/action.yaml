@@ -25,6 +25,9 @@ inputs:
   algoliaApiKeyServer:
     description: 'Api key for Algolia to be used server side'
     required: false
+  environment:
+    description: 'dev, preprod or prod'
+    required: false
 outputs:
   copied-files:
     description: 'Number of files copied'
@@ -39,6 +42,7 @@ runs:
       id: set-default-image-tag
       run: |
         echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
     - name: Build web component ⚙️
       shell: bash
       id: build
@@ -51,8 +55,10 @@ runs:
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
+          --build-arg ARG_ENV=${{ inputs.environment }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
     - name: Push the image to GHCR ☁
       shell: bash

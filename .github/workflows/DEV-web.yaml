@@ -55,6 +55,9 @@ jobs:
   deploy-global:
     needs: check_code
     runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://web-energyvision-dev.radix.equinor.com/
     strategy:
       # The matrix approach is needed to re-use code created for satellites
       matrix:
@@ -76,6 +79,7 @@ jobs:
           sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+          environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
