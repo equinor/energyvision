@@ -6,9 +6,8 @@ export type NewsRoomProps = {
   /* url: string */
   isServerRendered?: boolean
   data?: {
-    menuData: MenuData
-    footerData: { footerColumns: FooterColumns[] }
+    menuData?: MenuData
+    footerData?: { footerColumns: FooterColumns[] }
     intl: IntlData
   }
-  errorCode?: number
 }

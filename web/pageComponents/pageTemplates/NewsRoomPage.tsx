@@ -2,14 +2,14 @@
 import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
-
+import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 //import { blocksToText } from '../../common/helpers'
 //import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-
 //import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { Text, Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
+import { getIsoFromLocale } from '../../lib/localization'
 
 const Wrapper = styled.div`
   grid-template-areas:
@@ -34,15 +34,20 @@ const News = styled.div`
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
+  locale: string
 }
 
-const NewsRoomPage = ({ isServerRendered = false }: NewsRoomTemplateProps) => {
+const NewsRoomPage = ({ isServerRendered = false, locale }: NewsRoomTemplateProps) => {
   // @TODO Add seo and some #947
   //const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
   // const plainTitle = title ? blocksToText(title) : ''
   //const { pathname } = useRouter()
   //const fullUrl = getFullUrl(pathname, slug)
 
+  const envPrefix = isGlobalProduction ? 'prod' : 'dev'
+  const isoCode = getIsoFromLocale(locale)
+
+  const indexName = `${envPrefix}_NEWS_${isoCode}`
   return (
     <>
       <NextSeo
@@ -71,7 +76,7 @@ const NewsRoomPage = ({ isServerRendered = false }: NewsRoomTemplateProps) => {
           <News>
             <InstantSearch
               searchClient={isServerRendered ? searchClientServer : searchClient}
-              indexName="dev_NEWS_en-GB"
+              indexName={indexName}
               /*  routing={{
                   router: history({
                     getLocation() {
