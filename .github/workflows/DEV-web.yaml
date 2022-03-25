@@ -1,4 +1,4 @@
-name: Lint, Test and Deploy only equinor.com
+name: DEV - Build & Deploy equinor.com
 on:
   workflow_dispatch:
   #push:

@@ -39,6 +39,7 @@ runs:
       shell: bash
       run: |
         echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
     - name: Build sanity container ⚙️
       id: build
       shell: bash
@@ -51,13 +52,14 @@ runs:
           --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
     - name: Push the image to GHCR ☁
       id: push-to-ghcr
       shell: bash
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+        docker push ${{ inputs.imageName }} --all-tags
     - name: Get environment from branch 🦞
       id: get-environment
       uses: equinor/radix-github-actions@master
