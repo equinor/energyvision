@@ -65,7 +65,7 @@ runs:
       id: push-to-ghcr
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName  }}:${{ env.IMAGE_TAG }}
+        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName  }} --all-tags
     - name: Get environment from branch 🦞
       id: get-environment
       uses: equinor/radix-github-actions@master
