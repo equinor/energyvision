@@ -29,6 +29,7 @@ export type HitsProps<THit> = React.ComponentProps<'div'> &
     hitComponent: (props: { hit: THit }) => JSX.Element
   }
 
+// @TODO: refactor into our code style
 export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({ hitComponent: Hit }: HitsProps<THit>) {
   const { hits } = useHits()
 
