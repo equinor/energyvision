@@ -7,7 +7,7 @@ spec:
     - name: dev
       build:
         from: main
-    - name: test
+    - name: prod
   components:
     - name: web
       publicPort: http
@@ -31,6 +31,7 @@ spec:
             BRANDMASTER_EMAIL_SUBSCRIPTION_URL: 'https://stage.brandmaster.com/apigateway/apigateway.dll/SOAP_UNENCRYPTED?service=Subscription'
             SERVICE_NOW_FORM_URL: 'https://equinortest.service-now.com'
             SERVICE_NOW_FORM_CATALOG_ITEM: 'e8139ed7db2a6200aa5ff1eabf961987'
+
       variables:
         BRANDMASTER_EMAIL_APN_ID: '32'
         BRANDMASTER_EMAIL_OTY_ID: '114961'
@@ -49,7 +50,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-germany
@@ -60,7 +61,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-argentina
@@ -71,7 +72,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-global-development
@@ -82,10 +83,8 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
-
-
 
     - name: web-poland
       publicPort: http
@@ -95,7 +94,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
       variables:
         NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: 'GTM-5FW9BN3'
@@ -108,7 +107,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-japan
@@ -119,7 +118,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-storage
@@ -130,7 +129,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-loop
@@ -141,7 +140,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-techstars
@@ -152,7 +151,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-southkorea
@@ -163,7 +162,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: web-typography
@@ -174,7 +173,7 @@ spec:
         - name: http
           port: 3000
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-brazil
@@ -185,7 +184,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-germany
@@ -196,7 +195,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-argentina
@@ -207,7 +206,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-global-development
@@ -229,7 +228,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-japan
@@ -240,7 +239,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-storage
@@ -251,7 +250,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-techstars
@@ -262,7 +261,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-equinorfunds
@@ -273,7 +272,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-loop
@@ -284,7 +283,7 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
     - name: studio-southkorea
@@ -295,11 +294,11 @@ spec:
         - name: http
           port: 3333
       environmentConfig:
-        - environment: dev
+        - environment: prod
           imageTagName: main-latest
 
   dnsAppAlias:
-    environment: dev
+    environment: prod
     component: web
   privateImageHubs:
     ghcr.io:
