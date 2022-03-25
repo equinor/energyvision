@@ -45,6 +45,9 @@ jobs:
   deploy-global:
     needs: check_code
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://web-energyvision-dev.radix.equinor.com/
     strategy:
       # The matrix approach is needed to re-use code created for satellites
       matrix:
@@ -94,6 +97,8 @@ jobs:
   deploy-satellites:
     needs: [deploy-global, read-satellites]
     runs-on: ubuntu-latest
+    environment:
+      name: production
     strategy:
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}

@@ -6,6 +6,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://equinor.sanity.studio
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
@@ -72,6 +75,8 @@ jobs:
   deploy-satellites:
     needs: [deploy, read-satellites]
     runs-on: ubuntu-latest
+    environment:
+      name: production
     strategy:
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
