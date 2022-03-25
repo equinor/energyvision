@@ -36,7 +36,7 @@ export default {
       name: 'icon',
       type: 'imageWithAlt',
       options: {
-        accept: '.svg',
+        accept: 'image/svg+xml',
       },
     },
   ],
