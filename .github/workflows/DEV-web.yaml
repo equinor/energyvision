@@ -1,16 +1,16 @@
 name: DEV - Build & Deploy equinor.com
 on:
   workflow_dispatch:
-  #push:
-  #  branches:
-  #    - main
-  #  paths:
-  #    - 'web/**'
-  #    - '!web/README.md'
-  #    - '!web/.storybook/**'
-  #    - '!web/.gitignore'
-  #    - '!web/jest.config.js'
-  #    - '!web/jest.setup.ts'
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.storybook/**'
+      - '!web/.gitignore'
+      - '!web/jest.config.js'
+      - '!web/jest.setup.ts'
   repository_dispatch:
     types: [sanity_publish]
 jobs:
@@ -52,7 +52,7 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-global:
+  deploy-global-development:
     needs: check_code
     runs-on: ubuntu-latest
     environment:
@@ -79,6 +79,7 @@ jobs:
           sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+          algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:

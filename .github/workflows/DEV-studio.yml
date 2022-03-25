@@ -1,4 +1,4 @@
-name: Build & deploy studio for dev
+name: DEV - Build & deploy studio for equinor.com
 on:
   workflow_dispatch:
   push:
@@ -14,7 +14,7 @@ jobs:
       SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE}}
       SANITY_STUDIO_PREVIEW_SECRET: ${{secrets.SANITY_STUDIO_PREVIEW_SECRET}}
-      SANITY_STUDIO_API_DATASET: global
+      SANITY_STUDIO_API_DATASET: global-development
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
@@ -55,6 +55,9 @@ jobs:
   deploy-studio:
     needs: deploy
     runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://studio-global-development-energyvision-dev.radix.equinor.com/
     strategy:
       matrix:
         dataset: [global-development]

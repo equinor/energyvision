@@ -1,19 +1,19 @@
 name: Lint, Test and Deploy only equinor.com
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'web/**'
-      - '!web/README.md'
-      - '!web/.storybook/**'
-      - '!web/.gitignore'
-      - '!web/jest.config.js'
-      - '!web/jest.setup.ts'
-      - 'pnpm-lock.yaml'
-  repository_dispatch:
-    types: [sanity_publish]
+  #push:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - 'web/**'
+  #    - '!web/README.md'
+  #    - '!web/.storybook/**'
+  #    - '!web/.gitignore'
+  #    - '!web/jest.config.js'
+  #    - '!web/jest.setup.ts'
+  #    - 'pnpm-lock.yaml'
+  #repository_dispatch:
+  #  types: [sanity_publish]
 jobs:
   check_code:
     runs-on: ubuntu-latest
