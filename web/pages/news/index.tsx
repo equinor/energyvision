@@ -30,7 +30,7 @@ import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from '@reac
 
 type NewsRoomProps = {
   serverState?: InstantSearchServerState
-  url: string
+  /* url: string */
   isServerRendered?: boolean
   data?: {
     menuData: MenuData
@@ -116,7 +116,7 @@ function Hit({ hit }: any) {
   )
 }
 
-export default function NewsRoom({ serverState, isServerRendered = false, data, errorCode }: NewsRoomProps) {
+export default function NewsRoom({ serverState, isServerRendered = false, /* url, */ data, errorCode }: NewsRoomProps) {
   if (errorCode && errorCode === 404) {
     return <Error statusCode={404} />
   }
@@ -245,9 +245,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
       props: { errorCode: 404 },
     }
   }
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const serverState = await getServerState(<NewsRoom isServerRendered url={url} />)
-  console.log('server', serverState, url)
+  //const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const serverState = await getServerState(<NewsRoom isServerRendered /* url={url} */ />)
+
   const lang = getNameFromLocale(locale)
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
@@ -259,7 +259,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, locale = 'en
     props: {
       serverState,
 
-      url,
+      // url,
       data: {
         menuData,
         footerData,
