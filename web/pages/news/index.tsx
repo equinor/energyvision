@@ -4,7 +4,7 @@ import { default as NextLink } from 'next/link'
 import { InstantSearch, InstantSearchServerState, InstantSearchSSRProvider, Configure } from 'react-instantsearch-hooks'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
-import { history } from 'instantsearch.js/es/lib/routers/index.js'
+//import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import { IntlProvider } from 'react-intl'
 import { Hits } from '../../pageComponents/news/newsRoom/Hits'
@@ -25,6 +25,8 @@ import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import type { MenuData, FooterColumns, IntlData } from '../../types/types'
+
+import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from '@reach/accordion'
 
 type NewsRoomProps = {
   serverState?: InstantSearchServerState
@@ -85,10 +87,6 @@ const StyledHitLink = styled.a`
   text-decoration: none;
 `
 
-const Refinement = styled.div`
-  padding: var(--space-medium) 0;
-`
-
 const StyledHeading = styled(Heading)`
   display: inline-block;
 `
@@ -118,8 +116,7 @@ function Hit({ hit }: any) {
   )
 }
 
-export default function NewsRoom({ serverState, isServerRendered = false, url, data, errorCode }: NewsRoomProps) {
-  console.log('is server rendered', isServerRendered)
+export default function NewsRoom({ serverState, isServerRendered = false, data, errorCode }: NewsRoomProps) {
   if (errorCode && errorCode === 404) {
     return <Error statusCode={404} />
   }
@@ -149,7 +146,7 @@ export default function NewsRoom({ serverState, isServerRendered = false, url, d
               <InstantSearch
                 searchClient={isServerRendered ? searchClientServer : searchClient}
                 indexName="dev_NEWS_en-GB"
-                routing={{
+                /*  routing={{
                   router: history({
                     getLocation() {
                       if (typeof window === 'undefined') {
@@ -159,7 +156,7 @@ export default function NewsRoom({ serverState, isServerRendered = false, url, d
                       return window.location
                     },
                   }),
-                }}
+                }} */
                 /*   routing={{
                   router: history({
                     getLocation: () =>
@@ -173,18 +170,26 @@ export default function NewsRoom({ serverState, isServerRendered = false, url, d
                     <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
                       <UncontrolledSearchBox />
                     </div>
-                    <Refinement>
-                      <span>Year</span>
-                      <RefinementList sortBy={['name:desc']} attribute="year" />
-                    </Refinement>
-                    <Refinement>
-                      <span>Country</span>
-                      <RefinementList sortBy={['name:desc']} attribute="countryTags" />
-                    </Refinement>
-                    <Refinement>
-                      <span>Topic</span>
-                      <RefinementList sortBy={['name:desc']} attribute="topicTags" />
-                    </Refinement>
+                    <Accordion id="filters" multiple collapsible>
+                      <AccordionItem>
+                        <AccordionButton>Year</AccordionButton>
+                        <AccordionPanel>
+                          <RefinementList sortBy={['name:desc']} attribute="year" />
+                        </AccordionPanel>
+                      </AccordionItem>
+                      <AccordionItem>
+                        <AccordionButton>Country</AccordionButton>
+                        <AccordionPanel>
+                          <RefinementList sortBy={['name:desc']} attribute="countryTags" />
+                        </AccordionPanel>
+                      </AccordionItem>
+                      <AccordionItem>
+                        <AccordionButton>Topic</AccordionButton>
+                        <AccordionPanel>
+                          <RefinementList sortBy={['name:desc']} attribute="topicTags" />
+                        </AccordionPanel>
+                      </AccordionItem>
+                    </Accordion>
                   </Filters>
 
                   <NewsList>
