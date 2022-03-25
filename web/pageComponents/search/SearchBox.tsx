@@ -43,18 +43,30 @@ export function SearchBox(props: SearchBoxProps) {
       debounceRef.current = setTimeout(() => {
         //console.log(router.asPath)
         const urlParts = router.asPath.split('?')[0]
-        router.push({
-          // @TODO Add the asPath explicit because of the 404 page and ssr
-          // This might cause bugs, I'm a bit unsure about the best approach here :/
-          // It adds the next.js query params slug :( Look into this
-          // jeeeez, remove the slug query
-          // pathname: router.asPath,
-          pathname: urlParts,
-          query: {
-            ...router.query,
-            query,
+        router.push(
+          {
+            // @TODO Add the asPath explicit because of the 404 page and ssr
+            // This might cause bugs, I'm a bit unsure about the best approach here :/
+            // It adds the next.js query params slug :( Look into this
+            // jeeeez, remove the slug query
+            // pathname: router.asPath,
+            pathname: urlParts,
+            query: {
+              ...router.query,
+              query,
+            },
           },
-        })
+          {
+            pathname: urlParts,
+            query: {
+              ...router.query,
+              query,
+            },
+          },
+          {
+            shallow: true,
+          },
+        )
       }, DEBOUNCE_TIME)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

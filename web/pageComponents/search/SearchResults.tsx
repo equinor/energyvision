@@ -56,12 +56,23 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
 
   // state to route
   useEffect(() => {
-    router.push({
-      query: {
-        ...router.query,
-        tab: currentTab,
+    router.push(
+      {
+        query: {
+          ...router.query,
+          tab: currentTab,
+        },
       },
-    })
+      {
+        query: {
+          ...router.query,
+          tab: currentTab,
+        },
+      },
+      {
+        shallow: true,
+      },
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTab])
 
