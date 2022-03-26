@@ -76,7 +76,7 @@ jobs:
     needs: [deploy, read-satellites]
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: preprod
     strategy:
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
@@ -96,6 +96,7 @@ jobs:
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+          environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
