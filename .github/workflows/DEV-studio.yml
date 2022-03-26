@@ -7,7 +7,7 @@ on:
     paths:
       - 'studio/**/*'
 jobs:
-  deploy:
+  check-code:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -38,13 +38,6 @@ jobs:
         id: lint
         run: |
           pnpm lint:studio
-      - name: Deploy 🚀
-        id: deploy
-        working-directory: ./studio
-        run: |
-          pnpm deploy
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
 
       - uses: act10ns/slack@v1
         with:
@@ -53,7 +46,7 @@ jobs:
         if: failure()
 
   deploy-studio:
-    needs: deploy
+    needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -77,6 +70,7 @@ jobs:
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+          environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}

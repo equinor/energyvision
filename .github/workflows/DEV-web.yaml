@@ -14,7 +14,7 @@ on:
   repository_dispatch:
     types: [sanity_publish]
 jobs:
-  check_code:
+  check-code:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -53,7 +53,7 @@ jobs:
         if: failure()
 
   deploy-global-development:
-    needs: check_code
+    needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
