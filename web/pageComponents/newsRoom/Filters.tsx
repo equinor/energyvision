@@ -16,13 +16,13 @@ const Filters = ({ ...rest }) => {
         <AccordionItem>
           <AccordionButton>Country</AccordionButton>
           <AccordionPanel>
-            <RefinementList sortBy={['name:desc']} attribute="countryTags" />
+            <RefinementList sortBy={['name:asc']} attribute="countryTags" />
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
           <AccordionButton>Topic</AccordionButton>
           <AccordionPanel>
-            <RefinementList sortBy={['name:desc']} attribute="topicTags" />
+            <RefinementList sortBy={['name:asc']} limit={20} attribute="topicTags" />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
