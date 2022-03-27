@@ -1,5 +1,5 @@
 import { useRefinementList, UseRefinementListProps } from 'react-instantsearch-hooks'
-import { List } from '@components'
+import { List, Checkbox } from '@components'
 
 export type RefinementListProps = React.ComponentProps<'div'> & UseRefinementListProps
 
@@ -13,11 +13,12 @@ export function RefinementList(props: RefinementListProps) {
       <List unstyled>
         {items.map((item) => (
           <Item key={item.value}>
-            <label>
-              <input type="checkbox" value={item.value} checked={item.isRefined} onChange={() => refine(item.value)} />
-              <span>{item.label}</span>
-              <span>{` (${item.count})`}</span>
-            </label>
+            <Checkbox
+              value={item.value}
+              label={`${item.label} (${item.count})`}
+              checked={item.isRefined}
+              onChange={() => refine(item.value)}
+            ></Checkbox>
           </Item>
         ))}
       </List>
