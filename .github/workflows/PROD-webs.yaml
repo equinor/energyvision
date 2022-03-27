@@ -1,0 +1,29 @@
+name: PROD - Deploy webs
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: 'Name of web to deploy'
+        required: true
+        type: choice
+        options:
+          - global
+          - brazil
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://equinor.com
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - id: deploy
+        run: echo  To be deployed ${{ github.event.inputs.site }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
