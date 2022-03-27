@@ -1,8 +1,10 @@
+// @todo This is not migrated, it's just a start
+
 import { Link } from '@components'
 import { default as NextLink } from 'next/link'
 import { getLocaleFromName } from '../../../lib/localization'
 
-type InternalLink = {
+type InternalLinkProps = {
   _key: string
   _type: string
   internalLink: {
@@ -18,7 +20,7 @@ type InternalLink = {
   markKey: string
 }
 
-export const InternalLink = ({ value, children }: { value: InternalLink; children: React.ReactNode }) => {
+export const InternalLink = ({ value, children }: { value: InternalLinkProps; children: React.ReactNode }) => {
   //console.log(value, children)
   try {
     const { id, lang } = value.internalLink

@@ -19,8 +19,18 @@ const Date = styled.div`
   font-size: var(--typeScale-0);
 `
 
+/* type HitProps = {
+  slug: string
+  pageTitle: string
+  publishDateTime?: string
+  topicTags?: string[]
+  countryTags?: string[]
+  text: string
+  objectId: string
+}
+ */
 // @TODO Types
-const Hit = ({ hit }: any) => {
+const Hit = ({ hit }: { hit: any }) => {
   return (
     <NextLink href={hit.slug} passHref>
       <StyledHitLink>
