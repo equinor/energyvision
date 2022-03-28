@@ -26,6 +26,7 @@ const StyledButton = styled(RAccordionButton)`
 
 const StyledTypography = styled(Typography)`
   font-weight: 400;
+  font-size: var(--typeScale-1);
 `
 
 type SimpleHeaderProps = TypographyProps
