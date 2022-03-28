@@ -3,8 +3,8 @@ import { getHighlightedParts, getPropertyByPath } from 'instantsearch.js/es/lib/
 import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { decode } from 'html-entities'
-import type { EventHit } from './EventHit'
-import type { TopicHit } from './TopicHit'
+import type { EventHitType } from './EventHit'
+import type { TopicHitType } from './TopicHit'
 
 const StyledSpan = styled.span`
   color: var(--spruce-wood-100);
@@ -12,7 +12,7 @@ const StyledSpan = styled.span`
 `
 
 type Highlight = {
-  hit: EventHit | TopicHit
+  hit: EventHitType | TopicHitType
   attribute: string
 }
 

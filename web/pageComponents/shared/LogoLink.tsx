@@ -1,4 +1,4 @@
-import { CSSProperties, AnchorHTMLAttributes } from 'react'
+import { AnchorHTMLAttributes } from 'react'
 import { LogoSecondary } from '@components'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
@@ -34,7 +34,7 @@ type LogoLinkProps = {
   inverted?: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-export const LogoLink = ({ inverted = false, style, ...rest }: LogoLinkProps) => {
+export const LogoLink = ({ inverted = false, ...rest }: LogoLinkProps) => {
   return (
     <NextLink href="/" passHref>
       {/*  Localize text */}

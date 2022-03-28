@@ -16,12 +16,6 @@ const TextSnippet = styled.p`
   color: var(--inverted-text);
 `
 
-const StyledLink = styled.a`
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-`
-
 type TopicResultHit = {
   slug?: string
   type?: string // @TODO: be more specific, like "news", "page", "event"?
@@ -30,10 +24,10 @@ type TopicResultHit = {
   text?: string
 }
 
-export type TopicHit = AlgoliaHit<TopicResultHit>
+export type TopicHitType = AlgoliaHit<TopicResultHit>
 
 export type HitProps = {
-  hit: TopicHit
+  hit: TopicHitType
   setIsOpen: (arg0: boolean) => void
 }
 

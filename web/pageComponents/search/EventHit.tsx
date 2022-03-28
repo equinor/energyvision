@@ -32,10 +32,10 @@ type EventResultHit = {
   type?: string // @TODO: be more specific, like "news", "page", "event"?
 }
 
-export type EventHit = AlgoliaHit<EventResultHit>
+export type EventHitType = AlgoliaHit<EventResultHit>
 
 export type HitProps = {
-  hit: EventHit
+  hit: EventHitType
   setIsOpen: (arg0: boolean) => void
 }
 
