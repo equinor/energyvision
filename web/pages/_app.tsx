@@ -6,7 +6,6 @@ import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
 import { SkipNavLink } from '@reach/skip-nav'
 import 'focus-visible'
-import Script from 'next/script'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
 import { isGlobal, shouldIndexAndFollow } from '../common/helpers/datasetHelpers'
@@ -44,7 +43,6 @@ declare global {
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
-  const isLocalhost = !!process.env.NEXT_PUBLIC_LOCALHOST
 
   useEffect(() => {
     if (!GTM_ID) return
@@ -86,16 +84,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       />
       <SkipNavLink />
       {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
-      {!isLocalhost && (
-        <Script
-          src="https://consent.cookiebot.com/uc.js"
-          id="Cookiebot"
-          data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-          strategy="beforeInteractive"
-          data-blockingmode="auto"
-          data-culture={router.locale == 'no' ? 'nb' : router.locale}
-        />
-      )}
       {getLayout(<Component {...pageProps} />)}
     </>
   )

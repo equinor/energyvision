@@ -1,7 +1,31 @@
 /* eslint-disable */
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import Script from 'next/script'
 import { ServerStyleSheet } from 'styled-components'
 import { GTM_ID } from '../lib/gtm'
+
+const GoogleConsentMode = () => (
+  <script
+    data-cookieconsent="ignore"
+    dangerouslySetInnerHTML={{
+      __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("consent", "default", {
+            ad_storage: "denied",
+            analytics_storage: "denied",
+            functionality_storage: "denied",
+            personalization_storage: "denied",
+            security_storage: "granted",
+            wait_for_update: 500,
+        });
+        gtag("set", "ads_data_redaction", true);
+      `,
+    }}
+  ></script>
+)
 
 const GoogleTagManagerHead = () => (
   <script
@@ -22,6 +46,17 @@ const GoogleTagManagerBody = () => (
             height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
     }}
   ></noscript>
+)
+
+const CookieBot = ({ locale }: { locale: string | undefined }) => (
+  <Script
+    src="https://consent.cookiebot.com/uc.js"
+    id="Cookiebot"
+    strategy="beforeInteractive"
+    data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+    data-blockingmode="auto"
+    data-culture={locale == 'no' ? 'nb' : locale || 'en'}
+  />
 )
 
 export default class MyDocument extends Document {
@@ -50,13 +85,21 @@ export default class MyDocument extends Document {
     }
   }
   render() {
+    const IS_LIVE = process.env.NODE_ENV !== 'development'
+    const { locale } = this.props.__NEXT_DATA__
     return (
       <Html data-dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}>
         <Head>
           {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" /> */}
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-          {GTM_ID && <GoogleTagManagerHead />}
+          {GTM_ID && (
+            <>
+              <GoogleConsentMode />
+              <GoogleTagManagerHead />
+            </>
+          )}
+          {IS_LIVE && <CookieBot locale={locale} />}
         </Head>
         <body>
           {GTM_ID && <GoogleTagManagerBody />}
