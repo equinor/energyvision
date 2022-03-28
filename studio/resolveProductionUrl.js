@@ -5,8 +5,8 @@ const dataset = process.env.SANITY_STUDIO_API_DATASET
 
 const remoteUrl =
   dataset === 'global'
-    ? 'https://web-energyvision-dev.radix.equinor.com/'
-    : `https://web-${dataset}-energyvision-dev.radix.equinor.com`
+    ? 'https://web-energyvision-preprod.radix.equinor.com/'
+    : `https://web-${dataset}-energyvision-preprod.radix.equinor.com`
 
 const localUrl = process.env.SANITY_STUDIO_PROJECT_URL
 
