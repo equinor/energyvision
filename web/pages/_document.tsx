@@ -3,7 +3,7 @@ import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/do
 import { ServerStyleSheet } from 'styled-components'
 import { GTM_ID } from '../lib/gtm'
 
-const GoogleTagManager = () => (
+const GoogleTagManagerHead = () => (
   <script
     dangerouslySetInnerHTML={{
       __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -13,6 +13,15 @@ const GoogleTagManager = () => (
         })(window,document,'script','dataLayer','${GTM_ID}');`,
     }}
   ></script>
+)
+
+const GoogleTagManagerBody = () => (
+  <noscript
+    dangerouslySetInnerHTML={{
+      __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+    }}
+  ></noscript>
 )
 
 export default class MyDocument extends Document {
@@ -47,17 +56,10 @@ export default class MyDocument extends Document {
           {/* <link rel="stylesheet" href="https://eds-static.equinor.com/font/equinor-uprights-vf.css" /> */}
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-          <GoogleTagManager />
+          {GTM_ID && <GoogleTagManagerHead />}
         </Head>
         <body>
-          {/*  <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            />
-       </noscript> */}
+          {GTM_ID && <GoogleTagManagerBody />}
           <Main />
           <NextScript />
         </body>
