@@ -30,7 +30,7 @@ export function RefinementList(props: RefinementListProps) {
           ))}
         </List>
       ) : (
-        <NoRelevant>No content is satisfying this filter</NoRelevant>
+        <NoRelevant>No content is satisfying this filter (or Norwegian = wip)</NoRelevant>
       )}
     </div>
   )

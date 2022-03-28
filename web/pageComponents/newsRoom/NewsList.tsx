@@ -3,6 +3,7 @@ import Hit from './Hit'
 import { Hits } from './Hits'
 import { Heading } from '@components'
 import { Pagination } from '../../pageComponents/search/Pagination'
+import { FormattedMessage } from 'react-intl'
 
 const StyledNewsList = styled.div``
 
@@ -14,7 +15,7 @@ const NewsList = ({ ...rest }) => {
   return (
     <StyledNewsList {...rest}>
       <Heading level="h2" size="lg">
-        News
+        <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
       </Heading>
       <Hits hitComponent={Hit} />
       <StyledPagination padding={1} hitsPerPage={20} />

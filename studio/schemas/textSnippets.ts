@@ -104,18 +104,18 @@ const snippets: textSnippet = {
     defaultValue:
       'Want the full picture? We’d love to share this content with you, but first you must accept additional cookies by enabling them in our cookie settings.',
   },
-  contact_form_name:{
+  contact_form_name: {
     title: 'Contact form: Name',
-    defaultValue: 'Name'
+    defaultValue: 'Name',
   },
 
-  contact_form_name_placeholder:{
+  contact_form_name_placeholder: {
     title: 'Contact form: Name Placeholder',
-    defaultValue: 'Jane Doe'
+    defaultValue: 'Jane Doe',
   },
-  contact_form_email:{
+  contact_form_email: {
     title: 'Contact form: Email',
-    defaultValue: 'Email'
+    defaultValue: 'Email',
   },
   contact_form_name_validation: {
     title: 'Contact form: Name validation',
@@ -125,37 +125,37 @@ const snippets: textSnippet = {
     title: 'Contact form: Email validation',
     defaultValue: 'Please fill out a valid email address',
   },
-  contact_form_category:{
+  contact_form_category: {
     title: 'Contact form: Category',
-    defaultValue: 'Category'
+    defaultValue: 'Category',
   },
-  contact_form_reaching_out:{
+  contact_form_reaching_out: {
     title: 'Contact form: Who are you trying to reach?',
-    defaultValue: 'Who are you trying to reach?'
+    defaultValue: 'Who are you trying to reach?',
   },
-  contact_form_how_to_help:{
+  contact_form_how_to_help: {
     title: 'Contact form: How can we help you?',
-    defaultValue: 'How can we help you?'
+    defaultValue: 'How can we help you?',
   },
-  contact_form_ask_us:{
+  contact_form_ask_us: {
     title: 'Contact form: Ask us a question',
-    defaultValue: 'Ask us a question'
+    defaultValue: 'Ask us a question',
   },
-  contact_form_report_error:{
+  contact_form_report_error: {
     title: 'Contact form: Report an error',
-    defaultValue: 'Report an error'
+    defaultValue: 'Report an error',
   },
-  contact_form_contact_department:{
+  contact_form_contact_department: {
     title: 'Contact form: Contact a department or member of staff',
-    defaultValue: 'Contact a department or member of staff'
+    defaultValue: 'Contact a department or member of staff',
   },
-  contact_form_investor_relations:{
+  contact_form_investor_relations: {
     title: 'Contact form: Investor relations',
-    defaultValue: 'Investor relations'
+    defaultValue: 'Investor relations',
   },
-  contact_form_other:{
+  contact_form_other: {
     title: 'Contact form: Other',
-    defaultValue: 'Other'
+    defaultValue: 'Other',
   },
   contact_form_cta: {
     title: 'Contact form: CTA',
@@ -166,29 +166,29 @@ const snippets: textSnippet = {
     defaultValue: 'School / Organisation',
   },
 
-  career_fair_form_organisation_validation:{
+  career_fair_form_organisation_validation: {
     title: 'Career fair form: Organisation validation',
-    defaultValue: 'Please enter your school or organisation'
+    defaultValue: 'Please enter your school or organisation',
   },
   career_fair_form_contact_person: {
     title: 'Career fair form: Contact Person',
     defaultValue: 'Contact Person',
   },
-  career_fair_form_contact_person_validation:{
+  career_fair_form_contact_person_validation: {
     title: 'Career fair form: Contact Person validation',
-    defaultValue: 'Please enter a contact person'
+    defaultValue: 'Please enter a contact person',
   },
-  career_fair_form_name_placeholder:{
+  career_fair_form_name_placeholder: {
     title: 'Contact form: Name Placeholder',
-    defaultValue: 'Jane Doe'
+    defaultValue: 'Jane Doe',
   },
   career_fair_form_phone: {
     title: 'Career fair form: Phone number',
     defaultValue: 'Phone number',
   },
-  career_fair_form_phone_validation:{
+  career_fair_form_phone_validation: {
     title: 'Career fair form: Phone Number validation',
-    defaultValue: 'Please enter your phone number'
+    defaultValue: 'Please enter your phone number',
   },
   career_fair_form_email: {
     title: 'Career fair form: Email',
@@ -235,20 +235,20 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
   },
 
-  order_reports_form_name:{
+  order_reports_form_name: {
     title: 'Order annual reports form: Name',
     defaultValue: 'Name',
   },
 
-  order_reports_form_name_validation:{
+  order_reports_form_name_validation: {
     title: 'Order annual reports form: Enter name',
     defaultValue: 'Please enter your name',
   },
-  order_reports_form_name_placeholder:{
+  order_reports_form_name_placeholder: {
     title: 'Order annual reports form: Name placeholder',
     defaultValue: 'Jane Doe',
   },
-  
+
   order_reports_form_email: {
     title: 'Order annual reports form: Email',
     defaultValue: 'Email',
@@ -307,18 +307,18 @@ const snippets: textSnippet = {
     title: 'Order reports form: Choose validation',
     defaultValue: 'Please choose atleast one of the following reports',
   },
-  careers_contact_form_name:{
+  careers_contact_form_name: {
     title: 'Careers contact form: Name',
-    defaultValue: 'Your Name'
+    defaultValue: 'Your Name',
   },
 
-  careers_contact_form_name_placeholder:{
+  careers_contact_form_name_placeholder: {
     title: 'Careers contact form: Name Placeholder',
-    defaultValue: 'Jane Doe'
+    defaultValue: 'Jane Doe',
   },
-  careers_contact_form_email:{
+  careers_contact_form_email: {
     title: 'Careers contact form: Email',
-    defaultValue: 'Email'
+    defaultValue: 'Email',
   },
   careers_contact_form_name_validation: {
     title: 'Careers contact form: Name validation',
@@ -328,63 +328,79 @@ const snippets: textSnippet = {
     title: 'Careers contact form: Email validation',
     defaultValue: 'Please fill out a valid email address',
   },
-  careers_contact_form_category:{
+  careers_contact_form_category: {
     title: 'Careers contact form: Category',
-    defaultValue: 'Category'
+    defaultValue: 'Category',
   },
-  careers_contact_form_questions:{
+  careers_contact_form_questions: {
     title: 'Careers contact form: Type your questions',
-    defaultValue: 'Type your questions'
+    defaultValue: 'Type your questions',
   },
-  careers_contact_form_location:{
+  careers_contact_form_location: {
     title: 'Careers contact form: Location',
-    defaultValue: 'Location'
+    defaultValue: 'Location',
   },
-  careers_contact_form_thesis_writing:{
+  careers_contact_form_thesis_writing: {
     title: 'Careers contact form: Thesis writing',
-    defaultValue: 'Thesis writing'
+    defaultValue: 'Thesis writing',
   },
-  careers_contact_form_questions_related_to_position:{
+  careers_contact_form_questions_related_to_position: {
     title: 'Careers contact form: Questions related to a specific position',
-    defaultValue: 'Questions related to a specific position'
+    defaultValue: 'Questions related to a specific position',
   },
-  careers_contact_form_technical_issues:{
+  careers_contact_form_technical_issues: {
     title: 'Careers contact form: Technical issue when applying for a specific position',
-    defaultValue: 'Technical issue when applying for a specific position'
+    defaultValue: 'Technical issue when applying for a specific position',
   },
   careers_contact_form_phone: {
     title: 'Careers contact form: Phone number',
     defaultValue: 'Phone number',
   },
-  careers_contact_form_phone_validation:{
+  careers_contact_form_phone_validation: {
     title: 'Careers contact form: Phone Number validation',
-    defaultValue: 'Please enter your phone number'
+    defaultValue: 'Please enter your phone number',
   },
-  careers_contact_form_phone_placeholder:{
+  careers_contact_form_phone_placeholder: {
     title: 'Careers contact form: Phone Number placeholder',
-    defaultValue: 'Country code and phone number'
+    defaultValue: 'Country code and phone number',
   },
 
-  careers_contact_form_position:{
+  careers_contact_form_position: {
     title: 'Careers contact form: Position Id/ Name',
-    defaultValue: 'Position ID/name'
+    defaultValue: 'Position ID/name',
   },
 
   careers_contact_form_cta: {
     title: 'Careers Contact form: CTA',
     defaultValue: 'Submit form',
   },
-  careers_contact_form_location_validation:{
+  careers_contact_form_location_validation: {
     title: 'Careers contact form: Location validation',
-    defaultValue: 'Enter a location'
+    defaultValue: 'Enter a location',
   },
-  careers_contact_form_location_placeholder:{
+  careers_contact_form_location_placeholder: {
     title: 'Careers contact form: Country/city',
-    defaultValue: 'Country/city'
+    defaultValue: 'Country/city',
   },
-  careers_contact_form_questions_validation:{
+  careers_contact_form_questions_validation: {
     title: 'Careers contact form: Questions validation',
-    defaultValue: 'Please enter a question'
+    defaultValue: 'Please enter a question',
+  },
+  newsroom_topic_filter: {
+    title: 'Newsroom: Topic filter heading',
+    defaultValue: 'Topic',
+  },
+  newsroom_country_filter: {
+    title: 'Newsroom: Country filter heading',
+    defaultValue: 'Country',
+  },
+  newsroom_year_filter: {
+    title: 'Newsroom: Year filter heading',
+    defaultValue: 'Year',
+  },
+  newsroom_newslist_header: {
+    title: 'Newsroom: News list heading',
+    defaultValue: 'News',
   },
 }
 
