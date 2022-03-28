@@ -38,7 +38,7 @@ jobs:
       #    repository: 'equinor/energyvision-internal'
       #    ref: main
       #    token: ${{ secrets.GITHUB_TOKEN }} # Replace with PAT
-      - name: Deploy API on Radix 🚀
+      - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master
         with:
@@ -46,7 +46,8 @@ jobs:
             create job
             deploy
             --token-environment
-            --from-config
+            --context production
+            -a energyvision
             -e ${{ secrets.ENV }}
             -f
 
