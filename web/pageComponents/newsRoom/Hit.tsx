@@ -36,7 +36,7 @@ const Hit = ({ hit }: { hit: any }) => {
       <StyledHitLink>
         <article>
           <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>
-          <StyledHeading level="h2" size="md">
+          <StyledHeading level="h3" size="md">
             {hit.pageTitle}
           </StyledHeading>
           {/*  <Text>{hit.text}</Text> */}
