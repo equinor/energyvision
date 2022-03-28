@@ -9,8 +9,7 @@ import 'focus-visible'
 import Script from 'next/script'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
-import { isGlobal } from '../common/helpers/datasetHelpers'
-
+import { isGlobal, shouldIndexAndFollow } from '../common/helpers/datasetHelpers'
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
@@ -76,11 +75,15 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       document.head.removeChild(script)
     }
   }, [router.asPath])
+
   return (
     <>
       <GlobalStyle />
       <GlobalFontStyle />
-      <DefaultSeo dangerouslySetAllPagesToNoIndex={true} dangerouslySetAllPagesToNoFollow={true} />
+      <DefaultSeo
+        dangerouslySetAllPagesToNoIndex={!shouldIndexAndFollow}
+        dangerouslySetAllPagesToNoFollow={!shouldIndexAndFollow}
+      />
       <SkipNavLink />
       {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
       {!isLocalhost && (
