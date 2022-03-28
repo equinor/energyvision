@@ -9,6 +9,16 @@ on:
         options:
           - global
           - brazil
+          - germany
+          - argentina
+          - poland
+          - japan
+          - storage
+          - equinorfunds
+          - southkorea
+# TODO: Read tag for current version in preprod from radixconfig
+# Then add this tag for prod for selected site
+# Then run radix deploy for prod environment (secrets.ENV)
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,8 +30,26 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - id: deploy
+      - id: debug
         run: echo  To be deployed ${{ github.event.inputs.site }}
+      #- id: checkout-envis-internal
+      #  uses: actions/checkout@v3
+      #  with:
+      #    repository: 'equinor/energyvision-internal'
+      #    ref: main
+      #    token: ${{ secrets.GITHUB_TOKEN }} # Replace with PAT
+      - name: Deploy API on Radix 🚀
+        id: deploy
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --from-config
+            -e ${{ secrets.ENV }}
+            -f
+
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
