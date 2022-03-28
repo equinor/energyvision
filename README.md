@@ -65,7 +65,3 @@ The legacy packages are currently excluded from the pnpm workspace (see `pnpm-wo
 We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net.
 
 To start the storybook during development, run `pnpm web storyboook` from the root.
-
-## Volta
-
-To ensure we all work with the same version of Nodejs we use [Volta](https://volta.sh/). If you need to use the latest version of Node outside this project, just run `volta install node@latest` in your home catalog. Then as you `cd` into this project, volta will install the pinned lts version. Volta does not support pnpm yet, so at the moment we use the `engines` field in package.json to ensure we’re all on `pnpm v6.x`.
