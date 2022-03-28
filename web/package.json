@@ -49,7 +49,7 @@
     "instantsearch.js": "^4.39.2",
     "next": "^12.1.0",
     "next-circular-dependency": "^1.0.1",
-    "next-sanity": "0.4.0",
+    "next-sanity": "0.5.1",
     "next-sanity-image": "^3.2.1",
     "next-seo": "^5.1.0",
     "only-allow": "^1.1.0",
