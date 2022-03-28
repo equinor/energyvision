@@ -28,7 +28,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   return (
     <>
       {image.extension === 'svg' ? (
-        <Image image={image} maxWidth={720} layout="responsive" />
+        <Image image={image} alt={altTag} maxWidth={720} layout="responsive" />
       ) : (
         <Img
           src={imageSrc}
