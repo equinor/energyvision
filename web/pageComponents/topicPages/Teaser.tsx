@@ -30,7 +30,14 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
       {image.extension === 'svg' ? (
         <Image image={image} maxWidth={720} layout="responsive" />
       ) : (
-        <Img src={imageSrc} alt={altTag} objectFit="cover" layout="fill" unoptimized />
+        <Img
+          src={imageSrc}
+          alt={altTag}
+          objectFit="cover"
+          layout="fill"
+          unoptimized
+          role={image?.isDecorative ? 'presentation' : undefined}
+        />
       )}
     </>
   )

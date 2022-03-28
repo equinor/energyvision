@@ -86,6 +86,7 @@ const Image = ({
       alt={altTag}
       sizes={sizes}
       layout={layout}
+      role={image?.isDecorative ? 'presentation' : undefined}
       placeholder={placeholder}
       unoptimized={unoptimized}
     />
