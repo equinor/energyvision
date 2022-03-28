@@ -22,9 +22,9 @@ const Filters = ({ ...rest }) => {
       <SearchBox />
       <Accordion id="filters" index={indices} onChange={toggleItem}>
         <AccordionItem>
-          <FilterHeader label="Year"></FilterHeader>
+          <FilterHeader label="Topic" />
           <AccordionPanel>
-            <RefinementList sortBy={['name:desc']} attribute="year" />
+            <RefinementList sortBy={['name:asc']} limit={20} attribute="topicTags" />
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
@@ -34,9 +34,9 @@ const Filters = ({ ...rest }) => {
           </AccordionPanel>
         </AccordionItem>
         <AccordionItem>
-          <FilterHeader label="Topic" />
+          <FilterHeader label="Year"></FilterHeader>
           <AccordionPanel>
-            <RefinementList sortBy={['name:asc']} limit={20} attribute="topicTags" />
+            <RefinementList sortBy={['name:desc']} attribute="year" />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
