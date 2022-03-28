@@ -25,7 +25,7 @@ const StyledButton = styled(RAccordionButton)`
 `
 
 const StyledTypography = styled(Typography)`
-  font-weight: 400;
+  font-weight: var(--font-weight);
   font-size: var(--typeScale-1);
 `
 
