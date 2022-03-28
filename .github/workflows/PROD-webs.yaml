@@ -23,7 +23,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: prod
+      name: production
       url: https://equinor.com
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
