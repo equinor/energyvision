@@ -10,7 +10,7 @@ import VisuallyHidden from '../shared/VisuallyHidden'
 import { useIntl } from 'react-intl'
 
 const Input = styled.input`
-  background-color: var(--slate-blue-95);
+  background-color: transparent;
   border: 1px solid var(--moss-green-50);
   padding: var(--space-medium) var(--space-medium) var(--space-medium) var(--space-xxLarge);
   width: 100%;

@@ -12,10 +12,11 @@ const StyledAccordionButton = styled(AccordionButton)`
   justify-content: space-between;
   width: 100%;
   background: transparent;
-  padding: var(--space-small) 0;
+  padding: var(--space-small) var(--space-large);
   border: none;
   border-bottom: 1px solid var(--slate-blue-50);
   cursor: pointer;
+
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }

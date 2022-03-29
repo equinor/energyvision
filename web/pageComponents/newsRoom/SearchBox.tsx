@@ -2,7 +2,7 @@ import UncontrolledSearchBox from '../../pageComponents/search/UncontrolledSearc
 
 const SearchBox = () => {
   return (
-    <div style={{ padding: '1rem', backgroundColor: 'var(--slate-blue-95)' }}>
+    <div>
       <UncontrolledSearchBox />
     </div>
   )

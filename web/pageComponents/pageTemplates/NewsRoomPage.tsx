@@ -14,22 +14,25 @@ import { getIsoFromLocale } from '../../lib/localization'
 const Wrapper = styled.div`
   grid-template-areas:
     'intro intro'
+    '. .'
     'news  news';
-  grid-template-rows: auto auto;
-
+  grid-template-rows: auto var(--space-large) auto;
   display: grid;
 `
 
 const Intro = styled.div`
   grid-area: intro;
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
-    var(--layout-paddingHorizontal-medium);
+  padding: 0 var(--layout-paddingHorizontal-medium);
 `
 
 const News = styled.div`
   grid-area: news;
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-small) var(--space-xLarge)
-    var(--layout-paddingHorizontal-small);
+`
+
+const UnpaddedText = styled.div`
+  & p:only-child {
+    margin-bottom: 0;
+  }
 `
 
 type NewsRoomTemplateProps = {
@@ -67,11 +70,13 @@ const NewsRoomPage = ({ isServerRendered = false, locale }: NewsRoomTemplateProp
             <Heading size="2xl" level="h1">
               Newsroom
             </Heading>
-            <Text>
-              We’re Equinor, a broad energy company with more than 20,000 colleagues committed to developing oil, gas,
-              wind and solar energy in more than 30 countries worldwide. We’re dedicated to safety, equality and
-              sustainability.
-            </Text>
+            <UnpaddedText>
+              <Text>
+                We’re Equinor, a broad energy company with more than 20,000 colleagues committed to developing oil, gas,
+                wind and solar energy in more than 30 countries worldwide. We’re dedicated to safety, equality and
+                sustainability.
+              </Text>
+            </UnpaddedText>
           </Intro>
           <News>
             <InstantSearch

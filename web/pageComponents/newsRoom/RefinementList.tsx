@@ -11,6 +11,9 @@ const NoRelevant = styled.span`
   display: inline-block;
 `
 
+const StyledItem = styled(Item)`
+  padding-left: var(--space-small);
+`
 export function RefinementList(props: RefinementListProps) {
   const { items, refine } = useRefinementList(props)
 
@@ -19,14 +22,14 @@ export function RefinementList(props: RefinementListProps) {
       {items.length > 0 ? (
         <List unstyled>
           {items.map((item) => (
-            <Item key={item.value}>
+            <StyledItem key={item.value}>
               <Checkbox
                 value={item.value}
                 label={`${item.label} (${item.count})`}
                 checked={item.isRefined}
                 onChange={() => refine(item.value)}
               ></Checkbox>
-            </Item>
+            </StyledItem>
           ))}
         </List>
       ) : (

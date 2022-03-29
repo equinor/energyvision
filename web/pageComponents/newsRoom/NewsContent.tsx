@@ -6,7 +6,10 @@ const NewsRoomContent = styled.div`
   display: grid;
   grid-template-areas:
     'filter'
+    '.'
     'list';
+  grid-template-rows: auto var(--space-xLarge) auto;
+
   @media (min-width: 800px) {
     grid-template-columns: 70% 30%;
     grid-template-areas: 'list filter';

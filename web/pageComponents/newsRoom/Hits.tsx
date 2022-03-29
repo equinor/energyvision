@@ -7,7 +7,7 @@ const { Item } = List
 
 const HitList = styled.div`
   /* Temp, use the grid */
-  padding-right: var(--space-3xLarge);
+  /*  padding-right: var(--space-3xLarge); */
   position: relative;
 `
 const HitItem = styled(Item)`

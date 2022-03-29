@@ -5,7 +5,9 @@ import { Heading } from '@components'
 import { Pagination } from '../../pageComponents/search/Pagination'
 import { FormattedMessage } from 'react-intl'
 
-const StyledNewsList = styled.div``
+const StyledNewsList = styled.div`
+  padding: 0 var(--space-large);
+`
 
 const StyledPagination = styled(Pagination)`
   padding-top: var(--space-medium);
