@@ -280,6 +280,11 @@ const snippets: textSnippet = {
     defaultValue: 'Would like to visit Equinor office or facility',
     hidden: !HAS_FORMS,
   },
+  career_fair_form_visit_equinor_helper_text: {
+    title: 'Career fair form: We offer visits to a few locations',
+    defaultValue: 'Please be aware that we only offer visits to a few selected locations. Please specify your preferred location and we will revert to you as soon as we can.',
+    hidden: !HAS_FORMS,
+  },
   career_fair_form_cta: {
     title: 'Career fair form: CTA',
     defaultValue: 'Submit form',

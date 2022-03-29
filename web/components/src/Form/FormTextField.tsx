@@ -6,6 +6,7 @@ export const TextFieldWrapper = styled.div`
   padding: var(--space-small) 0px var(--space-medium) 0px;
   p {
     color: var(--clear-red-100);
+    font-size: var(--typescale-0);
   }
 `
 const StyledEdsTextField = styled(EdsTextField)`

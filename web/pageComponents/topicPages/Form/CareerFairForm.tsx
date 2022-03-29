@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect } from '@components'
+import styled from 'styled-components'
 
 type FormValues = {
   organisation: string
@@ -16,6 +17,9 @@ type FormValues = {
   preferredLang: string
 }
 
+const StyledHelper = styled.p`
+  margin-top: calc(var(--space-small) * -1);
+`
 const CareerFairForm = () => {
   const intl = useIntl()
 
@@ -33,7 +37,7 @@ const CareerFairForm = () => {
     reset()
   }
 
-  const { handleSubmit, control, reset, register } = useForm({
+  const { handleSubmit, control, reset, register, watch } = useForm({
     defaultValues: {
       organisation: '',
       email: '',
@@ -49,6 +53,8 @@ const CareerFairForm = () => {
       preferredLang: intl.locale,
     },
   })
+
+  const watchEvent = watch('event')
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -175,31 +181,44 @@ const CareerFairForm = () => {
           name="event"
           control={control}
           render={({ field: { ref, ...props } }) => (
-            <FormSelect
-              {...props}
-              selectRef={ref}
-              id={props.name}
-              label={intl.formatMessage({ id: 'career_fair_form_event', defaultMessage: 'Event' })}
-            >
-              <option>
-                {intl.formatMessage({
-                  id: 'career_fair_form_invite_career_fair',
-                  defaultMessage: 'Invite Equinor to a career fair or student event',
-                })}
-              </option>
-              <option>
-                {intl.formatMessage({
-                  id: 'career_fair_form_invite_company_presentation',
-                  defaultMessage: 'Invite Equinor to hold a company presentation',
-                })}
-              </option>
-              <option>
-                {intl.formatMessage({
+            <>
+              <FormSelect
+                {...props}
+                selectRef={ref}
+                id={props.name}
+                aria-describedby="select-helper-text-${id}"
+                label={intl.formatMessage({ id: 'career_fair_form_event', defaultMessage: 'Event' })}
+              >
+                <option>
+                  {intl.formatMessage({
+                    id: 'career_fair_form_invite_career_fair',
+                    defaultMessage: 'Invite Equinor to a career fair or student event',
+                  })}
+                </option>
+                <option>
+                  {intl.formatMessage({
+                    id: 'career_fair_form_invite_company_presentation',
+                    defaultMessage: 'Invite Equinor to hold a company presentation',
+                  })}
+                </option>
+                <option>
+                  {intl.formatMessage({
+                    id: 'career_fair_form_visit_equinor',
+                    defaultMessage: 'Would like to visit Equinor office or facility',
+                  })}
+                </option>
+              </FormSelect>
+              {watchEvent ==
+                intl.formatMessage({
                   id: 'career_fair_form_visit_equinor',
                   defaultMessage: 'Would like to visit Equinor office or facility',
-                })}
-              </option>
-            </FormSelect>
+                }) && (
+                <StyledHelper id="select-helper-text">
+                  Please be aware that we only offer visits to a few selected locations. Please specify your preferred
+                  location and we will revert to you as soon as we can.
+                </StyledHelper>
+              )}
+            </>
           )}
         />
 

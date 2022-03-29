@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { NativeSelect as EdsNativeSelect, NativeSelectProps } from '@equinor/eds-core-react'
 import { TextFieldWrapper } from '@components'
 
-const StyledEdsTextField = styled(EdsNativeSelect)`
+const StyledEdsNativeSelectField = styled(EdsNativeSelect)`
   label {
     font-size: var(--typescale-0);
   }
@@ -15,9 +15,9 @@ export const FormSelect = forwardRef<HTMLDivElement, NativeSelectProps>(function
 ) {
   return (
     <TextFieldWrapper>
-      <StyledEdsTextField ref={ref} {...rest}>
+      <StyledEdsNativeSelectField ref={ref} {...rest}>
         {children}
-      </StyledEdsTextField>
+      </StyledEdsNativeSelectField>
     </TextFieldWrapper>
   )
 })
