@@ -13,16 +13,29 @@ import { getIsoFromLocale } from '../../lib/localization'
 
 const Wrapper = styled.div`
   grid-template-areas:
-    'intro intro'
-    '. .'
-    'news  news';
+    'intro'
+    '.'
+    'news';
   grid-template-rows: auto var(--space-large) auto;
   display: grid;
+  /* Yup, in an ideal world we might have used some clamp based paddings here to avoid MQ, but the smallest
+  one is way too big. Might create some fluid spacings later on   */
+  @media (min-width: 800px) {
+    grid-template-areas:
+      '. . .'
+      '. intro .'
+      '. . .'
+      '.  news news';
+    grid-template-rows: var(--space-xxLarge) auto var(--space-3xLarge) auto;
+    grid-template-columns: var(--layout-paddingHorizontal-small) minmax(auto, var(--layout-maxContent-narrow)) auto;
+  }
 `
 
 const Intro = styled.div`
   grid-area: intro;
-  padding: 0 var(--layout-paddingHorizontal-medium);
+
+  max-width: var(--maxViewportWidth);
+  margin: 0 auto;
 `
 
 const News = styled.div`

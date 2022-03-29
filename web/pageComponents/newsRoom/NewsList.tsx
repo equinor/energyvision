@@ -7,6 +7,9 @@ import { FormattedMessage } from 'react-intl'
 
 const StyledNewsList = styled.div`
   padding: 0 var(--space-large);
+  @media (min-width: 800px) {
+    padding: 0;
+  }
 `
 
 const StyledPagination = styled(Pagination)`

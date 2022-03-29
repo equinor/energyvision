@@ -1,11 +1,7 @@
 import UncontrolledSearchBox from '../../pageComponents/search/UncontrolledSearchBox'
 
 const SearchBox = () => {
-  return (
-    <div>
-      <UncontrolledSearchBox />
-    </div>
-  )
+  return <UncontrolledSearchBox />
 }
 
 export default SearchBox

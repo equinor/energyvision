@@ -10,6 +10,9 @@ const NoRelevant = styled.span`
   padding: var(--space-small) 0;
   display: inline-block;
 `
+const StyledList = styled(List)`
+  margin: var(--space-medium) 0;
+`
 
 const StyledItem = styled(Item)`
   padding-left: var(--space-small);
@@ -20,7 +23,7 @@ export function RefinementList(props: RefinementListProps) {
   return (
     <div>
       {items.length > 0 ? (
-        <List unstyled>
+        <StyledList unstyled>
           {items.map((item) => (
             <StyledItem key={item.value}>
               <Checkbox
@@ -31,7 +34,7 @@ export function RefinementList(props: RefinementListProps) {
               ></Checkbox>
             </StyledItem>
           ))}
-        </List>
+        </StyledList>
       ) : (
         <NoRelevant>No content is satisfying this filter (or Norwegian = wip)</NoRelevant>
       )}

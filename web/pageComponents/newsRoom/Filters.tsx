@@ -1,10 +1,23 @@
 import { useState } from 'react'
 import { Accordion, AccordionItem, AccordionPanel } from '@reach/accordion'
 import { useIntl } from 'react-intl'
-
+import styled from 'styled-components'
 import FilterHeader from '././FilterHeader'
 import { RefinementList } from './RefinementList'
 import SearchBox from './SearchBox'
+
+const StyledAccordion = styled(Accordion)`
+  @media (min-width: 800px) {
+    padding: 0 0 var(--space-large) var(--space-medium);
+    border-left: 1px solid var(--slate-blue-50);
+  }
+`
+
+const SearchBoxContainer = styled.div`
+  @media (min-width: 800px) {
+    padding-left: var(--space-medium);
+  }
+`
 
 const Filters = ({ ...rest }) => {
   const [indices, setIndices] = useState<number[]>([])
@@ -21,8 +34,11 @@ const Filters = ({ ...rest }) => {
 
   return (
     <div {...rest}>
-      <SearchBox />
-      <Accordion id="filters" index={indices} onChange={toggleItem}>
+      <SearchBoxContainer>
+        <SearchBox />
+      </SearchBoxContainer>
+
+      <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
         <AccordionItem>
           <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
           <AccordionPanel>
@@ -43,7 +59,7 @@ const Filters = ({ ...rest }) => {
             <RefinementList sortBy={['name:desc']} attribute="year" />
           </AccordionPanel>
         </AccordionItem>
-      </Accordion>
+      </StyledAccordion>
     </div>
   )
 }
