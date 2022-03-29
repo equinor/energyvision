@@ -12,7 +12,7 @@ const { Item } = List
 
 const SimpleSubMenu = styled(SubMenu)`
   @media (min-width: 1300px) {
-    border-bottom: 1px solid var(--grey-40);
+    border-bottom: 1px solid var(--grey-20);
   }
 `
 

@@ -11,6 +11,8 @@ import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import SearchOverlay from '../search/SearchOverlay'
 import { languages, defaultLanguage } from '../../languages'
+import { FormattedMessage } from 'react-intl'
+import Link from 'next/link'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -42,7 +44,7 @@ const ControlsContainer = styled.div`
   grid-area: menu;
   justify-self: right;
   display: grid;
-  grid-template-columns: repeat(var(--columns), min-content);
+  grid-template-columns: repeat(var(--columns), auto);
   grid-column-gap: var(--space-small);
   column-gap: var(--space-small);
   align-items: center;
@@ -51,6 +53,11 @@ const ControlsContainer = styled.div`
     grid-column-gap: var(--space-medium);
     column-gap: var(--space-medium);
   }
+`
+
+const StyledAllSites = styled.div`
+  cursor: pointer;
+  font-size: var(--typeScale-1);
 `
 
 export type HeaderProps = {
@@ -73,10 +80,19 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   if (hasSearch) columns++
   if (hasMoreThanOneLanguage && !is404) columns++
 
+  /** Display "All sites" in case menu is empty **/
+  const shouldDisplayAllSites = !isGlobal && !menuData
+  const AllSites = () => (
+    <Link href="https://www.equinor.com/languages.html?language=en" passHref>
+      <StyledAllSites>
+        <FormattedMessage id="all_sites" defaultMessage="All Sites" />
+      </StyledAllSites>
+    </Link>
+  )
+
   return (
     <HeaderRelative>
       <TopbarOffset />
-
       <Topbar>
         <TopbarContainer>
           <LogoLinkInGrid />
@@ -93,8 +109,9 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
               </ControlChild>
             )}
             {hasMoreThanOneLanguage && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
-
-            {menuData && isGlobal ? (
+            {shouldDisplayAllSites ? (
+              <AllSites />
+            ) : menuData && isGlobal ? (
               <ControlChild>
                 <SiteMenu data={menuData as MenuData} />
               </ControlChild>

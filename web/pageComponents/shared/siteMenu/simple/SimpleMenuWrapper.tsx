@@ -8,7 +8,7 @@ const StyledAccordion = styled(RAccordion)`
   padding: 0;
   list-style: none;
   @media (min-width: 700px) {
-    margin: var(--menu-paddingVertical) 0 0 var(--menu-paddingHorizontal);
+    margin: 0 auto;
     max-width: var(--layout-maxContent-narrow);
   }
 `
