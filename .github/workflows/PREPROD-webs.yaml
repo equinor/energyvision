@@ -11,7 +11,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
@@ -42,8 +42,46 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-global:
+  update-radix-config:
     needs: check-code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        id: checkout
+        uses: actions/checkout@v3
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${ GITHUB_SHA })" >> $GITHUB_ENV
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Modify radixconfig tag for production on master branch 🗒️
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/modifyTag.py web ${{ env.IMAGE_TAG_SHA }}
+          git config --global user.name 'nilsml'
+          git config --global user.email 'nilsml@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          git commit -am ${{ env.IMAGE_TAG_SHA }}
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-global:
+    needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: preprod
