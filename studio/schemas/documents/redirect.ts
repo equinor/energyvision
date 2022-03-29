@@ -4,6 +4,7 @@ import { filterByRouteAndNews } from '../../helpers/referenceFilters'
 import blocksToText from '../../helpers/blocksToText'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
+import { HAS_NEWS } from '../../src/lib/datasetHelpers'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
@@ -41,11 +42,11 @@ export default {
       name: 'to',
       type: 'reference',
       to: [
-        {
+        HAS_NEWS && {
           type: 'news',
         },
         ...routes,
-      ],
+      ].filter((e) => e),
       validation: (Rule: Rule) => Rule.required(),
       options: {
         filter: filterByRouteAndNews,

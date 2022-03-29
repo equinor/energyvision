@@ -21,8 +21,8 @@ const ingressContentType = configureBlockContent({
 
 export default {
   type: 'document',
-  title: `Landing page`,
-  name: `landingPage`,
+  title: 'Landing page',
+  name: 'landingPage',
   i18n,
   fieldsets: [
     {

@@ -23,6 +23,7 @@ import {
   iframe,
   relatedLinks,
 } from './news/sharedNewsFields'
+import { HAS_NEWS } from '../../src/lib/datasetHelpers'
 
 export default {
   title: 'Local news',
@@ -74,8 +75,8 @@ export default {
     },
     title,
     ...publishDateTime,
-    tags,
-    countryTags,
+    HAS_NEWS && tags,
+    HAS_NEWS && countryTags,
     {
       ...newsSlugField,
       fieldset: 'slug',
@@ -111,7 +112,7 @@ export default {
     content,
     iframe,
     relatedLinks,
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',

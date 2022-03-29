@@ -8,6 +8,7 @@ import type { ImageWithAlt } from '../imageWithAlt'
 import routes from '../../routes'
 import { AnchorLinkDescription } from '../anchorReferenceField'
 import { filterByRouteAndNews } from '../../../helpers/referenceFilters'
+import { HAS_NEWS } from '../../../src/lib/datasetHelpers'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -28,12 +29,15 @@ function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-const defaultReferenceTargets: ReferenceTarget[] = [
-  {
-    type: 'news',
-  },
-  ...routes,
-]
+const newsType = HAS_NEWS
+  ? [
+      {
+        type: 'news',
+      },
+    ]
+  : []
+
+const defaultReferenceTargets: ReferenceTarget[] = [...newsType, ...routes]
 
 export default {
   title: 'People promotion',

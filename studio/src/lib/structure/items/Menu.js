@@ -4,10 +4,10 @@ import { MenuIcon } from '../../../../icons'
 import { languages } from '../../../../languages'
 // eslint-disable-next-line import/no-unresolved
 import flags from '../../../../icons/countries'
-import { IS_GLOBAL } from '../../datasetHelpers'
+import { HAS_FANCY_MENU } from '../../datasetHelpers'
 
 const menuId = (lang) => {
-  if (IS_GLOBAL) {
+  if (HAS_FANCY_MENU) {
     return lang.id + '-menu'
   } else {
     return lang.id + '-simple-menu'
@@ -20,7 +20,7 @@ const getMenuListItems = (lang) => {
     id: `main-menu`,
     icon: MenuIcon,
     child: () =>
-      S.documentWithInitialValueTemplate(IS_GLOBAL ? 'menu-with-locale' : 'simple-menu-with-locale', {
+      S.documentWithInitialValueTemplate(HAS_FANCY_MENU ? 'menu-with-locale' : 'simple-menu-with-locale', {
         isoCode: `${lang.name}`,
       })
         .id(menuId(lang))
@@ -38,7 +38,7 @@ const getMenuListItems = (lang) => {
         .initialValueTemplates([S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` })]),
   })
 
-  return IS_GLOBAL ? [mainMenu, subMenu] : [mainMenu]
+  return HAS_FANCY_MENU ? [mainMenu, subMenu] : [mainMenu]
 }
 
 const menus = languages.map((lang) =>

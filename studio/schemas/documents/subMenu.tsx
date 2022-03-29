@@ -9,6 +9,7 @@ import { validateCharCounterEditor } from '../validations/validateCharCounterEdi
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
 import { filterByRoute, filterByRouteNewsAndTitle } from '../../helpers/referenceFilters'
+import { HAS_NEWS } from '../../src/lib/datasetHelpers'
 
 export type SubMenu = {
   _type: 'subMenu'
@@ -123,7 +124,7 @@ export default {
       name: 'featuredContent',
       type: 'reference',
       title: 'Featured content',
-      to: [{ type: 'news' }, ...routes],
+      to: [HAS_NEWS && { type: 'news' }, ...routes].filter((e) => e),
       options: {
         filter: filterByRouteNewsAndTitle,
         disableNew: true,

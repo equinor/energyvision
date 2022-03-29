@@ -19,6 +19,7 @@ import {
   iframe,
   relatedLinks,
 } from './news/sharedNewsFields'
+import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
 
 export default {
   title: 'News',
@@ -64,9 +65,9 @@ export default {
     },
     title,
     ...publishDateTime,
-    { ...tags, fieldset: 'tagFieldset' },
-    { ...countryTags, fieldset: 'tagFieldset' },
-    subscriptionType,
+    HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
+    HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
+    HAS_NEWS_SUBSCRIPTION && subscriptionType,
     {
       ...newsSlugField,
       fieldset: 'slug',
@@ -94,7 +95,7 @@ export default {
     content,
     iframe,
     relatedLinks,
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',

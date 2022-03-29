@@ -3,6 +3,7 @@ import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
+import { HAS_EVENT, HAS_LANDING_PAGE } from '../../src/lib/datasetHelpers'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -32,13 +33,13 @@ export default (isoCode: string, title: string) => {
           {
             type: 'page',
           },
-          {
+          HAS_LANDING_PAGE && {
             type: 'landingPage',
           },
-          {
+          HAS_EVENT && {
             type: 'event',
           },
-        ],
+        ].filter((e) => e),
         options: {
           filter: '_lang == $lang',
           filterParams: { lang: `${isoCode}` },

@@ -4,6 +4,7 @@ import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
+import { HAS_FORMS, HAS_NEWS } from '../../src/lib/datasetHelpers'
 // import { done } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
@@ -81,9 +82,9 @@ export default {
         { type: 'iframe' },
         { type: 'remitTable' },
         { type: 'cookieDeclaration' },
-        { type: 'form' },
-        { type: 'newsList' },
-      ],
+        HAS_FORMS && { type: 'form' },
+        HAS_NEWS && { type: 'newsList' },
+      ].filter((e) => e),
     },
   ],
   orderings: [

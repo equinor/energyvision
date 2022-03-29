@@ -5,15 +5,15 @@ import FilePreview from './src/previews/file/filePreview'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import Structure from './src/lib/structure'
-import { IS_GLOBAL } from './src/lib/datasetHelpers'
+import { HAS_EVENT, HAS_LANDING_PAGE, HAS_LOCAL_NEWS, HAS_NEWS } from './src/lib/datasetHelpers'
 import { hasPermission, PERMISSIONS } from './src/lib/permissions'
 
 const listItems = [
-  Structure.News,
-  IS_GLOBAL && Structure.LocalNews,
+  HAS_NEWS && Structure.News,
+  HAS_LOCAL_NEWS && Structure.LocalNews,
   Structure.TopicContent,
-  IS_GLOBAL && Structure.LandingPage,
-  Structure.Event,
+  HAS_LANDING_PAGE && Structure.LandingPage,
+  HAS_EVENT && Structure.Event,
   Structure.Misc,
   S.divider(),
   Structure.Homepage,

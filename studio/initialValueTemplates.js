@@ -1,7 +1,7 @@
 import T from '@sanity/base/initial-value-template-builder'
 import { languages } from './languages'
 import textSnippets from './schemas/textSnippets'
-import { IS_GLOBAL, HIDDEN_TYPES } from './src/lib/datasetHelpers'
+import { HAS_FANCY_MENU } from './src/lib/datasetHelpers'
 
 const ParentRoutesTemplates = languages.map(({ name, title }) =>
   T.template({
@@ -26,7 +26,7 @@ const TextSnippetsTemplates = Object.keys(textSnippets).map((key) =>
   }),
 )
 
-const MenuTemplates = IS_GLOBAL
+const MenuTemplates = HAS_FANCY_MENU
   ? [
       T.template({
         id: 'menu-with-locale',
@@ -60,10 +60,8 @@ const MenuTemplates = IS_GLOBAL
       }),
     ]
 
-const defaults = T.defaults()
-
 export default [
-  ...defaults.filter((item) => !HIDDEN_TYPES.includes(item.spec.schemaType)),
+  ...T.defaults(),
   ...MenuTemplates,
   T.template({
     id: 'footer-with-locale',

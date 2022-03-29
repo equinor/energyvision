@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Rule } from '@sanity/types'
 import { defaultLanguage } from '../../../languages'
+import { HAS_LOCAL_NEWS, HAS_NEWS } from '../../../src/lib/datasetHelpers'
 
 export default {
   title: 'News promotion',
@@ -18,7 +19,7 @@ export default {
     },
   ],
   fields: [
-    {
+    HAS_NEWS && {
       title: 'Topic tags',
       name: 'tags',
       type: 'array',
@@ -33,7 +34,7 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
       options: { sortable: false },
     },
-    {
+    HAS_NEWS && {
       title: 'Country tags',
       name: 'countryTags',
       type: 'array',
@@ -48,7 +49,7 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
       options: { sortable: false },
     },
-    {
+    HAS_LOCAL_NEWS && {
       title: 'Local news tags',
       name: 'localNewsTags',
       type: 'array',
@@ -63,7 +64,7 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
       options: { sortable: false },
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       tags1: `tags.0.title.${defaultLanguage.name}`,

@@ -1,15 +1,26 @@
 /* eslint-disable import/no-unresolved */
 import client from 'part:@sanity/base/client'
 
-const EQUINOR_COM_NAME = 'global'
-const EQUINOR_COM_DEV = 'global-development'
+export const dataset = client.clientConfig.dataset
 
-export const DATASET = client.clientConfig.dataset
+/** @TODO Replicate logic inside GROQ queries for the web */
+const GLOBAL = ['global', 'global-development']
 
-export const IS_GLOBAL = DATASET === EQUINOR_COM_NAME || DATASET === EQUINOR_COM_DEV
+const NEWS = [...GLOBAL, 'argentina', 'brazil', 'germany', 'japan', 'southkorea']
+const NEWS_SUBSCRIPTION = [...GLOBAL]
+const LOCAL_NEWS = [...GLOBAL]
+const SEARCH = [...GLOBAL]
+const EVENT = [...GLOBAL]
+const FORMS = [...GLOBAL]
+const FANCY_MENU = [...GLOBAL]
+/* LANDING_PAGE requires FANCY_MENU to work */
+const LANDING_PAGE = [...GLOBAL]
 
-/*
- * Used to hide documents in 'Create New Document' shortcut in the top bar
- * Proper permissions need to be handled at https://www.sanity.io/organizations/oA7CAj32v/project/h61q9gi9/access/resources
- */
-export const HIDDEN_TYPES = !IS_GLOBAL ? ['simpleMenu'] : ['localNews', 'localNewsTag', 'landingPage']
+export const HAS_NEWS = NEWS.includes(dataset)
+export const HAS_NEWS_SUBSCRIPTION = NEWS_SUBSCRIPTION.includes(dataset)
+export const HAS_LOCAL_NEWS = LOCAL_NEWS.includes(dataset)
+export const HAS_SEARCH = SEARCH.includes(dataset)
+export const HAS_EVENT = EVENT.includes(dataset)
+export const HAS_FORMS = FORMS.includes(dataset)
+export const HAS_FANCY_MENU = FANCY_MENU.includes(dataset)
+export const HAS_LANDING_PAGE = HAS_FANCY_MENU && LANDING_PAGE.includes(dataset)

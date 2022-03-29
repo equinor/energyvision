@@ -1,6 +1,6 @@
 import { getLanguages } from '../satellitesConfig'
-import { DATASET } from './src/lib/datasetHelpers'
+import { dataset } from './src/lib/datasetHelpers'
 
-export const languages = getLanguages(DATASET)
+export const languages = getLanguages(dataset)
 
 export const defaultLanguage = languages[0]

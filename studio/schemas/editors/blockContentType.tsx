@@ -6,6 +6,7 @@ import type { BlockFieldType } from '../../types/schemaTypes'
 import routes from '../routes'
 import { filterByRouteAndNews, filterByRouteAndNewsInOtherLanguages } from '../../helpers/referenceFilters'
 import type { Rule, ValidationContext } from '@sanity/types'
+import { HAS_NEWS } from '../../src/lib/datasetHelpers'
 
 export type BlockContentProps = {
   h1?: boolean
@@ -110,6 +111,13 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     reference: ReferenceType
     referenceToOtherLangs: ReferenceType
   }
+  const newsType = HAS_NEWS
+    ? [
+        {
+          type: 'news',
+        },
+      ]
+    : []
 
   const internalLinkConfig = {
     name: 'internalLink',
@@ -129,12 +137,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         title: 'Reference',
         name: 'reference',
         type: 'reference',
-        to: [
-          {
-            type: 'news',
-          },
-          ...routes,
-        ],
+        to: [...newsType, ...routes],
         options: {
           filter: filterByRouteAndNews,
           disableNew: true,
@@ -154,12 +157,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         title: 'Reference',
         name: 'referenceToOtherLanguange',
         type: 'reference',
-        to: [
-          {
-            type: 'news',
-          },
-          ...routes,
-        ],
+        to: [...newsType, ...routes],
         options: {
           filter: filterByRouteAndNewsInOtherLanguages,
           disableNew: true,

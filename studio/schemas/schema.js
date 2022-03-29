@@ -71,6 +71,14 @@ import anchorReferenceField from './objects/anchorReferenceField'
 import textSnippet from './documents/textSnippet'
 import largeTable from './objects/largeTable'
 import newsList from './objects/newsList'
+import {
+  HAS_EVENT,
+  HAS_FANCY_MENU,
+  HAS_FORMS,
+  HAS_LANDING_PAGE,
+  HAS_LOCAL_NEWS,
+  HAS_NEWS,
+} from '../src/lib/datasetHelpers'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -80,6 +88,60 @@ const routeHomepageSchemas = languages.map(({ name, title }) => {
   return routeHomepage(name, title)
 })
 
+const MenuSchemas = HAS_FANCY_MENU
+  ? [siteMenu, subMenu, menuGroup, menuLink]
+  : [simpleMenu, simpleMenuGroup, simpleMenuLink]
+const LocalNewsSchemas = HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
+const EventSchemas = HAS_EVENT ? [event, eventDate] : []
+const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
+const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
+const FormSchemas = HAS_FORMS ? [form] : []
+const RemainingSchemas = [
+  page,
+  ...routeSchemas,
+  ...routeHomepageSchemas,
+  pageNotFound,
+  internalServerError,
+  imageWithAlt,
+  imageWithAltAndCaption,
+  pullQuote,
+  factbox,
+  relatedLinks,
+  positionedInlineImage,
+  titleAndMeta,
+  downloadableFile,
+  downloadableImage,
+  teaser,
+  textBlock,
+  accordion,
+  accordionItem,
+  fullWidthImage,
+  figure,
+  textWithIcon,
+  textWithIconArray,
+  linkSelector,
+  promoTile,
+  promoTileArray,
+  stockValuesApi,
+  iframe,
+  basicIframe,
+  footer,
+  remitTable,
+  promotion,
+  promoteTopics,
+  promoteEvents,
+  promotePeople,
+  contactList,
+  table,
+  assetFile,
+  assetTag,
+  cookieDeclaration,
+  anchorReferenceField,
+  textSnippet,
+  largeTable,
+  redirect,
+]
+
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
   // We name our schema
@@ -87,67 +149,12 @@ export default createSchema({
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
-    /* Your types here! */
-    news,
-    page,
-    landingPage,
-    subMenu,
-    ...routeSchemas,
-    ...routeHomepageSchemas,
-    siteMenu,
-    pageNotFound,
-    internalServerError,
-    imageWithAlt,
-    imageWithAltAndCaption,
-    pullQuote,
-    factbox,
-    relatedLinks,
-    positionedInlineImage,
-    titleAndMeta,
-    downloadableFile,
-    downloadableImage,
-    teaser,
-    textBlock,
-    accordion,
-    accordionItem,
-    fullWidthImage,
-    figure,
-    textWithIcon,
-    textWithIconArray,
-    linkSelector,
-    promoTile,
-    promoTileArray,
-    stockValuesApi,
-    menuGroup,
-    menuLink,
-    iframe,
-    basicIframe,
-    footer,
-    remitTable,
-    tag,
-    countryTag,
-    promotion,
-    promoteNews,
-    promoteTopics,
-    promoteEvents,
-    promotePeople,
-    form,
-    event,
-    eventDate,
-    contactList,
-    table,
-    assetFile,
-    assetTag,
-    simpleMenu,
-    simpleMenuGroup,
-    simpleMenuLink,
-    cookieDeclaration,
-    anchorReferenceField,
-    textSnippet,
-    largeTable,
-    redirect,
-    localNews,
-    localNewsTag,
-    newsList,
+    ...MenuSchemas,
+    ...LocalNewsSchemas,
+    ...EventSchemas,
+    ...LandingPageSchemas,
+    ...FormSchemas,
+    ...NewsSchemas,
+    ...RemainingSchemas,
   ]),
 })
