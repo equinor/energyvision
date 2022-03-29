@@ -17,11 +17,14 @@ type RolesType = {
   [K in PERMISSIONS]: string[]
 }
 
-export const hasPermission = (permission: PERMISSIONS) => {
+export const getCurrentUserRoles = () => {
   const user = getCurrentUser()
-  if (!user) return false
-  const userRoles = user.roles.map((role) => role.name)
+  if (!user) return []
+  return user.roles.map((role) => role.name)
+}
 
+export const hasPermission = (permission: PERMISSIONS) => {
+  const userRoles = getCurrentUserRoles()
   return userRoles.some((role) => ROLES[permission]?.includes(role))
 }
 

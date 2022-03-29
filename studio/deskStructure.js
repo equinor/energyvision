@@ -6,9 +6,9 @@ import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import Structure from './src/lib/structure'
 import { HAS_EVENT, HAS_LANDING_PAGE, HAS_LOCAL_NEWS, HAS_NEWS } from './src/lib/datasetHelpers'
-import { hasPermission, PERMISSIONS } from './src/lib/permissions'
+import { getCurrentUserRoles, hasPermission, PERMISSIONS } from './src/lib/permissions'
 
-const listItems = [
+const items = [
   HAS_NEWS && Structure.News,
   HAS_LOCAL_NEWS && Structure.LocalNews,
   Structure.TopicContent,
@@ -26,6 +26,11 @@ const listItems = [
   S.divider(),
   hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Settings,
 ].filter((e) => e)
+
+const itemsForLocalNewsEditor = [HAS_LOCAL_NEWS && Structure.LocalNews]
+
+/** @TODO refactor datasets from public to private, then this code will be no longer needed */
+const listItems = getCurrentUserRoles().includes('local-news-editor') ? itemsForLocalNewsEditor : items
 
 export default () => S.list().title('Content').items(listItems)
 
