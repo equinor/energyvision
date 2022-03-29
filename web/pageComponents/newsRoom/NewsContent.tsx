@@ -13,8 +13,10 @@ const NewsRoomContent = styled.div`
   grid-template-rows: auto var(--space-xLarge) auto var(--space-xLarge);
 
   @media (min-width: 800px) {
-    grid-template-columns: 1fr var(--space-xLarge) 30% var(--space-medium);
-    grid-template-areas: ' list . filter .';
+    grid-template-columns: minmax(auto, var(--layout-maxContent-narrow)) minmax(var(--space-xLarge), 1fr) 30% var(
+        --space-medium
+      );
+    grid-template-areas: 'list . filter .';
   }
 `
 

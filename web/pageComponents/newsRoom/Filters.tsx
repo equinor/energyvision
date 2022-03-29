@@ -24,7 +24,6 @@ const Filters = ({ ...rest }) => {
   const intl = useIntl()
 
   function toggleItem(toggledIndex: number) {
-    console.log(toggledIndex)
     if (indices.includes(toggledIndex)) {
       setIndices(indices.filter((currentIndex) => currentIndex !== toggledIndex))
     } else {
