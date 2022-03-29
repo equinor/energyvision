@@ -69,7 +69,7 @@ jobs:
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
           python ci/modifyTag.py web ${{ env.IMAGE_TAG_SHA }}
-          git config --global user.name 'nilsml'
+          git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           git commit -am ${{ env.IMAGE_TAG_SHA }}
