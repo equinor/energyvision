@@ -19,6 +19,13 @@ const SearchBoxContainer = styled.div`
   }
 `
 
+const StyledFilters = styled.div`
+  @media (min-width: 800px) {
+    display: grid;
+    grid-template-rows: var(--space-56) min-content min-content;
+  }
+`
+
 const Filters = ({ ...rest }) => {
   const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
@@ -32,7 +39,7 @@ const Filters = ({ ...rest }) => {
   }
 
   return (
-    <div {...rest}>
+    <StyledFilters {...rest}>
       <SearchBoxContainer>
         <SearchBox />
       </SearchBoxContainer>
@@ -59,7 +66,7 @@ const Filters = ({ ...rest }) => {
           </AccordionPanel>
         </AccordionItem>
       </StyledAccordion>
-    </div>
+    </StyledFilters>
   )
 }
 

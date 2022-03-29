@@ -32,10 +32,10 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
     color: var(--inverted-text);
   }
 
-  ${({ isExpanded }) =>
+  /* ${({ isExpanded }) =>
     isExpanded && {
       fontWeight: 700,
-    }}
+    }} */
 `
 
 const FilterHeader = ({ label }: { label: string }) => {

@@ -30,7 +30,7 @@ const Wrapper = styled.div`
       '. . .'
       '.  news news';
     grid-template-rows: var(--space-xxLarge) auto var(--space-3xLarge) auto;
-    grid-template-columns: var(--layout-paddingHorizontal-small) minmax(auto, var(--layout-maxContent-narrow)) auto;
+    grid-template-columns: var(--layout-paddingHorizontal-small) minmax(auto, var(--layout-maxContent-narrow)) 1fr;
   }
 `
 
