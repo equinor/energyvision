@@ -53,7 +53,7 @@ jobs:
         shell: bash
         id: set-default-image-tag
         run: |
-          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${ GITHUB_SHA })" >> $GITHUB_ENV
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v3
@@ -63,6 +63,8 @@ jobs:
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Modify radixconfig tag for production on master branch 🗒️
         if: github.ref == 'refs/heads/main'
+        shell: bash
+        id: modify-radix
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
