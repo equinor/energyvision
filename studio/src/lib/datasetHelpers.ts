@@ -8,6 +8,7 @@ const GLOBAL = ['global', 'global-development']
 
 const NEWS = [...GLOBAL, 'poland', 'argentina', 'brazil', 'germany', 'japan', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
+const NEWSROOM = [...GLOBAL]
 const LOCAL_NEWS = [...GLOBAL]
 const SEARCH = [...GLOBAL]
 const EVENT = [...GLOBAL]
@@ -17,6 +18,7 @@ const FANCY_MENU = [...GLOBAL]
 const LANDING_PAGE = [...GLOBAL]
 
 export const HAS_NEWS = NEWS.includes(dataset)
+export const HAS_NEWSROOM = NEWSROOM.includes(dataset)
 export const HAS_NEWS_SUBSCRIPTION = NEWS_SUBSCRIPTION.includes(dataset)
 export const HAS_LOCAL_NEWS = LOCAL_NEWS.includes(dataset)
 export const HAS_SEARCH = SEARCH.includes(dataset)

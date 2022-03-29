@@ -68,6 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
+
   if (!isGlobal || locale !== 'en') {
     return {
       notFound: true,

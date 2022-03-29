@@ -27,6 +27,7 @@ import pageNotFound from './documents/404'
 import internalServerError from './documents/500'
 import localNews from './documents/localNews'
 import localNewsTag from './documents/localNewsTag'
+import newsroom from './documents/newsroom'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -78,6 +79,7 @@ import {
   HAS_LANDING_PAGE,
   HAS_LOCAL_NEWS,
   HAS_NEWS,
+  HAS_NEWSROOM,
 } from '../src/lib/datasetHelpers'
 
 const routeSchemas = languages.map(({ name, title }) => {
@@ -95,6 +97,7 @@ const LocalNewsSchemas = HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
 const EventSchemas = HAS_EVENT ? [event, eventDate] : []
 const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
+const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = HAS_FORMS ? [form] : []
 const RemainingSchemas = [
   page,
@@ -155,6 +158,7 @@ export default createSchema({
     ...LandingPageSchemas,
     ...FormSchemas,
     ...NewsSchemas,
+    ...NewsRoomSchema,
     ...RemainingSchemas,
   ]),
 })
