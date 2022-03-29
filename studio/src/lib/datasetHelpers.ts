@@ -6,7 +6,7 @@ export const dataset = client.clientConfig.dataset
 /** @TODO Replicate logic inside GROQ queries for the web */
 const GLOBAL = ['global', 'global-development']
 
-const NEWS = [...GLOBAL, 'argentina', 'brazil', 'germany', 'japan', 'southkorea']
+const NEWS = [...GLOBAL, 'poland', 'argentina', 'brazil', 'germany', 'japan', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
 const LOCAL_NEWS = [...GLOBAL]
 const SEARCH = [...GLOBAL]
