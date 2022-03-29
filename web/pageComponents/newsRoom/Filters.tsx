@@ -7,8 +7,9 @@ import { RefinementList } from './RefinementList'
 import SearchBox from './SearchBox'
 
 const Filters = ({ ...rest }) => {
-  const [indices, setIndices] = useState([0, 1, 2])
+  const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
+
   function toggleItem(toggledIndex: number) {
     console.log(toggledIndex)
     if (indices.includes(toggledIndex)) {
