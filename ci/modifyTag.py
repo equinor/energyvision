@@ -24,11 +24,13 @@ yaml = YAML()
 content = yaml.load(inp_radixconfig)
 
 # Set newTag for selected prefix (web or studio)
+componentIndex = 0
 for component in content['spec']['components']:
     if component['name'].startswith(prefix):
-        environmentIndex = getEnvironmentIndex(content['spec']['components'][component['name']]['environmentConfig'], environment)
+        environmentIndex = getEnvironmentIndex(content['spec']['components'][componentIndex]['environmentConfig'], environment)
         if environmentIndex > -1:
-            content['spec']['components'][component['name']]['environmentConfig'][environmentIndex]['imageTagname'] = newTag
+            content['spec']['components'][componentIndex]['environmentConfig'][environmentIndex]['imageTagname'] = newTag
+    componentIndex += 1
 
 outp_radixconfig = open("radixconfig.yaml", "w")
 yaml.dump(content, outp_radixconfig)
