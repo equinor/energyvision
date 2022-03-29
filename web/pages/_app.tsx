@@ -9,6 +9,7 @@ import 'focus-visible'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
 import { isGlobal, shouldIndexAndFollow } from '../common/helpers/datasetHelpers'
+import Script from 'next/script'
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
@@ -40,9 +41,21 @@ declare global {
   }
 }
 
+const CookieBot = ({ locale }: { locale: string | undefined }) => (
+  <Script
+    src="https://consent.cookiebot.com/uc.js"
+    id="Cookiebot"
+    strategy="beforeInteractive"
+    data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+    data-blockingmode="auto"
+    data-culture={locale == 'no' ? 'nb' : locale || 'en'}
+  />
+)
+
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
+  const IS_LIVE = process.env.NODE_ENV !== 'development'
 
   useEffect(() => {
     if (!GTM_ID) return
@@ -83,7 +96,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
         dangerouslySetAllPagesToNoFollow={!shouldIndexAndFollow}
       />
       <SkipNavLink />
-      {/* Cookie bot script should be the first in the document. Let it be here for now.*/}
+      {IS_LIVE && <CookieBot locale={router.locale} />}
       {getLayout(<Component {...pageProps} />)}
     </>
   )

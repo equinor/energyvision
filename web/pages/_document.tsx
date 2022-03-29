@@ -1,6 +1,5 @@
 /* eslint-disable */
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
-import Script from 'next/script'
 import { ServerStyleSheet } from 'styled-components'
 import { GTM_ID } from '../lib/gtm'
 
@@ -47,18 +46,6 @@ const GoogleTagManagerBody = () => (
     }}
   ></noscript>
 )
-
-const CookieBot = ({ locale }: { locale: string | undefined }) => (
-  <Script
-    src="https://consent.cookiebot.com/uc.js"
-    id="Cookiebot"
-    strategy="beforeInteractive"
-    data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-    data-blockingmode="auto"
-    data-culture={locale == 'no' ? 'nb' : locale || 'en'}
-  />
-)
-
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
@@ -85,8 +72,6 @@ export default class MyDocument extends Document {
     }
   }
   render() {
-    const IS_LIVE = process.env.NODE_ENV !== 'development'
-    const { locale } = this.props.__NEXT_DATA__
     return (
       <Html data-dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}>
         <Head>
@@ -99,7 +84,6 @@ export default class MyDocument extends Document {
               <GoogleTagManagerHead />
             </>
           )}
-          {IS_LIVE && <CookieBot locale={locale} />}
         </Head>
         <body>
           {GTM_ID && <GoogleTagManagerBody />}
