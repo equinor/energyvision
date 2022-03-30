@@ -70,7 +70,8 @@ runs:
           create job
           deploy
           --token-environment
-          --from-config
+          --context production
+          -a energyvision
           -e ${{ inputs.environment }}
           -f
     - name: log-errors-to-slack 📄
