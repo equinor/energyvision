@@ -16,4 +16,4 @@ export const hasNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_D
 
 export const hasArchivedNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
 
-export const shouldIndexAndFollow = dataset === 'rename_this_to_poland_later'
+export const shouldIndexAndFollow = dataset === 'poland'
