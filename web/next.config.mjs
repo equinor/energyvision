@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
-import { languages, defaultLanguage } from './languages.js'
+import { languages, defaultLanguage, domain } from './languages.js'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundle = withBundleAnalyzer({
@@ -21,7 +21,7 @@ export default withBundle({
     styledComponents: true,
   },
   publicRuntimeConfig: {
-    domain: 'https://energyvision.app.radix.equinor.com',
+    domain: domain,
     archiveStorageURL: archiveServerHostname,
   },
   images: {

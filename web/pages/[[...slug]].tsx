@@ -20,7 +20,7 @@ import Header from '../pageComponents/shared/Header'
 import { isGlobal } from '../common/helpers/datasetHelpers'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-import getTopicRoutesForLocale from '../common/helpers/getTopicRoutesForLocale'
+import { getRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { fetchData } from '../lib/fetchData'
 
@@ -181,17 +181,15 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
-  const fetchPaths = locales.map(async (locale) => {
-    const pages = await getTopicRoutesForLocale(locale)
-    return pages.map((slug: string) => ({
-      params: { slug: slug.split('/').filter((p) => p) },
-      locale,
-    }))
-  })
-  const paths = await Promise.all(fetchPaths)
+  const routePaths = await getRoutePaths(locales)
+
+  const paths = routePaths.map((path) => ({
+    params: { slug: path.slug },
+    locale: path.locale,
+  }))
 
   return {
-    paths: paths.flat(),
+    paths,
     fallback: 'blocking',
   }
 }

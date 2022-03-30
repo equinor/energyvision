@@ -67,6 +67,18 @@ const defaultWebLanguage = {
 }
 
 /**
+ * Link between domain and datasets
+ * This is necessary for static generation
+ * @type {Record<string, string>}
+ */
+const websiteDomains = {
+  global: 'https://www.equinor.com',
+  poland: 'https://www.equinor.pl',
+  brazil: 'https://www.equinor.com.br',
+  'global-development': 'localhost:3000',
+}
+
+/**
  * @returns {{
  *  id: string
  *  title: string
@@ -90,8 +102,14 @@ const logAndFallback = (dataset) => {
 const getLanguages = (dataset) =>
   Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
 
+/**
+ * @param {string} dataset
+ */
+const getDomain = (dataset) => websiteDomains[dataset] || 'Domain not set'
+
 module.exports = {
   getLanguages,
   defaultWebLanguage,
+  getDomain,
   newsSlug,
 }
