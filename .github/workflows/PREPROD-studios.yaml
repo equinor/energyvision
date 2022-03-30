@@ -58,9 +58,8 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
-      - name: Update radixconfig
-        id: update-radix-config
+        uses: actions/checkout@v3
+      - id: update-radix-config
         uses: ./.github/workflows/update-radixconfig/
         with:
           PAT: ${{ secrets.PAT }}
