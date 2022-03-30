@@ -2,6 +2,7 @@ import S from '@sanity/desk-tool/structure-builder'
 import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import FilePreview from './src/previews/file/filePreview'
+import NewsroomPreview from './src/previews/news/NewsroomPreview'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import Structure from './src/lib/structure'
@@ -57,6 +58,11 @@ export const getDefaultDocumentNode = (props) => {
     return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
   } else if (schemaType === 'internalServerError') {
     return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
+  } else if (schemaType === 'newsroom') {
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.component(NewsroomPreview).title('Preview'),
+    ])
   } else if (schemaType === 'event') {
     return S.document().views([
       ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),

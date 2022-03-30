@@ -44,6 +44,13 @@ export default {
       fieldset: 'metadata',
     },
     {
+      title: 'Open Graph Image',
+      name: 'openGraphImage',
+      type: 'imageWithAlt',
+      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      fieldset: 'metadata',
+    },
+    {
       name: 'title',
       type: 'array',
       title: 'Title',
