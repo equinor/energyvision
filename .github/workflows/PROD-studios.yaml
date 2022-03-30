@@ -1,8 +1,24 @@
-name: PROD - Build & deploy all studios
+name: PROD - Deploy studios
 on:
   workflow_dispatch:
+    inputs:
+      site:
+        description: 'Name of studio to deploy'
+        required: true
+        type: choice
+        options:
+          - global
+          - brazil
+          - germany
+          - argentina
+          - poland
+          - japan
+          - storage
+          - equinorfunds
+          - southkorea
 jobs:
   deploy-global:
+    if: github.event.inputs.site == global
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -26,6 +42,7 @@ jobs:
         if: failure()
 
   update-radix-config:
+    if: github.event.inputs.site != global
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -58,6 +75,7 @@ jobs:
         if: failure()
 
   deploy-satellite-studios:
+    if: github.event.inputs.site != global
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
