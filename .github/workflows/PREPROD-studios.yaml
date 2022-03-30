@@ -54,6 +54,7 @@ jobs:
   update-radix-config:
     needs: check-code
     runs-on: ubuntu-latest
+    environment: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
