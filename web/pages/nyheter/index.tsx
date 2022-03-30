@@ -8,6 +8,7 @@ import { getClient } from '../../lib/sanity.server'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
 import getPageSlugs from '../../common/helpers/getPageSlugs'
+import { newsroomQuery } from '../../lib/queries/newsroom'
 import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
 import { footerQuery } from '../../lib/queries/footer'
 import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
@@ -17,6 +18,7 @@ import { defaultLanguage } from '../../languages'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { NewsRoomProps } from '../../types'
+import { filterDataToSingleItem } from '../../lib/filterDataToSingleItem'
 
 export default function NorwegianNewsRoom({
   serverState,
@@ -35,7 +37,12 @@ export default function NorwegianNewsRoom({
           defaultLocale={getIsoFromLocale(defaultLocale)}
           messages={data?.intl?.messages}
         >
-          <NewsRoomPage isServerRendered={isServerRendered} locale={locale} />
+          <NewsRoomPage
+            isServerRendered={isServerRendered}
+            locale={locale}
+            pageData={data?.pageData}
+            slug={data?.slug}
+          />
         </IntlProvider>
       </InstantSearchSSRProvider>
     </>
@@ -47,7 +54,10 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
   // @ts-ignore
   const { props } = page
   const { data } = props
-  const slugs = getPageSlugs(data)
+  const slugs = [
+    { slug: '/news', lang: 'en_GB' },
+    { slug: '/nyheter', lang: 'nb_NO' },
+  ]
   const defaultLocale = defaultLanguage.locale
   const locale = data?.intl?.locale || defaultLocale
 
@@ -68,7 +78,7 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale = 'no' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ /* req, */ preview = false, locale = 'no' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not Norwegian.
   // This is a hack, and we should improve this at some point
@@ -81,6 +91,16 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
 
   const lang = getNameFromLocale(locale)
   //const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const queryParams = {
+    lang,
+  }
+
+  const data = await getClient(preview).fetch(newsroomQuery, queryParams)
+  const pageData = filterDataToSingleItem(data, preview) || null
+
+  // ZOMG
+  // We should probably rewrite and actually use the route in the query..?
+  const slug = '/nyheter'
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(false).fetch(menuQuery, { lang: lang })
@@ -92,6 +112,8 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
       isServerRendered
       data={{
         intl,
+        pageData,
+        slug,
       }} /* url={url} */
     />,
   )
@@ -105,6 +127,8 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
         menuData,
         footerData,
         intl,
+        pageData,
+        slug,
       },
     },
   }

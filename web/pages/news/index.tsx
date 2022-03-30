@@ -9,6 +9,7 @@ import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
 import getPageSlugs from '../../common/helpers/getPageSlugs'
 import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
+import { newsroomQuery } from '../../lib/queries/newsroom'
 import { footerQuery } from '../../lib/queries/footer'
 import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
 import getIntl from '../../common/helpers/getIntl'
@@ -17,6 +18,7 @@ import { defaultLanguage } from '../../languages'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { NewsRoomProps } from '../../types'
+import { filterDataToSingleItem } from '../../lib/filterDataToSingleItem'
 
 export default function NewsRoom({ serverState, isServerRendered = false, /* url, */ data }: NewsRoomProps) {
   const defaultLocale = defaultLanguage.locale
@@ -30,7 +32,12 @@ export default function NewsRoom({ serverState, isServerRendered = false, /* url
           defaultLocale={getIsoFromLocale(defaultLocale)}
           messages={data?.intl?.messages}
         >
-          <NewsRoomPage isServerRendered={isServerRendered} locale={locale} />
+          <NewsRoomPage
+            isServerRendered={isServerRendered}
+            locale={locale}
+            pageData={data?.pageData}
+            slug={data?.slug}
+          />
         </IntlProvider>
       </InstantSearchSSRProvider>
     </>
@@ -42,7 +49,12 @@ NewsRoom.getLayout = (page: AppProps) => {
   // @ts-ignore
   const { props } = page
   const { data } = props
-  const slugs = getPageSlugs(data)
+
+  // Too hardcoded?
+  const slugs = [
+    { slug: '/news', lang: 'en_GB' },
+    { slug: '/nyheter', lang: 'nb_NO' },
+  ]
   const defaultLocale = defaultLanguage.locale
   const locale = data?.intl?.locale || defaultLocale
 
@@ -63,7 +75,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale = 'en' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ /* req, */ preview = false, locale = 'en' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
@@ -76,6 +88,14 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
   }
 
   const lang = getNameFromLocale(locale)
+  const queryParams = {
+    lang,
+  }
+
+  const data = await getClient(preview).fetch(newsroomQuery, queryParams)
+  const pageData = filterDataToSingleItem(data, preview) || null
+
+  const slug = '/news'
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(false).fetch(menuQuery, { lang: lang })
@@ -87,7 +107,10 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
       isServerRendered
       data={{
         intl,
-      }} /* url={url} */
+        pageData,
+        slug,
+      }}
+      /* url={url} */
     />,
   )
 
@@ -99,6 +122,8 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ locale
         menuData,
         footerData,
         intl,
+        pageData,
+        slug,
       },
     },
   }

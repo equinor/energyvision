@@ -1,15 +1,18 @@
 //import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
+import { toPlainText } from '@portabletext/react'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
-//import { blocksToText } from '../../common/helpers'
-//import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-//import { getFullUrl } from '../../common/helpers/getFullUrl'
-import { Text, Heading } from '@components'
+import SimpleBlockContent from '../../common/portableText/SimpleBlockContent'
+import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
+import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
+import type { NewsroomData } from '../../types/types'
+import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -52,15 +55,15 @@ const UnpaddedText = styled.div`
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
   locale: string
+  pageData: NewsroomData | undefined
+  slug: string
 }
 
-const NewsRoomPage = ({ isServerRendered = false, locale }: NewsRoomTemplateProps) => {
-  // @TODO Add seo and some #947
-  //const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
-  // const plainTitle = title ? blocksToText(title) : ''
-  //const { pathname } = useRouter()
-  //const fullUrl = getFullUrl(pathname, slug)
-
+const NewsRoomPage = ({ isServerRendered = false, locale, pageData = {} /* slug */ }: NewsRoomTemplateProps) => {
+  /*   const { pathname } = useRouter() */
+  // const fullUrl = getFullUrl(pathname, slug)
+  const { ingress = '', title, documentTitle, metaDescription, openGraphImage } = pageData
+  const plainTitle = title ? toPlainText(title) : ''
   const envPrefix = isGlobalProduction ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
 
@@ -68,29 +71,36 @@ const NewsRoomPage = ({ isServerRendered = false, locale }: NewsRoomTemplateProp
   return (
     <>
       <NextSeo
-      //  title={documentTitle || plainTitle}
-      //  description={metaDescription}
-      //   openGraph={{
-      //     title: plainTitle,
-      //     description: metaDescription,
-      //     type: 'website',
-      //     url: fullUrl,
-      //     images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
-      //   }}
+        title={documentTitle || plainTitle}
+        description={metaDescription}
+        openGraph={{
+          title: plainTitle,
+          description: metaDescription,
+          type: 'website',
+          // url: fullUrl,
+          images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
+        }}
       />
       <main>
         <Wrapper>
           <Intro>
-            <Heading size="2xl" level="h1">
-              Newsroom
-            </Heading>
-            <UnpaddedText>
-              <Text>
-                We’re Equinor, a broad energy company with more than 20,000 colleagues committed to developing oil, gas,
-                wind and solar energy in more than 30 countries worldwide. We’re dedicated to safety, equality and
-                sustainability.
-              </Text>
-            </UnpaddedText>
+            {title && (
+              <SimpleBlockContent
+                value={title}
+                components={{
+                  block: {
+                    // Overriding the h2
+                    normal: ({ children }) => (
+                      <Heading level="h1" size="2xl">
+                        {children}
+                      </Heading>
+                    ),
+                  },
+                }}
+              />
+            )}
+
+            <UnpaddedText>{ingress && <SimpleBlockContent value={ingress} />}</UnpaddedText>
           </Intro>
           <News>
             <InstantSearch
