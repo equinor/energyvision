@@ -1,18 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
 import { useRouter } from 'next/router'
-import { Topbar } from '@components'
+import { default as NextLink } from 'next/link'
+import { Topbar, Link } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
-
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import SearchOverlay from '../search/SearchOverlay'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage } from 'react-intl'
-import Link from 'next/link'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -55,9 +54,13 @@ const ControlsContainer = styled.div`
   }
 `
 
-const StyledAllSites = styled.div`
+const StyledAllSites = styled(Link)`
   cursor: pointer;
   font-size: var(--typeScale-1);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 export type HeaderProps = {
@@ -83,11 +86,11 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   /** Display "All sites" in case menu is empty **/
   const shouldDisplayAllSites = !isGlobal && !menuData
   const AllSites = () => (
-    <Link href="https://www.equinor.com/languages.html?language=en" passHref>
+    <NextLink href="https://www.equinor.com/languages.html?language=en" passHref>
       <StyledAllSites>
         <FormattedMessage id="all_sites" defaultMessage="All Sites" />
       </StyledAllSites>
-    </Link>
+    </NextLink>
   )
 
   return (
