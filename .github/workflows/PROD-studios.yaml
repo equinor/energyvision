@@ -28,6 +28,11 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: latest
       - name: Deploy 🚀
         id: deploy
         working-directory: ./studio
