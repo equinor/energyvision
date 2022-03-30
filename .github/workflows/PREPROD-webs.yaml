@@ -45,42 +45,14 @@ jobs:
   update-radix-config:
     needs: check-code
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Checkout 🛎️
-        id: checkout
-        uses: actions/checkout@v3
-      - name: Set image tag 🏷
-        shell: bash
-        id: set-default-image-tag
-        run: |
-          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
+      - id: update-radix-config
+        uses: ./.github/workflows/update-radixconfig/
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-      - name: Modify radixconfig tag for production on master branch 🗒️
-        if: github.ref == 'refs/heads/main'
-        shell: bash
-        id: modify-radix
-        run: |
-          # Install pre-requisite
-          python -m pip install --user ruamel.yaml
-          python ci/modifyTag.py web ${{ env.IMAGE_TAG_SHA }}
-          git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git commit -am ${{ env.IMAGE_TAG_SHA }}
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
+          PAT: ${{ secrets.PAT }}
+          component: web
 
   deploy-global:
     needs: update-radix-config

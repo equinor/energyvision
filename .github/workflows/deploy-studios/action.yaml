@@ -19,6 +19,9 @@ inputs:
   brandmasterPluginSource:
     description: 'Sanity Studio Brandmaster Plugin Source'
     required: true
+  environment:
+    description: 'dev, preprod or prod'
+    required: true
 
 outputs:
   copied-files:
