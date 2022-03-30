@@ -6,8 +6,6 @@ on:
 jobs:
   check-code:
     runs-on: ubuntu-latest
-    environment:
-      name: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
@@ -44,7 +42,6 @@ jobs:
      #     pnpm deploy
      #   env:
      #     SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
-
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
@@ -54,17 +51,42 @@ jobs:
   update-radix-config:
     needs: check-code
     runs-on: ubuntu-latest
-    environment: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - id: update-radix-config
-        uses: ./.github/workflows/update-radixconfig/
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
         with:
-          PAT: ${{ secrets.PAT }}
-          component: studio
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Modify radixconfig tag for preprod on main branch 🗒️
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        id: modify-radix
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/upgradePreprod.py studio ${{ env.IMAGE_TAG_SHA }}
+          git config --global user.name 'github'
+          git config --global user.email 'nilsml@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          git commit -am ${{ env.IMAGE_TAG_SHA }}
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
   read-satellites:
     runs-on: ubuntu-latest
