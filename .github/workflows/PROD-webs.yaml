@@ -16,10 +16,42 @@ on:
           - storage
           - equinorfunds
           - southkorea
-# TODO: Read tag for current version in preprod from radixconfig
-# Then add this tag for prod for selected site
-# Then run radix deploy for prod environment (secrets.ENV)
 jobs:
+
+  update-radix-config:
+    needs: check-code
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Promote preprod tag to prod 🗒️
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        id: modify-radix
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/promoteToProduction.py web ${{ github.events.inputs.site }}
+          git config --global user.name 'github'
+          git config --global user.email 'nilsml@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          git commit -am ${{ env.IMAGE_TAG_SHA }}
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+
   deploy:
     runs-on: ubuntu-latest
     environment:
@@ -32,12 +64,6 @@ jobs:
     steps:
       - id: debug
         run: echo  To be deployed ${{ github.event.inputs.site }}
-      #- id: checkout-envis-internal
-      #  uses: actions/checkout@v3
-      #  with:
-      #    repository: 'equinor/energyvision-internal'
-      #    ref: main
-      #    token: ${{ secrets.GITHUB_TOKEN }} # Replace with PAT
       - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master
