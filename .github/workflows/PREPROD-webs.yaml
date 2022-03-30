@@ -82,7 +82,6 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-
   deploy-global:
     needs: update-radix-config
     runs-on: ubuntu-latest
