@@ -3,7 +3,7 @@ import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
-import { HAS_EVENT, HAS_LANDING_PAGE } from '../../src/lib/datasetHelpers'
+import { HAS_EVENT, HAS_LANDING_PAGE, HAS_NEWSROOM } from '../../src/lib/datasetHelpers'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -38,6 +38,9 @@ export default (isoCode: string, title: string) => {
           },
           HAS_EVENT && {
             type: 'event',
+          },
+          HAS_NEWSROOM && {
+            type: 'newsroom',
           },
         ].filter((e) => e),
         options: {
