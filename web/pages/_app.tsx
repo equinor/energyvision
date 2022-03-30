@@ -73,8 +73,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   useEffect(() => {
-    if (!isGlobal) return
-
     const script = document.createElement('script')
 
     script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
