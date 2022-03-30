@@ -162,10 +162,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           description: data?.seoAndSome?.metaDescription,
           type: 'website',
           url: fullUrl,
-          /* @TODO: Add fallback image */
-          // eslint-disable-next-line
-          // @ts-ignore: Why does ts hates because I moved this line from another file
-          images: getOpenGraphImages(data?.seoAndSome?.openGraphImage),
+          images: getOpenGraphImages(data?.seoAndSome?.openGraphImage || data?.heroImage?.image),
         }}
         twitter={{
           handle: '@handle',
