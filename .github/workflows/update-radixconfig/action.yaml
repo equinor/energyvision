@@ -24,7 +24,7 @@ runs:
       with:
         repository: 'equinor/energyvision-internal'
         ref: main
-        token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+        token: ${{ inputs.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
     - name: Modify radixconfig tag for preprod on main branch 🗒️
       if: github.ref == 'refs/heads/main'
       shell: bash
