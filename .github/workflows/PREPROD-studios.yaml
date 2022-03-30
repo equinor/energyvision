@@ -48,6 +48,7 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
+  # Tried moving this to a composite action, but did not work for some reason
   update-radix-config:
     needs: check-code
     runs-on: ubuntu-latest

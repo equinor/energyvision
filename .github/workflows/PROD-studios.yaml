@@ -1,22 +1,30 @@
-name: PROD - Deploy webs
+name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
-    inputs:
-      site:
-        description: 'Name of web to deploy'
-        required: true
-        type: choice
-        options:
-          - global
-          - brazil
-          - germany
-          - argentina
-          - poland
-          - japan
-          - storage
-          - equinorfunds
-          - southkorea
 jobs:
+  deploy-global:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://equinor.sanity.studio
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./studio
+        run: |
+          pnpm deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   update-radix-config:
     runs-on: ubuntu-latest
     env:
@@ -36,11 +44,11 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/promoteToProduction.py web ${{ github.event.inputs.site }}
+          python ci/promoteToProduction.py studio ${{ github.event.inputs.site }}
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git commit -am "Deploy web for ${{ github.event.inputs.site }} to production"
+          git commit -am "Deploy studio for ${{ github.event.inputs.site }} to production"
           git pull --rebase origin main
           git push origin HEAD:main
       - uses: act10ns/slack@v1
@@ -49,18 +57,18 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-
-  deploy:
+  deploy-satellite-studios:
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://equinor.com
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
+      - id: debug
+        run: echo  To be deployed ${{ github.event.inputs.site }}
       - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master
@@ -79,3 +87,4 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
+
