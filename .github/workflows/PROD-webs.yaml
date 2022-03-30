@@ -30,6 +30,9 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
