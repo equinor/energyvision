@@ -19,24 +19,20 @@ inputs:
   algoliaAppId:
     description: 'AppID for Algolia'
     required: true
+  environment:
+    description: 'dev, preprod or prod'
+    required: true
   algoliaApiKey:
     description: 'Api key for Algolia'
     required: false
   algoliaApiKeyServer:
     description: 'Api key for Algolia to be used server side'
     required: false
-  environment:
-    description: 'dev, preprod or prod'
-    required: false
-outputs:
-  copied-files:
-    description: 'Number of files copied'
-    value: ${{ steps.random-number-generator.outputs.filesNo }}
 runs:
   using: 'composite'
   steps:
     - name: Checkout 🛎️
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Set default image tag 🏷
       shell: bash
       id: set-default-image-tag

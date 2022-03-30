@@ -1,4 +1,4 @@
-name: PREPROD - Build & deploy all studio
+name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
   schedule:
@@ -57,7 +57,10 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - id: update-radix-config
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Update radixconfig
+        id: update-radix-config
         uses: ./.github/workflows/update-radixconfig/
         with:
           PAT: ${{ secrets.PAT }}
