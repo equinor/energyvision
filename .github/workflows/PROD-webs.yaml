@@ -30,9 +30,6 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-      - uses: actions/setup-python@v3
-        with:
-          python-version: '3.9'
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -44,7 +41,7 @@ jobs:
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git commit -am ${{ env.IMAGE_TAG_SHA }}
+          git commit -am "Deploy ${{ github.events.inputs.site }} to production"
           git pull --rebase origin main
           git push origin HEAD:main
       - uses: act10ns/slack@v1
