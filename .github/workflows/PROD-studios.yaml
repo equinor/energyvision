@@ -1,4 +1,4 @@
-name: PREPROD - Build & deploy all studios
+name: PROD - Build & deploy all studios
 on:
   workflow_dispatch:
 jobs:
@@ -48,7 +48,7 @@ jobs:
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git commit -am "Deploy studio for ${{ github.event.inputs.site }} to production"
+          git commit -am "🚀 Deploy studio for ${{ github.event.inputs.site }} to production"
           git pull --rebase origin main
           git push origin HEAD:main
       - uses: act10ns/slack@v1
