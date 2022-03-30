@@ -10,9 +10,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout 🛎️
-      id: checkout
-      uses: actions/checkout@v3
     - name: Set image tag 🏷
       shell: bash
       id: set-default-image-tag
