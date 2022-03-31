@@ -78,7 +78,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          echo hello
+          pnpm deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v1
