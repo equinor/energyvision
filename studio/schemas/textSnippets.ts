@@ -1,4 +1,4 @@
-import { HAS_FORMS, HAS_SEARCH, HAS_NEWS } from '../src/lib/datasetHelpers'
+import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM } from '../src/lib/datasetHelpers'
 
 const snippets: textSnippet = {
   loading: {
@@ -282,7 +282,8 @@ const snippets: textSnippet = {
   },
   career_fair_form_visit_equinor_helper_text: {
     title: 'Career fair form: We offer visits to a few locations',
-    defaultValue: 'Please be aware that we only offer visits to a few selected locations. Please specify your preferred location and we will revert to you as soon as we can.',
+    defaultValue:
+      'Please be aware that we only offer visits to a few selected locations. Please specify your preferred location and we will revert to you as soon as we can.',
     hidden: !HAS_FORMS,
   },
   career_fair_form_cta: {
@@ -479,22 +480,27 @@ const snippets: textSnippet = {
   newsroom_topic_filter: {
     title: 'Newsroom: Topic filter heading',
     defaultValue: 'Topic',
-    hidden: !HAS_NEWS,
+    hidden: !HAS_NEWSROOM,
   },
   newsroom_country_filter: {
     title: 'Newsroom: Country filter heading',
     defaultValue: 'Country',
-    hidden: !HAS_NEWS,
+    hidden: !HAS_NEWSROOM,
   },
   newsroom_year_filter: {
     title: 'Newsroom: Year filter heading',
     defaultValue: 'Year',
-    hidden: !HAS_NEWS,
+    hidden: !HAS_NEWSROOM,
   },
   newsroom_newslist_header: {
     title: 'Newsroom: News list heading',
     defaultValue: 'News',
-    hidden: !HAS_NEWS,
+    hidden: !HAS_NEWSROOM,
+  },
+  newsroom_no_relevant_filters: {
+    title: 'Newsroom: No options for a filter',
+    defaultValue: 'No relevant content for this filter',
+    hidden: !HAS_NEWSROOM,
   },
 }
 

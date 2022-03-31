@@ -4,7 +4,14 @@ import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { update, sanityClient, generateIndexName, getEnvironment, languageFromIso, languageOrDefault } from '../../common'
+import {
+  update,
+  sanityClient,
+  generateIndexName,
+  getEnvironment,
+  languageFromIso,
+  languageOrDefault,
+} from '../../common'
 import { fetchData } from './sanity'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
@@ -24,4 +31,3 @@ export const indexNews = pipe(
   TE.flatten,
   T.map(E.fold(console.error, console.log)),
 )
-

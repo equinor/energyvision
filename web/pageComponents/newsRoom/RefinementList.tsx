@@ -1,6 +1,7 @@
 import { useRefinementList, UseRefinementListProps } from 'react-instantsearch-hooks'
 import { List, Checkbox } from '@components'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
 
 export type RefinementListProps = React.ComponentProps<'div'> & UseRefinementListProps
 
@@ -9,6 +10,7 @@ const { Item } = List
 const NoRelevant = styled.span`
   padding: var(--space-small) 0;
   display: inline-block;
+  padding: var(--space-small) var(--space-large);
 `
 const StyledList = styled(List)`
   margin: var(--space-medium) 0;
@@ -21,7 +23,7 @@ export function RefinementList(props: RefinementListProps) {
   const { items, refine } = useRefinementList(props)
 
   return (
-    <div>
+    <>
       {items.length > 0 ? (
         <StyledList unstyled>
           {items.map((item) => (
@@ -36,8 +38,10 @@ export function RefinementList(props: RefinementListProps) {
           ))}
         </StyledList>
       ) : (
-        <NoRelevant>No content is satisfying this filter (or Norwegian = wip)</NoRelevant>
+        <NoRelevant>
+          <FormattedMessage id="newsroom_no_relevant_filters" defaultMessage="No relevant content for this filter" />
+        </NoRelevant>
       )}
-    </div>
+    </>
   )
 }
