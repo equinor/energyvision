@@ -13,6 +13,9 @@ const StyledHitLink = styled.a`
 
 const StyledHeading = styled(Heading)`
   display: inline-block;
+  ${StyledHitLink}:hover & {
+    text-decoration: underline;
+  }
 `
 
 const Date = styled.div`
