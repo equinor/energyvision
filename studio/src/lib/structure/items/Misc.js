@@ -1,5 +1,5 @@
 import S from '@sanity/desk-tool/structure-builder'
-import { FileIcon, TopicDocuments } from '../../../../icons'
+import { FileIcon, TopicDocuments, NewsDocuments } from '../../../../icons'
 import { HAS_NEWSROOM } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -61,7 +61,7 @@ const miscPages = [
   HAS_NEWSROOM
     ? S.listItem()
         .title('Newsroom')
-        .icon(FileIcon)
+        .icon(NewsDocuments)
         .child(
           S.documentList()
             .id('newsroom')
