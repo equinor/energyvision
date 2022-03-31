@@ -46,7 +46,7 @@ jobs:
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
-          ref: '${{ steps.get-preprod-sha.outputs.sha }}'
+          # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
       - name: debug
         shell: bash
         run: |
