@@ -43,7 +43,7 @@ export function SearchBox(props: SearchBoxProps) {
       debounceRef.current = setTimeout(() => {
         //console.log(router.asPath)
         const urlParts = router.asPath.split('?')[0]
-        router.push(
+        router.replace(
           {
             // @TODO Add the asPath explicit because of the 404 page and ssr
             // This might cause bugs, I'm a bit unsure about the best approach here :/
