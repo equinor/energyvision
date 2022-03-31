@@ -10,6 +10,6 @@ export type NewsRoomProps = {
     footerData?: { footerColumns: FooterColumns[] }
     intl: IntlData
     pageData: NewsroomData
-    slug: string
+    slug?: string
   }
 }

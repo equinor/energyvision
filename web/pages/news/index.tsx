@@ -75,7 +75,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ /* req, */ preview = false, locale = 'en' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
@@ -95,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ previe
   const data = await getClient(preview).fetch(newsroomQuery, queryParams)
   const pageData = filterDataToSingleItem(data, preview) || null
 
-  const slug = '/news'
+  const slug = req.url
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(false).fetch(menuQuery, { lang: lang })

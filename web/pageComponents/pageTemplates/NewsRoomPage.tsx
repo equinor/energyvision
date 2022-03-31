@@ -1,7 +1,7 @@
 //import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
-import { useRouter } from 'next/router'
+//import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { toPlainText } from '@portabletext/react'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
@@ -12,7 +12,7 @@ import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { NewsroomData } from '../../types/types'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
+//import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -56,7 +56,7 @@ type NewsRoomTemplateProps = {
   isServerRendered?: boolean
   locale: string
   pageData: NewsroomData | undefined
-  slug: string
+  slug?: string
 }
 
 const NewsRoomPage = ({ isServerRendered = false, locale, pageData = {} /* slug */ }: NewsRoomTemplateProps) => {

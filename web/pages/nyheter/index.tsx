@@ -78,7 +78,7 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ /* req, */ preview = false, locale = 'no' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'no' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not Norwegian.
   // This is a hack, and we should improve this at some point
@@ -95,12 +95,10 @@ export const getServerSideProps: GetServerSideProps = async ({ /* req, */ previe
     lang,
   }
 
+  const slug = req.url
+
   const data = await getClient(preview).fetch(newsroomQuery, queryParams)
   const pageData = filterDataToSingleItem(data, preview) || null
-
-  // ZOMG
-  // We should probably rewrite and actually use the route in the query..?
-  const slug = '/nyheter'
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuData = await getClient(false).fetch(menuQuery, { lang: lang })
