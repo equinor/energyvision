@@ -26,8 +26,25 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout internal 🛎️
+        id: checkout-internal
         uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+      - name: Get preprod sha 🏷️
+        id: get-preprod-sha
+        shell: bash
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          echo "::set-output name=sha::$(python ci/returnGlobalStudioPreprodVersion.py)"
+      - name: Checkout 🛎️
+        id: checkout-specific-sha
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.get-preprod-sha.outputs.sha }}
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -47,7 +64,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          pnpm deploy
+          echo working
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v1
