@@ -2,15 +2,15 @@ name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 20 * * *'
+    - cron: "0 20 * * *"
 jobs:
   check-code:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SANITY_STUDIO_BRANDMASTER_URL: ${{secrets.SANITY_STUDIO_BRANDMASTER_URL}}
-      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE}}
-      SANITY_STUDIO_PREVIEW_SECRET: ${{secrets.SANITY_STUDIO_PREVIEW_SECRET}}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
       SANITY_STUDIO_API_DATASET: global
       DOCKER_BUILDKIT: 1
     steps:
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-          cache-dependency-path: 'studio/yarn.lock'
+          cache-dependency-path: "studio/yarn.lock"
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
@@ -35,13 +35,13 @@ jobs:
         id: lint
         run: |
           pnpm lint:studio
-     # - name: Deploy 🚀
-     #   id: deploy
-     #   working-directory: ./studio
-     #   run: |
-     #     pnpm deploy
-     #   env:
-     #     SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+      # - name: Deploy 🚀
+      #   id: deploy
+      #   working-directory: ./studio
+      #   run: |
+      #     pnpm deploy
+      #   env:
+      #     SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
@@ -66,7 +66,7 @@ jobs:
         id: checkout-internal
         uses: actions/checkout@v3
         with:
-          repository: 'equinor/energyvision-internal'
+          repository: "equinor/energyvision-internal"
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Modify radixconfig tag for preprod on main branch 🗒️
@@ -96,7 +96,7 @@ jobs:
       name: preprod
     strategy:
       matrix:
-        dataset: ['global']
+        dataset: ["global"]
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
