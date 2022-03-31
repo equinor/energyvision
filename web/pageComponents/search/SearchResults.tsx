@@ -56,7 +56,7 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
 
   // state to route
   useEffect(() => {
-    router.push(
+    router.replace(
       {
         query: {
           ...router.query,
