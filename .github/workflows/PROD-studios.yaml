@@ -49,7 +49,7 @@ jobs:
       - name: debug
         shell: bash
         run: |
-          echo "git rev-parse ${{ steps.get-preprod-sha.outputs.sha }}"
+          echo git rev-parse ${{ steps.get-preprod-sha.outputs.sha }}
       - uses: actions/setup-node@v2
         with:
           node-version: 16
