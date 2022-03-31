@@ -89,6 +89,37 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
+  deploy-global:
+    needs: [update-radix-config]
+    runs-on: ubuntu-latest
+    environment:
+      name: preprod
+    strategy:
+      matrix:
+        dataset: ['global']
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - id: deploy-satellite
+        uses: ./.github/workflows/deploy-studios/
+        with:
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+          brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+          brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+          environment: ${{ secrets.ENV }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   read-satellites:
     runs-on: ubuntu-latest
     env:
@@ -96,7 +127,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: set-matrix
         name: Read from satellites.json
         run: |
@@ -110,7 +141,7 @@ jobs:
         if: failure()
 
   deploy-satellites:
-    needs: [update-radix-config, read-satellites]
+    needs: [deploy-global, read-satellites]
     runs-on: ubuntu-latest
     environment:
       name: preprod
