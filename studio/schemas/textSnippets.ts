@@ -502,6 +502,11 @@ const snippets: textSnippet = {
     defaultValue: 'No relevant content for this filter',
     hidden: !HAS_NEWSROOM,
   },
+  newsroom_no_hits: {
+    title: 'Newsroom: No hits',
+    defaultValue: 'Your search returned no results',
+    hidden: !HAS_NEWSROOM,
+  },
 }
 
 type textSnippet = Record<

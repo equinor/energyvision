@@ -70,13 +70,14 @@ export default {
   preview: {
     select: {
       title: 'title',
+      ingress: 'ingress',
     },
-    prepare({ title }: { title: Block[] }) {
+    prepare({ title, ingress }: { title: Block[]; ingress: Block[] }) {
       const plainTitle = title ? blocksToText(title) : ''
 
       return {
         title: plainTitle,
-        subtitle: 'Newsroom',
+        subtitle: blocksToText(ingress) || '',
       }
     },
   },

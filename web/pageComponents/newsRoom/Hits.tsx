@@ -1,5 +1,6 @@
 import { Hit as AlgoliaHit } from '@algolia/client-search'
 import { useHits, UseHitsProps } from 'react-instantsearch-hooks'
+import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { List } from '@components'
 
@@ -33,6 +34,9 @@ export type HitsProps<THit> = React.ComponentProps<'div'> &
 export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({ hitComponent: Hit }: HitsProps<THit>) {
   const { hits } = useHits()
 
+  if (!hits || hits.length === 0) {
+    return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
+  }
   return (
     <HitList>
       <List variant="numbered" unstyled>
