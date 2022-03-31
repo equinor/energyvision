@@ -59,10 +59,10 @@ type NewsRoomTemplateProps = {
   slug?: string
 }
 
-const NewsRoomPage = ({ isServerRendered = false, locale, pageData = {} /* slug */ }: NewsRoomTemplateProps) => {
+const NewsRoomPage = ({ isServerRendered = false, locale, pageData /* slug */ }: NewsRoomTemplateProps) => {
   /*   const { pathname } = useRouter() */
   // const fullUrl = getFullUrl(pathname, slug)
-  const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData
+  const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData || {}
   const plainTitle = title ? toPlainText(title) : ''
   const envPrefix = isGlobalProduction ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
