@@ -28,10 +28,6 @@ const { Tab, TabList, TabPanel, TabPanels } = Tabs
 // in the Configure component, so how could we get it from there
 const HITS_PER_PAGE = 5
 
-type SearchResultsProps = {
-  setIsOpen: (arg0: boolean) => void
-}
-
 // @TODO How should we do this
 // What  about translations if we have Norwegian urls
 // is it better to use like tc and e instead? Doesn't feel safe to use text snippet that
@@ -41,7 +37,7 @@ const tabMap = [
   { id: 1, name: 'events' },
 ]
 
-const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
+const SearchResults = () => {
   const router = useRouter()
   //const replaceUrl = useRouterReplace()
   const { results } = useHits()
@@ -114,14 +110,14 @@ const SearchResults = ({ setIsOpen }: SearchResultsProps) => {
               <TabPanel>
                 {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                <Hits hitComponent={TopicHit} setIsOpen={setIsOpen} category="Topic" />
+                <Hits hitComponent={TopicHit} category="Topic" />
                 <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
                 {/*   </Index> */}
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits setIsOpen={setIsOpen} hitComponent={EventHit} category="Event" />
+                  <Hits hitComponent={EventHit} category="Event" />
                   <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
                 </Index>
               </TabPanel>

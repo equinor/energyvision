@@ -28,10 +28,9 @@ export type TopicHitType = AlgoliaHit<TopicResultHit>
 
 export type HitProps = {
   hit: TopicHitType
-  setIsOpen: (arg0: boolean) => void
 }
 
-const TopicHit = ({ hit, setIsOpen }: HitProps) => {
+const TopicHit = ({ hit }: HitProps) => {
   // Shouldn't be empty string, but this is work in progress
   const { slug = '' } = hit
 
@@ -42,7 +41,7 @@ const TopicHit = ({ hit, setIsOpen }: HitProps) => {
   return (
     <article>
       <NextLink href={slug} passHref>
-        <StyledHitLink onClick={() => setIsOpen(false)}>
+        <StyledHitLink>
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="pageTitle" />
           </HitHeading>

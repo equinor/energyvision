@@ -9,7 +9,6 @@ const { Item } = List
 type HitsProps = {
   // Let's consider to create a compound component instead of this Algolia example way of doing it
   hitComponent: React.FC<HitProps>
-  setIsOpen: (arg0: boolean) => void
   category?: string
 }
 
@@ -40,7 +39,7 @@ const WarningContainer = styled.div`
 
 const WarningText = styled.p``
 
-const Hits = ({ hitComponent: Hit, setIsOpen }: HitsProps) => {
+const Hits = ({ hitComponent: Hit }: HitsProps) => {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
@@ -64,7 +63,7 @@ const Hits = ({ hitComponent: Hit, setIsOpen }: HitsProps) => {
       <List variant="numbered" unstyled>
         {hits.map((hit) => (
           <HitItem key={hit.objectID}>
-            <Hit setIsOpen={setIsOpen} hit={hit} />
+            <Hit hit={hit} />
           </HitItem>
         ))}
       </List>

@@ -8,11 +8,7 @@ import { SearchBox } from './SearchBox'
 import SearchResults from './SearchResults'
 import { getIsoFromLocale } from '../../lib/localization'
 
-type SearchProps = {
-  setIsOpen: (arg0: boolean) => void
-}
-
-const Search = ({ setIsOpen }: SearchProps) => {
+const Search = () => {
   const router = useRouter()
 
   // @TODO: Don't hard code it like this
@@ -44,7 +40,7 @@ const Search = ({ setIsOpen }: SearchProps) => {
 
             return window.location
           },
-        }), 
+        }),
 
         stateMapping: {
           // eslint-disable-next-line
@@ -71,7 +67,7 @@ const Search = ({ setIsOpen }: SearchProps) => {
     >
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       <SearchBox />
-      <SearchResults setIsOpen={setIsOpen} />
+      <SearchResults />
     </InstantSearch>
   )
 }

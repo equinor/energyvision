@@ -42,8 +42,6 @@ const SearchContainer = styled.div`
 
 export default function SearchPage() {
   const router = useRouter()
-  // placeholder
-  const setIsOpen = (i: boolean) => console.log(i)
 
   return (
     <RemoveScroll enabled={true}>
@@ -62,7 +60,7 @@ export default function SearchPage() {
           </InvertedButton>
         </NavTopbar>
         <SearchContainer>
-          <Search setIsOpen={setIsOpen} />
+          <Search />
         </SearchContainer>
       </DarkTopbarDropdown>
     </RemoveScroll>
