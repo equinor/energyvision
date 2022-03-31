@@ -5,7 +5,7 @@ const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 
 const remoteUrl =
   dataset === 'global'
-    ? 'https://web-energyvision-preprod.radix.equinor.com/'
+    ? 'https://web-energyvision-preprod.radix.equinor.com'
     : `https://web-${dataset}-energyvision-preprod.radix.equinor.com`
 
 const localUrl = process.env.SANITY_STUDIO_PROJECT_URL

@@ -17,6 +17,11 @@ export async function middleware(request: NextRequest) {
     return undefined
   }
 
+  // Redirect to the same url lowercased if necessary
+  if (pathname !== pathname.toLowerCase()) {
+    return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`)
+  }
+
   // Check if a redirect exists in sanity
   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
