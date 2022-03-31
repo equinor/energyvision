@@ -41,16 +41,24 @@ jobs:
           python -m pip install --user ruamel.yaml
           echo "::set-output name=sha::$(python ci/returnGlobalStudioPreprodVersion.py)"
       - name: Checkout 🛎️
-        id: checkout-specific-sha
+        id: checkout-main
         uses: actions/checkout@v3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
-      - name: debug
+      - name: Get long sha ️🏷️
+        id: get-long-sha
         shell: bash
         run: |
-          echo `git rev-parse ${{ steps.get-preprod-sha.outputs.sha }}`
+          echo "::set-output name=sha::$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})"
+      - name: Checkout 🛎️
+        id: checkout-specific-branch
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
       - uses: actions/setup-node@v2
         with:
           node-version: 16
