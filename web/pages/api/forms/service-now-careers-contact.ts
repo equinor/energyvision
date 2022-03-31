@@ -21,8 +21,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     + "&Location=" + location + "&Questions=" + questions + "&PreferredLang=" + preferredLang;
                 
  await sendRequestToServiceNow(urlString).then((response)=>{
-     if(JSON.parse(response).status == 'failure')
+    if(JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes("Failure")){
         console.log("Failed to create ticket in service-now")
+        res.status(500).end()
+     }
      res.status(200).end()
  }).catch(error =>{
      console.log(error)

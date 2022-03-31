@@ -5,7 +5,8 @@ import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField } from '@components'
+import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox } from '@components'
+import { useState } from 'react'
 
 const StyledFieldset = styled.fieldset`
   border: 0;
@@ -51,6 +52,8 @@ type FormValues = {
 const SubscribeForm = () => {
   const router = useRouter()
   const intl = useIntl()
+  const [isServerError, setServerError] = useState(false)
+  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const onSubmit = async (data: FormValues) => {
     const allCategories = data.categories.includes('all')
     const subscribeFormParamers: SubscribeFormParameters = {
@@ -70,172 +73,193 @@ const SubscribeForm = () => {
       method: 'POST',
     })
     const result = await res.json()
-    if (result.statusCode != 200) console.error(result)
-    reset()
+    setServerError(result.statusCode != 200)
+    setSuccessfullySubmitted(result.statusCode == 200)
   }
 
   const {
     handleSubmit,
+    reset,
     control,
     register,
-    reset,
-    formState: { errors },
+    formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
   } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledFieldset>
-          {!errors.categories && (
-            <StyledLegend id="atleast-one-category-required">
-              <FormattedMessage
-                id="subscribe_form_choose"
-                defaultMessage="Please choose one or more of the following"
-              />
-            </StyledLegend>
-          )}
-          {errors.categories && (
-            <ErrorStyledDiv role="alert" id="atleast-one-category-required">
-              <StyledLegend>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      onReset={() => {
+        reset()
+        setSuccessfullySubmitted(false)
+      }}
+    >
+      {!isSuccessfullySubmitted && !isServerError && (
+        <>
+          <StyledFieldset>
+            {!errors.categories && (
+              <StyledLegend id="atleast-one-category-required">
                 <FormattedMessage
                   id="subscribe_form_choose"
                   defaultMessage="Please choose one or more of the following"
                 />
               </StyledLegend>
-              <StyledIcon data={error_filled} aria-hidden="true" />
-            </ErrorStyledDiv>
-          )}
+            )}
+            {errors.categories && (
+              <ErrorStyledDiv role="alert" id="atleast-one-category-required">
+                <StyledLegend>
+                  <FormattedMessage
+                    id="subscribe_form_choose"
+                    defaultMessage="Please choose one or more of the following"
+                  />
+                </StyledLegend>
+                <StyledIcon data={error_filled} aria-hidden="true" />
+              </ErrorStyledDiv>
+            )}
 
-          <UnstyledList>
-            <li>
-              <Checkbox
-                label="General news"
-                value="generalNews"
-                aria-describedby="atleast-one-category-required"
-                {...register('categories', {
-                  validate: (values) => values.length > 0,
-                })}
-                aria-required
-                aria-invalid={errors.categories ? 'true' : 'false'}
-              />
-            </li>
-            <li>
-              <Checkbox
+            <UnstyledList>
+              <li>
+                <Checkbox
+                  label="General news"
+                  value="generalNews"
+                  aria-describedby="atleast-one-category-required"
+                  {...register('categories', {
+                    validate: (values) => values.length > 0,
+                  })}
+                  aria-required
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                />
+              </li>
+              <li>
+                <Checkbox
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_magazine_stories',
+                    defaultMessage: 'Magazine stories',
+                  })}
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  value="magazineStories"
+                  aria-required
+                  {...register('categories')}
+                />
+              </li>
+              <li>
+                <Checkbox
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_stock_market',
+                    defaultMessage: 'Stock market announcements',
+                  })}
+                  value="stockMarketAnnouncements"
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  aria-required
+                  {...register('categories')}
+                />
+              </li>
+              <li>
+                <Checkbox
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_cruide_oil',
+                    defaultMessage: 'Crude oil assays',
+                  })}
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  value="crudeOilAssays"
+                  aria-required
+                  {...register('categories')}
+                />
+              </li>
+              <li>
+                <Checkbox
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_all',
+                    defaultMessage: 'All',
+                  })}
+                  aria-invalid={errors.categories ? 'true' : 'false'}
+                  aria-describedby="atleast-one-category-required"
+                  value="all"
+                  aria-required
+                  {...register('categories')}
+                />
+              </li>
+            </UnstyledList>
+          </StyledFieldset>
+          <Controller
+            name="firstName"
+            control={control}
+            rules={{
+              required: intl.formatMessage({
+                id: 'subscribe_form_name_validation',
+                defaultMessage: 'Please fill out your name',
+              }),
+            }}
+            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+              <FormTextField
+                {...props}
+                id={props.name}
                 label={intl.formatMessage({
-                  id: 'subscribe_form_magazine_stories',
-                  defaultMessage: 'Magazine stories',
+                  id: 'subscribe_form_first_name',
+                  defaultMessage: 'First name',
                 })}
-                aria-invalid={errors.categories ? 'true' : 'false'}
-                aria-describedby="atleast-one-category-required"
-                value="magazineStories"
-                aria-required
-                {...register('categories')}
+                inputRef={ref}
+                aria-required="true"
+                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                helperText={error?.message}
+                variant={invalid ? 'error' : 'default'}
               />
-            </li>
-            <li>
-              <Checkbox
-                label={intl.formatMessage({
-                  id: 'subscribe_form_stock_market',
-                  defaultMessage: 'Stock market announcements',
-                })}
-                value="stockMarketAnnouncements"
-                aria-invalid={errors.categories ? 'true' : 'false'}
-                aria-describedby="atleast-one-category-required"
-                aria-required
-                {...register('categories')}
-              />
-            </li>
-            <li>
-              <Checkbox
-                label={intl.formatMessage({
-                  id: 'subscribe_form_cruide_oil',
-                  defaultMessage: 'Crude oil assays',
-                })}
-                aria-invalid={errors.categories ? 'true' : 'false'}
-                aria-describedby="atleast-one-category-required"
-                value="crudeOilAssays"
-                aria-required
-                {...register('categories')}
-              />
-            </li>
-            <li>
-              <Checkbox
-                label={intl.formatMessage({
-                  id: 'subscribe_form_all',
-                  defaultMessage: 'All',
-                })}
-                aria-invalid={errors.categories ? 'true' : 'false'}
-                aria-describedby="atleast-one-category-required"
-                value="all"
-                aria-required
-                {...register('categories')}
-              />
-            </li>
-          </UnstyledList>
-        </StyledFieldset>
-        <Controller
-          name="firstName"
-          control={control}
-          rules={{
-            required: intl.formatMessage({
-              id: 'subscribe_form_name_validation',
-              defaultMessage: 'Please fill out your name',
-            }),
-          }}
-          render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <FormTextField
-              {...props}
-              id={props.name}
-              label={intl.formatMessage({
-                id: 'subscribe_form_first_name',
-                defaultMessage: 'First name',
-              })}
-              inputRef={ref}
-              aria-required="true"
-              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-              helperText={error?.message}
-              variant={invalid ? 'error' : 'default'}
-            />
-          )}
-        />
-        <Controller
-          name="email"
-          control={control}
-          rules={{
-            required: intl.formatMessage({
-              id: 'subscribe_form_email_validation',
-              defaultMessage: 'Please fill out a valid email address',
-            }),
-            pattern: {
-              value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-              message: intl.formatMessage({
+            )}
+          />
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              required: intl.formatMessage({
                 id: 'subscribe_form_email_validation',
                 defaultMessage: 'Please fill out a valid email address',
               }),
-            },
+              pattern: {
+                value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
+                message: intl.formatMessage({
+                  id: 'subscribe_form_email_validation',
+                  defaultMessage: 'Please fill out a valid email address',
+                }),
+              },
+            }}
+            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+              <FormTextField
+                {...props}
+                id={props.name}
+                label={intl.formatMessage({
+                  id: 'subscribe_form_email',
+                  defaultMessage: 'Email',
+                })}
+                inputRef={ref}
+                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                helperText={error?.message}
+                aria-required="true"
+                variant={invalid ? 'error' : 'default'}
+              />
+            )}
+          />
+          <FormButton type="submit">
+            {isSubmitting ? (
+              <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
+            ) : (
+              <FormattedMessage id="subscribe_form_cta" defaultMessage={'Subscribe'} />
+            )}
+          </FormButton>
+        </>
+      )}
+      {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
+      {isSubmitted && isServerError && (
+        <FormSubmitFailureBox
+          type="button"
+          onClick={() => {
+            reset(undefined, { keepValues: true })
+            setServerError(false)
           }}
-          render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-            <FormTextField
-              {...props}
-              id={props.name}
-              label={intl.formatMessage({
-                id: 'subscribe_form_email',
-                defaultMessage: 'Email',
-              })}
-              inputRef={ref}
-              inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-              helperText={error?.message}
-              aria-required="true"
-              variant={invalid ? 'error' : 'default'}
-            />
-          )}
         />
-
-        <FormButton type="submit">
-          <FormattedMessage id="subscribe_form_cta" defaultMessage="Subscribe" />
-        </FormButton>
-      </form>
-    </>
+      )}
+    </form>
   )
 }
 export default SubscribeForm

@@ -164,6 +164,11 @@ const snippets: textSnippet = {
     defaultValue: 'How can we help you?',
     hidden: !HAS_FORMS,
   },
+  contact_form_how_to_help_validation:{
+    title: 'Contact form: Please let us know how we may help you',
+    defaultValue: 'Please let us know how we may help you',
+    hidden: !HAS_FORMS,
+  },
   contact_form_ask_us: {
     title: 'Contact form: Ask us a question',
     defaultValue: 'Ask us a question',
@@ -477,6 +482,11 @@ const snippets: textSnippet = {
     defaultValue: 'Please enter a question',
     hidden: !HAS_FORMS,
   },
+  form_sending: {
+    title: 'Form: Sending...',
+    defaultValue: 'Sending...',
+    hidden: !HAS_FORMS,
+  },
   newsroom_topic_filter: {
     title: 'Newsroom: Topic filter heading',
     defaultValue: 'Topic',
@@ -507,6 +517,7 @@ const snippets: textSnippet = {
     defaultValue: 'Your search returned no results',
     hidden: !HAS_NEWSROOM,
   },
+
 }
 
 type textSnippet = Record<
