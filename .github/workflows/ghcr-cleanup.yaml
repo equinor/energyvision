@@ -21,7 +21,7 @@ jobs:
           account-type: org
           org-name: Equinor
           keep-at-least: 5
-          untagged-only: false
+          untagged-only: true
           token: ${{ secrets.NLUN_GITHUB_PAT }}
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
