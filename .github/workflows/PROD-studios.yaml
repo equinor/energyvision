@@ -44,7 +44,7 @@ jobs:
         id: checkout-specific-sha
         uses: actions/checkout@v3
         with:
-          ref: ${{ steps.get-preprod-sha.outputs.sha }}
+          ref: '${{ steps.get-preprod-sha.outputs.sha }}'
       - uses: actions/setup-node@v2
         with:
           node-version: 16
