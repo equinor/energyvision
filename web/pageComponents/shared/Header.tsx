@@ -2,16 +2,22 @@
 import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, Link } from '@components'
+import { Topbar, Link, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
-import SearchOverlay from '../search/SearchOverlay'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage } from 'react-intl'
+import { Icon } from '@equinor/eds-core-react'
+import { search } from '@equinor/eds-icons'
+
+const StyledSearchButton = styled(Button)`
+  color: var(--default-text);
+  fill: var(--default-text);
+`
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -108,7 +114,11 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           >
             {hasSearch && (
               <ControlChild>
-                <SearchOverlay />
+                <NextLink href="/search" passHref>
+                  <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
+                    <Icon size={32} data={search} />
+                  </StyledSearchButton>
+                </NextLink>
               </ControlChild>
             )}
             {hasMoreThanOneLanguage && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
