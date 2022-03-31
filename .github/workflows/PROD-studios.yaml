@@ -39,14 +39,17 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          shortSha=`python ci/returnGlobalStudioPreprodVersion.py`
-          echo "::set-output name=sha::$(git rev-parse $shortSha)"
+          echo "::set-output name=sha::$(python ci/returnGlobalStudioPreprodVersion.py)"
       - name: Checkout 🛎️
         id: checkout-specific-sha
         uses: actions/checkout@v3
         with:
           repository: 'equinor/energyvision'
-          ref: '${{ steps.get-preprod-sha.outputs.sha }}'
+          #ref: '${{ steps.get-preprod-sha.outputs.sha }}'
+      - name: debug
+        shell: bash
+        run: |
+          echo "git rev-parse ${{ steps.get-preprod-sha.outputs.sha }}"
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -66,7 +69,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          pnpm deploy
+          echo hello
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v1
