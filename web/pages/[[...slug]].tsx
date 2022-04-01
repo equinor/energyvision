@@ -134,7 +134,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   const intl = await getIntl(locale, preview)
 
   // @TODO This doesn't feel bullet proof at all this doesn't scale to well.
-  const notFound = (!pageData && !queryParams?.id) || (typeof pageData.news != 'undefined' && !pageData.news)
+  const notFound = (!pageData && !queryParams?.id) || (typeof pageData?.news != 'undefined' && !pageData?.news)
   // If global, fetch static content in case data is not found or trying to access news
   // @TODO This should only be for news at some point
   if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
