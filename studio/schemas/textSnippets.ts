@@ -383,7 +383,7 @@ const snippets: textSnippet = {
 
   order_reports_form_choose: {
     title: 'Order reports form: Choose validation',
-    defaultValue: 'Please choose atleast one of the following reports',
+    defaultValue: 'Please select atleast one of the reports',
     hidden: !HAS_FORMS,
   },
   careers_contact_form_name: {
@@ -485,6 +485,46 @@ const snippets: textSnippet = {
   form_sending: {
     title: 'Form: Sending...',
     defaultValue: 'Sending...',
+    hidden: !HAS_FORMS,
+  },
+  form_failure_title:{
+    title: 'Form: Failure title',
+    defaultValue: 'Sorry, something went wrong!',
+    hidden: !HAS_FORMS,
+  },
+  form_failure_line1:{
+    title: 'Form: Failure line1',
+    defaultValue: 'The form was not submitted.',
+    hidden: !HAS_FORMS,
+  },
+  form_failure_line2:{
+    title: 'Form: Failure line2',
+    defaultValue: 'Please try again',
+    hidden: !HAS_FORMS,
+  },
+  form_failure_cta:{
+    title: 'Form: Failure CTA',
+    defaultValue: 'Try again',
+    hidden: !HAS_FORMS,
+  },
+  form_success_title:{
+    title: 'Form: Success title',
+    defaultValue: 'Thank you!',
+    hidden: !HAS_FORMS,
+  },
+  form_success_line1:{
+    title: 'Form: Success line1',
+    defaultValue: 'Your form was successfully submitted.',
+    hidden: !HAS_FORMS,
+  },
+  form_success_line2:{
+    title: 'Form: Success line2',
+    defaultValue: 'You will hear from us shortly.',
+    hidden: !HAS_FORMS,
+  },
+  form_success_cta:{
+    title: 'Form: Success CTA',
+    defaultValue: 'Reopen the form',
     hidden: !HAS_FORMS,
   },
   newsroom_topic_filter: {

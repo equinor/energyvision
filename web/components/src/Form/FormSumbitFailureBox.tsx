@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Button as EdsButton, ButtonProps as EdsButtonProps, Icon } from '@equinor/eds-core-react'
 import { Text } from '@components'
 import { error_outlined } from '@equinor/eds-icons'
+import { FormattedMessage } from 'react-intl'
 
 const Box = styled.div`
   display: flex;
@@ -26,13 +27,15 @@ export const FormSubmitFailureBox = forwardRef<HTMLDivElement, EdsButtonProps>(f
       <StyledIcon data={error_outlined} size={48} />
       <div>
         <Text size="md" bold={true}>
-          Sorry, something went wrong!
+          <FormattedMessage id="form_failure_title" defaultMessage="Sorry, something went wrong!" />
         </Text>
         <Text>
-          The form was not submitted. <br></br>Please try again.
+          <FormattedMessage id="form_failure_line1" defaultMessage=" The form was not submitted. " />
+          <br></br>
+          <FormattedMessage id="form_failure_line2" defaultMessage="Please try again." />
         </Text>
         <StyledEdsButton ref={ref} {...rest} color="danger">
-          Try again
+          <FormattedMessage id="form_failure_cta" defaultMessage="Try again" />
         </StyledEdsButton>
       </div>
     </Box>
