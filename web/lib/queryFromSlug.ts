@@ -19,6 +19,18 @@ const isSlugID = (slug: string): boolean => {
   return regExp.test(slug.replace('drafts.', '').substr(0, 36))
 }
 
+// API is case sensitive, and we are getting an all lowercase ID from the browser
+// while a i18n document has an uppercase ISO code, example: __i18n_nb_NO
+const parseSlug = (slug: string): string => {
+  if (slug.includes('_i18n_')) {
+    const length = slug.length
+    const iso = slug.slice(length - 2, length)
+    return slug.slice(0, length - 2) + iso.toUpperCase()
+  }
+
+  return slug
+}
+
 export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   const [slugStart] = slugArray.filter((part: string) => part !== locale)
   // This is used for the event query in order to filter past events
@@ -30,9 +42,11 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
     // We are in preview mode for content that has currently no slug (no routes)
     //We need to figure out of which type
 
-    const publishedAndDraftIds = slugStart.startsWith('drafts.')
-      ? [slugStart, slugStart.replace('drafts.', '')]
-      : [slugStart, `drafts.${slugStart}`]
+    const documentID = parseSlug(slugStart)
+
+    const publishedAndDraftIds = documentID.startsWith('drafts.')
+      ? [documentID, documentID.replace('drafts.', '')]
+      : [documentID, `drafts.${documentID}`]
 
     // console.log(publishedAndDraftIds)
     /**
