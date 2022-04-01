@@ -75,8 +75,6 @@ export default {
     },
     title,
     ...publishDateTime,
-    HAS_NEWS && tags,
-    HAS_NEWS && countryTags,
     {
       ...newsSlugField,
       fieldset: 'slug',
