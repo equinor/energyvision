@@ -29,6 +29,7 @@ const CareersContactForm = () => {
       method: 'POST',
     })
     setSuccessfullySubmitted(res.status == 200)
+    setServerError(res.status != 200)
   }
 
   const {
