@@ -39,7 +39,6 @@ const Wrapper = styled.div`
 
 const Intro = styled.div`
   grid-area: intro;
-  margin: 0 auto;
 `
 
 const News = styled.div`
