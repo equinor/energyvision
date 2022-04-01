@@ -109,6 +109,7 @@ jobs:
           sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+          algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
