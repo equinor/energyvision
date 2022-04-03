@@ -77,7 +77,7 @@ jobs:
           then
             git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
             git pull --rebase origin main
-            git push origin HEAD:main)
+            git push origin HEAD:main
           fi
 
       - uses: act10ns/slack@v1
