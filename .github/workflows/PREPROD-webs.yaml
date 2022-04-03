@@ -73,9 +73,13 @@ jobs:
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          if [[git diff-index --quiet HEAD]]
+          then
+            git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
+            git pull --rebase origin main
+            git push origin HEAD:main)
+          fi
+
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
