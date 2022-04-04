@@ -4,15 +4,43 @@ import { EdsIcon } from '../../icons'
 import { list } from '@equinor/eds-icons'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import { Heading, Text, Box } from '@sanity/ui'
+import styled from 'styled-components'
 import type { Rule } from '@sanity/types'
 
 const titleContentType = configureTitleBlockContent()
+
+const StyledText = styled(Text)`
+  margin: 1em 0;
+`
+
+// eslint-disable-next-line react/display-name
+const ComponentDescription = () => {
+  return (
+    <Box>
+      <Heading size={1}>How to use</Heading>
+      <StyledText>
+        This component will automatically generate a list of news articles based on the tags you select.
+        <span role="img" aria-label="warning icon">
+          ⚠️
+        </span>
+        Please note that there is no limit on this list: it will generate a list of <strong>all</strong> articles that
+        match the selected tag(s).
+      </StyledText>
+    </Box>
+  )
+}
 
 export default {
   title: 'News list',
   name: 'newsList',
   type: 'object',
   fields: [
+    {
+      name: 'description',
+      type: 'string',
+      inputComponent: ComponentDescription,
+    },
     {
       name: 'title',
       type: 'array',
