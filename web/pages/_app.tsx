@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import { DefaultSeo } from 'next-seo'
@@ -87,6 +88,9 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <GlobalStyle />
       <GlobalFontStyle />
       <DefaultSeo
