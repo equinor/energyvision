@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl'
 import styled from 'styled-components'
 import FilterHeader from '././FilterHeader'
 import { RefinementList } from './RefinementList'
-import SearchBox from './SearchBox'
+import UncontrolledSearchBox from './UncontrolledSearchBox'
 
 const StyledAccordion = styled(Accordion)`
   @media (min-width: 800px) {
@@ -41,7 +41,7 @@ const Filters = ({ ...rest }) => {
   return (
     <StyledFilters {...rest}>
       <SearchBoxContainer>
-        <SearchBox />
+        <UncontrolledSearchBox />
       </SearchBoxContainer>
 
       <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
