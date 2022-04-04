@@ -10,7 +10,7 @@ export enum PERMISSIONS {
 
 const ROLES: RolesType = {
   ACCESS_SETTINGS: ['administrator', 'developer', 'editor'],
-  ACCESS_LOCAL_NEWS_TAGS: ['developer', 'administrator'],
+  ACCESS_LOCAL_NEWS_TAGS: ['administrator', 'developer'],
 }
 
 type RolesType = {
