@@ -1,5 +1,5 @@
 import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks'
-import { PaginationItem } from './pagination/PaginationItem'
+import { PaginationItem } from './PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import styled from 'styled-components'
@@ -18,9 +18,10 @@ const PaginationList = styled.ul`
 
 export type PaginationProps = {
   hitsPerPage?: number
+  inverted?: boolean
 } & UsePaginationProps
 
-export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: PaginationProps) => {
+export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = false, ...rest }: PaginationProps) => {
   const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
     totalPages,
     padding,
@@ -39,6 +40,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: Pa
         isDisabled={isFirstPage}
         createURL={createURL}
         refine={refine}
+        inverted={inverted}
       >
         <Icon data={first_page} />
       </PaginationItem>
@@ -49,6 +51,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: Pa
         isDisabled={isFirstPage}
         createURL={createURL}
         refine={refine}
+        inverted={inverted}
       >
         <Icon data={chevron_left} />
       </PaginationItem>
@@ -62,6 +65,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: Pa
           isDisabled={false}
           createURL={createURL}
           refine={refine}
+          inverted={inverted}
         >
           {page + 1}
         </PaginationItem>
@@ -74,6 +78,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: Pa
         isDisabled={isLastPage}
         createURL={createURL}
         refine={refine}
+        inverted={inverted}
       >
         <Icon data={chevron_right} />
       </PaginationItem>
@@ -85,6 +90,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: Pa
         isDisabled={isLastPage}
         createURL={createURL}
         refine={refine}
+        inverted={inverted}
       >
         <Icon data={last_page} />
       </PaginationItem>

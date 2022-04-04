@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Hit from './Hit'
 import { Hits } from './Hits'
 import { Heading } from '@components'
-import { Pagination } from '../../pageComponents/search/Pagination'
+import { Pagination } from '../shared/search/pagination/Pagination'
 import { FormattedMessage } from 'react-intl'
 
 const StyledNewsList = styled.div`

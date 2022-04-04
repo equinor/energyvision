@@ -9,7 +9,7 @@ import Hits from './Hits'
 import EventHit from './EventHit'
 import TopicHit from './TopicHit'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
-import { Pagination } from './Pagination'
+import { Pagination } from '../shared/search/pagination/Pagination'
 import TotalResultsStat from './TotalResultsStat'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
@@ -111,14 +111,14 @@ const SearchResults = () => {
                 {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits hitComponent={TopicHit} category="Topic" />
-                <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
+                <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 {/*   </Index> */}
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits hitComponent={EventHit} category="Event" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
+                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
             </TabPanels>
