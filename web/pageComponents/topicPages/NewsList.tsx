@@ -5,7 +5,7 @@ import { TitleBlockRenderer } from '../../common/serializers'
 import type { NewsListData } from '../../types/types'
 
 const Wrapper = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-small);
+  padding: 0 var(--layout-paddingHorizontal-medium);
   margin: var(--space-xLarge) auto var(--space-xLarge) auto;
   max-width: var(--maxViewportWidth);
 `
