@@ -7,7 +7,7 @@ import CharCounterEditor from '../../components/CharCounterEditor'
 
 import type { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { HAS_EVENT, HAS_LOCAL_NEWS, HAS_NEWS } from '../../../src/lib/datasetHelpers'
+import { HAS_EVENT, HAS_NEWS } from '../../../src/lib/datasetHelpers'
 
 export type Promotion = {
   _type: 'promotion'

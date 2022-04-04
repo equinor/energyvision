@@ -4,7 +4,7 @@ import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
-import type { Rule, CurrentUser } from '@sanity/types'
+import type { Rule } from '@sanity/types'
 import { i18n } from '../documentTranslation'
 import { formatDate } from '../../helpers/formatDate'
 
@@ -14,8 +14,6 @@ import {
   title,
   publishDateTime,
   // We have asked Mette if this is relevant
-  tags,
-  countryTags,
   newsSlugField,
   heroImage,
   ingress,
@@ -23,7 +21,6 @@ import {
   iframe,
   relatedLinks,
 } from './news/sharedNewsFields'
-import { HAS_NEWS } from '../../src/lib/datasetHelpers'
 
 export default {
   title: 'Local news',

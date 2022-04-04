@@ -1,7 +1,6 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { FileIcon, TopicDocuments, NewsDocuments } from '../../../../icons'
 import { HAS_NEWSROOM } from '../../datasetHelpers'
-import { EmptyItem } from './EmptyItem'
 
 const miscPages = [
   S.listItem()
@@ -58,36 +57,35 @@ const miscPages = [
           },
         ]),
     ),
-  HAS_NEWSROOM
-    ? S.listItem()
-        .title('Newsroom')
-        .icon(NewsDocuments)
-        .child(
-          S.documentList()
-            .id('newsroom')
-            .title('Newsroom')
-            .schemaType('newsroom')
-            .filter('(_id match "*" + $id) && _type == $type')
-            .params({
-              id: 'newsroom',
-              type: 'newsroom',
-            })
-            .menuItems([
-              {
-                title: 'Create new',
-                intent: {
-                  type: 'create',
-                  params: {
-                    id: 'newsroom',
-                    type: 'newsroom',
-                    template: 'newsroom',
-                  },
+  HAS_NEWSROOM &&
+    S.listItem()
+      .title('Newsroom')
+      .icon(NewsDocuments)
+      .child(
+        S.documentList()
+          .id('newsroom')
+          .title('Newsroom')
+          .schemaType('newsroom')
+          .filter('(_id match "*" + $id) && _type == $type')
+          .params({
+            id: 'newsroom',
+            type: 'newsroom',
+          })
+          .menuItems([
+            {
+              title: 'Create new',
+              intent: {
+                type: 'create',
+                params: {
+                  id: 'newsroom',
+                  type: 'newsroom',
+                  template: 'newsroom',
                 },
               },
-            ]),
-        )
-    : EmptyItem,
-]
+            },
+          ]),
+      ),
+].filter((e) => e)
 
 export const Misc = S.listItem()
   .title('Misc')
