@@ -3,7 +3,7 @@ import { ClientConfig } from 'next-sanity'
 export const sanityConfig: ClientConfig = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'global',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'h61q9gi9',
-  token: process.env.SANITY_API_TOKEN,
+  token: process.env.NEXT_PUBLIC_SANITY_DATASET === 'global-development' ? process.env.SANITY_API_TOKEN : undefined,
   useCdn: process.env.NODE_ENV === 'production',
   apiVersion: '2021-12-17',
 }
