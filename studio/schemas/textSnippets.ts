@@ -116,13 +116,25 @@ const snippets: textSnippet = {
     hidden: !HAS_FORMS,
   },
   cookie_settings: {
-    title: 'Cookie Settings',
+    title: 'Cookie: Cookie settings link text',
     defaultValue: 'Cookie settings',
   },
+  cookie_type_marketing: {
+    title: 'Cookie: Type marketing',
+    defaultValue: 'marketing',
+  },
+  cookie_type_statistics: {
+    title: 'Cookie: Type statistics',
+    defaultValue: 'statistics',
+  },
+  cookie_consent_header: {
+    title: 'Cookie: Consent header',
+    defaultValue: 'Accept Cookies',
+  },
   cookie_consent: {
-    title: 'Cookie request consent',
+    title: 'Cookie: Information text',
     defaultValue:
-      'Want the full picture? We’d love to share this content with you, but first you must accept additional cookies by enabling them in our cookie settings.',
+      'Want the full picture? We’d love to share this content with you, but first you must accept {typeOfCookie} cookies by enabling them in our cookie settings.',
   },
   contact_form_name: {
     title: 'Contact form: Name',
@@ -164,7 +176,7 @@ const snippets: textSnippet = {
     defaultValue: 'How can we help you?',
     hidden: !HAS_FORMS,
   },
-  contact_form_how_to_help_validation:{
+  contact_form_how_to_help_validation: {
     title: 'Contact form: Please let us know how we may help you',
     defaultValue: 'Please let us know how we may help you',
     hidden: !HAS_FORMS,
@@ -487,42 +499,42 @@ const snippets: textSnippet = {
     defaultValue: 'Sending...',
     hidden: !HAS_FORMS,
   },
-  form_failure_title:{
+  form_failure_title: {
     title: 'Form: Failure title',
     defaultValue: 'Sorry, something went wrong!',
     hidden: !HAS_FORMS,
   },
-  form_failure_line1:{
+  form_failure_line1: {
     title: 'Form: Failure line1',
     defaultValue: 'The form was not submitted.',
     hidden: !HAS_FORMS,
   },
-  form_failure_line2:{
+  form_failure_line2: {
     title: 'Form: Failure line2',
     defaultValue: 'Please try again',
     hidden: !HAS_FORMS,
   },
-  form_failure_cta:{
+  form_failure_cta: {
     title: 'Form: Failure CTA',
     defaultValue: 'Try again',
     hidden: !HAS_FORMS,
   },
-  form_success_title:{
+  form_success_title: {
     title: 'Form: Success title',
     defaultValue: 'Thank you!',
     hidden: !HAS_FORMS,
   },
-  form_success_line1:{
+  form_success_line1: {
     title: 'Form: Success line1',
     defaultValue: 'Your form was successfully submitted.',
     hidden: !HAS_FORMS,
   },
-  form_success_line2:{
+  form_success_line2: {
     title: 'Form: Success line2',
     defaultValue: 'You will hear from us shortly.',
     hidden: !HAS_FORMS,
   },
-  form_success_cta:{
+  form_success_cta: {
     title: 'Form: Success CTA',
     defaultValue: 'Reopen the form',
     hidden: !HAS_FORMS,
@@ -557,7 +569,6 @@ const snippets: textSnippet = {
     defaultValue: 'Your search returned no results',
     hidden: !HAS_NEWSROOM,
   },
-
 }
 
 type textSnippet = Record<

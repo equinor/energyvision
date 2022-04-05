@@ -1800,18 +1800,9 @@
   resolved "https://registry.yarnpkg.com/@sanity/production-preview/-/production-preview-2.23.1-next.10.tgz#2c1908d1b29ac3770c18fa670b48033abef29f3f"
   integrity sha512-gbOh7rR9jXeq/vPnrPisTtVtIapnlfXhZ+XwlEJwKbOeHpwkz02A0ZiRMwfrLl/0QYYvq/olWUjXojhGS/YqhQ==
 
-"@sanity/react-hooks@2.29.3":
+"@sanity/react-hooks@2.29.3", "@sanity/react-hooks@^2.29.3":
   version "2.29.3"
   resolved "https://registry.npmjs.org/@sanity/react-hooks/-/react-hooks-2.29.3.tgz#052d7e50d80da3190cf78e63bf53ff42560cf7fd"
-  integrity sha512-Pvf2YrvVehG5bv2ItssRV2YWkR8rrXnf07N9UpWtGAd5atzVednatr1VP84pCwedc3QX1ax2/2145zodGhv69w==
-  dependencies:
-    "@sanity/types" "2.29.3"
-    react-rx "^1.0.0-beta.6"
-    rxjs "^6.5.3"
-
-"@sanity/react-hooks@^2.29.3":
-  version "2.29.3"
-  resolved "https://registry.yarnpkg.com/@sanity/react-hooks/-/react-hooks-2.29.3.tgz#052d7e50d80da3190cf78e63bf53ff42560cf7fd"
   integrity sha512-Pvf2YrvVehG5bv2ItssRV2YWkR8rrXnf07N9UpWtGAd5atzVednatr1VP84pCwedc3QX1ax2/2145zodGhv69w==
   dependencies:
     "@sanity/types" "2.29.3"

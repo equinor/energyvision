@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Text, Button, Heading } from '@components'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 declare global {
   interface Window {
@@ -36,6 +36,8 @@ const CookieHeader = styled.div`
   grid-area: heading;
   padding: var(--space-medium) var(--space-large);
   padding-left: var(--icon-column-width);
+  word-break: break-word;
+  hyphens: auto;
 `
 const Icon = styled.div`
   grid-area: icon;
@@ -56,6 +58,8 @@ const SVG = styled.svg`
 const Content = styled.div`
   grid-area: text;
   padding-right: var(--space-medium);
+  word-break: break-word;
+  hyphens: auto;
 `
 
 const LeftAlignedButton = styled(Button)`
@@ -73,14 +77,20 @@ const StyledText = styled(Text)`
 
 type RequestConsentContainerProps = {
   hasSectionTitle?: boolean
+  cookiePolicy: string
 }
 
-const RequestConsentContainer = ({ hasSectionTitle = true }: RequestConsentContainerProps) => {
+const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
+  const intl = useIntl()
+  const typeOfCookie =
+    cookiePolicy === 'statistics'
+      ? intl.formatMessage({ id: 'cookie_type_statistics', defaultMessage: 'statistic' })
+      : intl.formatMessage({ id: 'cookie_type_marketing', defaultMessage: 'marketing' })
   return (
     <StyledDiv>
       <CookieHeader>
         <Heading inverted size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
-          Accept Cookies
+          <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Heading>
       </CookieHeader>
       <Icon>
@@ -129,7 +139,10 @@ const RequestConsentContainer = ({ hasSectionTitle = true }: RequestConsentConta
         <StyledText>
           <FormattedMessage
             id="cookie_consent"
-            defaultMessage="Want the full picture? We’d love to share this content with you, but first you must accept additional cookies by enabling them in our cookie settings."
+            defaultMessage="Cookie settings"
+            values={{
+              typeOfCookies: typeOfCookie,
+            }}
           />
         </StyledText>
 
