@@ -6,15 +6,10 @@ import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
-import { getClient } from '../lib/sanity.server'
 import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
-import { menuQuery as globalMenuQuery } from '../lib/queries/menu'
-import { simpleMenuQuery } from '../lib/queries/simpleMenu'
-import { footerQuery } from '../lib/queries/footer'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 // import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'
-import { getNameFromLocale } from '../lib/localization'
 import { defaultLanguage } from '../languages'
 import Header from '../pageComponents/shared/Header'
 import { isGlobal } from '../common/helpers/datasetHelpers'
@@ -22,7 +17,7 @@ import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
 import { getRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
-import { fetchData } from '../lib/fetchData'
+import { getComponentsData } from '../lib/fetchData'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -124,14 +119,16 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams, isNews } = getQueryFromSlug(params?.slug as string[], locale)
 
-  const data = await fetchData(query, queryParams, isNews, preview)
-  const pageData = filterDataToSingleItem(data, preview) || null
-
-  const lang = getNameFromLocale(locale)
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: lang })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: lang })
   const intl = await getIntl(locale, preview)
+
+  const { menuData, pageData, footerData } = await getComponentsData(
+    {
+      query,
+      queryParams,
+    },
+    preview,
+    isNews,
+  )
 
   // @TODO This doesn't feel bullet proof at all this doesn't scale to well.
   const notFound = (!pageData && !queryParams?.id) || (typeof pageData?.news != 'undefined' && !pageData?.news)

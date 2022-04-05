@@ -5,17 +5,13 @@ import { IntlProvider } from 'react-intl'
 import Footer from '../pageComponents/shared/Footer'
 import Header from '../pageComponents/shared/Header'
 import getPageSlugs from '../common/helpers/getPageSlugs'
-import { getClient } from '../lib/sanity.server'
-import { isGlobal } from '../common/helpers/datasetHelpers'
-import { menuQuery as globalMenuQuery } from '../lib/queries/menu'
-import { footerQuery } from '../lib/queries/footer'
-import { simpleMenuQuery } from '../lib/queries/simpleMenu'
 import { pageNotFoundQuery } from '../lib/queries/pageNotFound'
 import { getNameFromLocale, getIsoFromLocale } from '../lib/localization'
 import getIntl from '../common/helpers/getIntl'
 import { defaultLanguage } from '../languages'
 import ErrorPage from '../pageComponents/pageTemplates/ErrorPage'
 import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/types'
+import { getComponentsData } from '../lib/fetchData'
 
 const Grid = styled.div`
   display: grid;
@@ -71,15 +67,16 @@ Custom404.getLayout = (page: AppProps) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.locale }) => {
   const lang = getNameFromLocale(locale)
+  const intl = await getIntl(locale, false)
+
   const queryParams = {
     lang,
   }
-  // Let save preview for a later stage
-  const pageData: ErrorPageData = await getClient(false).fetch(pageNotFoundQuery, queryParams)
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(false).fetch(menuQuery, { lang: lang })
-  const footerData = await getClient(false).fetch(footerQuery, { lang: lang })
-  const intl = await getIntl(locale, false)
+
+  const { menuData, pageData, footerData } = await getComponentsData({
+    query: pageNotFoundQuery,
+    queryParams,
+  })
 
   return {
     props: {
@@ -87,7 +84,7 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
         menuData,
         footerData,
         intl,
-        pageData: pageData,
+        pageData,
       },
     },
     revalidate: 1,

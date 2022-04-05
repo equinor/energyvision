@@ -1,5 +1,5 @@
 export const simpleMenuQuery = /* groq */ `
-  *[_type == "simpleMenu" && _lang == $lang][0] {
+  *[_type == "simpleMenu" && _lang == $lang] {
 	"groups": group[]{
       "id": _key,
       label,
@@ -17,7 +17,6 @@ export const simpleMenuQuery = /* groq */ `
             "type": _type,
            "slug": slug.current,
          },
-      
     },
 }
 `

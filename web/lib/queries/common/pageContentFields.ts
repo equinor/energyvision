@@ -6,7 +6,7 @@ import downloadableImageFields from './actions/downloadableImageFields'
 import { publishDateTimeQuery } from '../news'
 
 const pageContentFields = /* groq */ `
-  _type == "teaser"=>{
+  _type == "teaser" =>{
     "type": _type,
     "id": _key,
     overline,
@@ -227,6 +227,7 @@ const pageContentFields = /* groq */ `
             ||
             localNewsTag._ref in ^.localNewsTags[]._ref
           )
+          && !(_id in path("drafts.**"))
         ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
@@ -287,12 +288,11 @@ const pageContentFields = /* groq */ `
       },
       _type == "promoteEvents" => {
         "id": _key,
-
         manuallySelectEvents,
         !manuallySelectEvents => {
           tags,
          // @TODO: This query is not done yet
-          "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date ]{
+          "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
             "type": "events",
             "id": _id,
             "slug": slug.current,

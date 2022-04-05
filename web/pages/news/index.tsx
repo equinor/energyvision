@@ -4,21 +4,16 @@ import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
 //import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { IntlProvider } from 'react-intl'
-import { getClient } from '../../lib/sanity.server'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
-import getPageSlugs from '../../common/helpers/getPageSlugs'
-import { menuQuery as globalMenuQuery } from '../../lib/queries/menu'
 import { newsroomQuery } from '../../lib/queries/newsroom'
-import { footerQuery } from '../../lib/queries/footer'
-import { simpleMenuQuery } from '../../lib/queries/simpleMenu'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import { isGlobal } from '../../common/helpers/datasetHelpers'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { NewsRoomProps } from '../../types'
-import { filterDataToSingleItem } from '../../lib/filterDataToSingleItem'
+import { getComponentsData } from '../../lib/fetchData'
 
 export default function NewsRoom({ serverState, isServerRendered = false, /* url, */ data }: NewsRoomProps) {
   const defaultLocale = defaultLanguage.locale
@@ -60,7 +55,7 @@ NewsRoom.getLayout = (page: AppProps) => {
 
   return (
     <>
-      {/* The intl provider doesn't seem to be necessary here, but I don't quite understand why so 
+      {/* The intl provider doesn't seem to be necessary here, but I don't quite understand why so
       keeping it just to be sure:/ */}
       <IntlProvider
         locale={getIsoFromLocale(locale)}
@@ -88,19 +83,22 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   }
 
   const lang = getNameFromLocale(locale)
+  const intl = await getIntl(locale, false)
+
   const queryParams = {
     lang,
   }
 
-  const data = await getClient(preview).fetch(newsroomQuery, queryParams)
-  const pageData = filterDataToSingleItem(data, preview) || null
-
   const slug = req.url
 
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(false).fetch(menuQuery, { lang: lang })
-  const footerData = await getClient(false).fetch(footerQuery, { lang: lang })
-  const intl = await getIntl(locale, false)
+  const { menuData, pageData, footerData } = await getComponentsData(
+    {
+      query: newsroomQuery,
+      queryParams,
+    },
+    preview,
+  )
+
   //const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <NewsRoom

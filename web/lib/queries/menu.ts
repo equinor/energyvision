@@ -1,7 +1,8 @@
 export const menuQuery = /* groq */ `
-  *[_type == "siteMenu" && _lang == $lang][0] {
-	"subMenus": menuGroups[]->{
-  	"id": _id,
+  *[_type == "siteMenu" && _lang == $lang] {
+    _id,
+    "subMenus": menuGroups[]->{
+    "id": _id,
     "topLevelLink": {
       label,
       "isStatic": coalesce(isStatic, false),
@@ -14,7 +15,7 @@ export const menuQuery = /* groq */ `
     },
     "groups": group[]{
       "id": _key,
-      label,   
+      label,
       "links": links[]{
           label,
           "isStatic": coalesce(isStatic, false),
@@ -23,7 +24,7 @@ export const menuQuery = /* groq */ `
             "type": _type,
            "slug": slug.current,
          },
-         
+
          "staticUrl": staticUrl,
        }
     },
@@ -45,7 +46,7 @@ export const menuQuery = /* groq */ `
         "slug": slug.current,
         "title": content->title,
         "heroImage": content->heroFigure,
- 
+
       }
     },
 	}

@@ -2,20 +2,16 @@ import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import { getClient } from '../lib/sanity.server'
 import Footer from '../pageComponents/shared/Footer'
 import Header from '../pageComponents/shared/Header'
 import getPageSlugs from '../common/helpers/getPageSlugs'
-import { isGlobal } from '../common/helpers/datasetHelpers'
-import { menuQuery as globalMenuQuery } from '../lib/queries/menu'
-import { footerQuery } from '../lib/queries/footer'
-import { simpleMenuQuery } from '../lib/queries/simpleMenu'
 import { internalServerErrorQuery } from '../lib/queries/internalServerError'
 import { getNameFromLocale, getIsoFromLocale } from '../lib/localization'
 import getIntl from '../common/helpers/getIntl'
 import { defaultLanguage } from '../languages'
 import ErrorPage from '../pageComponents/pageTemplates/ErrorPage'
 import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/types'
+import { getComponentsData } from '../lib/fetchData'
 
 const Grid = styled.div`
   display: grid;
@@ -74,11 +70,12 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
   const queryParams = {
     lang,
   }
-  // Let save preview for a later stage
-  const pageData: ErrorPageData = await getClient(false).fetch(internalServerErrorQuery, queryParams)
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(false).fetch(menuQuery, { lang: lang })
-  const footerData = await getClient(false).fetch(footerQuery, { lang: lang })
+
+  const { menuData, pageData, footerData } = await getComponentsData({
+    query: internalServerErrorQuery,
+    queryParams,
+  })
+
   const intl = await getIntl(locale, false)
 
   return {

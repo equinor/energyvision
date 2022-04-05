@@ -49,7 +49,7 @@ export const allNewsQuery = /* groq */ `
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug] | order(${publishDateTimeQuery} desc)[0] {
+  "news": *[_type == "news" && slug.current == $slug] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,
@@ -97,7 +97,7 @@ export const newsQuery = /* groq */ `
       slug.current != $slug &&
       heroImage.image.asset != null &&
       _lang == $lang &&
-      // filter drafts so it works similarly in sanity preview
+      // filter drafts, will also filter when previewing
       !(_id in path("drafts.**"))
     ] | order(${publishDateTimeQuery} desc)[0...3] {
     ${newsFields}

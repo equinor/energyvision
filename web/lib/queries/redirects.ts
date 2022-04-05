@@ -4,7 +4,7 @@ export type RedirectsType = {
 } | null
 
 export const redirects = /* groq */ `
-  *[_type == "redirect" && (from == $slug || from == $slugWithLocale)][0]{
+  *[_type == "redirect" && (from == $slug || from == $slugWithLocale) && !(_id in path("drafts.**"))][0]{
     "lang": _lang,
     "to": to->slug.current
   }
