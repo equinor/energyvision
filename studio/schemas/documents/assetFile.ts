@@ -29,7 +29,7 @@ export const fileIcon = (extension: string) => {
   }
 }
 
-const acceptedFileTypes = ['.pdf', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.pptx', '.txt', '.zip', '.asc', '.ics']
+const acceptedFileTypes = ['.pdf', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.pptx', '.txt', '.zip', '.asc', '.ics', '.mp3']
 
 export default {
   title: 'File',
