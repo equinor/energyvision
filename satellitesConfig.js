@@ -75,6 +75,7 @@ const websiteDomains = {
   global: 'https://www.equinor.com',
   poland: 'https://www.equinor.pl',
   brazil: 'https://www.equinor.com.br',
+  storage: 'https://www.equinorstorage.de',
   'global-development': 'localhost:3000',
 }
 
