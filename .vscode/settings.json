@@ -7,5 +7,6 @@
   "azureFunctions.projectLanguage": "TypeScript",
   "azureFunctions.projectRuntime": "~4",
   "debug.internalConsoleOptions": "neverOpen",
-  "azureFunctions.preDeployTask": "npm prune (functions)"
+  "azureFunctions.preDeployTask": "npm prune (functions)",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
