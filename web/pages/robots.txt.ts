@@ -1,18 +1,18 @@
-import { domain } from '../languages'
 import { GetServerSideProps } from 'next'
 
 const Robots = () => {
   return 'Loading...'
 }
 
-const robots = `User-agent: *
+const robots = (domain: string) => `User-agent: *
 Allow: /
 Sitemap: ${domain}/sitemap.xml
 Crawl-delay: 10`
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const domain = String(req.headers.host)
   res.setHeader('Content-Type', 'text/plain')
-  res.write(robots)
+  res.write(robots(domain))
   res.end()
 
   return {

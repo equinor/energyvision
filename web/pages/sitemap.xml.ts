@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { languages, domain, defaultLanguage } from '../languages'
+import { languages, defaultLanguage } from '../languages'
 import { getRoutePaths, PathType } from '../common/helpers/getPaths'
 
 const Sitemap = () => {
@@ -8,17 +8,17 @@ const Sitemap = () => {
 
 const getUrl = ({ slug, locale }: PathType) => {
   const url = slug.length === 0 ? locale : locale + '/' + slug.join('/')
-  return domain + '/' + url
+  return url
 }
 
-const getSitemapUrls = (paths: PathType[]) =>
+const getSitemapUrls = (domain: string, paths: PathType[]) =>
   `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${paths
       .map(
         (path) => `
           <url>
-            <loc>${getUrl(path)}</loc>
+            <loc>${domain + '/' + getUrl(path)}</loc>
             <lastmod>${path.updatedAt}</lastmod>
           </url>
         `,
@@ -26,7 +26,7 @@ const getSitemapUrls = (paths: PathType[]) =>
       .join('')}
     </urlset>`
 
-const getSitemapIndex = (locales: string[]) =>
+const getSitemapIndex = (domain: string, locales: string[]) =>
   `<?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${locales
@@ -40,10 +40,11 @@ const getSitemapIndex = (locales: string[]) =>
       .join('')}
     </sitemapindex>`
 
-export const getServerSideProps: GetServerSideProps = async ({ query, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   let locale = ''
   let paths: PathType[]
 
+  const domain = String(req.headers.host)
   const locales = languages.map((lang) => lang.locale)
   const routeSlugs = await getRoutePaths(locales)
   const isMultilanguage = locales.length > 1
@@ -57,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res }) => 
   }
 
   const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
-  const sitemap = shouldFetchUrls ? getSitemapUrls(paths) : getSitemapIndex(locales)
+  const sitemap = shouldFetchUrls ? getSitemapUrls(domain, paths) : getSitemapIndex(domain, locales)
 
   res.setHeader('Content-Type', 'text/xml')
   res.write(sitemap)
