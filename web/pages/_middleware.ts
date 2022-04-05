@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect to the same url lowercased if necessary
-  if (pathname !== pathname.toLowerCase()) {
+  if (pathname !== pathname.toLowerCase() && !pathname.includes('/news/archive')) {
     return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`)
   }
 
