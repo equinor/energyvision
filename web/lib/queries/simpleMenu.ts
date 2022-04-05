@@ -1,6 +1,7 @@
 export const simpleMenuQuery = /* groq */ `
   *[_type == "simpleMenu" && _lang == $lang] {
-	"groups": group[]{
+    _id,
+	  "groups": group[]{
       "id": _key,
       label,
       "type": _type,
