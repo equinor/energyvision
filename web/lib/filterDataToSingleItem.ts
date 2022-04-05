@@ -9,5 +9,5 @@ export function filterDataToSingleItem(data: any, preview: any) {
    */
   return preview
     ? data.find((item) => item._id.startsWith('drafts.')) ?? data[0]
-    : data.find((item) => !item._id.startsWith('drafts.')) ?? data[0]
+    : data.find((item) => !item._id.startsWith('drafts.')) ?? null
 }
