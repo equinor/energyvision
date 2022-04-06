@@ -1,10 +1,9 @@
 import { Highlight } from './Highlight'
 import { default as NextLink } from 'next/link'
+import getConfig from 'next/config'
 import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { FormattedDate } from '@components'
-import { useRouter } from 'next/router'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { StyledHitLink } from './hit/HitLink'
 import DisplayLink from './hit/DisplayLink'
 import HitHeading from './hit/HitHeading'
@@ -42,8 +41,8 @@ const EventHit = ({ hit }: HitProps) => {
   // Shouldn't be empty string, but this is work in progress
   const { slug = '', eventDate } = hit
 
-  const { pathname } = useRouter()
-  const fullUrl = getFullUrl(pathname, slug)
+  const { publicRuntimeConfig } = getConfig()
+  const fullUrl = `${publicRuntimeConfig.domain}${slug}`
 
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (
