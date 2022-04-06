@@ -169,8 +169,7 @@ const NewsPage = ({ data }: ArticleProps) => {
     initialData: data,
     enabled: preview || router.query.preview !== null,
   }) */
-  const newsData = data.news
-  const { latestNews } = data
+  const { news: newsData, latestNews } = data
   const { pathname } = router
 
   if (!router.isFallback && !slug) {

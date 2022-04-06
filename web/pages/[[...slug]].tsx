@@ -103,16 +103,15 @@ Page.getLayout = (page: AppProps) => {
   // @ts-ignore
   const { props } = page
   const { data, preview } = props
+
   const slugs = getPageSlugs(data)
 
   return (
-    <>
-      <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
-        <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
-        {page}
-      </Layout>
-    </>
+    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
+      <Header slugs={slugs} menuData={data?.menuData} />
+      <SkipNavContent />
+      {page}
+    </Layout>
   )
 }
 
@@ -131,10 +130,30 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   )
 
   // @TODO This doesn't feel bullet proof at all this doesn't scale to well.
-  const notFound = (!pageData && !queryParams?.id) || (typeof pageData?.news != 'undefined' && !pageData?.news)
+  const notFound = isNews ? pageData.news.length === 0 : !pageData
+
   // If global, fetch static content in case data is not found or trying to access news
   // @TODO This should only be for news at some point
-  if (isGlobal && ((!pageData && !queryParams?.id) || (params?.slug === 'news' && !pageData.news))) {
+  if (isGlobal && notFound) fetchArchivedContent()
+
+  return {
+    props: {
+      preview,
+      data: {
+        isArchivedFallback: false,
+        query,
+        queryParams,
+        pageData,
+        menuData,
+        footerData,
+        intl,
+      },
+    },
+    revalidate: 120,
+    notFound,
+  }
+
+  async function fetchArchivedContent() {
     const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
 
     const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'
@@ -157,23 +176,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
       revalidate: 300,
       notFound: notFoundInArchived,
     }
-  }
-
-  return {
-    props: {
-      preview,
-      data: {
-        isArchivedFallback: false,
-        query,
-        queryParams,
-        pageData,
-        menuData,
-        footerData,
-        intl,
-      },
-    },
-    revalidate: 120,
-    notFound,
   }
 }
 

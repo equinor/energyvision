@@ -10,7 +10,7 @@ const getValidSlugs = (allSlugs: AllSlugsType) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPageSlugs = (data: any) => {
   const isNewsPage = !!data?.pageData?.news
-  const pageSlugs = isNewsPage ? data?.pageData?.news.slugs?.allSlugs : data?.pageData?.slugs?.allSlugs
+  const pageSlugs = isNewsPage ? data?.pageData?.news[0]?.slugs?.allSlugs : data?.pageData?.slugs?.allSlugs
   const validSlugs = getValidSlugs((pageSlugs as AllSlugsType) || [])
   const defaultSlug = validSlugs.find((slug) => slug.lang === defaultLanguage.name)
   const filteredSlugs = validSlugs.filter((slug) => slug.lang !== defaultLanguage.name)
