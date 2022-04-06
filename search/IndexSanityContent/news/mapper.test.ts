@@ -6,14 +6,13 @@ describe('News', () => {
   describe('mapper tests', () => {
     describe('Vanilla version works', () => {
       // Hei fremtids-Nils Magne, vi bør ikke ha en en-til-en type mot Sanity?
-      const newsArticle: NewsArticle & { year: number } = {
+      const newsArticle: NewsArticle = {
         title: 'title',
         slug: '/a/slug',
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
         countryTags: ['Germany'],
         topicTags: ['Oil'],
-        year: 2021,
         // tags: ['Oil', 'Norway'],
         blocks: [
           {
