@@ -7,12 +7,12 @@ const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
   dataset === 'global'
     ? 'https://web-energyvision-preprod.radix.equinor.com'
     : `https://web-${dataset}-energyvision-preprod.radix.equinor.com` */
-const remoteUrl = (dataset: string) => {
+const remoteUrl = () => {
   switch (dataset) {
     case 'global':
       return 'https://web-energyvision-preprod.radix.equinor.com'
     case 'global-development':
-      return 'https://web-energyvision-dev.radix.equinor.com'
+      return 'https://web-global-development-energyvision-dev.radix.equinor.com'
     default:
       return `https://web-${dataset}-energyvision-preprod.radix.equinor.com`
   }
@@ -20,7 +20,7 @@ const remoteUrl = (dataset: string) => {
 
 const localUrl = process.env.SANITY_STUDIO_PROJECT_URL
 
-export const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl
+export const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl()
 
 export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
