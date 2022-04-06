@@ -1,9 +1,10 @@
 {
   "bindings": [
     {
-      "name": "myArchivedNewsTimer",
-      "type": "timerTrigger",
-      "direction": "in"
+      "name": "myArchivedNewsTrigger",
+      "type": "httpTrigger",
+      "direction": "in",
+      "route": "archive"
     }
   ],
   "scriptFile": "../dist/IndexArchivedNews/index.js"
