@@ -175,6 +175,7 @@ describe('News', () => {
     describe('Empty blocks works', () => {
       const newsArticle: NewsArticle = {
         title: 'title',
+        ingress: 'ingress',
         slug: '/a/slug',
         _id: 'id',
         blocks: [],

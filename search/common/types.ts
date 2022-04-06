@@ -54,6 +54,8 @@ export type NewsIndex = {
   publishDateTime: string
   year: number
   ingress: string
+  topicTags: string[]
+  countryTags: string[]
 }
 
 export type IndexType = EventIndex | TopicIndex | NewsIndex

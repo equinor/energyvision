@@ -80,7 +80,7 @@ const getQueryParams = (language: Language) => ({
 export type NewsArticle = {
   slug: string
   title: string
-  ingress?: string
+  ingress: string
   // ISO 8601
   publishDateTime?: string
   topicTags?: string[]

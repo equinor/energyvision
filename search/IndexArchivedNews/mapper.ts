@@ -7,6 +7,8 @@ export const mapData: MapDataType = (article) => {
     publishedDate,
     tags: { topics, country },
     title,
+    category,
+    description,
     link,
   } = article
   const year = publishedDate ? new Date(publishedDate).getFullYear() : ''
@@ -15,10 +17,11 @@ export const mapData: MapDataType = (article) => {
     objectID: `${publishedDate}-${link}`,
     type: 'news',
     pageTitle: title,
+    ingress: description,
     text: '', // To be added
     publishDateTime: publishedDate,
-    topics,
-    country,
+    topicTags: [...topics, category],
+    countryTags: [country],
     year,
   } as NewsIndex
 }
