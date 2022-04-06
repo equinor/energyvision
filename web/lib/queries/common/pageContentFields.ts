@@ -406,6 +406,7 @@ const pageContentFields = /* groq */ `
       ||
         localNewsTag._ref in ^.selectedTags.localNewsTags[]._ref
     )
+    && !(_id in path("drafts.**"))
     ] | order(${publishDateTimeQuery} desc){
       "type": _type,
       "id": _id,
