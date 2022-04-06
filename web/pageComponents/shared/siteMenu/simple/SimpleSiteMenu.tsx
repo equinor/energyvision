@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
 import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
@@ -15,7 +16,6 @@ import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
 import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
-import { useIntl } from 'react-intl'
 
 const MenuContainer = styled.div`
   font-size: var(--typeScale-1);
@@ -32,6 +32,13 @@ const MenuLink = styled(Link)`
   }
   &:hover {
     background-color: var(--grey-10);
+  }
+`
+const AllSitesLink = styled(Link)`
+  text-decoration: none;
+  padding: calc(var(--space-small) + var(--space-small)) 0;
+  &:hover {
+    text-decoration: underline;
   }
 `
 
@@ -101,6 +108,11 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       )
                     }
                   })}
+                  <NextLink href="https://www.equinor.com/languages.html?language=en" passHref>
+                    <AllSitesLink>
+                      <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                    </AllSitesLink>
+                  </NextLink>
                 </SimpleMenuWrapper>
               </MenuContainer>
             </nav>
