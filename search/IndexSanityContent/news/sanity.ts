@@ -30,7 +30,7 @@ const blocksToArray = (blocks, opts = {}) => {
   pipe(
     blocks,
     A.map((block) =>
-      pipe( 
+      pipe(
         block,
         E.fromPredicate(
           (block) => block.children.length > 0,
@@ -58,6 +58,7 @@ export const query = /* groq */ `*[_type == "news" && _lang == $lang] {
   "slug": slug.current,
   _id,
   "title": title,
+  "ingress": ingress,
   "type": _type,
   "publishDateTime": ${publishDateTimeQuery},
   "topicTags": tags[]->.title[$lang],
@@ -79,7 +80,8 @@ const getQueryParams = (language: Language) => ({
 export type NewsArticle = {
   slug: string
   title: string
-  // Enjoy... ISO type
+  ingress?: string
+  // ISO 8601
   publishDateTime?: string
   topicTags?: string[]
   countryTags?: string[]

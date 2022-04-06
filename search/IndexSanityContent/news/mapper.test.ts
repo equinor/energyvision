@@ -8,6 +8,7 @@ describe('News', () => {
       // Hei fremtids-Nils Magne, vi bør ikke ha en en-til-en type mot Sanity?
       const newsArticle: NewsArticle = {
         title: 'title',
+        ingress: 'ingress',
         slug: '/a/slug',
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -39,6 +40,7 @@ describe('News', () => {
           slug: '/a/slug',
           objectID: 'id-blockKey-childKey',
           pageTitle: 'title',
+          ingress: 'ingress',
           type: 'news',
           text: 'Some text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -52,6 +54,7 @@ describe('News', () => {
     describe('Multiple children works (advanced version)', () => {
       const newsArticle: NewsArticle & { year: number } = {
         title: 'title',
+        ingress: 'ingress',
         slug: '/a/slug',
         _id: 'id',
         publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -100,6 +103,7 @@ describe('News', () => {
           slug: '/a/slug',
           objectID: 'id-blockKey-childKey',
           pageTitle: 'title',
+          ingress: 'ingress',
           type: 'news',
           text: 'Some text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -111,6 +115,7 @@ describe('News', () => {
           slug: '/a/slug',
           objectID: 'id-blockKey-childKey2',
           pageTitle: 'title',
+          ingress: 'ingress',
           type: 'news',
           text: 'Some more text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -122,6 +127,7 @@ describe('News', () => {
           slug: '/a/slug',
           objectID: 'id-blockKey2-childKey3',
           pageTitle: 'title',
+          ingress: 'ingress',
           type: 'news',
           text: 'Some text 3',
           publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -133,6 +139,7 @@ describe('News', () => {
           slug: '/a/slug',
           objectID: 'id-blockKey2-childKey4',
           pageTitle: 'title',
+          ingress: 'ingress',
           type: 'news',
           text: 'Some more text 4',
           publishDateTime: '2021-11-26T07:00:00.000Z',
@@ -146,6 +153,7 @@ describe('News', () => {
     describe('Empty children works', () => {
       const newsArticle: NewsArticle = {
         title: 'title',
+        ingress: 'ingress',
         slug: '/a/slug',
         _id: 'id',
         blocks: [
