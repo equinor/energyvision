@@ -13,8 +13,8 @@ export const landingPageContentFields = /* groq */ `
         "type": _type,
         "slug": slug.current,            
       },
-        "image": route->content->
-          heroFigure.image,
+        "image": coalesce(route->content->
+          heroFigure.image, route->content->openGraphImage)
     },
     "id": _key,
     label,
