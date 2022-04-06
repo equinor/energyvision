@@ -10,9 +10,10 @@ import { flow } from 'fp-ts/lib/function'
 
 
 // 1. Parse json file (need a type for the json)
-type SearchMetadataEntry = {
+export type SearchMetadataEntry = {
   title: string
   description: string
+  publishedDate: string
   link: string
   thumbnailURL: string
   category: string
