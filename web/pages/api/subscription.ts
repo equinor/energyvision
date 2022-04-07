@@ -99,6 +99,10 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
 
 export const distribute = async (parameters: NewsDistributionParameters) => {
   const loginResult = await authenticate()
-  if (loginResult.apiSecret != '' && loginResult.instId != '') return createDistributeRequest(loginResult, parameters)
+  if (loginResult.apiSecret != '' && loginResult.instId != '') 
+  {
+    console.log("Authentication for distribute...")
+    return createDistributeRequest(loginResult, parameters)
+  }
   else return false
 }

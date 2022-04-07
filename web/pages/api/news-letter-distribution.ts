@@ -17,8 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     newsType: data.newsType,
     languageCode: locale,
   }
+  console.log("Sending distribution request for "+newsDistributionParameters.link)
   await distribute(newsDistributionParameters).then((isSuccessful) => {
-    console.log("Sending distribution request for "+newsDistributionParameters.link)
     if (!isSuccessful) {
       return res.status(500).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
     }
