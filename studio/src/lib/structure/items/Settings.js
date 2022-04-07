@@ -7,14 +7,13 @@ import { LocalNewsTags } from './LocalNewsTags'
 import { Redirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
 import { HAS_NEWS, HAS_LOCAL_NEWS } from '../../datasetHelpers'
-import { hasPermission, PERMISSIONS } from '../../permissions'
 
 const settingsItems = [
   HAS_NEWS && Tags,
   HAS_NEWS && CountryTags,
   TextSnippet,
   Redirects,
-  HAS_LOCAL_NEWS && hasPermission(PERMISSIONS.ACCESS_LOCAL_NEWS_TAGS) && LocalNewsTags,
+  HAS_LOCAL_NEWS && LocalNewsTags,
 ].filter((e) => e)
 
 export const Settings = S.listItem()

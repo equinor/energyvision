@@ -5,35 +5,9 @@ import FilePreview from './src/previews/file/filePreview'
 import NewsroomPreview from './src/previews/news/NewsroomPreview'
 import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import Structure from './src/lib/structure'
-import { HAS_EVENT, HAS_LANDING_PAGE, HAS_LOCAL_NEWS, HAS_NEWS } from './src/lib/datasetHelpers'
-import { getCurrentUserRoles, hasPermission, PERMISSIONS } from './src/lib/permissions'
+import items from './src/lib/structure'
 
-const items = [
-  HAS_NEWS && Structure.News,
-  HAS_LOCAL_NEWS && Structure.LocalNews,
-  Structure.TopicContent,
-  HAS_LANDING_PAGE && Structure.LandingPage,
-  HAS_EVENT && Structure.Event,
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Misc,
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && S.divider(),
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Homepage,
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Routes,
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && S.divider(),
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Menu,
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Footer,
-  S.divider(),
-  Structure.AssetLibrary,
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && S.divider(),
-  hasPermission(PERMISSIONS.ACCESS_SETTINGS) && Structure.Settings,
-].filter((e) => e)
-
-const itemsForLocalNewsEditor = [HAS_LOCAL_NEWS && Structure.LocalNews]
-
-/** @TODO refactor datasets from public to private, then this code will be no longer needed */
-const listItems = getCurrentUserRoles().includes('local-news-editor') ? itemsForLocalNewsEditor : items
-
-export default () => S.list().title('Content').items(listItems)
+export default () => S.list().title('Content').items(items)
 
 export const getDefaultDocumentNode = (props) => {
   /**
