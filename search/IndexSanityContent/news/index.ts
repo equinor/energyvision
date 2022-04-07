@@ -18,7 +18,7 @@ import { mapData } from './mapper'
 
 const indexIdentifier = 'NEWS'
 // TODO: From where to get language?
-const language = pipe(languageFromIso('en-GB'), languageOrDefault)
+const language = pipe(languageFromIso('nb-NO'), languageOrDefault)
 
 const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
 const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))

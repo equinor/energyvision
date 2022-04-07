@@ -3,44 +3,7 @@ import type { CardData, PeopleCardData, EventCardData, PromotionType } from '../
 import NewsCard from '../cards/NewsCard'
 import TopicPageCard from '../cards/TopicPageCard'
 import PeopleCard from '../cards/PeopleCard/PeopleCard'
-import EventsCard from '../cards/EventsCard'
-
-const FlexibleWrapper = styled.div`
-  --card-minWidth: 250px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-  @media (min-width: 1000px) {
-    --card-minWidth: 340px;
-  }
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-  margin: var(--space-xLarge) auto 0 auto;
-  max-width: var(--maxViewportWidth);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-`
-
-const PairWrapper = styled.div`
-  --card-minWidth: 250px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-  margin: var(--space-xLarge) auto 0 auto;
-  max-width: var(--maxViewportWidth);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-
-  @media (min-width: 990px) {
-    padding: 0 var(--layout-paddingHorizontal-medium);
-    justify-content: center;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px));
-  }
-`
+import MultipleEventCards from './promotions/MultipleEventCards'
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -99,37 +62,23 @@ const MultiplePromotions = ({
         return <StyledTopicPageCard data={data as CardData} key={data.id} />
       case 'people':
         return <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
-      case 'events':
-        return <EventsCard data={data as EventCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
       default:
         return console.warn('Missing card type for ', data)
     }
   }
 
-  const eventCards = (data: EventCardData[]) => {
-    if (data.length === 2) {
-      return (
-        <PairWrapper>
-          {data.map((item) => {
-            return getCard(item)
-          })}
-        </PairWrapper>
-      )
-    } else {
-      return (
-        <FlexibleWrapper>
-          {data.map((item) => {
-            return getCard(item)
-          })}
-        </FlexibleWrapper>
-      )
-    }
+  if (variant === 'promoteEvents') {
+    return <MultipleEventCards data={data as EventCardData[]} hasSectionTitle={hasSectionTitle} />
   }
 
   return (
     <>
-      {variant === 'promoteEvents' ? (
-        <>{eventCards(data as EventCardData[])}</>
+      {variant === 'promotePeople' ? (
+        <div>
+          {data.map((item) => {
+            return getCard(item)
+          })}
+        </div>
       ) : (
         <CardsWrapper>
           {data.map((item) => {
