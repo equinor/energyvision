@@ -565,3 +565,11 @@ export type NewsListData = {
   countryTags?: [id: string]
   localNewsTags?: [id: string]
 }
+
+export type StockValuesData = {
+  id: string
+  type: string
+  designOptions: {
+    background: BackgroundColours
+  }
+}

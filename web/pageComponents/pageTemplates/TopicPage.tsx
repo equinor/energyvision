@@ -18,6 +18,7 @@ import Promotion from '../topicPages/Promotion'
 import Form from '../topicPages/Form/Form'
 import Table from '../topicPages/Table'
 import NewsList from '../topicPages/NewsList'
+import StockValues from '../topicPages/StockValues'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer } from '../../common/serializers'
 import { blocksToText } from '../../common/helpers/blocksToText'
@@ -40,6 +41,7 @@ import {
   FormData,
   TableData,
   NewsListData,
+  StockValuesData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -107,6 +109,7 @@ type ComponentProps =
   | PromotionData
   | FormData
   | TableData
+  | StockValuesData
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname } = useRouter()
@@ -148,6 +151,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <CookieDeclaration key={c.id} />
       case 'newsList':
         return <NewsList key={c.id} data={c as NewsListData} />
+      case 'stockValuesApi':
+        return <StockValues key={c.id} data={c as StockValuesData} />
       default:
         return null
     }

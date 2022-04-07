@@ -420,7 +420,17 @@ const pageContentFields = /* groq */ `
         ${markDefs},
       },
     },
-  }
+  },
+
+  _type == "stockValuesApi"=>{
+    "type": _type,
+    "id": _key,
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+      "imagePosition": coalesce(imagePosition, 'left'),
+      imageSize,
+    },
+  },
 
 `
 
