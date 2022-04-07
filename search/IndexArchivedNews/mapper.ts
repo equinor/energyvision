@@ -10,6 +10,7 @@ export const mapData: MapDataType = (article) => {
     category,
     description,
     link,
+    content,
   } = article
   const year = publishedDate ? new Date(publishedDate).getFullYear() : ''
   return  {
@@ -18,7 +19,7 @@ export const mapData: MapDataType = (article) => {
     type: 'news',
     pageTitle: title,
     ingress: description,
-    text: '', // To be added
+    text: content,
     publishDateTime: publishedDate,
     topicTags: [...topics, category],
     countryTags: [country],

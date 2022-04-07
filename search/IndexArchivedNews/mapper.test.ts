@@ -36,7 +36,8 @@ describe('fileStorage', () => {
         expect(res.year).toEqual(2022)
         expect(res.topicTags).toEqual(['tag1', 'tag2', 'General news'])
         expect(res.countryTags).toEqual(['Norway'])
-        // TODO: Add text and thumbnailUrl
+        expect(res.text).toEqual('A lot of \n content')
+        // TODO: Add thumbnailUrl
       })
     })
   })

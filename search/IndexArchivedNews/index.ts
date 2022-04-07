@@ -41,4 +41,14 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
   console.log('Test function called!')
 }
 
+//const trigger: AzureFunction = async function (context: Context, ): Promise<void> {
+  // New trigger to be used from now on
+  // TODO:
+  // 1. Read list of files from somewhere. Could be httpTrigger or blobTrigger
+  // 2. Read files from blobStorage and put in temporary file store for function. There should be a TempPath we can use for thos
+  // 3. Parse files and make a note of which ones have been parsed. Use this later on to avoid reading same file twice
+
+
+//}
+
 export default timerTrigger
