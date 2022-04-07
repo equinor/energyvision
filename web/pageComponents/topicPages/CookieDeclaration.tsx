@@ -18,19 +18,22 @@ const Container = styled.div`
 const CookieDeclaration = () => {
   const router = useRouter()
   useEffect(() => {
-    window.CookieDeclaration.init()
-    console.log('load')
-  }, [])
+    if (window.CookieDeclaration != undefined && document.getElementsByClassName('CookieDeclaration') == undefined) {
+      window.CookieDeclaration.init()
+    }
+  })
   return (
     <>
       <Container>
-        <script
-          id="CookieDeclaration"
-          src="https://consent.cookiebot.com/f1327b03-7951-45da-a2fd-9181babc783f/cd.js"
-          type="text/javascript"
-          data-culture={router.locale == 'no' ? 'nb' : router.locale}
-          async
-        ></script>
+        {
+          <script
+            id="CookieDeclaration"
+            src="https://consent.cookiebot.com/f1327b03-7951-45da-a2fd-9181babc783f/cd.js"
+            type="text/javascript"
+            data-culture={router.locale == 'no' ? 'nb' : router.locale}
+            async
+          ></script>
+        }
       </Container>
     </>
   )
