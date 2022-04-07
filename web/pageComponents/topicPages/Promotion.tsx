@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 
-import SinglePromotion from './SinglePromotion'
-import MultiplePromotions from './MultiplePromotions'
+import SinglePromotion from './promotions/SinglePromotion'
+import MultiplePromotions from './promotions/MultiplePromotions'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
 import type { PromotionData } from '../../types/types'

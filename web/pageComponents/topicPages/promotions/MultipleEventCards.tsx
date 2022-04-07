@@ -60,7 +60,6 @@ const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) =
           })}
         </FlexibleWrapper>
       )}
-      )
     </>
   )
 }

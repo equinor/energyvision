@@ -9,6 +9,8 @@ const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
+
+  /*   justify-self: center; */
   ${StyledLandscapeCard}& {
     /*  A litte bit messy, but the landscape version for people
   doesn't look good before it actually breaks into to columns
