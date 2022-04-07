@@ -78,6 +78,7 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
     xml: envelope,
     timeout: 5000,
   })
+  console.log("---------Distribute response ----------\n"+response.body+"\n--------------------")
   xml2js.parseString(response.body, function (err, result) {
     if (err != null) console.error(err)
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
@@ -85,7 +86,7 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
       console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
     }
   })
-  console.log("---------Distribute response ----------\n"+response.body+"\n--------------------")
+  
   return response.statusCode == 200
 }
 
