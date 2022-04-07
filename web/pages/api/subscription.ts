@@ -60,7 +60,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     timeout: 5000,
   })
   xml2js.parseString(response.body, function (err, result) {
-    if (err != null) console.error(err)
+    if (err != null) console.error("No response from Brandmaster ....\n"+err)
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
     if (soapBody['SOAP-ENV:Fault'] != undefined) {
       console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
