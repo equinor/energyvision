@@ -14,6 +14,7 @@ const sampleHeaders = {
   'Content-Type': 'text/xml;charset=UTF-8',
 }
 const xml = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Authentication___Login xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><userName>SUBSCRIPTIONAPI</userName><password>${password}</password><comId>34</comId><ptlId>${ptlId}</ptlId><otyId>${otyId}</otyId><laeId>1</laeId><apnId>${apnId}</apnId></Authentication___Login></s:Body></s:Envelope>`
+console.log("---------Authenticate envelope ----------\n"+xml+"\n--------------------")
 const authenticate = async () => {
   const { response } = await soapRequest({
     url: authenticationUrl,
@@ -23,6 +24,7 @@ const authenticate = async () => {
   })
   const { body } = response
 
+  console.log("---------Authenticate response ----------\n"+body+"\n--------------------")
   let apiSecret = ''
   let instId = ''
   xml2js.parseString(body, function (err, result) {
@@ -69,12 +71,14 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
 
 const createDistributeRequest = async (loginResult: LoginResult, parameters: NewsDistributionParameters) => {
   const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL>${parameters.link}</newsURL><newsType>${parameters.newsType}</newsType><language>${parameters.languageCode}</language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
+  console.log("---------Distribute envelope ----------\n"+envelope+"\n--------------------")
   const { response } = await soapRequest({
     url: subscriptionUrl,
     headers: sampleHeaders,
     xml: envelope,
     timeout: 5000,
   })
+  console.log("---------Distribute response ----------\n"+response.body+"\n--------------------")
   return response.statusCode == 200
 }
 

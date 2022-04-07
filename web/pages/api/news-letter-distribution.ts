@@ -3,7 +3,6 @@ import { languages } from '../../languages'
 import { NewsDistributionParameters } from '../../types/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import getConfig from 'next/config'
-import { appInsights } from '../../common'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -19,11 +18,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     languageCode: locale,
   }
   await distribute(newsDistributionParameters).then((isSuccessful) => {
+    console.log("Sending distribution request for "+newsDistributionParameters.link)
     if (!isSuccessful) {
-      appInsights.trackEvent({ name: 'News Distribution Failure' })
       return res.status(500).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
     }
-    appInsights.trackEvent({ name: 'News Distribution Success' })
     res.status(200).json({ msg: `Successfully distributed ${newsDistributionParameters.link}` })
   })
 }
