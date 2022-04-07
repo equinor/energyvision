@@ -21,6 +21,8 @@ const ComponentDescription = () => {
       <Heading size={1}>How to use</Heading>
       <StyledText>
         This component will automatically generate a list of news articles based on the tags you select.
+      </StyledText>
+      <StyledText>
         <span role="img" aria-label="warning icon">
           ⚠️
         </span>
