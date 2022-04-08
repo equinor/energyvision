@@ -110,7 +110,8 @@ export const typography = css`
     --lineHeight-3: 1.5;
 
     /* Font weights */
-    --fontWeight-bold: 700;
+    --fontWeight-bolder: 650;
+    --fontWeight-bold: 600;
     --fontWeight-medium: 500;
     --fontWeight-regular: 400;
   }

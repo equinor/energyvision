@@ -4,7 +4,7 @@ import { Text, Heading } from '@components'
 import { PortableTextBlock } from '../../types/types'
 
 const StyledHeading = styled(Heading)`
-  font-weight: 600;
+  font-weight: var(--fontWeight-bolder);
   line-height: var(--lineHeight-3);
   margin-bottom: 0.5em;
 

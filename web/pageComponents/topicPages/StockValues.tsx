@@ -62,7 +62,7 @@ const Price = styled.span`
 `
 
 const Subtitle = styled.p`
-  font-weight: var(--fontWeight-bold);
+  font-weight: var(--fontWeight-bolder);
   margin: 0 0 var(--space-xSmall);
   padding: 0;
 `

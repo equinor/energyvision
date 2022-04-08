@@ -8,7 +8,7 @@ import type { TopicHitType } from './TopicHit'
 
 const StyledSpan = styled.span`
   color: var(--spruce-wood-100);
-  font-weight: var(--fontWeight-bold);
+  font-weight: var(--fontWeight-bolder);
 `
 
 type Highlight = {

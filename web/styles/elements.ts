@@ -16,4 +16,8 @@ export const elements = css`
   em {
     font-style: italic;
   }
+  strong,
+  b {
+    font-weight: var(--fontWeight-bold);
+  }
 `

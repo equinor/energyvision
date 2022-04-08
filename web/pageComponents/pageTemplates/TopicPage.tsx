@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
 import type { PageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
-
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
 import Teaser from '../topicPages/Teaser'
