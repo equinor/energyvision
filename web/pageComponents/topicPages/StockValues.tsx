@@ -67,6 +67,11 @@ const Subtitle = styled.p`
   padding: 0;
 `
 
+const TimeDelay = styled.span`
+  font-style: italic;
+  font-weight: var(--fontWeight-medium);
+`
+
 const ENDPOINT = `https://tools.eurolandir.com/tools/pricefeed/xmlirmultiiso5.aspx?companyid=9053`
 
 // @TODO: use correct datetime & formatting
@@ -93,7 +98,7 @@ const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesDa
           </p>
           <Subtitle>{data.OSE?.title}</Subtitle>
           <Subtitle>
-            <FormattedDate datetime={data.OSE?.Date} />
+            <FormattedDate datetime={data.OSE?.Date} /> CET
           </Subtitle>
         </Item>
         <Item>
@@ -104,7 +109,7 @@ const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesDa
           </p>
           <Subtitle>{data.NYSE?.title}</Subtitle>
           <Subtitle>
-            <FormattedDate datetime={data.NYSE?.Date} />
+            <FormattedDate datetime={data.NYSE?.Date} /> CET <TimeDelay>at least 20 minutes delayed</TimeDelay>
           </Subtitle>
         </Item>
       </Container>
