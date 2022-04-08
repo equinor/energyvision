@@ -10,7 +10,6 @@ const CardsWrapper = styled.div`
   max-width: calc(var(--card-maxWidth) * 3 + var(--space-large) * 2);
   padding: 0 var(--space-xxLarge);
   margin: auto;
-  margin-top: var(--space-xLarge);
   display: flex;
   gap: var(--space-large);
   justify-content: center;
@@ -28,7 +27,7 @@ const PeopleCardsWrapper = styled.div`
   --row-gap: var(--space-xLarge);
   --column-gap: var(--space-medium);
   padding: 0 var(--space-xxLarge);
-  margin: var(--space-xxLarge) auto 0 auto;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
   grid-row-gap: var(--row-gap);

@@ -8,7 +8,7 @@ const PairWrapper = styled.div`
   --column-gap: var(--space-medium);
 
   padding: 0 var(--layout-paddingHorizontal-small);
-  margin: var(--space-xLarge) auto 0 auto;
+  margin: 0 auto;
   max-width: var(--maxViewportWidth);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));

@@ -12,6 +12,9 @@ const Wrapper = styled.div`
   --card-maxWidth: 400px;
   --card-minWidth: 200px;
 `
+const Ingress = styled.div`
+  margin-bottom: var(--space-xLarge);
+`
 
 const Intro = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
@@ -45,14 +48,16 @@ const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
             />
           )}
           {ingress && (
-            <SimpleBlockContent
-              blocks={ingress}
-              serializers={{
-                types: {
-                  block: (props) => <IngressBlockRenderer centered={true} {...props} />,
-                },
-              }}
-            ></SimpleBlockContent>
+            <Ingress>
+              <SimpleBlockContent
+                blocks={ingress}
+                serializers={{
+                  types: {
+                    block: (props) => <IngressBlockRenderer centered={true} {...props} />,
+                  },
+                }}
+              ></SimpleBlockContent>
+            </Ingress>
           )}
         </Intro>
         {promotions?.length === 1 ? (
