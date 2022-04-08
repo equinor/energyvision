@@ -6,7 +6,7 @@ import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
-import { Link } from '@components'
+import { Link, BackgroundContainer } from '@components'
 import { LinkData } from '../../../types/types'
 import CareersContactForm from './CareersContactForm'
 
@@ -65,7 +65,7 @@ const Form = ({ data }: { data: FormData }) => {
     }
   }
   return (
-    <>
+    <BackgroundContainer background="White">
       <Container>
         {title && (
           <SimpleBlockContent
@@ -90,7 +90,7 @@ const Form = ({ data }: { data: FormData }) => {
 
         {renderForm(variant)}
       </Container>
-    </>
+    </BackgroundContainer>
   )
 }
 export default Form
