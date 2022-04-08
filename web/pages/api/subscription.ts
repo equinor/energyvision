@@ -14,7 +14,6 @@ const sampleHeaders = {
   'Content-Type': 'text/xml;charset=UTF-8',
 }
 const xml = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Authentication___Login xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><userName>SUBSCRIPTIONAPI</userName><password>${password}</password><comId>34</comId><ptlId>${ptlId}</ptlId><otyId>${otyId}</otyId><laeId>1</laeId><apnId>${apnId}</apnId></Authentication___Login></s:Body></s:Envelope>`
-console.log("---------Authenticate envelope ----------\n"+xml+"\n--------------------")
 const authenticate = async () => {
   const { response } = await soapRequest({
     url: authenticationUrl,
@@ -23,17 +22,14 @@ const authenticate = async () => {
     timeout: 5000,
   })
   const { body } = response
-
-  console.log("---------Authenticate response ----------\n"+body+"\n--------------------")
   let apiSecret = ''
   let instId = ''
   xml2js.parseString(body, function (err, result) {
-    if (err != null) console.error(err)
+    if (err != null) console.error("Error while authenticating from Brandmaster : ----------------\n"+err)
+    if(parsedError(result,"could not get apiSecret and instId ") != undefined)
+     return
+
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
-    if (soapBody['SOAP-ENV:Fault'] != undefined) {
-      console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
-      return
-    }
     const loginResult = soapBody['v1:Authentication___LoginResponse']['0']['v1:Result']['0']
     apiSecret = loginResult['v1:apiSecret']['0']
     instId = loginResult['v1:instId']['0']
@@ -60,30 +56,28 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     timeout: 5000,
   })
   xml2js.parseString(response.body, function (err, result) {
-    if (err != null) console.error("No response from Brandmaster ....\n"+err)
-    const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
-    if (soapBody['SOAP-ENV:Fault'] != undefined) {
-      console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
-    }
+    if (err != null) console.error("Error while creating signup request to Brandmaster : ----------------\n"+err)
+    if(parsedError(result,"could not create sign up request ")!= undefined)
+    return
   })
   return response.statusCode == 200
 }
 
 const createDistributeRequest = async (loginResult: LoginResult, parameters: NewsDistributionParameters) => {
   const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL><![CDATA[${parameters.link}]]></newsURL><newsType><![CDATA[${parameters.newsType}]]></newsType><language><![CDATA[${parameters.languageCode}]]></language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
-  console.log("---------Distribute envelope ----------\n"+envelope+"\n--------------------")
   const { response } = await soapRequest({
     url: subscriptionUrl,
     headers: sampleHeaders,
     xml: envelope,
     timeout: 5000,
   })
-  console.log("---------Distribute response ----------\n"+response.body+"\n--------------------")
   xml2js.parseString(response.body, function (err, result) {
-    if (err != null) console.error(err)
-    const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
-    if (soapBody['SOAP-ENV:Fault'] != undefined) {
-      console.error('Error ' + soapBody['SOAP-ENV:Fault']['0']['faultstring'])
+    if (err != null) console.error("Error while creating distribute request to Brandmaster : ----------------\n"+err)
+    const error = parsedError(result,"could not distribute newsletter ")
+    if(error != undefined)
+    {
+      // should trigger mail... 
+      response.statusCode = 500
     }
   })
   
@@ -91,7 +85,6 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
 }
 
 export const signUp = async (formParameters: SubscribeFormParameters) => {
-  console.log(formParameters)
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createSignUpRequest(loginResult, formParameters)
   else return false
@@ -101,8 +94,17 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') 
   {
-    console.log("Authentication for distribute...")
     return createDistributeRequest(loginResult, parameters)
   }
   else return false
 }
+
+const parsedError = (result:any, prefix:string)=>{
+    const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
+    if (soapBody['SOAP-ENV:Fault'] != undefined) {
+      const error = soapBody['SOAP-ENV:Fault']['0']['faultstring']
+      console.error("Newsletter Failure Error: "+prefix +"\n"+error)
+      return error
+    }
+}
+
