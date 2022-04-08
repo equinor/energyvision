@@ -27,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   })
 }
 else{
+  console.log("Test webhook"+ newsDistributionParameters.link)
   res.status(200).json({ msg: `Test Successfully distributed ${newsDistributionParameters.link}` })
 }
 }
