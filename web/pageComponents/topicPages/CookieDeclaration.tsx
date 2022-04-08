@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import styled from 'styled-components'
-
+import { BackgroundContainer } from '@components'
 //COOKIEBOT
 declare global {
   interface Window {
@@ -23,7 +23,7 @@ const CookieDeclaration = () => {
     }
   })
   return (
-    <>
+    <BackgroundContainer background="White">
       <Container>
         {
           <script
@@ -35,7 +35,7 @@ const CookieDeclaration = () => {
           ></script>
         }
       </Container>
-    </>
+    </BackgroundContainer>
   )
 }
 export default CookieDeclaration
