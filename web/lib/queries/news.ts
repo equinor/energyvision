@@ -2,14 +2,7 @@ import markDefs from './common/blockEditorMarks'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
-
-const allSlugsQuery = /* groq */ `
-  "slugs": *[_type == 'news' && ^._id match _id + "*"] | order(_id asc)[0] {
-    "allSlugs": *[_type == 'news' && _id match ^._id + "*"] {
-       "slug": *[_type == 'news' && _id == ^._id][0].slug.current,
-       "lang": _lang
-    }
-  }`
+import slugsForNews from './slugsForNews'
 
 export const publishDateTimeQuery = /* groq */ `
   select(
@@ -26,7 +19,7 @@ export const newsFields = /* groq */ `
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
-  ${allSlugsQuery},
+  ${slugsForNews('news')},
   ingress[]{
     ...,
     ${markDefs},
