@@ -43,8 +43,8 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   let locale = ''
   let paths: PathType[]
-
-  const domain = String(req.headers.host)
+  let domain = String(req.headers.host)
+  domain = domain.startsWith('www') ? `https://${domain}` : domain
   const locales = languages.map((lang) => lang.locale)
   const routeSlugs = await getRoutePaths(locales)
   const isMultilanguage = locales.length > 1

@@ -15,8 +15,7 @@ const fetchData = async (
   if (isNews) {
     const { newsQuery, localNewsQuery } = query as NewsQuery
     const newsData = await getClient(preview).fetch(newsQuery, queryParams)
-
-    if (!newsData?.news) {
+    if (newsData.news.length === 0) {
       return await getClient(preview).fetch(localNewsQuery, queryParams)
     }
     return newsData
