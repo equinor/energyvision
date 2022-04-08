@@ -47,7 +47,7 @@ const TextWithIconArray = ({ data }: TextWithIconArrayProps) => {
       <Container items={group.length}>
         {group.map((item: TextWithIconItem) => {
           const { icon, title, text, id } = item
-          const altTag = item?.icon?.isDecorative ? '' : item.icon.alt || ''
+          const altTag = icon?.isDecorative ? '' : icon?.alt || ''
           return (
             <TextWithIcon key={id}>
               {icon && icon.asset && (
