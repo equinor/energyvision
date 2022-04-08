@@ -5,11 +5,6 @@ import * as IOE from 'fp-ts/lib/IOEither'
 import { toError } from 'fp-ts/lib/Either'
 import { flow } from 'fp-ts/lib/function'
 
-
-// TODO: Read from files in bulks
-
-
-// 1. Parse json file (need a type for the json)
 export type SearchMetadataEntry = {
   title: string
   description: string
@@ -36,10 +31,3 @@ export const loadJson: LoadJsonType = flow(
   getFileContents,
   TE.chain((rawFileContent: string) => TE.fromIOEither(parseStringifiedData(rawFileContent)))
 )
-
-// 2. Massage the data to our needs (potentially not handled by this file)
-
-// 3. Upload to Algolia (not handled by this file)
-
-
-
