@@ -12,6 +12,11 @@ export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string |
     }}
 `
 
+const Spacer = styled.span`
+  display: block;
+  height: var(--space-medium);
+`
+
 const StyledTextBlock = styled.section`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
@@ -81,6 +86,7 @@ const TextBlock = ({ data }: TextBlockProps) => {
             }}
           />
         )}
+        {callToActions && callToActions.length === 1 && <Spacer />}
         {callToActions && <CallToActions callToActions={callToActions} />}
       </StyledTextBlock>
     </StyledTextBlockWrapper>
