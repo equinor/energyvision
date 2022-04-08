@@ -70,7 +70,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
 }
 
 const createDistributeRequest = async (loginResult: LoginResult, parameters: NewsDistributionParameters) => {
-  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL><![CDATA[${parameters.link}]]</newsURL><newsType><![CDATA[${parameters.newsType}]]</newsType><language><![CDATA[${parameters.languageCode}]]</language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
+  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL><![CDATA[${parameters.link}]]></newsURL><newsType><![CDATA[${parameters.newsType}]]></newsType><language><![CDATA[${parameters.languageCode}]]></language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
   console.log("---------Distribute envelope ----------\n"+envelope+"\n--------------------")
   const { response } = await soapRequest({
     url: subscriptionUrl,
