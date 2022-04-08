@@ -130,7 +130,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
   )
 
   // @TODO This doesn't feel bullet proof at all this doesn't scale to well.
-  const notFound = isNews ? pageData.news.length === 0 : !pageData
+  const notFound = isNews ? pageData.news?.length === 0 || !pageData.news : !pageData
 
   // If global, fetch static content in case data is not found or trying to access news
   // @TODO This should only be for news at some point
