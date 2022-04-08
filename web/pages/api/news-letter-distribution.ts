@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     newsType: data.newsType,
     languageCode: locale,
   }
+  if(data.test == false){
   console.log("Sending distribution request for "+newsDistributionParameters.link)
   await distribute(newsDistributionParameters).then((isSuccessful) => {
     if (!isSuccessful) {
@@ -24,4 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     res.status(200).json({ msg: `Successfully distributed ${newsDistributionParameters.link}` })
   })
+}
+else{
+  res.status(200).json({ msg: `Test Successfully distributed ${newsDistributionParameters.link}` })
+}
 }
