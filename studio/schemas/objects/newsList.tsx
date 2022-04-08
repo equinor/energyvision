@@ -23,7 +23,7 @@ const ComponentDescription = () => {
         This component will automatically generate a list of news articles based on the tags you select.
       </StyledText>
       <StyledText>
-        <span role="img" aria-label="warning icon">
+        <span role="img" aria-label="warning icon" style={{ marginRight: '5px' }}>
           ⚠️
         </span>
         Please note that there is no limit on this list: it will generate a list of <strong>all</strong> articles that
