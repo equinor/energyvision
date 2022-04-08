@@ -45,28 +45,38 @@ const TextWithIconArray = ({ data }: TextWithIconArrayProps) => {
   return (
     <BackgroundContainer background={designOptions?.background}>
       <Container items={group.length}>
-        {group.map((item: TextWithIconItem) => (
-          <TextWithIcon key={item.id}>
-            {item.icon && item.icon.asset && (
-              <Media>
-                <Img src={getImgSrc(item.icon)} width="150" height="150" alt={item.icon.alt} />
-              </Media>
-            )}
-            {item.title && <Title>{item.title}</Title>}
-            {item.text && (
-              <Text>
-                <SimpleBlockContent
-                  blocks={item.text}
-                  serializers={{
-                    types: {
-                      block: ({ children, node }) => IngressBlockRenderer({ children, node, centered: true }),
-                    },
-                  }}
-                ></SimpleBlockContent>
-              </Text>
-            )}
-          </TextWithIcon>
-        ))}
+        {group.map((item: TextWithIconItem) => {
+          const { icon, title, text, id } = item
+          const altTag = item?.icon?.isDecorative ? '' : item.icon.alt || ''
+          return (
+            <TextWithIcon key={id}>
+              {icon && icon.asset && (
+                <Media>
+                  <Img
+                    src={getImgSrc(icon)}
+                    width="150"
+                    height="150"
+                    alt={altTag}
+                    role={icon?.isDecorative ? 'presentation' : undefined}
+                  />
+                </Media>
+              )}
+              {title && <Title>{title}</Title>}
+              {text && (
+                <Text>
+                  <SimpleBlockContent
+                    blocks={text}
+                    serializers={{
+                      types: {
+                        block: ({ children, node }) => IngressBlockRenderer({ children, node, centered: true }),
+                      },
+                    }}
+                  ></SimpleBlockContent>
+                </Text>
+              )}
+            </TextWithIcon>
+          )
+        })}
       </Container>
     </BackgroundContainer>
   )
