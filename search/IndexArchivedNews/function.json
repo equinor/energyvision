@@ -1,10 +1,11 @@
 {
+  "disabled": false,
   "bindings": [
     {
-      "name": "myArchivedNewsTrigger",
       "type": "httpTrigger",
-      "direction": "in",
-      "route": "indexArchivedNews"
+      "route": "indexArchivedNews",
+      "name": "req",
+      "direction": "in"
     }
   ],
   "scriptFile": "../dist/IndexArchivedNews/index.js"

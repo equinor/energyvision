@@ -1,29 +1,23 @@
-import { AzureFunction, Context } from '@azure/functions'
+import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
 import { indexEvents } from './events'
 import { indexTopic } from './topic'
 import { indexNews } from './news'
+import { languageFromIso, languageOrDefault } from '../common'
+import { pipe } from 'fp-ts/lib/function'
 
-const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
-  const timeStamp = new Date().toISOString()
-
+const timerTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false
   })
 
-  if (myTimer.isPastDue) {
-    context.log('Timer function is running late!')
-  }
-  context.log('Timer trigger function ran!', timeStamp)
+  const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
-
-  await indexEvents().catch(console.error)
-  await indexTopic().catch(console.error)
-  await indexNews().catch(console.error)
-
-  console.log('DONE!')
+  await indexEvents(language)().catch(context.log)
+  await indexTopic(language)().catch(context.log)
+  await indexNews(language)().catch(context.log)
 }
 
 export default timerTrigger

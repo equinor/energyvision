@@ -1,4 +1,4 @@
-import { AzureFunction, Context } from '@azure/functions'
+import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
 import { tmpdir } from 'os'
@@ -16,7 +16,7 @@ import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const trigger: AzureFunction = async function (_context: Context): Promise<void> {
+const trigger: AzureFunction = async function (_context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
@@ -28,8 +28,9 @@ const trigger: AzureFunction = async function (_context: Context): Promise<void>
   // 3. Parse files and make a note of which ones have been parsed. Use this later on to avoid reading same file twice
 
   const indexIdentifier = 'NEWS'
+  console.log('Language: ', req.body.language)
   // TODO: From where to get language?
-  const language = pipe(languageFromIso('en-GB'), languageOrDefault)
+  const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
   const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))

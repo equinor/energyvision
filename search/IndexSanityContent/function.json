@@ -1,11 +1,12 @@
 
 {
+  "disabled": false,
   "bindings": [
     {
-      "name": "mySanityTimer",
-      "type": "timerTrigger",
-      "direction": "in",
-      "schedule": "15 * * * * *"
+      "type": "httpTrigger",
+      "route": "indexSanityContent",
+      "name": "req",
+      "direction": "in"
     }
   ],
   "scriptFile": "../dist/IndexSanityContent/index.js"
