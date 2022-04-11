@@ -172,10 +172,6 @@ const NewsPage = ({ data }: ArticleProps) => {
   const { news: newsData, latestNews } = data
   const { pathname } = router
 
-  if (!router.isFallback && !slug) {
-    return <ErrorPage statusCode={404} />
-  }
-
   const fullUrl = getFullUrl(pathname, slug)
 
   const {
@@ -217,61 +213,56 @@ const NewsPage = ({ data }: ArticleProps) => {
           cardType: 'summary_large_image',
         }}
       ></NextSeo>
+      <main>
+        <article>
+          <NewsLayout>
+            <Header>
+              <HeaderInner>
+                <StyledHeading level="h1" size="2xl" inverted>
+                  {title}
+                </StyledHeading>
+                <DateWrapper>
+                  <Icon data={calendar} />
+                  <DateContainer>
+                    <FormattedDateTime uppercase datetime={publishDateTime} />
+                    {isDateAfter(modifiedDate, publishDateTime) && (
+                      <>
+                        <LastModifiedLabel>Last modified</LastModifiedLabel>
+                        <FormattedDateTime uppercase datetime={modifiedDate} />
+                      </>
+                    )}
+                  </DateContainer>
+                </DateWrapper>
+              </HeaderInner>
+            </Header>
+            <Image>{heroImage && <HeroImage data={heroImage} />}</Image>
+            {ingress && (
+              <LeadParagraph>
+                <Lead blocks={ingress} />
+              </LeadParagraph>
+            )}
+            {content && (
+              <Content>
+                <NewsBlockContent blocks={content}></NewsBlockContent>
+              </Content>
+            )}
 
-      {router.isFallback ? (
-        <p>Loading…</p>
-      ) : (
-        <main>
-          <article>
-            <NewsLayout>
-              <Header>
-                <HeaderInner>
-                  <StyledHeading level="h1" size="2xl" inverted>
-                    {title}
-                  </StyledHeading>
-                  <DateWrapper>
-                    <Icon data={calendar} />
-                    <DateContainer>
-                      <FormattedDateTime uppercase datetime={publishDateTime} />
-                      {isDateAfter(modifiedDate, publishDateTime) && (
-                        <>
-                          <LastModifiedLabel>Last modified</LastModifiedLabel>
-                          <FormattedDateTime uppercase datetime={modifiedDate} />
-                        </>
-                      )}
-                    </DateContainer>
-                  </DateWrapper>
-                </HeaderInner>
-              </Header>
-              <Image>{heroImage && <HeroImage data={heroImage} />}</Image>
-              {ingress && (
-                <LeadParagraph>
-                  <Lead blocks={ingress} />
-                </LeadParagraph>
-              )}
-              {content && (
-                <Content>
-                  <NewsBlockContent blocks={content}></NewsBlockContent>
-                </Content>
-              )}
+            {iframe && <StyledBasicIFrame data={iframe} />}
 
-              {iframe && <StyledBasicIFrame data={iframe} />}
+            {relatedLinks?.links && relatedLinks.links.length > 0 && (
+              <Related>
+                <RelatedContent data={relatedLinks} />
+              </Related>
+            )}
 
-              {relatedLinks?.links && relatedLinks.links.length > 0 && (
-                <Related>
-                  <RelatedContent data={relatedLinks} />
-                </Related>
-              )}
-
-              {latestNews && latestNews.length > 0 && (
-                <Latest>
-                  <LatestNews data={latestNews} />
-                </Latest>
-              )}
-            </NewsLayout>
-          </article>
-        </main>
-      )}
+            {latestNews && latestNews.length > 0 && (
+              <Latest>
+                <LatestNews data={latestNews} />
+              </Latest>
+            )}
+          </NewsLayout>
+        </article>
+      </main>
     </>
   )
 }
