@@ -13,11 +13,12 @@ const timerTrigger: AzureFunction = async function (context: Context, req: HttpR
     debug: false
   })
 
+  const logger = context.log
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
-  await indexEvents(language)().catch(context.log)
-  await indexTopic(language)().catch(context.log)
-  await indexNews(language)().catch(context.log)
+  await indexEvents(language)().catch(logger.error)
+  await indexTopic(language)().catch(logger.error)
+  await indexNews(language)().catch(logger.error)
 }
 
 export default timerTrigger

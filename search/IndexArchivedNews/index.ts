@@ -22,13 +22,14 @@ const trigger: AzureFunction = async function (context: Context, req: HttpReques
   })
   // New trigger to be used from now on
   // TODO:
-  // 1. Read list of files from somewhere. Could be httpTrigger or blobTrigger
-  // 2. Read files from blobStorage and put in temporary file store for function. There should be a TempPath we can use for thos
+  // 1. Read list of files from somewhere. Could be httpTrigger or blobTrigger ✅
+  // 2. Read files from blobStorage and put in temporary file store for function. There should be a TempPath we can use for those ✅
   // 3. Parse files and make a note of which ones have been parsed. Use this later on to avoid reading same file twice
 
   const indexIdentifier = 'NEWS'
-  console.log('Language: ', req.body.language)
-  // TODO: From where to get language?
+  context.log('Language: ', req.body.language)
+  const logger = context.log
+
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
   const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
@@ -53,7 +54,7 @@ const trigger: AzureFunction = async function (context: Context, req: HttpReques
     TE.chainW(({ client, files }) => pipe(files.map(mapToNewsIndex(client)), TE.sequenceArray, TE.map(A.flatten))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(context.log, context.log)),
+    T.map(E.fold(logger.error, logger.info)),
   )
 
   return indexArchivedNews()
