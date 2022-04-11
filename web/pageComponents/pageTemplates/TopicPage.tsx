@@ -54,7 +54,8 @@ const TopicPageLayout = styled.main`
   .background-three + .background-three,
   .background-four + .background-four,
   .background-five + .background-five,
-  .background-none + .background-none {
+  .background-none + .background-none,
+  .background-image + .background-none {
     /* The teaser component uses an article element, so lets avoid that.
     Would be more robust if we add a container for the padding :/ */
     > section,
@@ -78,7 +79,9 @@ const StyledHeading = styled(TitleBlockRenderer)`
   margin-right: auto;
 `
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div.attrs(() => ({
+  className: 'background-image',
+}))`
   padding: 0 var(--layout-paddingHorizontal-small) var(--space-3xLarge) var(--layout-paddingHorizontal-small);
   max-width: 1920px;
   margin-left: auto;
