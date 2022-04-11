@@ -1,5 +1,6 @@
 // Helper file for dealing with languages
 import * as E from 'fp-ts/lib/Either'
+import { pipe } from 'fp-ts/lib/function'
 
 export type Language = {
   internalCode: string
@@ -24,8 +25,15 @@ const findLanguageFromInternalCode: MaybeLanguageType = (mappings) => (internalC
     mappings?.find((mapping) => mapping.internalCode === internalCode),
   )
 
-// TODO: Not using error message for now. Could/should add logger
-export const languageOrDefault = E.getOrElse(() => (DEFAULT_LANGUAGE))
+// Can be moved some place central as it is generic
+const logIt =
+  (message: string) =>
+  <T>(value: T) => {
+    console.log(message)
+    return value
+  }
+
+export const languageOrDefault = E.getOrElse(() => pipe(DEFAULT_LANGUAGE, logIt('Language not found! Using default language.')))
 
 export const languageFromIso = findLanguageFromIso(languageMappings)
 export const languageFromInternalCode = findLanguageFromInternalCode(languageMappings)
