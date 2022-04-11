@@ -32,8 +32,8 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install
-          pnpm install --filter search-indexers
+          pnpm install --frozen-lockfile
+          pnpm install --frozen-lockfile --filter search-indexers
       - name: Run ESLint 🔎
         id: lint
         run: |
