@@ -9,14 +9,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import * as T from 'fp-ts/lib/Task'
 import { init, getClient, getFileList, copyFile } from './blobStorage'
 import { ContainerClient } from '@azure/storage-blob'
-import {
-  update,
-  generateIndexName,
-  getEnvironment,
-  languageFromIso,
-  languageOrDefault,
-  NewsIndex,
-} from '../common'
+import { update, generateIndexName, getEnvironment, languageFromIso, languageOrDefault, NewsIndex } from '../common'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
@@ -35,7 +28,7 @@ const trigger: AzureFunction = async function (_context: Context): Promise<void>
 
   const indexIdentifier = 'NEWS'
   // TODO: From where to get language?
-  const language = pipe(languageFromIso('nb-NO'), languageOrDefault)
+  const language = pipe(languageFromIso('en-GB'), languageOrDefault)
 
   const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
@@ -59,7 +52,7 @@ const trigger: AzureFunction = async function (_context: Context): Promise<void>
     TE.chainW(({ client, files }) => pipe(files.map(mapToNewsIndex(client)), TE.sequenceArray, TE.map(A.flatten))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(console.error, console.log))
+    T.map(E.fold(console.error, console.log)),
   )
 
   return indexArchivedNews()

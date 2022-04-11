@@ -4,14 +4,7 @@
       "name": "myArchivedNewsTrigger",
       "type": "httpTrigger",
       "direction": "in",
-      "route": "archive"
-    },
-    {
-      "type": "blobTrigger",
-      "direction": "in",
-      "name": "inputBlob",
-      "path": "incontainer/{name}",
-      "connection": "FUNCTIONS_WORKER_RUNTIME"
+      "route": "indexArchivedNews"
     }
   ],
   "scriptFile": "../dist/IndexArchivedNews/index.js"

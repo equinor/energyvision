@@ -4,14 +4,9 @@ import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
-import { BlobConfiguration, GetProcessEnvType } from '../common/types'
+import { BlobConfiguration } from '../common/types'
 import { Language } from '../common'
-
-const getAzureConnectionString: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find Azure connection string')(process.env.AZ_CONNECTION_STRING)
-
-const getContainerName: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find container name')(process.env.CONTAINER_NAME)
+import { getAzureConnectionString, getContainerName } from '../common/env'
 
 type InitType = IO.IO<E.Either<string, BlobConfiguration>>
 export const init: InitType = flow(
@@ -43,11 +38,11 @@ const getDocumentsFromBlob: GetDocumentsFromBlobType = async (containerClient) =
 
 type GetSearchMetadataFilesType = (containerClient: ContainerClient) => (language: string) => Promise<string[]>
 const getSearchMetadataFiles: GetSearchMetadataFilesType = (containerCLient) => async (language) => {
-  const iter = containerCLient.listBlobsByHierarchy(`/metadata/${language}`,)
+  const iter = containerCLient.listBlobsByHierarchy(`/metadata/${language}`)
   const result: string[] = []
   for await (const blob of iter) {
     switch (blob.kind) {
-      case ('blob'):
+      case 'blob':
         result.push(blob.name)
     }
   }
@@ -63,9 +58,12 @@ type GetFileListType = (language: Language) => (ContainerClient: ContainerClient
 export const getFileList: GetFileListType = (language) => (containerClient) =>
   TE.tryCatch(() => getSearchMetadataFiles(containerClient)(language.isoCode), E.toError)
 
-type CopyFileType = (containerClient: ContainerClient) => (destinationPath: string) => (fileName: string) => TE.TaskEither<Error, string>
-export const copyFile: CopyFileType = (containerClient) => (destinationPath) => (fileName) => pipe(
-  containerClient.getBlockBlobClient(fileName),
-  (blob) => TE.tryCatch(() => blob.downloadToFile(`${destinationPath}\\${fileName}`), E.toError),
-  TE.map(() => `${destinationPath}\\${fileName}`)
+type CopyFileType = (
+  containerClient: ContainerClient,
+) => (destinationPath: string) => (fileName: string) => TE.TaskEither<Error, string>
+export const copyFile: CopyFileType = (containerClient) => (destinationPath) => (fileName) =>
+  pipe(
+    containerClient.getBlockBlobClient(fileName),
+    (blob) => TE.tryCatch(() => blob.downloadToFile(`${destinationPath}\\${fileName}`), E.toError),
+    TE.map(() => `${destinationPath}\\${fileName}`),
   )
