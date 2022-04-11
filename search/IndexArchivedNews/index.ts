@@ -15,8 +15,7 @@ import { indexSettings } from './algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const trigger: AzureFunction = async function (_context: Context, req: HttpRequest): Promise<void> {
+const trigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
@@ -54,7 +53,7 @@ const trigger: AzureFunction = async function (_context: Context, req: HttpReque
     TE.chainW(({ client, files }) => pipe(files.map(mapToNewsIndex(client)), TE.sequenceArray, TE.map(A.flatten))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(console.error, console.log)),
+    T.map(E.fold(context.log, context.log)),
   )
 
   return indexArchivedNews()
