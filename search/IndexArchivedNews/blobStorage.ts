@@ -5,7 +5,7 @@ import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
 import { BlobConfiguration } from '../common/types'
-import { Language, languageOrDefault } from '../common'
+import { Language } from '../common'
 import { getAzureConnectionString, getContainerName } from '../common/env'
 
 type InitType = IO.IO<E.Either<string, BlobConfiguration>>

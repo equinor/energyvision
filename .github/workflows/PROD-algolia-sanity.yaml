@@ -41,7 +41,7 @@ jobs:
       - name: Run tests 🔍
         id: test
         run: |
-          pnpm test --filter search-indexers
+          pnpm search-indexers test
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
         with:
