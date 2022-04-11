@@ -1,6 +1,7 @@
 import { AzureFunction, Context } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
+import { tmpdir } from 'os'
 import { flow, pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/lib/ReadonlyArray'
 import { ap } from 'fp-ts/lib/Identity'
@@ -38,7 +39,7 @@ const trigger: AzureFunction = async function (_context: Context): Promise<void>
   const mapToNewsIndex: MapToNewsIndexType = (client) => (fileName) =>
     pipe(
       fileName,
-      copyFile(client)('tempPath'),
+      copyFile(client)(tmpdir()),
       TE.chain(loadJson),
       TE.map((searchMetadataEntries) => pipe(searchMetadataEntries.map(mapData))),
     )

@@ -1,11 +1,11 @@
 import { BlobItem, BlobServiceClient, ContainerClient } from '@azure/storage-blob'
-
+import { basename } from 'path'
 import * as IO from 'fp-ts/lib/IO'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { flow, pipe } from 'fp-ts/lib/function'
 import { BlobConfiguration } from '../common/types'
-import { Language } from '../common'
+import { Language, languageOrDefault } from '../common'
 import { getAzureConnectionString, getContainerName } from '../common/env'
 
 type InitType = IO.IO<E.Either<string, BlobConfiguration>>
@@ -38,11 +38,13 @@ const getDocumentsFromBlob: GetDocumentsFromBlobType = async (containerClient) =
 
 type GetSearchMetadataFilesType = (containerClient: ContainerClient) => (language: string) => Promise<string[]>
 const getSearchMetadataFiles: GetSearchMetadataFilesType = (containerCLient) => async (language) => {
-  const iter = containerCLient.listBlobsByHierarchy(`/metadata/${language}`)
+  console.log('Finding metadata files for language: ', language)
+  const iter = containerCLient.listBlobsByHierarchy('/', { prefix: `metadata/${language}/` })
   const result: string[] = []
   for await (const blob of iter) {
     switch (blob.kind) {
       case 'blob':
+        console.log('pushing file: ', blob.name)
         result.push(blob.name)
     }
   }
@@ -64,6 +66,6 @@ type CopyFileType = (
 export const copyFile: CopyFileType = (containerClient) => (destinationPath) => (fileName) =>
   pipe(
     containerClient.getBlockBlobClient(fileName),
-    (blob) => TE.tryCatch(() => blob.downloadToFile(`${destinationPath}\\${fileName}`), E.toError),
-    TE.map(() => `${destinationPath}\\${fileName}`),
+    (blob) => TE.tryCatch(() => blob.downloadToFile(`${destinationPath}/${basename(fileName)}`), E.toError),
+    TE.map(() => `${destinationPath}/${basename(fileName)}`),
   )
