@@ -41,7 +41,7 @@ type UpdateType = (
   indexName: string,
 ) => (
   indexSettings: Settings,
-) => (mappedData: IndexType[]) => TE.TaskEither<string | Error, string>
+) => (mappedData: readonly IndexType[]) => TE.TaskEither<string | Error, string>
 export const update: UpdateType = (indexName) => (indexSettings) => (mappedData) =>
   pipe(
     init(indexName),

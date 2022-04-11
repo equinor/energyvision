@@ -2,19 +2,27 @@ import { AzureFunction, Context } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
 import { flow, pipe } from 'fp-ts/lib/function'
-import { flatten } from 'fp-ts/Array'
+import * as A from 'fp-ts/lib/ReadonlyArray'
 import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as T from 'fp-ts/lib/Task'
-import { init, getClient, getDocuments, getFileList, copyFile } from './blobStorage'
-import { BlobItem, ContainerClient } from '@azure/storage-blob'
-import { update, sanityClient, generateIndexName, getEnvironment, languageFromIso, languageOrDefault, NewsIndex } from '../common'
+import { init, getClient, getFileList, copyFile } from './blobStorage'
+import { ContainerClient } from '@azure/storage-blob'
+import {
+  update,
+  generateIndexName,
+  getEnvironment,
+  languageFromIso,
+  languageOrDefault,
+  NewsIndex,
+} from '../common'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
 
-const trigger: AzureFunction = async function (context: Context): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const trigger: AzureFunction = async function (_context: Context): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
@@ -33,8 +41,8 @@ const trigger: AzureFunction = async function (context: Context): Promise<void> 
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
   // Consider moving out of this file
-  type UpdateFileType = (client: ContainerClient) => (fileName: string) => TE.TaskEither<Error, NewsIndex[]>
-  const updateFile: UpdateFileType = (client) => (fileName) =>
+  type MapToNewsIndexType = (client: ContainerClient) => (fileName: string) => TE.TaskEither<Error, NewsIndex[]>
+  const mapToNewsIndex: MapToNewsIndexType = (client) => (fileName) =>
     pipe(
       fileName,
       copyFile(client)('tempPath'),
@@ -42,25 +50,19 @@ const trigger: AzureFunction = async function (context: Context): Promise<void> 
       TE.map((searchMetadataEntries) => pipe(searchMetadataEntries.map(mapData))),
     )
 
-  // TODO: Change to work with news articles
-  const foo = pipe(
+  const indexArchivedNews = pipe(
     init(),
     E.map(getClient),
     TE.fromEither,
     TE.bindTo('client'),
     TE.bindW('files', ({ client }) => getFileList(language)(client)),
-    //TE.chain(({ client, files }) => //Loop over files here)
-
-
-    /*getFileList(language),
-    fetchData(sanityClient)(language),
-    TE.map((pages) => pipe(pages.map(mapData), flatten)),
+    TE.chainW(({ client, files }) => pipe(files.map(mapToNewsIndex(client)), TE.sequenceArray, TE.map(A.flatten))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(console.error, console.log)),*/
+    T.map(E.fold(console.error, console.log))
   )
 
-  return foo
+  return indexArchivedNews()
 }
 
 export default trigger
