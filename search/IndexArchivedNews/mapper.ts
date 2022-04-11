@@ -1,5 +1,6 @@
 import { NewsIndex } from '../common'
 import type { SearchMetadataEntry } from './fileStorage'
+import { identity } from 'fp-ts/function'
 
 type MapDataType = (article: SearchMetadataEntry) => NewsIndex
 export const mapData: MapDataType = (article) => {
@@ -21,8 +22,8 @@ export const mapData: MapDataType = (article) => {
     ingress: description,
     text: content,
     publishDateTime: publishedDate,
-    topicTags: [...topics, category],
-    countryTags: [country],
+    topicTags: [...topics, category].filter(identity),
+    countryTags: [country].filter(identity),
     year,
   } as NewsIndex
 }
