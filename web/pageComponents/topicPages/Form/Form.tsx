@@ -20,6 +20,7 @@ const Container = styled.div`
 `
 const ListStyled = styled.div`
   padding-bottom: var(--space-3xLarge);
+  font-size: var(--typeScale-1);
 `
 
 const Form = ({ data }: { data: FormData }) => {
