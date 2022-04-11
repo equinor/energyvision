@@ -1,6 +1,5 @@
 import { Heading } from '@components'
 import styled from 'styled-components'
-import Head from 'next/head'
 import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
@@ -26,10 +25,6 @@ type LatestNewsProp = {
 const LatestNews = ({ data }: LatestNewsProp) => {
   return (
     <>
-      <Head>
-        {/* eslint-disable jsx-a11y/html-has-lang */}
-        <html data-template="news" />
-      </Head>
       <Heading size="xl" level="h2" center>
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
       </Heading>
