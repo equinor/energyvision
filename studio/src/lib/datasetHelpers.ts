@@ -1,10 +1,13 @@
 /* eslint-disable import/no-unresolved */
 import client from 'part:@sanity/base/client'
 
+const projectId = client.clientConfig.projectId
+
 export const dataset = client.clientConfig.dataset
+export const IS_SECRET = projectId === 'w3b4om14'
 
 /** @TODO Replicate logic inside GROQ queries for the web */
-const GLOBAL = ['global', 'global-development']
+const GLOBAL = ['global', 'global-development', 'secret']
 
 const NEWS = [...GLOBAL, 'poland', 'argentina', 'brazil', 'germany', 'japan', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]

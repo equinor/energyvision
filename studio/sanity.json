@@ -21,7 +21,9 @@
   ],
   "env": {
     "development": {
-      "plugins": ["@sanity/vision"]
+      "plugins": [
+        "@sanity/vision"
+      ]
     }
   },
   "parts": [
@@ -48,6 +50,37 @@
     {
       "implements": "part:@sanity/production-preview/resolve-production-url",
       "path": "./resolveProductionUrl.js"
+    },
+    {
+      "implements": "part:@sanity/base/document-actions/resolver",
+      "path": "./actions/resolveDocumentActions.ts"
+    }
+  ],
+  "__experimental_spaces": [
+    {
+      "name": "secret",
+      "title": "Secret",
+      "default": true,
+      "api": {
+        "projectId": "w3b4om14",
+        "dataset": "secret"
+      }
+    },
+    {
+      "name": "development",
+      "title": "Development",
+      "api": {
+        "projectId": "h61q9gi9",
+        "dataset": "global-development"
+      }
+    },
+    {
+      "name": "global",
+      "title": "Production",
+      "api": {
+        "projectId": "h61q9gi9",
+        "dataset": "global"
+      }
     }
   ]
 }

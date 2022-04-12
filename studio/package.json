@@ -10,9 +10,10 @@
   },
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "./node_modules/.bin/sanity start",
-    "start": "sanity start",
-    "build": "sanity build",
+    "prepare": "node sanity.json.js",
+    "dev": "yarn prepare && ./node_modules/.bin/sanity start",
+    "start": "yarn prepare && sanity start",
+    "build": "yarn prepare && sanity build",
     "deploy": "sanity deploy",
     "upgrade": "sanity upgrade",
     "yarn": "yarn"
@@ -27,6 +28,7 @@
     "@sanity/cli": "^2.29.3",
     "@sanity/components": "^2.14.0",
     "@sanity/core": "^2.27.0",
+    "@sanity/cross-dataset-duplicator": "^0.3.2",
     "@sanity/data-aspects": "^2.29.3",
     "@sanity/default-layout": "^2.29.3",
     "@sanity/default-login": "^2.29.3",
