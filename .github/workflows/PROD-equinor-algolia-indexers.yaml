@@ -58,6 +58,7 @@ jobs:
         shell: bash
     steps:
       - name: Login to Azure 🌥️
+        id: login-to-azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
@@ -116,7 +117,8 @@ jobs:
         id: build-functions
         run: |
           pnpm search-indexers build
-      - name: 'Package Azure Function release build'
+      - name: Package Azure Function release build
+        id: package-artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
@@ -135,6 +137,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Azure 🌥️
+        id: login-to-azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
@@ -154,13 +157,15 @@ jobs:
 
       # Fetch published code
       - name: Download Azure function release build
+        id: download-artifacts
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           path: ${{ env.AZURE_FUNCTIONAPP_NAME }}
 
       # Deploy Azure functions code
-      - name: 'Run Azure Functions Action'
+      - name: Run Azure Functions Action
+        id: deploy
         uses: azure/functions-action@v1
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
