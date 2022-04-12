@@ -12,9 +12,10 @@ export const mapData: MapDataType = (article) => {
     description,
     link,
     content,
+    thumbnailURL,
   } = article
   const year = publishedDate ? new Date(publishedDate).getFullYear() : ''
-  return  {
+  return {
     slug: link,
     objectID: `${publishedDate}-${link}`,
     type: 'news',
@@ -22,8 +23,16 @@ export const mapData: MapDataType = (article) => {
     ingress: description,
     text: content,
     publishDateTime: publishedDate,
-    topicTags: [...topics, category].filter(identity),
-    countryTags: [country].filter(identity),
+    topicTags: [
+      ...new Set(
+        [...topics, ...category.split(',')]
+          .map((s) => s.trim())
+          .filter(identity)
+          .filter((s) => s !== country.trim()),
+      ),
+    ],
+    countryTags: [country.trim()].filter(identity),
     year,
+    thumbnailUrl: `https://envisstoragedev.blob.core.windows.net/equinor-archive-content${thumbnailURL}`,
   } as NewsIndex
 }
