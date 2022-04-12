@@ -86,6 +86,7 @@ jobs:
             --template-file $GITHUB_WORKSPACE/ci/azArmTemplates/equinor-algolia-indexers/template.json \
             --mode incremental \
             --parameters $GITHUB_WORKSPACE/ci/azArmTemplates/equinor-algolia-indexers/parameters.json \
+            --verbose \
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
