@@ -9,6 +9,8 @@ on:
       - '!search/README.md'
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  AZURE_RESOURCE_GROUP_NAME: 'envisRGDev'
+  AZURE_FUNCTIONAPP_NAME: 'equinor-algolia-indexers'
 
 jobs:
   check-code:
@@ -48,15 +50,10 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy:
+  deploy-az-infrastructure:
     needs: check-code
     runs-on: ubuntu-latest
     env:
-      AZURE_RESOURCE_GROUP_NAME: 'envisRGDev'
-      AZURE_FUNCTIONAPP_NAME: 'equinor-algolia-indexers'
-      AZURE_FUNCTIONAPP_PACKAGE_PATH: '${{ github.workspace }}/search/dist'
-      BUILD_OUTPUT_PATH: '${{ github.workspace }}/build-artifacts'
-      BUILD_PACKAGE_NAME: 'az-func.zip'
     defaults:
       run:
         shell: bash
@@ -86,7 +83,90 @@ jobs:
             --template-file $GITHUB_WORKSPACE/ci/azArmTemplates/equinor-algolia-indexers/template.json \
             --mode incremental \
             --parameters $GITHUB_WORKSPACE/ci/azArmTemplates/equinor-algolia-indexers/parameters.json \
-            --verbose \
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  build-function-application:
+    needs: check-code
+    runs-on: ubuntu-latest
+    env:
+      BUILD_OUTPUT_PATH: 'dist'
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: latest
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm install --frozen-lockfile --filter search-indexers
+      - name: Build ⚙
+        id: build-functions
+        run: |
+          pnpm search-indexers build
+      - name: 'Package Azure Function release build'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          path: ${{ env.BUILD_OUTPUT_PATH }}
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-function-application:
+    environment:
+      name: production
+    needs: build-function-application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Azure 🌥️
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Fetching Azure Functions Publishing Profile
+        id: fetch-publishing-profile
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+              $profile = ""
+              $profile = Get-AzWebAppPublishingProfile -ResourceGroupName $env:AZURE_RESOURCE_GROUP_NAME -Name $env:AZURE_FUNCTIONAPP_NAME
+              $profile = $profile.Replace("`r", "").Replace("`n", "")
+              Write-Output "::set-output name=pubprofile::$profile"
+              Remove-Variable profile
+          azPSVersion: "latest"
+
+      # Fetch published code
+      - name: Download Azure function release build
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          path: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+
+      # Deploy Azure functions code
+      - name: 'Run Azure Functions Action'
+        uses: azure/functions-action@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          publish-profile: ${{ steps.fetch-publishing-profile.outputs.pubprofile }}
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
