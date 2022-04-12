@@ -1,4 +1,4 @@
-name: PROD - Algolia Sanity Indexer
+name: PROD - Equinor Algolia Indexers
 on:
   workflow_dispatch:
   push:
@@ -7,14 +7,13 @@ on:
     paths:
       - 'search/**'
       - '!search/README.md'
-      - '!search/IndexArchivedNews/**'
-  repository_dispatch:
-    types: [sanity_publish]
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
   check-code:
     runs-on: ubuntu-latest
     env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
@@ -42,6 +41,52 @@ jobs:
         id: test
         run: |
           pnpm search-indexers test
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy:
+    needs: check-code
+    runs-on: ubuntu-latest
+    env:
+      AZURE_RESOURCE_GROUP_NAME: 'envisRGDev'
+      AZURE_FUNCTIONAPP_NAME: 'equinor-algolia-indexers'
+      AZURE_FUNCTIONAPP_PACKAGE_PATH: '${{ github.workspace }}/search/dist'
+      BUILD_OUTPUT_PATH: '${{ github.workspace }}/build-artifacts'
+      BUILD_PACKAGE_NAME: 'az-func.zip'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Login to Azure 🌥️
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+
+      # Makes source code accessible via $github.workspace
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+
+      - name: 'Creating Azure Function App'
+        id: create-azure-app
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az deployment group create \
+            --name az-func-algolia-sanity-deploy \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
+            --template-file $GITHUB_WORKSPACE/ci/azArmTemplates/equinor-algolia-indexers/template.json \
+            --mode incremental \
+            --parameters $GITHUB_WORKSPACE/ci/azArmTemplates/equinor-algolia-indexers/parameters.json \
+
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
         with:
