@@ -14,7 +14,7 @@ const PaginationLink = styled(Button)<{ isCurrent?: boolean; inverted?: boolean 
   color: ${(props) => (props.inverted ? 'var(--moss-green-80)' : 'var(--slate-blue-95)')};
   ${({ isCurrent, inverted }) =>
     isCurrent && {
-      background: inverted ? 'var(--moss-green-80)' : 'var(--moss-green-80)',
+      background: inverted ? 'var(--moss-green-80)' : 'var(--moss-green-70)',
       color: inverted ? 'var(--black-100)' : 'var(--default-text)',
     }}
 
@@ -55,6 +55,7 @@ export const PaginationItem = ({
   inverted,
   children,
 }: PaginationItemProps) => {
+  console.log({ inverted })
   if (isDisabled || isCurrent) {
     return (
       <StyledListItem>
