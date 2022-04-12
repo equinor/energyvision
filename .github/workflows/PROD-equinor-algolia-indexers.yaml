@@ -131,7 +131,7 @@ jobs:
   deploy-function-application:
     environment:
       name: production
-    needs: build-function-application
+    needs: [build-function-application, deploy-az-infrastructure]
     runs-on: ubuntu-latest
     steps:
       - name: Login to Azure 🌥️
