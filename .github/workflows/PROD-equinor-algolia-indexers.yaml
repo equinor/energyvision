@@ -112,6 +112,7 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install --frozen-lockfile
+          pnpm i -F ./search --frozen-lockfile --virtual-store-dir search/node_modules/.pnpm
           pnpm install --frozen-lockfile --filter search-indexers
       - name: Build ⚙
         id: build-functions
