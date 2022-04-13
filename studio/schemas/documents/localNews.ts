@@ -9,6 +9,7 @@ import { i18n } from '../documentTranslation'
 import { formatDate } from '../../helpers/formatDate'
 
 import {
+  isLive,
   seo,
   openGraphImage,
   title,
@@ -51,6 +52,7 @@ export default {
     },
   ],
   fields: [
+    isLive,
     {
       ...seo,
       fieldset: 'metadata',

@@ -27,6 +27,16 @@ const validateRelatedLinksTitle = (value: any, context: any) => {
   return true
 }
 
+export const isLive = {
+  name: 'live',
+  title: 'Live',
+  type: 'boolean',
+  initialValue: false,
+  readOnly: true,
+  description: `This can only be changed by clicking "Make Public" on a Published article`,
+  hidden: true,
+}
+
 export const seo = {
   name: 'seo',
   type: 'titleAndMeta',

@@ -3,17 +3,7 @@ import defaultResolve from 'part:@sanity/base/document-actions'
 import { DuplicateToAction } from '@sanity/cross-dataset-duplicator'
 import config from 'config:@sanity/cross-dataset-duplicator'
 import { IS_SECRET } from '../src/lib/datasetHelpers'
-
-/*
-export default function resolveDocumentActions(props: any) {
-  // Replace default actions inside map() or add additional actions to return array
-  return [
-    ...defaultResolve(props).map((Action: any) => {
-      return Action === PublishAction ? () => ConfirmPublishAction(props, Action) : Action
-    }),
-  ]
-}
-*/
+import { GoLive } from './GoLive'
 
 export default function resolveDocumentActions(props: any) {
   const defaultActions = defaultResolve(props)
@@ -24,5 +14,5 @@ export default function resolveDocumentActions(props: any) {
   }
 
   // ...all your other document action code
-  return defaultActions
+  return [/*GoLive,*/ ...defaultActions]
 }

@@ -5,6 +5,7 @@ import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
 import { formatDate } from '../../helpers/formatDate'
 import {
+  isLive,
   seo,
   openGraphImage,
   title,
@@ -55,6 +56,7 @@ export default {
     },
   ],
   fields: [
+    isLive,
     {
       ...seo,
       fieldset: 'metadata',
