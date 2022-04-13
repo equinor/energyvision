@@ -118,7 +118,9 @@ jobs:
         run: |
           pnpm search-indexers build
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          zip -r ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} ${{ env.BUILD_OUTPUT_PATH }}
+          pushd ${{ env.BUILD_OUTPUT_PATH }}
+          zip -r ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
+          popd
       - name: Package Azure Function release build
         id: package-artifact
         uses: actions/upload-artifact@v3
