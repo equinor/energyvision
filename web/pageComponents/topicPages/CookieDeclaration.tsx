@@ -2,12 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
-//COOKIEBOT
-declare global {
-  interface Window {
-    CookieDeclaration: any
-  }
-}
+import { useRef } from 'react'
 
 const Container = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
@@ -18,38 +13,21 @@ const Container = styled.div`
 
 const CookieDeclaration = () => {
   const router = useRouter()
-  const language = router.locale == 'no' ? 'nb' : router.locale
+  const placeholderRef = useRef<HTMLDivElement>(null)
+  const language = router.locale == 'no' ? 'nb' : router.locale ? router.locale : 'en'
   useEffect(() => {
-    if (window.CookieDeclaration != undefined && document.getElementsByClassName('CookieDeclaration') == undefined) {
-      window.CookieDeclaration.init()
-    } else {
+    if (!placeholderRef.current?.hasChildNodes()) {
       const script = document.createElement('script')
       script.setAttribute('id', 'CookieDeclaration')
       script.setAttribute('src', 'https://consent.cookiebot.com/f1327b03-7951-45da-a2fd-9181babc783f/cd.js')
-      script.setAttribute('type', 'text/javascript')
-      if (language) {
-        script.setAttribute('data-culture', language)
-      }
-      script.onload = () => {
-        window.CookieDeclaration.init()
-      }
-      const cookieDeclarationWrapper = document.querySelector('cookie-declaration-wrapper')
-      cookieDeclarationWrapper?.appendChild(script)
+      script.setAttribute('async', 'true')
+      script.setAttribute('data-culture', language)
+      placeholderRef.current?.appendChild(script)
     }
-  }, [router.asPath, language])
+  }, [language])
   return (
     <BackgroundContainer background="White">
-      <Container id="cookie-declaration-wrapper">
-        {
-          <script
-            id="CookieDeclaration"
-            src="https://consent.cookiebot.com/f1327b03-7951-45da-a2fd-9181babc783f/cd.js"
-            type="text/javascript"
-            data-culture={router.locale == 'no' ? 'nb' : router.locale}
-            async
-          ></script>
-        }
-      </Container>
+      <Container id="cookie-declaration-wrapper" ref={placeholderRef}></Container>
     </BackgroundContainer>
   )
 }
