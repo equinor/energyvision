@@ -11,6 +11,9 @@ env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   AZURE_RESOURCE_GROUP_NAME: 'envisRGDev'
   AZURE_FUNCTIONAPP_NAME: 'equinor-algolia-indexers'
+  BUILD_OUTPUT_PATH: ${{ github.workspace }}/search
+  BUILD_PACKAGE_NAME: indexers.zip
+  BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
 
 jobs:
   check-code:
@@ -93,10 +96,6 @@ jobs:
   build-function-application:
     needs: check-code
     runs-on: ubuntu-latest
-    env:
-      BUILD_OUTPUT_PATH: ${{ github.workspace }}/search
-      BUILD_PACKAGE_NAME: indexers.zip
-      BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -158,13 +157,18 @@ jobs:
               Remove-Variable profile
           azPSVersion: "latest"
 
+      - name: 'Create output directory'
+        shell: bash
+        run: |
+          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
+
       # Fetch published code
       - name: Download Azure function release build
         id: download-artifacts
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          path: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          path: ${{ env.BUILD_ARTIFACT_PATH }}
 
       # Deploy Azure functions code
       - name: Run Azure Functions Action
@@ -172,7 +176,7 @@ jobs:
         uses: azure/functions-action@v1
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          package: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.AZURE_FUNCTIONAPP_NAME }}
           publish-profile: ${{ steps.fetch-publishing-profile.outputs.pubprofile }}
 
       - name: log-errors-to-slack 📄
