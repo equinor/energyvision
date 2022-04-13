@@ -95,6 +95,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_OUTPUT_PATH: ${{ github.workspace }}/search
+      BUILD_PACKAGE_NAME: indexers.zip
+      BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -116,12 +118,14 @@ jobs:
         id: build-functions
         run: |
           pnpm search-indexers build
+          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
+          zip -r ${{ BUILD_ARTIFACT_PATH }}/${{ BUILD_PACKAGE_NAME }} ${{ BUILD_OUTPUT_PATH }}
       - name: Package Azure Function release build
         id: package-artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          path: ${{ env.BUILD_OUTPUT_PATH }}
+          path: ${{ env.BUILD_ARTIFACT_PATH }}
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v1
         with:
