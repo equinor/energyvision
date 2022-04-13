@@ -107,13 +107,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'pnpm'
+          cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install --frozen-lockfile
-          pnpm i -F ./search --frozen-lockfile --virtual-store-dir search/node_modules/.pnpm
-          pnpm install --frozen-lockfile --filter search-indexers
+          pushd search
+          npm install
+          popd
       - name: Build ⚙
         id: build-functions
         run: |
