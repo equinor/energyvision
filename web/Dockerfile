@@ -4,11 +4,13 @@ RUN npm install -g pnpm
 
 WORKDIR /opt/app
 
+# Should consider using pnpm fetch
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
 COPY ./satellitesConfig.js ./
 COPY ./pnpm-workspace.yaml ./
+COPY ./.npmrc ./
 
 COPY ./web ./web
 COPY ./legacy ./legacy
@@ -58,12 +60,14 @@ RUN addgroup -S "$USER" && \
 COPY --from=builder /opt/app/web/.next ./web/.next
 COPY --from=builder /opt/app/web/next.config.mjs ./web
 COPY --from=builder /opt/app/web/package.json ./web
+COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
 COPY --from=builder /opt/app/pnpm-lock.yaml ./
 COPY --from=builder /opt/app/web/languages.js ./web
 COPY --from=builder /opt/app/web/public ./web/public
 COPY --from=builder /opt/app/package.json ./
 COPY --from=builder /opt/app/satellitesConfig.js ./
 COPY --from=builder /opt/app/pnpm-workspace.yaml ./
+COPY --from=builder /opt/app/.npmrc ./
 
 RUN chown -R "$USER":"$USER" .
 USER "$UID"
@@ -88,7 +92,7 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
 
-RUN pnpm install --frozen-lockfile
+# RUN pnpm install --frozen-lockfile
 RUN pnpm web install --frozen-lockfile
 
 RUN rm ./pnpm-lock.yaml
