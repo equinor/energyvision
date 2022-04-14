@@ -1,6 +1,7 @@
 import soapRequest from 'easy-soap-request'
 import * as xml2js from 'xml2js'
 import { LoginResult, SubscribeFormParameters, NewsDistributionParameters } from '../../types/types'
+import { appInsights } from '../../common'
 
 const subscriptionUrl = process.env.BRANDMASTER_EMAIL_SUBSCRIPTION_URL || ''
 export const authenticationUrl = process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || ''
@@ -77,6 +78,7 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
     if(error != undefined)
     {
       // should trigger mail... 
+      appInsights.trackEvent({name:"Newsletter distribution failure"},{message:error})
       response.statusCode = 500
     }
   })
