@@ -427,8 +427,6 @@ const pageContentFields = /* groq */ `
     "id": _key,
     "designOptions": {
       "background": coalesce(background.title, 'White'),
-      "imagePosition": coalesce(imagePosition, 'left'),
-      imageSize,
     },
   },
 
