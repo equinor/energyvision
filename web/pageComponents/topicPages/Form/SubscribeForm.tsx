@@ -63,7 +63,7 @@ const SubscribeForm = () => {
       generalNews: allCategories || data.categories.includes('generalNews'),
       stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
       magazineStories: allCategories || data.categories.includes('magazineStories'),
-      languageCode: router.locale == 'no-nb' ? 'no' : 'en',
+      languageCode: router.locale == 'en' ? 'en' : 'no',
     }
     const res = await fetch('/api/subscribe-form', {
       body: JSON.stringify(subscribeFormParamers),
@@ -119,7 +119,10 @@ const SubscribeForm = () => {
             <UnstyledList>
               <li>
                 <Checkbox
-                  label="General news"
+                  label={intl.formatMessage({
+                    id: 'subscribe_form_general_news',
+                    defaultMessage: 'General News',
+                  })}
                   value="generalNews"
                   aria-describedby="atleast-one-category-required"
                   {...register('categories', {
