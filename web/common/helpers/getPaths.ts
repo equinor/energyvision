@@ -20,7 +20,7 @@ const getNewsOrLocalNewsForLocale = async (type: 'news' | 'localNews', locale: s
   const groqType = "'" + type + "'"
   const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
-    groq`*[_type match ${groqType} && _lang == $lang && defined(slug.current) && !(_id in path("drafts.**"))][] {
+    groq`*[_type == ${groqType} && _lang == $lang && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
       "slug": slug.current,
     }`,
