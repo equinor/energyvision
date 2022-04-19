@@ -55,7 +55,6 @@ export const PaginationItem = ({
   inverted,
   children,
 }: PaginationItemProps) => {
-  console.log({ inverted })
   if (isDisabled || isCurrent) {
     return (
       <StyledListItem>
