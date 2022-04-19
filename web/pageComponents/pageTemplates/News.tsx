@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
 import { NextSeo } from 'next-seo'
 import { Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
@@ -225,7 +224,11 @@ const NewsPage = ({ data }: ArticleProps) => {
                   <Icon data={calendar} />
                   <DateContainer>
                     <FormattedDateTime uppercase datetime={publishDateTime} />
-                    {isDateAfter(modifiedDate, publishDateTime) && (
+                    {isDateAfter(
+                      modifiedDate,
+                      // publishDateTime + 5 minutes
+                      new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
+                    ) && (
                       <>
                         <LastModifiedLabel>Last modified</LastModifiedLabel>
                         <FormattedDateTime uppercase datetime={modifiedDate} />

@@ -18,7 +18,6 @@ import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
-import { newsSlugs } from './index'
 import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 
@@ -133,7 +132,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   const { data } = props
   return (
     <Layout intl={data?.intl} footerData={data?.footerData}>
-      <Header slugs={newsSlugs} menuData={data?.menuData} />
+      <Header slugs={[]} menuData={data?.menuData} />
       <SkipNavContent />
       {page}
     </Layout>

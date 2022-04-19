@@ -15,6 +15,8 @@ export const isGlobalDevelopment = dataset === EQUINOR_COM_DEV
 
 export const hasNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
 
+export const hasLocalNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
+
 export const hasArchivedNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
 
 export const shouldIndexAndFollow = LIVE_DATASETS.includes(dataset)

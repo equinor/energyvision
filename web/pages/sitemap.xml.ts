@@ -1,14 +1,19 @@
 import { GetServerSideProps } from 'next'
 import { languages, defaultLanguage } from '../languages'
-import { getRoutePaths, PathType } from '../common/helpers/getPaths'
+import { getRoutePaths, getNewsPaths, getLocalNewsPaths, PathType } from '../common/helpers/getPaths'
+import { hasArchivedNews, hasLocalNews, hasNews } from '../common/helpers/datasetHelpers'
+import archivedNews from '../lib/archive/archivedNewsPaths.json'
 
 const Sitemap = () => {
   return 'Loading...'
 }
 
 const getUrl = ({ slug, locale }: PathType) => {
-  const url = slug.length === 0 ? locale : locale + '/' + slug.join('/')
-  return url
+  if (Array.isArray(slug)) {
+    const url = slug.length === 0 ? locale : locale + '/' + slug.join('/')
+    return url
+  }
+  return locale + slug
 }
 
 const getSitemapUrls = (domain: string, paths: PathType[]) =>
@@ -46,15 +51,22 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   let domain = String(req.headers.host)
   domain = domain.startsWith('www') ? `https://${domain}` : domain
   const locales = languages.map((lang) => lang.locale)
-  const routeSlugs = await getRoutePaths(locales)
+
   const isMultilanguage = locales.length > 1
+
+  const routeSlugs = await getRoutePaths(locales)
+  const newsSlugs = hasNews ? await getNewsPaths(locales) : []
+  const localNewsSlugs = hasLocalNews ? await getLocalNewsPaths(locales) : []
+  const archivedNewsSlugs = hasArchivedNews ? archivedNews : []
+
+  const allSlugs = [...routeSlugs, ...newsSlugs, ...localNewsSlugs, ...(archivedNewsSlugs as PathType[])]
 
   if (isMultilanguage) {
     locale = String(query?.lang)
-    paths = routeSlugs.filter((route) => route.locale === locale)
+    paths = allSlugs.filter((route) => route.locale === locale)
   } else {
     locale = defaultLanguage.locale
-    paths = routeSlugs
+    paths = allSlugs
   }
 
   const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
