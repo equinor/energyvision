@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'npm'
+          # cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -109,7 +109,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: 'npm'
+          # cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
