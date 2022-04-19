@@ -3,6 +3,7 @@ import useSWR from 'swr'
 import * as xml2js from 'xml2js'
 import styled from 'styled-components'
 import { BackgroundContainer, FormattedDate } from '@components'
+import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/types'
 
 const fetchData = async (url: string) => {
@@ -22,12 +23,12 @@ const fetchData = async (url: string) => {
 
     const OSE = {
       ...stockData.filter((i: any) => i.RicCode === 'EQNR.OSL')[0],
-      title: 'OSLO STOCK EXCHANGE (OSE)',
+      title: 'Oslo Stock Exchange (OSE)',
       currency: 'NOK',
     }
     const NYSE = {
       ...stockData.filter((i: any) => i.RicCode === 'EQNR.NYSE')[0],
-      title: 'NEW YORK STOCK EXCHANGE (NYSE)',
+      title: 'New York Stock Exchange (NYSE)',
       currency: 'USD',
     }
 
@@ -67,6 +68,10 @@ const Subtitle = styled.p`
   padding: 0;
 `
 
+const MarketTitle = styled(Subtitle)`
+  text-transform: uppercase;
+`
+
 const TimeDelay = styled.span`
   font-style: italic;
   font-weight: var(--fontWeight-medium);
@@ -96,7 +101,7 @@ const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesDa
             <Price>{data.OSE?.Quote}</Price>
             {data.OSE?.currency}
           </p>
-          <Subtitle>{data.OSE?.title}</Subtitle>
+          <MarketTitle>{data.OSE?.title}</MarketTitle>
           <Subtitle>
             <FormattedDate datetime={data.OSE?.Date} /> CET
           </Subtitle>
@@ -107,9 +112,12 @@ const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesDa
             <Price>{data.NYSE?.Quote}</Price>
             {data.NYSE?.currency}
           </p>
-          <Subtitle>{data.NYSE?.title}</Subtitle>
+          <MarketTitle>{data.NYSE?.title}</MarketTitle>
           <Subtitle>
-            <FormattedDate datetime={data.NYSE?.Date} /> CET <TimeDelay>at least 20 minutes delayed</TimeDelay>
+            <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
+            <TimeDelay>
+              <FormattedMessage id="stock_nyse_time_delay_message" defaultMessage="at least 20 minutes delayed" />
+            </TimeDelay>
           </Subtitle>
         </Item>
       </Container>

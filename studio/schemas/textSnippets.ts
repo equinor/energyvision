@@ -569,6 +569,10 @@ const snippets: textSnippet = {
     defaultValue: 'Your search returned no results',
     hidden: !HAS_NEWSROOM,
   },
+  stock_nyse_time_delay_message: {
+    title: 'Stock API: NYSE time delay message',
+    defaultValue: 'at least 20 minutes delayed',
+  },
 }
 
 type textSnippet = Record<
