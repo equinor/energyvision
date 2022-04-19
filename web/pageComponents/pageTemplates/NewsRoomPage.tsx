@@ -117,7 +117,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData /* slug */ }:
                   }),
                 }} */
             >
-              <Configure facetingAfterDistinct />
+              <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
               <NewsContent />
             </InstantSearch>
           </News>

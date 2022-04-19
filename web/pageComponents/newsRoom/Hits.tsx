@@ -37,6 +37,7 @@ export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({ hitComp
   if (!hits || hits.length === 0) {
     return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
   }
+
   return (
     <HitList>
       <List variant="numbered" unstyled>

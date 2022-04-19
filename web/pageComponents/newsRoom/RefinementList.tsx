@@ -25,18 +25,20 @@ export function RefinementList(props: RefinementListProps) {
   return (
     <>
       {items.length > 0 ? (
-        <StyledList unstyled>
-          {items.map((item) => (
-            <StyledItem key={item.value}>
-              <Checkbox
-                value={item.value}
-                label={`${item.label} (${item.count})`}
-                checked={item.isRefined}
-                onChange={() => refine(item.value)}
-              ></Checkbox>
-            </StyledItem>
-          ))}
-        </StyledList>
+        <>
+          <StyledList unstyled>
+            {items.map((item) => (
+              <StyledItem key={item.value}>
+                <Checkbox
+                  value={item.value}
+                  label={`${item.label} (${item.count})`}
+                  checked={item.isRefined}
+                  onChange={() => refine(item.value)}
+                ></Checkbox>
+              </StyledItem>
+            ))}
+          </StyledList>
+        </>
       ) : (
         <NoRelevant>
           <FormattedMessage id="newsroom_no_relevant_filters" defaultMessage="No relevant content for this filter" />
