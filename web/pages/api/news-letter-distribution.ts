@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   await distribute(newsDistributionParameters).then((isSuccessful) => {
     if (!isSuccessful) {
-      return res.status(500).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
+      return res.status(400).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
     }
     res.status(200).json({ msg: `Successfully distributed ${newsDistributionParameters.link}` })
   })

@@ -58,7 +58,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
   })
   xml2js.parseString(response.body, function (err, result) {
     if (err != null) console.error("Error while creating signup request to Brandmaster : ----------------\n"+err)
-    if(parsedError(result,"could not create sign up request ")!= undefined)
+    if(parsedError(result,"could not create sign up request ")!= undefined,response.body)
     return
   })
   return response.statusCode == 200
@@ -74,12 +74,13 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
   })
   xml2js.parseString(response.body, function (err, result) {
     if (err != null) console.error("Error while creating distribute request to Brandmaster : ----------------\n"+err)
-    const error = parsedError(result,"could not distribute newsletter ")
+    const error = parsedError(result,"could not distribute newsletter "+parameters.link+" published at "+parameters.timeStamp)
     if(error != undefined)
     {
-      // should trigger mail... 
+      // should trigger mail...
+      console.log(response.body.toString()) 
       appInsights.trackEvent({name:"Newsletter distribution failure"},{message:error})
-      response.statusCode = 500
+      response.statusCode = 400
     }
   })
   
@@ -105,7 +106,7 @@ const parsedError = (result:any, prefix:string)=>{
     const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
     if (soapBody['SOAP-ENV:Fault'] != undefined) {
       const error = soapBody['SOAP-ENV:Fault']['0']['faultstring']
-      console.error("Newsletter Failure Error: "+prefix +"\n"+error)
+      console.error(Date()+ " : Newsletter Failure Error: "+prefix +"\n"+error)
       return error
     }
 }
