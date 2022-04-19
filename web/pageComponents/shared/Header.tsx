@@ -13,6 +13,9 @@ import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage } from 'react-intl'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
+import { getLocaleFromName } from '../../lib/localization'
+import Head from 'next/head'
+import getConfig from 'next/config'
 
 const StyledSearchButton = styled(Button)`
   color: var(--default-text);
@@ -99,8 +102,35 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
     </NextLink>
   )
 
+  /* Filter objects that have translations but no routes */
+  const validSlugs = slugs.filter((obj) => obj.slug)
+
+  const { publicRuntimeConfig } = getConfig()
+
+  const HeadTags = () => {
+    const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
+    return (
+      <Head>
+        {slugs.map((slug) => {
+          const locale = getLocaleFromName(slug.lang)
+          return (
+            <link
+              key={locale}
+              rel="alternate"
+              hrefLang={locale}
+              href={`${publicRuntimeConfig.domain}/${locale}${slug.slug}`}
+            />
+          )
+        })}
+        <link rel="alternate" hrefLang="x-default" href={`${publicRuntimeConfig.domain}${defaultSlug}`} />
+        <link rel="canonical" href={`${publicRuntimeConfig.domain}${defaultSlug}`} />
+      </Head>
+    )
+  }
+
   return (
     <HeaderRelative>
+      <HeadTags />
       <TopbarOffset />
       <Topbar>
         <TopbarContainer>
@@ -121,7 +151,9 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                 </NextLink>
               </ControlChild>
             )}
-            {hasMoreThanOneLanguage && <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={slugs} />}
+            {hasMoreThanOneLanguage && (
+              <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
+            )}
             {shouldDisplayAllSites ? (
               <AllSites />
             ) : menuData && isGlobal ? (

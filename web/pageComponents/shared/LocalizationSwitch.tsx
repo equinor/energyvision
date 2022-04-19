@@ -103,35 +103,30 @@ const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, wi
   return null
 }
 
-export const LocalizationSwitch = ({ allSlugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
+export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
   const { width } = useWindowSize()
-
-  /* Filter objects that have translations but no routes */
-  const slugs = allSlugs.filter((obj) => obj.slug)
 
   if (slugs.length < 1) return null
 
   return (
     <Wrapper {...rest}>
-      <>
-        {slugs.map((obj, key) => {
-          const language = languages.find((lang) => lang.name === obj.lang)
-          return (
-            <StyledDiv key={obj.lang}>
-              <LocaleLink
-                href={obj.slug}
-                title={`Switch to ${language?.title}`}
-                locale={`${language?.locale}`}
-                active={activeLocale === `${language?.locale}`}
-                width={width}
-              >
-                <span style={{ textTransform: 'uppercase' }}>{language?.locale}</span>
-              </LocaleLink>
-              {key + 1 < slugs.length && width > BREAKPOINT && '|'}
-            </StyledDiv>
-          )
-        })}
-      </>
+      {slugs.map((obj, key) => {
+        const language = languages.find((lang) => lang.name === obj.lang)
+        return (
+          <StyledDiv key={obj.lang}>
+            <LocaleLink
+              href={obj.slug}
+              title={`Switch to ${language?.title}`}
+              locale={`${language?.locale}`}
+              active={activeLocale === `${language?.locale}`}
+              width={width}
+            >
+              <span style={{ textTransform: 'uppercase' }}>{language?.locale}</span>
+            </LocaleLink>
+            {key + 1 < slugs.length && width > BREAKPOINT && '|'}
+          </StyledDiv>
+        )
+      })}
     </Wrapper>
   )
 }
