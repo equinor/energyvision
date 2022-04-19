@@ -15,7 +15,7 @@ export interface ClientConfig extends ProjectConfig {
 const sanityConfig: ClientConfig = {
   dataset: process.env.SANITY_DATASET || 'global',
   projectId: process.env.SANITY_PROJECT_ID || 'h61q9gi9',
-  token: process.env.NEXT_PUBLIC_SANITY_DATASET === 'global-development' ? process.env.SANITY_API_TOKEN : undefined,
+  token: process.env.SANITY_API_TOKEN,
   useCdn: true,
   apiVersion: '2021-12-17',
 }

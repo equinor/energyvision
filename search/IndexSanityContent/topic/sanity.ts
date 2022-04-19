@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 
-export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page"] {
+export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && !(_id in path("drafts.**"))] {
   "slug": slug.current,
   _id,
   "title": pt::text(content->title),
