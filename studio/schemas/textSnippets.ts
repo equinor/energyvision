@@ -31,6 +31,11 @@ const snippets: textSnippet = {
     defaultValue: 'Search',
     hidden: !HAS_SEARCH,
   },
+  search_news_tab: {
+    title: 'Search: News tab name',
+    defaultValue: 'News',
+    hidden: !HAS_SEARCH,
+  },
   search_events_tab: {
     title: 'Search: Events tab name',
     defaultValue: 'Events',
