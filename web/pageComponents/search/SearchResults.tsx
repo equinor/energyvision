@@ -8,6 +8,7 @@ import NumberOfHits from './NumberOfHits'
 import Hits from './Hits'
 import EventHit from './EventHit'
 import TopicHit from './TopicHit'
+import NewsHit from './NewsHit'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
 import { Pagination } from '../shared/search/pagination/Pagination'
 import TotalResultsStat from './TotalResultsStat'
@@ -35,6 +36,7 @@ const HITS_PER_PAGE = 5
 const tabMap = [
   { id: 0, name: 'topics' },
   { id: 1, name: 'events' },
+  { id: 2, name: 'news' },
 ]
 
 const SearchResults = () => {
@@ -105,6 +107,12 @@ const SearchResults = () => {
                   <NumberOfHits />
                 </Index>
               </Tab>
+              <Tab inverted>
+                <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
+                  <FormattedMessage id="search_news_tab" defaultMessage="News" />
+                  <NumberOfHits />
+                </Index>
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -118,6 +126,13 @@ const SearchResults = () => {
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits hitComponent={EventHit} category="Event" />
+                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                </Index>
+              </TabPanel>
+              <TabPanel>
+                <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
+                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                  <Hits hitComponent={NewsHit} category="News" />
                   <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
