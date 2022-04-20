@@ -13,7 +13,7 @@ import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage } from 'react-intl'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
 import getConfig from 'next/config'
 
@@ -108,22 +108,34 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const { publicRuntimeConfig } = getConfig()
 
   const HeadTags = () => {
+    const activeSlug = slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug
     const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
+    const defaultLocale = defaultLanguage.locale
+
     return (
       <Head>
-        {slugs.map((slug) => {
-          const locale = getLocaleFromName(slug.lang)
-          return (
-            <link
-              key={locale}
-              rel="alternate"
-              hrefLang={locale}
-              href={`${publicRuntimeConfig.domain}/${locale}${slug.slug}`}
-            />
-          )
-        })}
-        <link rel="alternate" hrefLang="x-default" href={`${publicRuntimeConfig.domain}${defaultSlug}`} />
-        <link rel="canonical" href={`${publicRuntimeConfig.domain}${defaultSlug}`} />
+        {slugs.length > 1 &&
+          slugs.map((slug) => {
+            const locale = getLocaleFromName(slug.lang)
+            return (
+              <link
+                key={locale}
+                rel="alternate"
+                hrefLang={locale}
+                href={`${publicRuntimeConfig.domain}/${locale}${slug.slug}`}
+              />
+            )
+          })}
+
+        {slugs.length > 1 && (
+          <link
+            rel="alternate"
+            hrefLang="x-default"
+            href={`${publicRuntimeConfig.domain}/${defaultLocale}${defaultSlug}`}
+          />
+        )}
+
+        <link rel="canonical" href={`${publicRuntimeConfig.domain}/${localization.activeLocale}${activeSlug}`} />
       </Head>
     )
   }
