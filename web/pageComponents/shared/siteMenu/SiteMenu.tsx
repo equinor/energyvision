@@ -118,7 +118,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                       return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                     })}
                   </Menu>
-                  <NextLink href="/" passHref>
+                  <NextLink href="https://www.equinor.com/languages.html?language=en" passHref>
                     <AllSitesLink>
                       <FormattedMessage id="all_sites" defaultMessage="All sites" />
                     </AllSitesLink>
