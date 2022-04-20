@@ -12,6 +12,7 @@ import { defaultLanguage } from '../languages'
 import ErrorPage from '../pageComponents/pageTemplates/ErrorPage'
 import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/types'
 import { getComponentsData } from '../lib/fetchData'
+import { SkipNavContent } from '@reach/skip-nav'
 
 const Grid = styled.div`
   display: grid;
@@ -57,6 +58,7 @@ Custom404.getLayout = (page: AppProps) => {
       >
         <Grid>
           <Header slugs={slugs} menuData={data?.menuData} />
+          <SkipNavContent />
           {page}
           <Footer footerData={data?.footerData} />
         </Grid>

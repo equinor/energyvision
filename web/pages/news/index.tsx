@@ -14,6 +14,7 @@ import { isGlobal } from '../../common/helpers/datasetHelpers'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { NewsRoomProps } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
+import { SkipNavContent } from '@reach/skip-nav'
 
 export default function NewsRoom({ serverState, isServerRendered = false, /* url, */ data }: NewsRoomProps) {
   const defaultLocale = defaultLanguage.locale
@@ -63,6 +64,7 @@ NewsRoom.getLayout = (page: AppProps) => {
         messages={data?.intl?.messages}
       >
         <Header slugs={slugs} menuData={data?.menuData} />
+        <SkipNavContent />
         {page}
         <Footer footerData={data?.footerData} />
       </IntlProvider>
