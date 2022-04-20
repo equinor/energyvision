@@ -239,12 +239,12 @@ const NewsPage = ({ data }: ArticleProps) => {
               </HeaderInner>
             </Header>
             <Image>{heroImage && <HeroImage data={heroImage} />}</Image>
-            {ingress && (
+            {ingress && ingress.length > 0 && (
               <LeadParagraph>
                 <Lead blocks={ingress} />
               </LeadParagraph>
             )}
-            {content && (
+            {content && content.length > 0 && (
               <Content>
                 <NewsBlockContent blocks={content}></NewsBlockContent>
               </Content>
