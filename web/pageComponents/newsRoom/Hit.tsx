@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 import { Heading, FormattedDate } from '@components'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 const StyledHitLink = styled.a`
   padding: var(--space-small) 0;
@@ -15,6 +18,11 @@ const StyledHeading = styled(Heading)`
   display: inline-block;
   ${StyledHitLink}:hover & {
     text-decoration: underline;
+  }
+
+  ${StyledHitLink}:focus-visible & {
+    outline: none;
+    ${outlineTemplate(outline)}
   }
 `
 
