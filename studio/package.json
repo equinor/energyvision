@@ -36,7 +36,7 @@
     "@sanity/document-internationalization": "0.0.1-beta.11",
     "@sanity/form-builder": "^2.29.3",
     "@sanity/icons": "^1.2.5",
-    "@sanity/production-preview": "2.23.1-next.10",
+    "@sanity/production-preview": "2.29.3",
     "@sanity/react-hooks": "^2.29.3",
     "@sanity/types": "^2.29.3",
     "@sanity/ui": "^0.37.5",
