@@ -206,11 +206,11 @@ const NewsPage = ({ data }: ArticleProps) => {
           url: fullUrl,
           images: getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image),
         }}
-        twitter={{
-          handle: '@handle',
-          site: '@site',
-          cardType: 'summary_large_image',
-        }}
+        // twitter={{
+        //   handle: '@handle',
+        //   site: '@site',
+        //   cardType: 'summary_large_image',
+        // }}
       ></NextSeo>
       <main>
         <article>

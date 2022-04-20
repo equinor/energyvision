@@ -172,11 +172,11 @@ const TopicPage = ({ data }: TopicPageProps) => {
           url: fullUrl,
           images: getOpenGraphImages(data?.seoAndSome?.openGraphImage || data?.heroImage?.image),
         }}
-        twitter={{
-          handle: '@handle',
-          site: '@site',
-          cardType: 'summary_large_image',
-        }}
+        // twitter={{
+        //   handle: '@handle',
+        //   site: '@site',
+        //   cardType: 'summary_large_image',
+        // }}
       ></NextSeo>
       <TopicPageLayout>
         <HeroBanner>

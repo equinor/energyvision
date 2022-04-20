@@ -63,11 +63,11 @@ const LandingPage = ({ data }: LandingPageProps) => {
           // @ts-ignore: Why does ts hates because I moved this line from another file
           images: getOpenGraphImages(data?.seoAndSome?.openGraphImage),
         }}
-        twitter={{
-          handle: '@handle',
-          site: '@site',
-          cardType: 'summary_large_image',
-        }}
+        // twitter={{
+        //   handle: '@handle',
+        //   site: '@site',
+        //   cardType: 'summary_large_image',
+        // }}
       ></NextSeo>
       <LandingPageLayout>
         <HeroBanner>
