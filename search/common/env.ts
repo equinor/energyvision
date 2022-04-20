@@ -11,3 +11,9 @@ export const getAlgoliaAppId: GetProcessEnvType = () =>
 export const getAlgoliaApiKey: GetProcessEnvType = () =>
   E.fromNullable('Unable to find API key')(process.env.ALGOLIA_API_KEY)
 export const getEnvironment: GetProcessEnvType = () => E.fromNullable('Unable to find environment')(process.env.ENV)
+export const getSanityDataset: GetProcessEnvType = () =>
+  E.fromNullable('Unable to find Sanity dataset')(process.env.SANITY_DATASET)
+export const getSanityProjectId: GetProcessEnvType = () =>
+  E.fromNullable('Unable to find Sainty Project ID')(process.env.SANITY_PROJECT_ID)
+export const getSanityApiToken: GetProcessEnvType = () =>
+  E.fromNullable('Unable to find Sanity API token')(process.env.SANITY_API_TOKEN)

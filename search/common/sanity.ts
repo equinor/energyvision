@@ -1,4 +1,7 @@
 import createClient from '@sanity/client'
+import { flow } from 'fp-ts/lib/function'
+import * as E from 'fp-ts/lib/Either'
+import { getSanityApiToken, getSanityDataset, getSanityProjectId } from './env'
 
 // @TODO Where
 export interface ProjectConfig {
@@ -12,12 +15,16 @@ export interface ClientConfig extends ProjectConfig {
   apiVersion?: string
 }
 
-const sanityConfig: ClientConfig = {
-  dataset: process.env.SANITY_DATASET || 'global',
-  projectId: process.env.SANITY_PROJECT_ID || 'h61q9gi9',
-  token: process.env.SANITY_API_TOKEN,
-  useCdn: true,
-  apiVersion: '2021-12-17',
-}
-
-export const sanityClient = createClient(sanityConfig)
+export const getSanityClient = flow(
+  getSanityDataset,
+  E.bindTo('dataset'),
+  E.bind('projectId', () => getSanityProjectId()),
+  E.bind('token', () => getSanityApiToken()),
+  E.map(({ dataset, projectId, token }) => createClient({
+    dataset,
+    projectId,
+    token,
+    useCdn: true,
+    apiVersion: '2021-12-17'
+  }))
+)

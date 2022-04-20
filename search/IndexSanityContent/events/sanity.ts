@@ -12,7 +12,7 @@ const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type
     "title": pt::text(title),
     "ingress": pt::text(ingress),
     "eventDate": eventDate.date,
-    "eventDescription": pt::text(content), 
+    "eventDescription": pt::text(content),
   }
 }
 `
@@ -36,9 +36,9 @@ type FetchDataType = (
   query: string,
 ) => (
   getQueryparams: (language: Language) => Readonly<Record<string, string>>,
-) => (sanityClient: SanityClient) => (language: Language) => TE.TaskEither<Error, Event[]>
+) => (language: Language) => (sanityClient: SanityClient) => TE.TaskEither<Error, Event[]>
 
-const fetch: FetchDataType = (query) => (getQueryParams) => (sanityClient) => (language) =>
+const fetch: FetchDataType = (query) => (getQueryParams) => (language) => (sanityClient) =>
   pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language)), E.toError))
 
 export const fetchData = fetch(query)(getQueryParams)

@@ -3,7 +3,7 @@ import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { update, sanityClient, generateIndexName, getEnvironment, Language } from '../../common'
+import { update, generateIndexName, getEnvironment, Language, getSanityClient } from '../../common'
 import { fetchData } from './sanity'
 import { mapData } from './mapper'
 import { indexSettings } from './algolia'
@@ -15,7 +15,9 @@ export const indexEvents = (language: Language) => {
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
   return pipe(
-    fetchData(sanityClient)(language),
+    getSanityClient(),
+    TE.fromEither,
+    TE.chainW(fetchData(language)),
     TE.map((events) => events.map(mapData)),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,

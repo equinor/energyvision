@@ -49,9 +49,9 @@ type FetchDataType = (
   query: string,
 ) => (
   getQueryparams: (language: Language) => Readonly<Record<string, string>>,
-) => (sanityClient: SanityClient) => (language: Language) => TE.TaskEither<Error, TopicPage[]>
+) => (language: Language) => (sanityClient: SanityClient) => TE.TaskEither<Error, TopicPage[]>
 
-const fetch: FetchDataType = (query) => (getQueryParams) => (sanityClient) => (language) =>
+const fetch: FetchDataType = (query) => (getQueryParams) => (language) => (sanityClient) =>
   pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language)), E.toError))
 
 export const fetchData = fetch(query)(getQueryParams)
