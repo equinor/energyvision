@@ -8,10 +8,6 @@ export const getRedirectUrl = async (slug: string, locale: string): Promise<Redi
 export const getDnsRedirect = (host: string, pathname: string) => {
   const dnsRedirects = [
     {
-      from: 'web-global-development-energyvision-dev.radix.equinor.com',
-      to: '/en/energy/mariner',
-    },
-    {
       from: 'equinor.co.uk/mariner',
       to: '/en/energy/mariner',
     },
