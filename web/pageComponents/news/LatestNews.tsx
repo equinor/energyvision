@@ -18,6 +18,10 @@ const Wrapper = styled.div`
   }
 `
 
+const StyledHeading = styled(Heading)`
+  margin: var(--space-xLarge);
+`
+
 type LatestNewsProp = {
   data: CardData[]
 }
@@ -25,9 +29,9 @@ type LatestNewsProp = {
 const LatestNews = ({ data }: LatestNewsProp) => {
   return (
     <>
-      <Heading size="xl" level="h2" center>
+      <StyledHeading size="xl" level="h2" center>
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
-      </Heading>
+      </StyledHeading>
       <Wrapper>
         {data.map((newsItem: CardData) => {
           return <NewsCard data={newsItem} key={newsItem.id} />

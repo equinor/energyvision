@@ -18,12 +18,6 @@ const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
   --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 
-  /*  @TODO: Revisit when finalizing news article */
-  & h2,
-  & h3 {
-    margin: var(--space-small) 0;
-  }
-
   margin-bottom: var(--space-4xLarge);
 `
 
@@ -81,6 +75,12 @@ const Image = styled.div`
 `
 
 const LeadParagraph = styled.div`
+  /*  @TODO: Revisit when finalizing news article */
+  & h2,
+  & h3 {
+    margin: var(--space-small) 0;
+  }
+
   padding: 0 var(--layout-paddingHorizontal-large);
   margin-top: var(--space-xLarge);
   margin-bottom: var(--space-3xLarge);
@@ -95,6 +95,12 @@ const LeadParagraph = styled.div`
 `
 
 const Content = styled.div`
+  /*  @TODO: Revisit when finalizing news article */
+  & h2,
+  & h3 {
+    margin: var(--space-small) 0;
+  }
+
   /* The max-width makes things easier with 50% floating images */
   max-width: var(--maxViewportWidth);
   margin-left: auto;
