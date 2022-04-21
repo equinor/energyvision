@@ -19,6 +19,9 @@ export async function middleware(request: NextRequest) {
 
   // Check if it is a DNS redirect
   const dnsRedirect = getDnsRedirect(origin, pathname)
+  console.log('### DNS REDIRECT ###')
+  console.log('origin: ', origin)
+  console.log('redirect: ', dnsRedirect)
   if (dnsRedirect) {
     return NextResponse.redirect(dnsRedirect)
   }

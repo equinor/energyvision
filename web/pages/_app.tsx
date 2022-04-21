@@ -109,6 +109,7 @@ function MyApp({ Component, pageProps, props }: CustomAppProps): JSX.Element {
 
 MyApp.getInitialProps = async ({ ctx }: any) => {
   const domain = ctx.req.headers.host
+  console.log('No follow:', domain)
   return {
     props: {
       origin: domain,
