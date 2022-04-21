@@ -20,8 +20,6 @@ export async function middleware(request: NextRequest) {
   // Check if it is a DNS redirect
   const host = String(request.headers.get('host'))
   const dnsRedirect = getDnsRedirect(host, pathname)
-  console.log('#DNS HOST: ', host)
-  console.log('#DNS REDIRECT: ', dnsRedirect)
   if (dnsRedirect) {
     return NextResponse.redirect(dnsRedirect)
   }
