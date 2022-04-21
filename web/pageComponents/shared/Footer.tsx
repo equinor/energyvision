@@ -131,11 +131,11 @@ function getLink(linkData: FooterLinkData) {
   // Sanity should take care of the validation here, and this is temp. until
   // the static pages are migrated  {link.image && <FooterIcon image={link.image} />}
   if (!linkData) return 'something-wrong'
-  const { isStatic, link, staticUrl, url } = linkData
+  const { isStatic, link, staticUrl } = linkData
   if (isStatic) {
     return staticUrl || '/'
   } else {
-    return (link && link.slug) || (url && url) || '/'
+    return (link && link.slug) || '/'
   }
 }
 
@@ -153,7 +153,16 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
               <LinkHeader>{header}</LinkHeader>
               <LinksList>
                 {linkList?.map((link: FooterLinkData) => {
-                  const { id, type, someType, label } = link
+                  const { id, type, someType, label, url } = link
+                  if (url)
+                    return (
+                      <FooterLink href={url} key={id}>
+                        {type === 'someLink' && someType && (
+                          <SomeIcon aria-hidden={true}>{getSomeSvg(someType)}</SomeIcon>
+                        )}
+                        {label}
+                      </FooterLink>
+                    )
                   return (
                     <NextLink key={id} href={getLink(link)} passHref>
                       <FooterLink>
