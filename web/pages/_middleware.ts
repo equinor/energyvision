@@ -1,4 +1,4 @@
-import { getRedirectUrl } from '../common/helpers/getRedirectUrl'
+import { getRedirectUrl, getDnsRedirect } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
 import { isGlobal } from '../common/helpers/datasetHelpers'
@@ -11,6 +11,12 @@ const DOT_HTML = '.html'
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl
   const isDotHtml = pathname.slice(-5) === DOT_HTML
+
+  // Check if it is a DNS redirect
+  const dnsRedirect = getDnsRedirect(origin, pathname)
+  if (dnsRedirect) {
+    return NextResponse.redirect(dnsRedirect)
+  }
 
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
