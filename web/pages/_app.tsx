@@ -34,7 +34,7 @@ type Page<P = {}, IP = P> = NextPage<P, IP> & {
 // eslint-disable-next-line @typescript-eslint/ban-types
 type CustomAppProps<P = {}> = AppProps<P> & {
   Component: Page<P>
-} & { props: { origin: string } }
+}
 
 //COOKIEBOT
 declare global {
@@ -54,7 +54,7 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
   />
 )
 
-function MyApp({ Component, pageProps, props }: CustomAppProps): JSX.Element {
+function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
   const IS_LIVE = process.env.NODE_ENV !== 'development'
@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps, props }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
-  const setNoIndexAndNoFollow = !shouldIndexAndFollow(props.origin)
+  // const setNoIndexAndNoFollow = !shouldIndexAndFollow(props.origin)
 
   return (
     <>
@@ -96,27 +96,12 @@ function MyApp({ Component, pageProps, props }: CustomAppProps): JSX.Element {
       </Head>
       <GlobalStyle />
       <GlobalFontStyle />
-      <DefaultSeo
-        dangerouslySetAllPagesToNoIndex={setNoIndexAndNoFollow}
-        dangerouslySetAllPagesToNoFollow={setNoIndexAndNoFollow}
-      />
+      <DefaultSeo dangerouslySetAllPagesToNoIndex={false} dangerouslySetAllPagesToNoFollow={false} />
       <SkipNavLink />
       {IS_LIVE && <CookieBot locale={router.locale} />}
       {getLayout(<Component {...pageProps} />)}
     </>
   )
-}
-
-MyApp.getInitialProps = async ({ ctx }: any) => {
-  const { req } = ctx
-
-  const domain = String(req?.headers?.host)
-
-  return {
-    props: {
-      origin: domain,
-    },
-  }
 }
 
 export default MyApp
