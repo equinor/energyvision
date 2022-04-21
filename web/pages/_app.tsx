@@ -4,12 +4,10 @@ import type { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
-import { DefaultSeo } from 'next-seo'
 import { SkipNavLink } from '@reach/skip-nav'
 import 'focus-visible'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
-import { shouldIndexAndFollow } from '../common/helpers/datasetHelpers'
 import Script from 'next/script'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
@@ -87,8 +85,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
-  // const setNoIndexAndNoFollow = !shouldIndexAndFollow(props.origin)
-
   return (
     <>
       <Head>
@@ -96,7 +92,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       </Head>
       <GlobalStyle />
       <GlobalFontStyle />
-      <DefaultSeo dangerouslySetAllPagesToNoIndex={false} dangerouslySetAllPagesToNoFollow={false} />
       <SkipNavLink />
       {IS_LIVE && <CookieBot locale={router.locale} />}
       {getLayout(<Component {...pageProps} />)}

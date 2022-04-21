@@ -4,8 +4,10 @@ const Robots = () => {
   return 'Loading...'
 }
 
+const crawlableDomains = ['www.equinor.com', 'www.equinor.pl', 'www.equinorstorage.de']
+
 const robots = (domain: string) => `User-agent: *
-Allow: /
+${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
 Sitemap: ${domain}/sitemap.xml
 Crawl-delay: 10`
 
