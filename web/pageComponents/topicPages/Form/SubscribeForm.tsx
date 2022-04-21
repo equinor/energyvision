@@ -72,9 +72,8 @@ const SubscribeForm = () => {
       },
       method: 'POST',
     })
-    const result = await res.json()
-    setServerError(result.statusCode != 200)
-    setSuccessfullySubmitted(result.statusCode == 200)
+    setServerError(res.status != 200)
+    setSuccessfullySubmitted(res.status == 200)
   }
 
   const {

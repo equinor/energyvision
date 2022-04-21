@@ -57,9 +57,14 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     timeout: 5000,
   })
   xml2js.parseString(response.body, function (err, result) {
-    if (err != null) console.error("Error while creating signup request to Brandmaster : ----------------\n"+err)
-    if(parsedError(result,"could not create sign up request ")!= undefined,response.body)
+    if (err != null) {
+      console.log("Error while creating signup request to Brandmaster : ----------------\n"+err)
+      response.statusCode = 500
+    }
+    if(parsedError(result,"could not create sign up request ")!= undefined){
+      response.statusCode = 500
     return
+    }
   })
   return response.statusCode == 200
 }
