@@ -52,8 +52,8 @@ export const getDnsRedirect = (origin: string, pathname: string) => {
   const dns = origin.replace('http://', '').replace('https://', '').replace('www.', '')
 
   const redirect =
-    dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
-    dnsRedirects.find((redirect) => redirect.from === dns)
+    dnsRedirects.find((redirect) => redirect.from + '/' === dns + pathname) ||
+    dnsRedirects.find((redirect) => redirect.from + '/' === dns)
 
   return redirect && `https://www.equinor.com${redirect.to}`
 }

@@ -1,9 +1,12 @@
+import { getDomain } from '../../../satellitesConfig'
+
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || ''
 
 // What is the dataset name for global production site
 const EQUINOR_COM_NAME = 'global'
 const EQUINOR_COM_DEV = 'global-development'
-const LIVE_DATASETS = ['poland', 'storage']
+
+const LIVE_DOMAINS = ['equinor.pl', 'equinorstorage.de', 'equinor.com']
 
 export const getDataset = () => dataset
 
@@ -19,4 +22,4 @@ export const hasLocalNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_
 
 export const hasArchivedNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
 
-export const shouldIndexAndFollow = LIVE_DATASETS.includes(dataset)
+export const shouldIndexAndFollow = (domain: string) => LIVE_DOMAINS.includes(domain)

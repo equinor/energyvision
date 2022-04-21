@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
 import { shouldIndexAndFollow } from '../common/helpers/datasetHelpers'
 import Script from 'next/script'
+
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
@@ -33,7 +34,7 @@ type Page<P = {}, IP = P> = NextPage<P, IP> & {
 // eslint-disable-next-line @typescript-eslint/ban-types
 type CustomAppProps<P = {}> = AppProps<P> & {
   Component: Page<P>
-}
+} & { props: { origin: string } }
 
 //COOKIEBOT
 declare global {
@@ -53,7 +54,7 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
   />
 )
 
-function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
+function MyApp({ Component, pageProps, props }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
   const IS_LIVE = process.env.NODE_ENV !== 'development'
@@ -86,6 +87,8 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
+  const setNoIndexAndNoFollow = !shouldIndexAndFollow(props.origin)
+
   return (
     <>
       <Head>
@@ -94,14 +97,23 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       <GlobalStyle />
       <GlobalFontStyle />
       <DefaultSeo
-        dangerouslySetAllPagesToNoIndex={!shouldIndexAndFollow}
-        dangerouslySetAllPagesToNoFollow={!shouldIndexAndFollow}
+        dangerouslySetAllPagesToNoIndex={setNoIndexAndNoFollow}
+        dangerouslySetAllPagesToNoFollow={setNoIndexAndNoFollow}
       />
       <SkipNavLink />
       {IS_LIVE && <CookieBot locale={router.locale} />}
       {getLayout(<Component {...pageProps} />)}
     </>
   )
+}
+
+MyApp.getInitialProps = async ({ ctx }: any) => {
+  const domain = ctx.req.headers.host
+  return {
+    props: {
+      origin: domain,
+    },
+  }
 }
 
 export default MyApp

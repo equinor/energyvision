@@ -12,15 +12,15 @@ export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl
   const isDotHtml = pathname.slice(-5) === DOT_HTML
 
+  // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
+  if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
+    return undefined
+  }
+
   // Check if it is a DNS redirect
   const dnsRedirect = getDnsRedirect(origin, pathname)
   if (dnsRedirect) {
     return NextResponse.redirect(dnsRedirect)
-  }
-
-  // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
-  if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
-    return undefined
   }
 
   // Redirect to the same url lowercased if necessary
