@@ -2,6 +2,7 @@ import { getRedirectUrl, getDnsRedirect } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
 import { isGlobal } from '../common/helpers/datasetHelpers'
+import { getNewsPaths } from '../common/helpers/getPaths'
 
 const PERMANENT_REDIRECT = 301
 const TEMPORARY_REDIRECT = 302
@@ -23,6 +24,13 @@ export async function middleware(request: NextRequest) {
   console.log('#DNS REDIRECT: ', dnsRedirect)
   if (dnsRedirect) {
     return NextResponse.redirect(dnsRedirect)
+  }
+
+  // Redirect external links to news which is now archived if link doesn't exist in Sanity
+  if (pathname.startsWith('/news') && !pathname.startsWith('/news/archive') && isGlobal) {
+    const sanityNewsSlugs = await getNewsPaths(['en', 'no'])
+    const existsInSanity = sanityNewsSlugs.some((item) => item.slug === pathname)
+    if (!existsInSanity) return NextResponse.redirect(`${origin}${pathname.replace('news', 'news/archive')}`)
   }
 
   // Redirect to the same url lowercased if necessary
