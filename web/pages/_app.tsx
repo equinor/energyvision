@@ -110,15 +110,7 @@ function MyApp({ Component, pageProps, props }: CustomAppProps): JSX.Element {
 MyApp.getInitialProps = async ({ ctx }: any) => {
   const { req } = ctx
 
-  if (!req) {
-    console.log('No follow: no request, using window fallback')
-    return {
-      hostname: window.location.hostname,
-    }
-  }
-
-  const domain = req?.headers?.host
-  console.log('No follow:', domain)
+  const domain = String(req?.headers?.host)
 
   return {
     props: {

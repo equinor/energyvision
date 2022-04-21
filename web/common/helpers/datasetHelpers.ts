@@ -1,5 +1,3 @@
-import { getDomain } from '../../../satellitesConfig'
-
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || ''
 
 // What is the dataset name for global production site
@@ -22,4 +20,7 @@ export const hasLocalNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_
 
 export const hasArchivedNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV
 
-export const shouldIndexAndFollow = (domain: string) => LIVE_DOMAINS.includes(domain)
+export const shouldIndexAndFollow = (domain: string) => {
+  const sanitizedDomain = domain.replace('http://', '').replace('https://', '').replace('www.', '')
+  return LIVE_DOMAINS.includes(sanitizedDomain)
+}
