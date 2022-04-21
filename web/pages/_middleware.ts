@@ -11,17 +11,16 @@ const DOT_HTML = '.html'
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl
   const isDotHtml = pathname.slice(-5) === DOT_HTML
-
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
     return undefined
   }
 
   // Check if it is a DNS redirect
-  const dnsRedirect = getDnsRedirect(origin, pathname)
-  console.log('### DNS REDIRECT ###')
-  console.log('origin: ', origin)
-  console.log('redirect: ', dnsRedirect)
+  const host = String(request.headers.get('host'))
+  const dnsRedirect = getDnsRedirect(host, pathname)
+  console.log('#DNS HOST: ', host)
+  console.log('#DNS REDIRECT: ', dnsRedirect)
   if (dnsRedirect) {
     return NextResponse.redirect(dnsRedirect)
   }

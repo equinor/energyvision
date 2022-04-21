@@ -5,8 +5,12 @@ export const getRedirectUrl = async (slug: string, locale: string): Promise<Redi
   return getClient(false).fetch(redirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
 }
 
-export const getDnsRedirect = (origin: string, pathname: string) => {
+export const getDnsRedirect = (host: string, pathname: string) => {
   const dnsRedirects = [
+    {
+      from: 'web-global-development-energyvision-dev.radix.equinor.com',
+      to: '/en/energy/mariner',
+    },
     {
       from: 'equinor.co.uk/mariner',
       to: '/en/energy/mariner',
@@ -49,11 +53,11 @@ export const getDnsRedirect = (origin: string, pathname: string) => {
     },
   ]
 
-  const dns = origin.replace('http://', '').replace('https://', '').replace('www.', '')
+  const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
 
   const redirect =
-    dnsRedirects.find((redirect) => redirect.from + '/' === dns + pathname) ||
-    dnsRedirects.find((redirect) => redirect.from + '/' === dns)
+    dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
+    dnsRedirects.find((redirect) => redirect.from === dns)
 
   return redirect && `https://www.equinor.com${redirect.to}`
 }
