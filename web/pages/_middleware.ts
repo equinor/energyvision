@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getRedirectUrl, getDnsRedirect } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
@@ -19,7 +20,10 @@ const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
   const localNewsSlugs = await getLocalNewsPaths(locales)
   const allSlugs = [...routeSlugs, ...newsSlugs, ...localNewsSlugs]
 
-  return allSlugs.some((item) => item.slug === pathname)
+  const slug = pathname.startsWith('/') ? pathname.substring(1) : pathname
+
+  // @ts-ignore
+  return allSlugs.some((item) => item.slug.join('/') === slug)
 }
 
 export async function middleware(request: NextRequest) {
