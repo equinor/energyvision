@@ -9,7 +9,7 @@ import DisplayLink from './hit/DisplayLink'
 import { FormattedDate } from '@components'
 
 const StyledFormattedDate = styled(FormattedDate)`
-  font-size: var(--typeScale-0);
+  font-size: var(--typeScale-00);
   letter-spacing: 1px;
   display: block;
 `

@@ -11,7 +11,7 @@ import HitHeading from './hit/HitHeading'
 /* @TODO: Let's use the Text component if the margin is removed */
 const TextSnippet = styled.p`
   margin: 0;
-  font-size: var(--typeScale-0);
+  font-size: var(--typeScale-00);
   line-height: var(--lineHeight-3);
   color: var(--inverted-text);
 `
