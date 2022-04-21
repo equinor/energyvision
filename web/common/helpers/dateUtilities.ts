@@ -34,9 +34,12 @@ export const getEventDates = (eventDate: EventDateType) => {
 
   if (!date) return { start: null, end: null }
 
+  const universalDate = date.replace(/-/g, '/')
+
   if (startTime && endTime) {
-    const start = zonedTimeToUtc(new Date(date + ' ' + startTime), timezone).toString()
-    const end = zonedTimeToUtc(new Date(date + ' ' + endTime), timezone).toString()
+    const start = zonedTimeToUtc(new Date(universalDate + ' ' + startTime), timezone).toString()
+    const end = zonedTimeToUtc(new Date(universalDate + ' ' + endTime), timezone).toString()
+
     return { start: start, end: end }
   } else {
     const [YYYY, MM, DD] = date.split('-').map(Number)
