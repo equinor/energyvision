@@ -108,11 +108,16 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const { publicRuntimeConfig } = getConfig()
 
   const HeadTags = () => {
-    const activeSlug = slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug
+    const activeSlug =
+      slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || router.asPath
     const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
     const defaultLocale = defaultLanguage.locale
-
+    const canonicalSlug =
+      localization.activeLocale === defaultLocale
+        ? `${activeSlug !== '/' ? activeSlug : ''}`
+        : `${localization.activeLocale}${activeSlug !== '/' ? activeSlug : ''}`
     return (
+      /** @TODO Add alternate tags to archived news */
       <Head>
         {slugs.length > 1 &&
           slugs.map((slug) => {
@@ -135,7 +140,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           />
         )}
 
-        <link rel="canonical" href={`${publicRuntimeConfig.domain}/${localization.activeLocale}${activeSlug}`} />
+        <link rel="canonical" href={`${publicRuntimeConfig.domain}/${canonicalSlug}`} />
       </Head>
     )
   }
