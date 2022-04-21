@@ -1,13 +1,26 @@
 import { getRedirectUrl, getDnsRedirect } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
-import { isGlobal } from '../common/helpers/datasetHelpers'
-import { getNewsPaths } from '../common/helpers/getPaths'
+import { hasArchivedNews, isGlobal } from '../common/helpers/datasetHelpers'
+import { getNewsPaths, getLocalNewsPaths, getRoutePaths } from '../common/helpers/getPaths'
+import { languages } from '../languages'
 
 const PERMANENT_REDIRECT = 301
 const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
+
+// Check if a given path exists in Sanity or not
+const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
+  const locales = languages.map((lang) => lang.locale)
+
+  const routeSlugs = await getRoutePaths(locales)
+  const newsSlugs = await getNewsPaths(locales)
+  const localNewsSlugs = await getLocalNewsPaths(locales)
+  const allSlugs = [...routeSlugs, ...newsSlugs, ...localNewsSlugs]
+
+  return allSlugs.some((item) => item.slug === pathname)
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl
@@ -25,9 +38,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
-  if (pathname.startsWith('/news') && !pathname.startsWith('/news/archive') && isGlobal) {
-    const sanityNewsSlugs = await getNewsPaths(['en', 'no'])
-    const existsInSanity = sanityNewsSlugs.some((item) => item.slug === pathname)
+  if (hasArchivedNews && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
+    const existsInSanity = await pathExistsInSanity(pathname)
     if (!existsInSanity) return NextResponse.redirect(`${origin}${pathname.replace('news', 'news/archive')}`)
   }
 
