@@ -11,6 +11,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 import news from './documents/news'
 import page from './documents/page'
 import redirect from './documents/redirect'
+import externalRedirect from './documents/externalRedirect'
 import landingPage from './documents/landingPage'
 import route from './documents/route'
 import routeHomepage from './documents/routeHomepage'
@@ -143,6 +144,7 @@ const RemainingSchemas = [
   textSnippet,
   largeTable,
   redirect,
+  externalRedirect,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

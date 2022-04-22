@@ -23,6 +23,12 @@ const redirects = languages.map((lang) =>
     ),
 )
 
+export const ExternalRedirects = S.listItem()
+  .title('External Redirects')
+  .icon(() => EdsIcon(directions))
+  .schemaType('externalRedirect')
+  .child(S.documentTypeList('externalRedirect').title('External Redirects').showIcons(false))
+
 export const Redirects = S.listItem()
   .icon(() => EdsIcon(directions))
   .title('Redirects')

@@ -4,7 +4,7 @@ import { settings } from '@equinor/eds-icons'
 import { Tags } from './Tags'
 import { CountryTags } from './CountryTags'
 import { LocalNewsTags } from './LocalNewsTags'
-import { Redirects } from './Redirects'
+import { Redirects, ExternalRedirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
 import { HAS_NEWS, HAS_LOCAL_NEWS } from '../../datasetHelpers'
 
@@ -13,6 +13,7 @@ const settingsItems = [
   HAS_NEWS && CountryTags,
   TextSnippet,
   Redirects,
+  ExternalRedirects,
   HAS_LOCAL_NEWS && LocalNewsTags,
 ].filter((e) => e)
 

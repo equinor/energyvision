@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getRedirectUrl, getDnsRedirect } from '../common/helpers/redirects'
+import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
 import { hasArchivedNews, isGlobal } from '../common/helpers/datasetHelpers'
@@ -31,6 +31,7 @@ export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isPreview = isPreviewEnabled(request)
+
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
     return undefined
@@ -54,11 +55,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`)
   }
 
-  // Check if a redirect exists in sanity
+  // Check if an external redirect exists in sanity
+  const externalRedirect = await getExternalRedirectUrl(pathname, request.nextUrl.locale)
+  if (externalRedirect) {
+    return NextResponse.redirect(externalRedirect.to, PERMANENT_REDIRECT)
+  }
+
+  // Check if an internal redirect exists in sanity
   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
-    return NextResponse.redirect(`${origin}/${locale}${redirect.to}`, PERMANENT_REDIRECT)
+    return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)
   }
 
   // Check if has /magazine/ in the url and redirect to a temporary landing page if so
