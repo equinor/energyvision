@@ -59,7 +59,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
       {pages.map((page) => (
         <PaginationItem
           key={page}
-          ariaLabel={String(page)}
+          ariaLabel={`Page ${page + 1}`}
           value={page}
           isCurrent={page === currentRefinement}
           isDisabled={false}

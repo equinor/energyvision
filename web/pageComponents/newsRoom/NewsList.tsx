@@ -16,7 +16,7 @@ const StyledNewsList = styled.div`
 `
 
 const StyledPagination = styled(Pagination)`
-  padding-top: var(--space-medium);
+  margin-top: var(--space-medium);
 `
 
 const NewsList = ({ ...rest }) => {
