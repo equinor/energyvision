@@ -20,7 +20,7 @@ export default {
         Rule.custom(async (value: string, context: ValidationContext) => {
           const { document } = context
           const documentId = document?._id
-          const query = `*[_type == 'externalRedirect' && from == $value && _id != $documentId && !(_id in path("drafts.**"))]`
+          const query = `*[_type == 'externalRedirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId && !(_id in path("drafts.**"))]`
           const params = { value, documentId }
           const redirects = await client.fetch(query, params)
 
@@ -42,7 +42,6 @@ export default {
       type: 'string',
       validation: (Rule: Rule) =>
         Rule.custom(async (value: string) => {
-          console.log(value)
           if (!value) {
             return 'Url is required'
           } else if (!value.startsWith('https://') && !value.startsWith('http://')) {

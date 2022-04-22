@@ -22,7 +22,7 @@ export default {
         Rule.custom(async (value: string, context: ValidationContext) => {
           const { document } = context
           const documentId = document?._id
-          const query = `*[_type == 'redirect' && from == $value && _id != $documentId]`
+          const query = `*[_type == 'redirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId]`
           const params = { value, documentId }
           const redirects = await client.fetch(query, params)
 
