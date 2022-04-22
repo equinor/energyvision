@@ -115,7 +115,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
     const canonicalSlug =
       localization.activeLocale === defaultLocale
         ? `${activeSlug !== '/' ? activeSlug : ''}`
-        : `${localization.activeLocale}${activeSlug !== '/' ? activeSlug : ''}`
+        : `/${localization.activeLocale}${activeSlug !== '/' ? activeSlug : ''}`
     return (
       /** @TODO Add alternate tags to archived news */
       <Head>
@@ -140,7 +140,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           />
         )}
 
-        <link rel="canonical" href={`${publicRuntimeConfig.domain}/${canonicalSlug}`} />
+        <link rel="canonical" href={`${publicRuntimeConfig.domain}${canonicalSlug}`} />
       </Head>
     )
   }
