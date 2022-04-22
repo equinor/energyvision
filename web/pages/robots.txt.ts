@@ -8,7 +8,7 @@ const crawlableDomains = ['www.equinor.com', 'www.equinor.pl', 'www.equinorstora
 
 const robots = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
-Sitemap: ${domain}/sitemap.xml
+Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 Crawl-delay: 10`
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
