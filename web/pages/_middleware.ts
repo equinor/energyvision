@@ -3,8 +3,7 @@ import { getRedirectUrl, getDnsRedirect } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
 import { hasArchivedNews, isGlobal } from '../common/helpers/datasetHelpers'
-import { getNewsPaths, getLocalNewsPaths, getRoutePaths } from '../common/helpers/getPaths'
-import { languages } from '../languages'
+import { getDocumentBySlug } from '../common/helpers/getPaths'
 
 const PERMANENT_REDIRECT = 301
 const TEMPORARY_REDIRECT = 302
@@ -12,23 +11,26 @@ const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 
 // Check if a given path exists in Sanity or not
-const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
-  const locales = languages.map((lang) => lang.locale)
+const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
+  const article = await getDocumentBySlug(pathname, isPreview)
+  return Boolean(article)
+}
 
-  const routeSlugs = await getRoutePaths(locales)
-  const newsSlugs = await getNewsPaths(locales)
-  const localNewsSlugs = await getLocalNewsPaths(locales)
-  const allSlugs = [...routeSlugs, ...newsSlugs, ...localNewsSlugs]
+// Check if preview mode is enabled in Sanity
+const isPreviewEnabled = (request: NextRequest): boolean => {
+  const { searchParams } = request.nextUrl
+  const previewCookie = request.cookies['__next_preview_data']
+  const previewParam = searchParams.get('preview')
 
-  const slug = pathname.startsWith('/') ? pathname.substring(1) : pathname
+  if (previewCookie && previewParam) return true
 
-  // @ts-ignore
-  return allSlugs.some((item) => item.slug.join('/') === slug)
+  return false
 }
 
 export async function middleware(request: NextRequest) {
   const { pathname, origin } = request.nextUrl
   const isDotHtml = pathname.slice(-5) === DOT_HTML
+  const isPreview = isPreviewEnabled(request)
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
     return undefined
@@ -43,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
   if (hasArchivedNews && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
-    const existsInSanity = await pathExistsInSanity(pathname)
+    const existsInSanity = await pathExistsInSanity(pathname, isPreview)
     if (!existsInSanity) return NextResponse.redirect(`${origin}${pathname.replace('news', 'news/archive')}`)
   }
 

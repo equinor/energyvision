@@ -11,7 +11,7 @@ export default function NewsPreview(props: any) {
   }
   const locale = getLocaleFromName(displayed._lang)
 
-  const url = `${baseUrl}/${locale}/${displayed?.slug?.current}?preview`
+  const url = `${baseUrl}/${locale}/${displayed?.slug?.current}?preview=true`
 
   return (
     <div className={styles.componentWrapper}>

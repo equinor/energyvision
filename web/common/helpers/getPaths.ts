@@ -31,6 +31,22 @@ const getNewsOrLocalNewsForLocale = async (type: 'news' | 'localNews', locale: s
   return data
 }
 
+// Get a Sanity document by given slug
+// Only include drafts if preview mode is enabled
+export const getDocumentBySlug = async (slug: string, isPreview = false) => {
+  const draft = isPreview ? `` : `&& !(_id in path("drafts.**"))`
+  const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
+    groq`*[defined(slug.current) && slug.current == $slug ${draft}][0] {
+      _updatedAt,
+      "slug": slug.current,
+    }`,
+    {
+      slug,
+    },
+  )
+  return data
+}
+
 export type PathType = {
   slug: string[] | string
   updatedAt: string
