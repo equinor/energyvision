@@ -2,17 +2,17 @@
  * More on security headers can be found at:
  * https://nextjs.org/docs/advanced-features/security-headers
  */
-import { domain } from './languages.js'
 
-const sanitizedDomain = domain.replace('https://', '').replace('http://', '').replace('www.', '')
-
+/*
 const ContentSecurityPolicy = `
-default-src 'self';
-script-src 'self';
-child-src ${sanitizedDomain};
-style-src 'self' ${sanitizedDomain};
-font-src 'self';
+  default-src 'self' cdn.sanity.io;
+  img-src 'self' cdn.sanity.io;
+  script-src 'self';
+  child-src 'self';
+  style-src 'self';
+  font-src 'self';
 `
+*/
 
 export default [
   {
@@ -43,10 +43,12 @@ export default [
   },
   {
     key: 'Referrer-Policy',
-    value: 'origin-when-cross-origin',
+    value: 'no-referrer-when-downgrade',
   },
+  /*
   {
     key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
   },
+  */
 ]
