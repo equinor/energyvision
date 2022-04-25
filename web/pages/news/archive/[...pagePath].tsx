@@ -20,6 +20,7 @@ import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
 import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
+import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
 
 import type { MenuData, SimpleMenuData } from '../../../types/types'
 import { FormattedMessage } from 'react-intl'
@@ -160,9 +161,12 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   }
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
-  const menuData = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
-  const footerData = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
+  const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+  const footerDataWithDrafts = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
   const intl = await getIntl(locale, preview)
+
+  const menuData = filterDataToSingleItem(menuDataWithDrafts, preview)
+  const footerData = filterDataToSingleItem(footerDataWithDrafts, preview)
 
   return {
     props: {
