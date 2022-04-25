@@ -59,10 +59,11 @@ RUN addgroup -S "$USER" && \
 
 COPY --from=builder /opt/app/web/.next ./web/.next
 COPY --from=builder /opt/app/web/next.config.mjs ./web
+COPY --from=builder /opt/app/web/securityHeaders.mjs ./web
 COPY --from=builder /opt/app/web/package.json ./web
 COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
-COPY --from=builder /opt/app/pnpm-lock.yaml ./
 COPY --from=builder /opt/app/web/languages.js ./web
+COPY --from=builder /opt/app/pnpm-lock.yaml ./
 COPY --from=builder /opt/app/web/public ./web/public
 COPY --from=builder /opt/app/package.json ./
 COPY --from=builder /opt/app/satellitesConfig.js ./
