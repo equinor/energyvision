@@ -2,7 +2,7 @@
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
 import { languages, defaultLanguage, domain } from './languages.js'
-import securityHeaders from './securityHeaders.js'
+import securityHeaders from './securityHeaders.mjs'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundle = withBundleAnalyzer({
