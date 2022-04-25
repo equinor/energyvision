@@ -51,7 +51,6 @@
     "next-circular-dependency": "^1.0.1",
     "next-sanity": "0.4.0",
     "next-sanity-image": "^3.2.1",
-    "next-secure-headers": "^2.2.0",
     "next-seo": "^5.1.0",
     "only-allow": "^1.1.0",
     "prom-client": "^13.2.0",

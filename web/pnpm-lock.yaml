@@ -52,7 +52,6 @@ specifiers:
   next-circular-dependency: ^1.0.1
   next-sanity: 0.4.0
   next-sanity-image: ^3.2.1
-  next-secure-headers: ^2.2.0
   next-seo: ^5.1.0
   only-allow: ^1.1.0
   prettier: 2.6.0
@@ -107,7 +106,6 @@ dependencies:
   next-circular-dependency: 1.0.1
   next-sanity: 0.4.0_react@17.0.2
   next-sanity-image: 3.2.1_a13c486ae6f2fafd0e1bbb5354ecf1d7
-  next-secure-headers: 2.2.0
   next-seo: 5.4.0_7711af82ee0d60a5c39f3f11da715b4c
   only-allow: 1.1.0
   prom-client: 13.2.0
@@ -5239,7 +5237,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.9_debug@2.6.9
+      follow-redirects: 1.14.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -5247,7 +5245,7 @@ packages:
   /axios/0.26.1:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
-      follow-redirects: 1.14.9_debug@2.6.9
+      follow-redirects: 1.14.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7461,6 +7459,16 @@ packages:
 
   /focus-visible/5.2.0:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
+    dev: false
+
+  /follow-redirects/1.14.9:
+    resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.9_debug@2.6.9:
@@ -10092,11 +10100,6 @@ packages:
       groq: 2.29.3
       react: 17.0.2
       use-deep-compare-effect: 1.8.1_react@17.0.2
-    dev: false
-
-  /next-secure-headers/2.2.0:
-    resolution: {integrity: sha512-C7OfZ9JdSJyYMz2ZBMI/WwNbt0qNjlFWX9afUp8nEUzbz6ez3JbeopdyxSZJZJAzVLIAfyk6n73rFpd4e22jRg==}
-    engines: {node: '>=10.0.0'}
     dev: false
 
   /next-seo/5.4.0_7711af82ee0d60a5c39f3f11da715b4c:

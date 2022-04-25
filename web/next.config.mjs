@@ -2,7 +2,7 @@
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
 import { languages, defaultLanguage, domain } from './languages.js'
-import { createSecureHeaders } from 'next-secure-headers'
+import securityHeaders from './securityHeaders.js'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundle = withBundleAnalyzer({
@@ -60,19 +60,8 @@ export default withBundle({
   async headers() {
     return [
       {
-        source: '/(.*)',
-        headers: createSecureHeaders({
-          contentSecurityPolicy: {
-            directives: {
-              defaultSrc: ["'self'", domain],
-              styleSrc: ["'self'", "'unsafe-inline'"],
-              imgSrc: ["'self'"],
-              baseUri: 'self',
-              formAction: 'self',
-              frameAncestors: true,
-            },
-          },
-        }),
+        source: '/:path*',
+        headers: securityHeaders,
       },
     ]
   },
