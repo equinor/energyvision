@@ -16,6 +16,7 @@ import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
 import getConfig from 'next/config'
+import { getALlSitesLink } from '../../common/helpers/getAllSitesLink'
 
 const StyledSearchButton = styled(Button)`
   color: var(--default-text);
@@ -94,8 +95,9 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
 
   /** Display "All sites" in case menu is empty **/
   const shouldDisplayAllSites = !isGlobal && !menuData
+  const allSitesURL = getALlSitesLink('external')
   const AllSites = () => (
-    <NextLink href="https://www.equinor.com/languages.html?language=en" passHref>
+    <NextLink href={allSitesURL} passHref>
       <StyledAllSites>
         <FormattedMessage id="all_sites" defaultMessage="All Sites" />
       </StyledAllSites>

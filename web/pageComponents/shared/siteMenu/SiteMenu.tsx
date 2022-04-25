@@ -11,6 +11,7 @@ import { TopbarDropdown } from './TopbarDropdown'
 import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
+import { getALlSitesLink } from '../../../common/helpers/getAllSitesLink'
 
 import { LogoLink } from '../LogoLink'
 
@@ -99,6 +100,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   }
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
+  const allSitesURL = getALlSitesLink('internal', router?.locale || 'en')
 
   return (
     <>
@@ -118,7 +120,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                       return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                     })}
                   </Menu>
-                  <NextLink href="https://www.equinor.com/languages.html?language=en" passHref>
+                  <NextLink href={allSitesURL} passHref>
                     <AllSitesLink>
                       <FormattedMessage id="all_sites" defaultMessage="All sites" />
                     </AllSitesLink>
