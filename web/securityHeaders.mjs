@@ -28,10 +28,6 @@ export default [
     value: '1; mode=block',
   },
   {
-    key: 'X-Frame-Options',
-    value: 'DENY',
-  },
-  {
     //https://github.com/w3c/webappsec-permissions-policy/issues/189
     key: 'Permissions-Policy',
     value:
