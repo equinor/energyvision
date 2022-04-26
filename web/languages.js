@@ -9,4 +9,4 @@ const defaultLanguage = languages.find((lang) => lang.id === defaultWebLanguage[
 
 const domain = getDomain(dataset)
 
-module.exports = { languages, defaultLanguage, domain }
+module.exports = { dataset, languages, defaultLanguage, domain }
