@@ -5,7 +5,7 @@ import sanityClient from 'part:@sanity/base/client'
 
 const client = sanityClient.withConfig({
   apiVersion: '2021-05-19',
-  projectId: process.env.SANITY_STUDIO_API_PROJECT_ID,
+  projectId: process.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9',
   token: process.env.SANITY_STUDIO_MUTATION_TOKEN,
 })
 
