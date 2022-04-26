@@ -44,7 +44,7 @@ export default [
     //https://github.com/w3c/webappsec-permissions-policy/issues/189
     key: 'Permissions-Policy',
     value:
-      'accelerometer=(); camera=(); geolocation=(); gyroscope=(); magnetometer=(); microphone=(); payment=(); usb=()',
+      'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()',
   },
   {
     key: 'X-Content-Type-Options',
