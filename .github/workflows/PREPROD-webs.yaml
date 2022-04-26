@@ -1,8 +1,6 @@
 name: PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 20 * * *'
 jobs:
   check-code:
     runs-on: ubuntu-latest
