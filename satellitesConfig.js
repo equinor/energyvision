@@ -26,6 +26,7 @@ const newsSlug = {
   nb_NO: 'nyheter',
   pt_BR: 'noticias',
   pl_PL: 'aktualnosci',
+  de_DE: 'aktuelles',
 }
 
 /*
@@ -42,6 +43,7 @@ const newsSlug = {
 const datasets = {
   // The  equinor.com dataset
   global: ['english', 'norwegian'],
+  secret: ['english', 'norwegian'],
   // Satellite pages
   brazil: ['portuguese'],
   germany: ['german'],
