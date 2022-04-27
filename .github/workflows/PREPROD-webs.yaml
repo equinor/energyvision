@@ -104,8 +104,8 @@ jobs:
           projectId: w3b4om14
           datasetName: secret
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
+          sanityApiToken: ${{ secrets.SANITY_API_SECRET_TOKEN }}
+          sanityPreviewSecret: ${{ secrets.SANITY_API_SECRET_TOKEN }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
