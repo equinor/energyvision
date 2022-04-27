@@ -162,7 +162,7 @@ const ContactEquinorForm = () => {
                   {...props}
                   id={props.name}
                   label={intl.formatMessage({
-                    id: 'contact_form_name',
+                    id: 'contact_form_reaching_out',
                     defaultMessage: 'Who are you trying to reach?',
                   })}
                   inputRef={ref}
