@@ -139,7 +139,7 @@ jobs:
         if: failure()
 
   deploy-satellites:
-    needs: [deploy-global, read-satellites]
+    needs: [update-radix-config, read-satellites]
     runs-on: ubuntu-latest
     environment:
       name: preprod
