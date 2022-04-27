@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@algolia/client-search': ^4.13.0
-  '@equinor/eds-core-react': 0.18.0
+  '@equinor/eds-core-react': 0.19.0
   '@equinor/eds-icons': ^0.10.0
   '@equinor/eds-tokens': ^0.7.0
   '@microsoft/applicationinsights-react-js': ^3.2.4
@@ -76,7 +76,7 @@ specifiers:
   xml2js: ^0.4.23
 
 dependencies:
-  '@equinor/eds-core-react': 0.18.0_cdce0472005fc9929e7dd0afca7bfa15
+  '@equinor/eds-core-react': 0.19.0_cdce0472005fc9929e7dd0afca7bfa15
   '@equinor/eds-icons': 0.10.0
   '@equinor/eds-tokens': 0.7.0
   '@microsoft/applicationinsights-react-js': 3.2.4_react@17.0.2
@@ -1980,8 +1980,8 @@ packages:
     resolution: {integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==}
     dev: true
 
-  /@equinor/eds-core-react/0.18.0_cdce0472005fc9929e7dd0afca7bfa15:
-    resolution: {integrity: sha512-Fw8Z1Rbc+gSvSB1b35dSXg1D63vTngXpTTV6lufw1Cdl2z0Ae9UOiNIzwt0fB0qJkLy/zGwo9LseBuWyTTfrzA==}
+  /@equinor/eds-core-react/0.19.0_cdce0472005fc9929e7dd0afca7bfa15:
+    resolution: {integrity: sha512-dyJ8EoCQQzGCQcLLsp5HQsS8bdvn5uPfVgi1fcwyjS0E2YFOiLoNJ/yn2VIwrcD3cTKS1fbLGnAu+0XMBH3aOg==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
       react: '>=16.8'
@@ -1991,7 +1991,7 @@ packages:
       '@babel/runtime': 7.17.9
       '@equinor/eds-icons': 0.10.0
       '@equinor/eds-tokens': 0.7.0
-      '@equinor/eds-utils': 0.1.0_cdce0472005fc9929e7dd0afca7bfa15
+      '@equinor/eds-utils': 0.2.1_cdce0472005fc9929e7dd0afca7bfa15
       '@popperjs/core': 2.9.2
       downshift: 6.1.7_react@17.0.2
       react: 17.0.2
@@ -2011,8 +2011,8 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@equinor/eds-utils/0.1.0_cdce0472005fc9929e7dd0afca7bfa15:
-    resolution: {integrity: sha512-1iG1H3cJtOlKlepoPBS1pOWMdeBivQ5fvAafNacA1lZVNX7TFVXIjypVojIBbwy5C/3viJzBuyMMxvqDv3PZXA==}
+  /@equinor/eds-utils/0.2.1_cdce0472005fc9929e7dd0afca7bfa15:
+    resolution: {integrity: sha512-Stlk+Q2w6jbEwJwKayee/SKrC5LbUEDs3r4fkEnxem0ZM3edusqEGeE+ilVZtviV6eYwDSjjBvkoroNOH37Z9Q==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
       react: '>=16.8'
@@ -6878,7 +6878,7 @@ packages:
       prop-types: 15.8.1
       react: 17.0.2
       react-is: 17.0.2
-      tslib: 2.3.1
+      tslib: 2.4.0
 
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -12907,7 +12907,6 @@ packages:
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-    dev: true
 
   /tty-browserify/0.0.0:
     resolution: {integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=}
