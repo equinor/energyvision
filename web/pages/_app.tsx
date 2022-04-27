@@ -9,6 +9,8 @@ import 'focus-visible'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -52,6 +54,11 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
   />
 )
 
+// Log errors to relevant services here
+const HandleBoundaryError = (error: Error, info: { componentStack: string }) => {
+  console.error(error, info)
+}
+
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
@@ -92,16 +99,18 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   return (
-    <>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <GlobalStyle />
-      <GlobalFontStyle />
-      <SkipNavLink />
-      {IS_LIVE && <CookieBot locale={router.locale} />}
-      {getLayout(<Component {...pageProps} />)}
-    </>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
+      <>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <GlobalStyle />
+        <GlobalFontStyle />
+        <SkipNavLink />
+        {IS_LIVE && <CookieBot locale={router.locale} />}
+        {getLayout(<Component {...pageProps} />)}
+      </>
+    </ErrorBoundary>
   )
 }
 

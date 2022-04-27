@@ -59,6 +59,7 @@ specifiers:
   query-string: ^7.1.1
   react: ^17.0.2
   react-dom: ^17.0.2
+  react-error-boundary: ^3.1.4
   react-focus-lock: ^2.8.1
   react-hook-form: 7.28.1
   react-instantsearch-hooks: ^6.22.0
@@ -112,6 +113,7 @@ dependencies:
   query-string: 7.1.1
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-error-boundary: 3.1.4_react@17.0.2
   react-focus-lock: 2.8.1_c8e45b4eb687790dba17b4e1c4b4273f
   react-hook-form: 7.28.1_react@17.0.2
   react-instantsearch-hooks: 6.23.3_24a9da51e62336c335e8233e10af21bd
@@ -5237,7 +5239,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.9
+      follow-redirects: 1.14.9_debug@2.6.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -5245,7 +5247,7 @@ packages:
   /axios/0.26.1:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
-      follow-redirects: 1.14.9
+      follow-redirects: 1.14.9_debug@2.6.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7459,16 +7461,6 @@ packages:
 
   /focus-visible/5.2.0:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
-    dev: false
-
-  /follow-redirects/1.14.9:
-    resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: false
 
   /follow-redirects/1.14.9_debug@2.6.9:
@@ -11193,6 +11185,16 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-is: 17.0.2
     dev: true
+
+  /react-error-boundary/3.1.4_react@17.0.2:
+    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.17.9
+      react: 17.0.2
+    dev: false
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
