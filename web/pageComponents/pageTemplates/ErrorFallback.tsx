@@ -1,4 +1,4 @@
-import { Button, Text, Heading } from '@components'
+import { Button, Text, Heading, Link } from '@components'
 import styled from 'styled-components'
 import { GlobalStyle, GlobalFontStyle } from '../../styles/globalStyles'
 
@@ -44,6 +44,18 @@ const sliceErrorStack = (stackTrace = '', numLines = 10) => {
   return joinedLines
 }
 
+const getMailLink = (): string => {
+  const subject = 'Problem: unable to load website'
+
+  if (typeof window === 'undefined') {
+    return `mailto:noreply@equinor.com?subject=${encodeURIComponent(subject)}`
+  }
+
+  const body = `An error occured while viewing: ${window.location.href}`
+
+  return `mailto:noreply@equinor.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
+
 export const ErrorFallback = ({ error, errorInfo, resetErrorBoundary }: any) => {
   return (
     <Wrapper>
@@ -62,12 +74,13 @@ export const ErrorFallback = ({ error, errorInfo, resetErrorBoundary }: any) => 
 
         <StyledButton onClick={resetErrorBoundary}>Reload the Page</StyledButton>
 
-        {/* TODO: get correct text & contact details
         <Text>
-          If the error keeps occurring, please file a bug report with the following details, and include any steps to
-          reproduce the issue:
+          If the error keeps occurring, please contact us at{' '}
+          <Link type="externalUrl" href={getMailLink()}>
+            noreply@equinor.com
+          </Link>{' '}
+          with the URL of the page you are trying to view and the details below:
         </Text>
-        */}
       </ContentWrapper>
 
       <ContentWrapper>
