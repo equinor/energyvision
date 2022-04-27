@@ -1,3 +1,5 @@
+import { publishDateTimeQuery } from './news'
+
 export const menuQuery = /* groq */ `
   *[_type == "siteMenu" && _lang == $lang] {
     _id,
@@ -36,7 +38,7 @@ export const menuQuery = /* groq */ `
         "updatedAt": _updatedAt,
         title,
         heroImage,
-        "publishDateTime": coalesce(publishDateTime, _createdAt),
+        "publishDateTime": ${publishDateTimeQuery},
         "slug": slug.current,
         ingress,
       },
