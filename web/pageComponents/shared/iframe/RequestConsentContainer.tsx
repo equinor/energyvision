@@ -80,6 +80,16 @@ type RequestConsentContainerProps = {
   cookiePolicy: string
 }
 
+const handleCookiebotRenew = () => {
+  if (window?.Cookiebot) {
+    try {
+      window.Cookiebot?.renew()
+    } catch (error) {
+      console.error('An error occured while trying to run the Cookiebot script: ', error)
+    }
+  }
+}
+
 const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
   const intl = useIntl()
   const typeOfCookie =
@@ -146,13 +156,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </StyledText>
 
-        <LeftAlignedButton
-          onClick={() => {
-            window.Cookiebot.renew()
-          }}
-          color="secondary"
-          variant="outlined"
-        >
+        <LeftAlignedButton onClick={handleCookiebotRenew} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
         </LeftAlignedButton>
       </Content>

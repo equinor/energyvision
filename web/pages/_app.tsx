@@ -68,7 +68,13 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
   useEffect(() => {
     if (window.self === window.top) {
-      window.Cookiebot?.runScripts()
+      if (window?.Cookiebot) {
+        try {
+          window.Cookiebot?.runScripts()
+        } catch (error) {
+          console.error('An error occured while trying to run the Cookiebot script: ', error)
+        }
+      }
     }
   }, [router.asPath])
 
