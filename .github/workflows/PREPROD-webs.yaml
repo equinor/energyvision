@@ -84,16 +84,12 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-global:
+  deploy-secret:
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: preprod
-      url: https://web-energyvision-dev.radix.equinor.com/
-    strategy:
-      # The matrix approach is needed to re-use code created for satellites
-      matrix:
-        dataset: ['global']
+      url: https://web-secret-energyvision-preprod.radix.equinor.com/
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -101,11 +97,12 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
-      - id: deploy-global
+      - id: deploy-secret
         uses: ./.github/workflows/deploy-websites/
         with:
-          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
-          datasetName: ${{ matrix.dataset }}
+          imageName: ghcr.io/equinor/energyvision/web-secret
+          projectId: w3b4om14
+          datasetName: secret
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
           sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
@@ -138,7 +135,7 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-satellites:
+  deploy-all-sites:
     needs: [update-radix-config, read-satellites]
     runs-on: ubuntu-latest
     environment:

@@ -8,6 +8,7 @@ on:
         type: choice
         options:
           - global
+          - secret
           - brazil
           - germany
           - argentina
@@ -51,7 +52,6 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
-
 
   deploy:
     needs: update-radix-config

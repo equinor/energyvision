@@ -10,11 +10,11 @@ const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 const remoteUrl = () => {
   switch (dataset) {
     case 'global':
-      return 'https://web-energyvision-preprod.radix.equinor.com'
+      return 'https://web-energyvision-prod.radix.equinor.com'
     case 'global-development':
       return 'https://web-global-development-energyvision-dev.radix.equinor.com'
     default:
-      return `https://web-${dataset}-energyvision-preprod.radix.equinor.com`
+      return `https://web-${dataset}-energyvision-prod.radix.equinor.com`
   }
 }
 

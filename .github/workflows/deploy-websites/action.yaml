@@ -4,6 +4,9 @@ inputs:
   imageName:
     description: 'The path to where the image is to be copied'
     required: true
+  projectId:
+    description: 'Id of the sanity project'
+    required: false
   datasetName:
     description: 'Name of dataset to be used for Sanity'
     required: true
@@ -45,6 +48,7 @@ runs:
       run: |
         docker build . \
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG}} \
+          --build-arg ARG_SANITY_PROJECT_ID=${{ inputs.projectId }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
           --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }} \
