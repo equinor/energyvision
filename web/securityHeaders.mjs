@@ -23,7 +23,7 @@ const xFrameUrls = [localUrl, ...studioUrls, globalUrl, secretUrl].filter((e) =>
   img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com;
   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com;
   script-src-elem 'self' 'unsafe-inline' https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.googletagmanager.com;
-  frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com;
+  frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com;
   frame-ancestors ${xFrameUrls};
   font-src 'self' https://eds-static.equinor.com;
 ` 
