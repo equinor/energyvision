@@ -76,7 +76,7 @@ export const publishDateTime = [
     name: 'publishDateTime',
     type: 'datetime',
     options: {
-      timeStep: 15,
+      timeStep: 1,
       calendarTodayLabel: 'Today',
     },
     hidden: ({ parent }: { parent: PublishDateTimeType }) => !parent.customPublicationDate,
