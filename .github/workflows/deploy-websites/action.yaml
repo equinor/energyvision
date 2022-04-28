@@ -75,7 +75,7 @@ runs:
           deploy
           --token-environment
           --context platform2
-          -a energyvision
+          -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
     - name: log-errors-to-slack 📄
