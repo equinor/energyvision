@@ -21,12 +21,12 @@ const xFrameUrls = [localUrl, ...studioUrls, globalUrl, secretUrl].filter((e) =>
   ${isProduction ? "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com": "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com 'unsafe-eval'"};
   img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com;
   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com;
-  script-src-elem 'self' https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com;
+  script-src-elem 'self' 'unsafe-inline' https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.googletagmanager.com;
   frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com;
   frame-ancestors ${xFrameUrls};
   font-src 'self';
 ` 
-//console.log(ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim())
+// console.log(ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim())
 
 export default [
   {
