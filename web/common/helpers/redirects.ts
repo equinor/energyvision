@@ -51,6 +51,10 @@ export const getDnsRedirect = (host: string, pathname: string) => {
       from: 'h2hsaltend.co.uk',
       to: '/en/energy/h2h-saltend',
     },
+    {
+      from: 'equinor.ca',
+      to: '/en/where-we-are/canada',
+    },
   ]
 
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
