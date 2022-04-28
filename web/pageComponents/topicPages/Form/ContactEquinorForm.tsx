@@ -4,6 +4,7 @@ import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { useState } from 'react'
+import FriendlyCaptcha from './FriendlyCaptcha'
 
 type FormValues = {
   name: string
@@ -12,14 +13,21 @@ type FormValues = {
   receiver: string
   message: string
 }
+/* tslint:disable */
+const JsFriendlyCaptcha: any = FriendlyCaptcha
+/* tslint:enable */
 
 const ContactEquinorForm = () => {
   const intl = useIntl()
+  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const onSubmit = async (data: FormValues) => {
     const res = await fetch('/api/forms/service-now-contact-us', {
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        data,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -52,6 +60,7 @@ const ContactEquinorForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
+          setSubmitButtonEnabled(false)
           setSuccessfullySubmitted(false)
         }}
       >
@@ -198,7 +207,15 @@ const ContactEquinorForm = () => {
               )}
             />
 
-            <FormButton type="submit">
+            <JsFriendlyCaptcha
+              doneCallback={() => {
+                setSubmitButtonEnabled(true)
+              }}
+              errorCallback={() => {
+                setSubmitButtonEnabled(true)
+              }}
+            />
+            <FormButton type="submit" disabled={!submitButtonEnabled}>
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
@@ -214,6 +231,7 @@ const ContactEquinorForm = () => {
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
+              setSubmitButtonEnabled(false)
             }}
           />
         )}

@@ -78,7 +78,10 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
     timeout: 5000,
   })
   xml2js.parseString(response.body, function (err, result) {
-    if (err != null) console.error("Error while creating distribute request to Brandmaster : ----------------\n"+err)
+    if (err != null) {
+      console.error("Error while creating distribute request to Brandmaster : ----------------\n"+err)
+      response.statusCode = 400
+    }
     const error = parsedError(result,"could not distribute newsletter "+parameters.link+" published at "+parameters.timeStamp)
     if(error != undefined)
     {

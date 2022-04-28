@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox } from '@components'
 import { useState } from 'react'
+import FriendlyCaptcha from './FriendlyCaptcha'
 
 const StyledFieldset = styled.fieldset`
   border: 0;
@@ -43,6 +44,10 @@ const StyledLegend = styled.legend`
   font-size: var(--typeScale-2);
 `
 
+/* tslint:disable */
+const JsFriendlyCaptcha: any = FriendlyCaptcha
+/* tslint:enable */
+
 type FormValues = {
   firstName: string
   email: string
@@ -52,8 +57,10 @@ type FormValues = {
 const SubscribeForm = () => {
   const router = useRouter()
   const intl = useIntl()
+  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+
   const onSubmit = async (data: FormValues) => {
     const allCategories = data.categories.includes('all')
     const subscribeFormParamers: SubscribeFormParameters = {
@@ -65,8 +72,12 @@ const SubscribeForm = () => {
       magazineStories: allCategories || data.categories.includes('magazineStories'),
       languageCode: router.locale == 'en' ? 'en' : 'no',
     }
+
     const res = await fetch('/api/subscribe-form', {
-      body: JSON.stringify(subscribeFormParamers),
+      body: JSON.stringify({
+        subscribeFormParamers,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -89,6 +100,7 @@ const SubscribeForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       onReset={() => {
         reset()
+        setSubmitButtonEnabled(false)
         setSuccessfullySubmitted(false)
       }}
     >
@@ -242,7 +254,15 @@ const SubscribeForm = () => {
               />
             )}
           />
-          <FormButton type="submit">
+          <JsFriendlyCaptcha
+            doneCallback={() => {
+              setSubmitButtonEnabled(true)
+            }}
+            errorCallback={() => {
+              setSubmitButtonEnabled(true)
+            }}
+          />
+          <FormButton type="submit" disabled={!submitButtonEnabled}>
             {isSubmitting ? (
               <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
             ) : (
@@ -258,6 +278,7 @@ const SubscribeForm = () => {
           onClick={() => {
             reset(undefined, { keepValues: true })
             setServerError(false)
+            setSubmitButtonEnabled(false)
           }}
         />
       )}

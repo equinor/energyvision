@@ -69,7 +69,9 @@
     "styled-normalize": "^8.0.7",
     "swr": "^1.2.2",
     "uuid": "^8.3.2",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "friendly-challenge": "^0.9.1",
+    "next-transpile-modules": "^9.0.0"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.13.0",

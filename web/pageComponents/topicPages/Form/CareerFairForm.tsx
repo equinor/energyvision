@@ -5,6 +5,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import styled from 'styled-components'
 import { useState } from 'react'
+import FriendlyCaptcha from './FriendlyCaptcha'
 
 type FormValues = {
   organisation: string
@@ -18,17 +19,24 @@ type FormValues = {
   preferredLang: string
 }
 
+/* tslint:disable */
+const JsFriendlyCaptcha: any = FriendlyCaptcha
+/* tslint:enable */
 const StyledHelper = styled.p`
   margin-top: calc(var(--space-small) * -1);
 `
 const CareerFairForm = () => {
   const intl = useIntl()
+  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const onSubmit = async (data: FormValues) => {
     data.preferredLang = intl.locale
     const res = await fetch('/api/forms/service-now-career-fair-events', {
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        data,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -70,6 +78,7 @@ const CareerFairForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
+          setSubmitButtonEnabled(false)
           setSuccessfullySubmitted(false)
         }}
       >
@@ -296,7 +305,15 @@ const CareerFairForm = () => {
               {...register('supportingDocuments')}
             />
 
-            <FormButton type="submit">
+            <JsFriendlyCaptcha
+              doneCallback={() => {
+                setSubmitButtonEnabled(true)
+              }}
+              errorCallback={() => {
+                setSubmitButtonEnabled(true)
+              }}
+            />
+            <FormButton type="submit" disabled={!submitButtonEnabled}>
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
@@ -312,6 +329,7 @@ const CareerFairForm = () => {
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
+              setSubmitButtonEnabled(false)
             }}
           />
         )}
