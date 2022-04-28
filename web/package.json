@@ -65,7 +65,7 @@
     "react-intl": "^5.25.1",
     "react-remove-scroll": "^2.5.1",
     "styled-components": "^5.3.3",
-    "styled-jsx": "^4.0.1",
+    "styled-jsx": "^5.0.2",
     "styled-normalize": "^8.0.7",
     "swr": "^1.2.2",
     "uuid": "^8.3.2",
