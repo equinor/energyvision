@@ -173,6 +173,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
             }
           }),
       },
+      {
+        name: 'anchorReference',
+        title: 'Anchor reference',
+        type: 'anchorReferenceField',
+        description: 'Use this field to link to an anchor point on the page you are linking to.',
+      },
     ],
     options: {
       modal: {

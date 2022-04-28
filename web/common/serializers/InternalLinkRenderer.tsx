@@ -16,6 +16,7 @@ type InternalLinkMark = {
     _type: string
   }
   markKey: string
+  anchorReference?: string
 }
 
 type Child = {
@@ -29,11 +30,12 @@ type Child = {
 export const InternalLinkRenderer = (child: Child) => {
   try {
     const { mark, children } = child
+    const { anchorReference } = mark
     const { id, lang } = mark.internalLink
     const linkLocale = getLocaleFromName(lang)
-    const href = id
+    const href = anchorReference ? `${id}#${anchorReference}` : id
 
-    if (!href) {
+    if (!id) {
       return <>{children}</>
     }
 
