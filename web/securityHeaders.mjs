@@ -27,7 +27,7 @@ const xFrameUrls = [localUrl, ...studioUrls, globalUrl, secretUrl].filter((e) =>
   frame-ancestors ${xFrameUrls};
   font-src 'self' https://eds-static.equinor.com;
 ` 
- console.log(ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim())
+ // console.log(ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim())
 
 export default [
   {
