@@ -61,7 +61,7 @@ specifiers:
   react-dom: ^17.0.2
   react-error-boundary: ^3.1.4
   react-focus-lock: ^2.8.1
-  react-hook-form: 7.28.1
+  react-hook-form: 7.30.0
   react-instantsearch-hooks: ^6.23.4
   react-instantsearch-hooks-server: ^6.23.4
   react-intl: ^5.24.7
@@ -115,7 +115,7 @@ dependencies:
   react-dom: 17.0.2_react@17.0.2
   react-error-boundary: 3.1.4_react@17.0.2
   react-focus-lock: 2.8.1_c8e45b4eb687790dba17b4e1c4b4273f
-  react-hook-form: 7.28.1_react@17.0.2
+  react-hook-form: 7.30.0_react@17.0.2
   react-instantsearch-hooks: 6.23.4_24a9da51e62336c335e8233e10af21bd
   react-instantsearch-hooks-server: 6.23.4_9b8e18b5cb5fb389e8f0dd6018a41c59
   react-intl: 5.24.8_react@17.0.2+typescript@4.6.3
@@ -11304,11 +11304,11 @@ packages:
       shallowequal: 1.1.0
     dev: true
 
-  /react-hook-form/7.28.1_react@17.0.2:
-    resolution: {integrity: sha512-mgwxvXuvt3FMY/mdnWbPc++Zf1U5xYzkhOaL05mtFMLvXc9MvUhMUlKtUVuO12sOrgT3nPXBgVFawtiJ4ONrgg==}
+  /react-hook-form/7.30.0_react@17.0.2:
+    resolution: {integrity: sha512-DzjiM6o2vtDGNMB9I4yCqW8J21P314SboNG1O0obROkbg7KVS0I7bMtwSdKyapnCPjHgnxc3L7E5PEdISeEUcQ==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
-      react: ^16.8.0 || ^17
+      react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 17.0.2
     dev: false
