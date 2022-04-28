@@ -11,10 +11,10 @@ specifiers:
   '@next/eslint-plugin-next': ^12.1.0
   '@portabletext/react': ^1.0.4
   '@portabletext/types': ^1.0.3
-  '@reach/accordion': ^0.16.1
-  '@reach/skip-nav': ^0.16.0
-  '@reach/tabs': ^0.16.4
-  '@reach/window-size': ^0.16.0
+  '@reach/accordion': ^0.17.0
+  '@reach/skip-nav': ^0.17.0
+  '@reach/tabs': ^0.17.0
+  '@reach/window-size': ^0.17.0
   '@react-spring/web': ^9.4.4
   '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^3.2.0
@@ -84,10 +84,10 @@ dependencies:
   '@next/bundle-analyzer': 12.1.5
   '@portabletext/react': 1.0.6_react@17.0.2
   '@portabletext/types': 1.0.3
-  '@reach/accordion': 0.16.1_react-dom@17.0.2+react@17.0.2
-  '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
-  '@reach/tabs': 0.16.4_react-dom@17.0.2+react@17.0.2
-  '@reach/window-size': 0.16.0_react-dom@17.0.2+react@17.0.2
+  '@reach/accordion': 0.17.0_react-dom@17.0.2+react@17.0.2
+  '@reach/skip-nav': 0.17.0_react-dom@17.0.2+react@17.0.2
+  '@reach/tabs': 0.17.0_react-dom@17.0.2+react@17.0.2
+  '@reach/window-size': 0.17.0_react-dom@17.0.2+react@17.0.2
   '@react-spring/web': 9.4.4_react-dom@17.0.2+react@17.0.2
   '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 3.3.0
@@ -2752,75 +2752,75 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /@reach/accordion/0.16.1_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-gv0Trq3cfM92h8xZ9RBr5MGyulR6EgfLUKYrf+s9XUJjcIi3sMc611tbwlByigYVSt5gE/TLK0mKHLiXOrT3Sg==}
+  /@reach/accordion/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-BoFDIYpaW56j1Ys2N1wA2E5UsMW7yJQtVCJkaV0OO4Q/JJY8r8JZoiQ/+Juc8z0DqOJGVIgYebMAgroDT8Oo0g==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/auto-id': 0.16.0_react-dom@17.0.2+react@17.0.2
-      '@reach/descendants': 0.16.1_react-dom@17.0.2+react@17.0.2
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/auto-id': 0.17.0_react-dom@17.0.2+react@17.0.2
+      '@reach/descendants': 0.17.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.17.0_react-dom@17.0.2+react@17.0.2
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       tiny-warning: 1.0.3
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
-  /@reach/auto-id/0.16.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-5ssbeP5bCkM39uVsfQCwBBL+KT8YColdnMN5/Eto6Rj7929ql95R3HZUOkKIvj7mgPtEb60BLQxd1P3o6cjbmg==}
+  /@reach/auto-id/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-ud8iPwF52RVzEmkHq1twuqGuPA+moreumUHdtgvU3sr3/15BNhwp3KyDLrKKSz0LP1r3V4pSdyF9MbYM8BoSjA==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.17.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
-  /@reach/descendants/0.16.1_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-3WZgRnD9O4EORKE31rrduJDiPFNMOjUkATx0zl192ZxMq3qITe4tUj70pS5IbJl/+v9zk78JwyQLvA1pL7XAPA==}
+  /@reach/descendants/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-c7lUaBfjgcmKFZiAWqhG+VnXDMEhPkI4kAav/82XKZD6NVvFjsQOTH+v3tUkskrAPV44Yuch0mFW/u5Ntifr7Q==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.17.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
-  /@reach/skip-nav/0.16.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-SY4PdNx+hQHbeOr/+qLc+QXdRt9NTVlt0r737bOqY1WURGBIEN9sGgsmIsHluP1/bQuAe0JKdOJ/tXiwQ3Z3ug==}
+  /@reach/skip-nav/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-wkkpQK3ffczzGHis6TaUvpOabuAL9n9Kh5vr4h56XPIJP3X77VcHUDk7MK3HbV1mTgamGxc9Hbd1sXKSWLu3yA==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.17.0_react-dom@17.0.2+react@17.0.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
-  /@reach/tabs/0.16.4_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-4EK+1U0OoLfg2tJ1BSZf6/tx0hF5vlXKxY7qB//bPWtlIh9Xfp/aSDIdspFf3xS8MjtKeb6IVmo5UAxDMq85ZA==}
+  /@reach/tabs/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-XMw+5EaF6ZSmdkUQ45Cy8jbVp63Ksq77ZvS6zI64LHO2KPfPuTZTeUcsvvnJfA/POp3Ou9q6FRbs2d2HxWEApw==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/auto-id': 0.16.0_react-dom@17.0.2+react@17.0.2
-      '@reach/descendants': 0.16.1_react-dom@17.0.2+react@17.0.2
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/auto-id': 0.17.0_react-dom@17.0.2+react@17.0.2
+      '@reach/descendants': 0.17.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.17.0_react-dom@17.0.2+react@17.0.2
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
-  /@reach/utils/0.16.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-PCggBet3qaQmwFNcmQ/GqHSefadAFyNCUekq9RrWoaU9hh/S4iaFgf2MBMdM47eQj5i/Bk0Mm07cP/XPFlkN+Q==}
+  /@reach/utils/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-M5y8fCBbrWeIsxedgcSw6oDlAMQDkl5uv3VnMVJ7guwpf4E48Xlh1v66z/1BgN/WYe2y8mB/ilFD2nysEfdGeA==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
@@ -2828,20 +2828,20 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       tiny-warning: 1.0.3
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
-  /@reach/window-size/0.16.0_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-8avB4RCPiTn5yOD5YYlO7szNjtTa3hZWddCpSaJwVEN7PGBFrRPeIihgfXLMSA5Vo8SUP6eP5uKAsk1zyccMYA==}
+  /@reach/window-size/0.17.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-grk4rFUhbg4dauDIRkSAvBXjs+xSxX8vTEgMp8/vmuM5KfcYQmXIxoJ1WmwxVv3HKuywqkHLeoAdMuREE0SFYg==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.16.0_react-dom@17.0.2+react@17.0.2
+      '@reach/utils': 0.17.0_react-dom@17.0.2+react@17.0.2
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      tslib: 2.3.1
+      tslib: 2.4.0
     dev: false
 
   /@react-spring/animated/9.4.4_react@17.0.2:
@@ -12855,10 +12855,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: false
-
-  /tslib/2.3.1:
-    resolution: {integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==}
     dev: false
 
   /tslib/2.4.0:
