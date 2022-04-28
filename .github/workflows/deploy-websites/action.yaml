@@ -74,7 +74,7 @@ runs:
           create job
           deploy
           --token-environment
-          --context production
+          --context platform2
           -a energyvision
           -e ${{ inputs.environment }}
           -f
