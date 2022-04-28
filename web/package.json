@@ -63,7 +63,7 @@
     "react-instantsearch-hooks": "^6.23.4",
     "react-instantsearch-hooks-server": "^6.23.4",
     "react-intl": "^5.25.1",
-    "react-remove-scroll": "^2.4.4",
+    "react-remove-scroll": "^2.5.1",
     "styled-components": "^5.3.3",
     "styled-jsx": "^4.0.1",
     "styled-normalize": "^8.0.7",

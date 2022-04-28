@@ -65,7 +65,7 @@ specifiers:
   react-instantsearch-hooks: ^6.23.4
   react-instantsearch-hooks-server: ^6.23.4
   react-intl: ^5.25.1
-  react-remove-scroll: ^2.4.4
+  react-remove-scroll: ^2.5.1
   storybook-css-modules-preset: ^1.1.1
   styled-components: ^5.3.3
   styled-jsx: ^4.0.1
@@ -119,7 +119,7 @@ dependencies:
   react-instantsearch-hooks: 6.23.4_24a9da51e62336c335e8233e10af21bd
   react-instantsearch-hooks-server: 6.23.4_9b8e18b5cb5fb389e8f0dd6018a41c59
   react-intl: 5.25.1_react@17.0.2+typescript@4.6.3
-  react-remove-scroll: 2.4.4_c8e45b4eb687790dba17b4e1c4b4273f
+  react-remove-scroll: 2.5.1_c8e45b4eb687790dba17b4e1c4b4273f
   styled-components: 5.3.5_react-dom@17.0.2+react@17.0.2
   styled-jsx: 4.0.1_react@17.0.2
   styled-normalize: 8.0.7_styled-components@5.3.5
@@ -11424,25 +11424,9 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-remove-scroll-bar/2.2.0_c8e45b4eb687790dba17b4e1c4b4273f:
-    resolution: {integrity: sha512-UU9ZBP1wdMR8qoUs7owiVcpaPwsQxUDC2lypP6mmixaGlARZa7ZIBx1jcuObLdhMOvCsnZcvetOho0wzPa9PYg==}
-    engines: {node: '>=8.5.0'}
-    peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0
-      react: ^16.8.0 || ^17.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@types/react': 17.0.44
-      react: 17.0.2
-      react-style-singleton: 2.1.1_c8e45b4eb687790dba17b4e1c4b4273f
-      tslib: 1.14.1
-    dev: false
-
-  /react-remove-scroll/2.4.4_c8e45b4eb687790dba17b4e1c4b4273f:
-    resolution: {integrity: sha512-EyC5ohYhaeKbThMSQxuN2i+QC5HqV3AJvNZKEdiATITexu0gHm00+5ko0ltNS1ajYJVeDgVG2baRSCei0AUWlQ==}
-    engines: {node: '>=8.5.0'}
+  /react-remove-scroll-bar/2.3.0_c8e45b4eb687790dba17b4e1c4b4273f:
+    resolution: {integrity: sha512-v2vf8kgrRph5FQeLVZjSOmM0g3ZiBxwMk98VXhsiJDSPeRDUaXJrzYDk2Hhoe6qLggrhWtAXJZVxUwXmRXa93g==}
+    engines: {node: '>=10'}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -11452,11 +11436,27 @@ packages:
     dependencies:
       '@types/react': 17.0.44
       react: 17.0.2
-      react-remove-scroll-bar: 2.2.0_c8e45b4eb687790dba17b4e1c4b4273f
-      react-style-singleton: 2.1.1_c8e45b4eb687790dba17b4e1c4b4273f
-      tslib: 1.14.1
-      use-callback-ref: 1.2.5_c8e45b4eb687790dba17b4e1c4b4273f
-      use-sidecar: 1.0.5_react@17.0.2
+      react-style-singleton: 2.2.0_c8e45b4eb687790dba17b4e1c4b4273f
+      tslib: 2.4.0
+    dev: false
+
+  /react-remove-scroll/2.5.1_c8e45b4eb687790dba17b4e1c4b4273f:
+    resolution: {integrity: sha512-Lzam+uvyTLlSCqxGeEe5fLadZQkAYYWurr7P+9kgJfgBcBhs04T181D3yqmUzML63W0FLW/oqSd6dnaE0IIisQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 17.0.44
+      react: 17.0.2
+      react-remove-scroll-bar: 2.3.0_c8e45b4eb687790dba17b4e1c4b4273f
+      react-style-singleton: 2.2.0_c8e45b4eb687790dba17b4e1c4b4273f
+      tslib: 2.4.0
+      use-callback-ref: 1.3.0_c8e45b4eb687790dba17b4e1c4b4273f
+      use-sidecar: 1.1.2_c8e45b4eb687790dba17b4e1c4b4273f
     dev: false
 
   /react-router-dom/6.3.0_react-dom@17.0.2+react@17.0.2:
@@ -11489,12 +11489,12 @@ packages:
       throttle-debounce: 3.0.1
     dev: true
 
-  /react-style-singleton/2.1.1_c8e45b4eb687790dba17b4e1c4b4273f:
-    resolution: {integrity: sha512-jNRp07Jza6CBqdRKNgGhT3u9umWvils1xsuMOjZlghBDH2MU0PL2WZor4PGYjXpnRCa9DQSlHMs/xnABWOwYbA==}
-    engines: {node: '>=8.5.0'}
+  /react-style-singleton/2.2.0_c8e45b4eb687790dba17b4e1c4b4273f:
+    resolution: {integrity: sha512-nK7mN92DMYZEu3cQcAhfwE48NpzO5RpxjG4okbSqRRbfal9Pk+fG2RdQXTMp+f6all1hB9LIJSt+j7dCYrU11g==}
+    engines: {node: '>=10'}
     peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0
-      react: ^16.8.0 || ^17.0.0
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -11503,7 +11503,7 @@ packages:
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 17.0.2
-      tslib: 1.14.1
+      tslib: 2.4.0
     dev: false
 
   /react-syntax-highlighter/13.5.3_react@17.0.2:
@@ -13200,6 +13200,21 @@ packages:
       react: 17.0.2
     dev: false
 
+  /use-callback-ref/1.3.0_c8e45b4eb687790dba17b4e1c4b4273f:
+    resolution: {integrity: sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 17.0.44
+      react: 17.0.2
+      tslib: 2.4.0
+    dev: false
+
   /use-composed-ref/1.3.0_react@17.0.2:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
@@ -13255,6 +13270,22 @@ packages:
       detect-node-es: 1.1.0
       react: 17.0.2
       tslib: 1.14.1
+    dev: false
+
+  /use-sidecar/1.1.2_c8e45b4eb687790dba17b4e1c4b4273f:
+    resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      '@types/react': ^16.9.0 || ^17.0.0 || ^18.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 17.0.44
+      detect-node-es: 1.1.0
+      react: 17.0.2
+      tslib: 2.4.0
     dev: false
 
   /use/3.1.1:
