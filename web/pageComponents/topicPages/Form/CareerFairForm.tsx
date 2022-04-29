@@ -4,7 +4,7 @@ import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import styled from 'styled-components'
-import { FormEvent, useState } from 'react'
+import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 type FormValues = {
@@ -19,18 +19,16 @@ type FormValues = {
   preferredLang: string
 }
 
-/* tslint:disable */
-const JsFriendlyCaptcha: any = FriendlyCaptcha
-/* tslint:enable */
 const StyledHelper = styled.p`
   margin-top: calc(var(--space-small) * -1);
 `
+
 const CareerFairForm = () => {
   const intl = useIntl()
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues, event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     data.preferredLang = intl.locale
     const res = await fetch('/api/forms/service-now-career-fair-events', {
       body: JSON.stringify({
@@ -75,7 +73,7 @@ const CareerFairForm = () => {
   return (
     <>
       <form
-        onSubmit={(e) => handleSubmit((data) => onSubmit(data, e))}
+        onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
           setSubmitButtonEnabled(false)
@@ -305,7 +303,7 @@ const CareerFairForm = () => {
               {...register('supportingDocuments')}
             />
 
-            <JsFriendlyCaptcha
+            <FriendlyCaptcha
               doneCallback={() => {
                 setSubmitButtonEnabled(true)
               }}

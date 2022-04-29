@@ -1,4 +1,4 @@
 {
   "tool": true,
-  "types": ["news"]
+  "types": ["news", "tag", "countryTag"]
 }

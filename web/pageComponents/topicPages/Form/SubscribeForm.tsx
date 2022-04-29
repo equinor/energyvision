@@ -6,7 +6,7 @@ import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox } from '@components'
-import { FormEvent, useState } from 'react'
+import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 const StyledFieldset = styled.fieldset`
@@ -44,10 +44,6 @@ const StyledLegend = styled.legend`
   font-size: var(--typeScale-2);
 `
 
-/* tslint:disable */
-const JsFriendlyCaptcha: any = FriendlyCaptcha
-/* tslint:enable */
-
 type FormValues = {
   firstName: string
   email: string
@@ -61,7 +57,7 @@ const SubscribeForm = () => {
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
-  const onSubmit = async (data: FormValues, event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     const allCategories = data.categories.includes('all')
     const subscribeFormParamers: SubscribeFormParameters = {
       firstName: data.firstName,
@@ -97,7 +93,7 @@ const SubscribeForm = () => {
 
   return (
     <form
-      onSubmit={(e) => handleSubmit((data) => onSubmit(data, e))}
+      onSubmit={handleSubmit(onSubmit)}
       onReset={() => {
         reset()
         setSubmitButtonEnabled(false)
@@ -254,7 +250,7 @@ const SubscribeForm = () => {
               />
             )}
           />
-          <JsFriendlyCaptcha
+          <FriendlyCaptcha
             doneCallback={() => {
               setSubmitButtonEnabled(true)
             }}

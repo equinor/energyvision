@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
-import { FormEvent, useState } from 'react'
+import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 type FormValues = {
@@ -13,16 +13,13 @@ type FormValues = {
   receiver: string
   message: string
 }
-/* tslint:disable */
-const JsFriendlyCaptcha: any = FriendlyCaptcha
-/* tslint:enable */
 
 const ContactEquinorForm = () => {
   const intl = useIntl()
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues, event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     const res = await fetch('/api/forms/service-now-contact-us', {
       body: JSON.stringify({
         data,
@@ -57,7 +54,7 @@ const ContactEquinorForm = () => {
   return (
     <>
       <form
-        onSubmit={(e) => handleSubmit((data) => onSubmit(data, e))}
+        onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
           setSubmitButtonEnabled(false)
@@ -207,7 +204,7 @@ const ContactEquinorForm = () => {
               )}
             />
 
-            <JsFriendlyCaptcha
+            <FriendlyCaptcha
               doneCallback={() => {
                 setSubmitButtonEnabled(true)
               }}
