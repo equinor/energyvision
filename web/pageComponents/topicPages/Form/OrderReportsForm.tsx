@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSubmitFailureBox, FormSubmitSuccessBox } from '@components'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 const UnstyledList = styled.ul`
@@ -64,7 +64,7 @@ const OrderReportsForm = () => {
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues, event: FormEvent<HTMLFormElement>) => {
     const res = await fetch('/api/forms/service-now-order-reports', {
       body: JSON.stringify({
         data,
@@ -126,7 +126,7 @@ const OrderReportsForm = () => {
   })
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={(e) => handleSubmit((data) => onSubmit(data, e))}
       onReset={() => {
         reset()
         setSubmitButtonEnabled(false)

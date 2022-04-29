@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         const { accept, errorCode } = await validateCaptcha(frcCaptchaSolution)
         if (!accept) {
-          console.log(`Anti-robot check failed [code=${errorCode}] for subscribe form`)
+          console.log(`Anti-robot check failed [code=${errorCode}] for contact equinor form`)
           return res.status(400).json({ msg: `Anti-robot check failed [code=${errorCode}], please try again.` })
         }
       } catch (err) {

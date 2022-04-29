@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 type FormValues = {
@@ -22,7 +22,7 @@ const ContactEquinorForm = () => {
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues, event: FormEvent<HTMLFormElement>) => {
     const res = await fetch('/api/forms/service-now-contact-us', {
       body: JSON.stringify({
         data,
@@ -57,7 +57,7 @@ const ContactEquinorForm = () => {
   return (
     <>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={(e) => handleSubmit((data) => onSubmit(data, e))}
         onReset={() => {
           reset()
           setSubmitButtonEnabled(false)

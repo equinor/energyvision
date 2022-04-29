@@ -6,7 +6,7 @@ import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox } from '@components'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 const StyledFieldset = styled.fieldset`
@@ -61,7 +61,7 @@ const SubscribeForm = () => {
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues, event: FormEvent<HTMLFormElement>) => {
     const allCategories = data.categories.includes('all')
     const subscribeFormParamers: SubscribeFormParameters = {
       firstName: data.firstName,
@@ -97,7 +97,7 @@ const SubscribeForm = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={(e) => handleSubmit((data) => onSubmit(data, e))}
       onReset={() => {
         reset()
         setSubmitButtonEnabled(false)
