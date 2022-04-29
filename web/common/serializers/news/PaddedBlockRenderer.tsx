@@ -41,6 +41,14 @@ export const PaddedBlockRenderer = (props: { children: string[]; node: PortableT
     )
   }
 
+  if (style === 'smallText') {
+    return (
+      <Container>
+        <Text size="small"> {children}</Text>
+      </Container>
+    )
+  }
+
   // Fall back to default handling
   // eslint-disable-next-line
   // @ts-ignore: Ask Sanity about progress for supporting types in block-content
