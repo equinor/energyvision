@@ -4,7 +4,7 @@ import { WidgetInstance } from 'friendly-challenge'
 const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
   const container = useRef()
   const widget = useRef()
-
+  const sitekey = process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY
   useEffect(() => {
     if (!widget.current && container.current) {
       widget.current = new WidgetInstance(container.current, {
@@ -20,7 +20,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
     }
   }, [container])
 
-  return <div ref={container} className="frc-captcha" data-sitekey={process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY} />
+  return <div ref={container} className="frc-captcha" data-sitekey={sitekey} />
 }
 
 export default FriendlyCaptcha
