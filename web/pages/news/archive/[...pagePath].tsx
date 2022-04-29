@@ -140,25 +140,36 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   )
 }
 
+const fetchArchiveData = async (pagePathArray: string[], pagePath: string, locale: string): Promise<Response> => {
+  const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
+
+  if (pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays') {
+    /** Check if the required page is old archived AEM page or not
+     * because AEM also has archived pages which has 'archive' the page path */
+    return await fetch(`${archiveSeverURL}/${locale}/news/archive/${pagePath}.json`)
+  }
+
+  return await fetch(`${archiveSeverURL}/${locale}/news/${pagePath}.json`)
+}
+
+const parseResponse = async (response: Response) => {
+  try {
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('An error occured while parsing archive news data', error)
+    return null
+  }
+}
+
 export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale = defaultLanguage.locale }) => {
   if (!hasArchivedNews) return { notFound: true }
 
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
-  const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
-  /** Check if the required page is old archived AEM page or not
-   * because AEM also has archived pages which has 'archive' the page path */
-  let response
-  if (pagePathArray.length > 1) response = await fetch(`${archiveSeverURL}/${locale}/news/archive/${pagePath}.json`)
-  else response = await fetch(`${archiveSeverURL}/${locale}/news/${pagePath}.json`)
 
-  let pageData
-  try {
-    pageData = await response.json()
-  } catch (err) {
-    console.log('error', err)
-    pageData = null
-  }
+  const response = await fetchArchiveData(pagePathArray, pagePath, locale)
+  const pageData = await parseResponse(response)
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
