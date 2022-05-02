@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
 import { outlineTemplate, Tokens } from '@utils'
-import { useWindowSize } from '@reach/window-size'
 import { languages } from '../../languages'
 
 const { outline } = Tokens
@@ -29,7 +28,7 @@ const ActiveLocale = styled.span`
   ${SharedStyle}
   color: var(--slate-blue-95);
   position: relative;
-
+  display: none;
   &:after {
     content: '';
     display: block;
@@ -41,6 +40,9 @@ const ActiveLocale = styled.span`
     right: 0;
     margin: 0 auto;
     background: var(--moss-green-100);
+  }
+  @media (min-width: 600px) {
+    display: block;
   }
 `
 
@@ -70,6 +72,13 @@ const StyledLink = styled.a`
   }
 `
 
+const Divider = styled.span`
+  display: none;
+  @media (min-width: 600px) {
+    display: inline-block;
+  }
+`
+
 export type AllSlugsType = { slug: string; lang: string }[]
 
 export type LocalizationSwitchProps = {
@@ -82,12 +91,9 @@ type LocaleLinkProps = {
   title: string
   locale: string
   active: boolean
-  width: number
 }
 
-const BREAKPOINT = 600
-
-const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, width, children }) => {
+const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, children }) => {
   if (!active) {
     return (
       <NextLink href={href} locale={locale} passHref>
@@ -96,16 +102,10 @@ const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, wi
     )
   }
 
-  if (width > BREAKPOINT) {
-    return <ActiveLocale aria-hidden="true">{children}</ActiveLocale>
-  }
-
-  return null
+  return <ActiveLocale>{children}</ActiveLocale>
 }
 
 export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
-  const { width } = useWindowSize()
-
   if (slugs.length < 1) return null
 
   return (
@@ -119,11 +119,10 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
               title={`Switch to ${language?.title}`}
               locale={`${language?.locale}`}
               active={activeLocale === `${language?.locale}`}
-              width={width}
             >
               <span style={{ textTransform: 'uppercase' }}>{language?.locale}</span>
             </LocaleLink>
-            {key + 1 < slugs.length && width > BREAKPOINT && '|'}
+            {key + 1 < slugs.length && <Divider>|</Divider>}
           </StyledDiv>
         )
       })}
