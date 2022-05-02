@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       site:
-        description: "Name of studio to deploy"
+        description: 'Name of studio to deploy'
         required: true
         type: choice
         options:
@@ -35,7 +35,7 @@ jobs:
         id: checkout-internal
         uses: actions/checkout@v3
         with:
-          repository: "equinor/energyvision-internal"
+          repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }}
       - name: Get preprod sha 🏷️
@@ -49,7 +49,7 @@ jobs:
         id: checkout-main
         uses: actions/checkout@v3
         with:
-          repository: "equinor/energyvision"
+          repository: 'equinor/energyvision'
           fetch-depth: 0
           # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
       - name: Get long sha ️🏷️
@@ -61,14 +61,14 @@ jobs:
         id: checkout-specific-branch
         uses: actions/checkout@v3
         with:
-          repository: "equinor/energyvision"
+          repository: 'equinor/energyvision'
           fetch-depth: 0
-          ref: "${{ steps.get-long-sha.outputs.sha }}"
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
       - uses: actions/setup-node@v2
         with:
           node-version: 16
           cache: yarn
-          cache-dependency-path: "studio/yarn.lock"
+          cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
@@ -92,6 +92,82 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
+  deploy-secret:
+    if: github.event.inputs.site == 'global'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SANITY_STUDIO_API_PROJECT_ID: w3b4om14
+      SANITY_STUDIO_MUTATION_TOKEN: $${{ secrets.SANITY_STUDIO_SECRET_MUTATION_TOKEN }}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_API_SECRET_TOKEN }}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+      SANITY_STUDIO_API_DATASET: secret
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+      - name: Get preprod sha 🏷️
+        id: get-preprod-sha
+        shell: bash
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          echo "::set-output name=sha::$(python ci/returnGlobalStudioPreprodVersion.py)"
+      - name: Checkout 🛎️
+        id: checkout-main
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
+      - name: Get long sha ️🏷️
+        id: get-long-sha
+        shell: bash
+        run: |
+          echo "::set-output name=sha::$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})"
+      - name: Checkout 🛎️
+        id: checkout-specific-branch
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: latest
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm studio yarn
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./studio
+        run: |
+          pnpm deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   update-radix-config:
     if: github.event.inputs.site != 'global'
     runs-on: ubuntu-latest
@@ -102,7 +178,7 @@ jobs:
         id: checkout-internal
         uses: actions/checkout@v3
         with:
-          repository: "equinor/energyvision-internal"
+          repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Promote preprod tag to prod 🗒️
