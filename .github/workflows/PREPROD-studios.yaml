@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 16
           cache: yarn
-          cache-dependency-path: "studio/yarn.lock"
+          cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
@@ -57,7 +57,7 @@ jobs:
         id: checkout-internal
         uses: actions/checkout@v3
         with:
-          repository: "equinor/energyvision-internal"
+          repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Modify radixconfig tag for preprod on main branch 🗒️
@@ -77,37 +77,6 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-  deploy-global:
-    needs: [update-radix-config]
-    runs-on: ubuntu-latest
-    environment:
-      name: preprod
-    strategy:
-      matrix:
-        dataset: ["global"]
-    env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      - id: deploy-satellite
-        uses: ./.github/workflows/deploy-studios/
-        with:
-          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
-          datasetName: ${{ matrix.dataset }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
-          brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
-          brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
-          environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
@@ -134,7 +103,7 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-satellites:
+  deploy-all-studios:
     needs: [update-radix-config, read-satellites]
     runs-on: ubuntu-latest
     environment:
