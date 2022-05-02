@@ -50,6 +50,10 @@ const StyledLink = styled.a`
   ${SharedStyle}
   text-decoration: none;
   color: var(--grey-60);
+  min-width: 48px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
 
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
@@ -63,12 +67,9 @@ const StyledLink = styled.a`
     color: var(--grey-60);
   }
 
-  @media (max-width: 600px) {
-    min-width: 48px;
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  @media (min-width: 600px) {
+    min-width: auto;
+    min-height: auto;
   }
 `
 
