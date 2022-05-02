@@ -1,4 +1,6 @@
 import { AppProps } from 'next/app'
+import { NextSeo } from 'next-seo'
+import { useIntl } from 'react-intl'
 import { GetStaticProps } from 'next/types'
 import { IntlProvider } from 'react-intl'
 import { defaultLanguage } from '../../languages'
@@ -42,28 +44,34 @@ const SearchContainer = styled.div`
 
 export default function SearchPage() {
   const router = useRouter()
+  const intl = useIntl()
+
+  const searchTitle = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
   return (
-    <RemoveScroll enabled={true}>
-      <DarkTopbarDropdown isOpen={true}>
-        <NavTopbar>
-          <LogoLink inverted />
-          <InvertedButton
-            variant="ghost_icon"
-            aria-expanded={true}
-            aria-label="Close search"
-            onClick={() => {
-              router.back()
-            }}
-          >
-            <Icon size={32} data={close} />
-          </InvertedButton>
-        </NavTopbar>
-        <SearchContainer>
-          <Search />
-        </SearchContainer>
-      </DarkTopbarDropdown>
-    </RemoveScroll>
+    <>
+      <NextSeo title={searchTitle}></NextSeo>
+      <RemoveScroll enabled={true}>
+        <DarkTopbarDropdown isOpen={true}>
+          <NavTopbar>
+            <LogoLink inverted />
+            <InvertedButton
+              variant="ghost_icon"
+              aria-expanded={true}
+              aria-label="Close search"
+              onClick={() => {
+                router.back()
+              }}
+            >
+              <Icon size={32} data={close} />
+            </InvertedButton>
+          </NavTopbar>
+          <SearchContainer>
+            <Search />
+          </SearchContainer>
+        </DarkTopbarDropdown>
+      </RemoveScroll>
+    </>
   )
 }
 
