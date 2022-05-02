@@ -30,7 +30,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: latest
+          version: ^6.32.11
       - name: Install dependencies 🔽
         id: install-dependencies
         run: |
