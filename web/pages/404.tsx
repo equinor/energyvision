@@ -2,17 +2,22 @@ import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import Footer from '../pageComponents/shared/Footer'
-import Header from '../pageComponents/shared/Header'
+import { SkipNavContent } from '@reach/skip-nav'
+import dynamic from 'next/dynamic'
+//import Footer from '../pageComponents/shared/Footer'
+//import Header from '../pageComponents/shared/Header'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { pageNotFoundQuery } from '../lib/queries/pageNotFound'
 import { getNameFromLocale, getIsoFromLocale } from '../lib/localization'
 import getIntl from '../common/helpers/getIntl'
 import { defaultLanguage } from '../languages'
-import ErrorPage from '../pageComponents/pageTemplates/ErrorPage'
+//import ErrorPage from '../pageComponents/pageTemplates/ErrorPage'
 import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/types'
 import { getComponentsData } from '../lib/fetchData'
-import { SkipNavContent } from '@reach/skip-nav'
+
+const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPage'))
+const Footer = dynamic(() => import('../pageComponents/shared/Footer'))
+const Header = dynamic(() => import('../pageComponents/shared/Header'))
 
 const Grid = styled.div`
   display: grid;
