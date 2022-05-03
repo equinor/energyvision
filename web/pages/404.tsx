@@ -11,10 +11,10 @@ import getIntl from '../common/helpers/getIntl'
 import { defaultLanguage } from '../languages'
 import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/types'
 import { getComponentsData } from '../lib/fetchData'
+import Header from '../pageComponents/shared/Header'
+import Footer from '../pageComponents/shared/Footer'
 
 const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPage'))
-const Footer = dynamic(() => import('../pageComponents/shared/Footer'))
-const Header = dynamic(() => import('../pageComponents/shared/Header'))
 
 const Grid = styled.div`
   display: grid;
