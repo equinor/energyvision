@@ -2,12 +2,14 @@ import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { searchClient } from '../../lib/algolia'
 import { useRouter } from 'next/router'
 //import { history } from 'instantsearch.js/es/lib/routers/index.js'
+import dynamic from 'next/dynamic'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 
 import { SearchBox } from './SearchBox'
-import SearchResults from './SearchResults'
+//import SearchResults from './SearchResults'
 import { getIsoFromLocale } from '../../lib/localization'
 
+const SearchResults = dynamic(() => import('./SearchResults'))
 const Search = () => {
   const router = useRouter()
 
