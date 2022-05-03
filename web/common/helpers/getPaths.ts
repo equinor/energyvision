@@ -2,15 +2,23 @@ import { getNameFromLocale } from '../../lib/localization'
 import { sanityClient } from '../../lib/sanity.server'
 import { groq } from 'next-sanity'
 
+// These URLs uses SSR and thus should not be static rendered
+const topicSlugBlackList = {
+  en_GB: ['/news'],
+  nb_NO: ['/nyheter'],
+}
+
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
+  const blacklist = topicSlugBlackList[lang as keyof typeof topicSlugBlackList]
   const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
-    groq`*[_type match "route_" + $lang + "*" && defined(slug.current) && !(_id in path("drafts.**"))][] {
+    groq`*[_type match "route_" + $lang + "*" && (!(slug.current in $blacklist)) && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
       lang,
+      blacklist,
     },
   )
   return data
