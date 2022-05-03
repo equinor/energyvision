@@ -12,7 +12,6 @@ import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { Layout } from '../pageComponents/shared/Layout'
 import { defaultLanguage } from '../languages'
 import Header from '../pageComponents/shared/Header'
-import { isGlobal } from '../common/helpers/datasetHelpers'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
 import { getRoutePaths } from '../common/helpers/getPaths'
@@ -21,7 +20,6 @@ import { getComponentsData } from '../lib/fetchData'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
-const OldTopicPage = dynamic(() => import('../pageComponents/pageTemplates/OldTopicPage'))
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 
@@ -31,7 +29,6 @@ export default function Page({ data, preview }: any) {
    */
 
   const router = useRouter()
-
   // Let's nuke the preview hook temporarily for performance reasons
   /*   const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
@@ -53,16 +50,6 @@ export default function Page({ data, preview }: any) {
   }
 
   //appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
-
-  if (data?.isArchivedFallback) {
-    return router.isFallback ? (
-      <p>
-        <FormattedMessage id="loading" defaultMessage="Loading..." />
-      </p>
-    ) : (
-      <OldTopicPage data={pageData} />
-    )
-  }
 
   const template = pageData?.template || null
 
@@ -129,18 +116,12 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     isNews,
   )
 
-  // @TODO This doesn't feel bullet proof at all this doesn't scale to well.
   const notFound = isNews ? pageData.news?.length === 0 || !pageData.news : !pageData
-
-  // If global, fetch static content in case data is not found or trying to access news
-  // @TODO This should only be for news at some point
-  if (isGlobal && notFound) fetchArchivedContent()
 
   return {
     props: {
       preview,
       data: {
-        isArchivedFallback: false,
         query,
         queryParams,
         pageData,
@@ -151,31 +132,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     },
     revalidate: 120,
     notFound,
-  }
-
-  async function fetchArchivedContent() {
-    const { getArchivedPageData } = await import('../common/helpers/staticPageHelpers')
-
-    const slug = params?.slug ? (params?.slug as string[]).join('/') : '/'
-
-    const archivedData = await getArchivedPageData(locale, slug)
-    const notFoundInArchived = !archivedData
-
-    return {
-      props: {
-        preview: false,
-        data: {
-          isArchivedFallback: true,
-          pageData: { slug: slug, ...archivedData },
-          menuData,
-          footerData,
-          intl,
-        },
-      },
-      //@TODO: revalidate how often?
-      revalidate: 300,
-      notFound: notFoundInArchived,
-    }
   }
 }
 
