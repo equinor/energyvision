@@ -23,12 +23,13 @@ export default function preview(req, res) {
 
   console.log(hostname) */
   const pathname = req?.query?.id ? `/${req.query.id}` : req?.query?.slug ?? '/'
+  const url = '//' + req?.headers?.host + pathname
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  console.log('Everything is fine, lets redirect', pathname)
+  console.log('Everything is fine, lets redirect', url)
 
-  res.writeHead(307, { Location: `/${pathname}` ?? `/` })
+  res.writeHead(307, { Location: url ?? `/` })
 
   return res.end()
 }
