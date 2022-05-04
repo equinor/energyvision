@@ -1,6 +1,7 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
+  workflow_run:
     workflows: ["PREPROD - Build & deploy all studios"]
     types:
       - completed
