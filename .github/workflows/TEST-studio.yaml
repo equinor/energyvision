@@ -1,6 +1,9 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - feature/NLUN-1035-move-to-new-cluster
 jobs:
   check-code:
     runs-on: ubuntu-latest
