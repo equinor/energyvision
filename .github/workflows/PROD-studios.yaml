@@ -44,7 +44,7 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          echo "::set-output name=sha::$(python ci/returnGlobalStudioPreprodVersion.py)"
+          echo "::set-output name=sha::$(python ci/returnComponentVersion.py preprod studio-global)"
       - name: Checkout 🛎️
         id: checkout-main
         uses: actions/checkout@v3
@@ -120,7 +120,7 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          echo "::set-output name=sha::$(python ci/returnGlobalStudioPreprodVersion.py)"
+          echo "::set-output name=sha::$(python ci/returnGlobalStudioVersion.py preprod)"
       - name: Checkout 🛎️
         id: checkout-main
         uses: actions/checkout@v3
@@ -225,8 +225,8 @@ jobs:
             create job
             deploy
             --token-environment
-            --context production
-            -a energyvision
+            --context platform2
+            -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
 

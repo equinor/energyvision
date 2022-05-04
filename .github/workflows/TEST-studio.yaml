@@ -2,11 +2,59 @@ name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
 jobs:
-  update-radix-config:
+  check-code:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+      SANITY_STUDIO_API_DATASET: global
+      DOCKER_BUILDKIT: 1
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: latest
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm studio yarn
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:studio
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  # Tried moving this to a composite action, but did not work for some reason
+  update-radix-config:
+    needs: check-code
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v3
@@ -14,13 +62,6 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-      - name: Get test sha 🏷️
-        id: get-test-sha
-        shell: bash
-        run: |
-          # Install pre-requisite
-          python -m pip install --user ruamel.yaml
-          echo "::set-output name=sha::$(python ci/returnComponentVersion.py test studio-global-test)"
       - name: Modify radixconfig tag for preprod on main branch 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -28,13 +69,13 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/upgradeEnvironment.py studio ${{ steps.get-test-sha.outputs.sha }} ${{ secrets.ENV }}
+          python ci/upgradeEnvironment.py studio ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🚀 Deploy studios to preprod for tag ${{ steps.get-test-sha.outputs.sha }}"
+            git commit -am "🚀 Deploy studio to test for tag ${{ env.IMAGE_TAG_SHA }}"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -44,34 +85,15 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  read-satellites:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v3
-      - id: set-matrix
-        name: Read from satellites.json
-        run: |
-          MATRIX=$(cat satellites.json)
-          echo ::set-output name=matrix::${MATRIX}
-
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-  deploy-all-studios:
-    needs: [update-radix-config, read-satellites]
+  deploy-studio:
+    needs: check-code
     runs-on: ubuntu-latest
     environment:
-      name: preprod
+      name: development
+      url: https://studio-global-test-energyvision-test.radix.equinor.com/
     strategy:
       matrix:
-        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: [global-test]
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

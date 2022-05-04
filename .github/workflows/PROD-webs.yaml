@@ -72,8 +72,8 @@ jobs:
             create job
             deploy
             --token-environment
-            --context production
-            -a energyvision
+            --context platform2
+            -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
 
