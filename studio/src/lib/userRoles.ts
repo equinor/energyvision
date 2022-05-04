@@ -5,9 +5,7 @@ import { CurrentUser } from '@sanity/types/dist/dts'
 
 export const getCurrentUserRoles = () => {
   const user = getCurrentUser()
-  if (!user) return []
-
-  return user.roles.map((role) => role.name)
+  return (!user) ? [] : user.roles.map((role) => role.name)
 }
 
 const getCurrentUser = () => {
