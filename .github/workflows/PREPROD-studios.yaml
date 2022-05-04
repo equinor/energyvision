@@ -1,6 +1,9 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
+    workflows: [TEST-studio]
+    types:
+      - completed
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
