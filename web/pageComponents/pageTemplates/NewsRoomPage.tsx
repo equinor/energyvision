@@ -1,7 +1,6 @@
-//import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
-//import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { toPlainText } from '@portabletext/react'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
@@ -12,7 +11,8 @@ import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { NewsroomData } from '../../types/types'
-//import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { getFullUrl } from '../../common/helpers/getFullUrl'
+import type { NextRouter } from 'next/router'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -58,9 +58,18 @@ type NewsRoomTemplateProps = {
   slug?: string
 }
 
-const NewsRoomPage = ({ isServerRendered = false, locale, pageData /* slug */ }: NewsRoomTemplateProps) => {
-  /*   const { pathname } = useRouter() */
-  // const fullUrl = getFullUrl(pathname, slug)
+const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
+  const router = useRouter()
+
+  const getUrl = (router: NextRouter, slug: string | undefined) => {
+    if (!router || !slug) return undefined
+
+    const { pathname, locale } = router
+    return getFullUrl(pathname, slug, locale)
+  }
+
+  const fullUrl = getUrl(router, slug)
+
   const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData || {}
   const plainTitle = title ? toPlainText(title) : ''
   const envPrefix = isGlobalProduction ? 'prod' : 'dev'
@@ -76,7 +85,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData /* slug */ }:
           title: plainTitle,
           description: metaDescription,
           type: 'website',
-          // url: fullUrl,
+          url: fullUrl,
           images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
         }}
       />
