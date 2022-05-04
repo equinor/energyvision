@@ -1,4 +1,4 @@
-name: PREPROD - Build & deploy all studios
+name: TEST - Build & deploy all studios
 on:
   workflow_dispatch:
   push:
