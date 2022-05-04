@@ -1,6 +1,8 @@
 import getConfig from 'next/config'
 import { defaultLanguage } from '../../languages'
 
+// @TODO: figure out if this is still the optimal way of doing this
+// Compare with how we handle canonicals in web/pageComponents/shared/Header.tsx
 export const getFullUrl = (pathname: string, slug: string, locale = ''): string => {
   const { publicRuntimeConfig } = getConfig()
 
