@@ -1,7 +1,7 @@
 name: PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
-    workflows: [TEST-web]
+    workflows: ["TEST - Build & Deploy global-test"]
     types:
       - completed
 jobs:

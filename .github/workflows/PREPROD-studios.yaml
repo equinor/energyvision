@@ -1,7 +1,7 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
-    workflows: [TEST-studio]
+    workflows: ["PREPROD - Build & deploy all studios"]
     types:
       - completed
 jobs:
