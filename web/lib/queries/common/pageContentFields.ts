@@ -184,10 +184,6 @@ const pageContentFields = /* groq */ `
       height,
     },
   },
-  _type == "remitTable" => {
-    "type": _type,
-    "id": _key,
-  },
   _type == "promotion" => {
     "type": _type,
     "id": _key,

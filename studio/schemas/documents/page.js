@@ -80,7 +80,6 @@ export default {
         { type: 'table' },
         { type: 'stockValuesApi' },
         { type: 'iframe' },
-        { type: 'remitTable' },
         { type: 'cookieDeclaration' },
         HAS_FORMS && { type: 'form' },
         HAS_NEWS && { type: 'newsList' },

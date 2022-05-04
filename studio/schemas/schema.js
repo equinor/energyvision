@@ -56,7 +56,6 @@ import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 import basicIframe from './objects/basicIframe'
 import iframe from './objects/iframe'
-import remitTable from './objects/remitTable'
 import promotion from './objects/promotion/promotion'
 import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
@@ -130,7 +129,6 @@ const RemainingSchemas = [
   iframe,
   basicIframe,
   footer,
-  remitTable,
   promotion,
   promoteTopics,
   promoteEvents,

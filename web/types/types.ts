@@ -441,18 +441,6 @@ export type FooterLinkData = {
   }
 }
 
-export type RemitTableData = {
-  id?: string
-  type?: string
-}
-
-export type Remit = {
-  Timestamp: string
-  StatusCode: number
-  StatusMessage: string
-  Data: Data
-}
-
 export type ContactListData = {
   title: string
   ingress: string
@@ -464,33 +452,6 @@ export type Contacts = {
   _type: string
   location: string
   phone: string
-}
-export type Data = {
-  List?: ListEntity[] | null
-}
-export type ListEntity = {
-  CurrentMessage: Message
-  MessageHistory?: (Message | null)[] | null
-}
-export type Message = {
-  ID: number
-  MessagePublishedTimeOfDayLocal: string
-  MessagePublishedDateLocal: string
-  MessagePublishedTime: string
-  EventStartTimeOfDayLocal: string
-  EventStartDateLocal: string
-  EventStartTime: string
-  ExpectedEventEndTimeOfDayLocal: string
-  ExpectedEventEndDateLocal: string
-  ExpectedEventEndTime: string
-  ActualEventEndTimeOfDayLocal: string
-  ActualEventEndDateLocal: string
-  ActualEventEndTime: string
-  IsPublishedByGassco: boolean
-  Comments: string
-  Volume: string
-  Version: number
-  IsPlannedEvent: boolean
 }
 
 export type LoginResult = {

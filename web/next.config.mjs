@@ -55,10 +55,6 @@ export default withTM(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
-        {
-          source: `/services/remit`,
-          destination: `${archiveServerHostname}/RemitJson.json`,
-        },
       ]
     },
     async headers() {

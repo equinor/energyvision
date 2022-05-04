@@ -13,7 +13,6 @@ import PageQuote from '../topicPages/PageQuote'
 import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../topicPages/IFrame'
-import RemitTable from '../shared/RemitTable'
 import Promotion from '../topicPages/Promotion'
 import Form from '../topicPages/Form/Form'
 import Table from '../topicPages/Table'
@@ -37,7 +36,6 @@ import {
   PromoTileArrayData,
   IFrameData,
   PromotionData,
-  RemitTableData,
   FormData,
   TableData,
   NewsListData,
@@ -108,7 +106,6 @@ type ComponentProps =
   | AccordionData
   | PromoTileArrayData
   | IFrameData
-  | RemitTableData
   | PromotionData
   | FormData
   | TableData
@@ -142,8 +139,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <PromoTileArray key={c.id} data={c as PromoTileArrayData} />
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} />
-      case 'remitTable':
-        return <RemitTable key={c.id} />
       case 'promotion':
         return <Promotion key={c.id} data={c as PromotionData} />
       case 'form':
@@ -153,7 +148,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       case 'cookieDeclaration':
         return <CookieDeclaration key={c.id} />
       case 'newsList':
-        return <NewsList key={c.id} data={c as NewsListData} />
+        return <NewsList key={c.id} data={c as unknown as NewsListData} />
       case 'stockValuesApi':
         return <StockValues key={c.id} data={c as StockValuesData} />
       default:
