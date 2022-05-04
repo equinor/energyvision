@@ -175,9 +175,9 @@ const NewsPage = ({ data }: ArticleProps) => {
     enabled: preview || router.query.preview !== null,
   }) */
   const { news: newsData, latestNews } = data
-  const { pathname } = router
+  const { pathname, locale } = router
 
-  const fullUrl = getFullUrl(pathname, slug)
+  const fullUrl = getFullUrl(pathname, slug, locale)
 
   const {
     publishDateTime,

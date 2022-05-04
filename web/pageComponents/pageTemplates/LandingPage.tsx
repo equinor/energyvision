@@ -41,10 +41,10 @@ type LandingPageProps = {
 }
 
 const LandingPage = ({ data }: LandingPageProps) => {
-  const { pathname } = useRouter()
+  const { pathname, locale } = useRouter()
   const { slug, title, ingress, subGroups = [] } = data
 
-  const fullUrl = getFullUrl(pathname, slug)
+  const fullUrl = getFullUrl(pathname, slug, locale)
 
   const pageTitle = blocksToText(title) || ''
 

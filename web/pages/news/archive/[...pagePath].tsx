@@ -45,7 +45,7 @@ type OldArchivedNewsPageProps = {
 const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
   const [isArchivePage, setIsArchivePage] = useState(true)
   const router = useRouter()
-  const { pathname } = router
+  const { pathname, locale } = router
   useEffect(() => {
     if (isArchivePage) {
       document.getElementById('legacyScript')?.remove()
@@ -60,7 +60,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     setIsArchivePage(false)
     return <ErrorPage statusCode={404} />
   }
-  const fullUrl = getFullUrl(pathname, data?.news?.slug)
+  const fullUrl = getFullUrl(pathname, data?.news?.slug, locale)
   const onLinkClicked = (e: React.MouseEvent<HTMLDivElement>) => {
     anchorClick(e, router)
   }

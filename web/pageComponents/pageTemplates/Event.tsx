@@ -142,10 +142,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
   const plainTitle = title ? blocksToText(title) : ''
 
-  const { pathname } = useRouter()
+  const { pathname, locale } = useRouter()
 
   const { start, end } = getEventDates(eventDate)
-  const fullUrl = getFullUrl(pathname, slug)
+  const fullUrl = getFullUrl(pathname, slug, locale)
 
   return (
     <>

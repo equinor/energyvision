@@ -115,10 +115,10 @@ type ComponentProps =
   | StockValuesData
 
 const TopicPage = ({ data }: TopicPageProps) => {
-  const { pathname } = useRouter()
+  const { pathname, locale } = useRouter()
   const slug = data?.slug
 
-  const fullUrl = getFullUrl(pathname, slug)
+  const fullUrl = getFullUrl(pathname, slug, locale)
 
   const pageTitle = data?.title ? blocksToText(data.title) : ''
 
