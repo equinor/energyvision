@@ -42,7 +42,7 @@ Custom404.getLayout = (page: AppProps) => {
   As a consequence, preview for the menu data is not available.
 
   If this is a problem, we need to see if we are able to find another solution  */
-
+  // Making a random comment to trigger a new build
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { props } = page
