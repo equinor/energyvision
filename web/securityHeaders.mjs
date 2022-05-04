@@ -19,7 +19,7 @@ const ContentSecurityPolicy = `
   ${
     isProduction
       ? "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
-      : "'unsafe-eval' script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
+      : "script-src 'unsafe-eval' 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
   };
   img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com;
   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com;
