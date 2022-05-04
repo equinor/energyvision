@@ -15,21 +15,18 @@ const xFrameUrls = [localUrl, ...studioUrls, globalUrl, secretUrl].filter((e) =>
 
 const ContentSecurityPolicy = `
   default-src 'self' cdn.sanity.io;
-  style-src 'report-sample' 'self' 'unsafe-inline';
-  style-src-elem 'self' 'unsafe-inline' https://eds-static.equinor.com;
+  style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com;
   ${
     isProduction
-      ? "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com"
-      : "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com 'unsafe-eval'"
+      ? "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
+      : "'unsafe-eval' script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
   };
   img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com;
   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com;
-  script-src-elem 'self' 'unsafe-inline' https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.googletagmanager.com;
   frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com;
   frame-ancestors ${xFrameUrls};
   font-src 'self' https://eds-static.equinor.com;
 `
-// console.log(ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim())
 
 export default [
   {
