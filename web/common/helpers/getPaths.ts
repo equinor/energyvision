@@ -10,7 +10,8 @@ const topicSlugBlackList = {
 
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
-  const blacklist = topicSlugBlackList[lang as keyof typeof topicSlugBlackList]
+  // Empty array as fallback for satelittes
+  const blacklist = topicSlugBlackList[lang as keyof typeof topicSlugBlackList] || []
   const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
     groq`*[_type match "route_" + $lang + "*" && (!(slug.current in $blacklist)) && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
