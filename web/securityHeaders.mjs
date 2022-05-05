@@ -29,6 +29,7 @@ const ContentSecurityPolicy = `
    frame-ancestors ${xFrameUrls};
    font-src 'self' https://eds-static.equinor.com;
    report-uri /api/csp-report;
+   report-to csp-report;
  `
 
 export default [
@@ -43,6 +44,10 @@ export default [
   {
     key: 'X-XSS-Protection',
     value: '1; mode=block',
+  },
+  {
+    key: 'Report-To',
+    value: "{ group: 'csp-report', max_age: 10886400, endpoints: [{ url: '/api/csp-report' }] }",
   },
   /*  {
      //This blocks preview from working, unless we whitelist all studio urls
