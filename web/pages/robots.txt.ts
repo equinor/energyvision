@@ -4,7 +4,7 @@ const Robots = () => {
   return 'Loading...'
 }
 
-const crawlableDomains = ['www.equinor.com', 'www.equinor.pl', 'www.equinorstorage.de']
+const crawlableDomains = ['www.equinor.com', 'www.equinor.pl', 'www.equinorstorage.de', 'www.equinor.ar']
 
 const robots = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
