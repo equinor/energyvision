@@ -12,8 +12,9 @@ const envs = ['dev', 'preprod', 'prod']
 const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
 const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
-const studioUrls = envs.map((env) => `https://studio-${dataset}-energyvision-${env}.radix.equinor.com/`)
-const xFrameUrls = [localUrl, ...studioUrls, globalUrl, secretUrl].filter((e) => e).join(' ')
+const studioUrlsOldCluster = envs.map((env) => `https://studio-${dataset}-energyvision-${env}.radix.equinor.com/`)
+const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com/`)
+const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl, secretUrl].filter((e) => e).join(' ')
 
 const ContentSecurityPolicy = `
    default-src 'self' cdn.sanity.io;
@@ -60,10 +61,12 @@ export default [
     key: 'Referrer-Policy',
     value: 'strict-origin-when-cross-origin',
   },
-
   {
-    // key: 'Content-Security-Policy',
     key: 'Content-Security-Policy-Report-Only',
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  },
+  {
+    key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
   },
 ]
