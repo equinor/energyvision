@@ -6,7 +6,7 @@ import { dataset } from './languages.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const logCspReport = true
+const logCspReport = false
 
 const envs = ['dev', 'preprod', 'prod']
 const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
@@ -20,12 +20,12 @@ const ContentSecurityPolicy = `
    style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com;
    ${
      isProduction
-       ? "script-src 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
-       : "script-src 'unsafe-eval' 'report-sample' 'self' 'unsafe-inline' https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
+       ? "script-src 'report-sample' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
+       : "script-src 'unsafe-eval' 'report-sample' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
    };
    img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com;
-   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com ${
-     !isProduction && 'ws:'
+   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu ${
+     isProduction ? '' : 'ws:'
    };
    frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com;
    frame-ancestors ${xFrameUrls};
@@ -46,11 +46,6 @@ export default [
     key: 'X-XSS-Protection',
     value: '1; mode=block',
   },
-  /*  {
-     //This blocks preview from working, unless we whitelist all studio urls
-     key: 'X-Frame-Options',
-     value: 'SAMEORIGIN',
-   }, */
   {
     //https://github.com/w3c/webappsec-permissions-policy/issues/189
     key: 'Permissions-Policy',
