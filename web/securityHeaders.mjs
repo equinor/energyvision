@@ -65,8 +65,8 @@ export default [
     key: 'Content-Security-Policy-Report-Only',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
   },
-  {
+  /* {
     key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  },
+  }, */
 ]
