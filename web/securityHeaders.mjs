@@ -6,6 +6,8 @@ import { dataset } from './languages.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+const logCspReport = true
+
 const envs = ['dev', 'preprod', 'prod']
 const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
@@ -28,8 +30,7 @@ const ContentSecurityPolicy = `
    frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com;
    frame-ancestors ${xFrameUrls};
    font-src 'self' https://eds-static.equinor.com;
-   report-uri /api/csp-report;
-   report-to csp-report;
+   ${logCspReport ? 'report-uri /api/csp-report;' : ''}
  `
 
 export default [
@@ -44,10 +45,6 @@ export default [
   {
     key: 'X-XSS-Protection',
     value: '1; mode=block',
-  },
-  {
-    key: 'Report-To',
-    value: "{ group: 'csp-report', max_age: 10886400, endpoints: [{ url: '/api/csp-report' }] }",
   },
   /*  {
      //This blocks preview from working, unless we whitelist all studio urls
