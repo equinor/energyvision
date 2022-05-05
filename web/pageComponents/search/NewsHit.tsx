@@ -7,6 +7,8 @@ import { StyledHitLink } from './hit/HitLink'
 import HitHeading from './hit/HitHeading'
 import DisplayLink from './hit/DisplayLink'
 import { FormattedDate } from '@components'
+import { useRouter } from 'next/router'
+import { defaultLanguage } from '../../languages'
 
 const StyledFormattedDate = styled(FormattedDate)`
   font-size: var(--typeScale-00);
@@ -21,6 +23,18 @@ const TextSnippet = styled.p`
   line-height: var(--lineHeight-3);
   color: var(--inverted-text);
 `
+
+const buildDisplayURL = (slug: string, locale: string | undefined): string => {
+  const { publicRuntimeConfig } = getConfig()
+
+  const startsWithLocale = (slug: string) => slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
+
+  if (locale && locale !== defaultLanguage?.locale && !startsWithLocale(slug)) {
+    return `${publicRuntimeConfig.domain}/${locale}/${slug.replace(/^\//, '')}`
+  }
+
+  return `${publicRuntimeConfig.domain}${slug}`
+}
 
 type NewsResultHit = {
   slug?: string
@@ -40,9 +54,9 @@ export type HitProps = {
 const NewsHit = ({ hit }: HitProps) => {
   // Shouldn't be empty string, but this is work in progress
   const { slug = '' } = hit
-
-  const { publicRuntimeConfig } = getConfig()
-  const fullUrl = `${publicRuntimeConfig.domain}${slug}`
+  const router = useRouter()
+  const { locale } = router
+  const fullUrl = buildDisplayURL(slug, locale)
 
   return (
     <article>
