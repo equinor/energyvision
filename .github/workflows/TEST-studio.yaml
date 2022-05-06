@@ -1,4 +1,4 @@
-name: TEST - Build & deploy all studios
+name: TEST - Build & deploy studio for global-test
 on:
   workflow_dispatch:
 jobs:
