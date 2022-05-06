@@ -1,18 +1,6 @@
-name: DEV - Build & Deploy equinor.com
+name: TEST - Build & Deploy global-test
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'web/**'
-      - '!web/README.md'
-      - '!web/.storybook/**'
-      - '!web/.gitignore'
-      - '!web/jest.config.js'
-      - '!web/jest.setup.ts'
-  repository_dispatch:
-    types: [sanity_publish]
 jobs:
   check-code:
     runs-on: ubuntu-latest
@@ -21,7 +9,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
@@ -52,23 +40,69 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-global-development:
+  update-radix-config:
     needs: check-code
     runs-on: ubuntu-latest
     environment:
-      name: development
-      url: https://web-energyvision-dev.radix.equinor.com/
+      name: test
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Modify radixconfig tag for preprod on main branch 🗒️
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        id: modify-radix
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/upgradeEnvironment.py web ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
+          git config --global user.name 'github'
+          git config --global user.email 'nilsml@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          if [[ `git status --porcelain` ]]
+          then
+            git commit -am "🚀 Deploy web to test with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-global-test:
+    needs: check-code
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+      url: https://web-energyvision-test.radix.equinor.com/
     strategy:
       # The matrix approach is needed to re-use code created for satellites
       matrix:
-        dataset: ['global-development']
+        dataset: ['global-test']
     env:
       APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: deploy-global
         uses: ./.github/workflows/deploy-websites/
         with:

@@ -1,58 +1,16 @@
 name: PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["TEST - Build & Deploy global-test"]
+    types:
+      - completed
 jobs:
-  check-code:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      - name: Install pnpm 📦
-        id: install-pnpm
-        uses: pnpm/action-setup@v2.0.0
-        with:
-          version: '^6.32.11'
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: 'pnpm'
-      - name: Install dependencies 🔧
-        id: install-dependencies
-        run: |
-          pnpm install
-          pnpm install --filter energy-vision-web
-      - name: Run ESLint 🔎
-        id: lint
-        run: |
-          pnpm lint:web
-      - name: Run tests 🔍
-        id: test
-        run: |
-          pnpm test --filter energy-vision-web
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
   update-radix-config:
-    needs: check-code
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      - name: Set image tag 🏷
-        shell: bash
-        id: set-default-image-tag
-        run: |
-          echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v3
@@ -60,6 +18,13 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Get test sha 🏷️
+        id: get-test-sha
+        shell: bash
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          echo "::set-output name=sha::$(python ci/returnComponentVersion.py test web-global-test)"
       - name: Modify radixconfig tag for preprod on main branch 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -67,13 +32,13 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/upgradePreprod.py web ${{ env.IMAGE_TAG_SHA }}
+          python ci/upgradeEnvironment.py web ${{ steps.get-test-sha.outputs.sha }} ${{ secrets.ENV }}
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
+            git commit -am "🚀 Deploy webs to preprod with tag ${{ steps.get-test-sha.outputs.sha }}" --allow-empty
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -91,7 +56,7 @@ jobs:
       name: preprod
       url: https://web-secret-energyvision-preprod.radix.equinor.com/
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
@@ -144,7 +109,7 @@ jobs:
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.K8S_CREDENTIALS }}
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
