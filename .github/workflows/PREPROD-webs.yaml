@@ -8,6 +8,8 @@ on:
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
+    environment:
+      name: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
