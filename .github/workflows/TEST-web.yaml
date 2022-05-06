@@ -87,7 +87,7 @@ jobs:
         if: failure()
 
   deploy-global-test:
-    needs: check-code
+    needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: test
