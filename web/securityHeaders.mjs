@@ -21,7 +21,7 @@ const ContentSecurityPolicy = `
    style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com;
    ${
      isProduction
-       ? "script-src 'report-sample' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
+       ? "script-src 'report-sample' 'wasm-unsafe-eval' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
        : "script-src 'unsafe-eval' 'report-sample' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
    };
    img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com;
