@@ -155,6 +155,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return null
     }
   })
+
+  const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.heroImage?.image
   return (
     <>
       <NextSeo
@@ -165,7 +167,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           description: data?.seoAndSome?.metaDescription,
           type: 'website',
           url: fullUrl,
-          images: getOpenGraphImages(data?.seoAndSome?.openGraphImage || data?.heroImage?.image),
+          images: getOpenGraphImages(ogImage),
         }}
         // twitter={{
         //   handle: '@handle',
