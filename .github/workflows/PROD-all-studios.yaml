@@ -1,24 +1,8 @@
-name: PROD - Deploy selected studio
+name: PROD - Deploy all studios
 on:
   workflow_dispatch:
-    inputs:
-      site:
-        description: 'Name of studio to deploy'
-        required: true
-        type: choice
-        options:
-          - global
-          - brazil
-          - germany
-          - argentina
-          - poland
-          - japan
-          - storage
-          - equinorfunds
-          - southkorea
 jobs:
   deploy-global:
-    if: github.event.inputs.site == 'global'
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -93,7 +77,6 @@ jobs:
         if: failure()
 
   deploy-secret:
-    if: github.event.inputs.site == 'global'
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -169,7 +152,6 @@ jobs:
         if: failure()
 
   update-radix-config:
-    if: github.event.inputs.site != 'global'
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -188,13 +170,13 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/promoteToProduction.py studio ${{ github.event.inputs.site }}
+          python ci/promoteAllToProduction.py studio
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🚀 Deploy studio for ${{ github.event.inputs.site }} to production"
+            git commit -am "🚀 Deploy all studios to production"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -205,7 +187,6 @@ jobs:
         if: failure()
 
   deploy-satellite-studios:
-    if: github.event.inputs.site != 'global'
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
@@ -215,8 +196,6 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - id: debug
-        run: echo  To be deployed ${{ github.event.inputs.site }}
       - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master

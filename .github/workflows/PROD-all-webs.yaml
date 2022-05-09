@@ -1,22 +1,6 @@
-name: PROD - Deploy selected web site
+name: PROD - Deploy all webs
 on:
   workflow_dispatch:
-    inputs:
-      site:
-        description: 'Name of web to deploy'
-        required: true
-        type: choice
-        options:
-          - global
-          - secret
-          - brazil
-          - germany
-          - argentina
-          - poland
-          - japan
-          - storage
-          - equinorfunds
-          - southkorea
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
@@ -37,13 +21,13 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/promoteToProduction.py web ${{ github.event.inputs.site }}
+          python ci/promoteAllToProduction.py web
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🚀 Deploy web for ${{ github.event.inputs.site }} to production"
+            git commit -am "🚀 Deploy all web sites to production"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
