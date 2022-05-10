@@ -32,23 +32,22 @@ export const menuQuery = /* groq */ `
     },
     intro,
     "featuredContent": featuredContent->{
+      "type": _type,
+      "id": _id,
+      "slug": slug.current,
+
       _type == "news" => {
-        "type": _type,
-        "id": _id,
-        "updatedAt": _updatedAt,
         title,
         heroImage,
         "publishDateTime": ${publishDateTimeQuery},
-        "slug": slug.current,
         ingress,
       },
       _type match "route_*" => {
-        "type": _type,
-        "id": _id,
-        "slug": slug.current,
+        "routeContentType": content->_type,
         "title": content->title,
         "heroImage": content->heroFigure,
-
+        "eventDate": content->eventDate,
+        "location": content->location,
       }
     },
 	}
