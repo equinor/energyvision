@@ -1,4 +1,4 @@
-import { Link, FormattedDate, BackgroundContainer, Text, Table as EnvisTable } from '@components'
+import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
 import { TitleBlockRenderer } from '../../common/serializers'
 import IngressText from '../../common/portableText/IngressText'
 

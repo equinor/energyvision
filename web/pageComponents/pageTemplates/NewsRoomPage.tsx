@@ -5,15 +5,17 @@ import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { toPlainText } from '@portabletext/react'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
 import IngressText from '../../common/portableText/IngressText'
-import SimpleBlockContent from '../../common/portableText/SimpleBlockContent'
+import RichText from '../../common/portableText/RichText'
+import isEmpty from '../../common/portableText/helpers/isEmpty'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
-import type { NewsroomData } from '../../types/types'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+
 import type { NextRouter } from 'next/router'
+import type { NewsroomData } from '../../types/types'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -94,16 +96,21 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
         <Wrapper>
           <Intro>
             {title && (
-              <SimpleBlockContent
+              <RichText
                 value={title}
                 components={{
                   block: {
-                    // Overriding the h2
-                    normal: ({ children }) => (
-                      <Heading level="h1" size="2xl">
-                        {children}
-                      </Heading>
-                    ),
+                    // Overriding the h2. This is the normal text because that's all this text editor allows
+                    normal: ({ children }) => {
+                      // eslint-disable-next-line
+                      // @ts-ignore: Still struggling with the types here :/
+                      if (isEmpty(children)) return null
+                      return (
+                        <Heading level="h1" size="2xl">
+                          {children}
+                        </Heading>
+                      )
+                    },
                   },
                 }}
               />

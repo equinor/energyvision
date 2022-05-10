@@ -2,7 +2,8 @@ import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
 import { toPlainText } from '@portabletext/react'
 import { Heading, Text } from '@components'
-import SimpleBlockContent from '../../common/portableText/SimpleBlockContent'
+import RichText from '../../common/portableText/RichText'
+import isEmpty from '../../common/portableText/helpers/isEmpty'
 import BackgroundImage from '../errorPages/BackgroundImage'
 import type { ErrorPageData } from '../../types/types'
 
@@ -42,7 +43,7 @@ const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
           </StyledHeading>
           {text && (
             <TextContainer>
-              <SimpleBlockContent
+              <RichText
                 components={{
                   block: {
                     // Overriding the h2
@@ -51,7 +52,12 @@ const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
                         {children}
                       </Heading>
                     ),
-                    normal: ({ children }) => <Text style={{ fontSize: 'var(--typeScale-3)' }}>{children}</Text>,
+                    normal: ({ children }) => {
+                      // eslint-disable-next-line
+                      // @ts-ignore: Still struggling with the types here :/
+                      if (isEmpty(children)) return null
+                      return <Text style={{ fontSize: 'var(--typeScale-3)' }}>{children}</Text>
+                    },
                   },
                 }}
                 value={text}
