@@ -24,7 +24,7 @@ export const toUTCDateParts = (datetime: Date): number[] => {
   ]
 }
 
-export const getEventDates = (eventDate: EventDateType) => {
+export const getEventDates = (eventDate: EventDateType | undefined) => {
   if (!eventDate) {
     console.warn('Missing eventDate object for event')
     // This is indeed not optimal
