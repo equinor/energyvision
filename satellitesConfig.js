@@ -80,6 +80,7 @@ const websiteDomains = {
   storage: 'https://www.equinorstorage.de',
   argentina: 'https://www.equinor.ar',
   equinorfunds: 'https://www.equinorfondene.no',
+  japan: 'https://www.equinor.jp',
   'global-development': 'localhost:3000',
 }
 
