@@ -1,7 +1,8 @@
 import { Teaser as EnvisTeaser, Link, Eyebrow, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer } from '../../common/serializers'
+import IngressText from '../../common/portableText/IngressText'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { urlFor } from '../../common/helpers'
 import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
@@ -97,16 +98,7 @@ const Teaser = ({ data }: TeaserProps) => {
             />
           )}
 
-          {text && (
-            <SimpleBlockContent
-              blocks={text}
-              serializers={{
-                types: {
-                  block: IngressBlockRenderer,
-                },
-              }}
-            ></SimpleBlockContent>
-          )}
+          {text && <IngressText value={text} />}
           {action && <TeaserAction action={action} />}
         </Content>
       </StyledEnvisTeaser>

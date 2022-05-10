@@ -223,7 +223,7 @@ export type TeaserData = {
   type: string
   id: string
   title: PortableTextEntry[]
-  text: PortableTextEntry[]
+  text: SPortableTextBlock[]
   overline?: string
   image: ImageWithAlt
   action?: LinkData
