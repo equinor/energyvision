@@ -2,7 +2,6 @@ import { TextWithIcon, BackgroundContainer } from '@components'
 import { urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import styled from 'styled-components'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
 
 import IngressText from '../../common/portableText/IngressText'
 import type { TextWithIconArrayData, TextWithIconItem, ImageWithAlt } from '../../types/types'

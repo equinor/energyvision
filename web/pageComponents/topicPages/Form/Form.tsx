@@ -1,7 +1,8 @@
 import type { FormData } from '../../../types/types'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../../common/SimpleBlockContent'
-import { TitleBlockRenderer, IngressBlockRenderer } from '../../../common/serializers'
+import { TitleBlockRenderer } from '../../../common/serializers'
+import IngressText from '../../../common/portableText/IngressText'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
@@ -78,16 +79,7 @@ const Form = ({ data }: { data: FormData }) => {
             }}
           />
         )}
-        {ingress && (
-          <SimpleBlockContent
-            blocks={ingress}
-            serializers={{
-              types: {
-                block: (props) => <IngressBlockRenderer centered={false} {...props} />,
-              },
-            }}
-          ></SimpleBlockContent>
-        )}
+        {ingress && <IngressText value={ingress}></IngressText>}
 
         {renderForm(variant)}
       </Container>

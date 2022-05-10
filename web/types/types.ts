@@ -519,7 +519,7 @@ export type FormData = {
   id: string
   type: string
   title?: PortableTextEntry[]
-  ingress?: PortableTextEntry[]
+  ingress?: SPortableTextBlock[]
   form: string
   downloads: LinkData[]
 }
