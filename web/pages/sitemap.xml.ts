@@ -8,12 +8,13 @@ const Sitemap = () => {
   return 'Loading...'
 }
 
-const getUrl = ({ slug, locale }: PathType) => {
-  if (Array.isArray(slug)) {
-    const url = slug.length === 0 ? locale : locale + '/' + slug.join('/')
-    return url
-  }
-  return locale + slug
+const formatPath = ({ slug, locale: urlLocale }: PathType) => {
+  const locale = urlLocale === defaultLanguage.locale ? '' : urlLocale
+  const path = Array.isArray(slug) ? '/' + slug.join('/') : slug
+
+  if (path === '/') return locale ? `/${locale}` : ''
+
+  return locale ? `/${locale}${path}` : path
 }
 
 const getSitemapUrls = (domain: string, paths: PathType[]) =>
@@ -23,7 +24,7 @@ const getSitemapUrls = (domain: string, paths: PathType[]) =>
       .map(
         (path) => `
           <url>
-            <loc>${domain + '/' + getUrl(path)}</loc>
+            <loc>${domain + formatPath(path)}</loc>
             <lastmod>${path.updatedAt}</lastmod>
           </url>
         `,
