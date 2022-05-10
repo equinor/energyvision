@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
 import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import Lead from '../../pageComponents/shared/Lead'
+import IngressText from '../../common/portableText/IngressText'
 
 import ContactList from '../../pageComponents/shared/ContactList'
 import { TitleBlockRenderer } from '../../common/serializers'
@@ -201,7 +201,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           <ContentWrapper>
             {ingress && (
               <LeadParagraph>
-                <Lead blocks={ingress}></Lead>
+                <IngressText value={ingress}></IngressText>
               </LeadParagraph>
             )}
             {content && (

@@ -4,7 +4,7 @@ import { Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
 import NewsBlockContent from '../../common/NewsBlockContent'
 import HeroImage from '../../pageComponents/shared/HeroImage'
-import Lead from '../../pageComponents/shared/Lead'
+import IngressText from '../../common/portableText/IngressText'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import LatestNews from '../../pageComponents/news/LatestNews'
 import { Icon } from '@equinor/eds-core-react'
@@ -247,7 +247,7 @@ const NewsPage = ({ data }: ArticleProps) => {
             <Image>{heroImage && <HeroImage data={heroImage} />}</Image>
             {ingress && ingress.length > 0 && (
               <LeadParagraph>
-                <Lead blocks={ingress} />
+                <IngressText value={ingress} />
               </LeadParagraph>
             )}
             {content && content.length > 0 && (

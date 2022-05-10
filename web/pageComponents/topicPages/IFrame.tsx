@@ -5,7 +5,7 @@ import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { TitleBlockRenderer, BlockRenderer } from '../../common/serializers'
 import CoreIFrame from '../shared/iframe/IFrame'
 import { ButtonLink } from '../shared/ButtonLink'
-import Lead from '../shared/Lead'
+import IngressText from '../../common/portableText/IngressText'
 
 const StyledHeading = styled(TitleBlockRenderer)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -55,7 +55,7 @@ const IFrame = ({
         )}
         {ingress && (
           <Ingress>
-            <Lead blocks={ingress}></Lead>
+            <IngressText value={ingress}></IngressText>
           </Ingress>
         )}
         {description ? (

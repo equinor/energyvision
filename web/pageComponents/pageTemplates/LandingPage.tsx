@@ -3,7 +3,9 @@ import { NextSeo } from 'next-seo'
 import type { LandingPageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer } from '../../common/serializers'
+import IngressText from '../../common/portableText/IngressText'
+
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import ContentGroup from '../landingPages/ContentGroup'
@@ -84,14 +86,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
         </HeroBanner>
         {ingress && (
           <Intro>
-            <SimpleBlockContent
-              blocks={ingress}
-              serializers={{
-                types: {
-                  block: IngressBlockRenderer,
-                },
-              }}
-            ></SimpleBlockContent>
+            <IngressText value={ingress} />
           </Intro>
         )}
         <TOCList>

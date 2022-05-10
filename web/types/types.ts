@@ -138,7 +138,7 @@ export type NewsSchema = {
   updatedAt: string
   publishDateTime: string
   heroImage: ImageWithCaptionData
-  ingress: PortableTextEntry[]
+  ingress: SPortableTextBlock[]
   content: PortableTextEntry[]
   relatedLinks: RelatedLinksData
   iframe: IFrameData
@@ -385,7 +385,7 @@ export type IFrameData = {
   id?: string
   type?: string
   title?: PortableTextEntry[]
-  ingress?: PortableTextEntry[]
+  ingress?: SPortableTextBlock[]
   description?: PortableTextEntry[]
   action?: LinkData
   frameTitle: string
@@ -488,7 +488,7 @@ export type EventSchema = {
   content: {
     location?: string
     eventDate: EventDateType
-    ingress?: PortableTextEntry[]
+    ingress?: SPortableTextBlock[]
     content?: PortableTextEntry[]
     iframe?: IFrameData
     promotedPeople?: {
