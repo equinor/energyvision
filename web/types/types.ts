@@ -182,7 +182,7 @@ export type LandingPageSchema = {
   id: string
   slug: string
   title: BlockNode[]
-  ingress: BlockNode[]
+  ingress: SPortableTextBlock[]
   subGroups: SubMenuGroupData[]
   template: Templates
   seoAndSome: {
