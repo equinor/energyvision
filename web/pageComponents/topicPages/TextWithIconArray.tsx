@@ -3,7 +3,8 @@ import { urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import styled from 'styled-components'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { IngressBlockRenderer } from '../../common/serializers'
+
+import IngressText from '../../common/portableText/IngressText'
 import type { TextWithIconArrayData, TextWithIconItem, ImageWithAlt } from '../../types/types'
 
 const Container = styled.div<{ items: number }>`
@@ -64,14 +65,7 @@ const TextWithIconArray = ({ data }: TextWithIconArrayProps) => {
               {title && <Title>{title}</Title>}
               {text && (
                 <Text>
-                  <SimpleBlockContent
-                    blocks={text}
-                    serializers={{
-                      types: {
-                        block: ({ children, node }) => IngressBlockRenderer({ children, node, centered: true }),
-                      },
-                    }}
-                  ></SimpleBlockContent>
+                  <IngressText value={text} centered={true} />
                 </Text>
               )}
             </TextWithIcon>

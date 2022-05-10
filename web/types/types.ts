@@ -269,7 +269,7 @@ export type FigureData = {
 export type TextWithIconItem = {
   id: string
   icon: ImageWithAlt
-  text: PortableTextEntry[]
+  text: SPortableTextBlock[]
   title: string
 }
 
