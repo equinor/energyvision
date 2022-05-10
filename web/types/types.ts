@@ -247,7 +247,7 @@ export type TableData = {
   type: string
   id: string
   title: PortableTextEntry[]
-  ingress: PortableTextEntry[]
+  ingress: SPortableTextBlock[]
   tableHeaders: TableHeaderData[]
   tableRows: any[]
   designOptions: DesignOptions

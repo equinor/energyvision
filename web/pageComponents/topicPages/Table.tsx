@@ -1,5 +1,7 @@
-import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
-import { IngressBlockRenderer, TitleBlockRenderer } from '../../common/serializers'
+import { Link, FormattedDate, BackgroundContainer, Text, Table as EnvisTable } from '@components'
+import { TitleBlockRenderer } from '../../common/serializers'
+import IngressText from '../../common/portableText/IngressText'
+
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import type { TableData, LinkData, CellData } from '../../types/types'
 import styled from 'styled-components'
@@ -108,14 +110,7 @@ const Table = ({ data }: TableProps) => {
         )}
         {ingress && (
           <StyledIngress>
-            <SimpleBlockContent
-              blocks={ingress}
-              serializers={{
-                types: {
-                  block: IngressBlockRenderer,
-                },
-              }}
-            />
+            <IngressText value={ingress} />
           </StyledIngress>
         )}
 
@@ -127,11 +122,11 @@ const Table = ({ data }: TableProps) => {
                   <StyledHeaderCell key={header.id}>
                     <SimpleBlockContent
                       blocks={header.headerCell}
-                      serializers={{
-                        types: {
-                          block: IngressBlockRenderer,
+                      /*  components={{
+                        block: {
+                          normal: ({ children }) => <Text size="md">{children}</Text>,
                         },
-                      }}
+                      }} */
                     />
                   </StyledHeaderCell>
                 )
