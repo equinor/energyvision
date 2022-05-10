@@ -5,7 +5,6 @@ export * from './ExternalLinkRenderer'
 export * from './InternalLinkRenderer'
 // It's not actually in use?
 // export * from './FigureRenderer'
-export * from './IngressBlockRenderer'
 export * from './TitleBlockRenderer'
 export * from './ListRenderer'
 export * from './ListItemRenderer'
