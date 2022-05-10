@@ -4,7 +4,8 @@ import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer, IngressBlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer } from '../../common/serializers'
+import IngressText from '../../common/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 
 const Wrapper = styled.div`
@@ -49,14 +50,7 @@ const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
           )}
           {ingress && (
             <Ingress>
-              <SimpleBlockContent
-                blocks={ingress}
-                serializers={{
-                  types: {
-                    block: (props) => <IngressBlockRenderer centered={true} {...props} />,
-                  },
-                }}
-              ></SimpleBlockContent>
+              <IngressText value={ingress} centered={true} />
             </Ingress>
           )}
         </Intro>

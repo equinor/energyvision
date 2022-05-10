@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 export type ListProps = {
   unstyled?: boolean
+  centered?: boolean
 } & EdsListProps
 
 const StyledList = styled(EdsList)<ListProps>`
@@ -17,16 +18,23 @@ const StyledList = styled(EdsList)<ListProps>`
       padding: 0,
       listStyle: 'none',
     }}
+
+  ${({ centered }) =>
+    centered && {
+      display: 'grid',
+      placeContent: 'center',
+    }}
 `
 
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(
-  { unstyled = false, style, children, ...rest },
+  { unstyled = false, centered = false, style, children, ...rest },
   ref,
 ) {
   return (
     <StyledList
       ref={ref}
       unstyled={unstyled}
+      centered={centered}
       style={
         {
           ...style,

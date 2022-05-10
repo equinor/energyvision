@@ -12,13 +12,19 @@ const StyledList = styled(List)`
   font-size: var(--typeScale-2);
 `
 
-//import removeEmptyBlocks from '../helpers/removeEmptyBlocks'
+// @TODO Not able to figure out exactly the types
+function isEmpty(children: any[]): boolean {
+  return children.every((child) => child.length === 0)
+}
 
-const defaultSerializers = {
+const defaultComponents = {
   block: {
     h2: h2Heading,
     h3: h3Heading,
-    normal: ({ children }: PortableTextBlock) => <Text size="md">{children}</Text>,
+    normal: ({ children }: PortableTextBlock) => {
+      if (isEmpty(children)) return null
+      return <Text size="md">{children}</Text>
+    },
     smallText: ({ children }: PortableTextBlock) => <Text size="small">{children}</Text>,
   },
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
@@ -28,14 +34,46 @@ const defaultSerializers = {
   },
   listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
 }
+const centeredComponents = {
+  block: {
+    normal: ({ children }: PortableTextBlock) => {
+      if (isEmpty(children)) return null
+      return (
+        <Text size="md" centered>
+          {children}
+        </Text>
+      )
+    },
+    smallText: ({ children }: PortableTextBlock) => (
+      <Text size="small" centered={true}>
+        {children}
+      </Text>
+    ),
+  },
+  list: {
+    bullet: ({ children }: PortableTextBlock) => <StyledList centered>{children}</StyledList>,
+    number: ({ children }: PortableTextBlock) => (
+      <StyledList centered variant="numbered">
+        {children}
+      </StyledList>
+    ),
+  },
+}
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const IngressText = ({ value, components = {}, ...props }: PortableTextProps) => (
+type IngressTextProps = {
+  centered?: boolean
+} & PortableTextProps
+
+const IngressText = ({ value, centered = false, components = {}, ...props }: IngressTextProps) => (
   <PortableText
-    value={value /* && removeEmptyBlocks(value) */}
+    value={value}
     // eslint-disable-next-line
     // @ts-ignore: Look into the correct way of doing this
-    components={{ ...defaultSerializers, ...components }}
+    components={
+      centered
+        ? { ...defaultComponents, ...centeredComponents, ...components }
+        : { ...defaultComponents, ...components }
+    }
     {...props}
   />
 )

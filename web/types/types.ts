@@ -415,7 +415,7 @@ export type PromotionData = {
   id: string
   type: string
   title?: PortableTextEntry[]
-  ingress?: PortableTextEntry[]
+  ingress?: SPortableTextBlock[]
   content: {
     // Do we really need the tags here?
     tags?: Tag[]
