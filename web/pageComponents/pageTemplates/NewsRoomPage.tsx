@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { toPlainText } from '@portabletext/react'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
+import IngressText from '../../common/portableText/IngressText'
 import SimpleBlockContent from '../../common/portableText/SimpleBlockContent'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
@@ -108,7 +109,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
               />
             )}
 
-            {ingress && <UnpaddedText>{ingress && <SimpleBlockContent value={ingress} />}</UnpaddedText>}
+            {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
           <News>
             <InstantSearch
