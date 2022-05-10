@@ -2,6 +2,7 @@
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import styled from 'styled-components'
 import { h3Heading, h2Heading, Sub, Sup, ExternalLink, InternalLink } from './components'
+import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
 
 import { Text, List } from '@components'
@@ -11,11 +12,6 @@ const { Item } = List
 const StyledList = styled(List)`
   font-size: var(--typeScale-2);
 `
-
-// @TODO Not able to figure out exactly the types
-function isEmpty(children: any[]): boolean {
-  return children.every((child) => child.length === 0)
-}
 
 const defaultComponents = {
   block: {
