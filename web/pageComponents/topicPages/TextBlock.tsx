@@ -1,6 +1,8 @@
 import { Eyebrow, BackgroundContainer } from '@components'
-import { IngressBlockRenderer, BlockRenderer, TitleBlockRenderer } from '../../common/serializers'
+import { BlockRenderer, TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
+import IngressText from '../../common/portableText/IngressText'
+
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
 import CallToActions from './CallToActions'
@@ -65,16 +67,7 @@ const TextBlock = ({ data }: TextBlockProps) => {
             }}
           />
         )}
-        {ingress && (
-          <SimpleBlockContent
-            blocks={ingress}
-            serializers={{
-              types: {
-                block: IngressBlockRenderer,
-              },
-            }}
-          />
-        )}
+        {ingress && <IngressText value={ingress} />}
         {text && (
           <SimpleBlockContent
             blocks={text}

@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PortableText, PortableTextProps } from '@portabletext/react'
-import // SubRenderer,
-// SupRenderer,
-// ExternalLinkRenderer,
-// InternalLinkRenderer,
+import // InternalLinkRenderer,
 // ListRenderer,
 // ListItemRenderer,
 '../serializers'

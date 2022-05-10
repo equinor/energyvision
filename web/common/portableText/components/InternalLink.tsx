@@ -1,12 +1,10 @@
-// @todo This is not migrated, it's just a start
-
 import { Link } from '@components'
 import { default as NextLink } from 'next/link'
 import { getLocaleFromName } from '../../../lib/localization'
 
 type InternalLinkProps = {
   _key: string
-  _type: string
+  _type: 'internalLink'
   internalLink: {
     id: string
     name: string | null
@@ -17,18 +15,22 @@ type InternalLinkProps = {
     _ref: string
     _type: string
   }
-  markKey: string
+  anchorReference?: string
 }
 
 export const InternalLink = ({ value, children }: { value: InternalLinkProps; children: React.ReactNode }) => {
-  //console.log(value, children)
   try {
     const { id, lang } = value.internalLink
+    const anchorReference = value.anchorReference
     const linkLocale = getLocaleFromName(lang)
-    const href = id
+
+    const href = anchorReference ? `${id}#${anchorReference}` : id
+    if (!id) {
+      return <>{children}</>
+    }
 
     return (
-      <NextLink passHref href={`/${linkLocale}${href}`}>
+      <NextLink passHref locale={linkLocale} href={href}>
         <Link>{children}</Link>
       </NextLink>
     )

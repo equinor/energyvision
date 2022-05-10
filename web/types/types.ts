@@ -206,7 +206,7 @@ export type TextBlockData = {
   title: PortableTextEntry[]
   overline?: string
   text: PortableTextEntry[]
-  ingress: PortableTextEntry[]
+  ingress: SPortableTextBlock[]
   callToActions?: LinkData[]
   anchor?: string
   designOptions: DesignOptions
