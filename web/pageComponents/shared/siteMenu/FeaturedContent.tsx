@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
-import { CardData } from '../../../types/types'
+import FeaturedEventCard from '../../cards/FeaturedEventCard'
+import type { FeaturedContentData } from '../../../types/types'
 
 const Promoted = styled.div`
   margin-top: var(--space-medium);
@@ -18,13 +19,34 @@ const Promoted = styled.div`
 `
 
 type Props = {
-  data: CardData
+  data: FeaturedContentData
 }
 
 const FeaturedContent = ({ data }: Props) => {
+  if (!data.type) return null
+
+  const isNews = (type: string): boolean => type === 'news' || type === 'localNews'
+  const isEvent = (data: FeaturedContentData): boolean => data?.routeContentType === 'event'
+
+  if (isNews(data.type)) {
+    return (
+      <Promoted>
+        <NewsCard data={data} fitToContent />
+      </Promoted>
+    )
+  }
+
+  if (isEvent(data)) {
+    return (
+      <Promoted>
+        <FeaturedEventCard data={data} />
+      </Promoted>
+    )
+  }
+
   return (
     <Promoted>
-      {data.type && data.type === 'news' ? <NewsCard data={data} fitToContent /> : <TopicPageCard data={data} />}
+      <TopicPageCard data={data} />
     </Promoted>
   )
 }

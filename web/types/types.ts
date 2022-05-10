@@ -98,6 +98,13 @@ export type CardData = {
   ingress?: PortableTextEntry[]
 }
 
+export type FeaturedContentData = {
+  type?: string // news, localNews, route_${locale}
+  routeContentType?: 'page' | 'event'
+  location?: string
+  eventDate?: EventDateType
+} & CardData
+
 export type PeopleCardData = {
   type?: 'people'
   id: string
