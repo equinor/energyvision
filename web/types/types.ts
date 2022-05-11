@@ -222,7 +222,7 @@ export type CallToActionData = {
 export type TeaserData = {
   type: string
   id: string
-  title: PortableTextEntry[]
+  title: SPortableTextBlock[]
   text: SPortableTextBlock[]
   overline?: string
   image: ImageWithAlt
