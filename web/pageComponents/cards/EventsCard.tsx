@@ -1,12 +1,11 @@
 import { CSSProperties } from 'react'
 import { default as NextLink } from 'next/link'
-import { Card, FormattedDate, FormattedTime, ButtonLink } from '@components'
-/* @TODO Is it OK with the deps on the Icon component here? */
+import { Card, FormattedDate, FormattedTime, ButtonLink, Heading } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import styled from 'styled-components'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../common/serializers'
+import isEmpty from '../../common/portableText/helpers/isEmpty'
+import TitleText from '../../common/portableText/TitleText'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import type { EventCardData, EventDateType } from '../../types/types'
@@ -21,7 +20,7 @@ const StyledCard = styled(Card)`
   height: var(--height);
   width: 100%;
   /* For the landscape variant, we don't want the title
-  column to be too wid*/
+  column to be too wide*/
   --column-sizes: 40% 1fr;
 `
 
@@ -121,18 +120,21 @@ const EventsCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
     >
       <StyledMedia>
         {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: (props) => (
-                  <TitleBlockRenderer
-                    level={hasSectionTitle ? 'h3' : 'h2'}
-                    style={{ fontWeight: '500' }}
-                    size="md"
-                    {...props}
-                  />
-                ),
+          <TitleText
+            value={title}
+            components={{
+              block: {
+                // This one needs an override because of the font weight change
+                normal: ({ children }) => {
+                  // eslint-disable-next-line
+                  // @ts-ignore: Still struggling with the types here :/
+                  if (isEmpty(children)) return null
+                  return (
+                    <Heading level={hasSectionTitle ? 'h3' : 'h2'} style={{ fontWeight: '500' }} size="md">
+                      {children}
+                    </Heading>
+                  )
+                },
               },
             }}
           />
