@@ -9,7 +9,7 @@ export const IS_SECRET = projectId === 'w3b4om14'
 /** @TODO Replicate logic inside GROQ queries for the web */
 const GLOBAL = ['global', 'global-development', 'secret']
 
-const NEWS = [...GLOBAL, 'poland', 'brazil', 'germany', 'japan', 'southkorea']
+const NEWS = [...GLOBAL, 'poland', 'brazil', 'germany', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
 const NEWSROOM = [...GLOBAL]
 const LOCAL_NEWS = [...GLOBAL]
