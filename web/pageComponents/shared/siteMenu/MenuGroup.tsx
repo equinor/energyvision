@@ -1,8 +1,7 @@
 import { Fragment } from 'react'
 import styled from 'styled-components'
 import NextLink from 'next/link'
-import { BlockRenderer } from '../../../common/serializers'
-import SimpleBlockContent from '../../../common/SimpleBlockContent'
+import RichText from '../../../common/portableText/RichText'
 import { Link, List, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
@@ -95,14 +94,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
             <StyledSection>
               {intro && (
                 <TextContainer>
-                  <SimpleBlockContent
-                    blocks={intro}
-                    serializers={{
-                      types: {
-                        block: BlockRenderer,
-                      },
-                    }}
-                  />
+                  <RichText value={intro} />
                 </TextContainer>
               )}
 
