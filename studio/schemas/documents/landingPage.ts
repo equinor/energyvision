@@ -1,4 +1,3 @@
-import React from 'react'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import { configureTitleBlockContent } from '../editors'
@@ -40,6 +39,12 @@ export default {
       title: 'Meta information',
       name: 'seo',
       type: 'titleAndMeta',
+      fieldset: 'metadata',
+    },
+    {
+      name: 'openGraphImage',
+      type: 'image',
+      title: 'Open Graph Image',
       fieldset: 'metadata',
     },
     {
