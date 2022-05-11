@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@components'
-import { blocksToText } from '../../common/helpers'
-
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 
 import type { EventDateType } from '../../types/types'
-import type { BlockNode } from '@sanity/block-content-to-react'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')
@@ -14,7 +11,7 @@ const ics = require('ics')
 type AddToCalendarProps = {
   eventDate: EventDateType
   location?: string
-  title: BlockNode[]
+  title: string
 }
 
 type ICSProps = {
@@ -54,7 +51,6 @@ const createICS = (eventData: ICSProps): string | boolean => {
 
 const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   const [fileData, setFileData] = useState<string | boolean>(false)
-  const eventTitle = blocksToText(title)
 
   useEffect(() => {
     const { start: startString, end: endString } = getEventDates(eventDate)
@@ -79,18 +75,18 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
         startInputType: 'utc',
         end: padMonth(toUTCDateParts(end)), // ICS lib expects start & end to be an array
         endInputType: 'utc',
-        title: eventTitle,
+        title: title,
         location: location,
       }
 
       setFileData(createICS(eventData))
     }
-  }, [eventDate, location, eventTitle])
+  }, [eventDate, location, title])
 
   if (!fileData) return null
 
   return (
-    <Button {...(fileData && { href: fileData as string, download: `${eventTitle.replace(/ /g, '_')}.ics` })}>
+    <Button {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}>
       {/*  <Icon data={add} /> */}
       Add to Calendar
     </Button>

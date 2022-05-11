@@ -4,20 +4,20 @@ import styled from 'styled-components'
 import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import IngressText from '../../common/portableText/IngressText'
-
+import { toPlainText } from '@portabletext/react'
 import ContactList from '../../pageComponents/shared/ContactList'
-import { TitleBlockRenderer } from '../../common/serializers'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { blocksToText } from '../../common/helpers'
+import TitleText from '../../common/portableText/TitleText'
+import RichText from '../../common/portableText/RichText'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../topicPages/Promotion'
 import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
-
-import type { EventSchema } from '../../types/types'
 import { FormattedDate, FormattedTime } from '@components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { FormattedMessage } from 'react-intl'
+
+import type { EventSchema } from '../../types/types'
+import type { PortableTextBlock } from '@portabletext/types'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -140,7 +140,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
   const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
-  const plainTitle = title ? blocksToText(title) : ''
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const { pathname, locale } = useRouter()
 
@@ -164,16 +164,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
         <EventLayout>
           <Header>
             <HeaderInner>
-              {title && (
-                <SimpleBlockContent
-                  blocks={title}
-                  serializers={{
-                    types: {
-                      block: (props) => <TitleBlockRenderer level="h1" size="2xl" {...props} />,
-                    },
-                  }}
-                />
-              )}
+              {title && <TitleText value={title} level="h1" size="2xl" />}
               {start && (
                 <StyledDate>
                   <FormattedDate datetime={start} />
@@ -195,7 +186,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               </StyledTime>
 
               {location && <StyledLocation>{location}</StyledLocation>}
-              <AddToCalendar eventDate={eventDate} location={location} title={title} />
+              <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
             </HeaderInner>
           </Header>
           <ContentWrapper>
@@ -206,7 +197,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             )}
             {content && (
               <Content>
-                <SimpleBlockContent blocks={content}></SimpleBlockContent>
+                <RichText value={content}></RichText>
               </Content>
             )}
           </ContentWrapper>

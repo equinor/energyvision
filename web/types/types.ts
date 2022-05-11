@@ -121,7 +121,7 @@ export type PeopleCardData = {
 export type EventCardData = {
   id: string
   type: 'events'
-  title: BlockNode[]
+  title: SPortableTextBlock[]
   manuallySelectEvents: boolean
   slug: string
   location?: string
@@ -478,7 +478,7 @@ export type SubscribeFormParameters = {
 
 export type EventSchema = {
   id: string
-  title: BlockNode[]
+  title: SPortableTextBlock[]
   slug: string
   seoAndSome: {
     documentTitle?: string
@@ -489,7 +489,7 @@ export type EventSchema = {
     location?: string
     eventDate: EventDateType
     ingress?: SPortableTextBlock[]
-    content?: PortableTextEntry[]
+    content?: SPortableTextBlock[]
     iframe?: IFrameData
     promotedPeople?: {
       title?: PortableTextEntry[]
