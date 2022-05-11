@@ -3,10 +3,8 @@ import { NextSeo } from 'next-seo'
 import type { LandingPageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import { TitleBlockRenderer } from '../../common/serializers'
 import IngressText from '../../common/portableText/IngressText'
-
-import SimpleBlockContent from '../../common/SimpleBlockContent'
+import TitleText from '../../common/portableText/TitleText'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import ContentGroup from '../landingPages/ContentGroup'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
@@ -18,7 +16,7 @@ const HeroBanner = styled.div`
     var(--layout-paddingHorizontal-medium);
 `
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
@@ -60,30 +58,11 @@ const LandingPage = ({ data }: LandingPageProps) => {
           description: data?.seoAndSome?.metaDescription,
           type: 'website',
           url: fullUrl,
-          /* @TODO: Add fallback image */
-          // eslint-disable-next-line
-          // @ts-ignore: Why does ts hates because I moved this line from another file
-          images: getOpenGraphImages(data?.seoAndSome?.openGraphImage),
+          images: data?.seoAndSome?.openGraphImage?.asset && getOpenGraphImages(data?.seoAndSome?.openGraphImage),
         }}
-        // twitter={{
-        //   handle: '@handle',
-        //   site: '@site',
-        //   cardType: 'summary_large_image',
-        // }}
       ></NextSeo>
       <LandingPageLayout>
-        <HeroBanner>
-          {title && (
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: (props) => <StyledHeading level="h1" size="2xl" {...props} />,
-                },
-              }}
-            />
-          )}
-        </HeroBanner>
+        <HeroBanner>{title && <StyledHeading value={title} level="h1" size="2xl" />}</HeroBanner>
         {ingress && (
           <Intro>
             <IngressText value={ingress} />
