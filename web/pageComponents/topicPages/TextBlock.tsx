@@ -1,7 +1,9 @@
 import { Eyebrow, BackgroundContainer } from '@components'
-import { BlockRenderer, TitleBlockRenderer } from '../../common/serializers'
+import { TitleBlockRenderer } from '../../common/serializers'
 import SimpleBlockContent from '../../common/SimpleBlockContent'
 import IngressText from '../../common/portableText/IngressText'
+import RichText from '../../common/portableText/RichText'
+import TitleText from '../../common/portableText/TitleText'
 
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
@@ -57,27 +59,12 @@ const TextBlock = ({ data }: TextBlockProps) => {
     <StyledTextBlockWrapper background={background} id={anchor}>
       <StyledTextBlock>
         {overline && <Eyebrow>{overline}</Eyebrow>}
-        {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: TitleBlockRenderer,
-              },
-            }}
-          />
-        )}
+        {title && <TitleText value={title} />}
         {ingress && <IngressText value={ingress} />}
         {text && (
-          <SimpleBlockContent
-            blocks={text}
-            serializers={{
-              types: {
-                block: BlockRenderer,
-              },
-              container: TextContainer,
-            }}
-          />
+          <TextContainer>
+            <RichText value={text} />
+          </TextContainer>
         )}
         {callToActions && callToActions.length === 1 && <Spacer />}
         {callToActions && <CallToActions callToActions={callToActions} />}

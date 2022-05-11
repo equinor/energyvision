@@ -203,9 +203,9 @@ export type DesignOptions = {
 export type TextBlockData = {
   type: string
   id: string
-  title: PortableTextEntry[]
+  title: SPortableTextBlock[]
   overline?: string
-  text: PortableTextEntry[]
+  text: SPortableTextBlock[]
   ingress: SPortableTextBlock[]
   callToActions?: LinkData[]
   anchor?: string
