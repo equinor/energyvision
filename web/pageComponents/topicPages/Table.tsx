@@ -1,11 +1,12 @@
-import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable } from '@components'
-import { TitleBlockRenderer } from '../../common/serializers'
-import IngressText from '../../common/portableText/IngressText'
-
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import type { TableData, LinkData, CellData } from '../../types/types'
+import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable, Text } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
+import IngressText from '../../common/portableText/IngressText'
+import TitleText from '../../common/portableText/TitleText'
+import RichText from '../../common/portableText/RichText'
+import isEmpty from '../../common/portableText/helpers/isEmpty'
+
+import type { TableData, LinkData, CellData } from '../../types/types'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
@@ -17,10 +18,10 @@ const TableContainer = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
 `
 const StyledIngress = styled.div`
-  padding: var(--space-small) 0 var(--space-medium);
+  padding: 0 0 var(--space-medium);
 `
-const StyledTitle = styled.div`
-  padding: var(--space-small) 0 var(--space-small);
+const StyledTitle = styled(TitleText)`
+  margin-bottom: var(--space-xLarge);
 `
 
 const StyledHeaderCell = styled(Cell)`
@@ -29,7 +30,6 @@ const StyledHeaderCell = styled(Cell)`
     margin-bottom: 0;
   }
 `
-const StyledFormattedDate = styled(FormattedDate)``
 
 const StyledCell = styled(Cell)`
   font-size: var(--typeScale-0);
@@ -63,7 +63,7 @@ const renderCellByType = (cellData: CellData) => {
     case 'textField':
       return <>{cellData.text}</>
     case 'dateField':
-      return <>{cellData.date ? <StyledFormattedDate datetime={cellData.date.toString()} /> : null}</>
+      return <>{cellData.date ? <FormattedDate datetime={cellData.date.toString()} /> : null}</>
     case 'numberField':
       return <>{cellData.number}</>
     case 'downloadableFile':
@@ -96,18 +96,7 @@ const Table = ({ data }: TableProps) => {
   return (
     <StyledTableWrapper background={background}>
       <TableContainer>
-        {title && (
-          <StyledTitle>
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: TitleBlockRenderer,
-                },
-              }}
-            />
-          </StyledTitle>
-        )}
+        {title && <StyledTitle value={title} />}
         {ingress && (
           <StyledIngress>
             <IngressText value={ingress} />
@@ -120,14 +109,21 @@ const Table = ({ data }: TableProps) => {
               {tableHeaders?.map((header) => {
                 return (
                   <StyledHeaderCell key={header.id}>
-                    <SimpleBlockContent
-                      blocks={header.headerCell}
-                      /*  components={{
-                        block: {
-                          normal: ({ children }) => <Text size="md">{children}</Text>,
-                        },
-                      }} */
-                    />
+                    {header && header.headerCell && (
+                      <RichText
+                        value={header.headerCell}
+                        components={{
+                          block: {
+                            normal: ({ children }) => {
+                              // eslint-disable-next-line
+                              // @ts-ignore: Still struggling with the types here :/
+                              if (isEmpty(children)) return null
+                              return <Text size="md">{children}</Text>
+                            },
+                          },
+                        }}
+                      />
+                    )}
                   </StyledHeaderCell>
                 )
               })}

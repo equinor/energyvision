@@ -232,7 +232,7 @@ export type TeaserData = {
 
 export type TableHeaderData = {
   id: string
-  headerCell: PortableTextEntry[]
+  headerCell: SPortableTextBlock[]
 }
 
 export type CellData = {
@@ -246,7 +246,7 @@ export type CellData = {
 export type TableData = {
   type: string
   id: string
-  title: PortableTextEntry[]
+  title: SPortableTextBlock[]
   ingress: SPortableTextBlock[]
   tableHeaders: TableHeaderData[]
   tableRows: any[]

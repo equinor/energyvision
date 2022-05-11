@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
-
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../../common/portableText/TitleText'
