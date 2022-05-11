@@ -1,9 +1,10 @@
 import { BackgroundContainer } from '@components'
-import { BlockRenderer, TitleBlockRenderer } from '../../../common/serializers'
-import SimpleBlockContent from '../../../common/SimpleBlockContent'
-import type { AccordionData } from '../../../types/types'
 import styled from 'styled-components'
+import TitleText from '../../../common/portableText/TitleText'
+import IngressText from '../../../common/portableText/IngressText'
 import Accordion from './Accordion'
+
+import type { AccordionData } from '../../../types/types'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -19,7 +20,7 @@ const StyledTextBlock = styled.section`
   margin-right: auto;
 `
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
 `
 
@@ -34,26 +35,8 @@ const AccordionBlock = ({ data }: AccordionBlockProps) => {
   return (
     <StyledTextBlockWrapper background={background} id={anchor}>
       <StyledTextBlock>
-        {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: (props) => <StyledHeading {...props} />,
-              },
-            }}
-          />
-        )}
-        {ingress && (
-          <SimpleBlockContent
-            blocks={ingress}
-            serializers={{
-              types: {
-                block: BlockRenderer,
-              },
-            }}
-          />
-        )}
+        {title && <StyledHeading value={title} />}
+        {ingress && <IngressText value={ingress} />}
         {accordion && accordion.length > 0 && (
           <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
         )}

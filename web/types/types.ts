@@ -293,14 +293,14 @@ export type QuoteData = {
 export type AccordionListData = {
   id: string
   title: string
-  content: PortableTextEntry[]
+  content: SPortableTextBlock[]
 }
 
 export type AccordionData = {
   type: string
   id: string
-  title: PortableTextEntry[]
-  ingress: PortableTextEntry[]
+  title: SPortableTextBlock[]
+  ingress: SPortableTextBlock[]
   accordion: AccordionListData[]
   anchor?: string
   designOptions: DesignOptions
@@ -518,7 +518,7 @@ export type CookieDeclaration = {
 export type FormData = {
   id: string
   type: string
-  title?: PortableTextEntry[]
+  title?: SPortableTextBlock[]
   ingress?: SPortableTextBlock[]
   form: string
   downloads: LinkData[]

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { ParsedUrlQuery } from 'querystring'
 import useRouterReplace from '../../hooks/useRouterReplace'
 import { Accordion as EnvisAccordion } from '@components'
-import { BlockRenderer } from '../../../common/serializers'
-import SimpleBlockContent from '../../../common/SimpleBlockContent'
+import RichText from '../../../common/portableText/RichText'
+
 import type { AccordionListData } from '../../../types/types'
-import { ParsedUrlQuery } from 'querystring'
 
 const { Item, Header, Panel } = EnvisAccordion
 
@@ -65,18 +65,7 @@ const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps
         return (
           <Item key={id} id={idx}>
             <Header headingLevel={hasTitle ? 'h3' : 'h2'}>{itemTitle}</Header>
-            <Panel animate={animate}>
-              {content && (
-                <SimpleBlockContent
-                  blocks={content}
-                  serializers={{
-                    types: {
-                      block: BlockRenderer,
-                    },
-                  }}
-                />
-              )}
-            </Panel>
+            <Panel animate={animate}>{content && <RichText value={content} />}</Panel>
           </Item>
         )
       })}

@@ -1,17 +1,16 @@
-import type { FormData } from '../../../types/types'
 import styled from 'styled-components'
-import SimpleBlockContent from '../../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../../common/serializers'
+import TitleText from '../../../common/portableText/TitleText'
 import IngressText from '../../../common/portableText/IngressText'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
 import { Link, BackgroundContainer } from '@components'
-import { LinkData } from '../../../types/types'
 import CareersContactForm from './CareersContactForm'
 
-const StyledHeading = styled(TitleBlockRenderer)`
+import type { LinkData, FormData } from '../../../types/types'
+
+const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
 `
 const Container = styled.div`
@@ -69,16 +68,7 @@ const Form = ({ data }: { data: FormData }) => {
   return (
     <BackgroundContainer background="White">
       <Container>
-        {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: (props) => <StyledHeading {...props} />,
-              },
-            }}
-          />
-        )}
+        {title && <StyledHeading value={title} />}
         {ingress && <IngressText value={ingress}></IngressText>}
 
         {renderForm(variant)}

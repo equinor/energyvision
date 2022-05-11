@@ -1,6 +1,4 @@
 import { Eyebrow, BackgroundContainer } from '@components'
-import { TitleBlockRenderer } from '../../common/serializers'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
 import IngressText from '../../common/portableText/IngressText'
 import RichText from '../../common/portableText/RichText'
 import TitleText from '../../common/portableText/TitleText'
