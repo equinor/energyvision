@@ -1,11 +1,10 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../../types/types'
 import { BackgroundContainer } from '@components'
-import SimpleBlockContent from '../../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../../common/serializers'
+import TitleText from '../../../common/portableText/TitleText'
 import IFrame from './IFrame'
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
   text-align: var(--iframe-titleAlign, left);
 `
@@ -29,16 +28,7 @@ const BasicIFrame = ({
   return (
     <BackgroundContainer background={background} {...rest}>
       <Container>
-        {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: (props) => <StyledHeading {...props} />,
-              },
-            }}
-          />
-        )}
+        {title && <StyledHeading value={title} />}
         <IFrame
           frameTitle={frameTitle}
           url={url}

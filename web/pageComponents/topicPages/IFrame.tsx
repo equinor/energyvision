@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer, FigureCaption } from '@components'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer, BlockRenderer } from '../../common/serializers'
 import CoreIFrame from '../shared/iframe/IFrame'
 import { ButtonLink } from '../shared/ButtonLink'
 import IngressText from '../../common/portableText/IngressText'
+import TitleText from '../../common/portableText/TitleText'
+import RichText from '../../common/portableText/RichText'
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
   text-align: var(--iframe-titleAlign, left);
 `
@@ -43,16 +43,7 @@ const IFrame = ({
   return (
     <BackgroundContainer background={background} {...rest}>
       <Container>
-        {title && (
-          <SimpleBlockContent
-            blocks={title}
-            serializers={{
-              types: {
-                block: (props) => <StyledHeading {...props} />,
-              },
-            }}
-          />
-        )}
+        {title && <StyledHeading value={title} />}
         {ingress && (
           <Ingress>
             <IngressText value={ingress}></IngressText>
@@ -69,14 +60,7 @@ const IFrame = ({
               hasSectionTitle={!!title}
             />
             <FigureCaption size="medium">
-              <SimpleBlockContent
-                blocks={description}
-                serializers={{
-                  types: {
-                    block: BlockRenderer,
-                  },
-                }}
-              />
+              <RichText value={description} />
             </FigureCaption>
           </Figure>
         ) : (

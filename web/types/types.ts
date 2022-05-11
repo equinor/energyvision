@@ -384,9 +384,9 @@ export type CookiePolicy = 'none' | 'marketing' | 'statistics'
 export type IFrameData = {
   id?: string
   type?: string
-  title?: PortableTextEntry[]
+  title?: SPortableTextBlock[]
   ingress?: SPortableTextBlock[]
-  description?: PortableTextEntry[]
+  description?: SPortableTextBlock[]
   action?: LinkData
   frameTitle: string
   url: string
