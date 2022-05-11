@@ -18,8 +18,7 @@ import Form from '../topicPages/Form/Form'
 import Table from '../topicPages/Table'
 import NewsList from '../topicPages/NewsList'
 import StockValues from '../topicPages/StockValues'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../common/serializers'
+import TitleText from '../../common/portableText/TitleText'
 import { blocksToText } from '../../common/helpers/blocksToText'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
@@ -71,7 +70,7 @@ const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
 `
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
@@ -176,18 +175,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         // }}
       ></NextSeo>
       <TopicPageLayout>
-        <HeroBanner>
-          {data?.title && (
-            <SimpleBlockContent
-              blocks={data?.title}
-              serializers={{
-                types: {
-                  block: (props) => <StyledHeading level="h1" size="2xl" {...props} />,
-                },
-              }}
-            />
-          )}
-        </HeroBanner>
+        <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
         <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
         {content}
       </TopicPageLayout>
