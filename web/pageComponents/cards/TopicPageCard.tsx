@@ -1,12 +1,12 @@
 import { CSSProperties } from 'react'
 import { Card } from '@components'
 import { default as NextLink } from 'next/link'
+import { toPlainText } from '@portabletext/react'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
-import { blocksToText } from '../../common/helpers/blocksToText'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import type { BlockNode } from '@sanity/block-content-to-react'
+import RichText from '../../common/portableText/RichText'
+import { PortableTextBlock } from '@portabletext/types'
 
 const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 
@@ -29,7 +29,7 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
   const { slug, title, heroImage, ingress } = data
   if (!heroImage) return null
 
-  const pageTitle = title ? blocksToText(title as BlockNode[]) : ''
+  const pageTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
     <NextLink href={slug} passHref>
@@ -58,7 +58,7 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
           </Header>
           {ingress && (
             <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-              <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
+              <RichText value={ingress}></RichText>
             </Text>
           )}
           <Action>

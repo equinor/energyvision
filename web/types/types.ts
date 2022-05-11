@@ -92,10 +92,10 @@ export type CardData = {
   type?: 'news' | 'topics' | 'localNews'
   id: string
   slug: string
-  title: string | BlockNode[]
+  title: string | SPortableTextBlock[]
   publishDateTime?: string
   heroImage: ImageWithCaptionData
-  ingress?: PortableTextEntry[]
+  ingress?: SPortableTextBlock[]
 }
 
 export type FeaturedContentData = {

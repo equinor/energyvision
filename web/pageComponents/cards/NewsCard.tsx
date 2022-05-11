@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react'
 import { Card, FormattedDate } from '@components'
 import { default as NextLink } from 'next/link'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
+import RichText from '../../common/portableText/RichText'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
@@ -58,9 +58,11 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
             )}
             <Title>{title}</Title>
           </Header>
-          <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-            <SimpleBlockContent blocks={ingress}></SimpleBlockContent>
-          </Text>
+          {ingress && (
+            <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
+              <RichText value={ingress}></RichText>
+            </Text>
+          )}
           <Action>
             <Arrow />
           </Action>
