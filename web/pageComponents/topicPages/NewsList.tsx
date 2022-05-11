@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import NewsCard from '../cards/NewsCard'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../common/serializers'
+import TitleText from '../../common/portableText/TitleText'
 import type { NewsListData } from '../../types/types'
 
 const Wrapper = styled.div`
@@ -10,7 +9,7 @@ const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
 `
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   text-align: var(--promotion-titleAlign, center);
   margin-bottom: var(--space-xLarge);
 `
@@ -34,16 +33,7 @@ const NewsList = ({ data, ...rest }: { data: NewsListData }) => {
 
   return (
     <Wrapper>
-      {title && (
-        <SimpleBlockContent
-          blocks={title}
-          serializers={{
-            types: {
-              block: (props) => <StyledHeading level="h2" size="xl" {...props} />,
-            },
-          }}
-        />
-      )}
+      {title && <StyledHeading value={title} level="h2" size="xl" />}
       <Articles {...rest}>
         {articles.map((article) => (
           <NewsCard data={article} key={article.id} />
