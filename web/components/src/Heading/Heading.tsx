@@ -33,7 +33,6 @@ export type HeadingProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
-  weight?: number
   center?: boolean
   inverted?: boolean
   uppercase?: boolean
