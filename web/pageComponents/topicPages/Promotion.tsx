@@ -3,8 +3,7 @@ import { BackgroundContainer } from '@components'
 
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
-import SimpleBlockContent from '../../common/SimpleBlockContent'
-import { TitleBlockRenderer } from '../../common/serializers'
+import TitleText from '../../common/portableText/TitleText'
 import IngressText from '../../common/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 
@@ -23,7 +22,7 @@ const Intro = styled.div`
   margin: 0 auto;
 `
 
-const StyledHeading = styled(TitleBlockRenderer)`
+const StyledHeading = styled(TitleText)`
   text-align: var(--promotion-titleAlign, center);
   margin-bottom: var(--space-xLarge);
 `
@@ -38,16 +37,7 @@ const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
     <BackgroundContainer background={designOptions?.background}>
       <Wrapper {...rest}>
         <Intro>
-          {title && (
-            <SimpleBlockContent
-              blocks={title}
-              serializers={{
-                types: {
-                  block: (props) => <StyledHeading level="h2" size="xl" {...props} />,
-                },
-              }}
-            />
-          )}
+          {title && <StyledHeading value={title} level="h2" size="xl" />}
           {ingress && (
             <Ingress>
               <IngressText value={ingress} centered={true} />

@@ -414,7 +414,7 @@ export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 
 export type PromotionData = {
   id: string
   type: string
-  title?: PortableTextEntry[]
+  title?: SPortableTextBlock[]
   ingress?: SPortableTextBlock[]
   content: {
     // Do we really need the tags here?
@@ -492,7 +492,7 @@ export type EventSchema = {
     content?: SPortableTextBlock[]
     iframe?: IFrameData
     promotedPeople?: {
-      title?: PortableTextEntry[]
+      title?: SPortableTextBlock[]
       people?: PeopleCardData[]
     }
     contactList?: ContactListData
