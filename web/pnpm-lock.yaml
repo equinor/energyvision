@@ -16,7 +16,6 @@ specifiers:
   '@reach/tabs': ^0.17.0
   '@reach/window-size': ^0.17.0
   '@react-spring/web': ^9.4.4
-  '@sanity/block-content-to-react': ^3.0.0
   '@sanity/client': ^3.2.0
   '@sanity/image-url': ^1.0.1
   '@sanity/webhook': ^1.0.2
@@ -92,7 +91,6 @@ dependencies:
   '@reach/tabs': 0.17.0_react-dom@17.0.2+react@17.0.2
   '@reach/window-size': 0.17.0_react-dom@17.0.2+react@17.0.2
   '@react-spring/web': 9.4.4_react-dom@17.0.2+react@17.0.2
-  '@sanity/block-content-to-react': 3.0.0_react@17.0.2
   '@sanity/client': 3.3.0
   '@sanity/image-url': 1.0.1
   '@sanity/webhook': 1.0.2
@@ -5282,7 +5280,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.9_debug@2.6.9
+      follow-redirects: 1.14.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -5290,7 +5288,7 @@ packages:
   /axios/0.26.1:
     resolution: {integrity: sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==}
     dependencies:
-      follow-redirects: 1.14.9_debug@2.6.9
+      follow-redirects: 1.14.9
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7519,6 +7517,16 @@ packages:
 
   /focus-visible/5.2.0:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
+    dev: false
+
+  /follow-redirects/1.14.9:
+    resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.9_debug@2.6.9:
