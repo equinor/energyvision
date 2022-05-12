@@ -13,47 +13,36 @@ const StyledList = styled(List)`
   font-size: var(--typeScale-2);
 `
 
-const defaultComponents = {
-  block: {
-    h2: h2Heading,
-    h3: h3Heading,
-    normal: ({ children }: PortableTextBlock) => {
-      if (isEmpty(children)) return null
-      return <Text size="md">{children}</Text>
-    },
-    smallText: ({ children }: PortableTextBlock) => <Text size="small">{children}</Text>,
-  },
-  marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
-  list: {
-    bullet: ({ children }: PortableTextBlock) => <StyledList>{children}</StyledList>,
-    number: ({ children }: PortableTextBlock) => <StyledList variant="numbered">{children}</StyledList>,
-  },
-  listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
-}
-const centeredComponents = {
-  block: {
-    normal: ({ children }: PortableTextBlock) => {
-      if (isEmpty(children)) return null
-      return (
-        <Text size="md" centered>
+const defaultComponents = (centered: boolean) => {
+  return {
+    block: {
+      h2: h2Heading,
+      h3: h3Heading,
+      normal: ({ children }: PortableTextBlock) => {
+        if (isEmpty(children)) return null
+        return (
+          <Text size="md" centered={centered}>
+            {children}
+          </Text>
+        )
+      },
+      smallText: ({ children }: PortableTextBlock) => (
+        <Text size="small" centered={centered}>
           {children}
         </Text>
-      )
+      ),
     },
-    smallText: ({ children }: PortableTextBlock) => (
-      <Text size="small" centered={true}>
-        {children}
-      </Text>
-    ),
-  },
-  list: {
-    bullet: ({ children }: PortableTextBlock) => <StyledList centered>{children}</StyledList>,
-    number: ({ children }: PortableTextBlock) => (
-      <StyledList centered variant="numbered">
-        {children}
-      </StyledList>
-    ),
-  },
+    marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
+    list: {
+      bullet: ({ children }: PortableTextBlock) => <StyledList centered={centered}>{children}</StyledList>,
+      number: ({ children }: PortableTextBlock) => (
+        <StyledList variant="numbered" centered={centered}>
+          {children}
+        </StyledList>
+      ),
+    },
+    listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
+  }
 }
 
 type IngressTextProps = {
@@ -65,11 +54,7 @@ const IngressText = ({ value, centered = false, components = {}, ...props }: Ing
     value={value}
     // eslint-disable-next-line
     // @ts-ignore: Look into the correct way of doing this
-    components={
-      centered
-        ? { ...defaultComponents, ...centeredComponents, ...components }
-        : { ...defaultComponents, ...components }
-    }
+    components={{ ...defaultComponents(centered), ...components }}
     {...props}
   />
 )
