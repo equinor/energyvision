@@ -139,7 +139,7 @@ export type NewsSchema = {
   publishDateTime: string
   heroImage: ImageWithCaptionData
   ingress: SPortableTextBlock[]
-  content: PortableTextEntry[]
+  content: SPortableTextBlock[]
   relatedLinks: RelatedLinksData
   iframe: IFrameData
 }

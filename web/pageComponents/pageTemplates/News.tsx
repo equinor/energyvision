@@ -2,7 +2,8 @@ import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
-import NewsBlockContent from '../../common/NewsBlockContent'
+//import NewsBlockContent from '../../common/NewsBlockContent'
+import NewsText from '../../common/portableText/NewsText'
 import HeroImage from '../../pageComponents/shared/HeroImage'
 import IngressText from '../../common/portableText/IngressText'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
@@ -252,7 +253,7 @@ const NewsPage = ({ data }: ArticleProps) => {
             )}
             {content && content.length > 0 && (
               <Content>
-                <NewsBlockContent blocks={content}></NewsBlockContent>
+                <NewsText value={content}></NewsText>
               </Content>
             )}
 
