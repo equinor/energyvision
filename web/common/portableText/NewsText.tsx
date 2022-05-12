@@ -1,34 +1,58 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PortableText, PortableTextProps } from '@portabletext/react'
-import { Text, List } from '@components'
-import {
-  h3Heading,
-  h2Heading,
-  Sub,
-  Sup,
-  ExternalLink,
-  InternalLink,
-  BulletList,
-  NumberedList,
-  FigureWithLayout,
-  Quote,
-  Fact,
-} from './components'
+import { Text, List, Heading } from '@components'
+import styled from 'styled-components'
+
+import { Sub, Sup, ExternalLink, InternalLink, FigureWithLayout, Quote, Fact } from './components'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
 
 const { Item } = List
 
+const Container = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
+`
+const ContainerWithBottomSpace = styled(Container)`
+  margin-bottom: var(--space-medium);
+`
+
 const defaultSerializers = {
   block: {
-    h2: h2Heading,
-    h3: h3Heading,
+    h2: ({ children }: PortableTextBlock) => (
+      <Container>
+        <Heading level="h2" size="lg">
+          {children}
+        </Heading>
+      </Container>
+    ),
+    h3: ({ children }: PortableTextBlock) => (
+      <Container>
+        <Heading level="h3" size="md">
+          {children}
+        </Heading>
+      </Container>
+    ),
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
-      return <Text>{children}</Text>
+      return (
+        <Container>
+          <Text>{children}</Text>
+        </Container>
+      )
     },
-    smallText: ({ children }: PortableTextBlock) => <Text size="small">{children}</Text>,
+    smallText: ({ children }: PortableTextBlock) => {
+      if (isEmpty(children)) return null
+      return (
+        <Container>
+          <Text size="small">{children}</Text>
+        </Container>
+      )
+    },
   },
+
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
   types: {
     positionedInlineImage: FigureWithLayout,
@@ -36,8 +60,16 @@ const defaultSerializers = {
     pullQuote: Quote,
   },
   list: {
-    bullet: BulletList,
-    number: NumberedList,
+    bullet: ({ children }: PortableTextBlock) => (
+      <ContainerWithBottomSpace>
+        <List>{children}</List>
+      </ContainerWithBottomSpace>
+    ),
+    number: ({ children }: PortableTextBlock) => (
+      <ContainerWithBottomSpace>
+        <List variant="numbered">{children}</List>
+      </ContainerWithBottomSpace>
+    ),
   },
   listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
 }

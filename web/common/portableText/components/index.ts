@@ -9,5 +9,4 @@ export * from './NumberedList'
 
 export * from './news/Fact'
 export * from './news/FigureWithLayout'
-export * from './news/PaddedText'
 export * from './news/Quote'
