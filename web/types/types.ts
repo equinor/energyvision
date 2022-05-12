@@ -69,13 +69,6 @@ export type ErrorPageData = {
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
 }
-export type NewsroomData = {
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-}
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
 

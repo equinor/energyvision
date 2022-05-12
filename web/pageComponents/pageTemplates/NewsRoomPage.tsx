@@ -15,7 +15,7 @@ import { getIsoFromLocale } from '../../lib/localization'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 import type { NextRouter } from 'next/router'
-import type { NewsroomData } from '../../types/types'
+import type { NewsroomData } from '../../types'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
