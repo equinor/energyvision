@@ -1,7 +1,7 @@
 import { Eyebrow, BackgroundContainer } from '@components'
-import IngressText from '../../common/portableText/IngressText'
-import RichText from '../../common/portableText/RichText'
-import TitleText from '../../common/portableText/TitleText'
+import IngressText from '../shared/portableText/IngressText'
+import RichText from '../shared/portableText/RichText'
+import TitleText from '../shared/portableText/TitleText'
 
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'

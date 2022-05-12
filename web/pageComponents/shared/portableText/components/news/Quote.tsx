@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import QuoteComponent from '../../../../pageComponents/shared/Quote'
+import QuoteComponent from '../../../Quote'
 
 import type { PortableTextBlock } from '@portabletext/types'
-import type { QuoteData } from '../../../../types/types'
+import type { QuoteData } from '../../../../../types/types'
 
 const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-medium);

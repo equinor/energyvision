@@ -5,9 +5,9 @@ import RichText from '../../RichText'
 import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { ImageWithAlt } from '../../../../types/types'
+import type { ImageWithAlt } from '../../../../../types/types'
 
-import { urlFor } from '../../../helpers'
+import { urlFor } from '../../../../../common/helpers'
 
 type FactboxProps = {
   title: string

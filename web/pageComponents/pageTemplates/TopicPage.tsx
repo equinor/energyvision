@@ -18,7 +18,7 @@ import Form from '../topicPages/Form/Form'
 import Table from '../topicPages/Table'
 import NewsList from '../topicPages/NewsList'
 import StockValues from '../topicPages/StockValues'
-import TitleText from '../../common/portableText/TitleText'
+import TitleText from '../shared/portableText/TitleText'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 

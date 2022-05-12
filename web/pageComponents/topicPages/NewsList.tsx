@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import NewsCard from '../cards/NewsCard'
-import TitleText from '../../common/portableText/TitleText'
+import TitleText from '../shared/portableText/TitleText'
 import type { NewsListData } from '../../types/types'
 
 const Wrapper = styled.div`

@@ -2,8 +2,8 @@ import type { PortableTextBlock } from '@portabletext/types'
 
 import { FigureCaption } from '@components'
 import styled from 'styled-components'
-import Image from '../../../../pageComponents/shared/Image'
-import type { ImageWithAlt } from '../../../../types/types'
+import Image from '../../../Image'
+import type { ImageWithAlt } from '../../../../../types/types'
 
 type Layout = 'full' | 'left' | 'right'
 

@@ -1,6 +1,6 @@
 import { Link } from '@components'
 import { default as NextLink } from 'next/link'
-import { getLocaleFromName } from '../../../lib/localization'
+import { getLocaleFromName } from '../../../../lib/localization'
 
 type InternalLinkProps = {
   _key: string
