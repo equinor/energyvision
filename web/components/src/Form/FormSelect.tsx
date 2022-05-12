@@ -4,8 +4,9 @@ import { NativeSelect as EdsNativeSelect, NativeSelectProps } from '@equinor/eds
 import { TextFieldWrapper } from '@components'
 
 const StyledEdsNativeSelectField = styled(EdsNativeSelect)`
-  label {
-    font-size: var(--typescale-0);
+  label,
+  select {
+    font-size: var(--typeScale-1);
   }
 `
 
