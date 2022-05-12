@@ -44,7 +44,6 @@ type BlockProps = {
 
 export const Fact = (block: BlockProps) => {
   const { value } = block
-  console.log('block', value)
   const { title, content, background, image, imagePosition, dynamicHeight } = value
   const bgTitle = background ? background?.title : 'none'
   if (!content || content.length === 0) {
