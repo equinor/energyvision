@@ -2,14 +2,14 @@ import { Card, FormattedDate, FormattedTime } from '@components'
 import { default as NextLink } from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { blocksToText } from '../../common/helpers/blocksToText'
+import { toPlainText } from '@portabletext/react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import type { CSSProperties } from 'react'
-import type { BlockNode } from '@sanity/block-content-to-react'
 import type { FeaturedContentData } from '../../types/types'
+import type { PortableTextBlock } from '@portabletext/types'
 
 const { Title, Media, Header, Text, Action, Arrow, CardLink } = Card
 
@@ -56,7 +56,7 @@ const FeaturedEventCard = ({ data, fitToContent = false, ...rest }: FeaturedEven
   const { slug, title, eventDate, location } = data
   const { start, end } = getEventDates(eventDate)
 
-  const pageTitle = title ? blocksToText(title as BlockNode[]) : ''
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
     <NextLink href={slug} passHref>
@@ -71,7 +71,7 @@ const FeaturedEventCard = ({ data, fitToContent = false, ...rest }: FeaturedEven
         >
           <Media></Media>
           <Header>
-            <Title>{pageTitle}</Title>
+            <Title>{plainTitle}</Title>
           </Header>
           <Text>
             {start && (
