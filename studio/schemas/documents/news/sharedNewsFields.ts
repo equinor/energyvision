@@ -90,6 +90,14 @@ export const publishDateTime = [
         }
       }),
   },
+  {
+    // Set automatically in the custom action "ConfirmPublishWithi18n"
+    title: 'Date and time of when the document was first published at',
+    name: 'firstPublishedAt',
+    type: 'datetime',
+    readOnly: true,
+    hidden: true,
+  },
 ]
 
 export const tags = {

@@ -22,6 +22,10 @@ import type {
   IUseDocumentOperationResult,
   Ti18nSchema,
 } from '@sanity/document-internationalization/lib/types'
+//eslint-disable-next-line
+import sanityClient from 'part:@sanity/base/client'
+
+const client = sanityClient.withConfig({ apiVersion: '2022-05-12' })
 
 // Copied from @sanity/document-internationalization/src/hooks/useDelayedFlag.ts
 function useDelayedFlag(value = false, timeout = 500, delayedOn = false, delayedOff = true) {
@@ -53,6 +57,10 @@ function useDelayedFlag(value = false, timeout = 500, delayedOn = false, delayed
 
 // Add the _type of the documents that need a publish confirmation here
 const requiresConfirm = ['news', 'localNews']
+// Add the _type of the documents that need a firstPublished field here
+const requiresFirstPublished = ['news', 'localNews']
+
+const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
 
 export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolverProps) => {
   const toast = useToast()
@@ -77,7 +85,6 @@ export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolver
       markers.some((marker) => marker.level === 'error')
     ),
   )
-
   // Handle confirm dialog state
   const [dialogOpen, setDialogOpen] = React.useState(false)
 
@@ -117,12 +124,26 @@ export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolver
     const schema = getSchema<Ti18nSchema>(type)
     const config = getConfig(schema)
     const isTranslation = id !== baseDocumentId
+    const document = draft || published
+
     if (isTranslation && !baseDocumentEditState.published && config.referenceBehavior === ReferenceBehavior.STRONG) {
       throw new Error(UiMessages.errors.baseDocumentNotPublished)
     } else {
-      publish.execute()
+      // Add firstPublishedField
+      if (document && requiresFirstPublished.includes(type) && !document?.[FIRST_PUBLISHED_AT_FIELD_NAME]) {
+        client
+          .patch(document._id)
+          .setIfMissing({ [FIRST_PUBLISHED_AT_FIELD_NAME]: new Date().toISOString() })
+          .commit()
+          .then(() => {
+            publish.execute()
+          })
+          .catch((err: any) => console.error(err))
+      } else {
+        publish.execute()
+      }
     }
-  }, [id, baseDocumentId, type, publish, baseDocumentEditState.published])
+  }, [type, id, baseDocumentId, draft, published, baseDocumentEditState.published, publish])
 
   React.useEffect(() => {
     const didPublish = publishState === 'publishing' && !draft

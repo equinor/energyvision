@@ -8,7 +8,7 @@ export const publishDateTimeQuery = /* groq */ `
   select(
     customPublicationDate == true =>
       publishDateTime,
-      _createdAt
+      coalesce(firstPublishedAt, _createdAt)
   )
 `
 
