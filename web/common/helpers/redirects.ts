@@ -55,6 +55,10 @@ export const getDnsRedirect = (host: string, pathname: string) => {
       from: 'equinor.ca',
       to: '/en/where-we-are/canada',
     },
+    {
+      from: 'techstars.equinor.com',
+      to: '/en/energy/techstars',
+    },
   ]
 
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
