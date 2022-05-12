@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
-import type { PageSchema } from '../../types/types'
+import { toPlainText } from '@portabletext/react'
 import { useRouter } from 'next/router'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
@@ -19,9 +19,10 @@ import Table from '../topicPages/Table'
 import NewsList from '../topicPages/NewsList'
 import StockValues from '../topicPages/StockValues'
 import TitleText from '../../common/portableText/TitleText'
-import { blocksToText } from '../../common/helpers/blocksToText'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+
+import type { PageSchema } from '../../types/types'
 
 import {
   TeaserData,
@@ -116,7 +117,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
 
   const fullUrl = getFullUrl(pathname, slug, locale)
 
-  const pageTitle = data?.title ? blocksToText(data.title) : ''
+  const pageTitle = data?.title ? toPlainText(data?.title) : ''
 
   const content = (data?.content || []).map((c: ComponentProps) => {
     switch (c.type) {
@@ -168,11 +169,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
           url: fullUrl,
           images: getOpenGraphImages(ogImage),
         }}
-        // twitter={{
-        //   handle: '@handle',
-        //   site: '@site',
-        //   cardType: 'summary_large_image',
-        // }}
       ></NextSeo>
       <TopicPageLayout>
         <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
