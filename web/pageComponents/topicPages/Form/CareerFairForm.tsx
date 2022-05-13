@@ -1,8 +1,15 @@
-import { Icon, Checkbox } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
+import {
+  FormButton,
+  FormTextField,
+  Checkbox,
+  FormSelect,
+  FormSubmitSuccessBox,
+  FormSubmitFailureBox,
+} from '@components'
 import styled from 'styled-components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
@@ -21,6 +28,7 @@ type FormValues = {
 
 const StyledHelper = styled.p`
   margin-top: calc(var(--space-small) * -1);
+  font-size: var(--typeScale-1);
 `
 
 const CareerFairForm = () => {
