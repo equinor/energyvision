@@ -42,6 +42,7 @@ const StyledHelper = styled.p`
   margin: calc(var(--space-small) * -1) 0 var(--space-medium) 8px;
   color: var(--clear-red-100);
   font-weight: 500;
+  font-size: var(--typeScale-0);
 `
 
 type FormValues = {

@@ -28,7 +28,11 @@ type FormValues = {
 
 const StyledHelper = styled.p`
   margin-top: calc(var(--space-small) * -1);
-  font-size: var(--typeScale-1);
+  font-size: var(--typeScale-0);
+`
+
+const StyledCheckBox = styled(Checkbox)`
+  padding-bottom: var(--space-medium);
 `
 
 const CareerFairForm = () => {
@@ -301,7 +305,7 @@ const CareerFairForm = () => {
                 />
               )}
             />
-            <Checkbox
+            <StyledCheckBox
               label={intl.formatMessage({
                 id: 'career_fair_form_supporting_documents',
                 defaultMessage:
