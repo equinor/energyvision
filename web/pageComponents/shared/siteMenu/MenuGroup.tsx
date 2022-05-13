@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import styled from 'styled-components'
 import NextLink from 'next/link'
-import RichText from '../../../common/portableText/RichText'
+import RichText from '../portableText/RichText'
 import { Link, List, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'

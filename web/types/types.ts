@@ -5,9 +5,7 @@ import {
   SanityImageHotspot,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
-// @TODO: When we port to the new library this one should be used as PortableTextBlock type
-import { PortableTextBlock as SPortableTextBlock } from '@portabletext/types'
-import { PortableTextEntry } from '@sanity/block-content-to-react'
+import { PortableTextBlock } from '@portabletext/types'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import type { BlockNode } from '@sanity/block-content-to-react'
 
@@ -68,15 +66,8 @@ export type ErrorPageData = {
   documentTitle?: string
   metaDescription?: string
   backgroundImage: SanityImageSource
-  title?: SPortableTextBlock[]
-  text?: SPortableTextBlock[]
-}
-export type NewsroomData = {
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
-  title?: SPortableTextBlock[]
-  ingress?: SPortableTextBlock[]
+  title?: PortableTextBlock[]
+  text?: PortableTextBlock[]
 }
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
@@ -92,10 +83,10 @@ export type CardData = {
   type?: 'news' | 'topics' | 'localNews'
   id: string
   slug: string
-  title: string | SPortableTextBlock[]
+  title: string | PortableTextBlock[]
   publishDateTime?: string
   heroImage: ImageWithCaptionData
-  ingress?: SPortableTextBlock[]
+  ingress?: PortableTextBlock[]
 }
 
 export type FeaturedContentData = {
@@ -121,7 +112,7 @@ export type PeopleCardData = {
 export type EventCardData = {
   id: string
   type: 'events'
-  title: SPortableTextBlock[]
+  title: PortableTextBlock[]
   manuallySelectEvents: boolean
   slug: string
   location?: string
@@ -138,19 +129,10 @@ export type NewsSchema = {
   updatedAt: string
   publishDateTime: string
   heroImage: ImageWithCaptionData
-  ingress: SPortableTextBlock[]
-  content: PortableTextEntry[]
+  ingress: PortableTextBlock[]
+  content: PortableTextBlock[]
   relatedLinks: RelatedLinksData
   iframe: IFrameData
-}
-
-// From https://github.com/sanity-io/sanity/blob/next/packages/%40sanity/field/src/types/portableText/diff/types.ts
-export type PortableTextBlock = {
-  _key: string
-  _type: string
-  children: PortableTextChild[]
-  markDefs?: { _key: string; _type: string }[]
-  style?: string
 }
 
 export type PortableTextChild = {
@@ -182,7 +164,7 @@ export type LandingPageSchema = {
   id: string
   slug: string
   title: BlockNode[]
-  ingress: SPortableTextBlock[]
+  ingress: PortableTextBlock[]
   subGroups: SubMenuGroupData[]
   template: Templates
   seoAndSome: {
@@ -203,10 +185,10 @@ export type DesignOptions = {
 export type TextBlockData = {
   type: string
   id: string
-  title: SPortableTextBlock[]
+  title: PortableTextBlock[]
   overline?: string
-  text: SPortableTextBlock[]
-  ingress: SPortableTextBlock[]
+  text: PortableTextBlock[]
+  ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   anchor?: string
   designOptions: DesignOptions
@@ -222,8 +204,8 @@ export type CallToActionData = {
 export type TeaserData = {
   type: string
   id: string
-  title: SPortableTextBlock[]
-  text: SPortableTextBlock[]
+  title: PortableTextBlock[]
+  text: PortableTextBlock[]
   overline?: string
   image: ImageWithAlt
   action?: LinkData
@@ -232,7 +214,7 @@ export type TeaserData = {
 
 export type TableHeaderData = {
   id: string
-  headerCell: SPortableTextBlock[]
+  headerCell: PortableTextBlock[]
 }
 
 export type CellData = {
@@ -246,8 +228,8 @@ export type CellData = {
 export type TableData = {
   type: string
   id: string
-  title: SPortableTextBlock[]
-  ingress: SPortableTextBlock[]
+  title: PortableTextBlock[]
+  ingress: PortableTextBlock[]
   tableHeaders: TableHeaderData[]
   tableRows: any[]
   designOptions: DesignOptions
@@ -269,7 +251,7 @@ export type FigureData = {
 export type TextWithIconItem = {
   id: string
   icon: ImageWithAlt
-  text: SPortableTextBlock[]
+  text: PortableTextBlock[]
   title: string
 }
 
@@ -293,14 +275,14 @@ export type QuoteData = {
 export type AccordionListData = {
   id: string
   title: string
-  content: SPortableTextBlock[]
+  content: PortableTextBlock[]
 }
 
 export type AccordionData = {
   type: string
   id: string
-  title: SPortableTextBlock[]
-  ingress: SPortableTextBlock[]
+  title: PortableTextBlock[]
+  ingress: PortableTextBlock[]
   accordion: AccordionListData[]
   anchor?: string
   designOptions: DesignOptions
@@ -345,7 +327,7 @@ export type SubMenuGroupData = {
 export type SubMenuData = {
   id: string
   topLevelLink: MenuLinkData
-  intro: SPortableTextBlock[]
+  intro: PortableTextBlock[]
   groups: SubMenuGroupData[]
   featuredContent: CardData
 }
@@ -384,9 +366,9 @@ export type CookiePolicy = 'none' | 'marketing' | 'statistics'
 export type IFrameData = {
   id?: string
   type?: string
-  title?: SPortableTextBlock[]
-  ingress?: SPortableTextBlock[]
-  description?: SPortableTextBlock[]
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  description?: PortableTextBlock[]
   action?: LinkData
   frameTitle: string
   url: string
@@ -414,8 +396,8 @@ export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 
 export type PromotionData = {
   id: string
   type: string
-  title?: SPortableTextBlock[]
-  ingress?: SPortableTextBlock[]
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
   content: {
     // Do we really need the tags here?
     tags?: Tag[]
@@ -478,7 +460,7 @@ export type SubscribeFormParameters = {
 
 export type EventSchema = {
   id: string
-  title: SPortableTextBlock[]
+  title: PortableTextBlock[]
   slug: string
   seoAndSome: {
     documentTitle?: string
@@ -488,11 +470,11 @@ export type EventSchema = {
   content: {
     location?: string
     eventDate: EventDateType
-    ingress?: SPortableTextBlock[]
-    content?: SPortableTextBlock[]
+    ingress?: PortableTextBlock[]
+    content?: PortableTextBlock[]
     iframe?: IFrameData
     promotedPeople?: {
-      title?: SPortableTextBlock[]
+      title?: PortableTextBlock[]
       people?: PeopleCardData[]
     }
     contactList?: ContactListData
@@ -518,8 +500,8 @@ export type CookieDeclaration = {
 export type FormData = {
   id: string
   type: string
-  title?: SPortableTextBlock[]
-  ingress?: SPortableTextBlock[]
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
   form: string
   downloads: LinkData[]
 }
@@ -527,7 +509,7 @@ export type FormData = {
 export type NewsListData = {
   id: string
   type: string
-  title?: SPortableTextBlock[]
+  title?: PortableTextBlock[]
   articles: CardData[]
   tags?: [id: string]
   countryTags?: [id: string]

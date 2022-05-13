@@ -3,9 +3,9 @@ import type { IFrameData } from '../../types/types'
 import { BackgroundContainer, FigureCaption } from '@components'
 import CoreIFrame from '../shared/iframe/IFrame'
 import { ButtonLink } from '../shared/ButtonLink'
-import IngressText from '../../common/portableText/IngressText'
-import TitleText from '../../common/portableText/TitleText'
-import RichText from '../../common/portableText/RichText'
+import IngressText from '../shared/portableText/IngressText'
+import TitleText from '../shared/portableText/TitleText'
+import RichText from '../shared/portableText/RichText'
 
 const StyledHeading = styled(TitleText)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);

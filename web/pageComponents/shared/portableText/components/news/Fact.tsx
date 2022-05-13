@@ -1,28 +1,15 @@
-import { PortableText } from '../../../lib/sanity'
+import { toPlainText } from '@portabletext/react'
+import Img from 'next/image'
+import styled from 'styled-components'
+import RichText from '../../RichText'
 import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
-import styled from 'styled-components'
-import { ListRenderer } from '../ListRenderer'
-import { ListItemRenderer } from '../ListItemRenderer'
-import { BlockRenderer } from '../BlockRenderer'
-import { SubRenderer } from '../SubRenderer'
-import { SupRenderer } from '../SupRenderer'
-import { ExternalLinkRenderer } from '../ExternalLinkRenderer'
-import { InternalLinkRenderer } from '../InternalLinkRenderer'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { ImageWithAlt } from '../../../../../types/types'
 
-import { blocksToText, urlFor } from '../../helpers'
-import type { ImageWithAlt } from '../../../types/types'
-import Img from 'next/image'
-import removeEmptyBlocks from '../../helpers/removeEmptyBlocks'
+import { urlFor } from '../../../../../common/helpers'
 
-const defaultSerializers = {
-  types: { block: BlockRenderer },
-  marks: { sub: SubRenderer, sup: SupRenderer, link: ExternalLinkRenderer, internalLink: InternalLinkRenderer },
-  list: ListRenderer,
-  listItem: ListItemRenderer,
-}
-
-type FactboxNodeProps = {
+type FactboxProps = {
   title: string
   content: []
   background: { title: string; value: string }
@@ -50,9 +37,14 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean;
     }}
 `
 
-export const FactRenderer = (child: { node: FactboxNodeProps }) => {
-  const { node } = child
-  const { title, content, background, image, imagePosition, dynamicHeight } = node
+type BlockProps = {
+  isInline: boolean
+  value: FactboxProps
+} & PortableTextBlock
+
+export const Fact = (block: BlockProps) => {
+  const { value } = block
+  const { title, content, background, image, imagePosition, dynamicHeight } = value
   const bgTitle = background ? background?.title : 'none'
   if (!content || content.length === 0) {
     console.warn('Missing content in a fact box')
@@ -67,13 +59,11 @@ export const FactRenderer = (child: { node: FactboxNodeProps }) => {
   } else if (bgTitle === 'Spruce Wood') {
     backgroundColor = 'warm'
   }
-  const serializers = {
-    list: ListRenderer,
-    listItem: ListItemRenderer,
-  }
 
   const imageSrc = image && image.asset ? urlFor(image).size(1200, 800).auto('format').toString() : false
-  const plainText = blocksToText(content)
+
+  const plainText = content ? toPlainText(content as PortableTextBlock[]) : ''
+
   const hasColumns = !imageSrc && plainText.length > 800
   const hasImage = imageSrc ? true : false
 
@@ -90,10 +80,7 @@ export const FactRenderer = (child: { node: FactboxNodeProps }) => {
           {title}
         </Heading>
         <FactBox.Text hasColumns={hasColumns}>
-          <PortableText
-            blocks={content && removeEmptyBlocks(content)}
-            serializers={{ ...defaultSerializers, ...serializers }}
-          />
+          <RichText value={content} />
         </FactBox.Text>
       </FactBoxContentWithPadding>
     </FactBoxWithPadding>

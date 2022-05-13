@@ -3,10 +3,11 @@ import { Card } from '@components'
 import { default as NextLink } from 'next/link'
 import { toPlainText } from '@portabletext/react'
 import styled from 'styled-components'
-import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
-import RichText from '../../common/portableText/RichText'
-import { PortableTextBlock } from '@portabletext/types'
+import RichText from '../shared/portableText/RichText'
+
+import type { CardData } from '../../types/types'
+import type { PortableTextBlock } from '@portabletext/types'
 
 const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 

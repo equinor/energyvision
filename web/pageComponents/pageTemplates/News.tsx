@@ -2,17 +2,18 @@ import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
-import NewsBlockContent from '../../common/NewsBlockContent'
-import HeroImage from '../../pageComponents/shared/HeroImage'
-import IngressText from '../../common/portableText/IngressText'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import LatestNews from '../../pageComponents/news/LatestNews'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
+import NewsText from '../shared/portableText/NewsText'
+import HeroImage from '../shared/HeroImage'
+import IngressText from '../shared/portableText/IngressText'
+import RelatedContent from '../shared/RelatedContent'
+import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import type { CardData, NewsSchema } from '../../types/types'
-import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
+import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+
+import type { CardData, NewsSchema } from '../../types/types'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -252,7 +253,7 @@ const NewsPage = ({ data }: ArticleProps) => {
             )}
             {content && content.length > 0 && (
               <Content>
-                <NewsBlockContent blocks={content}></NewsBlockContent>
+                <NewsText value={content}></NewsText>
               </Content>
             )}
 

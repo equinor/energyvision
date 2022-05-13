@@ -1,7 +1,9 @@
+import type { PortableTextBlock } from '@portabletext/types'
+
 import { FigureCaption } from '@components'
 import styled from 'styled-components'
-import Image from '../../../pageComponents/shared/Image'
-import type { ImageWithAlt } from '../../../types/types'
+import Image from '../../../Image'
+import type { ImageWithAlt } from '../../../../../types/types'
 
 type Layout = 'full' | 'left' | 'right'
 
@@ -47,9 +49,14 @@ type FigureNode = {
   layout: Layout
 }
 
-export const FigureRendererWithLayout = (child: { node: FigureNode }) => {
-  const { node } = child
-  const { image, caption, attribution, layout = 'full' } = node
+type BlockProps = {
+  isInline: boolean
+  value: FigureNode
+} & PortableTextBlock
+
+export const FigureWithLayout = (block: BlockProps) => {
+  const { value } = block
+  const { image, caption, attribution, layout = 'full' } = value
   if (!image) return null
 
   return (
