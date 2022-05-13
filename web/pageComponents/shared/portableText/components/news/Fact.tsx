@@ -86,10 +86,3 @@ export const Fact = (block: BlockProps) => {
     </FactBoxWithPadding>
   )
 }
-
-/* export const Fact = (value: PortableTextBlock) => {
-  const { children } = value
-
-  return <div>{children}</div>
-}
- */
