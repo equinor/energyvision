@@ -7,7 +7,7 @@ export const dataset = client.clientConfig.dataset
 export const IS_SECRET = projectId === 'w3b4om14'
 
 /** @TODO Replicate logic inside GROQ queries for the web */
-const GLOBAL = ['global', 'global-development', 'secret']
+const GLOBAL = ['global', 'global-development', 'secret', 'global-test']
 
 const NEWS = [...GLOBAL, 'poland', 'brazil', 'germany', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
