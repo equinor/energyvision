@@ -1,13 +1,13 @@
 import React from 'react'
 import type { Rule } from '@sanity/types'
 import { filterByLang } from '../../helpers/referenceFilters'
+import { MenuIcon } from '../../icons'
 
 export default {
   type: 'document',
-  title: `Site menu`,
-  name: `siteMenu`,
+  title: 'Site menu',
+  name: 'siteMenu',
   __experimental_actions: ['create', 'update', 'publish' /*,"delete"*/],
-
   fields: [
     {
       title: 'Menu items',
@@ -36,4 +36,9 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
     },
   ],
+  preview: {
+    prepare() {
+      return { media: MenuIcon, title: 'Menu' }
+    },
+  },
 }
