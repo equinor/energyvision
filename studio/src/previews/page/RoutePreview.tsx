@@ -22,7 +22,6 @@ export default function RoutePreview(props: any) {
 
   // Get the selected dataset
   // @TODO: We need a way for the web to preview the right dataset
-  console.log('dataset', client.clientConfig.dataset)
 
   const slug = `${displayed?.slug?.current}?preview`
 
