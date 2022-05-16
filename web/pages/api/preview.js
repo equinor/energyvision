@@ -16,12 +16,7 @@ export default function preview(req, res) {
 
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({})
-  // /id/
-  /*   const hostname = req?.headers?.referer.includes('localhost')
-    ? 'localhost:3000'
-    : 'https://energyvision.app.radix.equinor.com'
 
-  console.log(hostname) */
   const pathname = req?.query?.id ? `/${req.query.id}` : req?.query?.slug ?? '/'
   const url = '//' + req?.headers?.host + pathname
 
