@@ -1,6 +1,7 @@
 import { EdsIcon } from '../../icons'
 import { tag } from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
+import { SearchWeights } from '../searchWeights'
 
 export default {
   title: 'Asset tag',
@@ -28,4 +29,5 @@ export default {
       }
     },
   },
+  __experimental_search: [{ weight: SearchWeights.Tag, path: 'title' }],
 }

@@ -9,6 +9,7 @@ import {
   calendar_event,
 } from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
+import { SearchWeights } from '../searchWeights'
 
 export const fileIcon = (extension: string) => {
   switch (extension) {
@@ -29,7 +30,20 @@ export const fileIcon = (extension: string) => {
   }
 }
 
-const acceptedFileTypes = ['.pdf', '.xls', '.xlsx', '.csv', '.doc', '.docx', '.pptx', '.txt', '.zip', '.asc', '.ics', '.mp3']
+const acceptedFileTypes = [
+  '.pdf',
+  '.xls',
+  '.xlsx',
+  '.csv',
+  '.doc',
+  '.docx',
+  '.pptx',
+  '.txt',
+  '.zip',
+  '.asc',
+  '.ics',
+  '.mp3',
+]
 
 export default {
   title: 'File',
@@ -86,4 +100,8 @@ export default {
       }
     },
   },
+  __experimental_search: [
+    { weight: SearchWeights.File, path: 'title' },
+    { weight: SearchWeights.File, path: 'asset.asset.originalFilename' },
+  ],
 }

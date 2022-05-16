@@ -2,6 +2,7 @@ import React from 'react'
 import { languages } from '../../languages'
 import type { CurrentUser } from '@sanity/types'
 import styled from 'styled-components'
+import { SearchWeights } from '../searchWeights'
 
 const StyledSpan = styled.span`
   display: block;
@@ -52,4 +53,5 @@ export default {
     },
     ...fields,
   ],
+  __experimental_search: [{ weight: SearchWeights.Tag, path: `title` }],
 }

@@ -1,5 +1,6 @@
 import { defaultLanguage, languages } from '../../languages'
 import { TagIcon } from '../../icons'
+import { SearchWeights } from '../searchWeights'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -61,4 +62,5 @@ export default {
       }
     },
   },
+  __experimental_search: [{ weight: SearchWeights.Tag, path: 'title' }],
 }
