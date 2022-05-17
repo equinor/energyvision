@@ -8,6 +8,7 @@ import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import ContentGroup from '../landingPages/ContentGroup'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { metaTitleSuffix } from '../../languages'
 
 const LandingPageLayout = styled.main``
 
@@ -51,7 +52,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
   return (
     <>
       <NextSeo
-        title={data?.seoAndSome?.documentTitle || pageTitle}
+        title={`${data?.seoAndSome?.documentTitle || pageTitle} - ${metaTitleSuffix}`}
         description={data?.seoAndSome?.metaDescription}
         openGraph={{
           title: pageTitle,

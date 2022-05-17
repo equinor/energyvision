@@ -6,6 +6,7 @@ import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import BackgroundImage from '../errorPages/BackgroundImage'
 import type { ErrorPageData } from '../../types/types'
+import { metaTitleSuffix } from '../../languages'
 
 const TextWrapper = styled.div`
   position: relative;
@@ -33,7 +34,10 @@ const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
 
   return (
     <>
-      <NextSeo title={pageData?.documentTitle} description={pageData?.metaDescription}></NextSeo>
+      <NextSeo
+        title={`${pageData?.documentTitle} - ${metaTitleSuffix}`}
+        description={pageData?.metaDescription}
+      ></NextSeo>
       <BodyContainer>
         {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}
         <TextWrapper>

@@ -13,6 +13,7 @@ import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { metaTitleSuffix } from '../../languages'
 
 import type { NextRouter } from 'next/router'
 import type { NewsroomData } from '../../types'
@@ -82,7 +83,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
   return (
     <>
       <NextSeo
-        title={documentTitle || plainTitle}
+        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
         description={metaDescription}
         openGraph={{
           title: plainTitle,

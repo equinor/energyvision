@@ -15,6 +15,7 @@ import { FormattedDate, FormattedTime } from '@components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { FormattedMessage } from 'react-intl'
+import { metaTitleSuffix } from '../../languages'
 
 import type { EventSchema } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -150,7 +151,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   return (
     <>
       <NextSeo
-        title={documentTitle || plainTitle}
+        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
         description={metaDescription}
         openGraph={{
           title: plainTitle,

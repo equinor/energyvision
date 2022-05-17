@@ -21,7 +21,7 @@ import StockValues from '../topicPages/StockValues'
 import TitleText from '../shared/portableText/TitleText'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
-
+import { metaTitleSuffix } from '../../languages'
 import type { PageSchema } from '../../types/types'
 
 import {
@@ -160,7 +160,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
   return (
     <>
       <NextSeo
-        title={data?.seoAndSome?.documentTitle || pageTitle}
+        title={`${data?.seoAndSome?.documentTitle || pageTitle} - ${metaTitleSuffix}`}
         description={data?.seoAndSome?.metaDescription}
         openGraph={{
           title: pageTitle,

@@ -12,6 +12,7 @@ import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { metaTitleSuffix } from '../../languages'
 
 import type { CardData, NewsSchema } from '../../types/types'
 
@@ -200,7 +201,7 @@ const NewsPage = ({ data }: ArticleProps) => {
   return (
     <>
       <NextSeo
-        title={documentTitle || title}
+        title={`${documentTitle || title} - ${metaTitleSuffix}`}
         description={metaDescription}
         openGraph={{
           title: title,
