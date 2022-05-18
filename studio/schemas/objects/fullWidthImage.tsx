@@ -24,8 +24,9 @@ export default {
       image: 'image.asset',
     },
     prepare({ alt, image }: { alt: string; image: Reference }) {
+      const altText = alt === undefined ? 'Decorative image' : alt
       return {
-        title: `Alt text: ${alt}`,
+        title: `Alt text: ${altText}`,
         subtitle: 'Full width image',
         media: image,
       }

@@ -14,6 +14,7 @@ export default {
   title: 'Image',
   type: 'object',
   description: 'Image with optional caption and credit.',
+
   fieldsets: [
     {
       name: 'design',
@@ -50,8 +51,9 @@ export default {
       image: 'figure.image.asset',
     },
     prepare({ alt, image }: { alt: string; image: Reference }) {
+      const altText = alt === undefined ? 'Decorative image' : alt
       return {
-        title: `Alt text: ${alt}`,
+        title: `Alt text: ${altText}`,
         subtitle: 'Image',
         media: image,
       }
