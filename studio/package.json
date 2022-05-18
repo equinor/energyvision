@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "@equinor/eds-icons": "^0.10.0",
-    "@reach/auto-id": "^0.16.0",
+    "@reach/auto-id": "^0.17.0",
     "@sanity/base": "^2.30.0",
     "@sanity/cli": "^2.30.0",
     "@sanity/components": "^2.14.0",
