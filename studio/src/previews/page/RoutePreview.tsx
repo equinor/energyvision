@@ -1,7 +1,5 @@
 import React from 'react'
 import { Wrapper, Frame } from './styles/shared'
-// eslint-disable-next-line import/no-unresolved
-import client from 'part:@sanity/base/client'
 import { languages } from '../../../languages'
 import { baseUrl } from '../../../resolveProductionUrl'
 
