@@ -1,5 +1,6 @@
 import { InstantSearchServerState } from 'react-instantsearch-hooks'
-import type { MenuData, FooterColumns, IntlData, NewsroomData } from './types'
+import type { MenuData, FooterColumns, IntlData, ImageWithAlt } from './types'
+import { PortableTextBlock } from '@portabletext/types'
 
 export type NewsRoomProps = {
   serverState?: InstantSearchServerState
@@ -12,4 +13,12 @@ export type NewsRoomProps = {
     pageData: NewsroomData
     slug?: string
   }
+}
+
+export type NewsroomData = {
+  documentTitle?: string
+  metaDescription?: string
+  openGraphImage?: ImageWithAlt
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
 }

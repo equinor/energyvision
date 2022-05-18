@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
-import TitleText from '../../../common/portableText/TitleText'
-import IngressText from '../../../common/portableText/IngressText'
+import TitleText from '../../shared/portableText/TitleText'
+import IngressText from '../../shared/portableText/IngressText'
 import Accordion from './Accordion'
 
 import type { AccordionData } from '../../../types/types'

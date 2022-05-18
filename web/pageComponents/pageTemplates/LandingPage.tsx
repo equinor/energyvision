@@ -2,12 +2,13 @@ import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
 import type { LandingPageSchema } from '../../types/types'
 import { useRouter } from 'next/router'
+import { toPlainText } from '@portabletext/react'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import IngressText from '../../common/portableText/IngressText'
-import TitleText from '../../common/portableText/TitleText'
-import { blocksToText } from '../../common/helpers/blocksToText'
+import IngressText from '../shared/portableText/IngressText'
+import TitleText from '../shared/portableText/TitleText'
 import ContentGroup from '../landingPages/ContentGroup'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { metaTitleSuffix } from '../../languages'
 
 const LandingPageLayout = styled.main``
 
@@ -46,12 +47,12 @@ const LandingPage = ({ data }: LandingPageProps) => {
 
   const fullUrl = getFullUrl(pathname, slug, locale)
 
-  const pageTitle = blocksToText(title) || ''
+  const pageTitle = title ? toPlainText(title) : ''
 
   return (
     <>
       <NextSeo
-        title={data?.seoAndSome?.documentTitle || pageTitle}
+        title={`${data?.seoAndSome?.documentTitle || pageTitle} - ${metaTitleSuffix}`}
         description={data?.seoAndSome?.metaDescription}
         openGraph={{
           title: pageTitle,

@@ -1,10 +1,10 @@
 import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable, Text } from '@components'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import IngressText from '../../common/portableText/IngressText'
-import TitleText from '../../common/portableText/TitleText'
-import RichText from '../../common/portableText/RichText'
-import isEmpty from '../../common/portableText/helpers/isEmpty'
+import IngressText from '../shared/portableText/IngressText'
+import TitleText from '../shared/portableText/TitleText'
+import RichText from '../shared/portableText/RichText'
+import isEmpty from '../shared/portableText/helpers/isEmpty'
 
 import type { TableData, LinkData, CellData } from '../../types/types'
 

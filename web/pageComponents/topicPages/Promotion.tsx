@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
-import TitleText from '../../common/portableText/TitleText'
-import IngressText from '../../common/portableText/IngressText'
+import TitleText from '../shared/portableText/TitleText'
+import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 
 const Wrapper = styled.div`

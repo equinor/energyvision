@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../../types/types'
 import { BackgroundContainer } from '@components'
-import TitleText from '../../../common/portableText/TitleText'
+import TitleText from '../portableText/TitleText'
 import IFrame from './IFrame'
 
 const StyledHeading = styled(TitleText)`

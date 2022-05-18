@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import useRouterReplace from '../../hooks/useRouterReplace'
 import { Accordion as EnvisAccordion } from '@components'
-import RichText from '../../../common/portableText/RichText'
+import RichText from '../../shared/portableText/RichText'
 
 import type { AccordionListData } from '../../../types/types'
 

@@ -4,18 +4,19 @@ import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks'
 import { toPlainText } from '@portabletext/react'
 import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
-import IngressText from '../../common/portableText/IngressText'
-import RichText from '../../common/portableText/RichText'
-import isEmpty from '../../common/portableText/helpers/isEmpty'
+import IngressText from '../shared/portableText/IngressText'
+import RichText from '../shared/portableText/RichText'
+import isEmpty from '../shared/portableText/helpers/isEmpty'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { metaTitleSuffix } from '../../languages'
 
 import type { NextRouter } from 'next/router'
-import type { NewsroomData } from '../../types/types'
+import type { NewsroomData } from '../../types'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -82,7 +83,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
   return (
     <>
       <NextSeo
-        title={documentTitle || plainTitle}
+        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
         description={metaDescription}
         openGraph={{
           title: plainTitle,

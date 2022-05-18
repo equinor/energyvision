@@ -1,11 +1,11 @@
 import type { SubscribeFormParameters } from '../../../types/types'
 import styled from 'styled-components'
-import { Checkbox, Icon } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox } from '@components'
+import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox, Checkbox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 

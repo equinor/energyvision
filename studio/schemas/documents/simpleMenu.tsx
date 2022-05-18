@@ -1,9 +1,10 @@
 import React from 'react'
+import { MenuIcon } from '../../icons'
 
 export default {
   type: 'document',
-  title: `Site menu(simple)`,
-  name: `simpleMenu`,
+  title: 'Site menu(simple)',
+  name: 'simpleMenu',
   __experimental_actions: ['create', 'update', 'publish' /*,"delete"*/],
   fields: [
     {
@@ -18,4 +19,9 @@ export default {
       ],
     },
   ],
+  preview: {
+    prepare() {
+      return { media: MenuIcon, title: 'Menu' }
+    },
+  },
 }

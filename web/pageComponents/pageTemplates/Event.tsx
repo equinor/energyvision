@@ -1,20 +1,21 @@
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
-import BasicIFrame from '../../pageComponents/shared/iframe/BasicIFrame'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import IngressText from '../../common/portableText/IngressText'
+import BasicIFrame from '../shared/iframe/BasicIFrame'
+import RelatedContent from '../shared/RelatedContent'
+import IngressText from '../shared/portableText/IngressText'
 import { toPlainText } from '@portabletext/react'
-import ContactList from '../../pageComponents/shared/ContactList'
-import TitleText from '../../common/portableText/TitleText'
-import RichText from '../../common/portableText/RichText'
+import ContactList from '../shared/ContactList'
+import TitleText from '../shared/portableText/TitleText'
+import RichText from '../shared/portableText/RichText'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../topicPages/Promotion'
-import AddToCalendar from '../../pageComponents/topicPages/AddToCalendar'
+import AddToCalendar from '../topicPages/AddToCalendar'
 import { FormattedDate, FormattedTime } from '@components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { FormattedMessage } from 'react-intl'
+import { metaTitleSuffix } from '../../languages'
 
 import type { EventSchema } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -150,7 +151,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   return (
     <>
       <NextSeo
-        title={documentTitle || plainTitle}
+        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
         description={metaDescription}
         openGraph={{
           title: plainTitle,

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { Icon, Checkbox } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField, FormSubmitFailureBox, FormSubmitSuccessBox } from '@components'
+import { FormButton, FormTextField, FormSubmitFailureBox, FormSubmitSuccessBox, Checkbox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
@@ -42,6 +42,7 @@ const StyledHelper = styled.p`
   margin: calc(var(--space-small) * -1) 0 var(--space-medium) 8px;
   color: var(--clear-red-100);
   font-weight: 500;
+  font-size: var(--typeScale-0);
 `
 
 type FormValues = {

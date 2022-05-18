@@ -3,18 +3,16 @@ import { dataset } from './src/lib/datasetHelpers'
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
 const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 
-/* const remoteUrl =
-  dataset === 'global'
-    ? 'https://web-energyvision-preprod.radix.equinor.com'
-    : `https://web-${dataset}-energyvision-preprod.radix.equinor.com` */
 const remoteUrl = () => {
   switch (dataset) {
     case 'global':
-      return 'https://web-energyvision-prod.radix.equinor.com'
+      return 'https://web-equinor-web-sites-prod.c2.radix.equinor.com'
     case 'global-development':
-      return 'https://web-global-development-energyvision-dev.radix.equinor.com'
+      return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
+    case 'global-test':
+      return 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com'
     default:
-      return `https://web-${dataset}-energyvision-prod.radix.equinor.com`
+      return `https://web-${dataset}-equinor-web-sites-prod.c2.radix.equinor.com`
   }
 }
 

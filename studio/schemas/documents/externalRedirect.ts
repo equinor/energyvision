@@ -3,6 +3,7 @@ import type { Rule, ValidationContext } from '@sanity/types'
 import sanityClient from 'part:@sanity/base/client'
 import { world } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import { SearchWeights } from '../searchWeights'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
@@ -61,4 +62,8 @@ export default {
       return { title: `From: ${from}`, subtitle: `To: ${to}`, media: () => EdsIcon(world) }
     },
   },
+  __experimental_search: [
+    { weight: SearchWeights.Redirects, path: 'from' },
+    { weight: SearchWeights.Redirects, path: 'to' },
+  ],
 }
