@@ -1320,7 +1320,7 @@
   resolved "https://registry.yarnpkg.com/@sanity/asset-utils/-/asset-utils-1.2.3.tgz#a90c7895c6506405d64c2363db131923ba1fa6ef"
   integrity sha512-0eOR0D6zcqd6nEmAGIJ93ibRGO6ocYzQ5aEuyYvngHy5MDDjUfC821UnF/YPIcxiMXg2DLDjWd4EPt9F8frKNQ==
 
-"@sanity/base@2.30.0", "@sanity/base@^2.30.0":
+"@sanity/base@2.30.0", "@sanity/base@^2.29.5", "@sanity/base@^2.30.0":
   version "2.30.0"
   resolved "https://registry.npmjs.org/@sanity/base/-/base-2.30.0.tgz#33c4280537745915792fdac01f462cb0f86e9f67"
   integrity sha512-b7ZZQq4/1k6Km+e4cHXbNy0dMLNT/DCw9qrhWRnqSRaYl6k/nG5mi+NoEukffQ/jkcOnKa01X5DjZNoPsn6E4w==
@@ -1561,7 +1561,7 @@
     prop-types "^15.6.0"
     rxjs "^6.5.3"
 
-"@sanity/desk-tool@^2.30.0":
+"@sanity/desk-tool@^2.29.5", "@sanity/desk-tool@^2.30.0":
   version "2.30.0"
   resolved "https://registry.npmjs.org/@sanity/desk-tool/-/desk-tool-2.30.0.tgz#fdea378985f8b6193d534b866af1871af7305fee"
   integrity sha512-FxI17mB4UBtSPLwRb3N5eKJZtg1QnQUqsx6YfeMORVk/c8Hxb+KJ9YCNhStGBkfYHDRWJqt5d4udIKht6zHPog==
@@ -1899,7 +1899,7 @@
     scroll-into-view-if-needed "^2.2.20"
     tiny-invariant "1.0.6"
 
-"@sanity/state-router@2.29.3":
+"@sanity/state-router@2.29.3", "@sanity/state-router@^2.29.3":
   version "2.29.3"
   resolved "https://registry.yarnpkg.com/@sanity/state-router/-/state-router-2.29.3.tgz#849f070fdb013c810e97e9235810a87d0e694c78"
   integrity sha512-gSxOXUe2WtSbmM4s4LOVZWL/IFIK0QuyeJgxTMxJYB8AnqFeEYLU7gXFiQu0WBvUXBFgq5hRz9bed0rkRCGxxA==
@@ -2009,7 +2009,7 @@
     react-popper "^2.2.5"
     react-refractor "^2.1.7"
 
-"@sanity/util@2.29.5":
+"@sanity/util@2.29.5", "@sanity/util@^2.29.5":
   version "2.29.5"
   resolved "https://registry.yarnpkg.com/@sanity/util/-/util-2.29.5.tgz#998b4f9a1d4dfeb449d7f9e1d260b1fc71118ff6"
   integrity sha512-DbXpOf25ujkZZFGGj+g+JRFOxRba1k9z+s1/48lQrJ6UQaY6HEg2vhJgA5N0a4atw2GbvA3vyNKypErIWNGrdQ==
@@ -9557,16 +9557,19 @@ sanity-plugin-color-list@^2.0.2:
     lodash "^4.17.20"
     prop-types "^15.7.2"
 
-sanity-plugin-documents-pane@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/sanity-plugin-documents-pane/-/sanity-plugin-documents-pane-1.0.5.tgz#384487ba50649803bef96d321e8f1730fa9f5fcc"
-  integrity sha512-ClXL7VoEZWFZctwtCkGzljqgzC4t38HIYJoFjiVx7Tb5ZX1urv1MaDOulIds0d0LVmpJGw0uLFqIFbkEzhS8wQ==
+sanity-plugin-documents-pane@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-documents-pane/-/sanity-plugin-documents-pane-1.0.8.tgz#0b9c3f4e4c009c776d4d38433d5e5b907520969d"
+  integrity sha512-or8GD8oHgXkoe42wnBIW8wvmycgtH+BA8OTwl2jSxS1cVavDGjs56u4dfoDO2F/dqwTbIzI/74/EZsETlqr2qA==
   dependencies:
+    "@sanity/base" "^2.29.5"
+    "@sanity/desk-tool" "^2.29.5"
+    "@sanity/state-router" "^2.29.3"
     "@sanity/ui" "^0.34.6"
+    "@sanity/util" "^2.29.5"
     dlv "^1.1.3"
-    prop-types "15.7.2"
+    husky "^7.0.1"
     react-query "^3.19.1"
-    styled-components "^5.3.0"
 
 sanity-plugin-iframe-pane@^1.0.14:
   version "1.0.16"
