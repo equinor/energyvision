@@ -120,8 +120,7 @@ const getDomain = (dataset) => websiteDomains[dataset] || 'Domain not set'
  * @param {string} dataset
  */
 const getMetaTitleSuffix = (dataset) => {
-  if (dataset == 'global') return 'Equinor'
-  else return websiteDomains[dataset].replace('https://', '').replace('www.', '')
+  return dataset == 'global' ? 'Equinor' : (websiteDomains[dataset] || '').replace('https://', '').replace('www.', '')
 }
 
 module.exports = {
