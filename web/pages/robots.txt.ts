@@ -11,6 +11,8 @@ const crawlableDomains = [
   'www.equinorstorage.de',
   'www.equinorfondene.no',
   'www.equinor.jp',
+  'www.equinor.com.br',
+  'www.equinor.de',
 ]
 
 const robots = (domain: string) => `User-agent: *
