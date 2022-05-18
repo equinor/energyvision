@@ -33,7 +33,7 @@
     "@sanity/default-layout": "^2.29.3",
     "@sanity/default-login": "^2.29.3",
     "@sanity/desk-tool": "^2.29.3",
-    "@sanity/document-internationalization": "0.0.1-beta.11",
+    "@sanity/document-internationalization": "^0.3.1",
     "@sanity/form-builder": "^2.29.3",
     "@sanity/icons": "^1.2.8",
     "@sanity/production-preview": "2.23.1-next.10",

@@ -1596,22 +1596,19 @@
   dependencies:
     diff-match-patch "^1.0.4"
 
-"@sanity/document-internationalization@0.0.1-beta.11":
-  version "0.0.1-beta.11"
-  resolved "https://registry.yarnpkg.com/@sanity/document-internationalization/-/document-internationalization-0.0.1-beta.11.tgz#c2a4f7363028a3a8956cc9e54963e06289a74703"
-  integrity sha512-Zkuj/TVOv6a7alEip3zw8lUkZvii+q/H41GKicVVXfl/b/cHU+44c7cJ1rOmWYu9uI0cAcgfCJnmK9nFZibOyg==
+"@sanity/document-internationalization@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@sanity/document-internationalization/-/document-internationalization-0.3.1.tgz#2cf832cf33cc4d5b6d34d1da59baccf9eee56b68"
+  integrity sha512-7+NJ3QL/1RXAdvmfDGPTuHJl7R9mR8wxrw3oriWR+mmTkdhoHL5a8fPNKcmjXCrJVJPtkYMeZTOD8wE7KKTzGA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@cprecioso/country-flag-emoji" "^1.0.0"
-    a11y-react-emoji "^1.1.3"
-    classnames "^2.2.6"
+    country-flag-emoji-polyfill "^0.1.1"
     just-omit "^2.0.1"
     just-safe-get "^4.0.1"
     just-split "^3.0.1"
-    moment "^2.29.1"
     pinst "^2.1.6"
     regenerator-runtime "^0.13.7"
-    slugify "^1.4.6"
 
 "@sanity/eventsource@^3.0.1", "@sanity/eventsource@^3.0.2":
   version "3.0.2"
@@ -2398,11 +2395,6 @@
   version "1.9.5"
   resolved "https://registry.yarnpkg.com/@xobotyi/scrollbar-width/-/scrollbar-width-1.9.5.tgz#80224a6919272f405b87913ca13b92929bdf3c4d"
   integrity sha512-N8tkAACJx2ww8vFMneJmaAgmjAG1tnVBZJRLRcx061tmsLRZHSEZSLuGWnwPtunsSLvSqXQ2wfp7Mgqg1I+2dQ==
-
-a11y-react-emoji@^1.1.3:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/a11y-react-emoji/-/a11y-react-emoji-1.2.0.tgz#6652b0d75821e8bc6ce5050e2b51c4c789eee840"
-  integrity sha512-lPzXEHbCfRic4xS5d5hpZm1SLrWH0xL3HvI3ZlqeAIxto0XBfY2gAIh6ftjZptvmqxyhQVDXnfVKiG/bqeek3g==
 
 abab@^2.0.0:
   version "2.0.5"
@@ -3435,7 +3427,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5, classnames@^2.2.6:
+classnames@^2.2.5:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
@@ -3753,6 +3745,13 @@ cosmiconfig@^6.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.7.2"
+
+country-flag-emoji-polyfill@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/country-flag-emoji-polyfill/-/country-flag-emoji-polyfill-0.1.1.tgz#1fab7b364c2631f7e7949fbd98659552f401596e"
+  integrity sha512-H4iB8BAnlcLxE9mxVXm9vY28zKtqjEYRCO+vz1x4u6IsmomHQd/EQfR/Py0YmxeVYkBAOUPJBcY3KJPd+BQe6Q==
+  dependencies:
+    is-emoji-supported "^0.0.5"
 
 crc-32@^1.2.0:
   version "1.2.2"
@@ -6031,6 +6030,11 @@ is-directory@^0.3.1:
   resolved "https://registry.yarnpkg.com/is-directory/-/is-directory-0.3.1.tgz#61339b6f2475fc772fd9c9d83f5c8575dc154ae1"
   integrity sha1-YTObbyR1/Hcv2cnYP1yFddwVSuE=
 
+is-emoji-supported@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/is-emoji-supported/-/is-emoji-supported-0.0.5.tgz#f22301b22c63d6322935e829f39dfa59d03a7fe2"
+  integrity sha512-WOlXUhDDHxYqcSmFZis+xWhhqXiK2SU0iYiqmth5Ip0FHLZQAt9rKL5ahnilE8/86WH8tZ3bmNNNC+bTzamqlw==
+
 is-extendable@^0.1.0, is-extendable@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
@@ -7027,7 +7031,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-moment@^2.19.1, moment@^2.29.1:
+moment@^2.19.1:
   version "2.29.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
   integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
@@ -9813,7 +9817,7 @@ slate@0.72.3:
     is-plain-object "^5.0.0"
     tiny-warning "^1.0.3"
 
-slugify@^1.4.6, slugify@^1.6.5:
+slugify@^1.6.5:
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.5.tgz#c8f5c072bf2135b80703589b39a3d41451fbe8c8"
   integrity sha512-8mo9bslnBO3tr5PEVFzMPIWwWnipGS0xVbYf65zxDqfNwmzYn1LpiKNrR6DlClusuvo+hDHd1zKpmfAe83NQSQ==

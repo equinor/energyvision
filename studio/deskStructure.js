@@ -3,7 +3,6 @@ import NewsPreview from './src/previews/news/NewsPreview'
 import PagePreview from './src/previews/page/PagePreview'
 import FilePreview from './src/previews/file/filePreview'
 import NewsroomPreview from './src/previews/news/NewsroomPreview'
-import * as I18nS from '@sanity/document-internationalization/lib/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import items from './src/lib/structure'
 
@@ -19,27 +18,14 @@ export const getDefaultDocumentNode = (props) => {
    */
   const { schemaType } = props
   if (schemaType === 'news' || schemaType === 'localNews') {
-    return S.document().views([
-      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
-      S.view.component(NewsPreview).title('News preview'),
-    ])
+    return S.document().views([S.view.form(), S.view.component(NewsPreview).title('Preview')])
   } else if (schemaType === 'landingPage') {
-    return S.document().views([
-      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
-      S.view.component(PagePreview).title('Preview'),
-    ])
-  } else if (schemaType === 'pageNotFound') {
-    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
-  } else if (schemaType === 'internalServerError') {
-    return S.document().views([...I18nS.getDocumentNodeViewsForSchemaType(schemaType)])
+    return S.document().views([S.view.form(), S.view.component(PagePreview).title('Preview')])
   } else if (schemaType === 'newsroom') {
-    return S.document().views([
-      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
-      S.view.component(NewsroomPreview).title('Preview'),
-    ])
+    return S.document().views([S.view.form(), S.view.component(NewsroomPreview).title('Preview')])
   } else if (schemaType === 'event') {
     return S.document().views([
-      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.form(),
       S.view.component(PagePreview).title('Preview'),
       S.view
         .component(DocumentsPane)
@@ -52,7 +38,7 @@ export const getDefaultDocumentNode = (props) => {
     ])
   } else if (schemaType === 'page') {
     return S.document().views([
-      ...I18nS.getDocumentNodeViewsForSchemaType(schemaType),
+      S.view.form(),
       S.view.component(PagePreview).title('Preview'),
       /* S.view
         .component(Iframe)
