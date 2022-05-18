@@ -64,7 +64,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
   const slug = `/${slugArray.join('/')}` || ''
   const lang = getNameFromLocale(locale)
-  const isNews = newsSlug[lang] === slugStart
+  const isNews = newsSlug[lang] === slugStart && slugArray.length > 1
 
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
