@@ -70,7 +70,6 @@ specifiers:
   react-remove-scroll: ^2.5.1
   storybook-css-modules-preset: ^1.1.1
   styled-components: ^5.3.3
-  styled-jsx: ^5.0.2
   styled-normalize: ^8.0.7
   swr: ^1.2.2
   typescript: 4.6.3
@@ -125,7 +124,6 @@ dependencies:
   react-intl: 5.25.1_react@17.0.2+typescript@4.6.3
   react-remove-scroll: 2.5.1_c8e45b4eb687790dba17b4e1c4b4273f
   styled-components: 5.3.5_react-dom@17.0.2+react@17.0.2
-  styled-jsx: 5.0.2_react@17.0.2
   styled-normalize: 8.0.7_styled-components@5.3.5
   swr: 1.3.0_react@17.0.2
   uuid: 8.3.2
@@ -12440,22 +12438,6 @@ packages:
 
   /styled-jsx/5.0.1_react@17.0.2:
     resolution: {integrity: sha512-+PIZ/6Uk40mphiQJJI1202b+/dYeTVd9ZnMPR80pgiWbjIwvN2zIp4r9et0BgqBuShh48I0gttPlAXA7WVvBxw==}
-    engines: {node: '>= 12.0.0'}
-    peerDependencies:
-      '@babel/core': '*'
-      babel-plugin-macros: '*'
-      react: '>= 16.8.0 || 17.x.x || ^18.0.0-0'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      babel-plugin-macros:
-        optional: true
-    dependencies:
-      react: 17.0.2
-    dev: false
-
-  /styled-jsx/5.0.2_react@17.0.2:
-    resolution: {integrity: sha512-LqPQrbBh3egD57NBcHET4qcgshPks+yblyhPlH2GY8oaDgKs8SK4C3dBh3oSJjgzJ3G5t1SYEZGHkP+QEpX9EQ==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
       '@babel/core': '*'

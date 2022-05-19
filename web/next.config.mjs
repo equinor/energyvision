@@ -84,21 +84,5 @@ export default withTM(
         },
       ].filter((e) => e)
     },
-    /*   webpack(config, { defaultLoaders }) {
-    config.module.rules.push({
-      test: /\.(css)$/,
-      use: [
-        defaultLoaders.babel,
-        {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          loader: require('styled-jsx/webpack').loader,
-          options: {
-            type: 'global',
-          },
-        },
-      ],
-    })
-    return config
-  }, */
   }),
 )
