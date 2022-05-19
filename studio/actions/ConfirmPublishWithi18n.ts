@@ -24,8 +24,12 @@ import type {
 } from '@sanity/document-internationalization/lib/types'
 //eslint-disable-next-line
 import sanityClient from 'part:@sanity/base/client'
+import { dataset } from '../src/lib/datasetHelpers'
 
-const client = sanityClient.withConfig({ apiVersion: '2022-05-12' })
+const apiVersion = '2022-05-12'
+const client = sanityClient.withConfig({ apiVersion: apiVersion })
+const projectId = process.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9'
+const token = process.env.SANITY_STUDIO_API_TOKEN
 
 // Copied from @sanity/document-internationalization/src/hooks/useDelayedFlag.ts
 function useDelayedFlag(value = false, timeout = 500, delayedOn = false, delayedOff = true) {
@@ -119,7 +123,7 @@ export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolver
     setUpdatingIntlFields(false)
   }, [toast, draft, published, baseDocumentEditState.published])
 
-  const onHandle = React.useCallback(() => {
+  const onHandle = React.useCallback(async () => {
     setPublishState('publishing')
     const schema = getSchema<Ti18nSchema>(type)
     const config = getConfig(schema)
@@ -130,10 +134,29 @@ export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolver
       throw new Error(UiMessages.errors.baseDocumentNotPublished)
     } else {
       // Add firstPublishedField
-      if (document && requiresFirstPublished.includes(type) && !document?.[FIRST_PUBLISHED_AT_FIELD_NAME]) {
+      // https://github.com/sanity-io/sanity/issues/2179
+      const revisions = await fetch(
+        `https://${projectId}.api.sanity.io/v${apiVersion}/data/history/${dataset}/transactions/${document?._id}?excludeContent=true`,
+        {
+          method: 'GET',
+          headers: new Headers({
+            Authorization: `Bearer ${token}`,
+          }),
+        },
+      )
+        .then((res) => res.text())
+        .catch((err: Error) => console.error(err))
+
+      const hasBeenPublished = revisions?.includes(`"_id":"${document?._id.replace('drafts.', '')}"`)
+
+      if (
+        document &&
+        requiresFirstPublished.includes(type) &&
+        (!hasBeenPublished || !document?.[FIRST_PUBLISHED_AT_FIELD_NAME])
+      ) {
         client
           .patch(document._id)
-          .setIfMissing({ [FIRST_PUBLISHED_AT_FIELD_NAME]: new Date().toISOString() })
+          .set({ [FIRST_PUBLISHED_AT_FIELD_NAME]: new Date().toISOString() })
           .commit()
           .then(() => {
             publish.execute()

@@ -22,6 +22,9 @@ inputs:
   environment:
     description: 'dev, preprod or prod'
     required: true
+  sanityApiToken:
+    description: 'Sanity API token'
+    required: true
 
 outputs:
   copied-files:
@@ -51,6 +54,7 @@ runs:
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
+          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
           --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
           --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
           --file studio/Dockerfile \
