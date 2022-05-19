@@ -7,7 +7,6 @@ import {
 } from '@sanity/image-url/lib/types/types'
 import { PortableTextBlock } from '@portabletext/types'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
-import type { BlockNode } from '@sanity/block-content-to-react'
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
@@ -146,7 +145,7 @@ export type Templates = 'landingPage' | 'page' | 'news'
 
 export type PageSchema = {
   slug: string
-  title: BlockNode[]
+  title: PortableTextBlock[]
   heroImage: ImageWithCaptionData
   template: Templates
   seoAndSome: {
@@ -163,7 +162,7 @@ export type PageSchema = {
 export type LandingPageSchema = {
   id: string
   slug: string
-  title: BlockNode[]
+  title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   subGroups: SubMenuGroupData[]
   template: Templates
