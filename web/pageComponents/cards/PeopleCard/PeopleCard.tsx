@@ -4,8 +4,10 @@ import styled from 'styled-components'
 import type { PeopleCardData } from '../../../types/types'
 import Image from '../../shared/Image'
 import CV from './CV'
+import { outlineTemplate, Tokens } from '@utils'
 
 const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
+const { outline } = Tokens
 
 const StyledCard = styled(Card)`
   height: var(--height);
@@ -68,6 +70,9 @@ const ContactLink = styled.a`
   display: block;
   &:hover {
     text-decoration: underline;
+  }
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
   }
 `
 
