@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
-import { languages, defaultLanguage, domain } from './languages.js'
-import securityHeaders from './securityHeaders.mjs'
+import { languages, defaultLanguage, domain, dataset } from './languages.js'
+import securityHeaders, { UnsafeContentSecurityPolicy } from './securityHeaders.mjs'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 
@@ -55,7 +55,12 @@ export default withTM(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
-      ]
+        // Add 50 years celebration page to equinor
+        dataset === 'global-test' && {
+          source: '/50/:slug*',
+          destination: 'https://equinor-50-historier.vercel.app/50/:slug*',
+        },
+      ].filter((e) => e)
     },
     async headers() {
       return [
@@ -63,7 +68,21 @@ export default withTM(
           source: '/:path*',
           headers: securityHeaders,
         },
-      ]
+        // Disable security headers for 50 years celebration page
+        dataset === 'global-test' && {
+          source: '/50/:path*',
+          headers: [
+            {
+              key: 'Content-Security-Policy',
+              value: UnsafeContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+            },
+            {
+              key: 'Content-Security-Policy-Report-Only',
+              value: UnsafeContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+            },
+          ],
+        },
+      ].filter((e) => e)
     },
     /*   webpack(config, { defaultLoaders }) {
     config.module.rules.push({
