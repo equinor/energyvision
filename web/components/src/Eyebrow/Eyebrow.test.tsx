@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { render, cleanup, screen } from '@testing-library/react'
 import 'jest-styled-components'
 import styled from 'styled-components'
