@@ -31,11 +31,11 @@ const Icon = styled.span<{ expanded: boolean }>`
   }
 
   span:nth-child(1) {
-    top: 11px;
+    top: 10px;
     transform-origin: left center;
   }
   span:nth-child(2) {
-    top: 19px;
+    top: 18px;
     transform-origin: left center;
   }
 
