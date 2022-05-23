@@ -6,8 +6,6 @@ import { dataset } from './languages.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const logCspReport = false
-
 const envs = ['dev', 'preprod', 'prod']
 const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
@@ -31,7 +29,7 @@ const ContentSecurityPolicy = `
    frame-src 'self' https://consentcdn.cookiebot.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com;
    frame-ancestors ${xFrameUrls};
    font-src 'self' https://eds-static.equinor.com;
-   ${logCspReport ? 'report-uri /api/csp-report;' : ''}
+
  `
 
 export const UnsafeContentSecurityPolicy = `
