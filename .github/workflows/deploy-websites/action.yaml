@@ -4,7 +4,7 @@ inputs:
   imageName:
     description: 'The path to where the image is to be copied'
     required: true
-  imageTag: 
+  imageTag:
     description: 'sha of image to be used'
     required: false
   projectId:
@@ -39,6 +39,10 @@ runs:
   steps:
     - name: Checkout 🛎️
       uses: actions/checkout@v3
+      with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: "${{ inputs.imageTag || 'main' }}"
     - name: Set default image tag 🏷
       if: "${{ inputs.imageTag == '' }}"
       shell: bash
@@ -46,11 +50,12 @@ runs:
       run: |
         echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
         echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
-    - name: Shorten image tag name from input
+    - name: Shorten image tag name from input 🏷
       if: "${{ inputs.imageTag != '' }}"
       shell: bash
       id: shorten-image-tag
       run: |
+        echo "IMAGE_TAG=${inputs.inageTag}"
         echo "IMAGE_TAG_SHA=$(git rev-parse --short ${inputs.imageTag})" >> $GITHUB_ENV
     - name: Build web component ⚙️
       shell: bash
