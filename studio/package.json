@@ -39,7 +39,7 @@
     "@sanity/production-preview": "2.29.3",
     "@sanity/react-hooks": "^2.30.0",
     "@sanity/types": "^2.29.3",
-    "@sanity/ui": "^0.37.5",
+    "@sanity/ui": "^0.37.8",
     "@sanity/vision": "^2.30.0",
     "only-allow": "^1.1.0",
     "prop-types": "^15.8.1",
