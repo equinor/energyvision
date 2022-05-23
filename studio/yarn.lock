@@ -1999,7 +1999,7 @@
     react-popper "^2.2.5"
     react-refractor "^2.1.6"
 
-"@sanity/ui@^0.37.9":
+"@sanity/ui@^0.37.8", "@sanity/ui@^0.37.9":
   version "0.37.9"
   resolved "https://registry.npmjs.org/@sanity/ui/-/ui-0.37.9.tgz#ab2fc9c06f856f38403cd364628ff26d8ff00f77"
   integrity sha512-Gyj7tC/0jKLYwJY/s1I7pU6fhzgP/jB7u2Xi20ZxLukWUioS95ccZ1bRcOBNk4aBqmroRs9IPT97fsRiiFhe2Q==
