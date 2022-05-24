@@ -12,6 +12,8 @@ jobs:
       name: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      imageTag: ${{ steps.get-test-sha.outputs.sha }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -63,11 +65,12 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: deploy-secret
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-secret
+          imageTag: ${{ (needs.update-radix-config.outputs.imageTag }}
           projectId: w3b4om14
           datasetName: secret
           githubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -90,7 +93,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: set-matrix
         name: Read from satellites.json
         run: |
@@ -116,11 +119,12 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - id: deploy-website
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
+          imageTag: ${{ (needs.update-radix-config.outputs.imageTag }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}

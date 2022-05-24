@@ -51,7 +51,6 @@ jobs:
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
-          # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
       - name: Get long sha ️🏷️
         id: get-long-sha
         shell: bash
