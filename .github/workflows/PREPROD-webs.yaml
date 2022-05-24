@@ -13,7 +13,7 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     outputs:
-      commitSha: ${{ steps.get-long-sha.outputs.sha }}
+      commitSha: ${{ steps.get-test-sha.outputs.sha }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -29,11 +29,6 @@ jobs:
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
           echo "::set-output name=sha::$(python ci/returnComponentVersion.py test web-global-test)"
-      - name: Get long sha ️🏷️
-        id: get-long-sha
-        shell: bash
-        run: |
-          echo "::set-output name=sha::$(git rev-parse ${{ steps.get-test-sha.outputs.sha }})"
       - name: Modify radixconfig tag for preprod on main branch 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
