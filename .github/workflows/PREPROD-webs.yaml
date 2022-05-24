@@ -70,7 +70,7 @@ jobs:
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-secret
-          imageTag: ${{ (needs.update-radix-config.outputs.imageTag }}
+          imageTag: ${{ needs.update-radix-config.outputs.imageTag }}
           projectId: w3b4om14
           datasetName: secret
           githubToken: ${{ secrets.GITHUB_TOKEN }}
