@@ -22,6 +22,7 @@ import {
   iframe,
   relatedLinks,
 } from './news/sharedNewsFields'
+import { SearchWeights } from '../searchWeights'
 
 export default {
   title: 'Local news',
@@ -134,4 +135,8 @@ export default {
       }
     },
   },
+  __experimental_search: [
+    { weight: SearchWeights.News, path: '_type' },
+    { weight: SearchWeights.News, path: 'title' },
+  ],
 }

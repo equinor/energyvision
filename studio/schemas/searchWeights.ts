@@ -1,7 +1,10 @@
 export enum SearchWeights {
-  TextSnippet = -1,
-  File = -2,
-  Tag = -3,
-  Redirects = -4,
-  ExternalRedirects = -5,
+  TopicPage = 10,
+  News = -1,
+  LocalNews = -2,
+  TextSnippet = -3,
+  File = -4,
+  Tag = -5,
+  Redirects = -6,
+  ExternalRedirects = -7,
 }

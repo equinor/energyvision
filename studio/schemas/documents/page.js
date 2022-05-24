@@ -5,6 +5,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import { HAS_FORMS, HAS_NEWS } from '../../src/lib/datasetHelpers'
+import { SearchWeights } from '../searchWeights'
 // import { done } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
@@ -111,4 +112,8 @@ export default {
       }
     },
   },
+  __experimental_search: [
+    { weight: SearchWeights.TopicPage, path: '_type' },
+    { weight: SearchWeights.TopicPage, path: 'title' },
+  ],
 }
