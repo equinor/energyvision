@@ -62,8 +62,8 @@ specifiers:
   react-error-boundary: ^3.1.4
   react-focus-lock: ^2.8.1
   react-hook-form: 7.30.0
-  react-instantsearch-hooks: ^6.23.4
-  react-instantsearch-hooks-server: ^6.23.4
+  react-instantsearch-hooks: ^6.26.0
+  react-instantsearch-hooks-server: ^6.26.0
   react-intl: ^6.0.2
   react-remove-scroll: ^2.5.1
   storybook-css-modules-preset: ^1.1.1
@@ -117,8 +117,8 @@ dependencies:
   react-error-boundary: 3.1.4_react@17.0.2
   react-focus-lock: 2.8.1_c8e45b4eb687790dba17b4e1c4b4273f
   react-hook-form: 7.30.0_react@17.0.2
-  react-instantsearch-hooks: 6.23.4_24a9da51e62336c335e8233e10af21bd
-  react-instantsearch-hooks-server: 6.23.4_9b8e18b5cb5fb389e8f0dd6018a41c59
+  react-instantsearch-hooks: 6.26.0_24a9da51e62336c335e8233e10af21bd
+  react-instantsearch-hooks-server: 6.26.0_9b8e18b5cb5fb389e8f0dd6018a41c59
   react-intl: 6.0.2_react@17.0.2+typescript@4.6.3
   react-remove-scroll: 2.5.1_c8e45b4eb687790dba17b4e1c4b4273f
   styled-components: 5.3.5_react-dom@17.0.2+react@17.0.2
@@ -6552,11 +6552,6 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /dequal/2.0.2:
-    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
-    engines: {node: '>=6'}
-    dev: false
-
   /des.js/1.0.1:
     resolution: {integrity: sha512-Q0I4pfFrv2VPd34/vfLrFOoRmlYj3OV50i7fskps1jZWK1kApMWWT9G6RRUeYedLcBDIhnSDaUvJMb3AhUlaEA==}
     dependencies:
@@ -11172,8 +11167,8 @@ packages:
       react: 17.0.2
     dev: true
 
-  /react-instantsearch-hooks-server/6.23.4_9b8e18b5cb5fb389e8f0dd6018a41c59:
-    resolution: {integrity: sha512-7H3aIpz9tStUn+tTef+GQeFRykUu71iaNNfOD+Of5qFe383gvE4oxOBbx2h1aDK1O1OeuMZmMOMtt7px5whmKA==}
+  /react-instantsearch-hooks-server/6.26.0_9b8e18b5cb5fb389e8f0dd6018a41c59:
+    resolution: {integrity: sha512-hhLXxYe1TP2pr+QdWB+EdG2ejzZkxsG8wL+r6tB3vbjuiIgdA/auVRNdoeG2L2ltucWXHKyrcfZDFE+KoLy+HQ==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
@@ -11184,11 +11179,11 @@ packages:
       instantsearch.js: 4.40.5_algoliasearch@4.13.0
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-instantsearch-hooks: 6.23.4_24a9da51e62336c335e8233e10af21bd
+      react-instantsearch-hooks: 6.26.0_24a9da51e62336c335e8233e10af21bd
     dev: false
 
-  /react-instantsearch-hooks/6.23.4_24a9da51e62336c335e8233e10af21bd:
-    resolution: {integrity: sha512-gy+VpR/xeyoup6i1bqDGXIpeAtAc16w3l9XSF1Y9mSdlWwiTrYTUcmC2Zzwuo0JerC/7GJJHI2nUkSBEjoJRuQ==}
+  /react-instantsearch-hooks/6.26.0_24a9da51e62336c335e8233e10af21bd:
+    resolution: {integrity: sha512-KcyQoquUUmYFZRQDXT63V7VHqAVsnxVIi7LwBHAUSWYGVG7RddfJzTgl00hjXFIq5SEwfG4f1rJHbSa9oXusug==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
       react: '>= 16.8.0 < 19'
@@ -11196,7 +11191,6 @@ packages:
       '@babel/runtime': 7.17.9
       algoliasearch: 4.13.0
       algoliasearch-helper: 3.8.2_algoliasearch@4.13.0
-      dequal: 2.0.2
       instantsearch.js: 4.40.5_algoliasearch@4.13.0
       react: 17.0.2
     dev: false
