@@ -150,7 +150,7 @@ const getDomain = (dataset) => websiteDomains[dataset]?.url || 'Domain not set'
  * @param {string} dataset
  */
 const getMetaTitleSuffix = (dataset) => {
-  return websiteDomains[dataset]?.meta
+  return websiteDomains[dataset]?.meta || 'Equinor'
 }
 
 module.exports = {
