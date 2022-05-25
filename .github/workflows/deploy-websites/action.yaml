@@ -61,7 +61,7 @@ runs:
       id: set-default-image-tag
       run: |
         echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-        echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
     - name: Set image tags based on commit sha 🏷
       if: "${{ inputs.commitSha != '' }}"
       shell: bash
