@@ -118,6 +118,8 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
+      - name: Checkout 🔔
+        uses: actions/checkout@v3
       - name: Deploy website 🌐
         id: deploy-website
         uses: ./.github/workflows/deploy-websites/
