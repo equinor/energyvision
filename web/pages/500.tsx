@@ -59,10 +59,12 @@ Custom500.getLayout = (page: AppProps) => {
         messages={data?.intl?.messages}
       >
         <Grid>
-          <Header slugs={slugs} menuData={data?.menuData} />
-          <SkipNavContent />
-          {page}
-          <Footer footerData={data?.footerData} />
+          <>
+            <Header slugs={slugs} menuData={data?.menuData} />
+            <SkipNavContent />
+            {page}
+            <Footer footerData={data?.footerData} />
+          </>
         </Grid>
       </IntlProvider>
     </>

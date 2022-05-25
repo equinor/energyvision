@@ -8,7 +8,10 @@ const StyledDisplayLink = styled.p`
   hyphens: auto;
 `
 
-const DisplayLink: React.FC = ({ children, ...rest }) => {
+const DisplayLink: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLParagraphElement>>> = ({
+  children,
+  ...rest
+}) => {
   return <StyledDisplayLink {...rest}>{children}</StyledDisplayLink>
 }
 

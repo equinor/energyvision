@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -11,6 +12,6 @@ const Container = styled.div`
   }
 `
 
-export const Image: React.FC = ({ children, ...rest }): React.ReactElement => (
+export const Image = ({ children, ...rest }: HTMLAttributes<HTMLDivElement> & HTMLAttributes<HTMLImageElement>) => (
   <Container {...rest}>{children}</Container>
 )

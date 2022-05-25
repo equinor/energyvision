@@ -56,17 +56,17 @@ NewsRoom.getLayout = (page: AppProps) => {
 
   return (
     <>
-      {/* The intl provider doesn't seem to be necessary here, but I don't quite understand why so
-      keeping it just to be sure:/ */}
       <IntlProvider
         locale={getIsoFromLocale(locale)}
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={data?.intl?.messages}
       >
-        <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
-        {page}
-        <Footer footerData={data?.footerData} />
+        <>
+          <Header slugs={slugs} menuData={data?.menuData} />
+          <SkipNavContent />
+          {page}
+          <Footer footerData={data?.footerData} />
+        </>
       </IntlProvider>
     </>
   )

@@ -24,14 +24,14 @@ const defaultSerializers = {
     h2: ({ children }: PortableTextBlock) => (
       <Container>
         <Heading level="h2" size="lg">
-          {children}
+          <>{children}</>
         </Heading>
       </Container>
     ),
     h3: ({ children }: PortableTextBlock) => (
       <Container>
         <Heading level="h3" size="md">
-          {children}
+          <>{children}</>
         </Heading>
       </Container>
     ),
@@ -39,7 +39,9 @@ const defaultSerializers = {
       if (isEmpty(children)) return null
       return (
         <Container>
-          <Text>{children}</Text>
+          <Text>
+            <>{children}</>
+          </Text>
         </Container>
       )
     },
@@ -47,7 +49,9 @@ const defaultSerializers = {
       if (isEmpty(children)) return null
       return (
         <Container>
-          <Text size="small">{children}</Text>
+          <Text size="small">
+            <>{children}</>
+          </Text>
         </Container>
       )
     },
@@ -62,16 +66,24 @@ const defaultSerializers = {
   list: {
     bullet: ({ children }: PortableTextBlock) => (
       <ContainerWithBottomSpace>
-        <List>{children}</List>
+        <List>
+          <>{children}</>
+        </List>
       </ContainerWithBottomSpace>
     ),
     number: ({ children }: PortableTextBlock) => (
       <ContainerWithBottomSpace>
-        <List variant="numbered">{children}</List>
+        <List variant="numbered">
+          <>{children}</>
+        </List>
       </ContainerWithBottomSpace>
     ),
   },
-  listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
+  listItem: ({ children }: PortableTextBlock) => (
+    <Item>
+      <>{children}</>
+    </Item>
+  ),
 }
 
 const NewsText = ({ value, components = {}, ...props }: PortableTextProps) => (

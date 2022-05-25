@@ -66,10 +66,12 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={data?.intl?.messages}
       >
-        <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
-        {page}
-        <Footer footerData={data?.footerData} />
+        <>
+          <Header slugs={slugs} menuData={data?.menuData} />
+          <SkipNavContent />
+          {page}
+          <Footer footerData={data?.footerData} />
+        </>
       </IntlProvider>
     </>
   )

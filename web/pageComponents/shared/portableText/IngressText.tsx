@@ -22,26 +22,34 @@ const defaultComponents = (centered: boolean) => {
         if (isEmpty(children)) return null
         return (
           <Text size="md" centered={centered}>
-            {children}
+            <>{children}</>
           </Text>
         )
       },
       smallText: ({ children }: PortableTextBlock) => (
         <Text size="small" centered={centered}>
-          {children}
+          <>{children}</>
         </Text>
       ),
     },
     marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
     list: {
-      bullet: ({ children }: PortableTextBlock) => <StyledList centered={centered}>{children}</StyledList>,
+      bullet: ({ children }: PortableTextBlock) => (
+        <StyledList centered={centered}>
+          <>{children}</>
+        </StyledList>
+      ),
       number: ({ children }: PortableTextBlock) => (
         <StyledList variant="numbered" centered={centered}>
-          {children}
+          <>{children}</>
         </StyledList>
       ),
     },
-    listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
+    listItem: ({ children }: PortableTextBlock) => (
+      <Item>
+        <>{children}</>
+      </Item>
+    ),
   }
 }
 

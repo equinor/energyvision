@@ -8,4 +8,6 @@ const Container = styled.div`
   padding: var(--space-small) 0;
 `
 
-export const InnerContainer: React.FC = ({ children, ...rest }) => <Container {...rest}>{children}</Container>
+export const InnerContainer = ({ children, ...rest }: React.HTMLAttributes<HTMLDivElement>) => (
+  <Container {...rest}>{children}</Container>
+)
