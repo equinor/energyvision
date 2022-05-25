@@ -1,4 +1,4 @@
-import { usePagination } from 'react-instantsearch-hooks'
+import { usePagination } from 'react-instantsearch-hooks-web'
 import { Button } from '@components'
 import styled from 'styled-components'
 

@@ -1,4 +1,4 @@
-import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks'
+import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks-web'
 import { PaginationItem } from './PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'

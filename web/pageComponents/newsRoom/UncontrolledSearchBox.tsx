@@ -3,7 +3,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks'
+import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import VisuallyHidden from '../shared/VisuallyHidden'
 

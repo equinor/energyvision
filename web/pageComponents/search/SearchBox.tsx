@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState, ChangeEvent, ComponentProps } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks'
+import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
 import ControlledSearchBox from './ControlledSearchBox'
 
 const DEBOUNCE_TIME = 400

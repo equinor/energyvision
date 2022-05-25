@@ -1,4 +1,4 @@
-import { useHits } from 'react-instantsearch-hooks'
+import { useHits } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 
 const HitsContainer = styled.span`

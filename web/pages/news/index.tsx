@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { InstantSearchSSRProvider } from 'react-instantsearch-hooks'
+import { InstantSearchSSRProvider } from 'react-instantsearch-hooks-web'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
 //import { history } from 'instantsearch.js/es/lib/routers/index.js'
