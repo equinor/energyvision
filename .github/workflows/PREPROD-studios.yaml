@@ -12,6 +12,8 @@ jobs:
       name: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      commitSha: ${{ steps.get-test-sha.outputs.sha }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -89,6 +91,7 @@ jobs:
         uses: ./.github/workflows/deploy-studios/
         with:
           imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          commitSha: ${{ needs.update-radix-config.outputs.commitSha }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
