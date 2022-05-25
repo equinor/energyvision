@@ -17,6 +17,7 @@ const crawlableDomains = [
 
 const robots = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
+${domain === 'www.equinor.com' ? 'Disallow: /search' : ''}
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 Crawl-delay: 10`
 
