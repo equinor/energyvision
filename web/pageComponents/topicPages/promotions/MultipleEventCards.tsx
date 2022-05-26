@@ -1,3 +1,4 @@
+import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
 import type { EventCardData } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
@@ -45,6 +46,16 @@ type MultipleEventCardsProp = {
 }
 
 const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) => {
+  // sort only automatically selected events
+  if (data.find((it) => it.manuallySelectEvents == false) != undefined) {
+    data.sort((a, b) => {
+      return (
+        new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
+        new Date(getEventDates(b.eventDate).start || b.eventDate.date).getTime()
+      )
+    })
+  }
+
   return (
     <>
       {data.length === 2 ? (

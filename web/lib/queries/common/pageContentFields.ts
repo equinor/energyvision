@@ -295,6 +295,7 @@ const pageContentFields = /* groq */ `
             "title": content->title,
             "location": content->location,
             "eventDate": content->eventDate,
+            "manuallySelectEvents": false
           },
         },
         manuallySelectEvents => {
@@ -305,6 +306,7 @@ const pageContentFields = /* groq */ `
             "title": content->title,
             "location": content->location,
             "eventDate": content->eventDate,
+            "manuallySelectEvents": true
 
           },
         },
