@@ -100,13 +100,16 @@ export default {
       name: 'url',
       type: 'url',
       title: 'Frame URL',
-      description: 'Link to the content to be loaded inside the iframe.',
+      description:
+        'Link to the content to be loaded inside the iframe. Any URL entered here must be whitelisted in order to load in this page. Please verify if the iframe loads correctly before publishing otherwise contact dev team for whitelisting.',
       fieldset: 'iframe',
-      validation: (Rule: Rule) =>
+      validation: (Rule: Rule) => [
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: IFrame }
           return (parent?.title || parent?.frameTitle) && value === undefined ? 'Required' : true
         }),
+        Rule.max(1).warning('Any URL entered here must be whitelisted in order to load correctly in this page.'),
+      ],
     },
     {
       name: 'cookiePolicy',
