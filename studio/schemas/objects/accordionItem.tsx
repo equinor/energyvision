@@ -27,7 +27,7 @@ export default {
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
+      validation: (Rule: Rule) => Rule.required().error(),
     },
     {
       title: 'Content',
