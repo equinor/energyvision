@@ -65,7 +65,7 @@ export default {
       type: 'array',
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('Should we warn for missing title'),
+      validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('A title is recommended'),
     },
     {
       name: 'anchor',
