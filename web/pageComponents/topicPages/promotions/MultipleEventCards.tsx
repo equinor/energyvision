@@ -47,7 +47,7 @@ type MultipleEventCardsProp = {
 
 const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) => {
   // sort only automatically selected events
-  if (data.find((it) => it.manuallySelectEvents == false) != undefined) {
+  if (!data[0]?.manuallySelectEvents) {
     data.sort((a, b) => {
       return (
         new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
