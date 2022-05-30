@@ -8,7 +8,8 @@ import { SchemaType } from '../../types'
 import { Colors } from '../../helpers/ColorListValues'
 import blocksToText from '../../helpers/blocksToText'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
-import type { Rule } from '@sanity/types'
+import type { Rule, Reference } from '@sanity/types'
+import type { ColorListValue } from 'sanity-plugin-color-list'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -26,6 +27,17 @@ const ingressContentType = configureBlockContent({
 })
 const titleContentType = configureTitleBlockContent()
 
+type TextBlock = {
+  overline?: string
+  title?: string
+  anchor?: string
+  ingress?: string
+  text?: string
+  action?: Reference[]
+  overrideButtonStyle?: boolean
+  background?: ColorListValue
+}
+
 export default {
   name: 'textBlock',
   title: 'Text block',
@@ -38,6 +50,14 @@ export default {
       options: {
         collapsible: true,
         collapsed: true,
+      },
+    },
+    {
+      title: 'Call to action(s)',
+      name: 'actions',
+      options: {
+        collapsible: true,
+        collapsed: false,
       },
     },
     {
@@ -93,13 +113,27 @@ export default {
     {
       name: 'action',
       type: 'array',
-      title: 'Call to action',
+      title: 'Links and downloads',
+      fieldset: 'actions',
       of: [
         { type: 'linkSelector', title: 'Link' },
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
     },
+    {
+      title: 'Use link style',
+      name: 'overrideButtonStyle',
+      type: 'boolean',
+      fieldset: 'actions',
+      initialValue: false,
+      description:
+        'If you only have one link, it is possible to override the default button design in certain circumstances.',
+      readOnly: ({ parent }: { parent: TextBlock }) => {
+        return !(parent.action && parent?.action.length === 1)
+      },
+    },
+
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
