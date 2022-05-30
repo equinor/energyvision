@@ -48,6 +48,7 @@ const pageContentFields = /* groq */ `
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
+    overrideButtonStyle,
     anchor,
     "designOptions": {
       "background": coalesce(background.title, 'White'),

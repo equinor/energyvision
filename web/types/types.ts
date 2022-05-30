@@ -189,6 +189,7 @@ export type TextBlockData = {
   text: PortableTextBlock[]
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
+  overrideButtonStyle?: boolean
   anchor?: string
   designOptions: DesignOptions
 }

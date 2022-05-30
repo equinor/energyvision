@@ -48,7 +48,7 @@ type TextBlockProps = {
 }
 
 const TextBlock = ({ data }: TextBlockProps) => {
-  const { overline, title, ingress, text, designOptions, callToActions, anchor } = data
+  const { overline, title, ingress, text, designOptions, callToActions, anchor, overrideButtonStyle = false } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text) return null
   const { background } = designOptions
@@ -64,8 +64,8 @@ const TextBlock = ({ data }: TextBlockProps) => {
             <RichText value={text} />
           </TextContainer>
         )}
-        {callToActions && callToActions.length === 1 && <Spacer />}
-        {callToActions && <CallToActions callToActions={callToActions} />}
+        {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}
+        {callToActions && <CallToActions callToActions={callToActions} overrideButtonStyle={overrideButtonStyle} />}
       </StyledTextBlock>
     </StyledTextBlockWrapper>
   )
