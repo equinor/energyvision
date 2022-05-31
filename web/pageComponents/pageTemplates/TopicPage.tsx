@@ -43,10 +43,8 @@ import {
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
-  --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-  /* @TODO: Find a good value here */
-  --banner-paddingVertical: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
-
+  /* The neverending spacing story... If two sections with the same background colour
+  follows each other we want less spacing */
   .background-one + .background-one,
   .background-two + .background-two,
   .background-three + .background-three,
@@ -66,9 +64,7 @@ const TopicPageLayout = styled.main`
 `
 
 const HeroBanner = styled.div`
-  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
-    var(--layout-paddingHorizontal-medium);
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium);
 `
 
 const StyledHeading = styled(TitleText)`
