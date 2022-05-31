@@ -128,7 +128,7 @@ export default {
       fieldset: 'actions',
       initialValue: false,
       description:
-        'If you only have one link, it is possible to override the default button design in certain circumstances.',
+        'You can override the default button style to link style. This can only be done if you have one link, and should be used with caution.',
       readOnly: ({ parent }: { parent: TextBlock }) => {
         return !(parent.action && parent?.action.length === 1)
       },
