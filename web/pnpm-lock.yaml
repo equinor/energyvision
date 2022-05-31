@@ -5,8 +5,6 @@ specifiers:
   '@equinor/eds-core-react': 0.19.0
   '@equinor/eds-icons': ^0.10.0
   '@equinor/eds-tokens': ^0.7.0
-  '@microsoft/applicationinsights-react-js': ^3.3.1
-  '@microsoft/applicationinsights-web': ^2.8.1
   '@next/bundle-analyzer': ^12.1.0
   '@next/eslint-plugin-next': ^12.1.0
   '@portabletext/react': ^1.0.6
@@ -78,8 +76,6 @@ dependencies:
   '@equinor/eds-core-react': 0.19.0_812972609a4258f3f97a86b39b83b6b7
   '@equinor/eds-icons': 0.10.0
   '@equinor/eds-tokens': 0.7.0
-  '@microsoft/applicationinsights-react-js': 3.3.1_react@18.1.0
-  '@microsoft/applicationinsights-web': 2.8.1
   '@next/bundle-analyzer': 12.1.5
   '@portabletext/react': 1.0.6_react@18.1.0
   '@portabletext/types': 1.0.3
@@ -2333,106 +2329,6 @@ packages:
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: true
-
-  /@microsoft/applicationinsights-analytics-js/2.8.1:
-    resolution: {integrity: sha512-VJlGPSrpxoPoalxUk39zG9shVic5piQW8y9ara90E5QfiLVPXG0va7fSCyqraFYdBFtA/HD68UJjkn/IUEHclw==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-common': 2.8.1
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/applicationinsights-channel-js/2.8.1:
-    resolution: {integrity: sha512-vhMXzQRzSRkDre3ZzAjD/aA4fqslrR8c6/7t/UM8BcR0opp4fcd2lDa4eeU+nknn8dEe+NvRKSuF/+BwIPN72w==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-common': 2.8.1
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/applicationinsights-common/2.8.1:
-    resolution: {integrity: sha512-UbxXYBEZgj1qn7MRSnGU9Am/D+IV37Fyp9KyMKk1wZat+fZm6lu4KkhvJQZ1L/99Tw92DhYxv4CqivOZth0tCA==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/applicationinsights-core-js/2.8.1:
-    resolution: {integrity: sha512-mG8ki504LV4SuwAo/mBiFPeGLKf5F6ObSC78c2QPvAFhohOogEOq00bKmGg178FLt9tSYtuJPWAPEZ3xYqsjvQ==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/applicationinsights-dependencies-js/2.8.1:
-    resolution: {integrity: sha512-vP4pI3csgX7ApbC20ML1WRbOeCng36tncgxSeP4djGJ9aq4xiF1YSasYbmtfrzjUaBAeSUognnRr8zGaOT3IOQ==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-common': 2.8.1
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/applicationinsights-properties-js/2.8.1:
-    resolution: {integrity: sha512-FXlYe5syr0gqSKKIAD0Cb0Z6utjlmT6bAhgCA02mmJb7dY3nNDHgKsD3nSppSdvso8u0fy3TlLcV7eRGnrUe9w==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-common': 2.8.1
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/applicationinsights-react-js/3.3.1_react@18.1.0:
-    resolution: {integrity: sha512-HvHldRK25pLNcICkjcpkBFUocHdY9oRKX3HLNtdutEG991L86bGcv5sJ5peRVaE++2CJPZXHTSvLBayHTYshxA==}
-    peerDependencies:
-      history: '>= 4.10.1'
-      react: ^17.0.1
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-common': 2.8.1
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-      react: 18.1.0
-    dev: false
-
-  /@microsoft/applicationinsights-shims/2.0.1:
-    resolution: {integrity: sha512-G0MXf6R6HndRbDy9BbEj0zrLeuhwt2nsXk2zKtF0TnYo39KgYqhYC2ayIzKPTm2KAE+xzD7rgyLdZnrcRvt9WQ==}
-    dev: false
-
-  /@microsoft/applicationinsights-web/2.8.1:
-    resolution: {integrity: sha512-USRKV/xHKVBmeyB7RoyA6d3kpKxoCEQYZ1nLTJB4eQ9TLqSlS/Nflnl8kmtVgzKhpKwicZ5exncn2YzQfA0wXw==}
-    peerDependencies:
-      tslib: '*'
-    dependencies:
-      '@microsoft/applicationinsights-analytics-js': 2.8.1
-      '@microsoft/applicationinsights-channel-js': 2.8.1
-      '@microsoft/applicationinsights-common': 2.8.1
-      '@microsoft/applicationinsights-core-js': 2.8.1
-      '@microsoft/applicationinsights-dependencies-js': 2.8.1
-      '@microsoft/applicationinsights-properties-js': 2.8.1
-      '@microsoft/applicationinsights-shims': 2.0.1
-      '@microsoft/dynamicproto-js': 1.1.4
-    dev: false
-
-  /@microsoft/dynamicproto-js/1.1.4:
-    resolution: {integrity: sha512-Ot53G927ykMF8cQ3/zq4foZtdk+Tt1YpX7aUTHxBU7UHNdkEiBvBfZSq+rnlUmKCJ19VatwPG4mNzvcGpBj4og==}
-    dev: false
 
   /@mrmlnc/readdir-enhanced/2.2.1:
     resolution: {integrity: sha512-bPHp6Ji8b41szTOcaP63VlnbbO5Ny6dwAATtY6JTjh5N2OLrb5Qk/Th5cRkRQhkWCt+EJsYrNB0MiL+Gpn6e3g==}
