@@ -47,7 +47,7 @@ jobs:
       - name: Build storybook 🔧
         id: build
         run: |
-          pnpm  --filter energy-vision-web build-storybook
+          pnpm --filter energy-vision-web build-storybook
       - name: Deploy 🚀
         id: deploy
         uses: bacongobbler/azure-blob-storage-upload@v2.0.0
