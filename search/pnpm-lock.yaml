@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@algolia/client-search': ^4.12.1
@@ -29,7 +29,7 @@ devDependencies:
   '@types/jest': 27.4.1
   '@types/node': 16.11.27
   jest: 28.1.0_@types+node@16.11.27
-  ts-jest: 28.0.2_d09198f55e30b847940a24d407965ec4
+  ts-jest: 28.0.2_2cizr5k6gc4epfaketkapfs6yq
   typescript: 4.4.4
 
 packages:
@@ -488,6 +488,8 @@ packages:
     resolution: {integrity: sha512-AqDccGC+m5O/iUStSJy3DGRIUFu7WbY/CppZYwrEUB4N0tZlnI8CSTsgL7v5fHVFmUbRv2sd+yy27o8Ydt4MGg==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.18.0
     dev: true
 
   /@babel/plugin-syntax-async-generators/7.8.4_@babel+core@7.18.0:
@@ -964,6 +966,8 @@ packages:
       make-error: 1.3.6
       object-assign: 4.1.1
       rxjs: 6.6.7
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@sanity/eventsource/3.0.2:
@@ -1498,6 +1502,11 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     dependencies:
       ms: 2.0.0
     dev: false
@@ -1843,6 +1852,8 @@ packages:
       simple-concat: 1.0.1
       tunnel-agent: 0.6.0
       url-parse: 1.5.10
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /get-package-type/0.1.0:
@@ -3397,7 +3408,7 @@ packages:
     resolution: {integrity: sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=}
     dev: false
 
-  /ts-jest/28.0.2_d09198f55e30b847940a24d407965ec4:
+  /ts-jest/28.0.2_2cizr5k6gc4epfaketkapfs6yq:
     resolution: {integrity: sha512-IOZMb3D0gx6IHO9ywPgiQxJ3Zl4ECylEFwoVpENB55aTn5sdO0Ptyx/7noNBxAaUff708RqQL4XBNxxOVjY0vQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
