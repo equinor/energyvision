@@ -26,7 +26,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: '^6.32.11'
+          version: '^7.1.7'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v2
         with:
@@ -35,8 +35,8 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install
-          pnpm install --filter energy-vision-web
+          pnpm install --strict-peer-dependencies=false
+          pnpm install --filter energy-vision-web --strict-peer-dependencies=false
       - name: Run ESLint 🔎
         id: lint
         run: |

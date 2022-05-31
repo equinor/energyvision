@@ -57,11 +57,11 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: '^6.32.11'
+          version: '^7.1.7'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install
+          pnpm install --strict-peer-dependencies=false
           pnpm studio yarn
       - name: Deploy 🚀
         id: deploy
@@ -132,7 +132,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: '^6.32.11'
+          version: '^7.1.7'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
