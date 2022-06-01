@@ -13,7 +13,7 @@ const Container = styled.div<{ items: number }>`
   justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(calc(13 * var(--space-medium)), calc(18 * var(--space-medium))));
   grid-gap: var(--space-xxLarge);
-  padding: var(--space-3xLarge) var(--space-large);
+  padding: var(--space-4xLarge) var(--space-large);
   margin: auto;
   max-width: var(--max-content-width);
 
