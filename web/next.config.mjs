@@ -56,7 +56,7 @@ export default withTM(
           destination: `${archiveServerHostname}/:slug*`,
         },
         // Add 50 years celebration page to equinor
-        dataset === 'global-test' && {
+        dataset === 'global' && {
           source: '/50/:slug*',
           destination: 'https://equinor-50-historier.vercel.app/50/:slug*',
         },
@@ -69,7 +69,7 @@ export default withTM(
           headers: securityHeaders,
         },
         // Disable security headers for 50 years celebration page
-        dataset === 'global-test' && {
+        dataset === 'global' && {
           source: '/50/:path*',
           headers: [
             {
