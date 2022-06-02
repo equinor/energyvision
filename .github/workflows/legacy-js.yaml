@@ -34,7 +34,7 @@ jobs:
         id: build-legacy-js
         working-directory: ./legacy/js
         run: |
-          pnpm install --strict-peer-dependencies=false
+          pnpm install
       - name: Export to Azure
         uses: bacongobbler/azure-blob-storage-upload@v1.2.0
         with:

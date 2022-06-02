@@ -76,7 +76,7 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install --strict-peer-dependencies=false
+          pnpm install
           pnpm studio yarn
       - name: Deploy 🚀
         id: deploy
@@ -152,7 +152,7 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install --strict-peer-dependencies=false
+          pnpm install
           pnpm studio yarn
       - name: Deploy 🚀
         id: deploy
