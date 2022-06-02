@@ -194,7 +194,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
       },
     },
     notFound: !pageData,
-    revalidate: 1,
+    revalidate: 1800,
   }
 }
 
