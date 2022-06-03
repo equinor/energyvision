@@ -34,8 +34,8 @@ jobs:
         shell: bash
         run: |
           TOKEN=$(curl -u ${{ secrets.GITHUB_TOKEN }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
-          statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null |
-                        -H "Authorization: Bearer $TOKEN" |
+          statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null \
+                        -H "Authorization: Bearer $TOKEN" \
                         https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
             echo "::set-output name=found::true"
