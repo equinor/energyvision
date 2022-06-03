@@ -1,0 +1,75 @@
+name: PROD - Rollback to a previous version
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: 'Name of web to roll back'
+        required: true
+        type: choice
+        options:
+          - global
+          - secret
+          - brazil
+          - germany
+          - argentina
+          - poland
+          - japan
+          - storage
+          - equinorfunds
+          - southkorea
+      image-sha:
+        description: 'The commit shaof the image to roll back to'
+        required: true
+        type: string
+jobs:
+  find-image:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      imageExists: ${{ steps.find-image-in-ghcr.outputs.found }}
+    steps:
+      - name: Find image on GHCR 🌠
+        id: find-image-in-ghcr
+        shell: bash
+        run: |
+          TOKEN=$(curl -u ${{ secrets.GITHUB_TOKEN }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
+          statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null |
+                        -H "Authorization: Bearer $TOKEN" |
+                        https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
+          if [[ $statusCode -eq 200 ]]
+            echo "::set-output name=found::true"
+          else
+            echo "::set-output name=found::false"
+          fi
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  update-radix-config:
+    needs: find-image
+    runs-on: ubuntu-latest
+    if: ${{ needs.find-image.outputs.imageExists == true }}
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Write to console 🗒️
+        shell: bash
+        run: |
+          echo 'Image exists - we will proceed to update the image'
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+
