@@ -33,7 +33,7 @@ jobs:
         id: find-image-in-ghcr
         shell: bash
         run: |
-          TOKEN=$(curl -u github:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
+          TOKEN=$(curl -u nilsml:${{ secrets.NLUN_GITHUB_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
           statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null \
                         -H "Authorization: Bearer $TOKEN" \
                         https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
