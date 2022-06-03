@@ -214,7 +214,6 @@ const Actions = ({
           style={
             {
               '--eds_button__font_size': 'var(--typeScale-0)',
-              '--eds_button__padding_y': 'var(--space-xSmall)',
             } as CSSProperties
           }
           aria-label={`${details} ${title}`}
