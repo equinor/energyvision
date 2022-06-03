@@ -132,7 +132,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
         intl,
       },
     },
-    revalidate: 120,
+    revalidate: 60,
     notFound,
   }
 }
