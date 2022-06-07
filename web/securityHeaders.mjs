@@ -16,13 +16,13 @@ const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl,
 
 const ContentSecurityPolicy = `
    default-src 'self' cdn.sanity.io;
-   style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com https://platform.twitter.com;
+   style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com https://platform.twitter.com https://*.twimg.com;
    ${
      isProduction
-       ? "script-src 'report-sample' 'wasm-unsafe-eval' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com"
+       ? "script-src 'report-sample' 'wasm-unsafe-eval' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/"
        : "script-src 'unsafe-eval' 'report-sample' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/"
    };
-   img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com;
+   img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com;
    connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu ${
      isProduction ? '' : 'ws:'
    };
