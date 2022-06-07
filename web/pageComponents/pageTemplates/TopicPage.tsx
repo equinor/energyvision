@@ -20,6 +20,7 @@ import NewsList from '../topicPages/NewsList'
 import StockValues from '../topicPages/StockValues'
 import TitleText from '../shared/portableText/TitleText'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
+import TwitterEmbed from '../topicPages/TwitterEmbed'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 import type { PageSchema } from '../../types/types'
@@ -40,6 +41,7 @@ import {
   TableData,
   NewsListData,
   StockValuesData,
+  TwitterEmbedData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -106,7 +108,7 @@ type ComponentProps =
   | FormData
   | TableData
   | StockValuesData
-
+  | TwitterEmbedData
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
   const slug = data?.slug
@@ -147,6 +149,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <NewsList key={c.id} data={c as unknown as NewsListData} />
       case 'stockValuesApi':
         return <StockValues key={c.id} data={c as StockValuesData} />
+      case 'twitterEmbed':
+        return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} />
       default:
         return null
     }

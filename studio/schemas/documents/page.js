@@ -84,6 +84,7 @@ export default {
         { type: 'cookieDeclaration' },
         HAS_FORMS && { type: 'form' },
         HAS_NEWS && { type: 'newsList' },
+        { type: 'twitterEmbed' },
       ].filter((e) => e),
     },
   ],

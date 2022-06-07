@@ -429,6 +429,13 @@ const pageContentFields = /* groq */ `
     },
   },
 
+  _type == "twitterEmbed"=>{
+    "type": _type,
+    "id": _key,
+    embedType,
+    embedValue,
+  },
+
 `
 
 export default pageContentFields

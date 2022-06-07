@@ -523,3 +523,10 @@ export type StockValuesData = {
     background: BackgroundColours
   }
 }
+
+export type TwitterEmbedData = {
+  id: string
+  type: string
+  embedType: string
+  embedValue: string
+}
