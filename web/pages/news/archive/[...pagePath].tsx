@@ -142,7 +142,13 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   )
 }
 
-const fetchArchiveData = async (pagePathArray: string[], pagePath: string, locale: string): Promise<Response> => {
+const fetchArchiveData = async (
+  pagePathArray: string[],
+  pagePath: string,
+  locale: string,
+): Promise<Response | false> => {
+  if (pagePath.includes('.')) return false
+
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
 
   if (pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays') {
@@ -171,7 +177,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   const pagePath = pagePathArray.join('/')
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
-  const pageData = await parseResponse(response)
+  const pageData = response ? await parseResponse(response) : false
 
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
