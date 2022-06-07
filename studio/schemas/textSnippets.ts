@@ -22,6 +22,10 @@ const snippets: textSnippet = {
     title: 'To be announced',
     defaultValue: 'To be announced',
   },
+  atc: {
+    title: 'Add to Calendar',
+    defaultValue: 'Add to Calendar',
+  },
   details: {
     title: 'Details',
     defaultValue: 'Details',

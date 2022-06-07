@@ -4,6 +4,7 @@ import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 
 import type { EventDateType } from '../../types/types'
+import { useIntl } from 'react-intl'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')
@@ -50,6 +51,7 @@ const createICS = (eventData: ICSProps): string | boolean => {
 }
 
 const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
+  const intl = useIntl()
   const [fileData, setFileData] = useState<string | boolean>(false)
 
   useEffect(() => {
@@ -84,11 +86,11 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   }, [eventDate, location, title])
 
   if (!fileData) return null
-
+  const atc = intl.formatMessage({ id: 'atc', defaultMessage: 'Add to Calendar' })
   return (
     <Button {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}>
       {/*  <Icon data={add} /> */}
-      Add to Calendar
+      {atc}
     </Button>
   )
 }
