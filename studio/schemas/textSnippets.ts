@@ -27,7 +27,7 @@ const snippets: textSnippet = {
     defaultValue: 'Add to Calendar',
     hidden : !HAS_EVENT
   },
-  details_event: {
+  details: {
     title: 'Event Promotion : Details',
     defaultValue: 'Details',
     hidden : !HAS_EVENT

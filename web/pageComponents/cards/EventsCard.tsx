@@ -203,7 +203,7 @@ const Actions = ({
   eventDate: EventDateType
 }) => {
   const intl = useIntl()
-  const details = intl.formatMessage({ id: 'details_event', defaultMessage: 'Details' })
+  const details = intl.formatMessage({ id: 'details', defaultMessage: 'Details' })
 
   return (
     <ActionContainer>
