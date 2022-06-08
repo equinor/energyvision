@@ -37,10 +37,10 @@ jobs:
           statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN"
           https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }});
           if [[ $statusCode -eq 200 ]]
-          then
-            echo "::set-output name=found::true";
-          else
-            echo "::set-output name=found::false";
+            then
+              echo "::set-output name=found::true";
+            else
+              echo "::set-output name=found::false";
           fi
       - uses: act10ns/slack@v1
         with:
