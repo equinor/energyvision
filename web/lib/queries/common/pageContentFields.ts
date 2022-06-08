@@ -434,6 +434,14 @@ const pageContentFields = /* groq */ `
     "id": _key,
     embedType,
     embedValue,
+    title,
+    ingress[]{
+        ...,
+        ${markDefs},
+      },
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+    },
   },
 
 `

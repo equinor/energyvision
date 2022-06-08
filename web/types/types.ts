@@ -527,6 +527,11 @@ export type StockValuesData = {
 export type TwitterEmbedData = {
   id: string
   type: string
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
   embedType: string
   embedValue: string
+  designOptions: {
+    background: BackgroundColours
+  }
 }

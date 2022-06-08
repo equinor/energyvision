@@ -3,23 +3,32 @@ import RequestConsentContainer from '../../pageComponents/shared/iframe/RequestC
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import TitleText from '../../pageComponents/shared/portableText/TitleText'
 
 type TwitterEmbedProps = {
   data: TwitterEmbedData
 }
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
   margin: auto;
+`
+const StyledIngress = styled.div`
+  padding: 0 0 var(--space-medium);
+`
+const StyledTitle = styled(TitleText)`
+  margin-bottom: var(--space-xLarge);
 `
 
 const TwitterEmbed = ({ data }: TwitterEmbedProps) => {
+  const { embedType, embedValue, designOptions, title, ingress } = data
   const Embed = () => {
-    switch (data.embedType) {
+    switch (embedType) {
       case 'timeline':
         return (
           <TwitterTimelineEmbed
-            screenName={data.embedValue}
+            screenName={embedValue}
             sourceType="profile"
             options={{
               height: 800,
@@ -28,20 +37,27 @@ const TwitterEmbed = ({ data }: TwitterEmbedProps) => {
           />
         )
       case 'tweet':
-        return <TwitterTweetEmbed tweetId={data.embedValue} options={{ align: 'center' }} />
+        return <TwitterTweetEmbed tweetId={embedValue} options={{ align: 'center' }} />
       default:
-        return <div></div>
+        return null
     }
   }
   return (
     <>
-      <BackgroundContainer background="White">
+      <BackgroundContainer background={designOptions.background}>
         <Container>
-          <div className={`cookieconsent-optin-marketing`}>
+          {title && <StyledTitle value={title} />}
+          {ingress && (
+            <StyledIngress>
+              <IngressText value={ingress} />
+            </StyledIngress>
+          )}
+
+          <div className="cookieconsent-optin-marketing">
             <Embed />
           </div>
-          <div className={`cookieconsent-optout-marketing`}>
-            <RequestConsentContainer cookiePolicy={'marketing'} />
+          <div className="cookieconsent-optout-marketing">
+            <RequestConsentContainer cookiePolicy="marketing" />
           </div>
         </Container>
       </BackgroundContainer>
