@@ -32,15 +32,14 @@ jobs:
       - name: Find image on GHCR 🌠
         id: find-image-in-ghcr
         shell: bash
-        run: >
-          TOKEN=$(curl -u nilsml:${{ secrets.GHCR_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token);
-          statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN"
-          https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }});
+        run: |
+          TOKEN=$(curl -u nilsml:${{ secrets.GHCR_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
+          statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
-            then
-              echo "::set-output name=found::true";
-            else
-              echo "::set-output name=found::false";
+          then
+            echo "::set-output name=found::true";
+          else
+            echo "::set-output name=found::false";
           fi
       - uses: act10ns/slack@v1
         with:
