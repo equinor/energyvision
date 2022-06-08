@@ -32,7 +32,7 @@ jobs:
       - name: Find image on GHCR 🌠
         id: find-image-in-ghcr
         shell: bash
-        run: >-
+        run: >
           TOKEN=$(curl -u nilsml:${{ secrets.GHCR_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token);
           statusCode=$(curl --head --fail --write-out '%{http_code}' --silent --output /dev/null
                         -H "Authorization: Bearer $TOKEN"
