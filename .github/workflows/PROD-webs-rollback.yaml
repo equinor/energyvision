@@ -54,7 +54,7 @@ jobs:
   update-radix-config:
     needs: find-image
     runs-on: ubuntu-latest
-    if: ${{ needs.find-image.outputs.imageExists == "true" }}
+    if: ${{ needs.find-image.outputs.imageExists }} == true
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
