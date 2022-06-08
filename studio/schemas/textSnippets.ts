@@ -1,4 +1,4 @@
-import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM } from '../src/lib/datasetHelpers'
+import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM,HAS_EVENT } from '../src/lib/datasetHelpers'
 
 const snippets: textSnippet = {
   loading: {
@@ -22,13 +22,15 @@ const snippets: textSnippet = {
     title: 'To be announced',
     defaultValue: 'To be announced',
   },
-  atc: {
-    title: 'Add to Calendar',
+  add_to_calendar_event: {
+    title: 'Event Promotion : Add to Calendar',
     defaultValue: 'Add to Calendar',
+    hidden : !HAS_EVENT
   },
-  details: {
-    title: 'Details',
+  details_event: {
+    title: 'Event Promotion : Details',
     defaultValue: 'Details',
+    hidden : !HAS_EVENT
   },
   search: {
     title: 'Search',

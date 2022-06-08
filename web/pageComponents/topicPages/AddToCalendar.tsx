@@ -86,7 +86,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   }, [eventDate, location, title])
 
   if (!fileData) return null
-  const atc = intl.formatMessage({ id: 'atc', defaultMessage: 'Add to Calendar' })
+  const atc = intl.formatMessage({ id: 'add_to_calendar_event', defaultMessage: 'Add to Calendar' })
   return (
     <Button {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}>
       {/*  <Icon data={add} /> */}
