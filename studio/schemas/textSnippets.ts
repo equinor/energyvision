@@ -212,6 +212,11 @@ const snippets: textSnippet = {
     defaultValue: 'Investor relations',
     hidden: !HAS_FORMS,
   },
+  contact_form_human_rights_information_request:{
+    title: 'Contact form: Human Rights Information Request',
+    defaultValue: 'Human Rights Information Request',
+    hidden: !HAS_FORMS,
+  },
   contact_form_other: {
     title: 'Contact form: Other',
     defaultValue: 'Other',

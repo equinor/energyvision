@@ -24,6 +24,12 @@ const ContactEquinorForm = () => {
       body: JSON.stringify({
         data,
         frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+        isHumanRightsInformationRequest: data.category.includes(
+          intl.formatMessage({
+            id: 'contact_form_human_rights_information_request',
+            defaultMessage: 'Human Rights Information Request',
+          }),
+        ),
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -153,6 +159,12 @@ const ContactEquinorForm = () => {
                     {intl.formatMessage({
                       id: 'contact_form_investor_relations',
                       defaultMessage: 'Investor relations',
+                    })}
+                  </option>
+                  <option>
+                    {intl.formatMessage({
+                      id: 'contact_form_human_rights_information_request',
+                      defaultMessage: 'Human Rights Information Request',
                     })}
                   </option>
                   <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
