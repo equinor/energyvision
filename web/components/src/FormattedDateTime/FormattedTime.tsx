@@ -27,11 +27,11 @@ export const FormattedTime = ({
     <StyledDate {...rest}>
       {icon && <TimeIcon />}
       <SmallText small={small}>
-        <time dateTime={datetime}>
+        <time suppressHydrationWarning dateTime={datetime}>
           <ReactIntlTime value={date} />
         </time>
         {timezone && (
-          <span style={{ marginLeft: 'var(--space-4)' }}>
+          <span suppressHydrationWarning style={{ marginLeft: 'var(--space-4)' }}>
             ({date.toLocaleTimeString('es-NO', { timeZoneName: 'short' }).split(' ')[1]})
           </span>
         )}

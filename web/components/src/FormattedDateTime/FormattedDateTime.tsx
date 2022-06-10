@@ -16,7 +16,7 @@ export const FormattedDateTime = ({
     <StyledDate {...rest}>
       {icon && <DateIcon />}
       <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />
-      <FormattedTime datetime={datetime} timezone={timezone} />
+      <FormattedTime suppressHydrationWarning datetime={datetime} timezone={timezone} />
     </StyledDate>
   )
 }
