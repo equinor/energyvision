@@ -6,5 +6,6 @@ export const indexSettings: Settings = {
   attributesForFaceting: ['year', 'topicTags', 'countryTags'],
   attributeForDistinct: 'slug',
   distinct: 1,
+  advancedSyntax: true,
   ranking: ['desc(publishDateTime)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
 }
