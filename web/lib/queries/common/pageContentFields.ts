@@ -140,6 +140,7 @@ const pageContentFields = /* groq */ `
       "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
+        "anchorReference": link.anchorReference,
         "isStatic": coalesce(link.isStatic, false),
         "link": link.reference-> {
           "type": _type,
