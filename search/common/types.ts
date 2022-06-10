@@ -56,6 +56,7 @@ export type NewsIndex = {
   ingress: string
   topicTags: string[]
   countryTags: string[]
+  thumbnailUrl: string
 }
 
 export type IndexType = EventIndex | TopicIndex | NewsIndex
