@@ -7,6 +7,7 @@ on:
         required: true
         type: choice
         options:
+          - global
           - brazil
           - germany
           - argentina
@@ -16,7 +17,7 @@ on:
           - equinorfunds
           - southkorea
       image-sha:
-        description: 'The commit shaof the image to roll back to'
+        description: 'The commit sha of the image to roll back to'
         required: true
         type: string
 jobs:
@@ -49,12 +50,150 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
+  rollback-global:
+    runs-on: ubuntu-latest
+    needs: find-image
+    if: github.event.inputs.site == 'global' && ${{ needs.find-image.outputs.imageExists }} == true
+    environment:
+      name: production
+      url: https://equinor.sanity.studio
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+      SANITY_STUDIO_API_DATASET: global
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+      - name: Checkout 🛎️
+        id: checkout-main
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+      - name: Get long sha ️🏷️
+        id: get-long-sha
+        shell: bash
+        run: |
+          echo "::set-output name=sha::$(git rev-parse ${{ github.event.inputs.image-sha }})"
+      - name: Checkout 🛎️
+        id: checkout-specific-branch
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: '^7.1.7'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm studio yarn
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./studio
+        run: |
+          pnpm deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  rollback-secret:
+    runs-on: ubuntu-latest
+    needs: find-image
+    if: github.event.inputs.site == 'global' && ${{ needs.find-image.outputs.imageExists }} == true
+    environment:
+      name: production
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SANITY_STUDIO_API_PROJECT_ID: w3b4om14
+      SANITY_STUDIO_MUTATION_TOKEN: ${{ secrets.SANITY_STUDIO_SECRET_MUTATION_TOKEN }}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_API_SECRET_TOKEN }}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+      SANITY_STUDIO_API_DATASET: secret
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+      - name: Checkout 🛎️
+        id: checkout-main
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
+      - name: Get long sha ️🏷️
+        id: get-long-sha
+        shell: bash
+        run: |
+          echo "::set-output name=sha::$(git rev-parse ${{ github.event.inputs.image-sha }})"
+      - name: Checkout 🛎️
+        id: checkout-specific-branch
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+          cache-dependency-path: 'studio/yarn.lock'
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.0.0
+        with:
+          version: '^7.1.7'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm studio yarn
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./studio
+        run: |
+          pnpm deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   update-radix-config:
     needs: find-image
     runs-on: ubuntu-latest
     environment:
       name: production
-    if: ${{ needs.find-image.outputs.imageExists }} == true
+    if: github.event.inputs.site != 'global' && ${{ needs.find-image.outputs.imageExists }} == true
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
