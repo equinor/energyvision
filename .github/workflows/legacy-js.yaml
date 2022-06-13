@@ -29,7 +29,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: '^7.1.7'
+          version: '^7.2.1'
       - name: Build legacy js
         id: build-legacy-js
         working-directory: ./legacy/js
