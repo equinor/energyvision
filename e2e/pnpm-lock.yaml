@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@percy/cli': ^1.0.0-beta.47
@@ -12,7 +12,7 @@ dependencies:
 
 devDependencies:
   '@percy/cli': 1.0.0-beta.47
-  '@percy/selenium-webdriver': 1.0.0_selenium-webdriver@4.0.0-beta.2
+  '@percy/selenium-webdriver': 1.0.0_433bpa7xrz7hbgewv6g7ljf4ge
   axe-core: 4.2.2
   dotenv: 10.0.0
 
@@ -289,7 +289,7 @@ packages:
       '@percy/logger': 1.0.0-beta.47
     dev: true
 
-  /@percy/selenium-webdriver/1.0.0_selenium-webdriver@4.0.0-beta.2:
+  /@percy/selenium-webdriver/1.0.0_433bpa7xrz7hbgewv6g7ljf4ge:
     resolution: {integrity: sha512-Kscun4p2TBHRsDm8DTeOSNGDKEkPDqyQB3SA4kADSFLv0hKx/yG2GLuHX5fFVT00f5eGp8Q0pvVbsBn5KkhBbA==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -444,7 +444,6 @@ packages:
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
-    dev: false
 
   /cosmiconfig/7.0.0:
     resolution: {integrity: sha512-pondGvTuVYDk++upghXJabWzL6Kxu6f26ljFw64Swq9v6sQPUL3EUlVDV56diOjpCayKihL6hVe8exIACU4XcA==}
@@ -653,7 +652,6 @@ packages:
 
   /immediate/3.0.6:
     resolution: {integrity: sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=}
-    dev: false
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -723,7 +721,6 @@ packages:
 
   /isarray/1.0.0:
     resolution: {integrity: sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=}
-    dev: false
 
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
@@ -754,13 +751,11 @@ packages:
       pako: 1.0.11
       readable-stream: 2.3.7
       set-immediate-shim: 1.0.1
-    dev: false
 
   /lie/3.3.0:
     resolution: {integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==}
     dependencies:
       immediate: 3.0.6
-    dev: false
 
   /lines-and-columns/1.1.6:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
@@ -831,7 +826,6 @@ packages:
 
   /pako/1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
-    dev: false
 
   /parent-module/1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -883,7 +877,6 @@ packages:
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
-    dev: false
 
   /progress/2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
@@ -931,7 +924,6 @@ packages:
       safe-buffer: 5.1.2
       string_decoder: 1.1.1
       util-deprecate: 1.0.2
-    dev: false
 
   /require-from-string/2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
@@ -953,7 +945,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.1.6
-    dev: false
 
   /rimraf/3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
@@ -969,7 +960,6 @@ packages:
 
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
-    dev: false
 
   /selenium-webdriver/4.0.0-beta.2:
     resolution: {integrity: sha512-uuNl3T1JjhrXCO4UAAy+iIIgZ/PqgYNiYvy+yfWCY+x2vHH9y7tIdD9a/q1rwbf/5jD/ENwYlVuNj46uIngknA==}
@@ -982,7 +972,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
 
   /semver/7.3.5:
     resolution: {integrity: sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==}
@@ -1008,7 +997,6 @@ packages:
   /set-immediate-shim/1.0.1:
     resolution: {integrity: sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /shebang-command/2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -1048,7 +1036,6 @@ packages:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
     dependencies:
       safe-buffer: 5.1.2
-    dev: false
 
   /strip-ansi/4.0.0:
     resolution: {integrity: sha1-qEeQIusaw2iocTibY1JixQXuNo8=}
@@ -1083,7 +1070,6 @@ packages:
     engines: {node: '>=8.17.0'}
     dependencies:
       rimraf: 3.0.2
-    dev: false
 
   /to-regex-range/5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
@@ -1113,7 +1099,6 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
-    dev: false
 
   /which/2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
