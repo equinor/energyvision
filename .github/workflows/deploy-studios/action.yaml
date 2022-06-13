@@ -4,6 +4,9 @@ inputs:
   imageName:
     description: 'The path to where the image is to be copied'
     required: true
+  commitSha:
+    description: 'sha of image to be used'
+    required: false
   datasetName:
     description: 'Name of dataset to be used for Sanity'
     required: true
@@ -34,18 +37,42 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout 🛎️
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get long sha ️🏷️
+      if: "${{ inputs.commitSha != '' }}"
+      id: get-long-sha
+      shell: bash
+      run: |
+        echo "::set-output name=sha::$(git rev-parse ${{ inputs.commitSha }})"
+    - name: Checkout specific branch 🛎️
+      if: "${{ inputs.commitSha != '' }}"
+      id: checkout-specific-branch
+      uses: actions/checkout@v3
+      with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: "${{ steps.get-long-sha.outputs.sha }}"
     - uses: actions/setup-node@v2
       with:
         node-version: 16
         cache: yarn
         cache-dependency-path: 'studio/yarn.lock'
     - name: Set default image tag 🏷
+      if: "${{ inputs.commitSha == '' }}"
       id: set-default-image-tag
       shell: bash
       run: |
         echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-        echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+    - name: Set image tags based on commit sha 🏷
+      if: "${{ inputs.commitSha != '' }}"
+      shell: bash
+      id: set-image-tag
+      run: |
+        echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
     - name: Build sanity container ⚙️
       id: build
       shell: bash

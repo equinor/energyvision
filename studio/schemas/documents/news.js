@@ -21,6 +21,7 @@ import {
   relatedLinks,
 } from './news/sharedNewsFields'
 import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
+import { SearchWeights } from '../searchWeights'
 
 export default {
   title: 'News',
@@ -122,4 +123,8 @@ export default {
       }
     },
   },
+  __experimental_search: [
+    { weight: SearchWeights.News, path: '_type' },
+    { weight: SearchWeights.News, path: 'title' },
+  ],
 }

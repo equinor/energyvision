@@ -94,7 +94,7 @@ type LocaleLinkProps = {
   active: boolean
 }
 
-const LocaleLink: React.FC<LocaleLinkProps> = ({ href, title, locale, active, children }) => {
+const LocaleLink: React.FC<React.PropsWithChildren<LocaleLinkProps>> = ({ href, title, locale, active, children }) => {
   if (!active) {
     return (
       <NextLink href={href} locale={locale} passHref>

@@ -6,7 +6,7 @@ export const h2Heading = (value: PortableTextBlock) => {
 
   return (
     <Heading level="h2" size="lg">
-      {children}
+      <>{children}</>
     </Heading>
   )
 }

@@ -48,6 +48,7 @@ const pageContentFields = /* groq */ `
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
+    overrideButtonStyle,
     anchor,
     "designOptions": {
       "background": coalesce(background.title, 'White'),
@@ -139,6 +140,7 @@ const pageContentFields = /* groq */ `
       "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
+        "anchorReference": link.anchorReference,
         "isStatic": coalesce(link.isStatic, false),
         "link": link.reference-> {
           "type": _type,
@@ -295,6 +297,7 @@ const pageContentFields = /* groq */ `
             "title": content->title,
             "location": content->location,
             "eventDate": content->eventDate,
+            "manuallySelectEvents": false
           },
         },
         manuallySelectEvents => {
@@ -305,6 +308,7 @@ const pageContentFields = /* groq */ `
             "title": content->title,
             "location": content->location,
             "eventDate": content->eventDate,
+            "manuallySelectEvents": true
 
           },
         },
@@ -421,6 +425,21 @@ const pageContentFields = /* groq */ `
   _type == "stockValuesApi"=>{
     "type": _type,
     "id": _key,
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+    },
+  },
+
+  _type == "twitterEmbed"=>{
+    "type": _type,
+    "id": _key,
+    embedType,
+    embedValue,
+    title,
+    ingress[]{
+        ...,
+        ${markDefs},
+      },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
     },

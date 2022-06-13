@@ -4,6 +4,9 @@ inputs:
   imageName:
     description: 'The path to where the image is to be copied'
     required: true
+  commitSha:
+    description: 'sha of image to be used'
+    required: false
   projectId:
     description: 'Id of the sanity project'
     required: false
@@ -34,14 +37,38 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout 🛎️
+    - name: Checkout 🛎 ️
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get long sha ️🏷️
+      if: "${{ inputs.commitSha != '' }}"
+      id: get-long-sha
+      shell: bash
+      run: |
+        echo "::set-output name=sha::$(git rev-parse ${{ inputs.commitSha }})"
+    - name: Checkout specific branch 🛎️
+      if: "${{ inputs.commitSha != '' }}"
+      id: checkout-specific-branch
+      uses: actions/checkout@v3
+      with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: "${{ steps.get-long-sha.outputs.sha }}"
     - name: Set default image tag 🏷
+      if: "${{ inputs.commitSha == '' }}"
       shell: bash
       id: set-default-image-tag
       run: |
         echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-        echo "IMAGE_TAG_SHA=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+    - name: Set image tags based on commit sha 🏷
+      if: "${{ inputs.commitSha != '' }}"
+      shell: bash
+      id: set-image-tag
+      run: |
+        echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
     - name: Build web component ⚙️
       shell: bash
       id: build

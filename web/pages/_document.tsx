@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import { GTM_ID } from '../lib/gtm'
 
@@ -46,6 +47,8 @@ const GoogleTagManagerBody = () => (
     }}
   ></noscript>
 )
+// We need this to support server-side rendering for styled components. It does create some issues with React 18 types
+// See https://github.com/vercel/next.js/issues/36008#issuecomment-1094073787 for the added fix
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
@@ -60,12 +63,12 @@ export default class MyDocument extends Document {
       const initialProps = await Document.getInitialProps(ctx)
       return {
         ...initialProps,
-        styles: (
-          <>
+        styles: [
+          <React.Fragment key="1">
             {initialProps.styles}
             {sheet.getStyleElement()}
-          </>
-        ),
+          </React.Fragment>,
+        ],
       }
     } finally {
       sheet.seal()

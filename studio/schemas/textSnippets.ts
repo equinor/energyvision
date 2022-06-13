@@ -1,4 +1,4 @@
-import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM } from '../src/lib/datasetHelpers'
+import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM,HAS_EVENT } from '../src/lib/datasetHelpers'
 
 const snippets: textSnippet = {
   loading: {
@@ -22,9 +22,15 @@ const snippets: textSnippet = {
     title: 'To be announced',
     defaultValue: 'To be announced',
   },
+  add_to_calendar_event: {
+    title: 'Event Promotion : Add to Calendar',
+    defaultValue: 'Add to Calendar',
+    hidden : !HAS_EVENT
+  },
   details: {
-    title: 'Details',
+    title: 'Event Promotion : Details',
     defaultValue: 'Details',
+    hidden : !HAS_EVENT
   },
   search: {
     title: 'Search',
@@ -204,6 +210,11 @@ const snippets: textSnippet = {
   contact_form_investor_relations: {
     title: 'Contact form: Investor relations',
     defaultValue: 'Investor relations',
+    hidden: !HAS_FORMS,
+  },
+  contact_form_human_rights_information_request:{
+    title: 'Contact form: Human Rights Information Request',
+    defaultValue: 'Human Rights Information Request',
     hidden: !HAS_FORMS,
   },
   contact_form_other: {

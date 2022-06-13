@@ -62,5 +62,5 @@ export default {
       }
     },
   },
-  __experimental_search: [{ weight: SearchWeights.Tag, path: 'title' }],
+  __experimental_search: languages.map((lang) => ({ weight: SearchWeights.Tag, path: `title.${lang.name}` })),
 }

@@ -13,16 +13,28 @@ const defaultSerializers = {
     h3: h3Heading,
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
-      return <Text>{children}</Text>
+      return (
+        <Text>
+          <>{children}</>
+        </Text>
+      )
     },
-    smallText: ({ children }: PortableTextBlock) => <Text size="small">{children}</Text>,
+    smallText: ({ children }: PortableTextBlock) => (
+      <Text size="small">
+        <>{children}</>
+      </Text>
+    ),
   },
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
   list: {
     bullet: BulletList,
     number: NumberedList,
   },
-  listItem: ({ children }: PortableTextBlock) => <Item>{children}</Item>,
+  listItem: ({ children }: PortableTextBlock) => (
+    <Item>
+      <>{children}</>
+    </Item>
+  ),
 }
 
 const RichText = ({ value, components = {}, ...props }: PortableTextProps) => (

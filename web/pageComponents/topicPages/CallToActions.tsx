@@ -9,12 +9,15 @@ const { Item } = List
 
 type CallToActionsProps = {
   callToActions: LinkData[]
+  overrideButtonStyle: boolean
 }
 
-const CallToActions = ({ callToActions }: CallToActionsProps) => {
+const CallToActions = ({ callToActions, overrideButtonStyle }: CallToActionsProps) => {
   if (!callToActions) return null
 
-  return callToActions.length === 1 ? (
+  // If we have only one link and the publisher has not made an active choice of overriding the style
+  // in Sanity the default style is a button style
+  return callToActions.length === 1 && !overrideButtonStyle ? (
     <ButtonLink action={callToActions[0]} />
   ) : (
     <List unstyled>

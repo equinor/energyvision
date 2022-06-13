@@ -56,7 +56,9 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
                 />
               </Eyebrow>
             )}
-            <Title>{title}</Title>
+            <Title>
+              <>{title}</>
+            </Title>
           </Header>
           {ingress && (
             <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>

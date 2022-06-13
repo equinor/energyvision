@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Tabs } from '@components'
-import { Index, useHits } from 'react-instantsearch-hooks'
+import { Index, useHits } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { FormattedMessage } from 'react-intl'

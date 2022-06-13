@@ -93,15 +93,19 @@ const MultiplePromotions = ({
     <>
       {variant === 'promotePeople' ? (
         <PeopleCardsWrapper>
-          {data.map((item) => {
-            return getCard(item)
-          })}
+          <>
+            {data.map((item) => {
+              return getCard(item)
+            })}
+          </>
         </PeopleCardsWrapper>
       ) : (
         <CardsWrapper>
-          {data.map((item) => {
-            return getCard(item)
-          })}
+          <>
+            {data.map((item) => {
+              return getCard(item)
+            })}
+          </>
         </CardsWrapper>
       )}
     </>

@@ -1,6 +1,7 @@
 import { getNameFromLocale } from '../../lib/localization'
 import { sanityClient } from '../../lib/sanity.server'
 import { groq } from 'next-sanity'
+import { publishDateTimeQuery } from '../../lib/queries/news'
 
 // These URLs uses SSR and thus should not be static rendered
 const topicSlugBlackList = {
@@ -99,4 +100,33 @@ export const getLocalNewsPaths = async (locales: string[]): Promise<PathType[]> 
   })
 
   return (await Promise.all(fetchPaths)).flat()
+}
+
+export const getNewsroomPaths = async (): Promise<PathType[]> => {
+  // Use last published news as updatedAt field for newsroom
+  const getUpdatedAt = async (lang: 'en_GB' | 'nb_NO'): Promise<{ _updatedAt: string }> =>
+    await sanityClient.fetch(
+      groq`*[_type == 'news' && _lang == $lang && !(_id in path("drafts.**"))] | order(${publishDateTimeQuery} desc)[0] {
+      _updatedAt,
+    }`,
+      {
+        lang,
+      },
+    )
+
+  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en_GB')
+  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb_NO')
+
+  return [
+    {
+      slug: ['news'],
+      updatedAt: englishUpdatedAt,
+      locale: 'en',
+    },
+    {
+      slug: ['nyheter'],
+      updatedAt: norwegianUpdatedAt,
+      locale: 'no',
+    },
+  ]
 }

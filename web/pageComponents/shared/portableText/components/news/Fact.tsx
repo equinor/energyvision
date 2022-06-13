@@ -47,7 +47,6 @@ export const Fact = (block: BlockProps) => {
   const { title, content, background, image, imagePosition, dynamicHeight } = value
   const bgTitle = background ? background?.title : 'none'
   if (!content || content.length === 0) {
-    console.warn('Missing content in a fact box')
     return null
   }
 

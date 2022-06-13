@@ -189,6 +189,7 @@ export type TextBlockData = {
   text: PortableTextBlock[]
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
+  overrideButtonStyle?: boolean
   anchor?: string
   designOptions: DesignOptions
 }
@@ -518,6 +519,18 @@ export type NewsListData = {
 export type StockValuesData = {
   id: string
   type: string
+  designOptions: {
+    background: BackgroundColours
+  }
+}
+
+export type TwitterEmbedData = {
+  id: string
+  type: string
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  embedType: string
+  embedValue: string
   designOptions: {
     background: BackgroundColours
   }

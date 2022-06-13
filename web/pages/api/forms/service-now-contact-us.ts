@@ -4,7 +4,8 @@ import { validateCaptcha } from './validateCaptcha'
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const catalogIdentifier = "66f0ff89db2e2644ff6272dabf961945"
+    const isHumanRightsInfoReq = req.body.isHumanRightsInformationRequest
+    const catalogIdentifier = isHumanRightsInfoReq? "d0d1eaee47fb0950cd271141e36d439b":"66f0ff89db2e2644ff6272dabf961945"
     const frcCaptchaSolution = req.body.frcCaptchaSolution
     const data = req.body.data
     const email = encodeURI(data.email)

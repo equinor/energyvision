@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 /* eslint-disable no-undef */
 import { render, cleanup, screen } from '@testing-library/react'
 import 'jest-styled-components'

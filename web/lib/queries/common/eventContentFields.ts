@@ -18,6 +18,7 @@ export const eventContentFields = /* groq */ `
     title,
     frameTitle,
     url,
+    "cookiePolicy": coalesce(cookiePolicy, 'none'),
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       "background": coalesce(background.title, 'none'),

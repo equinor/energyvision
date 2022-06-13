@@ -16,6 +16,7 @@ const locales = languages.map((lang) => lang.locale)
 
 export default withTM(
   withBundle({
+    reactStrictMode: true,
     eslint: {
       // Warning: Dangerously allow production builds to successfully complete even if
       // your project has ESLint errors.
@@ -56,7 +57,7 @@ export default withTM(
           destination: `${archiveServerHostname}/:slug*`,
         },
         // Add 50 years celebration page to equinor
-        dataset === 'global-test' && {
+        dataset === 'global' && {
           source: '/50/:slug*',
           destination: 'https://equinor-50-historier.vercel.app/50/:slug*',
         },
@@ -69,7 +70,7 @@ export default withTM(
           headers: securityHeaders,
         },
         // Disable security headers for 50 years celebration page
-        dataset === 'global-test' && {
+        dataset === 'global' && {
           source: '/50/:path*',
           headers: [
             {
@@ -84,21 +85,5 @@ export default withTM(
         },
       ].filter((e) => e)
     },
-    /*   webpack(config, { defaultLoaders }) {
-    config.module.rules.push({
-      test: /\.(css)$/,
-      use: [
-        defaultLoaders.babel,
-        {
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
-          loader: require('styled-jsx/webpack').loader,
-          options: {
-            type: 'global',
-          },
-        },
-      ],
-    })
-    return config
-  }, */
   }),
 )

@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { render, cleanup } from '@testing-library/react'
 import 'jest-styled-components'
 import { BackgroundContainer } from './'

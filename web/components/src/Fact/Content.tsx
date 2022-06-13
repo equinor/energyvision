@@ -59,9 +59,9 @@ const InnerWrapper = styled.div<{ dynamicHeight: boolean }>`
 type ContentProps = {
   hasImage?: boolean
   dynamicHeight?: boolean
-}
+} & React.HTMLAttributes<HTMLDivElement>
 
-export const Content: React.FC<ContentProps> = ({ hasImage = false, dynamicHeight = false, children, ...rest }) => {
+export const Content = ({ hasImage = false, dynamicHeight = false, children, ...rest }: ContentProps) => {
   if (hasImage) {
     return (
       <Container hasImage dynamicHeight={dynamicHeight} {...rest}>

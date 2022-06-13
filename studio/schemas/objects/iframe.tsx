@@ -100,7 +100,8 @@ export default {
       name: 'url',
       type: 'url',
       title: 'Frame URL',
-      description: 'Link to the content to be loaded inside the iframe.',
+      description:
+        'Link to the content to be loaded inside the iframe. Any URL must be whitelisted to load. Please make sure to verify that the iframe loads correctly before publishing, otherwise contact dev team for whitelisting.',
       fieldset: 'iframe',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {

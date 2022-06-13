@@ -1,4 +1,4 @@
-import { InstantSearch, Configure } from 'react-instantsearch-hooks'
+import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
 import { searchClient } from '../../lib/algolia'
 import { useRouter } from 'next/router'
 //import { history } from 'instantsearch.js/es/lib/routers/index.js'

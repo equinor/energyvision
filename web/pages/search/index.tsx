@@ -91,7 +91,7 @@ SearchPage.getLayout = (page: AppProps) => {
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={data?.intl?.messages}
       >
-        {page}
+        <>{page}</>
       </IntlProvider>
     </>
   )

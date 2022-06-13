@@ -1,4 +1,4 @@
-[![Build & deploy Storybook](https://github.com/equinor/energyvision/actions/workflows/storybook.yaml/badge.svg?branch=main)](https://github.com/equinor/energyvision/actions/workflows/storybook.yaml) [![Build & deploy main studio](https://github.com/equinor/energyvision/actions/workflows/global-studio.yaml/badge.svg)](https://github.com/equinor/energyvision/actions/workflows/global-studio.yaml) [![Lint, Test and Deploy only equinor.com](https://github.com/equinor/energyvision/actions/workflows/global-web.yaml/badge.svg)](https://github.com/equinor/energyvision/actions/workflows/global-web.yaml)
+[![Build & deploy Storybook](https://github.com/equinor/energyvision/actions/workflows/storybook.yaml/badge.svg?branch=main)](https://github.com/equinor/energyvision/actions/workflows/storybook.yaml)[![DEV - Build & Deploy equinor.com](https://github.com/equinor/energyvision/actions/workflows/DEV-web.yaml/badge.svg)](https://github.com/equinor/energyvision/actions/workflows/DEV-web.yaml)[![DEV - Build & deploy studio for equinor.com](https://github.com/equinor/energyvision/actions/workflows/DEV-studio.yml/badge.svg)](https://github.com/equinor/energyvision/actions/workflows/DEV-studio.yml) 
 
 # Energy Vision
 
@@ -24,11 +24,12 @@ This repository is organized into several folder. Please refer to README files i
 
 - `studio` - [Sanity](https://www.sanity.io/) powered content platform.
 - `web` - Web application using [Next.js](https://nextjs.org/) and React components developed in isolation with [Storybook](https://storybook.js.org/)
+- `search` - Azure functions for maintaining search indexes at [Algolia](https://www.algolia.com/apps/24ZMKUY18Z/dashboard)
 - `legacy` and `legacy-css` Old archived news content
 
 ## PNPM
 
-This project uses the PNPM package manager. All commands should be run from root. There’s an alias in the package-file to studio and web. So to run scripts from the package.json in studio:
+This project uses the PNPM package manager\*. All commands should be run from root. There’s an alias in the package-file to studio and web. So to run scripts from the package.json in studio:
 
     # Install dependencies
     pnpm web install
@@ -47,12 +48,15 @@ When adding arguments to scripts, such as `--force` or `--dev` to force a re-ins
     pnpm web install -- --force
     pnpm web add chalk -- --save-dev
 
-Since Sanity Studio doesn't work well with pnpm, we use yarn as package manager inside that folder instead. You can still run command from root using pnpm using the `studio` alias, but adding/updating/removing packages from the root may work unexpectedly.
+- PNPM is not perfect, and there has been some issues in the project.
+  Since Sanity Studio doesn't work well with pnpm, we use yarn as package manager inside that folder instead. You can still run command from root using pnpm using the `studio` alias, but adding/updating/removing packages from the root may work unexpectedly.
 
-    ```
-    # Start studio in dev mode
-    pnpm studio dev
-    ```
+      ```
+      # Start studio in dev mode
+      pnpm studio dev
+      ```
+
+For the Search indexers NPM is being used. The reason being that it was not possible (with PNPM v6 at least) to generate a package containing all dependencies from the search folder. So to work with dependencies for anything under `search`, use NPM in within that folder. PNPM from the root folder stil works for executing scripts though.
 
 ## Legacy packages
 

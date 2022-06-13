@@ -17,7 +17,7 @@ export const h3Heading = (value: PortableTextBlock) => {
 
   return (
     <StyledHeading level="h3" size="sm">
-      {children}
+      <>{children}</>
     </StyledHeading>
   )
 }

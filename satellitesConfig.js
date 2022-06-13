@@ -75,16 +75,46 @@ const defaultWebLanguage = {
  * @type {Record<string, string>}
  */
 const websiteDomains = {
-  global: 'https://www.equinor.com',
-  poland: 'https://www.equinor.pl',
-  brazil: 'https://www.equinor.com.br',
-  germany: 'https://www.equinor.de',
-  storage: 'https://www.equinorstorage.de',
-  argentina: 'https://www.equinor.ar',
-  equinorfunds: 'https://www.equinorfondene.no',
-  japan: 'https://www.equinor.jp',
-  'global-development': 'localhost:3000',
-  'global-test': 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com',
+  global: {
+    url: 'https://www.equinor.com',
+    meta: 'Equinor',
+  },
+  poland: {
+    url: 'https://www.equinor.pl',
+    meta: 'equinor.pl',
+  },
+  brazil: {
+    url: 'https://www.equinor.com.br',
+    meta: 'equinor.com.br',
+  },
+  germany: {
+    url: 'https://www.equinor.de',
+    meta: 'equinor.de',
+  },
+  storage: {
+    url: 'https://www.equinorstorage.de',
+    meta: 'equinorstorage.de',
+  },
+  argentina: {
+    url: 'https://www.equinor.ar',
+    meta: 'equinor.ar',
+  },
+  equinorfunds: {
+    url: 'https://www.equinorfondene.no',
+    meta: 'equinorfondene.no',
+  },
+  japan: {
+    url: 'https://www.equinor.jp',
+    meta: 'equinor.jp',
+  },
+  'global-development': {
+    url: 'localhost:3000',
+    meta: 'Equinor',
+  },
+  'global-test': {
+    url: 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com',
+    meta: 'Equinor',
+  },
 }
 
 /**
@@ -114,13 +144,13 @@ const getLanguages = (dataset) =>
 /**
  * @param {string} dataset
  */
-const getDomain = (dataset) => websiteDomains[dataset] || 'Domain not set'
+const getDomain = (dataset) => websiteDomains[dataset]?.url || 'Domain not set'
 
 /**
  * @param {string} dataset
  */
 const getMetaTitleSuffix = (dataset) => {
-  return dataset === 'global' ? 'Equinor' : (websiteDomains[dataset] || '').replace('https://', '').replace('www.', '')
+  return websiteDomains[dataset]?.meta || 'Equinor'
 }
 
 module.exports = {

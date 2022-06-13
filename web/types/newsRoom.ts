@@ -1,4 +1,4 @@
-import { InstantSearchServerState } from 'react-instantsearch-hooks'
+import { InstantSearchServerState } from 'react-instantsearch-hooks-web'
 import type { MenuData, FooterColumns, IntlData, ImageWithAlt } from './types'
 import { PortableTextBlock } from '@portabletext/types'
 

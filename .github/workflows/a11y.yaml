@@ -36,7 +36,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.0.0
         with:
-          version: '^6.32.11'
+          version: '^7.1.7'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -59,7 +59,7 @@ jobs:
           local-testing: stop
       - name: Publish results to Slack 💬
         id: publish-to-slack
-        uses: equinor/axe-slack-reporter@main
+        uses: equinor/axe-slack-reporter@v1.9
         with:
           fileName: e2e/output/Chrome_envis_news_report.json ## Temporary file name. Will use something more clever. Promise!
 

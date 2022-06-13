@@ -18,7 +18,7 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
         if (isEmpty(children)) return null
         return (
           <Heading size={size} level={level} className={className}>
-            {children}
+            <>{children}</>
           </Heading>
         )
       },

@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import { languages, defaultLanguage } from '../languages'
-import { getRoutePaths, getNewsPaths, getLocalNewsPaths, PathType } from '../common/helpers/getPaths'
-import { hasArchivedNews, hasLocalNews, hasNews } from '../common/helpers/datasetHelpers'
+import { getRoutePaths, getNewsPaths, getLocalNewsPaths, PathType, getNewsroomPaths } from '../common/helpers/getPaths'
+import { hasArchivedNews, hasLocalNews, hasNews, hasNewsroom } from '../common/helpers/datasetHelpers'
 import archivedNews from '../lib/archive/archivedNewsPaths.json'
 
 const Sitemap = () => {
@@ -57,10 +57,17 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
 
   const routeSlugs = await getRoutePaths(locales)
   const newsSlugs = hasNews ? await getNewsPaths(locales) : []
+  const newsroomSlugs = hasNewsroom ? await getNewsroomPaths() : []
   const localNewsSlugs = hasLocalNews ? await getLocalNewsPaths(locales) : []
   const archivedNewsSlugs = hasArchivedNews ? archivedNews : []
 
-  const allSlugs = [...routeSlugs, ...newsSlugs, ...localNewsSlugs, ...(archivedNewsSlugs as PathType[])]
+  const allSlugs = [
+    ...routeSlugs,
+    ...newsSlugs,
+    ...newsroomSlugs,
+    ...localNewsSlugs,
+    ...(archivedNewsSlugs as PathType[]),
+  ]
 
   if (isMultilanguage) {
     locale = String(query?.lang)

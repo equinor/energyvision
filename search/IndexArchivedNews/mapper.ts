@@ -33,6 +33,6 @@ export const mapData: MapDataType = (article) => {
     ],
     countryTags: [country.trim()].filter(identity),
     year,
-    thumbnailUrl: `https://envisstoragedev.blob.core.windows.net/equinor-archive-content${thumbnailURL}`,
+    thumbnailUrl: thumbnailURL ? `https://envisstoragedev.blob.core.windows.net/equinor-archive-content${thumbnailURL}` : null,
   } as NewsIndex
 }

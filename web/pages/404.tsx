@@ -59,10 +59,12 @@ Custom404.getLayout = (page: AppProps) => {
         messages={data?.intl?.messages}
       >
         <Grid>
-          <Header slugs={slugs} menuData={data?.menuData} />
-          <SkipNavContent />
-          {page}
-          <Footer footerData={data?.footerData} />
+          <>
+            <Header slugs={slugs} menuData={data?.menuData} />
+            <SkipNavContent />
+            {page}
+            <Footer footerData={data?.footerData} />
+          </>
         </Grid>
       </IntlProvider>
     </>
@@ -91,7 +93,7 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
         pageData,
       },
     },
-    revalidate: 1,
+    revalidate: 120,
   }
 }
 

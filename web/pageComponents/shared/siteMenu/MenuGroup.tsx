@@ -25,9 +25,9 @@ const StyledSubMenuGroupLink = styled(Link)`
   display: flex;
   padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
   @media (min-width: 1300px) {
-    /*  We want a slightly smaller padding here, em on purpose */
     font-size: var(--typeScale-1);
-    padding: var(--space-small) 0;
+    padding-left: var(--space-medium);
+    margin-left: calc(var(--space-medium) * -1);
   }
   :hover {
     background-color: var(--grey-10);

@@ -1,4 +1,4 @@
-import { useRefinementList, UseRefinementListProps } from 'react-instantsearch-hooks'
+import { useRefinementList, UseRefinementListProps } from 'react-instantsearch-hooks-web'
 import { List, Checkbox } from '@components'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
