@@ -1,5 +1,5 @@
 import { twitter } from '@equinor/eds-icons'
-import { ValidationContext } from '@sanity/types'
+import { Rule, ValidationContext } from '@sanity/types'
 import { EdsIcon } from '../../icons'
 import { Colors } from '../../helpers/ColorListValues'
 import CompactBlockEditor from '../components/CompactBlockEditor'
@@ -62,13 +62,13 @@ export default {
         ],
         layout: 'dropdown',
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'embedValue',
       type: 'string',
       description: 'Enter tweetid for embedding tweet or username of twitter profile for embedding timeline.',
-      validation: (Rule: any) =>
+      validation: (Rule: Rule) =>
         Rule.custom((embedValue: string, context: ValidationContext) => {
           const { parent } = context as { parent: TwitterEmbed }
           if (parent.embedType === 'tweet') return /^\d+$/.test(embedValue) ? true : 'Invalid tweetid'
