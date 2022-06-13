@@ -1,14 +1,12 @@
-name: PROD - Rollback web site to a previous version
+name: PROD - Rollback studio to a previous version
 on:
   workflow_dispatch:
     inputs:
       site:
-        description: 'Name of web to roll back'
+        description: 'Name of studio to roll back'
         required: true
         type: choice
         options:
-          - global
-          - secret
           - brazil
           - germany
           - argentina
@@ -38,7 +36,7 @@ jobs:
           set -o pipefail
           set -x
           TOKEN=$(curl -u nilsml:${{ secrets.GHCR_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
-          statusCode=$(curl --head --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/web-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
+          statusCode=$(curl --head --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/studio-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
           then
             echo "::set-output name=found::true"
@@ -72,13 +70,13 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/upgradeEnvironment.py web ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
+          python ci/upgradeEnvironment.py studio ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🔙 Rolling back web-${{ github.event.inputs.site }} in production to version ${{ github.event.inputs.image-sha }}"
+            git commit -am "🔙 Rolling back studio-${{ github.event.inputs.site }} in production to version ${{ github.event.inputs.image-sha }}"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -99,7 +97,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Deploy website on Radix 🚀
+      - name: Deploy studio on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master
         with:
