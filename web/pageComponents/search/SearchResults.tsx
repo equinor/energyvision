@@ -22,7 +22,9 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
   justify-content: center;
 `
-
+const TabText = styled.span`
+  font-size: var(--typeScale-05);
+`
 const { Tab, TabList, TabPanel, TabPanels } = Tabs
 
 // Sven: I don't understand how we can revieve this number, it's configured
@@ -96,31 +98,33 @@ const SearchResults = () => {
           <Tabs index={activeTab?.id || 0} onChange={handleTabChange}>
             <TabList>
               <Tab inverted>
-                {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
-                <FormattedMessage id="search_topics_tab" defaultMessage="Topics" />
-                <NumberOfHits />
-                {/*  </Index> */}
+                <TabText>
+                  <FormattedMessage id="search_topics_tab" defaultMessage="Topics" />
+                  <NumberOfHits />
+                </TabText>
               </Tab>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
-                  <FormattedMessage id="search_events_tab" defaultMessage="Events" />
-                  <NumberOfHits />
+                  <TabText>
+                    <FormattedMessage id="search_events_tab" defaultMessage="Events" />
+                    <NumberOfHits />
+                  </TabText>
                 </Index>
               </Tab>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
-                  <FormattedMessage id="search_news_tab" defaultMessage="News" />
-                  <NumberOfHits />
+                  <TabText>
+                    <FormattedMessage id="search_news_tab" defaultMessage="News" />
+                    <NumberOfHits />
+                  </TabText>
                 </Index>
               </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                {/*   <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}> */}
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits hitComponent={TopicHit} category="Topic" />
                 <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
-                {/*   </Index> */}
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
