@@ -89,7 +89,7 @@ jobs:
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
-      name: development
+      name: test
       url: https://studio-global-test-energyvision-test.radix.equinor.com/
     strategy:
       matrix:
