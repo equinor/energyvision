@@ -1,6 +1,6 @@
 FROM node:lts-alpine AS builder
 
-RUN npm install -g pnpm@^6.32.11
+RUN npm install -g pnpm@^7.2.1
 
 WORKDIR /opt/app
 
@@ -38,7 +38,7 @@ RUN pnpm web build
 
 FROM node:lts-alpine
 
-RUN npm install -g pnpm@^6.32.11
+RUN npm install -g pnpm@^7.2.1
 
 WORKDIR /opt/app
 
