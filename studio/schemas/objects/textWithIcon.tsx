@@ -3,6 +3,7 @@ import { configureBlockContent } from '../editors/blockContentType'
 import blocksToText from '../../helpers/blocksToText'
 import { puzzle_filled } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
+import imageWithAlt from './imageWithAlt'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -37,6 +38,7 @@ export default {
       type: 'imageWithAlt',
       options: {
         accept: 'image/svg+xml',
+        hotspot: false,
       },
     },
   ],
