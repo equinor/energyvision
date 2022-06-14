@@ -137,7 +137,7 @@ export default {
     {
       name: 'imageSize',
       title: 'Image size',
-      description: 'Select whether the image should be full size or have padding around it',
+      description: 'Select whether the image should be full size or have padding around it (SVG only)',
       type: 'string',
       fieldset: 'design',
       inputComponent: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
