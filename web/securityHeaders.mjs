@@ -6,7 +6,7 @@ import { dataset } from './languages.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const envs = ['dev', 'preprod', 'prod']
+const envs = ['dev', 'preprod', 'prod', 'test']
 const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
 const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
