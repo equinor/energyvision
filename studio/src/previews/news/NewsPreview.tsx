@@ -7,7 +7,7 @@ export default function NewsPreview(props: any) {
   const { document } = props
   const { displayed } = document
   if (!displayed?.slug?.current) {
-    return <div>The product needs a slug before it can be previewed.</div>
+    return <div style={{ padding: '1rem' }}>A slug is required in order to preview this news article. </div>
   }
   const locale = getLocaleFromName(displayed._lang)
 
