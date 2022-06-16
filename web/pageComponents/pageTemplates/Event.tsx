@@ -7,7 +7,7 @@ import IngressText from '../shared/portableText/IngressText'
 import { toPlainText } from '@portabletext/react'
 import ContactList from '../shared/ContactList'
 import TitleText from '../shared/portableText/TitleText'
-import RichText from '../shared/portableText/RichText'
+import EventText from '../shared/portableText/EventText'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../topicPages/Promotion'
 import AddToCalendar from '../topicPages/AddToCalendar'
@@ -138,7 +138,7 @@ const StyledContactList = styled(ContactList)`
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
-  const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
+  const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
   const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
@@ -198,12 +198,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             )}
             {content && (
               <Content>
-                <RichText value={content}></RichText>
+                <EventText value={content}></EventText>
               </Content>
             )}
           </ContentWrapper>
-
-          {iframe && <StyledBasicIFrame data={iframe} />}
 
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion

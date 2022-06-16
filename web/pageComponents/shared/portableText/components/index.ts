@@ -6,6 +6,7 @@ export * from './ExternalLink'
 export * from './InternalLink'
 export * from './BulletList'
 export * from './NumberedList'
+export * from './BasicIframe'
 
 export * from './news/Fact'
 export * from './news/FigureWithLayout'

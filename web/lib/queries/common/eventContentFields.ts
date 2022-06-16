@@ -13,8 +13,9 @@ export const eventContentFields = /* groq */ `
   content[]{
     ...,
     ${markDefs},
-  },
-  "iframe": iframe{
+    _type == "basicIframe" =>{
+      "type": _type,
+        "id": _key,
     title,
     frameTitle,
     url,
@@ -25,6 +26,8 @@ export const eventContentFields = /* groq */ `
       height,
     },
   },
+  },
+ 
   "promotedPeople": {
     "title": promotedPeopleTitle[]{
       ...,

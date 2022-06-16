@@ -8,6 +8,7 @@ import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { EventDate } from '../objects/eventDate'
+import basicIframe from '../objects/basicIframe'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -100,13 +101,8 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [blockContentType],
-    },
-    {
-      title: 'IFrame',
-      name: 'iframe',
-      type: 'basicIframe',
-      description: 'Use this to add an iframe to this event. This could for example be a livestream, video, or map.',
+      of: [blockContentType,
+       basicIframe],
     },
     {
       title: 'Title',
