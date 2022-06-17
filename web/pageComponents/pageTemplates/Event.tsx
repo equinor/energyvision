@@ -138,7 +138,7 @@ const StyledContactList = styled(ContactList)`
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title, slug } = data
-  const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
+  const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
   const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
@@ -202,7 +202,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               </Content>
             )}
           </ContentWrapper>
-
+          {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion
               data={{

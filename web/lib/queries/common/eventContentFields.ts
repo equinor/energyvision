@@ -15,19 +15,29 @@ export const eventContentFields = /* groq */ `
     ${markDefs},
     _type == "basicIframe" =>{
       "type": _type,
-        "id": _key,
-    title,
-    frameTitle,
-    url,
-    "cookiePolicy": coalesce(cookiePolicy, 'none'),
-    "designOptions": {
-      "aspectRatio": coalesce(aspectRatio, '16:9'),
-      "background": coalesce(background.title, 'none'),
-      height,
+      "id": _key,
+      title,
+      frameTitle,
+      url,
+      "cookiePolicy": coalesce(cookiePolicy, 'none'),
+      "designOptions": {
+        "aspectRatio": coalesce(aspectRatio, '16:9'),
+        "background": coalesce(background.title, 'none'),
+        height,
+      },
     },
   },
-  },
- 
+  "iframe": iframe{
+    title,
+      frameTitle,
+      url,
+      "cookiePolicy": coalesce(cookiePolicy, 'none'),
+      "designOptions": {
+        "aspectRatio": coalesce(aspectRatio, '16:9'),
+        "background": coalesce(background.title, 'none'),
+        height,
+      },
+    },
   "promotedPeople": {
     "title": promotedPeopleTitle[]{
       ...,

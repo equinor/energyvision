@@ -472,6 +472,7 @@ export type EventSchema = {
     eventDate: EventDateType
     ingress?: PortableTextBlock[]
     content?: PortableTextBlock[]
+    iframe?: IFrameData
     promotedPeople?: {
       title?: PortableTextBlock[]
       people?: PeopleCardData[]

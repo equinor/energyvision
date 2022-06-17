@@ -38,6 +38,11 @@ export default {
   title: 'Event',
   name: 'event',
   i18n,
+  validation: (Rule:Rule) => Rule.custom((fields:any) => {
+    if (fields.iframe!= null ) return "IFrame is deprecated. Please insert iframe inside the content field."
+    return true
+  }).warning(),
+
   fieldsets: [
     {
       title: 'SEO & metadata',
@@ -103,6 +108,12 @@ export default {
       type: 'array',
       of: [blockContentType,
        basicIframe],
+    },
+    {
+      title: 'IFrame (Deprecated)',
+      name: 'iframe',
+      type: 'basicIframe',
+      description: 'Iframe is deprecated on event page. You can insert iframe directly in to the content field above.',
     },
     {
       title: 'Title',

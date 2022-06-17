@@ -9,9 +9,9 @@ type IframeRenderer = {
   _type: string
 } & IFrameData
 
-const StyledIFrame = styled(IFrame)`
-  padding: 0px;
-  background: red;
+const Container = styled.div`
+  margin: var(--space-xxLarge) auto;
+  clear: both;
 `
 type BlockProps = {
   isInline: boolean
@@ -27,13 +27,15 @@ export const BasicIframe = (iframe: BlockProps) => {
   }
 
   return (
-    <IFrame
-      frameTitle={data.frameTitle}
-      url={data.url}
-      cookiePolicy={data.cookiePolicy}
-      aspectRatio={data.designOptions.aspectRatio}
-      height={data.designOptions.height}
-      hasSectionTitle={!!data.title}
-    />
+    <Container>
+      <IFrame
+        frameTitle={data.frameTitle}
+        url={data.url}
+        cookiePolicy={data.cookiePolicy}
+        aspectRatio={data.designOptions.aspectRatio}
+        height={data.designOptions.height}
+        hasSectionTitle={!!data.title}
+      />
+    </Container>
   )
 }
