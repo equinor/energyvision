@@ -5,6 +5,7 @@ import { TextArea, Label, Box } from '@sanity/ui'
 // eslint-disable-next-line import/no-unresolved
 import PatchEvent, { set } from 'part:@sanity/form-builder/patch-event'
 import { SchemaType } from '../../types'
+import { Rule } from '@sanity/types'
 //const createPatchFrom = (value) => PatchEvent.from(value === '' ? unset() : set(value))
 
 type TextAreaWithCharsProps = {
@@ -21,8 +22,8 @@ const TextAreaWithChars = forwardRef<HTMLTextAreaElement, TextAreaWithCharsProps
     const length = value.split('').length
 
     const handleChange = useCallback(
-      (event) => {
-        onChange(PatchEvent.from(set(event.target.value)))
+      (event: React.FormEvent<HTMLTextAreaElement>) => {
+        onChange(PatchEvent.from(set((event.target as HTMLTextAreaElement).value)))
       },
       [onChange],
     )
@@ -44,7 +45,7 @@ export default {
   title: 'Fields for title and description meta',
   name: 'titleAndMeta',
   type: 'object',
-  validation: (Rule: any) => [Rule.required().warning(`Please pay attention to SEO`)],
+  validation: (Rule: Rule) => [Rule.required().warning('Please pay attention to SEO')],
   fields: [
     {
       name: 'documentTitle',
@@ -60,7 +61,7 @@ export default {
     {
       name: 'metaDescription',
       title: 'Meta description',
-      validation: (Rule: any) => [
+      validation: (Rule: Rule) => [
         Rule.required().warning('Meta description is important for SEO'),
         Rule.max(160).warning('Google recommends max. 160 chars'),
       ],
