@@ -72,6 +72,7 @@ export default function Page({ data, preview }: any) {
     case 'news':
     case 'localNews':
       return <NewsPage data={{ news: pageData, latestNews: data.pageData?.latestNews }} />
+    case 'magazine':
     default:
       return <TopicPage data={pageData} />
   }

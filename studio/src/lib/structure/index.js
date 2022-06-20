@@ -8,6 +8,7 @@ import { Homepage } from './items/Homepage'
 import { AssetLibrary } from './items/AssetLibrary'
 import { Misc } from './items/Misc'
 import { TopicContent } from './items/TopicContent'
+import { Magazine } from './items/Magazine'
 import { Routes } from './items/Routes'
 import { Settings } from './items/Settings'
 import S from '@sanity/desk-tool/structure-builder'
@@ -25,6 +26,7 @@ const ADMIN_ITEMS = [
   TopicContent,
   LandingPage,
   Event,
+  Magazine,
   Misc,
   S.divider(),
   Homepage,
@@ -38,7 +40,16 @@ const ADMIN_ITEMS = [
   Settings,
 ].filter((e) => e)
 
-const SUB_EDITOR_ITEMS = [News, LocalNews, TopicContent, LandingPage, Event, S.divider(), AssetLibrary].filter((e) => e)
+const SUB_EDITOR_ITEMS = [
+  News,
+  LocalNews,
+  TopicContent,
+  LandingPage,
+  Magazine,
+  Event,
+  S.divider(),
+  AssetLibrary,
+].filter((e) => e)
 
 const LOCAL_NEWS_EDITOR_ITEMS = [LocalNews].filter((e) => e)
 
