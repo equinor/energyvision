@@ -20,9 +20,9 @@ export const getAccessToken = (): string | false => {
 
   const tokenData = JSON.parse(accessToken)
 
-  const now = new Date().getTime()
+  const now = Math.floor(new Date().getTime() / 1000.0)
 
-  if (tokenData.expires <= now) {
+  if (parseInt(tokenData.expires) <= now) {
     localStorage.removeItem('FotowareToken')
     return false
   }
@@ -31,11 +31,11 @@ export const getAccessToken = (): string | false => {
 }
 
 export const storeAccessToken = (data: any): void => {
-  const now = new Date().getTime()
+  const now = Math.floor(new Date().getTime() / 1000.0)
 
   const tokenData = {
     access_token: data.access_token,
-    expires: now + data.expires_in,
+    expires: now + parseInt(data.expires_in),
   }
 
   localStorage.setItem('FotowareToken', JSON.stringify(tokenData))
