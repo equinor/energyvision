@@ -17,7 +17,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
     return () => {
       if (widget.current != undefined) widget.current.destroy()
     }
-  }, [container])
+  }, [container, doneCallback, errorCallback])
 
   return <div ref={container} className="frc-captcha" data-sitekey="FCMJCLB7MR20RMO6" />
 }
