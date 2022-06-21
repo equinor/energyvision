@@ -91,10 +91,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [])
 
   useEffect(() => {
-    const requestURL = getAuthURL(requestState)
+    const authURL = getAuthURL(requestState)
 
-    if (!accessToken && container && requestURL) {
-      newWindow.current = window.open(requestURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
+    if (!accessToken && container && authURL) {
+      newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
 
       if (newWindow.current) {
         newWindow.current.document.body.appendChild(container)
