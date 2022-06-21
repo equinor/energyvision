@@ -34,6 +34,7 @@ const headerCellContentType = configureBlockContent({
   externalLink: false,
   attachment: false,
   lists: false,
+  smallText: false,
 })
 /* const tableCellContentType = configureBlockContent({
   h1: false,

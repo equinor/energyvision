@@ -2,8 +2,9 @@
 import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
-import { hasArchivedNews, isGlobal } from '../common/helpers/datasetHelpers'
+import { hasArchivedNews, hasMagazine, isGlobal } from '../common/helpers/datasetHelpers'
 import { getDocumentBySlug } from '../common/helpers/getPaths'
+import archivedNews from '../lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301
 const TEMPORARY_REDIRECT = 302
@@ -47,7 +48,11 @@ export async function middleware(request: NextRequest) {
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
   if (hasArchivedNews && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
     const existsInSanity = await pathExistsInSanity(pathname, isPreview)
-    if (!existsInSanity) return NextResponse.redirect(`${origin}${pathname.replace('news', 'news/archive')}`)
+    if (!existsInSanity) {
+      const archivedPath = pathname.replace('news', 'news/archive')
+      const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
+      if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`)
+    }
   }
 
   // Redirect to the same url lowercased if necessary
@@ -69,7 +74,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check if has /magazine/ in the url and redirect to a temporary landing page if so
-  if (pathname.includes('/magazine/') && isGlobal) {
+  if (pathname.includes('/magazine/') && isGlobal && !hasMagazine) {
     return NextResponse.redirect(`${origin}/magazine`, TEMPORARY_REDIRECT)
   }
 

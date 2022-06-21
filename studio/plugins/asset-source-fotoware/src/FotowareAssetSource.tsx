@@ -5,62 +5,83 @@ import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 import { uuid } from '@sanity/uuid'
+import { getAuthURL, storeAccessToken, getAccessToken } from './utils'
 import type { FWAsset } from './types'
 
-const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_URI
+const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
 
 const Content = styled.div`
   margin: 2em;
 `
 
-const getRequestURL = () => {
-  if (!CLIENT_ID || !TENANT_URL || !REDIRECT_URI) {
-    console.warn('Required Fotoware .env variables are not defined. Make sure they are set in the .env file(s)')
-    return false
-  }
-
-  const state = uuid()
-
-  return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&state=${state}`
-}
+const StyledIframe = styled.iframe`
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 70vh;
+  border: none;
+`
 
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
 
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
+  const [requestState, setRequestState] = useState<string>(uuid())
+  const [accessToken, setAccessToken] = useState<string | false>(getAccessToken())
+
   const newWindow = useRef<Window | null>(null)
 
-  const requestURL = getRequestURL()
-
-  // TODO: handle close/cancel event
-  // https://learn.fotoware.com/Integrations_and_APIs/01_Creating_Integrations_using_Embeddable_Widgets/Using_the_widgets
-  const handleFotowareEvent = useCallback(
+  // Login & store access token
+  const handleAuthEvent = useCallback(
     (event: any) => {
-      if (!event || !event.data || event.origin !== TENANT_URL) return false
+      if (!newWindow.current || !event || !event.data) return false
 
-      const data = JSON.parse(event.data)
-      console.log('Fotoware data:', data)
+      if (event.origin !== REDIRECT_ORIGIN) {
+        console.log('Fotoware: invalid event origin')
+        return false
+      }
 
-      if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
+      if (event.data.state !== requestState) {
+        console.log('Fotoware: redirect state did not match request state')
+        return false
+      }
+
+      storeAccessToken(event.data)
+      setAccessToken(event.data.access_token)
+      newWindow.current.close()
+    },
+    [requestState],
+  )
+
+  const handleSelectEvent = useCallback(
+    (event: any) => {
+      if (!event || !event.data) return false
+      console.log('Fotoware: event received', event)
+
+      if (event.origin !== TENANT_URL) {
+        console.log('Fotoware: invalid event origin', event.origin)
+        return false
+      }
+
+      // if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
 
       // https://learn.fotoware.com/Integrations_and_APIs/001_The_FotoWare_API/FotoWare_API_Overview/Asset_representation
-      const asset = data.asset as FWAsset
+      // const asset = data.asset as FWAsset
 
-      onSelect([
-        {
-          kind: 'url',
-          value: asset.href,
-          assetDocumentProps: {
-            originalFileName: asset.filename,
-            source: {
-              id: asset.uniqueid,
-              name: 'fotoware',
-            },
-          },
-        },
-      ])
+      // onSelect([
+      //   {
+      //     kind: 'url',
+      //     value: asset.href,
+      //     assetDocumentProps: {
+      //       originalFileName: asset.filename,
+      //       source: {
+      //         id: asset.uniqueid,
+      //         name: 'fotoware',
+      //       },
+      //     },
+      //   },
+      // ])
     },
     [onSelect],
   )
@@ -70,41 +91,40 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [])
 
   useEffect(() => {
-    if (container && requestURL) {
+    const requestURL = getAuthURL(requestState)
+
+    if (!accessToken && container && requestURL) {
       newWindow.current = window.open(requestURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
 
       if (newWindow.current) {
         newWindow.current.document.body.appendChild(container)
-        window.addEventListener('message', handleFotowareEvent)
+        window.addEventListener('message', handleAuthEvent)
       }
 
-      const currentWindow = newWindow.current
-
       return () => {
-        window.removeEventListener('message', handleFotowareEvent)
-
-        if (currentWindow) {
-          currentWindow.close()
+        window.removeEventListener('message', handleAuthEvent)
+        if (newWindow.current) {
+          newWindow.current.close()
         }
       }
     }
-  }, [container, handleFotowareEvent, requestURL])
+  }, [container, requestState, handleAuthEvent, accessToken])
 
   return (
     <Dialog id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
-      {container && createPortal(props.children, container)}
+      {container && !accessToken && createPortal(props.children, container)}
 
-      {requestURL ? (
+      {accessToken ? (
         <Content>
-          <p>Select an image from Fotoware in the popup window.</p>
-          <p>Once selected, the upload process should start automatically.</p>
+          <StyledIframe
+            src={`${TENANT_URL}/fotoweb/widgets/selection#access_token=${accessToken}`}
+            title="Fotoware"
+            frameBorder="0"
+          ></StyledIframe>
         </Content>
       ) : (
         <Content>
-          <p>
-            No Fotoware source URL found. Please define the URL and path in the enviromental variables to load the
-            iframe.
-          </p>
+          <p>Authentication required, please login to Fotoware using the popup window.</p>
         </Content>
       )}
     </Dialog>

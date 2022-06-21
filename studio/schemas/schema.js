@@ -10,6 +10,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type'
 // Document types
 import news from './documents/news'
 import page from './documents/page'
+import magazine from './documents/magazine'
 import redirect from './documents/redirect'
 import externalRedirect from './documents/externalRedirect'
 import landingPage from './documents/landingPage'
@@ -103,6 +104,7 @@ const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = HAS_FORMS ? [form] : []
 const RemainingSchemas = [
   page,
+  magazine,
   ...routeSchemas,
   ...routeHomepageSchemas,
   pageNotFound,

@@ -21,6 +21,7 @@ const FANCY_MENU = [...GLOBAL]
 /* LANDING_PAGE requires FANCY_MENU to work */
 const LANDING_PAGE = [...GLOBAL]
 const TWITTER_FEED = [...GLOBAL_TEST, 'germany']
+const MAGAZINE = [...GLOBAL_TEST]
 
 export const HAS_NEWS = NEWS.includes(dataset)
 export const HAS_NEWSROOM = NEWSROOM.includes(dataset)
@@ -32,3 +33,4 @@ export const HAS_FORMS = FORMS.includes(dataset)
 export const HAS_FANCY_MENU = FANCY_MENU.includes(dataset)
 export const HAS_LANDING_PAGE = HAS_FANCY_MENU && LANDING_PAGE.includes(dataset)
 export const HAS_TWITTER_FEED = TWITTER_FEED.includes(dataset)
+export const HAS_MAGAZINE = MAGAZINE.includes(dataset)

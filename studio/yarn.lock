@@ -1797,6 +1797,11 @@
   resolved "https://registry.yarnpkg.com/@sanity/icons/-/icons-1.2.8.tgz#7d899a83104cb13c434a02f1e73e981148980c63"
   integrity sha512-WkFb1HGxzXQa+d7ETxIU5KF6TBok9RmbGPdS3H0rLJy302bjIEtUevDA3V6Lxu6j3oyVCOFj/Te5iaoTPqgSqw==
 
+"@sanity/icons@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@sanity/icons/-/icons-1.3.1.tgz#fea796f40ac3ed1f0c10624b0412e5cc37c8ce77"
+  integrity sha512-bK82ifbPLCAF10wx5xlq8b3irnZJyG/L1eNQcEjdBH+ztgOcylsdShzL2IlFETb91YdoEDcPGQlbS5iNUH2mcg==
+
 "@sanity/image-url@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@sanity/image-url/-/image-url-1.0.1.tgz#960d649b2f4396da0adb31cf94503c929495cea0"
@@ -2056,6 +2061,22 @@
     react-popper "^2.2.5"
     react-refractor "^2.1.5"
 
+"@sanity/ui@^0.37.12":
+  version "0.37.12"
+  resolved "https://registry.yarnpkg.com/@sanity/ui/-/ui-0.37.12.tgz#9b8fb197a988f5914b59d62559679665f26a5904"
+  integrity sha512-TWsNnJsG/DETZyc0EqxOjxKJKaTQttDVz5i27LJkNpYv+f/G/ABuO/voroFffgkjA3jf/VZiz8VY4O5AdXsOLQ==
+  dependencies:
+    "@juggle/resize-observer" "^3.3.1"
+    "@popperjs/core" "^2.11.5"
+    "@reach/auto-id" "^0.16.0"
+    "@sanity/color" "^2.1.11"
+    "@sanity/icons" "^1.3.1"
+    framer-motion "6.3.0"
+    popper-max-size-modifier "^0.2.0"
+    react-is "^17.0.2"
+    react-popper "^2.2.5"
+    react-refractor "^2.1.7"
+
 "@sanity/ui@^0.37.5":
   version "0.37.11"
   resolved "https://registry.yarnpkg.com/@sanity/ui/-/ui-0.37.11.tgz#4e8d8327f5b126471bdb0f11931d35ac10ac0f06"
@@ -2072,7 +2093,7 @@
     react-popper "^2.2.5"
     react-refractor "^2.1.7"
 
-"@sanity/ui@^0.37.8", "@sanity/ui@^0.37.9":
+"@sanity/ui@^0.37.9":
   version "0.37.9"
   resolved "https://registry.npmjs.org/@sanity/ui/-/ui-0.37.9.tgz#ab2fc9c06f856f38403cd364628ff26d8ff00f77"
   integrity sha512-Gyj7tC/0jKLYwJY/s1I7pU6fhzgP/jB7u2Xi20ZxLukWUioS95ccZ1bRcOBNk4aBqmroRs9IPT97fsRiiFhe2Q==

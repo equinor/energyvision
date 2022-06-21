@@ -21,3 +21,5 @@ export const hasArchivedNews =
   dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV || dataset === EQUINOR_COM_TEST
 
 export const hasNewsroom = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV || dataset === EQUINOR_COM_TEST
+
+export const hasMagazine = dataset === EQUINOR_COM_DEV || dataset === EQUINOR_COM_TEST

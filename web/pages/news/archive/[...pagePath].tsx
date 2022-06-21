@@ -21,6 +21,7 @@ import { SkipNavContent } from '@reach/skip-nav'
 import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
+import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
 
 import type { MenuData, SimpleMenuData } from '../../../types/types'
 import { FormattedMessage } from 'react-intl'
@@ -175,6 +176,9 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
 
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
+
+  const existsInArchive = archivedNews.some((e) => e.slug === `/news/archive/${pagePath}`)
+  if (!existsInArchive) return { notFound: true }
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
   const pageData = response ? await parseResponse(response) : false

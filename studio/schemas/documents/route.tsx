@@ -3,7 +3,7 @@ import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
-import { HAS_EVENT, HAS_LANDING_PAGE, HAS_NEWSROOM } from '../../src/lib/datasetHelpers'
+import { HAS_EVENT, HAS_MAGAZINE, HAS_LANDING_PAGE, HAS_NEWSROOM } from '../../src/lib/datasetHelpers'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -42,6 +42,9 @@ export default (isoCode: string, title: string) => {
           HAS_NEWSROOM && {
             type: 'newsroom',
           },
+          HAS_MAGAZINE && {
+            type: 'magazine',
+          },
         ].filter((e) => e),
         options: {
           filter: '_lang == $lang',
@@ -69,8 +72,7 @@ export default (isoCode: string, title: string) => {
         type: 'string',
 
         placeholder: 'For example "Experienced professionals"',
-        description:
-          'The unique part of the URL for this topic page. Should probably be something like the page title.',
+        description: 'The unique part of the URL for this page. Should probably be something like the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
       },

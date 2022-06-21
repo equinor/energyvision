@@ -11,9 +11,9 @@ const StyledLogoLink = styled.a<LogoLinkProps>`
   display: flex;
   align-items: center;
   height: 100%;
-
+  /* We add the focus ring manually for keyboard users */
+  outline: none;
   &[data-focus-visible-added]:focus {
-    outline: none;
     ${outlineTemplate(outline)}
 
     ${({ inverted }) =>
