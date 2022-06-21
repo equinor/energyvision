@@ -319,7 +319,8 @@ const CareerFairForm = () => {
               doneCallback={() => {
                 setSubmitButtonEnabled(true)
               }}
-              errorCallback={() => {
+              errorCallback={(error: any) => {
+                console.error('FriendlyCaptcha encountered an error', error)
                 setSubmitButtonEnabled(true)
               }}
             />
