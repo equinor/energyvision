@@ -102,11 +102,15 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       }
 
       return () => {
-        window.removeEventListener('message', handleAuthEvent)
         if (newWindow.current) {
+          window.removeEventListener('message', handleAuthEvent)
           newWindow.current.close()
         }
       }
+    }
+
+    if (accessToken && newWindow.current) {
+      newWindow.current.close()
     }
   }, [container, requestState, handleAuthEvent, accessToken])
 
