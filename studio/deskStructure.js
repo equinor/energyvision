@@ -23,29 +23,10 @@ export const getDefaultDocumentNode = (props) => {
     return S.document().views([S.view.form(), S.view.component(PagePreview).title('Preview')])
   } else if (schemaType === 'newsroom') {
     return S.document().views([S.view.form(), S.view.component(NewsroomPreview).title('Preview')])
-  } else if (schemaType === 'event') {
+  } else if (['page', 'event', 'magazine'].includes(schemaType)) {
     return S.document().views([
       S.view.form(),
       S.view.component(PagePreview).title('Preview'),
-      S.view
-        .component(DocumentsPane)
-        .options({
-          query: `*[!(_id in path("drafts.**")) && references($id) && _type match "route_*"]`,
-          params: { id: `_id` },
-          useDraft: false,
-        })
-        .title('Connected routes'),
-    ])
-  } else if (schemaType === 'page') {
-    return S.document().views([
-      S.view.form(),
-      S.view.component(PagePreview).title('Preview'),
-      /* S.view
-        .component(Iframe)
-        .options({
-          url: (doc) => resolveProductionUrl(doc),
-        })
-        .title('Preview'), */
       S.view
         .component(DocumentsPane)
         .options({
