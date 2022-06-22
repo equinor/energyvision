@@ -31,6 +31,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [accessToken, setAccessToken] = useState<string | false>(getAccessToken())
 
   const newWindow = useRef<Window | null>(null)
+  const iframeRef = useRef(null)
 
   // Login & store access token
   const handleAuthEvent = useCallback(
@@ -69,24 +70,26 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         return false
       }
 
-      // if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
+      const { data } = event
+
+      if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
 
       // https://learn.fotoware.com/Integrations_and_APIs/001_The_FotoWare_API/FotoWare_API_Overview/Asset_representation
-      // const asset = data.asset as FWAsset
+      const asset = data.asset as FWAsset
 
-      // onSelect([
-      //   {
-      //     kind: 'url',
-      //     value: asset.href,
-      //     assetDocumentProps: {
-      //       originalFileName: asset.filename,
-      //       source: {
-      //         id: asset.uniqueid,
-      //         name: 'fotoware',
-      //       },
-      //     },
-      //   },
-      // ])
+      onSelect([
+        {
+          kind: 'url',
+          value: asset.href,
+          assetDocumentProps: {
+            originalFileName: asset.filename,
+            source: {
+              id: asset.uniqueid,
+              name: 'fotoware',
+            },
+          },
+        },
+      ])
     },
     [onSelect],
   )
@@ -94,6 +97,16 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   useEffect(() => {
     setContainer(document.createElement('div'))
   }, [])
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      window.addEventListener('message', handleSelectEvent)
+    }
+
+    return () => {
+      window.removeEventListener('message', handleSelectEvent)
+    }
+  }, [iframeRef, handleSelectEvent])
 
   useEffect(() => {
     const authURL = getAuthURL(requestState)
@@ -129,6 +142,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
             src={`${TENANT_URL}/fotoweb/widgets/selection#access_token=${accessToken}`}
             title="Fotoware"
             frameBorder="0"
+            ref={iframeRef}
           ></StyledIframe>
         </Content>
       ) : (
