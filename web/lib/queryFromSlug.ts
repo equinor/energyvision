@@ -48,10 +48,6 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
       ? [documentID, documentID.replace('drafts.', '')]
       : [documentID, `drafts.${documentID}`]
 
-    // console.log(publishedAndDraftIds)
-    /**
-     * @TODO Fix preview for news
-     */
     return {
       queryParams: {
         id: publishedAndDraftIds,

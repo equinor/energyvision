@@ -23,18 +23,23 @@ export const pageQuery = /* groq */ `
     },
     "heroImage": content->heroFigure,
     "template": content->_type,
-     content->_type == "landingPage"=>{
+     content->_type == "landingPage" => {
         ${landingPageContentFields}
     },
-    content->_type == "page"=>{
-      "content": content->content[]{
+    content->_type == "page" => {
+      "content": content->content[] {
           ${pageContentFields}
       },
     },
-    content->_type == "event"=>{
+    content->_type == "event" => {
       "content": content->{
         ${eventContentFields}
       }
-    }
+    },
+    content->_type == "magazine" => {
+      "content": content->content[] {
+          ${pageContentFields}
+      },
+    },
   }
 `

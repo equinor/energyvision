@@ -18,7 +18,7 @@ import { eventContentFields } from './common/eventContentFields'
   }
 ` */
 
-export const contentQueryById = /* groq */ ` 
+export const contentQueryById = /* groq */ `
   *[_id in $id] {
     _id,
     "title": title,
@@ -29,18 +29,23 @@ export const contentQueryById = /* groq */ `
     },
     "heroImage": heroFigure,
     "template": _type,
-     _type == "landingPage"=>{
+     _type == "landingPage" => {
         ${landingPageById}
     },
-    _type == "page"=>{
+    _type == "page" => {
       "content": content[]{
           ${pageContentFields}
       },
     },
-    _type == "event"=>{
+    _type == "event" => {
       "content": {
         ${eventContentFields}
       }
-    }
+    },
+    _type == "magazine" => {
+      "content": content[]{
+          ${pageContentFields}
+      },
+    },
   }
 `
