@@ -139,7 +139,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       {accessToken ? (
         <Content>
           <StyledIframe
-            src={`${TENANT_URL}/fotoweb/widgets/selection#access_token=${accessToken}`}
+            src={`${TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`}
             title="Fotoware"
             frameBorder="0"
             ref={iframeRef}
