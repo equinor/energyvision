@@ -30,7 +30,13 @@ export const getAccessToken = (): string | false => {
   return tokenData.access_token
 }
 
-export const storeAccessToken = (data: any): void => {
+type FotowareAuthData = {
+  access_token: string
+  expires_in: string
+  state: string
+}
+
+export const storeAccessToken = (data: FotowareAuthData): void => {
   const now = Math.floor(new Date().getTime() / 1000.0)
 
   const tokenData = {
@@ -39,4 +45,11 @@ export const storeAccessToken = (data: any): void => {
   }
 
   localStorage.setItem('FotowareToken', JSON.stringify(tokenData))
+}
+
+export const checkAuthData = (data: any): boolean => {
+  return (
+    typeof data === 'object' &&
+    ['access_token', 'expires_in', 'state'].every((key: string) => data[key] && typeof data[key] === 'string')
+  )
 }

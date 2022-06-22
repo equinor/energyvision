@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 import { uuid } from '@sanity/uuid'
-import { getAuthURL, storeAccessToken, getAccessToken } from './utils'
+import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData } from './utils'
 import type { FWAsset } from './types'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
@@ -38,12 +38,17 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (!newWindow.current || !event || !event.data) return false
 
       if (event.origin !== REDIRECT_ORIGIN) {
-        console.log('Fotoware: invalid event origin')
+        console.warn('Fotoware: invalid event origin')
+        return false
+      }
+
+      if (!checkAuthData(event.data)) {
+        console.warn('Fotoware: invalid event data')
         return false
       }
 
       if (event.data.state !== requestState) {
-        console.log('Fotoware: redirect state did not match request state')
+        console.warn('Fotoware: redirect state did not match request state')
         return false
       }
 
