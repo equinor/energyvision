@@ -13,7 +13,7 @@ import { footerQuery } from '../../../lib/queries/footer'
 import { getClient } from '../../../lib/sanity.server'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 import { getNameFromLocale } from '../../../lib/localization'
-import { defaultLanguage } from '../../../languages'
+import { languages, defaultLanguage } from '../../../languages'
 import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
@@ -143,12 +143,8 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   )
 }
 
-const fetchArchiveData = async (
-  pagePathArray: string[],
-  pagePath: string,
-  locale: string,
-): Promise<Response | false> => {
-  if (pagePath.includes('.')) return false
+const fetchArchiveData = async (pagePathArray: string[], pagePath: string, locale: string): Promise<Response> => {
+  if (pagePath.includes('.')) return Promise.reject()
 
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
 
@@ -171,6 +167,46 @@ const parseResponse = async (response: Response) => {
   }
 }
 
+type FallbackToAnotherLanguageType = Promise<
+  | {
+      redirect: {
+        permanent: boolean
+        destination: string
+      }
+    }
+  | {
+      notFound: true
+    }
+>
+
+const fallbackToAnotherLanguage = async (
+  pagePathArray: string[],
+  pagePath: string,
+  locale: string,
+): FallbackToAnotherLanguageType => {
+  const otherLanguages = languages.filter((lang) => lang.locale !== locale)
+  const otherLocales = otherLanguages.map((lang) => lang.locale)
+  const responses = await Promise.all(
+    otherLocales.map(async (locale) => ({
+      locale: locale,
+      res: await fetchArchiveData(pagePathArray, pagePath, locale),
+    })),
+  )
+  const response = responses && responses.find((e) => e.res.status === 200)
+  if (response) {
+    console.log(`Archived page does not exist with request locale: ${locale}`)
+    console.log(`Redirecting to existing path: /${response.locale}/news/archive/${pagePath}`)
+    return {
+      redirect: {
+        permanent: true,
+        destination: `/${response.locale}/news/archive/${pagePath}`,
+      },
+    }
+  } else {
+    return { notFound: true }
+  }
+}
+
 export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale = defaultLanguage.locale }) => {
   if (!hasArchivedNews) return { notFound: true }
 
@@ -181,8 +217,10 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   if (!existsInArchive) return { notFound: true }
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
-  const pageData = response ? await parseResponse(response) : false
 
+  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
+
+  const pageData = await parseResponse(response)
   const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
   const footerDataWithDrafts = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
