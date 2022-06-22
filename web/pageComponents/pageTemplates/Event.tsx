@@ -198,7 +198,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             )}
             {content && (
               <Content>
-                <EventText value={content}></EventText>
+                <EventText value={content} />
               </Content>
             )}
           </ContentWrapper>
