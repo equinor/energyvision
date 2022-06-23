@@ -1,3 +1,4 @@
+// https://learn.fotoware.com/Integrations_and_APIs/001_The_FotoWare_API/FotoWare_API_Overview/Asset_representation
 export type FWAsset = {
   href: string
   archiveHREF: string

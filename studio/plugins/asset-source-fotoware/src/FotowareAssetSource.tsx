@@ -29,6 +29,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const [requestState, setRequestState] = useState<string>(uuid())
   const [accessToken, setAccessToken] = useState<string | false>(getAccessToken())
+  const [asset, setAsset] = useState<FWAsset | null>(null)
+  const [iframeURL, setIframeURL] = useState<string | null>(null)
 
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
@@ -63,7 +65,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleSelectEvent = useCallback(
     (event: any) => {
       if (!event || !event.data) return false
-      console.log('Fotoware: event received', event)
 
       if (event.origin !== TENANT_URL) {
         console.log('Fotoware: invalid event origin', event.origin)
@@ -72,41 +73,57 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       const { data } = event
 
-      if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
+      if (data.event === 'assetSelected') {
+        setAsset(data.asset)
+      }
 
-      // https://learn.fotoware.com/Integrations_and_APIs/001_The_FotoWare_API/FotoWare_API_Overview/Asset_representation
-      const asset = data.asset as FWAsset
+      if (data.event === 'assetExported') {
+        const exportedImage = event.data.export.export
 
-      onSelect([
-        {
-          kind: 'url',
-          value: asset.href,
-          assetDocumentProps: {
-            originalFileName: asset.filename,
-            source: {
-              id: asset.uniqueid,
-              name: 'fotoware',
+        onSelect([
+          {
+            kind: 'url',
+            value: exportedImage.image.normal,
+            assetDocumentProps: {
+              originalFileName: asset?.filename,
+              source: {
+                id: asset?.uniqueid,
+                name: 'fotoware',
+                url: exportedImage.source,
+              },
             },
           },
-        },
-      ])
+        ])
+      }
+
+      if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
     },
-    [onSelect],
+    [onSelect, asset],
   )
 
   useEffect(() => {
-    setContainer(document.createElement('div'))
-  }, [])
+    if (accessToken) {
+      if (!asset || !asset.href) {
+        setIframeURL(`${TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`)
+      } else {
+        setIframeURL(
+          `${TENANT_URL}/fotoweb/widgets/publish?access_token=${accessToken}&i=${encodeURI(asset.href as string)}`,
+        )
+      }
+    }
+  }, [accessToken, asset])
 
   useEffect(() => {
-    if (iframeRef.current) {
-      window.addEventListener('message', handleSelectEvent)
-    }
+    window.addEventListener('message', handleSelectEvent)
+    window.addEventListener('message', handleAuthEvent)
+
+    setContainer(document.createElement('div'))
 
     return () => {
       window.removeEventListener('message', handleSelectEvent)
+      window.removeEventListener('message', handleAuthEvent)
     }
-  }, [iframeRef, handleSelectEvent])
+  }, [handleSelectEvent, handleAuthEvent])
 
   useEffect(() => {
     const authURL = getAuthURL(requestState)
@@ -116,12 +133,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       if (newWindow.current) {
         newWindow.current.document.body.appendChild(container)
-        window.addEventListener('message', handleAuthEvent)
       }
 
       return () => {
         if (newWindow.current) {
-          window.removeEventListener('message', handleAuthEvent)
           newWindow.current.close()
         }
       }
@@ -136,14 +151,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     <Dialog id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
       {container && !accessToken && createPortal(props.children, container)}
 
-      {accessToken ? (
+      {accessToken && iframeURL ? (
         <Content>
-          <StyledIframe
-            src={`${TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`}
-            title="Fotoware"
-            frameBorder="0"
-            ref={iframeRef}
-          ></StyledIframe>
+          <StyledIframe src={iframeURL} title="Fotoware" frameBorder="0" ref={iframeRef}></StyledIframe>
         </Content>
       ) : (
         <Content>
