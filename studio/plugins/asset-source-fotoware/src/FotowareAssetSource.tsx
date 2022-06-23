@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { uuid } from '@sanity/uuid'
 import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData } from './utils'
 import type { FWAsset } from './types'
+import { HAS_FOTOWARE } from '../../../src/lib/datasetHelpers'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
@@ -114,10 +115,12 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, asset])
 
   useEffect(() => {
-    window.addEventListener('message', handleSelectEvent)
-    window.addEventListener('message', handleAuthEvent)
+    if (HAS_FOTOWARE) {
+      window.addEventListener('message', handleSelectEvent)
+      window.addEventListener('message', handleAuthEvent)
 
-    setContainer(document.createElement('div'))
+      setContainer(document.createElement('div'))
+    }
 
     return () => {
       window.removeEventListener('message', handleSelectEvent)
@@ -128,7 +131,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   useEffect(() => {
     const authURL = getAuthURL(requestState)
 
-    if (!accessToken && container && authURL) {
+    if (!accessToken && container && authURL && HAS_FOTOWARE) {
       newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
 
       if (newWindow.current) {
@@ -149,16 +152,24 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   return (
     <Dialog id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
-      {container && !accessToken && createPortal(props.children, container)}
+      {!HAS_FOTOWARE && (
+        <Content>
+          <p>This feature is not yet available.</p>
+        </Content>
+      )}
 
-      {accessToken && iframeURL ? (
+      {HAS_FOTOWARE && container && !accessToken && createPortal(props.children, container)}
+
+      {HAS_FOTOWARE && accessToken && iframeURL ? (
         <Content>
           <StyledIframe src={iframeURL} title="Fotoware" frameBorder="0" ref={iframeRef}></StyledIframe>
         </Content>
       ) : (
-        <Content>
-          <p>Authentication required, please login to Fotoware using the popup window.</p>
-        </Content>
+        HAS_FOTOWARE && (
+          <Content>
+            <p>Authentication required, please login to Fotoware using the popup window.</p>
+          </Content>
+        )
       )}
     </Dialog>
   )
