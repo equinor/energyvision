@@ -1,32 +1,33 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { anchor } from '@equinor/eds-icons'
 import { Rule } from '@sanity/types'
+import { validateComponentAnchor } from '../validations/validateAnchorReference'
+import { EdsIcon } from '../../icons'
+import { Heading, Text, Box } from '@sanity/ui'
 import styled from 'styled-components'
-import { validateAnchorReference } from '../validations/validateAnchorReference'
-
-const StyledSpan = styled.span`
-  display: block;
-  margin-top: 0.3em;
-`
-
-export const AnchorComponentDescription = () => (
-  <>
-    <StyledSpan>Add an optional anchor reference that can be used to link directly to this component.</StyledSpan>
-    <StyledSpan>
-      Allowed characters are: letters, numbers, hyphens, and underscores. The # symbol is not needed.
-    </StyledSpan>
-  </>
-)
-
-// export const AnchorLinkDescription = () => (
-//   <>
-//     <StyledSpan>Optional: add the anchor reference of the component/section you want to link directly to.</StyledSpan>
-//     <StyledSpan>Results cannot be guaranteed for external URLs.</StyledSpan>
-//   </>
-// )
+import React from 'react'
 
 export type AnchorLink = {
   _type: 'anchorLink'
 }
+
+const StyledText = styled(Text)`
+  margin: 1em 0;
+`
+
+// eslint-disable-next-line react/display-name
+const Description = () => {
+  return (
+    <Box>
+      <Heading size={2}>How to use</Heading>
+      <StyledText>
+        Add this component before the component for which you want to have an anchor reference. The anchor reference
+        will be ignored when there is no component following it.
+      </StyledText>
+    </Box>
+  )
+}
+
 export default {
   title: 'Anchor Link',
   description: 'This component is to be used to display Id',
@@ -35,11 +36,29 @@ export default {
 
   fields: [
     {
-      name: 'anchorReferenceField',
-      title: 'Anchor reference',
+      name: 'description',
       type: 'string',
-      description: AnchorComponentDescription(),
-      validation: (Rule: Rule) => Rule.custom((value: string) => validateAnchorReference(value)),
+      inputComponent: Description,
+    },
+    {
+      name: 'anchorReference',
+      type: 'anchorReferenceField',
+      title: 'Anchor reference',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
     },
   ],
+  preview: {
+    select: {
+      anchorReference: 'anchorReference',
+    },
+    prepare({ anchorReference }: { anchorReference: string }) {
+      return {
+        title: anchorReference,
+        subtitle: `Anchor Link component`,
+        media: EdsIcon(anchor),
+      }
+    },
+  },
 }

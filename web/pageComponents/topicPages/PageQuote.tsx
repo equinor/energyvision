@@ -9,12 +9,11 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
-
-const PageQuote = ({ data }: { data: QuoteData }) => {
+const PageQuote = ({ data, anchor }: { data: QuoteData; anchor?: string }) => {
   const { designOptions } = data
   const { background } = designOptions
   return (
-    <BackgroundContainer background={background}>
+    <BackgroundContainer background={background} id={anchor}>
       <Container>
         <Quote data={data} />
       </Container>

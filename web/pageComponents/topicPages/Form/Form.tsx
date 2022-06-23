@@ -23,7 +23,7 @@ const ListStyled = styled.div`
   font-size: var(--typeScale-1);
 `
 
-const Form = ({ data }: { data: FormData }) => {
+const Form = ({ data, anchor }: { data: FormData; anchor?: string }) => {
   const { title, ingress, downloads } = data
   const variant = data.form
   const renderForm = (variant: string | undefined) => {
@@ -66,7 +66,7 @@ const Form = ({ data }: { data: FormData }) => {
     }
   }
   return (
-    <BackgroundContainer background="White">
+    <BackgroundContainer background="White" id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && <IngressText value={ingress}></IngressText>}

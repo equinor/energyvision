@@ -445,6 +445,12 @@ const pageContentFields = /* groq */ `
     },
   },
 
+  _type == "anchorLink" =>{
+    "type": _type,
+    "id": _key,
+    anchorReference
+  }
+
 `
 
 export default pageContentFields

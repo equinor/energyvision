@@ -10,7 +10,7 @@ const Container = styled.div`
   overflow-x: auto;
 `
 
-const CookieDeclaration = () => {
+const CookieDeclaration = ({ anchor }: { anchor?: string }) => {
   const router = useRouter()
   const placeholderRef = useRef<HTMLDivElement>(null)
   const language = router.locale == 'no' ? 'nb' : router.locale ? router.locale : 'en'
@@ -25,7 +25,7 @@ const CookieDeclaration = () => {
     }
   }, [language])
   return (
-    <BackgroundContainer background="White">
+    <BackgroundContainer background="White" id={anchor}>
       <Container id="cookie-declaration-wrapper" ref={placeholderRef}></Container>
     </BackgroundContainer>
   )

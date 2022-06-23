@@ -26,14 +26,14 @@ const StyledHeading = styled(TitleText)`
 
 type AccordionBlockProps = {
   data: AccordionData
+  anchor?: string
 }
 
-const AccordionBlock = ({ data }: AccordionBlockProps) => {
-  const { title, ingress, designOptions, accordion, id, anchor } = data
-
+const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
+  const { title, ingress, designOptions, accordion, id } = data
   const { background } = designOptions
   return (
-    <StyledTextBlockWrapper background={background} id={anchor}>
+    <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>
         {title && <StyledHeading value={title} />}
         {ingress && <IngressText value={ingress} />}

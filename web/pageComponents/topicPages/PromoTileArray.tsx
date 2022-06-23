@@ -33,11 +33,11 @@ const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
 `
 
-const PromoTileArray = ({ data }: { data: PromoTileArrayData }) => {
+const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
   if (!data.group) return null
 
   return (
-    <div className="background-none">
+    <div className="background-none" id={anchor}>
       <Container>
         {data.group.map((tile: PromoTileData) => {
           const { id, designOptions, image, title, action } = tile

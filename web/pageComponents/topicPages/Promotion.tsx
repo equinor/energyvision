@@ -26,14 +26,14 @@ const StyledHeading = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
 
-const Promotion = ({ data, ...rest }: { data: PromotionData }) => {
+const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: string }) => {
   const { title, ingress, content, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
 
   return (
-    <BackgroundContainer background={designOptions?.background}>
+    <BackgroundContainer background={designOptions?.background} id={anchor}>
       <Wrapper {...rest}>
         <Intro>
           {title && <StyledHeading value={title} level="h2" size="xl" />}

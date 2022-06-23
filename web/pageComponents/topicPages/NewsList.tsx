@@ -28,11 +28,11 @@ const Articles = styled.div`
   grid-column-gap: var(--column-gap);
 `
 
-const NewsList = ({ data, ...rest }: { data: NewsListData }) => {
+const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: string }) => {
   const { title, articles } = data
 
   return (
-    <Wrapper>
+    <Wrapper id={anchor}>
       {title && <StyledHeading value={title} level="h2" size="xl" />}
       <Articles {...rest}>
         {articles.map((article) => (

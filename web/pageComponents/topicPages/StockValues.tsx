@@ -80,7 +80,7 @@ const TimeDelay = styled.span`
 const ENDPOINT = `https://tools.eurolandir.com/tools/pricefeed/xmlirmultiiso5.aspx?companyid=9053`
 
 // @TODO: use correct datetime & formatting
-const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesData }) => {
+const StockValues = ({ data: { designOptions }, anchor, ...rest }: { data: StockValuesData; anchor?: string }) => {
   const { data, error } = useSWR(ENDPOINT, fetchData, { refreshInterval: 60000 })
 
   if (error) {
@@ -93,7 +93,7 @@ const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesDa
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest}>
+    <BackgroundContainer background={background} {...rest} id={anchor}>
       <Container>
         <Item>
           <p>

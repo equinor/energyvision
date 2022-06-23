@@ -14,6 +14,7 @@ const { Content, Media } = EnvisTeaser
 
 type TeaserProps = {
   data: TeaserData
+  anchor?: string
 }
 
 const StyledEnvisTeaser = styled(EnvisTeaser)`
@@ -69,13 +70,13 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
   )
 }
 
-const Teaser = ({ data }: TeaserProps) => {
+const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions } = data
   const { background, imageSize, imagePosition } = designOptions
 
   const isSvg = image?.extension === 'svg'
   return (
-    <BackgroundContainer background={background}>
+    <BackgroundContainer background={background} id={anchor}>
       <StyledEnvisTeaser imagePosition={imagePosition}>
         <Media
           size={isSvg && imageSize === 'small' ? 'small' : 'full'}
