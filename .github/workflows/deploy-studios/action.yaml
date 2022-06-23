@@ -22,6 +22,15 @@ inputs:
   brandmasterPluginSource:
     description: 'Sanity Studio Brandmaster Plugin Source'
     required: true
+  fotowareClientId:
+    description: 'Client ID for Fotoware integration'
+    required: true
+  fotowareTenantUrl:
+    description: 'Tenant URL for Fotoware application'
+    required: true
+  fotowareRedirectOrigin:
+    description: 'Redirect URL for Fotoware auth'
+    required: true
   environment:
     description: 'dev, preprod or prod'
     required: true
@@ -51,9 +60,9 @@ runs:
       id: checkout-specific-branch
       uses: actions/checkout@v3
       with:
-          repository: 'equinor/energyvision'
-          fetch-depth: 0
-          ref: "${{ steps.get-long-sha.outputs.sha }}"
+        repository: 'equinor/energyvision'
+        fetch-depth: 0
+        ref: '${{ steps.get-long-sha.outputs.sha }}'
     - uses: actions/setup-node@v2
       with:
         node-version: 16
@@ -84,6 +93,9 @@ runs:
           --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
           --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
           --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
+          --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
+          --build-arg ARG_FOTOWARE_TENANT_URL="${{ inputs.fotowareTenantUrl }}" \
+          --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \

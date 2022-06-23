@@ -2,7 +2,7 @@ name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["TEST - Build & deploy studio for global-test"]
+    workflows: ['TEST - Build & deploy studio for global-test']
     types:
       - completed
 jobs:
@@ -98,6 +98,9 @@ jobs:
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+          fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
+          fotowareTenantUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
+          fotowareRedirectOrigin: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
