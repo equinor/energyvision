@@ -15,6 +15,7 @@
     "@sanity/desk-tool",
     "color-list",
     "asset-source-brandmaster",
+    "asset-source-fotoware",
     "media",
     "@sanity/production-preview",
     "@sanity/document-internationalization"
