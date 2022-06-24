@@ -1,14 +1,18 @@
 export const HAS_ENV_VARS =
-  process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID && process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
+  process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID &&
+  process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL &&
+  process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN &&
+  process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL &&
+  process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY
 
 export const getAuthURL = (requestState: string): string | false => {
-  const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
-  const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-
-  if (!CLIENT_ID || !TENANT_URL) {
+  if (!HAS_ENV_VARS) {
     console.warn('Required Fotoware .env variables are not defined. Make sure they are set in the .env file(s)')
     return false
   }
+
+  const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
+  const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 
   return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}`
 }

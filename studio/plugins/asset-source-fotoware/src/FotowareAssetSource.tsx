@@ -3,26 +3,14 @@ import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'rea
 // @ts-ignore
 import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
-import styled from 'styled-components'
 import { uuid } from '@sanity/uuid'
-import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData, getExportURL } from './utils'
+import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData, getExportURL, HAS_ENV_VARS } from './utils'
+import { Content, StyledIframe, ErrorMessage } from './components'
 import type { FWAsset } from './types'
 import { HAS_FOTOWARE } from '../../../src/lib/datasetHelpers'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
-
-const Content = styled.div`
-  margin: 2em;
-`
-
-const StyledIframe = styled.iframe`
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 70vh;
-  border: none;
-`
 
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
@@ -161,30 +149,29 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     }
   }, [container, requestState, handleAuthEvent, accessToken])
 
+  if (!HAS_FOTOWARE || !HAS_ENV_VARS) {
+    const message = !HAS_FOTOWARE
+      ? 'This feature is not available.'
+      : 'The required enviroment variables are not defined'
+    return <ErrorMessage onClose={onClose} ref={ref} message={message} />
+  }
+
   return (
     <Dialog id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
-      {!HAS_FOTOWARE && (
-        <Content>
-          <p>This feature is not yet available.</p>
-        </Content>
-      )}
+      {container && !accessToken && createPortal(props.children, container)}
 
-      {HAS_FOTOWARE && container && !accessToken && createPortal(props.children, container)}
-
-      {HAS_FOTOWARE && accessToken && iframeURL && !loading ? (
+      {accessToken && iframeURL && !loading ? (
         <Content>
           <StyledIframe src={iframeURL} title="Fotoware" frameBorder="0" ref={iframeRef}></StyledIframe>
         </Content>
       ) : (
-        HAS_FOTOWARE && (
-          <Content>
-            {loading ? (
-              <p>Retrieving image...</p>
-            ) : (
-              <p>Authentication required, please login to Fotoware using the popup window.</p>
-            )}
-          </Content>
-        )
+        <Content>
+          {loading ? (
+            <p>Retrieving image...</p>
+          ) : (
+            <p>Authentication required, please login to Fotoware using the popup window.</p>
+          )}
+        </Content>
       )}
     </Dialog>
   )
