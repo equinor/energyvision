@@ -2,20 +2,21 @@ import { News as NewsStructure } from './items/News'
 import { LocalNews as LocalNewsStructure } from './items/LocalNews'
 import { LandingPage as LandingPageStructure } from './items/LandingPage'
 import { Event as EventStructure } from './items/Event'
+import { Magazine as MagazineStructure } from './items/Magazine'
 import { Menu } from './items/Menu'
 import { Footer } from './items/Footer'
 import { Homepage } from './items/Homepage'
 import { AssetLibrary } from './items/AssetLibrary'
 import { Misc } from './items/Misc'
 import { TopicContent } from './items/TopicContent'
-import { Magazine } from './items/Magazine'
 import { Routes } from './items/Routes'
 import { Settings } from './items/Settings'
 import S from '@sanity/desk-tool/structure-builder'
-import { HAS_EVENT, HAS_LANDING_PAGE, HAS_LOCAL_NEWS, HAS_NEWS } from '../datasetHelpers'
+import { HAS_EVENT, HAS_MAGAZINE, HAS_LANDING_PAGE, HAS_LOCAL_NEWS, HAS_NEWS } from '../datasetHelpers'
 import { getCurrentUserRoles } from '../userRoles'
 
 const News = HAS_NEWS && NewsStructure
+const Magazine = HAS_MAGAZINE && MagazineStructure
 const LocalNews = HAS_LOCAL_NEWS && LocalNewsStructure
 const LandingPage = HAS_LANDING_PAGE && LandingPageStructure
 const Event = HAS_EVENT && EventStructure
