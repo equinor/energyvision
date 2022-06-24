@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 import { uuid } from '@sanity/uuid'
-import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData } from './utils'
+import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData, getExportURL } from './utils'
 import type { FWAsset } from './types'
 import { HAS_FOTOWARE } from '../../../src/lib/datasetHelpers'
 
@@ -32,6 +32,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [accessToken, setAccessToken] = useState<string | false>(getAccessToken())
   const [asset, setAsset] = useState<FWAsset | null>(null)
   const [iframeURL, setIframeURL] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
@@ -81,20 +82,30 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (data.event === 'assetExported') {
         const exportedImage = event.data.export.export
 
-        onSelect([
-          {
-            kind: 'url',
-            value: exportedImage.image.normal,
-            assetDocumentProps: {
-              originalFileName: asset?.filename,
-              source: {
-                id: asset?.uniqueid,
-                name: 'fotoware',
-                url: exportedImage.source,
+        const getBase64 = async (uri: string, source: string) => {
+          const url = getExportURL(uri)
+          setLoading(true)
+
+          const response = await fetch(url)
+          const data = await response.json()
+
+          onSelect([
+            {
+              kind: 'base64',
+              value: data.image,
+              assetDocumentProps: {
+                originalFileName: asset?.filename || '',
+                source: {
+                  id: asset?.uniqueid || uri,
+                  name: 'fotoware',
+                  url: source,
+                },
               },
             },
-          },
-        ])
+          ])
+        }
+
+        getBase64(exportedImage.image.highCompression, exportedImage.source)
       }
 
       if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
@@ -160,14 +171,18 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       {HAS_FOTOWARE && container && !accessToken && createPortal(props.children, container)}
 
-      {HAS_FOTOWARE && accessToken && iframeURL ? (
+      {HAS_FOTOWARE && accessToken && iframeURL && !loading ? (
         <Content>
           <StyledIframe src={iframeURL} title="Fotoware" frameBorder="0" ref={iframeRef}></StyledIframe>
         </Content>
       ) : (
         HAS_FOTOWARE && (
           <Content>
-            <p>Authentication required, please login to Fotoware using the popup window.</p>
+            {loading ? (
+              <p>Retrieving image...</p>
+            ) : (
+              <p>Authentication required, please login to Fotoware using the popup window.</p>
+            )}
           </Content>
         )
       )}

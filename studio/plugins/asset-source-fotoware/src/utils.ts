@@ -53,3 +53,6 @@ export const checkAuthData = (data: any): boolean => {
     ['access_token', 'expires_in', 'state'].every((key: string) => data[key] && typeof data[key] === 'string')
   )
 }
+
+export const getExportURL = (uri: string): string =>
+  `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}&uri=${uri}`
