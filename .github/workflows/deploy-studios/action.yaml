@@ -31,6 +31,12 @@ inputs:
   fotowareRedirectOrigin:
     description: 'Redirect URL for Fotoware auth'
     required: true
+  fotowareAfExportUrl:
+    description: 'Azure Function img export URL'
+    required: true
+  fotowareAfExportKey:
+    description: 'Azure Function img export function key'
+    required: true
   environment:
     description: 'dev, preprod or prod'
     required: true
@@ -96,6 +102,8 @@ runs:
           --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
           --build-arg ARG_FOTOWARE_TENANT_URL="${{ inputs.fotowareTenantUrl }}" \
           --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
+          --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
+          --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
