@@ -67,12 +67,17 @@ export default {
     {
       name: 'embedValue',
       type: 'string',
-      description: 'Enter tweetid for embedding tweet or username of twitter profile for embedding timeline.',
+      description: 'Enter tweetid for embedding tweet or twitter handle (without @) for embedding timeline.',
       validation: (Rule: Rule) =>
         Rule.custom((embedValue: string, context: ValidationContext) => {
           const { parent } = context as { parent: TwitterEmbed }
           if (parent.embedType === 'tweet') return /^\d+$/.test(embedValue) ? true : 'Invalid tweetid'
-          else return embedValue?.length > 0 || embedValue != undefined ? true : 'Username is required'
+          else
+            return embedValue?.startsWith('@')
+              ? "Enter twitter handle without '@'"
+              : embedValue === undefined
+              ? 'Twitter handle is required'
+              : true
         }).error(),
     },
     {
