@@ -62,7 +62,7 @@ export default {
       title: 'Should distribute this magazine?',
       name: 'shouldDistributeMagazine',
       description:
-        'Enable this to distribute this magazine to subscribers. Magazine will be distributed once after it is published.',
+        'Enable this to distribute this magazine to subscribers. Magazine will be distributed once after its route is published.',
       type: 'boolean',
       initialValue: false,
     },
