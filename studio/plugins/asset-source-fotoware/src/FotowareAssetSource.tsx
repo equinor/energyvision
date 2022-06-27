@@ -61,7 +61,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     [requestState],
   )
 
-  const handleSelectEvent = useCallback(
+  const handleWidgetEvent = useCallback(
     (event: any) => {
       if (!event || !event.data) return false
 
@@ -126,17 +126,17 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   useEffect(() => {
     if (HAS_FOTOWARE) {
-      window.addEventListener('message', handleSelectEvent)
+      window.addEventListener('message', handleWidgetEvent)
       window.addEventListener('message', handleAuthEvent)
 
       setContainer(document.createElement('div'))
     }
 
     return () => {
-      window.removeEventListener('message', handleSelectEvent)
+      window.removeEventListener('message', handleWidgetEvent)
       window.removeEventListener('message', handleAuthEvent)
     }
-  }, [handleSelectEvent, handleAuthEvent])
+  }, [handleWidgetEvent, handleAuthEvent])
 
   useEffect(() => {
     const authURL = getAuthURL(requestState)
