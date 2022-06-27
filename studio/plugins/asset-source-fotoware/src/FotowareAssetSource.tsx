@@ -4,7 +4,16 @@ import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'rea
 import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
-import { getAuthURL, storeAccessToken, getAccessToken, checkAuthData, getExportURL, HAS_ENV_VARS } from './utils'
+import {
+  getAuthURL,
+  storeAccessToken,
+  getAccessToken,
+  checkAuthData,
+  getExportURL,
+  HAS_ENV_VARS,
+  getSelectionWidgetURL,
+  getExportWidgetURL,
+} from './utils'
 import { Content, StyledIframe, ErrorMessage } from './components'
 import type { FWAsset } from './types'
 import { HAS_FOTOWARE } from '../../../src/lib/datasetHelpers'
@@ -104,11 +113,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   useEffect(() => {
     if (accessToken) {
       if (!asset || !asset.href) {
-        setIframeURL(`${TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`)
+        setIframeURL(getSelectionWidgetURL(accessToken))
       } else {
-        setIframeURL(
-          `${TENANT_URL}/fotoweb/widgets/publish?access_token=${accessToken}&i=${encodeURI(asset.href as string)}`,
-        )
+        setIframeURL(getExportWidgetURL(accessToken, asset.href as string))
       }
     }
   }, [accessToken, asset])

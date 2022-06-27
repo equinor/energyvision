@@ -60,3 +60,14 @@ export const checkAuthData = (data: any): boolean => {
 
 export const getExportURL = (uri: string): string =>
   `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}&uri=${uri}`
+
+export const getSelectionWidgetURL = (accessToken: string) => {
+  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`
+}
+
+export const getExportWidgetURL = (accessToken: string, href: string) => {
+  const assetURI = encodeURI(href)
+  const params = `access_token=${accessToken}&i=${assetURI}&caption=false&action=false&behaviour=false&publication=false`
+
+  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/publish?${params}`
+}
