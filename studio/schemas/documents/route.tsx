@@ -1,9 +1,13 @@
 import { slugWithRef } from '../objects/slugWithRef'
-import { SchemaType } from '../../types'
+import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { HAS_EVENT, HAS_MAGAZINE, HAS_LANDING_PAGE, HAS_NEWSROOM } from '../../src/lib/datasetHelpers'
+// eslint-disable-next-line import/no-unresolved
+import sanityClient from 'part:@sanity/base/client'
+
+const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
 export default (isoCode: string, title: string) => {
   return {
@@ -27,7 +31,23 @@ export default (isoCode: string, title: string) => {
         title: 'Content',
         name: 'content',
         description: 'The content you want to appear at this path. Remember it needs to be published.',
-        validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+        validation: (Rule: Rule) => [
+          Rule.required(),
+          Rule.custom(async (value: Reference, context: ValidationContext) => {
+            const id = value?._ref
+            if (!id) return true
+            else {
+              const { document } = context
+              const isRouteADraft = document?._id.startsWith('drafts')
+              const query = `*[_type == 'magazine' && _id == $id][0]{shouldDistributeMagazine}`
+              const params = { id }
+              const shouldDistributeMagazine = await client.fetch(query, params)
+              return shouldDistributeMagazine && isRouteADraft
+                ? 'You are about to publish this magazine to all subscribers.'
+                : true
+            }
+          }).warning(),
+        ],
         type: 'reference',
         to: [
           {
