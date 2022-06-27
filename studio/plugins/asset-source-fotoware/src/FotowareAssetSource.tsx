@@ -111,7 +111,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
     },
-    [onSelect, asset],
+    [onSelect, onClose, asset],
   )
 
   useEffect(() => {
