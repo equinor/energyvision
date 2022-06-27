@@ -157,7 +157,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }
 
   return (
-    <Dialog id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
+    <Dialog width={2} id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
       {container && !accessToken && createPortal(props.children, container)}
 
       {accessToken && iframeURL && !loading ? (
