@@ -13,6 +13,7 @@ import {
   HAS_ENV_VARS,
   getSelectionWidgetURL,
   getExportWidgetURL,
+  FotowareEvents,
 } from './utils'
 import { Content, StyledIframe, ErrorMessage } from './components'
 import type { FWAsset } from './types'
@@ -72,6 +73,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       const { data } = event
 
+      if (!FotowareEvents.includes(data.event)) return false
+
       if (data.event === 'selectionWidgetCancel') {
         onClose()
       }
@@ -108,8 +111,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
         getBase64(exportedImage.image.highCompression, exportedImage.source)
       }
-
-      if (!data.event || data.event !== 'assetSelected' || !data.asset) return false
     },
     [onSelect, onClose, asset],
   )

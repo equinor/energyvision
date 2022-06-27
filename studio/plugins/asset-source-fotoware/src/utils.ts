@@ -5,6 +5,8 @@ export const HAS_ENV_VARS =
   process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL &&
   process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY
 
+export const FotowareEvents = ['selectionWidgetCancel', 'assetSelected', 'assetExported']
+
 export const getAuthURL = (requestState: string): string | false => {
   if (!HAS_ENV_VARS) {
     console.warn('Required Fotoware .env variables are not defined. Make sure they are set in the .env file(s)')
