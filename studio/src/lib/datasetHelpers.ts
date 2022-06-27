@@ -12,6 +12,7 @@ const GLOBAL = ['global', 'secret', ...GLOBAL_TEST]
 
 const NEWS = [...GLOBAL, 'poland', 'brazil', 'germany', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
+const MAGAZINE_SUBSCRIPTION = [...GLOBAL_TEST]
 const NEWSROOM = [...GLOBAL]
 const LOCAL_NEWS = [...GLOBAL]
 const SEARCH = [...GLOBAL]
@@ -27,6 +28,7 @@ const FOTOWARE = [...GLOBAL_TEST]
 export const HAS_NEWS = NEWS.includes(dataset)
 export const HAS_NEWSROOM = NEWSROOM.includes(dataset)
 export const HAS_NEWS_SUBSCRIPTION = NEWS_SUBSCRIPTION.includes(dataset)
+export const HAS_MAGAZINE_SUBSCRIPTION = MAGAZINE_SUBSCRIPTION.includes(dataset)
 export const HAS_LOCAL_NEWS = LOCAL_NEWS.includes(dataset)
 export const HAS_SEARCH = SEARCH.includes(dataset)
 export const HAS_EVENT = EVENT.includes(dataset)

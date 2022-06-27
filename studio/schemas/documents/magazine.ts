@@ -4,6 +4,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import type { Rule } from '@sanity/types'
+import { HAS_MAGAZINE_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -56,6 +57,14 @@ export default {
       type: 'imageWithAltAndCaption',
       validation: (Rule: Rule) => Rule.required(),
       fieldset: 'header',
+    },
+    HAS_MAGAZINE_SUBSCRIPTION && {
+      title: 'Should distribute this magazine?',
+      name: 'shouldDistributeMagazine',
+      description:
+        'Enable this to distribute this magazine to subscribers. Magazine will be distributed once after it is published.',
+      type: 'boolean',
+      initialValue: false,
     },
     {
       name: 'content',
