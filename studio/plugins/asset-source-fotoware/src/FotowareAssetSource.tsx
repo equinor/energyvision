@@ -72,6 +72,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       const { data } = event
 
+      if (data.event === 'selectionWidgetCancel') {
+        onClose()
+      }
+
       if (data.event === 'assetSelected') {
         setAsset(data.asset)
       }
