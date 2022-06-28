@@ -19,11 +19,11 @@ export const getDefaultDocumentNode = (props) => {
   const { schemaType } = props
   if (schemaType === 'news' || schemaType === 'localNews') {
     return S.document().views([S.view.form(), S.view.component(NewsPreview).title('Preview')])
-  } else if (schemaType === 'landingPage') {
+  } else if (schemaType === 'landingPage' || schemaType === 'magazine') {
     return S.document().views([S.view.form(), S.view.component(PagePreview).title('Preview')])
   } else if (schemaType === 'newsroom') {
     return S.document().views([S.view.form(), S.view.component(NewsroomPreview).title('Preview')])
-  } else if (['page', 'event', 'magazine'].includes(schemaType)) {
+  } else if (['page', 'event'].includes(schemaType)) {
     return S.document().views([
       S.view.form(),
       S.view.component(PagePreview).title('Preview'),

@@ -1,9 +1,10 @@
 import { newsQuery } from './queries/news'
 import { localNewsQuery } from './queries/localNews'
 import { pageQuery } from './queries/routes'
+import { magazineQuery } from './queries/magazine'
 import { contentQueryById } from './queries/contentById'
 import { getNameFromLocale } from './localization'
-import { newsSlug } from '../../satellitesConfig'
+import { newsSlug, magazineSlug } from '../../satellitesConfig'
 
 export type QueryParams = {
   id?: string[]
@@ -61,10 +62,11 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   const slug = `/${slugArray.join('/')}` || ''
   const lang = getNameFromLocale(locale)
   const isNews = newsSlug[lang] === slugStart && slugArray.length > 1
+  const isMagazine = magazineSlug[lang] === slugStart && slugArray.length > 1
 
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
-    query: isNews ? { newsQuery, localNewsQuery } : pageQuery,
+    query: isNews ? { newsQuery, localNewsQuery } : isMagazine ? magazineQuery : pageQuery,
     isNews,
   }
 }

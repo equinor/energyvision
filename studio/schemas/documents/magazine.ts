@@ -3,8 +3,12 @@ import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
-import type { Rule } from '@sanity/types'
+import type { Rule, SanityDocument } from '@sanity/types'
+import { defaultLanguage } from '../../languages'
 import { HAS_MAGAZINE_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
+import SlugInput from '../components/SlugInput'
+import { magazineSlug } from '../../../satellitesConfig.js'
+import slugify from 'slugify'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -17,6 +21,15 @@ export default {
     {
       title: 'Header / Banner v1',
       name: 'header',
+    },
+    {
+      title: 'Slug',
+      name: 'slug',
+      description: '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
     },
     {
       title: 'SEO & metadata',
@@ -65,6 +78,34 @@ export default {
         'Enable this to distribute this magazine to subscribers. Magazine will be distributed once after its route is published.',
       type: 'boolean',
       initialValue: false,
+    },
+    {
+      name: 'magazineSlug',
+      title: 'Magazine slug',
+      type: 'string',
+      fieldset: 'slug',
+      placeholder: 'For example "Experienced professionals"',
+      description: 'The unique part of the URL for this magazine. Should probably be something like the page title.',
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      fieldset: 'slug',
+      inputComponent: SlugInput,
+      options: {
+        source: async (doc: SanityDocument) => {
+          // translated document ids end with _i18n__lang while base documents don't
+          const lastFiveCharacters = doc._id.slice(-5)
+          const translatedMagazine = magazineSlug[lastFiveCharacters] || magazineSlug[defaultLanguage.name]
+          return doc.magazineSlug
+            ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string, { lower: true })}`
+            : ''
+        },
+        slugify: (value: string) => value,
+      },
+      description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'content',

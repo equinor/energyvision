@@ -31,6 +31,17 @@ const newsSlug = {
   ko_KR: 'news',
 }
 
+/**
+ * @type {Record<string, string>}
+ */
+const magazineSlug = {
+  en_GB: 'magazine',
+  nb_NO: 'magasin',
+  pt_BR: 'revista',
+  pl_PL: 'czasopismo',
+  de_DE: 'zeitschrift',
+}
+
 /*
   The first language will be set as the default language. The default language is used as
   1. The main language in Sanity studio for translations (base language)
@@ -160,5 +171,6 @@ module.exports = {
   defaultWebLanguage,
   getDomain,
   newsSlug,
+  magazineSlug,
   getMetaTitleSuffix,
 }
