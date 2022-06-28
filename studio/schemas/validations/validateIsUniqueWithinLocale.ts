@@ -11,7 +11,6 @@ export const validateIsUniqueWithinLocale = async (slug: string, { document }: {
   const query = `*[slug.current == $slug && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
   const params = { baseId: baseId, slug: slug }
   const matchingSlugs = await client.fetch(query, params)
-  console.log(baseId)
-  console.log(matchingSlugs)
+
   return matchingSlugs.length === 0
 }
