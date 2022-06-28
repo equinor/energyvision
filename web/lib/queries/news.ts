@@ -2,7 +2,7 @@ import markDefs from './common/blockEditorMarks'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
-import slugsForNews from './slugsForNews'
+import slugsForNewsAndMagazine from './slugsForNews'
 
 export const publishDateTimeQuery = /* groq */ `
   select(
@@ -19,7 +19,7 @@ export const newsFields = /* groq */ `
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
-  ${slugsForNews('news')},
+  ${slugsForNewsAndMagazine('news')},
   ingress[]{
     ...,
     ${markDefs},

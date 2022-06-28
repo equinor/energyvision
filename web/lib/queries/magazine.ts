@@ -1,4 +1,5 @@
 import pageContentFields from './common/pageContentFields'
+import slugsForNewsAndMagazine from './slugsForNews'
 
 export const magazineQuery = /* groq */ `
 *[_type == "magazine" && slug.current == $slug] {
@@ -15,4 +16,5 @@ export const magazineQuery = /* groq */ `
     "content": content[] {
           ${pageContentFields}
       },
+      ${slugsForNewsAndMagazine('magazine')},
 }`

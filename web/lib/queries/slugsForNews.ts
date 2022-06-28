@@ -1,6 +1,6 @@
-type SlugsForNewsType = 'news' | 'localNews'
+type SlugsForNewsAndMagazineType = 'news' | 'localNews' | 'magazine'
 
-const slugsForNews = (type: SlugsForNewsType) => {
+const slugsForNewsAndMagazine = (type: SlugsForNewsAndMagazineType) => {
   const groqType = "'" + type + "'"
 
   return /* groq */ `
@@ -12,4 +12,4 @@ const slugsForNews = (type: SlugsForNewsType) => {
     }`
 }
 
-export default slugsForNews
+export default slugsForNewsAndMagazine
