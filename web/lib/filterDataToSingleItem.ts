@@ -7,7 +7,8 @@ export function filterDataToSingleItem(data: any, preview: any) {
    * We should filter out irrelevant documents.
    * Drafts are relevant only when in preview mode.
    */
+
   return preview
-    ? data.find((item) => item._id.startsWith('drafts.')) ?? data[0]
+    ? data.find((item) => item._id.startsWith('drafts.')) ?? data[0] ?? null
     : data.find((item) => !item._id.startsWith('drafts.')) ?? null
 }

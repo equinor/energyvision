@@ -4,6 +4,8 @@ import slugify from 'slugify'
 import sanityClient from 'part:@sanity/base/client'
 import type { Rule } from '@sanity/types'
 import SlugInput from '../components/SlugInput'
+import { validateIsUniqueWithinLocale } from '../validations/validateIsUniqueWithinLocale'
+import { HAS_SAME_SLUG } from '../../src/lib/datasetHelpers'
 
 const client = sanityClient.withConfig({ apiVersion: `2021-05-19` })
 const slugifyConfig = { lower: true }
@@ -48,10 +50,16 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     type: 'slug',
     fieldset: fieldset,
     inputComponent: SlugInput,
-    options: {
-      source: (doc: any) => getPrefix(doc, source, ref),
-      slugify: (value: any) => formatSlug(value),
-    },
+    options: HAS_SAME_SLUG
+      ? {
+          source: (doc: any) => getPrefix(doc, source, ref),
+          slugify: (value: any) => formatSlug(value),
+          isUnique: validateIsUniqueWithinLocale,
+        }
+      : {
+          source: (doc: any) => getPrefix(doc, source, ref),
+          slugify: (value: any) => formatSlug(value),
+        },
     validation: (Rule: Rule) => Rule.required().custom(({ current }: { current: any }) => SlugValidation(current)),
   }
 }

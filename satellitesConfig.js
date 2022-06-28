@@ -27,6 +27,8 @@ const newsSlug = {
   pt_BR: 'noticias',
   pl_PL: 'aktualnosci',
   de_DE: 'aktuelles',
+  ja_JP: 'news',
+  ko_KR: 'news',
 }
 
 /*

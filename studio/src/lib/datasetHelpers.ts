@@ -10,7 +10,7 @@ export const IS_SECRET = projectId === 'w3b4om14'
 const GLOBAL_TEST = ['global-development', 'global-test']
 const GLOBAL = ['global', 'secret', ...GLOBAL_TEST]
 
-const NEWS = [...GLOBAL, 'poland', 'brazil', 'germany', 'southkorea']
+const NEWS = [...GLOBAL, 'japan', 'poland', 'brazil', 'germany', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_TEST]
 const NEWSROOM = [...GLOBAL]
@@ -24,6 +24,7 @@ const LANDING_PAGE = [...GLOBAL]
 const TWITTER_FEED = [...GLOBAL_TEST, 'germany']
 const MAGAZINE = [...GLOBAL_TEST]
 const FOTOWARE = [...GLOBAL_TEST]
+const SAME_SLUG = [...GLOBAL_TEST]
 
 export const HAS_NEWS = NEWS.includes(dataset)
 export const HAS_NEWSROOM = NEWSROOM.includes(dataset)
@@ -38,3 +39,5 @@ export const HAS_LANDING_PAGE = HAS_FANCY_MENU && LANDING_PAGE.includes(dataset)
 export const HAS_TWITTER_FEED = TWITTER_FEED.includes(dataset)
 export const HAS_MAGAZINE = MAGAZINE.includes(dataset)
 export const HAS_FOTOWARE = FOTOWARE.includes(dataset)
+/* @TODO: remove feature flag once code is reviewed */
+export const HAS_SAME_SLUG = SAME_SLUG.includes(dataset)
