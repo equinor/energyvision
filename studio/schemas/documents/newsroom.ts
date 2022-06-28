@@ -22,7 +22,7 @@ const textContentType = configureBlockContent({
 
 export default {
   type: 'document',
-  title: 'Newsroom | Magazines',
+  title: 'Newsroom',
   name: 'newsroom',
   i18n,
   fieldsets: [

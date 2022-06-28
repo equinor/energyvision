@@ -1,26 +1,90 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { FileIcon, TopicDocuments, NewsDocuments } from '../../../../icons'
-import { HAS_NEWSROOM, HAS_MAGAZINE } from '../../datasetHelpers'
+import { HAS_NEWSROOM } from '../../datasetHelpers'
 
 const miscPages = [
   S.listItem()
     .title('404 - Page not found')
     .icon(FileIcon)
-    .child(S.document().id('pageNotFound').title('404').schemaType('pageNotFound')),
+    .child(
+      S.documentList()
+        .id('pageNotFound')
+        .title('404')
+        .schemaType('pageNotFound')
+        .filter('(_id match "*" + $id) && _type == $type')
+        .params({
+          id: 'pageNotFound',
+          type: 'pageNotFound',
+        })
+        .menuItems([
+          {
+            title: 'Create new',
+            intent: {
+              type: 'create',
+              params: {
+                id: 'pageNotFound',
+                type: 'pageNotFound',
+                template: 'pageNotFound',
+              },
+            },
+          },
+        ]),
+    ),
   S.listItem()
     .title('500 - Internal server error')
     .icon(FileIcon)
-    .child(S.document().id('internalServerError').title('500').schemaType('internalServerError')),
+    .child(
+      S.documentList()
+        .id('internalServerError')
+        .title('500')
+        .schemaType('internalServerError')
+        .filter('(_id match "*" + $id) && _type == $type')
+        .params({
+          id: 'internalServerError',
+          type: 'internalServerError',
+        })
+        .menuItems([
+          {
+            title: 'Create new',
+            intent: {
+              type: 'create',
+              params: {
+                id: 'internalServerError',
+                type: 'internalServerError',
+                template: 'internalServerError',
+              },
+            },
+          },
+        ]),
+    ),
   HAS_NEWSROOM &&
     S.listItem()
       .title('Newsroom')
       .icon(NewsDocuments)
-      .child(S.document().id('newsroom').title('Newsroom').schemaType('newsroom')),
-  HAS_MAGAZINE &&
-    S.listItem()
-      .title('Magazine')
-      .icon(NewsDocuments)
-      .child(S.document().id('magazine').title('Magazine').schemaType('newsroom')),
+      .child(
+        S.documentList()
+          .id('newsroom')
+          .title('Newsroom')
+          .schemaType('newsroom')
+          .filter('(_id match "*" + $id) && _type == $type')
+          .params({
+            id: 'newsroom',
+            type: 'newsroom',
+          })
+          .menuItems([
+            {
+              title: 'Create new',
+              intent: {
+                type: 'create',
+                params: {
+                  id: 'newsroom',
+                  type: 'newsroom',
+                  template: 'newsroom',
+                },
+              },
+            },
+          ]),
+      ),
 ].filter((e) => e)
 
 export const Misc = S.listItem()
