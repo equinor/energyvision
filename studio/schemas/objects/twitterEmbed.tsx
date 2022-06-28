@@ -22,7 +22,8 @@ const ingressContentType = configureBlockContent({
 })
 export default {
   title: 'Twitter Embed',
-  description: 'This component is to be used to display twitter feeds.',
+  description:
+    'This component displays twitter feeds. This sets marketing cookies hence cookie policy is set to marketing by default.',
   name: 'twitterEmbed',
   type: 'object',
   fieldsets: [
@@ -57,8 +58,8 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Timeline', value: 'timeline' },
-          { title: 'Tweet', value: 'tweet' },
+          { title: 'Timeline/feed', value: 'timeline' },
+          { title: 'Single Tweet', value: 'tweet' },
         ],
         layout: 'dropdown',
       },
@@ -67,7 +68,8 @@ export default {
     {
       name: 'embedValue',
       type: 'string',
-      description: 'Enter tweetid for embedding tweet or twitter handle (without @) for embedding timeline.',
+      description:
+        'Enter tweetid(number) for embedding single tweet or twitter handle (without @) for embedding timeline.',
       validation: (Rule: Rule) =>
         Rule.custom((embedValue: string, context: ValidationContext) => {
           const { parent } = context as { parent: TwitterEmbed }
