@@ -79,6 +79,7 @@ import {
   HAS_FORMS,
   HAS_LANDING_PAGE,
   HAS_LOCAL_NEWS,
+  HAS_MAGAZINE,
   HAS_NEWS,
   HAS_NEWSROOM,
 } from '../src/lib/datasetHelpers'
@@ -101,9 +102,9 @@ const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
 const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = HAS_FORMS ? [form] : []
+const MagazineSchemas = HAS_MAGAZINE ? [magazine] : []
 const RemainingSchemas = [
   page,
-  magazine,
   ...routeSchemas,
   ...routeHomepageSchemas,
   pageNotFound,
@@ -157,6 +158,7 @@ export default createSchema({
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
     ...MenuSchemas,
+    ...MagazineSchemas,
     ...LocalNewsSchemas,
     ...EventSchemas,
     ...LandingPageSchemas,
