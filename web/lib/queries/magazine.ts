@@ -1,5 +1,5 @@
 import pageContentFields from './common/pageContentFields'
-import slugsForNewsAndMagazine from './slugsForNews'
+import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
 export const magazineQuery = /* groq */ `
 *[_type == "magazine" && slug.current == $slug] {
