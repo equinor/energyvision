@@ -11,6 +11,7 @@ import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
+import { isProductionEnvironment } from '../common/helpers/datasetHelpers'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -86,17 +87,19 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   useEffect(() => {
-    const script = document.createElement('script')
+    if (isProductionEnvironment) {
+      const script = document.createElement('script')
 
-    script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
-    script.async = true
+      script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
+      script.async = true
 
-    document.head.appendChild(script)
+      document.head.appendChild(script)
 
-    return () => {
-      document.head.removeChild(script)
+      return () => {
+        document.head.removeChild(script)
+      }
     }
-  }, [router.asPath])
+  }, [router.asPath, isProductionEnvironment])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
