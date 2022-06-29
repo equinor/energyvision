@@ -124,12 +124,13 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
         {slugs.length > 1 &&
           slugs.map((slug) => {
             const locale = getLocaleFromName(slug.lang)
+            const correctedSlug = slug.slug !== '/' ? slug.slug : ''
             return (
               <link
                 key={locale}
                 rel="alternate"
                 hrefLang={locale}
-                href={`${publicRuntimeConfig.domain}/${locale}${slug.slug}`}
+                href={`${publicRuntimeConfig.domain}/${locale}${correctedSlug}`}
               />
             )
           })}
@@ -138,7 +139,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           <link
             rel="alternate"
             hrefLang="x-default"
-            href={`${publicRuntimeConfig.domain}/${defaultLocale}${defaultSlug}`}
+            href={`${publicRuntimeConfig.domain}/${defaultLocale}${defaultSlug === '/' ? '' : defaultSlug}`}
           />
         )}
 
