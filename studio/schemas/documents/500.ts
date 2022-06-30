@@ -19,6 +19,7 @@ const textContentType = configureBlockContent({
   internalLink: false,
   lists: false,
   attachment: false,
+  smallText: false,
 })
 
 export default {
