@@ -139,7 +139,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           <link
             rel="alternate"
             hrefLang="x-default"
-            href={`${publicRuntimeConfig.domain}/${defaultLocale}${defaultSlug === '/' ? '' : defaultSlug}`}
+            href={`${publicRuntimeConfig.domain}${defaultSlug === '/' ? '' : defaultSlug}`}
           />
         )}
 
