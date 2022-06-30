@@ -84,7 +84,7 @@ const StockValues = ({ data: { designOptions }, ...rest }: { data: StockValuesDa
   const { data, error } = useSWR(ENDPOINT, fetchData, { refreshInterval: 60000 })
 
   if (error) {
-    console.error(error)
+    console.error('An error occured while fetching stock values: ', error)
     return null
   }
 

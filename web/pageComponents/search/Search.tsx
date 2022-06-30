@@ -15,7 +15,7 @@ const Search = () => {
 
   // @TODO: Don't hard code it like this
   if (searchClient.appId === '') {
-    console.warn('You need to add an app id for Algolia search')
+    console.warn('Missing app ID in Algolia search client')
     return null
   }
 

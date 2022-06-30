@@ -71,7 +71,7 @@ export const getArchivedPageData = async (locale: string, slug: string) => {
       const allSlugs = await getLocalizedSlugs(locale, slug)
       pageData = { ...pageData, slugs: { allSlugs } }
     } catch (err) {
-      console.log('error', err)
+      console.error('Error parsing archived page data', err)
       pageData = null
     }
 

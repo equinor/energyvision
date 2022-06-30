@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ msg: `Anti-robot check failed [code=${errorCode}], please try again.` })
     }
   } catch (err) {
-    console.error(err)
+    console.error('Error occured while attempting to validate captcha', err)
     return res.status(502).json({ msg: 'failed to validate captcha' })
   }
 
@@ -70,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(200).end()
     })
     .catch((error) => {
-      console.log(error)
+      console.log('Error occured while sending request to ServiceNow', error)
       res.status(500).end()
     })
 }

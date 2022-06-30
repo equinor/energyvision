@@ -57,7 +57,7 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
 
 // Log errors to relevant services here
 const HandleBoundaryError = (error: Error, info: { componentStack: string }) => {
-  console.error(error, info)
+  console.error('ErrorBoundary caught error: ', error, info)
 }
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {

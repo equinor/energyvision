@@ -122,7 +122,7 @@ function getSomeSvg(someType: SomeType) {
     case 'youtube':
       return <Youtube width={24} />
     default:
-      console.warn('Unknown SoMe type')
+      console.warn('Unable to get social icon for footer: Unknown SoMe type passed')
   }
 }
 
