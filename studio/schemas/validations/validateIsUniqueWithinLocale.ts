@@ -8,8 +8,13 @@ const client = sanityClient.withConfig({
 
 export const validateIsUniqueWithinLocale = async (slug: string, { document }: { document: SanityDocument }) => {
   const baseId = document._id.replace('drafts.', '').substring(0, 36)
-  const query = `*[slug.current == $slug && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
-  const params = { baseId: baseId, slug: slug }
+  let query: string
+  if (document._type.includes('route')) {
+    query = `*[slug.current == $slug && _type == $type && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
+  } else {
+    query = `*[slug.current == $slug && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
+  }
+  const params = { type: document._type, baseId, slug }
   const matchingSlugs = await client.fetch(query, params)
 
   return matchingSlugs.length === 0

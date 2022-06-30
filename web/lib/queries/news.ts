@@ -42,7 +42,7 @@ export const allNewsQuery = /* groq */ `
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug] | order(${publishDateTimeQuery} desc) {
+  "news": *[_type == "news" && slug.current == $slug && _lang == $lang] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,

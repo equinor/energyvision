@@ -64,9 +64,18 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   const isNews = newsSlug[lang] === slugStart && slugArray.length > 1
   const isMagazine = magazineSlug[lang] === slugStart && slugArray.length > 1
 
+  let query: string | NewsQuery
+  if (isNews) {
+    query = { newsQuery, localNewsQuery }
+  } else if (isMagazine) {
+    query = magazineQuery
+  } else {
+    query = pageQuery
+  }
+
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
-    query: isNews ? { newsQuery, localNewsQuery } : isMagazine ? magazineQuery : pageQuery,
+    query: query,
     isNews,
   }
 }

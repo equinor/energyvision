@@ -30,7 +30,7 @@ export const localNewsFields = /* groq */ `
 
 export const localNewsQuery = /* groq */ `
 {
-  "news": *[_type == "localNews" && slug.current == $slug] | order(${publishDateTimeQuery} desc) {
+  "news": *[_type == "localNews" && slug.current == $slug && _lang == $lang] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,

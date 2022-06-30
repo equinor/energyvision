@@ -2,7 +2,7 @@ import pageContentFields from './common/pageContentFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
 export const magazineQuery = /* groq */ `
-*[_type == "magazine" && slug.current == $slug] {
+*[_type == "magazine" && slug.current == $slug && _lang == $lang] {
     _id, //used for data filtering
     "slug": slug.current,
     "title": title,
