@@ -11,7 +11,6 @@ import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
-import { isProductionEnvironment } from '../common/helpers/datasetHelpers'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -87,7 +86,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   useEffect(() => {
-    if (isProductionEnvironment) {
+    if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
       const script = document.createElement('script')
 
       script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
@@ -99,7 +98,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
         document.head.removeChild(script)
       }
     }
-  }, [router.asPath, isProductionEnvironment])
+  }, [router.asPath])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>

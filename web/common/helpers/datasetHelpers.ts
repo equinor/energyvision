@@ -12,7 +12,6 @@ export const isGlobal = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_
 // Used to map to correct indices for search
 export const isGlobalProduction = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_TEST
 export const isGlobalDevelopment = dataset === EQUINOR_COM_DEV
-export const isProductionEnvironment = process.env.NODE_ENV === 'production'
 
 export const hasNews = dataset === EQUINOR_COM_NAME || dataset === EQUINOR_COM_DEV || dataset === EQUINOR_COM_TEST
 
