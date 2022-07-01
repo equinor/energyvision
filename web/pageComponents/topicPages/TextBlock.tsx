@@ -45,16 +45,17 @@ const TextContainer = styled.div`
 
 type TextBlockProps = {
   data: TextBlockData
+  anchor?: string
 }
 
-const TextBlock = ({ data }: TextBlockProps) => {
-  const { overline, title, ingress, text, designOptions, callToActions, anchor, overrideButtonStyle = false } = data
+const TextBlock = ({ data, anchor }: TextBlockProps) => {
+  const { overline, title, ingress, text, designOptions, callToActions, overrideButtonStyle = false } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text) return null
   const { background } = designOptions
 
   return (
-    <StyledTextBlockWrapper background={background} id={anchor}>
+    <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>
         {overline && <Eyebrow>{overline}</Eyebrow>}
         {title && <TitleText value={title} />}

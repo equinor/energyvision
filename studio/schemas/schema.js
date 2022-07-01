@@ -84,6 +84,7 @@ import {
   HAS_NEWSROOM,
 } from '../src/lib/datasetHelpers'
 import twitterEmbed from './objects/twitterEmbed'
+import anchorLink from './objects/anchorLink'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -148,6 +149,7 @@ const RemainingSchemas = [
   redirect,
   externalRedirect,
   twitterEmbed,
+  anchorLink,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

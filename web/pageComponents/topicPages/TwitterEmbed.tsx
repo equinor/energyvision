@@ -8,6 +8,7 @@ import TitleText from '../../pageComponents/shared/portableText/TitleText'
 
 type TwitterEmbedProps = {
   data: TwitterEmbedData
+  anchor?: string
 }
 const Container = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
@@ -21,7 +22,7 @@ const StyledTitle = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
 
-const TwitterEmbed = ({ data }: TwitterEmbedProps) => {
+const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
   const { embedType, embedValue, designOptions, title, ingress } = data
   const Embed = () => {
     switch (embedType) {
@@ -44,7 +45,7 @@ const TwitterEmbed = ({ data }: TwitterEmbedProps) => {
   }
   return (
     <>
-      <BackgroundContainer background={designOptions.background}>
+      <BackgroundContainer background={designOptions.background} id={anchor}>
         <Container>
           {title && <StyledTitle value={title} />}
           {ingress && (

@@ -33,17 +33,18 @@ const { Title, Media, Text } = TextWithIcon
 
 type TextWithIconArrayProps = {
   data: TextWithIconArrayData
+  anchor?: string
 }
 
 const getImgSrc = (img: ImageWithAlt): string => urlFor(img).size(150, 150).auto('format').toString() || ''
 
-const TextWithIconArray = ({ data }: TextWithIconArrayProps) => {
+const TextWithIconArray = ({ data, anchor }: TextWithIconArrayProps) => {
   const { designOptions, group } = data
 
   if (!group) return null
 
   return (
-    <BackgroundContainer background={designOptions?.background}>
+    <BackgroundContainer background={designOptions?.background} id={anchor}>
       <Container items={group.length}>
         {group.map((item: TextWithIconItem) => {
           const { icon, title, text, id } = item

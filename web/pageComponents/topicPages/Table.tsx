@@ -46,6 +46,7 @@ const StyledTableLink = styled(Link)`
 
 type TableProps = {
   data: TableData
+  anchor?: string
 }
 
 const getLink = (linkData: LinkData) => {
@@ -87,14 +88,14 @@ const renderCellByType = (cellData: CellData) => {
   }
 }
 
-const Table = ({ data }: TableProps) => {
+const Table = ({ data, anchor }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
   const { background } = designOptions
 
   // Should the headers just be a plain text field?
   return (
-    <StyledTableWrapper background={background}>
+    <StyledTableWrapper background={background} id={anchor}>
       <TableContainer>
         {title && <StyledTitle value={title} />}
         {ingress && (

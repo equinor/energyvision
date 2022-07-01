@@ -23,7 +23,7 @@ import CookieDeclaration from '../topicPages/CookieDeclaration'
 import TwitterEmbed from '../topicPages/TwitterEmbed'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
-import type { PageSchema } from '../../types/types'
+import type { AnchorLinkData, PageSchema } from '../../types/types'
 
 import {
   TeaserData,
@@ -109,6 +109,7 @@ type ComponentProps =
   | TableData
   | StockValuesData
   | TwitterEmbedData
+  | AnchorLinkData
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
   const slug = data?.slug
@@ -117,40 +118,46 @@ const TopicPage = ({ data }: TopicPageProps) => {
 
   const pageTitle = data?.title ? toPlainText(data?.title) : ''
 
-  const content = (data?.content || []).map((c: ComponentProps) => {
+  const content = (data?.content || []).map((c: ComponentProps, index) => {
+    const prevComponent = data?.content?.[index - 1]
+    const anchorReference =
+      (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
+        ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
+        : undefined
+
     switch (c.type) {
       case 'teaser':
-        return <Teaser key={c.id} data={c as TeaserData} />
+        return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
       case 'textBlock':
-        return <TextBlock key={c.id} data={c as TextBlockData} />
+        return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
-        return <FullWidthImage key={c.id} data={c as FullWidthImageData} />
+        return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'figure':
-        return <Figure key={c.id} data={c as FigureData} />
+        return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} />
       case 'textWithIconArray':
-        return <TextWithIconArray key={c.id} data={c as TextWithIconArrayData} />
+        return <TextWithIconArray key={c.id} data={c as TextWithIconArrayData} anchor={anchorReference} />
       case 'pullQuote':
-        return <PageQuote key={c.id} data={c as QuoteData} />
+        return <PageQuote key={c.id} data={c as QuoteData} anchor={anchorReference} />
       case 'accordion':
-        return <AccordionBlock key={c.id} data={c as AccordionData} />
+        return <AccordionBlock key={c.id} data={c as AccordionData} anchor={anchorReference} />
       case 'promoTileArray':
-        return <PromoTileArray key={c.id} data={c as PromoTileArrayData} />
+        return <PromoTileArray key={c.id} data={c as PromoTileArrayData} anchor={anchorReference} />
       case 'iframe':
-        return <IFrame key={c.id} data={c as IFrameData} />
+        return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} />
       case 'promotion':
-        return <Promotion key={c.id} data={c as PromotionData} />
+        return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} />
       case 'form':
-        return <Form key={c.id} data={c as FormData} />
+        return <Form key={c.id} data={c as FormData} anchor={anchorReference} />
       case 'table':
-        return <Table key={c.id} data={c as TableData} />
+        return <Table key={c.id} data={c as TableData} anchor={anchorReference} />
       case 'cookieDeclaration':
-        return <CookieDeclaration key={c.id} />
+        return <CookieDeclaration key={c.id} anchor={anchorReference} />
       case 'newsList':
-        return <NewsList key={c.id} data={c as unknown as NewsListData} />
+        return <NewsList key={c.id} data={c as unknown as NewsListData} anchor={anchorReference} />
       case 'stockValuesApi':
-        return <StockValues key={c.id} data={c as StockValuesData} />
+        return <StockValues key={c.id} data={c as StockValuesData} anchor={anchorReference} />
       case 'twitterEmbed':
-        return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} />
+        return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} />
       default:
         return null
     }

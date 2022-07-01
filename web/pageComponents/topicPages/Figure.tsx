@@ -6,6 +6,7 @@ import Image from '../shared/Image'
 
 type TeaserProps = {
   data: FigureData
+  anchor?: string
 }
 
 const StyledFigure = styled.figure`
@@ -27,7 +28,7 @@ const StyledFigureWrapper = styled(BackgroundContainer)`
   } */
 `
 
-const FullWidthImage = ({ data }: TeaserProps) => {
+const FullWidthImage = ({ data, anchor }: TeaserProps) => {
   const { figure, designOptions } = data
 
   // With previews in Sanity, we need to support work in progress figures
@@ -36,7 +37,7 @@ const FullWidthImage = ({ data }: TeaserProps) => {
   const { image, caption, attribution } = figure
 
   return (
-    <StyledFigureWrapper background={designOptions?.background}>
+    <StyledFigureWrapper background={designOptions?.background} id={anchor}>
       <StyledFigure>
         <Image
           image={image}

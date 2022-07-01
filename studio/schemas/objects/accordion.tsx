@@ -38,7 +38,9 @@ export default {
     },
     {
       name: 'anchor',
-      title: 'Additional anchor point reference',
+      title: 'Additional anchor point reference. (Deprecated)',
+      description:
+        'If the anchor reference to this component is set using anchor link component, the value here will be overridden',
       options: {
         collapsible: true,
         collapsed: true,
@@ -62,6 +64,7 @@ export default {
         // @ts-ignore
         Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
       fieldset: 'anchor',
+      readOnly: true,
     },
     {
       title: 'Ingress',

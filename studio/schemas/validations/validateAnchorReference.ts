@@ -43,8 +43,8 @@ export const validateComponentAnchor = (value: string, context: TopicContentDocu
 
   // Check for duplicate anchor values in the document
   const anchors = context.document.content
-    .filter((item: TypedObject) => item._key !== context.parent._key && item?.anchor)
-    .map((item) => item.anchor)
+    .filter((item: TypedObject) => item._key !== context.parent._key && (item?.anchor || item?.anchorReference))
+    .map((item) => item.anchor || item.anchorReference)
 
   if (anchors.includes(value)) {
     errors.push('Cannot have multiple components with the same anchor on the same page.')

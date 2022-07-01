@@ -535,3 +535,9 @@ export type TwitterEmbedData = {
     background: BackgroundColours
   }
 }
+
+export type AnchorLinkData = {
+  id: string 
+  type: string
+  anchorReference: string
+}

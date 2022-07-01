@@ -85,6 +85,7 @@ export default {
         HAS_FORMS && { type: 'form' },
         HAS_NEWS && { type: 'newsList' },
         HAS_TWITTER_FEED && { type: 'twitterEmbed' },
+        { type: 'anchorLink' },
       ].filter((e) => e),
     },
   ],

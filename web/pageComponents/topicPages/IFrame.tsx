@@ -31,17 +31,19 @@ const Ingress = styled.div`
 `
 
 const IFrame = ({
+  anchor,
   data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action },
   ...rest
 }: {
   data: IFrameData
+  anchor?: string
 }) => {
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest}>
+    <BackgroundContainer background={background} {...rest} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && (
