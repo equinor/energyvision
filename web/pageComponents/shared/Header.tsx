@@ -124,13 +124,15 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
         {slugs.length > 1 &&
           slugs.map((slug) => {
             const locale = getLocaleFromName(slug.lang)
-            const correctedSlug = slug.slug !== '/' ? slug.slug : ''
+            const correctedSlug = (defaultLocale !== locale ? `/${locale}` : '').concat(
+              slug.slug !== '/' ? slug.slug : '',
+            )
             return (
               <link
                 key={locale}
                 rel="alternate"
                 hrefLang={locale}
-                href={`${publicRuntimeConfig.domain}/${locale}${correctedSlug}`}
+                href={`${publicRuntimeConfig.domain}${correctedSlug}`}
               />
             )
           })}
