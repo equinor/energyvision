@@ -3,10 +3,29 @@ import { anchor } from '@equinor/eds-icons'
 import { Rule } from '@sanity/types'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import { EdsIcon } from '../../icons'
+import { Heading, Text, Box } from '@sanity/ui'
+import styled from 'styled-components'
 import React from 'react'
 
 export type AnchorLink = {
   _type: 'anchorLink'
+}
+
+const StyledText = styled(Text)`
+  margin: 1em 0;
+`
+
+// eslint-disable-next-line react/display-name
+const Description = () => {
+  return (
+    <Box>
+      <Heading size={2}>How to use</Heading>
+      <StyledText>
+        Add this component before the component for which you want to have an anchor reference. The anchor reference
+        will be ignored when there is no component following it.
+      </StyledText>
+    </Box>
+  )
 }
 
 export default {
@@ -16,6 +35,11 @@ export default {
   type: 'object',
 
   fields: [
+    {
+      name: 'description',
+      type: 'string',
+      inputComponent: Description,
+    },
     {
       name: 'anchorReference',
       type: 'anchorReferenceField',
