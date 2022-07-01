@@ -8,6 +8,7 @@ import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { EventDate } from '../objects/eventDate'
+import basicIframe, { IFrame } from '../objects/basicIframe'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -100,13 +101,20 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [blockContentType],
+      of: [blockContentType, basicIframe],
     },
     {
-      title: 'IFrame',
+      title: 'IFrame (Deprecated)',
       name: 'iframe',
       type: 'basicIframe',
-      description: 'Use this to add an iframe to this event. This could for example be a livestream, video, or map.',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: IFrame) => {
+          if (!value) {
+            return true
+          } else return 'IFrame is deprecated. Please insert iframe inside the content field.'
+        }).warning(),
+
+      description: 'Iframe is deprecated on event page. You can insert iframe directly in to the content field above.',
     },
     {
       title: 'Title',
