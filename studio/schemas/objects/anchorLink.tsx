@@ -15,7 +15,6 @@ const StyledText = styled(Text)`
   margin: 1em 0;
 `
 
-// eslint-disable-next-line react/display-name
 const Description = () => {
   return (
     <Box>
@@ -30,7 +29,6 @@ const Description = () => {
 
 export default {
   title: 'Anchor Link',
-  description: 'This component is to be used to display Id',
   name: 'anchorLink',
   type: 'object',
 
