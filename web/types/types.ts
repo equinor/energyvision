@@ -537,7 +537,21 @@ export type TwitterEmbedData = {
 }
 
 export type AnchorLinkData = {
-  id: string 
+  id: string
   type: string
   anchorReference: string
+}
+
+export type VideoData = {
+  id: string
+  type: string
+  videoURL: string
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  asset: {
+    url: string
+  }
+  designOptions: {
+    background: BackgroundColours
+  }
 }

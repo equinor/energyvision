@@ -4,7 +4,7 @@ import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
-import { HAS_FORMS, HAS_NEWS, HAS_TWITTER_FEED } from '../../src/lib/datasetHelpers'
+import { HAS_FORMS, HAS_NEWS, HAS_TWITTER_FEED, HAS_VIDEO } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
 // import { done } from '@equinor/eds-icons'
 
@@ -86,6 +86,7 @@ export default {
         HAS_NEWS && { type: 'newsList' },
         HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'anchorLink' },
+        HAS_VIDEO && { type: 'video' },
       ].filter((e) => e),
     },
   ],

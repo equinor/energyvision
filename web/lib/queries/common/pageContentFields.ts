@@ -449,6 +449,22 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
     anchorReference
+  },
+
+  _type == "video" =>{
+    "type": _type,
+    "id": _key,
+    title,
+    ingress[]{
+        ...,
+        ${markDefs},
+      },
+	  "asset":video.asset->{
+	  		"url": "https://stream.mux.com/" + playbackId
+			},
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+    },
   }
 
 `

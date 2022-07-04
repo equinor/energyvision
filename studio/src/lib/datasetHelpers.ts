@@ -25,6 +25,7 @@ const TWITTER_FEED = [...GLOBAL_TEST, 'germany']
 const MAGAZINE = [...GLOBAL_TEST]
 const FOTOWARE = [...GLOBAL_TEST]
 const SAME_SLUG = [...GLOBAL_TEST]
+const VIDEO = [...GLOBAL_TEST]
 
 export const HAS_NEWS = NEWS.includes(dataset)
 export const HAS_NEWSROOM = NEWSROOM.includes(dataset)
@@ -41,3 +42,4 @@ export const HAS_MAGAZINE = MAGAZINE.includes(dataset)
 export const HAS_FOTOWARE = FOTOWARE.includes(dataset)
 /* @TODO: remove feature flag once code is reviewed */
 export const HAS_SAME_SLUG = SAME_SLUG.includes(dataset)
+export const HAS_VIDEO = VIDEO.includes(dataset)

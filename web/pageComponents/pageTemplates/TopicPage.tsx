@@ -21,6 +21,7 @@ import StockValues from '../topicPages/StockValues'
 import TitleText from '../shared/portableText/TitleText'
 import CookieDeclaration from '../topicPages/CookieDeclaration'
 import TwitterEmbed from '../topicPages/TwitterEmbed'
+import Video from '../topicPages/Video'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 import type { AnchorLinkData, PageSchema } from '../../types/types'
@@ -42,6 +43,7 @@ import {
   NewsListData,
   StockValuesData,
   TwitterEmbedData,
+  VideoData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -110,6 +112,7 @@ type ComponentProps =
   | StockValuesData
   | TwitterEmbedData
   | AnchorLinkData
+  | VideoData
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
   const slug = data?.slug
@@ -158,6 +161,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         return <StockValues key={c.id} data={c as StockValuesData} anchor={anchorReference} />
       case 'twitterEmbed':
         return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} />
+      case 'video':
+        return <Video key={c.id} data={c as VideoData} anchor={anchorReference} />
       default:
         return null
     }

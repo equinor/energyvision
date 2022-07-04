@@ -18,13 +18,12 @@
     "asset-source-fotoware",
     "media",
     "@sanity/production-preview",
-    "@sanity/document-internationalization"
+    "@sanity/document-internationalization",
+    "mux-input"
   ],
   "env": {
     "development": {
-      "plugins": [
-        "@sanity/vision"
-      ]
+      "plugins": ["@sanity/vision"]
     }
   },
   "parts": [
