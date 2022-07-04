@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 
-export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && !(_id in path("drafts.**"))] {
+export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "title": pt::text(content->title),
@@ -35,13 +35,13 @@ export type TopicPage = {
     title: string
     ingress: string
     text: string
-  }[],
-  accordions : {
+  }[]
+  accordions: {
     _key: string
     title: string
     ingress: string
     text: string
-  }[],
+  }[]
   _id: string
 }
 
