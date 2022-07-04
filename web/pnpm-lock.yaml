@@ -50,7 +50,6 @@ specifiers:
   jest: ^28.1.0
   jest-environment-jsdom: ^28.1.0
   jest-styled-components: ^7.0.8
-  mux-embed: ^4.9.3
   next: ^12.1.0
   next-sanity: ^0.5.2
   next-sanity-image: ^3.2.1
@@ -108,7 +107,6 @@ dependencies:
   html-entities: 2.3.3
   ics: 2.35.0
   instantsearch.js: 4.40.5_algoliasearch@4.13.0
-  mux-embed: 4.9.3
   next: 12.1.5_aandee56mam3mbdnvxoybr464e
   next-sanity: 0.5.2_react@18.1.0
   next-sanity-image: 3.2.1_phsaitihabgo6obm25p365gjsi
@@ -11343,10 +11341,6 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: true
-
-  /mux-embed/4.9.3:
-    resolution: {integrity: sha512-NjTlvsPf75EK+GXQS+EGI4nSyL+B+vrJlB0zyJug0eBPvNAXhsdhsx4MhbCq23RE05fgxArHcR9G/6jwz1E+eQ==}
-    dev: false
 
   /nan/2.15.0:
     resolution: {integrity: sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ==}
