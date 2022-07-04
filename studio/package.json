@@ -49,7 +49,7 @@
     "sanity-plugin-color-list": "^2.0.2",
     "sanity-plugin-documents-pane": "^1.0.8",
     "sanity-plugin-iframe-pane": "^1.0.14",
-    "sanity-plugin-media": "^1.4.9",
+    "sanity-plugin-media": "^1.4.10",
     "sanity-plugin-mux-input": "^1.1.1",
     "slugify": "^1.6.5",
     "speakingurl": "^14.0.1",

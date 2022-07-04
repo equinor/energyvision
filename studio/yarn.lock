@@ -9870,10 +9870,10 @@ sanity-plugin-iframe-pane@^1.0.14:
     prop-types "15.7.2"
     usehooks-ts "^1.2.0"
 
-sanity-plugin-media@^1.4.9:
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/sanity-plugin-media/-/sanity-plugin-media-1.4.9.tgz#bbfac2894a060380747185a98108427a0bead946"
-  integrity sha512-uJAdPMA9H4yvnRFY7DAQChNNiqDYKuJjbwa68Q8EmHtl/ghUZi6jC9ds0GGJYIVqqPgABexLvOD4penk2nt1Ag==
+sanity-plugin-media@^1.4.10:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-media/-/sanity-plugin-media-1.4.10.tgz#4240888498c06ad7a3e69e78950a9af66fec1861"
+  integrity sha512-biJx3X7ou7pJ0/a7io2zzmuyDEUcqMgQNDPY6VnOnAQ8m8EWtBwoXkfmSGZicmqVWOaqPDayLpntAFidmKldSw==
   dependencies:
     "@hookform/resolvers" "2.0.0-beta.3"
     "@reduxjs/toolkit" "^1.8.1"
