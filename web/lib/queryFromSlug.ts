@@ -32,6 +32,16 @@ const parseSlug = (slug: string): string => {
   return slug
 }
 
+const getQuery = (isNews: boolean, isMagazine: boolean) => {
+  if (isNews) {
+    return { newsQuery, localNewsQuery }
+  } else if (isMagazine) {
+    return magazineQuery
+  } else {
+    return pageQuery
+  }
+}
+
 export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   const [slugStart] = slugArray.filter((part: string) => part !== locale)
   // This is used for the event query in order to filter past events
@@ -63,15 +73,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
   const lang = getNameFromLocale(locale)
   const isNews = newsSlug[lang] === slugStart && slugArray.length > 1
   const isMagazine = magazineSlug[lang] === slugStart && slugArray.length > 1
-
-  let query: string | NewsQuery
-  if (isNews) {
-    query = { newsQuery, localNewsQuery }
-  } else if (isMagazine) {
-    query = magazineQuery
-  } else {
-    query = pageQuery
-  }
+  const query = getQuery(isNews, isMagazine)
 
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
