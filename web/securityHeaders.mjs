@@ -23,7 +23,7 @@ const ContentSecurityPolicy = `
        : "script-src 'unsafe-eval' 'report-sample' 'self' 'unsafe-inline' blob: https://www.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/"
    };
    img-src 'self' data: cdn.sanity.io https://*.siteimproveanalytics.io www.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com;
-   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu https://inferred.litix.io/ https://*.mux.com ${
+   connect-src 'self' https://tools.eurolandir.com https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu  https://*.mux.com ${
      isProduction ? '' : 'ws:'
    };
    child-src  blob:;
