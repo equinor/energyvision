@@ -10,7 +10,7 @@ import { SimpleMenuWrapper } from './SimpleMenuWrapper'
 import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import NextLink from 'next/link'
-import { getALlSitesLink } from '../../../../common/helpers/getAllSitesLink'
+import { getAllSitesLink } from '../../../../common/helpers/getAllSitesLink'
 
 import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
 
@@ -78,7 +78,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
   }
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getALlSitesLink('external')
+  const allSitesURL = getAllSitesLink('external')
 
   return (
     <>

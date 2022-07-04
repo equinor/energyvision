@@ -11,7 +11,7 @@ import { TopbarDropdown } from './TopbarDropdown'
 import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
-import { getALlSitesLink } from '../../../common/helpers/getAllSitesLink'
+import { getAllSitesLink } from '../../../common/helpers/getAllSitesLink'
 
 import { LogoLink } from '../LogoLink'
 
@@ -100,7 +100,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   }
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getALlSitesLink('internal', router?.locale || 'en')
+  const allSitesURL = getAllSitesLink('internal', router?.locale || 'en')
 
   return (
     <>
