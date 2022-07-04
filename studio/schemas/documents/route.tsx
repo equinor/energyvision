@@ -74,6 +74,10 @@ export default (isoCode: string, title: string) => {
         fieldset: 'slug',
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
+      {
+        type: 'excludeFromSearch',
+        name: 'excludeFromSearch',
+      },
     ],
     preview: {
       select: {

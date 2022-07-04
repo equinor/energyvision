@@ -73,6 +73,7 @@ import anchorReferenceField from './objects/anchorReferenceField'
 import textSnippet from './documents/textSnippet'
 import largeTable from './objects/largeTable'
 import newsList from './objects/newsList'
+import excludeFromSearch from './objects/excludeFromSearch'
 import {
   HAS_EVENT,
   HAS_FANCY_MENU,
@@ -152,6 +153,7 @@ const RemainingSchemas = [
   twitterEmbed,
   anchorLink,
   video,
+  excludeFromSearch,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

@@ -19,6 +19,7 @@ import {
   content,
   iframe,
   relatedLinks,
+  excludeFromSearch,
 } from './news/sharedNewsFields'
 import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION, HAS_SAME_SLUG } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
@@ -110,6 +111,7 @@ export default {
     content,
     iframe,
     relatedLinks,
+    excludeFromSearch,
   ].filter((e) => e),
   preview: {
     select: {
