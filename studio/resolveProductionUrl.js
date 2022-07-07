@@ -6,7 +6,7 @@ const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 const remoteUrl = () => {
   switch (dataset) {
     case 'global':
-      return 'https://web-equinor-web-sites-prod.c2.radix.equinor.com'
+      return 'https://web-equinor-web-sites-preprod.c2.radix.equinor.com/'
     case 'global-development':
       return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
     case 'global-test':
