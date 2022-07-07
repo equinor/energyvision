@@ -1,3 +1,4 @@
+import React from 'react'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 
@@ -16,16 +17,13 @@ export const StyledIframe = styled.iframe`
 type ErrorMessageProps = {
   onClose: any
   ref: any
-  message: string
+  children?: React.ReactNode
 }
 
-export const ErrorMessage = ({ onClose, ref, message }: ErrorMessageProps) => {
+export const ErrorMessage = ({ onClose, ref, children }: ErrorMessageProps) => {
   return (
-    <Dialog id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
-      <Content>
-        <h3>The Fotoware plugin could not be loaded.</h3>
-        <p>{message}</p>
-      </Content>
+    <Dialog id="fotowareAssetSource" header="Error loading Fotoware plugin" onClose={onClose} ref={ref}>
+      <Content>{children}</Content>
     </Dialog>
   )
 }

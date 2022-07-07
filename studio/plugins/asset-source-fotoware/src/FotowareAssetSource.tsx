@@ -17,7 +17,6 @@ import {
 } from './utils'
 import { Content, StyledIframe, ErrorMessage } from './components'
 import type { FWAsset } from './types'
-import { HAS_FOTOWARE } from '../../../src/lib/datasetHelpers'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
@@ -126,12 +125,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, asset])
 
   useEffect(() => {
-    if (HAS_FOTOWARE) {
-      window.addEventListener('message', handleWidgetEvent)
-      window.addEventListener('message', handleAuthEvent)
+    window.addEventListener('message', handleWidgetEvent)
+    window.addEventListener('message', handleAuthEvent)
 
-      setContainer(document.createElement('div'))
-    }
+    setContainer(document.createElement('div'))
 
     return () => {
       window.removeEventListener('message', handleWidgetEvent)
@@ -142,7 +139,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   useEffect(() => {
     const authURL = getAuthURL(requestState)
 
-    if (!accessToken && container && authURL && HAS_FOTOWARE) {
+    if (!accessToken && container && authURL) {
       newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
 
       if (newWindow.current) {
@@ -161,11 +158,15 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     }
   }, [container, requestState, handleAuthEvent, accessToken])
 
-  if (!HAS_FOTOWARE || !HAS_ENV_VARS) {
-    const message = !HAS_FOTOWARE
-      ? 'This feature is not available.'
-      : 'The required enviroment variables are not defined'
-    return <ErrorMessage onClose={onClose} ref={ref} message={message} />
+  if (!HAS_ENV_VARS) {
+    return (
+      <ErrorMessage onClose={onClose} ref={ref}>
+        <p>
+          The plugin could not be loaded because one or more required enviroment variables are not defined. Please
+          contact support.
+        </p>
+      </ErrorMessage>
+    )
   }
 
   return (
