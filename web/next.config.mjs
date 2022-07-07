@@ -16,8 +16,8 @@ const locales = languages.map((lang) => lang.locale)
 
 const extensions = ['tsx', 'ts', 'txt.ts', 'xml.ts', 'js', 'jsx']
 const globalOnlyExtensions = ['global.tsx', 'global.ts']
-
-const pageExtensions = dataset === 'global' ? [...extensions, ...globalOnlyExtensions] : extensions
+const isGlobal = dataset === 'global' || dataset === 'global-development' || dataset === 'global-test'
+const pageExtensions = isGlobal ? [...extensions, ...globalOnlyExtensions] : extensions
 
 export default withTM(
   withBundle({
