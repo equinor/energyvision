@@ -3,6 +3,7 @@ import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import { defaultLanguage } from '../../languages'
 
 export const publishDateTimeQuery = /* groq */ `
   select(
@@ -42,7 +43,7 @@ export const allNewsQuery = /* groq */ `
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug && _lang == $lang] | order(${publishDateTimeQuery} desc) {
+  "news": *[_type == "news" && slug.current == $slug && ((defined(_lang) && _lang == $lang) || (!defined(_lang) && $lang == "${defaultLanguage.name}"))] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,
