@@ -15,7 +15,9 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
     }
 
     return () => {
-      if (widget.current != undefined) widget.current.destroy()
+      if (widget.current !== undefined && widget.current.needsReInit) {
+        widget.current.reset()
+      }
     }
   }, [container, doneCallback, errorCallback])
 
