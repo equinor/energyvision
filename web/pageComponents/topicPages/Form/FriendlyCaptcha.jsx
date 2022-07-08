@@ -13,12 +13,6 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
         puzzleEndpoint: 'https://eu-api.friendlycaptcha.eu/api/v1/puzzle',
       })
     }
-
-    return () => {
-      if (widget.current !== undefined && widget.current.needsReInit) {
-        widget.current.reset()
-      }
-    }
   }, [container, doneCallback, errorCallback])
 
   return <div ref={container} className="frc-captcha" data-sitekey="FCMJCLB7MR20RMO6" />
