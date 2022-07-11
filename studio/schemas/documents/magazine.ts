@@ -9,6 +9,7 @@ import { HAS_MAGAZINE_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
 import { magazineSlug } from '../../../satellitesConfig.js'
 import slugify from 'slugify'
+import { withSlugValidation } from '../validations/validateSlug'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -93,7 +94,7 @@ export default {
       type: 'slug',
       fieldset: 'slug',
       inputComponent: SlugInput,
-      options: {
+      options: withSlugValidation({
         source: async (doc: SanityDocument) => {
           // translated document ids end with _i18n__lang while base documents don't
           const lastFiveCharacters = doc._id.slice(-5)
@@ -103,7 +104,7 @@ export default {
             : ''
         },
         slugify: (value: string) => value,
-      },
+      }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
     },

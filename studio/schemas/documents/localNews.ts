@@ -23,8 +23,7 @@ import {
   relatedLinks,
 } from './news/sharedNewsFields'
 import { SearchWeights } from '../searchWeights'
-import { validateIsUniqueWithinLocale } from '../validations/validateIsUniqueWithinLocale'
-import { HAS_SAME_SLUG } from '../../src/lib/datasetHelpers'
+import { withSlugValidation } from '../validations/validateSlug'
 
 export default {
   title: 'Local news',
@@ -87,46 +86,25 @@ export default {
       type: 'slug',
       fieldset: 'slug',
       inputComponent: SlugInput,
-      options: HAS_SAME_SLUG
-        ? {
-            source: async (doc: any) => {
-              // translated document ids end with _i18n__lang while base documents don't
-              const lastFiveCharacters = doc._id.slice(-5)
-              const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
+      options: withSlugValidation({
+        source: async (doc: any) => {
+          // translated document ids end with _i18n__lang while base documents don't
+          const lastFiveCharacters = doc._id.slice(-5)
+          const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
 
-              const localNewsTag = await client.fetch(`*[_id == $id && _type == 'localNewsTag'][0]`, {
-                id: doc.localNewsTag._ref,
-              })
-              const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
+          const localNewsTag = await client.fetch(`*[_id == $id && _type == 'localNewsTag'][0]`, {
+            id: doc.localNewsTag._ref,
+          })
+          const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
 
-              return doc.newsSlug
-                ? `/${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slugify(doc.newsSlug, {
-                    lower: true,
-                  })}`
-                : ''
-            },
-            slugify: (value: string) => value,
-            isUnique: validateIsUniqueWithinLocale,
-          }
-        : {
-            source: async (doc: any) => {
-              // translated document ids end with _i18n__lang while base documents don't
-              const lastFiveCharacters = doc._id.slice(-5)
-              const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
-
-              const localNewsTag = await client.fetch(`*[_id == $id && _type == 'localNewsTag'][0]`, {
-                id: doc.localNewsTag._ref,
-              })
-              const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
-
-              return doc.newsSlug
-                ? `/${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slugify(doc.newsSlug, {
-                    lower: true,
-                  })}`
-                : ''
-            },
-            slugify: (value: string) => value,
-          },
+          return doc.newsSlug
+            ? `/${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slugify(doc.newsSlug, {
+                lower: true,
+              })}`
+            : ''
+        },
+        slugify: (value: string) => value,
+      }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
     },

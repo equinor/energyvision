@@ -21,9 +21,9 @@ import {
   relatedLinks,
   excludeFromSearch,
 } from './news/sharedNewsFields'
-import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION, HAS_SAME_SLUG } from '../../src/lib/datasetHelpers'
+import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
-import { validateIsUniqueWithinLocale } from '../validations/validateIsUniqueWithinLocale'
+import { withSlugValidation } from '../validations/validateSlug'
 
 export default {
   title: 'News',
@@ -83,26 +83,15 @@ export default {
       type: 'slug',
       fieldset: 'slug',
       inputComponent: SlugInput,
-      options: HAS_SAME_SLUG
-        ? {
-            source: async (doc) => {
-              // translated document ids end with _i18n__lang while base documents don't
-              const lastFiveCharacters = doc._id.slice(-5)
-              const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
-              return doc.newsSlug ? `/${translatedNews}/${slugify(doc.newsSlug, { lower: true })}` : ''
-            },
-            slugify: (value) => value,
-            isUnique: validateIsUniqueWithinLocale,
-          }
-        : {
-            source: async (doc) => {
-              // translated document ids end with _i18n__lang while base documents don't
-              const lastFiveCharacters = doc._id.slice(-5)
-              const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
-              return doc.newsSlug ? `/${translatedNews}/${slugify(doc.newsSlug, { lower: true })}` : ''
-            },
-            slugify: (value) => value,
-          },
+      options: withSlugValidation({
+        source: async (doc) => {
+          // translated document ids end with _i18n__lang while base documents don't
+          const lastFiveCharacters = doc._id.slice(-5)
+          const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
+          return doc.newsSlug ? `/${translatedNews}/${slugify(doc.newsSlug, { lower: true })}` : ''
+        },
+        slugify: (value) => value,
+      }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule) => Rule.required(),
     },
