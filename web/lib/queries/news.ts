@@ -13,6 +13,10 @@ export const publishDateTimeQuery = /* groq */ `
   )
 `
 
+export const fixPreviewForDrafts = /* groq */ `
+  ((defined(_lang) && _lang == $lang) || (!defined(_lang) && $lang == "${defaultLanguage.name}"))
+`
+
 export const newsFields = /* groq */ `
   "id": _id,
   "updatedAt": _updatedAt,
@@ -43,7 +47,7 @@ export const allNewsQuery = /* groq */ `
 
 export const newsQuery = /* groq */ `
 {
-  "news": *[_type == "news" && slug.current == $slug && ((defined(_lang) && _lang == $lang) || (!defined(_lang) && $lang == "${defaultLanguage.name}"))] | order(${publishDateTimeQuery} desc) {
+  "news": *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,
