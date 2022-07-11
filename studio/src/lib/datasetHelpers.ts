@@ -22,7 +22,7 @@ const FANCY_MENU = [...GLOBAL]
 /* LANDING_PAGE requires FANCY_MENU to work */
 const LANDING_PAGE = [...GLOBAL]
 const TWITTER_FEED = [...GLOBAL_TEST, 'germany']
-const MAGAZINE = [...GLOBAL_TEST]
+const MAGAZINE = [...GLOBAL, ...GLOBAL_TEST]
 const FOTOWARE = [...GLOBAL_TEST]
 const SAME_SLUG = [...GLOBAL_TEST]
 const VIDEO = [...GLOBAL_TEST]
