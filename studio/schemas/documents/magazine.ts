@@ -125,7 +125,7 @@ export default {
         { type: 'iframe' },
       ].filter((e) => e),
     },
-  ],
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
