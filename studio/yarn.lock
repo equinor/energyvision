@@ -9836,11 +9836,12 @@ sanity-diff-patch@^1.0.9:
   dependencies:
     diff-match-patch "^1.0.5"
 
-sanity-plugin-color-list@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/sanity-plugin-color-list/-/sanity-plugin-color-list-2.0.2.tgz#4b9d124846dbab2e75f71364aed9499026a84a24"
-  integrity sha512-NEejkHQOUj3lXwzJRiWlYzbtMr6xgbiiQNmu872iCoZ2g3m/B2GAMLnPeMFrKfTvjA6lTW+CgR4okBeoZrKP4w==
+sanity-plugin-color-list@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-color-list/-/sanity-plugin-color-list-2.0.3.tgz#8aa8d142bdf843a8213ad9996db459ef53223c1c"
+  integrity sha512-PdTE+nEJzlmIOSBFxGAcG6pKVf03e5VTk0TRTazCMVOjlOeBuQ6Sy3a1qYvB3TcCl5I5me8kgHfUE/zpG6+b7w==
   dependencies:
+    "@babel/runtime" "^7.17.9"
     "@ctrl/tinycolor" "^2.5.4"
     "@sanity/ui" "^0.34.4"
     lodash "^4.17.20"
