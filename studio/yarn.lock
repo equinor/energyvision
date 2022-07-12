@@ -9899,10 +9899,10 @@ sanity-plugin-media@^1.4.10:
     theme-ui "0.3.5"
     yup "^0.32.11"
 
-sanity-plugin-mux-input@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/sanity-plugin-mux-input/-/sanity-plugin-mux-input-1.1.1.tgz#2bf9be352f70ce75e032a4cc097ba40daecd95f1"
-  integrity sha512-kVGH8cLmNH/CXq5HEYfmqzGHBTjOtUhdfAlJWZURV7YMJ3LTFrbLO9jhn8yUW8r8LvjmT51rKOC47qgey5eDoA==
+sanity-plugin-mux-input@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-mux-input/-/sanity-plugin-mux-input-1.1.3.tgz#3dbbda1f07e6abc2066634aeaae3bf0f80c8398d"
+  integrity sha512-e4SxVZPis+I0CQxPlOpJ25RBdGxkiQgy8x6NoVlf8Mph62F+oJn+7gpsYGXtWygI3w5XY+x7CRR3woFQmTSS7g==
   dependencies:
     "@mux/upchunk" "2.2.2"
     "@sanity/icons" "^1.2.1"
@@ -9912,7 +9912,7 @@ sanity-plugin-mux-input@^1.1.1:
     jsonwebtoken "^8.5.1"
     lodash "^4.17.21"
     media-chrome "^0.2.2"
-    prop-types "^15.7.2"
+    prop-types "^15.8.1"
     react-icons "^4.3.1"
     rxjs "^6.5.3"
 
