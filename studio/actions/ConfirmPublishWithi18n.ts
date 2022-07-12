@@ -135,6 +135,7 @@ export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolver
     } else {
       // Add firstPublishedField
       // https://github.com/sanity-io/sanity/issues/2179
+      let error = false
       const revisions = await fetch(
         `https://${projectId}.api.sanity.io/v${apiVersion}/data/history/${dataset}/transactions/${document?._id.replace(
           'drafts.',
@@ -148,11 +149,15 @@ export const ConfirmPublishWithi18nAction = ({ type, id, onComplete }: IResolver
         },
       )
         .then((res) => res.text())
-        .catch((err: Error) => console.error(err))
+        .catch((err: Error) => {
+          console.error(err)
+          error = true
+        })
 
       const hasBeenPublished = !!revisions
 
       if (
+        !error &&
         document &&
         requiresFirstPublished.includes(type) &&
         (!hasBeenPublished || !document?.[FIRST_PUBLISHED_AT_FIELD_NAME])
