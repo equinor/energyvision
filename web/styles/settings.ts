@@ -115,6 +115,10 @@ export const typography = css`
     --fontWeight-medium: 500;
     --fontWeight-regular: 400;
   }
+
+  :root {
+    line-break: strict;
+  }
 `
 
 export const spacings = css`
