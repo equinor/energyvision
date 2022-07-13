@@ -118,6 +118,7 @@ export const typography = css`
 
   :root {
     line-break: strict;
+    word-break: keep-all;
   }
 `
 
