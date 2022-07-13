@@ -6,15 +6,15 @@ export type GetProcessEnvType = IO.IO<E.Either<string, string>>
 
 // TODO: Should we move specific types to the place where they are
 export type BlobConfiguration = {
-  client: BlobServiceClient,
+  client: BlobServiceClient
   container: string
 }
 
 export type BlockChildNode = {
-    _key: string
-    _type: string
-    marks: string[]
-    text: string
+  _key: string
+  _type: string
+  marks: string[]
+  text: string
 }
 
 export type BlockNode = {
@@ -59,4 +59,14 @@ export type NewsIndex = {
   thumbnailUrl: string
 }
 
-export type IndexType = EventIndex | TopicIndex | NewsIndex
+export type MagazineIndex = {
+  slug: string
+  objectID: string
+  type: string
+  pageTitle: string
+  title: string
+  ingress: string
+  text: string
+}
+
+export type IndexType = EventIndex | TopicIndex | NewsIndex | MagazineIndex
