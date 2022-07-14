@@ -17,7 +17,7 @@ const mapperFunction: MapperFunctionType =
   (article) =>
   ({ _key, title, ingress, text }) => ({
     slug: article.slug,
-    objectID: `${article._id}- ${_key}`,
+    objectID: `${article._id}-${_key}`,
     type: 'magazine',
     pageTitle: article.title,
     title,
