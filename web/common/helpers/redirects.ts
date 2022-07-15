@@ -12,6 +12,10 @@ export const getExternalRedirectUrl = async (slug: string, locale: string): Prom
 export const getDnsRedirect = (host: string, pathname: string) => {
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
 
+  if (dns === 'statoil.com') {
+    return `https://www.equinor.com${pathname}`
+  }
+
   if (dns === 'equinor.kr') {
     return `https://www.equinor.co.kr${pathname}`
   }
@@ -51,10 +55,6 @@ const dnsRedirects = [
   {
     from: 'equinor.no',
     to: '/no',
-  },
-  {
-    from: 'statoil.com',
-    to: '/en',
   },
   {
     from: 'equinorventures.com',
