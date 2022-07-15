@@ -37,9 +37,6 @@ const newsSlug = {
 const magazineSlug = {
   en_GB: 'magazine',
   nb_NO: 'magasin',
-  pt_BR: 'revista',
-  pl_PL: 'czasopismo',
-  de_DE: 'zeitschrift',
 }
 
 /*
@@ -119,6 +116,10 @@ const websiteDomains = {
   japan: {
     url: 'https://www.equinor.jp',
     meta: 'equinor.jp',
+  },
+  southkorea: {
+    url: 'https://www.equinor.co.kr',
+    meta: 'equinor.co.kr',
   },
   'global-development': {
     url: 'localhost:3000',
