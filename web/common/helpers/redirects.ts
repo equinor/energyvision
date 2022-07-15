@@ -10,58 +10,11 @@ export const getExternalRedirectUrl = async (slug: string, locale: string): Prom
 }
 
 export const getDnsRedirect = (host: string, pathname: string) => {
-  const dnsRedirects = [
-    {
-      from: 'equinor.co.uk/mariner',
-      to: '/en/energy/mariner',
-    },
-    {
-      from: 'equinor.co.uk',
-      to: '/en/where-we-are/united-kingdom',
-    },
-    {
-      from: 'equinorpensjon.no',
-      to: '/no/om-oss/equinor-pensjon',
-    },
-    {
-      from: 'statoilpensjon.no',
-      to: '/no/om-oss/equinor-pensjon',
-    },
-    {
-      from: 'equinor.co.tz',
-      to: '/en/where-we-are/tanzania',
-    },
-    {
-      from: 'statoil.co.tz',
-      to: '/en/where-we-are/tanzania',
-    },
-    {
-      from: 'equinor.no',
-      to: '/no',
-    },
-    {
-      from: 'statoil.com',
-      to: '/en',
-    },
-    {
-      from: 'equinorventures.com',
-      to: '/en/energy/ventures',
-    },
-    {
-      from: 'h2hsaltend.co.uk',
-      to: '/en/energy/h2h-saltend',
-    },
-    {
-      from: 'equinor.ca',
-      to: '/en/where-we-are/canada',
-    },
-    {
-      from: 'techstars.equinor.com',
-      to: '/en/energy/techstars',
-    },
-  ]
-
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
+
+  if (dns === 'equinor.kr') {
+    return `https://www.equinor.co.kr${pathname}`
+  }
 
   const redirect =
     dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
@@ -69,3 +22,54 @@ export const getDnsRedirect = (host: string, pathname: string) => {
 
   return redirect && `https://www.equinor.com${redirect.to}`
 }
+
+const dnsRedirects = [
+  {
+    from: 'equinor.co.uk/mariner',
+    to: '/en/energy/mariner',
+  },
+  {
+    from: 'equinor.co.uk',
+    to: '/en/where-we-are/united-kingdom',
+  },
+  {
+    from: 'equinorpensjon.no',
+    to: '/no/om-oss/equinor-pensjon',
+  },
+  {
+    from: 'statoilpensjon.no',
+    to: '/no/om-oss/equinor-pensjon',
+  },
+  {
+    from: 'equinor.co.tz',
+    to: '/en/where-we-are/tanzania',
+  },
+  {
+    from: 'statoil.co.tz',
+    to: '/en/where-we-are/tanzania',
+  },
+  {
+    from: 'equinor.no',
+    to: '/no',
+  },
+  {
+    from: 'statoil.com',
+    to: '/en',
+  },
+  {
+    from: 'equinorventures.com',
+    to: '/en/energy/ventures',
+  },
+  {
+    from: 'h2hsaltend.co.uk',
+    to: '/en/energy/h2h-saltend',
+  },
+  {
+    from: 'equinor.ca',
+    to: '/en/where-we-are/canada',
+  },
+  {
+    from: 'techstars.equinor.com',
+    to: '/en/energy/techstars',
+  },
+]
