@@ -13,7 +13,7 @@ const publishDateTimeQuery = /* groq */ `
 `
 
 export const query = /* groq */ `*[_type == "news" && _lang == $lang && !(_id in path("drafts.**")) && excludeFromSearch != true && 
-(subscriptionType != "Crude" && ((count(tags)==1 && tags[0]->.key.current !="crude-oil-assays") || (count(tags) >1))) ] {
+(subscriptionType != "Crude" && ((count(tags)==1 && tags[0]->.key.current !="crude-oil-assays") || (count(tags) >1) || !defined(tags))) ] {
   "slug": slug.current,
   _id,
   "title": title,
