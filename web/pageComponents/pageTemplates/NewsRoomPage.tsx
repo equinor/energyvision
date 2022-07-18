@@ -1,5 +1,4 @@
 import { NextSeo } from 'next-seo'
-import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
 import { toPlainText } from '@portabletext/react'
@@ -12,48 +11,11 @@ import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
+import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
+import { getUrl } from './algoliaPages/helpers'
 
-import type { NextRouter } from 'next/router'
 import type { NewsroomData } from '../../types'
-
-const Wrapper = styled.div`
-  max-width: var(--maxViewportWidth);
-  margin: 0 auto;
-  grid-template-areas:
-    '. intro'
-    '. .'
-    'news news';
-  grid-template-rows: auto var(--space-large) auto;
-  grid-template-columns: var(--space-large) auto;
-  display: grid;
-  /* Yup, in an ideal world we might have used some clamp based paddings here to avoid MQ, but the smallest
-  one is way too big. Might create some fluid spacings later on   */
-  @media (min-width: 800px) {
-    grid-template-areas:
-      '. . .'
-      '. intro .'
-      '. . .'
-      '.  news news';
-    grid-template-rows: var(--space-xxLarge) auto var(--space-3xLarge) auto;
-    grid-template-columns: var(--layout-paddingHorizontal-small) minmax(auto, var(--layout-maxContent-narrow)) 1fr;
-  }
-`
-
-const Intro = styled.div`
-  grid-area: intro;
-`
-
-const News = styled.div`
-  grid-area: news;
-`
-
-const UnpaddedText = styled.div`
-  & p:only-child {
-    margin-bottom: 0;
-  }
-`
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -64,13 +26,6 @@ type NewsRoomTemplateProps = {
 
 const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
   const router = useRouter()
-
-  const getUrl = (router: NextRouter, slug: string | undefined) => {
-    if (!router || !slug) return undefined
-
-    const { pathname, locale } = router
-    return getFullUrl(pathname, slug, locale)
-  }
 
   const fullUrl = getUrl(router, slug)
 
