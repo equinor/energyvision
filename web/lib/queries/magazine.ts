@@ -18,3 +18,14 @@ export const magazineQuery = /* groq */ `
       },
       ${slugsForNewsAndMagazine('magazine')},
 }`
+
+export const magazineIndexQuery = /* groq */ `
+  *[_type == "magazineIndex" && _lang == $lang] {
+    _id,
+    "documentTitle": seo.documentTitle,
+    "metaDescription": seo.metaDescription,
+    openGraphImage,
+    title,
+    ingress,
+    backgroundImage
+  }`

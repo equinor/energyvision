@@ -3,7 +3,7 @@ import type { Rule } from '@sanity/types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
-import { HAS_EVENT, HAS_LANDING_PAGE, HAS_NEWSROOM } from '../../src/lib/datasetHelpers'
+import { HAS_EVENT, HAS_LANDING_PAGE, HAS_NEWSROOM, HAS_MAGAZINE } from '../../src/lib/datasetHelpers'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -41,6 +41,9 @@ export default (isoCode: string, title: string) => {
           },
           HAS_NEWSROOM && {
             type: 'newsroom',
+          },
+          HAS_MAGAZINE && {
+            type: 'magazineIndex',
           },
         ].filter((e) => e),
         options: {

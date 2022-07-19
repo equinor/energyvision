@@ -30,6 +30,7 @@ import internalServerError from './documents/500'
 import localNews from './documents/localNews'
 import localNewsTag from './documents/localNewsTag'
 import newsroom from './documents/newsroom'
+import magazineIndex from './documents/magazineIndexPage'
 
 // Objects
 import imageWithAlt from './objects/imageWithAlt'
@@ -105,7 +106,7 @@ const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
 const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = HAS_FORMS ? [form] : []
-const MagazineSchemas = HAS_MAGAZINE ? [magazine] : []
+const MagazineSchemas = HAS_MAGAZINE ? [magazine, magazineIndex] : []
 const RemainingSchemas = [
   page,
   ...routeSchemas,

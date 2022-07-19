@@ -1,6 +1,6 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { FileIcon, TopicDocuments, NewsDocuments } from '../../../../icons'
-import { HAS_NEWSROOM } from '../../datasetHelpers'
+import { HAS_NEWSROOM, HAS_MAGAZINE } from '../../datasetHelpers'
 
 const miscPages = [
   S.listItem()
@@ -80,6 +80,35 @@ const miscPages = [
                   id: 'newsroom',
                   type: 'newsroom',
                   template: 'newsroom',
+                },
+              },
+            },
+          ]),
+      ),
+  HAS_MAGAZINE &&
+    HAS_NEWSROOM &&
+    S.listItem()
+      .title('Magazine Index Page')
+      .icon(NewsDocuments)
+      .child(
+        S.documentList()
+          .id('magazineIndex')
+          .title('Magazine Index Page')
+          .schemaType('magazineIndex')
+          .filter('(_id match "*" + $id) && _type == $type')
+          .params({
+            id: 'magazineIndex',
+            type: 'magazineIndex',
+          })
+          .menuItems([
+            {
+              title: 'Create new',
+              intent: {
+                type: 'create',
+                params: {
+                  id: 'magazineIndex',
+                  type: 'magazineIndex',
+                  template: 'magazineIndex',
                 },
               },
             },
