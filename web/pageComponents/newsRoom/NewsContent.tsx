@@ -28,10 +28,10 @@ const GridNewsList = styled(NewsList)`
   grid-area: list;
 `
 
-const NewsContent = () => {
+const NewsContent = ({ hasFilters = true, hasSearch = true }) => {
   return (
     <NewsRoomContent>
-      <GridFilters></GridFilters>
+      {(hasFilters || hasSearch) && <GridFilters hasFilters={hasFilters} hasSearch={hasSearch}></GridFilters>}
       <GridNewsList></GridNewsList>
     </NewsRoomContent>
   )

@@ -26,7 +26,12 @@ const StyledFilters = styled.div`
   }
 `
 
-const Filters = ({ ...rest }) => {
+type FiltersProps = {
+  hasFilters: boolean
+  hasSearch: boolean
+}
+
+const Filters = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
   const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
 
@@ -40,32 +45,36 @@ const Filters = ({ ...rest }) => {
 
   return (
     <StyledFilters {...rest}>
-      <SearchBoxContainer>
-        <UncontrolledSearchBox />
-      </SearchBoxContainer>
+      {hasSearch && (
+        <SearchBoxContainer>
+          <UncontrolledSearchBox />
+        </SearchBoxContainer>
+      )}
 
-      <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
-        <AccordionItem>
-          <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
-          <AccordionPanel>
-            <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
-          <AccordionPanel>
-            <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <FilterHeader
-            label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
-          ></FilterHeader>
-          <AccordionPanel>
-            <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
-          </AccordionPanel>
-        </AccordionItem>
-      </StyledAccordion>
+      {hasFilters && (
+        <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
+          <AccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
+            <AccordionPanel>
+              <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
+            <AccordionPanel>
+              <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <FilterHeader
+              label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
+            ></FilterHeader>
+            <AccordionPanel>
+              <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
+            </AccordionPanel>
+          </AccordionItem>
+        </StyledAccordion>
+      )}
     </StyledFilters>
   )
 }
