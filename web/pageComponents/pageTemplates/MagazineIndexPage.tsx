@@ -91,7 +91,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
                 }} */
             >
               <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
-              <NewsContent />
+              <NewsContent hasFilters={false} />
             </InstantSearch>
           </News>
         </Wrapper>
