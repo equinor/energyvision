@@ -18,7 +18,7 @@ specifiers:
   '@react-spring/web': ^9.4.5
   '@sanity/client': ^3.2.0
   '@sanity/image-url': ^1.0.1
-  '@sanity/webhook': ^1.0.2
+  '@sanity/webhook': ^2.0.0
   '@storybook/addon-docs': ^6.5.9
   '@storybook/addon-essentials': ^6.5.9
   '@storybook/addon-links': ^6.5.9
@@ -93,7 +93,7 @@ dependencies:
   '@react-spring/web': 9.4.5_ef5jwxihqo6n7gxfmzogljlgcm
   '@sanity/client': 3.3.0
   '@sanity/image-url': 1.0.1
-  '@sanity/webhook': 1.0.2
+  '@sanity/webhook': 2.0.0
   '@types/easy-soap-request': 4.1.1
   '@types/uuid': 8.3.4
   '@types/xml2js': 0.4.9
@@ -3893,8 +3893,8 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/webhook/1.0.2:
-    resolution: {integrity: sha512-WV31Y8XNKOULoYTgKe3BF5ErVDD8XlS81EcRjj0kNOKuPrVfHDzxwymop4HNTGt6vxrVnTTAfR/XoWL3jFeC5g==}
+  /@sanity/webhook/2.0.0:
+    resolution: {integrity: sha512-KusHeWVy6yW3hcgVHbGx6qVv//bUj3CD9Nr0EOw086+mo/ESrUV21HjOCrNQ+AYqXvJ9H5qhqmMiuc8H5dXUGA==}
     engines: {node: '>=12.0.0'}
     dependencies:
       base64url: 3.0.1
