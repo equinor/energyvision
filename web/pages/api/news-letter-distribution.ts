@@ -33,8 +33,11 @@ const logRequest = (req: NextApiRequest, title: string) => {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log('Datetime: ' + new Date())
   console.log('Sending newsletter...')
+  console.log('Signature header: ', req.headers[SIGNATURE_HEADER_NAME])
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
+  console.log('Signature as string: ', req.headers[SIGNATURE_HEADER_NAME])
   const body = await readBody(req)
   if (!isValidSignature(body, signature, SANITY_API_TOKEN)) {
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
