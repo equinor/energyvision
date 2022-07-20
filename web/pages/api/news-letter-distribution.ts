@@ -26,7 +26,8 @@ const logRequest = (req: NextApiRequest, title: string) => {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log('Sending newsletter...')
+  console.log('Sending newsletter...  ')
+  console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
   const body = (await getRawBody(req)).toString()
 
@@ -46,6 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     newsType: data.newsType,
     languageCode: locale,
   }
+
+  console.log('Newsletter link: ', newsDistributionParameters.link)
 
   await distribute(newsDistributionParameters).then((isSuccessful) => {
     if (!isSuccessful) {
