@@ -3,6 +3,7 @@ import { languages } from '../../languages'
 import { NewsDistributionParameters } from '../../types/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
+import getRawBody from 'raw-body'
 import getConfig from 'next/config'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
@@ -15,36 +16,27 @@ export const config = {
   },
 }
 
-async function readBody(readable: NextApiRequest) {
-  const chunks = []
-  for await (const chunk of readable) {
-    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
-  }
-  return Buffer.concat(chunks).toString('utf8')
-}
-
 const logRequest = (req: NextApiRequest, title: string) => {
-  console.log('\n\n')
+  console.log('\n')
   console.log(title)
   console.log('Datetime: ' + new Date())
   console.log('Headers:\n', req.headers)
   console.log('Body:\n', req.body)
-  console.log('\n\n')
+  console.log('\n')
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log('Datetime: ' + new Date())
   console.log('Sending newsletter...')
-  console.log('Signature header: ', req.headers[SIGNATURE_HEADER_NAME])
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
-  console.log('Signature as string: ', req.headers[SIGNATURE_HEADER_NAME])
-  const body = await readBody(req)
+  const body = (await getRawBody(req)).toString()
+
   if (!isValidSignature(body, signature, SANITY_API_TOKEN)) {
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
+
   const { publicRuntimeConfig } = getConfig()
-  const data = req.body
+  const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
   const newsDistributionParameters: NewsDistributionParameters = {
     timeStamp: data.timeStamp,
@@ -54,8 +46,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     newsType: data.newsType,
     languageCode: locale,
   }
+
   await distribute(newsDistributionParameters).then((isSuccessful) => {
     if (!isSuccessful) {
+      console.log('Newsletter distribution failed!')
       return res.status(400).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
     }
     console.log('Newsletter sent successfully!')
