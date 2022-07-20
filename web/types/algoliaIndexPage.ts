@@ -2,7 +2,7 @@ import { InstantSearchServerState } from 'react-instantsearch-hooks-web'
 import type { MenuData, FooterColumns, IntlData, ImageWithAlt } from './types'
 import { PortableTextBlock } from '@portabletext/types'
 
-export type NewsRoomProps = {
+export type AlgoliaIndexPageProps = {
   serverState?: InstantSearchServerState
   /* url: string */
   isServerRendered?: boolean
@@ -15,10 +15,16 @@ export type NewsRoomProps = {
   }
 }
 
-export type NewsroomData = {
+export type NewsRoomProps = AlgoliaIndexPageProps
+export type MagazineIndexProps = AlgoliaIndexPageProps
+
+export type AlgoliaIndexPageData = {
   documentTitle?: string
   metaDescription?: string
   openGraphImage?: ImageWithAlt
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
 }
+
+export type NewsroomData = AlgoliaIndexPageData
+export type MagazineIndexData = AlgoliaIndexPageData

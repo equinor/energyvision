@@ -1,1 +1,1 @@
-export * from './newsRoom'
+export * from './algoliaIndexPage'

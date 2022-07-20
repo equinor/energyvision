@@ -15,16 +15,16 @@ import { metaTitleSuffix } from '../../languages'
 import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
 import { getUrl } from './algoliaPages/helpers'
 
-import type { NewsroomData } from '../../types'
+import type { MagazineIndexData } from '../../types'
 
-type NewsRoomTemplateProps = {
+type MagazineIndexTemplateProps = {
   isServerRendered?: boolean
   locale: string
-  pageData: NewsroomData | undefined
+  pageData: MagazineIndexData | undefined
   slug?: string
 }
 
-const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
+const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }: MagazineIndexTemplateProps) => {
   const router = useRouter()
 
   const fullUrl = getUrl(router, slug)
