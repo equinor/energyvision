@@ -14,10 +14,23 @@ const withBundle = withBundleAnalyzer({
 
 const locales = languages.map((lang) => lang.locale)
 
-const extensions = ['tsx', 'ts', 'js', 'jsx']
-const globalOnlyExtensions = ['global.tsx', 'global.ts']
-const isGlobal = dataset === 'global' || dataset === 'global-development' || dataset === 'global-test'
-const pageExtensions = isGlobal ? [...extensions, ...globalOnlyExtensions] : extensions
+const getPageExtensions = (dataset) => {
+  const extensions = ['tsx', 'ts', 'js', 'jsx']
+  const globalOnlyExtensions = ['global.tsx', 'global.ts']
+  const devOnlyExtensions = ['dev.tsx', 'dev.ts']
+
+  if (dataset === 'global') {
+    return [...extensions, ...globalOnlyExtensions]
+  }
+
+  if (dataset === 'global-development' || dataset === 'global-test') {
+    return [...extensions, ...globalOnlyExtensions, ...devOnlyExtensions]
+  }
+
+  return extensions
+}
+
+const pageExtensions = getPageExtensions(dataset)
 
 export default withTM(
   withBundle({
