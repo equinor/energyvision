@@ -549,7 +549,7 @@ export type VideoData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   asset: {
-    playbackId: string
+    url: string
   }
   designOptions: {
     background: BackgroundColours

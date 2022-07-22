@@ -70,8 +70,7 @@
     "styled-normalize": "^8.0.7",
     "swr": "^1.2.2",
     "uuid": "^8.3.2",
-    "xml2js": "^0.4.23",
-    "@mux/mux-video-react": "^0.5.1"
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.13.1",
