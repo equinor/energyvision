@@ -3,6 +3,7 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
+import { useEffect, useRef } from 'react'
 import MuxVideo from '@mux/mux-video-react';
 
 type VideoProps = {
