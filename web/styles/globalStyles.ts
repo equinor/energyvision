@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import { normalize } from 'styled-normalize'
-import { colors, typography, spacings, componentSettings } from './settings'
+import { colors, typography, spacings, componentSettings, strictLineBreak } from './settings'
 import { generic } from './generic'
 import { elements } from './elements'
 import { skipNavLink, cookieBot, algolia } from './components'
@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   /* Settings */
   ${colors}
   ${typography}
+  ${strictLineBreak}
   ${spacings}
   ${componentSettings}
   /* Generic */

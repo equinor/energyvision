@@ -1,3 +1,4 @@
+import { hasStrictLineBreakTypography } from '../common/helpers/datasetHelpers'
 import { css } from 'styled-components'
 
 export const colors = css`
@@ -115,12 +116,16 @@ export const typography = css`
     --fontWeight-medium: 500;
     --fontWeight-regular: 400;
   }
-
-  :root {
-    line-break: strict;
-    word-break: keep-all;
-  }
 `
+
+export const strictLineBreak = hasStrictLineBreakTypography
+  ? css`
+      :root {
+        line-break: strict;
+        word-break: keep-all;
+      }
+    `
+  : css``
 
 export const spacings = css`
   // prettier-ignore

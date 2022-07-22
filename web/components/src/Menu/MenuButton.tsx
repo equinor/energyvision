@@ -13,6 +13,7 @@ export type MenuButtonProps = {
 const StyledButtonText = styled.span`
   line-height: 1em;
   display: none;
+  word-break: keep-all;
 
   @media (min-width: 600px) {
     display: block;
