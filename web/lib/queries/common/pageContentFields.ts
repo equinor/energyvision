@@ -460,7 +460,7 @@ const pageContentFields = /* groq */ `
         ${markDefs},
       },
 	  "asset":video.asset->{
-	  		"url": "https://stream.mux.com/" + playbackId
+	  		playbackId
 			},
     "designOptions": {
       "background": coalesce(background.title, 'White'),

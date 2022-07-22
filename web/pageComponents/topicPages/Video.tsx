@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
 import { useEffect, useRef } from 'react'
-import Hls from 'hls.js'
+import MuxVideo from '@mux/mux-video-react';
 
 type VideoProps = {
   data: VideoData
@@ -24,30 +24,7 @@ const StyledTitle = styled(TitleText)`
 
 const Video = ({ data, anchor }: VideoProps) => {
   const { asset, designOptions, title, ingress } = data
-  const videoRef = useRef(null)
-  const src = asset.url
-  useEffect(() => {
-    let hls: Hls | undefined = undefined
-    if (videoRef.current) {
-      const video: HTMLVideoElement = videoRef.current
-
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        // This will run in safari, where HLS is supported natively
-        video.src = src
-      } else if (Hls.isSupported()) {
-        // This will run in all other modern browsers
-        hls = new Hls()
-        hls.loadSource(src)
-        hls.attachMedia(video)
-      }
-    }
-
-    return () => {
-      if (hls) {
-        hls.destroy()
-      }
-    }
-  }, [videoRef, src])
+  const playbackId = asset.playbackId
 
   return (
     <>
@@ -60,8 +37,12 @@ const Video = ({ data, anchor }: VideoProps) => {
             </StyledIngress>
           )}
           {
-            // eslint-disable-next-line jsx-a11y/media-has-caption
-            <video controls ref={videoRef} style={{ width: '100%' }} />
+            <MuxVideo
+              streamType="on-demand"
+              playbackId={playbackId}
+              controls
+              style={{ height: '100%', width: '100%' }}
+            />
           }
         </Container>
       </BackgroundContainer>
