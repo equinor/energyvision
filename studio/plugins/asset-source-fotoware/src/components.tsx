@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 
@@ -20,10 +20,12 @@ type ErrorMessageProps = {
   children?: React.ReactNode
 }
 
-export const ErrorMessage = ({ onClose, ref, children }: ErrorMessageProps) => {
+export const ErrorMessage = forwardRef<HTMLDivElement, ErrorMessageProps>((props, ref) => {
+  const { onClose, children } = props
+
   return (
     <Dialog id="fotowareAssetSource" header="Error loading Fotoware plugin" onClose={onClose} ref={ref}>
       <Content>{children}</Content>
     </Dialog>
   )
-}
+})
