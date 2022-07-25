@@ -51,7 +51,7 @@ const IFrame = ({
     <>
       <div className={`cookieconsent-optin-${cookiePolicy}`}>
         <IFrameContainer aspectRatioPadding={containerPadding}>
-          <StyledIFrame src={url} title={frameTitle}></StyledIFrame>
+          <StyledIFrame data-cookieblock-src={url} title={frameTitle} data-cookieconsent={cookiePolicy}></StyledIFrame>
         </IFrameContainer>
       </div>
       {cookiePolicy !== 'none' && (
