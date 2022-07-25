@@ -30,7 +30,7 @@ const ContentSecurityPolicy = `
    frame-src 'self' https://consentcdn.cookiebot.com https://lt.morningstar.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com https://tools.eurolandir.com/ https://platform.twitter.com/;
    frame-ancestors ${xFrameUrls};
    font-src 'self' https://eds-static.equinor.com;
-   media-src 'self' blob:;
+   media-src 'self' blob: https://stream.mux.com/;
 
  `
 
