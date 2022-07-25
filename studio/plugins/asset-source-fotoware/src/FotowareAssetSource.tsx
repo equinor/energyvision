@@ -30,6 +30,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [asset, setAsset] = useState<FWAsset | null>(null)
   const [iframeURL, setIframeURL] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
@@ -89,23 +90,29 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           const url = getExportURL(uri)
           setLoading(true)
 
-          const response = await fetch(url)
-          const data = await response.json()
+          const response = await fetch(url).catch((error) => {
+            console.error('An error occured while retrieving base64 image', error)
+            setError('An error occured while retrieving the image. If this keeps happening, please contact support.')
+          })
 
-          onSelect([
-            {
-              kind: 'base64',
-              value: data.image,
-              assetDocumentProps: {
-                originalFileName: asset?.filename || '',
-                source: {
-                  id: asset?.uniqueid || uri,
-                  name: 'fotoware',
-                  url: source,
+          if (response) {
+            const data = await response.json()
+
+            onSelect([
+              {
+                kind: 'base64',
+                value: data.image,
+                assetDocumentProps: {
+                  originalFileName: asset?.filename || '',
+                  source: {
+                    id: asset?.uniqueid || uri,
+                    name: 'fotoware',
+                    url: source,
+                  },
                 },
               },
-            },
-          ])
+            ])
+          }
         }
 
         getBase64(exportedImage.image.highCompression, exportedImage.source)
@@ -165,6 +172,14 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           The plugin could not be loaded because one or more required enviroment variables are not defined. Please
           contact support.
         </p>
+      </ErrorMessage>
+    )
+  }
+
+  if (error) {
+    return (
+      <ErrorMessage onClose={onClose} ref={ref}>
+        <p>{error}</p>
       </ErrorMessage>
     )
   }
