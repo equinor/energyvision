@@ -78,6 +78,7 @@ const defaultWebLanguage = {
   argentina: 'spanish-ar',
   storage: 'german',
   southkorea: 'korean',
+  japan: 'japanese',
 }
 
 /**
