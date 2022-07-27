@@ -2,7 +2,7 @@
 import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
 // @ts-ignore
 import { createPortal } from 'react-dom'
-import { Dialog } from '@sanity/ui'
+import { Dialog, Spinner } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import {
   getAuthURL,
@@ -15,7 +15,7 @@ import {
   getExportWidgetURL,
   FotowareEvents,
 } from './utils'
-import { Content, StyledIframe, ErrorMessage } from './components'
+import { Content, StyledIframe, ErrorMessage, LoadingContent } from './components'
 import type { FWAsset } from './types'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
@@ -185,7 +185,13 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }
 
   return (
-    <Dialog width={2} id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
+    <Dialog
+      width={loading ? 0 : 2}
+      id="fotowareAssetSource"
+      header="Select image from Fotoware"
+      onClose={onClose}
+      ref={ref}
+    >
       {container && !accessToken && createPortal(props.children, container)}
 
       {accessToken && iframeURL && !loading ? (
@@ -195,7 +201,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       ) : (
         <Content>
           {loading ? (
-            <p>Retrieving image...</p>
+            <LoadingContent>
+              <Spinner muted />
+              <p>Retrieving image...</p>
+            </LoadingContent>
           ) : (
             <p>Authentication required, please login to Fotoware using the popup window.</p>
           )}

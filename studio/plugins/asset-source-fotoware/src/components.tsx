@@ -14,6 +14,14 @@ export const StyledIframe = styled.iframe`
   border: none;
 `
 
+export const LoadingContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  grid-gap: 1rem;
+`
+
 type ErrorMessageProps = {
   onClose: any
   ref: any
