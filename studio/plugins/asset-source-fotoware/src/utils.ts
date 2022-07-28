@@ -70,7 +70,7 @@ export const getSelectionWidgetURL = (accessToken: string) => {
 export const getExportWidgetURL = (accessToken: string, href: string) => {
   const assetURI = encodeURI(href)
   const publicationText = encodeURI(`Sanity (Dataset: ${process.env.SANITY_STUDIO_API_DATASET})`)
-  const params = `access_token=${accessToken}&i=${assetURI}&pub=${publicationText}&&caption=false&action=false&behaviour=false&publication=false`
+  const params = `access_token=${accessToken}&i=${assetURI}&pub=${publicationText}&&caption=false&action=false&behaviour=false&publication=false&enhance=false`
 
   return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/publish?${params}`
 }
