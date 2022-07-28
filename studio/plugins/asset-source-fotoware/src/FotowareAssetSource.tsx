@@ -16,7 +16,7 @@ import {
   FotowareEvents,
 } from './utils'
 import { Content, ErrorMessage, LoadingContent, FotowareWidget } from './components'
-import type { FWAsset } from './types'
+import type { FWAsset, FWAttributeField } from './types'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
@@ -98,6 +98,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           if (response) {
             const data = await response.json()
 
+            const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
+            const assetDescription =
+              asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+
             onSelect([
               {
                 kind: 'base64',
@@ -109,6 +113,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                     name: 'fotoware',
                     url: source,
                   },
+                  ...(assetTitle?.value && { title: assetTitle.value }),
+                  ...(assetDescription?.value && { description: assetDescription.value }),
                 },
               },
             ])

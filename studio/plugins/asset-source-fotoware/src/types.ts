@@ -21,7 +21,14 @@ export type FWAsset = {
     imageattributes: any
     photoAttributes: any
   }
+  builtinFields: FWAttributeField[]
   metadata: any
   ancestors: any[]
   props: any
+}
+
+export type FWAttributeField = {
+  field: string
+  required: boolean
+  value: any
 }
