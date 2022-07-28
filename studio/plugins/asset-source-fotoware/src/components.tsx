@@ -10,7 +10,7 @@ export const StyledIframe = styled.iframe`
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 70vh;
+  min-height: 80vh;
   border: none;
 `
 
