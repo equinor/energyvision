@@ -3,6 +3,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { validateCaptcha } from './forms/validateCaptcha'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Invalid request' })
+  }
+
   const data = req.body
   const frcCaptchaSolution = data.frcCaptchaSolution
   if (!frcCaptchaSolution) {

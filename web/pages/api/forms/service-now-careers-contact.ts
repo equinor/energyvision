@@ -3,8 +3,26 @@ import { sendRequestToServiceNow } from './service-now-base'
 import { validateCaptcha } from './validateCaptcha'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const catalogIdentifier = '59e02ac8375a3640615af01643990e7c'
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Invalid request' })
+  }
+
   const frcCaptchaSolution = req.body.frcCaptchaSolution
+  if (!frcCaptchaSolution) {
+    return res.status(500).json({ msg: 'Anti-robot check solution was not present' })
+  }
+  try {
+    const { accept, errorCode } = await validateCaptcha(frcCaptchaSolution)
+    if (!accept) {
+      console.log(`Anti-robot check failed [code=${errorCode}] for careers contact form`)
+      return res.status(400).json({ msg: `Anti-robot check failed [code=${errorCode}], please try again.` })
+    }
+  } catch (err) {
+    console.error('Error occured while attempting to validate captcha', err)
+    return res.status(502).json({ msg: 'failed to validate captcha' })
+  }
+
+  const catalogIdentifier = '59e02ac8375a3640615af01643990e7c'
   const data = req.body.data
   const phone = encodeURI(data.phone)
   const email = encodeURI(data.email)
@@ -37,20 +55,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     questions +
     '&PreferredLang=' +
     preferredLang
-
-  if (!frcCaptchaSolution) {
-    return res.status(500).json({ msg: 'Anti-robot check solution was not present' })
-  }
-  try {
-    const { accept, errorCode } = await validateCaptcha(data.frcCaptchaSolution)
-    if (!accept) {
-      console.log(`Anti-robot check failed [code=${errorCode}] for careers contact form`)
-      return res.status(400).json({ msg: `Anti-robot check failed [code=${errorCode}], please try again.` })
-    }
-  } catch (err) {
-    console.error('Error occured while attempting to validate captcha', err)
-    return res.status(502).json({ msg: 'failed to validate captcha' })
-  }
 
   await sendRequestToServiceNow(urlString)
     .then((response) => {
