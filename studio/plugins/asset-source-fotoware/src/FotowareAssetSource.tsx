@@ -15,7 +15,7 @@ import {
   getExportWidgetURL,
   FotowareEvents,
 } from './utils'
-import { Content, StyledIframe, ErrorMessage, LoadingContent } from './components'
+import { Content, ErrorMessage, LoadingContent, FotowareWidget } from './components'
 import type { FWAsset } from './types'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
@@ -184,32 +184,24 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     )
   }
 
+  if (accessToken && iframeURL && !loading) {
+    return <FotowareWidget onClose={onClose} url={iframeURL} iframeRef={iframeRef} />
+  }
+
   return (
-    <Dialog
-      width={loading ? 0 : 2}
-      id="fotowareAssetSource"
-      header="Select image from Fotoware"
-      onClose={onClose}
-      ref={ref}
-    >
+    <Dialog width={0} id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
       {container && !accessToken && createPortal(props.children, container)}
 
-      {accessToken && iframeURL && !loading ? (
-        <Content>
-          <StyledIframe src={iframeURL} title="Fotoware" frameBorder="0" ref={iframeRef}></StyledIframe>
-        </Content>
-      ) : (
-        <Content>
-          {loading ? (
-            <LoadingContent>
-              <Spinner muted />
-              <p>Retrieving image...</p>
-            </LoadingContent>
-          ) : (
-            <p>Authentication required, please login to Fotoware using the popup window.</p>
-          )}
-        </Content>
-      )}
+      <Content>
+        {loading ? (
+          <LoadingContent>
+            <Spinner muted />
+            <p>Retrieving image...</p>
+          </LoadingContent>
+        ) : (
+          <p>Authentication required, please login to Fotoware using the popup window.</p>
+        )}
+      </Content>
     </Dialog>
   )
 })
