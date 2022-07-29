@@ -1,4 +1,4 @@
-import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM,HAS_EVENT } from '../src/lib/datasetHelpers'
+import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM, HAS_EVENT, HAS_MAGAZINE } from '../src/lib/datasetHelpers'
 
 const snippets: textSnippet = {
   loading: {
@@ -25,12 +25,12 @@ const snippets: textSnippet = {
   add_to_calendar_event: {
     title: 'Event Promotion : Add to Calendar',
     defaultValue: 'Add to Calendar',
-    hidden : !HAS_EVENT
+    hidden: !HAS_EVENT,
   },
   details: {
     title: 'Event Promotion : Details',
     defaultValue: 'Details',
-    hidden : !HAS_EVENT
+    hidden: !HAS_EVENT,
   },
   search: {
     title: 'Search',
@@ -212,7 +212,7 @@ const snippets: textSnippet = {
     defaultValue: 'Investor relations',
     hidden: !HAS_FORMS,
   },
-  contact_form_human_rights_information_request:{
+  contact_form_human_rights_information_request: {
     title: 'Contact form: Human Rights Information Request',
     defaultValue: 'Human Rights Information Request',
     hidden: !HAS_FORMS,
@@ -584,6 +584,11 @@ const snippets: textSnippet = {
     title: 'Newsroom: No hits',
     defaultValue: 'Your search returned no results',
     hidden: !HAS_NEWSROOM,
+  },
+  magazineindex_list_header: {
+    title: 'Magazine index: Stories list heading',
+    defaultValue: 'Stories',
+    hidden: !HAS_MAGAZINE,
   },
   stock_nyse_time_delay_message: {
     title: 'Stock API: NYSE time delay message',
