@@ -12,7 +12,7 @@ import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../newsRoom/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { metaTitleSuffix } from '../../languages'
-import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
+import { Wrapper, Intro, News as MagazineContent, UnpaddedText } from './algoliaPages/components'
 import { getUrl } from './algoliaPages/helpers'
 
 import type { MagazineIndexData } from '../../types'
@@ -74,7 +74,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
 
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
-          <News>
+          <MagazineContent>
             <InstantSearch
               searchClient={isServerRendered ? searchClientServer : searchClient}
               indexName={indexName}
@@ -93,7 +93,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
               <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
               <NewsContent hasFilters={false} />
             </InstantSearch>
-          </News>
+          </MagazineContent>
         </Wrapper>
       </main>
     </>
