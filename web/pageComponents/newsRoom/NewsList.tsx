@@ -19,11 +19,19 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-medium);
 `
 
-const NewsList = ({ ...rest }) => {
+const HeaderText = ({ header }: { header: string }) => {
+  if (header === 'magazine') {
+    return <FormattedMessage id="magazineindex_list_header" defaultMessage="Stories" />
+  }
+
+  return <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
+}
+
+const NewsList = ({ header, ...rest }: { header: string }) => {
   return (
     <StyledNewsList {...rest}>
       <Heading level="h2" size="lg">
-        <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
+        <HeaderText header={header} />
       </Heading>
       <Hits hitComponent={Hit} />
       <StyledPagination padding={1} hitsPerPage={20} />
