@@ -78,11 +78,11 @@ MagazineIndexNorwegian.getLayout = (page: AppProps) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'no' }) => {
   // For the time being, let's just give 404 for satellites
-  // We will also return 404 if the locale is not English.
+  // We will also return 404 if the locale is not Norwegian.
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
 
-  if (!isGlobal || locale !== 'en') {
+  if (!isGlobal || locale !== 'no') {
     return {
       notFound: true,
     }
