@@ -66,7 +66,7 @@ const snippets: textSnippet = {
     group: groups.search,
   },
   search_no_results_heading: {
-    title: 'no results title',
+    title: 'No results title',
     defaultValue: 'NOTHING FOUND',
     group: groups.search,
   },
@@ -76,7 +76,7 @@ const snippets: textSnippet = {
     group: groups.search,
   },
   search_no_results_generic: {
-    title: 'no search results, generic',
+    title: 'No search results, generic',
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
     group: groups.search,
   },
