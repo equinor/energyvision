@@ -231,6 +231,7 @@ const NewsPage = ({ data }: ArticleProps) => {
                 <DateWrapper>
                   <Icon data={calendar} />
                   <DateContainer>
+                    <FormattedDateTime uppercase datetime={publishDateTime} timezone />
                     {isDateAfter(
                       modifiedDate,
                       // publishDateTime + 5 minutes
