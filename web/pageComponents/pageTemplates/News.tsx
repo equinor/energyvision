@@ -231,7 +231,7 @@ const NewsPage = ({ data }: ArticleProps) => {
                 <DateWrapper>
                   <Icon data={calendar} />
                   <DateContainer>
-                    <FormattedDateTime uppercase datetime={publishDateTime} timezone />
+                    <FormattedDateTime uppercase datetime={publishDateTime} />
                     {isDateAfter(
                       modifiedDate,
                       // publishDateTime + 5 minutes
@@ -239,7 +239,7 @@ const NewsPage = ({ data }: ArticleProps) => {
                     ) && (
                       <>
                         <LastModifiedLabel>Last modified</LastModifiedLabel>
-                        <FormattedDateTime uppercase datetime={modifiedDate} timezone />
+                        <FormattedDateTime uppercase datetime={modifiedDate} />
                       </>
                     )}
                   </DateContainer>
