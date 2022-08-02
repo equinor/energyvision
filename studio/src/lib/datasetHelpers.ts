@@ -10,6 +10,8 @@ export const IS_SECRET = projectId === 'w3b4om14'
 const GLOBAL_TEST = ['global-development', 'global-test']
 const GLOBAL = ['global', 'secret', ...GLOBAL_TEST]
 
+export const IS_TEST = GLOBAL_TEST.includes(dataset)
+
 const NEWS = [...GLOBAL, 'japan', 'poland', 'brazil', 'germany', 'southkorea']
 const NEWS_SUBSCRIPTION = [...GLOBAL]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_TEST]
