@@ -2,6 +2,14 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
+import TitleText from '../../pageComponents/shared/portableText/TitleText'
+import { CookieDeclarationData } from '../../types/types'
+import {hasCookieDeclarationTitle} from '../../common/helpers/datasetHelpers'
+
+type CookieDeclarationProps = {
+  data: CookieDeclarationData
+  anchor?: string
+}
 
 const Container = styled.div`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
@@ -9,8 +17,11 @@ const Container = styled.div`
   margin: auto;
   overflow-x: auto;
 `
-
-const CookieDeclaration = ({ anchor }: { anchor?: string }) => {
+const StyledTitle = styled(TitleText)`
+  margin-bottom: var(--space-xLarge);
+`
+const CookieDeclaration = ({ data,anchor }: CookieDeclarationProps) => {
+  const title = data.title
   const router = useRouter()
   const placeholderRef = useRef<HTMLDivElement>(null)
   const language = router.locale == 'no' ? 'nb' : router.locale ? router.locale : 'en'
@@ -26,7 +37,9 @@ const CookieDeclaration = ({ anchor }: { anchor?: string }) => {
   }, [language])
   return (
     <BackgroundContainer background="White" id={anchor}>
-      <Container id="cookie-declaration-wrapper" ref={placeholderRef}></Container>
+      <Container id="cookie-declaration-wrapper" ref={placeholderRef}>
+      {hasCookieDeclarationTitle && title && <StyledTitle value={title} />}
+      </Container>
     </BackgroundContainer>
   )
 }

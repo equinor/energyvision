@@ -44,6 +44,7 @@ import {
   StockValuesData,
   TwitterEmbedData,
   VideoData,
+  CookieDeclarationData,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -113,6 +114,7 @@ type ComponentProps =
   | TwitterEmbedData
   | AnchorLinkData
   | VideoData
+  | CookieDeclarationData
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
   const slug = data?.slug
@@ -154,7 +156,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       case 'table':
         return <Table key={c.id} data={c as TableData} anchor={anchorReference} />
       case 'cookieDeclaration':
-        return <CookieDeclaration key={c.id} anchor={anchorReference} />
+        return <CookieDeclaration key={c.id} data={c as CookieDeclarationData} anchor={anchorReference} />
       case 'newsList':
         return <NewsList key={c.id} data={c as unknown as NewsListData} anchor={anchorReference} />
       case 'stockValuesApi':

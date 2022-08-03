@@ -492,9 +492,10 @@ export type NewsDistributionParameters = {
   languageCode: string
 }
 
-export type CookieDeclaration = {
-  id?: string
-  type?: string
+export type CookieDeclarationData = {
+  id: string
+  type: string
+  title?: PortableTextBlock[]
 }
 
 export type FormData = {

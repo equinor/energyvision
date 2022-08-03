@@ -364,6 +364,7 @@ const pageContentFields = /* groq */ `
   _type == "cookieDeclaration" => {
     "type": _type,
     "id": _key,
+    title,
   },
   _type == "form" => {
     "type": _type,
