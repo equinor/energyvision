@@ -5,7 +5,7 @@ import { Heading, Text, Box } from '@sanity/ui'
 import styled from 'styled-components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
-import { HAS_TITTLE_COOKIE_DECLARATION } from '../../src/lib/datasetHelpers'
+import { IS_TEST } from '../../src/lib/datasetHelpers'
 
 const StyledText = styled(Text)`
   margin: 1em 0;
@@ -36,21 +36,21 @@ export default {
   name: 'cookieDeclaration',
   type: 'object',
   fields: [
-    HAS_TITTLE_COOKIE_DECLARATION && {
-    name: 'title',
-    type: 'array',
-    title: 'Title',
-    description: 'The (optional) title/heading shown above the iframe.',
-    inputComponent: CompactBlockEditor,
-    of: [titleContentType],
-  },
+    IS_TEST && {
+      name: 'title',
+      type: 'array',
+      title: 'Title',
+      description: 'The (optional) title/heading shown above the iframe.',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
+    },
     {
       name: 'description',
       type: 'string',
       inputComponent: ApiDescription,
       initialValue: 'Cookie Declaration',
     },
-  ],
+  ].filter((e) => e),
   preview: {
     prepare() {
       return {

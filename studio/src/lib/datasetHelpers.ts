@@ -30,7 +30,6 @@ const FOTOWARE = [...GLOBAL_TEST]
 const SAME_SLUG = [...GLOBAL_TEST, 'japan', 'southkorea']
 const VIDEO = [...GLOBAL_TEST]
 const GROUPED_TEXT_SNIPPETS = [...GLOBAL_TEST]
-const TITTLE_COOKIE_DECLARATION=[...GLOBAL_TEST]
 
 export const HAS_NEWS = NEWS.includes(dataset)
 export const HAS_NEWSROOM = NEWSROOM.includes(dataset)
@@ -48,4 +47,3 @@ export const HAS_FOTOWARE = FOTOWARE.includes(dataset)
 export const HAS_SAME_SLUG = SAME_SLUG.includes(dataset)
 export const HAS_VIDEO = VIDEO.includes(dataset)
 export const HAS_GROUPED_TEXT_SNIPPETS = GROUPED_TEXT_SNIPPETS.includes(dataset)
-export const HAS_TITTLE_COOKIE_DECLARATION=TITTLE_COOKIE_DECLARATION.includes(dataset)
