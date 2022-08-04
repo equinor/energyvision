@@ -1,23 +1,20 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { EdsIcon } from '../../../../icons'
-import { text_field } from '@equinor/eds-icons'
+import { text_field, folder } from '@equinor/eds-icons'
 import textSnippetsV2, { groups } from '../../../../schemas/textSnippetsV2'
 
 const textSnippets = textSnippetsV2
-const ungroupedTextSnippets = Object.keys(textSnippets)
-  .filter((key) => !textSnippets[key].group && !textSnippets[key].hidden)
-  .map((key) => S.listItem(createTextSnippetItem(key)))
 
 const textSnippetGroups = Object.keys(groups)
   .filter((it) => !groups[it].hidden)
   .map((it) => S.listItem(createTextSnippetGroupItem(groups[it])))
 
-const textSnippetItems = [...ungroupedTextSnippets, S.divider(), ...textSnippetGroups]
+const textSnippetItems = [...textSnippetGroups]
 
 function createTextSnippetGroupItem(group) {
   return {
     title: group.title,
-    icon: () => EdsIcon(text_field),
+    icon: () => EdsIcon(folder),
     id: `snippet-group-${group.title.split(' ').join('-')}`,
     child: () =>
       S.list('textSnippet')
@@ -25,7 +22,7 @@ function createTextSnippetGroupItem(group) {
         .title(group.title)
         .items(
           Object.keys(textSnippets)
-            .filter((it) => textSnippets[it].group === group)
+            .filter((it) => textSnippets[it].group === group && !textSnippets[it].hidden)
             .map((it) => S.listItem(createTextSnippetItem(it))),
         ),
   }

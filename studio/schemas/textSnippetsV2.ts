@@ -11,24 +11,29 @@ export const groups = {
   orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !HAS_FORMS },
   form: { title: 'Form', hidden: !HAS_FORMS },
   cookie: { title: 'Cookie' },
+  others: { title: 'Others' },
 }
 const snippets: textSnippet = {
   loading: {
     title: 'Loading',
     defaultValue: 'Loading...',
+    group: groups.others,
   },
   menu: {
     title: 'Menu',
     defaultValue: 'Menu',
+    group: groups.others,
   },
   all_sites: {
     title: 'All sites',
     defaultValue: 'All sites',
+    group: groups.others,
   },
   latest_news: {
     title: 'Latest News',
     defaultValue: 'Latest News',
     hidden: !HAS_NEWS,
+    group: groups.others,
   },
   tba: {
     title: 'To be announced',
@@ -83,6 +88,7 @@ const snippets: textSnippet = {
   copyright: {
     title: 'Copyright',
     defaultValue: 'Copyright 2022 Equinor ASA',
+    group: groups.others,
   },
   subscribe_form_choose: {
     title: 'Choose validation',
@@ -607,10 +613,12 @@ const snippets: textSnippet = {
     title: 'Magazine index: Stories list heading',
     defaultValue: 'Stories',
     hidden: !HAS_MAGAZINE,
+    group: groups.others,
   },
   stock_nyse_time_delay_message: {
     title: 'Stock API: NYSE time delay message',
     defaultValue: 'at least 20 minutes delayed',
+    group: groups.others,
   },
 }
 
@@ -621,7 +629,7 @@ type textSnippet = Record<
     title: string
     defaultValue: string
     hidden?: boolean
-    group?: textSnippetGroup
+    group: textSnippetGroup
   }
 >
 
