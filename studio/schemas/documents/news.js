@@ -4,6 +4,7 @@ import { newsSlug } from '../../../satellitesConfig.js'
 import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
 import { formatDate } from '../../helpers/formatDate'
+import { IS_TEST } from '../../src/lib/datasetHelpers'
 import {
   isLive,
   seo,
@@ -108,14 +109,21 @@ export default {
       media: 'heroImage.image',
       description: 'ingress',
       publishedDate: 'publishDateTime',
+      firstPublishedAt: 'firstPublishedAt',
+      isCustomDate: 'customPublicationDate',
     },
     prepare(selection) {
-      const { title, media, description, publishedDate } = selection
-      const date = publishedDate ? formatDate(publishedDate) : 'Ikke oppgitt'
+      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const date =
+        publishedDate && isCustomDate
+          ? formatDate(publishedDate)
+          : firstPublishedAt
+          ? formatDate(firstPublishedAt)
+          : 'Not Published'
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${date}`,
+        subtitle: `Published date: ${IS_TEST && date}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')
