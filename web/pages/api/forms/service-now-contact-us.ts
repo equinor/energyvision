@@ -4,7 +4,7 @@ import { validateFormRequest } from './validateFormRequest'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'contact us form')
-  if (result.status != 200) {
+  if (result.status !== 200) {
     return res.status(result.status).json({ msg: result.message })
   }
 

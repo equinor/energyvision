@@ -4,9 +4,10 @@ import { validateFormRequest } from './validateFormRequest'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'order reports form')
-  if (result.status != 200) {
+  if (result.status !== 200) {
     return res.status(result.status).json({ msg: result.message })
   }
+
   const data = req.body.data
   const catalogIdentifier = 'd1872741db26ea40977079e9bf961949'
   const email = encodeURI(data.email)
