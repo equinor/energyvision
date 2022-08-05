@@ -1,4 +1,5 @@
 import { dataset } from './src/lib/datasetHelpers'
+import { getLocaleFromName } from './src/lib/localization'
 
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
 const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
@@ -6,7 +7,7 @@ const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 const remoteUrl = () => {
   switch (dataset) {
     case 'global':
-      return 'https://web-equinor-web-sites-preprod.c2.radix.equinor.com/'
+      return 'https://web-equinor-web-sites-prod.c2.radix.equinor.com/'
     case 'global-development':
       return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
     case 'global-test':
@@ -27,6 +28,7 @@ export default function resolveProductionUrl(doc) {
   previewUrl.searchParams.append('secret', previewSecret)
 
   if (doc?.slug?.current) {
+    previewUrl.searchParams.append('locale', getLocaleFromName(doc?._lang))
     previewUrl.searchParams.append('slug', doc?.slug?.current)
   } else if (doc?._id) {
     previewUrl.searchParams.append('id', doc?._id)

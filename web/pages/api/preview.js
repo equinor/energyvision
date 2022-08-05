@@ -18,7 +18,8 @@ export default function preview(req, res) {
   res.setPreviewData({})
 
   const pathname = req?.query?.id ? `/${req.query.id}` : req?.query?.slug ?? '/'
-  const url = '//' + req?.headers?.host + pathname
+  const locale = req?.query?.locale ? `/${req?.query?.locale}` : ''
+  const url = '//' + req?.headers?.host + locale + pathname
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities

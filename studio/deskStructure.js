@@ -1,10 +1,12 @@
 import S from '@sanity/desk-tool/structure-builder'
 import NewsPreview from './src/previews/news/NewsPreview'
+import Preview from './src/previews/Preview'
 import PagePreview from './src/previews/page/PagePreview'
 import FilePreview from './src/previews/file/filePreview'
 import NewsroomPreview from './src/previews/news/NewsroomPreview'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import items from './src/lib/structure'
+import { IS_TEST } from './src/lib/datasetHelpers'
 
 export default () => S.list().title('Content').items(items)
 
@@ -18,15 +20,15 @@ export const getDefaultDocumentNode = (props) => {
    */
   const { schemaType } = props
   if (schemaType === 'news' || schemaType === 'localNews') {
-    return S.document().views([S.view.form(), S.view.component(NewsPreview).title('Preview')])
+    return S.document().views([S.view.form(), S.view.component(IS_TEST ? Preview : NewsPreview).title('Preview')])
   } else if (schemaType === 'landingPage' || schemaType === 'magazine') {
-    return S.document().views([S.view.form(), S.view.component(PagePreview).title('Preview')])
+    return S.document().views([S.view.form(), S.view.component(IS_TEST ? Preview : PagePreview).title('Preview')])
   } else if (schemaType === 'newsroom') {
-    return S.document().views([S.view.form(), S.view.component(NewsroomPreview).title('Preview')])
+    return S.document().views([S.view.form(), S.view.component(IS_TEST ? Preview : NewsroomPreview).title('Preview')])
   } else if (['page', 'event'].includes(schemaType)) {
     return S.document().views([
       S.view.form(),
-      S.view.component(PagePreview).title('Preview'),
+      S.view.component(IS_TEST ? Preview : PagePreview).title('Preview'),
       S.view
         .component(DocumentsPane)
         .options({

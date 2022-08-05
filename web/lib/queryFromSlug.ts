@@ -77,7 +77,7 @@ export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
 
   return {
     queryParams: { slug: slug, lang: lang, date: currentDate },
-    query: query,
+    query,
     isNews,
   }
 }
