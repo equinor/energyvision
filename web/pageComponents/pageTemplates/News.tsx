@@ -15,7 +15,6 @@ import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 
 import type { CardData, NewsSchema } from '../../types/types'
-import { isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -232,7 +231,7 @@ const NewsPage = ({ data }: ArticleProps) => {
                 <DateWrapper>
                   <Icon data={calendar} />
                   <DateContainer>
-                    <FormattedDateTime uppercase datetime={publishDateTime} timezone={isGlobalDevelopment} />
+                    <FormattedDateTime uppercase datetime={publishDateTime} timezone />
                     {isDateAfter(
                       modifiedDate,
                       // publishDateTime + 5 minutes
