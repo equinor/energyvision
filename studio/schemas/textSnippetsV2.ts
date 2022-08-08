@@ -2,6 +2,7 @@ import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM, HAS_EVENT, HAS_MAGAZINE 
 
 export const groups = {
   newsroom: { title: 'Newsroom', hidden: !HAS_NEWSROOM },
+  magazine: { title: 'Magazine', hidden: !HAS_MAGAZINE },
   search: { title: 'Search', hidden: !HAS_SEARCH },
   eventPromotion: { title: 'Event', hidden: !HAS_EVENT },
   subscribeForm: { title: 'Subscribe form', hidden: !HAS_FORMS },
@@ -59,6 +60,11 @@ const snippets: textSnippet = {
     title: 'News tab name',
     defaultValue: 'News',
     group: groups.search,
+  },
+  search_magazine_tab: {
+    title: 'Magazine tab name',
+    defaultValue: 'Magazine',
+    group: groups.magazine,
   },
   search_events_tab: {
     title: 'Events tab name',
@@ -612,8 +618,7 @@ const snippets: textSnippet = {
   magazineindex_list_header: {
     title: 'Magazine index: Stories list heading',
     defaultValue: 'Stories',
-    hidden: !HAS_MAGAZINE,
-    group: groups.others,
+    group: groups.magazine,
   },
   stock_nyse_time_delay_message: {
     title: 'Stock API: NYSE time delay message',
