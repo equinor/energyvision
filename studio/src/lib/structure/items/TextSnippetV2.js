@@ -7,6 +7,7 @@ const textSnippets = textSnippetsV2
 
 const textSnippetGroups = Object.keys(groups)
   .filter((it) => !groups[it].hidden)
+  .sort((a, b) => groups[a].title.localeCompare(groups[b].title))
   .map((it) => S.listItem(createTextSnippetGroupItem(groups[it])))
 
 const textSnippetItems = [...textSnippetGroups]
@@ -23,6 +24,7 @@ function createTextSnippetGroupItem(group) {
         .items(
           Object.keys(textSnippets)
             .filter((it) => textSnippets[it].group === group && !textSnippets[it].hidden)
+            .sort((a, b) => textSnippets[a].title.localeCompare(textSnippets[b].title))
             .map((it) => S.listItem(createTextSnippetItem(it))),
         ),
   }
