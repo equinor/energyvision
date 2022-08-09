@@ -4,7 +4,6 @@ import { newsSlug } from '../../../satellitesConfig.js'
 import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
 import { formatDate } from '../../helpers/formatDate'
-import { IS_TEST } from '../../src/lib/datasetHelpers'
 import {
   isLive,
   seo,
@@ -22,7 +21,7 @@ import {
   relatedLinks,
   excludeFromSearch,
 } from './news/sharedNewsFields'
-import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
+import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION,IS_TEST } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
 import { withSlugValidation } from '../validations/validateSlug'
 
@@ -115,15 +114,15 @@ export default {
     prepare(selection) {
       const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
       const date =
-        publishedDate && isCustomDate
+        IS_TEST && publishedDate && isCustomDate
           ? formatDate(publishedDate)
           : firstPublishedAt
           ? formatDate(firstPublishedAt)
-          : 'Not Published'
+          : 'Ikke oppgitt'
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${IS_TEST && date}`,
+        subtitle: `Published date: ${date}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')
