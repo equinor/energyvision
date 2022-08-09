@@ -114,7 +114,7 @@ export default {
     prepare(selection) {
       const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
       const date = publishedDate ? formatDate(publishedDate) : 'Ikke oppgitt'
-      const date_new =
+      const date1 =
         publishedDate && isCustomDate
           ? formatDate(publishedDate)
           : firstPublishedAt
@@ -123,7 +123,7 @@ export default {
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${IS_TEST && date_new ? date_new : date}`,
+        subtitle: `Published date: ${IS_TEST ? date1 : date}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')
