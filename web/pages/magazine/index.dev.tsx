@@ -10,7 +10,6 @@ import { magazineIndexQuery } from '../../lib/queries/magazine'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
-import { isGlobal } from '../../common/helpers/datasetHelpers'
 import MagazineIndexPage from '../../pageComponents/pageTemplates/MagazineIndexPage'
 import { MagazineIndexProps } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
@@ -78,7 +77,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
 
-  if (!isGlobal || locale !== 'en') {
+  if (locale !== 'en') {
     return {
       notFound: true,
     }

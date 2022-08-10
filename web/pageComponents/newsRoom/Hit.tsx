@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 import { Heading, FormattedDate } from '@components'
 import { outlineTemplate, Tokens } from '@utils'
+import { toPlainText } from '@portabletext/react'
+import { PortableTextBlock } from '@portabletext/types'
 
 const { outline } = Tokens
 
@@ -42,13 +44,15 @@ const Date = styled.div`
  */
 // @TODO Types
 const Hit = ({ hit }: { hit: any }) => {
+  const pageTitle = Array.isArray(hit.pageTitle) ? toPlainText(hit.pageTitle as PortableTextBlock[]) : hit.pageTitle
+
   return (
     <NextLink href={hit.slug} passHref>
       <StyledHitLink>
         <article>
           <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>
           <StyledHeading level="h3" size="md">
-            {hit.pageTitle}
+            {pageTitle}
           </StyledHeading>
           {/*  <Text>{hit.text}</Text> */}
         </article>
