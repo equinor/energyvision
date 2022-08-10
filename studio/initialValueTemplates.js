@@ -1,8 +1,7 @@
 import T from '@sanity/base/initial-value-template-builder'
 import { languages } from './languages'
 import textSnippets from './schemas/textSnippets'
-import textSnippetsV2 from './schemas/textSnippetsV2'
-import { HAS_FANCY_MENU, HAS_GROUPED_TEXT_SNIPPETS } from './src/lib/datasetHelpers'
+import { HAS_FANCY_MENU } from './src/lib/datasetHelpers'
 
 const ParentRoutesTemplates = languages.map(({ name, title }) =>
   T.template({
@@ -14,7 +13,7 @@ const ParentRoutesTemplates = languages.map(({ name, title }) =>
   }),
 )
 
-const TextSnippetsTemplates = Object.keys(HAS_GROUPED_TEXT_SNIPPETS ? textSnippetsV2 : textSnippets).map((key) =>
+const TextSnippetsTemplates = Object.keys(textSnippets).map((key) =>
   T.template({
     id: `text-snippet-${key}`,
     title: `Text Snippet - ${textSnippets[key].title}`,

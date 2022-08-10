@@ -6,13 +6,12 @@ import { CountryTags } from './CountryTags'
 import { LocalNewsTags } from './LocalNewsTags'
 import { Redirects, ExternalRedirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
-import { TextSnippetV2 } from './TextSnippetV2'
-import { HAS_NEWS, HAS_LOCAL_NEWS, HAS_GROUPED_TEXT_SNIPPETS } from '../../datasetHelpers'
+import { HAS_NEWS, HAS_LOCAL_NEWS } from '../../datasetHelpers'
 
 const settingsItems = [
   HAS_NEWS && Tags,
   HAS_NEWS && CountryTags,
-  HAS_GROUPED_TEXT_SNIPPETS ? TextSnippetV2 : TextSnippet,
+  TextSnippet,
   Redirects,
   ExternalRedirects,
   HAS_LOCAL_NEWS && LocalNewsTags,
