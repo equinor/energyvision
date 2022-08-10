@@ -113,13 +113,13 @@ export default {
     },
     prepare(selection) {
       const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
-      const date = publishedDate ? formatDate(publishedDate) : 'Ikke oppgitt'
+      const date = publishedDate ? formatDate(publishedDate) : 'Not Published'
       const date1 =
         publishedDate && isCustomDate
           ? formatDate(publishedDate)
           : firstPublishedAt
           ? formatDate(firstPublishedAt)
-          : 'Ikke oppgitt'
+          : 'Not Published'
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
