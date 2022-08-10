@@ -7,8 +7,6 @@ export default function NewsPreview(props: any) {
   const { document } = props
   const { displayed } = document
 
-  console.log(displayed)
-
   const locale = getLocaleFromName(displayed._lang)
 
   const url = locale === 'no' ? `${baseUrl}/${locale}/nyheter?preview` : `${baseUrl}/news?preview`

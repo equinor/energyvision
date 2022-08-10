@@ -27,9 +27,10 @@ const StyledButton = styled(Button)`
 type Props = {
   src: string
   children: React.ReactNode
+  shareable: boolean
 }
 
-export const PreviewWrapper = ({ src, children }: Props) => {
+export const PreviewWrapper = ({ src, children, shareable }: Props) => {
   const toast = useToast()
   const handleClick = () => {
     navigator.clipboard.writeText(src)
@@ -41,20 +42,21 @@ export const PreviewWrapper = ({ src, children }: Props) => {
 
   return (
     <StyledWrapper>
-      <Tooltip
-        content={
-          <Box padding={2}>
-            <Text muted size={1}>
-              Copy shareable link to clipboard
-            </Text>
-          </Box>
-        }
-        placement="left"
-        portal
-      >
-        <StyledButton tone="primary" radius={6} icon={CopyIcon} onClick={handleClick} />
-      </Tooltip>
-
+      {shareable && (
+        <Tooltip
+          content={
+            <Box padding={2}>
+              <Text muted size={1}>
+                Copy shareable link to clipboard
+              </Text>
+            </Box>
+          }
+          placement="left"
+          portal
+        >
+          <StyledButton tone="primary" radius={6} icon={CopyIcon} onClick={handleClick} />
+        </Tooltip>
+      )}
       {children}
     </StyledWrapper>
   )

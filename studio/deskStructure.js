@@ -23,7 +23,7 @@ export const getDefaultDocumentNode = (props) => {
     return S.document().views([S.view.form(), S.view.component(IS_TEST ? Preview : NewsPreview).title('Preview')])
   } else if (schemaType === 'landingPage' || schemaType === 'magazine') {
     return S.document().views([S.view.form(), S.view.component(IS_TEST ? Preview : PagePreview).title('Preview')])
-  } else if (schemaType === 'newsroom') {
+  } else if (schemaType === 'newsroom' || schemaType === 'magazineIndex') {
     return S.document().views([S.view.form(), S.view.component(IS_TEST ? Preview : NewsroomPreview).title('Preview')])
   } else if (['page', 'event'].includes(schemaType)) {
     return S.document().views([
