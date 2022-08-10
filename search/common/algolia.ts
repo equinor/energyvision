@@ -20,12 +20,13 @@ const init: InitType = (indexName) =>
   )
 
 // Push to Algolia index
-type UpdateIndexType = (
-  data: readonly IndexType[],
-) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
+type UpdateIndexType = (data: readonly IndexType[]) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 const updateIndex: UpdateIndexType = (data) => (index) =>
   pipe(
-    TE.tryCatch(() => index.saveObjects(data), (error) => new Error(`Unable to update index. Error message: ${JSON.stringify(error)}`)),
+    TE.tryCatch(
+      () => index.saveObjects(data),
+      (error) => new Error(`Unable to update index. Error message: ${JSON.stringify(error)}`),
+    ),
     //TE.map((response) => `Number of objects updated: ${response.objectIDs.length}`),
     TE.map(() => index),
   )
@@ -33,15 +34,16 @@ const updateIndex: UpdateIndexType = (data) => (index) =>
 type UpdateSettingsType = (settings: Settings) => (index: SearchIndex) => TE.TaskEither<Error, SearchIndex>
 export const updateSettings: UpdateSettingsType = (settings) => (index) =>
   pipe(
-    TE.tryCatch(() => index.setSettings(settings), (error) => new Error(`Unable to update settings: Error message: ${JSON.stringify(error)}`)),
+    TE.tryCatch(
+      () => index.setSettings(settings),
+      (error) => new Error(`Unable to update settings: Error message: ${JSON.stringify(error)}`),
+    ),
     TE.map(() => index),
   )
 
 type UpdateType = (
   indexName: string,
-) => (
-  indexSettings: Settings,
-) => (mappedData: readonly IndexType[]) => TE.TaskEither<string | Error, string>
+) => (indexSettings: Settings) => (mappedData: readonly IndexType[]) => TE.TaskEither<string | Error, string>
 export const update: UpdateType = (indexName) => (indexSettings) => (mappedData) =>
   pipe(
     init(indexName),

@@ -7,15 +7,15 @@ import { Language } from '../../common'
 export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
-  "title": title,
+  "title": pt::text(title),
   "type": _type,
-  "textBlocks": content->content[_type == "textBlock"]{
+  "textBlocks": content[_type == "textBlock"]{
     "_key": _key,
     "title": pt::text(title),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
   },
-  "accordions": content->content[_type == "accordion"] {
+  "accordions": content[_type == "accordion"] {
     "_key": _key,
     "title": pt::text(title),
     "ingress": pt::text(ingress)

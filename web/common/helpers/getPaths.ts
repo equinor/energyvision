@@ -26,10 +26,10 @@ const getTopicRoutesForLocale = async (locale: string) => {
   return data
 }
 
-const getNewsOrLocalNewsForLocale = async (type: 'news' | 'localNews', locale: string) => {
+const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', locale: string) => {
   const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
-    groq`*[_type == $type && _lang == $lang && defined(slug.current)][] {
+    groq`*[_type == $type && _lang == $lang && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
       "slug": slug.current,
     }`,
@@ -78,7 +78,20 @@ export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
 
 export const getNewsPaths = async (locales: string[]): Promise<PathType[]> => {
   const fetchPaths = locales.map(async (locale) => {
-    const pages = await getNewsOrLocalNewsForLocale('news', locale)
+    const pages = await getDocumentsForLocale('news', locale)
+    return pages.map((page) => ({
+      slug: page.slug.split('/').filter((p) => p),
+      updatedAt: page._updatedAt,
+      locale,
+    }))
+  })
+
+  return (await Promise.all(fetchPaths)).flat()
+}
+
+export const getMagazinePaths = async (locales: string[]): Promise<PathType[]> => {
+  const fetchPaths = locales.map(async (locale) => {
+    const pages = await getDocumentsForLocale('magazine', locale)
     return pages.map((page) => ({
       slug: page.slug.split('/').filter((p) => p),
       updatedAt: page._updatedAt,
@@ -91,7 +104,7 @@ export const getNewsPaths = async (locales: string[]): Promise<PathType[]> => {
 
 export const getLocalNewsPaths = async (locales: string[]): Promise<PathType[]> => {
   const fetchPaths = locales.map(async (locale) => {
-    const pages = await getNewsOrLocalNewsForLocale('localNews', locale)
+    const pages = await getDocumentsForLocale('localNews', locale)
     return pages.map((page) => ({
       slug: page.slug.split('/').filter((p) => p),
       updatedAt: page._updatedAt,
@@ -125,6 +138,35 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
     },
     {
       slug: ['nyheter'],
+      updatedAt: norwegianUpdatedAt,
+      locale: 'no',
+    },
+  ]
+}
+
+export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
+  // Use last published news as updatedAt field for newsroom
+  const getUpdatedAt = async (lang: 'en_GB' | 'nb_NO'): Promise<{ _updatedAt: string }> =>
+    await sanityClient.fetch(
+      groq`*[_type == 'magazine' && _lang == $lang && !(_id in path("drafts.**"))] | order(_createdAt desc)[0] {
+      _updatedAt,
+    }`,
+      {
+        lang,
+      },
+    )
+
+  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en_GB')
+  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb_NO')
+
+  return [
+    {
+      slug: ['magazine'],
+      updatedAt: englishUpdatedAt,
+      locale: 'en',
+    },
+    {
+      slug: ['magasin'],
       updatedAt: norwegianUpdatedAt,
       locale: 'no',
     },

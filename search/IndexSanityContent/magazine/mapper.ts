@@ -3,7 +3,7 @@ import { ap } from 'fp-ts/lib/Identity'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 import { MagazineArticle } from './sanity'
-import { TopicIndex } from '../../common'
+import { MagazineIndex } from '../../common'
 
 type MappableObjectType = {
   _key: string
@@ -12,7 +12,7 @@ type MappableObjectType = {
   text: string
 }
 
-type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => TopicIndex
+type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => MagazineIndex
 const mapperFunction: MapperFunctionType =
   (article) =>
   ({ _key, title, ingress, text }) => ({
@@ -25,20 +25,20 @@ const mapperFunction: MapperFunctionType =
     text,
   })
 
-type MapDataType = (article: MagazineArticle) => TopicIndex[]
+type MapDataType = (article: MagazineArticle) => MagazineIndex[]
 export const mapData: MapDataType = (article) =>
   pipe(mapperFunction, ap(article), (fn) =>
     pipe(
       pipe(
         O.fromNullable(article.textBlocks),
         O.map(A.map(fn)),
-        O.getOrElse(() => [] as TopicIndex[]),
+        O.getOrElse(() => [] as MagazineIndex[]),
       ),
       A.concat(
         pipe(
           O.fromNullable(article.accordions),
           O.map(A.map(fn)),
-          O.getOrElse(() => [] as TopicIndex[]),
+          O.getOrElse(() => [] as MagazineIndex[]),
         ),
       ),
     ),

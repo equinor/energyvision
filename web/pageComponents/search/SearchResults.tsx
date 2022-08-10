@@ -12,7 +12,7 @@ import NewsHit from './NewsHit'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
 import { Pagination } from '../shared/search/pagination/Pagination'
 import TotalResultsStat from './TotalResultsStat'
-import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
+import { isGlobalDevelopment, isGlobalProduction } from '../../common/helpers/datasetHelpers'
 import MagazineHit from './MagazineHit'
 
 const Results = styled.div`
@@ -121,14 +121,16 @@ const SearchResults = () => {
                   </TabText>
                 </Index>
               </Tab>
-              <Tab inverted>
-                <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
-                  <TabText>
-                    <FormattedMessage id="search_magazine_tab" defaultMessage="Magazine" />
-                    <NumberOfHits />
-                  </TabText>
-                </Index>
-              </Tab>
+              {isGlobalDevelopment && (
+                <Tab inverted>
+                  <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
+                    <TabText>
+                      <FormattedMessage id="search_magazine_tab" defaultMessage="Magazine" />
+                      <NumberOfHits />
+                    </TabText>
+                  </Index>
+                </Tab>
+              )}
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -150,13 +152,15 @@ const SearchResults = () => {
                   <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
-              <TabPanel>
-                <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
-                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits hitComponent={MagazineHit} category="Magazine" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
-                </Index>
-              </TabPanel>
+              {isGlobalDevelopment && (
+                <TabPanel>
+                  <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
+                    <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                    <Hits hitComponent={MagazineHit} category="Magazine" />
+                    <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                  </Index>
+                </TabPanel>
+              )}
             </TabPanels>
           </Tabs>
         </Results>

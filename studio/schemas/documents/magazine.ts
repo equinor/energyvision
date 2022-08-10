@@ -123,7 +123,11 @@ export default {
         { type: 'promoTileArray' },
         { type: 'promotion' },
         { type: 'iframe' },
-      ].filter((e) => e),
+      ],
+    },
+    {
+      type: 'excludeFromSearch',
+      name: 'excludeFromSearch',
     },
   ].filter((e) => e),
   orderings: [
