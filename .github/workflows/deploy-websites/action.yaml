@@ -76,6 +76,7 @@ runs:
         echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
         echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
     - name: Docker login with Dynatrace credentials 🐳
+      if: "${{ inputs.dynatraceEnvironment != '' }}"
       uses: docker/login-action@v2
       id: docker-dynatrace-login
       with:
