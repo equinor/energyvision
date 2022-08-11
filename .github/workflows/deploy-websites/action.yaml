@@ -34,6 +34,12 @@ inputs:
   algoliaApiKeyServer:
     description: 'Api key for Algolia to be used server side'
     required: false
+  dynatraceEnvironment:
+    description: 'Dynatrace environment'
+    required: false
+  dynatracePaaSToken:
+    description: 'Dynatrace PaaS Token'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -74,8 +80,8 @@ runs:
       id: docker-dynatrace-login
       with:
         registry: https://spa-equinor.kanari.com
-        username: ${{ secrets.DYNATRACE_ENVIRONMENT }}
-        password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
+        username: ${{ inputs.dynatraceEnvironment }}
+        password: ${{ inputs.dynatracePaaSToken }}
     - name: Build web component ⚙️
       shell: bash
       id: build
