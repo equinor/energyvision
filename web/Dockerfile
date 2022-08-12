@@ -39,7 +39,7 @@ RUN pnpm web build
 #Unfortunately docker doesn't have a better IF and ELSE approach
 #https://stackoverflow.com/a/54245466
 FROM node:lts-alpine as run_with_dynatrace_true
-ONBUILD COPY file COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
+ONBUILD COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
 ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 ONBUILD RUN echo "Building with Dynatrace enabled..."
 
