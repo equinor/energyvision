@@ -25,7 +25,7 @@ import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
 import type { MenuData, SimpleMenuData } from '../../../types/types'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../../../common/helpers/getIntl'
-import { PathType } from 'common/helpers/getPaths'
+import { PathType } from '../../../common/helpers/getPaths'
 
 const { publicRuntimeConfig } = getConfig()
 
