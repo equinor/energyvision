@@ -137,7 +137,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
       slug: data['slug'],
       lang: data['locale'] == 'en' ? 'en_GB' : 'nb_NO',
     })) ?? []
-  console.log(data?.archivedItems)
+
   return (
     <Layout intl={data?.intl} footerData={data?.footerData}>
       <>
@@ -220,7 +220,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   const pagePath = pagePathArray.join('/')
 
   const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
-  if (archivedItems.length < 0) return { notFound: true }
+  if (archivedItems.length === 0) return { notFound: true }
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
 
