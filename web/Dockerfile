@@ -1,3 +1,6 @@
+# GLOBAL VARIABLES
+ARG ARG_DYNATRACE_ENABLED=false
+
 FROM node:lts-alpine AS builder
 
 RUN npm install -g pnpm@^7.2.1
@@ -11,16 +14,12 @@ COPY ./tsconfig.base.json ./
 COPY ./satellitesConfig.js ./
 COPY ./pnpm-workspace.yaml ./
 COPY ./.npmrc ./
-
 COPY ./web ./web
-COPY ./legacy ./legacy
 
 # Replace workspace:* with the actual versions | Load css from public folder atm
 # RUN version=$(jq --raw-output .version ./legacy/css/package.json); \
 #  jq --arg legacy_css "$version" '.dependencies["@equinor/energyvision-legacy-css"] = $legacy_css' \
 #  ./web/package.json | sponge ./web/package.json
-
-RUN rm -rf ./legacy
 
 ARG ARG_SANITY_PROJECT_ID
 ARG ARG_SANITY_DATASET
@@ -36,11 +35,18 @@ ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
 RUN pnpm web install --frozen-lockfile
 RUN pnpm web build
 
-FROM node:lts-alpine
+#Add dynatrace conditionally
+#Unfortunately docker doesn't have a better IF and ELSE approach
+#https://stackoverflow.com/a/54245466
+FROM node:lts-alpine as run_with_dynatrace_true
+ONBUILD COPY file COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
+ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
+ONBUILD RUN echo "Building with Dynatrace enabled..."
 
-#COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
-#ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
+FROM node:lts-alpine as run_with_dynatrace_false
+ONBUILD RUN echo "Building with Dynatrace disabled..."
 
+FROM run_with_dynatrace_${ARG_DYNATRACE_ENABLED}
 RUN npm install -g pnpm@^7.2.1
 
 WORKDIR /opt/app
@@ -65,6 +71,7 @@ COPY --from=builder /opt/app/web/.next ./web/.next
 COPY --from=builder /opt/app/web/next.config.mjs ./web
 COPY --from=builder /opt/app/web/securityHeaders.mjs ./web
 COPY --from=builder /opt/app/web/package.json ./web
+COPY --from=builder /opt/app/web/node_modules ./web/node_modules
 COPY --from=builder /opt/app/web/pnpm-lock.yaml ./web
 COPY --from=builder /opt/app/web/languages.js ./web
 COPY --from=builder /opt/app/pnpm-lock.yaml ./
@@ -97,12 +104,6 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
-
-# RUN pnpm install --frozen-lockfile
-RUN pnpm web install --frozen-lockfile
-
-RUN rm ./pnpm-lock.yaml
-RUN rm -rf .pnpm-store
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
