@@ -38,15 +38,15 @@ RUN pnpm web build
 #Add dynatrace conditionally
 #Unfortunately docker doesn't have a better IF and ELSE approach
 #https://stackoverflow.com/a/54245466
-FROM node:lts-alpine as run_with_dynatrace_true
+FROM node:lts-alpine as dynatrace_true
 ONBUILD COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
 ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
-ONBUILD RUN echo "Building with Dynatrace enabled..."
+ONBUILD RUN echo "Running with Dynatrace..."
 
-FROM node:lts-alpine as run_with_dynatrace_false
-ONBUILD RUN echo "Building with Dynatrace disabled..."
+FROM node:lts-alpine as dynatrace_false
+ONBUILD RUN echo "Running without Dynatrace..."
 
-FROM run_with_dynatrace_${ARG_DYNATRACE_ENABLED}
+FROM dynatrace_${ARG_DYNATRACE_ENABLED} as runner
 RUN npm install -g pnpm@^7.2.1
 
 WORKDIR /opt/app
