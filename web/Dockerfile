@@ -38,8 +38,8 @@ RUN pnpm web build
 
 FROM node:lts-alpine
 
-COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
-ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
+#COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
+#ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 
 RUN npm install -g pnpm@^7.2.1
 
