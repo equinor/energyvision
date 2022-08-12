@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: https://web-energyvision-dev.radix.equinor.com/
+      url: https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com/
     strategy:
       # The matrix approach is needed to re-use code created for satellites
       matrix:

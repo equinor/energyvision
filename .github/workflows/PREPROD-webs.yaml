@@ -133,6 +133,8 @@ jobs:
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
+          dynatraceEnvironment: ${{ secrets.DYNATRACE_ENVIRONMENT }}
+          dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
