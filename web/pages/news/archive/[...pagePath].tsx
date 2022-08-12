@@ -18,14 +18,14 @@ import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
-import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
+import { hasArchivedNews, isGlobal, isGlobalDevelopment } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
 import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
-
 import type { MenuData, SimpleMenuData } from '../../../types/types'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../../../common/helpers/getIntl'
+import { PathType } from 'common/helpers/getPaths'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -132,10 +132,16 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   const { props } = page
 
   const { data } = props
+  const slugData =
+    data?.archivedItems?.map((data: PathType) => ({
+      slug: data['slug'],
+      lang: data['locale'] == 'en' ? 'en_GB' : 'nb_NO',
+    })) ?? []
+  console.log(data?.archivedItems)
   return (
     <Layout intl={data?.intl} footerData={data?.footerData}>
       <>
-        <Header slugs={[]} menuData={data?.menuData} />
+        <Header slugs={isGlobalDevelopment ? slugData : []} menuData={data?.menuData} />
         <SkipNavContent />
         {page}
       </>
@@ -213,8 +219,8 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
 
-  const existsInArchive = archivedNews.some((e) => e.slug === `/news/archive/${pagePath}`)
-  if (!existsInArchive) return { notFound: true }
+  const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
+  if (archivedItems.length < 0) return { notFound: true }
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
 
@@ -234,6 +240,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
       data: {
         menuData,
         footerData,
+        archivedItems,
         news: {
           ...pageData,
           slug: pagePath,
@@ -241,6 +248,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
         intl,
       },
     },
+
     notFound: !pageData,
     revalidate: 1800,
   }
