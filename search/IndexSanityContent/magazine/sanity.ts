@@ -9,6 +9,7 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   _id,
   "title": pt::text(title),
   "type": _type,
+  "ingress": pt::text(ingress),
   "textBlocks": content[_type == "textBlock"]{
     "_key": _key,
     "title": pt::text(title),
@@ -30,6 +31,7 @@ const getQueryParams = (language: Language) => ({
 export type MagazineArticle = {
   slug: string
   title: string
+  ingress: string
   textBlocks: {
     _key: string
     title: string
