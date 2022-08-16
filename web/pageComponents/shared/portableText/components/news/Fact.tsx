@@ -75,9 +75,11 @@ export const Fact = (block: BlockProps) => {
       )}
 
       <FactBoxContentWithPadding dynamicHeight={dynamicHeight} hasImage={hasImage} hasColumns={hasColumns}>
-        <Heading size="xl" level="h3">
-          {title}
-        </Heading>
+        {title && (
+          <Heading size="xl" level="h3">
+            {title}
+          </Heading>
+        )}
         <FactBox.Text hasColumns={hasColumns}>
           <RichText value={content} />
         </FactBox.Text>
