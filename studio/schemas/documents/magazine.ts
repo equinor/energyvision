@@ -5,13 +5,27 @@ import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import type { Rule, SanityDocument } from '@sanity/types'
 import { defaultLanguage } from '../../languages'
-import { HAS_MAGAZINE_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
+import { HAS_MAGAZINE_SUBSCRIPTION, IS_TEST } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
 import { magazineSlug } from '../../../satellitesConfig.js'
 import slugify from 'slugify'
 import { withSlugValidation } from '../validations/validateSlug'
+import { configureBlockContent } from '../editors/blockContentType'
+import CharCounterEditor from '../components/CharCounterEditor'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 const titleContentType = configureTitleBlockContent()
+
+const ingressBlockContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  attachment: false,
+  lists: false,
+})
 
 export default {
   type: 'document',
@@ -107,6 +121,15 @@ export default {
       }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    IS_TEST && {
+      name: 'ingress',
+      title: 'Ingress',
+      description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [ingressBlockContentType],
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
     {
       name: 'content',
