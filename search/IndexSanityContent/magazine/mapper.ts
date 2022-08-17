@@ -15,13 +15,13 @@ type MappableObjectType = {
 type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => MagazineIndex
 const mapperFunction: MapperFunctionType =
   (article) =>
-  ({ _key, title, text }) => ({
+  ({ _key, title, ingress, text }) => ({
     slug: article.slug,
     objectID: `${article._id}-${_key}`,
     type: 'magazine',
     pageTitle: article.title,
     title,
-    ingress: article.ingress,
+    ingress,
     text,
   })
 
@@ -37,6 +37,24 @@ export const mapData: MapDataType = (article) =>
       A.concat(
         pipe(
           O.fromNullable(article.accordions),
+          O.map(A.map(fn)),
+          O.getOrElse(() => [] as MagazineIndex[]),
+        ),
+      ),
+      A.concat(
+        pipe(
+          O.fromNullable(
+            article.ingress
+              ? Array.of({
+                  _key: `ingress`,
+                  type: 'magazine',
+                  pageTitle: article.title,
+                  title: null,
+                  ingress: article.ingress,
+                  text: null,
+                } as unknown as MappableObjectType)
+              : null,
+          ),
           O.map(A.map(fn)),
           O.getOrElse(() => [] as MagazineIndex[]),
         ),
