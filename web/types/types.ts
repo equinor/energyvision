@@ -116,6 +116,8 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  isPastEvent: boolean
+  pastEventsCount?: number
 }
 
 export type NewsSchema = {

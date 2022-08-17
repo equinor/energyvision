@@ -47,13 +47,16 @@ type MultipleEventCardsProp = {
 
 const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) => {
   // sort only automatically selected events
-  if (!data[0]?.manuallySelectEvents) {
+  if (!data[0]?.manuallySelectEvents && !data[0]?.isPastEvent) {
     data.sort((a, b) => {
       return (
         new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
         new Date(getEventDates(b.eventDate).start || b.eventDate.date).getTime()
       )
     })
+  }
+  if (data[0]?.pastEventsCount) {
+    data = data.slice(0, data[0]?.pastEventsCount)
   }
 
   return (

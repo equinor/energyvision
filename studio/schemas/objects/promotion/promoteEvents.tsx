@@ -4,6 +4,7 @@ import type { Rule, Reference, ValidationContext, Block } from '@sanity/types'
 import blocksToText from '../../../helpers/blocksToText'
 import routes from '../../routes'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
+import { IS_TEST } from '../../../src/lib/datasetHelpers'
 
 // @TODO: How to do tags
 const eventTags = [
@@ -17,6 +18,7 @@ export type Event = {
   tags: string[]
   manuallySelectEvents: boolean
   promotedEvents: Reference[]
+  isPastEvent: boolean
 }
 
 export default {
@@ -31,6 +33,22 @@ export default {
       title: 'Manually select events',
       description: `Use this option if you want to manually select the events to promote`,
       initialValue: false,
+    },
+    IS_TEST && {
+      name: 'isPastEvent',
+      type: 'boolean',
+      title: 'Select past events',
+      description: `Enable this to automatically pick past events, otherwise future events are picked`,
+      initialValue: false,
+      hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true,
+    },
+    IS_TEST && {
+      name: 'pastEventsCount',
+      title: 'How many number of past events to show?',
+      type: 'number',
+      description: 'Leave empty to show all the past events (max limit 50).',
+      validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
+      hidden: ({ parent }: { parent: Event }) => parent?.isPastEvent === false,
     },
     {
       // @TODO

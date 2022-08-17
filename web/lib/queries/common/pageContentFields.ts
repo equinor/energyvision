@@ -4,6 +4,7 @@ import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import { publishDateTimeQuery } from '../news'
+import { eventPromotionFields, pastEventsQuery } from './eventPromotion'
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
@@ -290,26 +291,35 @@ const pageContentFields = /* groq */ `
         !manuallySelectEvents => {
           tags,
          // @TODO: This query is not done yet
-          "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
-            "type": "events",
-            "id": _id,
-            "slug": slug.current,
-            "title": content->title,
-            "location": content->location,
-            "eventDate": content->eventDate,
-            "manuallySelectEvents": false
+          !isPastEvent => {
+            "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
+              ${eventPromotionFields}
+              "manuallySelectEvents": false,
+              "isPastEvent": false,
+            }
           },
+          isPastEvent =>{
+            defined(pastEventsCount)=>{
+               "promotions": ${pastEventsQuery}{
+                 ${eventPromotionFields}
+                 "manuallySelectEvents":false,
+               "isPastEvent": true,
+               "pastEventsCount":^.pastEventsCount
+               }
+             },
+             !defined(pastEventsCount)=>{
+               "promotions": ${pastEventsQuery}{
+                 ${eventPromotionFields}
+                 "manuallySelectEvents": false,
+               "isPastEvent":true,
+               }
+             },
+           },
         },
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{
-            "type": "events",
-            "id": _id,
-            "slug": slug.current,
-            "title": content->title,
-            "location": content->location,
-            "eventDate": content->eventDate,
-            "manuallySelectEvents": true
-
+            ${eventPromotionFields}
+            "manuallySelectEvents": true,
           },
         },
       },
