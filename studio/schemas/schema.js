@@ -21,6 +21,7 @@ import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
 import tag from './documents/tag'
 import countryTag from './documents/countryTag'
+import magazineTag from './documents/magazineTag'
 import event from './documents/event'
 import assetFile from './documents/assetFile'
 import assetTag from './documents/assetTag'
@@ -84,6 +85,7 @@ import {
   HAS_MAGAZINE,
   HAS_NEWS,
   HAS_NEWSROOM,
+  IS_TEST,
 } from '../src/lib/datasetHelpers'
 import twitterEmbed from './objects/twitterEmbed'
 import anchorLink from './objects/anchorLink'
@@ -106,7 +108,7 @@ const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
 const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = HAS_FORMS ? [form] : []
-const MagazineSchemas = HAS_MAGAZINE ? [magazine, magazineIndex] : []
+const MagazineSchemas = HAS_MAGAZINE ? [magazine, magazineIndex, IS_TEST && magazineTag] : []
 const RemainingSchemas = [
   page,
   ...routeSchemas,

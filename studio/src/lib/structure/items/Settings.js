@@ -4,13 +4,15 @@ import { settings } from '@equinor/eds-icons'
 import { Tags } from './Tags'
 import { CountryTags } from './CountryTags'
 import { LocalNewsTags } from './LocalNewsTags'
+import { MagazineTags } from './MagazineTags'
 import { Redirects, ExternalRedirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
-import { HAS_NEWS, HAS_LOCAL_NEWS } from '../../datasetHelpers'
+import { HAS_NEWS, HAS_LOCAL_NEWS, HAS_MAGAZINE } from '../../datasetHelpers'
 
 const settingsItems = [
   HAS_NEWS && Tags,
   HAS_NEWS && CountryTags,
+  HAS_MAGAZINE && MagazineTags,
   TextSnippet,
   Redirects,
   ExternalRedirects,
