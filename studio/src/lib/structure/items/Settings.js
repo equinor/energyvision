@@ -7,12 +7,12 @@ import { LocalNewsTags } from './LocalNewsTags'
 import { MagazineTags } from './MagazineTags'
 import { Redirects, ExternalRedirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
-import { HAS_NEWS, HAS_LOCAL_NEWS, HAS_MAGAZINE } from '../../datasetHelpers'
+import { HAS_NEWS, HAS_LOCAL_NEWS, HAS_MAGAZINE, IS_TEST } from '../../datasetHelpers'
 
 const settingsItems = [
   HAS_NEWS && Tags,
   HAS_NEWS && CountryTags,
-  HAS_MAGAZINE && MagazineTags,
+  IS_TEST && HAS_MAGAZINE && MagazineTags,
   TextSnippet,
   Redirects,
   ExternalRedirects,
