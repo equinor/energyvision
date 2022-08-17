@@ -87,10 +87,9 @@ export default {
       fieldset: 'header',
     },
     HAS_MAGAZINE_SUBSCRIPTION && {
-      title: 'Should distribute this magazine?',
+      title: 'Send to subscribers',
       name: 'shouldDistributeMagazine',
-      description:
-        'Enable this to distribute this magazine to subscribers. Magazine will be distributed once after its is published.',
+      description: 'Activate (change to green) to send to subscribers when you publish the magazine article.',
       type: 'boolean',
       initialValue: false,
     },
