@@ -1,4 +1,12 @@
-import { HAS_FORMS, HAS_SEARCH, HAS_NEWS, HAS_NEWSROOM, HAS_EVENT, HAS_MAGAZINE } from '../src/lib/datasetHelpers'
+import {
+  HAS_FORMS,
+  HAS_SEARCH,
+  HAS_NEWS,
+  HAS_NEWSROOM,
+  HAS_EVENT,
+  HAS_MAGAZINE,
+  IS_TEST,
+} from '../src/lib/datasetHelpers'
 
 export const groups = {
   newsroom: { title: 'Newsroom', hidden: !HAS_NEWSROOM },
@@ -594,6 +602,12 @@ const snippets: textSnippet = {
     title: 'Country filter heading',
     defaultValue: 'Country',
     group: groups.newsroom,
+  },
+  newsroom_local_market_filter: {
+    title: 'Local market filter heading',
+    defaultValue: 'Local market',
+    group: groups.newsroom,
+    hidden: !IS_TEST,
   },
   newsroom_year_filter: {
     title: 'Year filter heading',
