@@ -3,7 +3,7 @@ import { Settings } from '@algolia/client-search'
 export const indexSettings: Settings = {
   searchableAttributes: ['pageTitle', 'text'],
   attributesToSnippet: ['text'],
-  attributesForFaceting: ['year', 'topicTags', 'countryTags'],
+  attributesForFaceting: ['year', 'topicTags', 'countryTags', 'localNewsTag'],
   attributeForDistinct: 'slug',
   distinct: 1,
   advancedSyntax: true,

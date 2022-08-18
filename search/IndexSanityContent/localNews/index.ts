@@ -4,15 +4,18 @@ import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { update, generateIndexName, getEnvironment, Language, getSanityClient } from '../../common'
+import { update, generateIndexName, Language, getSanityClient } from '../../common'
 import { fetchData } from './sanity'
 import { indexSettings } from '../common/news/algolia'
 import { mapData } from './mapper'
 
 const indexIdentifier = 'NEWS'
 
-export const indexNews = (language: Language) => {
-  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
+export const indexLocalNews = (language: Language) => {
+  const indexName = flow(
+    () => E.fromNullable('Use getEnvironment here after acceptance')('dev'),
+    E.map(generateIndexName(indexIdentifier)(language.isoCode)),
+  )
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
   return pipe(

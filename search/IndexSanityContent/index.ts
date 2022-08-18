@@ -7,6 +7,7 @@ import { indexNews } from './news'
 import { indexMagazine } from './magazine'
 import { languageFromIso, languageOrDefault } from '../common'
 import { pipe } from 'fp-ts/lib/function'
+import { indexLocalNews } from './localNews'
 
 const timerTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
@@ -21,6 +22,7 @@ const timerTrigger: AzureFunction = async function (context: Context, req: HttpR
   await indexTopic(language)().catch(logger.error)
   await indexNews(language)().catch(logger.error)
   await indexMagazine(language)().catch(logger.error)
+  await indexLocalNews(language)().catch(logger.error)
 }
 
 export default timerTrigger
