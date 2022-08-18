@@ -70,6 +70,15 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
+    IS_TEST && {
+      name: 'ingress',
+      title: 'Ingress',
+      description: 'Shown in newsletters and promotions. Max 400 characters',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [ingressBlockContentType],
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
+    },
     {
       name: 'title',
       type: 'array',
@@ -120,15 +129,6 @@ export default {
       }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
-    },
-    IS_TEST && {
-      name: 'ingress',
-      title: 'Ingress',
-      description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [ingressBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
     {
       name: 'content',
