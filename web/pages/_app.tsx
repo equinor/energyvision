@@ -107,7 +107,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <GlobalStyle />
-        {/* <GlobalFontStyle /> */}
         <SkipNavLink />
         {IS_LIVE && <CookieBot locale={router.locale} />}
         {getLayout(<Component {...pageProps} />)}
