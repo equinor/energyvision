@@ -5,7 +5,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import type { Rule, SanityDocument } from '@sanity/types'
 import { defaultLanguage } from '../../languages'
-import { HAS_MAGAZINE_SUBSCRIPTION, IS_TEST } from '../../src/lib/datasetHelpers'
+import { HAS_MAGAZINE, HAS_MAGAZINE_SUBSCRIPTION, IS_TEST } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
 import { magazineSlug } from '../../../satellitesConfig.js'
 import slugify from 'slugify'
@@ -53,6 +53,14 @@ export default {
       options: {
         collapsible: true,
         collapsed: true,
+      },
+    },
+    IS_TEST && {
+      title: 'Tags',
+      name: 'tagFieldset',
+      options: {
+        collapsible: true,
+        collapsed: false,
       },
     },
   ],
@@ -151,6 +159,21 @@ export default {
       type: 'excludeFromSearch',
       name: 'excludeFromSearch',
     },
+    HAS_MAGAZINE &&
+      IS_TEST && {
+        title: 'Magazine tags',
+        name: 'magazineTags',
+        type: 'array',
+        description: 'Add tags to describe the content of this magazine article',
+        of: [
+          {
+            type: 'reference',
+            to: [{ type: 'magazineTag' }],
+            options: { disableNew: true },
+          },
+        ],
+        fieldset: 'tagFieldset',
+      },
   ].filter((e) => e),
   orderings: [
     {
