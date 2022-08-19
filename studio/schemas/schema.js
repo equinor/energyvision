@@ -108,7 +108,7 @@ const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
 const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = HAS_FORMS ? [form] : []
-const MagazineSchemas = HAS_MAGAZINE ? [magazine, magazineIndex, IS_TEST && magazineTag] : []
+const MagazineSchemas = HAS_MAGAZINE ? [magazine, magazineIndex, IS_TEST && magazineTag].filter((e) => e) : []
 const RemainingSchemas = [
   page,
   ...routeSchemas,

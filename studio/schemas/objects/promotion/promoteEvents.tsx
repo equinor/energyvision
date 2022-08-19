@@ -90,7 +90,7 @@ export default {
 
       hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === false,
     },
-  ],
+  ].filter((e) => e),
   // When you play the game of previews, you win or you die
   preview: {
     select: {
