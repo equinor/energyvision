@@ -21,7 +21,7 @@ import {
   relatedLinks,
   excludeFromSearch,
 } from './news/sharedNewsFields'
-import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION, IS_TEST } from '../../src/lib/datasetHelpers'
+import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
 import { withSlugValidation } from '../validations/validateSlug'
 
@@ -113,8 +113,7 @@ export default {
     },
     prepare(selection) {
       const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
-      const date = publishedDate ? formatDate(publishedDate) : 'Not Published'
-      const date1 =
+      const date =
         publishedDate && isCustomDate
           ? formatDate(publishedDate)
           : firstPublishedAt
@@ -123,7 +122,7 @@ export default {
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${IS_TEST ? date1 : date}`,
+        subtitle: `Published date: ${date}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')
