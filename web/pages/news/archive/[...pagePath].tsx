@@ -18,7 +18,7 @@ import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
-import { hasArchivedNews, isGlobal, isGlobalDevelopment } from '../../../common/helpers/datasetHelpers'
+import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
 import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
@@ -141,7 +141,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   return (
     <Layout intl={data?.intl} footerData={data?.footerData}>
       <>
-        <Header slugs={isGlobalDevelopment ? slugData : []} menuData={data?.menuData} />
+        <Header slugs={slugData} menuData={data?.menuData} />
         <SkipNavContent />
         {page}
       </>
