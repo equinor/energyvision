@@ -1,13 +1,13 @@
 import S from '@sanity/desk-tool/structure-builder'
 // eslint-disable-next-line import/no-unresolved
 import documentStore from 'part:@sanity/base/datastore/document'
-import RoutePreview from '../../../previews/page/RoutePreview'
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../../../icons'
 
 import { languages } from '../../../../languages'
 
 import flags from '../../../../icons/countries'
+import Preview from '../../../previews/Preview'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -19,7 +19,7 @@ import flags from '../../../../icons/countries'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = [S.view.form().title('Edit route'), S.view.component(RoutePreview).title('Preview')]
+const views = [S.view.form().title('Edit route'), S.view.component(Preview).title('Preview')]
 // Original version without preview pane
 // const views = [S.view.form()]
 
