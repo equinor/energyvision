@@ -68,6 +68,7 @@ export type MagazineIndex = {
   title: string
   ingress: string
   text: string
+  magazineTags?: string[]
 }
 
 export type IndexType = EventIndex | TopicIndex | NewsIndex | MagazineIndex

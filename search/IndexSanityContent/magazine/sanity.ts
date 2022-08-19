@@ -20,7 +20,8 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
     "_key": _key,
     "title": pt::text(title),
     "ingress": pt::text(ingress)
-  }
+  },
+  "magazineTags": magazineTags[]->.title[$lang],
 }
 `
 
@@ -45,6 +46,7 @@ export type MagazineArticle = {
     text: string
   }[]
   _id: string
+  magazineTags?: string[]
 }
 
 type FetchDataType = (
