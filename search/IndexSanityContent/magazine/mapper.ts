@@ -16,7 +16,7 @@ type MappableObjectType = {
 type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => MagazineIndex
 const mapperFunction: MapperFunctionType =
   (article) =>
-  ({ _key, title, ingress, text, magazineTags }) => ({
+  ({ _key, title, ingress, text }) => ({
     slug: article.slug,
     objectID: `${article._id}-${_key}`,
     type: 'magazine',
@@ -24,7 +24,7 @@ const mapperFunction: MapperFunctionType =
     title,
     ingress,
     text,
-    magazineTags,
+    magazineTags: article.magazineTags,
   })
 
 type MapDataType = (article: MagazineArticle) => MagazineIndex[]
