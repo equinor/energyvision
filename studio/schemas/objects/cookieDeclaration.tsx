@@ -5,7 +5,6 @@ import { Heading, Text, Box } from '@sanity/ui'
 import styled from 'styled-components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
-import { IS_TEST } from '../../src/lib/datasetHelpers'
 
 const StyledText = styled(Text)`
   margin: 1em 0;
@@ -36,7 +35,7 @@ export default {
   name: 'cookieDeclaration',
   type: 'object',
   fields: [
-    IS_TEST && {
+    {
       name: 'title',
       type: 'array',
       title: 'Title',

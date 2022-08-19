@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
 import { CookieDeclarationData } from '../../types/types'
-import { isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
 
 type CookieDeclarationProps = {
   data: CookieDeclarationData
@@ -38,7 +37,7 @@ const CookieDeclaration = ({ data, anchor }: CookieDeclarationProps) => {
   return (
     <BackgroundContainer background="White" id={anchor}>
       <Container id="cookie-declaration-wrapper" ref={placeholderRef}>
-        {isGlobalDevelopment && title && <StyledTitle value={title} />}
+        {title && <StyledTitle value={title} />}
       </Container>
     </BackgroundContainer>
   )
