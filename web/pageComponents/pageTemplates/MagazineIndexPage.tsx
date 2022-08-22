@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
 import { toPlainText } from '@portabletext/react'
-import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
+import { isGlobalProduction, isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
@@ -10,6 +10,7 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import MagazineContent from '../newsRoom/NewsContent'
+import MagazineContent1 from '../newsRoom1/MagazineContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { metaTitleSuffix } from '../../languages'
 import { Wrapper, Intro, News as MagazineWapper, UnpaddedText } from './algoliaPages/components'
@@ -91,7 +92,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
                 }} */
             >
               <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
-              <MagazineContent hasFilters={false} header="magazine" />
+              {isGlobalDevelopment ? <MagazineContent1 /> : <MagazineContent hasFilters={false} header="magazine" />}
             </InstantSearch>
           </MagazineWapper>
         </Wrapper>
