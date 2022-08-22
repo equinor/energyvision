@@ -3,6 +3,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
+import { SharedNewsFields } from '../common/news/SharedNewsFields'
 
 const publishDateTimeQuery = /* groq */ `
   select(
@@ -35,22 +36,9 @@ const getQueryParams = (language: Language) => ({
   lang: language.internalCode,
 })
 
-export type NewsArticle = {
-  slug: string
-  title: string
-  ingress: string
-  // ISO 8601
-  publishDateTime?: string
+export type NewsArticle = SharedNewsFields & {
   topicTags?: string[]
   countryTags?: string[]
-  blocks: {
-    blockKey: string
-    children: {
-      childKey: string
-      text: string
-    }[]
-  }[]
-  _id: string
 }
 
 type FetchDataType = (
