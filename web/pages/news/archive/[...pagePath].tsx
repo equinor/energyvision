@@ -135,7 +135,7 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   const slugData =
     data?.archivedItems?.map((data: PathType) => ({
       slug: data['slug'],
-      lang: data['locale'] == 'en' ? 'en_GB' : 'nb_NO',
+      lang: data['locale'] === 'en' ? 'en_GB' : 'nb_NO',
     })) ?? []
 
   return (
