@@ -634,6 +634,11 @@ const snippets: textSnippet = {
     defaultValue: 'Stories',
     group: groups.magazine,
   },
+  magazine_tag_filter: {
+    title: 'Magazine filter heading',
+    defaultValue: 'Magazine Tag',
+    group: groups.magazine,
+  },
   stock_nyse_time_delay_message: {
     title: 'Stock API: NYSE time delay message',
     defaultValue: 'at least 20 minutes delayed',

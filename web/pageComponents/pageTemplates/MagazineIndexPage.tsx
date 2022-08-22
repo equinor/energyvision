@@ -9,7 +9,7 @@ import isEmpty from '../shared/portableText/helpers/isEmpty'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
-import MagazineContent from '../newsRoom/NewsContent'
+import MagazineContent from '../newsRoom/MagazineContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { metaTitleSuffix } from '../../languages'
 import { Wrapper, Intro, News as MagazineWapper, UnpaddedText } from './algoliaPages/components'
@@ -91,7 +91,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
                 }} */
             >
               <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
-              <MagazineContent hasFilters={false} header="magazine" />
+              <MagazineContent />
             </InstantSearch>
           </MagazineWapper>
         </Wrapper>

@@ -5,7 +5,7 @@ import { Heading } from '@components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import { FormattedMessage } from 'react-intl'
 
-const StyledNewsList = styled.div`
+const StyledList = styled.div`
   padding: 0 var(--space-large);
 
   @media (min-width: 800px) {
@@ -27,16 +27,16 @@ const HeaderText = ({ header }: { header: string }) => {
   return <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
 }
 
-const NewsList = ({ header, ...rest }: { header: string }) => {
+const List = ({ header, ...rest }: { header: string }) => {
   return (
-    <StyledNewsList {...rest}>
+    <StyledList {...rest}>
       <Heading level="h2" size="lg">
         <HeaderText header={header} />
       </Heading>
       <Hits hitComponent={Hit} />
       <StyledPagination padding={1} hitsPerPage={20} />
-    </StyledNewsList>
+    </StyledList>
   )
 }
 
-export default NewsList
+export default List
