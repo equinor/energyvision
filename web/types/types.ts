@@ -108,16 +108,29 @@ export type PeopleCardData = {
   cv?: LinkData
 }
 
+export type EventPromotionSettings = {
+  manuallySelectEvents: boolean
+  promotePastEvents: boolean
+  pastEventsCount?: number
+}
+
 export type EventCardData = {
   id: string
   type: 'events'
   title: PortableTextBlock[]
-  manuallySelectEvents: boolean
   slug: string
   location?: string
   eventDate: EventDateType
-  isPastEvent: boolean
-  pastEventsCount?: number
+  manuallySelectEvents: boolean
+}
+
+export type EventCardDataV2 = {
+  id: string
+  type: 'events'
+  title: PortableTextBlock[]
+  slug: string
+  location?: string
+  eventDate: EventDateType
 }
 
 export type NewsSchema = {
@@ -405,6 +418,21 @@ export type PromotionData = {
     tags?: Tag[]
     promotions: CardData[] | PeopleCardData[] | EventCardData[]
     type: PromotionType
+  }
+  designOptions?: DesignOptions
+}
+
+export type PromotionDataV2 = {
+  id: string
+  type: string
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  content: {
+    // Do we really need the tags here?
+    tags?: Tag[]
+    promotions: CardData[] | PeopleCardData[] | EventCardDataV2[]
+    type: PromotionType
+    eventPromotionSettings?: EventPromotionSettings
   }
   designOptions?: DesignOptions
 }

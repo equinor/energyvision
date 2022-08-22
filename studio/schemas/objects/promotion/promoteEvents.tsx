@@ -18,7 +18,7 @@ export type Event = {
   tags: string[]
   manuallySelectEvents: boolean
   promotedEvents: Reference[]
-  isPastEvent: boolean
+  promotePastEvents: boolean
 }
 
 export default {
@@ -35,7 +35,7 @@ export default {
       initialValue: false,
     },
     IS_TEST && {
-      name: 'isPastEvent',
+      name: 'promotePastEvents',
       type: 'boolean',
       title: 'Select past events',
       description: `Enable this to automatically pick past events, otherwise future events are picked`,
@@ -48,7 +48,7 @@ export default {
       type: 'number',
       description: 'Leave empty to show all the past events (max limit 50).',
       validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
-      hidden: ({ parent }: { parent: Event }) => parent?.isPastEvent === false,
+      hidden: ({ parent }: { parent: Event }) => parent?.promotePastEvents === false,
     },
     {
       // @TODO

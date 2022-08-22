@@ -1,6 +1,6 @@
 import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
-import type { EventCardData } from '../../../types/types'
+import type { EventCardDataV2, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
 
 const PairWrapper = styled.div`
@@ -41,13 +41,14 @@ const FlexibleWrapper = styled.div`
 `
 
 type MultipleEventCardsProp = {
-  data: EventCardData[]
+  data: EventCardDataV2[]
   hasSectionTitle: boolean
+  eventPromotionSettings?: EventPromotionSettings
 }
 
-const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) => {
-  // sort only automatically selected events
-  if (!data[0]?.manuallySelectEvents) {
+const MultipleEventCardsV2 = ({ data, hasSectionTitle, eventPromotionSettings }: MultipleEventCardsProp) => {
+  // sort only automatically selected future events
+  if (!eventPromotionSettings?.manuallySelectEvents && !eventPromotionSettings?.promotePastEvents) {
     data.sort((a, b) => {
       return (
         new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
@@ -55,12 +56,15 @@ const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) =
       )
     })
   }
+  if (eventPromotionSettings?.pastEventsCount) {
+    data = data.slice(0, eventPromotionSettings.pastEventsCount)
+  }
 
   return (
     <>
       {data.length === 2 ? (
         <PairWrapper>
-          {data.map((item: EventCardData) => {
+          {data.map((item: EventCardDataV2) => {
             return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
           })}
         </PairWrapper>
@@ -75,4 +79,4 @@ const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) =
   )
 }
 
-export default MultipleEventCards
+export default MultipleEventCardsV2

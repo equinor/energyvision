@@ -14,6 +14,7 @@ import AccordionBlock from '../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../topicPages/PromoTileArray'
 import IFrame from '../topicPages/IFrame'
 import Promotion from '../topicPages/Promotion'
+import PromotionV2 from '../topicPages/PromotionV2'
 import Form from '../topicPages/Form/Form'
 import Table from '../topicPages/Table'
 import NewsList from '../topicPages/NewsList'
@@ -24,9 +25,10 @@ import TwitterEmbed from '../topicPages/TwitterEmbed'
 import Video from '../topicPages/Video'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
-import type { AnchorLinkData, PageSchema } from '../../types/types'
-
 import {
+  AnchorLinkData,
+  PageSchema,
+  PromotionDataV2,
   TeaserData,
   TextBlockData,
   FullWidthImageData,
@@ -46,6 +48,7 @@ import {
   VideoData,
   CookieDeclarationData,
 } from '../../types/types'
+import { isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -115,6 +118,7 @@ type ComponentProps =
   | AnchorLinkData
   | VideoData
   | CookieDeclarationData
+  | PromotionDataV2
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
   const slug = data?.slug
@@ -150,7 +154,11 @@ const TopicPage = ({ data }: TopicPageProps) => {
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} />
       case 'promotion':
-        return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} />
+        return isGlobalDevelopment ? (
+          <PromotionV2 key={c.id} data={c as PromotionDataV2} anchor={anchorReference} />
+        ) : (
+          <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} />
+        )
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} />
       case 'table':

@@ -287,39 +287,30 @@ const pageContentFields = /* groq */ `
       },
       _type == "promoteEvents" => {
         "id": _key,
-        manuallySelectEvents,
+        "eventPromotionSettings":{
+          manuallySelectEvents,
+          promotePastEvents,
+          pastEventsCount,
+        },
         !manuallySelectEvents => {
           tags,
          // @TODO: This query is not done yet
-          !isPastEvent => {
+          (!promotePastEvents || !defined(promotePastEvents)) => {
             "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
               ${eventPromotionFields}
-              "manuallySelectEvents": false,
-              "isPastEvent": false,
-            }
+              "manuallySelectEvents":false // remove this after acceptance #1063
+            },
           },
-          isPastEvent =>{
-            defined(pastEventsCount)=>{
+          promotePastEvents=>{
                "promotions": ${pastEventsQuery}{
                  ${eventPromotionFields}
-                 "manuallySelectEvents":false,
-               "isPastEvent": true,
-               "pastEventsCount":^.pastEventsCount
-               }
+               },
              },
-             !defined(pastEventsCount)=>{
-               "promotions": ${pastEventsQuery}{
-                 ${eventPromotionFields}
-                 "manuallySelectEvents": false,
-               "isPastEvent":true,
-               }
-             },
-           },
         },
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{
             ${eventPromotionFields}
-            "manuallySelectEvents": true,
+            "manuallySelectEvents":true // remove this after acceptance #1063
           },
         },
       },
