@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Accordion, AccordionItem, AccordionPanel } from '@reach/accordion'
 import { useIntl } from 'react-intl'
 import styled from 'styled-components'
-import FilterHeader from './FilterHeader'
+import FilterHeader from '././FilterHeader'
 import { RefinementList } from './RefinementList'
 import UncontrolledSearchBox from './UncontrolledSearchBox'
 import { isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
@@ -30,10 +30,9 @@ const StyledFilters = styled.div`
 type FiltersProps = {
   hasFilters: boolean
   hasSearch: boolean
-  header: string
 }
 
-const Filters = ({ hasFilters, hasSearch, header, ...rest }: FiltersProps) => {
+const Filters = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
   const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
 
@@ -53,52 +52,40 @@ const Filters = ({ hasFilters, hasSearch, header, ...rest }: FiltersProps) => {
         </SearchBoxContainer>
       )}
 
-      {hasFilters &&
-        (isGlobalDevelopment && header === 'magazine' ? (
-          <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
+      {hasFilters && (
+        <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
+          <AccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
+            <AccordionPanel>
+              <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
+            <AccordionPanel>
+              <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
+            </AccordionPanel>
+          </AccordionItem>
+          {isGlobalDevelopment && (
             <AccordionItem>
               <FilterHeader
-                label={intl.formatMessage({ id: 'magazine_tag_filter', defaultMessage: 'Magazine Tags' })}
+                label={intl.formatMessage({ id: 'newsroom_local_market_filter', defaultMessage: 'Local Market' })}
               />
               <AccordionPanel>
-                <RefinementList /* sortBy={['name:asc']} */ attribute="magazineTags" />
+                <RefinementList /* sortBy={['name:asc']} */ attribute="localNewsTag" />
               </AccordionPanel>
             </AccordionItem>
-          </StyledAccordion>
-        ) : (
-          <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
-            <AccordionItem>
-              <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
-              <AccordionPanel>
-                <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem>
-              <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
-              <AccordionPanel>
-                <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
-              </AccordionPanel>
-            </AccordionItem>
-            {isGlobalDevelopment && (
-              <AccordionItem>
-                <FilterHeader
-                  label={intl.formatMessage({ id: 'newsroom_local_market_filter', defaultMessage: 'Local Market' })}
-                />
-                <AccordionPanel>
-                  <RefinementList /* sortBy={['name:asc']} */ attribute="localNewsTag" />
-                </AccordionPanel>
-              </AccordionItem>
-            )}
-            <AccordionItem>
-              <FilterHeader
-                label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
-              ></FilterHeader>
-              <AccordionPanel>
-                <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
-              </AccordionPanel>
-            </AccordionItem>
-          </StyledAccordion>
-        ))}
+          )}
+          <AccordionItem>
+            <FilterHeader
+              label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
+            ></FilterHeader>
+            <AccordionPanel>
+              <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
+            </AccordionPanel>
+          </AccordionItem>
+        </StyledAccordion>
+      )}
     </StyledFilters>
   )
 }

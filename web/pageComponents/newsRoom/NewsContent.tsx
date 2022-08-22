@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import NewsList from './List'
+import NewsList from './NewsList'
 import Filters from './Filters'
 
 const NewsRoomContent = styled.div`
@@ -31,9 +31,7 @@ const GridNewsList = styled(NewsList)`
 const NewsContent = ({ hasFilters = true, hasSearch = true, header = 'news' }) => {
   return (
     <NewsRoomContent>
-      {(hasFilters || hasSearch || header) && (
-        <GridFilters hasFilters={hasFilters} hasSearch={hasSearch} header={header}></GridFilters>
-      )}
+      {(hasFilters || hasSearch) && <GridFilters hasFilters={hasFilters} hasSearch={hasSearch}></GridFilters>}
       <GridNewsList header={header}></GridNewsList>
     </NewsRoomContent>
   )
