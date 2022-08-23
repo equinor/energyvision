@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import type { ContactListData } from '../../types/types'
 import { Text, Heading } from '@components'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
-import { isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
 
 const Wrapper = styled.div`
   margin: var(--space-4xLarge) auto;
@@ -55,7 +54,7 @@ const ContactList = ({ data, ...rest }: ContactListProps) => {
           {data.title}
         </Header>
       )}
-      {isGlobalDevelopment && data?.ingress && <Text size="md">{data.ingress}</Text>}
+      {data?.ingress && <Text size="md">{data.ingress}</Text>}
       {data?.contacts && data?.contacts.length > 0 && (
         <Contacts>
           {data.contacts.map((contact) => {
