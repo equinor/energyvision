@@ -80,7 +80,7 @@ export default {
     },
     IS_TEST && {
       name: 'ingress',
-      title: 'Ingress',
+      title: 'Description',
       description: 'Shown in newsletters and promotions. Max 400 characters',
       type: 'array',
       inputComponent: CharCounterEditor,
