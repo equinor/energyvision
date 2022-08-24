@@ -33,7 +33,7 @@ type FiltersProps = {
   filterType: 'news' | 'magazine'
 }
 
-const MagazineFilter = ({ hasFilters, hasSearch, filterType, ...rest }: FiltersProps) => {
+const MagazineFilter = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
   const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
 
@@ -66,7 +66,7 @@ const MagazineFilter = ({ hasFilters, hasSearch, filterType, ...rest }: FiltersP
   )
 }
 
-const NewsFilter = ({ hasFilters, hasSearch, filterType, ...rest }: FiltersProps) => {
+const NewsFilter = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
   const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
 
