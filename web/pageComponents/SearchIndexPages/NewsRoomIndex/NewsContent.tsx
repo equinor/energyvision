@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import NewsList from './List'
-import Filters from './Filters'
+import NewsList from '../common/List'
+import Filters from '../common/Filters'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -28,13 +28,13 @@ const GridNewsList = styled(NewsList)`
   grid-area: list;
 `
 
-const NewsContent = ({ hasFilters = true, hasSearch = true, header = 'news' }) => {
+const NewsContent = ({ hasFilters = true, hasSearch = true }) => {
   return (
     <NewsRoomContent>
-      {(hasFilters || hasSearch || header) && (
-        <GridFilters hasFilters={hasFilters} hasSearch={hasSearch} header={header}></GridFilters>
+      {(hasFilters || hasSearch) && (
+        <GridFilters hasFilters={hasFilters} hasSearch={hasSearch} filterType="news"></GridFilters>
       )}
-      <GridNewsList header={header}></GridNewsList>
+      <GridNewsList filterType="news"></GridNewsList>
     </NewsRoomContent>
   )
 }

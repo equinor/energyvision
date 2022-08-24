@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import List from './List'
-import Filters from './Filters'
+import List from '../common/List'
+import Filters from '../common/Filters'
 
 const MagazineContent = styled.div`
   display: grid;
@@ -28,13 +28,13 @@ const GridList = styled(List)`
   grid-area: list;
 `
 
-const MagazineStoryContent = ({ hasFilters = true, hasSearch = true, header = 'magazine' }) => {
+const MagazineStoryContent = ({ hasFilters = true, hasSearch = true }) => {
   return (
     <MagazineContent>
-      {(hasFilters || hasSearch || header) && (
-        <GridFilters hasFilters={hasFilters} hasSearch={hasSearch} header={header}></GridFilters>
+      {(hasFilters || hasSearch) && (
+        <GridFilters hasFilters={hasFilters} hasSearch={hasSearch} filterType="magazine"></GridFilters>
       )}
-      <GridList header={header}></GridList>
+      <GridList filterType="magazine"></GridList>
     </MagazineContent>
   )
 }

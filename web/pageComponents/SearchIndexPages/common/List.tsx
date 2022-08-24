@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Hit from './Hit'
 import { Hits } from './Hits'
 import { Heading } from '@components'
-import { Pagination } from '../shared/search/pagination/Pagination'
+import { Pagination } from '../../shared/search/pagination/Pagination'
 import { FormattedMessage } from 'react-intl'
 
 const StyledList = styled.div`
@@ -19,19 +19,19 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-medium);
 `
 
-const HeaderText = ({ header }: { header: string }) => {
-  if (header === 'magazine') {
+const HeaderText = ({ filterType }: { filterType: 'news' | 'magazine' }) => {
+  if (filterType === 'magazine') {
     return <FormattedMessage id="magazineindex_list_header" defaultMessage="Stories" />
   }
 
   return <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
 }
 
-const List = ({ header, ...rest }: { header: string }) => {
+const List = ({ filterType, ...rest }: { filterType: 'news' | 'magazine' }) => {
   return (
     <StyledList {...rest}>
       <Heading level="h2" size="lg">
-        <HeaderText header={header} />
+        <HeaderText filterType={filterType} />
       </Heading>
       <Hits hitComponent={Hit} />
       <StyledPagination padding={1} hitsPerPage={20} />
