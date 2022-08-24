@@ -5,6 +5,8 @@ import blocksToText from '../../../helpers/blocksToText'
 import routes from '../../routes'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import { IS_TEST } from '../../../src/lib/datasetHelpers'
+import { EdsIcon } from '../../../icons'
+import { calendar_event } from '@equinor/eds-icons'
 
 // @TODO: How to do tags
 const eventTags = [
@@ -102,6 +104,8 @@ export default {
       reference2: 'promotedEvents.1.content.title',
       reference3: 'promotedEvents.2.content.title',
       manually: 'manuallySelectEvents',
+      promotePastEvents: 'promotePastEvents',
+      pastEventsCount: 'pastEventsCount',
     },
     prepare({
       tags1,
@@ -112,6 +116,8 @@ export default {
       reference2,
       reference3,
       manually,
+      promotePastEvents,
+      pastEventsCount,
     }: {
       tags1?: string
       tags2?: string
@@ -121,6 +127,8 @@ export default {
       reference2: Block[]
       reference3: Block[]
       manually: boolean
+      pastEventsCount?: number
+      promotePastEvents: boolean
     }) {
       // @TODO: Figure out how to do tags
       const getTagTitle = (id: string | undefined) => {
@@ -139,12 +147,16 @@ export default {
       } else {
         const tags = [getTagTitle(tags1), getTagTitle(tags2), getTagTitle(tags3)].filter(Boolean)
         const hasMoreTags = Boolean(getTagTitle(tags4))
-        const titleText = tags.length > 0 ? `Tags: ${tags.join(', ')}` : ''
+        const titleText =
+          tags.length > 0
+            ? `Tags: ${tags.join(', ')}`
+            : `Showing ${pastEventsCount || 'all'} ${promotePastEvents ? 'past' : 'future'} events without tag filters`
         title = hasMoreTags ? `${titleText}…` : titleText
       }
       return {
         title: title,
         subtitle: manually ? `Events promotion | Manual` : `Events promotion | Automatic`,
+        media: EdsIcon(calendar_event),
       }
     },
   },
