@@ -2,12 +2,12 @@
 import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
-import { hasArchivedNews, hasMagazine, isGlobal } from '../common/helpers/datasetHelpers'
+import { hasArchivedNews } from '../common/helpers/datasetHelpers'
 import { getDocumentBySlug } from '../common/helpers/getPaths'
 import archivedNews from '../lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301
-const TEMPORARY_REDIRECT = 302
+// const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 
@@ -71,11 +71,6 @@ export async function middleware(request: NextRequest) {
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
     return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)
-  }
-
-  // Check if has /magazine/ in the url and redirect to a temporary landing page if so
-  if (pathname.includes('/magazine/') && isGlobal && !hasMagazine) {
-    return NextResponse.redirect(`${origin}/magazine`, TEMPORARY_REDIRECT)
   }
 
   // Check if pathname ends with .html
