@@ -17,8 +17,10 @@ import landingPage from './documents/landingPage'
 import route from './documents/route'
 import routeHomepage from './documents/routeHomepage'
 import subMenu from './documents/subMenu'
+import subMenuV2 from './documents/subMenuV2'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
+import footerV2 from './documents/footerV2'
 import tag from './documents/tag'
 import countryTag from './documents/countryTag'
 import magazineTag from './documents/magazineTag'
@@ -52,6 +54,7 @@ import figure from './objects/figure'
 import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
 import linkSelector from './objects/linkSelector'
+import linkSelectorV2 from './objects/linkSelectorV2'
 import promoTile from './objects/promoTile'
 import promoTileArray from './objects/promoTileArray'
 import stockValuesApi from './objects/stockValuesApi'
@@ -90,6 +93,7 @@ import {
 import twitterEmbed from './objects/twitterEmbed'
 import anchorLink from './objects/anchorLink'
 import video from './objects/video'
+import menuLinkV2 from './objects/menuLinkV2'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -100,7 +104,7 @@ const routeHomepageSchemas = languages.map(({ name, title }) => {
 })
 
 const MenuSchemas = HAS_FANCY_MENU
-  ? [siteMenu, subMenu, menuGroup, menuLink]
+  ? [siteMenu, IS_TEST ? subMenuV2 : subMenu, menuGroup, IS_TEST ? menuLinkV2 : menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
 const LocalNewsSchemas = HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
 const EventSchemas = HAS_EVENT ? [event, eventDate] : []
@@ -132,13 +136,13 @@ const RemainingSchemas = [
   figure,
   textWithIcon,
   textWithIconArray,
-  linkSelector,
+  IS_TEST ? linkSelectorV2 : linkSelector,
   promoTile,
   promoTileArray,
   stockValuesApi,
   iframe,
   basicIframe,
-  footer,
+  IS_TEST ? footerV2 : footer,
   promotion,
   promoteTopics,
   promoteEvents,
