@@ -71,6 +71,21 @@ export default {
       type: 'titleAndMeta',
       fieldset: 'metadata',
     },
+    HAS_MAGAZINE &&
+      IS_TEST && {
+        title: 'Magazine tags',
+        name: 'magazineTags',
+        type: 'array',
+        description: 'Add tags to describe the content of this magazine article',
+        of: [
+          {
+            type: 'reference',
+            to: [{ type: 'magazineTag' }],
+            options: { disableNew: true },
+          },
+        ],
+        fieldset: 'tagFieldset',
+      },
     {
       title: 'Open Graph Image',
       name: 'openGraphImage',
@@ -159,21 +174,6 @@ export default {
       type: 'excludeFromSearch',
       name: 'excludeFromSearch',
     },
-    HAS_MAGAZINE &&
-      IS_TEST && {
-        title: 'Magazine tags',
-        name: 'magazineTags',
-        type: 'array',
-        description: 'Add tags to describe the content of this magazine article',
-        of: [
-          {
-            type: 'reference',
-            to: [{ type: 'magazineTag' }],
-            options: { disableNew: true },
-          },
-        ],
-        fieldset: 'tagFieldset',
-      },
   ].filter((e) => e),
   orderings: [
     {

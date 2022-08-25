@@ -1,21 +1,22 @@
 import { defaultLanguage, languages } from '../../languages'
 import { TagIcon } from '../../icons'
 import { SearchWeights } from '../searchWeights'
+import { Rule } from '@sanity/types/dist/dts'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
   name: lang.name,
   type: 'string',
   title: lang.title,
-  validation: (Rule) => Rule.required(),
+  validation: (Rule: Rule) => Rule.required(),
 }))
 
 const title = `title.${defaultLanguage.name}`
 
 export default {
   type: 'document',
-  name: `magazineTag`,
-  title: `MagazineTag`,
+  name: 'magazineTag',
+  title: 'MagazineTag',
   fields: [
     {
       type: 'object',
@@ -28,11 +29,11 @@ export default {
       name: 'key',
       type: 'slug',
       description: "This is a data point, no need to alter it beyond 'generate'",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
 
       options: {
         source: title,
-        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-'),
+        slugify: (input: string) => input.toLowerCase().replace(/\s+/g, '-'),
       },
     },
   ],
@@ -53,7 +54,7 @@ export default {
     select: {
       title: title,
     },
-    prepare(selection) {
+    prepare(selection: { title: string }) {
       const { title } = selection
       // For debugging purposes
       return {
