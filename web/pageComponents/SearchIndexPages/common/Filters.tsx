@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Accordion, AccordionItem, AccordionPanel } from '@reach/accordion'
-import { useIntl } from 'react-intl'
+import { IntlShape, useIntl } from 'react-intl'
 import styled from 'styled-components'
 import FilterHeader from './FilterHeader'
 import { RefinementList } from './RefinementList'
@@ -32,11 +32,63 @@ type FiltersProps = {
   hasSearch: boolean
   filterType: 'news' | 'magazine'
 }
+type requiredProps = {
+  intl: IntlShape
+  indices: number[]
+  toggleItem(toggledIndex: number): void
+}
 
-const MagazineFilter = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
+const MagazineFilter = ({ intl, indices, toggleItem }: requiredProps) => {
+  return (
+    <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
+      <AccordionItem>
+        <FilterHeader label={intl.formatMessage({ id: 'magazine_tag_filter', defaultMessage: 'Magazine Tags' })} />
+        <AccordionPanel>
+          <RefinementList /* sortBy={['name:asc']} */ attribute="magazineTags" />
+        </AccordionPanel>
+      </AccordionItem>
+    </StyledAccordion>
+  )
+}
+
+const NewsFilter = ({ intl, indices, toggleItem }: requiredProps) => {
+  return (
+    <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
+      <AccordionItem>
+        <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
+        <AccordionPanel>
+          <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
+        </AccordionPanel>
+      </AccordionItem>
+      <AccordionItem>
+        <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
+        <AccordionPanel>
+          <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
+        </AccordionPanel>
+      </AccordionItem>
+      {isGlobalDevelopment && (
+        <AccordionItem>
+          <FilterHeader
+            label={intl.formatMessage({ id: 'newsroom_local_market_filter', defaultMessage: 'Local Market' })}
+          />
+          <AccordionPanel>
+            <RefinementList /* sortBy={['name:asc']} */ attribute="localNewsTag" />
+          </AccordionPanel>
+        </AccordionItem>
+      )}
+      <AccordionItem>
+        <FilterHeader label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}></FilterHeader>
+        <AccordionPanel>
+          <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
+        </AccordionPanel>
+      </AccordionItem>
+    </StyledAccordion>
+  )
+}
+
+const Filters = ({ hasFilters, hasSearch, filterType, ...rest }: FiltersProps) => {
   const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
-
   function toggleItem(toggledIndex: number) {
     if (indices.includes(toggledIndex)) {
       setIndices(indices.filter((currentIndex) => currentIndex !== toggledIndex))
@@ -44,39 +96,6 @@ const MagazineFilter = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
       setIndices([...indices, toggledIndex].sort())
     }
   }
-  return (
-    <StyledFilters {...rest}>
-      {hasSearch && (
-        <SearchBoxContainer>
-          <UncontrolledSearchBox />
-        </SearchBoxContainer>
-      )}
-
-      {hasFilters && (
-        <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
-          <AccordionItem>
-            <FilterHeader label={intl.formatMessage({ id: 'magazine_tag_filter', defaultMessage: 'Magazine Tags' })} />
-            <AccordionPanel>
-              <RefinementList /* sortBy={['name:asc']} */ attribute="magazineTags" />
-            </AccordionPanel>
-          </AccordionItem>
-        </StyledAccordion>
-      )}
-    </StyledFilters>
-  )
-}
-
-const NewsFilter = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
-  const [indices, setIndices] = useState<number[]>([])
-  const intl = useIntl()
-
-  function toggleItem(toggledIndex: number) {
-    if (indices.includes(toggledIndex)) {
-      setIndices(indices.filter((currentIndex) => currentIndex !== toggledIndex))
-    } else {
-      setIndices([...indices, toggledIndex].sort())
-    }
-  }
 
   return (
     <StyledFilters {...rest}>
@@ -85,51 +104,14 @@ const NewsFilter = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
           <UncontrolledSearchBox />
         </SearchBoxContainer>
       )}
-
-      {hasFilters && (
-        <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
-          <AccordionItem>
-            <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
-            <AccordionPanel>
-              <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem>
-            <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
-            <AccordionPanel>
-              <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
-            </AccordionPanel>
-          </AccordionItem>
-          {isGlobalDevelopment && (
-            <AccordionItem>
-              <FilterHeader
-                label={intl.formatMessage({ id: 'newsroom_local_market_filter', defaultMessage: 'Local Market' })}
-              />
-              <AccordionPanel>
-                <RefinementList /* sortBy={['name:asc']} */ attribute="localNewsTag" />
-              </AccordionPanel>
-            </AccordionItem>
-          )}
-          <AccordionItem>
-            <FilterHeader
-              label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
-            ></FilterHeader>
-            <AccordionPanel>
-              <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
-            </AccordionPanel>
-          </AccordionItem>
-        </StyledAccordion>
-      )}
+      {hasFilters &&
+        (filterType === 'magazine' ? (
+          <MagazineFilter intl={intl} indices={indices} toggleItem={toggleItem} />
+        ) : (
+          <NewsFilter intl={intl} indices={indices} toggleItem={toggleItem} />
+        ))}
     </StyledFilters>
   )
-}
-
-const Filters = ({ hasFilters, hasSearch, filterType }: FiltersProps) => {
-  if (filterType === 'magazine') {
-    return <MagazineFilter hasFilters={hasFilters} hasSearch={hasSearch} filterType="magazine" />
-  } else {
-    return <NewsFilter hasFilters={hasFilters} hasSearch={hasSearch} filterType="news" />
-  }
 }
 
 export default Filters
