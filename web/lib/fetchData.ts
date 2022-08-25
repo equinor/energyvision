@@ -1,6 +1,6 @@
 import { getClient } from './sanity.server'
 import type { NewsQuery, QueryParams } from './queryFromSlug'
-import { isGlobal } from '../common/helpers/datasetHelpers'
+import { Flags } from '../common/helpers/datasetHelpers'
 import { filterDataToSingleItem } from './filterDataToSingleItem'
 import { footerQuery } from './queries/footer'
 import { simpleMenuQuery } from './queries/simpleMenu'
@@ -31,7 +31,7 @@ export const getComponentsData = async (
 ) => {
   const client = getClient(preview)
 
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
+  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await client.fetch(menuQuery, page.queryParams)
   const pageDataWithDrafts = await fetchData(page.query, page.queryParams, isNews, preview)
   const footerDataWithDrafts = await client.fetch(footerQuery, page.queryParams)

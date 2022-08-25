@@ -4,7 +4,7 @@ import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
-import { HAS_FORMS, HAS_NEWS, HAS_TWITTER_FEED, HAS_VIDEO } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
 // import { done } from '@equinor/eds-icons'
 
@@ -82,11 +82,11 @@ export default {
         { type: 'stockValuesApi' },
         { type: 'iframe' },
         { type: 'cookieDeclaration' },
-        HAS_FORMS && { type: 'form' },
-        HAS_NEWS && { type: 'newsList' },
-        HAS_TWITTER_FEED && { type: 'twitterEmbed' },
+        Flags.HAS_FORMS && { type: 'form' },
+        Flags.HAS_NEWS && { type: 'newsList' },
+        Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'anchorLink' },
-        HAS_VIDEO && { type: 'video' },
+        Flags.HAS_MUX && { type: 'video' },
       ].filter((e) => e),
     },
   ],

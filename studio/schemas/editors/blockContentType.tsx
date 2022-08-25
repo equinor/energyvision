@@ -6,7 +6,7 @@ import type { BlockFieldType } from '../../types/schemaTypes'
 import routes from '../routes'
 import { filterByRouteAndNews, filterByRouteAndNewsInOtherLanguages } from '../../helpers/referenceFilters'
 import type { Rule, ValidationContext } from '@sanity/types'
-import { HAS_NEWS } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 export type BlockContentProps = {
   h1?: boolean
@@ -111,7 +111,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     reference: ReferenceType
     referenceToOtherLangs: ReferenceType
   }
-  const newsType = HAS_NEWS
+  const newsType = Flags.HAS_NEWS
     ? [
         {
           type: 'news',

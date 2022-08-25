@@ -48,7 +48,7 @@ import {
   VideoData,
   CookieDeclarationData,
 } from '../../types/types'
-import { isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -154,7 +154,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} />
       case 'promotion':
-        return isGlobalDevelopment ? (
+        return Flags.IS_DEV ? (
           <PromotionV2 key={c.id} data={c as PromotionDataV2} anchor={anchorReference} />
         ) : (
           <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} />

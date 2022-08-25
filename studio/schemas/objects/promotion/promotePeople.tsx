@@ -8,7 +8,7 @@ import type { ImageWithAlt } from '../imageWithAlt'
 import routes from '../../routes'
 import { AnchorLinkDescription } from '../anchorReferenceField'
 import { filterByRouteAndNews } from '../../../helpers/referenceFilters'
-import { HAS_NEWS } from '../../../src/lib/datasetHelpers'
+import { Flags } from '../../../src/lib/datasetHelpers'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -29,7 +29,7 @@ function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-const newsType = HAS_NEWS
+const newsType = Flags.HAS_NEWS
   ? [
       {
         type: 'news',

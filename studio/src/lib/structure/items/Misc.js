@@ -1,6 +1,6 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { FileIcon, TopicDocuments, NewsDocuments } from '../../../../icons'
-import { HAS_NEWSROOM, HAS_MAGAZINE, IS_TEST } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 
 const miscPages = [
   S.listItem()
@@ -57,7 +57,7 @@ const miscPages = [
           },
         ]),
     ),
-  HAS_NEWSROOM &&
+  Flags.HAS_NEWSROOM &&
     S.listItem()
       .title('Newsroom')
       .icon(NewsDocuments)
@@ -85,9 +85,8 @@ const miscPages = [
             },
           ]),
       ),
-  HAS_MAGAZINE &&
-    HAS_NEWSROOM &&
-    IS_TEST &&
+  Flags.HAS_MAGAZINE &&
+    Flags.IS_DEV &&
     S.listItem()
       .title('Magazine Index Page')
       .icon(NewsDocuments)

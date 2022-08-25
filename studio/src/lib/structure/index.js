@@ -12,14 +12,14 @@ import { TopicContent } from './items/TopicContent'
 import { Routes } from './items/Routes'
 import { Settings } from './items/Settings'
 import S from '@sanity/desk-tool/structure-builder'
-import { HAS_EVENT, HAS_MAGAZINE, HAS_LANDING_PAGE, HAS_LOCAL_NEWS, HAS_NEWS } from '../datasetHelpers'
+import { Flags } from '../datasetHelpers'
 import { getCurrentUserRoles } from '../userRoles'
 
-const News = HAS_NEWS && NewsStructure
-const Magazine = HAS_MAGAZINE && MagazineStructure
-const LocalNews = HAS_LOCAL_NEWS && LocalNewsStructure
-const LandingPage = HAS_LANDING_PAGE && LandingPageStructure
-const Event = HAS_EVENT && EventStructure
+const News = Flags.HAS_NEWS && NewsStructure
+const Magazine = Flags.HAS_MAGAZINE && MagazineStructure
+const LocalNews = Flags.HAS_LOCAL_NEWS && LocalNewsStructure
+const LandingPage = Flags.HAS_LANDING_PAGE && LandingPageStructure
+const Event = Flags.HAS_EVENT && EventStructure
 
 const ADMIN_ITEMS = [
   News,

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
 import { SanityDocument } from '@sanity/types'
-import { HAS_SAME_SLUG } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const client = sanityClient.withConfig({
   apiVersion: '2022-06-22',
@@ -22,7 +22,7 @@ const validateIsUniqueWithinLocale = async (slug: string, { document }: { docume
 }
 
 export const withSlugValidation = (options: any) => {
-  return HAS_SAME_SLUG
+  return Flags.HAS_SAME_SLUG
     ? {
         ...options,
         isUnique: validateIsUniqueWithinLocale,

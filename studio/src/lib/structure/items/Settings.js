@@ -7,16 +7,16 @@ import { LocalNewsTags } from './LocalNewsTags'
 import { MagazineTags } from './MagazineTags'
 import { Redirects, ExternalRedirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
-import { HAS_NEWS, HAS_LOCAL_NEWS, HAS_MAGAZINE, IS_TEST } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 
 const settingsItems = [
-  HAS_NEWS && Tags,
-  HAS_NEWS && CountryTags,
-  IS_TEST && HAS_MAGAZINE && MagazineTags,
+  Flags.HAS_NEWS && Tags,
+  Flags.HAS_NEWS && CountryTags,
+  Flags.IS_DEV && Flags.HAS_MAGAZINE && MagazineTags,
   TextSnippet,
   Redirects,
   ExternalRedirects,
-  HAS_LOCAL_NEWS && LocalNewsTags,
+  Flags.HAS_LOCAL_NEWS && LocalNewsTags,
 ].filter((e) => e)
 
 export const Settings = S.listItem()

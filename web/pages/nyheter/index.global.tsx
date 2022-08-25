@@ -10,7 +10,6 @@ import { newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
-import { isGlobal } from '../../common/helpers/datasetHelpers'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { NewsRoomProps } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
@@ -82,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   // We will also return 404 if the locale is not Norwegian.
   // This is a hack, and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-  if (!isGlobal || locale !== 'no') {
+  if (locale !== 'no') {
     return {
       notFound: true,
     }

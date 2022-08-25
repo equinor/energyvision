@@ -18,7 +18,7 @@ import Header from '../../../pageComponents/shared/Header'
 import { anchorClick } from '../../../common/helpers/staticPageHelpers'
 import Head from 'next/head'
 import { SkipNavContent } from '@reach/skip-nav'
-import { hasArchivedNews, isGlobal } from '../../../common/helpers/datasetHelpers'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
 import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
 import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
@@ -214,7 +214,7 @@ const fallbackToAnotherLanguage = async (
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale = defaultLanguage.locale }) => {
-  if (!hasArchivedNews) return { notFound: true }
+  if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
@@ -227,7 +227,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
 
   const pageData = await parseResponse(response)
-  const menuQuery = isGlobal ? globalMenuQuery : simpleMenuQuery
+  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
   const footerDataWithDrafts = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
   const intl = await getIntl(locale, preview)

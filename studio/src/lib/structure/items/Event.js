@@ -1,10 +1,10 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { TopicDocuments } from '../../../../icons'
 import { i18n } from '../../../../schemas/documentTranslation'
-import { HAS_EVENT } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
-export const Event = HAS_EVENT
+export const Event = Flags.HAS_EVENT
   ? S.listItem()
       .title('Event')
       .icon(TopicDocuments)

@@ -5,7 +5,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import type { Rule, SanityDocument } from '@sanity/types'
 import { defaultLanguage } from '../../languages'
-import { HAS_MAGAZINE, HAS_MAGAZINE_SUBSCRIPTION, IS_TEST } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
 import { magazineSlug } from '../../../satellitesConfig.js'
 import slugify from 'slugify'
@@ -55,7 +55,7 @@ export default {
         collapsed: true,
       },
     },
-    IS_TEST && {
+    Flags.IS_DEV && {
       title: 'Tags',
       name: 'tagFieldset',
       options: {
@@ -71,21 +71,20 @@ export default {
       type: 'titleAndMeta',
       fieldset: 'metadata',
     },
-    HAS_MAGAZINE &&
-      IS_TEST && {
-        title: 'Magazine tags',
-        name: 'magazineTags',
-        type: 'array',
-        description: 'Add tags to describe the content of this magazine article',
-        of: [
-          {
-            type: 'reference',
-            to: [{ type: 'magazineTag' }],
-            options: { disableNew: true },
-          },
-        ],
-        fieldset: 'tagFieldset',
-      },
+    Flags.IS_DEV && {
+      title: 'Magazine tags',
+      name: 'magazineTags',
+      type: 'array',
+      description: 'Add tags to describe the content of this magazine article',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'magazineTag' }],
+          options: { disableNew: true },
+        },
+      ],
+      fieldset: 'tagFieldset',
+    },
     {
       title: 'Open Graph Image',
       name: 'openGraphImage',
@@ -93,7 +92,7 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    IS_TEST && {
+    Flags.IS_DEV && {
       name: 'ingress',
       title: 'Description',
       description: 'Shown in newsletters and promotions. Max 400 characters',
@@ -118,7 +117,7 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
       fieldset: 'header',
     },
-    HAS_MAGAZINE_SUBSCRIPTION && {
+    Flags.HAS_MAGAZINE_SUBSCRIPTION && {
       title: 'Send to subscribers',
       name: 'shouldDistributeMagazine',
       description: 'Activate (change to green) to send to subscribers when you publish the magazine article.',

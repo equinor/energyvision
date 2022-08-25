@@ -6,7 +6,7 @@ import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
 import { AnchorLinkDescription } from './anchorReferenceField'
 import { filterByRouteAndNews } from '../../helpers/referenceFilters'
-import { HAS_NEWS } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 export type ReferenceTarget = {
   type: string
@@ -22,7 +22,7 @@ export type LinkSelector = {
   ariaLabel?: string
 }
 
-const newsType = HAS_NEWS
+const newsType = Flags.HAS_NEWS
   ? [
       {
         type: 'news',

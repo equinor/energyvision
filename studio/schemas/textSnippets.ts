@@ -1,24 +1,16 @@
-import {
-  HAS_FORMS,
-  HAS_SEARCH,
-  HAS_NEWS,
-  HAS_NEWSROOM,
-  HAS_EVENT,
-  HAS_MAGAZINE,
-  IS_TEST,
-} from '../src/lib/datasetHelpers'
+import { Flags } from '../src/lib/datasetHelpers'
 
 export const groups = {
-  newsroom: { title: 'Newsroom', hidden: !HAS_NEWSROOM },
-  magazine: { title: 'Magazine', hidden: !HAS_MAGAZINE },
-  search: { title: 'Search', hidden: !HAS_SEARCH },
-  eventPromotion: { title: 'Event', hidden: !HAS_EVENT },
-  subscribeForm: { title: 'Subscribe form', hidden: !HAS_FORMS },
-  careerFairForm: { title: 'Career fair form', hidden: !HAS_FORMS },
-  contactForm: { title: 'Contact form', hidden: !HAS_FORMS },
-  careerContactForm: { title: 'Careers Contact Form', hidden: !HAS_FORMS },
-  orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !HAS_FORMS },
-  form: { title: 'Form', hidden: !HAS_FORMS },
+  newsroom: { title: 'Newsroom', hidden: !Flags.HAS_NEWSROOM },
+  magazine: { title: 'Magazine', hidden: !Flags.HAS_MAGAZINE },
+  search: { title: 'Search', hidden: !Flags.HAS_SEARCH },
+  eventPromotion: { title: 'Event', hidden: !Flags.HAS_EVENT },
+  subscribeForm: { title: 'Subscribe form', hidden: !Flags.HAS_FORMS },
+  careerFairForm: { title: 'Career fair form', hidden: !Flags.HAS_FORMS },
+  contactForm: { title: 'Contact form', hidden: !Flags.HAS_FORMS },
+  careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_FORMS },
+  orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_FORMS },
+  form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
   others: { title: 'Others' },
 }
@@ -41,7 +33,7 @@ const snippets: textSnippet = {
   latest_news: {
     title: 'Latest News',
     defaultValue: 'Latest News',
-    hidden: !HAS_NEWS,
+    hidden: !Flags.HAS_NEWS,
     group: groups.others,
   },
   tba: {
@@ -607,7 +599,7 @@ const snippets: textSnippet = {
     title: 'Local market filter heading',
     defaultValue: 'Local market',
     group: groups.newsroom,
-    hidden: !IS_TEST,
+    hidden: !Flags.IS_DEV,
   },
   newsroom_year_filter: {
     title: 'Year filter heading',
@@ -638,7 +630,7 @@ const snippets: textSnippet = {
     title: 'Magazine filter heading',
     defaultValue: 'Magazine Tag',
     group: groups.magazine,
-    hidden: !IS_TEST,
+    hidden: !Flags.IS_DEV,
   },
   stock_nyse_time_delay_message: {
     title: 'Stock API: NYSE time delay message',

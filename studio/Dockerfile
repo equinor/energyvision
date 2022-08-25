@@ -12,6 +12,7 @@ COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
 COPY ./satellitesConfig.js ./
+COPY ./FeatureFlags.js ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_API_TOKEN

@@ -2,7 +2,7 @@
 import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from '../common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from '../lib/localization'
-import { hasArchivedNews } from '../common/helpers/datasetHelpers'
+import { Flags } from '../common/helpers/datasetHelpers'
 import { getDocumentBySlug } from '../common/helpers/getPaths'
 import archivedNews from '../lib/archive/archivedNewsPaths.json'
 
@@ -46,7 +46,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
-  if (hasArchivedNews && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
+  if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
     const existsInSanity = await pathExistsInSanity(pathname, isPreview)
     if (!existsInSanity) {
       const archivedPath = pathname.replace('news', 'news/archive')

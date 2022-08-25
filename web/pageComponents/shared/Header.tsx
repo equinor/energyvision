@@ -7,7 +7,7 @@ import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
-import { isGlobal } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage } from 'react-intl'
@@ -141,7 +141,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const localization = {
     activeLocale: router.locale || defaultLanguage.locale,
   }
-  const hasSearch = isGlobal
+  const hasSearch = Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
   const is404 = slugs.length === 0
 
@@ -150,7 +150,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   if (hasMoreThanOneLanguage && !is404) columns++
 
   /** Display "All sites" in case menu is empty **/
-  const shouldDisplayAllSites = !isGlobal && !menuData
+  const shouldDisplayAllSites = !Flags.HAS_FANCY_MENU && !menuData
 
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
@@ -183,7 +183,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             )}
             {shouldDisplayAllSites ? (
               <AllSites />
-            ) : menuData && isGlobal ? (
+            ) : menuData && Flags.HAS_FANCY_MENU ? (
               <ControlChild>
                 <SiteMenu data={menuData as MenuData} />
               </ControlChild>

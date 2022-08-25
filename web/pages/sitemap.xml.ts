@@ -1,4 +1,3 @@
-import { isGlobalDevelopment } from './../common/helpers/datasetHelpers'
 import { GetServerSideProps } from 'next'
 import { languages, defaultLanguage } from '../languages'
 import {
@@ -10,7 +9,7 @@ import {
   getMagazineIndexPaths,
   getMagazinePaths,
 } from '../common/helpers/getPaths'
-import { hasArchivedNews, hasLocalNews, hasMagazine, hasNews, hasNewsroom } from '../common/helpers/datasetHelpers'
+import { Flags } from '../common/helpers/datasetHelpers'
 import archivedNews from '../lib/archive/archivedNewsPaths.json'
 
 const Sitemap = () => {
@@ -65,12 +64,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   const isMultilanguage = locales.length > 1
 
   const routeSlugs = await getRoutePaths(locales)
-  const newsSlugs = hasNews ? await getNewsPaths(locales) : []
-  const newsroomSlugs = hasNewsroom ? await getNewsroomPaths() : []
-  const magazineSlugs = hasMagazine && isGlobalDevelopment ? await getMagazinePaths(locales) : []
-  const magazineIndexSlugs = hasMagazine && isGlobalDevelopment ? await getMagazineIndexPaths() : []
-  const localNewsSlugs = hasLocalNews ? await getLocalNewsPaths(locales) : []
-  const archivedNewsSlugs = hasArchivedNews ? archivedNews : []
+  const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
+  const newsroomSlugs = Flags.HAS_NEWSROOM ? await getNewsroomPaths() : []
+  const magazineSlugs = Flags.HAS_MAGAZINE ? await getMagazinePaths(locales) : []
+  const magazineIndexSlugs = Flags.HAS_MAGAZINE ? await getMagazineIndexPaths() : []
+  const localNewsSlugs = Flags.HAS_LOCAL_NEWS ? await getLocalNewsPaths(locales) : []
+  const archivedNewsSlugs = Flags.HAS_ARCHIVED_NEWS ? archivedNews : []
 
   const allSlugs = [
     ...routeSlugs,

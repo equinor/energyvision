@@ -12,6 +12,7 @@ COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
 COPY ./satellitesConfig.js ./
+COPY ./FeatureFlags.js ./
 COPY ./pnpm-workspace.yaml ./
 COPY ./.npmrc ./
 COPY ./web ./web

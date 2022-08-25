@@ -1,10 +1,10 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { TopicDocuments } from '../../../../icons'
 import { i18n } from '../../../../schemas/documentTranslation'
-import { HAS_MAGAZINE } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
-export const Magazine = HAS_MAGAZINE
+export const Magazine = Flags.HAS_MAGAZINE
   ? S.listItem()
       .title('Magazine')
       .icon(TopicDocuments)

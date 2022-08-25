@@ -1,10 +1,10 @@
 import S from '@sanity/desk-tool/structure-builder'
 import { TopicDocuments } from '../../../../icons'
 import { i18n } from '../../../../schemas/documentTranslation'
-import { HAS_LANDING_PAGE } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
-export const LandingPage = HAS_LANDING_PAGE
+export const LandingPage = Flags.HAS_LANDING_PAGE
   ? S.listItem()
       .title('Landing page')
       .icon(TopicDocuments)

@@ -7,7 +7,7 @@ import imageWithAlt from './imageWithAlt'
 import { Rule } from '@sanity/types/dist/dts'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
-import { IS_TEST } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const client = sanityClient.withConfig({
   apiVersion: '2021-05-19',
@@ -42,7 +42,7 @@ export default {
       type: 'array',
       of: [blockContentType],
     },
-    IS_TEST && {
+    Flags.IS_DEV && {
       title: 'Icon',
       name: 'icon',
       type: 'imageWithAlt',
@@ -64,7 +64,7 @@ export default {
           } else return true
         }),
     },
-    !IS_TEST && {
+    !Flags.IS_DEV && {
       title: 'Icon',
       name: 'icon',
       type: 'imageWithAlt',

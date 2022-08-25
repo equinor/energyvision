@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
 import { toPlainText } from '@portabletext/react'
-import { isGlobalProduction, isGlobalDevelopment } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
@@ -32,7 +32,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
 
   const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData || {}
   const plainTitle = title ? toPlainText(title) : ''
-  const envPrefix = isGlobalProduction ? 'prod' : 'dev'
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
 
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
@@ -92,7 +92,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
                 }} */
             >
               <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
-              {isGlobalDevelopment ? <MagazineContent1 /> : <MagazineContent hasFilters={false} header="magazine" />}
+              {Flags.IS_DEV ? <MagazineContent1 /> : <MagazineContent hasFilters={false} header="magazine" />}
             </InstantSearch>
           </MagazineWapper>
         </Wrapper>

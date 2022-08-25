@@ -4,7 +4,6 @@ import { useIntl, IntlProvider } from 'react-intl'
 import { GetStaticProps } from 'next/types'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
-import { isGlobal } from '../../common/helpers/datasetHelpers'
 import getIntl from '../../common/helpers/getIntl'
 
 import { RemoveScroll } from 'react-remove-scroll'
@@ -98,12 +97,6 @@ SearchPage.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false, locale = defaultLanguage.locale }) => {
-  if (!isGlobal) {
-    return {
-      notFound: true,
-    }
-  }
-
   const intl = await getIntl(locale, false)
 
   return {

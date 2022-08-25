@@ -1,7 +1,7 @@
 import T from '@sanity/base/initial-value-template-builder'
 import { languages } from './languages'
 import textSnippets from './schemas/textSnippets'
-import { HAS_FANCY_MENU } from './src/lib/datasetHelpers'
+import { Flags } from './src/lib/datasetHelpers'
 
 const ParentRoutesTemplates = languages.map(({ name, title }) =>
   T.template({
@@ -26,7 +26,7 @@ const TextSnippetsTemplates = Object.keys(textSnippets).map((key) =>
   }),
 )
 
-const MenuTemplates = HAS_FANCY_MENU
+const MenuTemplates = Flags.HAS_FANCY_MENU
   ? [
       T.template({
         id: 'menu-with-locale',

@@ -12,7 +12,7 @@ import NewsHit from './NewsHit'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
 import { Pagination } from '../shared/search/pagination/Pagination'
 import TotalResultsStat from './TotalResultsStat'
-import { isGlobalDevelopment, isGlobalProduction } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import MagazineHit from './MagazineHit'
 
 const Results = styled.div`
@@ -90,7 +90,7 @@ const SearchResults = () => {
   const hasQuery = results && results.query !== ''
 
   // @TODO How can we make this robust?
-  const envPrefix = isGlobalProduction ? 'prod' : 'dev'
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
 
   const activeTab = tabMap.find((tab) => tab.name === currentTab)
   return (
@@ -121,7 +121,7 @@ const SearchResults = () => {
                   </TabText>
                 </Index>
               </Tab>
-              {isGlobalDevelopment && (
+              {Flags.IS_DEV && (
                 <Tab inverted>
                   <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
                     <TabText>
@@ -152,7 +152,7 @@ const SearchResults = () => {
                   <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
-              {isGlobalDevelopment && (
+              {Flags.IS_DEV && (
                 <TabPanel>
                   <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
                     <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />

@@ -1,4 +1,4 @@
-import { hasStrictLineBreakTypography } from '../common/helpers/datasetHelpers'
+import { Flags } from '../common/helpers/datasetHelpers'
 import { css } from 'styled-components'
 
 export const colors = css`
@@ -118,7 +118,7 @@ export const typography = css`
   }
 `
 
-export const strictLineBreak = hasStrictLineBreakTypography
+export const strictLineBreak = Flags.HAS_LINE_BREAK_TYPO
   ? css`
       :root {
         line-break: strict;

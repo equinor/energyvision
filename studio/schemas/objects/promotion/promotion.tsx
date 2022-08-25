@@ -7,7 +7,7 @@ import CharCounterEditor from '../../components/CharCounterEditor'
 
 import type { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { HAS_EVENT, HAS_NEWS } from '../../../src/lib/datasetHelpers'
+import { Flags } from '../../../src/lib/datasetHelpers'
 
 export type Promotion = {
   _type: 'promotion'
@@ -67,10 +67,10 @@ export default {
       description: 'Select what type of content you want to promote',
       title: 'Type of promotion',
       of: [
-        HAS_NEWS && { type: 'promoteNews', title: 'Promote news' },
+        Flags.HAS_NEWS && { type: 'promoteNews', title: 'Promote news' },
         { type: 'promoteTopics', title: 'Promote topic' },
         { type: 'promotePeople', title: 'Promote people' },
-        HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
+        Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
       ].filter((e) => e),
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),

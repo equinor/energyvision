@@ -10,7 +10,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { Rule, Reference } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { IS_TEST } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -95,12 +95,12 @@ export default {
       type: 'anchorReferenceField',
       title: 'Anchor reference',
       validation: (Rule: Rule) =>
-        IS_TEST
+        Flags.IS_DEV
           ? Rule.max(0).error('Clear this field and use anchor link component instead.')
           : // @ts-ignore
             Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
       fieldset: 'anchor',
-      readOnly: !IS_TEST,
+      readOnly: !Flags.IS_DEV,
     },
     {
       name: 'ingress',

@@ -3,7 +3,7 @@ import { searchClient } from '../../lib/algolia'
 import { useRouter } from 'next/router'
 //import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import dynamic from 'next/dynamic'
-import { isGlobalProduction } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 import { SearchBox } from './SearchBox'
 //import SearchResults from './SearchResults'
@@ -19,7 +19,7 @@ const Search = () => {
     return null
   }
 
-  const envPrefix = isGlobalProduction ? 'prod' : 'dev'
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(router.locale)
 
   // Don't know if this is 100% correct

@@ -2,9 +2,9 @@ import S from '@sanity/desk-tool/structure-builder'
 import { EdsIcon } from '../../../../icons'
 import { tag } from '@equinor/eds-icons'
 import { EmptyItem } from './EmptyItem'
-import { HAS_NEWS } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 
-export const Tags = HAS_NEWS
+export const Tags = Flags.HAS_NEWS
   ? S.listItem()
       .icon(() => EdsIcon(tag))
       .title('Tags')

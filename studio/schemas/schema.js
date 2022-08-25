@@ -79,17 +79,7 @@ import textSnippet from './documents/textSnippet'
 import largeTable from './objects/largeTable'
 import newsList from './objects/newsList'
 import excludeFromSearch from './objects/excludeFromSearch'
-import {
-  HAS_EVENT,
-  HAS_FANCY_MENU,
-  HAS_FORMS,
-  HAS_LANDING_PAGE,
-  HAS_LOCAL_NEWS,
-  HAS_MAGAZINE,
-  HAS_NEWS,
-  HAS_NEWSROOM,
-  IS_TEST,
-} from '../src/lib/datasetHelpers'
+import { Flags } from '../src/lib/datasetHelpers'
 import twitterEmbed from './objects/twitterEmbed'
 import anchorLink from './objects/anchorLink'
 import video from './objects/video'
@@ -103,16 +93,18 @@ const routeHomepageSchemas = languages.map(({ name, title }) => {
   return routeHomepage(name, title)
 })
 
-const MenuSchemas = HAS_FANCY_MENU
-  ? [siteMenu, IS_TEST ? subMenuV2 : subMenu, menuGroup, IS_TEST ? menuLinkV2 : menuLink]
+const MenuSchemas = Flags.HAS_FANCY_MENU
+  ? [siteMenu, Flags.IS_DEV ? subMenuV2 : subMenu, menuGroup, Flags.IS_DEV ? menuLinkV2 : menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
-const LocalNewsSchemas = HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
-const EventSchemas = HAS_EVENT ? [event, eventDate] : []
-const LandingPageSchemas = HAS_LANDING_PAGE ? [landingPage] : []
-const NewsSchemas = HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
-const NewsRoomSchema = HAS_NEWSROOM ? [newsroom] : []
-const FormSchemas = HAS_FORMS ? [form] : []
-const MagazineSchemas = HAS_MAGAZINE ? [magazine, magazineIndex, IS_TEST && magazineTag].filter((e) => e) : []
+const LocalNewsSchemas = Flags.HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
+const EventSchemas = Flags.HAS_EVENT ? [event, eventDate] : []
+const LandingPageSchemas = Flags.HAS_LANDING_PAGE ? [landingPage] : []
+const NewsSchemas = Flags.HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
+const NewsRoomSchema = Flags.HAS_NEWSROOM ? [newsroom] : []
+const FormSchemas = Flags.HAS_FORMS ? [form] : []
+const MagazineSchemas = Flags.HAS_MAGAZINE
+  ? [magazine, magazineIndex, Flags.IS_DEV && magazineTag].filter((e) => e)
+  : []
 const RemainingSchemas = [
   page,
   ...routeSchemas,
@@ -136,13 +128,13 @@ const RemainingSchemas = [
   figure,
   textWithIcon,
   textWithIconArray,
-  IS_TEST ? linkSelectorV2 : linkSelector,
+  Flags.IS_DEV ? linkSelectorV2 : linkSelector,
   promoTile,
   promoTileArray,
   stockValuesApi,
   iframe,
   basicIframe,
-  IS_TEST ? footerV2 : footer,
+  Flags.IS_DEV ? footerV2 : footer,
   promotion,
   promoteTopics,
   promoteEvents,

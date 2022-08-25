@@ -21,7 +21,7 @@ import {
   relatedLinks,
   excludeFromSearch,
 } from './news/sharedNewsFields'
-import { HAS_NEWS, HAS_NEWS_SUBSCRIPTION } from '../../src/lib/datasetHelpers'
+import { Flags } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
 import { withSlugValidation } from '../validations/validateSlug'
 
@@ -70,9 +70,9 @@ export default {
     },
     title,
     ...publishDateTime,
-    HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
-    HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
-    HAS_NEWS_SUBSCRIPTION && subscriptionType,
+    Flags.HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
+    Flags.HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
+    Flags.HAS_NEWS_SUBSCRIPTION && subscriptionType,
     {
       ...newsSlugField,
       fieldset: 'slug',

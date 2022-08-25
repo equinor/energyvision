@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 import { i18n } from '../../../../schemas/documentTranslation'
 import { list, tag as tagIcon } from '@equinor/eds-icons'
 import { EmptyItem } from './EmptyItem'
-import { HAS_LOCAL_NEWS } from '../../datasetHelpers'
+import { Flags } from '../../datasetHelpers'
 
 const localNewsStructure = () => {
   const documentName = 'localNews'
@@ -62,6 +62,6 @@ const localNewsStructure = () => {
     )
 }
 
-export const LocalNews = HAS_LOCAL_NEWS
+export const LocalNews = Flags.HAS_LOCAL_NEWS
   ? S.listItem().title('Local news').icon(NewsDocuments).schemaType('localNews').child(localNewsStructure())
   : EmptyItem
