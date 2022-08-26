@@ -54,3 +54,10 @@ export const filterByRouteAndNewsInOtherLanguages = ({ document }: { document: S
     },
   }
 }
+
+export const filterMagazineByLang = ({ document }: { document: SanityDocument }) => {
+  return {
+    filter: `_lang == $lang`,
+    params: { lang: langOrDefault(document._lang) },
+  }
+}

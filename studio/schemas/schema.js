@@ -67,6 +67,7 @@ import promoteNews from './objects/promotion/promoteNews'
 import promoteTopics from './objects/promotion/promoteTopic'
 import promotePeople from './objects/promotion/promotePeople'
 import promoteEvents from './objects/promotion/promoteEvents'
+import promoteMagazine from './objects/promotion/promoteMagazine'
 import form from './objects/form'
 import contactList from './objects/contactList'
 import eventDate from './objects/eventDate'
@@ -139,6 +140,7 @@ const RemainingSchemas = [
   promoteTopics,
   promoteEvents,
   promotePeople,
+  promoteMagazine,
   contactList,
   table,
   assetFile,

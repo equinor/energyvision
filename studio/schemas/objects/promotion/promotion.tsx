@@ -17,7 +17,7 @@ export type Promotion = {
   background?: ColorListValue
 }
 
-type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents'
+type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -71,6 +71,7 @@ export default {
         { type: 'promoteTopics', title: 'Promote topic' },
         { type: 'promotePeople', title: 'Promote people' },
         Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
+        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
       ].filter((e) => e),
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
@@ -107,6 +108,8 @@ export default {
           return 'People promotion'
         } else if (type == 'promoteEvents') {
           return 'Events promotion'
+        } else if (type == 'promoteMagazine') {
+          return 'Magazine promotion'
         }
         return 'News promotions'
       }
