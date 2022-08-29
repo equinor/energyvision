@@ -31,6 +31,7 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
       case 'localNews':
         return <NewsCard data={data as CardData} />
       case 'topics':
+      case 'magazine':
         return <TopicPageCard data={data as CardData} />
       case 'people':
         return <PeopleCard orientation="landscape" data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />

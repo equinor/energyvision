@@ -5,6 +5,7 @@ import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import { publishDateTimeQuery } from '../news'
 import { eventPromotionFields, pastEventsQuery } from './eventPromotion'
+import promoteMagazine from './promotions/promoteMagazine'
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
@@ -314,6 +315,9 @@ const pageContentFields = /* groq */ `
           },
         },
       },
+      _type == "promoteMagazine" => {
+        ${promoteMagazine}
+      }
     },
     "designOptions": {
       "background": coalesce(background.title, 'none'),

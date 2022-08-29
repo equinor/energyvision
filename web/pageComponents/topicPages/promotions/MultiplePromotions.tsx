@@ -77,6 +77,7 @@ const MultiplePromotions = ({
       case 'localNews':
         return <StyledNewsCard data={data as CardData} key={data.id} />
       case 'topics':
+      case 'magazine':
         return <StyledTopicPageCard data={data as CardData} key={data.id} />
       case 'people':
         return <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />

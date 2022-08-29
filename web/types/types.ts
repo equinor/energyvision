@@ -79,7 +79,7 @@ export type EventDateType = {
 }
 
 export type CardData = {
-  type?: 'news' | 'topics' | 'localNews'
+  type?: 'news' | 'topics' | 'localNews' | 'magazine'
   id: string
   slug: string
   title: string | PortableTextBlock[]
@@ -406,7 +406,7 @@ export type Tag = {
 }
 
 // Do we have a way to share types between studio and web?
-export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents'
+export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
 
 export type PromotionData = {
   id: string
