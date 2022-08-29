@@ -5,7 +5,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 
-const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event" && excludeFromSearch != true] {
+const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "content": content->{
