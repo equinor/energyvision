@@ -71,7 +71,7 @@ export default {
         { type: 'promoteTopics', title: 'Promote topic' },
         { type: 'promotePeople', title: 'Promote people' },
         Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
-        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
+        Flags.IS_DEV && { type: 'promoteMagazine', title: 'Promote magazine' },
       ].filter((e) => e),
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
