@@ -17,7 +17,7 @@ export const query = /* groq */ `*[_type == "localNews" && _lang == $lang && !(_
   "slug": slug.current,
   _id,
   "title": title,
-  "ingress": ingress,
+  "ingress": pt::text(ingress),
   "type": _type,
   "publishDateTime": ${publishDateTimeQuery},
   "localNewsTag": localNewsTag->[$lang],
