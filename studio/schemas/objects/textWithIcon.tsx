@@ -59,7 +59,7 @@ export default {
                 id: referencedId,
               })
               .then((res: any) => {
-                return res.extension == 'svg' ? true : 'Only svg files are allowed'
+                return res.extension === 'svg' ? true : 'Only svg files are allowed'
               })
           } else return true
         }),
