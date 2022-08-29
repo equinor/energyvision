@@ -95,12 +95,13 @@ export default {
       type: 'anchorReferenceField',
       title: 'Anchor reference',
       validation: (Rule: Rule) =>
-        Flags.IS_DEV
-          ? Rule.max(0).error('Clear this field and use anchor link component instead.')
-          : // @ts-ignore
-            Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
+        [
+          Flags.IS_DEV ? Rule.max(0).warning('Clear this field and use anchor link component instead.') : '',
+          // @ts-ignore
+          Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
+        ].filter((e) => e),
       fieldset: 'anchor',
-      readOnly: !Flags.IS_DEV,
+      readOnly: ({ value }: { value?: string }) => !value,
     },
     {
       name: 'ingress',
