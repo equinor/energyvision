@@ -8,6 +8,8 @@ import CharCounterEditor from '../../components/CharCounterEditor'
 import type { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 import { Flags } from '../../../src/lib/datasetHelpers'
+import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
+import { EdsIcon } from '../../../icons'
 
 export type Promotion = {
   _type: 'promotion'
@@ -114,9 +116,21 @@ export default {
         return 'News promotions'
       }
 
+      const getPromotionIcon = (type: PromotionType) => {
+        if (type == 'promotePeople') {
+          return EdsIcon(contacts)
+        } else if (type == 'promoteEvents') {
+          return EdsIcon(calendar_event)
+        } else if (type == 'promoteMagazine') {
+          return EdsIcon(library_books)
+        }
+        return
+      }
+
       return {
         title: plainTitle,
         subtitle: getPromotionType(type),
+        media: getPromotionIcon(type),
       }
     },
   },

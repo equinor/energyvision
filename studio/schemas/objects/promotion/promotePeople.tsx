@@ -9,6 +9,8 @@ import routes from '../../routes'
 import { AnchorLinkDescription } from '../anchorReferenceField'
 import { filterByRouteAndNews } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
+import { contacts } from '@equinor/eds-icons'
+import { EdsIcon } from '../../../icons'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -222,6 +224,7 @@ export default {
       return {
         title: hasMorePeople ? `${peopleList}...` : peopleList,
         subtitle: `People promotions.`,
+        media: EdsIcon(contacts),
       }
     },
   },
