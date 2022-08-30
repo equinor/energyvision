@@ -101,7 +101,7 @@ export default {
           Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
         ].filter((e) => e),
       fieldset: 'anchor',
-      readOnly: ({ value }: { value?: string }) => !value,
+      readOnly: ({ value }: { value?: string }) => (Flags.IS_DEV ? !value : true),
     },
     {
       name: 'ingress',
