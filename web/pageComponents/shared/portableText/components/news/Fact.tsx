@@ -67,7 +67,7 @@ export const Fact = (block: BlockProps) => {
   const hasImage = imageSrc ? true : false
 
   return (
-    <FactBoxWithPadding imagePosition={imagePosition} background={backgroundColor}>
+    <FactBoxWithPadding className="fact-box" imagePosition={imagePosition} background={backgroundColor}>
       {imageSrc && (
         <FactBox.Image>
           <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />

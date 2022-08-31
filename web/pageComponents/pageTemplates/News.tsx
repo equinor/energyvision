@@ -15,6 +15,7 @@ import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 
 import type { CardData, NewsSchema } from '../../types/types'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -96,6 +97,29 @@ const LeadParagraph = styled.div`
   }
 `
 
+const ContentDev = styled.div`
+  & h2,
+  & h3 {
+    margin: var(--space-small) 0;
+  }
+
+  /* The max-width makes things easier with 50% floating images */
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
+
+  /*   Clear floats if two left or right aligned images are adjacent siblings*/
+  .float-left + .float-left,
+  .float-right + .float-right {
+    clear: both;
+  }
+
+  /* "Remove" margin top from FactBox if the following element is also a FactBox */
+  .fact-box + .fact-box {
+    margin-top: calc(-1 * var(--space-4xLarge));
+  }
+`
+
 const Content = styled.div`
   /*  @TODO: Revisit when finalizing news article */
   & h2,
@@ -107,6 +131,7 @@ const Content = styled.div`
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
+
   /** Remove the bottom margin of the last element inside the rich text editor/content
   Sanity add a div container for the rich text editor */
   > div > aside:last-child,
@@ -252,11 +277,17 @@ const NewsPage = ({ data }: ArticleProps) => {
                 <IngressText value={ingress} />
               </LeadParagraph>
             )}
-            {content && content.length > 0 && (
-              <Content>
-                <NewsText value={content}></NewsText>
-              </Content>
-            )}
+            {content &&
+              content.length > 0 &&
+              (Flags.IS_DEV ? (
+                <ContentDev>
+                  <NewsText value={content}></NewsText>
+                </ContentDev>
+              ) : (
+                <Content>
+                  <NewsText value={content}></NewsText>
+                </Content>
+              ))}
 
             {iframe && <StyledBasicIFrame data={iframe} />}
 
