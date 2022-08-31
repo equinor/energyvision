@@ -3,9 +3,10 @@ import { PortableText, PortableTextProps } from '@portabletext/react'
 import { Text, List, Heading } from '@components'
 import styled from 'styled-components'
 
-import { Sub, Sup, ExternalLink, InternalLink, FigureWithLayout, Quote, Fact } from './components'
+import { Sub, Sup, ExternalLink, InternalLink, FigureWithLayout, Quote, Fact, h2Heading, h3Heading } from './components'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const { Item } = List
 
@@ -21,18 +22,26 @@ const ContainerWithBottomSpace = styled(Container)`
 
 const defaultSerializers = {
   block: {
-    h2: ({ children }: PortableTextBlock) => (
+    h2: (props: PortableTextBlock) => (
       <Container>
-        <Heading level="h2" size="lg">
-          <>{children}</>
-        </Heading>
+        {Flags.IS_DEV ? (
+          h2Heading(props)
+        ) : (
+          <Heading level="h2" size="lg">
+            <>{props.children}</>
+          </Heading>
+        )}
       </Container>
     ),
-    h3: ({ children }: PortableTextBlock) => (
+    h3: (props: PortableTextBlock) => (
       <Container>
-        <Heading level="h3" size="md">
-          <>{children}</>
-        </Heading>
+        {Flags.IS_DEV ? (
+          h3Heading(props)
+        ) : (
+          <Heading level="h3" size="md">
+            <>{props.children}</>
+          </Heading>
+        )}
       </Container>
     ),
     normal: ({ children }: PortableTextBlock) => {
