@@ -97,6 +97,8 @@ runs:
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
           --build-arg ARG_DYNATRACE_ENABLED=${{ inputs.dynatraceEnvironment != '' }} \
+          --build-arg ARG_DYNATRACE_ENVIRONMENT=${{ inputs.dynatraceEnvironment }} \
+          --build-arg ARG_DYNATRACE_PAAS_TOKEN=${{ inputs.dynatracePaaSToken }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
