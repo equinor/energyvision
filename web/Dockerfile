@@ -43,7 +43,7 @@ FROM node:lts-alpine as dynatrace_true
 #ONBUILD COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
 #ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 ONBUILD ENV DT_TAGS=EQUINORCOM ENVIRONMENT=PRE-PRODUCTION
-ONBUILD RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+ONBUILD RUN apt-get update && apt-get install -y curl
 ONBUILD RUN curl -o /tmp/installer.sh -s "https://spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/api/v1/deployment/installer/agent/unix/paas-sh/latest?Api-Token=$ARG_DYNATRACE_PAAS_TOKEN&arch=x86" && sh /tmp/installer.sh /home
 ONBUILD RUN apt-get remove curl -y
 ONBUILD RUN echo "Running with Dynatrace..."
