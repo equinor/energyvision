@@ -3,7 +3,7 @@ ARG ARG_DYNATRACE_ENABLED=false
 ARG ARG_DYNATRACE_ENVIRONMENT
 FROM spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/linux/oneagent-codemodules-musl:all as dynatrace_repo
 
-FROM node:current-alpine3.15 AS builder
+FROM node:lts-alpine AS builder
 
 RUN npm install -g pnpm@^7.2.1
 
@@ -43,7 +43,7 @@ RUN pnpm web build
 #https://stackoverflow.com/a/54245466
 
 
-FROM node:current-alpine3.15 as runner
+FROM node:lts-alpine as runner
 
 RUN npm install -g pnpm@^7.2.1
 
