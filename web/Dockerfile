@@ -40,19 +40,15 @@ RUN pnpm web build
 #Unfortunately docker doesn't have a better IF and ELSE approach
 #https://stackoverflow.com/a/54245466
 FROM node:lts-alpine as dynatrace_true
+
+ONBUILD COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
+ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 ONBUILD ENV DT_TAGS=EQUINORCOM ENVIRONMENT=PRE-PRODUCTION
-ONBUILD ARG ARG_DYNATRACE_ENVIRONMENT
-ONBUILD ARG ARG_DYNATRACE_PAAS_TOKEN
 
-#INSTALL DYNATRACE
-ONBUILD RUN apk add --update curl
-ONBUILD RUN curl -o /tmp/installer.sh -s "https://spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/api/v1/deployment/installer/agent/unix/paas-sh/latest?Api-Token=$ARG_DYNATRACE_PAAS_TOKEN" && sh /tmp/installer.sh /home
-
-#TODO: ADD DYNATRACE ENVS
-#ONBUILD RUN apk add --update json
+#ONBUILD ARG ${ARG_DYNATRACE_ENVIRONMENT}
 #ONBUILD RUN curl -o /tmp/response.txt -X GET "https://spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/api/v1/deployment/installer/agent/connectioninfo" -H "accept: application/json" -H "Authorization: Api-Token $ARG_DYNATRACE_PAAS_TOKEN"
+#ONBUILD RUN echo "https://spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/api/v1/deployment/installer/agent/unix/paas-sh/latest?Api-Token=$ARG_DYNATRACE_PAAS_TOKEN&arch=x86"
 
-ONBUILD RUN apk del curl
 ONBUILD RUN echo "Running with Dynatrace..."
 
 FROM node:lts-alpine as dynatrace_false
