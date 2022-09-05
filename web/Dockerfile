@@ -1,7 +1,9 @@
 # GLOBAL VARIABLES
 ARG ARG_DYNATRACE_ENABLED=false
+ARG ARG_DYNATRACE_ENVIRONMENT
+FROM spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/linux/oneagent-codemodules-musl:all as dynatrace_repo
 
-FROM node:lts-alpine AS builder
+FROM node:current-alpine3.15 AS builder
 
 RUN npm install -g pnpm@^7.2.1
 
@@ -39,22 +41,10 @@ RUN pnpm web build
 #Add dynatrace conditionally
 #Unfortunately docker doesn't have a better IF and ELSE approach
 #https://stackoverflow.com/a/54245466
-FROM node:lts-alpine as dynatrace_true
 
-ONBUILD COPY --from=spa-equinor.kanari.com/linux/oneagent-codemodules-musl:nodejs / /
-ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
-ONBUILD ENV DT_TAGS=EQUINORCOM ENVIRONMENT=PRE-PRODUCTION
 
-#ONBUILD ARG ${ARG_DYNATRACE_ENVIRONMENT}
-#ONBUILD RUN curl -o /tmp/response.txt -X GET "https://spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/api/v1/deployment/installer/agent/connectioninfo" -H "accept: application/json" -H "Authorization: Api-Token $ARG_DYNATRACE_PAAS_TOKEN"
-#ONBUILD RUN echo "https://spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/api/v1/deployment/installer/agent/unix/paas-sh/latest?Api-Token=$ARG_DYNATRACE_PAAS_TOKEN&arch=x86"
+FROM node:current-alpine3.15 as runner
 
-ONBUILD RUN echo "Running with Dynatrace..."
-
-FROM node:lts-alpine as dynatrace_false
-ONBUILD RUN echo "Running without Dynatrace..."
-
-FROM dynatrace_${ARG_DYNATRACE_ENABLED} as runner
 RUN npm install -g pnpm@^7.2.1
 
 WORKDIR /opt/app
@@ -112,6 +102,11 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
+
+COPY --from=dynatrace_repo / /
+ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
+ENV DT_TAGS EQUINORCOM
+ENV ENVIRONMENT PRE-PRODUCTION
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
