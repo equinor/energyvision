@@ -32,13 +32,13 @@ type FiltersProps = {
   hasSearch: boolean
   filterType: 'news' | 'magazine'
 }
-type requiredProps = {
+type RequiredProps = {
   intl: IntlShape
   indices: number[]
-  toggleItem(toggledIndex: number): void
+  toggleItem: (toggledIndex: number) => void
 }
 
-const MagazineFilter = ({ intl, indices, toggleItem }: requiredProps) => {
+const MagazineFilter = ({ intl, indices, toggleItem }: RequiredProps) => {
   return (
     <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
       <AccordionItem>
@@ -51,7 +51,7 @@ const MagazineFilter = ({ intl, indices, toggleItem }: requiredProps) => {
   )
 }
 
-const NewsFilter = ({ intl, indices, toggleItem }: requiredProps) => {
+const NewsFilter = ({ intl, indices, toggleItem }: RequiredProps) => {
   return (
     <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
       <AccordionItem>
