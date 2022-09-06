@@ -103,6 +103,7 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
 
+#
 COPY --from=dynatrace_repo / /
 ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 ENV DT_TAGS EQUINORCOM
