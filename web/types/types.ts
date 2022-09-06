@@ -121,16 +121,6 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
-  manuallySelectEvents: boolean
-}
-
-export type EventCardDataV2 = {
-  id: string
-  type: 'events'
-  title: PortableTextBlock[]
-  slug: string
-  location?: string
-  eventDate: EventDateType
 }
 
 export type NewsSchema = {
@@ -417,20 +407,6 @@ export type PromotionData = {
     // Do we really need the tags here?
     tags?: Tag[]
     promotions: CardData[] | PeopleCardData[] | EventCardData[]
-    type: PromotionType
-  }
-  designOptions?: DesignOptions
-}
-
-export type PromotionDataV2 = {
-  id: string
-  type: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  content: {
-    // Do we really need the tags here?
-    tags?: Tag[]
-    promotions: CardData[] | PeopleCardData[] | EventCardDataV2[]
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
   }

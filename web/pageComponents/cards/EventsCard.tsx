@@ -12,7 +12,7 @@ import AddToCalendar from '../topicPages/AddToCalendar'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 
-import type { EventCardDataV2, EventDateType } from '../../types/types'
+import type { EventCardData, EventDateType } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
 
 const { Text, Media, Action, StyledLandscapeCard } = Card
@@ -98,7 +98,7 @@ const ActionContainer = styled.div`
 const TextInfoWrapper = styled.div``
 
 type EventCardProps = {
-  data: EventCardDataV2
+  data: EventCardData
   hasSectionTitle: boolean
   orientation?: 'portrait' | 'landscape'
 }

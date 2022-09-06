@@ -299,7 +299,6 @@ const pageContentFields = /* groq */ `
           (!promotePastEvents || !defined(promotePastEvents)) => {
             "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
               ${eventPromotionFields}
-              "manuallySelectEvents":false // remove this after acceptance #1063
             },
           },
           promotePastEvents=>{
@@ -311,7 +310,6 @@ const pageContentFields = /* groq */ `
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{
             ${eventPromotionFields}
-            "manuallySelectEvents":true // remove this after acceptance #1063
           },
         },
       },

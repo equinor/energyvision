@@ -1,6 +1,6 @@
 import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
-import type { EventCardData } from '../../../types/types'
+import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
 
 const PairWrapper = styled.div`
@@ -43,17 +43,21 @@ const FlexibleWrapper = styled.div`
 type MultipleEventCardsProp = {
   data: EventCardData[]
   hasSectionTitle: boolean
+  eventPromotionSettings?: EventPromotionSettings
 }
 
-const MultipleEventCards = ({ data, hasSectionTitle }: MultipleEventCardsProp) => {
-  // sort only automatically selected events
-  if (!data[0]?.manuallySelectEvents) {
+const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: MultipleEventCardsProp) => {
+  // sort only automatically selected future events
+  if (!eventPromotionSettings?.manuallySelectEvents && !eventPromotionSettings?.promotePastEvents) {
     data.sort((a, b) => {
       return (
         new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
         new Date(getEventDates(b.eventDate).start || b.eventDate.date).getTime()
       )
     })
+  }
+  if (eventPromotionSettings?.pastEventsCount) {
+    data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
 
   return (

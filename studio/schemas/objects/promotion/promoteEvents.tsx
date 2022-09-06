@@ -4,7 +4,6 @@ import type { Rule, Reference, ValidationContext, Block } from '@sanity/types'
 import blocksToText from '../../../helpers/blocksToText'
 import routes from '../../routes'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import { EdsIcon } from '../../../icons'
 import { calendar_event } from '@equinor/eds-icons'
 
@@ -36,7 +35,7 @@ export default {
       description: `Use this option if you want to manually select the events to promote`,
       initialValue: false,
     },
-    Flags.IS_DEV && {
+    {
       name: 'promotePastEvents',
       type: 'boolean',
       title: 'Select past events',
@@ -44,7 +43,7 @@ export default {
       initialValue: false,
       hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true,
     },
-    Flags.IS_DEV && {
+    {
       name: 'pastEventsCount',
       title: 'How many number of past events to show?',
       type: 'number',

@@ -4,7 +4,7 @@ import EventCard from '../../cards/EventsCard'
 import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 
-import type { PeopleCardData, EventCardDataV2, CardData } from '../../../types/types'
+import type { PeopleCardData, EventCardData, CardData } from '../../../types/types'
 
 const LandscapeWrapper = styled.div`
   /* max-width: 350px; */
@@ -17,10 +17,10 @@ const LandscapeWrapper = styled.div`
     max-width: var(--maxViewportWidth);
   }
 `
-type CardProps = CardData | PeopleCardData | EventCardDataV2
+type CardProps = CardData | PeopleCardData | EventCardData
 
 type SinglePromotionData = {
-  promotion: PeopleCardData | CardData | EventCardDataV2
+  promotion: PeopleCardData | CardData | EventCardData
   hasSectionTitle?: boolean
 }
 
@@ -36,7 +36,7 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
       case 'people':
         return <PeopleCard orientation="landscape" data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
       case 'events':
-        return <EventCard data={data as EventCardDataV2} orientation="landscape" hasSectionTitle={hasSectionTitle} />
+        return <EventCard data={data as EventCardData} orientation="landscape" hasSectionTitle={hasSectionTitle} />
       default:
         console.warn('Missing card type for ', data)
         return <div />

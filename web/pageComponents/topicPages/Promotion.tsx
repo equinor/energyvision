@@ -47,7 +47,12 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
           /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
-          <MultiplePromotions data={promotions} variant={variant} hasSectionTitle={!!title} />
+          <MultiplePromotions
+            data={promotions}
+            variant={variant}
+            hasSectionTitle={!!title}
+            eventPromotionSettings={content?.eventPromotionSettings}
+          />
         )}
       </Wrapper>
     </BackgroundContainer>

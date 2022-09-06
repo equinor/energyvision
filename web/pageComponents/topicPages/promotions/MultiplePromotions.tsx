@@ -1,5 +1,11 @@
 import styled, { css } from 'styled-components'
-import type { CardData, PeopleCardData, EventCardData, PromotionType } from '../../../types/types'
+import type {
+  CardData,
+  PeopleCardData,
+  EventCardData,
+  PromotionType,
+  EventPromotionSettings,
+} from '../../../types/types'
 import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
@@ -66,10 +72,12 @@ const MultiplePromotions = ({
   data,
   variant,
   hasSectionTitle,
+  eventPromotionSettings,
 }: {
   data: CardData[] | PeopleCardData[] | EventCardData[]
   variant: PromotionType
   hasSectionTitle: boolean
+  eventPromotionSettings?: EventPromotionSettings
 }) => {
   const getCard = (data: CardProps) => {
     switch (data.type) {
@@ -87,7 +95,13 @@ const MultiplePromotions = ({
   }
 
   if (variant === 'promoteEvents') {
-    return <MultipleEventCards data={data as EventCardData[]} hasSectionTitle={hasSectionTitle} />
+    return (
+      <MultipleEventCards
+        data={data as EventCardData[]}
+        hasSectionTitle={hasSectionTitle}
+        eventPromotionSettings={eventPromotionSettings}
+      />
+    )
   }
 
   return (
