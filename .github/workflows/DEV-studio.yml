@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'studio/**/*'
+      - './FeatureFlags.js'
 jobs:
   check-code:
     runs-on: ubuntu-latest
