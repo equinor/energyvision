@@ -40,6 +40,9 @@ inputs:
   dynatracePaaSToken:
     description: 'Dynatrace PaaS Token'
     required: false
+  dynatraceImage:
+    description: 'Dynatrace image URL'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -96,9 +99,8 @@ runs:
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
-          --build-arg ARG_DYNATRACE_ENABLED=${{ inputs.dynatraceEnvironment != '' }} \
           --build-arg ARG_DYNATRACE_ENVIRONMENT=${{ inputs.dynatraceEnvironment }} \
-          --build-arg ARG_DYNATRACE_PAAS_TOKEN=${{ inputs.dynatracePaaSToken }} \
+          --build-arg ARG_DYNATRACE_IMAGE=${{ inputs.dynatraceImage }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \

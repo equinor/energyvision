@@ -1,4 +1,5 @@
-FROM spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/linux/oneagent-codemodules-musl:all as dynatrace_repo
+ARG ARG_DYNATRACE_IMAGE=node:lts-alpine
+FROM $ARG_DYNATRACE_IMAGE AS dynatrace_image
 
 FROM node:lts-alpine AS builder
 
@@ -95,7 +96,7 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
 
-COPY --from=dynatrace_repo / /
+COPY --from=dynatrace_image / /
 ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}
 
