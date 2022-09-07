@@ -14,8 +14,10 @@ import { close } from '@equinor/eds-icons'
 import { TopbarDropdown } from '../../pageComponents/shared/siteMenu/TopbarDropdown'
 import { NavTopbar } from '../../pageComponents/shared/siteMenu/NavTopbar'
 import { LogoLink } from '../../pageComponents/shared/LogoLink'
+import SearchV2 from '../../pageComponents/search/SearchV2'
 import Search from '../../pageComponents/search/Search'
 import { useRouter } from 'next/router'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const InvertedButton = styled(Button)`
   color: var(--white-100);
@@ -64,9 +66,7 @@ export default function SearchPage() {
               <Icon size={32} data={close} />
             </InvertedButton>
           </NavTopbar>
-          <SearchContainer>
-            <Search />
-          </SearchContainer>
+          <SearchContainer>{Flags.IS_DEV ? <SearchV2 /> : <Search />}</SearchContainer>
         </DarkTopbarDropdown>
       </RemoveScroll>
     </>
