@@ -1,6 +1,3 @@
-# GLOBAL VARIABLES
-ARG ARG_DYNATRACE_ENABLED=false
-ARG ARG_DYNATRACE_ENVIRONMENT
 FROM spa-equinor.kanari.com/e/$ARG_DYNATRACE_ENVIRONMENT/linux/oneagent-codemodules-musl:all as dynatrace_repo
 
 FROM node:lts-alpine AS builder
@@ -37,11 +34,6 @@ ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
 #RUN pnpm install --recursive --frozen-lockfile
 RUN pnpm web install --frozen-lockfile
 RUN pnpm web build
-
-#Add dynatrace conditionally
-#Unfortunately docker doesn't have a better IF and ELSE approach
-#https://stackoverflow.com/a/54245466
-
 
 FROM node:lts-alpine as runner
 
@@ -103,11 +95,9 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
 
-#
 COPY --from=dynatrace_repo / /
 ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
-ENV DT_TAGS EQUINORCOM
-ENV ENVIRONMENT PRE-PRODUCTION
+ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
