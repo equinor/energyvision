@@ -1,5 +1,6 @@
 ARG ARG_DYNATRACE_IMAGE
 ARG ARG_DYNATRACE_ENABLED=false
+ARG dynatrace = dynatrace_${ARG_DYNATRACE_ENABLED}
 
 FROM ARG_DYNATRACE_IMAGE AS dynatrace_true
 ONBUILD RUN echo "Running with dynatrace..."
@@ -103,7 +104,7 @@ ENV ALGOLIA_SEARCH_API_SERVER_KEY ${ARG_ALGOLIA_SEARCH_API_SERVER_KEY}
 ARG ARG_ENV
 ENV ENV ${ARG_ENV}
 
-COPY --from=dynatrace_${ARG_DYNATRACE_ENABLED} / /
+COPY --from=dynatrace / /
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
