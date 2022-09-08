@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import FilterHeader from '././FilterHeader'
 import { RefinementList } from './RefinementList'
 import UncontrolledSearchBox from './UncontrolledSearchBox'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const StyledAccordion = styled(Accordion)`
   @media (min-width: 800px) {
@@ -66,16 +65,6 @@ const Filters = ({ hasFilters, hasSearch, ...rest }: FiltersProps) => {
               <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
             </AccordionPanel>
           </AccordionItem>
-          {Flags.IS_DEV && (
-            <AccordionItem>
-              <FilterHeader
-                label={intl.formatMessage({ id: 'newsroom_local_market_filter', defaultMessage: 'Local Market' })}
-              />
-              <AccordionPanel>
-                <RefinementList /* sortBy={['name:asc']} */ attribute="localNewsTag" />
-              </AccordionPanel>
-            </AccordionItem>
-          )}
           <AccordionItem>
             <FilterHeader
               label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}

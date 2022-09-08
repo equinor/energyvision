@@ -91,7 +91,17 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
                   }),
                 }} */
             >
-              <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
+              {Flags.IS_DEV ? (
+                <Configure
+                  facetingAfterDistinct
+                  maxFacetHits={50}
+                  maxValuesPerFacet={100}
+                  facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
+                />
+              ) : (
+                <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
+              )}
+
               {Flags.IS_DEV ? <NewsContent1 /> : <NewsContent />}
             </InstantSearch>
           </News>
