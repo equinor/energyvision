@@ -5,7 +5,7 @@ ARG DYNATRACE=dynatrace_${ARG_DYNATRACE_ENABLED}
 
 FROM ${DYNATRACE_URL} AS dynatrace_true
 FROM node:lts-alpine AS dynatrace_false
-FROM $DYNATRACE as dynatrace
+FROM $DYNATRACE AS dynatrace
 
 FROM node:lts-alpine AS builder
 
