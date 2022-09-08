@@ -1,11 +1,5 @@
-ARG ARG_DYNATRACE_ENABLED
-ARG ARG_DYNATRACE_ENVIRONMENT
-ARG DYNATRACE_URL=spa-equinor.kanari.com/e/${ARG_DYNATRACE_ENVIRONMENT}/linux/oneagent-codemodules-musl:all
-ARG DYNATRACE=dynatrace_${ARG_DYNATRACE_ENABLED}
-
-FROM ${DYNATRACE_URL} AS dynatrace_true
-FROM node:lts-alpine AS dynatrace_false
-FROM $DYNATRACE AS dynatrace
+ARG ARG_DYNATRACE_IMAGE
+FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
 
 FROM node:lts-alpine AS builder
 
