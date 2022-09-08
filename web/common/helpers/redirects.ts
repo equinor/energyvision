@@ -72,4 +72,8 @@ const dnsRedirects = [
     from: 'techstars.equinor.com',
     to: '/en/energy/techstars',
   },
+  {
+    from: 'equinor.com.au',
+    to: '/en/where-we-are/australia',
+  },
 ]
