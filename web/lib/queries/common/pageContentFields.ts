@@ -6,7 +6,13 @@ import downloadableImageFields from './actions/downloadableImageFields'
 import { publishDateTimeQuery } from '../news'
 import { eventPromotionFields, pastEventsQuery } from './eventPromotion'
 import promoteMagazine from './promotions/promoteMagazine'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
+const isStatic = Flags.IS_DEV ? '' : `"isStatic": isStatic,` // remove this after acceptance #986
+const staticUrl = Flags.IS_DEV ? '' : `  "staticUrl": staticUrl,` // remove this after acceptance #986
+
+const isStaticPromoTiles = Flags.IS_DEV ? '' : ` "isStatic": coalesce(link.isStatic, false),`
+const staticUrlPromoTiles = Flags.IS_DEV ? '' : `"staticUrl": link.staticUrl,`
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
     "type": _type,
@@ -143,13 +149,13 @@ const pageContentFields = /* groq */ `
         "label": link.label,
         "ariaLabel": link.ariaLabel,
         "anchorReference": link.anchorReference,
-        "isStatic": coalesce(link.isStatic, false),
+        ${isStaticPromoTiles}
         "link": link.reference-> {
           "type": _type,
           "slug": ${slugReference}
         },
         "href": link.url,
-        "staticUrl": link.staticUrl,
+        ${staticUrlPromoTiles}
         "type": select(
           defined(link.url) => "externalUrl",
           "internalUrl"
@@ -346,13 +352,13 @@ const pageContentFields = /* groq */ `
          "type": _type,
         "id": _key,
         label,
-        "isStatic": coalesce(isStatic, false),
+        ${isStatic}
   	    "link": reference-> {
         "type": _type,
         "slug": slug.current,
       },
        "href": url,
-      "staticUrl": staticUrl,
+      ${staticUrl}
 
       ${downloadableFileFields},
       ${downloadableImageFields}, ...},

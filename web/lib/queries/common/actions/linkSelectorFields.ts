@@ -1,4 +1,8 @@
 import slugReference from '../slugReference'
+import { Flags } from '../../../../common/helpers/datasetHelpers'
+
+const isStatic = Flags.IS_DEV ? '' : `"isStatic": coalesce(isStatic, false),` // remove this after acceptance #986
+const staticUrl = Flags.IS_DEV ? '' : `  "staticUrl": staticUrl,` // remove this after acceptance #986
 
 const linkSelectorFields = /* groq */ `
 _type == "linkSelector" => {
@@ -8,13 +12,13 @@ _type == "linkSelector" => {
   ),
   label,
   ariaLabel,
-  "isStatic": coalesce(isStatic, false),
+  ${isStatic}
   "link": reference-> {
     "type": _type,
     "slug": ${slugReference}
   },
   "href": url,
-  "staticUrl": staticUrl,
+  ${staticUrl}
   anchorReference,
 }
 `

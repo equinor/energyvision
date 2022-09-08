@@ -1,4 +1,10 @@
 // Or "topLevelGroups": group[reference._ref == ^.^._id]
+
+import { Flags } from '../../../common/helpers/datasetHelpers'
+
+const isStatic = Flags.IS_DEV ? '' : `"isStatic": isStatic,` // remove this after acceptance #986
+const staticUrl = Flags.IS_DEV ? '' : `  "staticUrl": staticUrl,` // remove this after acceptance #986
+
 export const landingPageContentFields = /* groq */ `
  "ingress": content->ingress,
   "id": _id,
@@ -6,9 +12,9 @@ export const landingPageContentFields = /* groq */ `
     "links": links[]{
       "id": _key,
       label,
-      isStatic,
+      ${isStatic}
       href,
-      staticUrl,
+      ${staticUrl}
       "link": route->{
         "type": _type,
         "slug": slug.current,            

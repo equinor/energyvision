@@ -309,7 +309,7 @@ export type PromoTileArrayData = {
 
 export type MenuLinkData = {
   label: string
-  isStatic: boolean
+  isStatic?: boolean
   href?: string
   staticUrl?: string
   id?: string
@@ -426,7 +426,7 @@ export type FooterLinkData = {
   type: 'someLink' | 'link'
   key: string
   label: string
-  isStatic: boolean
+  isStatic?: boolean
   url?: string
   staticUrl?: string
   someType?: SomeType
