@@ -54,6 +54,7 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
   />
 )
 
+/*
 const GoogleConsentMode = () => (
   <Script
     id="gtag-consent"
@@ -90,6 +91,7 @@ const GoogleTagManager = () => (
     }}
   />
 )
+*/
 
 // Log errors to relevant services here
 const HandleBoundaryError = (error: Error, info: { componentStack: string }) => {
@@ -146,12 +148,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
         <GlobalStyle />
         <SkipNavLink />
         {IS_LIVE && <CookieBot locale={router.locale} />}
-        {GTM_ID && (
-          <>
-            <GoogleConsentMode />
-            <GoogleTagManager />
-          </>
-        )}
         {getLayout(<Component {...pageProps} />)}
       </>
     </ErrorBoundary>
