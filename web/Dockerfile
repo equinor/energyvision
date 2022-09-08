@@ -4,12 +4,7 @@ ARG DYNATRACE_URL=spa-equinor.kanari.com/e/${ARG_DYNATRACE_ENVIRONMENT}/linux/on
 ARG DYNATRACE=dynatrace_${ARG_DYNATRACE_ENABLED}
 
 FROM ${DYNATRACE_URL} AS dynatrace_true
-ONBUILD RUN echo "Running with dynatrace..."
-ONBUILD ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
-ONBUILD ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}
 FROM node:lts-alpine AS dynatrace_false
-ONBUILD RUN echo "Running without dynatrace..."
-
 FROM $DYNATRACE as dynatrace
 
 FROM node:lts-alpine AS builder
@@ -108,6 +103,8 @@ ARG ARG_ENV
 ENV ENV ${ARG_ENV}
 
 COPY --from=dynatrace / /
+ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
+ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
