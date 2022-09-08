@@ -99,6 +99,7 @@ runs:
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
+          --build-arg ARG_DYNATRACE_ENABLED=${{ inputs.dynatraceEnvironment != '' }} \
           --build-arg ARG_DYNATRACE_ENVIRONMENT=${{ inputs.dynatraceEnvironment }} \
           --build-arg ARG_DYNATRACE_IMAGE=${{ inputs.dynatraceImage }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
