@@ -7,7 +7,7 @@ import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
 import routes from '../../routes'
 import { AnchorLinkDescription } from '../anchorReferenceField'
-import { filterByRouteAndNews } from '../../../helpers/referenceFilters'
+import { filterByPages } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import { contacts } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../icons'
@@ -122,7 +122,7 @@ export default {
                 }),
               to: defaultReferenceTargets,
               options: {
-                filter: filterByRouteAndNews,
+                filter: filterByPages,
                 disableNew: true,
               },
               hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,

@@ -1,6 +1,6 @@
 import type { Rule, ValidationContext } from '@sanity/types'
 import routes from '../routes'
-import { filterByRouteAndNews } from '../../helpers/referenceFilters'
+import { filterByPages } from '../../helpers/referenceFilters'
 import blocksToText from '../../helpers/blocksToText'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
@@ -43,6 +43,14 @@ export default {
       name: 'to',
       type: 'reference',
       to: [
+        Flags.IS_DEV &&
+          Flags.HAS_LOCAL_NEWS && {
+            type: 'localNews',
+          },
+        Flags.IS_DEV &&
+          Flags.HAS_MAGAZINE && {
+            type: 'magazine',
+          },
         Flags.HAS_NEWS && {
           type: 'news',
         },
@@ -50,7 +58,7 @@ export default {
       ].filter((e) => e),
       validation: (Rule: Rule) => Rule.required(),
       options: {
-        filter: filterByRouteAndNews,
+        filter: filterByPages,
         disableNew: true,
       },
     },
@@ -60,17 +68,23 @@ export default {
       type: 'to._type',
       newsTitle: 'to.title',
       newsMedia: 'to.heroImage.image',
-      routeMedia: 'to.content.heroFigure.image',
+      magazineTitle: 'to.content.title',
+      magazineMedia: 'to.heroFigure.image',
       routeTitle: 'to.content.title',
+      routeMedia: 'to.content.heroFigure.image',
       newSlug: 'to.slug.current',
       oldSlug: 'from',
     },
     prepare(selection: Record<string, any>) {
-      const { type, newsTitle, newsMedia, routeMedia, routeTitle, newSlug, oldSlug } = selection
+      const { type, newsTitle, newsMedia, magazineTitle, magazineMedia, routeMedia, routeTitle, newSlug, oldSlug } =
+        selection
       let title, media
-      if (type === 'news') {
+      if (type === 'news' || type === 'localNews') {
         title = newsTitle
         media = newsMedia
+      } else if (type === 'magazine') {
+        title = blocksToText(magazineTitle)
+        media = magazineMedia
       } else {
         title = blocksToText(routeTitle)
         media = routeMedia

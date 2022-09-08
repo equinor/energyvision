@@ -1,5 +1,6 @@
 import { SanityDocument } from '@sanity/types'
 import { defaultLanguage } from '../languages'
+import { Flags } from '../src/lib/datasetHelpers'
 
 export const langOrDefault = (lang: string | unknown) => lang || defaultLanguage.name
 
@@ -13,8 +14,18 @@ export const filterByRoute = ({ document }: { document: SanityDocument }) => ({
   params: { routeLang: `route_${langOrDefault(document._lang)}*` },
 })
 
-export const filterByRouteAndNews = ({ document }: { document: SanityDocument }) => {
+export const filterByPages = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document._lang)
+
+  if (Flags.IS_DEV)
+    return {
+      filter: `_type match $routeLang || _type in ['news', 'localNews', 'magazine'] && _lang == $lang`,
+      params: {
+        routeLang: `route_${lang}*`,
+        lang: lang,
+      },
+    }
+
   return {
     filter: `_type match $routeLang || (_type == 'news' && _lang == $newsLang )`,
     params: {
