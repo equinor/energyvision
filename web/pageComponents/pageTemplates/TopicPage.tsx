@@ -46,6 +46,7 @@ import {
   VideoData,
   CookieDeclarationData,
 } from '../../types/types'
+import { MagazineTagBar } from '@components'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -187,6 +188,16 @@ const TopicPage = ({ data }: TopicPageProps) => {
       <TopicPageLayout>
         <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
         <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
+        <MagazineTagBar
+          tags={[
+            { label: 'All', link: '/all' },
+            { label: 'Green Transition', link: '/all' },
+            { label: 'Equinor at 50', link: '/all' },
+            { label: 'Net zero', link: '/all' },
+            { label: 'Innovation', link: '/all' },
+            { label: 'Performance', link: '/all' },
+          ]}
+        />
         {content}
       </TopicPageLayout>
     </>
