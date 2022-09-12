@@ -85,6 +85,7 @@ import twitterEmbed from './objects/twitterEmbed'
 import anchorLink from './objects/anchorLink'
 import video from './objects/video'
 import menuLinkV2 from './objects/menuLinkV2'
+import magazineTagBar from './objects/magazineTagBar'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -104,7 +105,13 @@ const NewsSchemas = Flags.HAS_NEWS ? [news, newsList, promoteNews, tag, countryT
 const NewsRoomSchema = Flags.HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = Flags.HAS_FORMS ? [form] : []
 const MagazineSchemas = Flags.HAS_MAGAZINE
-  ? [magazine, magazineIndex, Flags.IS_DEV && magazineTag, Flags.IS_DEV && promoteMagazine].filter((e) => e)
+  ? [
+      magazine,
+      magazineIndex,
+      Flags.IS_DEV && magazineTag,
+      Flags.IS_DEV && promoteMagazine,
+      Flags.IS_DEV && magazineTagBar,
+    ].filter((e) => e)
   : []
 const RemainingSchemas = [
   page,

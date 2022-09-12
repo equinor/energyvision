@@ -85,6 +85,11 @@ export default {
       ],
       fieldset: 'tagFieldset',
     },
+    Flags.IS_DEV && {
+      title: 'Horizontal Magazine Tags Bar',
+      name: 'magazineTagBar',
+      type: 'magazineTagBar',
+    },
     {
       title: 'Open Graph Image',
       name: 'openGraphImage',

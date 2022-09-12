@@ -13,6 +13,7 @@ export const magazineQuery = /* groq */ `
     },
     "heroImage": heroFigure,
     "template": _type,
+    "magazineTags": magazineTagBar.magazineTags[]->.title[$lang],
     "content": content[] {
           ${pageContentFields}
       },
