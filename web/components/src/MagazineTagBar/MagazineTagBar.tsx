@@ -17,16 +17,15 @@ const StyledLink = styled(Link)`
   }
 
   &:after {
-    /* ADDED */
     content: '';
     position: absolute;
     border-left: 2px solid var(--energy-red-100);
     right: calc(var(--space-xLarge) * -0.5);
-    height: 100%; /* adjust this */
+    height: 100%;
   }
 
-  &:last-child:after {
-    display: none; /* Hide the divider for the last block */
+  &:nth-child(3n):after {
+    display: none;
   }
 `
 const Wrapper = styled.div`
@@ -34,12 +33,27 @@ const Wrapper = styled.div`
   grid-gap: 0px;
   grid-template-columns: auto auto;
   border: 1px solid var(--slate-blue-70);
+  @media (max-width: 750px) {
+    grid-template-columns: auto;
+  }
+`
+
+const StyledForm = styled.form`
+  display: none;
+  @media (min-width: 1000px) {
+    display: block;
+  }
 `
 const TagWrapper = styled.div`
   margin: var(--space-medium) var(--space-xLarge) var(--space-medium) auto;
   display: grid;
   padding-left: var(--space-3xLarge);
   grid-gap: var(--space-xLarge);
+  @media (max-width: 750px) {
+    grid-template-columns: repeat(3, max-content);
+    padding-left: 0px;
+    margin: var(--space-medium) auto var(--space-medium) auto;
+  }
   grid-template-columns: repeat(6, fit-content(100%));
 `
 const Input = styled.input`
@@ -75,7 +89,7 @@ const Input = styled.input`
   }
 `
 
-export const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar({ tags }) {
+export const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar({ tags }, ref) {
   const [inputValue, setInputValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -98,7 +112,7 @@ export const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(fu
     }
   }
   return (
-    <Wrapper>
+    <Wrapper ref={ref}>
       <TagWrapper>
         <StyledLink underline={false} href={tags[0].link}>
           {tags[0].label}
@@ -119,7 +133,7 @@ export const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(fu
           {tags[5].label}
         </StyledLink>
       </TagWrapper>
-      <form action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
+      <StyledForm action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
         <Input
           id="site-search"
           ref={inputRef}
@@ -133,7 +147,7 @@ export const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(fu
           value={inputValue}
           onChange={(event) => setInputValue(event.currentTarget.value)}
         />
-      </form>
+      </StyledForm>
     </Wrapper>
   )
 })

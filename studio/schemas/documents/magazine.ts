@@ -13,6 +13,7 @@ import { withSlugValidation } from '../validations/validateSlug'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import magazineTagBar from '../objects/magazineTagBar'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -86,9 +87,11 @@ export default {
       fieldset: 'tagFieldset',
     },
     Flags.IS_DEV && {
-      title: 'Horizontal Magazine Tags Bar',
+      type: 'array',
       name: 'magazineTagBar',
-      type: 'magazineTagBar',
+      title: 'Horizontal Magazine Tags Bar',
+      of: [{ type: 'magazineTagBar', title: 'Promote Magazine Tag' }],
+      validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
     {
       title: 'Open Graph Image',
