@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
-import { useEffect, useRef, useState, ChangeEvent, ComponentProps } from 'react'
+import { useEffect, useRef, useState, ChangeEvent, ComponentProps, useContext } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
 import ControlledSearchBox from './ControlledSearchBox'
+import { SearchContext } from './SearchContext'
 
 const DEBOUNCE_TIME = 400
 
@@ -14,7 +15,7 @@ export function SearchBox(props: SearchBoxProps) {
   // spinner if search is slow? Do we need a spinner if this happens?
   const { query, refine /* isSearchStalled */ } = useSearchBox(props)
   const [value, setValue] = useState(query)
-  const [userTyped, setUserTyped] = useState(false)
+  const { userTyped, setUserTyped } = useContext(SearchContext)
   const inputRef = useRef<HTMLInputElement>(null)
 
   function onReset() {

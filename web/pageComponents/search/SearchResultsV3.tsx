@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Tabs } from '@components'
 import { Index, useHits } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
@@ -14,6 +14,7 @@ import { Pagination } from '../shared/search/pagination/Pagination'
 import TotalResultsStat from './TotalResultsStat'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import MagazineHit from './MagazineHit'
+import { SearchContext } from './SearchContext'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -48,6 +49,8 @@ const SearchResults = () => {
   //const replaceUrl = useRouterReplace()
   const { results } = useHits()
   const [currentTab, setCurrentTab] = useState<string>((router.query.tab as string) || 'topics')
+
+  const { userTyped } = useContext(SearchContext)
   const [userClicked, setUserClicked] = useState(false)
   const [tabResults, setTabResults] = useState<Record<string, boolean>>({
     topics: false,
@@ -57,11 +60,12 @@ const SearchResults = () => {
   })
 
   useEffect(() => {
+    if (!userTyped) return
     const tabWithHits = Object.keys(tabResults).find((key) => tabResults[key])
     if (tabWithHits && !userClicked) {
       setCurrentTab(tabWithHits)
     }
-  }, [tabResults, userClicked])
+  }, [userTyped, tabResults, userClicked])
 
   // state to route
   useEffect(() => {
