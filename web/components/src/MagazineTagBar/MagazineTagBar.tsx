@@ -23,8 +23,12 @@ const StyledLink = styled(Link)`
     right: calc(var(--space-xLarge) * -0.5);
     height: 100%;
   }
-
-  &:nth-child(3n):after {
+  @media (max-width: 750px) {
+    &:nth-child(3n):after {
+      display: none;
+    }
+  }
+  &:last-child:after {
     display: none;
   }
 `
