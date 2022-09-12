@@ -10,6 +10,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { Rule, Reference } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -34,6 +35,7 @@ type TextBlock = {
   ingress?: string
   text?: string
   action?: Reference[]
+  splitList?: boolean
   overrideButtonStyle?: boolean
   background?: ColorListValue
 }
@@ -126,6 +128,15 @@ export default {
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
+    },
+    Flags.IS_DEV && {
+      title: 'Display links as two columns',
+      name: 'splitList',
+      type: 'boolean',
+      fieldset: 'actions',
+      initialValue: false,
+      description:
+        'You can also display links/downloads as two columns if there are alot of links.Ensure that titles are short enough to do this.',
     },
     {
       title: 'Use link style',

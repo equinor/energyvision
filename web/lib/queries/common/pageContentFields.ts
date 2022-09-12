@@ -56,6 +56,7 @@ const pageContentFields = /* groq */ `
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
+    splitList,
     overrideButtonStyle,
     anchor,
     "designOptions": {

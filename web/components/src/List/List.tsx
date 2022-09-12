@@ -1,10 +1,12 @@
 import { forwardRef, CSSProperties } from 'react'
 import { List as EdsList, ListProps as EdsListProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 export type ListProps = {
   unstyled?: boolean
   centered?: boolean
+  splitList?: boolean
 } & EdsListProps
 
 const StyledList = styled(EdsList)<ListProps>`
@@ -24,13 +26,35 @@ const StyledList = styled(EdsList)<ListProps>`
       display: 'grid',
       placeContent: 'center',
     }}
+
+    ${({ splitList }) =>
+    splitList && {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gridColumnGap: '50px',
+    }}
 `
 
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(
-  { unstyled = false, centered = false, style, children, ...rest },
+  { unstyled = false, centered = false, splitList = false, style, children, ...rest },
   ref,
 ) {
-  return (
+  return Flags.IS_DEV ? (
+    <StyledList
+      ref={ref}
+      unstyled={unstyled}
+      centered={centered}
+      splitList={splitList}
+      style={
+        {
+          ...style,
+        } as CSSProperties
+      }
+      {...rest}
+    >
+      {children}
+    </StyledList>
+  ) : (
     <StyledList
       ref={ref}
       unstyled={unstyled}

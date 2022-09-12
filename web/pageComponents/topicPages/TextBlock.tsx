@@ -6,6 +6,8 @@ import TitleText from '../shared/portableText/TitleText'
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
 import CallToActions from './CallToActions'
+import CallToActions2 from './_CallToActionsV2'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -49,7 +51,7 @@ type TextBlockProps = {
 }
 
 const TextBlock = ({ data, anchor }: TextBlockProps) => {
-  const { overline, title, ingress, text, designOptions, callToActions, overrideButtonStyle = false } = data
+  const { overline, title, ingress, text, designOptions, callToActions, splitList, overrideButtonStyle = false } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text) return null
   const { background } = designOptions
@@ -66,7 +68,16 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
           </TextContainer>
         )}
         {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}
-        {callToActions && <CallToActions callToActions={callToActions} overrideButtonStyle={overrideButtonStyle} />}
+        {callToActions &&
+          (Flags.IS_DEV ? (
+            <CallToActions2
+              callToActions={callToActions}
+              overrideButtonStyle={overrideButtonStyle}
+              splitList={splitList}
+            />
+          ) : (
+            <CallToActions callToActions={callToActions} overrideButtonStyle={overrideButtonStyle} />
+          ))}
       </StyledTextBlock>
     </StyledTextBlockWrapper>
   )
