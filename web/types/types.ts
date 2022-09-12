@@ -149,6 +149,7 @@ export type PortableTextChild = {
 export type Templates = 'landingPage' | 'page' | 'news'
 
 export type PageSchema = {
+  magazineTags?: string[]
   slug: string
   title: PortableTextBlock[]
   heroImage: ImageWithCaptionData
