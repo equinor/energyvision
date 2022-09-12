@@ -123,6 +123,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const fullUrl = getFullUrl(pathname, slug, locale)
 
   const pageTitle = data?.title ? toPlainText(data?.title) : ''
+  const magazineTags = data?.magazineTags
 
   const content = (data?.content || []).map((c: ComponentProps, index) => {
     const prevComponent = data?.content?.[index - 1]
@@ -188,16 +189,19 @@ const TopicPage = ({ data }: TopicPageProps) => {
       <TopicPageLayout>
         <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
         <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
-        <MagazineTagBar
-          tags={[
-            { label: 'All', link: '/all' },
-            { label: 'Green Transition', link: '/all' },
-            { label: 'Equinor at 50', link: '/all' },
-            { label: 'Net zero', link: '/all' },
-            { label: 'Innovation', link: '/all' },
-            { label: 'Performance', link: '/all' },
-          ]}
-        />
+        {magazineTags && (
+          <MagazineTagBar
+            tags={[
+              { label: 'All', link: '/all' },
+              { label: magazineTags[0], link: '/all' },
+              { label: magazineTags[1], link: '/all' },
+              { label: magazineTags[2], link: '/all' },
+              { label: magazineTags[3], link: '/all' },
+              { label: magazineTags[4], link: '/all' },
+            ]}
+          />
+        )}
+
         {content}
       </TopicPageLayout>
     </>
