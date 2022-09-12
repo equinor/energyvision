@@ -19,15 +19,25 @@ export type LinkSelector = {
   ariaLabel?: string
 }
 
-const newsType = Flags.HAS_NEWS
-  ? [
-      {
-        type: 'news',
-      },
-    ]
-  : []
+const types = [
+  Flags.HAS_NEWS && {
+    type: 'news',
+  },
+  Flags.HAS_NEWSROOM && {
+    type: 'newsroom',
+  },
+  Flags.HAS_LOCAL_NEWS && {
+    type: 'localNews',
+  },
+  Flags.HAS_MAGAZINE && {
+    type: 'magazine',
+  },
+  Flags.HAS_MAGAZINE && {
+    type: 'magazineIndex',
+  },
+].filter((e) => e)
 
-const defaultReferenceTargets: ReferenceTarget[] = [...newsType, ...routes]
+const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
 const LinkField = {
   name: 'linkSelector',
