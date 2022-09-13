@@ -9,8 +9,7 @@ import isEmpty from '../shared/portableText/helpers/isEmpty'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
-import NewsContent from '../newsRoom/NewsContent'
-import NewsContent1 from '../searchIndexPages/newsRoomIndex/NewsContent'
+import NewsContent from '../searchIndexPages/newsRoomIndex/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { metaTitleSuffix } from '../../languages'
 import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
@@ -102,7 +101,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
                 <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
               )}
 
-              {Flags.IS_DEV ? <NewsContent1 /> : <NewsContent />}
+              <NewsContent />
             </InstantSearch>
           </News>
         </Wrapper>

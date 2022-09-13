@@ -72,7 +72,7 @@ export default {
       type: 'titleAndMeta',
       fieldset: 'metadata',
     },
-    Flags.IS_DEV && {
+    {
       title: 'Magazine tags',
       name: 'magazineTags',
       type: 'array',

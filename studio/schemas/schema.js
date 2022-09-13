@@ -105,13 +105,9 @@ const NewsSchemas = Flags.HAS_NEWS ? [news, newsList, promoteNews, tag, countryT
 const NewsRoomSchema = Flags.HAS_NEWSROOM ? [newsroom] : []
 const FormSchemas = Flags.HAS_FORMS ? [form] : []
 const MagazineSchemas = Flags.HAS_MAGAZINE
-  ? [
-      magazine,
-      magazineIndex,
-      Flags.IS_DEV && magazineTag,
-      Flags.IS_DEV && promoteMagazine,
-      Flags.IS_DEV && magazineTagBar,
-    ].filter((e) => e)
+  ? [magazine, magazineIndex, magazineTag, Flags.IS_DEV && promoteMagazine, Flags.IS_DEV && magazineTagBar].filter(
+      (e) => e,
+    )
   : []
 const RemainingSchemas = [
   page,

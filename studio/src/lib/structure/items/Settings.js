@@ -12,7 +12,7 @@ import { Flags } from '../../datasetHelpers'
 const settingsItems = [
   Flags.HAS_NEWS && Tags,
   Flags.HAS_NEWS && CountryTags,
-  Flags.IS_DEV && Flags.HAS_MAGAZINE && MagazineTags,
+  Flags.HAS_MAGAZINE && MagazineTags,
   TextSnippet,
   Redirects,
   ExternalRedirects,
