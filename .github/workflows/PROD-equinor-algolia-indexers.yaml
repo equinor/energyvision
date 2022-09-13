@@ -1,12 +1,6 @@
 name: PROD - Equinor Algolia Indexers
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'search/**'
-      - '!search/README.md'
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   AZURE_RESOURCE_GROUP_NAME: 'envisRGDev'
