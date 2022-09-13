@@ -26,13 +26,14 @@ const StyledList = styled(EdsList)<ListProps>`
       display: 'grid',
       placeContent: 'center',
     }}
-
+    @media (min-width: 800px) {
     ${({ splitList }) =>
-    splitList && {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gridColumnGap: '50px',
-    }}
+      splitList && {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridColumnGap: `var(--space-xLarge) `,
+      }}
+  }
 `
 
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(

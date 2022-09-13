@@ -136,7 +136,7 @@ export default {
       fieldset: 'actions',
       initialValue: false,
       description:
-        'You can also display links/downloads as two columns if there are alot of links.Ensure that titles are short enough to do this.',
+        'You can also display links/downloads as two columns if there are a lot of links. Ensure that titles are short enough to do this.',
     },
     {
       title: 'Use link style',

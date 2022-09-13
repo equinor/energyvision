@@ -6,7 +6,6 @@ import TitleText from '../shared/portableText/TitleText'
 import type { TextBlockData } from '../../types/types'
 import styled from 'styled-components'
 import CallToActions from './CallToActions'
-import CallToActions2 from './_CallToActionsV2'
 import { Flags } from '../../common/helpers/datasetHelpers'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
@@ -70,7 +69,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
         {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}
         {callToActions &&
           (Flags.IS_DEV ? (
-            <CallToActions2
+            <CallToActions
               callToActions={callToActions}
               overrideButtonStyle={overrideButtonStyle}
               splitList={splitList}

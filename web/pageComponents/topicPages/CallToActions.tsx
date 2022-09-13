@@ -4,15 +4,17 @@ import type { LinkData } from '../../types/types'
 import { default as NextLink } from 'next/link'
 import { ButtonLink } from '../shared/ButtonLink'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Item } = List
 
 type CallToActionsProps = {
   callToActions: LinkData[]
   overrideButtonStyle: boolean
+  splitList?: boolean
 }
 
-const CallToActions = ({ callToActions, overrideButtonStyle }: CallToActionsProps) => {
+const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallToActionsProps) => {
   if (!callToActions) return null
 
   // If we have only one link and the publisher has not made an active choice of overriding the style
@@ -20,7 +22,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle }: CallToActionsProp
   return callToActions.length === 1 && !overrideButtonStyle ? (
     <ButtonLink action={callToActions[0]} />
   ) : (
-    <List unstyled>
+    <List unstyled splitList={Flags.IS_DEV ? splitList : false}>
       {callToActions.map((callToAction: LinkData) => {
         const { id, type, label, ariaLabel, extension } = callToAction
 
