@@ -88,6 +88,13 @@ export type CardData = {
   ingress?: PortableTextBlock[]
 }
 
+export type MagazineCardData = {
+  slug: string
+  title: string | PortableTextBlock[]
+  tags?: string[]
+  heroImage?: string
+}
+
 export type FeaturedContentData = {
   type?: string // news, localNews, route_${locale}
   routeContentType?: 'page' | 'event'

@@ -12,10 +12,24 @@ import { searchClientServer, searchClient } from '../../lib/algolia'
 import MagazineContent from '../searchIndexPages/magazineIndex/MagazineContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { metaTitleSuffix } from '../../languages'
-import { Wrapper, Intro, News as MagazineWapper, UnpaddedText } from './algoliaPages/components'
+import { UnpaddedText } from './algoliaPages/components'
 import { getUrl } from './algoliaPages/helpers'
+import styled from 'styled-components'
 
 import type { MagazineIndexData } from '../../types'
+
+const Wrapper = styled.div`
+  max-width: var(--maxViewportWidth);
+  margin: 0 auto;
+`
+
+const Intro = styled.div`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium);
+`
+
+const MagazineWapper = styled.div`
+  padding: var(--space-3xLarge);
+`
 
 type MagazineIndexTemplateProps = {
   isServerRendered?: boolean
