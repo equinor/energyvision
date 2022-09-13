@@ -11,11 +11,21 @@ export type TagLink = {
   link: string
 }
 const StyledLink = styled(Link)`
+  display: inline-block;
   position: relative;
+  padding-left: 4px;
   &:hover {
     font-weight: bold !important;
   }
 
+  &:before {
+    display: block;
+    content: attr(data-title);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
   &:after {
     content: '';
     position: absolute;
@@ -118,22 +128,22 @@ export const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(fu
   return (
     <Wrapper ref={ref}>
       <TagWrapper>
-        <StyledLink underline={false} href={tags[0].link}>
+        <StyledLink underline={false} href={tags[0].link} data-title={tags[0].label}>
           {tags[0].label}
         </StyledLink>
-        <StyledLink underline={false} href={tags[1].link}>
+        <StyledLink underline={false} href={tags[1].link} data-title={tags[1].label}>
           {tags[1].label}
         </StyledLink>
-        <StyledLink underline={false} href={tags[1].link}>
+        <StyledLink underline={false} href={tags[1].link} data-title={tags[2].label}>
           {tags[2].label}
         </StyledLink>
-        <StyledLink underline={false} href={tags[1].link}>
+        <StyledLink underline={false} href={tags[1].link} data-title={tags[3].label}>
           {tags[3].label}
         </StyledLink>
-        <StyledLink underline={false} href={tags[1].link}>
+        <StyledLink underline={false} href={tags[1].link} data-title={tags[4].label}>
           {tags[4].label}
         </StyledLink>
-        <StyledLink underline={false} href={tags[1].link}>
+        <StyledLink underline={false} href={tags[1].link} data-title={tags[5].label}>
           {tags[5].label}
         </StyledLink>
       </TagWrapper>
