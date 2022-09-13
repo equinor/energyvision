@@ -17,20 +17,11 @@ export const filterByRoute = ({ document }: { document: SanityDocument }) => ({
 export const filterByPages = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document._lang)
 
-  if (!Flags.IS_DEV)
-    return {
-      filter: `_type match $routeLang || _type in ['news', 'localNews', 'magazine'] && _lang == $lang`,
-      params: {
-        routeLang: `route_${lang}*`,
-        lang: lang,
-      },
-    }
-
   return {
-    filter: `_type match $routeLang || (_type == 'news' && _lang == $newsLang )`,
+    filter: `_type match $routeLang || _type in ['news', 'localNews', 'magazine'] && _lang == $lang`,
     params: {
       routeLang: `route_${lang}*`,
-      newsLang: lang,
+      lang: lang,
     },
   }
 }

@@ -43,14 +43,12 @@ export default {
       name: 'to',
       type: 'reference',
       to: [
-        Flags.IS_DEV &&
-          Flags.HAS_LOCAL_NEWS && {
-            type: 'localNews',
-          },
-        Flags.IS_DEV &&
-          Flags.HAS_MAGAZINE && {
-            type: 'magazine',
-          },
+        Flags.HAS_LOCAL_NEWS && {
+          type: 'localNews',
+        },
+        Flags.HAS_MAGAZINE && {
+          type: 'magazine',
+        },
         Flags.HAS_NEWS && {
           type: 'news',
         },
