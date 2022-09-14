@@ -90,6 +90,15 @@ export default [
       localNewsTag: params.localNewsTag,
     }),
   }),
+
+  T.template({
+    id: `promoted-magazine-tags`,
+    title: `Promoted magazine tags`,
+    schemaType: `promotedMagazineTags`,
+    value: () => {
+      return { tags: [] }
+    },
+  }),
   ...ParentRoutesTemplates,
   ...TextSnippetsTemplates,
-]
+].filter((e) => e)

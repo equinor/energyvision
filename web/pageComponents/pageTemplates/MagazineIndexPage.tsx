@@ -16,7 +16,6 @@ import { UnpaddedText } from './algoliaPages/components'
 import { getUrl } from './algoliaPages/helpers'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
-
 import type { MagazineIndexData } from '../../types'
 
 const Wrapper = styled.div`
@@ -96,6 +95,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
 
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
+
           <MagazineWapper>
             <InstantSearch
               searchClient={isServerRendered ? searchClientServer : searchClient}

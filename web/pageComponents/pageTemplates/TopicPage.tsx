@@ -4,6 +4,7 @@ import { toPlainText } from '@portabletext/react'
 import { useRouter } from 'next/router'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import HeroImage from '../shared/HeroImage'
+import MagazineTagBar from '../shared/MagazineTagBar'
 import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
 import FullWidthImage from '../topicPages/FullWidthImage'
@@ -46,7 +47,6 @@ import {
   VideoData,
   CookieDeclarationData,
 } from '../../types/types'
-import { MagazineTagBar } from '@components'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -192,7 +192,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
         {magazineTags && (
           <MagazineTagBar
             tags={[
-              { label: 'All', link: '/all' },
               { label: magazineTags[0], link: '/all' },
               { label: magazineTags[1], link: '/all' },
               { label: magazineTags[2], link: '/all' },

@@ -167,7 +167,7 @@ export default {
       fieldset: 'design',
       initialValue: Colors[0],
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
