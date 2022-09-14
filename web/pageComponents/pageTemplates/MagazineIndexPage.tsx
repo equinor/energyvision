@@ -15,6 +15,7 @@ import { metaTitleSuffix } from '../../languages'
 import { UnpaddedText } from './algoliaPages/components'
 import { getUrl } from './algoliaPages/helpers'
 import styled from 'styled-components'
+import { Pagination } from '../shared/search/pagination/Pagination'
 
 import type { MagazineIndexData } from '../../types'
 
@@ -29,6 +30,11 @@ const Intro = styled.div`
 
 const MagazineWapper = styled.div`
   padding: var(--space-3xLarge);
+`
+
+const StyledPagination = styled(Pagination)`
+  padding-bottom: var(--space-4xLarge);
+  justify-content: center;
 `
 
 type MagazineIndexTemplateProps = {
@@ -49,6 +55,8 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
   const isoCode = getIsoFromLocale(locale)
 
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
+  const HITS_PER_PAGE = 12
+
   return (
     <>
       <NextSeo
@@ -104,8 +112,9 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
                   }),
                 }} */
             >
-              <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} />
+              <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
               <MagazineContent />
+              <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
             </InstantSearch>
           </MagazineWapper>
         </Wrapper>
