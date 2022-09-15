@@ -47,6 +47,9 @@ import {
   VideoData,
   CookieDeclarationData,
 } from '../../types/types'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import { FullImageHero } from '../shared/Hero/FullImageHero'
+import { DefaultHero } from '../shared/Hero/DefaultHero'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -116,6 +119,7 @@ type ComponentProps =
   | AnchorLinkData
   | VideoData
   | CookieDeclarationData
+
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
   const slug = data?.slug
@@ -172,6 +176,14 @@ const TopicPage = ({ data }: TopicPageProps) => {
     }
   })
 
+  const Hero = () => {
+    if (data?.hero.type === 'fullWidthImage') {
+      return <FullImageHero ratio={data.hero.ratio as string} image={data.heroImage.image} />
+    } else {
+      return <DefaultHero title={data.title} image={data.heroImage} />
+    }
+  }
+
   const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.heroImage?.image
   return (
     <>
@@ -187,8 +199,14 @@ const TopicPage = ({ data }: TopicPageProps) => {
         }}
       ></NextSeo>
       <TopicPageLayout>
-        <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
-        <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
+        {Flags.IS_DEV ? (
+          <Hero />
+        ) : (
+          <>
+            <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
+            <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
+          </>
+        )}
         {magazineTags && (
           <MagazineTagBar
             tags={[

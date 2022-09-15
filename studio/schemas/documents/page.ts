@@ -1,24 +1,21 @@
 import React from 'react'
 import { i18n } from '../documentTranslation'
-import { configureTitleBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
+import sharedHeroFields from './header/sharedHeaderFields'
 // import { done } from '@equinor/eds-icons'
-
-const titleContentType = configureTitleBlockContent()
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
 export default {
   type: 'document',
-  name: `page`,
-  title: `Topic page`,
+  name: 'page',
+  title: 'Topic page',
   i18n,
   fieldsets: [
     {
-      title: 'Header / Banner v1',
+      title: 'Header',
       name: 'header',
     },
     {
@@ -45,25 +42,8 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    {
-      name: 'title',
-      type: 'array',
-      title: 'Title',
-      inputComponent: CompactBlockEditor,
-      of: [titleContentType],
-      fieldset: 'header',
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      title: 'Hero image',
-      name: 'heroFigure',
-      type: 'imageWithAltAndCaption',
-      validation: (Rule) => Rule.required(),
-      fieldset: 'header',
-    },
+    ...sharedHeroFields,
 
-    // @TODO: Write a new function
-    //slugWithRef('topicSlug', 'parent', 'slug'),
     {
       name: 'content',
       type: 'array',
@@ -89,7 +69,7 @@ export default {
         Flags.HAS_MUX && { type: 'video' },
       ].filter((e) => e),
     },
-  ],
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
@@ -104,7 +84,7 @@ export default {
       title: 'title',
       media: 'heroFigure.image',
     },
-    prepare(selection) {
+    prepare(selection: any) {
       const { title, media } = selection
       const plainTitle = title ? blocksToText(title) : ''
 

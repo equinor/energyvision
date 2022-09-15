@@ -159,6 +159,10 @@ export type PageSchema = {
   magazineTags?: string[]
   slug: string
   title: PortableTextBlock[]
+  hero: {
+    type?: string
+    ratio?: string
+  }
   heroImage: ImageWithCaptionData
   template: Templates
   seoAndSome: {

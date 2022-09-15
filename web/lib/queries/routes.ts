@@ -21,6 +21,10 @@ export const pageQuery = /* groq */ `
           "metaDescription": seo.metaDescription,
           openGraphImage,
     },
+    "hero": {
+      "type": content->heroType,
+      "ratio": content->heroRatio,
+    },
     "heroImage": content->heroFigure,
     "template": content->_type,
      content->_type == "landingPage" => {

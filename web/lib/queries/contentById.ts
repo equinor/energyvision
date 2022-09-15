@@ -27,6 +27,10 @@ export const contentQueryById = /* groq */ `
           "metaDescription": seo.metaDescription,
           openGraphImage,
     },
+    "hero": {
+      "type": heroType,
+      "ratio": heroRatio,
+    },
     "heroImage": heroFigure,
     "template": _type,
      _type == "landingPage" => {

@@ -12,6 +12,10 @@ export const magazineQuery = /* groq */ `
     "metaDescription": seo.metaDescription,
     openGraphImage,
     },
+    "hero": {
+      "type": heroType,
+      "ratio": heroRatio,
+    },
     "heroImage": heroFigure,
     "template": _type,
     ${promotedmagazineTags},

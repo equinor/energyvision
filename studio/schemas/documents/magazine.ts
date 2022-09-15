@@ -1,6 +1,4 @@
 import { i18n } from '../documentTranslation'
-import { configureTitleBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import type { Rule, SanityDocument } from '@sanity/types'
@@ -13,8 +11,7 @@ import { withSlugValidation } from '../validations/validateSlug'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
-const titleContentType = configureTitleBlockContent()
+import sharedHeaderFields from './header/sharedHeaderFields'
 
 const ingressBlockContentType = configureBlockContent({
   h1: false,
@@ -34,7 +31,7 @@ export default {
   i18n,
   fieldsets: [
     {
-      title: 'Header / Banner v1',
+      title: 'Header',
       name: 'header',
     },
     {
@@ -101,22 +98,7 @@ export default {
       of: [ingressBlockContentType],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
-    {
-      name: 'title',
-      type: 'array',
-      title: 'Title',
-      inputComponent: CompactBlockEditor,
-      of: [titleContentType],
-      fieldset: 'header',
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      title: 'Hero image',
-      name: 'heroFigure',
-      type: 'imageWithAltAndCaption',
-      validation: (Rule: Rule) => Rule.required(),
-      fieldset: 'header',
-    },
+    ...sharedHeaderFields,
     Flags.HAS_MAGAZINE_SUBSCRIPTION && {
       title: 'Send to subscribers',
       name: 'shouldDistributeMagazine',
