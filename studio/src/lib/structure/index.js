@@ -14,7 +14,7 @@ import { Settings } from './items/Settings'
 import S from '@sanity/desk-tool/structure-builder'
 import { Flags } from '../datasetHelpers'
 import { getCurrentUserRoles } from '../userRoles'
-import { PromotedMagazineTags } from './items/promotedMagazineTags'
+import { PromotedMagazineTags } from './items/PromotedMagazineTags'
 
 const News = Flags.HAS_NEWS && NewsStructure
 const Magazine = Flags.HAS_MAGAZINE && MagazineStructure
