@@ -14,14 +14,14 @@ export const SearchBoxAndAlgoliaSync = (props: SearchBoxProps) => {
     // Bypass the state update if the input is focused to avoid concurrent
     // updates when typing.
 
-    if (document.activeElement !== inputRef?.current && query !== inputValue) {
+    if (document.activeElement !== inputRef?.current && query !== inputValue && setInputValue) {
       setInputValue(query)
     }
   }, [query, inputValue])
   // Track when the value coming from the React state changes to synchronize
   // it with InstantSearch.
   useEffect(() => {
-    if (query !== inputValue) {
+    if (query !== inputValue && inputValue) {
       refine(inputValue)
     }
   }, [inputValue, refine, query])

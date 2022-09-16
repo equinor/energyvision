@@ -1,8 +1,8 @@
 import { createContext, useRef, useState } from 'react'
 
 type Props = {
-  inputValue: string
-  setInputValue: React.Dispatch<React.SetStateAction<string>>
+  inputValue?: string
+  setInputValue?: React.Dispatch<React.SetStateAction<string>>
   inputRef?: React.RefObject<HTMLInputElement>
 }
 
@@ -11,10 +11,8 @@ type ProviderProps = {
 }
 
 export const SearchBoxContext = createContext<Props>({
-  inputValue: '',
-  setInputValue: () => {
-    return
-  },
+  inputValue: undefined,
+  setInputValue: undefined,
   inputRef: undefined,
 })
 

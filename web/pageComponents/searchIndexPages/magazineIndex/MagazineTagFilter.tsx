@@ -17,6 +17,7 @@ export function MagazineTagFilter(props: RefinementListProps) {
     <>
       {items.length > 0 ? (
         <MagazineTagBar
+          href=""
           tags={tagLinks}
           onClick={(value: string) => {
             if (value === 'ALL') {

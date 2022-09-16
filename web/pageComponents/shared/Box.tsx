@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import styled from 'styled-components'
 import VisuallyHidden from './VisuallyHidden'
 
@@ -36,9 +36,15 @@ const Input = styled.input`
     pointer-events: none;
   }
 `
-const Box = () => {
+
+type SearchBoxProps = {
+  onSubmit?: (searchQuery: string) => void
+}
+const Box = (props: SearchBoxProps) => {
   const { inputValue, setInputValue, inputRef } = useContext(SearchBoxContext)
   const intl = useIntl()
+  const [value, setValue] = useState('')
+  const { onSubmit } = props
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -47,13 +53,13 @@ const Box = () => {
     if (inputRef?.current) {
       inputRef.current.blur()
     }
+    if (onSubmit) onSubmit(value)
   }
 
   function handleReset(event: React.FormEvent) {
     event.preventDefault()
     event.stopPropagation()
-
-    setInputValue('')
+    if (setInputValue) setInputValue('')
 
     if (inputRef?.current) {
       inputRef.current.focus()
@@ -80,7 +86,8 @@ const Box = () => {
           type="search"
           value={inputValue}
           onChange={(event) => {
-            setInputValue(event.currentTarget.value)
+            if (setInputValue) setInputValue(event.currentTarget.value)
+            setValue(event.currentTarget.value)
           }}
         />
       </form>

@@ -1,5 +1,6 @@
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
+import Router from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
 import { toPlainText } from '@portabletext/react'
 import { Flags } from '../../common/helpers/datasetHelpers'
@@ -125,8 +126,9 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     addQueryPrefix: true,
                     arrayFormat: 'repeat',
                   })
-
-                  return `${baseUrl}magazine${queryString}`
+                  const href = `${baseUrl}magazine${queryString}`
+                  Router.push(href, undefined, { shallow: true })
+                  return href
                 },
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct

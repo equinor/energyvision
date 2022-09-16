@@ -4,10 +4,12 @@ import { Link } from '@components'
 import UncontrolledSearchBox from '../searchIndexPages/magazineIndex/UncontrolledSearchBoxV2'
 import Box from './Box'
 import { useIntl } from 'react-intl'
+import { useRouter } from 'next/router'
 
 export type MagazineTagBarProps = {
   tags: TagLink[]
   isIndexPage?: boolean
+  href: string
   onClick?: (value: string) => void
 }
 
@@ -108,17 +110,18 @@ const StyledTagLink: React.FC<React.PropsWithChildren<TagLink>> = ({ active, hre
 }
 
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
-  { tags, onClick, isIndexPage },
+  { tags, onClick, isIndexPage, href },
   ref,
 ) {
   const intl = useIntl()
+  const router = useRouter()
   allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
   allTagLink.active = tags.find((it) => it.active) === undefined
   return (
     <Wrapper ref={ref}>
       <TagWrapper>
         <StyledTagLink
-          href={allTagLink.href}
+          href={href}
           label={allTagLink.label}
           active={allTagLink.active}
           onClick={(event) => {
@@ -134,7 +137,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         {tags.map((it: TagLink) => (
           <StyledTagLink
             label={it.label}
-            href={it.href}
+            href={encodeURI(`${href}?magazineTags=${it.label}`)}
             key={`key_${it.label}`}
             active={it.active}
             onClick={(event) => {
@@ -147,7 +150,17 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
           />
         ))}
       </TagWrapper>
-      <SearchBoxWrapper>{isIndexPage ? <UncontrolledSearchBox /> : <Box />}</SearchBoxWrapper>
+      <SearchBoxWrapper>
+        {isIndexPage ? (
+          <UncontrolledSearchBox />
+        ) : (
+          <Box
+            onSubmit={(query) => {
+              router.push(encodeURI(`${href}?query=${query}`))
+            }}
+          />
+        )}
+      </SearchBoxWrapper>
     </Wrapper>
   )
 })
