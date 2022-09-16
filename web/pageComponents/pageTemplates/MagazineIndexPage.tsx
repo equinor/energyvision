@@ -49,9 +49,7 @@ type MagazineIndexTemplateProps = {
 
 const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const router = useRouter()
-
   const fullUrl = getUrl(router, slug)
-
   const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData || {}
   const plainTitle = title ? toPlainText(title) : ''
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
@@ -107,11 +105,14 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               // @TODO If this is enabled, the app will freeze with browser back
               router: history({
                 createURL({ qsModule, routeState, location }) {
-                  const urlParts = location.href.match(/^(.*?)\/magazine/)
-                  const baseUrl = `${urlParts ? urlParts[1] : ''}/`
+                  const isIndexpageUrl = location.href.match(/^(.*?)\/magazine((?:&?[^=&]*=[^=&]*)*)?$/)
+                  const isNorwegianIndexpageUrl = location.href.match(/^(.*?)\/no\/magasin((?:&?[^=&]*=[^=&]*)*)?$/)
+                  if (isIndexpageUrl === null || isNorwegianIndexpageUrl === null) {
+                    // do not update router state when magazine pages are clicked..
+                    return location.href
+                  }
 
                   const queryParameters: any = {}
-
                   if (routeState.query) {
                     queryParameters.query = encodeURIComponent(routeState.query as string)
                   }
@@ -126,7 +127,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     addQueryPrefix: true,
                     arrayFormat: 'repeat',
                   })
-                  const href = `${baseUrl}magazine${queryString}`
+                  const href = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
                   Router.push(href, undefined, { shallow: true })
                   return href
                 },
