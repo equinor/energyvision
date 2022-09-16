@@ -5,7 +5,7 @@ import ControlledSearchBox from './ControlledSearchBox'
 import { SearchContext } from './SearchContext'
 import useDebounce from '../../lib/hooks/useDebounce'
 
-const DEBOUNCE_TIME = 400
+const DEBOUNCE_TIME = 300
 
 export type SearchBoxProps = ComponentProps<'div'> & UseSearchBoxProps
 
@@ -45,6 +45,7 @@ export function SearchBox(props: SearchBoxProps) {
   // state to route
   const debounceRef: { current: NodeJS.Timeout | null } = useRef(null)
   useEffect(() => {
+    if (!userTyped) return
     clearTimeout(debounceRef.current as NodeJS.Timeout)
     debounceRef.current = setTimeout(() => {
       const urlParts = router.asPath.split('?')[0]
@@ -67,10 +68,10 @@ export function SearchBox(props: SearchBoxProps) {
     }, DEBOUNCE_TIME)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query])
+  }, [query, userTyped])
 
   useEffect(() => {
-    if (query !== value) {
+    if (query !== debouncedValue) {
       refine(debouncedValue)
     }
     // We want to track when the value coming from the React state changes
