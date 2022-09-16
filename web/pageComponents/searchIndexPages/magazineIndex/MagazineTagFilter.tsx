@@ -1,25 +1,27 @@
-import { useRefinementList, UseRefinementListProps } from 'react-instantsearch-hooks-web'
+import { useMenu, UseMenuProps, useClearRefinements } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import MagazineTagBar from '../../shared/MagazineTagBar'
 
-export type RefinementListProps = React.ComponentProps<'div'> & UseRefinementListProps
-
+export type RefinementListProps = React.ComponentProps<'div'> & UseMenuProps
 const NoRelevant = styled.span`
   padding: var(--space-small) 0;
   display: inline-block;
   padding: var(--space-small) var(--space-large);
 `
 export function MagazineTagFilter(props: RefinementListProps) {
-  const { items, refine, createURL } = useRefinementList(props)
-  const tagLinks = items.map((e) => ({ link: createURL(e.value), label: e.value }))
+  const { items, refine } = useMenu(props)
+  const { refine: clear } = useClearRefinements()
+  const tagLinks = items.map((e) => ({ href: '#', label: e.value, active: e.isRefined }))
   return (
     <>
       {items.length > 0 ? (
         <MagazineTagBar
           tags={tagLinks}
-          onClick={(e: any) => {
-            refine(e.value)
+          onClick={(value: string) => {
+            if (value === 'ALL') {
+              clear()
+            } else refine(value)
           }}
           isIndexPage
         />

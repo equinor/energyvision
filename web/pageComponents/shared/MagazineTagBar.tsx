@@ -3,17 +3,19 @@ import styled from 'styled-components'
 import { Link } from '@components'
 import UncontrolledSearchBox from '../searchIndexPages/magazineIndex/UncontrolledSearchBoxV2'
 import Box from './Box'
+import { useIntl } from 'react-intl'
 
 export type MagazineTagBarProps = {
   tags: TagLink[]
   isIndexPage?: boolean
-  onClick?: any
-} & AnchorHTMLAttributes<HTMLAnchorElement>
+  onClick?: (value: string) => void
+}
 
 export type TagLink = {
   label: string
-  link: string
-}
+  active: boolean
+} & AnchorHTMLAttributes<HTMLAnchorElement>
+
 const StyledLink = styled(Link)`
   display: inline-block;
   position: relative;
@@ -46,6 +48,10 @@ const StyledLink = styled(Link)`
     display: none;
   }
 `
+
+const ActiveLink = styled(StyledLink)`
+  font-weight: bold !important;
+`
 const Wrapper = styled.div`
   display: grid;
   grid-gap: 0px;
@@ -60,6 +66,14 @@ const SearchBoxWrapper = styled.div`
   display: none;
   @media (min-width: 1000px) {
     display: block;
+    input {
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 0;
+      &:focus {
+        box-shadow: 1px 0 0 1px solid var(--slate-blue-70);
+      }
+    }
   }
 `
 const TagWrapper = styled.div`
@@ -75,20 +89,61 @@ const TagWrapper = styled.div`
   grid-template-columns: repeat(6, max-content);
 `
 
+const allTagLink: TagLink = {
+  href: '#',
+  label: 'All',
+  active: true,
+}
+
+const StyledTagLink: React.FC<React.PropsWithChildren<TagLink>> = ({ active, href, label, onClick }: TagLink) => {
+  return active ? (
+    <ActiveLink underline={false} href={href} key={label} data-title={label} onClick={onClick}>
+      {label}
+    </ActiveLink>
+  ) : (
+    <StyledLink underline={false} href={href} key={label} data-title={label} onClick={onClick}>
+      {label}
+    </StyledLink>
+  )
+}
+
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
   { tags, onClick, isIndexPage },
   ref,
 ) {
+  const intl = useIntl()
+  allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
   return (
     <Wrapper ref={ref}>
       <TagWrapper>
-        <StyledLink underline={false} href="#" key="ALL" data-title="ALL">
+        <StyledTagLink
+          href={allTagLink.href}
+          label={allTagLink.label}
+          active={allTagLink.active}
+          onClick={(event) => {
+            if (onClick) {
+              event.preventDefault()
+              onClick('ALL')
+              allTagLink.active = true
+            }
+          }}
+        >
           ALL
-        </StyledLink>
+        </StyledTagLink>
         {tags.map((it: TagLink) => (
-          <StyledLink underline={false} href={it.link} key={it.label} data-title={it.label} onClick={onClick}>
-            {it.label}
-          </StyledLink>
+          <StyledTagLink
+            label={it.label}
+            href={it.href}
+            key={`key_${it.label}`}
+            active={it.active}
+            onClick={(event) => {
+              if (onClick) {
+                event.preventDefault()
+                onClick(it.label)
+                allTagLink.active = false
+              }
+            }}
+          />
         ))}
       </TagWrapper>
       <SearchBoxWrapper>{isIndexPage ? <UncontrolledSearchBox /> : <Box />}</SearchBoxWrapper>

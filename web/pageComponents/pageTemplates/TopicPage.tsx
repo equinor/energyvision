@@ -210,11 +210,11 @@ const TopicPage = ({ data }: TopicPageProps) => {
         {magazineTags && (
           <MagazineTagBar
             tags={[
-              { label: magazineTags[0], link: '/all' },
-              { label: magazineTags[1], link: '/all' },
-              { label: magazineTags[2], link: '/all' },
-              { label: magazineTags[3], link: '/all' },
-              { label: magazineTags[4], link: '/all' },
+              { label: magazineTags[0], href: '#', active: false },
+              { label: magazineTags[1], href: '#', active: false },
+              { label: magazineTags[2], href: '#', active: false },
+              { label: magazineTags[3], href: '#', active: false },
+              { label: magazineTags[4], href: '#', active: false },
             ]}
           />
         )}

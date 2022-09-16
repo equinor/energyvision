@@ -21,10 +21,7 @@ export const SearchBoxAndAlgoliaSync = (props: SearchBoxProps) => {
   // Track when the value coming from the React state changes to synchronize
   // it with InstantSearch.
   useEffect(() => {
-    console.log(query)
-    console.log(inputValue)
     if (query !== inputValue) {
-      console.log('refine ' + inputValue)
       refine(inputValue)
     }
   }, [inputValue, refine, query])

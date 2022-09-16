@@ -17,6 +17,7 @@ import { getUrl } from './algoliaPages/helpers'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
+import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -96,11 +97,10 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
 
-          <MagazineWapper>
-            <InstantSearch
-              searchClient={isServerRendered ? searchClientServer : searchClient}
-              indexName={indexName}
-              /*  routing={{
+          <InstantSearch
+            searchClient={isServerRendered ? searchClientServer : searchClient}
+            indexName={indexName}
+            /*  routing={{
                   router: history({
                     getLocation() {
                       if (typeof window === 'undefined') {
@@ -111,12 +111,14 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
                     },
                   }),
                 }} */
-            >
-              <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
+          >
+            <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
+            <MagazineTagFilter attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
+            <MagazineWapper>
               <MagazineContent />
               <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
-            </InstantSearch>
-          </MagazineWapper>
+            </MagazineWapper>
+          </InstantSearch>
         </Wrapper>
       </main>
     </>
