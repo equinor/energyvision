@@ -18,7 +18,8 @@ import { SkipNavContent } from '@reach/skip-nav'
 export default function MagazineIndexNorwegian({
   serverState,
   isServerRendered = false,
-  /* url, */ data,
+  url,
+  data,
 }: MagazineIndexProps) {
   const defaultLocale = defaultLanguage.locale
   const locale = data?.intl?.locale || defaultLocale
@@ -36,6 +37,7 @@ export default function MagazineIndexNorwegian({
             locale={locale}
             pageData={data?.pageData}
             slug={data?.slug}
+            url={url}
           />
         </IntlProvider>
       </InstantSearchSSRProvider>
@@ -104,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
-  //const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <MagazineIndexNorwegian
       isServerRendered
@@ -113,14 +115,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         pageData,
         slug,
       }}
-      /* url={url} */
+      url={url}
     />,
   )
 
   return {
     props: {
       serverState,
-      // url,
+      url,
       data: {
         menuData,
         footerData,

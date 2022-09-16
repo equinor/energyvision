@@ -113,6 +113,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
 ) {
   const intl = useIntl()
   allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
+  allTagLink.active = tags.find((it) => it.active) === undefined
   return (
     <Wrapper ref={ref}>
       <TagWrapper>

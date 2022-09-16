@@ -16,7 +16,7 @@ export type AlgoliaIndexPageProps = {
 }
 
 export type NewsRoomProps = AlgoliaIndexPageProps
-export type MagazineIndexProps = AlgoliaIndexPageProps
+export type MagazineIndexProps = { url: string } & AlgoliaIndexPageProps
 
 export type AlgoliaIndexPageData = {
   documentTitle?: string

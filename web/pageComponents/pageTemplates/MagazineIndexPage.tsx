@@ -18,6 +18,7 @@ import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
+import { history } from 'instantsearch.js/es/lib/routers'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -42,9 +43,10 @@ type MagazineIndexTemplateProps = {
   locale: string
   pageData: MagazineIndexData | undefined
   slug?: string
+  url: string
 }
 
-const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }: MagazineIndexTemplateProps) => {
+const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const router = useRouter()
 
   const fullUrl = getUrl(router, slug)
@@ -100,17 +102,75 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
           <InstantSearch
             searchClient={isServerRendered ? searchClientServer : searchClient}
             indexName={indexName}
-            /*  routing={{
-                  router: history({
-                    getLocation() {
-                      if (typeof window === 'undefined') {
-                        return new URL(url!) as unknown as Location
-                      }
+            routing={{
+              // @TODO If this is enabled, the app will freeze with browser back
+              router: history({
+                createURL({ qsModule, routeState, location }) {
+                  const urlParts = location.href.match(/^(.*?)\/magazine/)
+                  const baseUrl = `${urlParts ? urlParts[1] : ''}/`
 
-                      return window.location
+                  const queryParameters: any = {}
+
+                  if (routeState.query) {
+                    queryParameters.query = encodeURIComponent(routeState.query as string)
+                  }
+                  if (routeState.page !== 1) {
+                    queryParameters.page = routeState.page
+                  }
+                  if (routeState.magazineTags) {
+                    queryParameters.magazineTags = encodeURIComponent(routeState.magazineTags as string)
+                  }
+
+                  const queryString = qsModule.stringify(queryParameters, {
+                    addQueryPrefix: true,
+                    arrayFormat: 'repeat',
+                  })
+
+                  return `${baseUrl}magazine${queryString}`
+                },
+                // eslint-disable-next-line
+                // @ts-ignore: @TODO: The types are not correct
+                parseURL({ qsModule, location }) {
+                  const { query = '', page, magazineTags = '' }: any = qsModule.parse(location.search.slice(1))
+                  return {
+                    query: decodeURIComponent(query),
+                    page,
+                    magazineTags: decodeURIComponent(magazineTags),
+                  }
+                },
+                getLocation() {
+                  if (typeof window === 'undefined') {
+                    return new URL(url!) as unknown as Location
+                  }
+
+                  return window.location
+                },
+              }),
+
+              stateMapping: {
+                // eslint-disable-next-line
+                // @ts-ignore: @TODO: The types are not correct
+                stateToRoute(uiState) {
+                  const indexUiState = uiState[indexName] || {}
+                  return {
+                    query: indexUiState.query,
+                    magazineTags: indexUiState.menu && indexUiState.menu.magazineTags,
+                  }
+                },
+                // eslint-disable-next-line
+                // @ts-ignore: @TODO: The types are not correct
+                routeToState(routeState) {
+                  return {
+                    [indexName]: {
+                      query: routeState.query,
+                      menu: {
+                        magazineTags: routeState.magazineTags,
+                      },
                     },
-                  }),
-                }} */
+                  }
+                },
+              },
+            }}
           >
             <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
             <MagazineTagFilter attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
@@ -124,5 +184,4 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug }:
     </>
   )
 }
-
 export default MagazineIndexPage

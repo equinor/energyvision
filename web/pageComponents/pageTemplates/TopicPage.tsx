@@ -122,12 +122,20 @@ type ComponentProps =
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { pathname, locale } = useRouter()
-  const slug = data?.slug
 
+  const slug = data?.slug
+  const parentSlug = slug.split('/')[1]
   const fullUrl = getFullUrl(pathname, slug, locale)
 
   const pageTitle = data?.title ? toPlainText(data?.title) : ''
   const magazineTags = data?.magazineTags
+  const tags = magazineTags?.map((it) => {
+    return {
+      label: it,
+      href: encodeURI(`/${parentSlug}?magazineTags=${it}`),
+      active: false,
+    }
+  })
 
   const content = (data?.content || []).map((c: ComponentProps, index) => {
     const prevComponent = data?.content?.[index - 1]
@@ -207,18 +215,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
             <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
           </>
         )}
-        {magazineTags && (
-          <MagazineTagBar
-            tags={[
-              { label: magazineTags[0], href: '#', active: false },
-              { label: magazineTags[1], href: '#', active: false },
-              { label: magazineTags[2], href: '#', active: false },
-              { label: magazineTags[3], href: '#', active: false },
-              { label: magazineTags[4], href: '#', active: false },
-            ]}
-          />
-        )}
-
+        {tags && <MagazineTagBar tags={tags} />}
         {content}
       </TopicPageLayout>
     </>
