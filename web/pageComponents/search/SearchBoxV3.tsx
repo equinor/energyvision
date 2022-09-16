@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, ChangeEvent, ComponentProps, useContext } 
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
 import ControlledSearchBox from './ControlledSearchBox'
 import { SearchContext } from './SearchContext'
+import useDebounce from '../../lib/hooks/useDebounce'
 
 const DEBOUNCE_TIME = 400
 
@@ -15,6 +16,8 @@ export function SearchBox(props: SearchBoxProps) {
   // spinner if search is slow? Do we need a spinner if this happens?
   const { query, refine /* isSearchStalled */ } = useSearchBox(props)
   const [value, setValue] = useState(query)
+  const debouncedValue = useDebounce<string>(value, DEBOUNCE_TIME)
+
   const { userTyped, setUserTyped } = useContext(SearchContext)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -44,7 +47,6 @@ export function SearchBox(props: SearchBoxProps) {
   useEffect(() => {
     clearTimeout(debounceRef.current as NodeJS.Timeout)
     debounceRef.current = setTimeout(() => {
-      console.log(router.query)
       const urlParts = router.asPath.split('?')[0]
       router.replace(
         {
@@ -69,13 +71,13 @@ export function SearchBox(props: SearchBoxProps) {
 
   useEffect(() => {
     if (query !== value) {
-      refine(value)
+      refine(debouncedValue)
     }
     // We want to track when the value coming from the React state changes
     // to update the InstantSearch.js query, so we don't need to track the
     // InstantSearch.js query.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, refine])
+  }, [debouncedValue, refine])
 
   return (
     <ControlledSearchBox
