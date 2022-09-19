@@ -1,36 +1,34 @@
+import { useState } from 'react'
 import { useMenu, UseMenuProps, useClearRefinements } from 'react-instantsearch-hooks-web'
-import styled from 'styled-components'
-import { FormattedMessage } from 'react-intl'
 import MagazineTagBar from '../../shared/MagazineTagBar'
 
-export type RefinementListProps = React.ComponentProps<'div'> & UseMenuProps
-const NoRelevant = styled.span`
-  padding: var(--space-small) 0;
-  display: inline-block;
-  padding: var(--space-small) var(--space-large);
-`
+export type RefinementListProps = { tags: string[] } & React.ComponentProps<'div'> & UseMenuProps
+
 export function MagazineTagFilter(props: RefinementListProps) {
   const { items, refine } = useMenu(props)
   const { refine: clear } = useClearRefinements()
-  const tagLinks = items.map((e) => ({ href: '#', label: e.value, active: e.isRefined }))
+  const [active, setActive] = useState('')
+  const { tags } = props
+  const tagLinks = tags.map((e) => ({
+    href: '#',
+    label: e,
+    active: e === items.find((it) => it.isRefined)?.value || active === e,
+  }))
   return (
     <>
-      {items.length > 0 ? (
-        <MagazineTagBar
-          href=""
-          tags={tagLinks}
-          onClick={(value: string) => {
-            if (value === 'ALL') {
-              clear()
-            } else refine(value)
-          }}
-          isIndexPage
-        />
-      ) : (
-        <NoRelevant>
-          <FormattedMessage id="newsroom_no_relevant_filters" defaultMessage="No relevant content for this filter" />
-        </NoRelevant>
-      )}
+      <MagazineTagBar
+        href="#"
+        tags={tagLinks}
+        onClick={(value: string) => {
+          setActive(value)
+          if (value === 'ALL') {
+            clear()
+          } else if (value !== active) {
+            refine(value)
+          }
+        }}
+        isIndexPage
+      />
     </>
   )
 }

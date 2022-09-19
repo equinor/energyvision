@@ -121,6 +121,7 @@ type ComponentProps =
   | CookieDeclarationData
 
 const TopicPage = ({ data }: TopicPageProps) => {
+  const router = useRouter()
   const { pathname, locale } = useRouter()
 
   const slug = data?.slug
@@ -214,7 +215,15 @@ const TopicPage = ({ data }: TopicPageProps) => {
             <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
           </>
         )}
-        {tags && <MagazineTagBar tags={tags} href={parentSlug} />}
+        {tags && (
+          <MagazineTagBar
+            tags={tags}
+            href={parentSlug}
+            onClick={(tagValue) => {
+              router.push(encodeURI(`${parentSlug}?magazineTags=${tagValue}`))
+            }}
+          />
+        )}
         {content}
       </TopicPageLayout>
     </>

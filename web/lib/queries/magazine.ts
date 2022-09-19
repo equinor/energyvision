@@ -33,5 +33,6 @@ export const magazineIndexQuery = /* groq */ `
     openGraphImage,
     title,
     ingress,
-    backgroundImage
+    backgroundImage,
+    ${promotedmagazineTags},
   }`

@@ -24,6 +24,7 @@ export type AlgoliaIndexPageData = {
   openGraphImage?: ImageWithAlt
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
+  magazineTags: string[]
 }
 
 export type NewsroomData = AlgoliaIndexPageData

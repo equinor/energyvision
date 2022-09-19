@@ -1,8 +1,8 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
 import styled from 'styled-components'
 import { Link } from '@components'
-import UncontrolledSearchBox from '../searchIndexPages/magazineIndex/UncontrolledSearchBoxV2'
-import Box from './Box'
+//import UncontrolledSearchBox from '../searchIndexPages/magazineIndex/UncontrolledSearchBoxV2'
+//import Box from './Box'
 import { useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 
@@ -110,11 +110,10 @@ const StyledTagLink: React.FC<React.PropsWithChildren<TagLink>> = ({ active, hre
 }
 
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
-  { tags, onClick, isIndexPage, href },
+  { tags, onClick, href },
   ref,
 ) {
   const intl = useIntl()
-  const router = useRouter()
   allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
   allTagLink.active = tags.find((it) => it.active) === undefined
   return (
@@ -137,7 +136,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         {tags.map((it: TagLink) => (
           <StyledTagLink
             label={it.label}
-            href={encodeURI(`${href}?magazineTags=${it.label}`)}
+            href={encodeURI(`?magazineTags=${it.label}`)}
             key={`key_${it.label}`}
             active={it.active}
             onClick={(event) => {
@@ -150,7 +149,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
           />
         ))}
       </TagWrapper>
-      <SearchBoxWrapper>
+      {/*<SearchBoxWrapper>
         {isIndexPage ? (
           <UncontrolledSearchBox />
         ) : (
@@ -160,7 +159,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
             }}
           />
         )}
-      </SearchBoxWrapper>
+          </SearchBoxWrapper> */}
     </Wrapper>
   )
 })

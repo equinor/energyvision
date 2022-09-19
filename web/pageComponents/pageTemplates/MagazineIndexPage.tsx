@@ -50,7 +50,7 @@ type MagazineIndexTemplateProps = {
 const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const router = useRouter()
   const fullUrl = getUrl(router, slug)
-  const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData || {}
+  const { ingress, title, documentTitle, metaDescription, openGraphImage, magazineTags } = pageData || {}
   const plainTitle = title ? toPlainText(title) : ''
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -105,9 +105,9 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               // @TODO If this is enabled, the app will freeze with browser back
               router: history({
                 createURL({ qsModule, routeState, location }) {
-                  const isIndexpageUrl = location.href.match(/^(.*?)\/magazine((?:&?[^=&]*=[^=&]*)*)?$/)
-                  const isNorwegianIndexpageUrl = location.href.match(/^(.*?)\/no\/magasin((?:&?[^=&]*=[^=&]*)*)?$/)
-                  if (isIndexpageUrl === null || isNorwegianIndexpageUrl === null) {
+                  const isIndexpageUrl = location.pathname.split('/').length === (locale === 'en' ? 2 : 3)
+
+                  if (!isIndexpageUrl) {
                     // do not update router state when magazine pages are clicked..
                     return location.href
                   }
@@ -128,7 +128,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     arrayFormat: 'repeat',
                   })
                   const href = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
-                  Router.push(href, undefined, { shallow: true })
+
                   return href
                 },
                 // eslint-disable-next-line
@@ -176,7 +176,9 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
             }}
           >
             <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
-            <MagazineTagFilter attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
+            {magazineTags && (
+              <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
+            )}
             <MagazineWapper>
               <MagazineContent />
               <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
