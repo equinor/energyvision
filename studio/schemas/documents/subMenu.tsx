@@ -2,7 +2,6 @@ import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
-import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
@@ -14,12 +13,10 @@ import { Flags } from '../../src/lib/datasetHelpers'
 export type SubMenu = {
   _type: 'subMenu'
   label: string
-  isStatic: boolean
   isDisabled: boolean
   intro: any
   group?: any
   url?: string
-  staticUrl?: string
   reference?: Reference
   featuredContent?: Reference
 }
@@ -57,15 +54,6 @@ export default {
       type: 'string',
     },
     {
-      name: 'isStatic',
-      title: 'Is static page',
-      description: `While migrating, content can be available as static pages generated from the old CMS. If this is
-      the case for this menu item, it's important to register the url in the static input field`,
-      type: 'boolean',
-      initialValue: false,
-      fieldset: 'link',
-    },
-    {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
@@ -74,14 +62,13 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: SubMenu }
-          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
+          return validateInternalOrExternalUrl(value, parent.url)
         }),
       to: routes,
       options: {
         filter: filterByRoute,
         disableNew: true,
       },
-      hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === true,
     },
     {
       name: 'url',
@@ -92,22 +79,8 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: SubMenu }
-          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
+          return validateInternalOrExternalUrl(value, parent.reference)
         }),
-      hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === true,
-    },
-    {
-      name: 'staticUrl',
-      title: 'Static URL',
-      type: 'string',
-      description: `The URL for the static page. Don't add language information`,
-      placeholder: '/careers/experienced-professionals',
-      fieldset: 'link',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string, context: ValidationContext) => {
-          return validateStaticUrl(value, context)
-        }),
-      hidden: ({ parent }: { parent: SubMenu }) => parent?.isStatic === false,
     },
     {
       title: 'Menu groups',

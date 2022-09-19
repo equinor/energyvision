@@ -51,12 +51,8 @@ type TableProps = {
 
 const getLink = (linkData: LinkData) => {
   if (!linkData) return 'something-wrong'
-  const { isStatic, link, staticUrl, href } = linkData
-  if (isStatic) {
-    return staticUrl || '/'
-  } else {
-    return (link && link.slug) || (href && href) || '/'
-  }
+  const { link, href } = linkData
+  return (link && link.slug) || (href && href) || '/'
 }
 
 const renderCellByType = (cellData: CellData) => {

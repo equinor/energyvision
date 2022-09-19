@@ -44,7 +44,6 @@ const MenuTemplates = Flags.HAS_FANCY_MENU
         parameters: [{ name: 'isoCode', type: 'string' }],
         value: (params) => ({
           _lang: params.isoCode,
-          isStatic: false,
         }),
       }),
     ]

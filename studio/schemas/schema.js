@@ -17,10 +17,8 @@ import landingPage from './documents/landingPage'
 import route from './documents/route'
 import routeHomepage from './documents/routeHomepage'
 import subMenu from './documents/subMenu'
-import subMenuV2 from './documents/subMenuV2'
 import siteMenu from './documents/siteMenu'
 import footer from './documents/footer'
-import footerV2 from './documents/footerV2'
 import tag from './documents/tag'
 import countryTag from './documents/countryTag'
 import magazineTag from './documents/magazineTag'
@@ -55,7 +53,6 @@ import figure from './objects/figure'
 import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
 import linkSelector from './objects/linkSelector'
-import linkSelectorV2 from './objects/linkSelectorV2'
 import promoTile from './objects/promoTile'
 import promoTileArray from './objects/promoTileArray'
 import stockValuesApi from './objects/stockValuesApi'
@@ -85,7 +82,6 @@ import { Flags } from '../src/lib/datasetHelpers'
 import twitterEmbed from './objects/twitterEmbed'
 import anchorLink from './objects/anchorLink'
 import video from './objects/video'
-import menuLinkV2 from './objects/menuLinkV2'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -96,7 +92,7 @@ const routeHomepageSchemas = languages.map(({ name, title }) => {
 })
 
 const MenuSchemas = Flags.HAS_FANCY_MENU
-  ? [siteMenu, Flags.IS_DEV ? subMenuV2 : subMenu, menuGroup, Flags.IS_DEV ? menuLinkV2 : menuLink]
+  ? [siteMenu, subMenu, menuGroup, menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
 const LocalNewsSchemas = Flags.HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
 const EventSchemas = Flags.HAS_EVENT ? [event, eventDate] : []
@@ -136,13 +132,13 @@ const RemainingSchemas = [
   figure,
   textWithIcon,
   textWithIconArray,
-  Flags.IS_DEV ? linkSelectorV2 : linkSelector,
+  linkSelector,
   promoTile,
   promoTileArray,
   stockValuesApi,
   iframe,
   basicIframe,
-  Flags.IS_DEV ? footerV2 : footer,
+  footer,
   promotion,
   promoteTopics,
   promoteEvents,

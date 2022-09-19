@@ -35,7 +35,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
         return (
           <Fragment key={id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
-            {type === 'internalUrl' || callToAction.isStatic ? (
+            {type === 'internalUrl' ? (
               <Item>
                 <NextLink href={url} passHref>
                   <Link variant="contentLink" type={type} aria-label={ariaLabel}>

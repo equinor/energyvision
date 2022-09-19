@@ -25,7 +25,7 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
       <List unstyled>
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
-            const { id, label, type, isStatic, extension, ariaLabel } = item
+            const { id, label, type, extension, ariaLabel } = item
 
             const url = getUrlFromAction(item)
             if (!url) {
@@ -35,7 +35,7 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
 
             return (
               <Fragment key={id}>
-                {type === 'internalUrl' || isStatic ? (
+                {type === 'internalUrl' ? (
                   <Item>
                     <NextLink href={url} passHref>
                       <Link variant="contentLink" type={type} aria-label={ariaLabel}>

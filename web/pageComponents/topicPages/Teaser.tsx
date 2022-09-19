@@ -53,7 +53,7 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
     return null
   }
 
-  if (action.type === 'internalUrl' || action.isStatic) {
+  if (action.type === 'internalUrl') {
     return (
       <NextLink href={url} passHref>
         <Link variant="readMore" aria-label={action.ariaLabel}>

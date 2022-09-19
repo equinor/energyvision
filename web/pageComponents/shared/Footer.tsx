@@ -131,12 +131,9 @@ function getLink(linkData: FooterLinkData) {
   // Sanity should take care of the validation here, and this is temp. until
   // the static pages are migrated  {link.image && <FooterIcon image={link.image} />}
   if (!linkData) return 'something-wrong'
-  const { isStatic, link, staticUrl } = linkData
-  if (isStatic) {
-    return staticUrl || '/'
-  } else {
-    return (link && link.slug) || '/'
-  }
+  const { link } = linkData
+
+  return (link && link.slug) || '/'
 }
 
 type FooterProps = {

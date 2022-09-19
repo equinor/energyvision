@@ -1,6 +1,5 @@
 import { link } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
@@ -14,23 +13,31 @@ export type ReferenceTarget = {
 
 export type LinkSelector = {
   _type: 'linkSelector'
-  isStatic: boolean
   reference?: Reference
   url?: string
-  staticUrl?: string
   label?: string
   ariaLabel?: string
 }
 
-const newsType = Flags.HAS_NEWS
-  ? [
-      {
-        type: 'news',
-      },
-    ]
-  : []
+const types = [
+  Flags.HAS_NEWS && {
+    type: 'news',
+  },
+  Flags.HAS_NEWSROOM && {
+    type: 'newsroom',
+  },
+  Flags.HAS_LOCAL_NEWS && {
+    type: 'localNews',
+  },
+  Flags.HAS_MAGAZINE && {
+    type: 'magazine',
+  },
+  Flags.HAS_MAGAZINE && {
+    type: 'magazineIndex',
+  },
+].filter((e) => e)
 
-const defaultReferenceTargets: ReferenceTarget[] = [...newsType, ...routes]
+const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
 const LinkField = {
   name: 'linkSelector',
@@ -46,15 +53,6 @@ const LinkField = {
   ],
   fields: [
     {
-      name: 'isStatic',
-      title: 'Is static page',
-      description: `While migrating, content can be available as static pages generated from the old CMS.
-      This is a temporary solution and should be avoided whenever possible. Links using this should be
-      updated when this content/page has been published in Sanity.`,
-      type: 'boolean',
-      initialValue: false,
-    },
-    {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
@@ -62,14 +60,13 @@ const LinkField = {
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
+          return validateInternalOrExternalUrl(value, parent.url)
         }),
       to: defaultReferenceTargets,
       options: {
         filter: filterByPages,
         disableNew: true,
       },
-      hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === true,
     },
     {
       name: 'url',
@@ -79,21 +76,8 @@ const LinkField = {
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
+          return validateInternalOrExternalUrl(value, parent.reference)
         }),
-      hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === true,
-    },
-    {
-      name: 'staticUrl',
-      title: 'Static URL',
-      type: 'string',
-      description: `The URL for the static page. Please don't add language information (no/en) or .html`,
-      placeholder: '/careers/experienced-professionals',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string, context: ValidationContext) => {
-          return validateStaticUrl(value, context)
-        }),
-      hidden: ({ parent }: { parent: LinkSelector }) => parent?.isStatic === false || parent?.isStatic === undefined,
     },
     {
       name: 'anchorReference',

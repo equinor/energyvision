@@ -33,8 +33,6 @@ export type LinkData = {
   link?: { slug: string; type: string }
   href?: string
   extension?: string
-  isStatic?: boolean
-  staticUrl?: string
   fileName?: string
   anchorReference?: string
   filename?: string
@@ -322,9 +320,7 @@ export type PromoTileArrayData = {
 
 export type MenuLinkData = {
   label: string
-  isStatic?: boolean
   href?: string
-  staticUrl?: string
   id?: string
   link?: {
     type: string
@@ -439,9 +435,7 @@ export type FooterLinkData = {
   type: 'someLink' | 'link'
   key: string
   label: string
-  isStatic?: boolean
   url?: string
-  staticUrl?: string
   someType?: SomeType
   link?: {
     type: string

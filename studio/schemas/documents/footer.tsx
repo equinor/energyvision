@@ -1,4 +1,3 @@
-import { validateStaticUrl } from '../validations/validateStaticUrl'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
@@ -7,8 +6,6 @@ import { filterByRoute } from '../../helpers/referenceFilters'
 export type ColumnLink = {
   _type: 'link'
   label: string
-  isStatic: boolean
-  staticUrl?: string
   reference?: Reference
   url?: string
 }
@@ -54,14 +51,6 @@ export default {
                       validation: (Rule: Rule) => Rule.required(),
                     },
                     {
-                      name: 'isStatic',
-                      title: 'Is static page',
-                      description: `While migrating, content can be available as static pages generated from the old CMS. If this is
-                the case for this menu item, it's important to register the url in the static input field`,
-                      type: 'boolean',
-                      initialValue: false,
-                    },
-                    {
                       name: 'reference',
                       title: 'Internal link',
                       description: 'Use this field to reference an internal page.',
@@ -70,13 +59,12 @@ export default {
                       validation: (Rule: Rule) =>
                         Rule.custom((value: any, context: ValidationContext) => {
                           const { parent } = context as { parent: ColumnLink }
-                          return validateInternalOrExternalUrl(parent?.isStatic, value, parent.url)
+                          return validateInternalOrExternalUrl(value, parent.url)
                         }),
                       to: routes,
                       options: {
                         filter: filterByRoute,
                       },
-                      hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === true,
                     },
 
                     {
@@ -89,24 +77,9 @@ export default {
                         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
                           (value: any, context: ValidationContext) => {
                             const { parent } = context as { parent: ColumnLink }
-                            return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
+                            return validateInternalOrExternalUrl(value, parent.reference)
                           },
                         ),
-                      hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === true,
-                    },
-
-                    {
-                      name: 'staticUrl',
-                      title: 'Static URL',
-                      type: 'string',
-                      description: `The URL for the static page. Don't add language information (no/en)`,
-                      placeholder: '/careers/experienced-professionals',
-
-                      validation: (Rule: Rule) =>
-                        Rule.custom((value: string, context: ValidationContext) => {
-                          return validateStaticUrl(value, context)
-                        }),
-                      hidden: ({ parent }: { parent: ColumnLink }) => parent?.isStatic === false,
                     },
                   ],
                 },
@@ -126,7 +99,7 @@ export default {
                           (value: any, context: ValidationContext) => {
                             const { parent } = context as { parent: ColumnLink }
 
-                            return validateInternalOrExternalUrl(parent?.isStatic, value, parent.reference)
+                            return validateInternalOrExternalUrl(value, parent.reference)
                           },
                         ),
                     },
