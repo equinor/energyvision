@@ -38,9 +38,8 @@ const heroRatio = {
   type: 'string',
   options: {
     list: [
-      { title: '1:2', value: '0.5' },
-      { title: '3:4', value: '0.75' },
-      { title: '3:10', value: '0.3' },
+      { title: '2:1', value: '0.5' },
+      { title: 'Narrow', value: 'narrow' },
       { title: 'Full screen', value: 'fullScreen' },
     ],
   },

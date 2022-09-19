@@ -4,6 +4,7 @@ import Image, { SanityImgLoader } from '../Image'
 import { useNextSanityImage } from 'next-sanity-image'
 import { sanityClient } from '../../../lib/sanity.server'
 import styled from 'styled-components'
+import useWindowSize from '../../../lib/hooks/useWindowSize'
 
 type Props = {
   ratio: string
@@ -33,6 +34,12 @@ const FullScreenImageHero = ({ image }: { image: ImageWithAlt }) => {
 }
 
 export const FullImageHero = ({ ratio, image }: Props) => {
+  const { width } = useWindowSize()
   if (ratio === 'fullScreen') return <FullScreenImageHero image={image} />
+  if (ratio === 'narrow') {
+    // 4:3 for small screens and 10:3 for large screens
+    const aspectRatio = width && width < 750 ? 0.75 : 0.3
+    return <Image maxWidth={1420} aspectRatio={aspectRatio} image={image} layout="responsive" priority />
+  }
   return <Image maxWidth={1420} aspectRatio={Number(ratio)} image={image} layout="responsive" priority />
 }
