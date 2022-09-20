@@ -36,7 +36,7 @@ type MagazineCardProp = {
 
 const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
   const { slug, title, heroImage, tags } = data
-  // if (!heroImage) return null
+  if (!heroImage || !heroImage.asset) return null
 
   return (
     <NextLink href={slug} passHref>
@@ -68,7 +68,7 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
           <Action>
             <Arrow />
           </Action>
-          {tags && (
+          {tags && tags.length > 0 && (
             <TagsContainer>
               {tags.map((tag: string) => (
                 <Tag key={tag}>{tag}</Tag>
