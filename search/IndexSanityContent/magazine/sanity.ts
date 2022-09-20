@@ -22,12 +22,42 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
     "ingress": pt::text(ingress)
   },
   "magazineTags": magazineTags[]->.title[$lang],
+  heroFigure,
 }
 `
 
 const getQueryParams = (language: Language) => ({
   lang: language.internalCode,
 })
+
+export type ImageWithAltAndCaption = {
+  _type: 'imageWithAltAndCaption'
+  attribution?: string
+  caption?: string
+  image: {
+    _type: 'imageWithAlt'
+    alt: string
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+    crop?: {
+      _type: 'sanity.imageCrop'
+      bottom: number
+      left: number
+      right: number
+      top: number
+    }
+    hotspot?: {
+      _type: 'sanity.imageHotspot'
+      height: number
+      width: number
+      x: number
+      y: number
+    }
+  }
+  isDecorative?: boolean
+}
 
 export type MagazineArticle = {
   slug: string
@@ -47,6 +77,7 @@ export type MagazineArticle = {
   }[]
   _id: string
   magazineTags?: string[]
+  heroFigure?: ImageWithAltAndCaption
 }
 
 type FetchDataType = (

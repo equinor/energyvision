@@ -4,6 +4,7 @@ import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 import { MagazineArticle } from './sanity'
 import { MagazineIndex } from '../../common'
+import type { ImageWithAltAndCaption } from './sanity'
 
 type MappableObjectType = {
   _key: string
@@ -11,6 +12,7 @@ type MappableObjectType = {
   ingress: string
   text: string
   magazineTags?: string[]
+  heroFigure?: ImageWithAltAndCaption
 }
 
 type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => MagazineIndex
@@ -26,6 +28,7 @@ const mapperFunction: MapperFunctionType =
     ingress,
     text,
     magazineTags: article.magazineTags,
+    heroImage: article?.heroFigure?.image || null,
   })
 
 type MapDataType = (article: MagazineArticle) => MagazineIndex[]
