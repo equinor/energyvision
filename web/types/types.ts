@@ -90,7 +90,7 @@ export type MagazineCardData = {
   slug: string
   title: string | PortableTextBlock[]
   tags?: string[]
-  heroImage?: string
+  heroImage?: ImageWithAlt
 }
 
 export type FeaturedContentData = {

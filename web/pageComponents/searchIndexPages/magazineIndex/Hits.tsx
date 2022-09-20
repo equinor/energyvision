@@ -51,8 +51,7 @@ export function Hits() {
           title: hit.pageTitle,
           slug: hit.slug,
           tags: hit.magazineTags,
-          heroImage:
-            'https://cdn.sanity.io/images/h61q9gi9/global/32121fe3fb59bc14453048ae93b710cab61117ef-1280x720.jpg?rect=0,40,1280,640&w=1920&h=960&q=70&auto=format',
+          heroImage: hit.heroImage,
         }
 
         return <StyledMagazineCard key={hit.objectID} data={data as MagazineCardData} />

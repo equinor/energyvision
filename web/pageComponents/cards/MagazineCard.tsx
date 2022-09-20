@@ -51,10 +51,10 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
         >
           <Media>
             {heroImage && (
-              <Img
-                src={heroImage}
-                width={1920}
-                height={960}
+              <Image
+                image={heroImage}
+                maxWidth={400}
+                aspectRatio={0.56}
                 layout="responsive"
                 sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
               />
