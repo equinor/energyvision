@@ -124,6 +124,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
+  // remove this useeffect after code review..
   useEffect(() => {
     if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
       const script = document.createElement('script')
@@ -138,6 +139,31 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       }
     }
   }, [router.asPath])
+  /*
+  // rename localhost to localhost.com in your system's hosts file to test cookiebot locally.. 
+    useEffect(() => {
+    window?.addEventListener('CookiebotOnAccept', manageStatisticsCookies)
+    return () => {
+      window.removeEventListener('CookiebotOnAccept', manageStatisticsCookies)
+    }
+  }, [])
+
+  useEffect(() => {
+    manageStatisticsCookies()
+  }, [router.asPath])
+
+  function manageStatisticsCookies() {
+    if (
+      !(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost')) &&
+      window?.Cookiebot.consent.statistics
+    ) {
+      const script = document.createElement('script')
+      script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
+      script.async = true
+      document.head.appendChild(script)
+    }
+  }
+  */
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
