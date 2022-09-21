@@ -50,6 +50,7 @@ import {
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { FullImageHero } from '../shared/Hero/FullImageHero'
 import { DefaultHero } from '../shared/Hero/DefaultHero'
+import { Hero5050 } from '../shared/Hero/Hero5050'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -187,6 +188,15 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const Hero = () => {
     if (data?.hero.type === 'fullWidthImage') {
       return <FullImageHero ratio={data.hero.ratio as string} image={data.heroImage.image} />
+    } else if (data?.hero.type === 'banner5050') {
+      return (
+        <Hero5050
+          title={data.title}
+          subtitle={data.subtitle}
+          bannerIngress={data.bannerIngress}
+          image={data.heroImage.image}
+        />
+      )
     } else {
       return <DefaultHero title={data.title} image={data.heroImage} />
     }

@@ -25,6 +25,8 @@ export const pageQuery = /* groq */ `
       "type": content->heroType,
       "ratio": content->heroRatio,
     },
+    "subtitle":content->subtitle,
+    "bannerIngress":content->bannerIngress,
     "heroImage": content->heroFigure,
     "template": content->_type,
      content->_type == "landingPage" => {

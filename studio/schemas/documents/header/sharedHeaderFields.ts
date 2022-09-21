@@ -1,12 +1,20 @@
 import React from 'react'
 import { Rule, ValidationContext } from '@sanity/types/dist/dts'
-import { configureTitleBlockContent } from '../../editors'
+import CharCounterEditor from '../../components/CharCounterEditor'
+import { configureTitleBlockContent, configureBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { Flags } from '../../../src/lib/datasetHelpers'
 
 type DocumentType = { parent: { heroType?: string } }
 
 const titleContentType = configureTitleBlockContent()
+const ingressContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  attachment: false,
+})
 
 const title = {
   name: 'title',
@@ -26,6 +34,7 @@ const heroType = {
     list: [
       { title: 'Default', value: 'default' },
       { title: 'Full Image', value: 'fullWidthImage' },
+      { title: '50-50 Image', value: 'banner5050' },
     ],
   },
   initialValue: 'default',
@@ -55,7 +64,41 @@ const heroRatio = {
   initialValue: '0.5',
   fieldset: 'header',
 }
+const subtitle = {
+  name: 'subtitle',
+  type: 'array',
+  title: 'Subtitle',
+  inputComponent: CompactBlockEditor,
+  of: [titleContentType],
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== 'banner5050'
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as DocumentType
+      if (parent?.heroType === 'banner5050' && !value) return 'Field is required'
+      return true
+    }),
+  fieldset: 'header',
+}
 
+const bannerIngress = {
+  title: 'Ingress',
+  name: 'bannerIngress',
+  type: 'array',
+  inputComponent: CharCounterEditor,
+  of: [ingressContentType],
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== 'banner5050'
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as DocumentType
+      if (parent?.heroType === 'banner5050' && !value) return 'Field is required'
+      return true
+    }),
+  fieldset: 'header',
+}
 const heroImage = {
   title: 'Hero image',
   name: 'heroFigure',
@@ -64,4 +107,4 @@ const heroImage = {
   fieldset: 'header',
 }
 
-export default Flags.IS_DEV ? [title, heroType, heroRatio, heroImage] : [title, heroImage]
+export default Flags.IS_DEV ? [title, heroType, heroRatio, subtitle, bannerIngress, heroImage] : [title, heroImage]

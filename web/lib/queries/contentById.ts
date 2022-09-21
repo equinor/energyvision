@@ -31,6 +31,8 @@ export const contentQueryById = /* groq */ `
       "type": heroType,
       "ratio": heroRatio,
     },
+    "subtitle":subtitle,
+    "bannerIngress":bannerIngress,
     "heroImage": heroFigure,
     "template": _type,
      _type == "landingPage" => {

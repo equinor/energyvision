@@ -161,6 +161,9 @@ export type PageSchema = {
     type?: string
     ratio?: string
   }
+  subtitle: PortableTextBlock[]
+  bannerIngress: PortableTextBlock[]
+  action: LinkData
   heroImage: ImageWithCaptionData
   template: Templates
   seoAndSome: {
