@@ -77,8 +77,7 @@ export function SearchBox(props: SearchBoxProps) {
     // We want to track when the value coming from the React state changes
     // to update the InstantSearch.js query, so we don't need to track the
     // InstantSearch.js query.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedValue, refine])
+  }, [debouncedValue, refine, query])
 
   return (
     <ControlledSearchBox

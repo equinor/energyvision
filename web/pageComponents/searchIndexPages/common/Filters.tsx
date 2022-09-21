@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import FilterHeader from './FilterHeader'
 import { RefinementList } from './RefinementList'
 import UncontrolledSearchBox from './UncontrolledSearchBox'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const StyledAccordion = styled(Accordion)`
   @media (min-width: 800px) {
