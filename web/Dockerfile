@@ -98,7 +98,7 @@ ENV ENV ${ARG_ENV}
 
 COPY --from=dynatrace / /
 ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
-ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}
+ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}\ DT_PROCESS_GROUP=${ARG_SANITY_DATASET}
 
 EXPOSE "$PORT"
 CMD ["pnpm", "web", "start"]
