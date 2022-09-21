@@ -6,13 +6,12 @@ import dynamic from 'next/dynamic'
 import { Flags } from '../../common/helpers/datasetHelpers'
 
 import { SearchBox } from './SearchBox'
-import { SearchBox as SearchBoxV3 } from './SearchBoxV3'
 //import SearchResults from './SearchResults'
 import { getIsoFromLocale } from '../../lib/localization'
 import { SearchContextProvider } from './SearchContext'
 
 const SearchResults = dynamic(() => import('./SearchResults'))
-const SearchResultsV3 = dynamic(() => import('./SearchResultsV3'))
+
 const Search = () => {
   const router = useRouter()
 
@@ -71,17 +70,10 @@ const Search = () => {
       }} */
     >
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
-      {Flags.IS_DEV ? (
-        <SearchContextProvider>
-          <SearchBoxV3 />
-          <SearchResultsV3 />
-        </SearchContextProvider>
-      ) : (
-        <>
-          <SearchBox />
-          <SearchResults />
-        </>
-      )}
+      <SearchContextProvider>
+        <SearchBox />
+        <SearchResults />
+      </SearchContextProvider>
     </InstantSearch>
   )
 }
