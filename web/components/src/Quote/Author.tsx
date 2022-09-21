@@ -31,6 +31,13 @@ const AuthorWrapper = styled(Typography)`
   }
 `
 
+const TextWrapper = styled.span`
+  .inverted-background & {
+    color: var(--inverted-text);
+    font-weight: var(--fontWeight-bold);
+  }
+`
+
 export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author(
   { children, title = null, ...rest },
   ref,
@@ -43,7 +50,7 @@ export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author(
           {title}
         </AuthorWrapper>
       ) : (
-        <strong>{children}</strong>
+        <TextWrapper>{children}</TextWrapper>
       )}
     </Row>
   )
