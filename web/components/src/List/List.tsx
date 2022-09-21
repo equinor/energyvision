@@ -26,12 +26,13 @@ const StyledList = styled(EdsList)<ListProps>`
       display: 'grid',
       placeContent: 'center',
     }}
-    @media (min-width: 800px) {
+
+  @media (min-width: 800px) {
     ${({ splitList }) =>
       splitList && {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        gridColumnGap: `var(--space-xLarge) `,
+        gridColumnGap: `var(--space-xLarge)`,
       }}
   }
 `
