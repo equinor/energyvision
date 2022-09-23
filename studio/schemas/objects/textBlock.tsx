@@ -10,7 +10,6 @@ import blocksToText from '../../helpers/blocksToText'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { Rule, Reference } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -129,7 +128,7 @@ export default {
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
     },
-    Flags.IS_DEV && {
+    {
       title: 'Display links as two columns',
       name: 'splitList',
       type: 'boolean',

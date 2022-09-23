@@ -4,7 +4,6 @@ import type { LinkData } from '../../types/types'
 import { default as NextLink } from 'next/link'
 import { ButtonLink } from '../shared/ButtonLink'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Item } = List
 
@@ -22,7 +21,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
   return callToActions.length === 1 && !overrideButtonStyle ? (
     <ButtonLink action={callToActions[0]} />
   ) : (
-    <List unstyled splitList={Flags.IS_DEV ? splitList : false}>
+    <List unstyled splitList={splitList}>
       {callToActions.map((callToAction: LinkData) => {
         const { id, type, label, ariaLabel, extension } = callToAction
 

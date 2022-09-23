@@ -41,26 +41,12 @@ export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(f
   { unstyled = false, centered = false, splitList = false, style, children, ...rest },
   ref,
 ) {
-  return Flags.IS_DEV ? (
+  return (
     <StyledList
       ref={ref}
       unstyled={unstyled}
       centered={centered}
       splitList={splitList}
-      style={
-        {
-          ...style,
-        } as CSSProperties
-      }
-      {...rest}
-    >
-      {children}
-    </StyledList>
-  ) : (
-    <StyledList
-      ref={ref}
-      unstyled={unstyled}
-      centered={centered}
       style={
         {
           ...style,
