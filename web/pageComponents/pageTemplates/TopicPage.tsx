@@ -194,6 +194,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           title={data.title}
           subtitle={data.subtitle}
           bannerIngress={data.bannerIngress}
+          background={data.background}
           image={data.heroImage.image}
         />
       )

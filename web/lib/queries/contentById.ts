@@ -33,6 +33,7 @@ export const contentQueryById = /* groq */ `
     },
     "subtitle":subtitle,
     "bannerIngress":bannerIngress,
+    "background": background,
     "heroImage": heroFigure,
     "template": _type,
      _type == "landingPage" => {

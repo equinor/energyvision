@@ -164,6 +164,7 @@ export type PageSchema = {
   subtitle: PortableTextBlock[]
   bannerIngress: PortableTextBlock[]
   action: LinkData
+  background: BackgroundColours
   heroImage: ImageWithCaptionData
   template: Templates
   seoAndSome: {

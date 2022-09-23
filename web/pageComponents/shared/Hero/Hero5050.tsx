@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { HTMLAttributes } from 'react'
 import Img from 'next/image'
 import { SanityImgLoader } from '../Image'
 import { useNextSanityImage } from 'next-sanity-image'
@@ -6,14 +7,19 @@ import { sanityClient } from '../../../lib/sanity.server'
 import { PortableTextBlock } from '@portabletext/types'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import type { ImageWithAlt } from '../../../types/types'
+import type { ImageWithAlt, BackgroundColours } from '../../../types/types'
+import { BackgroundContainer } from '@components'
 
 type BannerProps = {
   title: PortableTextBlock[]
   subtitle: PortableTextBlock[]
   bannerIngress: PortableTextBlock[]
+  background: BackgroundColours
   image: ImageWithAlt
 }
+export type BackgroundProps = {
+  background: BackgroundColours
+} & HTMLAttributes<HTMLElement>
 
 const StyledContent = styled.div`
   display: grid;
@@ -26,7 +32,7 @@ const StyledContent = styled.div`
 const StyledMedia = styled.div`
   grid-area: image;
   position: relative;
-  width: 100%;
+
   height: 400px;
   @media (min-width: 750px) {
     height: auto;
@@ -35,7 +41,6 @@ const StyledMedia = styled.div`
   }
 `
 const StyledBanner5050 = styled.div`
-  background-color:var(--spruce-wood-90);
   display: grid;
   grid-template-rows: min-content min-content;
   grid-template-rows: 1fr;
@@ -91,17 +96,20 @@ const HeroImage5050 = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
-export const Hero5050 = ({ title, subtitle, bannerIngress, image }: BannerProps) => {
+export const Hero5050 = ({ title, subtitle, bannerIngress, background, image }: BannerProps) => {
+  console.log(background)
   return (
-    <StyledBanner5050>
-      <StyledMedia>
-        <HeroImage5050 image={image} />
-      </StyledMedia>
-      <StyledContent>
-        {title && <StyledHeading value={title} level="h1" size="xl" />}
-        {subtitle && <TitleText value={subtitle} level="h3" size="lg" />}
-        <HiddenIngress> {bannerIngress && <IngressText value={bannerIngress} />}</HiddenIngress>
-      </StyledContent>
-    </StyledBanner5050>
+    <BackgroundContainer background={background}>
+      <StyledBanner5050>
+        <StyledMedia>
+          <HeroImage5050 image={image} />
+        </StyledMedia>
+        <StyledContent>
+          {title && <StyledHeading value={title} level="h1" size="xl" />}
+          {subtitle && <TitleText value={subtitle} level="h3" size="lg" />}
+          <HiddenIngress> {bannerIngress && <IngressText value={bannerIngress} />}</HiddenIngress>
+        </StyledContent>
+      </StyledBanner5050>
+    </BackgroundContainer>
   )
 }
