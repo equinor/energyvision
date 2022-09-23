@@ -18,7 +18,7 @@ export const magazineQuery = /* groq */ `
     },
     "subtitle":subtitle,
     "bannerIngress":bannerIngress,
-    "background":background,
+    "background":background.title,
     "heroImage": heroFigure,
     "template": _type,
     ${promotedmagazineTags},

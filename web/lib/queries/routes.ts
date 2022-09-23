@@ -27,7 +27,7 @@ export const pageQuery = /* groq */ `
     },
     "subtitle":content->subtitle,
     "bannerIngress":content->bannerIngress,
-    "background":content->background,
+    "background":content->background.title,
     "heroImage": content->heroFigure,
     "template": content->_type,
      content->_type == "landingPage" => {
