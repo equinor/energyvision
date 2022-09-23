@@ -1,6 +1,6 @@
 import Img from 'next/image'
 import { useNextSanityImage, UseNextSanityImageBuilderOptions, ImageUrlBuilder } from 'next-sanity-image'
-import { sanityClient } from '../../lib/sanity.server'
+import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/types'
 
 declare const VALID_LAYOUT_VALUES: readonly ['fill', 'fixed', 'intrinsic', 'responsive', undefined]
@@ -59,7 +59,7 @@ const Image = ({
   ...rest
 }: ImgProps) => {
   const imageProps = useNextSanityImage(
-    sanityClient,
+    sanityClientWithEquinorCDN,
     image,
     /* { imageBuilder: customImageUrlBuilder }  */ {
       imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, maxWidth, aspectRatio),

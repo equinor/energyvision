@@ -1,8 +1,8 @@
 import imageUrlBuilder from '@sanity/image-url'
-import { sanityClient } from '../../lib/sanity.server'
+import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/types'
 
-const builder = imageUrlBuilder(sanityClient)
+const builder = imageUrlBuilder(sanityClientWithEquinorCDN)
 
 const getOpenGraphImages = (image: ImageWithAlt) => {
   return image?.asset

@@ -50,7 +50,7 @@ export default withTM(
       archiveStorageURL: archiveServerHostname,
     },
     images: {
-      domains: ['cdn.sanity.io'],
+      domains: ['cdn.sanity.io', 'cdn.equinor.com'],
       dangerouslyAllowSVG: true,
       contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },

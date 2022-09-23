@@ -2,7 +2,7 @@ import type { ImageWithAlt } from 'types/types'
 import Img from 'next/image'
 import Image, { SanityImgLoader } from '../Image'
 import { useNextSanityImage } from 'next-sanity-image'
-import { sanityClient } from '../../../lib/sanity.server'
+import { sanityClientWithEquinorCDN } from '../../../lib/sanity.server'
 import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 
@@ -18,7 +18,7 @@ const StyledDiv = styled.div`
 
 const FullScreenImageHero = ({ image }: { image: ImageWithAlt }) => {
   const imageProps = useNextSanityImage(
-    sanityClient,
+    sanityClientWithEquinorCDN,
     image,
     /* { imageBuilder: customImageUrlBuilder }  */ {
       imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1420),

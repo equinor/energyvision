@@ -1,4 +1,4 @@
 Contact: https://www.equinor.com/about-us/csirt
-Encryption: https://cdn.sanity.io/files/h61q9gi9/global/93bab8605ac16b2a19e25b2bb796c0c8afafcc67.asc?equinor-csirt-pgp-public-key-july-2019.asc
+Encryption: https://cdn.equinor.com/files/h61q9gi9/global/93bab8605ac16b2a19e25b2bb796c0c8afafcc67.asc?equinor-csirt-pgp-public-key-july-2019.asc
 Preferred-Languages: en
 Expires: 2023-05-12T08:08:03z
