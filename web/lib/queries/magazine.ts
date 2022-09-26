@@ -1,7 +1,7 @@
 import pageContentFields from './common/pageContentFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
-const promotedmagazineTags = `"": *[_id == "promoted-magazine-tags"][0]{"magazineTags":tags[]->title[$lang]}`
+const promotedmagazineTags = `"": *[_type == "magazineIndex" && _lang == $lang][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
 export const magazineQuery = /* groq */ `
 *[_type == "magazine" && slug.current == $slug && _lang == $lang] {
     _id, //used for data filtering
@@ -37,5 +37,5 @@ export const magazineIndexQuery = /* groq */ `
     title,
     ingress,
     backgroundImage,
-    ${promotedmagazineTags},
+    "magazineTags":promotedMagazineTags[]->title[$lang]
   }`

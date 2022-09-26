@@ -14,14 +14,12 @@ import { Settings } from './items/Settings'
 import S from '@sanity/desk-tool/structure-builder'
 import { Flags } from '../datasetHelpers'
 import { getCurrentUserRoles } from '../userRoles'
-import { PromotedMagazineTags } from './items/PromotedMagazineTags'
 
 const News = Flags.HAS_NEWS && NewsStructure
 const Magazine = Flags.HAS_MAGAZINE && MagazineStructure
 const LocalNews = Flags.HAS_LOCAL_NEWS && LocalNewsStructure
 const LandingPage = Flags.HAS_LANDING_PAGE && LandingPageStructure
 const Event = Flags.HAS_EVENT && EventStructure
-const PromotedMagazineTag = Flags.IS_DEV && Flags.HAS_MAGAZINE ? PromotedMagazineTags : ''
 
 const ADMIN_ITEMS = [
   News,
@@ -37,7 +35,6 @@ const ADMIN_ITEMS = [
   S.divider(),
   Menu,
   Footer,
-  PromotedMagazineTag,
   S.divider(),
   AssetLibrary,
   S.divider(),

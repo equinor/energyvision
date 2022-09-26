@@ -66,6 +66,25 @@ export default {
       inputComponent: CharCounterEditor,
       of: [textContentType],
     },
+    {
+      title: 'Promoted Magazine Tags',
+      name: 'promotedMagazineTags',
+      description: 'Place the magazine tags in the correct order',
+      type: 'array',
+      of: [
+        {
+          title: 'Magazine Tag',
+          type: 'reference',
+          to: [{ type: 'magazineTag' }],
+          options: {
+            // Disable new since this button does not work with dynamic initial
+            // values  :(
+            disableNew: true,
+          },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.unique().min(5).max(5),
+    },
   ],
   preview: {
     select: {
