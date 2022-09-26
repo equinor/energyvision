@@ -4,7 +4,6 @@ import { Link } from '@components'
 //import UncontrolledSearchBox from '../searchIndexPages/magazineIndex/UncontrolledSearchBoxV2'
 //import Box from './Box'
 import { useIntl } from 'react-intl'
-import { useRouter } from 'next/router'
 
 export type MagazineTagBarProps = {
   tags: TagLink[]
@@ -21,7 +20,6 @@ export type TagLink = {
 const StyledLink = styled(Link)`
   display: inline-block;
   position: relative;
-  padding-left: 4px;
   &:hover {
     font-weight: bold !important;
   }
@@ -41,11 +39,7 @@ const StyledLink = styled(Link)`
     right: calc(var(--space-xLarge) * -0.5);
     height: 100%;
   }
-  @media (max-width: 750px) {
-    &:nth-child(3n):after {
-      display: none;
-    }
-  }
+
   &:last-child:after {
     display: none;
   }
@@ -55,16 +49,13 @@ const ActiveLink = styled(StyledLink)`
   font-weight: bold !important;
 `
 const Wrapper = styled.div`
-  display: grid;
-  grid-gap: 0px;
-  grid-template-columns: auto auto;
+  display: flex;
+  align-content: center;
+  margin: 0 auto 0 auto;
   border: 1px solid var(--slate-blue-70);
-  @media (max-width: 750px) {
-    grid-template-columns: auto;
-  }
 `
 
-const SearchBoxWrapper = styled.div`
+/*const SearchBoxWrapper = styled.div`
   display: none;
   @media (min-width: 1000px) {
     display: block;
@@ -77,18 +68,16 @@ const SearchBoxWrapper = styled.div`
       }
     }
   }
-`
+`*/
 const TagWrapper = styled.div`
-  margin: var(--space-medium) var(--space-xLarge) var(--space-medium) auto;
-  display: grid;
-  padding-left: var(--space-3xLarge);
+  margin: var(--space-medium) auto var(--space-medium) auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 var(--space-3xLarge) 0 var(--space-3xLarge);
   grid-gap: var(--space-xLarge);
   @media (max-width: 750px) {
-    grid-template-columns: repeat(3, max-content);
-    padding-left: 0px;
-    margin: var(--space-medium) auto var(--space-medium) auto;
+    padding: 0 var(--space-large) 0 var(--space-large);
   }
-  grid-template-columns: repeat(6, max-content);
 `
 
 const allTagLink: TagLink = {
