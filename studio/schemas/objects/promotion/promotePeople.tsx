@@ -118,7 +118,7 @@ export default {
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, context: ValidationContext) => {
                   const { parent } = context as { parent: Promotion }
-                  return validateInternalOrExternalUrl(!parent?.isLink, value, parent.url)
+                  return validateInternalOrExternalUrl(value, parent.url)
                 }),
               to: defaultReferenceTargets,
               options: {
@@ -136,7 +136,7 @@ export default {
                 Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
                   (value: any, context: ValidationContext) => {
                     const { parent } = context as { parent: Promotion }
-                    return validateInternalOrExternalUrl(!parent?.isLink, value, parent.reference)
+                    return validateInternalOrExternalUrl(value, parent.reference)
                   },
                 ),
               hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
