@@ -17,6 +17,7 @@ import getIntl from '../common/helpers/getIntl'
 import { getRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
+import { Flags } from '../common/helpers/datasetHelpers'
 
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -107,6 +108,10 @@ Page.getLayout = (page: AppProps) => {
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams, isNews } = getQueryFromSlug(params?.slug as string[], locale)
+
+  if (Flags.IS_DEV && (params?.slug as string[]).join('/') === 'test') {
+    console.log('Get static props called...')
+  }
 
   const intl = await getIntl(locale, preview)
 
