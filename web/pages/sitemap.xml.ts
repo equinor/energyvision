@@ -54,6 +54,23 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
       .join('')}
     </sitemapindex>`
 
+type AnniversarySitemapItem = {
+  updatedAt: string
+  slug: string
+  locale: 'en' | 'no'
+}
+
+const getAnniversarySitemap = async (locale: string): Promise<AnniversarySitemapItem[] | void> => {
+  const response = await fetch(`https://www.equinor.com/50/api/sitemap`)
+  if (response) {
+    const data = await response.json()
+
+    if (data) {
+      return data.filter((item: AnniversarySitemapItem) => item.locale === locale)
+    }
+  }
+}
+
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   let locale = ''
   let paths: PathType[]
@@ -87,6 +104,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   } else {
     locale = defaultLanguage.locale
     paths = allSlugs
+  }
+
+  // TODO: switch to Flags.IS_GLOBAL_PROD for release
+  if (Flags.IS_DEV) {
+    const anniversarySitemap = await getAnniversarySitemap(locale)
+    if (anniversarySitemap) {
+      paths = [...paths, ...anniversarySitemap]
+    }
   }
 
   const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
