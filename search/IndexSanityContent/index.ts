@@ -9,7 +9,7 @@ import { languageFromIso, languageOrDefault } from '../common'
 import { pipe } from 'fp-ts/lib/function'
 import { indexLocalNews } from './localNews'
 
-const timerTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
@@ -25,4 +25,4 @@ const timerTrigger: AzureFunction = async function (context: Context, req: HttpR
   await indexLocalNews(language)().catch(logger.error)
 }
 
-export default timerTrigger
+export default httpTrigger

@@ -15,7 +15,7 @@ import { indexSettings } from './algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
 
-const trigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
@@ -60,4 +60,4 @@ const trigger: AzureFunction = async function (context: Context, req: HttpReques
   return indexArchivedNews()
 }
 
-export default trigger
+export default httpTrigger

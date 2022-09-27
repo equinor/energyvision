@@ -5,7 +5,7 @@ import { deleteIndex } from './common'
 import { languageFromIso, languageOrDefault } from '../common'
 import { pipe } from 'fp-ts/lib/function'
 
-const timerTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
@@ -16,7 +16,8 @@ const timerTrigger: AzureFunction = async function (context: Context, req: HttpR
   const index: string = req.body.index
   const slug: string = req.body.slug
   logger.info(`Requesting to delete ${slug} from ${index}`)
-  await deleteIndex(language, index, slug)
+
+  await deleteIndex(language)(index)(slug)().catch(logger)
 }
 
-export default timerTrigger
+export default httpTrigger
