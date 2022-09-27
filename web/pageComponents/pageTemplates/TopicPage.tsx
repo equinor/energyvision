@@ -82,6 +82,13 @@ const StyledHeading = styled(TitleText)`
   margin-left: auto;
   margin-right: auto;
 `
+const StyledHeading1 = styled(TitleText)`
+  max-width: 1186px; /* 1920 - (2 * 367) */
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: var(--space-xLarge);
+  padding-left: var(--layout-paddingHorizontal-medium);
+`
 
 const ImageWrapper = styled.div.attrs(() => ({
   className: 'background-image',
@@ -191,9 +198,9 @@ const TopicPage = ({ data }: TopicPageProps) => {
     } else if (data?.hero.type === 'banner5050') {
       return (
         <Hero5050
-          title={data.title}
-          subtitle={data.subtitle}
+          bannerTitle={data.bannerTitle}
           bannerIngress={data.bannerIngress}
+          action={data.action}
           background={data.background}
           image={data.heroImage.image}
         />
@@ -219,7 +226,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
       ></NextSeo>
       <TopicPageLayout>
         {Flags.IS_DEV ? (
-          <Hero />
+          <>
+            <Hero />
+            {data?.title && <StyledHeading1 value={data?.title} level="h1" size="2xl" />}
+          </>
         ) : (
           <>
             <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>

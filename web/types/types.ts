@@ -161,7 +161,7 @@ export type PageSchema = {
     type?: string
     ratio?: string
   }
-  subtitle: PortableTextBlock[]
+  bannerTitle: PortableTextBlock[]
   bannerIngress: PortableTextBlock[]
   action: LinkData
   background: BackgroundColours

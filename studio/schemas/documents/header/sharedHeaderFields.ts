@@ -65,12 +65,13 @@ const heroRatio = {
   initialValue: '0.5',
   fieldset: 'header',
 }
-const subtitle = {
-  name: 'subtitle',
+const bannerTitle = {
+  name: 'bannerTitle',
   type: 'array',
-  title: 'Subtitle',
+  title: 'Title',
   inputComponent: CompactBlockEditor,
   of: [titleContentType],
+  fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== 'banner5050'
   },
@@ -80,9 +81,7 @@ const subtitle = {
       if (parent?.heroType === 'banner5050' && !value) return 'Field is required'
       return true
     }),
-  fieldset: 'header',
 }
-
 const bannerIngress = {
   title: 'Ingress',
   name: 'bannerIngress',
@@ -92,13 +91,23 @@ const bannerIngress = {
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== 'banner5050'
   },
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === 'banner5050' && !value) return 'Field is required'
-      return true
-    }),
   fieldset: 'header',
+}
+const action = {
+  name: 'action',
+  title: 'Link/action',
+  description: 'Select the link or downloadable file',
+  type: 'array',
+  of: [
+    { type: 'linkSelector', title: 'Link' },
+    { type: 'downloadableImage', title: 'Downloadable image' },
+    { type: 'downloadableFile', title: 'Downloadable file' },
+  ],
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== 'banner5050'
+  },
+  fieldset: 'header',
+  validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
 }
 const background = {
   title: 'Background',
@@ -128,5 +137,5 @@ const heroImage = {
 }
 
 export default Flags.IS_DEV
-  ? [title, heroType, heroRatio, subtitle, bannerIngress, background, heroImage]
+  ? [title, heroType, heroRatio, bannerTitle, bannerIngress, action, background, heroImage]
   : [title, heroImage]

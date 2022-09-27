@@ -1,5 +1,8 @@
 import pageContentFields from './common/pageContentFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import linkSelectorFields from './common/actions/linkSelectorFields'
+import downloadableFileFields from './common/actions/linkSelectorFields'
+import downloadableImageFields from './common/actions/linkSelectorFields'
 
 const promotedmagazineTags = `"": *[_type == "magazineIndex" && _lang == $lang][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
 export const magazineQuery = /* groq */ `
@@ -16,8 +19,13 @@ export const magazineQuery = /* groq */ `
       "type": heroType,
       "ratio": heroRatio,
     },
-    "subtitle":subtitle,
+    "bannerTitle":bannerTitle,
     "bannerIngress":bannerIngress,
+    "action":  action[0]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
     "background":background.title,
     "heroImage": heroFigure,
     "template": _type,

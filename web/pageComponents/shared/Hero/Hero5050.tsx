@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { HTMLAttributes } from 'react'
+import { default as NextLink } from 'next/link'
 import Img from 'next/image'
 import { SanityImgLoader } from '../Image'
 import { useNextSanityImage } from 'next-sanity-image'
@@ -7,19 +7,17 @@ import { sanityClient } from '../../../lib/sanity.server'
 import { PortableTextBlock } from '@portabletext/types'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import type { ImageWithAlt, BackgroundColours } from '../../../types/types'
-import { BackgroundContainer } from '@components'
+import type { ImageWithAlt, BackgroundColours, LinkData } from '../../../types/types'
+import { BackgroundContainer, Link } from '@components'
+import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 
 type BannerProps = {
-  title: PortableTextBlock[]
-  subtitle: PortableTextBlock[]
+  bannerTitle: PortableTextBlock[]
   bannerIngress: PortableTextBlock[]
+  action: LinkData
   background: BackgroundColours
   image: ImageWithAlt
 }
-export type BackgroundProps = {
-  background: BackgroundColours
-} & HTMLAttributes<HTMLElement>
 
 const StyledContent = styled.div`
   display: grid;
@@ -32,7 +30,6 @@ const StyledContent = styled.div`
 const StyledMedia = styled.div`
   grid-area: image;
   position: relative;
-
   height: 400px;
   @media (min-width: 750px) {
     height: auto;
@@ -57,9 +54,7 @@ const StyledBanner5050 = styled.div`
 `
 const HiddenIngress = styled.div`
   @media (max-width: 768px) {
-    * {
-      display: none;
-    }
+    display: none;
   }
 `
 const StyledDiv = styled.div`
@@ -96,8 +91,30 @@ const HeroImage5050 = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
-export const Hero5050 = ({ title, subtitle, bannerIngress, background, image }: BannerProps) => {
-  console.log(background)
+const BannerAction = ({ action, ...rest }: { action: LinkData }) => {
+  const { label, ariaLabel, extension, type } = action
+  const url = getUrlFromAction(action)
+  if (!url) {
+    console.warn(`Missing URL on Action link with type: '${type}' and label: '${label}'`)
+    return null
+  }
+  if (action.type === 'internalUrl') {
+    return (
+      <NextLink href={url} passHref>
+        <Link variant="readMore" aria-label={ariaLabel} {...rest}>
+          {action.label}
+        </Link>
+      </NextLink>
+    )
+  }
+  return (
+    <Link variant="readMore" href={url} type={action.type} aria-label={ariaLabel}>
+      {action.label} {extension && `(${extension.toUpperCase()})`}
+    </Link>
+  )
+}
+
+export const Hero5050 = ({ bannerTitle, bannerIngress, action, background, image }: BannerProps) => {
   return (
     <BackgroundContainer background={background}>
       <StyledBanner5050>
@@ -105,9 +122,9 @@ export const Hero5050 = ({ title, subtitle, bannerIngress, background, image }: 
           <HeroImage5050 image={image} />
         </StyledMedia>
         <StyledContent>
-          {title && <StyledHeading value={title} level="h1" size="xl" />}
-          {subtitle && <TitleText value={subtitle} level="h3" size="lg" />}
+          {bannerTitle && <StyledHeading value={bannerTitle} level="h1" size="xl" />}
           <HiddenIngress> {bannerIngress && <IngressText value={bannerIngress} />}</HiddenIngress>
+          {action && <BannerAction action={action} />}
         </StyledContent>
       </StyledBanner5050>
     </BackgroundContainer>
