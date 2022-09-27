@@ -68,7 +68,7 @@ const heroRatio = {
 const bannerTitle = {
   name: 'bannerTitle',
   type: 'array',
-  title: 'Title',
+  title: 'Banner Title',
   inputComponent: CompactBlockEditor,
   of: [titleContentType],
   fieldset: 'header',
@@ -83,7 +83,7 @@ const bannerTitle = {
     }),
 }
 const bannerIngress = {
-  title: 'Ingress',
+  title: 'Banner Ingress',
   name: 'bannerIngress',
   type: 'array',
   inputComponent: CharCounterEditor,
