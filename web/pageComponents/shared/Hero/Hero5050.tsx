@@ -17,8 +17,24 @@ type BannerProps = {
   action: LinkData
   background: BackgroundColours
   image: ImageWithAlt
+  title: PortableTextBlock[]
 }
 
+const StyledBanner = styled(BackgroundContainer)`
+display: grid;
+  grid-template-rows: min-content min-content;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    'image'
+    'content';
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  
+  @media (min-width: 750px) {
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: min-content;
+    grid-template-areas: 'content image'; 
+`
 const StyledContent = styled.div`
   display: grid;
   grid-auto-columns: auto;
@@ -37,32 +53,25 @@ const StyledMedia = styled.div`
     padding: 0;
   }
 `
-const StyledBanner5050 = styled.div`
-  display: grid;
-  grid-template-rows: min-content min-content;
-  grid-template-rows: 1fr;
-  grid-template-areas:
-    'image'
-    'content';
-  max-width: var(--max-content-width);
-  margin: 0 auto;
-  
-  @media (min-width: 750px) {
-    grid-template-columns: repeat(2, 50%);
-    grid-template-rows: min-content;
-    grid-template-areas: 'content image'; 
-`
 const HiddenIngress = styled.div`
   @media (max-width: 768px) {
     display: none;
   }
 `
-const StyledDiv = styled.div`
-  font-size: var(--typeScale-1);
+const StyledBannerTitle = styled(TitleText)`
+  max-width: 1186px; /* 1920 - (2 * 367) */
+  font-weight: 500;
 `
 const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
-  font-weight: 500;
+  margin-left: auto;
+  margin-right: auto;
+`
+const TitleWrapper = styled.div`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
+`
+const StyledDiv = styled.div`
+  font-size: var(--typeScale-1);
 `
 
 const HeroImage5050 = ({ image }: { image: ImageWithAlt }) => {
@@ -114,19 +123,24 @@ const BannerAction = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const Hero5050 = ({ bannerTitle, bannerIngress, action, background, image }: BannerProps) => {
+export const Hero5050 = ({ bannerTitle, bannerIngress, action, background, image, title }: BannerProps) => {
   return (
-    <BackgroundContainer background={background}>
-      <StyledBanner5050>
+    <>
+      <StyledBanner background={background}>
         <StyledMedia>
           <HeroImage5050 image={image} />
         </StyledMedia>
         <StyledContent>
-          {bannerTitle && <StyledHeading value={bannerTitle} level="h1" size="xl" />}
-          <HiddenIngress> {bannerIngress && <IngressText value={bannerIngress} />}</HiddenIngress>
+          {bannerTitle && <StyledBannerTitle value={bannerTitle} level="h1" size="xl" />}
+          {bannerIngress && (
+            <HiddenIngress>
+              <IngressText value={bannerIngress} />
+            </HiddenIngress>
+          )}
           {action && <BannerAction action={action} />}
         </StyledContent>
-      </StyledBanner5050>
-    </BackgroundContainer>
+      </StyledBanner>
+      <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
+    </>
   )
 }

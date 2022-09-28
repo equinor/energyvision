@@ -205,6 +205,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           action={data.action}
           background={data.background}
           image={data.heroImage.image}
+          title={data.title}
         />
       )
     } else {
