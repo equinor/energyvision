@@ -10,6 +10,7 @@ export const deleteIndex = (language: Language) => (indexIdentifier: string) => 
 
   return pipe(
     pipe(removeIndexFromAlgolia(), E.ap(E.of(slug)), TE.fromEither),
-    T.map(E.fold(console.error, console.log))
+    TE.flatten,
+    T.map(E.fold(console.error, console.log)),
   )
 }
