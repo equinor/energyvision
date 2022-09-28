@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo'
 import { toPlainText } from '@portabletext/react'
 import { useRouter } from 'next/router'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import HeroImage from '../shared/HeroImage'
+import HeroImage from '../shared/Hero/HeroImage'
 import MagazineTagBar from '../shared/MagazineTagBar'
 import Teaser from '../topicPages/Teaser'
 import TextBlock from '../topicPages/TextBlock'
@@ -193,8 +193,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
   })
 
   const Hero = () => {
+    if (!data.title) return null
+
     if (data?.hero.type === 'fullWidthImage') {
-      return <FullImageHero ratio={data.hero.ratio as string} image={data.heroImage.image} />
+      return <FullImageHero title={data.title} ratio={data.hero.ratio as string} heroImage={data.heroImage} />
     } else if (data?.hero.type === 'banner5050') {
       return (
         <Hero5050
@@ -226,10 +228,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       ></NextSeo>
       <TopicPageLayout>
         {Flags.IS_DEV ? (
-          <>
-            <Hero />
-            {data?.title && <StyledHeading1 value={data?.title} level="h1" size="2xl" />}
-          </>
+          <Hero />
         ) : (
           <>
             <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>

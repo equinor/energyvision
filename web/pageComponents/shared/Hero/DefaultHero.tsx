@@ -1,6 +1,6 @@
 import type { ImageWithCaptionData } from '../../../types/types'
 import styled from 'styled-components'
-import HeroImage from '../HeroImage'
+import HeroImage from './HeroImage'
 import { PortableTextBlock } from '@portabletext/types'
 import TitleText from '../portableText/TitleText'
 

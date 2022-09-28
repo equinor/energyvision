@@ -8,12 +8,15 @@ import {
 import { PortableTextBlock } from '@portabletext/types'
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 
-export type ImageWithCaptionData = {
-  _type: 'imageWithAltAndCaption'
+export type CaptionData = {
   attribution?: string
   caption?: string
-  image: ImageWithAlt
 }
+
+export type ImageWithCaptionData = {
+  _type: 'imageWithAltAndCaption'
+  image: ImageWithAlt
+} & CaptionData
 
 export type LinkType =
   | 'internalUrl'

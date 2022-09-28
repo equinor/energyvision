@@ -1,45 +1,91 @@
-import type { ImageWithAlt } from 'types/types'
+import type { ImageWithCaptionData } from 'types/types'
 import Img from 'next/image'
 import Image, { SanityImgLoader } from '../Image'
 import { useNextSanityImage } from 'next-sanity-image'
 import { sanityClientWithEquinorCDN } from '../../../lib/sanity.server'
 import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
+import { Caption } from './Caption'
+import { PortableTextBlock } from '@portabletext/types'
+import TitleText from '../portableText/TitleText'
 
 type Props = {
   ratio: string
-  image: ImageWithAlt
+  heroImage: ImageWithCaptionData
+  title: PortableTextBlock[]
 }
 
-const StyledDiv = styled.div`
+const ImgWrapper = styled.div`
   height: calc(100vh - var(--topbar-height));
   position: relative;
 `
 
-const FullScreenImageHero = ({ image }: { image: ImageWithAlt }) => {
+const CaptionWrapper = styled.div`
+  padding: 0 var(--layout-paddingHorizontal-small);
+`
+
+const TitleWrapper = styled.div`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
+`
+
+const StyledHeading = styled(TitleText)`
+  max-width: 1186px; /* 1920 - (2 * 367) */
+  margin-left: auto;
+  margin-right: auto;
+`
+
+const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
   const imageProps = useNextSanityImage(
     sanityClientWithEquinorCDN,
-    image,
+    heroImage.image,
     /* { imageBuilder: customImageUrlBuilder }  */ {
       imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1420),
     },
   )
-  const altTag = image?.isDecorative ? '' : image?.alt || ''
+  const altTag = heroImage?.image?.isDecorative ? '' : heroImage?.image?.alt || ''
 
   return (
-    <StyledDiv>
-      <Img alt={altTag} layout="fill" objectFit="cover" quality={100} src={imageProps.src} />
-    </StyledDiv>
+    <>
+      <ImgWrapper>
+        <Img alt={altTag} layout="fill" objectFit="cover" quality={100} src={imageProps.src} />
+      </ImgWrapper>
+      <Caption attribution={heroImage.attribution} caption={heroImage.caption} />
+    </>
   )
 }
 
-export const FullImageHero = ({ ratio, image }: Props) => {
+const NarrowHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
   const { width } = useWindowSize()
-  if (ratio === 'fullScreen') return <FullScreenImageHero image={image} />
-  if (ratio === 'narrow') {
-    // 4:3 for small screens and 10:3 for large screens
-    const aspectRatio = width && width < 750 ? 0.75 : 0.3
-    return <Image maxWidth={1420} aspectRatio={aspectRatio} image={image} layout="responsive" priority />
-  }
-  return <Image maxWidth={1420} aspectRatio={Number(ratio)} image={image} layout="responsive" priority />
+  // 4:3 for small screens and 10:3 for large screens
+  const aspectRatio = width && width < 750 ? 0.75 : 0.3
+
+  return <Image maxWidth={1420} aspectRatio={aspectRatio} image={heroImage.image} layout="responsive" priority />
+}
+
+const RatioHero = ({ ratio, heroImage }: { ratio: string; heroImage: ImageWithCaptionData }) => {
+  return <Image maxWidth={1420} aspectRatio={Number(ratio)} image={heroImage.image} layout="responsive" priority />
+}
+
+export const FullImageHero = ({ ratio, heroImage, title }: Props) => {
+  let Hero: JSX.Element
+
+  const StyledCaption = heroImage?.image?.asset && (
+    <CaptionWrapper>
+      <Caption attribution={heroImage.attribution} caption={heroImage.caption} />
+    </CaptionWrapper>
+  )
+
+  const StyledTitle = <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
+
+  if (ratio === 'fullScreen') Hero = <FullScreenHero heroImage={heroImage} />
+  if (ratio === 'narrow') Hero = <NarrowHero heroImage={heroImage} />
+  else Hero = <RatioHero heroImage={heroImage} ratio={ratio} />
+
+  return (
+    <>
+      {Hero}
+      {StyledCaption}
+      {StyledTitle}
+    </>
+  )
 }
