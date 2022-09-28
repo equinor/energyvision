@@ -54,19 +54,13 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
       .join('')}
     </sitemapindex>`
 
-type AnniversarySitemapItem = {
-  updatedAt: string
-  slug: string
-  locale: 'en' | 'no'
-}
-
-const getAnniversarySitemap = async (locale: string): Promise<AnniversarySitemapItem[] | void> => {
+const getAnniversarySitemap = async (locale: string): Promise<PathType[] | void> => {
   const response = await fetch(`https://www.equinor.com/50/api/sitemap`)
   if (response) {
     const data = await response.json()
 
     if (data) {
-      return data.filter((item: AnniversarySitemapItem) => item.locale === locale)
+      return data.filter((item: PathType) => item.locale === locale)
     }
   }
 }
