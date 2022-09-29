@@ -112,10 +112,6 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams, isNews } = getQueryFromSlug(params?.slug as string[], locale)
 
-  if (Flags.IS_DEV && (params?.slug as string[])?.join('/') === 'test') {
-    console.log('Get static props called...')
-  }
-
   const intl = await getIntl(locale, preview)
 
   const { menuData, pageData, footerData } = await getComponentsData(

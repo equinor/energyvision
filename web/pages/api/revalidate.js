@@ -24,14 +24,16 @@ export default async function handler(req, res) {
   const data = JSON.parse(body)
   try {
     // @TODO Remove 'unstable' after upgrading next to ^12.2.0
-    if (data._type === 'page') {
-      // Sanity webhook does not support subqueries
-      const route = await sanityClient.fetch(
-        groq`*[_type match "route_*" && content._ref == $id][0]{"slug": slug.current}`,
+    if (data._type in ['page', 'landingPage', 'event']) {
+      const routes = await sanityClient.fetch(
+        groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
         { id: data._id },
       )
-      await res.unstable_revalidate(route.slug)
-      console.log('Revalidated: ', route.slug)
+      // Revalidade every path that points to the modified document
+      routes.map(async (route) => {
+        await res.unstable_revalidate(route.slug)
+        console.log('Revalidated: ', route.slug)
+      })
     } else {
       await res.unstable_revalidate(data.slug)
       console.log('Revalidated: ', data.slug)
@@ -41,7 +43,7 @@ export default async function handler(req, res) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
     console.log('Error revalidating: ', data.slug)
-    // return res.status(500).send('Error revalidating')
     return res.status(500).json({ revalidated: false })
+    // return res.status(500).send('Error revalidating')
   }
 }
