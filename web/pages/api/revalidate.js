@@ -1,5 +1,7 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
+import { groq } from 'next-sanity'
 import getRawBody from 'raw-body'
+import { sanityClient } from '../../lib/sanity.server'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 
@@ -20,16 +22,26 @@ export default async function handler(req, res) {
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
   const data = JSON.parse(body)
-
   try {
     // @TODO Remove 'unstable' after upgrading next to ^12.2.0
-    await res.unstable_revalidate(data.slug)
-    console.log('Revalidated: ', data.slug)
+    if (data._type === 'page') {
+      // Sanity webhook does not support subqueries
+      const route = await sanityClient.fetch(
+        groq`*[_type match "route_*" && content._ref == $id][0]{"slug": slug.current}`,
+        { id: data._id },
+      )
+      await res.unstable_revalidate(route.slug)
+      console.log('Revalidated: ', route.slug)
+    } else {
+      await res.unstable_revalidate(data.slug)
+      console.log('Revalidated: ', data.slug)
+    }
     return res.json({ revalidated: true })
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
-    console.log('Error revalidating ', data.slug)
-    return res.status(500).send('Error revalidating')
+    console.log('Error revalidating: ', data.slug)
+    // return res.status(500).send('Error revalidating')
+    return res.status(500).json({ revalidated: false })
   }
 }
