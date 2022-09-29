@@ -25,7 +25,7 @@ const formatPath = ({ slug, locale: urlLocale }: PathType) => {
   return locale ? `/${locale}${path}` : path
 }
 
-const getSitemapUrls = (domain: string, paths: PathType[]) =>
+const getSitemapUrls = (domain: string, paths: PathType[], additionalPaths: PathType[] | null = null) =>
   `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${paths
@@ -38,6 +38,17 @@ const getSitemapUrls = (domain: string, paths: PathType[]) =>
         `,
       )
       .join('')}
+      ${
+        additionalPaths &&
+        additionalPaths.map(
+          (path) => `
+        <url>
+          <loc>${domain}${path.slug}</loc>
+          <lastmod>${path.updatedAt}</lastmod>
+        </url>
+      `,
+        )
+      }
     </urlset>`
 
 const getSitemapIndex = (domain: string, locales: string[]) =>
@@ -54,8 +65,12 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
       .join('')}
     </sitemapindex>`
 
-const getAnniversarySitemap = async (locale: string): Promise<PathType[] | void> => {
+const getAnniversarySitemap = async (locale: string): Promise<PathType[] | null> => {
+  // TODO: switch to Flags.IS_GLOBAL_PROD for release
+  if (!Flags.IS_DEV) return null
+
   const response = await fetch(`https://www.equinor.com/50/api/sitemap`)
+
   if (response) {
     const data = await response.json()
 
@@ -63,6 +78,8 @@ const getAnniversarySitemap = async (locale: string): Promise<PathType[] | void>
       return data.filter((item: PathType) => item.locale === locale)
     }
   }
+
+  return null
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
@@ -100,16 +117,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
     paths = allSlugs
   }
 
-  // TODO: switch to Flags.IS_GLOBAL_PROD for release
-  if (Flags.IS_DEV) {
-    const anniversarySitemap = await getAnniversarySitemap(locale)
-    if (anniversarySitemap) {
-      paths = [...paths, ...anniversarySitemap]
+  const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
+
+  if (!shouldFetchUrls) {
+    res.setHeader('Content-Type', 'text/xml')
+    res.write(getSitemapIndex(domain, locales))
+    res.end()
+
+    return {
+      props: {},
     }
   }
 
-  const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
-  const sitemap = shouldFetchUrls ? getSitemapUrls(domain, paths) : getSitemapIndex(domain, locales)
+  const anniversarySitemap = await getAnniversarySitemap(locale)
+  const sitemap = getSitemapUrls(domain, paths, anniversarySitemap)
 
   res.setHeader('Content-Type', 'text/xml')
   res.write(sitemap)
