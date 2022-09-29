@@ -119,7 +119,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     queryParameters.page = routeState.page
                   }
                   if (routeState.magazineTags) {
-                    queryParameters.tags = encodeURIComponent(routeState.magazineTags as string)
+                    queryParameters.tag = encodeURIComponent(routeState.magazineTags as string)
                   }
 
                   const queryString = qsModule.stringify(queryParameters, {
@@ -133,11 +133,11 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct
                 parseURL({ qsModule, location }) {
-                  const { query = '', page, tags = '' }: any = qsModule.parse(location.search.slice(1))
+                  const { query = '', page, tag = '' }: any = qsModule.parse(location.search.slice(1))
                   return {
                     query: decodeURIComponent(query),
                     page,
-                    magazineTags: decodeURIComponent(tags),
+                    magazineTags: decodeURIComponent(tag),
                   }
                 },
                 getLocation() {

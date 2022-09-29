@@ -241,7 +241,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
             tags={tags}
             href={parentSlug}
             onClick={(tagValue) => {
-              router.push(encodeURI(`${parentSlug}?magazineTags=${tagValue}`))
+              router.push(encodeURI(`${parentSlug}?tag=${tagValue}`))
             }}
           />
         )}

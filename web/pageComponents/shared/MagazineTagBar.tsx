@@ -17,8 +17,9 @@ export type TagLink = {
 const StyledLink = styled(Link).attrs((props: { active: boolean }) => props)`
   display: inline-block;
   position: relative;
+  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
   &:hover {
-    font-weight: bold !important;
+    font-weight: bold;
   }
 
   &:before {
@@ -31,7 +32,6 @@ const StyledLink = styled(Link).attrs((props: { active: boolean }) => props)`
   }
   &:after {
     content: '';
-    font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
     position: absolute;
     border-left: 2px solid var(--energy-red-100);
     right: calc(var(--space-xLarge) * -0.5);
@@ -93,7 +93,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         {tags.map((it: TagLink) => (
           <StyledLink
             underline={false}
-            href={encodeURI(`?tags=${it.label}`)}
+            href={encodeURI(`?tag=${it.label}`)}
             key={`key_${it.label}`}
             active={it.active}
             data-title={it.label}
