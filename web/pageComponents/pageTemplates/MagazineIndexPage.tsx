@@ -1,6 +1,5 @@
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
-import Router from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
 import { toPlainText } from '@portabletext/react'
 import { Flags } from '../../common/helpers/datasetHelpers'
@@ -120,7 +119,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     queryParameters.page = routeState.page
                   }
                   if (routeState.magazineTags) {
-                    queryParameters.magazineTags = encodeURIComponent(routeState.magazineTags as string)
+                    queryParameters.tags = encodeURIComponent(routeState.magazineTags as string)
                   }
 
                   const queryString = qsModule.stringify(queryParameters, {
@@ -134,11 +133,11 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct
                 parseURL({ qsModule, location }) {
-                  const { query = '', page, magazineTags = '' }: any = qsModule.parse(location.search.slice(1))
+                  const { query = '', page, tags = '' }: any = qsModule.parse(location.search.slice(1))
                   return {
                     query: decodeURIComponent(query),
                     page,
-                    magazineTags: decodeURIComponent(magazineTags),
+                    magazineTags: decodeURIComponent(tags),
                   }
                 },
                 getLocation() {

@@ -157,7 +157,30 @@ export type PortableTextChild = {
 export type Templates = 'landingPage' | 'page' | 'news'
 
 export type PageSchema = {
+  slug: string
   magazineTags?: string[]
+  title: PortableTextBlock[]
+  hero: {
+    type?: string
+    ratio?: string
+  }
+  bannerTitle: PortableTextBlock[]
+  bannerIngress: PortableTextBlock[]
+  action: LinkData
+  background: BackgroundColours
+  heroImage: ImageWithCaptionData
+  template: Templates
+  seoAndSome: {
+    documentTitle?: string
+    metaDescription?: string
+    openGraphImage?: ImageWithAlt
+  }
+  // @TODO: Better typings here
+  content?: []
+  id: string
+  type: string
+}
+export type PageSchemaV2 = {
   slug: string
   title: PortableTextBlock[]
   hero: {
@@ -179,6 +202,12 @@ export type PageSchema = {
   content?: []
   id: string
   type: string
+}
+
+export type TopicPageSchema = PageSchemaV2
+
+export type MagazinePageSchema = PageSchemaV2 & {
+  magazineTags?: string[]
 }
 
 export type LandingPageSchema = {

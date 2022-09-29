@@ -1,13 +1,10 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
 import styled from 'styled-components'
 import { Link } from '@components'
-//import UncontrolledSearchBox from '../searchIndexPages/magazineIndex/UncontrolledSearchBoxV2'
-//import Box from './Box'
 import { useIntl } from 'react-intl'
 
 export type MagazineTagBarProps = {
   tags: TagLink[]
-  isIndexPage?: boolean
   href: string
   onClick?: (value: string) => void
 }
@@ -17,7 +14,7 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link).attrs((props: { active: boolean }) => props)`
   display: inline-block;
   position: relative;
   &:hover {
@@ -34,6 +31,7 @@ const StyledLink = styled(Link)`
   }
   &:after {
     content: '';
+    font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
     position: absolute;
     border-left: 2px solid var(--energy-red-100);
     right: calc(var(--space-xLarge) * -0.5);
@@ -44,31 +42,12 @@ const StyledLink = styled(Link)`
     display: none;
   }
 `
-
-const ActiveLink = styled(StyledLink)`
-  font-weight: bold !important;
-`
 const Wrapper = styled.div`
   display: flex;
   align-content: center;
   margin: 0 auto 0 auto;
   border: 1px solid var(--slate-blue-70);
 `
-
-/*const SearchBoxWrapper = styled.div`
-  display: none;
-  @media (min-width: 1000px) {
-    display: block;
-    input {
-      border-top: 0;
-      border-right: 0;
-      border-bottom: 0;
-      &:focus {
-        box-shadow: 1px 0 0 1px solid var(--slate-blue-70);
-      }
-    }
-  }
-`*/
 const TagWrapper = styled.div`
   margin: var(--space-medium) auto var(--space-medium) auto;
   display: flex;
@@ -86,18 +65,6 @@ const allTagLink: TagLink = {
   active: true,
 }
 
-const StyledTagLink: React.FC<React.PropsWithChildren<TagLink>> = ({ active, href, label, onClick }: TagLink) => {
-  return active ? (
-    <ActiveLink underline={false} href={href} key={label} data-title={label} onClick={onClick}>
-      {label}
-    </ActiveLink>
-  ) : (
-    <StyledLink underline={false} href={href} key={label} data-title={label} onClick={onClick}>
-      {label}
-    </StyledLink>
-  )
-}
-
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
   { tags, onClick, href },
   ref,
@@ -108,10 +75,11 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   return (
     <Wrapper ref={ref}>
       <TagWrapper>
-        <StyledTagLink
+        <StyledLink
           href={href}
-          label={allTagLink.label}
           active={allTagLink.active}
+          underline={false}
+          data-title={allTagLink.label}
           onClick={(event) => {
             if (onClick) {
               event.preventDefault()
@@ -120,14 +88,15 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
             }
           }}
         >
-          ALL
-        </StyledTagLink>
+          {allTagLink.label}
+        </StyledLink>
         {tags.map((it: TagLink) => (
-          <StyledTagLink
-            label={it.label}
-            href={encodeURI(`?magazineTags=${it.label}`)}
+          <StyledLink
+            underline={false}
+            href={encodeURI(`?tags=${it.label}`)}
             key={`key_${it.label}`}
             active={it.active}
+            data-title={it.label}
             onClick={(event) => {
               if (onClick) {
                 event.preventDefault()
@@ -135,20 +104,11 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
                 allTagLink.active = false
               }
             }}
-          />
+          >
+            {it.label}
+          </StyledLink>
         ))}
       </TagWrapper>
-      {/*<SearchBoxWrapper>
-        {isIndexPage ? (
-          <UncontrolledSearchBox />
-        ) : (
-          <Box
-            onSubmit={(query) => {
-              router.push(encodeURI(`${href}?query=${query}`))
-            }}
-          />
-        )}
-          </SearchBoxWrapper> */}
     </Wrapper>
   )
 })

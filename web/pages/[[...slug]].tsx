@@ -19,10 +19,12 @@ import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { Flags } from '../common/helpers/datasetHelpers'
 
+const MagazinePage = dynamic(() => import('../pageComponents/pageTemplates/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
-const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
+const TopicPageV2 = dynamic(() => import('../pageComponents/pageTemplates/TopicPageV2'))
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
+const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 
 // @TODO Improve types here, don't use any
 export default function Page({ data, preview }: any) {
@@ -74,8 +76,9 @@ export default function Page({ data, preview }: any) {
     case 'localNews':
       return <NewsPage data={{ news: pageData, latestNews: data.pageData?.latestNews }} />
     case 'magazine':
+      return Flags.IS_DEV ? <MagazinePage data={pageData} /> : <TopicPage data={pageData} />
     default:
-      return <TopicPage data={pageData} />
+      return Flags.IS_DEV ? <TopicPageV2 data={pageData} /> : <TopicPage data={pageData} />
   }
 }
 

@@ -15,20 +15,17 @@ export function MagazineTagFilter(props: RefinementListProps) {
     active: e === items.find((it) => it.isRefined)?.value || active === e,
   }))
   return (
-    <>
-      <MagazineTagBar
-        href="#"
-        tags={tagLinks}
-        onClick={(value: string) => {
-          setActive(value)
-          if (value === 'ALL') {
-            clear()
-          } else if (value !== active) {
-            refine(value)
-          }
-        }}
-        isIndexPage
-      />
-    </>
+    <MagazineTagBar
+      href="#"
+      tags={tagLinks}
+      onClick={(value: string) => {
+        setActive(value)
+        if (value === 'ALL') {
+          clear()
+        } else if (value !== active) {
+          refine(value)
+        }
+      }}
+    />
   )
 }
