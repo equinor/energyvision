@@ -4,7 +4,6 @@ import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { MagazineCardData } from '../../types/types'
 import Image from '../shared/Image'
-import Img from 'next/image'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
