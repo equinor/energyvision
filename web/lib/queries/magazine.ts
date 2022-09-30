@@ -5,6 +5,27 @@ import downloadableFileFields from './common/actions/linkSelectorFields'
 import downloadableImageFields from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 
+const footerComponentFields = `
+  title,
+  text[]{
+    ...,
+    ${markDefs},
+  },
+  "designOptions": {
+    "background": coalesce(background.title, 'White'),
+    "imagePosition": coalesce(imagePosition, 'left'),
+  },
+  "image": image{
+    ...,
+    "extension": asset-> extension
+  },
+  "action": action[0]{
+    ${linkSelectorFields},
+    ${downloadableFileFields},
+    ${downloadableImageFields},
+  },
+`
+
 const promotedmagazineTags = `"": *[_type == "magazineIndex" && _lang == $lang][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
 export const magazineQuery = /* groq */ `
 *[_type == "magazine" && slug.current == $slug && _lang == $lang] {
@@ -35,6 +56,11 @@ export const magazineQuery = /* groq */ `
           ${pageContentFields}
       },
       ${slugsForNewsAndMagazine('magazine')},
+    "footerComponent": *[_id == 'magazineIndex'][0]{
+      "data": footerComponent{
+        ${footerComponentFields}
+      }
+    }
 }`
 
 export const magazineIndexQuery = /* groq */ `
@@ -48,23 +74,6 @@ export const magazineIndexQuery = /* groq */ `
     backgroundImage,
     "magazineTags":promotedMagazineTags[]->title[$lang],
     "footerComponent": footerComponent{
-      title,
-      text[]{
-        ...,
-        ${markDefs},
-      },
-      "designOptions": {
-        "background": coalesce(background.title, 'White'),
-        "imagePosition": coalesce(imagePosition, 'left'),
-      },
-      "image": image{
-        ...,
-        "extension": asset-> extension
-      },
-      "action": action[0]{
-        ${linkSelectorFields},
-        ${downloadableFileFields},
-        ${downloadableImageFields},
-      },
+      ${footerComponentFields}
     }
   }`

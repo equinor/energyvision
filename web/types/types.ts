@@ -208,6 +208,9 @@ export type TopicPageSchema = PageSchemaV2
 
 export type MagazinePageSchema = PageSchemaV2 & {
   magazineTags?: string[]
+  footerComponent?: {
+    data?: TeaserData
+  }
 }
 
 export type LandingPageSchema = {

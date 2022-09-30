@@ -10,6 +10,7 @@ import { metaTitleSuffix } from '../../languages'
 import { PageContent } from './shared/SharedPageContent'
 import { MagazinePageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
+import Teaser from '../topicPages/Teaser'
 
 const MagazinePageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -53,6 +54,8 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
     }
   })
 
+  const { footerComponent } = data
+
   const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.heroImage?.image
   return (
     <>
@@ -79,6 +82,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
           />
         )}
         <PageContent data={data} />
+        {footerComponent?.data && <Teaser data={footerComponent.data} />}
       </MagazinePageLayout>
     </>
   )
