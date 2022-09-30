@@ -66,8 +66,7 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
     </sitemapindex>`
 
 const getAnniversarySitemap = async (locale: string): Promise<PathType[] | null> => {
-  // TODO: switch to Flags.IS_GLOBAL_PROD for release
-  if (!Flags.IS_DEV) return null
+  if (!Flags.IS_GLOBAL_PROD) return null
 
   const response = await fetch(`https://www.equinor.com/50/api/sitemap`)
 
