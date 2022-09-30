@@ -4,6 +4,7 @@ import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 import { defaultLanguage } from '../../languages'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export const publishDateTimeQuery = /* groq */ `
   select(
@@ -16,6 +17,9 @@ export const publishDateTimeQuery = /* groq */ `
 export const fixPreviewForDrafts = /* groq */ `
   ((defined(_lang) && _lang == $lang) || (!defined(_lang) && $lang == "${defaultLanguage.name}"))
 `
+
+/* @TODO Add 'OR Flags.IS_GLOBAL_PROD' after review */
+const excludeCrudeOilAssays = Flags.IS_DEV ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
 
 export const newsFields = /* groq */ `
   "id": _id,
@@ -95,6 +99,7 @@ export const newsQuery = /* groq */ `
       slug.current != $slug &&
       heroImage.image.asset != null &&
       _lang == $lang &&
+      ${excludeCrudeOilAssays}
       // filter drafts, will also filter when previewing
       !(_id in path("drafts.**"))
     ] | order(${publishDateTimeQuery} desc)[0...3] {
