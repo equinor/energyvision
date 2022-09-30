@@ -3,6 +3,7 @@ import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/linkSelectorFields'
 import downloadableImageFields from './common/actions/linkSelectorFields'
+import markDefs from './common/blockEditorMarks'
 
 const promotedmagazineTags = `"": *[_type == "magazineIndex" && _lang == $lang][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
 export const magazineQuery = /* groq */ `
@@ -45,5 +46,25 @@ export const magazineIndexQuery = /* groq */ `
     title,
     ingress,
     backgroundImage,
-    "magazineTags":promotedMagazineTags[]->title[$lang]
+    "magazineTags":promotedMagazineTags[]->title[$lang],
+    "footerComponent": footerComponent{
+      title,
+      text[]{
+        ...,
+        ${markDefs},
+      },
+      "designOptions": {
+        "background": coalesce(background.title, 'White'),
+        "imagePosition": coalesce(imagePosition, 'left'),
+      },
+      "image": image{
+        ...,
+        "extension": asset-> extension
+      },
+      "action": action[0]{
+        ${linkSelectorFields},
+        ${downloadableFileFields},
+        ${downloadableImageFields},
+      },
+    }
   }`

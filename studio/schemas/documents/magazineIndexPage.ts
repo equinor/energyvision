@@ -5,6 +5,7 @@ import { configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
+import MagazineFooterComponent from '../objects/magazineFooterComponent'
 
 import type { Rule, Block } from '@sanity/types'
 
@@ -85,6 +86,7 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.unique().min(5).max(5),
     },
+    MagazineFooterComponent,
   ],
   preview: {
     select: {

@@ -19,6 +19,7 @@ import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 import { history } from 'instantsearch.js/es/lib/routers'
+import Teaser from '../topicPages/Teaser'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -49,7 +50,8 @@ type MagazineIndexTemplateProps = {
 const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const router = useRouter()
   const fullUrl = getUrl(router, slug)
-  const { ingress, title, documentTitle, metaDescription, openGraphImage, magazineTags } = pageData || {}
+  const { ingress, title, documentTitle, metaDescription, openGraphImage, magazineTags, footerComponent } =
+    pageData || {}
   const plainTitle = title ? toPlainText(title) : ''
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -182,6 +184,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               <MagazineContent />
               <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
             </MagazineWapper>
+            {footerComponent && <Teaser data={footerComponent} />}
           </InstantSearch>
         </Wrapper>
       </main>
