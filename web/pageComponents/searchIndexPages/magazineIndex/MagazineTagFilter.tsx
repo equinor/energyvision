@@ -19,7 +19,9 @@ export function MagazineTagFilter(props: RefinementListProps) {
     <MagazineTagBar
       href="#"
       tags={tagLinks}
-      defaultActive={items.find((it) => it.isRefined) === undefined && !initiallyActive && active === 'ALL'}
+      defaultActive={
+        (items.length > 0 && items.find((it) => it.isRefined) === undefined && !initiallyActive) || active === 'ALL'
+      }
       onClick={(value: string) => {
         setActive(value)
         if (value === 'ALL') {
