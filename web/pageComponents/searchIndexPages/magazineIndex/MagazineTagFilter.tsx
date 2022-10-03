@@ -15,8 +15,6 @@ export function MagazineTagFilter(props: RefinementListProps) {
     label: e,
     active: e === items.find((it) => it.isRefined)?.value || initiallyActive === e || active === e,
   }))
-  console.log(items)
-  console.log(initiallyActive)
   return (
     <MagazineTagBar
       href="#"
