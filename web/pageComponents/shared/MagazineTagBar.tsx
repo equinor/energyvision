@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   display: flex;
   align-content: center;
   margin: 0 auto 0 auto;
-  border: 1px solid var(--slate-blue-70);
+  border: 1px solid var(--slate-blue-60);
 `
 const TagWrapper = styled.div`
   margin: var(--space-medium) auto var(--space-medium) auto;
