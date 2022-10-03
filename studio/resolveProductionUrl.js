@@ -39,6 +39,6 @@ export default function resolveProductionUrl(doc) {
     previewUrl.searchParams.append('slug', '/')
   }
 
-  console.log('Preview url', previewUrl.toString())
+  // console.log('Preview url', previewUrl.toString())
   return previewUrl.toString()
 }

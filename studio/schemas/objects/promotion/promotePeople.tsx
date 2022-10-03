@@ -86,7 +86,6 @@ export default {
               options: {
                 isHighlighted: true,
               },
-
               initialValue: false,
             },
             {
@@ -107,9 +106,8 @@ export default {
               name: 'phone',
               type: 'string',
               placeholder: '+47 999 99 999',
-              hidden: ({ parent }: { parent: Promotion }) => parent?.isLink === true,
+              hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
             },
-
             {
               name: 'reference',
               title: 'Internal link',
@@ -118,6 +116,7 @@ export default {
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, context: ValidationContext) => {
                   const { parent } = context as { parent: Promotion }
+                  if (!parent?.isLink) return true
                   return validateInternalOrExternalUrl(value, parent.url)
                 }),
               to: defaultReferenceTargets,
@@ -136,6 +135,7 @@ export default {
                 Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
                   (value: any, context: ValidationContext) => {
                     const { parent } = context as { parent: Promotion }
+                    if (!parent?.isLink) return true
                     return validateInternalOrExternalUrl(value, parent.reference)
                   },
                 ),
