@@ -10,11 +10,15 @@ export function MagazineTagFilter(props: RefinementListProps) {
   const { refine: clear } = useClearRefinements()
   const [active, setActive] = useState('')
   const { tags, initiallyActive } = props
+
+  const currentlyActive = items.find((it) => it.isRefined)?.value || initiallyActive || active
+
   const tagLinks = tags.map((e) => ({
     href: '#',
     label: e,
-    active: e === items.find((it) => it.isRefined)?.value || initiallyActive === e || active === e,
+    active: currentlyActive === e,
   }))
+
   return (
     <MagazineTagBar
       href="#"
