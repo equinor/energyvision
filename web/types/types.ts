@@ -163,10 +163,10 @@ export type PageSchema = {
   hero: {
     type?: string
     ratio?: string
+    heroTitle: PortableTextBlock[]
+    heroIngress: PortableTextBlock[]
+    heroLink: LinkData
   }
-  bannerTitle: PortableTextBlock[]
-  bannerIngress: PortableTextBlock[]
-  action: LinkData
   background: BackgroundColours
   heroImage: ImageWithCaptionData
   template: Templates
@@ -186,10 +186,10 @@ export type PageSchemaV2 = {
   hero: {
     type?: string
     ratio?: string
+    heroTitle: PortableTextBlock[]
+    heroIngress: PortableTextBlock[]
+    heroLink: LinkData
   }
-  bannerTitle: PortableTextBlock[]
-  bannerIngress: PortableTextBlock[]
-  action: LinkData
   background: BackgroundColours
   heroImage: ImageWithCaptionData
   template: Templates

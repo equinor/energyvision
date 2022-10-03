@@ -3,7 +3,7 @@ import { default as NextLink } from 'next/link'
 import Img from 'next/image'
 import { SanityImgLoader } from '../Image'
 import { useNextSanityImage } from 'next-sanity-image'
-import { sanityClient } from '../../../lib/sanity.server'
+import { sanityClientWithEquinorCDN } from '../../../lib/sanity.server'
 import { PortableTextBlock } from '@portabletext/types'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
@@ -11,17 +11,17 @@ import type { ImageWithAlt, BackgroundColours, LinkData } from '../../../types/t
 import { BackgroundContainer, Link } from '@components'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 
-type BannerProps = {
-  bannerTitle: PortableTextBlock[]
-  bannerIngress: PortableTextBlock[]
-  action: LinkData
+type HeroProps = {
+  heroTitle: PortableTextBlock[]
+  heroIngress: PortableTextBlock[]
+  heroLink: LinkData
   background: BackgroundColours
   image: ImageWithAlt
   title: PortableTextBlock[]
 }
 
-const StyledBanner = styled(BackgroundContainer)`
-display: grid;
+const StyledHero = styled(BackgroundContainer)`
+  display: grid;
   grid-template-rows: min-content min-content;
   grid-template-rows: 1fr;
   grid-template-areas:
@@ -29,11 +29,12 @@ display: grid;
     'content';
   max-width: var(--max-content-width);
   margin: 0 auto;
-  
+
   @media (min-width: 750px) {
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
-    grid-template-areas: 'content image'; 
+    grid-template-areas: 'content image';
+  }
 `
 const StyledContent = styled.div`
   display: grid;
@@ -41,7 +42,8 @@ const StyledContent = styled.div`
   grid-gap: var(--space-large);
   align-items: center;
   grid-area: content;
-  padding: var(--space-xxLarge) var(--space-large);
+  padding: calc(3 * var(--space-medium)) calc(3 * var(--space-large)) calc(3 * var(--space-medium))
+    var(--layout-paddingHorizontal-small);
 `
 const StyledMedia = styled.div`
   grid-area: image;
@@ -53,14 +55,14 @@ const StyledMedia = styled.div`
     padding: 0;
   }
 `
-const HiddenIngress = styled.div`
-  @media (max-width: 768px) {
+const StyledIngress = styled.div`
+  @media (max-width: 750px) {
     display: none;
   }
 `
-const StyledBannerTitle = styled(TitleText)`
+const StyledHeroTitle = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
-  font-weight: 500;
+  font-weight: var(--fontWeight-medium);
 `
 const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -70,13 +72,10 @@ const StyledHeading = styled(TitleText)`
 const TitleWrapper = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
 `
-const StyledDiv = styled.div`
-  font-size: var(--typeScale-1);
-`
 
 const HeroImage5050 = ({ image }: { image: ImageWithAlt }) => {
   const imageProps = useNextSanityImage(
-    sanityClient,
+    sanityClientWithEquinorCDN,
     image,
     /* { imageBuilder: customImageUrlBuilder }  */ {
       imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1420),
@@ -86,21 +85,19 @@ const HeroImage5050 = ({ image }: { image: ImageWithAlt }) => {
   const altTag = image?.isDecorative ? '' : image?.alt || ''
 
   return (
-    <StyledDiv>
-      <Img
-        alt={altTag}
-        layout="fill"
-        unoptimized
-        objectFit="cover"
-        quality={100}
-        src={imageProps.src}
-        role={image?.isDecorative ? 'presentation' : undefined}
-      />
-    </StyledDiv>
+    <Img
+      alt={altTag}
+      layout="fill"
+      unoptimized
+      objectFit="cover"
+      quality={100}
+      src={imageProps.src}
+      role={image?.isDecorative ? 'presentation' : undefined}
+    />
   )
 }
 
-const BannerAction = ({ action, ...rest }: { action: LinkData }) => {
+const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   const { label, ariaLabel, extension, type } = action
   const url = getUrlFromAction(action)
   if (!url) {
@@ -123,23 +120,23 @@ const BannerAction = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const Hero5050 = ({ bannerTitle, bannerIngress, action, background, image, title }: BannerProps) => {
+export const Hero5050 = ({ heroTitle, heroIngress, heroLink, background, image, title }: HeroProps) => {
   return (
     <>
-      <StyledBanner background={background}>
+      <StyledHero background={background}>
         <StyledMedia>
           <HeroImage5050 image={image} />
         </StyledMedia>
         <StyledContent>
-          {bannerTitle && <StyledBannerTitle value={bannerTitle} level="h1" size="xl" />}
-          {bannerIngress && (
-            <HiddenIngress>
-              <IngressText value={bannerIngress} />
-            </HiddenIngress>
+          {heroTitle && <StyledHeroTitle value={heroTitle} level="h1" size="xl" />}
+          {heroIngress && (
+            <StyledIngress>
+              <IngressText value={heroIngress} />
+            </StyledIngress>
           )}
-          {action && <BannerAction action={action} />}
+          {heroLink && <HeroActionLink action={heroLink} />}
         </StyledContent>
-      </StyledBanner>
+      </StyledHero>
       <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
     </>
   )

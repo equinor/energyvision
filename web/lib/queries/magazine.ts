@@ -40,15 +40,13 @@ export const magazineQuery = /* groq */ `
     "hero": {
       "type": heroType,
       "ratio": heroRatio,
+      "bannerTitle": bannerTitle,
+      "bannerIngress": bannerIngress,
+      "heroLink": heroLink[0]{
+        ${linkSelectorFields}
+      }
     },
-    "bannerTitle":bannerTitle,
-    "bannerIngress":bannerIngress,
-    "action":  action[0]{
-      ${linkSelectorFields},
-      ${downloadableFileFields},
-      ${downloadableImageFields},
-    },
-    "background":background.title,
+    "background": background.title,
     "heroImage": heroFigure,
     "template": _type,
     ${promotedmagazineTags},

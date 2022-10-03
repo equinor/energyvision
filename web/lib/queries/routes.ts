@@ -2,8 +2,6 @@ import pageContentFields from './common/pageContentFields'
 import { landingPageContentFields } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
-import downloadableFileFields from './common/actions/linkSelectorFields'
-import downloadableImageFields from './common/actions/linkSelectorFields'
 
 const allSlugsQuery = /* groq */ `
   "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
@@ -27,15 +25,13 @@ export const pageQuery = /* groq */ `
     "hero": {
       "type": content->heroType,
       "ratio": content->heroRatio,
+      "heroTitle": content->heroTitle,
+      "heroIngress": content->heroIngress,
+      "heroLink": content-> heroLink[0]{
+        ${linkSelectorFields}
+      },
     },
-    "bannerTitle":content->bannerTitle,
-    "bannerIngress":content->bannerIngress,
-    "action":content-> action[0]{
-      ${linkSelectorFields},
-      ${downloadableFileFields},
-      ${downloadableImageFields},
-    },
-    "background":content->background.title,
+    "background": content->background.title,
     "heroImage": content->heroFigure,
     "template": content->_type,
      content->_type == "landingPage" => {

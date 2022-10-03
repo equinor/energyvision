@@ -65,10 +65,10 @@ const heroRatio = {
   initialValue: '0.5',
   fieldset: 'header',
 }
-const bannerTitle = {
-  name: 'bannerTitle',
+const heroTitle = {
+  name: 'heroTitle',
   type: 'array',
-  title: 'Banner Title',
+  title: 'Hero Title',
   inputComponent: CompactBlockEditor,
   of: [titleContentType],
   fieldset: 'header',
@@ -82,9 +82,9 @@ const bannerTitle = {
       return true
     }),
 }
-const bannerIngress = {
-  title: 'Banner Ingress',
-  name: 'bannerIngress',
+const heroIngress = {
+  title: 'Hero Ingress',
+  name: 'heroIngress',
   type: 'array',
   inputComponent: CharCounterEditor,
   of: [ingressContentType],
@@ -93,16 +93,12 @@ const bannerIngress = {
   },
   fieldset: 'header',
 }
-const action = {
-  name: 'action',
-  title: 'Link/action',
-  description: 'Select the link or downloadable file',
+const heroLink = {
+  name: 'heroLink',
+  title: 'Link',
+  description: 'Select link to display',
   type: 'array',
-  of: [
-    { type: 'linkSelector', title: 'Link' },
-    { type: 'downloadableImage', title: 'Downloadable image' },
-    { type: 'downloadableFile', title: 'Downloadable file' },
-  ],
+  of: [{ type: 'linkSelector', title: 'Link' }],
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== 'banner5050'
   },
@@ -137,5 +133,5 @@ const heroImage = {
 }
 
 export default Flags.IS_DEV
-  ? [title, heroType, heroRatio, bannerTitle, bannerIngress, action, background, heroImage]
+  ? [title, heroType, heroRatio, heroTitle, heroIngress, heroLink, background, heroImage]
   : [title, heroImage]
