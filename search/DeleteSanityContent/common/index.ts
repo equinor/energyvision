@@ -2,10 +2,14 @@ import { flow, pipe } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { remove, generateIndexName, getEnvironment, Language } from '../../common'
+import { remove, generateIndexName, Language } from '../../common'
 
 export const deleteIndex = (language: Language) => (indexIdentifier: string) => (slug: string) => {
-  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
+  const indexName = flow(
+    () => E.fromNullable('Use getEnvironment here after acceptance')('dev'),
+    E.map(generateIndexName(indexIdentifier)(language.isoCode)),
+  )
+  // const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
   return pipe(
