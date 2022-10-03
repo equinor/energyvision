@@ -7,6 +7,7 @@ export type MagazineTagBarProps = {
   tags: TagLink[]
   href: string
   onClick?: (value: string) => void
+  defaultActive: boolean
 }
 
 export type TagLink = {
@@ -62,16 +63,16 @@ const TagWrapper = styled.div`
 const allTagLink: TagLink = {
   href: '#',
   label: 'All',
-  active: true,
+  active: false,
 }
 
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
-  { tags, onClick, href },
+  { tags, onClick, href, defaultActive = false },
   ref,
 ) {
   const intl = useIntl()
   allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
-  allTagLink.active = tags.find((it) => it.active) === undefined
+  allTagLink.active = defaultActive
   return (
     <Wrapper ref={ref}>
       <TagWrapper>

@@ -75,6 +75,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
         {tags && (
           <MagazineTagBar
             tags={tags}
+            defaultActive
             href={parentSlug}
             onClick={(tagValue) => {
               router.push(encodeURI(`${parentSlug}?tag=${tagValue}`))

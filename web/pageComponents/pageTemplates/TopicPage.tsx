@@ -240,6 +240,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           <MagazineTagBar
             tags={tags}
             href={parentSlug}
+            defaultActive
             onClick={(tagValue) => {
               router.push(encodeURI(`${parentSlug}?tag=${tagValue}`))
             }}

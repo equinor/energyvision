@@ -178,7 +178,13 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
           >
             <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
             {magazineTags && (
-              <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
+              <MagazineTagFilter
+                tags={magazineTags}
+                initiallyActive={magazineTags.find((it) => it === (router?.query?.tag as string))}
+                attribute="magazineTags"
+                sortBy={[`name:asc`]}
+                limit={5}
+              />
             )}
             <MagazineWapper>
               <MagazineContent />
