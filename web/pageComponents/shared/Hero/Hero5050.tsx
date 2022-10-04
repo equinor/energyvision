@@ -8,7 +8,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
 import type { ImageWithAlt, BackgroundColours, LinkData } from '../../../types/types'
-import { BackgroundContainer, Link } from '@components'
+import { BackgroundContainer, Link, Text } from '@components'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 
 type HeroProps = {
@@ -114,7 +114,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
     )
   }
   return (
-    <Link variant="readMore" href={url} type={action.type} aria-label={ariaLabel}>
+    <Link variant="regular" href={url} type={action.type} aria-label={ariaLabel}>
       {action.label} {extension && `(${extension.toUpperCase()})`}
     </Link>
   )
@@ -131,7 +131,18 @@ export const Hero5050 = ({ heroTitle, heroIngress, heroLink, background, image, 
           {heroTitle && <StyledHeroTitle value={heroTitle} level="h1" size="xl" />}
           {heroIngress && (
             <StyledIngress>
-              <IngressText value={heroIngress} />
+              <IngressText
+                value={heroIngress}
+                components={{
+                  block: {
+                    normal: ({ children }) => {
+                      // eslint-disable-next-line
+                      // @ts-ignore: Still struggling with the types here :/
+                      return <Text size="regular">{children}</Text>
+                    },
+                  },
+                }}
+              />
             </StyledIngress>
           )}
           {heroLink && <HeroActionLink action={heroLink} />}
