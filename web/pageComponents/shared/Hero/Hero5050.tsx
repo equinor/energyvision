@@ -40,16 +40,17 @@ const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  grid-area: content;
   grid-gap: var(--space-large);
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small);
   max-width: calc(var(--maxViewportWidth) / 2);
+
   @media (min-width: 750px) {
     padding-left: var(--space-xxLarge);
     padding-right: var(--space-xxLarge);
     min-height: 450px;
     justify-self: end;
   }
+
   @media (min-width: 1000px) {
     padding-left: var(--layout-paddingHorizontal-small);
     padding-right: var(--space-4xLarge);
