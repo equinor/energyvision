@@ -10,8 +10,7 @@ export function MagazineTagFilter(props: RefinementListProps) {
   const { items, refine } = useMenu(props)
   const { refine: clear } = useClearRefinements()
   const { tags } = props
-  const currentlyActive = items.find((it) => it.isRefined)?.value || (router?.query?.tag as string)
-  const [active, setActive] = useState(currentlyActive)
+  const [active, setActive] = useState(items.find((it) => it.isRefined)?.value)
 
   const tagLinks = tags.map((e) => ({
     href: '#',
@@ -19,32 +18,39 @@ export function MagazineTagFilter(props: RefinementListProps) {
     active: active === e,
   }))
 
+  // state to route
   useEffect(() => {
-    if (!active) {
+    if (active === 'ALL') {
       clear()
+      return
     }
-    if (active && items.find((it) => it.isRefined)?.value !== active && active !== router?.query?.tag) {
+    if (active && items.find((it) => it.isRefined)?.value !== active) {
       refine(active)
     }
-
     router.replace(
       {
         query: {
           ...router.query,
-          tag: active,
+          tag: active === 'ALL' ? '' : active,
         },
       },
       undefined,
       { shallow: true },
     )
   }, [active])
+
+  //route to state
+  useEffect(() => {
+    setActive(router.query.tag as string)
+  }, [router?.query?.tag])
+
   return (
     <MagazineTagBar
       href="#"
       tags={tagLinks}
       defaultActive={(items.length > 0 && items.find((it) => it.isRefined) === undefined) || active === ''}
       onClick={(value: string) => {
-        setActive(value === 'ALL' ? '' : value)
+        setActive(value)
       }}
     />
   )
