@@ -37,13 +37,23 @@ const StyledHero = styled(BackgroundContainer)`
   }
 `
 const StyledContent = styled.div`
-  display: grid;
-  grid-auto-columns: auto;
-  grid-gap: var(--space-large);
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   grid-area: content;
-  padding: calc(3 * var(--space-medium)) calc(3 * var(--space-large)) calc(3 * var(--space-medium))
-    var(--layout-paddingHorizontal-small);
+  grid-gap: var(--space-large);
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small);
+  max-width: calc(var(--maxViewportWidth) / 2);
+  @media (min-width: 750px) {
+    padding-left: var(--space-xxLarge);
+    padding-right: var(--space-xxLarge);
+    min-height: 450px;
+    justify-self: end;
+  }
+  @media (min-width: 1000px) {
+    padding-left: var(--layout-paddingHorizontal-small);
+    padding-right: var(--space-4xLarge);
+  }
 `
 const StyledMedia = styled.div`
   grid-area: image;
