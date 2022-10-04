@@ -163,7 +163,6 @@ export const spacings = css`
   :root {
     --minViewportWidth: 375px;
     --maxViewportWidth: 1920px;
-    --layout-paddingHorizontal-xsmall: clamp(16px, calc(-21.2158px + 9.2262vw), 180px);
     --layout-paddingHorizontal-small: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
     --layout-paddingHorizontal-medium: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
     --layout-paddingHorizontal-large: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);
