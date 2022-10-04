@@ -18,7 +18,7 @@ import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
-import { history } from 'instantsearch.js/es/lib/routers'
+//import { history } from 'instantsearch.js/es/lib/routers'
 import Teaser from '../topicPages/Teaser'
 
 const Wrapper = styled.div`
@@ -44,10 +44,15 @@ type MagazineIndexTemplateProps = {
   locale: string
   pageData: MagazineIndexData | undefined
   slug?: string
-  url: string
+  // url: string
 }
 
-const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
+const MagazineIndexPage = ({
+  isServerRendered = false,
+  locale,
+  pageData,
+  slug /* url */,
+}: MagazineIndexTemplateProps) => {
   const router = useRouter()
   const fullUrl = getUrl(router, slug)
   const { ingress, title, documentTitle, metaDescription, openGraphImage, magazineTags, footerComponent } =
@@ -102,7 +107,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
           <InstantSearch
             searchClient={isServerRendered ? searchClientServer : searchClient}
             indexName={indexName}
-            routing={{
+            /* routing={{
               // @TODO If this is enabled, the app will freeze with browser back
               router: history({
                 createURL({ qsModule, routeState, location }) {
@@ -129,7 +134,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     arrayFormat: 'repeat',
                   })
                   const href = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
-
+                  
                   return href
                 },
                 // eslint-disable-next-line
@@ -174,17 +179,11 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                   }
                 },
               },
-            }}
+            }}*/
           >
             <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
             {magazineTags && (
-              <MagazineTagFilter
-                tags={magazineTags}
-                initiallyActive={magazineTags.find((it) => it === (router?.query?.tag as string))}
-                attribute="magazineTags"
-                sortBy={[`name:asc`]}
-                limit={5}
-              />
+              <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
             )}
             <MagazineWapper>
               <MagazineContent />

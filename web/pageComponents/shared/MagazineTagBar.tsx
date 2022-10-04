@@ -94,7 +94,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         {tags.map((it: TagLink) => (
           <StyledLink
             underline={false}
-            href={encodeURI(`?tag=${it.label}`)}
+            href={`${`?tag=${it.label}`}`}
             key={`key_${it.label}`}
             active={it.active}
             data-title={it.label}

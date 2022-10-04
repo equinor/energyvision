@@ -15,7 +15,7 @@ import { MagazineIndexProps } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { SkipNavContent } from '@reach/skip-nav'
 
-export default function MagazineIndex({ serverState, isServerRendered = false, url, data }: MagazineIndexProps) {
+export default function MagazineIndex({ serverState, isServerRendered = false, /* url, */ data }: MagazineIndexProps) {
   const defaultLocale = defaultLanguage.locale
   const locale = data?.intl?.locale || defaultLocale
   return (
@@ -31,7 +31,7 @@ export default function MagazineIndex({ serverState, isServerRendered = false, u
             locale={locale}
             pageData={data?.pageData}
             slug={data?.slug}
-            url={url}
+            /* url={url}*/
           />
         </IntlProvider>
       </InstantSearchSSRProvider>
@@ -100,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  // const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <MagazineIndex
       isServerRendered
@@ -109,14 +109,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         pageData,
         slug,
       }}
-      url={url}
+      //url={url}
     />,
   )
 
   return {
     props: {
       serverState,
-      url,
+      //url,
       data: {
         menuData,
         footerData,
