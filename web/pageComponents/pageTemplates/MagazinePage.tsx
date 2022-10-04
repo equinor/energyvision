@@ -44,7 +44,6 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
   const slug = data?.slug
   const fullUrl = getFullUrl(pathname, slug, locale)
   const parentSlug = fullUrl.substring(fullUrl.indexOf('/'), fullUrl.lastIndexOf('/'))
-
   const pageTitle = data?.title ? toPlainText(data?.title) : ''
   const magazineTags = data?.magazineTags
   const tags = magazineTags?.map((it) => {
@@ -78,7 +77,12 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
             defaultActive
             href={parentSlug}
             onClick={(tagValue) => {
-              router.push(encodeURI(`${parentSlug}?tag=${tagValue === 'ALL' ? '' : tagValue}`))
+              router.push({
+                pathname: parentSlug,
+                query: {
+                  tag: tagValue === 'ALL' ? '' : tagValue,
+                },
+              })
             }}
           />
         )}

@@ -47,7 +47,8 @@ const Wrapper = styled.div`
   display: flex;
   align-content: center;
   margin: 0 auto 0 auto;
-  border: 1px solid var(--slate-blue-60);
+  border-top: 1px solid var(--slate-blue-60);
+  border-bottom: 1px solid var(--slate-blue-60);
 `
 const TagWrapper = styled.div`
   margin: var(--space-medium) auto var(--space-medium) auto;
@@ -94,7 +95,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         {tags.map((it: TagLink) => (
           <StyledLink
             underline={false}
-            href={`${`?tag=${it.label}`}`}
+            href={`${href}${`?tag=${it.label}`}`}
             key={`key_${it.label}`}
             active={it.active}
             data-title={it.label}
