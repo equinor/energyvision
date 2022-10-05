@@ -31,19 +31,20 @@ export default async function handler(req, res) {
       )
       // Revalidade every path that points to the modified document
       routes.map(async (route) => {
-        await res.unstable_revalidate(route.slug)
         //console.log('Revalidated: ', route.slug)
+        await res.unstable_revalidate(route.slug)
       })
+      return res.json({ revalidated: true, slug: routes })
     } else {
+      // console.log('Revalidated: ', data.slug)
       await res.unstable_revalidate(data.slug)
-      //console.log('Revalidated: ', data.slug)
+      return res.json({ revalidated: true, slug: data.slug })
     }
-    return res.json({ revalidated: true })
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
     console.log('Error revalidating...')
-    return res.status(500).json({ revalidated: false })
+    return res.status(500).json({ revalidated: false, data })
     // return res.status(500).send('Error revalidating')
   }
 }
