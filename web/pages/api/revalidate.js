@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   const data = JSON.parse(body)
   try {
     // @TODO Remove 'unstable' after upgrading next to ^12.2.0
-    if (data._type in ['page', 'landingPage', 'event']) {
+    if (['page', 'landingPage', 'event'].includes(data._type)) {
       const routes = await sanityClient.fetch(
         groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
         { id: data._id },
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
-    console.log('Error revalidating: ', data.slug)
+    console.log('Error revalidating...')
     return res.status(500).json({ revalidated: false })
     // return res.status(500).send('Error revalidating')
   }
