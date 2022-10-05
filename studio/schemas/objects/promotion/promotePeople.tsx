@@ -93,7 +93,7 @@ export default {
               name: 'email',
               type: 'string',
               placeholder: 'abbr@equinor.com',
-              hidden: ({ parent }: { parent: Promotion }) => parent?.isLink === true,
+              hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
               validation: (Rule: Rule) =>
                 Rule.warning().custom((email: string) => {
                   if (!email || email === '') return true
