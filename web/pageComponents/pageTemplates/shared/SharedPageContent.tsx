@@ -1,4 +1,4 @@
-import Teaser from '../../topicPages/Teaser'
+import Teaser from '../../shared/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
 import Figure from '../../topicPages/Figure'

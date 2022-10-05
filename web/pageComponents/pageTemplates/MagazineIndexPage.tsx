@@ -19,7 +19,7 @@ import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 //import { history } from 'instantsearch.js/es/lib/routers'
-import Teaser from '../topicPages/Teaser'
+import Teaser from '../shared/Teaser'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -134,7 +134,7 @@ const MagazineIndexPage = ({
                     arrayFormat: 'repeat',
                   })
                   const href = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
-                  
+
                   return href
                 },
                 // eslint-disable-next-line

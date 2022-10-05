@@ -10,7 +10,7 @@ import { metaTitleSuffix } from '../../languages'
 import { PageContent } from './shared/SharedPageContent'
 import { MagazinePageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
-import Teaser from '../topicPages/Teaser'
+import Teaser from '../shared/Teaser'
 
 const MagazinePageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
