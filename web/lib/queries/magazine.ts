@@ -1,8 +1,8 @@
 import pageContentFields from './common/pageContentFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 import linkSelectorFields from './common/actions/linkSelectorFields'
-import downloadableFileFields from './common/actions/linkSelectorFields'
-import downloadableImageFields from './common/actions/linkSelectorFields'
+import downloadableFileFields from './common/actions/downloadableFileFields'
+import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
 
 const footerComponentFields = `
