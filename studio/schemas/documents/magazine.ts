@@ -155,6 +155,13 @@ export default {
       type: 'excludeFromSearch',
       name: 'excludeFromSearch',
     },
+    {
+      title: 'Hide footer component',
+      description: 'Toggle this to hide the shared magazine footer component on this article',
+      type: 'boolean',
+      name: 'hideFooterComponent',
+      initialValue: false,
+    },
   ].filter((e) => e),
   orderings: [
     {

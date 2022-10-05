@@ -58,7 +58,8 @@ export const magazineQuery = /* groq */ `
       "data": footerComponent{
         ${footerComponentFields}
       }
-    }
+    },
+    hideFooterComponent,
 }`
 
 export const magazineIndexQuery = /* groq */ `

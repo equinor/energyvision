@@ -53,7 +53,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
     }
   })
 
-  const { footerComponent } = data
+  const { hideFooterComponent, footerComponent } = data
 
   const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.heroImage?.image
   return (
@@ -87,7 +87,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
           />
         )}
         <PageContent data={data} />
-        {footerComponent?.data && <Teaser data={footerComponent.data} />}
+        {!hideFooterComponent && footerComponent?.data && <Teaser data={footerComponent.data} />}
       </MagazinePageLayout>
     </>
   )

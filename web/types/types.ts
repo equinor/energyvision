@@ -211,6 +211,7 @@ export type MagazinePageSchema = PageSchemaV2 & {
   footerComponent?: {
     data?: TeaserData
   }
+  hideFooterComponent?: boolean
 }
 
 export type LandingPageSchema = {
