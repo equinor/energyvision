@@ -31,9 +31,9 @@ export const contentQueryById = /* groq */ `
     "hero": {
       "type": heroType,
       "ratio": heroRatio,
-      "heroTitle": heroTitle,
-      "heroIngress": heroIngress,
-      "heroLink": heroLink[0]{
+      "title": heroTitle,
+      "ingress": heroIngress,
+      "link": heroLink[0]{
         ${linkSelectorFields}
       }
     },

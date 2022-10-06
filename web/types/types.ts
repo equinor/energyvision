@@ -186,9 +186,9 @@ export type PageSchemaV2 = {
   hero: {
     type?: string
     ratio?: string
-    heroTitle: PortableTextBlock[]
-    heroIngress: PortableTextBlock[]
-    heroLink: LinkData
+    title: PortableTextBlock[]
+    ingress: PortableTextBlock[]
+    link: LinkData
   }
   background: BackgroundColours
   heroImage: ImageWithCaptionData

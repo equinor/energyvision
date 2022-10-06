@@ -25,9 +25,9 @@ export const pageQuery = /* groq */ `
     "hero": {
       "type": content->heroType,
       "ratio": content->heroRatio,
-      "heroTitle": content->heroTitle,
-      "heroIngress": content->heroIngress,
-      "heroLink": content-> heroLink[0]{
+      "title": content->heroTitle,
+      "ingress": content->heroIngress,
+      "link": content-> heroLink[0]{
         ${linkSelectorFields}
       },
     },

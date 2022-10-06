@@ -50,9 +50,9 @@ export const SharedBanner = ({ data }: BannerProps) => {
     } else if (data?.hero.type === 'banner5050') {
       return (
         <Hero5050
-          heroTitle={data.hero.heroTitle}
-          heroIngress={data.hero.heroIngress}
-          heroLink={data.hero.heroLink}
+          heroTitle={data.hero.title}
+          heroIngress={data.hero.ingress}
+          heroLink={data.hero.link}
           background={data.background}
           image={data.heroImage.image}
           title={data.title}

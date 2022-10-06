@@ -40,9 +40,9 @@ export const magazineQuery = /* groq */ `
     "hero": {
       "type": heroType,
       "ratio": heroRatio,
-      "bannerTitle": bannerTitle,
-      "bannerIngress": bannerIngress,
-      "heroLink": heroLink[0]{
+      "title": bannerTitle,
+      "ingress": bannerIngress,
+      "link": heroLink[0]{
         ${linkSelectorFields}
       }
     },
