@@ -20,6 +20,7 @@ export function MagazineTagFilter(props: RefinementListProps) {
 
   // state to route
   useEffect(() => {
+    if (!active) return
     if (active === 'ALL') {
       clear()
       return
