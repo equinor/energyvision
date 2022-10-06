@@ -11,6 +11,8 @@ import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
+import useConsentState from '../lib/hooks/useConsentState'
+import { Flags } from '../common/helpers/datasetHelpers'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -124,8 +126,8 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
-  // remove this useeffect after code review..
   useEffect(() => {
+    if (Flags.IS_DEV) return
     if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
       const script = document.createElement('script')
 
@@ -139,31 +141,19 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       }
     }
   }, [router.asPath])
-  /*
-  // rename localhost to localhost.com in your system's hosts file to test cookiebot locally.. 
-    useEffect(() => {
-    window?.addEventListener('CookiebotOnAccept', manageStatisticsCookies)
-    return () => {
-      window.removeEventListener('CookiebotOnAccept', manageStatisticsCookies)
-    }
-  }, [])
 
-  useEffect(() => {
-    manageStatisticsCookies()
-  }, [router.asPath])
-
-  function manageStatisticsCookies() {
-    if (
-      !(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost')) &&
-      window?.Cookiebot.consent.statistics
-    ) {
-      const script = document.createElement('script')
-      script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
-      script.async = true
-      document.head.appendChild(script)
-    }
+  const loadSiteImproveScript = () => {
+    const script = document.createElement('script')
+    script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
+    script.id = 'siteimprove'
+    script.async = true
+    document.head.appendChild(script)
   }
-  */
+
+  const cleanUpSiteImproveScript = () => {
+    document.getElementById('siteimprove')?.remove()
+  }
+  useConsentState('statistics', loadSiteImproveScript, cleanUpSiteImproveScript)
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
