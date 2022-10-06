@@ -42,7 +42,9 @@ export function MagazineTagFilter(props: RefinementListProps) {
 
   //route to state
   useEffect(() => {
-    setActive(router.query.tag as string)
+    if ((router.query.tag as string) !== active) {
+      setActive(router.query.tag as string)
+    }
   }, [router?.query?.tag])
 
   return (
