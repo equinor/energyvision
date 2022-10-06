@@ -249,9 +249,17 @@ const pageContentFields = /* groq */ `
             ...,
             ${markDefs},
           },
-         "slug": reference->slug.current,
-         "title": reference->content->title,
-         "heroImage": reference->content->heroFigure,
+          "slug": reference->slug.current,
+
+          reference->_type == 'route_' + $lang => {
+            "title": reference->content->title,
+            "heroImage": reference->content->heroFigure,
+          },
+
+         reference->_type == 'magazine' => {
+          "title": reference->title,
+          "heroImage": reference->heroFigure,
+         },
        },
       },
       _type == "promotePeople" => {

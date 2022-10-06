@@ -63,3 +63,15 @@ export const filterMagazineByLang = ({ document }: { document: SanityDocument })
     params: { lang: langOrDefault(document._lang) },
   }
 }
+
+export const topicPromotionFilter = ({ document }: { document: SanityDocument }) => {
+  const lang = langOrDefault(document._lang)
+
+  return {
+    filter: `(_type match $routeLang && content->_type == "page") || (_type == 'magazine' && _lang == $lang)`,
+    params: {
+      routeLang: `route_${lang}*`,
+      lang: lang,
+    },
+  }
+}

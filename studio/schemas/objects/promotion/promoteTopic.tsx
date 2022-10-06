@@ -6,7 +6,7 @@ import { validateCharCounterEditor } from '../../validations/validateCharCounter
 
 import type { Block, Rule, Image } from '@sanity/types'
 import routes from '../../routes'
-import { filterByRoute } from '../../../helpers/referenceFilters'
+import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -20,7 +20,7 @@ const introBlockContentType = configureBlockContent({
 })
 
 export default {
-  title: 'Topic promotion',
+  title: 'Topic/magazine promotion',
   name: 'promoteTopics',
   type: 'object',
 
@@ -32,16 +32,16 @@ export default {
         {
           type: 'object',
           name: 'topics',
-          title: 'Topic',
+          title: 'Pages',
           fields: [
             {
-              title: 'Topic to be promoted',
+              title: 'Page to be promoted',
               name: 'reference',
-              description: 'Select the topic you want to promote',
+              description: 'Select the page you want to promote',
               type: 'reference',
-              to: routes,
+              to: [...routes, { type: 'magazine' }],
               options: {
-                filter: filterByRoute,
+                filter: topicPromotionFilter,
                 disableNew: true,
               },
             },
@@ -57,15 +57,28 @@ export default {
           ],
           preview: {
             select: {
-              title: 'reference.content.title',
-              media: 'reference.content.heroFigure.image',
+              topicTitle: 'reference.content.title',
+              magazineTitle: 'reference.title',
+              topicMedia: 'reference.content.heroFigure.image',
+              magazineMedia: 'reference.heroFigure.image',
             },
-            prepare({ title, media }: { title: Block[]; media: Image }) {
+            prepare({
+              topicTitle,
+              magazineTitle,
+              topicMedia,
+              magazineMedia,
+            }: {
+              topicTitle: Block[]
+              magazineTitle: Block[]
+              topicMedia: Image
+              magazineMedia: Image
+            }) {
+              const title = topicTitle || magazineTitle || ''
               const plainTitle = title ? blocksToText(title) : ''
 
               return {
                 title: plainTitle,
-                media,
+                media: topicMedia || magazineMedia,
               }
             },
           },
@@ -76,15 +89,30 @@ export default {
   ],
   preview: {
     select: {
+      references: 'references',
+      // Annoyingly, the select lines below are needed to resolve the references in the references object above
       reference1: 'references.0.reference.content.title',
       reference2: 'references.1.reference.content.title',
       reference3: 'references.2.reference.content.title',
+      magazineRef1: 'references.0.reference.title',
+      magazineRef2: 'references.1.reference.title',
+      magazineRef3: 'references.2.reference.title',
     },
-    prepare({ reference1, reference2, reference3 }: { reference1: Block[]; reference2: Block[]; reference3: Block[] }) {
-      const plainTitle1 = reference1 ? blocksToText(reference1) : undefined
-      const plainTitle2 = reference2 ? blocksToText(reference2) : undefined
-      const plainTitle3 = reference3 ? blocksToText(reference3) : undefined
-      const titles = [plainTitle1, plainTitle2, plainTitle3].filter(Boolean)
+    prepare({ references }: { references: any[] }) {
+      const titles = Object.entries(references)
+        .map((reference) => {
+          if (reference[1]?.reference) {
+            const ref = reference[1].reference
+            if (ref?.title) {
+              return blocksToText(ref.title)
+            }
+
+            if (ref?.content?.title) {
+              return blocksToText(ref.content.title)
+            }
+          }
+        })
+        .filter(Boolean)
       return {
         title: titles.join(', '),
         subtitle: `Topic promotions.`,
