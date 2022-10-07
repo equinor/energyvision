@@ -192,6 +192,7 @@ export type PageSchemaV2 = {
   }
   background: BackgroundColours
   heroImage: ImageWithCaptionData
+  heroVideo: VideoHeroData
   template: Templates
   seoAndSome: {
     documentTitle?: string
@@ -608,4 +609,10 @@ export type VideoData = {
   designOptions: {
     background: BackgroundColours
   }
+}
+
+export type VideoHeroData = {
+  id: string
+  type: string
+  playbackId: string
 }

@@ -4,6 +4,7 @@ import { Flags } from '../../../common/helpers/datasetHelpers'
 import { FullImageHero } from '../../shared/Hero/FullImageHero'
 import { DefaultHero } from '../../shared/Hero/DefaultHero'
 import { Hero5050 } from '../../shared/Hero/Hero5050'
+import { VideoHero } from '../../shared/Hero/VideoHero'
 import TitleText from '../../shared/portableText/TitleText'
 import { MagazinePageSchema, TopicPageSchema } from '../../../types/types'
 
@@ -16,14 +17,6 @@ const StyledHeading = styled(TitleText)`
   margin-left: auto;
   margin-right: auto;
 `
-const StyledHeading1 = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: var(--space-xLarge);
-  padding-left: var(--layout-paddingHorizontal-medium);
-`
-
 const ImageWrapper = styled.div.attrs(() => ({
   className: 'background-image',
 }))`
@@ -58,6 +51,8 @@ export const SharedBanner = ({ data }: BannerProps) => {
           title={data.title}
         />
       )
+    } else if (data?.hero.type === 'videoHero') {
+      return <VideoHero videoHero={data.heroVideo} title={data.title} />
     } else {
       return <DefaultHero title={data.title} image={data.heroImage} />
     }

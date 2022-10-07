@@ -82,14 +82,6 @@ const StyledHeading = styled(TitleText)`
   margin-left: auto;
   margin-right: auto;
 `
-const StyledHeading1 = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: var(--space-xLarge);
-  padding-left: var(--layout-paddingHorizontal-medium);
-`
-
 const ImageWrapper = styled.div.attrs(() => ({
   className: 'background-image',
 }))`

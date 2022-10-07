@@ -36,6 +36,7 @@ const heroType = {
       { title: 'Default', value: 'default' },
       { title: 'Full Image', value: 'fullWidthImage' },
       { title: '50-50 Image', value: 'banner5050' },
+      { title: 'Full Video', value: 'videoHero' },
     ],
   },
   initialValue: 'default',
@@ -132,6 +133,38 @@ const heroImage = {
   fieldset: 'header',
 }
 
+const heroImage_v1 = {
+  title: 'Hero image',
+  name: 'heroFigure',
+  type: 'imageWithAltAndCaption',
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as DocumentType
+      if (parent?.heroType !== 'videoHero' && !value) return 'Field is required'
+      return true
+    }),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType === 'videoHero'
+  },
+  fieldset: 'header',
+}
+
+const heroVideo = {
+  title: 'Hero video',
+  name: 'heroVideo',
+  type: 'mux.video',
+  fieldset: 'header',
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as DocumentType
+      if (parent?.heroType === 'videoHero' && !value) return 'Field is required'
+      return true
+    }),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== 'videoHero'
+  },
+}
+
 export default Flags.IS_DEV
-  ? [title, heroType, heroRatio, heroTitle, heroIngress, heroLink, background, heroImage]
+  ? [title, heroType, heroRatio, heroTitle, heroIngress, heroLink, background, heroImage_v1, heroVideo]
   : [title, heroImage]

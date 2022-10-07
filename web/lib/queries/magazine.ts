@@ -48,6 +48,9 @@ export const magazineQuery = /* groq */ `
     },
     "background": background.title,
     "heroImage": heroFigure,
+    "heroVideo": heroVideo.asset->{
+      playbackId,
+		},
     "template": _type,
     ${promotedmagazineTags},
     "content": content[] {

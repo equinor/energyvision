@@ -33,6 +33,9 @@ export const pageQuery = /* groq */ `
     },
     "background": content->background.title,
     "heroImage": content->heroFigure,
+    "heroVideo": content->heroVideo.asset->{
+      playbackId,
+		},
     "template": content->_type,
      content->_type == "landingPage" => {
         ${landingPageContentFields}

@@ -39,6 +39,9 @@ export const contentQueryById = /* groq */ `
     },
     "background": background.title,
     "heroImage": heroFigure,
+    "heroVideo": heroVideo.asset->{
+      playbackId,
+		},
     "template": _type,
      _type == "landingPage" => {
         ${landingPageById}
