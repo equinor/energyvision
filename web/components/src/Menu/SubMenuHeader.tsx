@@ -72,8 +72,9 @@ export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(f
           '--border-bottom-color': isExpanded ? 'var(--moss-green-95)' : 'transparent ',
         } as CSSProperties
       }
+      {...rest}
     >
-      <StyledButton ref={ref} {...rest}>
+      <StyledButton ref={ref}>
         <StyledTypography
           forwardedAs="span"
           style={
