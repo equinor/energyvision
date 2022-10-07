@@ -7,6 +7,7 @@ import { validateCharCounterEditor } from '../../validations/validateCharCounter
 import type { Block, Rule, Image } from '@sanity/types'
 import routes from '../../routes'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
+import { Flags } from '../../../src/lib/datasetHelpers'
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -39,7 +40,7 @@ export default {
               name: 'reference',
               description: 'Select the page you want to promote',
               type: 'reference',
-              to: [...routes, { type: 'magazine' }],
+              to: [...routes, Flags.HAS_MAGAZINE && { type: 'magazine' }].filter((e) => e),
               options: {
                 filter: topicPromotionFilter,
                 disableNew: true,
