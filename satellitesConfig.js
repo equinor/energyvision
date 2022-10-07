@@ -16,6 +16,7 @@ const languages = [
   { id: 'polish', title: 'Polish', iso: 'pl-PL', name: 'pl_PL', locale: 'pl' },
   { id: 'japanese', title: 'Japanese', iso: 'ja-JP', name: 'ja_JP', locale: 'ja' },
   { id: 'korean', title: 'Korean', iso: 'ko-KR', name: 'ko_KR', locale: 'ko' },
+  { id: 'welsh', title: 'Welsh', iso: 'cy-CY', name: 'cy_CY', locale: 'cy' },
 ]
 
 /**
@@ -29,6 +30,7 @@ const newsSlug = {
   de_DE: 'aktuelles',
   ja_JP: 'news',
   ko_KR: 'news',
+  cy_CY: 'newyddion',
 }
 
 /**
@@ -64,6 +66,7 @@ const datasets = {
   techstars: ['english'],
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
+  celticsea: ['english', 'welsh'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],
@@ -122,6 +125,10 @@ const websiteDomains = {
   southkorea: {
     url: 'https://www.equinor.co.kr',
     meta: 'equinor.co.kr',
+  },
+  celticsea: {
+    url: 'https://web-celticsea-equinor-web-sites-prod.c2.radix.equinor.com',
+    meta: 'Equinor',
   },
   'global-development': {
     url: 'localhost:3000',

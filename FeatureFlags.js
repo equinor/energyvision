@@ -5,7 +5,7 @@
  */
 const GLOBAL_PROD = ['global', 'secret', 'global-test']
 const GLOBAL_DEV = ['global-development', 'global-test']
-const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea']
+const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea', 'celticsea']
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV]
