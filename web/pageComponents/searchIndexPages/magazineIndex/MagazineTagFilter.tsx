@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useMenu, UseMenuProps, useClearRefinements } from 'react-instantsearch-hooks-web'
+import { useMenu, UseMenuProps, useClearRefinements, useCurrentRefinements } from 'react-instantsearch-hooks-web'
 import MagazineTagBar from '../../shared/MagazineTagBar'
 import { useRouter } from 'next/router'
 
@@ -7,10 +7,11 @@ export type RefinementListProps = { tags: string[] } & React.ComponentProps<'div
 
 export function MagazineTagFilter(props: RefinementListProps) {
   const router = useRouter()
-  const { items, refine } = useMenu(props)
+  const { refine } = useMenu(props)
   const { refine: clear } = useClearRefinements()
+  const { items: currentItems } = useCurrentRefinements()
   const { tags } = props
-  const [active, setActive] = useState(items.find((it) => it.isRefined)?.value)
+  const [active, setActive] = useState(currentItems[0]?.refinements[0]?.label)
 
   const tagLinks = tags.map((e) => ({
     href: '#',
@@ -20,13 +21,14 @@ export function MagazineTagFilter(props: RefinementListProps) {
 
   // state to route
   useEffect(() => {
-    if (!active) return
-    if (active === 'ALL') {
+    if (!active) {
       clear()
       return
     }
-    if (active && items.find((it) => it.isRefined)?.value !== active) {
+    if ((active && active !== 'ALL') || active !== '') {
       refine(active)
+    } else {
+      clear()
     }
     router.replace(
       {
@@ -46,12 +48,11 @@ export function MagazineTagFilter(props: RefinementListProps) {
       setActive(router.query.tag as string)
     }
   }, [router?.query?.tag])
-
   return (
     <MagazineTagBar
       href=""
       tags={tagLinks}
-      defaultActive={(items.length > 0 && items.find((it) => it.isRefined) === undefined) || active === ''}
+      defaultActive={currentItems.length === 0}
       onClick={(value: string) => {
         setActive(value)
       }}
