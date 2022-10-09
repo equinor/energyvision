@@ -49,7 +49,6 @@ const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
       <ImgWrapper>
         <Img alt={altTag} layout="fill" objectFit="cover" quality={100} src={imageProps.src} />
       </ImgWrapper>
-      <Caption attribution={heroImage.attribution} caption={heroImage.caption} />
     </>
   )
 }
@@ -67,25 +66,37 @@ const RatioHero = ({ ratio, heroImage }: { ratio: string; heroImage: ImageWithCa
 }
 
 export const FullImageHero = ({ ratio, heroImage, title }: Props) => {
-  let Hero: JSX.Element
-
   const StyledCaption = heroImage?.image?.asset && (
     <CaptionWrapper>
       <Caption attribution={heroImage.attribution} caption={heroImage.caption} />
     </CaptionWrapper>
   )
-
   const StyledTitle = <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
 
-  if (ratio === 'fullScreen') Hero = <FullScreenHero heroImage={heroImage} />
-  if (ratio === 'narrow') Hero = <NarrowHero heroImage={heroImage} />
-  else Hero = <RatioHero heroImage={heroImage} ratio={ratio} />
-
-  return (
-    <>
-      {Hero}
-      {StyledCaption}
-      {StyledTitle}
-    </>
-  )
+  switch (ratio) {
+    case 'fullScreen':
+      return (
+        <>
+          <FullScreenHero heroImage={heroImage} />
+          {StyledCaption}
+          {StyledTitle}
+        </>
+      )
+    case 'narrow':
+      return (
+        <>
+          <NarrowHero heroImage={heroImage} />
+          {StyledCaption}
+          {StyledTitle}
+        </>
+      )
+    default:
+      return (
+        <>
+          <RatioHero heroImage={heroImage} ratio={ratio} />
+          {StyledCaption}
+          {StyledTitle}
+        </>
+      )
+  }
 }
