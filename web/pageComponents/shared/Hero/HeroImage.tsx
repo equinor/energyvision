@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { FigureCaption } from '@components'
 import type { ImageWithCaptionData } from '../../../types/types'
 import Image from '../Image'
-import Caption from './Caption'
+import { Caption } from './Caption'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
 type HeroImageProps = {

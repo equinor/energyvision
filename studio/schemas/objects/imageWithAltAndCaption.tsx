@@ -22,11 +22,13 @@ export default {
       name: 'caption',
       title: 'Image caption',
       type: 'string',
+      hidden: ({ document }: any) => document?.heroType === 'fiftyFifty',
     },
     {
       name: 'attribution',
       title: 'Credit',
       type: 'string',
+      hidden: ({ document }: any) => document?.heroType === 'fiftyFifty',
     },
   ],
   preview: {

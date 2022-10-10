@@ -35,7 +35,7 @@ const heroType = {
     list: [
       { title: 'Default', value: 'default' },
       { title: 'Full Image', value: 'fullWidthImage' },
-      { title: '50-50 Image', value: 'banner5050' },
+      { title: '50-50 Banner', value: 'fiftyFifty' },
       { title: 'Full Video', value: 'videoHero' },
     ],
   },
@@ -66,6 +66,7 @@ const heroRatio = {
   initialValue: '0.5',
   fieldset: 'header',
 }
+
 const heroTitle = {
   name: 'heroTitle',
   type: 'array',
@@ -74,15 +75,16 @@ const heroTitle = {
   of: [titleContentType],
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'banner5050'
+    return parent?.heroType !== 'fiftyFifty'
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType === 'banner5050' && !value) return 'Field is required'
+      if (parent?.heroType === 'fiftyFifty' && !value) return 'Field is required'
       return true
     }),
 }
+
 const heroIngress = {
   title: 'Hero Ingress',
   name: 'heroIngress',
@@ -90,10 +92,11 @@ const heroIngress = {
   inputComponent: CharCounterEditor,
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'banner5050'
+    return parent?.heroType !== 'fiftyFifty'
   },
   fieldset: 'header',
 }
+
 const heroLink = {
   name: 'heroLink',
   title: 'Link',
@@ -101,11 +104,12 @@ const heroLink = {
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'banner5050'
+    return parent?.heroType !== 'fiftyFifty'
   },
   fieldset: 'header',
   validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
 }
+
 const background = {
   title: 'Background',
   description: 'Pick a colour for the background. Default is white.',
@@ -120,11 +124,12 @@ const background = {
     list: Colors,
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'banner5050'
+    return parent?.heroType !== 'fiftyFifty'
   },
   fieldset: 'header',
   initialValue: Colors[0],
 }
+
 const heroImage = {
   title: 'Hero image',
   name: 'heroFigure',

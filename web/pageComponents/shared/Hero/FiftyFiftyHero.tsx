@@ -84,7 +84,7 @@ const TitleWrapper = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
 `
 
-const HeroImage5050 = ({ image }: { image: ImageWithAlt }) => {
+const HeroImage = ({ image }: { image: ImageWithAlt }) => {
   const imageProps = useNextSanityImage(
     sanityClientWithEquinorCDN,
     image,
@@ -131,12 +131,12 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const Hero5050 = ({ heroTitle, heroIngress, heroLink, background, image, title }: HeroProps) => {
+export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, image, title }: HeroProps) => {
   return (
     <>
       <StyledHero background={background}>
         <StyledMedia>
-          <HeroImage5050 image={image} />
+          <HeroImage image={image} />
         </StyledMedia>
         <StyledContent>
           {heroTitle && <StyledHeroTitle value={heroTitle} level="h1" size="xl" />}
