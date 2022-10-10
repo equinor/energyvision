@@ -6,20 +6,16 @@ import type { MagazineCardData } from '../../../types/types'
 
 const HitList = styled.div`
   width: 100%;
-  padding: var(--space-4xLarge) 0;
-
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), var(--card-maxWidth)));
+  justify-content: center;
   grid-gap: var(--space-large);
 
-  @media (min-width: 750px) {
-    flex-direction: row;
-  }
-
-  --card-maxWidth: 400px;
   --card-minWidth: 200px;
-  @media (min-width: 1000px) {
-    --card-minWidth: 340px;
+  --card-maxWidth: 335px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), var(--card-maxWidth)));
+
+  @media (min-width: 1300px) {
+    --card-maxWidth: 400px;
   }
 `
 

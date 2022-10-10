@@ -26,7 +26,11 @@ const Intro = styled.div`
 `
 
 const MagazineWapper = styled.div`
-  padding: var(--space-3xLarge);
+  padding: var(--space-xLarge);
+
+  @media (min-width: 1000px) {
+    padding: var(--space-xLarge) var(--space-3xLarge);
+  }
 `
 
 const StyledPagination = styled(Pagination)`
