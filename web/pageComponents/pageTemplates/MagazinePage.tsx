@@ -1,16 +1,12 @@
 import styled from 'styled-components'
-import { NextSeo } from 'next-seo'
-import { toPlainText } from '@portabletext/react'
 import { useRouter } from 'next/router'
-import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import MagazineTagBar from '../shared/MagazineTagBar'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
-import { metaTitleSuffix } from '../../languages'
 
 import { PageContent } from './shared/SharedPageContent'
 import { MagazinePageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
 import Teaser from '../shared/Teaser'
+import Seo from '../../pageComponents/shared/Seo'
 
 const MagazinePageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -39,12 +35,9 @@ type MagazinePageProps = {
 
 const MagazinePage = ({ data }: MagazinePageProps) => {
   const router = useRouter()
-  const { pathname, locale } = useRouter()
-
-  const slug = data?.slug
-  const fullUrl = getFullUrl(pathname, slug, locale)
-  const parentSlug = fullUrl.substring(fullUrl.indexOf('/'), fullUrl.lastIndexOf('/'))
-  const pageTitle = data?.title ? toPlainText(data?.title) : ''
+  const parentSlug =
+    (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
+    router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
   const magazineTags = data?.magazineTags
   const tags = magazineTags?.map((it) => {
     return {
@@ -55,20 +48,9 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
 
   const { hideFooterComponent, footerComponent } = data
 
-  const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.heroImage?.image
   return (
     <>
-      <NextSeo
-        title={`${data?.seoAndSome?.documentTitle || pageTitle} - ${metaTitleSuffix}`}
-        description={data?.seoAndSome?.metaDescription}
-        openGraph={{
-          title: pageTitle,
-          description: data?.seoAndSome?.metaDescription,
-          type: 'website',
-          url: fullUrl,
-          images: getOpenGraphImages(ogImage),
-        }}
-      ></NextSeo>
+      <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} heroImage={data?.heroImage?.image} pageTitle={data?.title} />
       <MagazinePageLayout>
         <SharedBanner data={data} />
         {tags && (

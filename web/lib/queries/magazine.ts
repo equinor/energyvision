@@ -68,9 +68,11 @@ export const magazineQuery = /* groq */ `
 export const magazineIndexQuery = /* groq */ `
   *[_type == "magazineIndex" && _lang == $lang] {
     _id,
-    "documentTitle": seo.documentTitle,
-    "metaDescription": seo.metaDescription,
-    openGraphImage,
+    "seoAndSome": {
+      "documentTitle": seo.documentTitle,
+      "metaDescription": seo.metaDescription,
+      openGraphImage,
+      },
     title,
     ingress,
     backgroundImage,

@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo'
 import styled from 'styled-components'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
 import RelatedContent from '../shared/RelatedContent'
@@ -8,17 +6,15 @@ import { toPlainText } from '@portabletext/react'
 import ContactList from '../shared/ContactList'
 import TitleText from '../shared/portableText/TitleText'
 import EventText from '../shared/portableText/EventText'
-import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import Promotion from '../topicPages/Promotion'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import { FormattedDate, FormattedTime } from '@components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { FormattedMessage } from 'react-intl'
-import { metaTitleSuffix } from '../../languages'
 
 import type { EventSchema } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
+import Seo from '../../pageComponents/shared/Seo'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -137,30 +133,15 @@ const StyledContactList = styled(ContactList)`
 `
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
-  const { title, slug } = data
+  const { title } = data
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
-  const { documentTitle, metaDescription, openGraphImage } = data.seoAndSome
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-
-  const { pathname, locale } = useRouter()
-
   const { start, end } = getEventDates(eventDate)
-  const fullUrl = getFullUrl(pathname, slug, locale)
 
   return (
     <>
-      <NextSeo
-        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
-        description={metaDescription}
-        openGraph={{
-          title: plainTitle,
-          description: metaDescription,
-          type: 'website',
-          url: fullUrl,
-          images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
-        }}
-      />
+      <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       <main>
         <EventLayout>
           <Header>

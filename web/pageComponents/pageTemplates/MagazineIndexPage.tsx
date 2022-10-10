@@ -1,25 +1,20 @@
-import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
-import { toPlainText } from '@portabletext/react'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
-import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import MagazineContent from '../searchIndexPages/magazineIndex/MagazineContent'
 import { getIsoFromLocale } from '../../lib/localization'
-import { metaTitleSuffix } from '../../languages'
 import { UnpaddedText } from './algoliaPages/components'
-import { getUrl } from './algoliaPages/helpers'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 //import { history } from 'instantsearch.js/es/lib/routers'
 import Teaser from '../shared/Teaser'
+import Seo from '../../pageComponents/shared/Seo'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -53,11 +48,7 @@ const MagazineIndexPage = ({
   pageData,
   slug /* url */,
 }: MagazineIndexTemplateProps) => {
-  const router = useRouter()
-  const fullUrl = getUrl(router, slug)
-  const { ingress, title, documentTitle, metaDescription, openGraphImage, magazineTags, footerComponent } =
-    pageData || {}
-  const plainTitle = title ? toPlainText(title) : ''
+  const { ingress, title, magazineTags, footerComponent } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
 
@@ -66,17 +57,7 @@ const MagazineIndexPage = ({
 
   return (
     <>
-      <NextSeo
-        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
-        description={metaDescription}
-        openGraph={{
-          title: plainTitle,
-          description: metaDescription,
-          type: 'website',
-          url: fullUrl,
-          images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
-        }}
-      />
+      <Seo seoAndSome={pageData?.seoAndSome} slug={slug} pageTitle={pageData?.title} />
       <main>
         <Wrapper>
           <Intro>

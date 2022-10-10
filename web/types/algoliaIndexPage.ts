@@ -1,5 +1,5 @@
 import { InstantSearchServerState } from 'react-instantsearch-hooks-web'
-import type { MenuData, FooterColumns, IntlData, ImageWithAlt, TeaserData } from './types'
+import type { MenuData, FooterColumns, IntlData, ImageWithAlt, TeaserData, SeoData } from './types'
 import { PortableTextBlock } from '@portabletext/types'
 
 export type AlgoliaIndexPageProps = {
@@ -19,9 +19,7 @@ export type NewsRoomProps = AlgoliaIndexPageProps
 export type MagazineIndexProps = /* { url: string } & */ AlgoliaIndexPageProps
 
 export type AlgoliaIndexPageData = {
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
+  seoAndSome: SeoData
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   magazineTags: string[]

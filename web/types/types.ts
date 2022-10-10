@@ -41,6 +41,12 @@ export type LinkData = {
   filename?: string
 }
 
+export type SeoData = {
+  documentTitle?: string
+  metaDescription?: string
+  openGraphImage?: ImageWithAlt
+}
+
 export type RelatedLinksData = {
   title: string
   links: LinkData[]
@@ -170,11 +176,7 @@ export type PageSchema = {
   background: BackgroundColours
   heroImage: ImageWithCaptionData
   template: Templates
-  seoAndSome: {
-    documentTitle?: string
-    metaDescription?: string
-    openGraphImage?: ImageWithAlt
-  }
+  seoAndSome: SeoData
   // @TODO: Better typings here
   content?: []
   id: string
@@ -194,11 +196,7 @@ export type PageSchemaV2 = {
   heroImage: ImageWithCaptionData
   heroVideo: VideoHeroData
   template: Templates
-  seoAndSome: {
-    documentTitle?: string
-    metaDescription?: string
-    openGraphImage?: ImageWithAlt
-  }
+  seoAndSome: SeoData
   // @TODO: Better typings here
   content?: []
   id: string
@@ -222,11 +220,7 @@ export type LandingPageSchema = {
   ingress: PortableTextBlock[]
   subGroups: SubMenuGroupData[]
   template: Templates
-  seoAndSome: {
-    documentTitle?: string
-    metaDescription?: string
-    openGraphImage?: ImageWithAlt
-  }
+  seoAndSome: SeoData
 }
 
 export type BackgroundColours = 'White' | 'Moss Green' | 'Moss Green Light' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
@@ -516,11 +510,7 @@ export type EventSchema = {
   id: string
   title: PortableTextBlock[]
   slug: string
-  seoAndSome: {
-    documentTitle?: string
-    metaDescription?: string
-    openGraphImage?: ImageWithAlt
-  }
+  seoAndSome: SeoData
   content: {
     location?: string
     eventDate: EventDateType

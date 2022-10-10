@@ -1,14 +1,9 @@
 import styled from 'styled-components'
-import { NextSeo } from 'next-seo'
 import type { LandingPageSchema } from '../../types/types'
-import { useRouter } from 'next/router'
-import { toPlainText } from '@portabletext/react'
-import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import ContentGroup from '../landingPages/ContentGroup'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
-import { metaTitleSuffix } from '../../languages'
+import Seo from '../../pageComponents/shared/Seo'
 
 const LandingPageLayout = styled.main``
 
@@ -42,26 +37,11 @@ type LandingPageProps = {
 }
 
 const LandingPage = ({ data }: LandingPageProps) => {
-  const { pathname, locale } = useRouter()
-  const { slug, title, ingress, subGroups = [] } = data
-
-  const fullUrl = getFullUrl(pathname, slug, locale)
-
-  const pageTitle = title ? toPlainText(title) : ''
+  const { title, ingress, subGroups = [] } = data
 
   return (
     <>
-      <NextSeo
-        title={`${data?.seoAndSome?.documentTitle || pageTitle} - ${metaTitleSuffix}`}
-        description={data?.seoAndSome?.metaDescription}
-        openGraph={{
-          title: pageTitle,
-          description: data?.seoAndSome?.metaDescription,
-          type: 'website',
-          url: fullUrl,
-          images: data?.seoAndSome?.openGraphImage?.asset && getOpenGraphImages(data?.seoAndSome?.openGraphImage),
-        }}
-      ></NextSeo>
+      <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       <LandingPageLayout>
         <HeroBanner>{title && <StyledHeading value={title} level="h1" size="2xl" />}</HeroBanner>
         {ingress && (

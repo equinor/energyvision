@@ -1,21 +1,16 @@
-import { NextSeo } from 'next-seo'
-import { useRouter } from 'next/router'
 import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
-import { toPlainText } from '@portabletext/react'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
-import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../searchIndexPages/newsRoomIndex/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
-import { metaTitleSuffix } from '../../languages'
 import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
-import { getUrl } from './algoliaPages/helpers'
 
 import type { NewsroomData } from '../../types'
+import Seo from '../../pageComponents/shared/Seo'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -25,29 +20,14 @@ type NewsRoomTemplateProps = {
 }
 
 const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
-  const router = useRouter()
-
-  const fullUrl = getUrl(router, slug)
-
-  const { ingress, title, documentTitle, metaDescription, openGraphImage } = pageData || {}
-  const plainTitle = title ? toPlainText(title) : ''
+  const { ingress, title } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
 
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   return (
     <>
-      <NextSeo
-        title={`${documentTitle || plainTitle} - ${metaTitleSuffix}`}
-        description={metaDescription}
-        openGraph={{
-          title: plainTitle,
-          description: metaDescription,
-          type: 'website',
-          url: fullUrl,
-          images: openGraphImage?.asset && getOpenGraphImages(openGraphImage),
-        }}
-      />
+      <Seo seoAndSome={pageData?.seoAndSome} slug={slug} pageTitle={title} />
       <main>
         <Wrapper>
           <Intro>
