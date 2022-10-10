@@ -14,7 +14,7 @@ const HitList = styled.div`
   --card-maxWidth: 335px;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), var(--card-maxWidth)));
 
-  @media (min-width: 1300px) {
+  @media (min-width: 1000px) {
     --card-maxWidth: 400px;
   }
 `
