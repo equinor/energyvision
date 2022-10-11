@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
   const host = String(request.headers.get('host'))
   const dnsRedirect = getDnsRedirect(host, pathname)
   if (dnsRedirect) {
-    return NextResponse.redirect(dnsRedirect)
+    return NextResponse.redirect(dnsRedirect, PERMANENT_REDIRECT)
   }
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
