@@ -56,7 +56,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
         {tags && (
           <MagazineTagBar
             tags={tags}
-            defaultActive
+            defaultActive={false}
             href={parentSlug}
             onClick={(tagValue) => {
               router.push({
