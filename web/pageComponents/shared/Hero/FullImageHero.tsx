@@ -42,6 +42,9 @@ const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
       imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1420),
     },
   )
+
+  if (!imageProps) return null
+
   const altTag = heroImage?.image?.isDecorative ? '' : heroImage?.image?.alt || ''
 
   return (
@@ -58,7 +61,16 @@ const NarrowHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
   // 4:3 for small screens and 10:3 for large screens
   const aspectRatio = width && width < 750 ? 0.75 : 0.3
 
-  return <Image maxWidth={1420} aspectRatio={aspectRatio} image={heroImage.image} layout="responsive" priority />
+  return (
+    <Image
+      maxWidth={4000}
+      aspectRatio={aspectRatio}
+      image={heroImage.image}
+      layout="responsive"
+      sizes="100vw"
+      priority
+    />
+  )
 }
 
 const RatioHero = ({ ratio, heroImage }: { ratio: string; heroImage: ImageWithCaptionData }) => {
@@ -73,30 +85,22 @@ export const FullImageHero = ({ ratio, heroImage, title }: Props) => {
   )
   const StyledTitle = <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
 
-  switch (ratio) {
-    case 'fullScreen':
-      return (
-        <>
-          <FullScreenHero heroImage={heroImage} />
-          {StyledCaption}
-          {StyledTitle}
-        </>
-      )
-    case 'narrow':
-      return (
-        <>
-          <NarrowHero heroImage={heroImage} />
-          {StyledCaption}
-          {StyledTitle}
-        </>
-      )
-    default:
-      return (
-        <>
-          <RatioHero heroImage={heroImage} ratio={ratio} />
-          {StyledCaption}
-          {StyledTitle}
-        </>
-      )
+  const getHero = () => {
+    switch (ratio) {
+      case 'fullScreen':
+        return <FullScreenHero heroImage={heroImage} />
+      case 'narrow':
+        return <NarrowHero heroImage={heroImage} />
+      default:
+        return <RatioHero heroImage={heroImage} ratio={ratio} />
+    }
   }
+
+  return (
+    <>
+      {getHero()}
+      {StyledCaption}
+      {StyledTitle}
+    </>
+  )
 }
