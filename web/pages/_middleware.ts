@@ -51,13 +51,13 @@ export async function middleware(request: NextRequest) {
     if (!existsInSanity) {
       const archivedPath = pathname.replace('news', 'news/archive')
       const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
-      if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`)
+      if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
     }
   }
 
   // Redirect to the same url lowercased if necessary
   if (pathname !== pathname.toLowerCase() && !pathname.includes('/news/archive')) {
-    return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`)
+    return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`, PERMANENT_REDIRECT)
   }
 
   // Check if an external redirect exists in sanity
