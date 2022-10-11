@@ -29,6 +29,7 @@ const mapperFunction: MapperFunctionType =
     text,
     magazineTags: article.magazineTags,
     heroImage: article?.heroFigure?.image || null,
+    openGraphImage: article?.openGraphImage || null,
   })
 
 type MapDataType = (article: MagazineArticle) => MagazineIndex[]
