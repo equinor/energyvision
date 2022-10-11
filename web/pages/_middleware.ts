@@ -67,7 +67,10 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check if an internal redirect exists in sanity
-  const redirect = await getRedirectUrl(isDotHtml ? pathname.replace(DOT_HTML, '') : pathname, request.nextUrl.locale)
+
+  const redirect = Flags.IS_DEV
+    ? await getRedirectUrl(isDotHtml ? pathname.replace(DOT_HTML, '') : pathname, request.nextUrl.locale)
+    : await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
     return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)
