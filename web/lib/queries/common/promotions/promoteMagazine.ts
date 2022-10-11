@@ -14,6 +14,7 @@ const promotedMagazineFields = `
     ${markDefs},
   },
   "heroImage": heroFigure,
+  openGraphImage,
 `
 
 export default `

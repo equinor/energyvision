@@ -92,6 +92,7 @@ export type CardData = {
   title: string | PortableTextBlock[]
   publishDateTime?: string
   heroImage: ImageWithCaptionData
+  openGraphImage?: ImageWithAlt
   ingress?: PortableTextBlock[]
 }
 
@@ -100,6 +101,7 @@ export type MagazineCardData = {
   title: string | PortableTextBlock[]
   tags?: string[]
   heroImage?: ImageWithAlt
+  openGraphImage?: ImageWithAlt
 }
 
 export type FeaturedContentData = {

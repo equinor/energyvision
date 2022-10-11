@@ -34,8 +34,10 @@ type MagazineCardProp = {
 }
 
 const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
-  const { slug, title, heroImage, tags } = data
-  if (!heroImage || !heroImage.asset) return null
+  const { slug, title, heroImage, openGraphImage, tags } = data
+
+  const thumbnail = heroImage?.asset ? heroImage : openGraphImage
+  if (!thumbnail || !thumbnail.asset) return null
 
   return (
     <NextLink href={slug} passHref>
@@ -49,9 +51,9 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
           }
         >
           <Media>
-            {heroImage && (
+            {thumbnail && (
               <Image
-                image={heroImage}
+                image={thumbnail}
                 maxWidth={400}
                 aspectRatio={0.56}
                 layout="responsive"

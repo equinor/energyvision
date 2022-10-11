@@ -254,11 +254,13 @@ const pageContentFields = /* groq */ `
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,
             "heroImage": reference->content->heroFigure,
+            "openGraphImage": reference->content->openGraphImage,
           },
 
          reference->_type == 'magazine' => {
           "title": reference->title,
           "heroImage": reference->heroFigure,
+          "openGraphImage": reference->openGraphImage,
          },
        },
       },

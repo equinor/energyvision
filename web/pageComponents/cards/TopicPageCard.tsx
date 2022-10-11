@@ -27,8 +27,10 @@ type TopicPageCardProp = {
 }
 
 const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardProp) => {
-  const { slug, title, heroImage, ingress } = data
-  if (!heroImage) return null
+  const { slug, title, heroImage, openGraphImage, ingress } = data
+
+  const thumbnail = heroImage?.image?.asset ? heroImage.image : openGraphImage
+  if (!thumbnail || !thumbnail.asset) return null
 
   const pageTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
@@ -44,9 +46,9 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
           }
         >
           <Media>
-            {heroImage && (
+            {thumbnail && (
               <Image
-                image={heroImage.image}
+                image={thumbnail}
                 maxWidth={400}
                 aspectRatio={0.56}
                 layout="responsive"
