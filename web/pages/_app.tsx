@@ -11,8 +11,9 @@ import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
-import useConsentState from '../lib/hooks/useConsentState'
 import { Flags } from '../common/helpers/datasetHelpers'
+import useConsentState from '../lib/hooks/useConsentState'
+import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -126,6 +127,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
+  useConsentState('statistics', loadSiteImproveScript, cleanUpSiteImproveScript)
   useEffect(() => {
     if (Flags.IS_DEV) return
     if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
@@ -141,19 +143,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       }
     }
   }, [router.asPath])
-
-  const loadSiteImproveScript = () => {
-    const script = document.createElement('script')
-    script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
-    script.id = 'siteimprove'
-    script.async = true
-    document.head.appendChild(script)
-  }
-
-  const cleanUpSiteImproveScript = () => {
-    document.getElementById('siteimprove')?.remove()
-  }
-  useConsentState('statistics', loadSiteImproveScript, cleanUpSiteImproveScript)
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>

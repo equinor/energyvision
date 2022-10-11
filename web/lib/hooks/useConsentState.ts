@@ -13,6 +13,7 @@ export type ConsentType = 'marketing' | 'statistics'
 
 function useConsentState(consentType: ConsentType, callback: () => void, cleanup?: () => void) {
   const [consent, changeConsent] = useState<boolean>(false)
+  const router = useRouter()
 
   useEffect(() => {
     if (!Flags.IS_DEV) return
@@ -29,7 +30,6 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
     }
   }, [])
 
-  const router = useRouter()
   useEffect(() => {
     if (!Flags.IS_DEV) return
     if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
