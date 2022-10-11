@@ -19,7 +19,7 @@
     "legacy-css": "pnpm --filter ./legacy/css",
     "legacy-js": "pnpm --filter ./legacy/js",
     "legacy-content": "pnpm --filter ./legacy/content",
-    "docker:build": "docker build --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=h61q9gi9 --build-arg ARG_SANITY_DATASET=global -t envis/web -f web/Dockerfile .",
+    "docker:build": "docker build --build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=h61q9gi9 --build-arg ARG_SANITY_DATASET=global-development -t envis/web -f web/Dockerfile .",
     "docker:run": "docker run -p 3000:3000 --env-file=web/.env.local envis/web",
     "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
     "prepare": "is-ci || husky install",

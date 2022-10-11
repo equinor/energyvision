@@ -32,12 +32,12 @@ export default async function handler(req, res) {
       // Revalidade every path that points to the modified document
       routes.map(async (route) => {
         //console.log('Revalidated: ', route.slug)
-        await res.unstable_revalidate(route.slug)
+        if (route.slug) await res.unstable_revalidate(route.slug)
       })
       return res.json({ revalidated: true, slug: routes })
     } else {
       // console.log('Revalidated: ', data.slug)
-      await res.unstable_revalidate(data.slug)
+      if (data.slug) await res.unstable_revalidate(data.slug)
       return res.json({ revalidated: true, slug: data.slug })
     }
   } catch (err) {

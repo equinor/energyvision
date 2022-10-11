@@ -1,4 +1,4 @@
-ARG ARG_DYNATRACE_IMAGE
+ARG ARG_DYNATRACE_IMAGE='node:lts-alpine'
 FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
 
 FROM node:lts-alpine AS builder
