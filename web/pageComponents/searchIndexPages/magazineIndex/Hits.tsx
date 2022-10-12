@@ -33,7 +33,7 @@ export type HitsProps<THit> = React.ComponentProps<'div'> &
   }
 
 // @TODO: refactor into our code style
-export function Hits() {
+export function Hits({ ...rest }) {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
@@ -41,7 +41,7 @@ export function Hits() {
   }
 
   return (
-    <HitList>
+    <HitList {...rest}>
       {hits.map((hit) => {
         const data = {
           title: hit.pageTitle,

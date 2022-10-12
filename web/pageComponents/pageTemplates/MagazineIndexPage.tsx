@@ -5,12 +5,12 @@ import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
-import MagazineContent from '../searchIndexPages/magazineIndex/MagazineContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { UnpaddedText } from './algoliaPages/components'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import type { MagazineIndexData } from '../../types'
+import { Hits } from '../searchIndexPages/magazineIndex/Hits'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 //import { history } from 'instantsearch.js/es/lib/routers'
 import Teaser from '../shared/Teaser'
@@ -33,8 +33,16 @@ const MagazineWapper = styled.div`
   }
 `
 
+const StyledHits = styled(Hits)`
+  padding-bottom: var(--space-xLarge);
+
+  @media (min-width: 1000px) {
+    padding-bottom: var(--space-3xLarge);
+  }
+`
+
 const StyledPagination = styled(Pagination)`
-  padding-bottom: var(--space-4xLarge);
+  padding: var(--space-xLarge) 0;
   justify-content: center;
 `
 
@@ -171,7 +179,7 @@ const MagazineIndexPage = ({
               <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
             )}
             <MagazineWapper>
-              <MagazineContent />
+              <StyledHits />
               <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
             </MagazineWapper>
           </InstantSearch>
