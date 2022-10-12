@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from '../common/helpers/redirects'
+import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from './common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
-import { getLocaleFromName } from '../lib/localization'
-import { Flags } from '../common/helpers/datasetHelpers'
-import { getDocumentBySlug } from '../common/helpers/getPaths'
-import archivedNews from '../lib/archive/archivedNewsPaths.json'
+import { getLocaleFromName } from './lib/localization'
+import { Flags } from './common/helpers/datasetHelpers'
+import { getDocumentBySlug } from './common/helpers/getPaths'
+import archivedNews from './lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301
 // const TEMPORARY_REDIRECT = 302
@@ -18,7 +18,7 @@ const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<
 }
 
 // Check if preview mode is enabled in Sanity
-const isPreviewEnabled = (request: NextRequest): boolean => {
+const isPreviewEnabled = (request: any): boolean => {
   const { searchParams } = request.nextUrl
   const previewCookie = request.cookies['__next_preview_data']
   const previewParam = searchParams.get('preview')
@@ -67,10 +67,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check if an internal redirect exists in sanity
-
-  const redirect = Flags.IS_DEV
-    ? await getRedirectUrl(isDotHtml ? pathname.replace(DOT_HTML, '') : pathname, request.nextUrl.locale)
-    : await getRedirectUrl(pathname, request.nextUrl.locale)
+  const redirect = await getRedirectUrl(pathname.replace(DOT_HTML, ''), request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
     return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)
