@@ -57,7 +57,7 @@ const MagazineIndexPage = ({
   const isoCode = getIsoFromLocale(locale)
 
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
-  const HITS_PER_PAGE = 12
+  const HITS_PER_PAGE = 5
 
   return (
     <>
@@ -174,9 +174,9 @@ const MagazineIndexPage = ({
               <MagazineContent />
               <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
             </MagazineWapper>
-            {footerComponent && <Teaser data={footerComponent} />}
           </InstantSearch>
         </Wrapper>
+        {footerComponent && <Teaser data={footerComponent} />}
       </main>
     </>
   )
