@@ -65,7 +65,7 @@ const MagazineIndexPage = ({
   const isoCode = getIsoFromLocale(locale)
 
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
-  const HITS_PER_PAGE = 5
+  const HITS_PER_PAGE = 12
 
   return (
     <>
