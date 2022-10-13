@@ -34,10 +34,7 @@ const pageExtensions = getPageExtensions(dataset)
 
 export default withTM(
   withBundle({
-    experimental: {
-      // https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration#self-hosting-isr
-      isrMemoryCacheSize: 0,
-    },
+    output: 'standalone',
     pageExtensions: pageExtensions,
     reactStrictMode: true,
     eslint: {

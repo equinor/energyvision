@@ -23,21 +23,25 @@ export default async function handler(req, res) {
   }
   const data = JSON.parse(body)
   try {
-    // @TODO Remove 'unstable' after upgrading next to ^12.2.0
     if (['page', 'landingPage', 'event'].includes(data._type)) {
       const routes = await sanityClient.fetch(
         groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
         { id: data._id },
       )
+
       // Revalidade every path that points to the modified document
       routes.map(async (route) => {
         //console.log('Revalidated: ', route.slug)
-        if (route.slug) await res.unstable_revalidate(route.slug)
+        if (route.slug) {
+          console.log(new Date(), 'Revalidating: ', route.slug)
+          await res.revalidate(route.slug)
+        }
       })
       return res.json({ revalidated: true, slug: routes })
     } else {
       // console.log('Revalidated: ', data.slug)
-      if (data.slug) await res.unstable_revalidate(data.slug)
+      console.log(new Date(), 'Revalidating: ', data?.slug)
+      if (data.slug) await res.revalidate(data.slug)
       return res.json({ revalidated: true, slug: data.slug })
     }
   } catch (err) {
