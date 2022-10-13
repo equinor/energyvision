@@ -2,7 +2,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { ap } from 'fp-ts/lib/Identity'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
-import { MagazineArticle } from './sanity'
+import { ImageWithAlt, MagazineArticle } from './sanity'
 import { MagazineIndex } from '../../common'
 import type { ImageWithAltAndCaption } from './sanity'
 
@@ -16,6 +16,19 @@ type MappableObjectType = {
 }
 
 type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => MagazineIndex
+
+const getHeroImage = (article: MagazineArticle): ImageWithAlt | null => {
+  if (article?.heroFigure?.image?.asset) {
+    return article.heroFigure.image
+  }
+
+  if (article?.openGraphImage?.asset) {
+    return article.openGraphImage
+  }
+
+  return null
+}
+
 const mapperFunction: MapperFunctionType =
   (article) =>
   ({ _key, title, ingress, text }) => ({
@@ -28,8 +41,7 @@ const mapperFunction: MapperFunctionType =
     ingress,
     text,
     magazineTags: article.magazineTags,
-    heroImage: article?.heroFigure?.image || null,
-    openGraphImage: article?.openGraphImage || null,
+    heroImage: getHeroImage(article),
   })
 
 type MapDataType = (article: MagazineArticle) => MagazineIndex[]
