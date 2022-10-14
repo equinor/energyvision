@@ -25,14 +25,19 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
       }
     }
     window?.addEventListener('CookiebotOnAccept', manageCookies)
+    window?.addEventListener('CookiebotOnDecline', manageCookies)
     return () => {
       window.removeEventListener('CookiebotOnAccept', manageCookies)
+      window.removeEventListener('CookiebotOnDecline', manageCookies)
     }
-  }, [])
+  }, [consentType])
 
   useEffect(() => {
     if (!Flags.IS_DEV) return
-    if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
+    if (
+      !(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhostss')) &&
+      consent
+    ) {
       callback()
       return () => {
         if (cleanup) cleanup()

@@ -36,8 +36,9 @@ const CookieDeclaration = ({ data, anchor }: CookieDeclarationProps) => {
   }, [language])
   return (
     <BackgroundContainer background="White" id={anchor}>
-      <Container id="cookie-declaration-wrapper" ref={placeholderRef}>
+      <Container id="cookie-declaration-wrapper">
         {title && <StyledTitle value={title} />}
+        <div ref={placeholderRef}></div>
       </Container>
     </BackgroundContainer>
   )
