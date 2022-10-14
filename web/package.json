@@ -20,9 +20,9 @@
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
-    "@equinor/eds-core-react": "0.23.0",
-    "@equinor/eds-icons": "^0.14.0",
-    "@equinor/eds-tokens": "^0.7.1",
+    "@equinor/eds-core-react": "0.24.0",
+    "@equinor/eds-icons": "^0.15.0",
+    "@equinor/eds-tokens": "^0.8.0",
     "@mux/mux-video": "^0.8.2",
     "@next/bundle-analyzer": "^12.1.0",
     "@portabletext/react": "^1.0.6",
