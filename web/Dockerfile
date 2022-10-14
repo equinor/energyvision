@@ -9,6 +9,7 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 COPY web/package.json web/pnpm-lock.yaml web/
+COPY web/patches web/patches
 
 RUN \
   if [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm m i --frozen-lockfile;\
@@ -19,9 +20,6 @@ FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
-# @TODO: Remove once issue with instantsearch is fixed
-# https://github.com/algolia/react-instantsearch/pull/3618
-COPY --from=deps /app/web/patches ./web/patches
 COPY . .
 
 #ARG ARG_SANITY_API_TOKEN
