@@ -101,5 +101,10 @@
     "storybook-css-modules-preset": "^1.1.1",
     "typescript": "4.8.4",
     "webpack": "^4.44.2"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "react-instantsearch-hooks-server@6.35.0": "patches/react-instantsearch-hooks-server@6.35.0.patch"
+    }
   }
 }

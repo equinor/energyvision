@@ -1,0 +1,349 @@
+diff --git a/dist/cjs/getServerState.js b/dist/cjs/getServerState.js
+index 55d1ad535cbe592915bb701c47e46dfe36c38bc4..b6dada586d929d60da785fedee8fbf865c035c65 100644
+--- a/dist/cjs/getServerState.js
++++ b/dist/cjs/getServerState.js
+@@ -5,11 +5,13 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
+ var _typeof = require("@babel/runtime/helpers/typeof");
+ 
+ Object.defineProperty(exports, "__esModule", {
+-  value: true
++  value: true,
+ });
+ exports.getServerState = getServerState;
+ 
+-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
++var _defineProperty2 = _interopRequireDefault(
++  require("@babel/runtime/helpers/defineProperty")
++);
+ 
+ var _index = require("instantsearch.js/cjs/lib/utils/index");
+ 
+@@ -17,20 +19,95 @@ var _react = _interopRequireDefault(require("react"));
+ 
+ var _reactInstantsearchHooks = require("react-instantsearch-hooks");
+ 
+-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
++function _getRequireWildcardCache(nodeInterop) {
++  if (typeof WeakMap !== "function") return null;
++  var cacheBabelInterop = new WeakMap();
++  var cacheNodeInterop = new WeakMap();
++  return (_getRequireWildcardCache = function _getRequireWildcardCache(
++    nodeInterop
++  ) {
++    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
++  })(nodeInterop);
++}
+ 
+-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
++function _interopRequireWildcard(obj, nodeInterop) {
++  if (!nodeInterop && obj && obj.__esModule) {
++    return obj;
++  }
++  if (
++    obj === null ||
++    (_typeof(obj) !== "object" && typeof obj !== "function")
++  ) {
++    return { default: obj };
++  }
++  var cache = _getRequireWildcardCache(nodeInterop);
++  if (cache && cache.has(obj)) {
++    return cache.get(obj);
++  }
++  var newObj = {};
++  var hasPropertyDescriptor =
++    Object.defineProperty && Object.getOwnPropertyDescriptor;
++  for (var key in obj) {
++    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
++      var desc = hasPropertyDescriptor
++        ? Object.getOwnPropertyDescriptor(obj, key)
++        : null;
++      if (desc && (desc.get || desc.set)) {
++        Object.defineProperty(newObj, key, desc);
++      } else {
++        newObj[key] = obj[key];
++      }
++    }
++  }
++  newObj.default = obj;
++  if (cache) {
++    cache.set(obj, newObj);
++  }
++  return newObj;
++}
+ 
+-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
++function ownKeys(object, enumerableOnly) {
++  var keys = Object.keys(object);
++  if (Object.getOwnPropertySymbols) {
++    var symbols = Object.getOwnPropertySymbols(object);
++    enumerableOnly &&
++      (symbols = symbols.filter(function (sym) {
++        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
++      })),
++      keys.push.apply(keys, symbols);
++  }
++  return keys;
++}
+ 
+-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
++function _objectSpread(target) {
++  for (var i = 1; i < arguments.length; i++) {
++    var source = null != arguments[i] ? arguments[i] : {};
++    i % 2
++      ? ownKeys(Object(source), !0).forEach(function (key) {
++          (0, _defineProperty2.default)(target, key, source[key]);
++        })
++      : Object.getOwnPropertyDescriptors
++      ? Object.defineProperties(
++          target,
++          Object.getOwnPropertyDescriptors(source)
++        )
++      : ownKeys(Object(source)).forEach(function (key) {
++          Object.defineProperty(
++            target,
++            key,
++            Object.getOwnPropertyDescriptor(source, key)
++          );
++        });
++  }
++  return target;
++}
+ 
+ /**
+  * Returns the InstantSearch server state from a component.
+  */
+ function getServerState(children) {
+   var searchRef = {
+-    current: undefined
++    current: undefined,
+   };
+ 
+   var notifyServer = function notifyServer(_ref) {
+@@ -38,95 +115,112 @@ function getServerState(children) {
+     searchRef.current = search;
+   };
+ 
+-  return importRenderToString().then(function (renderToString) {
+-    return execute({
+-      children: children,
+-      renderToString: renderToString,
+-      searchRef: searchRef,
+-      notifyServer: notifyServer
+-    }).then(function (serverState) {
+-      return {
+-        serverState: serverState,
+-        renderToString: renderToString
+-      };
+-    });
+-  }).then(function (_ref2) {
+-    var renderToString = _ref2.renderToString,
+-        serverState = _ref2.serverState;
+-    var shouldRefetch = false; // <DynamicWidgets> requires another query to retrieve the dynamic widgets
+-    // to render.
+-
+-    walkIndex(searchRef.current.mainIndex, function (index) {
+-      shouldRefetch = shouldRefetch || index.getWidgets().some(function (widget) {
+-        return widget.$$type === 'ais.dynamicWidgets';
+-      });
+-    });
+-
+-    if (shouldRefetch) {
++  return importRenderToString()
++    .then(function (renderToString) {
+       return execute({
+-        children: /*#__PURE__*/_react.default.createElement(_reactInstantsearchHooks.InstantSearchSSRProvider, serverState, children),
++        children: children,
+         renderToString: renderToString,
+         searchRef: searchRef,
+-        notifyServer: notifyServer
++        notifyServer: notifyServer,
++      }).then(function (serverState) {
++        return {
++          serverState: serverState,
++          renderToString: renderToString,
++        };
++      });
++    })
++    .then(function (_ref2) {
++      var renderToString = _ref2.renderToString,
++        serverState = _ref2.serverState;
++      var shouldRefetch = false; // <DynamicWidgets> requires another query to retrieve the dynamic widgets
++      // to render.
++
++      walkIndex(searchRef.current.mainIndex, function (index) {
++        shouldRefetch =
++          shouldRefetch ||
++          index.getWidgets().some(function (widget) {
++            return widget.$$type === "ais.dynamicWidgets";
++          });
+       });
+-    }
+ 
+-    return serverState;
+-  });
++      if (shouldRefetch) {
++        return execute({
++          children: /*#__PURE__*/ _react.default.createElement(
++            _reactInstantsearchHooks.InstantSearchSSRProvider,
++            serverState,
++            children
++          ),
++          renderToString: renderToString,
++          searchRef: searchRef,
++          notifyServer: notifyServer,
++        });
++      }
++
++      return serverState;
++    });
+ }
+ 
+ function execute(_ref3) {
+   var children = _ref3.children,
+-      renderToString = _ref3.renderToString,
+-      notifyServer = _ref3.notifyServer,
+-      searchRef = _ref3.searchRef;
+-  renderToString( /*#__PURE__*/_react.default.createElement(_reactInstantsearchHooks.InstantSearchServerContext.Provider, {
+-    value: {
+-      notifyServer: notifyServer
+-    }
+-  }, children)); // We wait for the component to mount so that `notifyServer()` is called.
++    renderToString = _ref3.renderToString,
++    notifyServer = _ref3.notifyServer,
++    searchRef = _ref3.searchRef;
++  renderToString(
++    /*#__PURE__*/ _react.default.createElement(
++      _reactInstantsearchHooks.InstantSearchServerContext.Provider,
++      {
++        value: {
++          notifyServer: notifyServer,
++        },
++      },
++      children
++    )
++  ); // We wait for the component to mount so that `notifyServer()` is called.
+ 
+   return new Promise(function (resolve) {
+     return setTimeout(resolve, 0);
+-  }).then(function () {
+-    // If `notifyServer()` is not called by then, it means that <InstantSearch>
+-    // wasn't within the `children`.
+-    // We decide to go with a strict behavior in that case; throwing. If users have
+-    // some routes that don't mount the <InstantSearch> component, they would need
+-    // to try/catch the `getServerState()` call.
+-    // If this behavior turns out to be too strict for many users, we can decide
+-    // to warn instead of throwing.
+-    if (!searchRef.current) {
+-      throw new Error("Unable to retrieve InstantSearch's server state in `getServerState()`. Did you mount the <InstantSearch> component?");
+-    }
+-
+-    return waitForResults(searchRef.current);
+-  }).then(function () {
+-    var initialResults = getInitialResults(searchRef.current.mainIndex);
+-    return {
+-      initialResults: initialResults
+-    };
+-  });
++  })
++    .then(function () {
++      // If `notifyServer()` is not called by then, it means that <InstantSearch>
++      // wasn't within the `children`.
++      // We decide to go with a strict behavior in that case; throwing. If users have
++      // some routes that don't mount the <InstantSearch> component, they would need
++      // to try/catch the `getServerState()` call.
++      // If this behavior turns out to be too strict for many users, we can decide
++      // to warn instead of throwing.
++      if (!searchRef.current) {
++        throw new Error(
++          "Unable to retrieve InstantSearch's server state in `getServerState()`. Did you mount the <InstantSearch> component?"
++        );
++      }
++
++      return waitForResults(searchRef.current);
++    })
++    .then(function () {
++      var initialResults = getInitialResults(searchRef.current.mainIndex);
++      return {
++        initialResults: initialResults,
++      };
++    });
+ }
+ /**
+  * Waits for the results from the search instance to coordinate the next steps
+  * in `getServerState()`.
+  */
+ 
+-
+ function waitForResults(search) {
+   var helper = search.mainHelper;
+   helper.searchOnlyWithDerivedHelpers();
+   return new Promise(function (resolve, reject) {
+     // All derived helpers resolve in the same tick so we're safe only relying
+     // on the first one.
+-    helper.derivedHelpers[0].on('result', function () {
++    helper.derivedHelpers[0].on("result", function () {
+       resolve();
+     }); // However, we listen to errors that can happen on any derived helper because
+     // any error is critical.
+ 
+     helper.derivedHelpers.forEach(function (derivedHelper) {
+-      return derivedHelper.on('error', function (error) {
++      return derivedHelper.on("error", function (error) {
+         reject(error);
+       });
+     });
+@@ -136,7 +230,6 @@ function waitForResults(search) {
+  * Recurse over all child indices
+  */
+ 
+-
+ function walkIndex(indexWidget, callback) {
+   callback(indexWidget);
+   return indexWidget.getWidgets().forEach(function (widget) {
+@@ -152,7 +245,6 @@ function walkIndex(indexWidget, callback) {
+  * Walks the InstantSearch root index to construct the initial results.
+  */
+ 
+-
+ function getInitialResults(rootIndex) {
+   var initialResults = {};
+   walkIndex(rootIndex, function (widget) {
+@@ -161,7 +253,7 @@ function getInitialResults(rootIndex) {
+       // We convert the Helper state to a plain object to pass parsable data
+       // structures from server to client.
+       state: _objectSpread({}, searchResults._state),
+-      results: searchResults._rawResults
++      results: searchResults._rawResults,
+     };
+   });
+   return initialResults;
+@@ -170,19 +262,18 @@ function getInitialResults(rootIndex) {
+ function importRenderToString() {
+   // React pre-18 doesn't use `exports` in package.json, requiring a fully resolved path
+   // Thus, only one of these imports is correct
+-  var modules = ['react-dom/server.js', 'react-dom/server']; // import is an expression to make sure https://github.com/webpack/webpack/issues/13865 does not kick in
+-
+-  return Promise.all(modules.map(function (mod) {
+-    return Promise.resolve("".concat(mod)).then(function (s) {
+-      return _interopRequireWildcard(require(s));
+-    }).catch(function () {});
+-  })).then(function (imports) {
+-    var ReactDOMServer = imports.find(function (mod) {
+-      return mod !== undefined;
+-    });
++  const modules = [
++    // eslint-disable-next-line import/extensions
++    import("react-dom/server.js").catch(() => {}),
++    import("react-dom/server").catch(() => {}),
++  ];
++
++  // import is an expression to make sure https://github.com/webpack/webpack/issues/13865 does not kick in
++  return Promise.all(modules).then((imports) => {
++    const ReactDOMServer = imports.find((mod) => mod !== undefined);
+ 
+     if (!ReactDOMServer) {
+-      throw new Error('Could not import ReactDOMServer.');
++      throw new Error("Could not import ReactDOMServer.");
+     }
+ 
+     return ReactDOMServer.renderToString;
