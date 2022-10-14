@@ -18,8 +18,8 @@ export const fixPreviewForDrafts = /* groq */ `
   ((defined(_lang) && _lang == $lang) || (!defined(_lang) && $lang == "${defaultLanguage.name}"))
 `
 
-/* @TODO Add 'OR Flags.IS_GLOBAL_PROD' after review */
-const excludeCrudeOilAssays = Flags.IS_DEV ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
+const excludeCrudeOilAssays =
+  Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
 
 export const newsFields = /* groq */ `
   "id": _id,
