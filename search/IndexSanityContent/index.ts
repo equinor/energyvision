@@ -8,6 +8,7 @@ import { indexMagazine } from './magazine'
 import { languageFromIso, languageOrDefault } from '../common'
 import { pipe } from 'fp-ts/lib/function'
 import { indexLocalNews } from './localNews'
+import * as O from 'fp-ts/Option'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
@@ -17,12 +18,34 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
   const logger = context.log
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
-
-  await indexEvents(language)().catch(logger.error)
-  await indexTopic(language)().catch(logger.error)
-  await indexNews(language)().catch(logger.error)
-  await indexMagazine(language)().catch(logger.error)
-  await indexLocalNews(language)().catch(logger.error)
+  const index: string = req.body.index
+  const isDev: boolean = req.body.isDev || false
+  await pipe(
+    index,
+    O.fromNullable,
+    O.match(
+      () => {
+        indexEvents(language)(false)().catch(logger.error)
+        indexTopic(language)(false)().catch(logger.error)
+        indexNews(language)(false)().catch(logger.error)
+        indexMagazine(language)(false)().catch(logger.error)
+        indexLocalNews(language)(false)().catch(logger.error)
+      },
+      (index) => {
+        index.includes('EVENTS')
+          ? indexEvents(language)(isDev)().catch(logger.error)
+          : index.includes('TOPICS')
+          ? indexTopic(language)(isDev)().catch(logger.error)
+          : index.includes('MAGAZINE')
+          ? indexMagazine(language)(isDev)().catch(logger.error)
+          : index.includes('NEWS')
+          ? indexNews(language)(isDev)().catch(logger.error)
+          : index.includes('LOCALNEWS')
+          ? indexLocalNews(language)(isDev)().catch(logger.error)
+          : O.none
+      },
+    ),
+  )
 }
 
 export default httpTrigger

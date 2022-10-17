@@ -8,15 +8,19 @@ import { update, generateIndexName, getEnvironment, Language, getSanityClient } 
 import { fetchData } from './sanity'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
+import { getDevEnvironment } from '../../common/env'
 
 const indexIdentifier = 'TOPICS'
 
-export const indexTopic = (language: Language) => {
-  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
+export const indexTopic = (language: Language) => (isDev: boolean) => {
+  const indexName = flow(
+    isDev ? getDevEnvironment : getEnvironment,
+    E.map(generateIndexName(indexIdentifier)(language.isoCode)),
+  )
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
   return pipe(
-    getSanityClient(),
+    getSanityClient(isDev)(),
     TE.fromEither,
     TE.chainW(fetchData(language)),
     TE.map((pages) => pipe(pages.map(mapData), flatten)),
