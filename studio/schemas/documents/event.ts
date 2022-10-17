@@ -56,6 +56,14 @@ export default {
         collapsed: false,
       },
     },
+    {
+      title: 'Tags',
+      name: 'tagFieldset',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
   ],
   fields: [
     {
@@ -70,6 +78,20 @@ export default {
       title: 'Open Graph Image',
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
+    },
+    {
+      title: 'Event tags',
+      name: 'eventTags',
+      type: 'array',
+      description: 'Add tags to this event',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'eventTag' }],
+          options: { disableNew: true },
+        },
+      ],
+      fieldset: 'tagFieldset',
     },
     {
       name: 'title',
