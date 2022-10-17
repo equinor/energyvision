@@ -21,7 +21,9 @@ const ImgWrapper = styled.div`
 `
 
 const CaptionWrapper = styled.div`
+  margin: 0 auto;
   padding: 0 var(--layout-paddingHorizontal-small);
+  max-width: var(--maxViewportWidth);
 `
 
 const TitleWrapper = styled.div`
@@ -39,7 +41,7 @@ const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
     sanityClientWithEquinorCDN,
     heroImage.image,
     /* { imageBuilder: customImageUrlBuilder }  */ {
-      imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1420),
+      imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 0.5),
     },
   )
 
@@ -48,11 +50,9 @@ const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
   const altTag = heroImage?.image?.isDecorative ? '' : heroImage?.image?.alt || ''
 
   return (
-    <>
-      <ImgWrapper>
-        <Img alt={altTag} layout="fill" objectFit="cover" quality={100} src={imageProps.src} />
-      </ImgWrapper>
-    </>
+    <ImgWrapper>
+      <Img alt={altTag} layout="fill" objectFit="cover" quality={100} src={imageProps.src} />
+    </ImgWrapper>
   )
 }
 

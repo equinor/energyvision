@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
 import { NextSeo } from 'next-seo'
 import { useIntl, IntlProvider } from 'react-intl'
-import { GetStaticProps } from 'next/types'
+import type { GetStaticProps } from 'next/types'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 import getIntl from '../../common/helpers/getIntl'
