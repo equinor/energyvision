@@ -12,7 +12,7 @@
 
   "runArgs": ["--init", "--privileged"],
   "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
-	"overrideCommand": false,
+  "overrideCommand": false,
 
   // Set *default* container specific settings.json values on container create.
   "settings": {
@@ -48,7 +48,8 @@
     "eg2.vscode-npm-script",
     "vscode-icons-team.vscode-icons",
     "ms-azuretools.vscode-azurefunctions",
-    "hdoro.sanity-snippets"
+    "hdoro.sanity-snippets",
+    "sanity-io.vscode-sanity"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
