@@ -22,6 +22,7 @@ import footer from './documents/footer'
 import tag from './documents/tag'
 import countryTag from './documents/countryTag'
 import magazineTag from './documents/magazineTag'
+import eventTag from './documents/eventTag'
 import event from './documents/event'
 import assetFile from './documents/assetFile'
 import assetTag from './documents/assetTag'
@@ -94,7 +95,7 @@ const MenuSchemas = Flags.HAS_FANCY_MENU
   ? [siteMenu, subMenu, menuGroup, menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
 const LocalNewsSchemas = Flags.HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
-const EventSchemas = Flags.HAS_EVENT ? [event, eventDate] : []
+const EventSchemas = Flags.HAS_EVENT ? [event, eventDate, eventTag] : []
 const LandingPageSchemas = Flags.HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = Flags.HAS_NEWS ? [news, newsList, promoteNews, tag, countryTag] : []
 const NewsRoomSchema = Flags.HAS_NEWSROOM ? [newsroom] : []

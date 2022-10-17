@@ -5,6 +5,7 @@ import { Tags } from './Tags'
 import { CountryTags } from './CountryTags'
 import { LocalNewsTags } from './LocalNewsTags'
 import { MagazineTags } from './MagazineTags'
+import { EventTags } from './EventTags'
 import { Redirects, ExternalRedirects } from './Redirects'
 import { TextSnippet } from './TextSnippet'
 import { Flags } from '../../datasetHelpers'
@@ -13,6 +14,7 @@ const settingsItems = [
   Flags.HAS_NEWS && Tags,
   Flags.HAS_NEWS && CountryTags,
   Flags.HAS_MAGAZINE && MagazineTags,
+  Flags.HAS_EVENT && EventTags,
   TextSnippet,
   Redirects,
   ExternalRedirects,
