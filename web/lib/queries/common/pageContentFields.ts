@@ -306,7 +306,7 @@ const pageContentFields = /* groq */ `
           tags,
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
-            "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event"  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
+            "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event" && count(content->eventTags[_ref in ^.^.tags[]._ref]) > 0  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
               ${eventPromotionFields}
             },
           },

@@ -57,10 +57,14 @@ export default {
       title: 'Tags',
       name: 'tags',
       type: 'array',
-      of: [{ type: 'string' }],
-      description: 'Feed in all the upcoming events that satisfies the tags',
-
-      options: { list: eventTags },
+      of: [
+        {
+          title: 'Select the event tag(s) to promote',
+          type: 'reference',
+          to: [{ type: 'eventTag' }],
+          options: { disableNew: true },
+        },
+      ],
       hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true,
     },
 
