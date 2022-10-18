@@ -1,6 +1,6 @@
 ARG ARG_DYNATRACE_IMAGE='node:16-alpine'
 
-#https://spa-equinor.kanari.com/e/<environment>/linux/oneagent-codemodules-musl:all
+#spa-equinor.kanari.com/e/<environment>/linux/oneagent-codemodules-musl:all
 FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
 
 FROM node:16-alpine AS deps
