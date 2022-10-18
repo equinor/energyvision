@@ -7,7 +7,7 @@ import { getDocumentBySlug } from './common/helpers/getPaths'
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301
-// const TEMPORARY_REDIRECT = 302
+const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 
@@ -42,7 +42,10 @@ export async function middleware(request: NextRequest) {
   const host = String(request.headers.get('host'))
   const dnsRedirect = getDnsRedirect(host, pathname)
   if (dnsRedirect) {
-    return NextResponse.redirect(dnsRedirect, PERMANENT_REDIRECT)
+    return NextResponse.redirect(
+      dnsRedirect,
+      host.includes('equinorcelticsea.co.uk') ? TEMPORARY_REDIRECT : PERMANENT_REDIRECT,
+    )
   }
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity

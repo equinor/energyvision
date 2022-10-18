@@ -76,4 +76,9 @@ const dnsRedirects = [
     from: 'equinor.com.au',
     to: '/en/where-we-are/australia',
   },
+  {
+    // remove this on go-live
+    from: 'equinorcelticsea.co.uk',
+    to: '/',
+  },
 ]
