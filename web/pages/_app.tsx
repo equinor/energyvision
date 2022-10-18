@@ -11,7 +11,6 @@ import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
-import { Flags } from '../common/helpers/datasetHelpers'
 import useConsentState from '../lib/hooks/useConsentState'
 import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 
