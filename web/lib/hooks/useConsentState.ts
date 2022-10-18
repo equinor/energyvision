@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 //COOKIEBOT
 declare global {
@@ -16,7 +15,6 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
   const router = useRouter()
 
   useEffect(() => {
-    if (!Flags.IS_DEV) return
     const manageCookies = () => {
       if (consentType === 'marketing') {
         changeConsent(window?.Cookiebot.consent.marketing)
@@ -33,9 +31,8 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
   }, [consentType])
 
   useEffect(() => {
-    if (!Flags.IS_DEV) return
     if (
-      !(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhostss')) &&
+      !(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost')) &&
       consent
     ) {
       callback()

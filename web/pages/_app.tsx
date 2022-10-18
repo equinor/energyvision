@@ -128,21 +128,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   useConsentState('statistics', loadSiteImproveScript, cleanUpSiteImproveScript)
-  useEffect(() => {
-    if (Flags.IS_DEV) return
-    if (!(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost'))) {
-      const script = document.createElement('script')
-
-      script.src = 'https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
-      script.async = true
-
-      document.head.appendChild(script)
-
-      return () => {
-        document.head.removeChild(script)
-      }
-    }
-  }, [router.asPath])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
