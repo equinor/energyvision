@@ -1,19 +1,10 @@
 import React from 'react'
-
 import type { Rule, Reference, ValidationContext, Block } from '@sanity/types'
 import blocksToText from '../../../helpers/blocksToText'
 import routes from '../../routes'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import { EdsIcon } from '../../../icons'
 import { calendar_event } from '@equinor/eds-icons'
-
-// @TODO: How to do tags
-const eventTags = [
-  { value: 'tag1', title: 'Tag one' },
-  { value: 'tag2', title: 'Tag two' },
-  { value: 'tag3', title: 'Tag three' },
-  { value: 'tag4', title: 'Tag four' },
-]
 
 export type Event = {
   tags: string[]
@@ -52,8 +43,6 @@ export default {
       hidden: ({ parent }: { parent: Event }) => parent?.promotePastEvents === false,
     },
     {
-      // @TODO
-      // I guess we need some separate tags for the event? Or? Fernando to do something here #628
       title: 'Tags',
       name: 'tags',
       type: 'array',
@@ -99,10 +88,7 @@ export default {
   // When you play the game of previews, you win or you die
   preview: {
     select: {
-      tags1: 'tags.0',
-      tags2: 'tags.1',
-      tags3: 'tags.2',
-      tags4: 'tags.3',
+      tags: 'tags',
       reference1: 'promotedEvents.0.content.title',
       reference2: 'promotedEvents.1.content.title',
       reference3: 'promotedEvents.2.content.title',
@@ -111,10 +97,7 @@ export default {
       pastEventsCount: 'pastEventsCount',
     },
     prepare({
-      tags1,
-      tags2,
-      tags3,
-      tags4,
+      tags,
       reference1,
       reference2,
       reference3,
@@ -122,10 +105,7 @@ export default {
       promotePastEvents,
       pastEventsCount,
     }: {
-      tags1?: string
-      tags2?: string
-      tags3?: string
-      tags4?: string
+      tags?: any
       reference1: Block[]
       reference2: Block[]
       reference3: Block[]
@@ -133,12 +113,6 @@ export default {
       pastEventsCount?: number
       promotePastEvents: boolean
     }) {
-      // @TODO: Figure out how to do tags
-      const getTagTitle = (id: string | undefined) => {
-        if (!id) return undefined
-        const tag = eventTags.find((tag) => tag.value === id)
-        return tag?.title
-      }
       let title
       if (manually) {
         const plainTitle1 = reference1 ? blocksToText(reference1) : undefined
@@ -148,13 +122,8 @@ export default {
         const titleText = [plainTitle1, plainTitle2].filter(Boolean).join(', ') || ''
         title = hasMoreReferences ? `${titleText}...` : titleText
       } else {
-        const tags = [getTagTitle(tags1), getTagTitle(tags2), getTagTitle(tags3)].filter(Boolean)
-        const hasMoreTags = Boolean(getTagTitle(tags4))
-        const titleText =
-          tags.length > 0
-            ? `Tags: ${tags.join(', ')}`
-            : `Showing ${pastEventsCount || 'all'} ${promotePastEvents ? 'past' : 'future'} events without tag filters`
-        title = hasMoreTags ? `${titleText}…` : titleText
+        const tagText = tags.length > 0 ? `from ${tags.length} tag(s)` : `without tag filters`
+        title = `Showing ${pastEventsCount || 'all'} ${promotePastEvents ? 'past' : 'future'} events ${tagText}`
       }
       return {
         title: title,
