@@ -135,7 +135,7 @@ jobs:
           algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
           dynatraceEnvironment: ${{ secrets.DYNATRACE_ENVIRONMENT }}
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
-          dynatraceImage: ${{ secrets.DYNATRACE_PROD_IMAGE }}
+          dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
