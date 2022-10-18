@@ -17,6 +17,7 @@ type ImgProps = Omit<
   placeholder?: 'empty' | 'blur'
   unoptimized?: boolean
   priority?: boolean
+  objectFit?: 'cover' | 'contain'
 }
 
 const getHeightByAspectRatio = (options: UseNextSanityImageBuilderOptions, maxWidth: number, aspectRatio: number) => {
@@ -55,7 +56,7 @@ const Image = ({
   aspectRatio,
   placeholder,
   unoptimized = false,
-
+  objectFit,
   ...rest
 }: ImgProps) => {
   const imageProps = useNextSanityImage(
@@ -76,7 +77,16 @@ const Image = ({
 
   // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
   if (layout === 'fill') {
-    return <Img src={imageProps.src} alt={altTag} sizes={sizes} layout={layout} placeholder={placeholder} />
+    return (
+      <Img
+        src={imageProps.src}
+        alt={altTag}
+        sizes={sizes}
+        layout={layout}
+        placeholder={placeholder}
+        objectFit={objectFit}
+      />
+    )
   }
 
   return (

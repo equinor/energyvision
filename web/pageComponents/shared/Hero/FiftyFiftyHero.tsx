@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import Img from 'next/image'
-import { SanityImgLoader } from '../Image'
-import { useNextSanityImage } from 'next-sanity-image'
-import { sanityClientWithEquinorCDN } from '../../../lib/sanity.server'
+import Image from '../Image'
 import { PortableTextBlock } from '@portabletext/types'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
@@ -59,12 +56,7 @@ const StyledContent = styled.div`
 const StyledMedia = styled.div`
   grid-area: image;
   position: relative;
-  height: 400px;
-  @media (min-width: 750px) {
-    height: auto;
-    max-height: 800px;
-    padding: 0;
-  }
+  min-height: 350px;
 `
 const StyledIngress = styled.div`
   @media (max-width: 750px) {
@@ -83,30 +75,6 @@ const StyledHeading = styled(TitleText)`
 const TitleWrapper = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
 `
-
-const HeroImage = ({ image }: { image: ImageWithAlt }) => {
-  const imageProps = useNextSanityImage(
-    sanityClientWithEquinorCDN,
-    image,
-    /* { imageBuilder: customImageUrlBuilder }  */ {
-      imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 1420),
-    },
-  )
-
-  const altTag = image?.isDecorative ? '' : image?.alt || ''
-
-  return (
-    <Img
-      alt={altTag}
-      layout="fill"
-      unoptimized
-      objectFit="cover"
-      quality={100}
-      src={imageProps.src}
-      role={image?.isDecorative ? 'presentation' : undefined}
-    />
-  )
-}
 
 const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   const { label, ariaLabel, extension, type } = action
@@ -136,7 +104,14 @@ export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, i
     <>
       <StyledHero background={background}>
         <StyledMedia>
-          <HeroImage image={image} />
+          <Image
+            maxWidth={4096}
+            sizes="(max-width: 800px) 100vw, 800px"
+            image={image}
+            layout={'fill'}
+            objectFit={'cover'}
+            priority
+          />
         </StyledMedia>
         <StyledContent>
           {heroTitle && <StyledHeroTitle value={heroTitle} level="h1" size="xl" />}

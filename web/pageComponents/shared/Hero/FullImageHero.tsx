@@ -1,8 +1,5 @@
 import type { ImageWithCaptionData } from 'types/types'
-import Img from 'next/image'
-import Image, { SanityImgLoader } from '../Image'
-import { useNextSanityImage } from 'next-sanity-image'
-import { sanityClientWithEquinorCDN } from '../../../lib/sanity.server'
+import Image from '../Image'
 import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Caption } from './Caption'
@@ -37,21 +34,9 @@ const StyledHeading = styled(TitleText)`
 `
 
 const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
-  const imageProps = useNextSanityImage(
-    sanityClientWithEquinorCDN,
-    heroImage.image,
-    /* { imageBuilder: customImageUrlBuilder }  */ {
-      imageBuilder: (imageUrlBuilder, options) => SanityImgLoader(imageUrlBuilder, options, 0.5),
-    },
-  )
-
-  if (!imageProps) return null
-
-  const altTag = heroImage?.image?.isDecorative ? '' : heroImage?.image?.alt || ''
-
   return (
     <ImgWrapper>
-      <Img alt={altTag} layout="fill" objectFit="cover" quality={100} src={imageProps.src} />
+      <Image maxWidth={4096} image={heroImage?.image} layout={'fill'} objectFit={'cover'} priority />
     </ImgWrapper>
   )
 }
