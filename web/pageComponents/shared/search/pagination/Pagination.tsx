@@ -3,6 +3,8 @@ import { PaginationItem } from './PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import styled from 'styled-components'
+import { useEffect } from 'react'
+import { Flags } from '../../../../common/helpers/datasetHelpers'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
@@ -26,6 +28,12 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
     totalPages,
     padding,
   })
+
+  useEffect(() => {
+    if (Flags.IS_DEV) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }
+  }, [currentRefinement])
 
   if (!nbHits || nbHits === 0 || nbHits <= hitsPerPage) {
     return null
