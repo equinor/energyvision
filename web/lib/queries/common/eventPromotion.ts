@@ -15,3 +15,12 @@ export const pastEventsQuery = `
     && !(_id in path("drafts.**"))
     && count(content->eventTags[_ref in ^.^.tags[]._ref]) > 0 ]
     | order(dateTime(content->eventDate.date+"T00:00:00.00Z") desc)[0...50]`
+
+export const futureEventsQuery = /* groq */ `
+  *[_type match "route_" + $lang + "*"
+    && content->_type == "event"
+    && count(content->eventTags[_ref in ^.^.tags[]._ref]) > 0
+    && content->eventDate.date >= $date
+    && !(_id in path("drafts.**"))
+  ]
+`

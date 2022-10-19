@@ -4,7 +4,7 @@ import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import { publishDateTimeQuery } from '../news'
-import { eventPromotionFields, pastEventsQuery } from './eventPromotion'
+import { eventPromotionFields, pastEventsQuery, futureEventsQuery } from './eventPromotion'
 import promoteMagazine from './promotions/promoteMagazine'
 
 const pageContentFields = /* groq */ `
@@ -306,7 +306,7 @@ const pageContentFields = /* groq */ `
           tags,
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
-            "promotions": *[_type match "route_" + $lang + "*" && content->_type == "event" && count(content->eventTags[_ref in ^.^.tags[]._ref]) > 0  && content->eventDate.date >= $date && !(_id in path("drafts.**")) ]{
+            "promotions": ${futureEventsQuery}{
               ${eventPromotionFields}
             },
           },
