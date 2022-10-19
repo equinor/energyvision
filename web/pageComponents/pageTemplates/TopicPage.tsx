@@ -188,7 +188,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
     if (!data.title) return null
 
     if (data?.hero.type === 'fullWidthImage') {
-      return <FullImageHero title={data.title} ratio={data.hero.ratio as string} heroImage={data.heroImage} />
+      return <FullImageHero ratio={data.hero.ratio as string} heroImage={data.heroImage} />
     } else if (data?.hero.type === 'fiftyFifty') {
       return (
         <FiftyFiftyHero
@@ -197,7 +197,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
           heroLink={data.hero.heroLink}
           background={data.background}
           image={data.heroImage.image}
-          title={data.title}
         />
       )
     } else {

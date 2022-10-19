@@ -39,11 +39,10 @@ export const SharedBanner = ({ data }: BannerProps) => {
     if (!data.title) return null
 
     if (data?.hero.type === 'fullWidthImage') {
-      return <FullImageHero title={data.title} ratio={data.hero.ratio as string} heroImage={data.heroImage} />
+      return <FullImageHero ratio={data.hero.ratio as string} heroImage={data.heroImage} />
     } else if (data?.hero.type === 'fiftyFifty') {
       return (
         <FiftyFiftyHero
-          title={data.title}
           image={data.heroImage.image}
           heroTitle={data.hero.title}
           heroIngress={data.hero.ingress}
@@ -52,7 +51,7 @@ export const SharedBanner = ({ data }: BannerProps) => {
         />
       )
     } else if (data?.hero.type === 'videoHero') {
-      return <VideoHero videoHero={data.heroVideo} title={data.title} />
+      return <VideoHero videoHero={data.heroVideo} />
     } else {
       return <DefaultHero title={data.title} image={data.heroImage} />
     }

@@ -3,13 +3,10 @@ import Image from '../Image'
 import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Caption } from './Caption'
-import { PortableTextBlock } from '@portabletext/types'
-import TitleText from '../portableText/TitleText'
 
 type Props = {
   ratio: string
   heroImage: ImageWithCaptionData
-  title: PortableTextBlock[]
 }
 
 const ImgWrapper = styled.div`
@@ -22,17 +19,6 @@ const CaptionWrapper = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small);
   max-width: var(--maxViewportWidth);
 `
-
-const TitleWrapper = styled.div`
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
-`
-
-const StyledHeading = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-`
-
 const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
   return (
     <ImgWrapper>
@@ -62,13 +48,12 @@ const RatioHero = ({ ratio, heroImage }: { ratio: string; heroImage: ImageWithCa
   return <Image maxWidth={1420} aspectRatio={Number(ratio)} image={heroImage.image} layout="responsive" priority />
 }
 
-export const FullImageHero = ({ ratio, heroImage, title }: Props) => {
+export const FullImageHero = ({ ratio, heroImage }: Props) => {
   const StyledCaption = heroImage?.image?.asset && (
     <CaptionWrapper>
       <Caption attribution={heroImage.attribution} caption={heroImage.caption} />
     </CaptionWrapper>
   )
-  const StyledTitle = <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
 
   const getHero = () => {
     switch (ratio) {
@@ -85,7 +70,6 @@ export const FullImageHero = ({ ratio, heroImage, title }: Props) => {
     <>
       {getHero()}
       {StyledCaption}
-      {StyledTitle}
     </>
   )
 }

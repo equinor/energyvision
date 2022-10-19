@@ -14,7 +14,6 @@ type HeroProps = {
   heroLink: LinkData
   background: BackgroundColours
   image: ImageWithAlt
-  title: PortableTextBlock[]
 }
 
 const StyledHero = styled(BackgroundContainer)`
@@ -67,14 +66,6 @@ const StyledHeroTitle = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
   font-weight: var(--fontWeight-medium);
 `
-const StyledHeading = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-`
-const TitleWrapper = styled.div`
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
-`
 
 const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   const { label, ariaLabel, extension, type } = action
@@ -99,7 +90,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, image, title }: HeroProps) => {
+export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, image }: HeroProps) => {
   return (
     <>
       <StyledHero background={background}>
@@ -134,7 +125,6 @@ export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, i
           {heroLink && <HeroActionLink action={heroLink} />}
         </StyledContent>
       </StyledHero>
-      <TitleWrapper>{title && <StyledHeading value={title} level="h1" size="2xl" />}</TitleWrapper>
     </>
   )
 }

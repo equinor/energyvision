@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import MagazineTagBar from '../shared/MagazineTagBar'
-
+import TitleText from '../shared/portableText/TitleText'
 import { PageContent } from './shared/SharedPageContent'
 import { MagazinePageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
@@ -27,6 +27,15 @@ const MagazinePageLayout = styled.main`
       padding-top: 0;
     }
   }
+`
+const TitleWrapper = styled.div`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
+`
+
+const StyledHeading = styled(TitleText)`
+  max-width: 1186px; /* 1920 - (2 * 367) */
+  margin-left: auto;
+  margin-right: auto;
 `
 
 type MagazinePageProps = {
@@ -67,6 +76,9 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
               })
             }}
           />
+        )}
+        {data.hero.type !== 'default' && (
+          <TitleWrapper>{data.title && <StyledHeading value={data.title} level="h1" size="2xl" />}</TitleWrapper>
         )}
         <PageContent data={data} />
         {!hideFooterComponent && footerComponent?.data && <Teaser data={footerComponent.data} />}
