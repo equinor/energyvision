@@ -1,4 +1,4 @@
-export const eventPromotionFields = `
+export const eventPromotionFields = /* groq */ `
     "type": "events",
     "id": _id,
     "slug": slug.current,
@@ -8,7 +8,7 @@ export const eventPromotionFields = `
     `
 
 /* Unable to pass end time along with the date to sort. So using hard coded timestamp*/
-export const pastEventsQuery = `
+export const pastEventsQuery = /* groq */ `
     *[_type match "route_" + $lang + "*"
     && content->_type == "event"
     && content->eventDate.date < $date
