@@ -14,7 +14,7 @@ import * as T from 'fp-ts/lib/Task'
 
 const indexes = ['EVENTS', 'TOPICS', 'MAGAZINE', 'NEWS', 'LOCALNEWS']
 
-const indexStuff: {
+const indexTasks: {
   [key: string]: (language: Language) => (isDev: boolean) => T.Task<void>
 } = {
   EVENTS: indexEvents,
@@ -41,7 +41,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   const getEnvironment = () => O.fromNullable(req.body?.isDev)
   const isDev = O.getOrElse(() => false)(getEnvironment())
 
-  pipe(getIndex, (indexArray) => indexArray.map((index) => indexStuff[index](language)(isDev)().catch(logger.error)))
+  pipe(getIndex, (indexArray) => indexArray.map((index) => indexTasks[index](language)(isDev)().catch(logger.error)))
 }
 
 export default httpTrigger
