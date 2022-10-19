@@ -5,10 +5,24 @@ import { indexEvents } from './events'
 import { indexTopic } from './topic'
 import { indexNews } from './news'
 import { indexMagazine } from './magazine'
-import { languageFromIso, languageOrDefault } from '../common'
+import { Language, languageFromIso, languageOrDefault } from '../common'
 import { pipe } from 'fp-ts/lib/function'
 import { indexLocalNews } from './localNews'
 import * as O from 'fp-ts/Option'
+import * as E from 'fp-ts/lib/Either'
+import * as T from 'fp-ts/lib/Task'
+
+const indexes = ['EVENTS', 'TOPICS', 'MAGAZINE', 'NEWS', 'LOCALNEWS']
+
+const indexStuff: {
+  [key: string]: (language: Language) => (isDev: boolean) => T.Task<void>
+} = {
+  EVENTS: indexEvents,
+  MAGAZINE: indexMagazine,
+  NEWS: indexNews,
+  LOCALNEWS: indexLocalNews,
+  TOPICS: indexTopic,
+}
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
   await new DotenvAzure().config({
@@ -18,34 +32,16 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
   const logger = context.log
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
-  const index: string = req.body.index
-  const isDev: boolean = req.body.isDev || false
-  await pipe(
-    index,
-    O.fromNullable,
-    O.match(
-      () => {
-        indexEvents(language)(false)().catch(logger.error)
-        indexTopic(language)(false)().catch(logger.error)
-        indexNews(language)(false)().catch(logger.error)
-        indexMagazine(language)(false)().catch(logger.error)
-        indexLocalNews(language)(false)().catch(logger.error)
-      },
-      (index) => {
-        index.includes('EVENTS')
-          ? indexEvents(language)(isDev)().catch(logger.error)
-          : index.includes('TOPICS')
-          ? indexTopic(language)(isDev)().catch(logger.error)
-          : index.includes('MAGAZINE')
-          ? indexMagazine(language)(isDev)().catch(logger.error)
-          : index.includes('NEWS')
-          ? indexNews(language)(isDev)().catch(logger.error)
-          : index.includes('LOCALNEWS')
-          ? indexLocalNews(language)(isDev)().catch(logger.error)
-          : O.none
-      },
-    ),
+
+  const getIndex = pipe(
+    req.body?.index as string[],
+    E.fromNullable('no index specified'),
+    E.getOrElse(() => indexes),
   )
+  const getEnvironment = () => O.fromNullable(req.body?.isDev)
+  const isDev = O.getOrElse(() => false)(getEnvironment())
+
+  pipe(getIndex, (indexArray) => indexArray.map((index) => indexStuff[index](language)(isDev)().catch(logger.error)))
 }
 
 export default httpTrigger
