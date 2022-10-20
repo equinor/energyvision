@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 //COOKIEBOT
 declare global {
@@ -31,7 +32,11 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
   }, [consentType])
 
   useEffect(() => {
-    if (!window?.location.origin.includes('localhost') && consent) {
+    // Disable Radix.equinor.com due to SiteImprove (possibly) collecting wrong data
+    const host = window?.location.origin
+    const isLocalHost = host.includes('localhost')
+    const enableConsentLogic = !isLocalHost && (Flags.IS_DEV || !host.includes('radix.equinor.com'))
+    if (enableConsentLogic && consent) {
       callback()
       return () => {
         if (cleanup) cleanup()
