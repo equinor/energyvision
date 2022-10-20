@@ -5,6 +5,7 @@ import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds
 import styled from 'styled-components'
 import { useEffect } from 'react'
 import { Flags } from '../../../../common/helpers/datasetHelpers'
+import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
@@ -29,11 +30,13 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
     padding,
   })
 
+  const prefersReducedMotion = usePrefersReducedMotion()
+
   useEffect(() => {
-    if (Flags.IS_DEV) {
+    if (Flags.IS_DEV && !prefersReducedMotion) {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }
-  }, [currentRefinement])
+  }, [currentRefinement, prefersReducedMotion])
 
   if (!nbHits || nbHits === 0 || nbHits <= hitsPerPage) {
     return null
