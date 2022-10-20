@@ -22,9 +22,18 @@ const PaginationList = styled.ul`
 export type PaginationProps = {
   hitsPerPage?: number
   inverted?: boolean
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resultsRef?: any
 } & UsePaginationProps
 
-export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = false, ...rest }: PaginationProps) => {
+export const Pagination = ({
+  totalPages,
+  padding,
+  hitsPerPage = 5,
+  inverted = false,
+  resultsRef,
+  ...rest
+}: PaginationProps) => {
   const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
     totalPages,
     padding,
@@ -35,11 +44,11 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
 
   useEffect(() => {
     if (Flags.IS_DEV) {
-      if (!prefersReducedMotion && typeof window !== 'undefined' && currentRefinement !== prevRefinement.current) {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      if (!prefersReducedMotion && resultsRef?.current && currentRefinement !== prevRefinement.current) {
+        resultsRef.current.scrollIntoView({ behavior: 'smooth' })
       }
     }
-  }, [currentRefinement, prefersReducedMotion])
+  }, [currentRefinement, prefersReducedMotion, resultsRef])
 
   useEffect(() => {
     prevRefinement.current = currentRefinement

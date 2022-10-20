@@ -3,6 +3,7 @@ import { useHits, UseHitsProps } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { List } from '@components'
+import { forwardRef } from 'react'
 
 const { Item } = List
 
@@ -31,7 +32,11 @@ export type HitsProps<THit> = React.ComponentProps<'div'> &
   }
 
 // @TODO: refactor into our code style
-export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({ hitComponent: Hit }: HitsProps<THit>) {
+export const Hits = forwardRef(function Hits<THit extends AlgoliaHit<Record<string, unknown>>>(
+  { hitComponent: Hit }: HitsProps<THit>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref: any,
+) {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
@@ -39,7 +44,7 @@ export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({ hitComp
   }
 
   return (
-    <HitList>
+    <HitList ref={ref}>
       <List variant="numbered" unstyled>
         {hits.map((hit) => (
           <HitItem key={hit.objectID} className="ais-Hits-item">
@@ -49,4 +54,4 @@ export function Hits<THit extends AlgoliaHit<Record<string, unknown>>>({ hitComp
       </List>
     </HitList>
   )
-}
+})

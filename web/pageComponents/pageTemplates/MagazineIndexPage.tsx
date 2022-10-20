@@ -15,6 +15,7 @@ import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTag
 //import { history } from 'instantsearch.js/es/lib/routers'
 import Teaser from '../shared/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
+import { useRef } from 'react'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -66,6 +67,8 @@ const MagazineIndexPage = ({
 
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
   const HITS_PER_PAGE = 12
+
+  const hitsListRef = useRef<HTMLDivElement>(null)
 
   return (
     <>
@@ -179,8 +182,8 @@ const MagazineIndexPage = ({
               <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
             )}
             <MagazineWapper>
-              <StyledHits />
-              <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
+              <StyledHits ref={hitsListRef} />
+              <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} resultsRef={hitsListRef} />
             </MagazineWapper>
           </InstantSearch>
         </Wrapper>

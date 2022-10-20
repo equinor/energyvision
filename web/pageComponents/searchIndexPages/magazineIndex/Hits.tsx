@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MagazineCard from '../../cards/MagazineCard'
 import type { MagazineCardData } from '../../../types/types'
+import { forwardRef } from 'react'
 
 const HitList = styled.div`
   width: 100%;
@@ -33,7 +34,7 @@ export type HitsProps<THit> = React.ComponentProps<'div'> &
   }
 
 // @TODO: refactor into our code style
-export function Hits({ ...rest }) {
+export const Hits = forwardRef<HTMLDivElement>(({ ...rest }, ref) => {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
@@ -41,7 +42,7 @@ export function Hits({ ...rest }) {
   }
 
   return (
-    <HitList {...rest}>
+    <HitList {...rest} ref={ref}>
       {hits.map((hit) => {
         const data = {
           title: hit.pageTitle,
@@ -54,4 +55,4 @@ export function Hits({ ...rest }) {
       })}
     </HitList>
   )
-}
+})
