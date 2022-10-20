@@ -3,7 +3,7 @@ import { PaginationItem } from './PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import styled from 'styled-components'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Flags } from '../../../../common/helpers/datasetHelpers'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 
@@ -30,13 +30,20 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
     padding,
   })
 
+  const prevRefinement = useRef<number>(currentRefinement)
   const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
-    if (Flags.IS_DEV && !prefersReducedMotion) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    if (Flags.IS_DEV) {
+      if (!prefersReducedMotion && currentRefinement !== prevRefinement.current) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      }
     }
   }, [currentRefinement, prefersReducedMotion])
+
+  useEffect(() => {
+    prevRefinement.current = currentRefinement
+  }, [currentRefinement])
 
   if (!nbHits || nbHits === 0 || nbHits <= hitsPerPage) {
     return null
