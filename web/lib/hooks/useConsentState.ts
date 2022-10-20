@@ -31,15 +31,12 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
   }, [consentType])
 
   useEffect(() => {
-    if (
-      !(window?.location.origin.includes('radix.equinor.com') || window?.location.origin.includes('localhost')) &&
-      consent
-    ) {
+    if (!window?.location.origin.includes('localhost') && consent) {
       callback()
       return () => {
         if (cleanup) cleanup()
       }
     }
-  }, [router.asPath, consent])
+  }, [router.asPath, consent, callback, cleanup])
 }
 export default useConsentState
