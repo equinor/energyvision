@@ -35,7 +35,7 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
 
   useEffect(() => {
     if (Flags.IS_DEV) {
-      if (!prefersReducedMotion && currentRefinement !== prevRefinement.current) {
+      if (!prefersReducedMotion && typeof window !== 'undefined' && currentRefinement !== prevRefinement.current) {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
       }
     }
