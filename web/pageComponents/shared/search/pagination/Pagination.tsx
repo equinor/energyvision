@@ -3,9 +3,10 @@ import { PaginationItem } from './PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import styled from 'styled-components'
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { Flags } from '../../../../common/helpers/datasetHelpers'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
+import { PaginationContext } from './PaginationContext'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
@@ -23,22 +24,15 @@ export type PaginationProps = {
   hitsPerPage?: number
   inverted?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resultsRef?: any
 } & UsePaginationProps
 
-export const Pagination = ({
-  totalPages,
-  padding,
-  hitsPerPage = 5,
-  inverted = false,
-  resultsRef,
-  ...rest
-}: PaginationProps) => {
+export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = false, ...rest }: PaginationProps) => {
   const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
     totalPages,
     padding,
   })
 
+  const { resultsRef } = useContext(PaginationContext)
   const prevRefinement = useRef<number>(currentRefinement)
   const prefersReducedMotion = usePrefersReducedMotion()
 

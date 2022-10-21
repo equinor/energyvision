@@ -15,6 +15,7 @@ import TotalResultsStat from './TotalResultsStat'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import MagazineHit from './MagazineHit'
 import { SearchContext } from './SearchContext'
+import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -102,7 +103,7 @@ const SearchResults = () => {
   const activeTab = tabMap.find((tab) => tab.name === currentTab)
 
   return (
-    <>
+    <PaginationContextProvider defaultRef={resultsRef}>
       {hasQuery && (
         <Results ref={resultsRef}>
           <Tabs index={activeTab?.id || 0} onChange={handleTabChange}>
@@ -144,20 +145,20 @@ const SearchResults = () => {
               <TabPanel>
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits setTabResults={setTabResults} hitComponent={TopicHit} category="topics" />
-                <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted resultsRef={resultsRef} />
+                <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setTabResults={setTabResults} hitComponent={EventHit} category="events" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted resultsRef={resultsRef} />
+                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setTabResults={setTabResults} hitComponent={NewsHit} category="news" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted resultsRef={resultsRef} />
+                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
               {Flags.IS_DEV && (
@@ -165,7 +166,7 @@ const SearchResults = () => {
                   <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
                     <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                     <Hits setTabResults={setTabResults} hitComponent={MagazineHit} category="magazine" />
-                    <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted resultsRef={resultsRef} />
+                    <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                   </Index>
                 </TabPanel>
               )}
@@ -173,7 +174,7 @@ const SearchResults = () => {
           </Tabs>
         </Results>
       )}
-    </>
+    </PaginationContextProvider>
   )
 }
 

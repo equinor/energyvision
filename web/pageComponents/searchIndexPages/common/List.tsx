@@ -4,7 +4,6 @@ import { Hits } from './Hits'
 import { Heading } from '@components'
 import { Pagination } from '../../shared/search/pagination/Pagination'
 import { FormattedMessage } from 'react-intl'
-import { useRef } from 'react'
 
 const StyledList = styled.div`
   padding: 0 var(--space-large);
@@ -29,15 +28,13 @@ const HeaderText = ({ filterType }: { filterType: 'news' | 'magazine' }) => {
 }
 
 const List = ({ filterType, ...rest }: { filterType: 'news' | 'magazine' }) => {
-  const resultsRef = useRef<HTMLDivElement>(null)
-
   return (
-    <StyledList {...rest} ref={resultsRef}>
+    <StyledList {...rest}>
       <Heading level="h2" size="lg">
         <HeaderText filterType={filterType} />
       </Heading>
       <Hits hitComponent={Hit} />
-      <StyledPagination padding={1} hitsPerPage={20} resultsRef={resultsRef} />
+      <StyledPagination padding={1} hitsPerPage={20} />
     </StyledList>
   )
 }

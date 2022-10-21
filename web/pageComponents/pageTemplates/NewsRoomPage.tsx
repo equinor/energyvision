@@ -8,9 +8,11 @@ import { searchClientServer, searchClient } from '../../lib/algolia'
 import NewsContent from '../searchIndexPages/newsRoomIndex/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
+import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 
 import type { NewsroomData } from '../../types'
 import Seo from '../../pageComponents/shared/Seo'
+import { useRef } from 'react'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -25,12 +27,14 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
   const isoCode = getIsoFromLocale(locale)
 
   const indexName = `${envPrefix}_NEWS_${isoCode}`
+  const resultsRef = useRef<HTMLDivElement>(null)
+
   return (
-    <>
+    <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={pageData?.seoAndSome} slug={slug} pageTitle={title} />
       <main>
         <Wrapper>
-          <Intro>
+          <Intro ref={resultsRef}>
             {title && (
               <RichText
                 value={title}
@@ -86,7 +90,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
           </News>
         </Wrapper>
       </main>
-    </>
+    </PaginationContextProvider>
   )
 }
 

@@ -16,6 +16,7 @@ import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTag
 import Teaser from '../shared/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
 import { useRef } from 'react'
+import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 
 const Wrapper = styled.div`
   max-width: var(--maxViewportWidth);
@@ -68,14 +69,14 @@ const MagazineIndexPage = ({
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
   const HITS_PER_PAGE = 12
 
-  const hitsListRef = useRef<HTMLDivElement>(null)
+  const resultsRef = useRef<HTMLDivElement>(null)
 
   return (
-    <>
+    <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={pageData?.seoAndSome} slug={slug} pageTitle={pageData?.title} />
       <main>
         <Wrapper>
-          <Intro>
+          <Intro ref={resultsRef}>
             {title && (
               <RichText
                 value={title}
@@ -182,14 +183,14 @@ const MagazineIndexPage = ({
               <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
             )}
             <MagazineWapper>
-              <StyledHits ref={hitsListRef} />
-              <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} resultsRef={hitsListRef} />
+              <StyledHits />
+              <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
             </MagazineWapper>
           </InstantSearch>
         </Wrapper>
         {footerComponent && <Teaser data={footerComponent} />}
       </main>
-    </>
+    </PaginationContextProvider>
   )
 }
 export default MagazineIndexPage
