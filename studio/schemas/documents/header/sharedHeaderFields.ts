@@ -5,7 +5,7 @@ import { configureTitleBlockContent, configureBlockContent } from '../../editors
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import { Colors } from '../../../helpers/ColorListValues'
-import { HeroTypes } from '../../../../web/pageComponents/shared/Hero/HeroTypes'
+import { HeroTypes } from '../../HeroTypes'
 
 type DocumentType = { parent: { heroType?: string } }
 

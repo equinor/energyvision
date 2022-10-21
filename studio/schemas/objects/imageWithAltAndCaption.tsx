@@ -1,6 +1,6 @@
 import React from 'react'
 import type { ImageWithAlt } from './imageWithAlt'
-import { HeroTypes } from '../../../web/pageComponents/shared/Hero/HeroTypes'
+import { HeroTypes } from '../HeroTypes'
 
 export type ImageWithAltAndCaption = {
   _type: 'imageWithAltAndCaption'
