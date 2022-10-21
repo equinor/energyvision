@@ -1,5 +1,6 @@
 import React from 'react'
 import type { ImageWithAlt } from './imageWithAlt'
+import { HeroTypes } from '../../../web/pageComponents/shared/Hero/HeroTypes'
 
 export type ImageWithAltAndCaption = {
   _type: 'imageWithAltAndCaption'
@@ -22,13 +23,13 @@ export default {
       name: 'caption',
       title: 'Image caption',
       type: 'string',
-      hidden: ({ document }: any) => document?.heroType === 'fiftyFifty',
+      hidden: ({ document }: any) => document?.heroType === HeroTypes.FIFTY_FIFTY,
     },
     {
       name: 'attribution',
       title: 'Credit',
       type: 'string',
-      hidden: ({ document }: any) => document?.heroType === 'fiftyFifty',
+      hidden: ({ document }: any) => document?.heroType === HeroTypes.FIFTY_FIFTY,
     },
   ],
   preview: {

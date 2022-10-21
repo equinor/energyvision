@@ -29,7 +29,7 @@ export const contentQueryById = /* groq */ `
           openGraphImage,
     },
     "hero": {
-      "type": heroType,
+      "type": coalesce(heroType, 'default'),
       "ratio": heroRatio,
       "title": heroTitle,
       "ingress": heroIngress,

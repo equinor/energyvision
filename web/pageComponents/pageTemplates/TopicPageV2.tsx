@@ -3,7 +3,8 @@ import { PageContent } from './shared/SharedPageContent'
 import { TopicPageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
 import Seo from '../../pageComponents/shared/Seo'
-import TitleText from '../shared/portableText/TitleText'
+import SharedTitle from './shared/SharedTitle'
+import { HeroTypes } from '../shared/Hero/HeroTypes'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -25,16 +26,6 @@ const TopicPageLayout = styled.main`
     }
   }
 `
-const TitleWrapper = styled.div`
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
-`
-
-const StyledHeading = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-`
-
 type TopicPageProps = {
   data: TopicPageSchema
 }
@@ -45,9 +36,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} heroImage={data?.heroImage?.image} pageTitle={data?.title} />
       <TopicPageLayout>
         <SharedBanner data={data} />
-        {data.hero.type !== 'default' && (
-          <TitleWrapper>{data.title && <StyledHeading value={data.title} level="h1" size="2xl" />}</TitleWrapper>
-        )}
+        {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} />}
         <PageContent data={data} />
       </TopicPageLayout>
     </>

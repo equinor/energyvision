@@ -5,6 +5,7 @@ import { configureTitleBlockContent, configureBlockContent } from '../../editors
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import { Colors } from '../../../helpers/ColorListValues'
+import { HeroTypes } from '../../../../web/pageComponents/shared/Hero/HeroTypes'
 
 type DocumentType = { parent: { heroType?: string } }
 
@@ -33,10 +34,10 @@ const heroType = {
   type: 'string',
   options: {
     list: [
-      { title: 'Default', value: 'default' },
-      { title: 'Full Image', value: 'fullWidthImage' },
-      { title: '50-50 Banner', value: 'fiftyFifty' },
-      { title: 'Full Video', value: 'videoHero' },
+      { title: 'Default', value: HeroTypes.DEFAULT },
+      { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
+      { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
+      { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
     ],
   },
   initialValue: 'default',
@@ -55,12 +56,12 @@ const heroRatio = {
     ],
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'fullWidthImage'
+    return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType === 'fullWidthImage' && !value) return 'Field is required'
+      if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
       return true
     }),
   initialValue: '0.5',
@@ -75,12 +76,12 @@ const heroTitle = {
   of: [titleContentType],
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'fiftyFifty'
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType === 'fiftyFifty' && !value) return 'Field is required'
+      if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value) return 'Field is required'
       return true
     }),
 }
@@ -92,7 +93,7 @@ const heroIngress = {
   inputComponent: CharCounterEditor,
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'fiftyFifty'
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
   },
   fieldset: 'header',
 }
@@ -104,7 +105,7 @@ const heroLink = {
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'fiftyFifty'
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
   },
   fieldset: 'header',
   validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
@@ -124,7 +125,7 @@ const background = {
     list: Colors,
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'fiftyFifty'
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
   },
   fieldset: 'header',
   initialValue: Colors[0],
@@ -145,11 +146,11 @@ const heroImage_v1 = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType !== 'videoHero' && !value) return 'Field is required'
+      if (parent?.heroType !== HeroTypes.VIDEO_HERO && !value) return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType === 'videoHero'
+    return parent?.heroType === HeroTypes.VIDEO_HERO
   },
   fieldset: 'header',
 }
@@ -162,11 +163,11 @@ const heroVideo = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType === 'videoHero' && !value) return 'Field is required'
+      if (parent?.heroType === HeroTypes.VIDEO_HERO && !value) return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== 'videoHero'
+    return parent?.heroType !== HeroTypes.VIDEO_HERO
   },
 }
 

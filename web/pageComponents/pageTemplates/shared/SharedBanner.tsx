@@ -7,6 +7,7 @@ import { FiftyFiftyHero } from '../../shared/Hero/FiftyFiftyHero'
 import { VideoHero } from '../../shared/Hero/VideoHero'
 import TitleText from '../../shared/portableText/TitleText'
 import { MagazinePageSchema, TopicPageSchema } from '../../../types/types'
+import { HeroTypes } from '../../shared/Hero/HeroTypes'
 
 const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium);
@@ -38,9 +39,9 @@ export const SharedBanner = ({ data }: BannerProps) => {
   const Hero = () => {
     if (!data.title) return null
 
-    if (data?.hero.type === 'fullWidthImage') {
+    if (data?.hero.type === HeroTypes.FULL_WIDTH_IMAGE) {
       return <FullImageHero ratio={data.hero.ratio as string} heroImage={data.heroImage} />
-    } else if (data?.hero.type === 'fiftyFifty') {
+    } else if (data?.hero.type === HeroTypes.FIFTY_FIFTY) {
       return (
         <FiftyFiftyHero
           image={data.heroImage.image}
@@ -50,7 +51,7 @@ export const SharedBanner = ({ data }: BannerProps) => {
           background={data.background}
         />
       )
-    } else if (data?.hero.type === 'videoHero') {
+    } else if (data?.hero.type === HeroTypes.VIDEO_HERO) {
       return <VideoHero videoHero={data.heroVideo} />
     } else {
       return <DefaultHero title={data.title} image={data.heroImage} />

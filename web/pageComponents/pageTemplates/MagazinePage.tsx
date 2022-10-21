@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import MagazineTagBar from '../shared/MagazineTagBar'
-import TitleText from '../shared/portableText/TitleText'
 import { PageContent } from './shared/SharedPageContent'
+import SharedTitle from './shared/SharedTitle'
 import { MagazinePageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
 import Teaser from '../shared/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
+import { HeroTypes } from '../shared/Hero/HeroTypes'
 
 const MagazinePageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -28,16 +29,6 @@ const MagazinePageLayout = styled.main`
     }
   }
 `
-const TitleWrapper = styled.div`
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
-`
-
-const StyledHeading = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-`
-
 type MagazinePageProps = {
   data: MagazinePageSchema
 }
@@ -77,9 +68,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
             }}
           />
         )}
-        {data.hero.type !== 'default' && (
-          <TitleWrapper>{data.title && <StyledHeading value={data.title} level="h1" size="2xl" />}</TitleWrapper>
-        )}
+        {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} />}
         <PageContent data={data} />
         {!hideFooterComponent && footerComponent?.data && <Teaser data={footerComponent.data} />}
       </MagazinePageLayout>
