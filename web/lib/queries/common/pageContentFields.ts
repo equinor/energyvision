@@ -306,15 +306,29 @@ const pageContentFields = /* groq */ `
           tags,
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
-            "promotions": ${futureEventsQuery}{
-              ${eventPromotionFields}
+            !defined(tags) => {
+              "promotions": ${futureEventsQuery(false)}{
+                ${eventPromotionFields}
+              },
             },
+            defined(tags) => {
+              "promotions": ${futureEventsQuery()}{
+                ${eventPromotionFields}
+              },
+            }
           },
           promotePastEvents=>{
-               "promotions": ${pastEventsQuery}{
-                 ${eventPromotionFields}
-               },
-             },
+            !defined(tags) => {
+              "promotions": ${pastEventsQuery(false)}{
+                ${eventPromotionFields}
+              },
+            },
+            defined(tags) => {
+              "promotions": ${pastEventsQuery()}{
+                ${eventPromotionFields}
+              },
+            }
+          },
         },
         manuallySelectEvents => {
           "promotions": promotedEvents[]->{
