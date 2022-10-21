@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, forwardRef } from 'react'
 import { useMenu, UseMenuProps, useClearRefinements, useCurrentRefinements } from 'react-instantsearch-hooks-web'
 import MagazineTagBar from '../../shared/MagazineTagBar'
 import { useRouter } from 'next/router'
 
 export type RefinementListProps = { tags: string[] } & React.ComponentProps<'div'> & UseMenuProps
 
-export function MagazineTagFilter(props: RefinementListProps) {
+export const MagazineTagFilter = forwardRef<HTMLDivElement, RefinementListProps>(function MagazineTagFilter(
+  props: RefinementListProps,
+  ref,
+) {
   const router = useRouter()
   const { refine } = useMenu(props)
   const { refine: clear } = useClearRefinements()
@@ -56,6 +59,7 @@ export function MagazineTagFilter(props: RefinementListProps) {
       onClick={(value: string) => {
         setActive(value)
       }}
+      ref={ref}
     />
   )
-}
+})
