@@ -8,7 +8,9 @@ type SharedTitleProps = {
 
 const TitleWrapper = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
+  margin-bottom: calc(-1 * var(--space-xLarge));
 `
+
 const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
