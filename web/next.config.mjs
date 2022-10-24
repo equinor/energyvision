@@ -105,5 +105,22 @@ export default withTM(
         },
       ].filter((e) => e)
     },
+    async redirects() {
+      return [
+        // Redirect IE users to not-supported page
+        {
+          source: '/',
+          has: [
+            {
+              type: 'header',
+              key: 'user-agent',
+              value: '.*(MSIE|Trident).*',
+            },
+          ],
+          permanent: true,
+          destination: '/not-supported.html',
+        },
+      ]
+    },
   }),
 )
