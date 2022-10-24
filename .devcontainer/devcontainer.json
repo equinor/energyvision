@@ -23,7 +23,11 @@
     "[javascript]": {
       "editor.formatOnSave": true,
       "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "editor.linkedEditing": true,
+    "html.autoClosingTags": true,
+    "javascript.autoClosingTags": true,
+    "typescript.autoClosingTags": true
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -43,8 +47,6 @@
     "editorconfig.editorconfig",
     "ms-azuretools.vscode-docker",
     "kamikillerto.vscode-colorize",
-    "formulahendry.auto-rename-tag",
-    "formulahendry.auto-close-tag",
     "eg2.vscode-npm-script",
     "vscode-icons-team.vscode-icons",
     "ms-azuretools.vscode-azurefunctions",
