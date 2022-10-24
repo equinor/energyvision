@@ -88,17 +88,8 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
-  const enableStatistics = () => {
-    loadSiteImproveScript
-    enableDynatrace
-  }
-
-  const disableStatistics = () => {
-    cleanUpSiteImproveScript
-    disableDynatrace
-  }
-
-  useConsentState('statistics', enableStatistics, disableStatistics)
+  useConsentState('statistics', loadSiteImproveScript, cleanUpSiteImproveScript)
+  useConsentState('statistics', enableDynatrace, disableDynatrace)
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
