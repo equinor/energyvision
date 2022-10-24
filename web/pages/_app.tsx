@@ -89,13 +89,13 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   const enableStatistics = () => {
-    loadSiteImproveScript()
-    enableDynatrace()
+    loadSiteImproveScript
+    enableDynatrace
   }
 
   const disableStatistics = () => {
-    cleanUpSiteImproveScript()
-    disableDynatrace()
+    cleanUpSiteImproveScript
+    disableDynatrace
   }
 
   useConsentState('statistics', enableStatistics, disableStatistics)
