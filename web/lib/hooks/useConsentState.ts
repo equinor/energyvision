@@ -5,6 +5,7 @@ import { Flags } from '../../common/helpers/datasetHelpers'
 //COOKIEBOT
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Cookiebot: any
   }
 }
