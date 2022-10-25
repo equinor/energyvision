@@ -39,7 +39,7 @@ export const magazineQuery = /* groq */ `
     openGraphImage,
     },
     "hero": {
-      "type": coalesce(heroType, ${HeroTypes.DEFAULT}),
+      "type": coalesce(heroType, 'default'),
       "ratio": heroRatio,
       "title": heroTitle,
       "ingress": heroIngress,

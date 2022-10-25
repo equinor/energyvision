@@ -24,7 +24,7 @@ export const pageQuery = /* groq */ `
           openGraphImage,
     },
     "hero": {
-      "type": coalesce(content->heroType,${HeroTypes.DEFAULT}),
+      "type": coalesce(content->heroType,'default'),
       "ratio": content->heroRatio,
       "title": content->heroTitle,
       "ingress": content->heroIngress,
