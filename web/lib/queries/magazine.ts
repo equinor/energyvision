@@ -4,6 +4,7 @@ import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
+import { HeroTypes } from '../../pageComponents/shared/Hero/HeroTypes'
 
 const footerComponentFields = `
   title,
@@ -38,7 +39,7 @@ export const magazineQuery = /* groq */ `
     openGraphImage,
     },
     "hero": {
-      "type": coalesce(heroType, 'default'),
+      "type": coalesce(heroType, ${HeroTypes.DEFAULT}),
       "ratio": heroRatio,
       "title": heroTitle,
       "ingress": heroIngress,
