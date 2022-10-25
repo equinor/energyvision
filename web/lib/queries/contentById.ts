@@ -2,7 +2,6 @@ import pageContentFields from './common/pageContentFields'
 import { landingPageById } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
-import { HeroTypes } from '../../pageComponents/shared/Hero/HeroTypes'
 
 /* export const pageQueryById =  `
   *[_type == "page" && _id == $id][0] {

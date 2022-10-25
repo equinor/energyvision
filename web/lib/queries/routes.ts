@@ -2,7 +2,6 @@ import pageContentFields from './common/pageContentFields'
 import { landingPageContentFields } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
-import { HeroTypes } from '../../pageComponents/shared/Hero/HeroTypes'
 
 const allSlugsQuery = /* groq */ `
   "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
