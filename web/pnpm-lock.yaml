@@ -1,10 +1,5 @@
 lockfileVersion: 5.4
 
-patchedDependencies:
-  react-instantsearch-hooks-server@6.35.0:
-    hash: anrucxwvwnfcoo56oomnvhabgy
-    path: patches/react-instantsearch-hooks-server@6.35.0.patch
-
 specifiers:
   '@algolia/client-search': ^4.13.1
   '@babel/core': ^7.9.6
@@ -69,7 +64,7 @@ specifiers:
   react-dom: ^18.1.0
   react-error-boundary: ^3.1.4
   react-focus-lock: ^2.9.1
-  react-hook-form: 7.36.0
+  react-hook-form: 7.38.0
   react-instantsearch-hooks-server: ^6.35.0
   react-instantsearch-hooks-web: ^6.35.0
   react-intl: ^6.0.2
@@ -128,8 +123,8 @@ dependencies:
   react-dom: 18.1.0_react@18.1.0
   react-error-boundary: 3.1.4_react@18.1.0
   react-focus-lock: 2.9.1_7cpxmzzodpxnolj5zcc5cr63ji
-  react-hook-form: 7.36.0_react@18.1.0
-  react-instantsearch-hooks-server: 6.35.0_anrucxwvwnfcoo56oomnvhabgy_7hvmjpngrix5ilvhzhrwzhdao4
+  react-hook-form: 7.38.0_react@18.1.0
+  react-instantsearch-hooks-server: 6.35.0_7hvmjpngrix5ilvhzhrwzhdao4
   react-instantsearch-hooks-web: 6.35.0_7hvmjpngrix5ilvhzhrwzhdao4
   react-intl: 6.0.2_p5zawh66z5wwyupoqciilrx7j4
   react-is: 18.1.0
@@ -9542,7 +9537,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.17.3
+      uglify-js: 3.17.4
     dev: true
 
   /has-bigints/1.0.2:
@@ -13072,8 +13067,8 @@ packages:
       use-sidecar: 1.1.2_7cpxmzzodpxnolj5zcc5cr63ji
     dev: false
 
-  /react-hook-form/7.36.0_react@18.1.0:
-    resolution: {integrity: sha512-2PmRhTDH90/G1XWbUGpfuFBf7wxj9kYvzPqoZCv4wUGBIfuac0fK3up9sbeoz0ghpLYcFFXRVDKMUXgMutLXTw==}
+  /react-hook-form/7.38.0_react@18.1.0:
+    resolution: {integrity: sha512-gxWW1kMeru9xR1GoR+Iw4hA+JBOM3SHfr4DWCUKY0xc7Vv1MLsF109oHtBeWl9shcyPFx67KHru44DheN0XY5A==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -13092,7 +13087,7 @@ packages:
       react: 18.1.0
     dev: true
 
-  /react-instantsearch-hooks-server/6.35.0_anrucxwvwnfcoo56oomnvhabgy_7hvmjpngrix5ilvhzhrwzhdao4:
+  /react-instantsearch-hooks-server/6.35.0_7hvmjpngrix5ilvhzhrwzhdao4:
     resolution: {integrity: sha512-JAecQWpRMz9J/vktT0DOXdoleQtZqX/l7yEFMdVKUfCCWhA1LLR0F5xEzZmn0W0xo1K3gbrtByXIu6yfX18WLA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
@@ -13106,7 +13101,6 @@ packages:
       react-dom: 18.1.0_react@18.1.0
       react-instantsearch-hooks: 6.35.0_g7odlm75meqxjgfgcxeuhora3u
     dev: false
-    patched: true
 
   /react-instantsearch-hooks-web/6.35.0_7hvmjpngrix5ilvhzhrwzhdao4:
     resolution: {integrity: sha512-E6m5g+wYJzGwsenm9VPNyeo/r4CLw/l4NIIJu6M0+hsFigDBYBtnGn2wrMwKdyGkz8m4Q+FH/kQuk+yYbmmj4w==}
@@ -14781,8 +14775,8 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
-  /uglify-js/3.17.3:
-    resolution: {integrity: sha512-JmMFDME3iufZnBpyKL+uS78LRiC+mK55zWfM5f/pWBJfpOttXAqYfdDGRukYhJuyRinvPVAtUhvy7rlDybNtFg==}
+  /uglify-js/3.17.4:
+    resolution: {integrity: sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
@@ -15602,3 +15596,8 @@ packages:
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
+
+patchedDependencies:
+  react-instantsearch-hooks-server@6.35.0:
+    hash: anrucxwvwnfcoo56oomnvhabgy
+    path: patches/react-instantsearch-hooks-server@6.35.0.patch
