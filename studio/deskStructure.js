@@ -16,6 +16,7 @@ export const getDefaultDocumentNode = (props) => {
    */
   const { schemaType } = props
   const docsWithPreview = ['news', 'localNews', 'landingPage', 'magazine', 'newsroom', 'magazineIndex']
+  const tagDocTypes = ['tag', 'localNewsTag', 'countryTag', 'magazineTag', 'eventTag']
 
   if (docsWithPreview.includes(schemaType)) {
     return S.document().views([S.view.form(), S.view.component(Preview).title('Preview')])
@@ -56,6 +57,18 @@ export const getDefaultDocumentNode = (props) => {
           useDraft: false,
         })
         .title('References'),
+    ])
+  } else if (tagDocTypes.includes(schemaType)) {
+    return S.document().views([
+      S.view.form(),
+      S.view
+        .component(DocumentsPane)
+        .options({
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type in ["news", "localNews", "magazine", "event"]]`,
+          params: { id: `_id` },
+          useDraft: false,
+        })
+        .title(schemaType === 'eventTag' ? 'Connected event(s)' : 'Connected article(s)'),
     ])
   }
 
