@@ -433,7 +433,7 @@ export type IFrameData = {
 
 export type Tag = {
   key: {
-    _type: 'tag' | 'countryTag'
+    _type: 'tag' | 'countryTag' | 'localNewsTag' | 'magazineTag' | 'eventTag'
     current: string
   }
   title: {
@@ -450,8 +450,9 @@ export type PromotionData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   content: {
-    // Do we really need the tags here?
     tags?: Tag[]
+    countryTags?: Tag[]
+    localNewsTags?: Tag[]
     promotions: CardData[] | PeopleCardData[] | EventCardData[]
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
