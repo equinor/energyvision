@@ -17,6 +17,7 @@ on:
           - storage
           - equinorfunds
           - southkorea
+          - celticsea
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
