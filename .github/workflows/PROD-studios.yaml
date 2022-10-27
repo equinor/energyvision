@@ -16,6 +16,7 @@ on:
           - storage
           - equinorfunds
           - southkorea
+          - celticsea
 jobs:
   deploy-global:
     if: github.event.inputs.site == 'global'
