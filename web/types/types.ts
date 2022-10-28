@@ -1,4 +1,3 @@
-// @TODO Don't know yet where to put this or how to structure it
 import {
   SanityImageObject,
   SanityImageCrop,
@@ -164,19 +163,29 @@ export type PortableTextChild = {
 
 export type Templates = 'landingPage' | 'page' | 'news'
 
+export enum HeroTypes {
+  DEFAULT = 'default',
+  FIFTY_FIFTY = 'fiftyFifty',
+  FULL_WIDTH_IMAGE = 'fullWidthImage',
+  VIDEO_HERO = 'videoHero',
+}
+
+export type HeroType = {
+  figure?: ImageWithCaptionData
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  link?: LinkData
+  type?: string
+  ratio?: string
+  background?: BackgroundColours
+  video?: VideoHeroData
+}
+
 export type PageSchema = {
   slug: string
   magazineTags?: string[]
   title: PortableTextBlock[]
-  hero: {
-    type?: string
-    ratio?: string
-    heroTitle: PortableTextBlock[]
-    heroIngress: PortableTextBlock[]
-    heroLink: LinkData
-  }
-  background: BackgroundColours
-  heroImage: ImageWithCaptionData
+  hero: HeroType
   template: Templates
   seoAndSome: SeoData
   // @TODO: Better typings here
@@ -184,19 +193,11 @@ export type PageSchema = {
   id: string
   type: string
 }
+
 export type PageSchemaV2 = {
   slug: string
   title: PortableTextBlock[]
-  hero: {
-    type?: string
-    ratio?: string
-    title: PortableTextBlock[]
-    ingress: PortableTextBlock[]
-    link: LinkData
-  }
-  background: BackgroundColours
-  heroImage: ImageWithCaptionData
-  heroVideo: VideoHeroData
+  hero: HeroType
   template: Templates
   seoAndSome: SeoData
   // @TODO: Better typings here
@@ -525,7 +526,6 @@ export type EventSchema = {
       people?: PeopleCardData[]
     }
     contactList?: ContactListData
-
     relatedLinks?: RelatedLinksData
   }
 }
@@ -605,7 +605,5 @@ export type VideoData = {
 }
 
 export type VideoHeroData = {
-  id: string
-  type: string
   playbackId: string
 }

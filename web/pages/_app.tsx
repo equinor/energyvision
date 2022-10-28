@@ -14,6 +14,7 @@ import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
 import useConsentState from '../lib/hooks/useConsentState'
 import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
+import { SWRConfig } from 'swr'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -92,17 +93,19 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   useConsentState('statistics', enableDynatrace, disableDynatrace)
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
-      <>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-        <GlobalStyle />
-        <SkipNavLink />
-        {IS_LIVE && <CookieBot locale={router.locale} />}
-        {getLayout(<Component {...pageProps} />)}
-      </>
-    </ErrorBoundary>
+    <SWRConfig>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
+        <>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+          </Head>
+          <GlobalStyle />
+          <SkipNavLink />
+          {IS_LIVE && <CookieBot locale={router.locale} />}
+          {getLayout(<Component {...pageProps} />)}
+        </>
+      </ErrorBoundary>
+    </SWRConfig>
   )
 }
 

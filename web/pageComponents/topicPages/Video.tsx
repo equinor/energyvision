@@ -4,7 +4,7 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
-import '@mux/mux-video';
+import '@mux/mux-video'
 
 type VideoProps = {
   data: VideoData
@@ -22,15 +22,14 @@ const StyledTitle = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
 interface MuxVideoHTMLAttributes<T> extends React.VideoHTMLAttributes<T> {
-  debug?: boolean;
-  autoplay?: boolean;
+  debug?: boolean
+  autoplay?: boolean
 }
-
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'mux-video': React.DetailedHTMLProps<MuxVideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>;
+      'mux-video': React.DetailedHTMLProps<MuxVideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement>
     }
   }
 }
@@ -47,14 +46,7 @@ const Video = ({ data, anchor }: VideoProps) => {
               <IngressText value={ingress} />
             </StyledIngress>
           )}
-          {
-           <mux-video
-           stream-type="on-demand"
-           playback-id={asset.playbackId}
-           controls
-           style={{width:'100%'}}
-         />
-          }
+          {<mux-video stream-type="on-demand" playback-id={asset.playbackId} controls style={{ width: '100%' }} />}
         </Container>
       </BackgroundContainer>
     </>

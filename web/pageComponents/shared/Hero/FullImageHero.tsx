@@ -1,13 +1,8 @@
-import type { ImageWithCaptionData } from 'types/types'
 import Image from '../Image'
 import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Caption } from './Caption'
-
-type Props = {
-  ratio: string
-  heroImage: ImageWithCaptionData
-}
+import type { HeroType, ImageWithCaptionData } from 'types'
 
 const ImgWrapper = styled.div`
   height: calc(100vh - var(--topbar-height));
@@ -19,51 +14,51 @@ const CaptionWrapper = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small);
   max-width: var(--maxViewportWidth);
 `
-const FullScreenHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
+
+type FullImageHeroType = {
+  figure: ImageWithCaptionData
+  ratio?: string
+}
+
+const FullScreenHero = ({ figure }: FullImageHeroType) => {
   return (
     <ImgWrapper>
-      <Image maxWidth={4096} image={heroImage?.image} layout={'fill'} objectFit={'cover'} priority />
+      <Image maxWidth={4096} image={figure.image} layout={'fill'} objectFit={'cover'} priority />
     </ImgWrapper>
   )
 }
 
-const NarrowHero = ({ heroImage }: { heroImage: ImageWithCaptionData }) => {
+const NarrowHero = ({ figure }: FullImageHeroType) => {
   const { width } = useWindowSize()
   // 4:3 for small screens and 10:3 for large screens
   const aspectRatio = width && width < 750 ? 0.75 : 0.3
 
   return (
-    <Image
-      maxWidth={4000}
-      aspectRatio={aspectRatio}
-      image={heroImage.image}
-      layout="responsive"
-      sizes="100vw"
-      priority
-    />
+    <Image maxWidth={4000} aspectRatio={aspectRatio} image={figure.image} layout="responsive" sizes="100vw" priority />
   )
 }
 
-const RatioHero = ({ ratio, heroImage }: { ratio: string; heroImage: ImageWithCaptionData }) => {
-  return <Image maxWidth={1420} aspectRatio={Number(ratio)} image={heroImage.image} layout="responsive" priority />
+const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
+  return <Image maxWidth={1420} aspectRatio={Number(ratio) || 0.5} image={figure.image} layout="responsive" priority />
 }
 
-export const FullImageHero = ({ ratio, heroImage }: Props) => {
-  const StyledCaption = heroImage?.image?.asset && (
+export const FullImageHero = ({ ratio, figure }: HeroType) => {
+  const StyledCaption = figure?.image?.asset && (
     <CaptionWrapper>
-      <Caption attribution={heroImage.attribution} caption={heroImage.caption} />
+      <Caption attribution={figure.attribution} caption={figure.caption} />
     </CaptionWrapper>
   )
 
   const getHero = () => {
-    switch (ratio) {
-      case 'fullScreen':
-        return <FullScreenHero heroImage={heroImage} />
-      case 'narrow':
-        return <NarrowHero heroImage={heroImage} />
-      default:
-        return <RatioHero heroImage={heroImage} ratio={ratio} />
-    }
+    if (figure)
+      switch (ratio) {
+        case 'fullScreen':
+          return <FullScreenHero figure={figure} />
+        case 'narrow':
+          return <NarrowHero figure={figure} />
+        default:
+          return <RatioHero figure={figure} ratio={ratio} />
+      }
   }
 
   return (

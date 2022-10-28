@@ -11,31 +11,30 @@ import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
-import { NewsRoomProps } from '../../types'
+import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { SkipNavContent } from '@reach/skip-nav'
 
-export default function NewsRoom({ serverState, isServerRendered = false, /* url, */ data }: NewsRoomProps) {
+export default function NewsRoom({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
+  const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <>
-      <InstantSearchSSRProvider {...serverState}>
-        <IntlProvider
-          locale={getIsoFromLocale(locale)}
-          defaultLocale={getIsoFromLocale(defaultLocale)}
-          messages={data?.intl?.messages}
-        >
-          <NewsRoomPage
-            isServerRendered={isServerRendered}
-            locale={locale}
-            pageData={data?.pageData}
-            slug={data?.slug}
-          />
-        </IntlProvider>
-      </InstantSearchSSRProvider>
-    </>
+    <InstantSearchSSRProvider {...serverState}>
+      <IntlProvider
+        locale={getIsoFromLocale(locale)}
+        defaultLocale={getIsoFromLocale(defaultLocale)}
+        messages={intl?.messages}
+      >
+        <NewsRoomPage
+          isServerRendered={isServerRendered}
+          locale={locale}
+          pageData={pageData as NewsRoomPageType}
+          slug={slug}
+        />
+      </IntlProvider>
+    </InstantSearchSSRProvider>
   )
 }
 
@@ -54,20 +53,18 @@ NewsRoom.getLayout = (page: AppProps) => {
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <>
-      <IntlProvider
-        locale={getIsoFromLocale(locale)}
-        defaultLocale={getIsoFromLocale(defaultLocale)}
-        messages={data?.intl?.messages}
-      >
-        <>
-          <Header slugs={slugs} menuData={data?.menuData} />
-          <SkipNavContent />
-          {page}
-          <Footer footerData={data?.footerData} />
-        </>
-      </IntlProvider>
-    </>
+    <IntlProvider
+      locale={getIsoFromLocale(locale)}
+      defaultLocale={getIsoFromLocale(defaultLocale)}
+      messages={data?.intl?.messages}
+    >
+      <>
+        <Header slugs={slugs} menuData={data?.menuData} />
+        <SkipNavContent />
+        {page}
+        <Footer footerData={data?.footerData} />
+      </>
+    </IntlProvider>
   )
 }
 

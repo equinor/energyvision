@@ -51,13 +51,13 @@ const Wrapper = styled.div`
   border-bottom: 1px solid var(--grey-30);
 `
 const TagWrapper = styled.div`
-  margin: var(--space-medium) auto var(--space-medium) auto;
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
-  padding: 0 var(--space-3xLarge) 0 var(--space-3xLarge);
+  padding: var(--space-large) var(--space-3xLarge);
   grid-gap: var(--space-xLarge);
   @media (max-width: 750px) {
-    padding: 0 var(--space-large) 0 var(--space-large);
+    padding: var(--space-large);
   }
 `
 

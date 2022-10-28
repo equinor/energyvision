@@ -43,7 +43,6 @@ export default {
       fieldset: 'metadata',
     },
     ...sharedHeroFields,
-
     {
       name: 'content',
       type: 'array',

@@ -1,15 +1,14 @@
 import React from 'react'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
-import { configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import MagazineFooterComponent from '../objects/magazineFooterComponent'
+import sharedHeroFields from './header/sharedHeaderFields'
 
 import type { Rule, Block } from '@sanity/types'
+import { Colors } from '../../helpers/ColorListValues'
 
-const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
   h1: false,
   h2: true,
@@ -27,6 +26,10 @@ export default {
   name: 'magazineIndex',
   i18n,
   fieldsets: [
+    {
+      title: 'Header',
+      name: 'header',
+    },
     {
       title: 'SEO & metadata',
       name: 'metadata',
@@ -51,21 +54,30 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    {
-      name: 'title',
-      type: 'array',
-      title: 'Title',
-
-      inputComponent: CompactBlockEditor,
-      of: [titleContentType],
-      validation: (Rule: Rule) => Rule.required(),
-    },
+    ...sharedHeroFields,
     {
       title: 'Text',
       name: 'ingress',
       type: 'array',
       inputComponent: CharCounterEditor,
       of: [textContentType],
+      fieldset: 'header',
+    },
+    {
+      title: 'Ingress Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'ingressBackground',
+      type: 'colorlist',
+      options: {
+        borderradius: {
+          outer: '100%',
+          inner: '100%',
+        },
+        tooltip: true,
+        list: Colors,
+      },
+      fieldset: 'header',
+      initialValue: Colors[0],
     },
     {
       title: 'Promoted Magazine Tags',

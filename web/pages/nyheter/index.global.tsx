@@ -2,7 +2,6 @@ import { GetServerSideProps } from 'next'
 import { InstantSearchSSRProvider } from 'react-instantsearch-hooks-web'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
-//import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
@@ -11,36 +10,30 @@ import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
-import { NewsRoomProps } from '../../types'
+import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { SkipNavContent } from '@reach/skip-nav'
 
-export default function NorwegianNewsRoom({
-  serverState,
-  isServerRendered = false,
-
-  /* url, */ data,
-}: NewsRoomProps) {
+export default function NorwegianNewsRoom({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
-  const locale = data?.intl?.locale || defaultLocale
+  const { pageData, slug, intl } = data
+  const locale = intl?.locale || defaultLocale
 
   return (
-    <>
-      <InstantSearchSSRProvider {...serverState}>
-        <IntlProvider
-          locale={getIsoFromLocale(locale)}
-          defaultLocale={getIsoFromLocale(defaultLocale)}
-          messages={data?.intl?.messages}
-        >
-          <NewsRoomPage
-            isServerRendered={isServerRendered}
-            locale={locale}
-            pageData={data?.pageData}
-            slug={data?.slug}
-          />
-        </IntlProvider>
-      </InstantSearchSSRProvider>
-    </>
+    <InstantSearchSSRProvider {...serverState}>
+      <IntlProvider
+        locale={getIsoFromLocale(locale)}
+        defaultLocale={getIsoFromLocale(defaultLocale)}
+        messages={intl?.messages}
+      >
+        <NewsRoomPage
+          isServerRendered={isServerRendered}
+          locale={locale}
+          pageData={pageData as NewsRoomPageType}
+          slug={slug}
+        />
+      </IntlProvider>
+    </InstantSearchSSRProvider>
   )
 }
 
@@ -57,22 +50,18 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <>
-      {/* The intl provider doesn't seem to be necessary here, but I don't quite understand why so
-      keeping it just to be sure:/ */}
-      <IntlProvider
-        locale={getIsoFromLocale(locale)}
-        defaultLocale={getIsoFromLocale(defaultLocale)}
-        messages={data?.intl?.messages}
-      >
-        <>
-          <Header slugs={slugs} menuData={data?.menuData} />
-          <SkipNavContent />
-          {page}
-          <Footer footerData={data?.footerData} />
-        </>
-      </IntlProvider>
-    </>
+    <IntlProvider
+      locale={getIsoFromLocale(locale)}
+      defaultLocale={getIsoFromLocale(defaultLocale)}
+      messages={data?.intl?.messages}
+    >
+      <>
+        <Header slugs={slugs} menuData={data?.menuData} />
+        <SkipNavContent />
+        {page}
+        <Footer footerData={data?.footerData} />
+      </>
+    </IntlProvider>
   )
 }
 

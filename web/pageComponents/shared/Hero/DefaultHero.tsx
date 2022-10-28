@@ -1,6 +1,6 @@
 import type { ImageWithCaptionData } from '../../../types/types'
 import styled from 'styled-components'
-import HeroImage from './HeroImage'
+import DefaulHeroImage from './DefaultHeroImage'
 import { PortableTextBlock } from '@portabletext/types'
 import TitleText from '../portableText/TitleText'
 
@@ -27,15 +27,15 @@ const ImageWrapper = styled.div.attrs(() => ({
 `
 
 type Props = {
-  title: PortableTextBlock[]
-  image: ImageWithCaptionData
+  title?: PortableTextBlock[]
+  image?: ImageWithCaptionData
 }
 
 export const DefaultHero = ({ title, image }: Props) => {
   return (
     <>
       <HeroBanner>{title && <StyledHeading value={title} level="h1" size="2xl" />}</HeroBanner>
-      <ImageWrapper>{image && <HeroImage data={image} />}</ImageWrapper>
+      <ImageWrapper>{image && <DefaulHeroImage data={image} />}</ImageWrapper>
     </>
   )
 }

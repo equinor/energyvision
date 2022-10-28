@@ -78,8 +78,6 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
           <FormattedMessage id="loading" defaultMessage="Loading..." />
         </p>
       ) : (
-        // @TODO: SEO stuffs
-        // @TODO: Menu
         <>
           <Head>
             <script
@@ -112,7 +110,6 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
             }}
           />
         </>
-        // @TODO: Footer
       )}
     </>
   )

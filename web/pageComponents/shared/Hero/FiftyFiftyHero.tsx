@@ -1,20 +1,11 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
 import Image from '../Image'
-import { PortableTextBlock } from '@portabletext/types'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import type { ImageWithAlt, BackgroundColours, LinkData } from '../../../types/types'
+import type { LinkData, HeroType } from '../../../types/types'
 import { BackgroundContainer, Link, Text } from '@components'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-
-type HeroProps = {
-  heroTitle: PortableTextBlock[]
-  heroIngress: PortableTextBlock[]
-  heroLink: LinkData
-  background: BackgroundColours
-  image: ImageWithAlt
-}
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -90,26 +81,28 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, image }: HeroProps) => {
+export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: HeroType) => {
   return (
     <>
       <StyledHero background={background}>
         <StyledMedia>
-          <Image
-            maxWidth={4096}
-            sizes="(max-width: 800px) 100vw, 800px"
-            image={image}
-            layout={'fill'}
-            objectFit={'cover'}
-            priority
-          />
+          {figure && (
+            <Image
+              maxWidth={4096}
+              sizes="(max-width: 800px) 100vw, 800px"
+              image={figure.image}
+              layout={'fill'}
+              objectFit={'cover'}
+              priority
+            />
+          )}
         </StyledMedia>
         <StyledContent>
-          {heroTitle && <StyledHeroTitle value={heroTitle} level="h1" size="xl" />}
-          {heroIngress && (
+          {title && <StyledHeroTitle value={title} level="h1" size="xl" />}
+          {ingress && (
             <StyledIngress>
               <IngressText
-                value={heroIngress}
+                value={ingress}
                 components={{
                   block: {
                     normal: ({ children }) => {
@@ -122,7 +115,7 @@ export const FiftyFiftyHero = ({ heroTitle, heroIngress, heroLink, background, i
               />
             </StyledIngress>
           )}
-          {heroLink && <HeroActionLink action={heroLink} />}
+          {link && <HeroActionLink action={link} />}
         </StyledContent>
       </StyledHero>
     </>

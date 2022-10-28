@@ -42,7 +42,7 @@ const Detail = styled.span`
   display: block;
   ${StyledLandscapeCard} & {
     @media (min-width: 650px) {
-      /* If we have two details, one for title and one for department, 
+      /* If we have two details, one for title and one for department,
       put them on one line, separate with comma */
       display: inline;
       :not(:only-of-type):after {

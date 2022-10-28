@@ -1,10 +1,5 @@
 import '@mux/mux-video'
-
-type VideoProps = {
-  videoHero: {
-    playbackId: string
-  }
-}
+import { VideoHeroData } from '../../../types/types'
 
 interface MuxVideoHTMLAttributes<T> extends React.VideoHTMLAttributes<T> {
   debug?: boolean
@@ -20,10 +15,7 @@ declare global {
   }
 }
 
-export const VideoHero = ({ videoHero }: VideoProps) => {
-  return (
-    <>
-      <mux-video stream-type="on-demand" playback-id={videoHero?.playbackId} controls style={{ width: '100%' }} />
-    </>
-  )
+export const VideoHero = ({ video }: { video?: VideoHeroData }) => {
+  if (!video?.playbackId) return <div>Missing video playbackId</div>
+  return <mux-video stream-type="on-demand" playback-id={video.playbackId} controls style={{ width: '100%' }} />
 }

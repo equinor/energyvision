@@ -8,7 +8,7 @@ type SharedTitleProps = {
 
 const TitleWrapper = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
-  margin-bottom: calc(-1 * var(--space-xLarge));
+  margin-bottom: calc(-1 * var(--space-large));
 `
 
 const StyledHeading = styled(TitleText)`
@@ -16,13 +16,12 @@ const StyledHeading = styled(TitleText)`
   margin-left: auto;
   margin-right: auto;
 `
+
 const SharedTitle = ({ title }: SharedTitleProps) => {
   return (
-    <>
-      <TitleWrapper>
-        <StyledHeading value={title} level="h1" size="2xl" />
-      </TitleWrapper>
-    </>
+    <TitleWrapper>
+      <StyledHeading value={title} level="h1" size="2xl" />
+    </TitleWrapper>
   )
 }
 

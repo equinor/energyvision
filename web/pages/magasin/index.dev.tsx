@@ -11,36 +11,30 @@ import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import MagazineIndexPage from '../../pageComponents/pageTemplates/MagazineIndexPage'
-import { MagazineIndexProps } from '../../types'
+import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { SkipNavContent } from '@reach/skip-nav'
 
-export default function MagazineIndexNorwegian({
-  serverState,
-  isServerRendered = false,
-  /*url,*/
-  data,
-}: MagazineIndexProps) {
+export default function MagazineIndexNorwegian({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
-  const locale = data?.intl?.locale || defaultLocale
+  const { pageData, slug, intl } = data
+  const locale = intl?.locale || defaultLocale
+
   return (
-    <>
-      <InstantSearchSSRProvider {...serverState}>
-        <IntlProvider
-          locale={getIsoFromLocale(locale)}
-          defaultLocale={getIsoFromLocale(defaultLocale)}
-          messages={data?.intl?.messages}
-        >
-          <MagazineIndexPage
-            isServerRendered={isServerRendered}
-            locale={locale}
-            pageData={data?.pageData}
-            slug={data?.slug}
-            /* url={url}*/
-          />
-        </IntlProvider>
-      </InstantSearchSSRProvider>
-    </>
+    <InstantSearchSSRProvider {...serverState}>
+      <IntlProvider
+        locale={getIsoFromLocale(locale)}
+        defaultLocale={getIsoFromLocale(defaultLocale)}
+        messages={intl?.messages}
+      >
+        <MagazineIndexPage
+          isServerRendered={isServerRendered}
+          locale={locale}
+          pageData={pageData as MagazineIndexPageType}
+          slug={slug}
+        />
+      </IntlProvider>
+    </InstantSearchSSRProvider>
   )
 }
 
@@ -50,7 +44,6 @@ MagazineIndexNorwegian.getLayout = (page: AppProps) => {
   const { props } = page
   const { data } = props
 
-  // Too hardcoded?
   const slugs = [
     { slug: '/magazine', lang: 'en_GB' },
     { slug: '/magasin', lang: 'nb_NO' },
@@ -59,20 +52,18 @@ MagazineIndexNorwegian.getLayout = (page: AppProps) => {
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <>
-      <IntlProvider
-        locale={getIsoFromLocale(locale)}
-        defaultLocale={getIsoFromLocale(defaultLocale)}
-        messages={data?.intl?.messages}
-      >
-        <>
-          <Header slugs={slugs} menuData={data?.menuData} />
-          <SkipNavContent />
-          {page}
-          <Footer footerData={data?.footerData} />
-        </>
-      </IntlProvider>
-    </>
+    <IntlProvider
+      locale={getIsoFromLocale(locale)}
+      defaultLocale={getIsoFromLocale(defaultLocale)}
+      messages={data?.intl?.messages}
+    >
+      <>
+        <Header slugs={slugs} menuData={data?.menuData} />
+        <SkipNavContent />
+        {page}
+        <Footer footerData={data?.footerData} />
+      </>
+    </IntlProvider>
   )
 }
 

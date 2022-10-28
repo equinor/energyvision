@@ -1,11 +1,13 @@
+import { heroFields } from './common/heroFields'
 import pageContentFields from './common/pageContentFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
 
-const footerComponentFields = `
+const footerComponentFields = /* groq */ `
   title,
   text[]{
     ...,
@@ -32,25 +34,8 @@ export const magazineQuery = /* groq */ `
     _id, //used for data filtering
     "slug": slug.current,
     "title": title,
-    "seoAndSome": {
-    "documentTitle": seo.documentTitle,
-    "metaDescription": seo.metaDescription,
-    openGraphImage,
-    },
-    "hero": {
-      "type": coalesce(heroType, 'default'),
-      "ratio": heroRatio,
-      "title": heroTitle,
-      "ingress": heroIngress,
-      "link": heroLink[0]{
-        ${linkSelectorFields}
-      }
-    },
-    "background": background.title,
-    "heroImage": heroFigure,
-    "heroVideo": heroVideo.asset->{
-      playbackId,
-		},
+    "seoAndSome": ${seoAndSomeFields},
+    "hero": ${heroFields},
     "template": _type,
     ${promotedmagazineTags},
     "content": content[] {
@@ -68,15 +53,14 @@ export const magazineQuery = /* groq */ `
 export const magazineIndexQuery = /* groq */ `
   *[_type == "magazineIndex" && _lang == $lang] {
     _id,
-    "seoAndSome": {
-      "documentTitle": seo.documentTitle,
-      "metaDescription": seo.metaDescription,
-      openGraphImage,
-      },
+    "seoAndSome": ${seoAndSomeFields},
     title,
-    ingress,
-    backgroundImage,
-    "magazineTags":promotedMagazineTags[]->title[$lang],
+    "hero": ${heroFields},
+    "ingress": {
+      "content": ingress,
+      "background": coalesce(ingressBackground.title, 'White'),
+    },
+    "magazineTags": promotedMagazineTags[]->title[$lang],
     "footerComponent": footerComponent{
       ${footerComponentFields}
     }

@@ -1,8 +1,17 @@
 import { InstantSearchServerState } from 'react-instantsearch-hooks-web'
-import type { MenuData, FooterColumns, IntlData, ImageWithAlt, TeaserData, SeoData } from './types'
+import type {
+  MenuData,
+  FooterColumns,
+  IntlData,
+  TeaserData,
+  SeoData,
+  HeroType,
+  ImageWithCaptionData,
+  BackgroundColours,
+} from './types'
 import { PortableTextBlock } from '@portabletext/types'
 
-export type AlgoliaIndexPageProps = {
+export type AlgoliaIndexPageType = {
   serverState?: InstantSearchServerState
   /* url: string */
   isServerRendered?: boolean
@@ -10,22 +19,27 @@ export type AlgoliaIndexPageProps = {
     menuData?: MenuData
     footerData?: { footerColumns: FooterColumns[] }
     intl: IntlData
-    pageData: NewsroomData
+    pageData: MagazineIndexPageType | NewsRoomPageType
     slug?: string
   }
 }
 
-export type NewsRoomProps = AlgoliaIndexPageProps
-export type MagazineIndexProps = /* { url: string } & */ AlgoliaIndexPageProps
-
-export type AlgoliaIndexPageData = {
+export type NewsRoomPageType = {
   seoAndSome: SeoData
-  title?: PortableTextBlock[]
+  title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  magazineTags: string[]
 }
 
-export type NewsroomData = AlgoliaIndexPageData
-export type MagazineIndexData = {
+export type MagazineIndexPageType = {
+  seoAndSome: SeoData
+  title: PortableTextBlock[]
+  hero: HeroType
+  ingress: {
+    content: PortableTextBlock[]
+    background: BackgroundColours
+  }
+  heroImage: ImageWithCaptionData
   footerComponent?: TeaserData
-} & AlgoliaIndexPageData
+  magazineTags: string[]
+  background: BackgroundColours
+}

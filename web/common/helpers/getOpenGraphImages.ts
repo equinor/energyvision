@@ -4,7 +4,7 @@ import type { ImageWithAlt } from '../../types/types'
 
 const builder = imageUrlBuilder(sanityClientWithEquinorCDN)
 
-const getOpenGraphImages = (image: ImageWithAlt) => {
+const getOpenGraphImages = (image?: ImageWithAlt) => {
   return image?.asset
     ? [
         /*  {

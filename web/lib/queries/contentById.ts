@@ -1,7 +1,8 @@
 import pageContentFields from './common/pageContentFields'
 import { landingPageById } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
-import linkSelectorFields from './common/actions/linkSelectorFields'
+import { heroFields } from './common/heroFields'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
 
 /* export const pageQueryById =  `
   *[_type == "page" && _id == $id][0] {
@@ -23,25 +24,8 @@ export const contentQueryById = /* groq */ `
   *[_id in $id] {
     _id,
     "title": title,
-    "seoAndSome": {
-      "documentTitle": seo.documentTitle,
-          "metaDescription": seo.metaDescription,
-          openGraphImage,
-    },
-    "hero": {
-      "type": coalesce(heroType, 'default'),
-      "ratio": heroRatio,
-      "title": heroTitle,
-      "ingress": heroIngress,
-      "link": heroLink[0]{
-        ${linkSelectorFields}
-      }
-    },
-    "background": background.title,
-    "heroImage": heroFigure,
-    "heroVideo": heroVideo.asset->{
-      playbackId,
-		},
+    "seoAndSome": ${seoAndSomeFields},
+    "hero": ${heroFields},
     "template": _type,
      _type == "landingPage" => {
         ${landingPageById}

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import NewsText from '../shared/portableText/NewsText'
-import HeroImage from '../shared/Hero/HeroImage'
+import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
 import IngressText from '../shared/portableText/IngressText'
 import RelatedContent from '../shared/RelatedContent'
 import LatestNews from '../news/LatestNews'
@@ -234,7 +234,7 @@ const NewsPage = ({ data }: ArticleProps) => {
                 </DateWrapper>
               </HeaderInner>
             </Header>
-            <Image>{heroImage && <HeroImage data={heroImage} />}</Image>
+            <Image>{heroImage && <DefaulHeroImage data={heroImage} />}</Image>
             {ingress && ingress.length > 0 && (
               <LeadParagraph>
                 <IngressText value={ingress} />

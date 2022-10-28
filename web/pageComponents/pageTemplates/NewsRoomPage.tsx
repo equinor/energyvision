@@ -9,15 +9,14 @@ import NewsContent from '../searchIndexPages/newsRoomIndex/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
 import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
-
-import type { NewsroomData } from '../../types'
+import type { NewsRoomPageType } from '../../types'
 import Seo from '../../pageComponents/shared/Seo'
 import { useRef } from 'react'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
   locale: string
-  pageData: NewsroomData | undefined
+  pageData: NewsRoomPageType | undefined
   slug?: string
 }
 
@@ -25,7 +24,6 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
   const { ingress, title } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
-
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
 

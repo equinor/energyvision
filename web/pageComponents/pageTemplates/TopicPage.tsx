@@ -3,7 +3,7 @@ import { NextSeo } from 'next-seo'
 import { toPlainText } from '@portabletext/react'
 import { useRouter } from 'next/router'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import HeroImage from '../shared/Hero/HeroImage'
+import HeroImage from '../shared/Hero/DefaultHeroImage'
 import MagazineTagBar from '../shared/MagazineTagBar'
 import Teaser from '../shared/Teaser'
 import TextBlock from '../topicPages/TextBlock'
@@ -47,10 +47,6 @@ import {
   VideoData,
   CookieDeclarationData,
 } from '../../types/types'
-import { Flags } from '../../common/helpers/datasetHelpers'
-import { FullImageHero } from '../shared/Hero/FullImageHero'
-import { DefaultHero } from '../shared/Hero/DefaultHero'
-import { FiftyFiftyHero } from '../shared/Hero/FiftyFiftyHero'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -184,27 +180,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
     }
   })
 
-  const Hero = () => {
-    if (!data.title) return null
-
-    if (data?.hero.type === 'fullWidthImage') {
-      return <FullImageHero ratio={data.hero.ratio as string} heroImage={data.heroImage} />
-    } else if (data?.hero.type === 'fiftyFifty') {
-      return (
-        <FiftyFiftyHero
-          heroTitle={data.hero.heroTitle}
-          heroIngress={data.hero.heroIngress}
-          heroLink={data.hero.heroLink}
-          background={data.background}
-          image={data.heroImage.image}
-        />
-      )
-    } else {
-      return <DefaultHero title={data.title} image={data.heroImage} />
-    }
-  }
-
-  const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.heroImage?.image
+  const ogImage = data?.seoAndSome?.openGraphImage?.asset ? data?.seoAndSome?.openGraphImage : data?.hero?.figure?.image
   return (
     <>
       <NextSeo
@@ -219,14 +195,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
         }}
       ></NextSeo>
       <TopicPageLayout>
-        {Flags.IS_DEV ? (
-          <Hero />
-        ) : (
-          <>
-            <HeroBanner>{data?.title && <StyledHeading value={data?.title} level="h1" size="2xl" />}</HeroBanner>
-            <ImageWrapper>{data?.heroImage && <HeroImage data={data?.heroImage} />}</ImageWrapper>
-          </>
-        )}
+        <>
+          <HeroBanner>{data?.title && <StyledHeading value={data.title} level="h1" size="2xl" />}</HeroBanner>
+          <ImageWrapper>{data?.hero?.figure && <HeroImage data={data.hero.figure} />}</ImageWrapper>
+        </>
         {tags && (
           <MagazineTagBar
             tags={tags}

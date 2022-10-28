@@ -112,9 +112,9 @@ const heroLink = {
 }
 
 const background = {
-  title: 'Background',
+  title: 'Hero Background',
   description: 'Pick a colour for the background. Default is white.',
-  name: 'background',
+  name: 'heroBackground',
   type: 'colorlist',
   options: {
     borderradius: {

@@ -13,9 +13,8 @@ const StyledFigure = styled.figure`
   margin: 0;
 `
 
-const HeroImage = ({ data }: HeroImageProps) => {
+const DefaulHeroImage = ({ data }: HeroImageProps) => {
   const { image, caption, attribution } = data
-  if (!image) return null
   return (
     <StyledFigure>
       <Image
@@ -50,4 +49,4 @@ const HeroImage = ({ data }: HeroImageProps) => {
   )
 }
 
-export default HeroImage
+export default DefaulHeroImage

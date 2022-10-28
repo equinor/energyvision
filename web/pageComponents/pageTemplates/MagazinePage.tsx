@@ -3,11 +3,10 @@ import { useRouter } from 'next/router'
 import MagazineTagBar from '../shared/MagazineTagBar'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
-import { MagazinePageSchema } from '../../types/types'
+import { HeroTypes, MagazinePageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
 import Teaser from '../shared/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
-import { HeroTypes } from '../shared/Hero/HeroTypes'
 
 const MagazinePageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -50,9 +49,14 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
 
   return (
     <>
-      <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} heroImage={data?.heroImage?.image} pageTitle={data?.title} />
+      <Seo
+        seoAndSome={data?.seoAndSome}
+        slug={data?.slug}
+        heroImage={data?.hero?.figure?.image}
+        pageTitle={data?.title}
+      />
       <MagazinePageLayout>
-        <SharedBanner data={data} />
+        <SharedBanner title={data?.title} hero={data?.hero} />
         {tags && (
           <MagazineTagBar
             tags={tags}
