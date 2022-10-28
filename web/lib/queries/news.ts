@@ -110,3 +110,29 @@ export const newsQuery = /* groq */ `
 export const newsSlugsQuery = /* groq */ `
 *[_type == "news" && defined(slug.current)][].slug.current
 `
+
+export const newsPromotionQuery = `
+  *[(_type == "news" || _type == "localNews")
+    && _lang == $lang
+    && (
+      count(tags[_ref in $tags[].id]) > 0
+      ||
+      count(countryTags[_ref in $countryTags[].id]) > 0
+      ||
+      localNewsTag._ref in $localNewsTags[].id
+    )
+    && !(_id in path("drafts.**"))
+  ] | order(${publishDateTimeQuery} desc)[0...3]{
+    "type": _type,
+    "id": _id,
+    "updatedAt": _updatedAt,
+    title,
+    heroImage,
+    "publishDateTime": ${publishDateTimeQuery},
+    "slug": slug.current,
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
+  }
+`
