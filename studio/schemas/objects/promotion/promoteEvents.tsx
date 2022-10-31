@@ -5,6 +5,7 @@ import routes from '../../routes'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import { EdsIcon } from '../../../icons'
 import { calendar_event } from '@equinor/eds-icons'
+import { Flags } from '../../../src/lib/datasetHelpers'
 
 export type Event = {
   tags: string[]
@@ -42,7 +43,7 @@ export default {
       validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
       hidden: ({ parent }: { parent: Event }) => parent?.promotePastEvents === false,
     },
-    {
+    Flags.HAS_EVENT && {
       title: 'Tags',
       name: 'tags',
       type: 'array',
@@ -56,7 +57,6 @@ export default {
       ],
       hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true,
     },
-
     {
       title: 'Events to be promoted',
       name: 'promotedEvents',
