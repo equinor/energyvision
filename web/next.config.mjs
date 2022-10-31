@@ -37,6 +37,9 @@ export default withTM(
     output: 'standalone',
     pageExtensions: pageExtensions,
     reactStrictMode: true,
+    experimental: {
+      largePageDataBytes: 300 * 1000,
+    },
     eslint: {
       // Warning: Dangerously allow production builds to successfully complete even if
       // your project has ESLint errors.
