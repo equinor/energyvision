@@ -74,6 +74,10 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions } = data
   const { background, imageSize, imagePosition } = designOptions
 
+  if ([title, overline, text, image?.asset, action].every((i) => !i)) {
+    return null
+  }
+
   const isSvg = image?.extension === 'svg'
   return (
     <BackgroundContainer background={background} id={anchor}>
