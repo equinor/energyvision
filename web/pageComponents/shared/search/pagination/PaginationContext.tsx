@@ -2,7 +2,6 @@ import { createContext, RefObject, useState } from 'react'
 
 type Props = {
   resultsRef: RefObject<HTMLDivElement> | undefined
-  setResultsRef: React.Dispatch<React.SetStateAction<RefObject<HTMLDivElement> | undefined>>
 }
 
 type ProviderProps = {
@@ -12,13 +11,10 @@ type ProviderProps = {
 
 export const PaginationContext = createContext<Props>({
   resultsRef: undefined,
-  setResultsRef: () => {
-    return
-  },
 })
 
 export const PaginationContextProvider = ({ defaultRef, children }: ProviderProps) => {
-  const [resultsRef, setResultsRef] = useState<RefObject<HTMLDivElement> | undefined>(defaultRef)
+  const [resultsRef] = useState<RefObject<HTMLDivElement> | undefined>(defaultRef)
 
-  return <PaginationContext.Provider value={{ resultsRef, setResultsRef }}>{children}</PaginationContext.Provider>
+  return <PaginationContext.Provider value={{ resultsRef }}>{children}</PaginationContext.Provider>
 }
