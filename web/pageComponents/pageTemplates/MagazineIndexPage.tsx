@@ -81,7 +81,7 @@ const MagazineIndexPage = ({
         <SharedBanner title={title} hero={hero} />
         <BackgroundContainer background={ingress.background}>
           {pageData?.hero.type !== HeroTypes.DEFAULT && title && <SharedTitle title={title} />}
-          <Intro ref={resultsRef}>
+          <Intro>
             {ingress && (
               <IngressWrapper>
                 <UnpaddedText>{ingress && <RichText value={ingress.content} />}</UnpaddedText>
@@ -169,7 +169,13 @@ const MagazineIndexPage = ({
         >
           <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
           {magazineTags && (
-            <MagazineTagFilter tags={magazineTags} attribute="magazineTags" sortBy={[`name:asc`]} limit={5} />
+            <MagazineTagFilter
+              tags={magazineTags}
+              attribute="magazineTags"
+              sortBy={[`name:asc`]}
+              limit={5}
+              ref={resultsRef}
+            />
           )}
           <MagazineWapper>
             <StyledHits />
