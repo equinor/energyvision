@@ -1,3 +1,7 @@
 /* eslint-disable no-undef */
-export const enableDynatrace = () => dtrum?.enable()
-export const disableDynatrace = () => dtrum?.disable()
+export const enableDynatrace = () => {
+  if (dtrum) dtrum?.enable()
+}
+export const disableDynatrace = () => {
+  if (dtrum) dtrum?.disable()
+}
