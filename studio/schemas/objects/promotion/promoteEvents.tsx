@@ -122,7 +122,7 @@ export default {
         const titleText = [plainTitle1, plainTitle2].filter(Boolean).join(', ') || ''
         title = hasMoreReferences ? `${titleText}...` : titleText
       } else {
-        const tagText = tags.length > 0 ? `from ${tags.length} tag(s)` : `without tag filters`
+        const tagText = tags && tags.length > 0 ? `from ${tags.length} tag(s)` : `without tag filters`
         title = `Showing ${pastEventsCount || 'all'} ${promotePastEvents ? 'past' : 'future'} events ${tagText}`
       }
       return {
