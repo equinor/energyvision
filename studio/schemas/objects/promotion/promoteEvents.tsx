@@ -12,6 +12,7 @@ export type Event = {
   manuallySelectEvents: boolean
   promotedEvents: Reference[]
   promotePastEvents: boolean
+  useTags: boolean
 }
 
 export default {
@@ -43,6 +44,13 @@ export default {
       validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
       hidden: ({ parent }: { parent: Event }) => parent?.promotePastEvents === false,
     },
+    {
+      name: 'useTags',
+      type: 'boolean',
+      title: 'Select events from tags',
+      description: `Enable this to automatically pick events with selected tags`,
+      initialValue: true,
+    },
     Flags.HAS_EVENT && {
       title: 'Tags',
       name: 'tags',
@@ -55,7 +63,14 @@ export default {
           options: { disableNew: true },
         },
       ],
-      hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true,
+      hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true || parent?.useTags !== true,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as { parent: Event }
+          if (!parent.useTags) return true
+          if (!value || value.length === 0) return 'You must select at least one tag'
+          return true
+        }).unique(),
     },
     {
       title: 'Events to be promoted',

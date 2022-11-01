@@ -306,13 +306,13 @@ const pageContentFields = /* groq */ `
           tags,
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
-            !defined(tags) => {
+            !useTags => {
               "promotions": ${futureEventsQuery(false)}{
                 ${eventPromotionFields}
               },
             },
-            defined(tags) => {
-              "promotions": ${futureEventsQuery()}{
+            useTags => {
+              "promotions": ${futureEventsQuery(true)}{
                 ${eventPromotionFields}
               },
             }
