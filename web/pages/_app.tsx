@@ -89,8 +89,17 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     }
   }, [router.asPath])
 
-  useConsentState('statistics', loadSiteImproveScript, cleanUpSiteImproveScript)
-  useConsentState('statistics', enableDynatrace, disableDynatrace)
+  const enableStatisticsCookies = () => {
+    loadSiteImproveScript()
+    enableDynatrace()
+  }
+
+  const disableStatisticsCookies = () => {
+    cleanUpSiteImproveScript()
+    disableDynatrace()
+  }
+
+  useConsentState('statistics', enableStatisticsCookies, disableStatisticsCookies)
 
   return (
     <SWRConfig>

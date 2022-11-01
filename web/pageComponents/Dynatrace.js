@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 export const enableDynatrace = () => {
-  if (dtrum) dtrum?.enable()
+  window?.dtrum?.enable()
 }
 export const disableDynatrace = () => {
-  if (dtrum) dtrum?.disable()
+  window?.dtrum?.disable()
 }
