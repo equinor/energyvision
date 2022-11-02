@@ -24,7 +24,7 @@ export const pageQuery = /* groq */ `
      content->_type == "landingPage" => {
         ${landingPageContentFields}
     },
-    content->_type == "page" => {
+    content->_type == "page" || content->_type == "magazine" => {
       "content": content->content[] {
           ${pageContentFields}
       },
@@ -33,11 +33,6 @@ export const pageQuery = /* groq */ `
       "content": content->{
         ${eventContentFields}
       }
-    },
-    content->_type == "magazine" => {
-      "content": content->content[] {
-          ${pageContentFields}
-      },
     },
   }
 `
