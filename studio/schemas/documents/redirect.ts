@@ -9,7 +9,7 @@ import { SearchWeights } from '../searchWeights'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
-export default {
+const redirect = {
   title: 'Redirect',
   name: 'redirect',
   type: 'document',
@@ -94,8 +94,14 @@ export default {
       }
     },
   },
-  __experimental_search: [
-    { weight: SearchWeights.Redirects, path: 'from' },
-    { weight: SearchWeights.Redirects, path: 'to' },
-  ],
 }
+
+export default Flags.IS_DEV
+  ? redirect
+  : {
+      ...redirect,
+      __experimental_search: [
+        { weight: SearchWeights.Redirects, path: 'from' },
+        { weight: SearchWeights.Redirects, path: 'to' },
+      ],
+    }

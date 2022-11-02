@@ -8,7 +8,7 @@ import sharedHeroFields from './header/sharedHeaderFields'
 // import { done } from '@equinor/eds-icons'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
-export default {
+const page = {
   type: 'document',
   name: 'page',
   title: 'Topic page',
@@ -99,3 +99,13 @@ export default {
     { weight: SearchWeights.TopicPage, path: 'title' },
   ],
 }
+
+export default Flags.IS_DEV
+  ? page
+  : {
+      ...page,
+      __experimental_search: [
+        { weight: SearchWeights.TopicPage, path: '_type' },
+        { weight: SearchWeights.TopicPage, path: 'title' },
+      ],
+    }

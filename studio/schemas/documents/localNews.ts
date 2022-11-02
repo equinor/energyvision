@@ -7,6 +7,7 @@ import client from 'part:@sanity/base/client'
 import type { Rule } from '@sanity/types'
 import { i18n } from '../documentTranslation'
 import { formatDate } from '../../helpers/formatDate'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 import {
   isLive,
@@ -25,7 +26,7 @@ import {
 import { SearchWeights } from '../searchWeights'
 import { withSlugValidation } from '../validations/validateSlug'
 
-export default {
+const localNews = {
   title: 'Local news',
   name: 'localNews',
   type: 'document',
@@ -138,8 +139,14 @@ export default {
       }
     },
   },
-  __experimental_search: [
-    { weight: SearchWeights.News, path: '_type' },
-    { weight: SearchWeights.News, path: 'title' },
-  ],
 }
+
+export default Flags.IS_DEV
+  ? localNews
+  : {
+      ...localNews,
+      __experimental_search: [
+        { weight: SearchWeights.News, path: '_type' },
+        { weight: SearchWeights.News, path: 'title' },
+      ],
+    }

@@ -3,6 +3,7 @@ import { languages } from '../../languages'
 import type { CurrentUser } from '@sanity/types'
 import styled from 'styled-components'
 import { SearchWeights } from '../searchWeights'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const StyledSpan = styled.span`
   display: block;
@@ -27,7 +28,7 @@ const fields = languages.map((lang) => ({
   fieldset: 'tagName',
 }))
 
-export default {
+const localNewsTag = {
   type: 'document',
   title: `Local news tag`,
   name: `localNewsTag`,
@@ -53,5 +54,11 @@ export default {
     },
     ...fields,
   ],
-  __experimental_search: [{ weight: SearchWeights.Tag, path: `title` }],
 }
+
+export default Flags.IS_DEV
+  ? localNewsTag
+  : {
+      ...localNewsTag,
+      __experimental_search: [{ weight: SearchWeights.Tag, path: `title` }],
+    }

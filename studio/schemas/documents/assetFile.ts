@@ -10,6 +10,7 @@ import {
 } from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
 import { SearchWeights } from '../searchWeights'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 export const fileIcon = (extension: string) => {
   switch (extension) {
@@ -45,7 +46,7 @@ const acceptedFileTypes = [
   '.mp3',
 ]
 
-export default {
+const assetFile = {
   title: 'File',
   type: 'document',
   name: 'assetFile',
@@ -100,8 +101,14 @@ export default {
       }
     },
   },
-  __experimental_search: [
-    { weight: SearchWeights.File, path: 'title' },
-    { weight: SearchWeights.File, path: 'asset.asset.originalFilename' },
-  ],
 }
+
+export default Flags.IS_DEV
+  ? assetFile
+  : {
+      ...assetFile,
+      __experimental_search: [
+        { weight: SearchWeights.File, path: 'title' },
+        { weight: SearchWeights.File, path: 'asset.asset.originalFilename' },
+      ],
+    }

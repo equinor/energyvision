@@ -25,7 +25,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { SearchWeights } from '../searchWeights'
 import { withSlugValidation } from '../validations/validateSlug'
 
-export default {
+const news = {
   title: 'News',
   name: 'news',
   type: 'document',
@@ -133,8 +133,14 @@ export default {
       }
     },
   },
-  __experimental_search: [
-    { weight: SearchWeights.News, path: '_type' },
-    { weight: SearchWeights.News, path: 'title' },
-  ],
 }
+
+export default Flags.IS_DEV
+  ? news
+  : {
+      ...news,
+      __experimental_search: [
+        { weight: SearchWeights.News, path: '_type' },
+        { weight: SearchWeights.News, path: 'title' },
+      ],
+    }
