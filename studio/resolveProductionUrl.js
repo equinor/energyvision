@@ -21,13 +21,19 @@ const localUrl = process.env.SANITY_STUDIO_PROJECT_URL
 
 export const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl()
 
+const shouldUseSlug = (doc) => {
+  if (doc._type === 'magazine' && !doc.firstPublishedAt) return false
+
+  return !!doc?.slug?.current
+}
+
 export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
 
   previewUrl.pathname = '/api/preview'
   previewUrl.searchParams.append('secret', previewSecret)
 
-  if (doc?.slug?.current) {
+  if (shouldUseSlug(doc)) {
     previewUrl.searchParams.append('locale', getLocaleFromName(doc?._lang))
     previewUrl.searchParams.append('slug', doc?.slug?.current)
   } else if (doc?._id) {

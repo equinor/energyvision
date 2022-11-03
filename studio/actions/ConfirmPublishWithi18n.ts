@@ -62,7 +62,7 @@ function useDelayedFlag(value = false, timeout = 500, delayedOn = false, delayed
 // Add the _type of the documents that need a publish confirmation here
 const requiresConfirm = ['news', 'localNews']
 // Add the _type of the documents that need a firstPublished field here
-const requiresFirstPublished = ['news', 'localNews']
+const requiresFirstPublished = ['news', 'localNews', 'magazine']
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
 
