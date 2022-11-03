@@ -4,7 +4,6 @@ import { SearchWeights } from '../searchWeights'
 import { Rule } from '@sanity/types/dist/dts'
 import { Flags } from '../../src/lib/datasetHelpers'
 
-
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
   name: lang.name,
