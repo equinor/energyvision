@@ -10,7 +10,6 @@ import blocksToText from '../../helpers/blocksToText'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { Rule, Reference } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -26,11 +25,7 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
-const titleContentType = configureTitleBlockContent({
-  strong: Flags.IS_DEV,
-  emphasis: Flags.IS_DEV,
-  strikethrough: Flags.IS_DEV,
-})
+const titleContentType = configureTitleBlockContent()
 
 type TextBlock = {
   overline?: string

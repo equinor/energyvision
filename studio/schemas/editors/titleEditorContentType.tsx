@@ -3,24 +3,20 @@ import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '.
 import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
 import type { BlockFieldType } from '../../types/schemaTypes'
 import { format_strikethrough } from '@equinor/eds-icons'
+import { Flags } from '../../src/lib/datasetHelpers'
 
-type TitleblockContentProps = {
-  strong?: boolean
-  emphasis?: boolean
-  strikethrough?: boolean
-}
 // TODO: Add relevant styles for titles (i.e. highlighted text)
-export const configureTitleBlockContent = (options: TitleblockContentProps = {}): BlockFieldType => {
-  const { strong, emphasis, strikethrough } = options
+export const configureTitleBlockContent = (): BlockFieldType => {
+  // const { strong, emphasis, strikethrough } = options
   return {
     type: 'block',
     styles: [],
     lists: [],
     marks: {
       decorators: [
-        strong ? { title: 'Strong', value: 'strong' } : undefined,
-        emphasis ? { title: 'Emphasis', value: 'em' } : undefined,
-        strikethrough
+        Flags.IS_DEV ? { title: 'Strong', value: 'strong' } : undefined,
+        Flags.IS_DEV ? { title: 'Emphasis', value: 'em' } : undefined,
+        Flags.IS_DEV
           ? {
               title: 'Strikethrough',
               value: 's',
