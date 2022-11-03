@@ -4,7 +4,6 @@ import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { useContext, useEffect, useRef } from 'react'
-import { Flags } from '../../../../common/helpers/datasetHelpers'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 import { PaginationContext } from './PaginationContext'
 
@@ -37,10 +36,8 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
   const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
-    if (Flags.IS_DEV) {
-      if (!prefersReducedMotion && resultsRef?.current && currentRefinement !== prevRefinement.current) {
-        resultsRef.current.scrollIntoView({ behavior: 'smooth' })
-      }
+    if (!prefersReducedMotion && resultsRef?.current && currentRefinement !== prevRefinement.current) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [currentRefinement, prefersReducedMotion, resultsRef])
 
