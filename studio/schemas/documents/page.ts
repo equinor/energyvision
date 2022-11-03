@@ -94,10 +94,6 @@ const page = {
       }
     },
   },
-  __experimental_search: [
-    { weight: SearchWeights.TopicPage, path: '_type' },
-    { weight: SearchWeights.TopicPage, path: 'title' },
-  ],
 }
 
 export default Flags.IS_DEV
