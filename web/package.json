@@ -29,7 +29,7 @@
     "@portabletext/types": "^1.0.3",
     "@reach/accordion": "^0.17.0",
     "@reach/skip-nav": "^0.17.0",
-    "@reach/tabs": "^0.17.0",
+    "@reach/tabs": "^0.18.0",
     "@reach/window-size": "^0.17.0",
     "@react-spring/web": "^9.4.5",
     "@sanity/client": "^3.2.0",
