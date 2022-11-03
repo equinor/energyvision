@@ -1,7 +1,19 @@
+import { Flags } from '../../../common/helpers/datasetHelpers'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { ContactFormCatalogType } from '../../../types'
 import { sendRequestToServiceNow } from './service-now-base'
 import { validateFormRequest } from './validateFormRequest'
 
+const getCatalogIdentifier = (catalogType: ContactFormCatalogType | null) => {
+  switch (catalogType) {
+    case 'humanRightsInformationRequest':
+      return 'd0d1eaee47fb0950cd271141e36d439b'
+    case 'loginIssues':
+      return '49f29a93dbb2ac10f42b2208059619a7'
+    default:
+      return '66f0ff89db2e2644ff6272dabf961945'
+  }
+}
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'contact us form')
   if (result.status !== 200) {
@@ -9,9 +21,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const isHumanRightsInfoReq = req.body.isHumanRightsInformationRequest
-  const catalogIdentifier = isHumanRightsInfoReq
+  const catalogIdentifierOld = isHumanRightsInfoReq
     ? 'd0d1eaee47fb0950cd271141e36d439b'
     : '66f0ff89db2e2644ff6272dabf961945'
+
+  const catalogIdentifierNew = getCatalogIdentifier(req.body.catalogType)
+
+  const catalogIdentifier = Flags.IS_DEV ? catalogIdentifierNew : catalogIdentifierOld
 
   const data = req.body.data
   const email = encodeURI(data.email)

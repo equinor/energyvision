@@ -607,3 +607,5 @@ export type VideoData = {
 export type VideoHeroData = {
   playbackId: string
 }
+
+export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'

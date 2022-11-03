@@ -5,6 +5,8 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
+import { ContactFormCatalogType } from '../../../types'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 type FormValues = {
   name: string
@@ -30,6 +32,7 @@ const ContactEquinorForm = () => {
             defaultMessage: 'Human Rights Information Request',
           }),
         ),
+        catalogType: getCatalog(data.category),
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -38,6 +41,28 @@ const ContactEquinorForm = () => {
     })
     setServerError(res.status != 200)
     setSuccessfullySubmitted(res.status == 200)
+  }
+
+  const getCatalog = (category: string): ContactFormCatalogType | null => {
+    if (
+      category.includes(
+        intl.formatMessage({
+          id: 'contact_form_human_rights_information_request',
+          defaultMessage: 'Human Rights Information Request',
+        }),
+      )
+    )
+      return 'humanRightsInformationRequest'
+    else if (
+      category.includes(
+        intl.formatMessage({
+          id: 'contact_form_login_issues',
+          defaultMessage: 'Login Issues',
+        }),
+      )
+    )
+      return 'loginIssues'
+    else return null
   }
 
   const {
@@ -167,6 +192,14 @@ const ContactEquinorForm = () => {
                       defaultMessage: 'Human Rights Information Request',
                     })}
                   </option>
+                  {Flags.IS_DEV && (
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_login_issues',
+                        defaultMessage: 'Login Issues',
+                      })}
+                    </option>
+                  )}
                   <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
                 </FormSelect>
               )}
