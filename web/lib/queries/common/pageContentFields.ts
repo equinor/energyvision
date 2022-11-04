@@ -318,13 +318,13 @@ const pageContentFields = /* groq */ `
             }
           },
           promotePastEvents=>{
-            !defined(tags) => {
+            !useTags => {
               "promotions": ${pastEventsQuery(false)}{
                 ${eventPromotionFields}
               },
             },
-            defined(tags) => {
-              "promotions": ${pastEventsQuery()}{
+            useTags => {
+              "promotions": ${pastEventsQuery(true)}{
                 ${eventPromotionFields}
               },
             }
