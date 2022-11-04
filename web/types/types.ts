@@ -175,11 +175,30 @@ export type HeroType = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   link?: LinkData
-  type?: string
+  type?: HeroTypes
   ratio?: string
   background?: BackgroundColours
   video?: VideoHeroData
 }
+
+export type ContentType =
+  | TeaserData
+  | TextBlockData
+  | FullWidthImageData
+  | FigureData
+  | TextWithIconArrayData
+  | QuoteData
+  | AccordionData
+  | PromoTileArrayData
+  | IFrameData
+  | PromotionData
+  | FormData
+  | TableData
+  | CookieDeclarationData
+  | NewsListData
+  | StockValuesData
+  | TwitterEmbedData
+  | VideoData
 
 export type PageSchema = {
   slug: string
@@ -188,8 +207,7 @@ export type PageSchema = {
   hero: HeroType
   template: Templates
   seoAndSome: SeoData
-  // @TODO: Better typings here
-  content?: []
+  content?: ContentType[]
   id: string
   type: string
 }
@@ -200,8 +218,7 @@ export type PageSchemaV2 = {
   hero: HeroType
   template: Templates
   seoAndSome: SeoData
-  // @TODO: Better typings here
-  content?: []
+  content?: ContentType[]
   id: string
   type: string
 }

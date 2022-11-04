@@ -32,8 +32,8 @@ const getPageExtensions = (dataset) => {
 
 const pageExtensions = getPageExtensions(dataset)
 
-export default withTM(
-  withBundle({
+export default withBundle(
+  withTM({
     output: 'standalone',
     pageExtensions: pageExtensions,
     reactStrictMode: true,

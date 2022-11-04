@@ -27,6 +27,21 @@ const ColourContainer = styled.div.attrs<ColourContainerProps>(({ isInverted, co
   background-color: var(--background-color);
 `
 
+// @TODO: Can we map colours in a better way? Duplicate code atm
+const backgrounds: { [name: string]: string } = {
+  none: 'var(--ui-background-default)',
+  one: 'var(--moss-green-70)',
+  two: 'var(--moss-green-50)',
+  three: 'var(--spruce-wood-90)',
+  four: 'var(--mist-blue-100)',
+  five: 'var(--slate-blue-100)',
+}
+
+export const getBackgroundByColorName = (name: BackgroundColours) => {
+  const styleVariant = getStyleVariant(name)
+  return backgrounds[styleVariant]
+}
+
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
   { background = 'White', disableContainerWrapper = false, style, children, ...rest },
   ref,
@@ -34,16 +49,6 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   // @TODO: Find a better way with task #334
   const styleVariant = getStyleVariant(background)
   const isInverted = styleVariant === 'five'
-
-  // @TODO: Can we map colours in a better way? Duplicate code atm
-  const backgrounds: { [name: string]: string } = {
-    none: 'var(--ui-background-default)',
-    one: 'var(--moss-green-70)',
-    two: 'var(--moss-green-50)',
-    three: 'var(--spruce-wood-90)',
-    four: 'var(--mist-blue-100)',
-    five: 'var(--slate-blue-100)',
-  }
 
   return (
     <ColourContainer

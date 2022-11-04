@@ -4,6 +4,7 @@ import { HeroTypes, TopicPageSchema } from '../../types/types'
 import { SharedBanner } from './shared/SharedBanner'
 import Seo from '../../pageComponents/shared/Seo'
 import SharedTitle from './shared/SharedTitle'
+import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -30,6 +31,8 @@ type TopicPageProps = {
 }
 
 const TopicPage = ({ data }: TopicPageProps) => {
+  const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
+
   return (
     <>
       <Seo
@@ -40,7 +43,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       />
       <TopicPageLayout>
         <SharedBanner title={data.title} hero={data.hero} />
-        {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} />}
+        {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} styles={titleStyles} />}
         <PageContent data={data} />
       </TopicPageLayout>
     </>

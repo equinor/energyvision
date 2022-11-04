@@ -33,7 +33,6 @@ import {
   FullWidthImageData,
   FigureData,
   TextWithIconArrayData,
-  CallToActionData,
   QuoteData,
   AccordionData,
   PromoTileArrayData,
@@ -46,6 +45,7 @@ import {
   TwitterEmbedData,
   VideoData,
   CookieDeclarationData,
+  ContentType,
 } from '../../types/types'
 
 const TopicPageLayout = styled.main`
@@ -95,27 +95,6 @@ type TopicPageProps = {
   data: PageSchema
 }
 
-// How could we do this for several different component types?
-type ComponentProps =
-  | TeaserData
-  | TextBlockData
-  | FullWidthImageData
-  | FigureData
-  | TextWithIconArrayData
-  | CallToActionData
-  | QuoteData
-  | AccordionData
-  | PromoTileArrayData
-  | IFrameData
-  | PromotionData
-  | FormData
-  | TableData
-  | StockValuesData
-  | TwitterEmbedData
-  | AnchorLinkData
-  | VideoData
-  | CookieDeclarationData
-
 const TopicPage = ({ data }: TopicPageProps) => {
   const router = useRouter()
   const { pathname, locale } = useRouter()
@@ -133,10 +112,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
     }
   })
 
-  const content = (data?.content || []).map((c: ComponentProps, index) => {
+  const content = (data?.content || []).map((c: ContentType, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
-      (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
+      (prevComponent as unknown as ContentType)?.type === 'anchorLink'
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
         : undefined
 

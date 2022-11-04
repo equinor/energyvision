@@ -79,8 +79,10 @@ const MagazineIndexPage = ({
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main>
         <SharedBanner title={title} hero={hero} />
+        {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
+          <SharedTitle title={title} styles={{ backgroundColor: ingress.background, negativeBottomSpace: true }} />
+        )}
         <BackgroundContainer background={ingress.background}>
-          {pageData?.hero.type !== HeroTypes.DEFAULT && title && <SharedTitle title={title} />}
           <Intro>
             {ingress && (
               <IngressWrapper>
