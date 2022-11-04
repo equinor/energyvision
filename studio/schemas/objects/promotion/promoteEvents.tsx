@@ -50,6 +50,7 @@ export default {
       title: 'Select events from tags',
       description: `Enable this to automatically pick events with selected tags`,
       initialValue: true,
+      hidden: ({ parent }: { parent: Event }) => parent?.manuallySelectEvents === true,
     },
     Flags.HAS_EVENT && {
       title: 'Tags',
