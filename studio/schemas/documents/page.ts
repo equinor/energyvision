@@ -3,12 +3,11 @@ import { i18n } from '../documentTranslation'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { SearchWeights } from '../searchWeights'
 import sharedHeroFields from './header/sharedHeaderFields'
 // import { done } from '@equinor/eds-icons'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
-const page = {
+export default {
   type: 'document',
   name: 'page',
   title: 'Topic page',
@@ -95,13 +94,3 @@ const page = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? page
-  : {
-      ...page,
-      __experimental_search: [
-        { weight: SearchWeights.TopicPage, path: '_type' },
-        { weight: SearchWeights.TopicPage, path: 'title' },
-      ],
-    }

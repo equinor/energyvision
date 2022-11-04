@@ -1,7 +1,5 @@
 import { defaultLanguage, languages } from '../../languages'
 import { TagIcon } from '../../icons'
-import { SearchWeights } from '../searchWeights'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -13,7 +11,7 @@ const localeStrings = languages.map((lang) => ({
 
 const title = `title.${defaultLanguage.name}`
 
-const countryTag = {
+export default {
   type: 'document',
   name: `countryTag`,
   title: `Country`,
@@ -63,10 +61,3 @@ const countryTag = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? countryTag
-  : {
-      ...countryTag,
-      __experimental_search: languages.map((lang) => ({ weight: SearchWeights.Tag, path: `title.${lang.name}` })),
-    }

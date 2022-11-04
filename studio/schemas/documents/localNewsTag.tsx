@@ -2,8 +2,6 @@ import React from 'react'
 import { languages } from '../../languages'
 import type { CurrentUser } from '@sanity/types'
 import styled from 'styled-components'
-import { SearchWeights } from '../searchWeights'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const StyledSpan = styled.span`
   display: block;
@@ -28,7 +26,7 @@ const fields = languages.map((lang) => ({
   fieldset: 'tagName',
 }))
 
-const localNewsTag = {
+export default {
   type: 'document',
   title: `Local news tag`,
   name: `localNewsTag`,
@@ -55,10 +53,3 @@ const localNewsTag = {
     ...fields,
   ],
 }
-
-export default Flags.IS_DEV
-  ? localNewsTag
-  : {
-      ...localNewsTag,
-      __experimental_search: [{ weight: SearchWeights.Tag, path: `title` }],
-    }

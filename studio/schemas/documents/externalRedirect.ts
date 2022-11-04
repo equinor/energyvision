@@ -3,12 +3,10 @@ import type { Rule, ValidationContext } from '@sanity/types'
 import sanityClient from 'part:@sanity/base/client'
 import { world } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { SearchWeights } from '../searchWeights'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
-const externalRedirect = {
+export default {
   title: 'External Redirect',
   name: 'externalRedirect',
   type: 'document',
@@ -64,13 +62,3 @@ const externalRedirect = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? externalRedirect
-  : {
-      ...externalRedirect,
-      __experimental_search: [
-        { weight: SearchWeights.Redirects, path: 'from' },
-        { weight: SearchWeights.Redirects, path: 'to' },
-      ],
-    }

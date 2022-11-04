@@ -22,10 +22,9 @@ import {
   excludeFromSearch,
 } from './news/sharedNewsFields'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { SearchWeights } from '../searchWeights'
 import { withSlugValidation } from '../validations/validateSlug'
 
-const news = {
+export default {
   title: 'News',
   name: 'news',
   type: 'document',
@@ -134,13 +133,3 @@ const news = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? news
-  : {
-      ...news,
-      __experimental_search: [
-        { weight: SearchWeights.News, path: '_type' },
-        { weight: SearchWeights.News, path: 'title' },
-      ],
-    }

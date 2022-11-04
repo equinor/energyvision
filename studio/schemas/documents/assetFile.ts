@@ -9,8 +9,6 @@ import {
   calendar_event,
 } from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
-import { SearchWeights } from '../searchWeights'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 export const fileIcon = (extension: string) => {
   switch (extension) {
@@ -46,7 +44,7 @@ const acceptedFileTypes = [
   '.mp3',
 ]
 
-const assetFile = {
+export default {
   title: 'File',
   type: 'document',
   name: 'assetFile',
@@ -102,13 +100,3 @@ const assetFile = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? assetFile
-  : {
-      ...assetFile,
-      __experimental_search: [
-        { weight: SearchWeights.File, path: 'title' },
-        { weight: SearchWeights.File, path: 'asset.asset.originalFilename' },
-      ],
-    }

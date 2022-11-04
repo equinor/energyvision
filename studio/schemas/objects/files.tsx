@@ -2,8 +2,6 @@ import React from 'react'
 import { library_pdf, microsoft_excel, file } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule, File } from '@sanity/types'
-import { SearchWeights } from '../searchWeights'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 export type DownloadableFile = {
   _type: 'downloadableFile'
@@ -11,7 +9,7 @@ export type DownloadableFile = {
   file: File
 }
 
-const files = {
+export default {
   type: 'object',
   name: 'downloadableFile',
   title: 'File',
@@ -65,13 +63,3 @@ const files = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? files
-  : {
-      ...files,
-      __experimental_search: [
-        { weight: SearchWeights.File, path: 'filename' },
-        { weight: SearchWeights.File, path: 'fileReference' },
-      ],
-    }

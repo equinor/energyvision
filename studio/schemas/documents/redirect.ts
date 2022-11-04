@@ -5,11 +5,10 @@ import blocksToText from '../../helpers/blocksToText'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { SearchWeights } from '../searchWeights'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
-const redirect = {
+export default {
   title: 'Redirect',
   name: 'redirect',
   type: 'document',
@@ -95,13 +94,3 @@ const redirect = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? redirect
-  : {
-      ...redirect,
-      __experimental_search: [
-        { weight: SearchWeights.Redirects, path: 'from' },
-        { weight: SearchWeights.Redirects, path: 'to' },
-      ],
-    }

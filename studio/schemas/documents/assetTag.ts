@@ -1,10 +1,8 @@
 import { EdsIcon } from '../../icons'
 import { tag } from '@equinor/eds-icons'
 import type { Rule } from '@sanity/types'
-import { SearchWeights } from '../searchWeights'
-import { Flags } from '../../src/lib/datasetHelpers'
 
-const assetTag = {
+export default {
   title: 'Asset tag',
   type: 'document',
   name: 'assetTag',
@@ -31,10 +29,3 @@ const assetTag = {
     },
   },
 }
-
-export default Flags.IS_DEV
-  ? assetTag
-  : {
-      ...assetTag,
-      __experimental_search: [{ weight: SearchWeights.Tag, path: 'title' }],
-    }
