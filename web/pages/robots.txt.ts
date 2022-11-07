@@ -14,13 +14,14 @@ const crawlableDomains = [
   'www.equinor.com.br',
   'www.equinor.de',
   'www.equinor.co.kr',
+  'www.equinorcelticsea.co.uk',
 ]
 
 const robots = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
 ${domain === 'www.equinor.com' ? 'Disallow: /search \nDisallow: /search.html' : ''}
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
-Crawl-delay: 10`
+${domain === 'www.equinor.com' ? 'Crawl-delay: 10' : ''}`
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const domain = String(req.headers.host)

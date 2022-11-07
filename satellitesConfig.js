@@ -127,8 +127,8 @@ const websiteDomains = {
     meta: 'equinor.co.kr',
   },
   celticsea: {
-    url: 'https://web-celticsea-equinor-web-sites-prod.c2.radix.equinor.com',
-    meta: 'Equinor',
+    url: 'https://www.equinorcelticsea.co.uk',
+    meta: 'equinorcelticsea.co.uk',
   },
   'global-development': {
     url: 'localhost:3000',
