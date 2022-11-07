@@ -17,6 +17,7 @@ on:
           - storage
           - equinorfunds
           - southkorea
+          - celticsea
       image-sha:
         description: 'The commit shaof the image to roll back to'
         required: true
