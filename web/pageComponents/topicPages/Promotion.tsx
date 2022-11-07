@@ -5,7 +5,7 @@ import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
-import { useNewsPromotion } from '../../common/hooks/useNewsPromotion'
+// import { useNewsPromotion } from '../../common/hooks/useNewsPromotion'
 
 const Wrapper = styled.div`
   padding: var(--promotion-padding, var(--space-3xLarge) 0);
@@ -33,8 +33,9 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
   const promotions = content?.promotions || []
   const variant = data.content?.type
 
-  const swrData = useNewsPromotion(data)
-  const promos = swrData || promotions
+  // Ensures that data is always up to date, bypassing cache issues
+  // const swrData = useNewsPromotion(data)
+  // const promos = swrData || promotions
 
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor}>
@@ -47,12 +48,12 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
             </Ingress>
           )}
         </Intro>
-        {promos?.length === 1 ? (
+        {promotions?.length === 1 ? (
           /*  TODO: More than just people and events */
-          <SinglePromotion promotion={promos[0]} hasSectionTitle={!!title} />
+          <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <MultiplePromotions
-            data={promos}
+            data={promotions}
             variant={variant}
             hasSectionTitle={!!title}
             eventPromotionSettings={content?.eventPromotionSettings}
