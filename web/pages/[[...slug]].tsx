@@ -21,7 +21,6 @@ import { Flags } from '../common/helpers/datasetHelpers'
 
 const MagazinePage = dynamic(() => import('../pageComponents/pageTemplates/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
-const TopicPageV2 = dynamic(() => import('../pageComponents/pageTemplates/TopicPageV2'))
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
@@ -78,7 +77,7 @@ export default function Page({ data, preview }: any) {
     case 'magazine':
       return Flags.IS_DEV ? <MagazinePage data={pageData} /> : <TopicPage data={pageData} />
     default:
-      return Flags.IS_DEV ? <TopicPageV2 data={pageData} /> : <TopicPage data={pageData} />
+      return <TopicPage data={pageData} />
   }
 }
 

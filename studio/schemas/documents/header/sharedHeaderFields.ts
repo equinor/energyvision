@@ -36,9 +36,9 @@ const heroType = {
     list: [
       { title: 'Default', value: HeroTypes.DEFAULT },
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
-      { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
-      { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
-    ],
+      Flags.IS_DEV && { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
+      Flags.IS_DEV && { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
+    ].filter((e) => e),
   },
   initialValue: 'default',
   fieldset: 'header',
@@ -135,14 +135,6 @@ const heroImage = {
   title: 'Hero image',
   name: 'heroFigure',
   type: 'imageWithAltAndCaption',
-  validation: (Rule: Rule) => Rule.required(),
-  fieldset: 'header',
-}
-
-const heroImage_v1 = {
-  title: 'Hero image',
-  name: 'heroFigure',
-  type: 'imageWithAltAndCaption',
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
@@ -171,6 +163,4 @@ const heroVideo = {
   },
 }
 
-export default Flags.IS_DEV
-  ? [title, heroType, heroRatio, heroTitle, heroIngress, heroLink, background, heroImage_v1, heroVideo]
-  : [title, heroImage]
+export default [title, heroType, heroRatio, heroTitle, heroIngress, heroLink, background, heroImage, heroVideo]
