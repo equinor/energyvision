@@ -40,9 +40,9 @@ jobs:
           statusCode=$(curl --head --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/studio-${{ github.event.inputs.site }}/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
           then
-            echo "::set-output name=found::true"
+            echo "found=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=found::false"
+            echo "found=false" >> $GITHUB_OUTPUT
           fi
       - uses: act10ns/slack@v1
         with:
@@ -87,7 +87,7 @@ jobs:
         id: get-long-sha
         shell: bash
         run: |
-          echo "::set-output name=sha::$(git rev-parse ${{ github.event.inputs.image-sha }})"
+          echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
         uses: actions/checkout@v3
@@ -162,7 +162,7 @@ jobs:
         id: get-long-sha
         shell: bash
         run: |
-          echo "::set-output name=sha::$(git rev-parse ${{ github.event.inputs.image-sha }})"
+          echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
         uses: actions/checkout@v3

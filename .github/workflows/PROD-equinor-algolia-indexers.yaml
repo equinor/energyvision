@@ -152,7 +152,7 @@ jobs:
             $profile = ""
             $profile = Get-AzWebAppPublishingProfile -ResourceGroupName $env:AZURE_RESOURCE_GROUP_NAME -Name $env:AZURE_FUNCTIONAPP_NAME
             $profile = $profile.Replace("`r", "").Replace("`n", "")
-            Write-Output "::set-output name=pubprofile::$profile"
+            Write-Output "pubprofile=$profile" >> $GITHUB_OUTPUT
             Remove-Variable profile
           azPSVersion: 'latest'
 

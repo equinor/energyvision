@@ -55,15 +55,15 @@ runs:
       id: get-long-sha
       shell: bash
       run: |
-        echo "::set-output name=sha::$(git rev-parse ${{ inputs.commitSha }})"
+        echo "sha=$(git rev-parse ${{ inputs.commitSha }})" >> $GITHUB_OUTPUT
     - name: Checkout specific branch 🛎️
       if: "${{ inputs.commitSha != '' }}"
       id: checkout-specific-branch
       uses: actions/checkout@v3
       with:
-          repository: 'equinor/energyvision'
-          fetch-depth: 0
-          ref: "${{ steps.get-long-sha.outputs.sha }}"
+        repository: 'equinor/energyvision'
+        fetch-depth: 0
+        ref: '${{ steps.get-long-sha.outputs.sha }}'
     - name: Set default image tag 🏷
       if: "${{ inputs.commitSha == '' }}"
       shell: bash

@@ -33,7 +33,7 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          echo "::set-output name=sha::$(python ci/returnComponentVersion.py preprod studio-global)"
+          echo "sha=$(python ci/returnComponentVersion.py preprod studio-global)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
         uses: actions/checkout@v3
@@ -45,7 +45,7 @@ jobs:
         id: get-long-sha
         shell: bash
         run: |
-          echo "::set-output name=sha::$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})"
+          echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
         uses: actions/checkout@v3
@@ -113,7 +113,7 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          echo "::set-output name=sha::$(python ci/returnGlobalStudioVersion.py preprod)"
+          echo "sha=$(python ci/returnGlobalStudioVersion.py preprod)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
         uses: actions/checkout@v3
@@ -125,7 +125,7 @@ jobs:
         id: get-long-sha
         shell: bash
         run: |
-          echo "::set-output name=sha::$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})"
+          echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
         uses: actions/checkout@v3

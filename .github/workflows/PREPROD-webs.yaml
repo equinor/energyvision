@@ -2,7 +2,7 @@ name: PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["TEST - Build & Deploy global-test"]
+    workflows: ['TEST - Build & Deploy global-test']
     types:
       - completed
 jobs:
@@ -28,7 +28,7 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          echo "::set-output name=sha::$(python ci/returnComponentVersion.py test web-global-test)"
+          echo "sha=$(python ci/returnComponentVersion.py test web-global-test)" >> $GITHUB_OUTPUT
       - name: Modify radixconfig tag for preprod on main branch 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -98,7 +98,7 @@ jobs:
         name: Read from satellites.json
         run: |
           MATRIX=$(cat satellites.json)
-          echo ::set-output name=matrix::${MATRIX}
+          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
