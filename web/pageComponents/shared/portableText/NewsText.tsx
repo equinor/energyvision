@@ -21,8 +21,8 @@ const ContainerWithBottomSpace = styled(Container)`
 
 const defaultSerializers = {
   block: {
-    h2: (props: PortableTextBlock) => <Container>{h2Heading(props)}</Container>,
-    h3: (props: PortableTextBlock) => <Container>{h3Heading(props)}</Container>,
+    h2: (props: { children: React.ReactNode }) => <Container>{h2Heading(props)}</Container>,
+    h3: (props: { children: React.ReactNode }) => <Container>{h3Heading(props)}</Container>,
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
       return (

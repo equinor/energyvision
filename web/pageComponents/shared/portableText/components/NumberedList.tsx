@@ -1,12 +1,5 @@
 import { List } from '@components'
-import type { PortableTextBlock } from '@portabletext/types'
 
-export const NumberedList = (value: PortableTextBlock) => {
-  const { children } = value
-
-  return (
-    <List variant="numbered">
-      <>{children}</>
-    </List>
-  )
+export const NumberedList = ({ children }: { children?: React.ReactNode }) => {
+  return <List variant="numbered">{children}</List>
 }

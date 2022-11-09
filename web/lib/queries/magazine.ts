@@ -57,7 +57,10 @@ export const magazineIndexQuery = /* groq */ `
     title,
     "hero": ${heroFields},
     "ingress": {
-      "content": ingress,
+      "content": ingress[]{
+        ...,
+        ${markDefs},
+      },
       "background": coalesce(ingressBackground.title, 'White'),
     },
     "magazineTags": promotedMagazineTags[]->title[$lang],

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import type { PortableTextBlock } from '@portabletext/types'
 import { Heading } from '@components'
 
 const StyledHeading = styled(Heading)`
@@ -12,12 +11,10 @@ const StyledHeading = styled(Heading)`
   }
 `
 
-export const h3Heading = (value: PortableTextBlock) => {
-  const { children } = value
-
+export const h3Heading = ({ children }: { children?: React.ReactNode }) => {
   return (
     <StyledHeading level="h3" size="sm">
-      <>{children}</>
+      {children}
     </StyledHeading>
   )
 }

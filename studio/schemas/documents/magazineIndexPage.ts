@@ -12,11 +12,11 @@ import { Colors } from '../../helpers/ColorListValues'
 const textContentType = configureBlockContent({
   h1: false,
   h2: true,
-  h3: false,
+  h3: true,
   h4: false,
   externalLink: false,
-  internalLink: false,
-  lists: false,
+  internalLink: true,
+  lists: true,
   attachment: false,
 })
 

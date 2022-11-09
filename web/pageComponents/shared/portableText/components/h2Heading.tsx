@@ -1,12 +1,9 @@
 import { Heading } from '@components'
-import type { PortableTextBlock } from '@portabletext/types'
 
-export const h2Heading = (value: PortableTextBlock) => {
-  const { children } = value
-
+export const h2Heading = ({ children }: { children?: React.ReactNode }) => {
   return (
     <Heading level="h2" size="lg">
-      <>{children}</>
+      {children}
     </Heading>
   )
 }

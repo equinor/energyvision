@@ -17,7 +17,7 @@ import { PaginationContextProvider } from '../shared/search/pagination/Paginatio
 import SharedTitle from './shared/SharedTitle'
 import { SharedBanner } from './shared/SharedBanner'
 import { HeroTypes } from '../../types/types'
-import RichText from '../shared/portableText/RichText'
+import MagazineIndexText from '../shared/portableText/MagazineIndexText'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -86,7 +86,7 @@ const MagazineIndexPage = ({
           <Intro>
             {ingress && (
               <IngressWrapper>
-                <UnpaddedText>{ingress && <RichText value={ingress.content} />}</UnpaddedText>
+                <UnpaddedText>{ingress && <MagazineIndexText value={ingress.content} />}</UnpaddedText>
               </IngressWrapper>
             )}
           </Intro>

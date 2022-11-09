@@ -1,9 +1,13 @@
 import React from 'react'
 
-export const ExternalLinkRenderer: React.FC = ({ children }) => <span>{children}</span>
+type Props = {
+  children: React.ReactNode
+}
 
-export const SubScriptRenderer: React.FC = ({ children }) => <sub>{children}</sub>
+export const ExternalLinkRenderer = ({ children }: Props) => <span>{children}</span>
 
-export const SuperScriptRenderer: React.FC = ({ children }) => <sup>{children}</sup>
+export const SubScriptRenderer = ({ children }: Props) => <sub>{children}</sub>
 
-export const StrikeThroughRenderer: React.FC = ({ children }) => <s>{children}</s>
+export const SuperScriptRenderer = ({ children }: Props) => <sup>{children}</sup>
+
+export const StrikeThroughRenderer = ({ children }: Props) => <s>{children}</s>

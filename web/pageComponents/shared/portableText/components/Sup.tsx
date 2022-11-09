@@ -1,7 +1,4 @@
-import type { PortableTextBlock } from '@portabletext/types'
-
-export const Sup = (value: PortableTextBlock) => {
-  const { children } = value
+export const Sup = ({ children }: { children?: React.ReactNode }) => {
   return (
     <sup>
       <>{children}</>

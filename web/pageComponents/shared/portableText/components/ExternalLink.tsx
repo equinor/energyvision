@@ -1,11 +1,13 @@
-// https://www.sanity.io/docs/portable-text-internal-and-external-links
 import { Link } from '@components'
-import type { PortableTextLink } from '@portabletext/types'
 
-export const ExternalLink = ({ value, children }: { value: PortableTextLink; children: React.ReactNode }) => {
-  const { href } = value
+interface DefaultLink {
+  _type: 'link'
+  href: string
+}
+
+export const ExternalLink = ({ value, children }: { value?: DefaultLink; children?: React.ReactNode }) => {
   return (
-    <Link href={href} type="externalUrl">
+    <Link href={value?.href} type="externalUrl">
       {children}
     </Link>
   )

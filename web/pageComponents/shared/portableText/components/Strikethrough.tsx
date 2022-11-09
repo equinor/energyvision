@@ -1,10 +1,3 @@
-import type { PortableTextBlock } from '@portabletext/types'
-
-export const Strikethrough = (value: PortableTextBlock) => {
-  const { children } = value
-  return (
-    <s>
-      <>{children}</>
-    </s>
-  )
+export const Strikethrough = ({ children }: { children?: React.ReactNode }) => {
+  return <s>{children}</s>
 }
