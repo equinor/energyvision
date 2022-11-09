@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2.2.4
         with:
           version: '^7.2.1'
       - name: Cache pnpm modules 💾
@@ -96,7 +96,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2.2.4
         with:
           version: '^7.2.1'
       - name: Cache pnpm modules 💾
