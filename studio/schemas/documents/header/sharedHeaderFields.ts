@@ -36,7 +36,7 @@ const heroType = {
     list: [
       { title: 'Default', value: HeroTypes.DEFAULT },
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
-      Flags.IS_DEV && { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
+      { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
       Flags.IS_DEV && { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
     ].filter((e) => e),
   },
