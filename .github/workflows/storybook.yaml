@@ -50,7 +50,8 @@ jobs:
           pnpm --filter energy-vision-web build-storybook
       - name: Deploy 🚀
         id: deploy
-        uses: bacongobbler/azure-blob-storage-upload@v2.0.0
+        # change back to v2 when v2.0.1 releases, see #1332
+        uses: bacongobbler/azure-blob-storage-upload@main
         with:
           source_dir: './web/storybook-static'
           container_name: '$web'
