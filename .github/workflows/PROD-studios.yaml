@@ -70,7 +70,7 @@ jobs:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           ref: '${{ steps.get-long-sha.outputs.sha }}'
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
@@ -152,7 +152,7 @@ jobs:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           ref: '${{ steps.get-long-sha.outputs.sha }}'
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: yarn
