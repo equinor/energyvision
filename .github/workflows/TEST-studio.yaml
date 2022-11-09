@@ -16,7 +16,7 @@ jobs:
           cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v2.0.0
+        uses: pnpm/action-setup@v2
         with:
           version: '^7.2.1'
       - name: Install dependencies 🔧
