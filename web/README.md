@@ -1,4 +1,4 @@
-# EnergyVision Web
+# EnergyVision/web
 
 This is the web frontend for equinor.com, built with the [Next.js](https://nextjs.org/) framework. The web primarily uses static site generation, with a few exceptions that are server-side generated.
 
