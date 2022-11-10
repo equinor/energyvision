@@ -12,8 +12,11 @@ const LocalNewsTagDescription = () => (
   <>
     <StyledSpan>The translated names used to display the tag on the web and generate the slugs.</StyledSpan>
     <StyledSpan>
-      ⚠️ Since these values are used to automatically generate slugs; they should only be changed if you know what you
-      are doing.
+      <span role="img" aria-label="warning icon">
+        ⚠️
+      </span>{' '}
+      Since these values are used to automatically generate slugs; they should only be changed if you know what you are
+      doing.
     </StyledSpan>
   </>
 )
