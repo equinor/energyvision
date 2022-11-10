@@ -36,7 +36,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             {type === 'internalUrl' ? (
               <Item>
-                <NextLink href={url} passHref>
+                <NextLink href={url} passHref legacyBehavior>
                   <Link variant="contentLink" type={type} aria-label={ariaLabel}>
                     {label}
                   </Link>

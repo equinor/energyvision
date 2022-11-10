@@ -1,6 +1,6 @@
 import { TextWithIcon, BackgroundContainer } from '@components'
 import { urlFor } from '../../common/helpers'
-import Img from 'next/image'
+import Img from 'next/legacy/image'
 import styled from 'styled-components'
 
 import IngressText from '../shared/portableText/IngressText'

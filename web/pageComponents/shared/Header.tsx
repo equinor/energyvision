@@ -128,7 +128,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <NextLink href={allSitesURL} passHref>
+    <NextLink href={allSitesURL} passHref legacyBehavior>
       <StyledAllSites>
         <FormattedMessage id="all_sites" defaultMessage="All Sites" />
       </StyledAllSites>

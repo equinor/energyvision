@@ -95,7 +95,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                 </TextContainer>
               )}
 
-              <NextLink href={topLevelHref} passHref>
+              <NextLink href={topLevelHref} passHref legacyBehavior>
                 <ReadMore variant="readMore">{topLevelLink?.label}</ReadMore>
               </NextLink>
             </StyledSection>

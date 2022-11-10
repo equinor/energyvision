@@ -1,6 +1,6 @@
 import { useNextSanityImage } from 'next-sanity-image'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
-import Img from 'next/image'
+import Img from 'next/legacy/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 const BackgroundImage = ({ backgroundImage }: { backgroundImage: SanityImageSource }) => {

@@ -1,5 +1,5 @@
 import { toPlainText } from '@portabletext/react'
-import Img from 'next/image'
+import Img from 'next/legacy/image'
 import styled from 'styled-components'
 import RichText from '../../RichText'
 import { FactBox, Heading } from '@components'

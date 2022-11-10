@@ -47,7 +47,7 @@ const Hit = ({ hit }: { hit: any }) => {
   const pageTitle = Array.isArray(hit.pageTitle) ? toPlainText(hit.pageTitle as PortableTextBlock[]) : hit.pageTitle
 
   return (
-    <NextLink href={hit.slug} passHref>
+    <NextLink href={hit.slug} passHref legacyBehavior>
       <StyledHitLink>
         <article>
           <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>

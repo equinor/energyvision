@@ -4,7 +4,7 @@ import { default as NextLink } from 'next/link'
 import IngressText from './portableText/IngressText'
 import TitleText from './portableText/TitleText'
 import { urlFor } from '../../common/helpers'
-import Img from 'next/image'
+import Img from 'next/legacy/image'
 import Image from './Image'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 
@@ -55,7 +55,7 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
 
   if (action.type === 'internalUrl') {
     return (
-      <NextLink href={url} passHref>
+      <NextLink href={url} passHref legacyBehavior>
         <Link variant="readMore" aria-label={action.ariaLabel}>
           {action.label}
         </Link>

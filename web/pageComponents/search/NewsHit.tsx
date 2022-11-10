@@ -60,7 +60,7 @@ const NewsHit = ({ hit }: HitProps) => {
 
   return (
     <article>
-      <NextLink href={slug} passHref>
+      <NextLink href={slug} passHref legacyBehavior>
         <StyledHitLink>
           {hit.publishDateTime && <StyledFormattedDate datetime={hit.publishDateTime} uppercase />}
           <HitHeading level="h2" size="sm" inverted>

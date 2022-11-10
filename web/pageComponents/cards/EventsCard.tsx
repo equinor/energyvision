@@ -208,7 +208,7 @@ const Actions = ({
   return (
     <ActionContainer>
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
-      <NextLink href={slug} passHref>
+      <NextLink href={slug} passHref legacyBehavior>
         {/*  @TODO: Language string for Details */}
         <ButtonLink
           style={

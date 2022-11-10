@@ -36,7 +36,7 @@ type LogoLinkProps = {
 
 export const LogoLink = ({ inverted = false, ...rest }: LogoLinkProps) => {
   return (
-    <NextLink href="/" passHref>
+    <NextLink href="/" passHref legacyBehavior>
       {/*  Localize text */}
       <StyledLogoLink inverted={inverted} aria-label="Equinor home page" {...rest}>
         <AlignedLogoSecondary inverted={inverted} />

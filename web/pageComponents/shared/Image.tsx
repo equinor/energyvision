@@ -1,4 +1,4 @@
-import Img from 'next/image'
+import Img from 'next/legacy/image'
 import { useNextSanityImage, UseNextSanityImageBuilderOptions, ImageUrlBuilder } from 'next-sanity-image'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/types'

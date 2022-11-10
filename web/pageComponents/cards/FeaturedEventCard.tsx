@@ -59,7 +59,7 @@ const FeaturedEventCard = ({ data, fitToContent = false, ...rest }: FeaturedEven
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
-    <NextLink href={slug} passHref>
+    <NextLink href={slug} passHref legacyBehavior>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <StyledLink {...rest}>
         <StyledCard

@@ -67,7 +67,7 @@ const renderCellByType = (cellData: CellData) => {
       return (
         <>
           {cellData.href ? (
-            <NextLink href={cellData.href} passHref>
+            <NextLink href={cellData.href} passHref legacyBehavior>
               <StyledTableLink download>{cellData.filename}</StyledTableLink>
             </NextLink>
           ) : null}
@@ -75,7 +75,7 @@ const renderCellByType = (cellData: CellData) => {
       )
     case 'linkSelector':
       return (
-        <NextLink href={getLink(cellData)} passHref>
+        <NextLink href={getLink(cellData)} passHref legacyBehavior>
           <StyledTableLink>{cellData.label}</StyledTableLink>
         </NextLink>
       )
