@@ -192,14 +192,14 @@ const ContactEquinorForm = () => {
                       defaultMessage: 'Human Rights Information Request',
                     })}
                   </option>
-                  {Flags.IS_DEV && (
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_login_issues',
-                        defaultMessage: 'Login Issues',
-                      })}
-                    </option>
-                  )}
+
+                  <option>
+                    {intl.formatMessage({
+                      id: 'contact_form_login_issues',
+                      defaultMessage: 'Login Issues',
+                    })}
+                  </option>
+
                   <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
                 </FormSelect>
               )}

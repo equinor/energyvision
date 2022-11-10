@@ -251,7 +251,6 @@ const snippets: textSnippet = {
     title: 'Login Issues',
     defaultValue: 'Login Issues',
     group: groups.contactForm,
-    hidden: !Flags.IS_DEV,
   },
   contact_form_other: {
     title: 'Other',

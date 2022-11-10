@@ -20,14 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(result.status).json({ msg: result.message })
   }
 
-  const isHumanRightsInfoReq = req.body.isHumanRightsInformationRequest
-  const catalogIdentifierOld = isHumanRightsInfoReq
-    ? 'd0d1eaee47fb0950cd271141e36d439b'
-    : '66f0ff89db2e2644ff6272dabf961945'
-
-  const catalogIdentifierNew = getCatalogIdentifier(req.body.catalogType)
-
-  const catalogIdentifier = Flags.IS_DEV ? catalogIdentifierNew : catalogIdentifierOld
+  const catalogIdentifier = getCatalogIdentifier(req.body.catalogType)
 
   const data = req.body.data
   const email = encodeURI(data.email)
