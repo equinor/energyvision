@@ -84,3 +84,7 @@ The legacy packages are currently excluded from the pnpm workspace (see `pnpm-wo
 We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net.
 
 To start Storybook locally during development, run `pnpm web storyboook` from the project root.
+
+## Feature flags
+
+We use a trunk-based development approach in this project, where developers commit directly to the main branch and deployments are done regularly. To help accomodate the review/acceptance process, we use feature flags that will conditionally enable/disable certain functionality. These feature flags are based on the currently active [Sanity dataset](https://www.sanity.io/docs/datasets). This allows us to have features that are not yet ready for production enabled in the development dataset, while being disabled in the production dataset.
