@@ -45,14 +45,14 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
       <SimplePanel>
         <PanelContentWrapper>
           {readMoreLink && (
-            <NextLink href={readMoreLink.link?.slug} passHref>
+            <NextLink href={readMoreLink.link?.slug} passHref legacyBehavior>
               <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
             </NextLink>
           )}
           <List aria-label={label} unstyled>
             {links?.map((link) => (
               <Item key={link.id}>
-                <NextLink href={link?.link?.slug || '/'} passHref>
+                <NextLink href={link?.link?.slug || '/'} passHref legacyBehavior>
                   <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
                 </NextLink>
               </Item>

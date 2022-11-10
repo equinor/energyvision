@@ -50,7 +50,7 @@ function getLink(linkData: MenuLinkData, label: string) {
 const SimpleCard = ({ data }: SimpleCardData) => {
   const { id, label, image } = data
   return (
-    <NextLink key={id} href={getLink(data, label)} passHref>
+    <NextLink key={id} href={getLink(data, label)} passHref legacyBehavior>
       <CardLink>
         <StyledCard
           style={

@@ -103,14 +103,14 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       }
                       return (
                         <li key={item.id}>
-                          <NextLink href={(item.link && item.link.slug) || '/'} passHref>
+                          <NextLink href={(item.link && item.link.slug) || '/'} passHref legacyBehavior>
                             <MenuLink variant="contentLink"> {item.label} </MenuLink>
                           </NextLink>
                         </li>
                       )
                     }
                   })}
-                  <NextLink href={allSitesURL} passHref>
+                  <NextLink href={allSitesURL} passHref legacyBehavior>
                     <AllSitesLink>
                       <FormattedMessage id="all_sites" defaultMessage="All sites" />
                     </AllSitesLink>

@@ -14,7 +14,7 @@ const CV = ({ data }: CVProps) => {
   return (
     <>
       {type === 'internalUrl' ? (
-        <NextLink href={url || ''} passHref>
+        <NextLink href={url || ''} passHref legacyBehavior>
           <ButtonLink aria-label={ariaLabel}>{label}</ButtonLink>
         </NextLink>
       ) : (

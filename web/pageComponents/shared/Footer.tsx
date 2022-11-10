@@ -161,7 +161,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
                       </FooterLink>
                     )
                   return (
-                    <NextLink key={id} href={getLink(link)} passHref>
+                    <NextLink key={id} href={getLink(link)} passHref legacyBehavior>
                       <FooterLink>
                         {type === 'someLink' && someType && (
                           <SomeIcon aria-hidden={true}>{getSomeSvg(someType)}</SomeIcon>

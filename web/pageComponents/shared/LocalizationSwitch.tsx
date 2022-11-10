@@ -97,7 +97,7 @@ type LocaleLinkProps = {
 const LocaleLink: React.FC<React.PropsWithChildren<LocaleLinkProps>> = ({ href, title, locale, active, children }) => {
   if (!active) {
     return (
-      <NextLink href={href} locale={locale} passHref>
+      <NextLink href={href} locale={locale} passHref legacyBehavior>
         <StyledLink aria-label={title}>{children}</StyledLink>
       </NextLink>
     )

@@ -47,7 +47,7 @@ const EventHit = ({ hit }: HitProps) => {
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (
     <article>
-      <NextLink href={slug} passHref>
+      <NextLink href={slug} passHref legacyBehavior>
         <StyledHitLink>
           {eventDate && <StyledFormattedDate datetime={eventDate} uppercase></StyledFormattedDate>}
           <HitHeading level="h2" size="sm" inverted>

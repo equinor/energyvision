@@ -15,7 +15,7 @@ export const ButtonLink = ({ action, ...rest }: { action: LinkData }) => {
   // If the URL is a static AEM page it should behave as an internal link in the web
   if (type === 'internalUrl') {
     return (
-      <NextLink passHref href={url}>
+      <NextLink passHref href={url} legacyBehavior>
         <Link aria-label={ariaLabel} {...rest}>
           {label}
         </Link>

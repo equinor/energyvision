@@ -37,7 +37,7 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
               <Fragment key={id}>
                 {type === 'internalUrl' ? (
                   <Item>
-                    <NextLink href={url} passHref>
+                    <NextLink href={url} passHref legacyBehavior>
                       <Link variant="contentLink" type={type} aria-label={ariaLabel}>
                         {label}
                       </Link>

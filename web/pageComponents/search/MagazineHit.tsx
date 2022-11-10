@@ -53,7 +53,7 @@ const MagazineHit = ({ hit }: HitProps) => {
 
   return (
     <article>
-      <NextLink href={slug} passHref>
+      <NextLink href={slug} passHref legacyBehavior>
         <StyledHitLink>
           <HitHeading level="h2" size="sm" inverted>
             <Highlight hit={hit} attribute="pageTitle" />

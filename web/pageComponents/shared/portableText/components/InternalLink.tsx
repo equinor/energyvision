@@ -31,7 +31,7 @@ export const InternalLink = ({ value, children }: { value?: InternalLinkProps; c
     }
 
     return (
-      <NextLink passHref locale={linkLocale} href={href}>
+      <NextLink passHref locale={linkLocale} href={href} legacyBehavior>
         <Link>{children}</Link>
       </NextLink>
     )

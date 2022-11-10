@@ -26,7 +26,7 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
   if (!heroImage) return null
 
   return (
-    <NextLink href={slug} passHref>
+    <NextLink href={slug} passHref legacyBehavior>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <StyledLink {...rest}>
         <StyledCard

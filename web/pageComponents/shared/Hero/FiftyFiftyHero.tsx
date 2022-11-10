@@ -67,7 +67,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   }
   if (action.type === 'internalUrl') {
     return (
-      <NextLink href={url} passHref>
+      <NextLink href={url} passHref legacyBehavior>
         <Link variant="readMore" aria-label={ariaLabel} {...rest}>
           {action.label}
         </Link>
