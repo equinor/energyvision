@@ -7,6 +7,8 @@ on:
     paths:
       - 'studio/**/*'
       - './FeatureFlags.js'
+      - '!./README.md'
+      - '!./.env.development.template'
 jobs:
   check-code:
     runs-on: ubuntu-latest
