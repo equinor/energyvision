@@ -25,7 +25,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
 
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
-  const [requestState, setRequestState] = useState<string>(uuid())
+  const [requestState] = useState<string>(uuid())
   const [accessToken, setAccessToken] = useState<string | false>(getAccessToken())
   const [asset, setAsset] = useState<FWAsset | null>(null)
   const [iframeURL, setIframeURL] = useState<string | null>(null)
