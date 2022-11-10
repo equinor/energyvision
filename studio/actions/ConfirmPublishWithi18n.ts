@@ -33,7 +33,7 @@ const token = process.env.SANITY_STUDIO_API_TOKEN
 
 // Copied from @sanity/document-internationalization/src/hooks/useDelayedFlag.ts
 function useDelayedFlag(value = false, timeout = 500, delayedOn = false, delayedOff = true) {
-  const [lastUpdate, setLastUpdate] = React.useState(Date.now())
+  // const [lastUpdate, setLastUpdate] = React.useState(Date.now())
   const [flag, setFlag] = React.useState(value)
 
   React.useEffect(() => {
