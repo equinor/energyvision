@@ -45,6 +45,7 @@ const CareerFairForm = () => {
     const res = await fetch('/api/forms/service-now-career-fair-events', {
       body: JSON.stringify({
         data,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
       }),
       headers: {

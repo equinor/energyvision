@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Cookiebot: any
   }
 }

@@ -39,7 +39,7 @@ const isUpcoming = (eventDate: Date): boolean => {
 }
 
 const createICS = (eventData: ICSProps): string | boolean => {
-  return ics.createEvent(eventData, (error: any, value: string) => {
+  return ics.createEvent(eventData, (error: Error, value: string) => {
     if (error) {
       console.error('An error occured while generating ICS file.', error)
       return false

@@ -67,9 +67,9 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
     if (ref && ref?.current) {
       const topbar = ref.current
 
-      const handleFocus = (event: any) => {
+      const handleFocus = (event: FocusEvent) => {
         if (!isVisible) {
-          topbar.contains(event.target) && setIsVisible(true)
+          topbar.contains(event.target as Node) && setIsVisible(true)
         }
       }
 

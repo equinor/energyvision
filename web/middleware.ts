@@ -19,9 +19,9 @@ const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<
 }
 
 // Check if preview mode is enabled in Sanity
-const isPreviewEnabled = (request: any): boolean => {
+const isPreviewEnabled = (request: NextRequest): boolean => {
   const { searchParams } = request.nextUrl
-  const previewCookie = request.cookies['__next_preview_data']
+  const previewCookie = request.cookies.get('__next_preview_data')
   const previewParam = searchParams.get('preview')
 
   if (previewCookie && previewParam) return true

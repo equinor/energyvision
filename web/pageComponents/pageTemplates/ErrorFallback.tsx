@@ -1,6 +1,7 @@
 import { Button, Text, Heading, Link } from '@components'
 import styled from 'styled-components'
 import { GlobalStyle, GlobalFontStyle } from '../../styles/globalStyles'
+import type { FallbackProps } from 'react-error-boundary'
 
 const Wrapper = styled.section`
   padding: clamp(40px, calc(14.3125px + 11.0032vw), 210px) clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -56,7 +57,7 @@ const getMailLink = (): string => {
   return `mailto:noreply@equinor.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
-export const ErrorFallback = ({ error, errorInfo, resetErrorBoundary }: any) => {
+export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   return (
     <Wrapper>
       <GlobalStyle />
@@ -95,11 +96,6 @@ export const ErrorFallback = ({ error, errorInfo, resetErrorBoundary }: any) => 
           <Heading level="h3">Stack Trace</Heading>
           <StyledCode>
             <StyledPre>{sliceErrorStack(error.stack)}</StyledPre>
-          </StyledCode>
-
-          <Heading level="h3">Component Stack</Heading>
-          <StyledCode>
-            <StyledPre>{sliceErrorStack(errorInfo?.componentStack)}</StyledPre>
           </StyledCode>
         </StyledDetails>
       </ContentWrapper>
