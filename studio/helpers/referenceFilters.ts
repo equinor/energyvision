@@ -1,6 +1,5 @@
 import { SanityDocument } from '@sanity/types'
 import { defaultLanguage } from '../languages'
-import { Flags } from '../src/lib/datasetHelpers'
 
 export const langOrDefault = (lang: string | unknown) => lang || defaultLanguage.name
 

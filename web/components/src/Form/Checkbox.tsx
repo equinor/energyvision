@@ -1,4 +1,4 @@
-import { forwardRef, CSSProperties } from 'react'
+import { forwardRef } from 'react'
 import { Checkbox as EdsCheckbox, CheckboxProps as EdsCheckboxProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 

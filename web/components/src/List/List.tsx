@@ -1,7 +1,6 @@
 import { forwardRef, CSSProperties } from 'react'
 import { List as EdsList, ListProps as EdsListProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 export type ListProps = {
   unstyled?: boolean

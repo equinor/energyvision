@@ -3,7 +3,7 @@ import { configureBlockContent } from '../editors/blockContentType'
 import blocksToText from '../../helpers/blocksToText'
 import { puzzle_filled } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import imageWithAlt from './imageWithAlt'
+import type { ImageWithAlt } from './imageWithAlt'
 import { Rule } from '@sanity/types/dist/dts'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
@@ -51,7 +51,7 @@ export default {
         hotspot: false,
       },
       validation: (Rule: Rule) =>
-        Rule.custom((imageWithAlt: any) => {
+        Rule.custom((imageWithAlt: ImageWithAlt) => {
           const referencedId = imageWithAlt?.asset?._ref
           if (referencedId) {
             return client
