@@ -40,7 +40,7 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
   if (!thumbnail || !thumbnail.asset) return null
 
   return (
-    <NextLink href={slug} passHref>
+    <NextLink href={slug} passHref legacyBehavior>
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <StyledLink {...rest}>
         <StyledCard
