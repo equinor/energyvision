@@ -24,6 +24,10 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   "magazineTags": magazineTags[]->.title[$lang],
   heroFigure,
   openGraphImage,
+  "heroVideo":heroVideo.asset->{
+    playbackId,
+  },
+  "heroType": coalesce(heroType, 'default'),
 }
 `
 
@@ -62,6 +66,17 @@ export type ImageWithAltAndCaption = {
   image: ImageWithAlt
 }
 
+export type VideoData = {
+  playbackId: string
+}
+
+export enum HeroTypes {
+  DEFAULT = 'default',
+  FIFTY_FIFTY = 'fiftyFifty',
+  FULL_WIDTH_IMAGE = 'fullWidthImage',
+  VIDEO_HERO = 'videoHero',
+}
+
 export type MagazineArticle = {
   slug: string
   title: string
@@ -82,6 +97,8 @@ export type MagazineArticle = {
   magazineTags?: string[]
   heroFigure?: ImageWithAltAndCaption
   openGraphImage?: ImageWithAlt
+  heroVideo: VideoData
+  heroType: HeroTypes
 }
 
 type FetchDataType = (

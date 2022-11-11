@@ -6,6 +6,7 @@ import downloadableImageFields from './actions/downloadableImageFields'
 import { publishDateTimeQuery } from '../news'
 import { eventPromotionFields, pastEventsQuery, futureEventsQuery } from './eventPromotion'
 import promoteMagazine from './promotions/promoteMagazine'
+import { heroFields } from './../common/heroFields'
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
@@ -255,12 +256,20 @@ const pageContentFields = /* groq */ `
             "title": reference->content->title,
             "heroImage": reference->content->heroFigure,
             "openGraphImage": reference->content->openGraphImage,
+            "heroVideo": reference->content->heroVideo.asset->{
+              playbackId,
+            },
+            "heroType": reference->content->coalesce(heroType, 'default'),
           },
 
          reference->_type == 'magazine' => {
           "title": reference->title,
           "heroImage": reference->heroFigure,
           "openGraphImage": reference->openGraphImage,
+          "heroType": reference->content->coalesce(heroType, 'default'),
+          "heroVideo": reference->heroVideo.asset->{
+            playbackId,
+          },
          },
        },
       },

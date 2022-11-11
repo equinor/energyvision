@@ -5,6 +5,7 @@ import { toPlainText } from '@portabletext/react'
 import styled from 'styled-components'
 import Image from '../shared/Image'
 import RichText from '../shared/portableText/RichText'
+import Img from 'next/image'
 
 import type { CardData } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -27,8 +28,8 @@ type TopicPageCardProp = {
 }
 
 const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardProp) => {
-  const { slug, title, heroImage, openGraphImage, ingress } = data
-
+  const { slug, title, heroImage, openGraphImage, heroVideo, heroType, ingress } = data
+  console.log(heroVideo?.playbackId, 'Topic Page')
   const thumbnail = heroImage?.image?.asset ? heroImage.image : openGraphImage
   if (!thumbnail || !thumbnail.asset) return null
 
