@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   }
   const data = JSON.parse(body)
   const result = await sanityClient.fetch(
-    groq`*[_type match "route_*" && content._ref == $id][0]{"slug": slug.current}`,
+    groq`*[_type match "route_*" && content._ref == $id && excludeFromSearch != true][0]{"slug": slug.current}`,
     {
       id: data._id,
     },
