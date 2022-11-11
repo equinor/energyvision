@@ -173,7 +173,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
               <ControlChild>
                 <NextLink href="/search" passHref legacyBehavior>
                   <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
-                    <Icon size={32} data={search} />
+                    <Icon size={Flags.IS_DEV ? 24 : 32} data={search} />
                   </StyledSearchButton>
                 </NextLink>
               </ControlChild>

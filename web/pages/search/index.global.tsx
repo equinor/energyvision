@@ -5,6 +5,7 @@ import type { GetStaticProps } from 'next/types'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 import getIntl from '../../common/helpers/getIntl'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 import { RemoveScroll } from 'react-remove-scroll'
 import styled from 'styled-components'
@@ -61,7 +62,7 @@ export default function SearchPage() {
                 router.back()
               }}
             >
-              <Icon size={32} data={close} />
+              <Icon size={Flags.IS_DEV ? 24 : 32} data={close} />
             </InvertedButton>
           </NavTopbar>
           <SearchContainer>
