@@ -2,6 +2,7 @@ import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const PairWrapper = styled.div`
   --card-minWidth: 250px;
@@ -19,7 +20,7 @@ const PairWrapper = styled.div`
   @media (min-width: 990px) {
     padding: 0 var(--layout-paddingHorizontal-medium);
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 380px));
+    grid-template-columns: ${ Flags.IS_DEV ? "repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 380px))" : "repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px))" };
   }
 `
 
