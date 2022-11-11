@@ -41,7 +41,7 @@ export const newsFields = /* groq */ `
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       height,
     },
-  },
+  }
 `
 
 export const allNewsQuery = /* groq */ `
@@ -50,8 +50,7 @@ export const allNewsQuery = /* groq */ `
 }`
 
 export const newsQuery = /* groq */ `
-{
-  "news": *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
+  *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
     "documentTitle": seo.documentTitle,
@@ -92,8 +91,7 @@ export const newsQuery = /* groq */ `
        ${downloadableImageFields},
     }
   },
-    ${newsFields}
-  },
+  ${newsFields},
   "latestNews": *[
       _type == "news" &&
       slug.current != $slug &&
@@ -103,9 +101,10 @@ export const newsQuery = /* groq */ `
       // filter drafts, will also filter when previewing
       !(_id in path("drafts.**"))
     ] | order(${publishDateTimeQuery} desc)[0...3] {
-    ${newsFields}
+      ${newsFields}
+    },
   }
-}`
+`
 
 export const newsSlugsQuery = /* groq */ `
 *[_type == "news" && defined(slug.current)][].slug.current

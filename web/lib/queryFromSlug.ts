@@ -1,10 +1,12 @@
 import { newsQuery } from './queries/news'
-import { localNewsQuery } from './queries/localNews'
-import { pageQuery } from './queries/routes'
+import { routeQuery } from './queries/routes'
 import { magazineQuery } from './queries/magazine'
 import { contentQueryById } from './queries/contentById'
 import { getNameFromLocale } from './localization'
 import { newsSlug, magazineSlug } from '../../satellitesConfig'
+import { getClient } from './sanity.server'
+import { Flags } from '../common/helpers/datasetHelpers'
+import { localNewsQuery } from './queries/localNews'
 
 export type QueryParams = {
   id?: string[]
@@ -12,8 +14,6 @@ export type QueryParams = {
   lang?: string
   date?: string
 }
-
-export type NewsQuery = { newsQuery: string; localNewsQuery: string }
 
 const isSlugID = (slug: string): boolean => {
   const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
@@ -32,52 +32,67 @@ const parseSlug = (slug: string): string => {
   return slug
 }
 
-const getQuery = (isNews: boolean, isMagazine: boolean) => {
-  if (isNews) {
-    return { newsQuery, localNewsQuery }
-  } else if (isMagazine) {
+const localNewsTagsQuery = (lang: string) =>
+  /* groq */ `*[_type == 'localNewsTag' && !(_id in path("drafts.**"))] {${lang}}`
+
+const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
+  if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
+    // is news
+    const localNewsTagsData: Record<string, string>[] = await getClient(false).fetch(localNewsTagsQuery(lang))
+    const localNewsTags = localNewsTagsData
+      .map((e) => Object.values(e))
+      .flatMap(([e]) => e.toLowerCase().replace(' ', '-'))
+    if (Flags.HAS_LOCAL_NEWS && localNewsTags.includes(secondPiece.toLowerCase())) {
+      // is local news
+      return localNewsQuery
+    } else {
+      return newsQuery
+    }
+  } else if (Flags.HAS_MAGAZINE && magazineSlug[lang] === firstPiece && secondPiece) {
+    // is magazine
     return magazineQuery
   } else {
-    return pageQuery
+    // is route
+    return routeQuery
   }
 }
 
-export const getQueryFromSlug = (slugArray: string[] = [''], locale = '') => {
-  const [slugStart] = slugArray.filter((part: string) => part !== locale)
-  // This is used for the event query in order to filter past events
-  // This is an easy and simple approach, is it too easy and naive?
-  // We don't use the time information atm
-  const currentDate = new Date().toISOString().substring(0, 10)
+const getPreviewQuery = (slugStart: string, locale: string, currentDate: string) => {
+  // We are in preview mode for content that has currently no slug (no routes)
+  // We need to figure out of which type
+  const documentID = parseSlug(slugStart)
 
-  if (isSlugID(slugStart)) {
-    // We are in preview mode for content that has currently no slug (no routes)
-    //We need to figure out of which type
-
-    const documentID = parseSlug(slugStart)
-
-    const publishedAndDraftIds = documentID.startsWith('drafts.')
-      ? [documentID, documentID.replace('drafts.', '')]
-      : [documentID, `drafts.${documentID}`]
-
-    return {
-      queryParams: {
-        id: publishedAndDraftIds,
-        lang: getNameFromLocale(locale),
-        date: currentDate,
-      },
-      query: contentQueryById,
-    }
-  }
-
-  const slug = `/${slugArray.join('/')}` || ''
-  const lang = getNameFromLocale(locale)
-  const isNews = newsSlug[lang] === slugStart && slugArray.length > 1
-  const isMagazine = magazineSlug[lang] === slugStart && slugArray.length > 1
-  const query = getQuery(isNews, isMagazine)
+  const publishedAndDraftIds = documentID.startsWith('drafts.')
+    ? [documentID, documentID.replace('drafts.', '')]
+    : [documentID, `drafts.${documentID}`]
 
   return {
-    queryParams: { slug: slug, lang: lang, date: currentDate },
+    queryParams: {
+      id: publishedAndDraftIds,
+      lang: getNameFromLocale(locale),
+      date: currentDate,
+    },
+    query: contentQueryById,
+  }
+}
+
+export const getQueryFromSlug = async (
+  slugArray: string[] = [''],
+  locale = '',
+): Promise<{ query: string; queryParams: QueryParams }> => {
+  const [firstPiece, secondPiece] = slugArray.filter((part: string) => part !== locale)
+  const date = new Date().toISOString().substring(0, 10)
+
+  if (isSlugID(firstPiece)) {
+    return getPreviewQuery(firstPiece, locale, date)
+  }
+
+  const slug = `/${slugArray.join('/')}`
+  const lang = getNameFromLocale(locale)
+  const query = await getQuery(firstPiece, secondPiece, lang)
+
+  return {
     query,
-    isNews,
+    queryParams: { slug, lang, date },
   }
 }

@@ -12,7 +12,7 @@ const allSlugsQuery = /* groq */ `
     }
   }`
 
-export const pageQuery = /* groq */ `
+export const routeQuery = /* groq */ `
   *[(_type match "route_" + $lang + "*") && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,

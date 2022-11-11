@@ -11,6 +11,7 @@ const StyledCard = styled(Card)`
   height: var(--height);
   --card-gap: var(--space-large);
 `
+
 const StyledLink = styled(CardLink)`
   display: inline-block;
 `

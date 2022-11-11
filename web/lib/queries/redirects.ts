@@ -13,6 +13,7 @@ export const redirects = /* groq */ `
     "to": to->slug.current
   }
 `
+
 export const externalRedirects = /* groq */ `
   *[_type == "externalRedirect" && (from == $slug || from == $slugWithLocale) && !(_id in path("drafts.**"))][0]{
     to

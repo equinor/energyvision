@@ -73,7 +73,7 @@ export default function Page({ data, preview }: any) {
       return <EventPage data={pageData} />
     case 'news':
     case 'localNews':
-      return <NewsPage data={{ news: pageData, latestNews: data.pageData?.latestNews }} />
+      return <NewsPage data={pageData} />
     case 'magazine':
       return Flags.IS_DEV ? <MagazinePage data={pageData} /> : <TopicPage data={pageData} />
     default:
@@ -109,8 +109,7 @@ Page.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
-  const { query, queryParams, isNews } = getQueryFromSlug(params?.slug as string[], locale)
-
+  const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
   const intl = await getIntl(locale, preview)
 
   const { menuData, pageData, footerData } = await getComponentsData(
@@ -119,10 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
       queryParams,
     },
     preview,
-    isNews,
   )
-
-  const notFound = isNews ? pageData.news?.length === 0 || !pageData.news : !pageData
 
   return {
     props: {
@@ -137,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
       },
     },
     revalidate: 60,
-    notFound,
+    notFound: !pageData,
   }
 }
 

@@ -152,6 +152,7 @@ export type NewsSchema = {
   content: PortableTextBlock[]
   relatedLinks: RelatedLinksData
   iframe: IFrameData
+  latestNews: CardData[]
 }
 
 export type PortableTextChild = {

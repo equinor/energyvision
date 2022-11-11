@@ -143,16 +143,13 @@ const isDateAfter = (a: string, b: string) => {
 }
 
 type ArticleProps = {
-  data: {
-    news: NewsSchema
-    latestNews: CardData[]
-  }
+  data: NewsSchema
 }
 
-const NewsPage = ({ data }: ArticleProps) => {
+const NewsPage = ({ data: news }: ArticleProps) => {
   const router = useRouter()
   /*  const appInsights = useAppInsightsContext() */
-  const slug = data?.news?.slug
+  const slug = news?.slug
 
   // @TODO: Since data can be undefined, the rules of hooks fails. Why is data undefined
   // Temp. disable the preview hook due to serious performance issues
@@ -164,7 +161,6 @@ const NewsPage = ({ data }: ArticleProps) => {
     initialData: data,
     enabled: preview || router.query.preview !== null,
   }) */
-  const { news: newsData, latestNews } = data
   const { pathname, locale } = router
 
   const fullUrl = getFullUrl(pathname, slug, locale)
@@ -181,7 +177,8 @@ const NewsPage = ({ data }: ArticleProps) => {
     content,
     iframe,
     relatedLinks,
-  } = newsData
+    latestNews,
+  } = news
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
 
