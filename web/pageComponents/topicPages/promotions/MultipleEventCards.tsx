@@ -20,7 +20,7 @@ const PairWrapper = styled.div`
   @media (min-width: 990px) {
     padding: 0 var(--layout-paddingHorizontal-medium);
     justify-content: center;
-    grid-template-columns: ${ Flags.IS_DEV ? "repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 380px))" : "repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px))" };
+    grid-template-columns: ${ Flags.IS_DEV ? "repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr))" : "repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px))" };
   }
 `
 
