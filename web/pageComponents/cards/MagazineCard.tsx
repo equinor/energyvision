@@ -4,8 +4,7 @@ import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import { HeroTypes, ImageWithAlt, MagazineCardData, VideoHeroData } from '../../types/types'
 import Image from '../shared/Image'
-import Img from 'next/image'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import Img from 'next/legacy/image'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -44,6 +43,10 @@ type ThumbnailProps = {
 }
 
 const getThumbnail = ({ heroVideo, heroType, heroImage, openGraphImage }: ThumbnailProps) => {
+  if (heroType === HeroTypes.VIDEO_HERO) {
+    console.log('hero video')
+  }
+
   const getSanityImage = (image: ImageWithAlt) => {
     return (
       <Image
@@ -60,9 +63,11 @@ const getThumbnail = ({ heroVideo, heroType, heroImage, openGraphImage }: Thumbn
       <Img
         src={`https://image.mux.com/${heroVideo?.playbackId}/thumbnail.jpg`}
         alt="thumbnail"
-        width={400}
-        height={200}
-      ></Img>
+        layout="responsive"
+        sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+        width="500"
+        height="300"
+      />
     )
   } else if (heroImage?.asset) {
     return getSanityImage(heroImage)
@@ -73,9 +78,8 @@ const getThumbnail = ({ heroVideo, heroType, heroImage, openGraphImage }: Thumbn
 
 const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
   const { slug, title, heroImage, openGraphImage, heroVideo, heroType, tags } = data
-  console.log('Magazine Card', heroVideo?.playbackId)
-  const thumbnail = heroImage?.asset ? heroImage : openGraphImage
-  if (!thumbnail || !thumbnail.asset) return null
+  const hasThumbnail = heroImage?.asset || heroVideo?.playbackId || openGraphImage
+  if (!hasThumbnail) return null
 
   return (
     <NextLink href={slug} passHref legacyBehavior>
