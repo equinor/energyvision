@@ -24,6 +24,22 @@ const outgoingValue = ({ hours, minutes }: TimeType) => `${hours.padStart(2, '0'
 const isValid = ({ hours, minutes }: TimeType) =>
   hours && minutes && Number.isInteger(Number(hours)) && Number.isInteger(Number(minutes))
 
+const formatTime = (value: string | undefined): TimeType => {
+  const time = value && value.includes(':') ? value.split(':') : false
+
+  if (!time) {
+    return {
+      hours: EMPTY,
+      minutes: EMPTY,
+    }
+  }
+
+  return {
+    hours: time[0] || EMPTY,
+    minutes: time[1] || EMPTY,
+  }
+}
+
 type Props = {
   value?: string
   markers: Marker[]
@@ -45,43 +61,46 @@ type TimeType = {
 const TimeInput = forwardRef((props: Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
   const { value, onChange, presence, type, markers } = props
   const [warning, setWarning] = useState('')
-  const [time, setTime] = useState({
-    hours: value?.split(':')[0] ?? EMPTY,
-    minutes: value?.split(':')[1] ?? EMPTY,
-  })
+  const [time, setTime] = useState(formatTime(value))
+
+  const updateValue = useCallback(
+    (time: TimeType) => {
+      setTime(time)
+      setWarning('')
+
+      const newValue = outgoingValue(time)
+
+      if (isValid(time)) {
+        onChange(createPatchFrom(newValue))
+      } else if (time.hours === EMPTY && time.minutes === EMPTY) {
+        onChange(createPatchFrom(''))
+      } else {
+        setWarning(INVALID_TIME_FORMAT)
+        onChange(createPatchFrom(newValue))
+      }
+    },
+    [onChange],
+  )
 
   const handleHoursChange = useCallback(
     (event: React.FormEvent<HTMLSelectElement>) => {
-      setTime({ ...time, hours: event.currentTarget.value })
+      updateValue({ ...time, hours: event.currentTarget.value })
     },
-    [time],
+    [time, updateValue],
   )
 
   const handleMinutesChange = useCallback(
     (event: React.FormEvent<HTMLSelectElement>) => {
-      setTime({ ...time, minutes: event.currentTarget.value })
+      updateValue({ ...time, minutes: event.currentTarget.value })
     },
-    [time],
+    [time, updateValue],
   )
 
   const handleReset = useCallback(() => {
-    setTime({ hours: EMPTY, minutes: EMPTY })
-  }, [])
+    updateValue({ hours: EMPTY, minutes: EMPTY })
+  }, [updateValue])
 
   const ref = useForwardedRef(forwardedRef)
-
-  useEffect(() => {
-    setWarning('')
-    const newValue = outgoingValue(time)
-    if (isValid(time)) {
-      onChange(createPatchFrom(newValue))
-    } else if (time.hours === EMPTY && time.minutes === EMPTY) {
-      onChange(createPatchFrom(''))
-    } else {
-      setWarning(INVALID_TIME_FORMAT)
-      onChange(createPatchFrom(newValue))
-    }
-  }, [onChange, time])
 
   const createPatchFrom = (value: string) => PatchEvent.from(value === '' ? unset() : set(value))
 
