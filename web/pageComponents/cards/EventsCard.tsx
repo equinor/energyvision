@@ -11,6 +11,7 @@ import TitleText from '../shared/portableText/TitleText'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 import type { EventCardData, EventDateType } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -210,16 +211,20 @@ const Actions = ({
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
       <NextLink href={slug} passHref legacyBehavior>
         {/*  @TODO: Language string for Details */}
-        <ButtonLink
-          style={
-            {
-              '--eds_button__font_size': 'var(--typeScale-0)',
-            } as CSSProperties
-          }
-          aria-label={`${details} ${title}`}
-        >
-          {details}
-        </ButtonLink>
+        {Flags.IS_DEV ? (
+          <ButtonLink aria-label={`${details} ${title}`}>{details}</ButtonLink>
+        ) : (
+          <ButtonLink
+            style={
+              {
+                '--eds_button__font_size': 'var(--typeScale-0)',
+              } as CSSProperties
+            }
+            aria-label={`${details} ${title}`}
+          >
+            {details}
+          </ButtonLink>
+        )}
       </NextLink>
     </ActionContainer>
   )

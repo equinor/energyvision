@@ -18,6 +18,7 @@ const PairWrapper = styled.div`
   grid-column-gap: var(--column-gap);
 
   @media (min-width: 990px) {
+    --card-minWidth: 340px;
     padding: 0 var(--layout-paddingHorizontal-medium);
     justify-content: center;
     grid-template-columns: ${ Flags.IS_DEV ? "repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr))" : "repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px))" };
@@ -36,7 +37,7 @@ const FlexibleWrapper = styled.div`
   margin: var(--space-xLarge) auto 0 auto;
   max-width: var(--maxViewportWidth);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
+  grid-template-columns: ${ Flags.IS_DEV ? "repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr))" : "repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 380px))" };
   grid-row-gap: var(--row-gap);
   grid-column-gap: var(--column-gap);
 `
