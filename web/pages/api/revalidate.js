@@ -1,6 +1,7 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import { groq } from 'next-sanity'
 import getRawBody from 'raw-body'
+import { languages } from '../../languages'
 import { sanityClient } from '../../lib/sanity.server'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
@@ -23,6 +24,14 @@ export default async function handler(req, res) {
   }
   const data = JSON.parse(body)
   try {
+    const revalidateHomePages = async () => {
+      languages.map((e) => {
+        const homePageSlug = `/${e.locale}`
+        console.log(new Date(), 'Revalidating: ', homePageSlug)
+        res.revalidate(`/${e.homePageSlug}`)
+      })
+    }
+
     if (['page', 'landingPage', 'event'].includes(data._type)) {
       const routes = await sanityClient.fetch(
         groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
@@ -37,11 +46,13 @@ export default async function handler(req, res) {
           await res.revalidate(route.slug)
         }
       })
+      await revalidateHomePages()
       return res.json({ revalidated: true, slug: routes })
     } else {
       // console.log('Revalidated: ', data.slug)
       console.log(new Date(), 'Revalidating: ', data?.slug)
       if (data.slug) await res.revalidate(data.slug)
+      await revalidateHomePages()
       return res.json({ revalidated: true, slug: data.slug })
     }
   } catch (err) {
