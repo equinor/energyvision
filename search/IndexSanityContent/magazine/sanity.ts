@@ -24,11 +24,13 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   "magazineTags": magazineTags[]->.title[$lang],
   heroFigure,
   openGraphImage,
+  "docToClear": _id match $id
 }
 `
 
-const getQueryParams = (language: Language) => ({
+const getQueryParams = (language: Language, id: string) => ({
   lang: language.internalCode,
+  id: id,
 })
 
 export type ImageWithAlt = {
@@ -82,15 +84,16 @@ export type MagazineArticle = {
   magazineTags?: string[]
   heroFigure?: ImageWithAltAndCaption
   openGraphImage?: ImageWithAlt
+  docToClear?: boolean
 }
 
 type FetchDataType = (
   query: string,
 ) => (
-  getQueryparams: (language: Language) => Readonly<Record<string, string>>,
-) => (language: Language) => (sanityClient: SanityClient) => TE.TaskEither<Error, MagazineArticle[]>
+  getQueryparams: (language: Language, id: string) => Readonly<Record<string, string>>,
+) => (language: Language, id: string) => (sanityClient: SanityClient) => TE.TaskEither<Error, MagazineArticle[]>
 
-const fetch: FetchDataType = (query) => (getQueryParams) => (language) => (sanityClient) =>
-  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language)), E.toError))
+const fetch: FetchDataType = (query) => (getQueryParams) => (language, id) => (sanityClient) =>
+  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language, id)), E.toError))
 
 export const fetchData = fetch(query)(getQueryParams)

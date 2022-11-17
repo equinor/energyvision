@@ -29,11 +29,13 @@ export const query = /* groq */ `*[_type == "news" && _lang == $lang && !(_id in
       "text": text
     }
   },
+  "docToClear": _id match $id
 }
 `
 
-const getQueryParams = (language: Language) => ({
+const getQueryParams = (language: Language, id: string) => ({
   lang: language.internalCode,
+  id: id,
 })
 
 export type NewsArticle = SharedNewsFields & {
@@ -44,10 +46,10 @@ export type NewsArticle = SharedNewsFields & {
 type FetchDataType = (
   query: string,
 ) => (
-  getQueryparams: (language: Language) => Readonly<Record<string, string>>,
-) => (language: Language) => (sanityClient: SanityClient) => TE.TaskEither<Error, NewsArticle[]>
+  getQueryparams: (language: Language, id: string) => Readonly<Record<string, string>>,
+) => (language: Language, id: string) => (sanityClient: SanityClient) => TE.TaskEither<Error, NewsArticle[]>
 
-const fetch: FetchDataType = (query) => (getQueryParams) => (language) => (sanityClient) =>
-  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language)), E.toError))
+const fetch: FetchDataType = (query) => (getQueryParams) => (language, id) => (sanityClient) =>
+  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language, id)), E.toError))
 
 export const fetchData = fetch(query)(getQueryParams)

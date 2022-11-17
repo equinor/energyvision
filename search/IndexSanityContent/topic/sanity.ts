@@ -19,14 +19,19 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
     "_key": _key,
     "title": pt::text(title),
     "ingress": pt::text(ingress)
-  }
+  },
+  "docToClear": ($id match content._ref || _id match $id)
 }
 `
 
-const getQueryParams = (language: Language) => ({
+const getQueryParams = (language: Language, id: string) => ({
   lang: language.internalCode,
+  id: id,
 })
 
+export type Slug = {
+  slug: string
+}
 export type TopicPage = {
   slug: string
   title: string
@@ -43,15 +48,16 @@ export type TopicPage = {
     text: string
   }[]
   _id: string
+  docToClear?: boolean
 }
 
 type FetchDataType = (
   query: string,
 ) => (
-  getQueryparams: (language: Language) => Readonly<Record<string, string>>,
-) => (language: Language) => (sanityClient: SanityClient) => TE.TaskEither<Error, TopicPage[]>
+  getQueryparams: (language: Language, id: string) => Readonly<Record<string, string>>,
+) => (language: Language, id: string) => (sanityClient: SanityClient) => TE.TaskEither<Error, TopicPage[]>
 
-const fetch: FetchDataType = (query) => (getQueryParams) => (language) => (sanityClient) =>
-  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language)), E.toError))
+const fetch: FetchDataType = (query) => (getQueryParams) => (language, id) => (sanityClient) =>
+  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language, id)), E.toError))
 
 export const fetchData = fetch(query)(getQueryParams)

@@ -12,4 +12,5 @@ export type SharedNewsFields = {
     }[]
   }[]
   _id: string
+  docToClear?: boolean
 }
