@@ -1,5 +1,7 @@
+import { sameLang } from './common/langAndDrafts'
+
 export const simpleMenuQuery = /* groq */ `
-  *[_type == "simpleMenu" && _lang == $lang] {
+  *[_type == "simpleMenu" && ${sameLang}] {
     _id,
 	  "groups": group[]{
       "id": _key,

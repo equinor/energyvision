@@ -10,6 +10,7 @@ const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV]
 const NEWSROOM = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const MAGAZINE_INDEX = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const SEARCH = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const EVENT = [...GLOBAL_PROD, ...GLOBAL_DEV]
@@ -30,6 +31,7 @@ const LINE_BREAK_TYPO = ['southkorea']
 export default (dataset) => ({
   HAS_NEWS: NEWS.includes(dataset),
   HAS_NEWSROOM: NEWSROOM.includes(dataset),
+  HAS_MAGAZINE_INDEX: MAGAZINE_INDEX.includes(dataset),
   HAS_ARCHIVED_NEWS: ARCHIVED_NEWS.includes(dataset),
   HAS_NEWS_SUBSCRIPTION: NEWS_SUBSCRIPTION.includes(dataset),
   HAS_MAGAZINE_SUBSCRIPTION: MAGAZINE_SUBSCRIPTION.includes(dataset),

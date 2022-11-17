@@ -1,3 +1,5 @@
+import { Flags } from '../../common/helpers/datasetHelpers'
+
 export default function preview(req, res) {
   if (!req?.query?.secret) {
     return res.status(401).json({ message: 'No secret token' })
@@ -19,7 +21,16 @@ export default function preview(req, res) {
 
   const pathname = req?.query?.id ? `/${req.query.id}` : req?.query?.slug ?? '/'
   const locale = req?.query?.locale ? `/${req?.query?.locale}` : ''
-  const url = '//' + req?.headers?.host + locale + pathname
+  const baseUrl = '//' + req?.headers?.host
+
+  let url = ''
+  if (Flags.HAS_NEWSROOM && ['/newsroom', '/drafts.newsroom'].includes(pathname)) {
+    url = locale === 'no' ? `${baseUrl}/no/nyheter?preview` : `${baseUrl}/news?preview`
+  } else if (Flags.HAS_MAGAZINE_INDEX && ['/magazineIndex', '/drafts.magazineIndex'].includes(pathname)) {
+    url = locale === 'no' ? `${baseUrl}/no/magasin?preview` : `${baseUrl}/magazine?preview`
+  } else {
+    url = `${baseUrl}${locale}${pathname}`
+  }
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities

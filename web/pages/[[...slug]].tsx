@@ -26,36 +26,18 @@ const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 
 // @TODO Improve types here, don't use any
-export default function Page({ data, preview }: any) {
-  /*   const appInsights = useAppInsightsContext()
-   */
-
+export default function Page({ data }: any) {
   const router = useRouter()
-  // Let's nuke the preview hook temporarily for performance reasons
-  /*   const { data: previewData } = usePreviewSubscription(data?.query, {
-    params: data?.queryParams ?? {},
-    initialData: data?.pageData,
-    enabled: preview || router.query.preview !== null,
-    //  sanity types not updated to beta yet
-    // eslint-disable-next-line
-    // @ts-ignore
-    useGroqBeta: true,
-  }) */
 
-  const pageData = data?.pageData?.news
-    ? filterDataToSingleItem(data.pageData.news, preview)
-    : filterDataToSingleItem(data.pageData, preview)
+  const { pageData } = data
 
   const slug = pageData?.slug
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
   }
 
-  //appInsights.trackPageView({ name: slug /* uri: fullUrl */ })
-
   const template = pageData?.template || null
 
-  // @TODO: How should we handle this in the best possible way?
   if (!template) console.warn('Missing template for', slug)
 
   if (router.isFallback) {

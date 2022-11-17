@@ -6,6 +6,7 @@ import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { sameLang } from './common/langAndDrafts'
 
 const footerComponentFields = /* groq */ `
   title,
@@ -28,9 +29,10 @@ const footerComponentFields = /* groq */ `
   },
 `
 
-const promotedmagazineTags = `"": *[_type == "magazineIndex" && _lang == $lang][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
+const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang}][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
+
 export const magazineQuery = /* groq */ `
-*[_type == "magazine" && slug.current == $slug && _lang == $lang] {
+*[_type == "magazine" && slug.current == $slug && ${sameLang}] {
     _id, //used for data filtering
     "slug": slug.current,
     "title": title,
@@ -51,7 +53,7 @@ export const magazineQuery = /* groq */ `
 }`
 
 export const magazineIndexQuery = /* groq */ `
-  *[_type == "magazineIndex" && _lang == $lang] {
+  *[_type == "magazineIndex" && ${sameLang}] {
     _id,
     "seoAndSome": ${seoAndSomeFields},
     title,

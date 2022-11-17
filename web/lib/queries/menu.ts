@@ -1,7 +1,8 @@
-import { publishDateTimeQuery } from './news'
+import { sameLang } from './common/langAndDrafts'
+import { publishDateTimeQuery } from './common/publishDateTime'
 
 export const menuQuery = /* groq */ `
-  *[_type == "siteMenu" && _lang == $lang] {
+  *[_type == "siteMenu" && ${sameLang}] {
     _id,
     "subMenus": menuGroups[]->{
     "id": _id,
@@ -31,7 +32,6 @@ export const menuQuery = /* groq */ `
       "type": _type,
       "id": _id,
       "slug": slug.current,
-
       _type == "news" => {
         title,
         heroImage,

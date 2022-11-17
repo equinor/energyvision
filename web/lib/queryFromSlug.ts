@@ -7,6 +7,7 @@ import { newsSlug, magazineSlug } from '../../satellitesConfig'
 import { getClient } from './sanity.server'
 import { Flags } from '../common/helpers/datasetHelpers'
 import { localNewsQuery } from './queries/localNews'
+import { noDrafts } from './queries/common/langAndDrafts'
 
 export type QueryParams = {
   id?: string[]
@@ -32,8 +33,7 @@ const parseSlug = (slug: string): string => {
   return slug
 }
 
-const localNewsTagsQuery = (lang: string) =>
-  /* groq */ `*[_type == 'localNewsTag' && !(_id in path("drafts.**"))] {${lang}}`
+const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag' && ${noDrafts}] {${lang}}`
 
 const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
@@ -57,7 +57,7 @@ const getQuery = async (firstPiece: string, secondPiece: string | undefined, lan
   }
 }
 
-const getPreviewQuery = (slugStart: string, locale: string, currentDate: string) => {
+const getPreviewByIdQuery = (slugStart: string, locale: string, currentDate: string) => {
   // We are in preview mode for content that has currently no slug (no routes)
   // We need to figure out of which type
   const documentID = parseSlug(slugStart)
@@ -84,7 +84,7 @@ export const getQueryFromSlug = async (
   const date = new Date().toISOString().substring(0, 10)
 
   if (isSlugID(firstPiece)) {
-    return getPreviewQuery(firstPiece, locale, date)
+    return getPreviewByIdQuery(firstPiece, locale, date)
   }
 
   const slug = `/${slugArray.join('/')}`

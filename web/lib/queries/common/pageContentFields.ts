@@ -1,11 +1,12 @@
+import { noDrafts, sameLang } from './langAndDrafts'
 import slugReference from './slugReference'
 import markDefs from './blockEditorMarks'
 import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import { publishDateTimeQuery } from '../news'
 import { eventPromotionFields, pastEventsQuery, futureEventsQuery } from './eventPromotion'
 import promoteMagazine from './promotions/promoteMagazine'
+import { publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
@@ -218,7 +219,6 @@ const pageContentFields = /* groq */ `
         },
         "promotions": *[
           (_type == "news" || _type == "localNews")
-          && _lang == $lang
           && (
             count(tags[_ref in ^.^.tags[]._ref]) > 0
             ||
@@ -226,7 +226,7 @@ const pageContentFields = /* groq */ `
             ||
             localNewsTag._ref in ^.localNewsTags[]._ref
           )
-          && !(_id in path("drafts.**"))
+          && ${sameLang} && ${noDrafts}
         ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
@@ -423,7 +423,6 @@ const pageContentFields = /* groq */ `
     },
     "articles": *[
       (_type == "news" || _type == "localNews")
-      && _lang == $lang
       && (
         count(tags[_ref in ^.^.selectedTags.tags[]._ref]) > 0
       ||
@@ -431,7 +430,7 @@ const pageContentFields = /* groq */ `
       ||
         localNewsTag._ref in ^.selectedTags.localNewsTags[]._ref
     )
-    && !(_id in path("drafts.**"))
+    && ${sameLang} && ${noDrafts}
     ] | order(${publishDateTimeQuery} desc){
       "type": _type,
       "id": _id,

@@ -1,5 +1,7 @@
+import { sameLang } from './common/langAndDrafts'
+
 export const footerQuery = /* groq */ `
- *[_type == "footer" && _lang == $lang] {
+ *[_type == "footer" && ${sameLang}] {
   _id,
 	footerColumns[]{
     "id": _key,
@@ -13,8 +15,8 @@ export const footerQuery = /* groq */ `
         "type": _type,
         "slug": slug.current,
       },
-       url,
-      }
+      url,
     }
-	}
+  }
+}
 `

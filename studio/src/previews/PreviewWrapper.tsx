@@ -27,10 +27,10 @@ const StyledButton = styled(Button)`
 type Props = {
   src: string
   children: React.ReactNode
-  shareable: boolean
+  shareable?: boolean
 }
 
-export const PreviewWrapper = ({ src, children, shareable }: Props) => {
+export const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
   const toast = useToast()
   const handleClick = () => {
     navigator.clipboard.writeText(src)

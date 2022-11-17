@@ -1,7 +1,8 @@
+import { sameLang } from './common/langAndDrafts'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 
 export const newsroomQuery = /* groq */ `
-  *[_type == "newsroom" && _lang == $lang] {
+  *[_type == "newsroom" && ${sameLang}] {
     _id,
     "seoAndSome": ${seoAndSomeFields},
     title,

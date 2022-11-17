@@ -1,7 +1,8 @@
-import { publishDateTimeQuery } from '../../../../lib/queries/news'
+import { sameLang, noDrafts } from './../langAndDrafts'
 import markDefs from '../blockEditorMarks'
+import { publishDateTimeQuery } from '../publishDateTime'
 
-const promotedMagazineFields = `
+const promotedMagazineFields = /* groq */ `
   "id": _id,
   "type": _type,
   ingress[]{
@@ -17,7 +18,7 @@ const promotedMagazineFields = `
   openGraphImage,
 `
 
-export default `
+export default /* groq */ `
   "id": _key,
   manuallySelectArticles,
   !manuallySelectArticles => {
@@ -28,9 +29,8 @@ export default `
     },
     "promotions": *[
       _type == "magazine"
-      && _lang == $lang
       && (count(magazineTags[_ref in ^.^.tags[]._ref]) > 0)
-      && !(_id in path("drafts.**"))
+      && ${sameLang} && ${noDrafts}
     ] | order(${publishDateTimeQuery} desc)[0...3]{
       ${promotedMagazineFields}
     }

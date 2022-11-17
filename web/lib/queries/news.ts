@@ -1,53 +1,50 @@
-import markDefs from './common/blockEditorMarks'
-import linkSelectorFields from './common/actions/linkSelectorFields'
-import downloadableFileFields from './common/actions/downloadableFileFields'
-import downloadableImageFields from './common/actions/downloadableImageFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
-import { defaultLanguage } from '../../languages'
 import { Flags } from '../../common/helpers/datasetHelpers'
-
-export const publishDateTimeQuery = /* groq */ `
-  select(
-    customPublicationDate == true =>
-      publishDateTime,
-      coalesce(firstPublishedAt, _createdAt)
-  )
-`
-
-export const fixPreviewForDrafts = /* groq */ `
-  ((defined(_lang) && _lang == $lang) || (!defined(_lang) && $lang == "${defaultLanguage.name}"))
-`
+import { noDrafts, sameLang } from './common/langAndDrafts'
+import {
+  contentForNewsQuery,
+  fixPreviewForDrafts,
+  iframeForNewsQuery,
+  ingressForNewsQuery,
+  relatedLinksForNewsQuery,
+} from './common/newsSubqueries'
+import { publishDateTimeQuery } from './common/publishDateTime'
 
 const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
 
-export const newsFields = /* groq */ `
+const latestNewsFields = /* groq */ `
+  "id": _id,
+  "updatedAt": _updatedAt,
+  title,
+  heroImage,
+  ${slugsForNewsAndMagazine('news')},
+  ${ingressForNewsQuery},
+  "publishDateTime": ${publishDateTimeQuery},
+  "slug": slug.current,
+  "iframe": ${iframeForNewsQuery},
+`
+
+const newsFields = /* groq */ `
   "id": _id,
   "updatedAt": _updatedAt,
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
-  "slug": slug.current,
   ${slugsForNewsAndMagazine('news')},
-  ingress[]{
-    ...,
-    ${markDefs},
-  },
-  "iframe": iframe{
-    title,
-    frameTitle,
-    url,
-    "designOptions": {
-      "aspectRatio": coalesce(aspectRatio, '16:9'),
-      height,
-    },
-  }
+  ${ingressForNewsQuery},
+  "iframe": ${iframeForNewsQuery},
+  "content": ${contentForNewsQuery},
+  "relatedLinks": ${relatedLinksForNewsQuery},
+  "latestNews": *[
+    _type == "news" &&
+    slug.current != $slug &&
+    heroImage.image.asset != null &&
+    ${excludeCrudeOilAssays}
+    ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...3] {
+      ${latestNewsFields}
+    }
 `
-
-export const allNewsQuery = /* groq */ `
-*[_type == "news"] | order(${publishDateTimeQuery} desc) {
-  ${newsFields}
-}`
 
 export const newsQuery = /* groq */ `
   *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
@@ -57,62 +54,12 @@ export const newsQuery = /* groq */ `
     "metaDescription": seo.metaDescription,
     "template": _type,
     openGraphImage,
-    "content": content[]{
-      ...,
-      _type == "pullQuote" => {
-        "type": _type,
-        "id": _key,
-        author,
-        authorTitle,
-        image,
-        quote,
-        "designOptions": {
-          "imagePosition": coalesce(imagePosition, 'right'),
-        }
-      },
-      _type == "positionedInlineImage" => {
-        ...,
-        // For these images, we don't want crop and hotspot
-        // because we don't know the aspect ratio
-        "image": image{
-          _type,
-          "asset": asset,
-          "alt": alt
-        }
-      },
-      ${markDefs},
-    },
-    "relatedLinks": relatedLinks{
-      title,
-      heroImage,
-      "links": links[]{
-       ${linkSelectorFields},
-       ${downloadableFileFields},
-       ${downloadableImageFields},
-    }
-  },
-  ${newsFields},
-  "latestNews": *[
-      _type == "news" &&
-      slug.current != $slug &&
-      heroImage.image.asset != null &&
-      _lang == $lang &&
-      ${excludeCrudeOilAssays}
-      // filter drafts, will also filter when previewing
-      !(_id in path("drafts.**"))
-    ] | order(${publishDateTimeQuery} desc)[0...3] {
-      ${newsFields}
-    },
+    ${newsFields}
   }
 `
 
-export const newsSlugsQuery = /* groq */ `
-*[_type == "news" && defined(slug.current)][].slug.current
-`
-
-export const newsPromotionQuery = `
+export const newsPromotionQuery = /* groq */ `
   *[(_type == "news" || _type == "localNews")
-    && _lang == $lang
     && (
       count(tags[_ref in $tags[].id]) > 0
       ||
@@ -120,7 +67,7 @@ export const newsPromotionQuery = `
       ||
       localNewsTag._ref in $localNewsTags[].id
     )
-    && !(_id in path("drafts.**"))
+    && ${sameLang} && ${noDrafts})
   ] | order(${publishDateTimeQuery} desc)[0...3]{
     "type": _type,
     "id": _id,
@@ -129,9 +76,6 @@ export const newsPromotionQuery = `
     heroImage,
     "publishDateTime": ${publishDateTimeQuery},
     "slug": slug.current,
-    ingress[]{
-      ...,
-      ${markDefs},
-    },
+    ${ingressForNewsQuery},
   }
 `

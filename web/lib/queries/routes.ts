@@ -1,3 +1,4 @@
+import { noDrafts } from './common/langAndDrafts'
 import pageContentFields from './common/pageContentFields'
 import { landingPageContentFields } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
@@ -6,7 +7,7 @@ import { seoAndSomeFields } from './common/seoAndSomeFields'
 
 const allSlugsQuery = /* groq */ `
   "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
-    "allSlugs": *[_type in ['page', 'landingPage', 'event'] && _id match ^._id + "*" && !(_id in path("drafts.**"))] {
+    "allSlugs": *[_type in ['page', 'landingPage', 'event'] && _id match ^._id + "*" && ${noDrafts}] {
        "slug": *[_type match "route*" && content._ref == ^._id][0].slug.current,
        "lang": _lang
     }

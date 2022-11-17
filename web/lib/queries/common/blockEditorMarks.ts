@@ -1,13 +1,13 @@
 import slugReference from './slugReference'
 
-const lang = `
+const lang = /* groq */ `
   select(_type match 'route_*' =>
     content->_lang,
     _lang
   )
 `
 
-const referenceFields = `
+const referenceFields = /* groq */ `
   {
     "id": ${slugReference},
     "lang": ${lang},
@@ -15,7 +15,7 @@ const referenceFields = `
   }
 `
 
-const markDefs = `
+const markDefs = /* groq */ `
   "markDefs": markDefs[]{
     ...,
     _type == "internalLink" => {
