@@ -11,13 +11,6 @@ export const StyledWrapper = styled.div`
   }
 `
 
-export const Frame = styled.iframe`
-  border: 0;
-  height: 100%;
-  left: 0;
-  width: 100%;
-`
-
 const StyledButton = styled(Button)`
   position: absolute;
   right: 11px;

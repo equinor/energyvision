@@ -26,6 +26,7 @@ export default function resolveProductionUrl(doc) {
 
   previewUrl.pathname = '/api/preview'
   previewUrl.searchParams.append('secret', previewSecret)
+  previewUrl.searchParams.append('type', doc?._type)
 
   if (doc?.slug?.current) {
     previewUrl.searchParams.append('locale', getLocaleFromName(doc?._lang))

@@ -5,7 +5,7 @@ import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 
 export const contentQueryById = /* groq */ `
-  *[_id in $id] {
+  *[_id == $id] {
     _id,
     "title": title,
     "seoAndSome": ${seoAndSomeFields},

@@ -1,5 +1,7 @@
 import { Flags } from '../../common/helpers/datasetHelpers'
 
+const REQUIRES_SLUG = ['news', 'localNews', 'magazine']
+
 export default function preview(req, res) {
   if (!req?.query?.secret) {
     return res.status(401).json({ message: 'No secret token' })
@@ -13,7 +15,11 @@ export default function preview(req, res) {
 
   if (!req.query.slug && !req.query.id) {
     console.log(req.query)
-    return res.status(401).json({ message: 'No slug or id', data: req.query })
+    return res.status(400).json({ message: 'No slug or id', data: req.query })
+  }
+
+  if (!req.query.slug && (REQUIRES_SLUG.includes(req.query.type) || req.query.type.includes('route'))) {
+    return res.status(400).json({ message: 'The document needs a slug before it can be previewed.' })
   }
 
   // Enable Preview Mode by setting the cookies

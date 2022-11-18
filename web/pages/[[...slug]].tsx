@@ -6,7 +6,6 @@ import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
-import { filterDataToSingleItem } from '../lib/filterDataToSingleItem'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 // import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'

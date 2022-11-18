@@ -10,7 +10,7 @@ import { localNewsQuery } from './queries/localNews'
 import { noDrafts } from './queries/common/langAndDrafts'
 
 export type QueryParams = {
-  id?: string[]
+  id?: string
   slug?: string
   lang?: string
   date?: string
@@ -62,13 +62,9 @@ const getPreviewByIdQuery = (slugStart: string, locale: string, currentDate: str
   // We need to figure out of which type
   const documentID = parseSlug(slugStart)
 
-  const publishedAndDraftIds = documentID.startsWith('drafts.')
-    ? [documentID, documentID.replace('drafts.', '')]
-    : [documentID, `drafts.${documentID}`]
-
   return {
     queryParams: {
-      id: publishedAndDraftIds,
+      id: documentID,
       lang: getNameFromLocale(locale),
       date: currentDate,
     },
