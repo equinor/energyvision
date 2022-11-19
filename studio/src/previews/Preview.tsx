@@ -31,7 +31,7 @@ export default function Preview({ document }: any) {
   }
 
   const url = resolveProductionUrl(previewDoc)
-  console.log(url)
+
   return (
     <PreviewWrapper src={url} shareable={dataset !== 'secret'}>
       <Frame src={url} title="preview" frameBorder={'0'} />
