@@ -1,12 +1,12 @@
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 import {
   contentForNewsQuery,
-  fixPreviewForDrafts,
   iframeForNewsQuery,
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
+import { fixPreviewForDrafts } from './common/langAndDrafts'
 
 const localNewsFields = /* groq */ `
   "id": _id,

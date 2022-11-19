@@ -1,5 +1,3 @@
-import { sameLang } from './langAndDrafts'
-import { defaultWebLanguage } from '../../../../satellitesConfig'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields from './actions/linkSelectorFields'
@@ -55,8 +53,4 @@ export const ingressForNewsQuery = /* groq */ `ingress[]{
     ...,
     ${markDefs},
   }
-`
-
-export const fixPreviewForDrafts = /* groq */ `
-  ((defined(_lang) && ${sameLang}) || (!defined(_lang) && $lang == "${defaultWebLanguage.name}"))
 `

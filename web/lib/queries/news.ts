@@ -1,9 +1,8 @@
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { noDrafts, sameLang } from './common/langAndDrafts'
+import { noDrafts, sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
   contentForNewsQuery,
-  fixPreviewForDrafts,
   iframeForNewsQuery,
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
