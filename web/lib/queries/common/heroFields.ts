@@ -7,9 +7,13 @@ export const heroFields = /* groq */ `{
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure": heroFigure,
-    "video": heroVideo.asset->{
+    "video": {
+      "playbackId":heroVideo.asset->{
       playbackId,
 		},
+    "loop": coalesce(heroVideoLoop,false),
+    "autoplay": coalesce(heroVideoAutoPlay,false)
+  },
     "link": heroLink[0]{
       ${linkSelectorFields}
     }

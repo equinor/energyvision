@@ -163,4 +163,39 @@ const heroVideo = {
   },
 }
 
-export default [title, heroType, heroRatio, heroTitle, heroIngress, heroLink, background, heroImage, heroVideo]
+const heroVideoLoop = {
+  title: 'Play in loop',
+  name: 'heroVideoLoop',
+  type: 'boolean',
+  description: 'Enable this to play the hero video in loop.',
+  fieldset: 'header',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.VIDEO_HERO
+  },
+  initialValue: true,
+}
+
+const heroVideoAutoPlay = {
+  title: 'Auto play hero video',
+  name: 'heroVideoAutoPlay',
+  description: 'Autoplay muted hero video when page is loaded.',
+  type: 'boolean',
+  fieldset: 'header',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.VIDEO_HERO
+  },
+  initialValue: true,
+}
+export default [
+  title,
+  heroType,
+  heroRatio,
+  heroTitle,
+  heroIngress,
+  heroLink,
+  background,
+  heroImage,
+  heroVideo,
+  heroVideoAutoPlay,
+  heroVideoLoop,
+]

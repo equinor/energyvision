@@ -17,5 +17,15 @@ declare global {
 
 export const VideoHero = ({ video }: { video?: VideoHeroData }) => {
   if (!video?.playbackId) return <div>Missing video playbackId</div>
-  return <mux-video stream-type="on-demand" playback-id={video.playbackId} controls style={{ width: '100%' }} />
+  return (
+    <mux-video
+      stream-type="on-demand"
+      playback-id={video.playbackId}
+      autoplay={video.autoplay}
+      muted={video.autoplay}
+      controls
+      loop={video.loop}
+      style={{ width: '100%' }}
+    />
+  )
 }
