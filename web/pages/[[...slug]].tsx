@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic'
 import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { getQueryFromSlug } from '../lib/queryFromSlug'
-// import { usePreviewSubscription } from '../lib/sanity'
 import { Layout } from '../pageComponents/shared/Layout'
 import { defaultLanguage } from '../languages'
 import Header from '../pageComponents/shared/Header'

@@ -1,7 +1,10 @@
-import { ClientConfig, ProjectConfig } from 'next-sanity'
+import type { ClientConfig } from 'next-sanity'
 
 // Because dataset and projectId are optional in the ClientConfig but not in the ProjectConfig :/
-type Config = ClientConfig & ProjectConfig
+type Config = {
+  dataset: string
+  projectId: string
+} & ClientConfig
 
 export const sanityConfig: Config = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'global',

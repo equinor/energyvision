@@ -49,7 +49,7 @@
     "ics": "^2.35.0",
     "instantsearch.js": "^4.47.0",
     "next": "^13.0.4",
-    "next-sanity": "^0.8.4",
+    "next-sanity": "^2.1.0",
     "next-sanity-image": "^5.0.0",
     "next-seo": "^5.1.0",
     "next-transpile-modules": "10.0.0",

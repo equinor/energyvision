@@ -151,16 +151,6 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   /*  const appInsights = useAppInsightsContext() */
   const slug = news?.slug
 
-  // @TODO: Since data can be undefined, the rules of hooks fails. Why is data undefined
-  // Temp. disable the preview hook due to serious performance issues
-  /*   const {
-    data: { news, latestNews },
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-  } = usePreviewSubscription(newsQuery, {
-    params: { slug },
-    initialData: data,
-    enabled: preview || router.query.preview !== null,
-  }) */
   const { pathname, locale } = router
 
   const fullUrl = getFullUrl(pathname, slug, locale)
