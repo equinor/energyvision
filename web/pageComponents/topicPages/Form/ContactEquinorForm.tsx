@@ -119,7 +119,7 @@ const ContactEquinorForm = () => {
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
@@ -151,7 +151,7 @@ const ContactEquinorForm = () => {
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   aria-required="true"
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
@@ -217,7 +217,6 @@ const ContactEquinorForm = () => {
                     defaultMessage: 'Who are you trying to reach?',
                   })}
                   inputRef={ref}
-                  variant="default"
                 />
               )}
             />
@@ -244,7 +243,7 @@ const ContactEquinorForm = () => {
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />

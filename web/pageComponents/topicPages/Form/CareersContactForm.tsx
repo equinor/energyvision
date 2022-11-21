@@ -94,7 +94,7 @@ const CareersContactForm = () => {
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
@@ -130,7 +130,7 @@ const CareersContactForm = () => {
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   aria-required="true"
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
@@ -162,7 +162,7 @@ const CareersContactForm = () => {
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   aria-required="true"
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
@@ -210,7 +210,6 @@ const CareersContactForm = () => {
                     defaultMessage: 'Position ID/name',
                   })}
                   inputRef={ref}
-                  variant="default"
                 />
               )}
             />
@@ -240,7 +239,7 @@ const CareersContactForm = () => {
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   aria-required="true"
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
@@ -267,7 +266,7 @@ const CareersContactForm = () => {
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
-                  variant={invalid ? 'error' : 'default'}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />

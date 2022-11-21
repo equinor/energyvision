@@ -186,7 +186,7 @@ const OrderReportsForm = () => {
                 aria-required="true"
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
@@ -218,7 +218,7 @@ const OrderReportsForm = () => {
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
                 aria-required="true"
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
@@ -243,7 +243,7 @@ const OrderReportsForm = () => {
                 aria-required="true"
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
@@ -268,7 +268,7 @@ const OrderReportsForm = () => {
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
                 aria-required="true"
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
@@ -294,7 +294,7 @@ const OrderReportsForm = () => {
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
                 aria-required="true"
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
@@ -320,7 +320,7 @@ const OrderReportsForm = () => {
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
                 inputRef={ref}
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
@@ -345,7 +345,7 @@ const OrderReportsForm = () => {
                 inputRef={ref}
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
-                variant={invalid ? 'error' : 'default'}
+                {...(invalid && { variant: 'error' })}
               />
             )}
           />
