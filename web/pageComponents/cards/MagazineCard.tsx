@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { HeroTypes, ImageWithAlt, MagazineCardData, VideoHeroData } from '../../types/types'
 import Image from '../shared/Image'
 import Img from 'next/image'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -35,26 +36,11 @@ type MagazineCardProp = {
   fitToContent?: boolean
 }
 
-type ThumbnailProps = {
-  heroVideo?: VideoHeroData
-  heroType?: HeroTypes
-  heroImage?: ImageWithAlt
-  openGraphImage?: ImageWithAlt
-}
+const getThumbnail = (data: MagazineCardData) => {
+  const { heroVideo, heroType, heroImage, openGraphImage } = data
+  if (!heroImage?.asset && !openGraphImage?.asset && !heroVideo?.playbackId) return false
 
-const getThumbnail = ({ heroVideo, heroType, heroImage, openGraphImage }: ThumbnailProps) => {
-  const getSanityImage = (image: ImageWithAlt) => {
-    return (
-      <Image
-        image={image}
-        maxWidth={400}
-        aspectRatio={0.56}
-        layout="responsive"
-        sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-      />
-    )
-  }
-  if (heroType === HeroTypes.VIDEO_HERO) {
+  if (Flags.IS_DEV && heroType === HeroTypes.VIDEO_HERO && heroVideo?.playbackId) {
     return (
       <Img
         src={`https://image.mux.com/${heroVideo?.playbackId}/thumbnail.jpg`}
@@ -65,17 +51,23 @@ const getThumbnail = ({ heroVideo, heroType, heroImage, openGraphImage }: Thumbn
         height="300"
       />
     )
-  } else if (heroImage?.asset) {
-    return getSanityImage(heroImage)
-  } else if (openGraphImage) {
-    return getSanityImage(openGraphImage)
   }
+
+  return (
+    <Image
+      image={(heroImage?.asset ? heroImage : openGraphImage) as ImageWithAlt}
+      maxWidth={400}
+      aspectRatio={0.56}
+      layout="responsive"
+      sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+    />
+  )
 }
 
 const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
-  const { slug, title, heroImage, openGraphImage, heroVideo, heroType, tags } = data
-  const hasThumbnail = heroImage?.asset || heroVideo?.playbackId || openGraphImage
-  if (!hasThumbnail) return null
+  const { slug, title, tags } = data
+  const thumbnail = getThumbnail(data)
+  if (!thumbnail) return null
 
   return (
     <NextLink href={slug} passHref legacyBehavior>
@@ -88,8 +80,9 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
             } as CSSProperties
           }
         >
-          <Media>{getThumbnail({ heroVideo, heroType, heroImage, openGraphImage })}</Media>
-
+          <Media>
+            {thumbnail}
+          </Media>
           <Header>
             <Title>
               <>{title}</>
