@@ -2,8 +2,9 @@ import { CSSProperties } from 'react'
 import { Card } from '@components'
 import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
-import type { MagazineCardData } from '../../types/types'
+import { HeroTypes, ImageWithAlt, MagazineCardData, VideoHeroData } from '../../types/types'
 import Image from '../shared/Image'
+import Img from 'next/image'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -34,11 +35,47 @@ type MagazineCardProp = {
   fitToContent?: boolean
 }
 
-const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
-  const { slug, title, heroImage, openGraphImage, tags } = data
+type ThumbnailProps = {
+  heroVideo?: VideoHeroData
+  heroType?: HeroTypes
+  heroImage?: ImageWithAlt
+  openGraphImage?: ImageWithAlt
+}
 
-  const thumbnail = heroImage?.asset ? heroImage : openGraphImage
-  if (!thumbnail || !thumbnail.asset) return null
+const getThumbnail = ({ heroVideo, heroType, heroImage, openGraphImage }: ThumbnailProps) => {
+  const getSanityImage = (image: ImageWithAlt) => {
+    return (
+      <Image
+        image={image}
+        maxWidth={400}
+        aspectRatio={0.56}
+        layout="responsive"
+        sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+      />
+    )
+  }
+  if (heroType === HeroTypes.VIDEO_HERO) {
+    return (
+      <Img
+        src={`https://image.mux.com/${heroVideo?.playbackId}/thumbnail.jpg`}
+        alt="thumbnail"
+        layout="responsive"
+        sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+        width="500"
+        height="300"
+      />
+    )
+  } else if (heroImage?.asset) {
+    return getSanityImage(heroImage)
+  } else if (openGraphImage) {
+    return getSanityImage(openGraphImage)
+  }
+}
+
+const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
+  const { slug, title, heroImage, openGraphImage, heroVideo, heroType, tags } = data
+  const hasThumbnail = heroImage?.asset || heroVideo?.playbackId || openGraphImage
+  if (!hasThumbnail) return null
 
   return (
     <NextLink href={slug} passHref legacyBehavior>
@@ -51,17 +88,8 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
             } as CSSProperties
           }
         >
-          <Media>
-            {thumbnail && (
-              <Image
-                image={thumbnail}
-                maxWidth={400}
-                aspectRatio={0.56}
-                layout="responsive"
-                sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-              />
-            )}
-          </Media>
+          <Media>{getThumbnail({ heroVideo, heroType, heroImage, openGraphImage })}</Media>
+
           <Header>
             <Title>
               <>{title}</>

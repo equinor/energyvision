@@ -93,6 +93,8 @@ export type CardData = {
   heroImage: ImageWithCaptionData
   openGraphImage?: ImageWithAlt
   ingress?: PortableTextBlock[]
+  heroVideo?: VideoHeroData
+  heroType?: HeroTypes
 }
 
 export type MagazineCardData = {
@@ -101,6 +103,8 @@ export type MagazineCardData = {
   tags?: string[]
   heroImage?: ImageWithAlt
   openGraphImage?: ImageWithAlt
+  heroVideo?: VideoHeroData
+  heroType?: HeroTypes
 }
 
 export type FeaturedContentData = {
