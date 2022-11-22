@@ -3,6 +3,7 @@ import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule } from '@sanity/types'
 import type { PromoTile } from './promoTile'
+import blocksToText from '../../helpers/blocksToText'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
@@ -29,7 +30,9 @@ export default {
     },
     prepare({ group }: { group: PromoTile[] }) {
       return {
-        title: group ? group[0]?.title + ' | ' + (group[1]?.title || '') : 'Missing content',
+        title: group
+          ? blocksToText(group[0]?.title) + ' | ' + (blocksToText(group[1]?.title) || '')
+          : 'Missing content',
         subtitle: 'Promo tiles component',
         media: <div>{EdsIcon(collection_2)}</div>,
       }

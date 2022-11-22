@@ -6,10 +6,16 @@ import type { Rule } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector'
 import type { ColorListValue } from 'sanity-plugin-color-list'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+import blocksToText from '../../helpers/blocksToText'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { configureTitleBlockContent } from '../editors'
+
+const titleContentType = configureTitleBlockContent()
 
 export type PromoTile = {
   _type: 'promoTile'
-  title: string
+  title: any[]
   image?: ImageWithAlt
   link?: LinkSelector
   background?: ColorListValue
@@ -38,7 +44,9 @@ export default {
   fields: [
     {
       name: 'title',
-      type: 'string',
+      type: 'array',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -74,9 +82,9 @@ export default {
       title: 'title',
       imageUrl: 'image.asset.url',
     },
-    prepare({ title, imageUrl }: { title: string; imageUrl: string }) {
+    prepare({ title, imageUrl }: { title: any[]; imageUrl: string }) {
       return {
-        title: title,
+        title: blocksToText(title),
         subtitle: `Promo tile component`,
         media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
       }
