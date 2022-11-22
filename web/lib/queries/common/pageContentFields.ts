@@ -114,6 +114,7 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
     title,
+    image,
     ingress[]{
       ...,
       ${markDefs},

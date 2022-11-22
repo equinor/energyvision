@@ -58,6 +58,20 @@ export default {
       validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
+      title: 'Ingress',
+      name: 'ingress',
+      type: 'array',
+      inputComponent: CharCounterEditor,
+      of: [ingressContentType],
+    },
+    Flags.IS_DEV && {
+      name: 'image',
+      type: 'imageWithAlt',
+      options: {
+        hotspot: true,
+      },
+    },
+    {
       name: 'anchor',
       type: 'anchorReferenceField',
       title: 'Anchor reference',
@@ -69,13 +83,6 @@ export default {
         ].filter((e) => e),
       fieldset: 'anchor',
       readOnly: ({ value }: { value?: string }) => (Flags.IS_DEV ? !value : true),
-    },
-    {
-      title: 'Ingress',
-      name: 'ingress',
-      type: 'array',
-      inputComponent: CharCounterEditor,
-      of: [ingressContentType],
     },
     {
       title: 'Accordion items',
@@ -100,7 +107,7 @@ export default {
       fieldset: 'design',
       initialValue: Colors[0],
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',

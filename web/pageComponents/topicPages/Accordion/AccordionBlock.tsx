@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import Accordion from './Accordion'
+import Image from '../../shared/Image'
 
 import type { AccordionData } from '../../../types/types'
 
@@ -23,6 +24,13 @@ const StyledTextBlock = styled.section`
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
 `
+const Img = styled(Image)`
+  border-radius: 50%;
+`
+
+const ImgContainer = styled.div`
+  padding: 0 0 var(--space-large) 0;
+`
 
 type AccordionBlockProps = {
   data: AccordionData
@@ -30,11 +38,16 @@ type AccordionBlockProps = {
 }
 
 const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
-  const { title, ingress, designOptions, accordion, id } = data
+  const { title, ingress, designOptions, accordion, id, image } = data
   const { background } = designOptions
   return (
     <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>
+        {image && (
+          <ImgContainer>
+            <Img image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />
+          </ImgContainer>
+        )}
         {title && <StyledHeading value={title} />}
         {ingress && <IngressText value={ingress} />}
         {accordion && accordion.length > 0 && (

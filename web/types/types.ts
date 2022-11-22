@@ -353,6 +353,7 @@ export type AccordionListData = {
 export type AccordionData = {
   type: string
   id: string
+  image?: ImageWithAlt
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   accordion: AccordionListData[]
