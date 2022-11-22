@@ -7,7 +7,6 @@ import downloadableImageFields from './actions/downloadableImageFields'
 import { eventPromotionFields, pastEventsQuery, futureEventsQuery } from './eventPromotion'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
-import { heroFields } from './heroFields'
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
