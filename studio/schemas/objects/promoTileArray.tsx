@@ -1,5 +1,5 @@
 import React from 'react'
-import { collection_2 } from '@equinor/eds-icons'
+import { block, collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule } from '@sanity/types'
 import type { PromoTile } from './promoTile'
@@ -29,10 +29,11 @@ export default {
       group: 'group',
     },
     prepare({ group }: { group: PromoTile[] }) {
+      const getTitle = (promoTitle: PromoTile) => {
+        return promoTitle.richTitle ? blocksToText(promoTitle.richTitle) : promoTitle.title || ''
+      }
       return {
-        title: group
-          ? blocksToText(group[0]?.title) + ' | ' + (blocksToText(group[1]?.title) || '')
-          : 'Missing content',
+        title: group ? getTitle(group[0]) + ' | ' + (getTitle(group[1]) || '') : 'Missing content',
         subtitle: 'Promo tiles component',
         media: <div>{EdsIcon(collection_2)}</div>,
       }

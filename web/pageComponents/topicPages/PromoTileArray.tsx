@@ -2,9 +2,11 @@ import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { Card, BackgroundContainer } from '@components'
 import { tokens } from '@equinor/eds-tokens'
-import type { PromoTileArrayData, PromoTileData } from '../../types/types'
+import type { ImageWithAlt, PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
+import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
+import { PortableTextBlock } from '@portabletext/types'
 
 const { Title, Header, Action, Media } = Card
 
@@ -33,16 +35,70 @@ const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
 `
 
-const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
+const PromoTileArray= ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
   if (!data.group) return null
 
+  const normalTitle = (image: ImageWithAlt, title: string) => {
+    return (
+      <Header>
+        {image ? (
+          <Title
+            style={
+              {
+                '--card-title-fontWeight': '450',
+              } as CSSProperties
+            }
+          >
+            {title}
+          </Title>
+        ) : (
+          <Title
+            style={
+              {
+                '--card-title-fontSize': 'var(--typeScale-4)',
+                '--card-title-fontWeight': '400',
+              } as CSSProperties
+            }
+          >
+            {title}
+          </Title>
+        )}
+      </Header>
+    )
+  }
+
+  const richTitle = (image: ImageWithAlt, title: PortableTextBlock[]) => {
+    return (
+      <Header>
+        {image.asset ? (
+          <PromotileTitleText
+            style={
+              {
+                '--card-title-fontWeight': '450',
+              } as CSSProperties
+            }
+            value={title}
+          />
+        ) : (
+          <PromotileTitleText
+            style={
+              {
+                '--card-title-fontSize': 'var(--typeScale-4)',
+                '--card-title-fontWeight': '400',
+              } as CSSProperties
+            }
+            value={title}
+          />
+        )}
+      </Header>
+    )
+  }
   return (
     <div className="background-none" id={anchor}>
       <Container>
         {data.group.map((tile: PromoTileData) => {
           const { id, designOptions, image, title, action } = tile
           const { background } = designOptions
-
           return (
             /* Sneaky little hack to make it work with the bg colour See #667 */
             <StyledBackgroundContainer disableContainerWrapper={true} background={background} key={id}>
@@ -58,30 +114,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
                     />
                   </Media>
                 )}
-                <Header>
-                  {image ? (
-                    <Title
-                      style={
-                        {
-                          '--card-title-fontWeight': '450',
-                        } as CSSProperties
-                      }
-                    >
-                      {title}
-                    </Title>
-                  ) : (
-                    <Title
-                      style={
-                        {
-                          '--card-title-fontSize': 'var(--typeScale-4)',
-                          '--card-title-fontWeight': '400',
-                        } as CSSProperties
-                      }
-                    >
-                      {title}
-                    </Title>
-                  )}
-                </Header>
+                { (title instanceof Array<PortableTextBlock>)? <>{richTitle(image,title)}</>: <>{normalTitle(image,title)}</> } 
                 {action.label && (
                   <Action>
                     <ButtonLink action={action} />

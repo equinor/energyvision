@@ -365,23 +365,9 @@ export type AccordionData = {
   designOptions: DesignOptions
 }
 
-export type PromoTileDataV2 = {
-  id: string
-  title: PortableTextBlock[]
-  image: ImageWithAlt
-  action: LinkData
-  designOptions: DesignOptions
-}
-
-export type PromoTileArrayDataV2 = {
-  type: string
-  id: string
-  group: PromoTileDataV2[]
-}
-
 export type PromoTileData = {
   id: string
-  title: string
+  title: string | PortableTextBlock[]
   image: ImageWithAlt
   action: LinkData
   designOptions: DesignOptions

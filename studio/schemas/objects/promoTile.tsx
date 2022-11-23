@@ -16,7 +16,8 @@ const titleContentType = configureTitleBlockContent()
 
 export type PromoTile = {
   _type: 'promoTile'
-  title: any[]
+  richTitle: any[]
+  title: string
   image?: ImageWithAlt
   link?: LinkSelector
   background?: ColorListValue
@@ -44,18 +45,20 @@ export default {
   ],
   fields: [
     Flags.IS_DEV && {
-      name: 'title',
+      name: 'richTitle',
       type: 'array',
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
     },
-    !Flags.IS_DEV && {
+    {
       name: 'title',
       type: 'string',
-      title: 'Title',
-      validation: (Rule: Rule) => Rule.required(),
+      title: 'Title (Deprecated)',
+      description: 'This field is deprecated. Use the above rich text editor for the title.',
+      validation: Flags.IS_DEV ? undefined : (Rule: Rule) => Rule.required(),
+      readOnly: Flags.IS_DEV,
     },
     {
       name: 'image',
@@ -87,11 +90,12 @@ export default {
   preview: {
     select: {
       title: 'title',
+      richTitle: 'richTitle',
       imageUrl: 'image.asset.url',
     },
-    prepare({ title, imageUrl }: { title: any[]; imageUrl: string }) {
+    prepare({ title, richTitle, imageUrl }: { richTitle: any[]; title: string; imageUrl: string }) {
       return {
-        title: blocksToText(title),
+        title: richTitle ? blocksToText(richTitle) : title,
         subtitle: `Promo tile component`,
         media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
       }
