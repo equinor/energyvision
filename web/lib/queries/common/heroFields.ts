@@ -8,7 +8,7 @@ export const heroFields = /* groq */ `{
     "background": coalesce(heroBackground.title, 'White'),
     "figure": heroFigure,
     "video": {
-      "playbackId":heroVideo.asset->{
+      "":heroVideo.asset->{
       playbackId,
 		},
     "loop": coalesce(heroVideoLoop,false),
