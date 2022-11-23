@@ -95,7 +95,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                 </TextContainer>
               )}
 
-              <NextLink href={topLevelHref} prefetch={false} passHref legacyBehavior>
+              <NextLink href={topLevelHref} passHref legacyBehavior>
                 <ReadMore variant="readMore">{topLevelLink?.label}</ReadMore>
               </NextLink>
             </StyledSection>
@@ -112,7 +112,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                       <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                         {groupItem.links?.map((link: MenuLinkData) => (
                           <StyledItem key={link.id}>
-                            <NextLink href={getLink(link)} prefetch={false} passHref legacyBehavior>
+                            <NextLink href={getLink(link)} passHref legacyBehavior>
                               <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
                             </NextLink>
                           </StyledItem>
