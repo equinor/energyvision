@@ -7,7 +7,7 @@ import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 
-const { Title, Header, Action, Media } = Card
+const { Header, Action, Media } = Card
 
 const Container = styled.div`
   display: grid;
