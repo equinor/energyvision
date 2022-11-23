@@ -10,6 +10,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -42,11 +43,17 @@ export default {
     },
   ],
   fields: [
-    {
+    Flags.IS_DEV && {
       name: 'title',
       type: 'array',
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
+      title: 'Title',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    !Flags.IS_DEV && {
+      name: 'title',
+      type: 'string',
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -76,7 +83,7 @@ export default {
       fieldset: 'design',
       initialValue: Colors[0],
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',

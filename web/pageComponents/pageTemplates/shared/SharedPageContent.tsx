@@ -37,7 +37,10 @@ import {
   TwitterEmbedData,
   VideoData,
   CookieDeclarationData,
+  PromoTileArrayDataV2,
 } from '../../../types/types'
+import { Flags } from '../../../common/helpers/datasetHelpers'
+import PromoTileArrayV2 from '../../topicPages/PromoTileArrayV2'
 
 // How could we do this for several different component types?
 type ComponentProps =
@@ -85,7 +88,11 @@ export const PageContent = ({ data }: PageContentProps) => {
       case 'accordion':
         return <AccordionBlock key={c.id} data={c as AccordionData} anchor={anchorReference} />
       case 'promoTileArray':
-        return <PromoTileArray key={c.id} data={c as PromoTileArrayData} anchor={anchorReference} />
+        return Flags.IS_DEV ? (
+          <PromoTileArrayV2 key={c.id} data={c as PromoTileArrayDataV2} anchor={anchorReference} />
+        ) : (
+          <PromoTileArray key={c.id} data={c as PromoTileArrayData} anchor={anchorReference} />
+        )
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} />
       case 'promotion':
