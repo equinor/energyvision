@@ -23,7 +23,7 @@ export const VideoHero = ({ video }: { video?: VideoHeroData }) => {
       playback-id={video.playbackId}
       autoplay={video.autoplay}
       muted={video.autoplay}
-      controls
+      controls={false}
       loop={video.loop}
       style={{ width: '100%' }}
     />
