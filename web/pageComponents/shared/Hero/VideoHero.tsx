@@ -21,10 +21,10 @@ export const VideoHero = ({ video }: { video?: VideoHeroData }) => {
     <mux-video
       stream-type="on-demand"
       playback-id={video.playbackId}
-      autoplay={video.autoplay}
-      muted={video.autoplay}
-      controls={false}
-      loop={video.loop}
+      autoplay={video.autoplay || undefined}
+      muted={video.autoplay || undefined}
+      loop={video.loop || undefined}
+      controls={!video.autoplay || undefined}
       style={{ width: '100%' }}
     />
   )
