@@ -5,7 +5,7 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/compat/router'
 
 type SeoProps = {
   seoAndSome?: {

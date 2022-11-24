@@ -10,7 +10,7 @@ import { getIsoFromLocale } from '../../lib/localization'
 import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
 import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 import type { NewsRoomPageType } from '../../types'
-import Seo from '../../pageComponents/shared/Seo'
+import Seo from '../shared/Seo'
 import { useRef } from 'react'
 
 type NewsRoomTemplateProps = {
@@ -21,7 +21,7 @@ type NewsRoomTemplateProps = {
 }
 
 const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
-  const { ingress, title } = pageData || {}
+  const { ingress, title, seoAndSome } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
@@ -29,7 +29,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
 
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
-      <Seo seoAndSome={pageData?.seoAndSome} slug={slug} pageTitle={title} />
+      <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main>
         <Wrapper>
           <Intro ref={resultsRef}>
