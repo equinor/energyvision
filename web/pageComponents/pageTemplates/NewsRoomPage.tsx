@@ -5,13 +5,55 @@ import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import { Heading } from '@components'
 import { searchClientServer, searchClient } from '../../lib/algolia'
-import NewsContent from '../searchIndexPages/newsRoomIndex/NewsContent'
 import { getIsoFromLocale } from '../../lib/localization'
-import { Wrapper, Intro, News, UnpaddedText } from './algoliaPages/components'
+import { Wrapper, Intro, News, UnpaddedText } from './newsroom/StyledComponents'
 import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 import type { NewsRoomPageType } from '../../types'
 import Seo from '../shared/Seo'
 import { useRef } from 'react'
+import styled from 'styled-components'
+import Filters from './newsroom/Filters'
+import { Pagination } from '../shared/search/pagination/Pagination'
+import { FormattedMessage } from 'react-intl'
+import Hit from './newsroom/Hit'
+import { Hits } from './newsroom/Hits'
+
+const NewsRoomContent = styled.div`
+  display: grid;
+  grid-template-areas:
+    'filter'
+    '.'
+    'list'
+    '.';
+
+  grid-template-rows: auto var(--space-xLarge) auto var(--space-xLarge);
+
+  @media (min-width: 800px) {
+    grid-template-columns: minmax(auto, var(--layout-maxContent-narrow)) minmax(var(--space-xLarge), 1fr) 30% var(
+        --space-medium
+      );
+    grid-template-areas: 'list . filter .';
+  }
+`
+
+const GridFilters = styled(Filters)`
+  grid-area: filter;
+`
+
+const StyledList = styled.div`
+  padding: 0 var(--space-large);
+
+  @media (min-width: 800px) {
+    padding: 0;
+    display: grid;
+    grid-template-rows: var(--space-56) min-content min-content;
+    grid-area: list;
+  }
+`
+
+const StyledPagination = styled(Pagination)`
+  margin-top: var(--space-medium);
+`
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -65,7 +107,16 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
                 facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
               />
 
-              <NewsContent />
+              <NewsRoomContent>
+                <GridFilters />
+                <StyledList>
+                  <Heading level="h2" size="lg">
+                    <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
+                  </Heading>
+                  <Hits hitComponent={Hit} />
+                  <StyledPagination padding={1} hitsPerPage={20} />
+                </StyledList>
+              </NewsRoomContent>
             </InstantSearch>
           </News>
         </Wrapper>
