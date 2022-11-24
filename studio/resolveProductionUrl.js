@@ -1,3 +1,4 @@
+import { defaultLanguage } from './languages'
 import { dataset } from './src/lib/datasetHelpers'
 import { getLocaleFromName } from './src/lib/localization'
 
@@ -25,11 +26,9 @@ export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
 
   previewUrl.pathname = '/api/preview'
-  previewUrl.searchParams.append('secret', previewSecret)
   previewUrl.searchParams.append('type', doc?._type)
-
+  previewUrl.searchParams.append('locale', getLocaleFromName(doc?._lang) || defaultLanguage.locale)
   if (doc?.slug?.current) {
-    previewUrl.searchParams.append('locale', getLocaleFromName(doc?._lang))
     previewUrl.searchParams.append('slug', doc?.slug?.current)
   } else if (doc?._id) {
     previewUrl.searchParams.append('id', doc?._id)
@@ -39,6 +38,7 @@ export default function resolveProductionUrl(doc) {
     console.warn('The content needs an id before it can be previewed')
     previewUrl.searchParams.append('slug', '/')
   }
+  previewUrl.searchParams.append('secret', previewSecret)
 
   // console.log('Preview url', previewUrl.toString())
   return previewUrl.toString()
