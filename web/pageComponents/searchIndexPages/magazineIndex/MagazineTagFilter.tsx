@@ -1,7 +1,7 @@
 import { useEffect, useState, forwardRef } from 'react'
 import { useMenu, UseMenuProps, useClearRefinements, useCurrentRefinements } from 'react-instantsearch-hooks-web'
 import MagazineTagBar from '../../shared/MagazineTagBar'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/compat/router'
 
 export type RefinementListProps = { tags: string[] } & React.ComponentProps<'div'> & UseMenuProps
 
@@ -33,10 +33,10 @@ export const MagazineTagFilter = forwardRef<HTMLDivElement, RefinementListProps>
     } else {
       clear()
     }
-    router.replace(
+    router?.replace(
       {
         query: {
-          ...router.query,
+          ...router?.query,
           tag: active === 'ALL' ? '' : active,
         },
       },
@@ -47,8 +47,8 @@ export const MagazineTagFilter = forwardRef<HTMLDivElement, RefinementListProps>
 
   //route to state
   useEffect(() => {
-    if ((router.query.tag as string) !== active) {
-      setActive(router.query.tag as string)
+    if ((router?.query.tag as string) !== active) {
+      setActive(router?.query.tag as string)
     }
   }, [router?.query?.tag])
   return (
