@@ -57,21 +57,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
           <News>
-            <InstantSearch
-              searchClient={isServerRendered ? searchClientServer : searchClient}
-              indexName={indexName}
-              /*  routing={{
-                  router: history({
-                    getLocation() {
-                      if (typeof window === 'undefined') {
-                        return new URL(url!) as unknown as Location
-                      }
-
-                      return window.location
-                    },
-                  }),
-                }} */
-            >
+            <InstantSearch searchClient={isServerRendered ? searchClientServer : searchClient} indexName={indexName}>
               <Configure
                 facetingAfterDistinct
                 maxFacetHits={50}
