@@ -17,7 +17,6 @@ on:
           - equinorfunds
           - southkorea
           - celticsea
-          - global-test
 
       image-sha:
         description: 'The commit sha of the image to roll back to'
@@ -111,7 +110,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          pnpm deploy
+          pnpm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v1
@@ -180,7 +179,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          pnpm deploy
+          pnpm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
       - uses: act10ns/slack@v1

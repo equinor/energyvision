@@ -14,7 +14,7 @@
     "dev": "yarn prepare && ./node_modules/.bin/sanity start",
     "start": "yarn prepare && sanity start",
     "build": "yarn prepare && sanity build",
-    "deploy": "sanity deploy",
+    "deploy": "sanity build",
     "upgrade": "sanity upgrade",
     "yarn": "yarn"
   },
