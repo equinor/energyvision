@@ -254,14 +254,22 @@ const pageContentFields = /* groq */ `
 
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,
-            "hero": content->{heroFields},
+            "heroImage": reference->content->heroFigure,
             "openGraphImage": reference->content->openGraphImage,
+            "heroVideo": reference->content->heroVideo.asset->{
+              playbackId,
+            },
+            "heroType": coalesce(reference->content->heroType, 'default'),
           },
 
          reference->_type == 'magazine' => {
           "title": reference->title,
-          "hero": content->{heroFields},
+          "heroImage": reference->heroFigure,
           "openGraphImage": reference->openGraphImage,
+          "heroType": coalesce(reference->content->heroType, 'default'),
+          "heroVideo": reference->heroVideo.asset->{
+            playbackId,
+          },
          },
        },
       },

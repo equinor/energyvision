@@ -14,8 +14,12 @@ const promotedMagazineFields = /* groq */ `
     ...,
     ${markDefs},
   },
-  "hero": content->{heroFields},
+  "heroImage": heroFigure,
   openGraphImage,
+  "heroType": coalesce(heroType, 'default'),
+  "heroVideo": heroVideo.asset->{
+    playbackId,
+  },
 `
 
 export default /* groq */ `
