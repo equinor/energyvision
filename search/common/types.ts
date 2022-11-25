@@ -72,3 +72,8 @@ export type MagazineIndex = {
 }
 
 export type IndexType = EventIndex | TopicIndex | NewsIndex | MagazineIndex
+
+export type Page = {
+  slug: string
+  docToClear?: boolean
+}

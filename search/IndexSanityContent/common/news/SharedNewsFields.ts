@@ -1,5 +1,6 @@
-export type SharedNewsFields = {
-  slug: string
+import { Page } from '../../../common'
+
+export type SharedNewsFields = Page & {
   title: string
   ingress: string
   // ISO 8601
@@ -12,5 +13,4 @@ export type SharedNewsFields = {
     }[]
   }[]
   _id: string
-  docToClear?: boolean
 }

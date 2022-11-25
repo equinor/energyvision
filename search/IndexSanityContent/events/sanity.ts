@@ -3,7 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
-import { Language } from '../../common'
+import { Language, Page } from '../../common'
 
 const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
@@ -23,8 +23,7 @@ const getQueryParams = (language: Language, id: string) => ({
   id: id,
 })
 
-export type Event = {
-  slug: string
+export type Event = Page & {
   content: {
     title: string
     ingress: string
@@ -32,7 +31,6 @@ export type Event = {
     eventDate: string
   }
   _id: string
-  docToClear?: boolean
 }
 
 type FetchDataType = (
