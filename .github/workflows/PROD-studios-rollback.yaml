@@ -16,6 +16,7 @@ on:
           - storage
           - equinorfunds
           - southkorea
+          - celticsea
       image-sha:
         description: 'The commit sha of the image to roll back to'
         required: true
@@ -63,6 +64,7 @@ jobs:
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
       SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
       SANITY_STUDIO_API_DATASET: global
+      SANITY_STUDIO_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
       SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
@@ -70,13 +72,6 @@ jobs:
       SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }}
       - name: Checkout 🛎️
         id: checkout-main
         uses: actions/checkout@v3
@@ -137,6 +132,7 @@ jobs:
       SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
       SANITY_STUDIO_API_DATASET: secret
+      SANITY_STUDIO_API_TOKEN: ${{ secrets.SANITY_API_SECRET_TOKEN }}
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
       SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
@@ -144,13 +140,6 @@ jobs:
       SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }}
       - name: Checkout 🛎️
         id: checkout-main
         uses: actions/checkout@v3
@@ -236,6 +225,7 @@ jobs:
         if: failure()
 
   deploy:
+    if: github.event.inputs.site != 'global'
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
