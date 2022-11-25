@@ -17,6 +17,8 @@ on:
           - equinorfunds
           - southkorea
           - celticsea
+          - global-test
+
       image-sha:
         description: 'The commit sha of the image to roll back to'
         required: true
