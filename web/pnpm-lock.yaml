@@ -1,10 +1,5 @@
 lockfileVersion: 5.4
 
-patchedDependencies:
-  react-instantsearch-hooks-server@6.35.0:
-    hash: anrucxwvwnfcoo56oomnvhabgy
-    path: patches/react-instantsearch-hooks-server@6.35.0.patch
-
 specifiers:
   '@algolia/client-search': ^4.13.1
   '@babel/core': ^7.9.6
@@ -17,10 +12,10 @@ specifiers:
   '@next/eslint-plugin-next': ^12.1.0
   '@portabletext/react': ^1.0.6
   '@portabletext/types': ^1.0.3
-  '@reach/accordion': ^0.17.0
-  '@reach/skip-nav': ^0.17.0
-  '@reach/tabs': ^0.17.0
-  '@reach/window-size': ^0.17.0
+  '@reach/accordion': ^0.18.0
+  '@reach/skip-nav': ^0.18.0
+  '@reach/tabs': ^0.18.0
+  '@reach/window-size': ^0.18.0
   '@react-spring/web': ^9.4.5
   '@sanity/client': ^3.2.0
   '@sanity/image-url': ^1.0.1
@@ -97,10 +92,10 @@ dependencies:
   '@next/bundle-analyzer': 12.1.5
   '@portabletext/react': 1.0.6_react@18.2.0
   '@portabletext/types': 1.0.3
-  '@reach/accordion': 0.17.0_biqbaboplfbrettd7655fr4n2y
-  '@reach/skip-nav': 0.17.0_biqbaboplfbrettd7655fr4n2y
-  '@reach/tabs': 0.17.0_biqbaboplfbrettd7655fr4n2y
-  '@reach/window-size': 0.17.0_biqbaboplfbrettd7655fr4n2y
+  '@reach/accordion': 0.18.0_biqbaboplfbrettd7655fr4n2y
+  '@reach/skip-nav': 0.18.0_biqbaboplfbrettd7655fr4n2y
+  '@reach/tabs': 0.18.0_biqbaboplfbrettd7655fr4n2y
+  '@reach/window-size': 0.18.0_biqbaboplfbrettd7655fr4n2y
   '@react-spring/web': 9.4.5_biqbaboplfbrettd7655fr4n2y
   '@sanity/client': 3.3.0
   '@sanity/image-url': 1.0.1
@@ -131,7 +126,7 @@ dependencies:
   react-error-boundary: 3.1.4_react@18.2.0
   react-focus-lock: 2.9.1_ulhmhxukhxjgxaybrsjlob7ffu
   react-hook-form: 7.38.0_react@18.2.0
-  react-instantsearch-hooks-server: 6.35.0_anrucxwvwnfcoo56oomnvhabgy_q6yhanr4arcizpfsqrdxn2ic6e
+  react-instantsearch-hooks-server: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
   react-instantsearch-hooks-web: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
   react-intl: 6.0.2_uz2ogxeagc4rbieizlfzyaazee
   react-is: 18.1.0
@@ -4104,96 +4099,94 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /@reach/accordion/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-BoFDIYpaW56j1Ys2N1wA2E5UsMW7yJQtVCJkaV0OO4Q/JJY8r8JZoiQ/+Juc8z0DqOJGVIgYebMAgroDT8Oo0g==}
+  /@reach/accordion/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-jOQ1jj0Oc4yYu58R7WzSCkDSNO8kpy8ovQTjKk0Bo3pbmmkX7QQq292TTl8dMz0RXGe0pmLViubRsD0GkrBFIA==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/auto-id': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      '@reach/descendants': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      '@reach/utils': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      prop-types: 15.8.1
+      '@reach/auto-id': 0.18.0_biqbaboplfbrettd7655fr4n2y
+      '@reach/descendants': 0.18.0_biqbaboplfbrettd7655fr4n2y
+      '@reach/polymorphic': 0.18.0_react@18.2.0
+      '@reach/utils': 0.18.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tiny-warning: 1.0.3
-      tslib: 2.4.0
     dev: false
 
-  /@reach/auto-id/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-ud8iPwF52RVzEmkHq1twuqGuPA+moreumUHdtgvU3sr3/15BNhwp3KyDLrKKSz0LP1r3V4pSdyF9MbYM8BoSjA==}
+  /@reach/auto-id/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-XwY1IwhM7mkHZFghhjiqjQ6dstbOdpbFLdggeke75u8/8icT8uEHLbovFUgzKjy9qPvYwZIB87rLiR8WdtOXCg==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.17.0_biqbaboplfbrettd7655fr4n2y
+      '@reach/utils': 0.18.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tslib: 2.4.1
     dev: false
 
-  /@reach/descendants/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-c7lUaBfjgcmKFZiAWqhG+VnXDMEhPkI4kAav/82XKZD6NVvFjsQOTH+v3tUkskrAPV44Yuch0mFW/u5Ntifr7Q==}
+  /@reach/descendants/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-GXUxnM6CfrX5URdnipPIl3Tlc6geuz4xb4n61y4tVWXQX1278Ra9Jz9DMRN8x4wheHAysvrYwnR/SzAlxQzwtA==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.17.0_biqbaboplfbrettd7655fr4n2y
+      '@reach/utils': 0.18.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tslib: 2.4.1
     dev: false
 
-  /@reach/skip-nav/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-wkkpQK3ffczzGHis6TaUvpOabuAL9n9Kh5vr4h56XPIJP3X77VcHUDk7MK3HbV1mTgamGxc9Hbd1sXKSWLu3yA==}
+  /@reach/polymorphic/0.18.0_react@18.2.0:
+    resolution: {integrity: sha512-N9iAjdMbE//6rryZZxAPLRorzDcGBnluf7YQij6XDLiMtfCj1noa7KyLpEc/5XCIB/EwhX3zCluFAwloBKdblA==}
     peerDependencies:
       react: ^16.8.0 || 17.x
-      react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.17.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      tslib: 2.4.0
     dev: false
 
-  /@reach/tabs/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-XMw+5EaF6ZSmdkUQ45Cy8jbVp63Ksq77ZvS6zI64LHO2KPfPuTZTeUcsvvnJfA/POp3Ou9q6FRbs2d2HxWEApw==}
+  /@reach/skip-nav/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-7XKHX0NNTz9VJw1d+ZRuu3KhKSOZTIHSbHUuv7qKKPwSNApDa+dVGqR/I7dKwyB/CDFMXO4iEz4XLtOmvi0FEg==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/auto-id': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      '@reach/descendants': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      '@reach/utils': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      prop-types: 15.8.1
+      '@reach/polymorphic': 0.18.0_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tslib: 2.4.0
     dev: false
 
-  /@reach/utils/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-M5y8fCBbrWeIsxedgcSw6oDlAMQDkl5uv3VnMVJ7guwpf4E48Xlh1v66z/1BgN/WYe2y8mB/ilFD2nysEfdGeA==}
+  /@reach/tabs/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-gTRJzStWJJtgMhn9FDEmKogAJMcqNaGZx0i1SGoTdVM+D29DBhVeRdO8qEg+I2l2k32DkmuZxG/Mrh+GZTjczQ==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
+      '@reach/auto-id': 0.18.0_biqbaboplfbrettd7655fr4n2y
+      '@reach/descendants': 0.18.0_biqbaboplfbrettd7655fr4n2y
+      '@reach/polymorphic': 0.18.0_react@18.2.0
+      '@reach/utils': 0.18.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tiny-warning: 1.0.3
-      tslib: 2.4.1
     dev: false
 
-  /@reach/window-size/0.17.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-grk4rFUhbg4dauDIRkSAvBXjs+xSxX8vTEgMp8/vmuM5KfcYQmXIxoJ1WmwxVv3HKuywqkHLeoAdMuREE0SFYg==}
+  /@reach/utils/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-KdVMdpTgDyK8FzdKO9SCpiibuy/kbv3pwgfXshTI6tEcQT1OOwj7BAksnzGC0rPz0UholwC+AgkqEl3EJX3M1A==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.17.0_biqbaboplfbrettd7655fr4n2y
-      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      tslib: 2.4.0
+    dev: false
+
+  /@reach/window-size/0.18.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-pOr3zzgp3ZsDQPI3Svxb1iHCyfK0d/7o8Q/MCo+umgEIQoruxH896E/HEZE7nSTMUAGzozSRRzITaQ86nIjZqg==}
+    peerDependencies:
+      react: ^16.8.0 || 17.x
+      react-dom: ^16.8.0 || 17.x
+    dependencies:
+      '@reach/utils': 0.18.0_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@react-spring/animated/9.4.5_react@18.2.0:
@@ -7584,7 +7577,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -13249,6 +13242,17 @@ packages:
         optional: true
     dev: true
 
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
+    dev: true
+
   /promise.allsettled/1.0.5:
     resolution: {integrity: sha512-tVDqeZPoBC0SlzJHzWGZ2NKAguVq2oiYj7gbggbiTvH2itHohijTp7njOUA0aQ/nl+0lr/r6egmhoYu63UZ/pQ==}
     engines: {node: '>= 0.4'}
@@ -13560,7 +13564,7 @@ packages:
       react: 18.2.0
     dev: true
 
-  /react-instantsearch-hooks-server/6.35.0_anrucxwvwnfcoo56oomnvhabgy_q6yhanr4arcizpfsqrdxn2ic6e:
+  /react-instantsearch-hooks-server/6.35.0_q6yhanr4arcizpfsqrdxn2ic6e:
     resolution: {integrity: sha512-JAecQWpRMz9J/vktT0DOXdoleQtZqX/l7yEFMdVKUfCCWhA1LLR0F5xEzZmn0W0xo1K3gbrtByXIu6yfX18WLA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
@@ -13574,7 +13578,6 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-instantsearch-hooks: 6.35.0_ohavwpeck6v6q5jdmjvgcmzzqq
     dev: false
-    patched: true
 
   /react-instantsearch-hooks-web/6.35.0_q6yhanr4arcizpfsqrdxn2ic6e:
     resolution: {integrity: sha512-E6m5g+wYJzGwsenm9VPNyeo/r4CLw/l4NIIJu6M0+hsFigDBYBtnGn2wrMwKdyGkz8m4Q+FH/kQuk+yYbmmj4w==}
@@ -15106,10 +15109,6 @@ packages:
       setimmediate: 1.0.5
     dev: true
 
-  /tiny-warning/1.0.3:
-    resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
-    dev: false
-
   /tmpl/1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
 
@@ -16188,3 +16187,8 @@ packages:
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
+
+patchedDependencies:
+  react-instantsearch-hooks-server@6.35.0:
+    hash: anrucxwvwnfcoo56oomnvhabgy
+    path: patches/react-instantsearch-hooks-server@6.35.0.patch
