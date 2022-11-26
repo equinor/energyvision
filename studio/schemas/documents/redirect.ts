@@ -21,8 +21,11 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom(async (value: string, context: ValidationContext) => {
           const { document } = context
-          const documentId = document?._id
-          const query = `*[_type == 'redirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId]`
+          const documentId = Flags.IS_DEV ? document?._id.replace('drafts.', '') : document?._id
+          const query = Flags.IS_DEV
+            ? /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
+            : `*[_type == 'redirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId]`
+
           const params = { value, documentId }
           const redirects = await client.fetch(query, params)
 
