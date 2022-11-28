@@ -15,6 +15,7 @@ export type CaptionData = {
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
   image: ImageWithAlt
+  asset: SanityImageObject
 } & CaptionData
 
 export type LinkType =
@@ -101,10 +102,11 @@ export type MagazineCardData = {
   slug: string
   title: string | PortableTextBlock[]
   tags?: string[]
-  heroImage?: ImageWithAlt
   openGraphImage?: ImageWithAlt
+  heroImage?: ImageWithAlt
   heroVideo?: VideoHeroData
   heroType?: HeroTypes
+  hero?: HeroType
 }
 
 export type FeaturedContentData = {

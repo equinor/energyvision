@@ -37,13 +37,15 @@ type MagazineCardProp = {
 }
 
 const getThumbnail = (data: MagazineCardData) => {
-  const { heroVideo, heroType, heroImage, openGraphImage } = data
-  if (!heroImage?.asset && !openGraphImage?.asset && !heroVideo?.playbackId) return false
+  const { openGraphImage, heroVideo, heroImage, hero } = data
 
-  if (Flags.IS_DEV && heroType === HeroTypes.VIDEO_HERO && heroVideo?.playbackId) {
+  if (!heroImage?.asset && !openGraphImage?.asset && !heroVideo?.playbackId) return false
+  if (Flags.IS_DEV && !hero?.figure?.asset && !openGraphImage?.asset && !hero?.video?.playbackId) return false
+
+  if (Flags.IS_DEV && data.hero?.type === HeroTypes.VIDEO_HERO && hero?.video?.playbackId) {
     return (
       <Img
-        src={`https://image.mux.com/${heroVideo?.playbackId}/thumbnail.jpg`}
+        src={`https://image.mux.com/${hero.video?.playbackId}/thumbnail.jpg`}
         alt="thumbnail"
         layout="responsive"
         sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
@@ -55,7 +57,15 @@ const getThumbnail = (data: MagazineCardData) => {
 
   return (
     <Image
-      image={(heroImage?.asset ? heroImage : openGraphImage) as ImageWithAlt}
+      image={
+        (Flags.IS_DEV
+          ? hero?.figure?.asset
+            ? hero.figure
+            : openGraphImage
+          : heroImage?.asset
+          ? heroImage
+          : openGraphImage) as ImageWithAlt
+      }
       maxWidth={400}
       aspectRatio={0.56}
       layout="responsive"
@@ -80,9 +90,7 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
             } as CSSProperties
           }
         >
-          <Media>
-            {thumbnail}
-          </Media>
+          <Media>{thumbnail}</Media>
           <Header>
             <Title>
               <>{title}</>

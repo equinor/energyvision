@@ -1,6 +1,7 @@
 import { sameLang, noDrafts } from './../langAndDrafts'
 import markDefs from '../blockEditorMarks'
 import { publishDateTimeQuery } from '../publishDateTime'
+import { heroFields } from '../../common/heroFields'
 
 const promotedMagazineFields = /* groq */ `
   "id": _id,
@@ -20,6 +21,7 @@ const promotedMagazineFields = /* groq */ `
   "heroVideo": heroVideo.asset->{
     playbackId,
   },
+  "hero": ${heroFields},
 `
 
 export default /* groq */ `
