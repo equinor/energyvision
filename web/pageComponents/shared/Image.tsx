@@ -1,7 +1,10 @@
+import NewImg from 'next/image'
 import Img from 'next/legacy/image'
+
 import { useNextSanityImage, UseNextSanityImageBuilderOptions, ImageUrlBuilder } from 'next-sanity-image'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/types'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 declare const VALID_LAYOUT_VALUES: readonly ['fill', 'fixed', 'intrinsic', 'responsive', undefined]
 declare type LayoutValue = typeof VALID_LAYOUT_VALUES[number]
@@ -76,16 +79,60 @@ const Image = ({
   imageProps.src = imageProps.src + `&width=1000`
 
   // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
-  if (layout === 'fill') {
+  if (Flags.IS_DEV && layout === 'fill') {
     return (
-      <Img
+        <NewImg
+        src={imageProps.src}
+        alt={altTag}
+        sizes={sizes}
+        fill
+        placeholder={placeholder}
+      /> 
+    )
+  }
+
+  if (!Flags.IS_DEV && layout === 'fill') {
+    return (
+        <Img
         src={imageProps.src}
         alt={altTag}
         sizes={sizes}
         layout={layout}
         placeholder={placeholder}
         objectFit={objectFit}
-      />
+      /> 
+    )
+  }
+
+  if (Flags.IS_DEV && layout==="responsive") {
+    return (
+      <NewImg
+      {...rest}
+      {...imageProps}
+      alt={altTag}
+      sizes={sizes}
+      style={{
+        width: '100%',
+        height: 'auto',
+      }}
+      role={image?.isDecorative ? 'presentation' : undefined}
+      placeholder={placeholder}
+      unoptimized={unoptimized}
+    />
+    )
+  }
+
+  if (Flags.IS_DEV) {
+    return (
+      <NewImg
+      {...rest}
+      {...imageProps}
+      alt={altTag}
+      sizes={sizes}
+      role={image?.isDecorative ? 'presentation' : undefined}
+      placeholder={placeholder}
+      unoptimized={unoptimized}
+    />
     )
   }
 

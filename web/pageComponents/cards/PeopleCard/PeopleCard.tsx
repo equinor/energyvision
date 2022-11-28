@@ -5,6 +5,7 @@ import type { PeopleCardData } from '../../../types/types'
 import Image from '../../shared/Image'
 import CV from './CV'
 import { outlineTemplate, Tokens } from '@utils'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 const { outline } = Tokens
@@ -93,7 +94,7 @@ const ImageContainer = styled.div`
     }
   }
   ${StyledPortraitCard} & {
-    padding: var(--space-medium) var(--space-large) 0 var(--space-medium);
+    padding: var(--space-medium) var(--space-medium) var(--space-medium) var(--space-medium);
     margin: 0 auto;
     @media (min-width: 450px) {
       height: 150px;
@@ -164,7 +165,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
         <ImageContainer>
           {/*   @TODO Final size adjustments */}
 
-          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />}
+          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout={Flags.IS_DEV ? "responsive" : "intrinsic"} />}
         </ImageContainer>
       </StyledMedia>
       <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>

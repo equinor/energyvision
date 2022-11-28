@@ -1,4 +1,5 @@
 import { toPlainText } from '@portabletext/react'
+import NewImg from 'next/image'
 import Img from 'next/legacy/image'
 import styled from 'styled-components'
 import RichText from '../../RichText'
@@ -6,6 +7,7 @@ import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { ImageWithAlt } from '../../../../../types/types'
+import { Flags } from "../../../../../common/helpers/datasetHelpers"
 
 import { urlFor } from '../../../../../common/helpers'
 
@@ -70,7 +72,9 @@ export const Fact = (block: BlockProps) => {
     <FactBoxWithPadding className="fact-box" imagePosition={imagePosition} background={backgroundColor}>
       {imageSrc && (
         <FactBox.Image>
-          <Img src={imageSrc} alt={image.alt} objectFit="cover" layout="fill" unoptimized />
+          {Flags.IS_DEV ? <NewImg src={imageSrc} alt={image.alt ? image.alt : "FactBox"} objectFit="cover" fill unoptimized /> : 
+          <Img src={imageSrc} alt={image.alt ? image.alt : "FactBox"} objectFit="cover" layout="fill" unoptimized />
+          }
         </FactBox.Image>
       )}
 

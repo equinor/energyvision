@@ -4,8 +4,8 @@ import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import { HeroTypes, ImageWithAlt, MagazineCardData } from '../../types/types'
 import Image from '../shared/Image'
-import Img from 'next/image'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import Img from 'next/image'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -47,10 +47,9 @@ const getThumbnail = (data: MagazineCardData) => {
       <Img
         src={`https://image.mux.com/${hero.video?.playbackId}/thumbnail.jpg`}
         alt="thumbnail"
-        layout="responsive"
+        width={400}
+        height={223}
         sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-        width="500"
-        height="300"
       />
     )
   }

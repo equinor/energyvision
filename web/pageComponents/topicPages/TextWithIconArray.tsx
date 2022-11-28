@@ -1,7 +1,9 @@
 import { TextWithIcon, BackgroundContainer } from '@components'
 import { urlFor } from '../../common/helpers'
-import Img from 'next/legacy/image'
 import styled from 'styled-components'
+import NewImg from 'next/image'
+import Img from 'next/legacy/image'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 import IngressText from '../shared/portableText/IngressText'
 import type { TextWithIconArrayData, TextWithIconItem, ImageWithAlt } from '../../types/types'
@@ -53,13 +55,23 @@ const TextWithIconArray = ({ data, anchor }: TextWithIconArrayProps) => {
             <TextWithIcon key={id}>
               {icon && icon.asset && (
                 <Media>
-                  <Img
-                    src={getImgSrc(icon)}
-                    width="150"
-                    height="150"
-                    alt={altTag}
-                    role={icon?.isDecorative ? 'presentation' : undefined}
-                  />
+                  {Flags.IS_DEV ? (
+                    <NewImg
+                      src={getImgSrc(icon)}
+                      width="150"
+                      height="150"
+                      alt={altTag}
+                      role={icon?.isDecorative ? 'presentation' : undefined}
+                    />
+                  ) : (
+                    <Img
+                      src={getImgSrc(icon)}
+                      width="150"
+                      height="150"
+                      alt={altTag}
+                      role={icon?.isDecorative ? 'presentation' : undefined}
+                    />
+                  )}
                 </Media>
               )}
               {title && <Title>{title}</Title>}

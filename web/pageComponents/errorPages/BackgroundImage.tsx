@@ -1,7 +1,9 @@
 import { useNextSanityImage } from 'next-sanity-image'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
+import NewImg from 'next/image'
 import Img from 'next/legacy/image'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const BackgroundImage = ({ backgroundImage }: { backgroundImage: SanityImageSource }) => {
   const imageProps = useNextSanityImage(sanityClientWithEquinorCDN, backgroundImage)
@@ -13,7 +15,22 @@ const BackgroundImage = ({ backgroundImage }: { backgroundImage: SanityImageSour
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const loader = imageProps?.loader
-  return <> {imageProps && src && <Img src={src} loader={loader} layout="fill" objectFit="cover" />} </>
+  if (Flags.IS_DEV)
+    return (
+      <>
+        {imageProps && src && (
+          <NewImg src={src} loader={loader} fill style={{ objectFit: 'cover' }} unoptimized={true} alt="" />
+        )}
+      </>
+    )
+  else
+    return (
+      <>
+        {imageProps && src && (
+          <Img src={src} loader={loader} layout="fill" objectFit="cover" />
+        )}
+      </>
+    )
 }
 
 export default BackgroundImage
