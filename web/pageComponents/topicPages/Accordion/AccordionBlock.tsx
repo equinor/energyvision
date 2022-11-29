@@ -46,11 +46,7 @@ const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
       <StyledTextBlock>
         {image && (
           <ImgContainer>
-            {Flags.IS_DEV ? (
-              <Img image={image} maxWidth={200} aspectRatio={1} />
-            ) : (
-              <Img image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />
-            )}
+              <Img image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />        
           </ImgContainer>
         )}
         {title && <StyledHeading value={title} />}
