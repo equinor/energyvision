@@ -5,7 +5,6 @@ import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
-// import { useNewsPromotion } from '../../common/hooks/useNewsPromotion'
 
 const Wrapper = styled.div`
   padding: var(--promotion-padding, var(--space-3xLarge) 0);
@@ -32,10 +31,6 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
-
-  // Ensures that data is always up to date, bypassing cache issues
-  // const swrData = useNewsPromotion(data)
-  // const promos = swrData || promotions
 
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor}>
