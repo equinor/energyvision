@@ -5,6 +5,17 @@
  */
 const GLOBAL_PROD = ['global', 'secret', 'global-test']
 const GLOBAL_DEV = ['global-development', 'global-test']
+const SATELLITES = [
+  'argentina',
+  'brazil',
+  'celticsea',
+  'equinorfunds',
+  'germany',
+  'japan',
+  'poland',
+  'southkorea',
+  'storage',
+]
 const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea', 'celticsea']
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
@@ -49,4 +60,5 @@ export default (dataset) => ({
   HAS_LINE_BREAK_TYPO: LINE_BREAK_TYPO.includes(dataset),
   IS_GLOBAL_PROD: GLOBAL_PROD.includes(dataset),
   IS_DEV: GLOBAL_DEV.includes(dataset),
+  IS_SATELLITE: SATELLITES.includes(dataset),
 })
