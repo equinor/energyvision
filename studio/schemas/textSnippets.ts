@@ -641,13 +641,12 @@ const snippets: textSnippet = {
     defaultValue: 'ALL',
     group: groups.magazine,
   },
-  ...(!Flags.IS_SATELLITE && {
-    stock_nyse_time_delay_message: {
-      title: 'Stock API: NYSE time delay message',
-      defaultValue: 'at least 20 minutes delayed',
-      group: groups.others,
-    },
-  }),
+  stock_nyse_time_delay_message: {
+    title: 'Stock API: NYSE time delay message',
+    defaultValue: 'at least 20 minutes delayed',
+    group: groups.others,
+    hidden: Flags.IS_SATELLITE
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
