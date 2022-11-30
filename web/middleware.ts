@@ -31,7 +31,7 @@ const isPreviewEnabled = (request: NextRequest): boolean => {
 
 export async function middleware(request: NextRequest) {
   const { origin } = request.nextUrl
-  const pathname = Flags.IS_DEV ? decodeURI(request.nextUrl.pathname) : request.nextUrl.pathname
+  const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isPreview = isPreviewEnabled(request)
 
