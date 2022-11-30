@@ -1,9 +1,10 @@
 import React from 'react'
-import { block, collection_2 } from '@equinor/eds-icons'
+import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule } from '@sanity/types'
 import type { PromoTile } from './promoTile'
 import blocksToText from '../../helpers/blocksToText'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
@@ -30,7 +31,7 @@ export default {
     },
     prepare({ group }: { group: PromoTile[] }) {
       const getTitle = (promoTitle: PromoTile) => {
-        return promoTitle.richTitle ? blocksToText(promoTitle.richTitle) : promoTitle.title || ''
+        return Flags.IS_DEV ? blocksToText(promoTitle.title as unknown as any[]) : promoTitle.title || ''
       }
       return {
         title: group ? getTitle(group[0]) + ' | ' + (getTitle(group[1]) || '') : 'Missing content',

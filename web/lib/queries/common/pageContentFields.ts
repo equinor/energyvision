@@ -137,7 +137,7 @@ const pageContentFields = /* groq */ `
     "id": _key,
     "group": group[]{
       "id": _key,
-      "title": coalesce(richTitle,title),
+      title,
       "image": {
         "asset": image.asset,
         "alt": image.alt,
