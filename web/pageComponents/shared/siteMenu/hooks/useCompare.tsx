@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
 
-export function useCompare(value: number) {
+export function useCompare(value?: number) {
   const prevVal = usePreviousValue(value)
   return prevVal !== value
 }
 
 // Helper hook
-function usePreviousValue(value: number) {
+function usePreviousValue(value?: number) {
   const ref = useRef<number>()
   useEffect(() => {
     ref.current = value
