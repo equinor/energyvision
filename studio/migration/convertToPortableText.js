@@ -8,10 +8,10 @@ const client = sanityClient.withConfig({
   token: process.env.SANITY_STUDIO_MUTATION_TOKEN,
   dataset: 'global-development',
 })
-// length(description) returns null if description isn't a (Portable Text) array
+
 const fetchDocuments = () =>
   client.fetch(
-    `*[_type == 'page' && length(content[_type == "promoTileArray"].group[count(title)==null])>0] {_id, _rev, "promotileArray":content[_type == "promoTileArray"].group[count(title)==null] }`,
+    `*[_type == 'page' && length(content[_type == "promoTileArray"].group[count(title)==null])>0][0..100] {_id, _rev, "promotileArray":content[_type == "promoTileArray"].group[count(title)==null] }`,
   )
 
 const buildPatches = (docs) =>

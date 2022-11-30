@@ -56,7 +56,7 @@ export default {
       name: 'title',
       type: 'string',
       title: 'Title',
-      validation: Flags.IS_DEV ? undefined : (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'image',
