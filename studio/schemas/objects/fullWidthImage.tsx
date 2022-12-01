@@ -1,4 +1,5 @@
 import type { Rule, Reference } from '@sanity/types'
+import { Flags } from '../../src/lib/datasetHelpers'
 import type { ImageWithAlt } from './imageWithAlt'
 
 export type FullWidthImage = {
@@ -11,13 +12,19 @@ export default {
   title: 'Full width image',
   type: 'object',
   fields: [
-    {
+    !Flags.IS_DEV && {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
       validation: (Rule: Rule) => Rule.required(),
     },
-  ],
+    Flags.IS_DEV && {
+      name: 'image',
+      title: 'Image',
+      type: 'imageWithAltAndCaption',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+  ].filter((e) => e),
   preview: {
     select: {
       alt: 'image.alt',

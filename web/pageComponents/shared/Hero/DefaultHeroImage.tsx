@@ -1,9 +1,7 @@
 import styled from 'styled-components'
-import { FigureCaption } from '@components'
 import type { ImageWithCaptionData } from '../../../types/types'
 import Image from '../Image'
-import { Caption } from './Caption'
-import { Flags } from '../../../common/helpers/datasetHelpers'
+import { Caption } from '../image/Caption'
 
 type HeroImageProps = {
   data: ImageWithCaptionData
@@ -34,17 +32,7 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
         layout="responsive"
         priority
       />
-
-      {Flags.IS_DEV ? (
-        <Caption caption={caption} attribution={attribution} />
-      ) : (
-        (caption || attribution) && (
-          <FigureCaption>
-            {caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>}
-            {attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>}
-          </FigureCaption>
-        )
-      )}
+      <Caption caption={caption} attribution={attribution} />
     </StyledFigure>
   )
 }

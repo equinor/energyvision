@@ -319,6 +319,12 @@ export type FullWidthImageData = {
   image: ImageWithAlt
 }
 
+export type FullWidthImageDataV2 = {
+  type: string
+  id: string
+  image: ImageWithCaptionData
+}
+
 export type FigureData = {
   type: string
   id: string

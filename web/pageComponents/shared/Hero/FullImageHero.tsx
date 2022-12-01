@@ -1,18 +1,12 @@
 import Image from '../Image'
 import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
-import { Caption } from './Caption'
+import { StyledCaption } from '../image/StyledCaption'
 import type { HeroType, ImageWithCaptionData } from 'types'
 
 const ImgWrapper = styled.div`
   height: calc(100vh - var(--topbar-height));
   position: relative;
-`
-
-const CaptionWrapper = styled.div`
-  margin: 0 auto;
-  padding: 0 var(--layout-paddingHorizontal-small);
-  max-width: var(--maxViewportWidth);
 `
 
 type FullImageHeroType = {
@@ -43,12 +37,6 @@ const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
 }
 
 export const FullImageHero = ({ ratio, figure }: HeroType) => {
-  const StyledCaption = figure?.image?.asset && (
-    <CaptionWrapper>
-      <Caption attribution={figure.attribution} caption={figure.caption} />
-    </CaptionWrapper>
-  )
-
   const getHero = () => {
     if (figure)
       switch (ratio) {
@@ -64,7 +52,7 @@ export const FullImageHero = ({ ratio, figure }: HeroType) => {
   return (
     <>
       {getHero()}
-      {StyledCaption}
+      {figure?.image?.asset && <StyledCaption attribution={figure.attribution} caption={figure.caption} />}
     </>
   )
 }
