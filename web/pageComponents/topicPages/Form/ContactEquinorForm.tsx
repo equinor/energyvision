@@ -6,7 +6,6 @@ import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmit
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { ContactFormCatalogType } from '../../../types'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 type FormValues = {
   name: string

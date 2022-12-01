@@ -1,4 +1,3 @@
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { ContactFormCatalogType } from '../../../types'
 import { sendRequestToServiceNow } from './service-now-base'
