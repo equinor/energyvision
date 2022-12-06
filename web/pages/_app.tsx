@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
+import { ChakraProvider } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle } from '../styles/globalStyles'
@@ -15,6 +16,8 @@ import useConsentState from '../lib/hooks/useConsentState'
 import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
+import { SkipNavLink as NewSkipNavLink, SkipNavContent } from '@chakra-ui/skip-nav'
+import { Flags } from '../common/helpers/datasetHelpers'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -103,17 +106,24 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
   return (
     <SWRConfig>
-      <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
-        <>
-          <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-          </Head>
-          <GlobalStyle />
-          <SkipNavLink />
-          {IS_LIVE && <CookieBot locale={router.locale} />}
-          {getLayout(<Component {...pageProps} />)}
-        </>
-      </ErrorBoundary>
+      <ChakraProvider>
+        <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
+          {Flags.IS_DEV && <NewSkipNavLink style={{ top: '10%' }}>Skip to Content</NewSkipNavLink>}
+          <>
+            <Head>
+              <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
+            <GlobalStyle />
+            <SkipNavLink />
+            {IS_LIVE && <CookieBot locale={router.locale} />}
+            {Flags.IS_DEV ? (
+              <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
+            ) : (
+              <>{getLayout(<Component {...pageProps} />)}</>
+            )}
+          </>
+        </ErrorBoundary>
+      </ChakraProvider>
     </SWRConfig>
   )
 }
