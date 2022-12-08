@@ -43,7 +43,7 @@ const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
   return (
     <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>
-        {image && (
+        {image?.asset && (
           <ImgContainer>
             <Img image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />
           </ImgContainer>
