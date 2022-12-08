@@ -2,6 +2,7 @@ import { library_books } from '@equinor/eds-icons'
 import type { Rule, Reference, ValidationContext } from '@sanity/types'
 import { filterMagazineByLang } from '../../../helpers/referenceFilters'
 import { EdsIcon } from '../../../icons'
+import { Flags } from '../../../src/lib/datasetHelpers'
 
 export type MagazinePromotion = {
   manuallySelectArticles: boolean
@@ -68,6 +69,15 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
       options: { sortable: false },
       hidden: ({ parent }: { parent: MagazinePromotion }) => parent?.manuallySelectArticles === true,
+    },
+    {
+      name: 'useCarousel',
+      title: 'Use carousel',
+      description: 'Display the cards in a horizontal carousel',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: !Flags.IS_DEV,
+      hidden: !Flags.IS_DEV,
     },
   ],
   preview: {
