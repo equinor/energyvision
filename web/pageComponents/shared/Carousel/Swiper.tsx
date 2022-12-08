@@ -11,6 +11,10 @@ import 'swiper/css/pagination'
 const CardCarouselStyles = css`
   max-width: calc(var(--card-maxWidth) * ${({ items }: any) => items || '3'} + var(--space-large) * 4);
   padding: 0 var(--space-large);
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+  }
 `
 
 // more to be added
