@@ -52,6 +52,7 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
             variant={variant}
             hasSectionTitle={!!title}
             eventPromotionSettings={content?.eventPromotionSettings}
+            useCarousel={content?.useCarousel}
           />
         )}
       </Wrapper>

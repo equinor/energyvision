@@ -10,6 +10,8 @@ import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
+import { Carousel, CarouselItem } from '../../shared/Carousel'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -73,11 +75,13 @@ const MultiplePromotions = ({
   variant,
   hasSectionTitle,
   eventPromotionSettings,
+  useCarousel = false,
 }: {
   data: CardData[] | PeopleCardData[] | EventCardData[]
   variant: PromotionType
   hasSectionTitle: boolean
   eventPromotionSettings?: EventPromotionSettings
+  useCarousel?: boolean | undefined
 }) => {
   const getCard = (data: CardProps) => {
     switch (data.type) {
@@ -104,16 +108,29 @@ const MultiplePromotions = ({
     )
   }
 
+  if (variant === 'promotePeople') {
+    return (
+      <PeopleCardsWrapper>
+        <>
+          {data.map((item) => {
+            return getCard(item)
+          })}
+        </>
+      </PeopleCardsWrapper>
+    )
+  }
+
   return (
     <>
-      {variant === 'promotePeople' ? (
-        <PeopleCardsWrapper>
-          <>
-            {data.map((item) => {
-              return getCard(item)
-            })}
-          </>
-        </PeopleCardsWrapper>
+      {Flags.IS_DEV && useCarousel ? (
+        <Carousel type="card">
+          {data.map((item) => {
+            const card = getCard(item)
+            if (card) {
+              return <CarouselItem key={item.id}>{card}</CarouselItem>
+            }
+          })}
+        </Carousel>
       ) : (
         <CardsWrapper>
           <>
