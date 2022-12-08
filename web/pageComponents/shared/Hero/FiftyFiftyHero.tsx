@@ -6,6 +6,7 @@ import TitleText from '../portableText/TitleText'
 import type { LinkData, HeroType } from '../../../types/types'
 import { BackgroundContainer, Link, Text } from '@components'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -86,16 +87,27 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
     <>
       <StyledHero background={background}>
         <StyledMedia>
-          {figure && (
-            <Image
-              maxWidth={4096}
-              sizes="(max-width: 800px) 100vw, 800px"
-              image={figure.image}
-              layout={'fill'}
-              objectFit={'cover'}
-              priority
-            />
-          )}
+          {Flags.IS_DEV
+            ? figure && (
+                <Image
+                  maxWidth={4096}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  image={figure.image}
+                  layout="fill"
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              )
+            : figure && (
+                <Image
+                  maxWidth={4096}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  image={figure.image}
+                  layout={'fill'}
+                  objectFit={'cover'}    
+                  priority
+                />
+              )}
         </StyledMedia>
         <StyledContent>
           {title && <StyledHeroTitle value={title} level="h1" size="xl" />}

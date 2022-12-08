@@ -15,22 +15,17 @@ const BackgroundImage = ({ backgroundImage }: { backgroundImage: SanityImageSour
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const loader = imageProps?.loader
-  if (Flags.IS_DEV)
-    return (
-      <>
-        {imageProps && src && (
-          <NewImg src={src} loader={loader} fill style={{ objectFit: 'cover' }} unoptimized={true} alt="" />
-        )}
-      </>
-    )
-  else
-    return (
-      <>
-        {imageProps && src && (
+  return (
+    <>
+      {imageProps &&
+        src &&
+        (Flags.IS_DEV ? (
+          <NewImg src={src} loader={loader} layout="fill" style={{ objectFit: 'cover' }} alt="" />
+        ) : (
           <Img src={src} loader={loader} layout="fill" objectFit="cover" />
-        )}
-      </>
-    )
+        ))}
+    </>
+  )
 }
 
 export default BackgroundImage

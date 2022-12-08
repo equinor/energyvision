@@ -41,9 +41,8 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
         <NewImg
           src={imageSrc}
           alt={altTag}
-          objectFit="cover"
-          fill
-          unoptimized
+          style={{ objectFit: 'cover' }}
+          layout="fill"
           role={image?.isDecorative ? 'presentation' : undefined}
         />
       ) : (

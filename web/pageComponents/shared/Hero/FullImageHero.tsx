@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { StyledCaption } from '../image/StyledCaption'
 import type { HeroType, ImageWithCaptionData } from 'types'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const ImgWrapper = styled.div`
   height: calc(100vh - var(--topbar-height));
@@ -17,7 +18,11 @@ type FullImageHeroType = {
 const FullScreenHero = ({ figure }: FullImageHeroType) => {
   return (
     <ImgWrapper>
-      <Image maxWidth={4096} image={figure.image} layout={'fill'} objectFit={'cover'} priority />
+      {Flags.IS_DEV ? (
+        <Image maxWidth={4096} image={figure.image} layout="fill" style={{ objectFit: 'cover' }} priority />
+      ) : (
+        <Image maxWidth={4096} image={figure.image} layout={'fill'} objectFit={'cover'} priority />
+      )}
     </ImgWrapper>
   )
 }

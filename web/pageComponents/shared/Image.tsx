@@ -21,6 +21,7 @@ type ImgProps = Omit<
   unoptimized?: boolean
   priority?: boolean
   objectFit?: 'cover' | 'contain'
+  style?: React.CSSProperties
 }
 
 const getHeightByAspectRatio = (options: UseNextSanityImageBuilderOptions, maxWidth: number, aspectRatio: number) => {
@@ -79,33 +80,23 @@ const Image = ({
   imageProps.src = imageProps.src + `&width=1000`
 
   // https://github.com/bundlesandbatches/next-sanity-image#fill-layout
-  if (Flags.IS_DEV && layout === 'fill') {
+  if (layout === 'fill' && Flags.IS_DEV) {
+    return <NewImg src={imageProps.src} alt={altTag} sizes={sizes} fill placeholder={placeholder} {...rest} />
+  } else if (layout === 'fill') {
     return (
-        <NewImg
-        src={imageProps.src}
-        alt={altTag}
-        sizes={sizes}
-        fill
-        placeholder={placeholder}
-      /> 
-    )
-  }
-
-  if (!Flags.IS_DEV && layout === 'fill') {
-    return (
-        <Img
+      <Img
         src={imageProps.src}
         alt={altTag}
         sizes={sizes}
         layout={layout}
         placeholder={placeholder}
         objectFit={objectFit}
-      /> 
+      />
     )
   }
 
-  if (Flags.IS_DEV && layout==="responsive") {
-    return (
+  if(Flags.IS_DEV){
+    return(
       <NewImg
       {...rest}
       {...imageProps}
@@ -115,20 +106,6 @@ const Image = ({
         width: '100%',
         height: 'auto',
       }}
-      role={image?.isDecorative ? 'presentation' : undefined}
-      placeholder={placeholder}
-      unoptimized={unoptimized}
-    />
-    )
-  }
-
-  if (Flags.IS_DEV) {
-    return (
-      <NewImg
-      {...rest}
-      {...imageProps}
-      alt={altTag}
-      sizes={sizes}
       role={image?.isDecorative ? 'presentation' : undefined}
       placeholder={placeholder}
       unoptimized={unoptimized}

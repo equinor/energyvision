@@ -7,7 +7,7 @@ import { FactBox, Heading } from '@components'
 import type { FactBackground, FactImagePosition } from '@components'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { ImageWithAlt } from '../../../../../types/types'
-import { Flags } from "../../../../../common/helpers/datasetHelpers"
+import { Flags } from '../../../../../common/helpers/datasetHelpers'
 
 import { urlFor } from '../../../../../common/helpers'
 
@@ -72,9 +72,16 @@ export const Fact = (block: BlockProps) => {
     <FactBoxWithPadding className="fact-box" imagePosition={imagePosition} background={backgroundColor}>
       {imageSrc && (
         <FactBox.Image>
-          {Flags.IS_DEV ? <NewImg src={imageSrc} alt={image.alt ? image.alt : "FactBox"} objectFit="cover" fill unoptimized /> : 
-          <Img src={imageSrc} alt={image.alt ? image.alt : "FactBox"} objectFit="cover" layout="fill" unoptimized />
-          }
+          {Flags.IS_DEV ? (
+            <NewImg
+              src={imageSrc}
+              alt={image.alt ? image.alt : 'FactBox'}
+              style={{ objectFit: 'cover' }}
+              layout="fill"
+            />
+          ) : (
+            <Img src={imageSrc} alt={image.alt ? image.alt : 'FactBox'} objectFit="cover" layout="fill" />
+          )}
         </FactBox.Image>
       )}
 
