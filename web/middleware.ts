@@ -11,6 +11,7 @@ const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
+const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
 
 // Check if a given path exists in Sanity or not
 const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
@@ -30,10 +31,15 @@ const isPreviewEnabled = (request: NextRequest): boolean => {
 }
 
 export async function middleware(request: NextRequest) {
-  const { origin } = request.nextUrl
+  const { origin, locale } = request.nextUrl
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isPreview = isPreviewEnabled(request)
+
+  if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname)) {
+    const rewrite = pathname.replace(pathname, `/content/dam/archive-assets/${locale}${pathname}`)
+    return NextResponse.rewrite(`${origin}${rewrite}`)
+  }
 
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
