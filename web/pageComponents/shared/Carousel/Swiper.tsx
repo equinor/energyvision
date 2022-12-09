@@ -41,11 +41,7 @@ const StyledSwiperSlide = styled(SwiperSlide)`
   display: flex;
   width: auto;
   height: auto;
-  margin: 0 var(--space-large);
-
-  &:first-of-type {
-    margin: 0;
-  }
+  margin-right: var(--space-large);
 
   &:last-of-type {
     margin: 0;
