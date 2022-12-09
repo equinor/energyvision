@@ -4,6 +4,7 @@ import { Children, ReactNode } from 'react'
 import { Swiper, SwiperSlide, type SwiperProps } from 'swiper/react'
 import { Pagination } from 'swiper'
 import styled, { css } from 'styled-components'
+import { NavButton } from './Navigation'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -65,11 +66,14 @@ export const Carousel = ({ slidesPerView = 'auto', type = 'card', children, ...r
       }}
       modules={[Pagination]}
       slidesPerView={slidesPerView}
+      grabCursor={true}
       $items={numberOfItems}
       $carouselType={type}
       {...rest}
     >
       {children}
+      <NavButton type="prev" />
+      <NavButton type="next" />
     </StyledSwiper>
   )
 }
