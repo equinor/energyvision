@@ -1,17 +1,13 @@
 /* eslint-disable no-console */
-//eslint-disable-next-line
-import sanityClient from 'part:@sanity/base/client'
 
-const client = sanityClient.withConfig({
-  apiVersion: '2021-05-19',
-  projectId: process.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9',
-  token: process.env.SANITY_STUDIO_MUTATION_TOKEN,
-  dataset: 'global-development',
-})
+import { customAlphabet } from 'nanoid'
+import { sanityClients } from './getSanityClients'
 
-const fetchDocuments = () =>
+const nanoid = customAlphabet('1234567890abcdef', 12)
+
+const fetchDocuments = (client) =>
   client.fetch(
-    `*[_type == 'page' && length(content[_type == "promoTileArray"].group[count(title)==null])>0][0..100] {_id, _rev, "promotileArray":content[_type == "promoTileArray"].group[count(title)==null] }`,
+    /* groq */ `*[_type in ['page','magazine'] && length(content[_type == "promoTileArray"].group[count(title)==null])>0][0..100] {_id, _rev, "promotileArray":content[_type == "promoTileArray"].group[count(title)==null] }`,
   )
 
 const buildPatches = (docs) =>
@@ -25,12 +21,12 @@ const buildPatches = (docs) =>
               {
                 style: 'normal',
                 _type: 'block',
-                _key: `${promoTile._key}${Math.floor(Math.random() * 1000)}`,
+                _key: nanoid(),
                 children: [
                   {
                     _type: 'span',
                     marks: [],
-                    _key: `${promoTile._key}child${Math.floor(Math.random() * 1000)}`,
+                    _key: nanoid(),
                     text: `${promoTile.title}`,
                   },
                 ],
@@ -46,14 +42,14 @@ const buildPatches = (docs) =>
     )
     .flat()
 
-const createTransaction = (patches) =>
+const createTransaction = (patches, client) =>
   patches.reduce((tx, patch) => tx.patch(patch.id, patch.patch), client.transaction())
 
 const commitTransaction = (tx) => tx.commit()
 
-const migrateNextBatch = async () => {
-  const documents = await fetchDocuments()
-  const patches = buildPatches(documents)
+const migrateNextBatch = async (client) => {
+  const documents = await fetchDocuments(client)
+  const patches = buildPatches(documents, client)
   if (patches.length === 0) {
     console.log('No more documents to migrate!')
     return null
@@ -62,12 +58,16 @@ const migrateNextBatch = async () => {
     `Migrating batch:\n %s`,
     patches.map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`).join('\n'),
   )
-  const transaction = createTransaction(patches)
+  const transaction = createTransaction(patches, client)
   await commitTransaction(transaction)
-  return migrateNextBatch()
+  return migrateNextBatch(client)
 }
 
-migrateNextBatch().catch((err) => {
-  console.error(err)
-  process.exit(1)
-})
+export default function script() {
+  sanityClients.map((client) =>
+    migrateNextBatch(client).catch((err) => {
+      console.error(err)
+      process.exit(1)
+    }),
+  )
+}
