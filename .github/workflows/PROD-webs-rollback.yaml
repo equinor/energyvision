@@ -30,7 +30,14 @@ jobs:
     outputs:
       imageExists: ${{ steps.find-image-in-ghcr.outputs.found }}
     steps:
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.inputs.image-sha }}
+          regex: '^[a-z0-9]{12}$'
+
       - name: Find image on GHCR 🌠
+        if: ${{ steps.regex-match.outputs.match != '' }}
         id: find-image-in-ghcr
         shell: bash
         run: |
@@ -68,53 +75,53 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-      - name: Write to console 🗒️
-        shell: bash
-        run: |
-          # Install pre-requisite
-          python -m pip install --user ruamel.yaml
-          python ci/upgradeEnvironment.py web ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
-          git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          if [[ `git status --porcelain` ]]
-          then
-            git commit -am "🔙 Rolling back web-${{ github.event.inputs.site }} in production to version ${{ github.event.inputs.image-sha }}"
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
+      # - name: Write to console 🗒️
+      #   shell: bash
+      #   run: |
+      #     # Install pre-requisite
+      #     python -m pip install --user ruamel.yaml
+      #     python ci/upgradeEnvironment.py web ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
+      #     git config --global user.name 'github'
+      #     git config --global user.email 'nilsml@users.noreply.github.com'
+      #     git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+      #     if [[ `git status --porcelain` ]]
+      #     then
+      #       git commit -am "🔙 Rolling back web-${{ github.event.inputs.site }} in production to version ${{ github.event.inputs.image-sha }}"
+      #       git pull --rebase origin main
+      #       git push origin HEAD:main
+      #     fi
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy:
-    needs: update-radix-config
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://equinor.com
-    env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Deploy website on Radix 🚀
-        id: deploy
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
+  # deploy:
+  #   needs: update-radix-config
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: production
+  #     url: https://equinor.com
+  #   env:
+  #     APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
+  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  #     DOCKER_BUILDKIT: 1
+  #   steps:
+  #     - name: Deploy website on Radix 🚀
+  #       id: deploy
+  #       uses: equinor/radix-github-actions@master
+  #       with:
+  #         args: >
+  #           create job
+  #           deploy
+  #           --token-environment
+  #           --context platform2
+  #           -a equinor-web-sites
+  #           -e ${{ secrets.ENV }}
+  #           -f
 
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
+  #     - uses: act10ns/slack@v1
+  #       with:
+  #         status: ${{ job.status }}
+  #         steps: ${{ toJson(steps) }}
+  #       if: failure()
