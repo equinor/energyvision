@@ -30,7 +30,8 @@ jobs:
     outputs:
       imageExists: ${{ steps.find-image-in-ghcr.outputs.found }}
     steps:
-      - uses: actions-ecosystem/action-regex-match@v2
+      - name: Regex 👾
+        uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
         with:
           text: ${{ github.event.inputs.image-sha }}
@@ -38,12 +39,13 @@ jobs:
 
         # https://github.com/actions/runner/issues/662
         # Love the quote in the thread: "really github? we can't abort a workflow? it's 2022"
-      - id: validate-input
+      - name: Validate commit SHA ✅
+        id: validate-input
         if: ${{ steps.regex-match.outputs.match == '' }}
         uses: actions/github-script@v3
         with:
-            script: |
-                core.setFailed('Image input is not valid. Use the 12 characters commit SHA.')
+          script: |
+            core.setFailed('Commit SHA is not valid. Please use the 12 characters format.')
 
       - name: Find image on GHCR 🌠
         if: ${{ steps.regex-match.outputs.match != '' }}
