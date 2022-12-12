@@ -30,7 +30,23 @@ jobs:
     outputs:
       imageExists: ${{ steps.find-image-in-ghcr.outputs.found }}
     steps:
+      - name: Regex 👾
+        uses: actions-ecosystem/action-regex-match@v2
+        id: regex-match
+        with:
+          text: ${{ github.event.inputs.image-sha }}
+          regex: '^[a-z0-9]{12}$'
+
+      - name: Skip or fail if invalid 🛂
+        id: validate-input
+        if: ${{ steps.regex-match.outputs.match == '' }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('Commit SHA is not valid. Please use the 12 characters format.')
+
       - name: Find image on GHCR 🌠
+        if: ${{ steps.regex-match.outputs.match != '' }}
         id: find-image-in-ghcr
         shell: bash
         run: |
