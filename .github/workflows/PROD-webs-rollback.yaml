@@ -36,6 +36,15 @@ jobs:
           text: ${{ github.event.inputs.image-sha }}
           regex: '^[a-z0-9]{12}$'
 
+        # https://github.com/actions/runner/issues/662
+        # Love the quote in the thread: "really github? we can't abort a workflow? it's 2022"
+      - id: validate-input
+        if: ${{ steps.regex-match.outputs.match == '' }}
+        uses: actions/github-script@v3
+        with:
+            script: |
+                core.setFailed('Image input is not valid. Use the 12 characters commit SHA.')
+
       - name: Find image on GHCR 🌠
         if: ${{ steps.regex-match.outputs.match != '' }}
         id: find-image-in-ghcr
