@@ -22,13 +22,25 @@ const TagsContainer = styled.div`
   padding: 0 var(--space-medium) var(--space-medium);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-medium);
+  gap: var(--space-medium);  
+  @media (max-width: 450px) {
+    overflow-x: ${Flags.IS_DEV && 'scroll'}';
+    overflow-y: ${Flags.IS_DEV && 'hidden'}';
+    white-space: ${Flags.IS_DEV && 'nowrap'}';
+    margin: ${Flags.IS_DEV && 'var(--space-medium)'}';
+    display: ${Flags.IS_DEV && 'list-item'}';
+    flex-direction: ${Flags.IS_DEV && 'row'}';
+    flex-wrap: ${Flags.IS_DEV && 'nowrap'}';)
+  }
 `
 
 const Tag = styled.span`
   color: var(--moss-green-100);
   font-weight: var(--fontWeight-medium);
   font-size: var(--typeScale-0);
+  @media (max-width: 450px) {
+    margin: ${Flags.IS_DEV && 'var(--space-small)'}';
+  }
 `
 
 type MagazineCardProp = {
