@@ -1,12 +1,13 @@
-import { Link, FormattedDate, BackgroundContainer, Table as EnvisTable, Text } from '@components'
-import styled from 'styled-components'
+import { BackgroundContainer, FormattedDate, Link, Table as EnvisTable, Text } from '@components'
 import { default as NextLink } from 'next/link'
-import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
-import RichText from '../shared/portableText/RichText'
+import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
+import IngressText from '../shared/portableText/IngressText'
+import RichText from '../shared/portableText/RichText'
+import TitleText from '../shared/portableText/TitleText'
 
-import type { TableData, LinkData, CellData } from '../../types/types'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import type { CellData, LinkData, TableData } from '../../types/types'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
@@ -67,7 +68,11 @@ const renderCellByType = (cellData: CellData) => {
       return (
         <>
           {cellData.href ? (
-            <NextLink href={cellData.href} passHref legacyBehavior>
+            <NextLink
+              href={Flags.IS_DEV ? cellData.href.replace('cdn.sanity.io', 'cdn.equinor.com') : cellData.href}
+              passHref
+              legacyBehavior
+            >
               <StyledTableLink download>{cellData.filename}</StyledTableLink>
             </NextLink>
           ) : null}
@@ -85,6 +90,7 @@ const renderCellByType = (cellData: CellData) => {
 }
 
 const Table = ({ data, anchor }: TableProps) => {
+  console.log(data.tableRows[0].row)
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
   const { background } = designOptions

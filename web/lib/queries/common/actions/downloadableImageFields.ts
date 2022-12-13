@@ -3,8 +3,8 @@ _type == "downloadableImage" => {
     "id": _key,
     "type": _type,
     label,
-    "href": image.asset-> url, 
-    "extension": image.asset-> extension, 
+    "href": image.asset->url,
+    "extension": image.asset->extension,
   }
 `
 
