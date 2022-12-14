@@ -20,11 +20,12 @@ const StyledLink = styled(CardLink)`
 
 const TagsContainer = Flags.IS_DEV
   ? styled.div`
-  padding: 0 var(--space-medium) var(--space-medium) 0;
+  padding: 0 var(--space-medium) var(--space-medium);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-medium);  
   @media (max-width: 450px) {
+    padding: 0 var(--space-medium) var(--space-medium) 0;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
