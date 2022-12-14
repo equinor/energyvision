@@ -200,10 +200,10 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
+    "useCarousel": useCarousel,
     "content": promotion[0]{
       "id": _key,
       "type": _type,
-      "useCarousel": useCarousel,
       _type == "promoteNews" => {
         "tags": tags[]->{
           "id": _id,

@@ -27,7 +27,7 @@ const StyledHeading = styled(TitleText)`
 `
 
 const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: string }) => {
-  const { title, ingress, content, designOptions } = data
+  const { title, ingress, content, useCarousel, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
@@ -52,7 +52,7 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
             variant={variant}
             hasSectionTitle={!!title}
             eventPromotionSettings={content?.eventPromotionSettings}
-            useCarousel={content?.useCarousel}
+            useCarousel={useCarousel}
           />
         )}
       </Wrapper>

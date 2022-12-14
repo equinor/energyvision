@@ -108,6 +108,19 @@ const MultiplePromotions = ({
     )
   }
 
+  if (Flags.IS_DEV && useCarousel) {
+    return (
+      <Carousel type="card">
+        {data.map((item) => {
+          const card = getCard(item)
+          if (card) {
+            return <CarouselItem key={item.id}>{card}</CarouselItem>
+          }
+        })}
+      </Carousel>
+    )
+  }
+
   if (variant === 'promotePeople') {
     return (
       <PeopleCardsWrapper>
@@ -121,26 +134,13 @@ const MultiplePromotions = ({
   }
 
   return (
-    <>
-      {Flags.IS_DEV && useCarousel ? (
-        <Carousel type="card">
-          {data.map((item) => {
-            const card = getCard(item)
-            if (card) {
-              return <CarouselItem key={item.id}>{card}</CarouselItem>
-            }
-          })}
-        </Carousel>
-      ) : (
-        <CardsWrapper>
-          <>
-            {data.map((item) => {
-              return getCard(item)
-            })}
-          </>
-        </CardsWrapper>
-      )}
-    </>
+    <CardsWrapper>
+      <>
+        {data.map((item) => {
+          return getCard(item)
+        })}
+      </>
+    </CardsWrapper>
   )
 }
 

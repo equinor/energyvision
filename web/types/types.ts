@@ -488,8 +488,8 @@ export type PromotionData = {
     promotions: CardData[] | PeopleCardData[] | EventCardData[]
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
-    useCarousel?: boolean | undefined
   }
+  useCarousel?: boolean | undefined
   designOptions?: DesignOptions
 }
 

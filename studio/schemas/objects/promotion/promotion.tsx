@@ -79,6 +79,16 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
     {
+      name: 'useCarousel',
+      title: 'Use carousel',
+      description:
+        'When this is enabled, the promotion will automatically be displayed in a horizontal carousel if the amount of content is more than the screen size allows',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: !Flags.IS_DEV,
+      hidden: !Flags.IS_DEV,
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',

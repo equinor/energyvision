@@ -70,15 +70,6 @@ export default {
       options: { sortable: false },
       hidden: ({ parent }: { parent: MagazinePromotion }) => parent?.manuallySelectArticles === true,
     },
-    {
-      name: 'useCarousel',
-      title: 'Use carousel',
-      description: 'Display the cards in a horizontal carousel',
-      type: 'boolean',
-      initialValue: false,
-      readOnly: !Flags.IS_DEV,
-      hidden: !Flags.IS_DEV,
-    },
   ],
   preview: {
     select: {

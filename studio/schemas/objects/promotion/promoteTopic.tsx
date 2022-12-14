@@ -87,15 +87,6 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.unique().min(3).max(3),
     },
-    {
-      name: 'useCarousel',
-      title: 'Use carousel',
-      description: 'Display the cards in a horizontal carousel',
-      type: 'boolean',
-      initialValue: false,
-      readOnly: !Flags.IS_DEV,
-      hidden: !Flags.IS_DEV,
-    },
   ],
   preview: {
     select: {
