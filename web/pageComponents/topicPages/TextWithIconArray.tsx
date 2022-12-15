@@ -62,7 +62,7 @@ const TextWithIconArray = ({ data, anchor }: TextWithIconArrayProps) => {
                       height="150"
                       alt={altTag}
                       role={icon?.isDecorative ? 'presentation' : undefined}
-                      style={{ width: '100%', height: '150px' }}
+                      style={{ width: '150px', height: '150px', margin: 'auto' }}
                     />
                   ) : (
                     <Img
