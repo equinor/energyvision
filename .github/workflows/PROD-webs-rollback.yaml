@@ -1,4 +1,4 @@
-name: PROD - Rollback web site to a previous version
+name: PROD - Rollback website to a previous version
 on:
   workflow_dispatch:
     inputs:
@@ -55,69 +55,69 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  # update-radix-config:
-  #   needs: find-image
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: production
-  #   if: ${{ needs.find-image.outputs.imageExists }} == true
-  #   env:
-  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #   steps:
-  #     - name: Checkout internal 🛎️
-  #       id: checkout-internal
-  #       uses: actions/checkout@v3
-  #       with:
-  #         repository: 'equinor/energyvision-internal'
-  #         ref: main
-  #         token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-  #     - name: Write to console 🗒️
-  #       shell: bash
-  #       run: |
-  #         # Install pre-requisite
-  #         python -m pip install --user ruamel.yaml
-  #         python ci/upgradeEnvironment.py web ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
-  #         git config --global user.name 'github'
-  #         git config --global user.email 'nilsml@users.noreply.github.com'
-  #         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-  #         if [[ `git status --porcelain` ]]
-  #         then
-  #           git commit -am "🔙 Rolling back all websites in production to version ${{ github.event.inputs.image-sha }}"
-  #           git pull --rebase origin main
-  #           git push origin HEAD:main
-  #         fi
-  #     - uses: act10ns/slack@v1
-  #       with:
-  #         status: ${{ job.status }}
-  #         steps: ${{ toJson(steps) }}
-  #       if: failure()
+  update-radix-config:
+    needs: find-image
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    if: ${{ needs.find-image.outputs.imageExists }} == true
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Write to console 🗒️
+        shell: bash
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/upgradeEnvironment.py web ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
+          git config --global user.name 'github'
+          git config --global user.email 'nilsml@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          if [[ `git status --porcelain` ]]
+          then
+            git commit -am "🔙 Rolling back all websites in production to version ${{ github.event.inputs.image-sha }}"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
-  # deploy:
-  #   needs: update-radix-config
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: production
-  #     url: https://equinor.com
-  #   env:
-  #     APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
-  #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #     DOCKER_BUILDKIT: 1
-  #   steps:
-  #     - name: Deploy website on Radix 🚀
-  #       id: deploy
-  #       uses: equinor/radix-github-actions@master
-  #       with:
-  #         args: >
-  #           create job
-  #           deploy
-  #           --token-environment
-  #           --context platform2
-  #           -a equinor-web-sites
-  #           -e ${{ secrets.ENV }}
-  #           -f
+  deploy:
+    needs: update-radix-config
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://equinor.com
+    env:
+      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Deploy website on Radix 🚀
+        id: deploy
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --context platform2
+            -a equinor-web-sites
+            -e ${{ secrets.ENV }}
+            -f
 
-  #     - uses: act10ns/slack@v1
-  #       with:
-  #         status: ${{ job.status }}
-  #         steps: ${{ toJson(steps) }}
-  #       if: failure()
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
