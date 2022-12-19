@@ -4,19 +4,14 @@
  * code that is not used on the client side.
  */
 import createClient from '@sanity/client'
-import { Flags } from '../common/helpers/datasetHelpers'
 import { sanityConfig } from './config'
 
 export const sanityClient = createClient(sanityConfig)
 
-export const sanityClientWithEquinorCDN = createClient(
-  Flags.IS_DEV
-    ? {
-        ...sanityConfig,
-        apiHost: 'https://cdn.equinor.com',
-      }
-    : sanityConfig,
-)
+export const sanityClientWithEquinorCDN = createClient({
+  ...sanityConfig,
+  apiHost: 'https://cdn.equinor.com',
+})
 
 export const previewClient = createClient({
   ...sanityConfig,

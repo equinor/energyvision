@@ -1,5 +1,4 @@
 import type { LinkData } from '../../types/types'
-import { Flags } from './datasetHelpers'
 
 export const getUrlFromAction = ({ link, href = '', type, fileName, anchorReference }: LinkData): string | false => {
   if (!type && !href) return false
@@ -16,8 +15,7 @@ export const getUrlFromAction = ({ link, href = '', type, fileName, anchorRefere
 
   if (type === 'downloadableFile' && fileName) {
     const equinorHref = href.replace('cdn.sanity.io', 'cdn.equinor.com')
-    if (Flags.IS_DEV) return equinorHref + '?' + fileName.replace(/ /g, '-')
-    return href + '?' + fileName.replace(/ /g, '-')
+    return equinorHref + '?' + fileName.replace(/ /g, '-')
   }
 
   return href + anchor || '/'

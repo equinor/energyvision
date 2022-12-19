@@ -6,7 +6,6 @@ import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
 
-import { Flags } from '../../common/helpers/datasetHelpers'
 import type { CellData, LinkData, TableData } from '../../types/types'
 
 const { Head, Row, Cell, Body } = EnvisTable
@@ -68,11 +67,7 @@ const renderCellByType = (cellData: CellData) => {
       return (
         <>
           {cellData.href ? (
-            <NextLink
-              href={Flags.IS_DEV ? cellData.href.replace('cdn.sanity.io', 'cdn.equinor.com') : cellData.href}
-              passHref
-              legacyBehavior
-            >
+            <NextLink href={cellData.href.replace('cdn.sanity.io', 'cdn.equinor.com')} passHref legacyBehavior>
               <StyledTableLink download>{cellData.filename}</StyledTableLink>
             </NextLink>
           ) : null}
@@ -90,7 +85,6 @@ const renderCellByType = (cellData: CellData) => {
 }
 
 const Table = ({ data, anchor }: TableProps) => {
-  console.log(data.tableRows[0].row)
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
   const { background } = designOptions
