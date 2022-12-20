@@ -200,7 +200,7 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
-    "useCarousel": useCarousel,
+    "useHorizontalScroll": useHorizontalScroll,
     "content": promotion[0]{
       "id": _key,
       "type": _type,

@@ -79,10 +79,10 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
     {
-      name: 'useCarousel',
-      title: 'Use carousel',
+      name: 'useHorizontalScroll',
+      title: 'Use horizontal scroll',
       description:
-        'When this is enabled, the promotion will automatically be displayed in a horizontal carousel if the amount of content is more than the screen size allows',
+        'When this is enabled, the promotion will use horizontal scroll if the amount of content is greater than the screen size allows. This feature is enabled by default for smaller screen sizes.',
       type: 'boolean',
       initialValue: false,
       readOnly: !Flags.IS_DEV,

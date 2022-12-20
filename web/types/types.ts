@@ -489,7 +489,7 @@ export type PromotionData = {
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
   }
-  useCarousel?: boolean | undefined
+  useHorizontalScroll?: boolean | undefined
   designOptions?: DesignOptions
 }
 
