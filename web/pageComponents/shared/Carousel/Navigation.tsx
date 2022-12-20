@@ -6,7 +6,7 @@ import { useSwiper } from 'swiper/react'
 import { useState, useEffect } from 'react'
 
 const SharedStyle = styled.div`
-  height: 100%;
+  height: calc(100% - var(--space-xxLarge));
   position: absolute;
   top: 0;
   z-index: 10;
@@ -70,7 +70,7 @@ export const NavButton = ({ type }: { type: 'prev' | 'next' }) => {
   return (
     <Wrapper>
       <Button variant="contained_icon" onClick={() => (isPrev ? swiper.slidePrev() : swiper.slideNext())}>
-        <Icon data={isPrev ? chevron_left : chevron_right} />
+        <Icon size={16} data={isPrev ? chevron_left : chevron_right} />
       </Button>
     </Wrapper>
   )

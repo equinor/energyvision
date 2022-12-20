@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide, type SwiperProps } from 'swiper/react'
 import { FreeMode, Scrollbar } from 'swiper'
 import styled, { css } from 'styled-components'
 import { NavButton } from './Navigation'
+import { EdsProvider } from '@equinor/eds-core-react'
 
 import 'swiper/css'
 import 'swiper/css/scrollbar'
@@ -79,9 +80,11 @@ export const HorizontalScroll = ({
       $carouselType={type}
       {...rest}
     >
-      <NavButton type="prev" />
       {children}
-      <NavButton type="next" />
+      <EdsProvider density="compact">
+        <NavButton type="prev" />
+        <NavButton type="next" />
+      </EdsProvider>
     </StyledSwiper>
   )
 }
