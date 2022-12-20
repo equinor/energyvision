@@ -43,7 +43,7 @@ export const MagazineTagFilter = forwardRef<HTMLDivElement, RefinementListProps>
       undefined,
       { shallow: true },
     )
-  }, [active, clear, refine, router])
+  }, [active, clear, refine])
 
   //route to state
   useEffect(() => {
