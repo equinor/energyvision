@@ -19,28 +19,21 @@ const StyledLink = styled(CardLink)`
 `
 
 const TagsContainer = styled.div`
-  padding: 0 var(--space-medium) var(--space-medium);
+  overflow-x: scroll;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  gap: var(--space-medium);
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-medium);  
-  @media (max-width: 1000px) {
-    padding: 0 var(--space-medium) var(--space-medium) 0;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    margin: var(--space-medium);
-    display: list-item;
-    flex-direction: row;
-    flex-wrap: nowrap;)
+  padding: 0 var(--space-medium) var(--space-medium);
+
+  @media (min-width: 1024px) {
+    flex-wrap: wrap;
   }
 `
 const Tag = styled.span`
   color: var(--moss-green-100);
   font-weight: var(--fontWeight-medium);
   font-size: var(--typeScale-0);
-  @media (max-width: 1000px) {
-    margin: var(--space-small) var(--space-small) var(--space-small) 0;
-  }
 `
 type MagazineCardProp = {
   data: MagazineCardData

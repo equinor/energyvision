@@ -51,20 +51,17 @@ const Wrapper = styled.div`
   border-bottom: 1px solid var(--grey-30);
 `
 const TagWrapper = styled.div`
-  margin: auto;
   display: flex;
-  flex-wrap: wrap;
-  padding: var(--space-large) var(--space-3xLarge);
+  flex-wrap: nowrap;
+  margin: auto;
+  overflow-x: scroll;
+  white-space: nowrap;
+  padding: var(--space-large);
   grid-gap: var(--space-xLarge);
-  @media (max-width: 1150px) {
-    padding: var(--space-large) var(--space-3xLarge) var(--space-large) 0;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    margin: 0 var(--space-medium) 0 var(--space-medium);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+
+  @media (min-width: 1024px) {
+    flex-wrap: wrap;
+    padding: var(--space-large) var(--space-3xLarge);
   }
 `
 const allTagLink: TagLink = {
