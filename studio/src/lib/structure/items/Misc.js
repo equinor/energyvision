@@ -1,5 +1,5 @@
 import S from '@sanity/desk-tool/structure-builder'
-import { FileIcon, TopicDocuments, NewsDocuments } from '../../../../icons'
+import { FileIcon, NewsDocuments, TopicDocuments } from '../../../../icons'
 import { Flags } from '../../datasetHelpers'
 
 const miscPages = [
@@ -85,8 +85,7 @@ const miscPages = [
             },
           ]),
       ),
-  Flags.HAS_MAGAZINE &&
-    Flags.IS_DEV &&
+  Flags.HAS_MAGAZINE_INDEX &&
     S.listItem()
       .title('Magazine Index Page')
       .icon(NewsDocuments)

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
 
-import { languages, defaultLanguage, domain, dataset } from './languages.js'
-import securityHeaders, { UnsafeContentSecurityPolicy } from './securityHeaders.mjs'
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
+import { dataset, defaultLanguage, domain, languages } from './languages.js'
+import securityHeaders, { UnsafeContentSecurityPolicy } from './securityHeaders.mjs'
 
 const withTM = nextTranspileModules(['friendly-challenge'])
 
