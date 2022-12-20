@@ -18,13 +18,12 @@ const StyledLink = styled(CardLink)`
   display: inline-block;
 `
 
-const TagsContainer = Flags.IS_DEV
-  ? styled.div`
+const TagsContainer = styled.div`
   padding: 0 var(--space-medium) var(--space-medium);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-medium);  
-  @media (max-width: 450px) {
+  @media (max-width: 1000px) {
     padding: 0 var(--space-medium) var(--space-medium) 0;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -35,27 +34,14 @@ const TagsContainer = Flags.IS_DEV
     flex-wrap: nowrap;)
   }
 `
-  : styled.div`
-      padding: 0 var(--space-medium) var(--space-medium);
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-medium);
-    `
-
-const Tag = Flags.IS_DEV
-  ? styled.span`
-      color: var(--moss-green-100);
-      font-weight: var(--fontWeight-medium);
-      font-size: var(--typeScale-0);
-      @media (max-width: 450px) {
-        margin: var(--space-small) var(--space-small) var(--space-small) 0;
-      }
-    `
-  : styled.span`
-      color: var(--moss-green-100);
-      font-weight: var(--fontWeight-medium);
-      font-size: var(--typeScale-0);
-    `
+const Tag = styled.span`
+  color: var(--moss-green-100);
+  font-weight: var(--fontWeight-medium);
+  font-size: var(--typeScale-0);
+  @media (max-width: 1000px) {
+    margin: var(--space-small) var(--space-small) var(--space-small) 0;
+  }
+`
 type MagazineCardProp = {
   data: MagazineCardData
   fitToContent?: boolean
