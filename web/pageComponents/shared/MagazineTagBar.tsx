@@ -2,6 +2,7 @@ import { AnchorHTMLAttributes, forwardRef } from 'react'
 import styled from 'styled-components'
 import { Link } from '@components'
 import { useIntl } from 'react-intl'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export type MagazineTagBarProps = {
   tags: TagLink[]
@@ -50,7 +51,8 @@ const Wrapper = styled.div`
   border-top: 1px solid var(--grey-30);
   border-bottom: 1px solid var(--grey-30);
 `
-const TagWrapper = styled.div`
+const TagWrapper = Flags.IS_DEV
+  ? styled.div`
   margin: auto;
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +61,28 @@ const TagWrapper = styled.div`
   @media (max-width: 750px) {
     padding: var(--space-large);
   }
+  @media (max-width: 1150px) {
+  padding: var(--space-large) var(--space-3xLarge) var(--space-large) 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin: var(--space-medium);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    )
+  }
 `
+  : styled.div`
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      padding: var(--space-large) var(--space-3xLarge);
+      grid-gap: var(--space-xLarge);
+      @media (max-width: 750px) {
+        padding: var(--space-large);
+      }
+    `
 
 const allTagLink: TagLink = {
   href: '#',
