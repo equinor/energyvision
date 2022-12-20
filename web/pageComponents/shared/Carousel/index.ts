@@ -7,4 +7,4 @@
  * and we can't selectively ignore just the export line for the Carousel there
  */
 
-export * from './Swiper'
+export * from './HorizontalScroll'

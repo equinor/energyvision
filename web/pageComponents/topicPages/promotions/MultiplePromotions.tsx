@@ -10,7 +10,7 @@ import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
-import { Carousel, CarouselItem } from '../../shared/Carousel'
+import { HorizontalScroll, HorizontalScrollItem } from '../../shared/Carousel'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const CardsWrapper = styled.div`
@@ -110,14 +110,14 @@ const MultiplePromotions = ({
 
   if (Flags.IS_DEV && useCarousel) {
     return (
-      <Carousel type="card">
+      <HorizontalScroll type="card">
         {data.map((item) => {
           const card = getCard(item)
           if (card) {
-            return <CarouselItem key={item.id}>{card}</CarouselItem>
+            return <HorizontalScrollItem key={item.id}>{card}</HorizontalScrollItem>
           }
         })}
-      </Carousel>
+      </HorizontalScroll>
     )
   }
 

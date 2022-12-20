@@ -2,12 +2,13 @@
 /* eslint-disable import/no-unresolved */
 import { Children, ReactNode } from 'react'
 import { Swiper, SwiperSlide, type SwiperProps } from 'swiper/react'
-import { Pagination } from 'swiper'
+import { FreeMode, Scrollbar } from 'swiper'
 import styled, { css } from 'styled-components'
 import { NavButton } from './Navigation'
 
 import 'swiper/css'
-import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/free-mode'
 
 const CardCarouselStyles = css`
   max-width: calc(var(--card-maxWidth) * ${({ items }: any) => items || '3'} + var(--space-large) * 4);
@@ -30,11 +31,13 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
   ${({ $carouselType }: any) => ($carouselType === 'card' ? CardCarouselStyles : '')}
 
   .swiper-wrapper {
-    padding-bottom: var(--space-3xLarge);
+    padding-bottom: var(--space-xxLarge);
   }
 
-  .swiper-pagination {
-    bottom: 0;
+  .swiper-scrollbar {
+    left: 0;
+    margin: 0 var(--space-3xLarge);
+    width: calc(100% - (var(--space-3xLarge) * 2));
   }
 `
 
@@ -49,41 +52,46 @@ const StyledSwiperSlide = styled(SwiperSlide)`
   }
 `
 
-export type CarouselProps = {
+export type HorizontalScrollProps = {
   slidesPerView?: number | 'auto'
   type?: CarouselTypes
   children: any
 }
 
-export const Carousel = ({ slidesPerView = 'auto', type = 'card', children, ...rest }: CarouselProps) => {
+export const HorizontalScroll = ({
+  slidesPerView = 'auto',
+  type = 'card',
+  children,
+  ...rest
+}: HorizontalScrollProps) => {
   const numberOfItems = Children.toArray(children).length
 
   return (
     <StyledSwiper
-      pagination={{
-        dynamicBullets: true,
-        clickable: true,
+      scrollbar={{
+        draggable: true,
       }}
-      modules={[Pagination]}
+      freeMode={true}
+      modules={[Scrollbar, FreeMode]}
       slidesPerView={slidesPerView}
       grabCursor={true}
       $items={numberOfItems}
       $carouselType={type}
       {...rest}
     >
-      {children}
       <NavButton type="prev" />
+      {children}
       <NavButton type="next" />
     </StyledSwiper>
   )
 }
 
-export type CarouselItemProps = {
+export type HorizontalScrollItemProps = {
   children: ReactNode
 }
 
-export const CarouselItem = ({ children, ...rest }: CarouselItemProps) => {
+export const HorizontalScrollItem = ({ children, ...rest }: HorizontalScrollItemProps) => {
   return <StyledSwiperSlide {...rest}>{children}</StyledSwiperSlide>
 }
 // This is required in order for the Swiper library to correctly render
-CarouselItem.displayName = 'SwiperSlide'
+HorizontalScrollItem.displayName = 'SwiperSlide'
