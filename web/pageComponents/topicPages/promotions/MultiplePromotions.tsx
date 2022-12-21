@@ -108,6 +108,7 @@ const MultiplePromotions = ({
         data={data as EventCardData[]}
         hasSectionTitle={hasSectionTitle}
         eventPromotionSettings={eventPromotionSettings}
+        renderScroll={renderScroll}
       />
     )
   }

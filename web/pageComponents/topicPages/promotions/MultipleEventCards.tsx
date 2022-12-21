@@ -2,6 +2,8 @@ import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
+import { HorizontalScroll, HorizontalScrollItem } from '../../shared/Carousel'
+import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const PairWrapper = styled.div`
   --card-minWidth: 250px;
@@ -45,9 +47,25 @@ type MultipleEventCardsProp = {
   data: EventCardData[]
   hasSectionTitle: boolean
   eventPromotionSettings?: EventPromotionSettings
+  renderScroll?: boolean
 }
 
-const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: MultipleEventCardsProp) => {
+const StyledEventsCard = styled(EventsCard)`
+  --card-minWidth: 250px;
+
+  @media (min-width: 1000px) {
+    --card-minWidth: 340px;
+  }
+
+  width: var(--card-minWidth);
+`
+
+const MultipleEventCards = ({
+  data,
+  hasSectionTitle,
+  eventPromotionSettings,
+  renderScroll = false,
+}: MultipleEventCardsProp) => {
   // sort only automatically selected future events
   if (!eventPromotionSettings?.manuallySelectEvents && !eventPromotionSettings?.promotePastEvents) {
     data.sort((a, b) => {
@@ -59,6 +77,20 @@ const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: M
   }
   if (eventPromotionSettings?.pastEventsCount) {
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
+  }
+
+  if (Flags.IS_DEV && renderScroll) {
+    return (
+      <HorizontalScroll type="card">
+        {data.map((item) => {
+          return (
+            <HorizontalScrollItem key={item.id}>
+              <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+            </HorizontalScrollItem>
+          )
+        })}
+      </HorizontalScroll>
+    )
   }
 
   return (
