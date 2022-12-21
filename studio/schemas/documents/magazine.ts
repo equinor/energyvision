@@ -97,7 +97,7 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    Flags.IS_DEV && {
+    {
       name: 'ingress',
       title: 'Description',
       description: 'Shown in newsletters and promotions. Max 400 characters',
