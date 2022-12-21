@@ -32,7 +32,7 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
   ${({ $carouselType }: any) => ($carouselType === 'card' ? CardCarouselStyles : '')}
 
   .swiper-wrapper {
-    padding-bottom: var(--space-xxLarge);
+    padding: var(--space-medium) 0 var(--space-xxLarge) 0;
   }
 
   .swiper-scrollbar {
