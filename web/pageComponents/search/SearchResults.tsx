@@ -1,21 +1,21 @@
-import { useState, useEffect, useContext, useRef } from 'react'
 import { Tabs } from '@components'
-import { Index, useHits } from 'react-instantsearch-hooks-web'
-import styled from 'styled-components'
 import { useRouter } from 'next/router'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { Index, useHits } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
-import NumberOfHits from './NumberOfHits'
-import Hits from './Hits'
-import EventHit from './EventHit'
-import TopicHit from './TopicHit'
-import NewsHit from './NewsHit'
+import styled from 'styled-components'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
 import { Pagination } from '../shared/search/pagination/Pagination'
-import TotalResultsStat from './TotalResultsStat'
-import { Flags } from '../../common/helpers/datasetHelpers'
-import MagazineHit from './MagazineHit'
-import { SearchContext } from './SearchContext'
 import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
+import EventHit from './EventHit'
+import Hits from './Hits'
+import MagazineHit from './MagazineHit'
+import NewsHit from './NewsHit'
+import NumberOfHits from './NumberOfHits'
+import { SearchContext } from './SearchContext'
+import TopicHit from './TopicHit'
+import TotalResultsStat from './TotalResultsStat'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -130,16 +130,14 @@ const SearchResults = () => {
                   </TabText>
                 </Index>
               </Tab>
-              {Flags.IS_DEV && (
-                <Tab inverted>
-                  <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
-                    <TabText>
-                      <FormattedMessage id="search_magazine_tab" defaultMessage="Magazine" />
-                      <NumberOfHits />
-                    </TabText>
-                  </Index>
-                </Tab>
-              )}
+              <Tab inverted>
+                <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
+                  <TabText>
+                    <FormattedMessage id="search_magazine_tab" defaultMessage="Magazine" />
+                    <NumberOfHits />
+                  </TabText>
+                </Index>
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
