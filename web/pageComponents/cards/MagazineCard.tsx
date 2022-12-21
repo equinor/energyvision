@@ -25,9 +25,13 @@ const TagsContainer = styled.div`
   gap: var(--space-medium);
   display: flex;
   padding: 0 var(--space-medium) var(--space-medium);
-
+  
+  ::-webkit-scrollbar{
+    display: none;
+  }
   @media (min-width: 1024px) {
     flex-wrap: wrap;
+    overflow: overlay;
   }
 `
 const Tag = styled.span`

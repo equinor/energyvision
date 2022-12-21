@@ -59,9 +59,14 @@ const TagWrapper = styled.div`
   padding: var(--space-large);
   grid-gap: var(--space-xLarge);
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  
   @media (min-width: 1024px) {
     flex-wrap: wrap;
     padding: var(--space-large) var(--space-3xLarge);
+    overflow: overlay;
   }
 `
 const allTagLink: TagLink = {
