@@ -1,7 +1,7 @@
 import { forwardRef, CSSProperties } from 'react'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
-import { Tab as CTab } from '@chakra-ui/react'
+import { Tab as CTab, TabProps as CTabProps } from '@chakra-ui/react'
 import { Tab as RTab, TabProps as RTabProps } from '@reach/tabs'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
@@ -24,6 +24,10 @@ const StyledCTab = styled(CTab)`
   /* If the text is used inside a inverted component, the text colour must also be inverted */
   .inverted-background & {
     color: var(--inverted-text);
+  }
+
+  &:active {
+    background: transparent;
   }
 
   &:focus-visible {
@@ -72,8 +76,13 @@ export type TabProps = RTabProps & {
   variant?: string
 }
 
+export type ChakraTabProps = CTabProps & {
+  inverted?: boolean
+  variant?: string
+}
+
 export const Tab = Flags.IS_DEV
-  ? forwardRef<HTMLButtonElement, TabProps>(function CTab(
+  ? forwardRef<HTMLButtonElement, ChakraTabProps>(function CTab(
       { inverted = false, children, variant = 'line', ...rest },
       ref,
     ) {
