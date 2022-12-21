@@ -70,7 +70,7 @@ const PromoTileArray= ({ data, anchor }: { data: PromoTileArrayData; anchor?: st
   const richTitle = (image: ImageWithAlt, title: PortableTextBlock[]) => {
     return (
       <Header>
-        {image.asset ? (
+        {image?.asset ? (
           <PromotileTitleText
             style={
               {
