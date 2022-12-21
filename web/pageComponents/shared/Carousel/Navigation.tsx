@@ -55,6 +55,12 @@ export const NavButton = ({ type }: { type: 'prev' | 'next' }) => {
     swiper.on('unlock', (swipe) => {
       updateConfig(swipe)
     })
+    swiper.on('transitionStart', (swipe) => {
+      updateConfig(swipe)
+    })
+    swiper.on('transitionEnd', (swipe) => {
+      updateConfig(swipe)
+    })
   }, [swiper])
 
   if (type !== 'prev' && type !== 'next') return null
