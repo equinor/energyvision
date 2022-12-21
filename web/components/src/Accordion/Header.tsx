@@ -9,7 +9,11 @@ import {
 } from '@reach/accordion'
 
 import { Flags } from '../../../common/helpers/datasetHelpers'
-import { AccordionButton as CAccordionButton, useAccordionItemState } from '@chakra-ui/react'
+import {
+  AccordionButton as CAccordionButton,
+  useAccordionItemState,
+  AccordionButtonProps as ChakraAccordionButtonProps,
+} from '@chakra-ui/react'
 import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
@@ -21,7 +25,7 @@ export type AccordionHeaderProps = {
 export type CAccordionHeaderProps = {
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
   children: React.ReactNode
-}
+} & ChakraAccordionButtonProps
 
 const StyledCAccordionButton = styled(CAccordionButton)`
   display: flex;
@@ -101,7 +105,11 @@ export const Header = Flags.IS_DEV
 
       return (
         <StyledHeader forwardedAs={headingLevel}>
-          <StyledCAccordionButton ref={ref} {...rest}>
+          <StyledCAccordionButton
+            ref={ref}
+            style={{ paddingLeft: 0, paddingTop: '1em', paddingBottom: '1em' }}
+            {...rest}
+          >
             {isOpen ? (
               <StyledIcon>
                 <OutlineIcon size={iconSize} data={remove_outlined} />

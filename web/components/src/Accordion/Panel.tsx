@@ -8,7 +8,7 @@ import {
   useAccordionItemContext,
 } from '@reach/accordion'
 import styled from 'styled-components'
-import { AccordionPanel as CAccordionPanel } from '@chakra-ui/react'
+import { AccordionPanel as CAccordionPanel, AccordionPanelProps as ChakraAccordionPanelProps } from '@chakra-ui/react'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
 export type AccordionPanelProps = {
@@ -18,7 +18,7 @@ export type AccordionPanelProps = {
 export type CAccordionPanelProps = {
   children?: React.ReactNode
   animate?: boolean
-}
+} & ChakraAccordionPanelProps
 
 const AnimatedAccordionPanel = animated(RAccordionPanel)
 
