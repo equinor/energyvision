@@ -100,7 +100,7 @@ const MultiplePromotions = ({
   }
 
   const { width } = useWindowSize()
-  const renderScroll = useHorizontalScroll || (width && width <= 800)
+  const renderScroll = useHorizontalScroll || Boolean(width && width <= 800)
 
   if (variant === 'promoteEvents') {
     return (
