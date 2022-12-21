@@ -159,15 +159,13 @@ const SearchResults = () => {
                   <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
-              {Flags.IS_DEV && (
-                <TabPanel>
-                  <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
-                    <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                    <Hits setTabResults={setTabResults} hitComponent={MagazineHit} category="magazine" />
-                    <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
-                  </Index>
-                </TabPanel>
-              )}
+              <TabPanel>
+                <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
+                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                  <Hits setTabResults={setTabResults} hitComponent={MagazineHit} category="magazine" />
+                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                </Index>
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </Results>
