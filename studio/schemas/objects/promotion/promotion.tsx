@@ -78,15 +78,13 @@ export default {
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
-    {
+    Flags.IS_DEV && {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
       description:
         'When this is enabled, the promotion will use horizontal scroll if the amount of content is greater than the screen size allows. This feature is enabled by default for smaller screen sizes.',
       type: 'boolean',
       initialValue: false,
-      readOnly: !Flags.IS_DEV,
-      hidden: !Flags.IS_DEV,
     },
     {
       title: 'Background',
@@ -104,7 +102,7 @@ export default {
       fieldset: 'design',
       initialValue: backgroundColors[0],
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
