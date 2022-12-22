@@ -6,15 +6,16 @@ import { getLocaleFromName } from './src/lib/localization'
 const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
 
 const remoteUrl = () => {
+  const env = window.location.hostname.includes('equinor-web-sites-preprod') ? 'preprod' : 'prod'
   switch (dataset) {
     case 'global':
-      return 'https://web-equinor-web-sites-prod.c2.radix.equinor.com/'
+      return `https://web-equinor-web-sites-${env}.c2.radix.equinor.com/`
     case 'global-development':
       return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
     case 'global-test':
       return 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com'
     default:
-      return `https://web-${dataset}-equinor-web-sites-prod.c2.radix.equinor.com`
+      return `https://web-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`
   }
 }
 
