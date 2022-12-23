@@ -1,8 +1,8 @@
-import React from 'react'
-import { i18n } from '../documentTranslation'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import { Flags } from '../../src/lib/datasetHelpers'
+import { i18n } from '../documentTranslation'
+import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
 // import { done } from '@equinor/eds-icons'
 
@@ -80,12 +80,14 @@ export default {
   preview: {
     select: {
       title: 'title',
-      media: 'heroFigure.image',
+      image: 'heroFigure.image',
+      video: 'heroLoopingVideo.thumbnail',
+      type: 'heroType',
     },
     prepare(selection: any) {
-      const { title, media } = selection
+      const { title, image, video, type } = selection
       const plainTitle = title ? blocksToText(title) : ''
-
+      const media = type === HeroTypes.LOOPING_VIDEO ? video : image
       return {
         title: plainTitle,
         subtitle: 'Topic content',

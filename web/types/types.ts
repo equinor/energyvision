@@ -1,11 +1,11 @@
+import { TeaserImagePosition, TeaserImageSize } from '@components'
+import { PortableTextBlock } from '@portabletext/types'
 import {
-  SanityImageObject,
   SanityImageCrop,
   SanityImageHotspot,
+  SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
-import { PortableTextBlock } from '@portabletext/types'
-import { TeaserImagePosition, TeaserImageSize } from '@components'
 
 export type CaptionData = {
   attribution?: string
@@ -174,6 +174,7 @@ export enum HeroTypes {
   DEFAULT = 'default',
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
+  LOOPING_VIDEO = 'loopingVideo',
   VIDEO_HERO = 'videoHero',
 }
 
@@ -186,6 +187,7 @@ export type HeroType = {
   ratio?: string
   background?: BackgroundColours
   video?: VideoHeroData
+  loopingVideo?: LoopingVideoData
 }
 
 export type ContentType =
@@ -640,6 +642,12 @@ export type VideoHeroData = {
   playbackId: string
   loop: boolean
   autoplay: boolean
+}
+
+export type LoopingVideoData = {
+  title: string
+  thumbnail: ImageWithAlt
+  url: string
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'

@@ -1,10 +1,9 @@
-import React from 'react'
 import { Rule, ValidationContext } from '@sanity/types/dist/dts'
-import CharCounterEditor from '../../components/CharCounterEditor'
-import { configureTitleBlockContent, configureBlockContent } from '../../editors'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import { Colors } from '../../../helpers/ColorListValues'
+import { Flags } from '../../../src/lib/datasetHelpers'
+import CharCounterEditor from '../../components/CharCounterEditor'
+import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
 
 type DocumentType = { parent: { heroType?: string } }
@@ -37,6 +36,7 @@ const heroType = {
       { title: 'Default', value: HeroTypes.DEFAULT },
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
+      Flags.IS_DEV && { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
       Flags.IS_DEV && { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
     ].filter((e) => e),
   },
@@ -138,13 +138,31 @@ const heroImage = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType !== HeroTypes.VIDEO_HERO && !value) return 'Field is required'
+      if ((parent?.heroType === HeroTypes.VIDEO_HERO || parent?.heroType === HeroTypes.LOOPING_VIDEO) && !value)
+        return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType === HeroTypes.VIDEO_HERO
+    return parent?.heroType === HeroTypes.VIDEO_HERO || parent?.heroType === HeroTypes.LOOPING_VIDEO
   },
   fieldset: 'header',
+}
+
+const heroLoopingVideo = {
+  title: 'Video',
+  name: 'heroLoopingVideo',
+  type: 'reference',
+  to: [{ type: 'videoFile' }],
+  fieldset: 'header',
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as DocumentType
+      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
+      return true
+    }),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
+  },
 }
 
 const heroVideo = {
@@ -195,6 +213,7 @@ export default [
   heroLink,
   background,
   heroImage,
+  heroLoopingVideo,
   heroVideo,
   heroVideoAutoPlay,
   heroVideoLoop,

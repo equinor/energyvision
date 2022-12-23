@@ -7,10 +7,16 @@ export const heroFields = /* groq */ `{
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure": heroFigure,
+    "loopingVideo": {
+      "title": heroLoopingVideo->title,
+      "thumbnail": heroLoopingVideo->thumbnail,
+      "url": heroLoopingVideo->video.asset->url,
+    },
     "video": {
       "":heroVideo.asset->{
       playbackId,
 		},
+    // @TODO: Move 'loop' and 'autoplay' inside 'video' object.
     "loop": coalesce(heroVideoLoop,false),
     "autoplay": coalesce(heroVideoAutoPlay,false)
   },
