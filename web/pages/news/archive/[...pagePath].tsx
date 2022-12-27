@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { SkipNavContent } from '@reach/skip-nav'
 import * as fs from 'fs'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
 import getConfig from 'next/config'
-import { Layout } from '../../../pageComponents/shared/Layout'
-import { menuQuery as globalMenuQuery } from '../../../lib/queries/menu'
-import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
-import { footerQuery } from '../../../lib/queries/footer'
-import { getClient } from '../../../lib/sanity.server'
-import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
-import { getNameFromLocale } from '../../../lib/localization'
-import { languages, defaultLanguage } from '../../../languages'
-import Header from '../../../pageComponents/shared/Header'
-import { anchorClick } from '../../../common/helpers/staticPageHelpers'
+import ErrorPage from 'next/error'
 import Head from 'next/head'
-import { SkipNavContent } from '@reach/skip-nav'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
-import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
-import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
-import type { MenuData, SimpleMenuData } from '../../../types/types'
-import { FormattedMessage } from 'react-intl'
 import getIntl from '../../../common/helpers/getIntl'
 import { PathType } from '../../../common/helpers/getPaths'
+import { anchorClick } from '../../../common/helpers/staticPageHelpers'
+import { defaultLanguage, languages } from '../../../languages'
+import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
+import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
+import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
+import { getNameFromLocale } from '../../../lib/localization'
+import { footerQuery } from '../../../lib/queries/footer'
+import { menuQuery as globalMenuQuery } from '../../../lib/queries/menu'
+import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
+import { getClient } from '../../../lib/sanity.server'
+import Header from '../../../pageComponents/shared/Header'
+import { Layout } from '../../../pageComponents/shared/Layout'
+import type { MenuData, SimpleMenuData } from '../../../types/types'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -71,6 +71,8 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
       anchorClick(e, router)
     }
   }
+
+  console.log(data?.news?.content)
   return (
     <>
       {router.isFallback ? (
@@ -106,7 +108,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
             onClick={onLinkClicked}
             onKeyDown={onLinkClickedKeyHandler}
             dangerouslySetInnerHTML={{
-              __html: data?.news?.content,
+              __html: data?.news?.content.replace('<a href="', '<a rel="nofollow" href="'),
             }}
           />
         </>
