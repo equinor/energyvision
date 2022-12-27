@@ -1,8 +1,8 @@
-import { noDrafts, sameLang } from './../../lib/queries/common/langAndDrafts'
-import { getNameFromLocale } from '../../lib/localization'
-import { sanityClient } from '../../lib/sanity.server'
 import { groq } from 'next-sanity'
+import { getNameFromLocale } from '../../lib/localization'
 import { publishDateTimeQuery } from '../../lib/queries/common/publishDateTime'
+import { sanityClient } from '../../lib/sanity.server'
+import { noDrafts, sameLang } from './../../lib/queries/common/langAndDrafts'
 
 // These URLs uses SSR and thus should not be static rendered
 const topicSlugBlackList = {
@@ -30,7 +30,7 @@ const getTopicRoutesForLocale = async (locale: string) => {
 const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', locale: string) => {
   const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
-    groq`*[_type == $type && defined(slug.current) && ${sameLang} && {noDrafts}][] {
+    groq`*[_type == $type && defined(slug.current) && ${sameLang} && ${noDrafts}][] {
       _updatedAt,
       "slug": slug.current,
     }`,
