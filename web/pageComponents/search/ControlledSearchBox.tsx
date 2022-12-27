@@ -1,8 +1,8 @@
-import { ChangeEvent, FormEvent, RefObject, ComponentProps } from 'react'
+import { outlineTemplate, Tokens } from '@utils'
+import { ChangeEvent, ComponentProps, FormEvent, RefObject } from 'react'
 import { useIntl } from 'react-intl'
 import styled from 'styled-components'
 import VisuallyHidden from '../shared/VisuallyHidden'
-import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
 
@@ -96,7 +96,7 @@ const ControlledSearchBox = ({
 
   return (
     <div {...props}>
-      <form action="" noValidate onSubmit={handleSubmit} onReset={handleReset}>
+      <form action="" role="search" noValidate onSubmit={handleSubmit} onReset={handleReset}>
         <VisuallyHidden as="label" htmlFor="site-search">
           {search}
         </VisuallyHidden>
