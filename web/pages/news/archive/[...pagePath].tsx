@@ -107,7 +107,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
             onClick={onLinkClicked}
             onKeyDown={onLinkClickedKeyHandler}
             dangerouslySetInnerHTML={{
-              __html: data?.news?.content.replace('<a ', '<a rel="nofollow" '),
+              __html: data?.news?.content.replaceAll('<a ', '<a rel="nofollow" '),
             }}
           />
         </>

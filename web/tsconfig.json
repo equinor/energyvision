@@ -2,7 +2,7 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2019",
-    "lib": ["dom", "dom.iterable", "ES2019"],
+    "lib": ["dom", "dom.iterable", "ES2019", "es2021"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
