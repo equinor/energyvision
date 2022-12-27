@@ -72,7 +72,6 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     }
   }
 
-  console.log(data?.news?.content)
   return (
     <>
       {router.isFallback ? (
@@ -108,7 +107,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
             onClick={onLinkClicked}
             onKeyDown={onLinkClickedKeyHandler}
             dangerouslySetInnerHTML={{
-              __html: data?.news?.content.replace('<a href="', '<a rel="nofollow" href="'),
+              __html: data?.news?.content.replace('<a ', '<a rel="nofollow" '),
             }}
           />
         </>
