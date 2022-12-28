@@ -644,10 +644,13 @@ export type VideoHeroData = {
   autoplay: boolean
 }
 
+export type LoopingVideoRatio = 'original' | 'narrow'
+
 export type LoopingVideoData = {
   title: string
   thumbnail: ImageWithAlt
   url: string
+  ratio: LoopingVideoRatio
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'

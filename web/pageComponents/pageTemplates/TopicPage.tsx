@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { PageContent } from './shared/SharedPageContent'
-import { HeroTypes, TopicPageSchema } from '../../types/types'
-import { SharedBanner } from './shared/SharedBanner'
-import Seo from '../shared/Seo'
-import SharedTitle from './shared/SharedTitle'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
+import { HeroTypes, TopicPageSchema } from '../../types/types'
+import Seo from '../shared/Seo'
+import { SharedBanner } from './shared/SharedBanner'
+import { PageContent } from './shared/SharedPageContent'
+import SharedTitle from './shared/SharedTitle'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour

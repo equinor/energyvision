@@ -1,27 +1,30 @@
 import styled from 'styled-components'
 import { urlFor } from '../../../common/helpers'
-import { LoopingVideoData } from '../../../types'
+import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
 
-const StyledFigure = styled.figure`
-  max-height: 600px;
+const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   justify-content: center;
   display: flex;
-  background-color: var(--grey-30);
+  background-color: var(--grey-10);
+  ${({ ratio }) =>
+    ratio === 'narrow' && {
+      'max-height': '500px',
+    }}
 `
 
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
-  const { title, url, thumbnail } = video
-
+  const { title, url, thumbnail, ratio } = video
   return (
-    <StyledFigure>
+    <StyledFigure ratio={ratio}>
       <video
         loop
         muted
         autoPlay
         playsInline
         title={title}
-        poster={urlFor(thumbnail).height(600).url()}
+        poster={urlFor(thumbnail).url()}
         src={url.replace('cdn.sanity.io', 'cdn.equinor.com')}
+        style={ratio === 'narrow' ? { objectFit: 'cover' } : {}}
       >
         <source type={'video/mp4'} />
       </video>

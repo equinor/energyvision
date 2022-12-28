@@ -11,6 +11,7 @@ export const heroFields = /* groq */ `{
       "title": heroLoopingVideo->title,
       "thumbnail": heroLoopingVideo->thumbnail,
       "url": heroLoopingVideo->video.asset->url,
+      "ratio": heroLoopingVideoRatio,
     },
     "video": {
       "":heroVideo.asset->{
