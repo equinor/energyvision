@@ -17,15 +17,15 @@ const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl,
 const ContentSecurityPolicy = `
    default-src 'self' cdn.sanity.io cdn.equinor.com;
    style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com https://platform.twitter.com https://*.twimg.com;
-   script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: https://*.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/;
-   img-src 'self' data: https://image.mux.com https://eds-static.equinor.com https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com;
+   script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: https://*.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/ https://www.youtube.com;
+   img-src 'self' data: https://image.mux.com https://eds-static.equinor.com https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com https://i.ytimg.com;
    connect-src 'self' https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu  https://*.mux.com ${
      isProduction ? '' : 'ws:'
    };
    child-src  blob:;
    frame-src 'self' https://consentcdn.cookiebot.com https://lt.morningstar.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com https://tools.eurolandir.com https://platform.twitter.com https://syndication.twitter.com https://vds.issgovernance.com https://eac.plaii.no;
    frame-ancestors ${xFrameUrls};
-   font-src 'self' https://eds-static.equinor.com;
+   font-src 'self' https://eds-static.equinor.com data:;
    media-src 'self' blob: https://stream.mux.com/ https://cdn.sanity.io/ https://cdn.equinor.com/;
 
  `
