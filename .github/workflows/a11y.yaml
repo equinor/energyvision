@@ -64,7 +64,7 @@ jobs:
           fileName: e2e/output/Chrome_envis_news_report.json ## Temporary file name. Will use something more clever. Promise!
 
       - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v1
+        uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}

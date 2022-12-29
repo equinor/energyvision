@@ -47,7 +47,7 @@ jobs:
             git push origin HEAD:main
           fi
 
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
@@ -80,7 +80,7 @@ jobs:
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
           environment: ${{ secrets.ENV }}
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
@@ -99,7 +99,7 @@ jobs:
         run: |
           MATRIX=$(cat satellites.json)
           echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
@@ -137,7 +137,7 @@ jobs:
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           environment: ${{ secrets.ENV }}
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
