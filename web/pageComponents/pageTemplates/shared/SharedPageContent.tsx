@@ -1,7 +1,6 @@
 import Teaser from '../../shared/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
-import FullWidthImageV2 from '../../topicPages/FullWidthImageV2'
 import Figure from '../../topicPages/Figure'
 import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
@@ -38,7 +37,6 @@ import {
   TwitterEmbedData,
   VideoData,
   CookieDeclarationData,
-  FullWidthImageDataV2,
 } from '../../../types/types'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
@@ -47,7 +45,6 @@ type ComponentProps =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
-  | FullWidthImageDataV2
   | FigureData
   | TextWithIconArrayData
   | CallToActionData
@@ -79,11 +76,7 @@ export const PageContent = ({ data }: PageContentProps) => {
       case 'textBlock':
         return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
-        return Flags.IS_DEV ? (
-          <FullWidthImageV2 key={c.id} data={c as FullWidthImageDataV2} anchor={anchorReference} />
-        ) : (
-          <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
-        )
+        return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'figure':
         return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} />
       case 'textWithIconArray':

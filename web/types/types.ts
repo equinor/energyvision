@@ -318,12 +318,6 @@ export type TableData = {
 export type FullWidthImageData = {
   type: string
   id: string
-  image: ImageWithAlt
-}
-
-export type FullWidthImageDataV2 = {
-  type: string
-  id: string
   image: ImageWithCaptionData
 }
 
