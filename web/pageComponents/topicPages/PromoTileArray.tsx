@@ -35,37 +35,8 @@ const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
 `
 
-const PromoTileArray= ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
+const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
   if (!data.group) return null
-
-  const normalTitle = (image: ImageWithAlt, title: string) => {
-    return (
-      <Header>
-        {image ? (
-          <Title
-            style={
-              {
-                '--card-title-fontWeight': '450',
-              } as CSSProperties
-            }
-          >
-            {title}
-          </Title>
-        ) : (
-          <Title
-            style={
-              {
-                '--card-title-fontSize': 'var(--typeScale-4)',
-                '--card-title-fontWeight': '400',
-              } as CSSProperties
-            }
-          >
-            {title}
-          </Title>
-        )}
-      </Header>
-    )
-  }
 
   const richTitle = (image: ImageWithAlt, title: PortableTextBlock[]) => {
     return (
@@ -114,7 +85,7 @@ const PromoTileArray= ({ data, anchor }: { data: PromoTileArrayData; anchor?: st
                     />
                   </Media>
                 )}
-                { (title instanceof Array<PortableTextBlock>)? <>{richTitle(image,title)}</>: <>{normalTitle(image,title)}</> } 
+                {<>{richTitle(image, title)}</>}
                 {action.label && (
                   <Action>
                     <ButtonLink action={action} />

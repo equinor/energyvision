@@ -377,7 +377,7 @@ export type AccordionData = {
 
 export type PromoTileData = {
   id: string
-  title: string | PortableTextBlock[]
+  title: PortableTextBlock[]
   image: ImageWithAlt
   action: LinkData
   designOptions: DesignOptions
