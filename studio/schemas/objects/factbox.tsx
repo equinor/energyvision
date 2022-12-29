@@ -6,6 +6,8 @@ import { Colors } from '../../helpers/ColorListValues'
 import type { Block } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { ColorListValue } from 'sanity-plugin-color-list'
+import { configureBlockContent } from '../editors/blockContentType'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -14,6 +16,16 @@ const imageAlignmentOptions = [
 
 const chosenColors = ['White', 'Moss Green', 'Spruce Wood']
 const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
+const blockContentType = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: true,
+  attachment: false,
+  smallText: false,
+})
 
 export type Factbox = {
   _type: 'factbox'
@@ -47,7 +59,7 @@ export default {
       title: 'Content',
       type: 'array',
       of: [
-        {
+        !Flags.IS_DEV && {
           type: 'block',
           styles: [{ title: 'Normal', value: 'normal' }],
           lists: [
@@ -61,7 +73,8 @@ export default {
             ],
           },
         },
-      ],
+        Flags.IS_DEV && blockContentType,
+      ].filter((e) => e),
     },
     {
       name: 'image',
