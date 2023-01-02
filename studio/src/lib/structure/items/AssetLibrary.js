@@ -10,6 +10,16 @@ const assetLibraryItems = [
     .title('Show all asset files')
     .icon(FileIcon)
     .child(S.documentTypeList('assetFile').id('allFiles').title('All files')),
+  Flags.IS_DEV &&
+    S.listItem()
+      .title('Show all unused asset files')
+      .icon(FileIcon)
+      .child(
+        S.documentTypeList('assetFile')
+          .filter(`_type in ["assetFile"] && count(*[ references(^._id) ]) == 0 && !(_id in path("drafts.**"))`)
+          .id('allFiles')
+          .title('All unused files'),
+      ),
   S.divider(),
   AssetExtensionFilters(),
   AssetTagFilters(),
@@ -24,6 +34,17 @@ const assetLibraryItems = [
       .title('Video Assets')
       .icon(() => EdsIcon(play_circle_outlined))
       .child(S.documentTypeList('videoFile').id('videoFiles').title('Video Files')),
+  Flags.IS_DEV &&
+    S.listItem()
+      .title('Unused Video Assets')
+      .icon(() => EdsIcon(play_circle_outlined))
+      .child(
+        S.documentTypeList('videoFile')
+          .filter(`_type in ["assetFile"] && count(*[ references(^._id) ]) == 0 && !(_id in path("drafts.**"))`)
+          .filter(`_type in ["assetFile"] && count(*[ references(^._id) ]) == 0 && !(_id in path("drafts.**"))`)
+          .id('videoFiles')
+          .title('Video Files'),
+      ),
 ].filter((e) => e)
 
 export const AssetLibrary = S.listItem()
