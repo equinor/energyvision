@@ -16,7 +16,6 @@ export type AccordionPanelProps = {
 } & RAccordionPanelProps
 
 export type CAccordionPanelProps = {
-  children?: React.ReactNode
   animate?: boolean
 } & ChakraAccordionPanelProps
 
@@ -34,6 +33,7 @@ const ContentWithBorder = styled.div`
   padding-left: calc(var(--space-xLarge) / 2);
 `
 
+// TODO: Remove animate prop, as it is not needed on chakra components
 export const Panel = Flags.IS_DEV
   ? forwardRef<HTMLDivElement, CAccordionPanelProps>(function Panel(
       { children, animate = true, ...rest },

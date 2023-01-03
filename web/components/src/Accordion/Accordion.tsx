@@ -8,9 +8,10 @@ export type AccordionProps = RAccordionProps & {
   id: string
   children?: React.ReactNode
 }
+
+// TODO: Remove or change how IDs are sent as prop in tests
 export type CAccordionProps = {
   id: string
-  children?: React.ReactNode
 } & ChakraAccordionProps
 
 export const Accordion = Flags.IS_DEV

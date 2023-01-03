@@ -14,9 +14,10 @@ export type AccordionItemProps = RAccordionItemProps & {
   id: number
 }
 
+// TODO: refactor tests so we can remove the children type here
 export type CAccordionItemProps = {
   id: number
-  children: React.ReactNode 
+  children: React.ReactNode
 }
 
 export const Item = Flags.IS_DEV
