@@ -16,7 +16,7 @@ const assetLibraryItems = [
       .icon(FileIcon)
       .child(
         S.documentTypeList('assetFile')
-          .filter(`_type in ["assetFile"] && count(*[ references(^._id) ]) == 0 && !(_id in path("drafts.**"))`)
+          .filter(`_type in ["assetFile"] && count(*[references(^._id)]) == 0`)
           .id('allFiles')
           .title('All unused files'),
       ),
@@ -40,8 +40,7 @@ const assetLibraryItems = [
       .icon(() => EdsIcon(play_circle_outlined))
       .child(
         S.documentTypeList('videoFile')
-          .filter(`_type in ["assetFile"] && count(*[ references(^._id) ]) == 0 && !(_id in path("drafts.**"))`)
-          .filter(`_type in ["assetFile"] && count(*[ references(^._id) ]) == 0 && !(_id in path("drafts.**"))`)
+          .filter(`_type in ["videoFile"] && count(*[ references(^._id) ]) == 0 `)
           .id('videoFiles')
           .title('Video Files'),
       ),
