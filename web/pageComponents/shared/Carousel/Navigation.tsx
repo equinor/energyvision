@@ -46,21 +46,13 @@ export const NavButton = ({ type }: { type: 'prev' | 'next' }) => {
       })
     }
 
-    swiper.on('slideChange', (swipe) => {
-      updateConfig(swipe)
-    })
-    swiper.on('lock', (swipe) => {
-      updateConfig(swipe)
-    })
-    swiper.on('unlock', (swipe) => {
-      updateConfig(swipe)
-    })
-    swiper.on('transitionStart', (swipe) => {
-      updateConfig(swipe)
-    })
-    swiper.on('transitionEnd', (swipe) => {
-      updateConfig(swipe)
-    })
+    swiper.on('reachBeginning', (swipe) => updateConfig(swipe))
+    swiper.on('reachEnd', (swipe) => updateConfig(swipe))
+
+    return () => {
+      swiper.off('reachBeginning', (swipe) => updateConfig(swipe))
+      swiper.off('reachEnd', (swipe) => updateConfig(swipe))
+    }
   }, [swiper])
 
   if (type !== 'prev' && type !== 'next') return null
