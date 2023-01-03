@@ -4,6 +4,7 @@ import { Button } from '@components'
 import { chevron_right, chevron_left } from '@equinor/eds-icons'
 import { useSwiper } from 'swiper/react'
 import { useState, useEffect } from 'react'
+import type { Swiper } from 'swiper'
 
 const SharedStyle = styled.div`
   height: calc(100% - var(--space-xxLarge));
@@ -23,46 +24,41 @@ const Next = styled(SharedStyle)`
   right: 0;
 `
 
+type NavigationType = 'prev' | 'next'
+
+const checkShouldRender = (config: Swiper, type: NavigationType) => {
+  if (config.isLocked) return false
+
+  if (config.isBeginning == null || config.isEnd == null) return false
+
+  if ((type === 'prev' && config.isBeginning) || (type !== 'prev' && config.isEnd)) return false
+
+  return true
+}
+
 export const NavButton = ({ type }: { type: 'prev' | 'next' }) => {
   const swiper = useSwiper()
-
-  /**
-   * The useSwiper hook is not reactive. So we need to rely on events and state
-   * in order to _make_ it reactive.
-   */
-  const [swiperConfig, setSwiperConfig] = useState({
-    isLocked: swiper.isLocked,
-    isBeginning: swiper.isBeginning,
-    isEnd: swiper.isEnd,
-  })
+  const [shouldRender, setShouldRender] = useState(false)
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const updateConfig = (swipe: any) => {
-      setSwiperConfig({
-        isLocked: swipe.isLocked,
-        isBeginning: swipe.isBeginning,
-        isEnd: swipe.isEnd,
-      })
-    }
+    setShouldRender(checkShouldRender(swiper, type))
 
-    swiper.on('reachBeginning', (swipe) => updateConfig(swipe))
-    swiper.on('reachEnd', (swipe) => updateConfig(swipe))
+    swiper.on('reachBeginning', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+    swiper.on('reachEnd', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+    swiper.on('lock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+    swiper.on('unlock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
 
     return () => {
-      swiper.off('reachBeginning', (swipe) => updateConfig(swipe))
-      swiper.off('reachEnd', (swipe) => updateConfig(swipe))
+      swiper.off('reachBeginning', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+      swiper.off('reachEnd', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+      swiper.off('lock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+      swiper.off('unlock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
     }
-  }, [swiper])
+  }, [swiper, setShouldRender, type])
 
-  if (type !== 'prev' && type !== 'next') return null
-
-  if (swiperConfig.isLocked) return null
+  if (!shouldRender) return null
 
   const isPrev = type === 'prev'
-
-  if ((isPrev && swiperConfig.isBeginning) || (!isPrev && swiperConfig.isEnd)) return null
-
   const Wrapper = isPrev ? Prev : Next
 
   return (
