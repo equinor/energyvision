@@ -9,7 +9,6 @@ import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 export type Accordion = {
   _type: 'accordion'
