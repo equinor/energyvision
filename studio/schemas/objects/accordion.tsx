@@ -64,7 +64,7 @@ export default {
       inputComponent: CharCounterEditor,
       of: [ingressContentType],
     },
-    Flags.IS_DEV && {
+    {
       name: 'image',
       type: 'imageWithAlt',
       options: {
