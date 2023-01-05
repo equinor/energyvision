@@ -11,7 +11,7 @@ specifiers:
   '@equinor/eds-icons': ^0.17.0
   '@equinor/eds-tokens': ^0.9.0
   '@mdx-js/react': ^2.1.5
-  '@mux/mux-video': ^0.8.2
+  '@mux/mux-video': ^0.12.0
   '@next/bundle-analyzer': ^12.1.0
   '@next/eslint-plugin-next': ^12.1.0
   '@portabletext/react': ^1.0.6
@@ -99,7 +99,7 @@ dependencies:
   '@equinor/eds-core-react': 0.27.0_x5h3ppxveredpixwfv4nnz4gfq
   '@equinor/eds-icons': 0.17.0
   '@equinor/eds-tokens': 0.9.0
-  '@mux/mux-video': 0.8.2
+  '@mux/mux-video': 0.12.0
   '@next/bundle-analyzer': 12.1.5
   '@portabletext/react': 1.0.6_react@18.2.0
   '@portabletext/types': 1.0.3
@@ -5078,17 +5078,17 @@ packages:
       glob-to-regexp: 0.3.0
     dev: true
 
-  /@mux/mux-video/0.8.2:
-    resolution: {integrity: sha512-X6h2jVdsUHxOSItiR1jqj15Ps/ucvFgRweRCkqPKkfHfO5MHa2GUzJ6w3ssnvauuVpeE/D0fyYJZ4Pme86+jiA==}
+  /@mux/mux-video/0.12.0:
+    resolution: {integrity: sha512-Nr5McFX0fxV+qnIKOf554wNm2f1YdIy8fJxg48E69QBnMxN8dhWAZrsuFm/UJwFyDpsl7T/CbCDp6JmOwgBEUg==}
     dependencies:
-      '@mux/playback-core': 0.9.0
+      '@mux/playback-core': 0.15.0
     dev: false
 
-  /@mux/playback-core/0.9.0:
-    resolution: {integrity: sha512-wy39NFM+jjmHzs206BKG3vaBxdv7rVwL+HGOb13tMRCItMFXJoNtstYoiaDIEBYwcUUsgWgIBPUXPBwTXm4Now==}
+  /@mux/playback-core/0.15.0:
+    resolution: {integrity: sha512-xBYd4ci8RYFGJUUAw3uX/DH4UUTzwb2FPePK8L5U+Q7SSPjQp/KiHzElJwEaAXT2Cv1H2s794nOblPTXHER/bw==}
     dependencies:
-      hls.js: 1.1.5
-      mux-embed: 4.10.0
+      hls.js: 1.2.3
+      mux-embed: 4.17.0
     dev: false
 
   /@next/bundle-analyzer/12.1.5:
@@ -11348,6 +11348,10 @@ packages:
     resolution: {integrity: sha512-mQX5TSNtJEzGo5HPpvcQgCu+BWoKDQM6YYtg/KbgWkmVAcqOCvSTi0SuqG2ZJLXxIzdnFcKU2z7Mrw/YQWhPOA==}
     dev: false
 
+  /hls.js/1.2.3:
+    resolution: {integrity: sha512-CC/vHi82ldiiydIhliNI3whlcepRXxI2jdpd/KKb6lyEv+74e7lXs4cGk5PHfTLxZMKOj6+m5LX9VAbvV/r7AQ==}
+    dev: false
+
   /hmac-drbg/1.0.1:
     resolution: {integrity: sha512-Tti3gMqLdZfhOQY1Mzf/AanLiqh1WTiJgEj26ZuYQ9fbkLomzGchCws4FyrSd4VkpBfiNhaE1On+lOz894jvXg==}
     dependencies:
@@ -13473,8 +13477,8 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: true
 
-  /mux-embed/4.10.0:
-    resolution: {integrity: sha512-Rz0QJGoxioI1CGagmYaOMwGS5ywRZPo+Tcz3K81leyXe52rJhKgs8UC9he5+2kepTfTYkGl28TXU1XnXZXYuXw==}
+  /mux-embed/4.17.0:
+    resolution: {integrity: sha512-GgrNo4k5sOnB5cj5O1L6EgVhitJ+I7Kgzqp6NzUf1PCEgeIIQz5EH+awNYiVqzQtvEFhbT5prExugI05pmErqg==}
     dev: false
 
   /nan/2.17.0:
