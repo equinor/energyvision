@@ -12,6 +12,8 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/free-mode'
 
 const CardCarouselStyles = css`
+  --card-maxWidth: 360px;
+
   max-width: calc(var(--card-maxWidth) * ${({ items }: any) => items || '3'} + var(--space-large) * 4);
   padding: 0 var(--space-large);
 
@@ -28,8 +30,19 @@ export type StyledSwiperTypes = {
   $carouselType?: CarouselTypes
 } & SwiperProps
 
+const Wrapper = styled.div`
+  position: relative;
+  padding: 0 var(--space-xxLarge);
+
+  @media (max-width: 600px) {
+    padding: 0;
+  }
+`
+
 const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
   ${({ $carouselType }: any) => ($carouselType === 'card' ? CardCarouselStyles : '')}
+
+  position: unset;
 
   .swiper-wrapper {
     padding: var(--space-medium) 0 var(--space-xxLarge) 0;
@@ -68,24 +81,26 @@ export const HorizontalScroll = ({
   const numberOfItems = Children.toArray(children).length
 
   return (
-    <StyledSwiper
-      scrollbar={{
-        draggable: true,
-      }}
-      freeMode={true}
-      modules={[Scrollbar, FreeMode]}
-      slidesPerView={slidesPerView}
-      grabCursor={true}
-      $items={numberOfItems}
-      $carouselType={type}
-      {...rest}
-    >
-      {children}
-      <EdsProvider density="compact">
-        <NavButton type="prev" />
-        <NavButton type="next" />
-      </EdsProvider>
-    </StyledSwiper>
+    <Wrapper>
+      <StyledSwiper
+        scrollbar={{
+          draggable: true,
+        }}
+        freeMode={true}
+        modules={[Scrollbar, FreeMode]}
+        slidesPerView={slidesPerView}
+        grabCursor={true}
+        $items={numberOfItems}
+        $carouselType={type}
+        {...rest}
+      >
+        {children}
+        <EdsProvider density="compact">
+          <NavButton type="prev" />
+          <NavButton type="next" />
+        </EdsProvider>
+      </StyledSwiper>
+    </Wrapper>
   )
 }
 
