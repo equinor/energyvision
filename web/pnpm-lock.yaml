@@ -8,7 +8,7 @@ specifiers:
   '@emotion/react': ^11
   '@emotion/styled': ^11
   '@equinor/eds-core-react': 0.27.0
-  '@equinor/eds-icons': ^0.16.0
+  '@equinor/eds-icons': ^0.17.0
   '@equinor/eds-tokens': ^0.9.0
   '@mdx-js/react': ^2.1.5
   '@mux/mux-video': ^0.8.2
@@ -97,7 +97,7 @@ dependencies:
   '@emotion/react': 11.10.5_r4wjfvbzxqrynsjveqwqjwvlkq
   '@emotion/styled': 11.10.5_vvmnzt7pfoszha5hgjme32bdji
   '@equinor/eds-core-react': 0.27.0_x5h3ppxveredpixwfv4nnz4gfq
-  '@equinor/eds-icons': 0.16.0
+  '@equinor/eds-icons': 0.17.0
   '@equinor/eds-tokens': 0.9.0
   '@mux/mux-video': 0.8.2
   '@next/bundle-analyzer': 12.1.5
@@ -4433,6 +4433,11 @@ packages:
 
   /@equinor/eds-icons/0.16.0:
     resolution: {integrity: sha512-ByEJLYaTMAoxRGpiyB/pSY/cfsXdiQ4TvQR0H4jaiWeDat/wYSZPWkA0tImo80As9iczTV8uC7iXCF7ZrY4KQA==}
+    engines: {node: '>=10.0.0', pnpm: '>=4'}
+    dev: false
+
+  /@equinor/eds-icons/0.17.0:
+    resolution: {integrity: sha512-Nhd/3rPS5l6IE+BN+fd1Om1yjS71CSMCCqWaXe3dVNPfkAG/ARIiG72+S4Rcjb1d5Qbn1bppNCUL26O5dlKrCw==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
