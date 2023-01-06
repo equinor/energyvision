@@ -10,13 +10,12 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const titleContentType = configureTitleBlockContent()
 
 export type PromoTile = {
   _type: 'promoTile'
-  richTitle: any[] | string
+  richTitle: any[]
   title: string
   image?: ImageWithAlt
   link?: LinkSelector
@@ -86,7 +85,7 @@ export default {
     },
     prepare({ title, imageUrl }: { title: any[] | string; imageUrl: string }) {
       return {
-        title: Flags.IS_DEV ? blocksToText(title as any[]) : title,
+        title: blocksToText(title as any[]),
         subtitle: `Promo tile component`,
         media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
       }
