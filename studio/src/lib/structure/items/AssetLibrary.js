@@ -18,7 +18,7 @@ const assetLibraryItems = [
         S.documentTypeList('assetFile')
           .apiVersion('2022-05-12')
           .filter(
-            /* groq */ `_type in ["assetFile"] && count(*[references(^._id)]) == 0 && count(*[references(string::split(^._id,"drafts.")[1])]) == 0`,
+            /* groq */ `_type in ["assetFile"] && count(*[references(^._id)]) == 0 && count(*[references(string::split(^._id,"drafts.")[1]+"")]) == 0`,
           )
           .id('allFiles')
           .title('All unused files'),
@@ -45,7 +45,7 @@ const assetLibraryItems = [
         S.documentTypeList('videoFile')
           .apiVersion('2022-05-12')
           .filter(
-            /* groq */ `_type in ["videoFile"] && count(*[ references(^._id) ]) == 0 && count(*[references(string::split(^._id,"drafts.")[1])]) == 0`,
+            /* groq */ `_type in ["videoFile"] && count(*[ references(^._id) ]) == 0 && count(*[references(string::split(^._id,"drafts.")[1]+"")]) == 0`,
           )
 
           .id('videoFiles')
