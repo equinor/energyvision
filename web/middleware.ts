@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isPreview = isPreviewEnabled(request)
 
-  if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) && Flags.IS_DEV && (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)) {
+  if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) && (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)) {
     const rewrite = pathname.replace(pathname, `/content/dam/archive-assets/${locale}${pathname}`)
     return NextResponse.rewrite(`${origin}${rewrite}`)
   }
