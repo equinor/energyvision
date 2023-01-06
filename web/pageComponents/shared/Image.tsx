@@ -1,10 +1,11 @@
 import NewImg from 'next/image'
 import Img from 'next/legacy/image'
 
-import { useNextSanityImage, UseNextSanityImageBuilderOptions, ImageUrlBuilder } from 'next-sanity-image'
+import { ImageUrlBuilder, useNextSanityImage, UseNextSanityImageBuilderOptions } from 'next-sanity-image'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/types'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import SanityImage from './SanityImage'
 
 declare const VALID_LAYOUT_VALUES: readonly ['fill', 'fixed', 'intrinsic', 'responsive', undefined]
 declare type LayoutValue = typeof VALID_LAYOUT_VALUES[number]
@@ -71,6 +72,19 @@ const Image = ({
     },
   )
 
+  if (Flags.IS_DEV) {
+    return (
+      <SanityImage
+        image={image}
+        aspectRatio={aspectRatio}
+        maxWidth={maxWidth}
+        sizes={sizes}
+        placeholder={placeholder}
+        {...rest}
+      />
+    )
+  }
+
   if (!imageProps) return null
 
   const altTag = image?.isDecorative ? '' : image?.alt || ''
@@ -95,21 +109,21 @@ const Image = ({
     )
   }
 
-  if(Flags.IS_DEV){
-    return(
+  if (Flags.IS_DEV) {
+    return (
       <NewImg
-      {...rest}
-      {...imageProps}
-      alt={altTag}
-      sizes={sizes}
-      style={{
-        width: '100%',
-        height: 'auto',
-      }}
-      role={image?.isDecorative ? 'presentation' : undefined}
-      placeholder={placeholder}
-      unoptimized={unoptimized}
-    />
+        {...rest}
+        {...imageProps}
+        alt={altTag}
+        sizes={sizes}
+        style={{
+          width: '100%',
+          height: 'auto',
+        }}
+        role={image?.isDecorative ? 'presentation' : undefined}
+        placeholder={placeholder}
+        unoptimized={unoptimized}
+      />
     )
   }
 

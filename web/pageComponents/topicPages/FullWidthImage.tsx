@@ -1,6 +1,7 @@
-import { StyledCaption } from '../shared/image/StyledCaption'
 import type { FullWidthImageData } from '../../types/types'
 import Image from '../shared/Image'
+import { StyledCaption } from '../shared/image/StyledCaption'
+import { Ratios } from '../shared/SanityImage'
 
 type TeaserProps = {
   data: FullWidthImageData
@@ -16,7 +17,7 @@ const FullWidthImage = ({ data, anchor }: TeaserProps) => {
         id={anchor}
         image={image}
         maxWidth={2000}
-        aspectRatio={0.3}
+        aspectRatio={Ratios.THREE_TO_TEN}
         sizes="100vw"
         alt={image.alt}
         layout="responsive"

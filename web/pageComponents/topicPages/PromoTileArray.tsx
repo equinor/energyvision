@@ -1,14 +1,15 @@
+import { BackgroundContainer, Card } from '@components'
+import { tokens } from '@equinor/eds-tokens'
+import { PortableTextBlock } from '@portabletext/types'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import { Card, BackgroundContainer } from '@components'
-import { tokens } from '@equinor/eds-tokens'
 import type { ImageWithAlt, PromoTileArrayData, PromoTileData } from '../../types/types'
-import Image from '../shared/Image'
 import { ButtonLink } from '../shared/ButtonLink'
+import Image from '../shared/Image'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
-import { PortableTextBlock } from '@portabletext/types'
+import { Ratios } from '../shared/SanityImage'
 
-const { Title, Header, Action, Media } = Card
+const { Header, Action, Media } = Card
 
 const Container = styled.div`
   display: grid;
@@ -80,7 +81,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
                       image={image}
                       alt={image.alt}
                       maxWidth={400}
-                      aspectRatio={0.8}
+                      aspectRatio={Ratios.FOUR_TO_FIVE}
                       layout="responsive"
                     />
                   </Media>

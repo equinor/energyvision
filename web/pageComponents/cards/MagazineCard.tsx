@@ -1,11 +1,12 @@
-import { CSSProperties } from 'react'
 import { Card } from '@components'
+import Img from 'next/image'
 import { default as NextLink } from 'next/link'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import { Ratios } from '../../pageComponents/shared/SanityImage'
 import { HeroTypes, ImageWithAlt, MagazineCardData } from '../../types/types'
 import Image from '../shared/Image'
-import { Flags } from '../../common/helpers/datasetHelpers'
-import Img from 'next/image'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -25,8 +26,8 @@ const TagsContainer = styled.div`
   gap: var(--space-medium);
   display: flex;
   padding: 0 var(--space-medium) var(--space-medium);
-  
-  ::-webkit-scrollbar{
+
+  ::-webkit-scrollbar {
     display: none;
   }
   @media (min-width: 1024px) {
@@ -74,7 +75,7 @@ const getThumbnail = (data: MagazineCardData) => {
           : openGraphImage) as ImageWithAlt
       }
       maxWidth={400}
-      aspectRatio={0.56}
+      aspectRatio={Ratios.NINE_TO_SIXTEEN}
       layout="responsive"
       sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
     />

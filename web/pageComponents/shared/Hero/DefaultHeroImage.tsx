@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import type { ImageWithCaptionData } from '../../../types/types'
 import Image from '../Image'
 import { Caption } from '../image/Caption'
+import { Ratios } from '../SanityImage'
 
 type HeroImageProps = {
   data: ImageWithCaptionData
@@ -17,7 +18,7 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
     <StyledFigure>
       <Image
         maxWidth={1420}
-        aspectRatio={0.5}
+        aspectRatio={Ratios.ONE_TO_TWO}
         image={image}
         sizes="
           (max-width: 340px) 295px,

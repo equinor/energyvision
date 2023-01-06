@@ -1,9 +1,10 @@
-import Image from '../Image'
 import styled from 'styled-components'
-import useWindowSize from '../../../lib/hooks/useWindowSize'
-import { StyledCaption } from '../image/StyledCaption'
 import type { HeroType, ImageWithCaptionData } from 'types'
 import { Flags } from '../../../common/helpers/datasetHelpers'
+import useWindowSize from '../../../lib/hooks/useWindowSize'
+import Image from '../Image'
+import { StyledCaption } from '../image/StyledCaption'
+import { Ratios } from '../SanityImage'
 
 const ImgWrapper = styled.div`
   height: calc(100vh - var(--topbar-height));
@@ -15,11 +16,13 @@ type FullImageHeroType = {
   ratio?: string
 }
 
+const imageSizes = '100vw'
+
 const FullScreenHero = ({ figure }: FullImageHeroType) => {
   return (
     <ImgWrapper>
       {Flags.IS_DEV ? (
-        <Image maxWidth={4096} image={figure.image} layout="fill" style={{ objectFit: 'cover' }} priority />
+        <Image maxWidth={4096} image={figure.image} sizes={imageSizes} priority />
       ) : (
         <Image maxWidth={4096} image={figure.image} layout={'fill'} objectFit={'cover'} priority />
       )}
@@ -30,15 +33,31 @@ const FullScreenHero = ({ figure }: FullImageHeroType) => {
 const NarrowHero = ({ figure }: FullImageHeroType) => {
   const { width } = useWindowSize()
   // 4:3 for small screens and 10:3 for large screens
-  const aspectRatio = width && width < 750 ? 0.75 : 0.3
+  const aspectRatio = width && width < 750 ? Ratios.THREE_TO_FOUR : Ratios.THREE_TO_TEN
 
   return (
-    <Image maxWidth={4000} aspectRatio={aspectRatio} image={figure.image} layout="responsive" sizes="100vw" priority />
+    <Image
+      maxWidth={4096}
+      aspectRatio={aspectRatio}
+      image={figure.image}
+      layout="responsive"
+      sizes={imageSizes}
+      priority
+    />
   )
 }
 
 const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
-  return <Image maxWidth={1420} aspectRatio={Number(ratio) || 0.5} image={figure.image} layout="responsive" priority />
+  return (
+    <Image
+      maxWidth={4096}
+      aspectRatio={Number(ratio) || Ratios.ONE_TO_TWO}
+      image={figure.image}
+      layout="responsive"
+      sizes={imageSizes}
+      priority
+    />
+  )
 }
 
 export const FullImageHero = ({ ratio, figure }: HeroType) => {
@@ -56,8 +75,8 @@ export const FullImageHero = ({ ratio, figure }: HeroType) => {
 
   return (
     <>
-      {getHero()}
-      {figure?.image?.asset && <StyledCaption attribution={figure.attribution} caption={figure.caption} />}
+      <div>{getHero()}</div>
+      <div>{figure?.image?.asset && <StyledCaption attribution={figure.attribution} caption={figure.caption} />}</div>
     </>
   )
 }

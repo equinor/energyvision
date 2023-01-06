@@ -1,12 +1,12 @@
 import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
-import TitleText from '../../shared/portableText/TitleText'
-import IngressText from '../../shared/portableText/IngressText'
-import Accordion from './Accordion'
 import Image from '../../shared/Image'
-import { Flags } from '../../../common/helpers/datasetHelpers'
+import IngressText from '../../shared/portableText/IngressText'
+import TitleText from '../../shared/portableText/TitleText'
+import Accordion from './Accordion'
 
 import type { AccordionData } from '../../../types/types'
+import { Ratios } from '../../shared/SanityImage'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -47,7 +47,7 @@ const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
       <StyledTextBlock>
         {image?.asset && (
           <ImgContainer>
-            <Img image={image} maxWidth={200} aspectRatio={1} layout="intrinsic" />
+            <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} layout="intrinsic" />
           </ImgContainer>
         )}
         {title && <StyledHeading value={title} />}

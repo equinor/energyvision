@@ -1,11 +1,12 @@
-import { CSSProperties } from 'react'
 import { Card, Heading } from '@components'
+import { outlineTemplate, Tokens } from '@utils'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
+import { Flags } from '../../../common/helpers/datasetHelpers'
+import { Ratios } from '../../../pageComponents/shared/SanityImage'
 import type { PeopleCardData } from '../../../types/types'
 import Image from '../../shared/Image'
 import CV from './CV'
-import { outlineTemplate, Tokens } from '@utils'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 const { outline } = Tokens
@@ -165,7 +166,14 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
         <ImageContainer>
           {/*   @TODO Final size adjustments */}
 
-          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={1} layout={Flags.IS_DEV ? "responsive" : "intrinsic"} />}
+          {image && (
+            <RoundedImage
+              image={image}
+              maxWidth={200}
+              aspectRatio={Ratios.ONE_TO_ONE}
+              layout={Flags.IS_DEV ? 'responsive' : 'intrinsic'}
+            />
+          )}
         </ImageContainer>
       </StyledMedia>
       <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>
