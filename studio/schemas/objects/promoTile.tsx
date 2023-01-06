@@ -15,8 +15,7 @@ const titleContentType = configureTitleBlockContent()
 
 export type PromoTile = {
   _type: 'promoTile'
-  richTitle: any[]
-  title: string
+  title: any[]
   image?: ImageWithAlt
   link?: LinkSelector
   background?: ColorListValue
@@ -83,7 +82,7 @@ export default {
       title: 'title',
       imageUrl: 'image.asset.url',
     },
-    prepare({ title, imageUrl }: { title: any[] | string; imageUrl: string }) {
+    prepare({ title, imageUrl }: { title: any[]; imageUrl: string }) {
       return {
         title: blocksToText(title as any[]),
         subtitle: `Promo tile component`,
