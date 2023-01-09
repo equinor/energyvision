@@ -6,6 +6,7 @@ const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   justify-content: center;
   display: flex;
   background-color: var(--grey-10);
+  min-width: 100vw;
   ${({ ratio }) =>
     ratio === 'narrow' && {
       'max-height': '500px',
@@ -14,6 +15,10 @@ const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
 
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const { title, url, thumbnail, ratio } = video
+  const style: React.CSSProperties = {
+    minWidth: '60vw',
+    objectFit: ratio === 'narrow' ? 'cover' : undefined,
+  }
   return (
     <StyledFigure ratio={ratio}>
       <video
@@ -24,7 +29,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
         title={title}
         poster={urlFor(thumbnail).url()}
         src={url.replace('cdn.sanity.io', 'cdn.equinor.com')}
-        style={ratio === 'narrow' ? { objectFit: 'cover' } : {}}
+        style={style}
       >
         <source type={'video/mp4'} />
       </video>
