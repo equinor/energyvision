@@ -39,7 +39,7 @@ export default withBundle(
     reactStrictMode: true,
     experimental: {
       largePageDataBytes: 300 * 1000,
-      scrollRestoration: dataset === 'global-development' || dataset === 'global-test' ? true : false,
+      scrollRestoration: true,
     },
     eslint: {
       // Warning: Dangerously allow production builds to successfully complete even if
