@@ -24,6 +24,17 @@ const Next = styled(SharedStyle)`
   right: 0;
 `
 
+const StyledButton = styled(Button)`
+  background: var(--white-100);
+  border: 1px solid var(--black-80);
+  color: var(--black-80);
+
+  &:hover {
+    background: var(--black-80);
+    color: var(--white-100);
+  }
+`
+
 type NavigationType = 'prev' | 'next'
 
 const checkShouldRender = (config: Swiper, type: NavigationType) => {
@@ -63,9 +74,9 @@ export const NavButton = ({ type }: { type: 'prev' | 'next' }) => {
 
   return (
     <Wrapper>
-      <Button variant="contained_icon" onClick={() => (isPrev ? swiper.slidePrev() : swiper.slideNext())}>
+      <StyledButton variant="contained_icon" onClick={() => (isPrev ? swiper.slidePrev() : swiper.slideNext())}>
         <Icon size={16} data={isPrev ? chevron_left : chevron_right} />
-      </Button>
+      </StyledButton>
     </Wrapper>
   )
 }
