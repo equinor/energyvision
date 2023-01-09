@@ -23,6 +23,7 @@ type ImgProps = Omit<
   priority?: boolean
   objectFit?: 'cover' | 'contain'
   style?: React.CSSProperties
+  fill?: boolean
 }
 
 const getHeightByAspectRatio = (options: UseNextSanityImageBuilderOptions, maxWidth: number, aspectRatio: number) => {

@@ -22,7 +22,7 @@ const FullScreenHero = ({ figure }: FullImageHeroType) => {
   return (
     <ImgWrapper>
       {Flags.IS_DEV ? (
-        <Image maxWidth={4096} image={figure.image} sizes={imageSizes} priority />
+        <Image maxWidth={4096} image={figure.image} fill sizes={imageSizes} priority />
       ) : (
         <Image maxWidth={4096} image={figure.image} layout={'fill'} objectFit={'cover'} priority />
       )}

@@ -11,6 +11,7 @@ type Props = Omit<JSX.IntrinsicElements['img'], 'src' | 'srcSet' | 'ref' | 'widt
   placeholder?: 'empty' | 'blur'
   priority?: boolean
   style?: React.CSSProperties
+  fill?: boolean
 }
 
 export enum Ratios {
@@ -40,18 +41,43 @@ const useSanityLoader = (image: ImageWithAlt, maxWidth: number, aspectRatio: num
     },
   })
 
-const Image = ({ image, aspectRatio, sizes = defaultSizes, maxWidth = defaultMaxWidth, ...rest }: Props) => {
+const Image = ({
+  image,
+  aspectRatio,
+  sizes = defaultSizes,
+  maxWidth = defaultMaxWidth,
+  fill,
+  style,
+  ...rest
+}: Props) => {
   const imageProps = useSanityLoader(image, maxWidth, aspectRatio)
   if (!image?.asset) return <></>
-  imageProps.src += '&width=0'
+  const { width, height, src } = imageProps
+  let props = {}
+
+  if (fill) {
+    // Layout fill
+    props = {
+      fill,
+      style: { ...style, objectFit: 'cover' },
+    }
+  } else {
+    // Layout responsive
+    props = {
+      width,
+      height,
+      style: { ...style, width: '100%', height: 'auto' },
+    }
+  }
 
   return (
     <Img
       {...rest}
-      {...imageProps}
-      sizes={sizes}
+      {...props}
+      src={src + '&width=0'}
       alt={image.isDecorative ? '' : image.alt ?? ''}
       role={image.isDecorative ? 'presentation' : undefined}
+      sizes={sizes}
     />
   )
 }
