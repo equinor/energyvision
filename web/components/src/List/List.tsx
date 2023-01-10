@@ -13,6 +13,7 @@ const StyledList = styled(EdsList)<ListProps>`
   line-height: var(--lineHeight-3);
   /* EDS list removes margin */
   margin: var(--space-medium) 0;
+  list-style-position: inside;
   ${({ unstyled }) =>
     unstyled && {
       margin: 0,
