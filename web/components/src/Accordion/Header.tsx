@@ -55,12 +55,6 @@ const StyledHeader = styled(Typography)`
   & ${FilledIcon} {
     display: none;
   }
-  &:hover ${FilledIcon} {
-    display: inline-flex;
-  }
-  &:hover ${OutlineIcon} {
-    display: none;
-  }
 `
 
 const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
