@@ -26,18 +26,6 @@ export type CAccordionHeaderProps = {
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
 } & ChakraAccordionButtonProps
 
-const StyledCAccordionButton = styled(CAccordionButton)`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background: transparent;
-  padding: var(--space-medium) 0;
-  border: none;
-  cursor: pointer;
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-`
 const StyledRAccordionButton = styled(RAccordionButton)`
   display: flex;
   align-items: center;
@@ -104,11 +92,7 @@ export const Header = Flags.IS_DEV
 
       return (
         <StyledHeader forwardedAs={headingLevel}>
-          <StyledCAccordionButton
-            ref={ref}
-            style={{ paddingLeft: 0, paddingTop: '1em', paddingBottom: '1em' }}
-            {...rest}
-          >
+          <CAccordionButton ref={ref} style={{ paddingLeft: 0, paddingTop: '1em', paddingBottom: '1em' }} {...rest}>
             {isOpen ? (
               <StyledIcon>
                 <OutlineIcon size={iconSize} data={remove_outlined} />
@@ -123,7 +107,7 @@ export const Header = Flags.IS_DEV
             <StyledTypography isExpanded={isOpen} forwardedAs="span">
               {children}
             </StyledTypography>
-          </StyledCAccordionButton>
+          </CAccordionButton>
         </StyledHeader>
       )
     })
