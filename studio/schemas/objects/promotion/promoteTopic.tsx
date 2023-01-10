@@ -4,7 +4,7 @@ import CharCounterEditor from '../../components/CharCounterEditor'
 import blocksToText from '../../../helpers/blocksToText'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
-import type { Block, Rule, Image } from '@sanity/types'
+import type { Block, Rule, Image, Reference } from '@sanity/types'
 import routes from '../../routes'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
@@ -19,6 +19,18 @@ const introBlockContentType = configureBlockContent({
   attachment: false,
   lists: false,
 })
+
+type PromotedTopicPage = {
+  _key: string
+  _type: 'topics'
+  ingress: Block[]
+  reference: Reference
+}
+
+export type TopicPromotion = {
+  _type: 'promoteTopics'
+  references: PromotedTopicPage[]
+}
 
 export default {
   title: 'Topic/magazine promotion',
@@ -85,7 +97,7 @@ export default {
           },
         },
       ],
-      validation: (Rule: Rule) => Rule.unique().min(3).max(3),
+      validation: (Rule: Rule) => Rule.unique(),
     },
   ],
   preview: {

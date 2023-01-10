@@ -1,21 +1,49 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react'
 import blocksToText from '../../../helpers/blocksToText'
 import { Colors } from '../../../helpers/ColorListValues'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import CharCounterEditor from '../../components/CharCounterEditor'
+import type { MagazinePromotion } from './promoteMagazine'
+import type { TopicPromotion } from './promoteTopic'
 
-import type { Rule, Block } from '@sanity/types'
+import type { Rule, Block, CustomValidatorResult, ValidationError } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../icons'
 
+const horizontalScrollValidation = (context: Promotion): true | ValidationError => {
+  const { promotion, useHorizontalScroll } = context
+  const promo = promotion[0]
+  const numberOfItems = promo._type === 'promoteTopics' ? promo.references.length : promo.promotedArticles.length
+
+  const MIN = 3
+  const MAX = useHorizontalScroll ? 6 : 3
+
+  const validateNumber = (length: number): true | ValidationError => {
+    if (length < MIN)
+      // @ts-ignore
+      return { message: `Must have at least ${MIN} items`, paths: ['promotion'] }
+    if (length > MAX)
+      // @ts-ignore
+      return { message: `Maximum of ${MIN} items allowed`, paths: ['promotion'] }
+
+    return true
+  }
+
+  if (promo._type === 'promoteMagazine' && !promo.manuallySelectArticles) return true
+
+  return validateNumber(numberOfItems)
+}
+
 export type Promotion = {
   _type: 'promotion'
-  type: 'news' | 'topic' | 'people'
   title?: Block[]
   ingress?: Block[]
+  promotion: TopicPromotion | MagazinePromotion | any // @TODO: add other types
+  useHorizontalScroll: boolean
   background?: ColorListValue
 }
 
@@ -47,6 +75,16 @@ export default {
       },
     },
   ],
+  validation: (Rule: Rule) =>
+    Rule.custom((value: Promotion): CustomValidatorResult => {
+      const typesToValidate = ['promoteTopics', 'promoteMagazine']
+
+      if (typesToValidate.includes(value.promotion[0]._type)) {
+        return horizontalScrollValidation(value)
+      }
+
+      return true
+    }),
   fields: [
     {
       title: 'Title',

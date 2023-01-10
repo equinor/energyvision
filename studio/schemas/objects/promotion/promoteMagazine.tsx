@@ -42,15 +42,7 @@ export default {
           },
         },
       ],
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as { parent: MagazinePromotion }
-          if (!parent.manuallySelectArticles) return true
-
-          if (!value || value.length !== 3) return 'You must select 3 articles'
-
-          return true
-        }).unique(),
+      validation: (Rule: Rule) => Rule.unique(),
       hidden: ({ parent }: { parent: MagazinePromotion }) => parent?.manuallySelectArticles === false,
     },
     {
