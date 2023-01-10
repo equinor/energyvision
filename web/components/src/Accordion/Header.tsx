@@ -50,12 +50,25 @@ const StyledIcon = styled.span`
     fill: var(--energy-red-100);
   }
 `
-const StyledHeader = styled(Typography)`
-  margin: 0;
-  & ${FilledIcon} {
-    display: none;
-  }
-`
+const StyledHeader = Flags.IS_DEV
+  ? styled(Typography)`
+      margin: 0;
+      & ${FilledIcon} {
+        display: none;
+      }
+    `
+  : styled(Typography)`
+      margin: 0;
+      & ${FilledIcon} {
+        display: none;
+      }
+      &:hover ${FilledIcon} {
+        display: inline-flex;
+      }
+      &:hover ${OutlineIcon} {
+        display: none;
+      }
+    `
 
 const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   font-size: var(--typeScale-1);
