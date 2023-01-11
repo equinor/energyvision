@@ -7,7 +7,6 @@ import type { Block } from '@sanity/types'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 import { configureBlockContent } from '../editors/blockContentType'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -58,23 +57,7 @@ export default {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [
-        !Flags.IS_DEV && {
-          type: 'block',
-          styles: [{ title: 'Normal', value: 'normal' }],
-          lists: [
-            { title: 'Numbered', value: 'number' },
-            { title: 'Unordered', value: 'bullet' },
-          ],
-          marks: {
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' },
-            ],
-          },
-        },
-        Flags.IS_DEV && blockContentType,
-      ].filter((e) => e),
+      of: [blockContentType],
     },
     {
       name: 'image',
