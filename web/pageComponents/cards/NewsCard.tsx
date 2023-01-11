@@ -6,6 +6,7 @@ import type { CardData } from '../../types/types'
 import Image from '../shared/Image'
 import RichText from '../shared/portableText/RichText'
 import { Ratios } from '../shared/SanityImage'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
@@ -15,6 +16,28 @@ const StyledCard = styled(Card)`
 `
 const StyledLink = styled(CardLink)`
   display: inline-block;
+`
+const StyledTitle = styled(Title)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+`
+
+const StyledIngress = styled(Text)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  margintop: calc(var(--space-small) * -1);
 `
 
 type NewsCardProp = {
@@ -57,15 +80,26 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
                 />
               </Eyebrow>
             )}
-            <Title>
-              <>{title}</>
-            </Title>
+            {Flags.IS_DEV ? (
+              <StyledTitle>
+                <>{title}</>
+              </StyledTitle>
+            ) : (
+              <Title>
+                <>{title}</>
+              </Title>
+            )}
           </Header>
-          {ingress && (
-            <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-              <RichText value={ingress}></RichText>
-            </Text>
-          )}
+          {ingress &&
+            (Flags.IS_DEV ? (
+              <StyledIngress>
+                <RichText value={ingress}></RichText>
+              </StyledIngress>
+            ) : (
+              <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
+                <RichText value={ingress}></RichText>
+              </Text>
+            ))}
           <Action>
             <Arrow />
           </Action>
