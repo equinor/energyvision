@@ -1,17 +1,13 @@
 import { useNextSanityImage } from 'next-sanity-image'
-import Img from 'next/image'
+import Img, { ImageProps } from 'next/image'
 
 import type { ImageWithAlt } from 'types'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 
-type Props = Omit<JSX.IntrinsicElements['img'], 'src' | 'srcSet' | 'ref' | 'width' | 'height' | 'loading' | 'style'> & {
+type Props = Omit<ImageProps, 'src' | 'alt'> & {
   image: ImageWithAlt
   maxWidth?: number
   aspectRatio?: number
-  placeholder?: 'empty' | 'blur'
-  priority?: boolean
-  style?: React.CSSProperties
-  fill?: boolean
 }
 
 export enum Ratios {
@@ -24,8 +20,8 @@ export enum Ratios {
   ONE_TO_ONE = 1,
 }
 
-const defaultSizes = '(max-width: 800px) 100vw, 800px'
-const defaultMaxWidth = 1440
+const DEFAULT_SIZES = '(max-width: 800px) 100vw, 800px'
+const DEFAULT_MAX_WIDTH = 1440
 
 const useSanityLoader = (image: ImageWithAlt, maxWidth: number, aspectRatio: number | undefined) =>
   useNextSanityImage(sanityClientWithEquinorCDN, image, {
@@ -44,8 +40,8 @@ const useSanityLoader = (image: ImageWithAlt, maxWidth: number, aspectRatio: num
 const Image = ({
   image,
   aspectRatio,
-  sizes = defaultSizes,
-  maxWidth = defaultMaxWidth,
+  sizes = DEFAULT_SIZES,
+  maxWidth = DEFAULT_MAX_WIDTH,
   fill,
   style,
   ...rest
@@ -53,6 +49,7 @@ const Image = ({
   const imageProps = useSanityLoader(image, maxWidth, aspectRatio)
   if (!image?.asset) return <></>
   const { width, height, src } = imageProps
+
   let props = {}
 
   if (fill) {
@@ -74,7 +71,7 @@ const Image = ({
     <Img
       {...rest}
       {...props}
-      src={src + '&width=0'}
+      src={src}
       alt={image.isDecorative ? '' : image.alt ?? ''}
       role={image.isDecorative ? 'presentation' : undefined}
       sizes={sizes}
