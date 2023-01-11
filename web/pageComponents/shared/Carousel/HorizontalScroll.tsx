@@ -14,7 +14,6 @@ import 'swiper/css/free-mode'
 const CardCarouselStyles = css`
   --card-maxWidth: 360px;
 
-  max-width: calc(var(--card-maxWidth) * ${({ items }: any) => items || '3'} + var(--space-large) * 4);
   padding: 0 var(--space-large);
 
   @media (max-width: 800px) {
@@ -26,11 +25,13 @@ const CardCarouselStyles = css`
 export type CarouselTypes = 'card'
 
 export type StyledSwiperTypes = {
-  $items?: number
   $carouselType?: CarouselTypes
 } & SwiperProps
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $items?: number }>`
+  max-width: calc(var(--card-maxWidth) * ${({ items }: any) => items || '3'} + var(--space-large) * 4);
+  margin: auto;
+
   position: relative;
   padding: 0 var(--space-xxLarge);
 
@@ -81,7 +82,7 @@ export const HorizontalScroll = ({
   const numberOfItems = Children.toArray(children).length
 
   return (
-    <Wrapper>
+    <Wrapper $items={numberOfItems}>
       <StyledSwiper
         scrollbar={{
           draggable: true,
@@ -90,7 +91,6 @@ export const HorizontalScroll = ({
         modules={[Scrollbar, FreeMode]}
         slidesPerView={slidesPerView}
         grabCursor={true}
-        $items={numberOfItems}
         $carouselType={type}
         {...rest}
       >
