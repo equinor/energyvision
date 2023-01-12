@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraBaseProvider } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle } from '../styles/globalStyles'
@@ -18,6 +18,7 @@ import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
 import { SkipNavLink as NewSkipNavLink, SkipNavContent } from '@chakra-ui/skip-nav'
 import { Flags } from '../common/helpers/datasetHelpers'
+import styled from 'styled-components'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
@@ -104,11 +105,22 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
   useConsentState('statistics', enableStatisticsCookies, disableStatisticsCookies)
 
+  const StyledSkipLink = styled(NewSkipNavLink)`
+    &:focus {
+      background: white;
+      padding: var(--space-medium);
+      border: 1px solid black;
+      position: sticky;
+      border-radius: 7px;
+      margin: var(--space-medium);
+      top: 10%;
+    }
+  `
   return (
     <SWRConfig>
-      <ChakraProvider>
+      <ChakraBaseProvider>
         <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
-          {Flags.IS_DEV && <NewSkipNavLink style={{ top: '10%' }}>Skip to Content</NewSkipNavLink>}
+          {Flags.IS_DEV && <StyledSkipLink>Skip to Content</StyledSkipLink>}
           <>
             <Head>
               <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -123,7 +135,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
             )}
           </>
         </ErrorBoundary>
-      </ChakraProvider>
+      </ChakraBaseProvider>
     </SWRConfig>
   )
 }
