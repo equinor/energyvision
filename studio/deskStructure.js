@@ -33,13 +33,13 @@ export const getDefaultDocumentNode = (props) => {
         })
         .title('Connected routes'),
     ])
-  } else if (schemaType === 'assetFile') {
+  } else if (['assetFile', 'videoFile'].includes(schemaType)) {
     return S.document().views([
       S.view.form(),
       S.view
         .component(DocumentsPane)
         .options({
-          query: `*[!(_id in path("drafts.**")) && references($id) && _type in ["news", "event", "page"]]`,
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type in ["news", "event", "page","magazine"]]`,
           params: { id: `_id` },
           useDraft: false,
         })
