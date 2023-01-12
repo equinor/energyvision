@@ -1,6 +1,8 @@
-import NextLink from 'next/link'
 import { ButtonLink as Link } from '@components'
+import NextLink from 'next/link'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../lib/localization'
 import type { LinkData } from '../../types/types'
 
 export const ButtonLink = ({ action, ...rest }: { action: LinkData }) => {
@@ -14,8 +16,9 @@ export const ButtonLink = ({ action, ...rest }: { action: LinkData }) => {
 
   // If the URL is a static AEM page it should behave as an internal link in the web
   if (type === 'internalUrl') {
+    const locale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink passHref href={url} legacyBehavior>
+      <NextLink passHref locale={Flags.IS_DEV ? locale : undefined} href={url} legacyBehavior>
         <Link aria-label={ariaLabel} {...rest}>
           {label}
         </Link>

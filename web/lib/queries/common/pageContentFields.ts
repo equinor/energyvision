@@ -1,10 +1,9 @@
-import { noDrafts, sameLang } from './langAndDrafts'
-import slugReference from './slugReference'
-import markDefs from './blockEditorMarks'
-import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import { eventPromotionFields, pastEventsQuery, futureEventsQuery } from './eventPromotion'
+import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import markDefs from './blockEditorMarks'
+import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
+import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
@@ -146,10 +145,11 @@ const pageContentFields = /* groq */ `
         "label": link.label,
         "ariaLabel": link.ariaLabel,
         "anchorReference": link.anchorReference,
-        "link": link.reference-> {
-          "type": _type,
-          "slug": ${slugReference}
-        },
+        "link": select(
+          link.linkToOtherLanguage == true =>
+            link.referenceToOtherLanguage->${linkReferenceFields},
+            link.reference->${linkReferenceFields},
+        ),
         "href": link.url,
         "type": select(
           defined(link.url) => "externalUrl",

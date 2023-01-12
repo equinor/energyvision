@@ -1,12 +1,11 @@
-import React from 'react'
-import { ExternalLinkRenderer, SuperScriptRenderer, SubScriptRenderer } from '../components'
-import { link, attach_file, external_link } from '@equinor/eds-icons'
-import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
-import type { BlockFieldType } from '../../types/schemaTypes'
-import routes from '../routes'
-import { filterByPages, filterByRouteAndNewsInOtherLanguages } from '../../helpers/referenceFilters'
+import { attach_file, external_link, link } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from '@sanity/types'
+import { filterByPages, filterByRouteAndNewsInOtherLanguages } from '../../helpers/referenceFilters'
+import { EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
+import type { BlockFieldType } from '../../types/schemaTypes'
+import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
+import routes from '../routes'
 
 export type BlockContentProps = {
   h1?: boolean
@@ -155,6 +154,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
       },
       {
         title: 'Reference',
+        // Oh no! There is a typo here :(
         name: 'referenceToOtherLanguange',
         type: 'reference',
         to: [...newsType, ...routes],

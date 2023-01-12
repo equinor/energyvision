@@ -1,11 +1,13 @@
 import { link } from '@equinor/eds-icons'
+import type { Reference, Rule, ValidationContext } from '@sanity/types'
+import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
-import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
-import type { Rule, ValidationContext, Reference } from '@sanity/types'
-import routes from '../routes'
-import { AnchorLinkDescription } from './anchorReferenceField'
-import { filterByPages } from '../../helpers/referenceFilters'
 import { Flags } from '../../src/lib/datasetHelpers'
+import routes from '../routes'
+import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
+import { AnchorLinkDescription } from './anchorReferenceField'
+// eslint-disable-next-line import/no-unresolved
+import client from 'part:@sanity/base/client'
 
 export type ReferenceTarget = {
   type: string
@@ -13,7 +15,9 @@ export type ReferenceTarget = {
 
 export type LinkSelector = {
   _type: 'linkSelector'
+  linkToOtherLanguage?: boolean
   reference?: Reference
+  referenceToOtherLanguage?: Reference
   url?: string
   label?: string
   ariaLabel?: string
@@ -53,18 +57,53 @@ const LinkField = {
   ],
   fields: [
     {
+      name: 'linkToOtherLanguage',
+      type: 'boolean',
+      title: 'Link to a different language',
+      hidden: !Flags.IS_DEV,
+      description: 'Use this if you want to create a link to a page of a different language',
+    },
+    {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
+      hidden: ({ parent }: { parent: LinkSelector }) => parent.linkToOtherLanguage,
       validation: (Rule: Rule) =>
-        Rule.custom((value: any, context: ValidationContext) => {
-          const { parent } = context as { parent: LinkSelector }
+        Rule.custom(async (value: any, context: ValidationContext) => {
+          const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
+          if (parent.linkToOtherLanguage) return true
+          const referenceLang = await client.fetch(
+            /* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`,
+            {
+              id: value._ref,
+            },
+          )
+          if (Flags.IS_DEV && document._lang !== referenceLang)
+            return 'Reference must have the same language as the document'
           return validateInternalOrExternalUrl(value, parent.url)
         }),
       to: defaultReferenceTargets,
       options: {
         filter: filterByPages,
+        disableNew: true,
+      },
+    },
+    {
+      name: 'referenceToOtherLanguage',
+      title: 'Internal link',
+      description: 'Use this field to reference an internal page.',
+      type: 'reference',
+      hidden: ({ parent }: { parent: LinkSelector }) => !parent.linkToOtherLanguage,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: LinkSelector }
+          if (!parent.linkToOtherLanguage) return true
+          return validateInternalOrExternalUrl(value, parent.url)
+        }),
+      to: defaultReferenceTargets,
+      options: {
+        filter: filterByPagesInOtherLanguages,
         disableNew: true,
       },
     },
@@ -76,7 +115,8 @@ const LinkField = {
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          return validateInternalOrExternalUrl(value, parent.reference)
+          const connectedField = parent.linkToOtherLanguage ? parent.referenceToOtherLanguage : parent.reference
+          return validateInternalOrExternalUrl(value, connectedField)
         }),
     },
     {

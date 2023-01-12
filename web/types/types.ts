@@ -4,7 +4,7 @@ import {
   SanityImageCrop,
   SanityImageHotspot,
   SanityImageObject,
-  SanityImageSource,
+  SanityImageSource
 } from '@sanity/image-url/lib/types/types'
 
 export type CaptionData = {
@@ -33,7 +33,7 @@ export type LinkData = {
   id?: string
   label: string
   ariaLabel?: string
-  link?: { slug: string; type: string }
+  link?: { slug: string; type: string, lang: string }
   href?: string
   extension?: string
   fileName?: string

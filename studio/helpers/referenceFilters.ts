@@ -25,6 +25,18 @@ export const filterByPages = ({ document }: { document: SanityDocument }) => {
   }
 }
 
+export const filterByPagesInOtherLanguages = ({ document }: { document: SanityDocument }) => {
+  const lang = langOrDefault(document._lang)
+
+  return {
+    filter: `(_type match 'route_*' && !(_type match $routeLang)) || _type in ['news', 'localNews', 'magazine'] && _lang != $lang`,
+    params: {
+      routeLang: `route_${lang}*`,
+      lang: lang,
+    },
+  }
+}
+
 export const filterByRouteNewsAndTitle = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document._lang)
   const title = document.title || ''

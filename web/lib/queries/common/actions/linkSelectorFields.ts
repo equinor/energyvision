@@ -1,5 +1,20 @@
 import slugReference from '../slugReference'
 
+const lang = /* groq */ `
+  select(_type match 'route_*' =>
+    content->_lang,
+    _lang
+  )
+`
+
+export const linkReferenceFields = /* groq */ `
+  {
+    "type": _type,
+    "slug": ${slugReference},
+    "lang": ${lang},
+  }
+`
+
 const linkSelectorFields = /* groq */ `
 _type == "linkSelector" => {
   "id": _key,
@@ -8,10 +23,11 @@ _type == "linkSelector" => {
   ),
   label,
   ariaLabel,
-  "link": reference-> {
-    "type": _type,
-    "slug": ${slugReference}
-  },
+  "link": select(
+    linkToOtherLanguage == true =>
+      referenceToOtherLanguage->${linkReferenceFields},
+      reference->${linkReferenceFields},
+  ),
   "href": url,
   anchorReference,
 }
