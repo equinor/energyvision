@@ -14,18 +14,18 @@ const StyledList = styled(EdsList)<ListProps>`
   line-height: var(--lineHeight-3);
   /* EDS list removes margin */
   margin: var(--space-medium) 0;
-  list-style-position: ${Flags.IS_DEV ? 'inside;' : 'outside;'}
-    ${({ unstyled }) =>
-      unstyled && {
-        margin: 0,
-        padding: 0,
-        listStyle: 'none',
-      }}
-    ${({ centered }) =>
-      centered && {
-        display: 'grid',
-        placeContent: 'center',
-      }}
+  list-style-position: ${Flags.IS_DEV ? 'inside' : 'outside'};
+  ${({ unstyled }) =>
+    unstyled && {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    }}
+  ${({ centered }) =>
+    centered && {
+      display: 'grid',
+      placeContent: 'center',
+    }}
     @media (min-width: 800px) {
     ${({ splitList }) =>
       splitList && {
