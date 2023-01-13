@@ -7,38 +7,46 @@ export const UnusedAssetFilters = () =>
     .title('Unused files')
     .icon()
     .child(S.list('unusedAssets').title('Unused Files').items(unusedTypesListItems))
+    .id('unusedFiles')
+
+const getUnusedPublishedAssets = (docType) =>
+  S.documentTypeList(docType)
+    .apiVersion('2023-01-13')
+    .filter(
+      /* groq */ ` _type in [$docType] && (
+        (!(_id in path("drafts.**"))&& count(*[references(^._id)]) == 0)
+        )`,
+    )
+    .params({ docType })
+    .id(`unusedPublishedAssets-${docType}`)
+
+const getUnpublishedDraftAssets = (docType) =>
+  S.documentTypeList(docType)
+    .apiVersion('2023-01-13')
+    .filter(
+      /* groq */ ` _type in [$docType] && (
+        (_id in path("drafts.**") && count(*[^._id == "drafts." + _id]) == 0)
+        )`,
+    )
+    .params({ docType })
+    .id(`unpublishedDrafts-${docType}`)
 
 const unusedTypesListItems = [
+  S.listItem().icon(FileIcon).child(getUnpublishedDraftAssets('assetFile')).id('draftAssets').title('Draft Assets'),
   S.listItem()
-    .title('Unused asset files')
     .icon(FileIcon)
-    .child(
-      S.documentTypeList('assetFile')
-        .apiVersion('2022-05-12')
-        .filter(
-          /* groq */ ` _type in ["assetFile"] && (
-            (!(_id in path("drafts.**"))&& count(*[references(^._id)]) == 0)
-            ||
-            (_id in path("drafts.**") && count(*[^._id == "drafts." + _id]) == 0)
-            )`,
-        )
-        .id('allFiles')
-        .title('All unused files'),
-    ),
+    .child(getUnusedPublishedAssets('assetFile'))
+    .id('publishedAssets')
+    .title('Published Assets'),
+  S.divider(),
   S.listItem()
-    .title('Unused video assets')
     .icon(() => EdsIcon(play_circle_outlined))
-    .child(
-      S.documentTypeList('videoFile')
-        .apiVersion('2022-05-12')
-        .filter(
-          /* groq */ ` _type in ["videoFile"] && (
-            (!(_id in path("drafts.**"))&& count(*[references(^._id)]) == 0)
-            ||
-            (_id in path("drafts.**") && count(*[^._id == "drafts." + _id]) == 0)
-            )`,
-        )
-        .id('videoFiles')
-        .title('Video Files'),
-    ),
+    .child(getUnpublishedDraftAssets('videoFile'))
+    .id('draftVideos')
+    .title('Draft Videos'),
+  S.listItem()
+    .icon(() => EdsIcon(play_circle_outlined))
+    .child(getUnusedPublishedAssets('videoFile'))
+    .id('publishedVideos')
+    .title('Published Videos'),
 ]
