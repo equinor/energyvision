@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link } from '@components'
+import { Link, Text } from '@components'
 import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
@@ -8,6 +8,7 @@ import Instagram from '../icons/Instagram'
 import Linkedin from '../icons/Linkedin'
 import Twitter from '../icons/Twitter'
 import Youtube from '../icons/Youtube'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
@@ -141,6 +142,7 @@ type FooterProps = {
 }
 
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
+  const dt = new Date()
   return (
     <StyledFooter ref={ref} {...rest}>
       <FooterTop>
@@ -177,9 +179,13 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
         })}
       </FooterTop>
       <FooterBottom>
-        <CompanyName>
-          <FormattedMessage id="copyright" defaultMessage="Copyright 2022 Equinor ASA" />
-        </CompanyName>
+        {Flags.IS_DEV ? (
+          <CompanyName>Copyright {dt.getFullYear()} Equinor ASA</CompanyName>
+        ) : (
+          <CompanyName>
+            <FormattedMessage id="copyright" defaultMessage="Copyright 2022 Equinor ASA" />
+          </CompanyName>
+        )}
       </FooterBottom>
     </StyledFooter>
   )
