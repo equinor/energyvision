@@ -141,6 +141,7 @@ type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
 }
 
+// TODO: Remove sanity text when removing featureflag for #770
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   const dt = new Date()
   return (
