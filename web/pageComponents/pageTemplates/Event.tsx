@@ -1,20 +1,20 @@
-import styled from 'styled-components'
-import BasicIFrame from '../shared/iframe/BasicIFrame'
-import RelatedContent from '../shared/RelatedContent'
-import IngressText from '../shared/portableText/IngressText'
-import { toPlainText } from '@portabletext/react'
-import ContactList from '../shared/ContactList'
-import TitleText from '../shared/portableText/TitleText'
-import EventText from '../shared/portableText/EventText'
-import Promotion from '../topicPages/Promotion'
-import AddToCalendar from '../topicPages/AddToCalendar'
 import { FormattedDate, FormattedTime } from '@components'
-import { getEventDates } from '../../common/helpers/dateUtilities'
+import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
+import { getEventDates } from '../../common/helpers/dateUtilities'
+import ContactList from '../shared/ContactList'
+import BasicIFrame from '../shared/iframe/BasicIFrame'
+import EventText from '../shared/portableText/EventText'
+import IngressText from '../shared/portableText/IngressText'
+import TitleText from '../shared/portableText/TitleText'
+import RelatedContent from '../shared/RelatedContent'
+import AddToCalendar from '../topicPages/AddToCalendar'
+import Promotion from '../topicPages/Promotion'
 
-import type { EventSchema } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
+import type { EventSchema } from '../../types/types'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -171,18 +171,20 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
             </HeaderInner>
           </Header>
-          <ContentWrapper>
-            {ingress && (
-              <LeadParagraph>
-                <IngressText value={ingress}></IngressText>
-              </LeadParagraph>
-            )}
-            {content && (
-              <Content>
-                <EventText value={content} />
-              </Content>
-            )}
-          </ContentWrapper>
+          {(ingress || content) && (
+            <ContentWrapper>
+              {ingress && (
+                <LeadParagraph>
+                  <IngressText value={ingress}></IngressText>
+                </LeadParagraph>
+              )}
+              {content && (
+                <Content>
+                  <EventText value={content} />
+                </Content>
+              )}
+            </ContentWrapper>
+          )}
           {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion
