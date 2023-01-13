@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app'
 import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
-import { ChakraBaseProvider } from '@chakra-ui/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle } from '../styles/globalStyles'
@@ -118,24 +117,22 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   `
   return (
     <SWRConfig>
-      <ChakraBaseProvider>
-        <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
-          {Flags.IS_DEV && <StyledSkipLink>Skip to Content</StyledSkipLink>}
-          <>
-            <Head>
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-            </Head>
-            <GlobalStyle />
-            <SkipNavLink />
-            {IS_LIVE && <CookieBot locale={router.locale} />}
-            {Flags.IS_DEV ? (
-              <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
-            ) : (
-              <>{getLayout(<Component {...pageProps} />)}</>
-            )}
-          </>
-        </ErrorBoundary>
-      </ChakraBaseProvider>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
+        {Flags.IS_DEV && <StyledSkipLink>Skip to Content</StyledSkipLink>}
+        <>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+          </Head>
+          <GlobalStyle />
+          <SkipNavLink />
+          {IS_LIVE && <CookieBot locale={router.locale} />}
+          {Flags.IS_DEV ? (
+            <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
+          ) : (
+            <>{getLayout(<Component {...pageProps} />)}</>
+          )}
+        </>
+      </ErrorBoundary>
     </SWRConfig>
   )
 }
