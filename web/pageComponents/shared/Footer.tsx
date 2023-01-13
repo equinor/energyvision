@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link, Text } from '@components'
+import { Link } from '@components'
 import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
 import NextLink from 'next/link'
