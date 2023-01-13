@@ -18,26 +18,21 @@ const StyledLink = styled(CardLink)`
   display: inline-block;
 `
 const StyledTitle = styled(Title)`
-  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
   line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 `
 
 const StyledIngress = styled(Text)`
-  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
   overflow: hidden;
-  text-overflow: ellipsis;
   line-clamp: 5;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  margintop: calc(var(--space-small) * -1);
 `
 
 type NewsCardProp = {
