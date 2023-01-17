@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import styled, { createGlobalStyle, CSSProperties } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
+import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import { Topbar, Link, Button } from '@components'
