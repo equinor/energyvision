@@ -1,6 +1,6 @@
 import { attach_file, external_link, link } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from '@sanity/types'
-import { filterByPages, filterByRouteAndNewsInOtherLanguages } from '../../helpers/referenceFilters'
+import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import type { BlockFieldType } from '../../types/schemaTypes'
@@ -159,7 +159,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         type: 'reference',
         to: [...newsType, ...routes],
         options: {
-          filter: filterByRouteAndNewsInOtherLanguages,
+          filter: filterByPagesInOtherLanguages,
           disableNew: true,
         },
         hidden: ({ parent }: { parent: InternalLinkType }) => !parent.linkToOtherLanguage,
