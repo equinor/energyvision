@@ -118,6 +118,14 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
       ]
     : []
 
+  const localNewsType = Flags.HAS_LOCAL_NEWS
+    ? [
+        {
+          type: 'localNews',
+        },
+      ]
+    : []
+
   const internalLinkConfig = {
     name: 'internalLink',
     type: 'object',
@@ -136,7 +144,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         title: 'Reference',
         name: 'reference',
         type: 'reference',
-        to: [...newsType, ...routes],
+        to: [...localNewsType, ...newsType, ...routes],
         options: {
           filter: filterByPages,
           disableNew: true,
@@ -157,7 +165,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         // Oh no! There is a typo here :(
         name: 'referenceToOtherLanguange',
         type: 'reference',
-        to: [...newsType, ...routes],
+        to: [...localNewsType, ...newsType, ...routes],
         options: {
           filter: filterByPagesInOtherLanguages,
           disableNew: true,
