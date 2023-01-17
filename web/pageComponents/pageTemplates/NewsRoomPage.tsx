@@ -42,12 +42,12 @@ const GridFilters = styled(Filters)`
 
 const StyledList = styled.div`
   padding: 0 var(--space-large);
+  grid-area: list;
 
   @media (min-width: 800px) {
     padding: 0;
     display: grid;
     grid-template-rows: var(--space-56) min-content min-content;
-    grid-area: list;
   }
 `
 
