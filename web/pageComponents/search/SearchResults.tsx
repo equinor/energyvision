@@ -5,6 +5,7 @@ import { Index, useHits } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
 import { Pagination } from '../shared/search/pagination/Pagination'
 import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
@@ -48,6 +49,7 @@ const tabMap = [
 const SearchResults = () => {
   const router = useRouter()
   //const replaceUrl = useRouterReplace()
+  const padding = usePaginationPadding()
   const { results } = useHits()
   const [currentTab, setCurrentTab] = useState<string>((router.query.tab as string) || 'topics')
 
@@ -143,27 +145,27 @@ const SearchResults = () => {
               <TabPanel>
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits setTabResults={setTabResults} hitComponent={TopicHit} category="topics" />
-                <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setTabResults={setTabResults} hitComponent={EventHit} category="events" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                  <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setTabResults={setTabResults} hitComponent={NewsHit} category="news" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                  <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
               <TabPanel>
                 <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits setTabResults={setTabResults} hitComponent={MagazineHit} category="magazine" />
-                  <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} inverted />
+                  <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
                 </Index>
               </TabPanel>
             </TabPanels>

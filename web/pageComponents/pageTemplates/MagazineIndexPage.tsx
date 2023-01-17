@@ -1,23 +1,24 @@
-import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import { BackgroundContainer } from '@components'
-import { searchClientServer, searchClient } from '../../lib/algolia'
-import { getIsoFromLocale } from '../../lib/localization'
-import { UnpaddedText } from './newsroom/StyledComponents'
+import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
-import { Pagination } from '../shared/search/pagination/Pagination'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import { searchClient, searchClientServer } from '../../lib/algolia'
+import { getIsoFromLocale } from '../../lib/localization'
 import type { MagazineIndexPageType } from '../../types'
 import { Hits } from '../searchIndexPages/magazineIndex/Hits'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
+import { Pagination } from '../shared/search/pagination/Pagination'
+import { UnpaddedText } from './newsroom/StyledComponents'
 //import { history } from 'instantsearch.js/es/lib/routers'
-import Teaser from '../shared/Teaser'
-import Seo from '../../pageComponents/shared/Seo'
 import { useRef } from 'react'
-import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
-import SharedTitle from './shared/SharedTitle'
-import { SharedBanner } from './shared/SharedBanner'
+import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
+import Seo from '../../pageComponents/shared/Seo'
 import { HeroTypes } from '../../types/types'
 import MagazineIndexText from '../shared/portableText/MagazineIndexText'
+import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
+import Teaser from '../shared/Teaser'
+import { SharedBanner } from './shared/SharedBanner'
+import SharedTitle from './shared/SharedTitle'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -68,6 +69,7 @@ const MagazineIndexPage = ({
   const { ingress, title, hero, seoAndSome, magazineTags, footerComponent } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
+  const padding = usePaginationPadding()
 
   const indexName = `${envPrefix}_MAGAZINE_${isoCode}`
   const HITS_PER_PAGE = 12
@@ -181,7 +183,7 @@ const MagazineIndexPage = ({
           )}
           <MagazineWapper>
             <StyledHits />
-            <StyledPagination padding={1} hitsPerPage={HITS_PER_PAGE} />
+            <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} />
           </MagazineWapper>
         </InstantSearch>
         {footerComponent && <Teaser data={footerComponent} />}

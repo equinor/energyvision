@@ -1,22 +1,23 @@
-import { InstantSearch, Configure } from 'react-instantsearch-hooks-web'
+import { Heading } from '@components'
+import { useRef } from 'react'
+import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
+import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { searchClient, searchClientServer } from '../../lib/algolia'
+import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
+import { getIsoFromLocale } from '../../lib/localization'
+import type { NewsRoomPageType } from '../../types'
+import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
-import isEmpty from '../shared/portableText/helpers/isEmpty'
-import { Heading } from '@components'
-import { searchClientServer, searchClient } from '../../lib/algolia'
-import { getIsoFromLocale } from '../../lib/localization'
-import { Wrapper, Intro, News, UnpaddedText } from './newsroom/StyledComponents'
-import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
-import type { NewsRoomPageType } from '../../types'
-import Seo from '../shared/Seo'
-import { useRef } from 'react'
-import styled from 'styled-components'
-import Filters from './newsroom/Filters'
 import { Pagination } from '../shared/search/pagination/Pagination'
-import { FormattedMessage } from 'react-intl'
+import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
+import Seo from '../shared/Seo'
+import Filters from './newsroom/Filters'
 import Hit from './newsroom/Hit'
 import { Hits } from './newsroom/Hits'
+import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -52,7 +53,13 @@ const StyledList = styled.div`
 `
 
 const StyledPagination = styled(Pagination)`
-  margin-top: var(--space-medium);
+  margin: var(--space-medium) calc(-1 * var(--space-large)) 0;
+  justify-content: center;
+
+  @media (min-width: 800px) {
+    margin: var(--space-medium) 0 0 0;
+    justify-content: left;
+  }
 `
 
 type NewsRoomTemplateProps = {
@@ -64,6 +71,7 @@ type NewsRoomTemplateProps = {
 
 const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
   const { ingress, title, seoAndSome } = pageData || {}
+  const padding = usePaginationPadding()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
@@ -114,7 +122,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
                     <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
                   </Heading>
                   <Hits hitComponent={Hit} />
-                  <StyledPagination padding={1} hitsPerPage={20} />
+                  <StyledPagination padding={padding} hitsPerPage={20} />
                 </StyledList>
               </NewsRoomContent>
             </InstantSearch>

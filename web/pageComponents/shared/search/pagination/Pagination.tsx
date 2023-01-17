@@ -1,11 +1,11 @@
-import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks-web'
-import { PaginationItem } from './PaginationItem'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
-import styled from 'styled-components'
 import { useContext, useEffect, useRef } from 'react'
+import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks-web'
+import styled from 'styled-components'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 import { PaginationContext } from './PaginationContext'
+import { PaginationItem } from './PaginationItem'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
