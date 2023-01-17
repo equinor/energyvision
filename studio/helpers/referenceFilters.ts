@@ -17,7 +17,7 @@ export const filterByPages = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document._lang)
 
   return {
-    filter: `_type match $routeLang || _type in ['news', 'localNews', 'magazine'] && _lang == $lang`,
+    filter: /* groq */ `_type match $routeLang || _type in ['news', 'localNews', 'magazine'] && _lang == $lang`,
     params: {
       routeLang: `route_${lang}*`,
       lang: lang,
@@ -29,7 +29,7 @@ export const filterByPagesInOtherLanguages = ({ document }: { document: SanityDo
   const lang = langOrDefault(document._lang)
 
   return {
-    filter: `(_type match 'route_*' && !(_type match $routeLang)) || _type in ['news', 'localNews', 'magazine'] && _lang != $lang`,
+    filter: /* groq */ `(_type match 'route_*' && !(_type match $routeLang)) || _type in ['news', 'localNews', 'magazine'] && _lang != $lang`,
     params: {
       routeLang: `route_${lang}*`,
       lang: lang,

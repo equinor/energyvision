@@ -110,21 +110,23 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     reference: ReferenceType
     referenceToOtherLangs: ReferenceType
   }
-  const newsType = Flags.HAS_NEWS
-    ? [
-        {
-          type: 'news',
-        },
-      ]
-    : []
 
-  const localNewsType = Flags.HAS_LOCAL_NEWS
-    ? [
-        {
-          type: 'localNews',
-        },
-      ]
-    : []
+  type ReferenceTarget = {
+    type: string
+  }
+
+  const types = [
+    Flags.HAS_NEWS && {
+      type: 'news',
+    },
+    Flags.HAS_LOCAL_NEWS && {
+      type: 'localNews',
+    },
+    Flags.HAS_MAGAZINE && {
+      type: 'magazine',
+    },
+  ].filter((e) => e)
+  const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
   const internalLinkConfig = {
     name: 'internalLink',
@@ -144,7 +146,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         title: 'Reference',
         name: 'reference',
         type: 'reference',
-        to: [...localNewsType, ...newsType, ...routes],
+        to: defaultReferenceTargets,
         options: {
           filter: filterByPages,
           disableNew: true,
@@ -165,7 +167,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         // Oh no! There is a typo here :(
         name: 'referenceToOtherLanguange',
         type: 'reference',
-        to: [...localNewsType, ...newsType, ...routes],
+        to: defaultReferenceTargets,
         options: {
           filter: filterByPagesInOtherLanguages,
           disableNew: true,
