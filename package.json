@@ -14,6 +14,7 @@
     "lint": "pnpm lint:web && pnpm lint:studio && pnpm lint:search",
     "studio": "yarn --cwd ./studio",
     "web": "pnpm --filter ./web",
+    "sanityv3": "pnpm --filter ./sanityv3",
     "e2e": "pnpm --filter ./e2e",
     "search-indexers": "pnpm --filter ./search",
     "legacy-css": "pnpm --filter ./legacy/css",
@@ -27,6 +28,7 @@
     "start:studio": "yarn --cwd ./studio dev",
     "start:storybook": "pnpm web storybook",
     "start:web": "pnpm web dev",
+    "v3:dev": "pnpm sanityv3 dev",
     "docker-studio:build": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/studio -f studio/Dockerfile .",
     "docker-studio:run": "docker run -p 3333:3333 envis/studio",
     "docker-studio:inspect": "docker run -p 3333:3333 -it envis/studio /bin/sh"
