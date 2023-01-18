@@ -1,7 +1,7 @@
 import { attach_file, external_link, link } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from '@sanity/types'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
-import { EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
+import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import type { BlockFieldType } from '../../types/schemaTypes'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
@@ -89,7 +89,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     title: 'External link',
     blockEditor: {
       render: ExternalLinkRenderer,
-      icon: () => EdsIcon(external_link),
+      icon: () => EdsBlockEditorIcon(external_link),
     },
     fields: [
       {
@@ -133,7 +133,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     type: 'object',
     title: 'Internal link',
     blockEditor: {
-      icon: () => EdsIcon(link),
+      icon: () => EdsBlockEditorIcon(link),
     },
     fields: [
       {

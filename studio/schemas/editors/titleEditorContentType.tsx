@@ -1,8 +1,8 @@
 import React from 'react'
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
-import { IconSuperScript, IconSubScript, EdsIcon } from '../../icons'
+import { IconSuperScript, IconSubScript } from '../../icons'
+import { StrikethroughIcon } from '@sanity/icons'
 import type { BlockFieldType } from '../../types/schemaTypes'
-import { format_strikethrough } from '@equinor/eds-icons'
 
 // TODO: Add relevant styles for titles (i.e. highlighted text)
 export const configureTitleBlockContent = (): BlockFieldType => {
@@ -19,7 +19,7 @@ export const configureTitleBlockContent = (): BlockFieldType => {
           title: 'Strikethrough',
           value: 's',
           blockEditor: {
-            icon: EdsIcon(format_strikethrough),
+            icon: StrikethroughIcon,
             render: StrikeThroughRenderer,
           },
         },

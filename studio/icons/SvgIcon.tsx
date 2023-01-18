@@ -7,7 +7,7 @@ type IconProps = {
   height?: string
 }
 
-const SvgIcon = ({ icon, width = '24', height = '24' }: IconProps): JSX.Element => {
+export const SvgIcon = ({ icon, width = '24', height = '24' }: IconProps): JSX.Element => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24">
       <path d={icon.svgPathData} fillRule="evenodd" clipRule="evenodd" />
@@ -15,4 +15,10 @@ const SvgIcon = ({ icon, width = '24', height = '24' }: IconProps): JSX.Element 
   )
 }
 
-export default SvgIcon
+export const BlockEditorSvgIcon = ({ icon, width = '1em', height = '1em' }: IconProps): JSX.Element => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 25 25">
+      <path d={icon.svgPathData} fillRule="evenodd" clipRule="evenodd" fill="currentColor" />
+    </svg>
+  )
+}
