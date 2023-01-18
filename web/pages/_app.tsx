@@ -66,6 +66,18 @@ const HandleBoundaryError = (error: Error, info: { componentStack: string }) => 
   console.error('ErrorBoundary caught error: ', error, info)
 }
 
+const StyledSkipLink = styled(NewSkipNavLink)`
+  &:focus {
+    background: white;
+    padding: var(--space-medium);
+    border: 1px solid black;
+    position: sticky;
+    border-radius: 7px;
+    margin: var(--space-medium);
+    top: 10%;
+  }
+`
+
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
@@ -104,17 +116,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
 
   useConsentState('statistics', enableStatisticsCookies, disableStatisticsCookies)
 
-  const StyledSkipLink = styled(NewSkipNavLink)`
-    &:focus {
-      background: white;
-      padding: var(--space-medium);
-      border: 1px solid black;
-      position: sticky;
-      border-radius: 7px;
-      margin: var(--space-medium);
-      top: 10%;
-    }
-  `
   return (
     <SWRConfig>
       <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
