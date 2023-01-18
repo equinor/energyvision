@@ -1,7 +1,7 @@
-import {visionTool} from '@sanity/vision'
-import {createAuthStore, defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
-import {schemaTypes} from './schemas'
+import { visionTool } from '@sanity/vision'
+import { createAuthStore, defineConfig } from 'sanity'
+import { deskTool } from 'sanity/desk'
+import { schemaTypes } from './schemas'
 
 export default defineConfig({
   name: 'default',
