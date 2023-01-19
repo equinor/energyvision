@@ -73,7 +73,7 @@ const LinkField = {
         Rule.custom(async (value: any, context: ValidationContext) => {
           const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
           if (parent.linkToOtherLanguage) return true
-          if (Flags.IS_DEV && value._ref) {
+          if (Flags.IS_DEV && value?._ref) {
             const referenceLang = await client.fetch(
               /* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`,
               {
