@@ -71,7 +71,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   react-error-boundary: ^3.1.4
-  react-focus-lock: ^2.9.1
+  react-focus-lock: ^2.9.2
   react-hook-form: 7.41.5
   react-instantsearch-hooks-server: ^6.35.0
   react-instantsearch-hooks-web: ^6.35.0
@@ -137,7 +137,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-error-boundary: 3.1.4_react@18.2.0
-  react-focus-lock: 2.9.1_ulhmhxukhxjgxaybrsjlob7ffu
+  react-focus-lock: 2.9.2_ulhmhxukhxjgxaybrsjlob7ffu
   react-hook-form: 7.41.5_react@18.2.0
   react-instantsearch-hooks-server: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
   react-instantsearch-hooks-web: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
@@ -3142,7 +3142,7 @@ packages:
     dependencies:
       '@chakra-ui/dom-utils': 2.0.4
       react: 18.2.0
-      react-focus-lock: 2.9.1_ulhmhxukhxjgxaybrsjlob7ffu
+      react-focus-lock: 2.9.2_ulhmhxukhxjgxaybrsjlob7ffu
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -14520,8 +14520,8 @@ packages:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
-  /react-focus-lock/2.9.1_ulhmhxukhxjgxaybrsjlob7ffu:
-    resolution: {integrity: sha512-pSWOQrUmiKLkffPO6BpMXN7SNKXMsuOakl652IBuALAu1esk+IcpJyM+ALcYzPTTFz1rD0R54aB9A4HuP5t1Wg==}
+  /react-focus-lock/2.9.2_ulhmhxukhxjgxaybrsjlob7ffu:
+    resolution: {integrity: sha512-5JfrsOKyA5Zn3h958mk7bAcfphr24jPoMoznJ8vaJF6fUrPQ8zrtEd3ILLOK8P5jvGxdMd96OxWNjDzATfR2qw==}
     peerDependencies:
       '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
