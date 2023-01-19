@@ -71,7 +71,7 @@
     "react-instantsearch-hooks-web": "^6.35.0",
     "react-intl": "^6.0.2",
     "react-is": "^18.1.0",
-    "react-remove-scroll": "^2.5.1",
+    "react-remove-scroll": "^2.5.5",
     "react-twitter-embed": "^4.0.4",
     "sharp": "^0.31.1",
     "styled-components": "^5.3.6",
