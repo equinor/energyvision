@@ -58,7 +58,7 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
 
 const StyledSwiperSlide = styled(SwiperSlide)`
   display: flex;
-  width: auto;
+  width: var(--card-maxWidth);
   height: auto;
   margin-right: var(--space-large);
 
