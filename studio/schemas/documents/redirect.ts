@@ -1,7 +1,7 @@
 import type { Rule, ValidationContext } from '@sanity/types'
-import routes from '../routes'
-import { filterByPages } from '../../helpers/referenceFilters'
 import blocksToText from '../../helpers/blocksToText'
+import { filterByPages } from '../../helpers/referenceFilters'
+import routes from '../routes'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
 import { Flags } from '../../src/lib/datasetHelpers'
@@ -21,10 +21,8 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom(async (value: string, context: ValidationContext) => {
           const { document } = context
-          const documentId = Flags.IS_DEV ? document?._id.replace('drafts.', '') : document?._id
-          const query = Flags.IS_DEV
-            ? /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
-            : `*[_type == 'redirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId]`
+          const documentId = document?._id.replace('drafts.', '')
+          const query = /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
 
           const params = { value, documentId }
           const redirects = await client.fetch(query, params)
