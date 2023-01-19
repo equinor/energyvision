@@ -47,7 +47,7 @@ specifiers:
   algoliasearch: ^4.13.0
   babel-plugin-styled-components: ^2.0.6
   date-fns: ^2.28.0
-  date-fns-tz: ^1.3.4
+  date-fns-tz: ^1.3.7
   easy-soap-request: ^4.6.0
   focus-visible: ^5.2.0
   framer-motion: ^6
@@ -117,7 +117,7 @@ dependencies:
   '@types/xml2js': 0.4.9
   algoliasearch: 4.13.0
   date-fns: 2.28.0
-  date-fns-tz: 1.3.4_date-fns@2.28.0
+  date-fns-tz: 1.3.7_date-fns@2.28.0
   easy-soap-request: 4.7.0
   focus-visible: 5.2.0
   framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
@@ -8483,7 +8483,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -9280,8 +9280,8 @@ packages:
       whatwg-url: 11.0.0
     dev: true
 
-  /date-fns-tz/1.3.4_date-fns@2.28.0:
-    resolution: {integrity: sha512-O47vEyz85F2ax/ZdhMBJo187RivZGjH6V0cPjPzpm/yi6YffJg4upD/8ibezO11ezZwP3QYlBHh/t4JhRNx0Ow==}
+  /date-fns-tz/1.3.7_date-fns@2.28.0:
+    resolution: {integrity: sha512-1t1b8zyJo+UI8aR+g3iqr5fkUHWpd58VBx8J/ZSQ+w7YrGlw80Ag4sA86qkfCXRBLmMc4I2US+aPMd4uKvwj5g==}
     peerDependencies:
       date-fns: '>=2.0.0'
     dependencies:
@@ -14246,17 +14246,6 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
-    dev: true
-
-  /promise-inflight/1.0.1_bluebird@3.7.2:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
     dev: true
 
   /promise.allsettled/1.0.6:
