@@ -58,12 +58,14 @@ export const NavButton = ({ type }: { type: 'prev' | 'next' }) => {
     swiper.on('reachEnd', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
     swiper.on('lock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
     swiper.on('unlock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+    swiper.on('slideChange', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
 
     return () => {
       swiper.off('reachBeginning', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
       swiper.off('reachEnd', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
       swiper.off('lock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
       swiper.off('unlock', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
+      swiper.off('slideChange', (swipe) => setShouldRender(checkShouldRender(swipe, type)))
     }
   }, [swiper, setShouldRender, type])
 
