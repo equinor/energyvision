@@ -1,5 +1,4 @@
 import React from 'react'
-import { forwardRef } from 'react'
 
 export const IconSuperScript = (): JSX.Element => {
   return (
