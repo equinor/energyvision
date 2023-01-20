@@ -382,12 +382,19 @@ const pageContentFields = /* groq */ `
   	    "link": reference-> {
         "type": _type,
         "slug": slug.current,
+        
       },
+        "link": select(
+          link.linkToOtherLanguage == true =>
+            link.referenceToOtherLanguage->${linkReferenceFields},
+            link.reference->${linkReferenceFields},
+        ),
        "href": url,
 
       ${downloadableFileFields},
       ${downloadableImageFields}, ...},
 
+    },
     },
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
