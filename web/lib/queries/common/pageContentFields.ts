@@ -395,7 +395,6 @@ const pageContentFields = /* groq */ `
       ${downloadableImageFields}, ...},
 
     },
-    },
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       "background": coalesce(background.title, 'none'),
