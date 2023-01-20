@@ -82,6 +82,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
   const IS_LIVE = process.env.NODE_ENV !== 'development'
+  const IS_COOKIEBOT_ENABLED = process.env.NODE_ENV !== 'development' && window.self === window.top
 
   useEffect(() => {
     if (!GTM_ID) return
@@ -126,7 +127,8 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           </Head>
           <GlobalStyle />
           <SkipNavLink />
-          {IS_LIVE && <CookieBot locale={router.locale} />}
+          {!Flags.IS_DEV && IS_LIVE && <CookieBot locale={router.locale} />}
+          {Flags.IS_DEV && IS_COOKIEBOT_ENABLED && <CookieBot locale={router.locale} />}
           {Flags.IS_DEV ? (
             <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
           ) : (
