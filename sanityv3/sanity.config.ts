@@ -12,9 +12,17 @@ export default defineConfig({
   projectId: 'h61q9gi9',
   dataset: 'global-development',
 
-  plugins: [deskTool({ structure: (S: StructureBuilder, context: ConfigContext) => {
-    return deskStructure(S, context)
-  }, name: 'desk', title: 'Desk' }), visionTool(), muxInput()],
+  plugins: [
+    deskTool({
+      structure: (S: StructureBuilder, context: ConfigContext) => {
+        return deskStructure(S, context)
+      },
+      name: 'desk',
+      title: 'Desk',
+    }),
+    visionTool(),
+    muxInput(),
+  ],
 
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
