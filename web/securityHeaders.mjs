@@ -14,6 +14,20 @@ const studioUrlsOldCluster = envs.map((env) => `https://studio-${dataset}-energy
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com/`)
 const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl, secretUrl].filter((e) => e).join(' ')
 
+const iframeSrcs = [
+  'https://consentcdn.cookiebot.com',
+  'https://lt.morningstar.com',
+  'https://www.youtube.com',
+  'https://vimeo.com',
+  'https://sds-maintenance.com',
+  'https://tools.eurolandir.com',
+  'https://platform.twitter.com',
+  'https://syndication.twitter.com',
+  'https://vds.issgovernance.com',
+  'https://eac.plaii.no',
+  'https://livestream.com',
+].join(' ')
+
 const ContentSecurityPolicy = `
    default-src 'self' cdn.sanity.io cdn.equinor.com;
    style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com https://platform.twitter.com https://*.twimg.com;
@@ -23,7 +37,7 @@ const ContentSecurityPolicy = `
      isProduction ? '' : 'ws:'
    };
    child-src  blob:;
-   frame-src 'self' https://consentcdn.cookiebot.com https://lt.morningstar.com https://www.youtube.com https://vimeo.com https://sds-maintenance.com https://tools.eurolandir.com https://platform.twitter.com https://syndication.twitter.com https://vds.issgovernance.com https://eac.plaii.no;
+   frame-src 'self' ${iframeSrcs};
    frame-ancestors ${xFrameUrls};
    font-src 'self' https://eds-static.equinor.com data:;
    media-src 'self' blob: https://stream.mux.com/ https://cdn.sanity.io/ https://cdn.equinor.com/;
