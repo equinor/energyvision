@@ -11,7 +11,7 @@ const remoteUrl = () => {
     case 'global':
       return `https://web-equinor-web-sites-${env}.c2.radix.equinor.com/`
     case 'global-development':
-      return 'https://web-global-development-equinor-web-sites-dev.c2-prod-34.c2.radix.equinor.com'
+      return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
     case 'global-test':
       return 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com'
     default:
