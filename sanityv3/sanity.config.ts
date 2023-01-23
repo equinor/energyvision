@@ -1,6 +1,8 @@
 import { visionTool } from '@sanity/vision'
-import { createAuthStore, defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
+import { muxInput } from 'sanity-plugin-mux-input'
+import { deskTool, StructureBuilder } from 'sanity/desk'
+import deskStructure from './deskStructure'
 import { schemaTypes } from './schemas'
 
 export default defineConfig({
@@ -10,10 +12,12 @@ export default defineConfig({
   projectId: 'h61q9gi9',
   dataset: 'global-development',
 
-  plugins: [deskTool(), visionTool()],
+  plugins: [deskTool({ structure: (S: StructureBuilder, context: ConfigContext) => {
+    return deskStructure(S, context)
+  }, name: 'desk', title: 'Desk' }), visionTool(), muxInput()],
 
   schema: {
-    types: schemaTypes,
+    types: schemaTypes as SchemaTypeDefinition[],
   },
 
   auth: createAuthStore({
