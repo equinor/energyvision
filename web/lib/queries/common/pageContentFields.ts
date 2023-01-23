@@ -379,11 +379,6 @@ const pageContentFields = /* groq */ `
          "type": _type,
         "id": _key,
         label,
-  	    "link": reference-> {
-        "type": _type,
-        "slug": slug.current,
-        
-      },
         "link": select(
           link.linkToOtherLanguage == true =>
             link.referenceToOtherLanguage->${linkReferenceFields},
