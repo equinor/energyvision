@@ -7,10 +7,11 @@ const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   display: flex;
   background-color: var(--grey-10);
   min-width: 100vw;
+  margin: 0;
   ${({ ratio }) =>
     ratio === 'narrow' && {
       'max-height': '500px',
-    }}
+    }};
 `
 
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
