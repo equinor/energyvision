@@ -153,11 +153,7 @@ const pageContentFields = /* groq */ `
         "label": link.label,
         "ariaLabel": link.ariaLabel,
         "anchorReference": link.anchorReference,
-        "link": select(
-          link.linkToOtherLanguage == true =>
-            link.referenceToOtherLanguage->${linkReferenceFields},
-            link.reference->${linkReferenceFields},
-        ),
+        languageLink,
         "href": link.url,
         "type": select(
           defined(link.url) => "externalUrl",
