@@ -1,6 +1,9 @@
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { Colors } from '../../helpers/ColorListValues'
+import { EdsIcon } from '../../icons'
+import { library_image } from '@equinor/eds-icons'
+import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from '@sanity/types'
 
 const titleContentType = configureTitleBlockContent()
@@ -10,6 +13,15 @@ export default {
   title: 'Image carousel',
   type: 'object',
   fieldsets: [
+    {
+      title: 'Carousel options',
+      name: 'carouselOptions',
+      description: 'Additional settings for the carousel',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
     {
       title: 'Design options',
       name: 'design',
@@ -27,7 +39,6 @@ export default {
       inputComponent: CompactBlockEditor,
       of: [titleContentType],
       title: 'Title',
-      validation: (Rule: Rule) => Rule.required(),
     },
     {
       type: 'array',
@@ -38,17 +49,21 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(2),
     },
     {
-      type: 'boolean',
-      name: 'autoplay',
-      title: 'Autoplay',
-      initialValue: true,
-    },
-    {
       type: 'number',
       name: 'delay',
       title: 'Delay',
       description: 'Time in seconds that an image should be visible for before transitioning to the next.',
-      initialValue: '3',
+      initialValue: 3,
+      fieldset: 'carouselOptions',
+      validation: (Rule: Rule) => Rule.required().min(2),
+    },
+    {
+      type: 'boolean',
+      name: 'autoplay',
+      title: 'Autoplay',
+      description: 'Whether the carousel should autoplay or not.',
+      initialValue: true,
+      fieldset: 'carouselOptions',
     },
     {
       title: 'Background',
@@ -67,4 +82,20 @@ export default {
       initialValue: Colors[0],
     },
   ],
+  preview: {
+    select: {
+      title: 'title',
+      items: 'items',
+    },
+    prepare(selection: any) {
+      const { title, items } = selection
+      const length = items ? items.length : 0
+
+      return {
+        title: title ? blocksToText(title) : 'Untitled image carousel',
+        subtitle: `Image carousel with ${length} items`,
+        media: EdsIcon(library_image),
+      }
+    },
+  },
 }
