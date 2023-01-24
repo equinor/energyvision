@@ -7,6 +7,13 @@ import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
+const languageLink = `
+  "link": select(
+    link.linkToOtherLanguage == true =>
+      link.referenceToOtherLanguage->${linkReferenceFields},
+      link.reference->${linkReferenceFields},
+  )`
+
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
     "type": _type,
@@ -123,6 +130,7 @@ const pageContentFields = /* groq */ `
       title,
       content[]{
         ...,
+        languageLink,
         ${markDefs},
       }
     },
@@ -379,11 +387,7 @@ const pageContentFields = /* groq */ `
          "type": _type,
         "id": _key,
         label,
-        "link": select(
-          link.linkToOtherLanguage == true =>
-            link.referenceToOtherLanguage->${linkReferenceFields},
-            link.reference->${linkReferenceFields},
-        ),
+        languageLink,
        "href": url,
 
       ${downloadableFileFields},
