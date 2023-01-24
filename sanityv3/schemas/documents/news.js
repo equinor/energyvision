@@ -1,5 +1,5 @@
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig.js'
+import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'

@@ -1,6 +1,6 @@
 import type { Rule } from 'sanity'
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig.js'
+import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { defaultLanguage } from '../../languages'
 import { sanityClient } from '../../sanity.client'

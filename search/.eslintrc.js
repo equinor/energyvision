@@ -1,5 +1,4 @@
 module.exports = {
-  extends: ['../.eslintrc.js'],
-  rules: {
-  }
+  extends: ['../.eslintrc.cjs'],
+  rules: {},
 }

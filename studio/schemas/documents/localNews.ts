@@ -1,28 +1,27 @@
-import SlugInput from '../components/SlugInput/index'
-import { newsSlug } from '../../../satellitesConfig.js'
-import { defaultLanguage } from '../../languages'
+import type { Rule } from '@sanity/types'
 import slugify from 'slugify'
+import { newsSlug } from '../../../satellitesConfig'
+import { defaultLanguage } from '../../languages'
+import SlugInput from '../components/SlugInput/index'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
-import type { Rule } from '@sanity/types'
-import { i18n } from '../documentTranslation'
 import { formatDate } from '../../helpers/formatDate'
+import { i18n } from '../documentTranslation'
 
-import {
-  isLive,
-  seo,
-  openGraphImage,
-  title,
-  publishDateTime,
-  // We have asked Mette if this is relevant
-  newsSlugField,
-  heroImage,
-  ingress,
-  content,
-  iframe,
-  relatedLinks,
-} from './news/sharedNewsFields'
 import { withSlugValidation } from '../validations/validateSlug'
+import {
+  content,
+  heroImage,
+  iframe,
+  ingress,
+  isLive,
+  newsSlugField,
+  openGraphImage,
+  publishDateTime,
+  relatedLinks,
+  seo,
+  title,
+} from './news/sharedNewsFields'
 
 export default {
   title: 'Local news',

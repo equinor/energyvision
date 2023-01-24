@@ -1,6 +1,6 @@
 import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
-import { magazineSlug } from '../../../satellitesConfig.js'
+import { magazineSlug } from '../../../satellitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import { defaultLanguage } from '../../languages'
