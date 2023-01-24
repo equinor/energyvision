@@ -15,6 +15,7 @@ import StockValues from '../../topicPages/StockValues'
 import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import Video from '../../topicPages/Video'
+import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import {
   AnchorLinkData,
   TopicPageSchema,
@@ -37,6 +38,7 @@ import {
   TwitterEmbedData,
   VideoData,
   CookieDeclarationData,
+  ImageCarouselData,
 } from '../../../types/types'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
@@ -105,6 +107,8 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} />
       case 'video':
         return <Video key={c.id} data={c as VideoData} anchor={anchorReference} />
+      case 'imageCarousel':
+        return <ImageCarousel key={c.id} data={c as ImageCarouselData} anchor={anchorReference} />
       default:
         return null
     }

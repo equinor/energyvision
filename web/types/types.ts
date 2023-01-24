@@ -4,7 +4,7 @@ import {
   SanityImageCrop,
   SanityImageHotspot,
   SanityImageObject,
-  SanityImageSource
+  SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
 
 export type CaptionData = {
@@ -34,7 +34,7 @@ export type LinkData = {
   id?: string
   label: string
   ariaLabel?: string
-  link?: { slug: string; type: string, lang: string }
+  link?: { slug: string; type: string; lang: string }
   href?: string
   extension?: string
   fileName?: string
@@ -646,6 +646,20 @@ export type LoopingVideoData = {
   thumbnail: ImageWithAlt
   url: string
   ratio: LoopingVideoRatio
+}
+
+export type ImageCarouselData = {
+  type: 'imageCarousel'
+  id: string
+  title?: PortableTextBlock[]
+  items: ImageWithCaptionData[]
+  options: {
+    autoplay: boolean
+    delay: number
+  }
+  designOptions: {
+    background: BackgroundColours
+  }
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
