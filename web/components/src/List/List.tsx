@@ -1,7 +1,6 @@
 import { forwardRef, CSSProperties } from 'react'
 import { List as EdsList, ListProps as EdsListProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 export type ListProps = {
   unstyled?: boolean
@@ -13,9 +12,9 @@ const StyledList = styled(EdsList)<ListProps>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-3);
   /* EDS list removes margin */
-  margin: ${Flags.IS_DEV ? 'var(--space-medium)' : 'var(--space-medium) 0'};
-  padding-left: ${Flags.IS_DEV ? 'var(--space-medium)' : '0'};
-  list-style-position: ${Flags.IS_DEV ? 'outside' : 'inside'};
+  margin: var(--space-medium);
+  padding-left: var(--space-medium);
+  list-style-position: outside;
   ${({ unstyled }) =>
     unstyled && {
       margin: 0,
