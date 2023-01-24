@@ -1,19 +1,12 @@
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import linkSelectorFields, { linkSelector } from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 import { imageCarouselFields } from './imageCarouselFields'
-
-const languageLink = `
-  "link": select(
-    link.linkToOtherLanguage == true =>
-      link.referenceToOtherLanguage->${linkReferenceFields},
-      link.reference->${linkReferenceFields},
-  )`
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
@@ -131,7 +124,6 @@ const pageContentFields = /* groq */ `
       title,
       content[]{
         ...,
-        languageLink,
         ${markDefs},
       }
     },
@@ -154,7 +146,7 @@ const pageContentFields = /* groq */ `
         "label": link.label,
         "ariaLabel": link.ariaLabel,
         "anchorReference": link.anchorReference,
-        languageLink,
+        linkSelector,
         "href": link.url,
         "type": select(
           defined(link.url) => "externalUrl",
@@ -384,7 +376,7 @@ const pageContentFields = /* groq */ `
          "type": _type,
         "id": _key,
         label,
-        languageLink,
+        linkSelector,
        "href": url,
 
       ${downloadableFileFields},
