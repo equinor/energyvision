@@ -36,9 +36,15 @@ export async function middleware(request: NextRequest) {
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isPreview = isPreviewEnabled(request)
 
+  // Rewrite the correct path for assets in download section of achived news (older than 2016)
   if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) && (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)) {
     const rewrite = pathname.replace(pathname, `/content/dam/archive-assets/${locale}${pathname}`)
     return NextResponse.rewrite(`${origin}${rewrite}`)
+  }
+
+  // Redirect statoil enrollment pdf 
+  if(Flags.IS_DEV && pathname.includes("/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf")){
+    return NextResponse.redirect(`${origin}/where-we-are/us-owner-relations`, PERMANENT_REDIRECT)
   }
 
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
