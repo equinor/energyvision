@@ -8,10 +8,8 @@ import Instagram from '../icons/Instagram'
 import Linkedin from '../icons/Linkedin'
 import Twitter from '../icons/Twitter'
 import Youtube from '../icons/Youtube'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
-import { FormattedMessage } from 'react-intl'
 
 const StyledFooter = styled.footer`
   min-height: var(--space-4xLarge);
@@ -141,7 +139,6 @@ type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
 }
 
-// TODO: Remove sanity text when removing featureflag for #770
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   const dt = new Date()
   return (
@@ -180,13 +177,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
         })}
       </FooterTop>
       <FooterBottom>
-        {Flags.IS_DEV ? (
-          <CompanyName>Copyright {dt.getFullYear()} Equinor ASA</CompanyName>
-        ) : (
-          <CompanyName>
-            <FormattedMessage id="copyright" defaultMessage="Copyright 2022 Equinor ASA" />
-          </CompanyName>
-        )}
+        <CompanyName>Copyright {dt.getFullYear()} Equinor ASA</CompanyName>
       </FooterBottom>
     </StyledFooter>
   )
