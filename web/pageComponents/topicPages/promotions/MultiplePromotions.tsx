@@ -10,7 +10,7 @@ import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
-import { HorizontalScroll, HorizontalScrollItem } from '../../shared/Carousel'
+import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 

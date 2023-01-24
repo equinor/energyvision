@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
-import { HorizontalScroll, HorizontalScrollItem } from '../shared/Carousel'
+import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
 import { Flags } from '../../common/helpers/datasetHelpers'
 

@@ -2,7 +2,7 @@ import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
-import { HorizontalScroll, HorizontalScrollItem } from '../../shared/Carousel'
+import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const PairWrapper = styled.div`
