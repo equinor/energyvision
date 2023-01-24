@@ -170,10 +170,9 @@ const heroLoopingVideoRatio = {
   name: 'heroLoopingVideoRatio',
   type: 'string',
   options: {
-    list: [
-      { title: 'Original', value: 'original' },
-      { title: 'Narrow', value: 'narrow' },
-    ],
+    list: [Flags.IS_DEV && { title: 'Original', value: 'original' }, { title: 'Narrow', value: 'narrow' }].filter(
+      (e) => e,
+    ),
   },
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.LOOPING_VIDEO
@@ -181,8 +180,7 @@ const heroLoopingVideoRatio = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
-      return true
+      return parent?.heroType === HeroTypes.LOOPING_VIDEO && !value ? 'Field is required' : true
     }),
   initialValue: 'original',
   fieldset: 'header',
