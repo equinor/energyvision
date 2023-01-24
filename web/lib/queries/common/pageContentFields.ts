@@ -6,6 +6,7 @@ import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './even
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
+import { imageCarouselFields } from './imageCarouselFields'
 
 const languageLink = `
   "link": select(
@@ -500,6 +501,10 @@ const pageContentFields = /* groq */ `
     "designOptions": {
       "background": coalesce(background.title, 'White'),
     },
+  },
+
+  _type == "imageCarousel" =>{
+    ${imageCarouselFields}
   }
 
 `
