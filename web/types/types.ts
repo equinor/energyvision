@@ -14,6 +14,7 @@ export type CaptionData = {
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
+  _key?: string
   image: ImageWithAlt
   asset: SanityImageObject
 } & CaptionData
