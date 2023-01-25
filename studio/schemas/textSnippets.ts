@@ -91,11 +91,6 @@ const snippets: textSnippet = {
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
     group: groups.search,
   },
-  copyright: {
-    title: 'Copyright',
-    defaultValue: 'Copyright 2022 Equinor ASA',
-    group: groups.others,
-  },
   subscribe_form_choose: {
     title: 'Choose validation',
     defaultValue: 'Please choose one or more of the following',
@@ -645,7 +640,7 @@ const snippets: textSnippet = {
     title: 'Stock API: NYSE time delay message',
     defaultValue: 'at least 20 minutes delayed',
     group: groups.others,
-    hidden: Flags.IS_SATELLITE
+    hidden: Flags.IS_SATELLITE,
   },
 }
 
