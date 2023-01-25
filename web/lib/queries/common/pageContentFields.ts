@@ -146,7 +146,11 @@ const pageContentFields = /* groq */ `
         "label": link.label,
         "ariaLabel": link.ariaLabel,
         "anchorReference": link.anchorReference,
-        linkSelector,
+        "link": select(
+          link.linkToOtherLanguage == true =>
+            link.referenceToOtherLanguage->${linkReferenceFields},
+            link.reference->${linkReferenceFields},
+        ),
         "href": link.url,
         "type": select(
           defined(link.url) => "externalUrl",
@@ -289,13 +293,14 @@ const pageContentFields = /* groq */ `
               "id": _key,
               "type": select(
                 defined(url) => "externalUrl", "internalUrl"
-              ),
+               ),
               label,
               ariaLabel,
-              "link": reference-> {
-                "type": _type,
-                "slug": slug.current,
-              },
+              "link": select(
+                  linkToOtherLanguage == true =>
+                  referenceToOtherLanguage->${linkReferenceFields},
+                  reference->${linkReferenceFields},
+                ),
               "href": url,
               anchorReference,
             },
