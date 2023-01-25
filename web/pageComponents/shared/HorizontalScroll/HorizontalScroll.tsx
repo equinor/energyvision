@@ -56,9 +56,9 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
   }
 `
 
-const StyledSwiperSlide = styled(SwiperSlide)`
+const StyledSwiperSlide = styled(SwiperSlide)<{ $autoSlideWidth?: boolean }>`
   display: flex;
-  width: var(--card-maxWidth);
+  width: ${({ $autoSlideWidth }) => ($autoSlideWidth ? 'auto' : 'var(--card-maxWidth)')};
   height: auto;
   margin-right: var(--space-large);
 
@@ -105,11 +105,16 @@ export const HorizontalScroll = ({
 }
 
 export type HorizontalScrollItemProps = {
+  autoSlideWidth?: boolean
   children: ReactNode
 }
 
-export const HorizontalScrollItem = ({ children, ...rest }: HorizontalScrollItemProps) => {
-  return <StyledSwiperSlide {...rest}>{children}</StyledSwiperSlide>
+export const HorizontalScrollItem = ({ autoSlideWidth, children, ...rest }: HorizontalScrollItemProps) => {
+  return (
+    <StyledSwiperSlide $autoSlideWidth={autoSlideWidth} {...rest}>
+      {children}
+    </StyledSwiperSlide>
+  )
 }
 // This is required in order for the Swiper library to correctly render
 HorizontalScrollItem.displayName = 'SwiperSlide'

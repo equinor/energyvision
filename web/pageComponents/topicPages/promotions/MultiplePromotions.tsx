@@ -119,7 +119,11 @@ const MultiplePromotions = ({
         {data.map((item) => {
           const card = getCard(item)
           if (card) {
-            return <HorizontalScrollItem key={item.id}>{card}</HorizontalScrollItem>
+            return (
+              <HorizontalScrollItem autoSlideWidth={variant === 'promotePeople'} key={item.id}>
+                {card}
+              </HorizontalScrollItem>
+            )
           }
         })}
       </HorizontalScroll>
