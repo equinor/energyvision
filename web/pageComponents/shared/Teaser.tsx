@@ -11,6 +11,7 @@ import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { Flags } from '../../common/helpers/datasetHelpers'
 
 import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
+import { getLocaleFromName } from '../../lib/localization'
 
 const { Content, Media } = EnvisTeaser
 
@@ -68,8 +69,9 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
   }
 
   if (action.type === 'internalUrl') {
+    const locale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink href={url} passHref legacyBehavior>
+      <NextLink href={url} locale={Flags.IS_DEV ? locale : undefined} passHref legacyBehavior>
         <Link variant="readMore" aria-label={action.ariaLabel}>
           {action.label}
         </Link>
