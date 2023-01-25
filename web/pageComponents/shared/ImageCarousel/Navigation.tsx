@@ -4,23 +4,7 @@ import { chevron_left, chevron_right } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { useSwiper } from 'swiper/react'
 
-const SharedStyle = styled.div`
-  height: calc(100% - var(--space-xxLarge));
-  position: absolute;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  padding: 0 var(--space-small);
-`
-
-const Prev = styled(SharedStyle)`
-  left: 0;
-`
-
-const Next = styled(SharedStyle)`
-  right: 0;
-`
+const ButtonWrapper = styled.div``
 
 const StyledButton = styled(Button)`
   background: var(--white-100);
@@ -36,7 +20,6 @@ const StyledButton = styled(Button)`
 export const NavButton = ({ type }: { type: 'next' | 'prev' }) => {
   const swiper = useSwiper()
 
-  const Wrapper = type === 'next' ? Next : Prev
   const ButtonIcon = type === 'next' ? chevron_right : chevron_left
 
   const handlePrev = () => {
@@ -59,10 +42,10 @@ export const NavButton = ({ type }: { type: 'next' | 'prev' }) => {
   const title = type === 'next' ? 'Next image' : 'Previous image'
 
   return (
-    <Wrapper>
+    <ButtonWrapper>
       <StyledButton variant="contained_icon" onClick={() => handler()} title={title}>
         <Icon size={16} data={ButtonIcon} />
       </StyledButton>
-    </Wrapper>
+    </ButtonWrapper>
   )
 }

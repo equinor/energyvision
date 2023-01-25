@@ -6,8 +6,6 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import TitleText from '../portableText/TitleText'
 import { CarouselItem } from './ImageCarouselItem'
-import { EdsProvider } from '@equinor/eds-core-react'
-import { NavButton } from './Navigation'
 import type { ImageCarouselData } from '../../../types/types'
 
 import 'swiper/css'
@@ -63,10 +61,6 @@ const ImageCarousel = ({ data, anchor, ...rest }: ImageCarouselProps) => {
               <CarouselItem image={item.image} caption={item.caption} attribution={item.attribution} />
             </SwiperSlide>
           ))}
-          <EdsProvider density="compact">
-            <NavButton type="prev" />
-            <NavButton type="next" />
-          </EdsProvider>
         </Swiper>
       </Container>
     </BackgroundContainer>
