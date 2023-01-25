@@ -56,10 +56,11 @@ export const NavButton = ({ type }: { type: 'next' | 'prev' }) => {
   }
 
   const handler = type === 'next' ? handleNext : handlePrev
+  const title = type === 'next' ? 'Next image' : 'Previous image'
 
   return (
     <Wrapper>
-      <StyledButton variant="contained_icon" onClick={() => handler()}>
+      <StyledButton variant="contained_icon" onClick={() => handler()} title={title}>
         <Icon size={16} data={ButtonIcon} />
       </StyledButton>
     </Wrapper>
