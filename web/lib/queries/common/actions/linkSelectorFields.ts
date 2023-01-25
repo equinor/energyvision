@@ -15,14 +15,6 @@ export const linkReferenceFields = /* groq */ `
   }
 `
 
-export const linkSelector = /* groq */ `
-  "link": select(
-    link.linkToOtherLanguage == true =>
-      link.referenceToOtherLanguage->${linkReferenceFields},
-      link.reference->${linkReferenceFields},
-  )
-`
-
 const linkSelectorFields = /* groq */ `
 _type == "linkSelector" => {
   "id": _key,

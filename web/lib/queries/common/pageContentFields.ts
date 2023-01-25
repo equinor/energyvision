@@ -1,12 +1,12 @@
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields, { linkSelector } from './actions/linkSelectorFields'
+import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
+import { imageCarouselFields } from './imageCarouselFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
-import { imageCarouselFields } from './imageCarouselFields'
 
 const pageContentFields = /* groq */ `
   _type == "teaser" =>{
@@ -368,20 +368,23 @@ const pageContentFields = /* groq */ `
         ...,
         ${markDefs},
       }
-
     },
     tableRows[]{
       "id": _key,
-       row[]{
-         "type": _type,
+      row[] {
+        "type": _type,
         "id": _key,
         label,
-        linkSelector,
-       "href": url,
-
-      ${downloadableFileFields},
-      ${downloadableImageFields}, ...},
-
+        "link": select(
+          linkToOtherLanguage == true =>
+            referenceToOtherLanguage->${linkReferenceFields},
+            reference->${linkReferenceFields},
+        ),
+        "href": url,
+        ${downloadableFileFields},
+        ${downloadableImageFields},
+        ...
+      },
     },
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
