@@ -1,3 +1,4 @@
+import React from 'react'
 import { attach_file, external_link, link } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from '@sanity/types'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
