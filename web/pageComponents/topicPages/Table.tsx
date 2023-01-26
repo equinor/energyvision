@@ -58,7 +58,7 @@ const getLink = (linkData: LinkData) => {
 }
 
 const getLocale = (linkData: LinkData) => {
-  if (!linkData) return 'something-wrong'
+  if (!linkData) return undefined
   const { link } = linkData
   return getLocaleFromName(link?.lang)
 }
@@ -85,7 +85,7 @@ const renderCellByType = (cellData: CellData) => {
       return (
         <NextLink
           href={getLink(cellData)}
-          locale={getLocale(cellData) && Flags.IS_DEV ? getLocale(cellData) : undefined}
+          locale={Flags.IS_DEV ? getLocale(cellData) : undefined}
           passHref
           legacyBehavior
         >
