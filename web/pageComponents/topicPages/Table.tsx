@@ -6,6 +6,8 @@ import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
 
+import { getLocaleFromName } from '../../lib/localization'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import type { CellData, LinkData, TableData } from '../../types/types'
 
 const { Head, Row, Cell, Body } = EnvisTable
@@ -55,6 +57,12 @@ const getLink = (linkData: LinkData) => {
   return (link && link.slug) || (href && href) || '/'
 }
 
+const getLocale = (linkData: LinkData) => {
+  if (!linkData) return 'something-wrong'
+  const { link } = linkData
+  return getLocaleFromName(link?.lang)
+}
+
 const renderCellByType = (cellData: CellData) => {
   switch (cellData.type) {
     case 'textField':
@@ -75,7 +83,12 @@ const renderCellByType = (cellData: CellData) => {
       )
     case 'linkSelector':
       return (
-        <NextLink href={getLink(cellData)} passHref legacyBehavior>
+        <NextLink
+          href={getLink(cellData)}
+          locale={getLocale(cellData) && Flags.IS_DEV ? getLocale(cellData) : undefined}
+          passHref
+          legacyBehavior
+        >
           <StyledTableLink>{cellData.label}</StyledTableLink>
         </NextLink>
       )
