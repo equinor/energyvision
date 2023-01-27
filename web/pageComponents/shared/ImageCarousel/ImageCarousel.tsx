@@ -34,8 +34,7 @@ type ImageCarouselProps = {
 const ImageCarousel = ({ data, anchor, ...rest }: ImageCarouselProps) => {
   const { title, items, options, designOptions } = data
   const { background } = designOptions
-
-  const delay = options.delay * 1000
+  const { autoplay, delay } = options
 
   return (
     <BackgroundContainer background={background} {...rest} id={anchor}>
@@ -44,17 +43,21 @@ const ImageCarousel = ({ data, anchor, ...rest }: ImageCarouselProps) => {
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
-          autoplay={{
-            delay: delay,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
           pagination={{
             type: 'fraction',
             el: '.paginationWrapper',
           }}
           navigation={true}
           modules={[Autoplay, Pagination]}
+          {...(autoplay
+            ? {
+                autoplay: {
+                  delay: delay * 1000,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                },
+              }
+            : {})}
         >
           {items.map((item) => (
             <SwiperSlide key={item._key}>
