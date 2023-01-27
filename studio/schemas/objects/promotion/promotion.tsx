@@ -17,6 +17,9 @@ import { EdsIcon } from '../../../icons'
 const horizontalScrollValidation = (context: Promotion): true | ValidationError => {
   const { promotion, useHorizontalScroll } = context
   const promo = promotion[0]
+
+  if (promo._type === 'promoteMagazine' && !promo.manuallySelectArticles) return true
+
   const numberOfItems = promo._type === 'promoteTopics' ? promo.references.length : promo.promotedArticles.length
 
   const MIN = 3
@@ -32,8 +35,6 @@ const horizontalScrollValidation = (context: Promotion): true | ValidationError 
 
     return true
   }
-
-  if (promo._type === 'promoteMagazine' && !promo.manuallySelectArticles) return true
 
   return validateNumber(numberOfItems)
 }
