@@ -22,6 +22,7 @@ import styled from 'styled-components'
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
+import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 
 /**
  * TODO:
@@ -127,11 +128,13 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           <GlobalStyle />
           <SkipNavLink />
           {IS_LIVE && <CookieBot locale={router.locale} />}
-          {Flags.IS_DEV ? (
-            <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
-          ) : (
-            <>{getLayout(<Component {...pageProps} />)}</>
-          )}
+          <PreviewContextProvider>
+            {Flags.IS_DEV ? (
+              <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
+            ) : (
+              <>{getLayout(<Component {...pageProps} />)}</>
+            )}
+          </PreviewContextProvider>
         </>
       </ErrorBoundary>
     </SWRConfig>

@@ -16,6 +16,8 @@ import { getRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { Flags } from '../common/helpers/datasetHelpers'
+import { useContext, useEffect } from 'react'
+import { PreviewContext } from '../lib/contexts/PreviewContext'
 
 const MagazinePage = dynamic(() => import('../pageComponents/pageTemplates/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -24,8 +26,16 @@ const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 
 // @TODO Improve types here, don't use any
-export default function Page({ data }: any) {
+export default function Page({ data, preview = false }: any) {
   const router = useRouter()
+
+  const { setIsPreview } = useContext(PreviewContext)
+
+  useEffect(() => {
+    if (Flags.IS_DEV) {
+      setIsPreview(preview)
+    }
+  }, [setIsPreview, preview])
 
   const { pageData } = data
 

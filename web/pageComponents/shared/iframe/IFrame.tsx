@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 import styled from 'styled-components'
 import RequestConsentContainer from './RequestConsentContainer'
 
@@ -43,9 +45,19 @@ const IFrame = ({
   aspectRatio,
   height,
 }: IFrameProps) => {
+  const { isPreview } = useContext(PreviewContext)
+
   if (!url) return null
 
   const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
+
+  if (isPreview) {
+    return (
+      <IFrameContainer aspectRatioPadding={containerPadding}>
+        <StyledIFrame src={url} title={frameTitle} />
+      </IFrameContainer>
+    )
+  }
 
   return (
     <>
