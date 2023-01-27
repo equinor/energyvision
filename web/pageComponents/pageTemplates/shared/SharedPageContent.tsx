@@ -40,7 +40,6 @@ import {
   CookieDeclarationData,
   ImageCarouselData,
 } from '../../../types/types'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 // How could we do this for several different component types?
 type ComponentProps =
