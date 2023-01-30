@@ -21,7 +21,7 @@ export const PreviewContextProvider = ({ children }: ProviderProps) => {
 
   useEffect(() => {
     if (isPreview) {
-      const cookiebot = document.getElementById('CookieBot')
+      const cookiebot = document.getElementById('Cookiebot')
       cookiebot?.remove()
     }
   }, [isPreview])
