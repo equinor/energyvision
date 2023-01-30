@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 type Props = {
   isPreview: boolean
@@ -18,6 +18,13 @@ export const PreviewContext = createContext<Props>({
 
 export const PreviewContextProvider = ({ children }: ProviderProps) => {
   const [isPreview, setIsPreview] = useState(false)
+
+  useEffect(() => {
+    if (isPreview) {
+      const cookiebot = document.getElementById('CookieBot')
+      cookiebot?.remove()
+    }
+  }, [isPreview])
 
   return <PreviewContext.Provider value={{ isPreview, setIsPreview }}>{children}</PreviewContext.Provider>
 }
