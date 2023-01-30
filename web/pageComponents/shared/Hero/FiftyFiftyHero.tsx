@@ -7,6 +7,7 @@ import type { LinkData, HeroType } from '../../../types/types'
 import { BackgroundContainer, Link, Text } from '@components'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { Flags } from '../../../common/helpers/datasetHelpers'
+import { getLocaleFromName } from '../../../lib/localization'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -67,8 +68,9 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
     return null
   }
   if (action.type === 'internalUrl') {
+    const linkLocale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink href={url} passHref legacyBehavior>
+      <NextLink href={url} locale={linkLocale} passHref legacyBehavior>
         <Link variant="readMore" aria-label={ariaLabel} {...rest}>
           {action.label}
         </Link>
