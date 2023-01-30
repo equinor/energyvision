@@ -70,7 +70,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const linkLocale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink href={url} locale={linkLocale} passHref legacyBehavior>
+      <NextLink href={url} locale={Flags.IS_DEV? linkLocale: undefined} passHref legacyBehavior>
         <Link variant="readMore" aria-label={ariaLabel} {...rest}>
           {action.label}
         </Link>
