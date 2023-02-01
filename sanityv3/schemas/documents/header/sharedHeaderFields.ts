@@ -21,7 +21,9 @@ const title = {
   name: 'title',
   type: 'array',
   title: 'Title',
-  inputComponent: CompactBlockEditor,
+  components: {
+    input: CompactBlockEditor,
+  },
   of: [titleContentType],
   fieldset: 'header',
   validation: (Rule: Rule) => Rule.required(),
@@ -72,7 +74,9 @@ const heroTitle = {
   name: 'heroTitle',
   type: 'array',
   title: 'Hero Title',
-  inputComponent: CompactBlockEditor,
+  components: {
+    input: CompactBlockEditor,
+  },
   of: [titleContentType],
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
@@ -90,7 +94,9 @@ const heroIngress = {
   title: 'Hero Ingress',
   name: 'heroIngress',
   type: 'array',
-  inputComponent: CharCounterEditor,
+  components: {
+    input: CharCounterEditor,
+  },
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY

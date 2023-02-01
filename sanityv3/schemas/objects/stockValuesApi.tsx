@@ -42,7 +42,9 @@ export default {
     {
       name: 'description',
       type: 'string',
-      inputComponent: ApiDescription,
+      components: {
+        input: ApiDescription,
+      },
     },
     /*     {
       title: 'Background',

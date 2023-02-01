@@ -83,7 +83,9 @@ export default {
       title: 'Slug',
       type: 'slug',
       fieldset: 'slug',
-      inputComponent: SlugInput,
+      components: {
+        input: SlugInput,
+      },
       options: withSlugValidation({
         source: async (doc: any) => {
           // translated document ids end with _i18n__lang while base documents don't

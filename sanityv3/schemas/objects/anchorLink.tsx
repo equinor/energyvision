@@ -36,7 +36,9 @@ export default {
     {
       name: 'description',
       type: 'string',
-      inputComponent: Description,
+      components: {
+        input: Description,
+      },
     },
     {
       name: 'anchorReference',

@@ -57,7 +57,9 @@ export default {
       title: 'Text',
       name: 'ingress',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [textContentType],
       fieldset: 'header',
     },

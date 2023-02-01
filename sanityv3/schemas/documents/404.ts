@@ -50,7 +50,9 @@ export default {
       type: 'array',
       title: 'Title',
       description: `Don't add the status code (404). The web will take care of that`,
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -58,7 +60,9 @@ export default {
       title: 'Text',
       name: 'text',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [textContentType],
     },
     {

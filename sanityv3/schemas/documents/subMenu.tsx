@@ -108,7 +108,9 @@ export default {
       title: 'Intro text',
       description: 'A short and catchy introduction text for this menu item (max. 215 chars)',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [introBlockContentType],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215)),
     },

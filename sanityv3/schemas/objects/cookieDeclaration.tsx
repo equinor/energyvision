@@ -40,13 +40,17 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the iframe.',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
     },
     {
       name: 'description',
       type: 'string',
-      inputComponent: ApiDescription,
+      components: {
+        input: ApiDescription,
+      },
       initialValue: 'Cookie Declaration',
     },
   ].filter((e) => e),

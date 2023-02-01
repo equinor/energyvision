@@ -81,17 +81,19 @@ export default {
       description: 'Select which side of the factbox the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
-      inputComponent: function ImagePosition({ type, onChange, value }: { type: any; onChange: any; value: string }) {
-        return (
-          <RadioIconSelector
-            name="imageAlignmentSelector"
-            options={imageAlignmentOptions}
-            defaultValue="left"
-            currentValue={value}
-            type={type}
-            onChange={onChange}
-          />
-        )
+      components: {
+        input: function ImagePosition({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+          return (
+            <RadioIconSelector
+              name="imageAlignmentSelector"
+              options={imageAlignmentOptions}
+              defaultValue="left"
+              currentValue={value}
+              type={type}
+              onChange={onChange}
+            />
+          )
+        },
       },
     },
     {

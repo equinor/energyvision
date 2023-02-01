@@ -47,7 +47,9 @@ export function slugWithRef(source = `title`, ref = ``, fieldset: string) {
     name: 'slug',
     type: 'slug',
     fieldset: fieldset,
-    inputComponent: SlugInput,
+    components: {
+      input: SlugInput,
+    },
     options: withSlugValidation({
       source: (doc: any) => getPrefix(doc, source, ref),
       slugify: (value: any) => formatSlug(value),

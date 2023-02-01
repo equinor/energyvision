@@ -62,7 +62,9 @@ export default {
               title: 'Ingress',
               description: 'A short and catchy introduction text for this topic content card (max. 215 chars)',
               type: 'array',
-              inputComponent: CharCounterEditor,
+              components: {
+                input: CharCounterEditor,
+              },
               of: [introBlockContentType],
               validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215)),
             },

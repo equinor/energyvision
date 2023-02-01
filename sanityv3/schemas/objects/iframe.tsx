@@ -71,14 +71,18 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the iframe.',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [ingressContentType],
     },
     {
@@ -156,7 +160,9 @@ export default {
       title: 'Description/caption',
       description: `Here you can write a short description of the iframes content. This text will show up as a caption text right below the iframe.`,
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [descriptionContentType],
     },
     {

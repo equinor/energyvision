@@ -51,7 +51,9 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -59,7 +61,9 @@ export default {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [ingressContentType],
     },
     {

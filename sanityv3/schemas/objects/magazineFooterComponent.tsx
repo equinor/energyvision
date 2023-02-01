@@ -64,14 +64,18 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
@@ -100,17 +104,19 @@ export default {
       description: 'Select which side the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
-      inputComponent: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
-        return (
-          <RadioIconSelector
-            name="imageAlignmentSelector"
-            options={imageAlignmentOptions}
-            defaultValue="left"
-            currentValue={value}
-            type={type}
-            onChange={onChange}
-          />
-        )
+      components: {
+        input: function ({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+          return (
+            <RadioIconSelector
+              name="imageAlignmentSelector"
+              options={imageAlignmentOptions}
+              defaultValue="left"
+              currentValue={value}
+              type={type}
+              onChange={onChange}
+            />
+          )
+        },
       },
     },
     /*     {

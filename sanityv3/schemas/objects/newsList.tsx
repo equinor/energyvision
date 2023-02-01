@@ -41,14 +41,18 @@ export default {
     {
       name: 'description',
       type: 'string',
-      inputComponent: ComponentDescription,
+      components: {
+        input: ComponentDescription,
+      },
     },
     {
       name: 'title',
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the news list.',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
     },
     {

@@ -42,17 +42,19 @@ export default {
       name: 'layout',
       title: 'Layout',
       type: 'string',
-      inputComponent: function ImagePosition({ type, onChange, value }: { type: any; onChange: any; value: string }) {
-        return (
-          <RadioIconSelector
-            name="imageAlignmentSelector"
-            options={imageAlignmentOptions}
-            defaultValue="full"
-            currentValue={value}
-            type={type}
-            onChange={onChange}
-          />
-        )
+      components: {
+        input: function ImagePosition({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+          return (
+            <RadioIconSelector
+              name="imageAlignmentSelector"
+              options={imageAlignmentOptions}
+              defaultValue="full"
+              currentValue={value}
+              type={type}
+              onChange={onChange}
+            />
+          )
+        },
       },
     },
   ],

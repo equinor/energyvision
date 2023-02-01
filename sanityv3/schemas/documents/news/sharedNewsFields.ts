@@ -164,7 +164,9 @@ export const ingress = {
   title: 'Ingress',
   description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
   type: 'array',
-  inputComponent: CharCounterEditor,
+  components: {
+    input: CharCounterEditor,
+  },
   of: [ingressBlockContentType],
   validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 }

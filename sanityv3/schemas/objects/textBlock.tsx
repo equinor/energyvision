@@ -85,7 +85,9 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('A title is recommended'),
     },
@@ -105,14 +107,18 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [ingressContentType],
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [blockContentType],
     },
     {

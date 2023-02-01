@@ -102,7 +102,9 @@ export default {
       title: 'Description',
       description: 'Shown in newsletters and promotions. Max 400 characters',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [ingressBlockContentType],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
@@ -127,7 +129,9 @@ export default {
       title: 'Slug',
       type: 'slug',
       fieldset: 'slug',
-      inputComponent: SlugInput,
+      components: {
+        input: SlugInput,
+      },
       options: withSlugValidation({
         source: async (doc: SanityDocument) => {
           // translated document ids end with _i18n__lang while base documents don't

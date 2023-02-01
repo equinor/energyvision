@@ -35,7 +35,9 @@ export default {
       title: 'Start time',
       name: 'startTime',
       type: 'string',
-      inputComponent: TimeInput,
+      components: {
+        input: TimeInput,
+      },
       validation: (Rule: Rule) =>
         Rule.custom((field: string | undefined, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
@@ -54,7 +56,9 @@ export default {
       title: 'End time',
       name: 'endTime',
       type: 'string',
-      inputComponent: TimeInput,
+      components: {
+        input: TimeInput,
+      },
       validation: (Rule: Rule) =>
         Rule.custom((field: string | undefined, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
@@ -76,7 +80,9 @@ export default {
       description: 'Timezone in which the event will be held',
       name: 'timezone',
       type: 'string',
-      inputComponent: TimezoneInput,
+      components: {
+        input: TimezoneInput,
+      },
       initialValue: Intl.DateTimeFormat().resolvedOptions().timeZone,
       validation: (Rule: Rule) => Rule.required(),
     },

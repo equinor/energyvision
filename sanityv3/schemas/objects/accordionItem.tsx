@@ -33,7 +33,9 @@ export default {
       title: 'Content',
       name: 'content',
       type: 'array',
-      inputComponent: CharCounterEditor,
+      components: {
+        input: CharCounterEditor,
+      },
       of: [contentType],
     },
   ],
