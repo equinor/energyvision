@@ -53,18 +53,14 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
         {
           title: 'Sub',
           value: 'sub',
-          blockEditor: {
-            icon: IconSubScript,
-            render: SubScriptRenderer,
-          },
+          icon: IconSubScript,
+          component: SubScriptRenderer,
         },
         {
           title: 'Super',
           value: 'sup',
-          blockEditor: {
-            icon: IconSuperScript,
-            render: SuperScriptRenderer,
-          },
+          icon: IconSuperScript,
+          component: SuperScriptRenderer,
         },
       ],
       annotations: [],
@@ -78,19 +74,15 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
-    blockEditor: {
-      render: SmallTextRender,
-    },
+    component: SmallTextRender,
   }
 
   const externalLinkConfig = {
     name: 'link',
     type: 'object',
     title: 'External link',
-    blockEditor: {
-      render: ExternalLinkRenderer,
-      icon: () => EdsBlockEditorIcon(external_link),
-    },
+    icon: () => EdsBlockEditorIcon(external_link),
+    component: ExternalLinkRenderer,
     fields: [
       {
         name: 'href',
@@ -132,9 +124,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     name: 'internalLink',
     type: 'object',
     title: 'Internal link',
-    blockEditor: {
-      icon: () => EdsBlockEditorIcon(link),
-    },
+    icon: () => EdsBlockEditorIcon(link),
     fields: [
       {
         name: 'linkToOtherLanguage',
@@ -201,9 +191,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     name: 'attachment',
     type: 'object',
     title: 'Attachment',
-    blockEditor: {
-      icon: () => EdsIcon(attach_file),
-    },
+    icon: () => EdsIcon(attach_file),
     fields: [
       {
         name: 'reference',

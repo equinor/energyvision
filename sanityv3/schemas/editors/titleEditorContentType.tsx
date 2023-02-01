@@ -18,26 +18,20 @@ export const configureTitleBlockContent = (): BlockFieldType => {
         {
           title: 'Strikethrough',
           value: 's',
-          blockEditor: {
-            icon: StrikethroughIcon,
-            render: StrikeThroughRenderer,
-          },
+          icon: StrikethroughIcon,
+          component: StrikeThroughRenderer,
         },
         {
           title: 'Sub',
           value: 'sub',
-          blockEditor: {
-            icon: IconSubScript,
-            render: SubScriptRenderer,
-          },
+          icon: IconSubScript,
+          component: SubScriptRenderer,
         },
         {
           title: 'Super',
           value: 'sup',
-          blockEditor: {
-            icon: IconSuperScript,
-            render: SuperScriptRenderer,
-          },
+          icon: IconSuperScript,
+          component: SuperScriptRenderer,
         },
       ],
       annotations: [],
