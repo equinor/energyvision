@@ -1,4 +1,4 @@
-import { getLanguages } from '../satellitesConfig.js'
+import { getLanguages } from '../satellitesConfig'
 import { dataset } from './src/lib/datasetHelpers'
 
 export const languages = getLanguages(dataset)

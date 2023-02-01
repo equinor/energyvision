@@ -3,6 +3,7 @@
   "description": "Web front end for equinor.com",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "author": {
     "name": "Heap Purple",
     "email": "fg_envis@equinor.com"

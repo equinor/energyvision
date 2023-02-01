@@ -4,6 +4,7 @@
   "engines": {
     "pnpm": ">=6"
   },
+  "type": "module",
   "scripts": {
     "setup-project": "pnpm m i && pnpm studio install",
     "lint:notworking": "eslint ./ --ext .js,.jsx,.ts,.tsx",

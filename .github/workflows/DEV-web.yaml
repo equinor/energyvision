@@ -9,7 +9,7 @@ on:
       - '!web/README.md'
       - '!web/.storybook/**'
       - '!web/.gitignore'
-      - '!web/jest.config.js'
+      - '!web/jest.config.cjs'
       - '!web/jest.setup.ts'
       - './FeatureFlags.js'
   repository_dispatch:

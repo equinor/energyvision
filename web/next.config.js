@@ -4,7 +4,7 @@ const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archiv
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
-import securityHeaders, { UnsafeContentSecurityPolicy } from './securityHeaders.mjs'
+import securityHeaders, { UnsafeContentSecurityPolicy } from './securityHeaders.js'
 
 const withTM = nextTranspileModules(['friendly-challenge'])
 

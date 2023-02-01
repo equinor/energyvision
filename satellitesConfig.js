@@ -22,7 +22,7 @@ const languages = [
 /**
  * @type {Record<string, string>}
  */
-const newsSlug = {
+export const newsSlug = {
   en_GB: 'news',
   nb_NO: 'nyheter',
   pt_BR: 'noticias',
@@ -36,7 +36,7 @@ const newsSlug = {
 /**
  * @type {Record<string, string>}
  */
-const magazineSlug = {
+export const magazineSlug = {
   en_GB: 'magazine',
   nb_NO: 'magasin',
 }
@@ -77,7 +77,7 @@ const datasets = {
  * If not set, the first language of the datasets array will be used
  * @type {Record<string, string>}
  */
-const defaultWebLanguage = {
+export const defaultWebLanguage = {
   argentina: 'spanish-ar',
   storage: 'german',
   southkorea: 'korean',
@@ -161,26 +161,17 @@ const logAndFallback = (dataset) => {
 /**
  * @param {string} dataset
  */
-const getLanguages = (dataset) =>
+export const getLanguages = (dataset) =>
   Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
 
 /**
  * @param {string} dataset
  */
-const getDomain = (dataset) => websiteDomains[dataset]?.url || 'Domain not set'
+export const getDomain = (dataset) => websiteDomains[dataset]?.url || 'Domain not set'
 
 /**
  * @param {string} dataset
  */
-const getMetaTitleSuffix = (dataset) => {
+export const getMetaTitleSuffix = (dataset) => {
   return websiteDomains[dataset]?.meta || 'Equinor'
-}
-
-module.exports = {
-  getLanguages,
-  defaultWebLanguage,
-  getDomain,
-  newsSlug,
-  magazineSlug,
-  getMetaTitleSuffix,
 }

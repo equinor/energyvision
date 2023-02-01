@@ -1,28 +1,28 @@
-import { i18n } from '../documentTranslation'
-import SlugInput from '../components/SlugInput/index'
-import { newsSlug } from '../../../satellitesConfig.js'
-import { defaultLanguage } from '../../languages'
 import slugify from 'slugify'
+import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
-import {
-  isLive,
-  seo,
-  openGraphImage,
-  title,
-  publishDateTime,
-  tags,
-  countryTags,
-  subscriptionType,
-  newsSlugField,
-  heroImage,
-  ingress,
-  content,
-  iframe,
-  relatedLinks,
-  excludeFromSearch,
-} from './news/sharedNewsFields'
+import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
+import SlugInput from '../components/SlugInput/index'
+import { i18n } from '../documentTranslation'
 import { withSlugValidation } from '../validations/validateSlug'
+import {
+  content,
+  countryTags,
+  excludeFromSearch,
+  heroImage,
+  iframe,
+  ingress,
+  isLive,
+  newsSlugField,
+  openGraphImage,
+  publishDateTime,
+  relatedLinks,
+  seo,
+  subscriptionType,
+  tags,
+  title,
+} from './news/sharedNewsFields'
 
 export default {
   title: 'News',

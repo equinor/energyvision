@@ -3,7 +3,7 @@ import { dataset } from './src/lib/datasetHelpers'
 import { getLocaleFromName } from './src/lib/localization'
 
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
-const previewSecret = process.env.SANITY_STUDIO_PREVIEW_SECRET
+const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
 
 const remoteUrl = () => {
   const env = window.location.hostname.includes('equinor-web-sites-preprod') ? 'preprod' : 'prod'
@@ -19,7 +19,7 @@ const remoteUrl = () => {
   }
 }
 
-const localUrl = process.env.SANITY_STUDIO_PROJECT_URL
+const localUrl = import.meta.env.SANITY_STUDIO_PROJECT_URL
 
 export const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl()
 
