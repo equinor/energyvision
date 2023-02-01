@@ -84,6 +84,7 @@ import twitterEmbed from './objects/twitterEmbed'
 import video from './objects/video'
 import videoFile from './objects/videoFile'
 import imageCarousel from './objects/imageCarousel'
+import iframeCarousel from './objects/iframeCarousel'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -172,6 +173,6 @@ export default createSchema({
     ...NewsSchemas,
     ...NewsRoomSchema,
     ...RemainingSchemas,
-    ...(Flags.IS_DEV ? [imageCarousel] : []),
+    ...(Flags.IS_DEV ? [imageCarousel,iframeCarousel] : []),
   ]),
 })

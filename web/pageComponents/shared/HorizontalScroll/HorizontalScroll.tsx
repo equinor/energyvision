@@ -21,11 +21,22 @@ const CardCarouselStyles = css`
   }
 `
 
+const IframeCarouselStyles = css`
+  --card-maxWidth: 480px;
+
+  padding: 0 var(--space-large);
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+  }
+`
+
 // more to be added
-export type CarouselTypes = 'card'
+export type CarouselTypes = 'card' | 'iframe'
 
 export type StyledSwiperTypes = {
   $carouselType?: CarouselTypes
+  $items?: number
 } & SwiperProps
 
 const Wrapper = styled.div<{ $items?: number }>`
@@ -41,12 +52,25 @@ const Wrapper = styled.div<{ $items?: number }>`
 `
 
 const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
-  ${({ $carouselType }: any) => ($carouselType === 'card' ? CardCarouselStyles : '')}
+  ${({ $carouselType }: any) => {
+    switch ($carouselType) {
+      case 'card':
+        return CardCarouselStyles
+      case 'iframe':
+        return IframeCarouselStyles
+      default:
+        return ''
+    }
+  }}
 
   position: unset;
 
   .swiper-wrapper {
     padding: var(--space-medium) 0 var(--space-xxLarge) 0;
+    @media (min-width: 800px) {
+      justify-content: ${({ $items, $carouselType }: any) =>
+        $items ? ($items < 3 && $carouselType === 'iframe' ? 'center' : 'normal') : `normal`};
+    }
   }
 
   .swiper-scrollbar {
@@ -92,6 +116,7 @@ export const HorizontalScroll = ({
         slidesPerView={slidesPerView}
         grabCursor={true}
         $carouselType={type}
+        $items={numberOfItems}
         {...rest}
       >
         {children}

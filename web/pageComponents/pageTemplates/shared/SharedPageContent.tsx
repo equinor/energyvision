@@ -16,6 +16,7 @@ import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import Video from '../../topicPages/Video'
 import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
+import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import {
   AnchorLinkData,
   TopicPageSchema,
@@ -39,6 +40,7 @@ import {
   VideoData,
   CookieDeclarationData,
   ImageCarouselData,
+  IframeCarouselData,
 } from '../../../types/types'
 
 // How could we do this for several different component types?
@@ -108,6 +110,8 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <Video key={c.id} data={c as VideoData} anchor={anchorReference} />
       case 'imageCarousel':
         return <ImageCarousel key={c.id} data={c as ImageCarouselData} anchor={anchorReference} />
+      case 'iframeCarousel':
+        return <IframeCarousel key={c.id} data={c as IframeCarouselData} anchor={anchorReference} />
       default:
         return null
     }

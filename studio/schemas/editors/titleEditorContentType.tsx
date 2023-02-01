@@ -6,7 +6,6 @@ import type { BlockFieldType } from '../../types/schemaTypes'
 
 // TODO: Add relevant styles for titles (i.e. highlighted text)
 export const configureTitleBlockContent = (): BlockFieldType => {
-  // const { strong, emphasis, strikethrough } = options
   return {
     type: 'block',
     styles: [],

@@ -1,3 +1,4 @@
+import { iframeCarouselFields } from '../iframeCarouselFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
@@ -504,6 +505,9 @@ const pageContentFields = /* groq */ `
 
   _type == "imageCarousel" =>{
     ${imageCarouselFields}
+  },
+  _type == "iframeCarousel" =>{
+    ${iframeCarouselFields}
   }
 
 `

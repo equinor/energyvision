@@ -446,6 +446,7 @@ export type CookiePolicy = 'none' | 'marketing' | 'statistics'
 export type IFrameData = {
   id?: string
   type?: string
+  _key?: string
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   description?: PortableTextBlock[]
@@ -657,6 +658,29 @@ export type ImageCarouselData = {
     autoplay: boolean
     delay: number
   }
+  designOptions: {
+    background: BackgroundColours
+  }
+}
+
+export type IFrameCarouselItemData = {
+  id?: string
+  type?: string
+  _key?: string
+  title?: PortableTextBlock[]
+  description?: PortableTextBlock[]
+  frameTitle: string
+  url: string
+  cookiePolicy: CookiePolicy
+  aspectRatio: string
+  height?: number
+}
+
+export type IframeCarouselData = {
+  type: 'iframeCarousel'
+  id: string
+  title?: PortableTextBlock[]
+  items: IFrameCarouselItemData[]
   designOptions: {
     background: BackgroundColours
   }
