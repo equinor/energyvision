@@ -83,9 +83,6 @@ export default {
               type: 'boolean',
               title: 'Use a link',
               description: 'Link to another piece of content instead of adding contact information',
-              options: {
-                isHighlighted: true,
-              },
               initialValue: false,
             },
             {

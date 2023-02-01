@@ -21,9 +21,6 @@ export default {
       title: 'Image is decorative',
       description:
         'If this image is purely decorative you can disable the alt tag input here. Please note that this makes the image invisible for screen reader users.',
-      options: {
-        isHighlighted: true,
-      },
       initialValue: false,
     },
     {
@@ -31,9 +28,6 @@ export default {
       type: 'string',
       title: 'Alt text',
       description: 'Alt attribute text description for image',
-      options: {
-        isHighlighted: true,
-      },
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext): CustomValidatorResult => {
           const { parent } = context as { parent: ImageWithAlt }
