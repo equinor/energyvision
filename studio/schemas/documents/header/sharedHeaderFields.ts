@@ -182,7 +182,6 @@ const heroLoopingVideoRatio = {
       const { parent } = context as DocumentType
       return parent?.heroType === HeroTypes.LOOPING_VIDEO && !value ? 'Field is required' : true
     }),
-  initialValue: 'narrow',
   fieldset: 'header',
 }
 
