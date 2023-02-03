@@ -297,10 +297,11 @@ const pageContentFields = /* groq */ `
                ),
               label,
               ariaLabel,
-              "link": reference-> {
-                "type": _type,
-                "slug": slug.current,
-              },
+              "link": select(
+                linkToOtherLanguage == true =>
+                referenceToOtherLanguage->${linkReferenceFields},
+                reference->${linkReferenceFields},
+                ),
               "href": url,
               anchorReference,
             },
