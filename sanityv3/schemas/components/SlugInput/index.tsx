@@ -81,27 +81,6 @@ export function SlugInput(props: SlugInputProps) {
 
   const handleChange = React.useCallback((event: any) => updateSlug(event.currentTarget.value), [updateSlug])
 
-  /*
-  useEffect(() => {
-    const getPrefix = async () => {
-      if (prefix?.query) {
-        const isHomePage = (
-          await client.fetch(
-            `*[_id == 'siteSettings'][0]{blogHomepage}`,
-          )
-        ).blogHomepage as boolean
-
-        if (!isHomePage) {
-          const value = (await client.fetch(prefix.query))[prefix.value]
-          setPrefixPath(value)
-        }
-      }
-    }
-
-    getPrefix()
-  }, [prefix])
-   */
-
   return (
     <Stack space={3}>
       <Flex>
