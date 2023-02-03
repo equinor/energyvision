@@ -21,6 +21,9 @@ export type LinkSelector = {
   url?: string
   label?: string
   ariaLabel?: string
+} & {
+  // Hack for promotion type
+  isLink?: boolean
 }
 
 const types = [
@@ -43,35 +46,28 @@ const types = [
 
 const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
-const LinkField = {
-  name: 'linkSelector',
-  title: 'Link',
-  type: 'object',
-  description: 'Select either an internal or external URL',
-  fieldsets: [
-    {
-      name: 'label',
-      title: 'Label',
-      description: 'The label that the link/button should have.',
-    },
-  ],
-  fields: [
+export const getLinkSelectorFields = (labelFieldset: string | undefined, checkForIsLink = false) => {
+  const isLinkCheck = (parent: LinkSelector) => checkForIsLink && !parent?.isLink
+  return [
     {
       name: 'linkToOtherLanguage',
       type: 'boolean',
       title: 'Link to a different language',
-      hidden: !Flags.IS_DEV,
       description: 'Use this if you want to create a link to a page of a different language',
+      hidden: ({ parent }: { parent: LinkSelector }) =>
+        !Flags.IS_DEV || (Flags.IS_DEV && isLinkCheck(parent)),
     },
     {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) => parent.linkToOtherLanguage,
+      hidden: ({ parent }: { parent: LinkSelector }) =>
+        parent.linkToOtherLanguage || (Flags.IS_DEV && isLinkCheck(parent)),
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
           const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
+          if (Flags.IS_DEV && isLinkCheck(parent)) return true
           if (parent.linkToOtherLanguage) return true
           if (Flags.IS_DEV && value?._ref) {
             const referenceLang = await client.fetch(
@@ -95,10 +91,12 @@ const LinkField = {
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) => !parent.linkToOtherLanguage,
+      hidden: ({ parent }: { parent: LinkSelector }) =>
+        !parent.linkToOtherLanguage || (Flags.IS_DEV && isLinkCheck(parent)),
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
+          if (Flags.IS_DEV && isLinkCheck(parent)) return true
           if (!parent.linkToOtherLanguage) return true
           return validateInternalOrExternalUrl(value, parent.url)
         }),
@@ -116,32 +114,52 @@ const LinkField = {
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
+          if (Flags.IS_DEV && isLinkCheck(parent)) return true
           const connectedField = parent.linkToOtherLanguage ? parent.referenceToOtherLanguage : parent.reference
           return validateInternalOrExternalUrl(value, connectedField)
         }),
+      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
     },
     {
       name: 'anchorReference',
       title: 'Anchor reference',
       type: 'anchorReferenceField',
       description: AnchorLinkDescription(),
+      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
     },
     {
       name: 'label',
       title: 'Visible label',
       description: 'The visible text on the link/button.',
       type: 'string',
-      fieldset: 'label',
+      fieldset: labelFieldset,
       validation: (Rule: Rule) => Rule.required(),
+      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
     },
     {
       name: 'ariaLabel',
       title: '♿ Screenreader label',
       description: 'A text used for providing screen readers with additional information',
       type: 'string',
-      fieldset: 'label',
+      fieldset: labelFieldset,
+      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
+    },
+  ]
+}
+
+const LinkField = {
+  name: 'linkSelector',
+  title: 'Link',
+  type: 'object',
+  description: 'Select either an internal or external URL',
+  fieldsets: [
+    {
+      name: 'label',
+      title: 'Label',
+      description: 'The label that the link/button should have.',
     },
   ],
+  fields: [...getLinkSelectorFields('label')],
   preview: {
     select: {
       title: 'label',
