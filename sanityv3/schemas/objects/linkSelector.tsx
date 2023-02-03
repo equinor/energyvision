@@ -7,7 +7,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { AnchorLinkDescription } from './anchorReferenceField'
-import { getClient } from '../../../web/lib/sanity.server';
+import { getClient } from '../../../web/lib/sanity.server'
 
 export type ReferenceTarget = {
   type: string
@@ -71,8 +71,11 @@ const LinkField = {
       hidden: ({ parent }: { parent: LinkSelector }) => parent.linkToOtherLanguage,
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
-          const { parent, document, getClient } = context as ValidationContext & { parent: LinkSelector; document: { _lang?: string } }
-          const client = getClient({ apiVersion: '2023-02-02'})
+          const { parent, document, getClient } = context as ValidationContext & {
+            parent: LinkSelector
+            document: { _lang?: string }
+          }
+          const client = getClient({ apiVersion: '2023-02-02' })
           if (parent.linkToOtherLanguage) return true
           if (Flags.IS_DEV && value?._ref) {
             const referenceLang = await client.fetch(
@@ -81,7 +84,6 @@ const LinkField = {
                 id: value._ref,
               },
             )
-            console.log('referenceLang: ', referenceLang)
             if (document._lang !== referenceLang) return 'Reference must have the same language as the document'
           }
           return validateInternalOrExternalUrl(value, parent.url)
