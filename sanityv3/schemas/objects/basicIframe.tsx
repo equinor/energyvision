@@ -3,7 +3,7 @@
 import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
-import type { Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'

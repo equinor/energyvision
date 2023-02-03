@@ -1,5 +1,5 @@
 import { link } from '@equinor/eds-icons'
-import type { Reference, Rule, ValidationContext } from 'sanity'
+import { Reference, Rule, useClient, ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import { sanityClient } from '../../sanity.client'
@@ -7,6 +7,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { AnchorLinkDescription } from './anchorReferenceField'
+import { getClient } from '../../../web/lib/sanity.server';
 
 export type ReferenceTarget = {
   type: string
@@ -70,15 +71,17 @@ const LinkField = {
       hidden: ({ parent }: { parent: LinkSelector }) => parent.linkToOtherLanguage,
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
-          const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
+          const { parent, document, getClient } = context as ValidationContext & { parent: LinkSelector; document: { _lang?: string } }
+          const client = getClient({ apiVersion: '2023-02-02'})
           if (parent.linkToOtherLanguage) return true
           if (Flags.IS_DEV && value?._ref) {
-            const referenceLang = await sanityClient.fetch(
+            const referenceLang = await client.fetch(
               /* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`,
               {
                 id: value._ref,
               },
             )
+            console.log('referenceLang: ', referenceLang)
             if (document._lang !== referenceLang) return 'Reference must have the same language as the document'
           }
           return validateInternalOrExternalUrl(value, parent.url)
@@ -163,6 +166,7 @@ export const FilteredLinkField = (
   fieldName = 'link',
   referenceTargets: ReferenceTarget[] = defaultReferenceTargets,
 ) => {
+  const client = useClient()
   const FilteredLink = { ...LinkField }
   FilteredLink.name = fieldName
   FilteredLink.fields[1].to = referenceTargets

@@ -1,5 +1,5 @@
 import { flight_land } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CharCounterEditor from '../components/CharCounterEditor'

@@ -36,7 +36,7 @@ const heroType = {
       { title: 'Default', value: HeroTypes.DEFAULT },
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
-      Flags.IS_DEV && { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
+      { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
       Flags.IS_DEV && { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
     ].filter((e) => e),
   },
@@ -170,7 +170,7 @@ const heroLoopingVideoRatio = {
   name: 'heroLoopingVideoRatio',
   type: 'string',
   options: {
-    list: [Flags.IS_DEV && { title: 'Original', value: 'original' }, { title: 'Narrow', value: 'narrow' }].filter(
+    list: [ { title: 'Original', value: 'original' }, { title: 'Narrow', value: 'narrow' }].filter(
       (e) => e,
     ),
   },

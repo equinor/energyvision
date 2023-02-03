@@ -1,5 +1,5 @@
 import { calendar_event } from '@equinor/eds-icons'
-import type { Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CharCounterEditor from '../components/CharCounterEditor'

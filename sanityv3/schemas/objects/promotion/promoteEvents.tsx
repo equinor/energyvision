@@ -1,5 +1,5 @@
 import { calendar_event } from '@equinor/eds-icons'
-import type { Reference, Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import { EdsIcon } from '../../../icons'

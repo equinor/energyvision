@@ -32,10 +32,10 @@ export default class CustomEditor extends PureComponent {
     const { value = [] } = this.props
     const plainText = blocksToText(value)
     return (
-      <div>
+      <>
         <BlockEditor {...(this.props as PortableTextInputProps)} />
         <div>Characters: {plainText.length}</div>
-      </div>
+      </>
     )
   }
 }

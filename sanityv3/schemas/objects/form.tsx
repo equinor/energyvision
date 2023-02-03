@@ -1,4 +1,4 @@
-import type { Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'

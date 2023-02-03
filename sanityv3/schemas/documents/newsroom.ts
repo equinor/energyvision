@@ -5,7 +5,7 @@ import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 
-import type { Rule } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({

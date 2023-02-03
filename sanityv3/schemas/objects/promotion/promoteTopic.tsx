@@ -3,7 +3,7 @@ import CharCounterEditor from '../../components/CharCounterEditor'
 import { configureBlockContent } from '../../editors/blockContentType'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
-import type { Image, Reference, Rule } from 'sanity'
+import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'

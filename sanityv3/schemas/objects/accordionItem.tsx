@@ -1,5 +1,5 @@
 import { text_field } from '@equinor/eds-icons'
-import type { Block, Rule } from 'sanity'
+import type {PortableTextBlock, Rule } from 'sanity'
 import { EdsIcon } from '../../icons'
 import CharCounterEditor from '../components/CharCounterEditor'
 import { configureBlockContent } from '../editors/blockContentType'
@@ -45,12 +45,12 @@ export default {
       content: 'content',
     },
     prepare({ title = '', content }: { title: string; content: PortableTextBlock[] }) {
-      const contentBlock = (content || []).find((contentBlock: Block) => contentBlock._type === 'block')
+      const contentBlock = content?.find((contentBlock: PortableTextBlock) => contentBlock._type === 'block')
       return {
         title: title || 'Missing title',
         subtitle:
           (contentBlock &&
-            contentBlock.children
+            (contentBlock.children as unknown[])
               .filter((child: any) => child._type === 'span')
               .map((span: any) => span.text)
               .join('')) ||

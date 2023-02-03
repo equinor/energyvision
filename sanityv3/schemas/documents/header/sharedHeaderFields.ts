@@ -190,7 +190,6 @@ const heroLoopingVideoRatio = {
       if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
       return true
     }),
-  initialValue: 'original',
   fieldset: 'header',
 }
 
