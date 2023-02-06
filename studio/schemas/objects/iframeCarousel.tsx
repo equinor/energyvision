@@ -8,7 +8,7 @@ import { title, frameTitle, description, cookiePolicy, aspectRatio, url, height 
 const carouselItemFields = [title, frameTitle, description, cookiePolicy, aspectRatio, url, height]
 export default {
   name: 'iframeCarousel',
-  title: 'Iframe carousel',
+  title: 'Horizontal scroll iframe',
   type: 'object',
   fieldsets: [
     {
@@ -26,11 +26,11 @@ export default {
     {
       type: 'array',
       name: 'items',
-      description: 'Add iframes for the carousel',
-      title: 'Carousel items',
+      description: 'Add more iframes',
+      title: 'Scrollable iframe items',
       of: [
         {
-          title: 'Iframe carousel item',
+          title: 'Iframe item',
           type: 'object',
           fieldsets: [
             {
@@ -83,8 +83,8 @@ export default {
       const length = items ? items.length : 0
 
       return {
-        title: title ? blocksToText(title) : 'Untitled iframe carousel',
-        subtitle: `Iframe carousel with ${length} items`,
+        title: title ? blocksToText(title) : 'Untitled horizontal scroll iframe',
+        subtitle: `Horizontal scroll iframe carousel with ${length} items`,
         media: EdsIcon(library_image),
       }
     },
