@@ -8,6 +8,7 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import { AnchorLinkDescription } from './anchorReferenceField'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
+import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
 
 export type ReferenceTarget = {
   type: string
@@ -54,8 +55,7 @@ export const getLinkSelectorFields = (labelFieldset: string | undefined, checkFo
       type: 'boolean',
       title: 'Link to a different language',
       description: 'Use this if you want to create a link to a page of a different language',
-      hidden: ({ parent }: { parent: LinkSelector }) =>
-        !Flags.IS_DEV || (Flags.IS_DEV && isLinkCheck(parent)),
+      hidden: ({ parent }: { parent: LinkSelector }) => !Flags.IS_DEV || (Flags.IS_DEV && isLinkCheck(parent)),
     },
     {
       name: 'reference',
@@ -133,7 +133,12 @@ export const getLinkSelectorFields = (labelFieldset: string | undefined, checkFo
       description: 'The visible text on the link/button.',
       type: 'string',
       fieldset: labelFieldset,
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as { parent: LinkSelector }
+          if (Flags.IS_DEV && isLinkCheck(parent)) return true
+          return validateRequiredIfVisible(!isLinkCheck(parent), value, 'You must add a label')
+        }),
       hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
     },
     {
