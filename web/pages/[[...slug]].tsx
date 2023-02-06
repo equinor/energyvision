@@ -65,7 +65,7 @@ export default function Page({ data, preview = false }: any) {
     case 'localNews':
       return <NewsPage data={pageData} />
     case 'magazine':
-      return Flags.IS_DEV ? <MagazinePage data={pageData} /> : <TopicPage data={pageData} />
+      return <MagazinePage data={pageData} />
     default:
       return <TopicPage data={pageData} />
   }
