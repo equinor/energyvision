@@ -12,7 +12,7 @@ import CoreIFrame from '../iframe/IFrame'
 import RichText from '../portableText/RichText'
 
 const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small);
+  padding: var(--space-3xLarge) calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
   max-width: 1920px;
   margin-left: auto;
   margin-right: auto;

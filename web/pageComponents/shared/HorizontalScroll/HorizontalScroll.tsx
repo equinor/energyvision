@@ -24,8 +24,6 @@ const CardCarouselStyles = css`
 const IframeCarouselStyles = css`
   --card-maxWidth: 480px;
 
-  padding: 0 var(--space-large);
-
   @media (max-width: 800px) {
     --card-maxWidth: 300px;
   }
