@@ -43,10 +43,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect statoil enrollment pdf
-  if (
-    Flags.IS_DEV &&
-    pathname.includes('/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf')
-  ) {
+  if (pathname.includes('/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf')) {
     return NextResponse.redirect(`${origin}/where-we-are/us-owner-relations`, PERMANENT_REDIRECT)
   }
 
