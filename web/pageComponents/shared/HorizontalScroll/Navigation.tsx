@@ -10,7 +10,7 @@ const SharedStyle = styled.div`
   height: calc(100% - var(--space-xxLarge));
   position: absolute;
   top: 0;
-  z-index: 10;
+  z-index: 1;
   display: flex;
   align-items: center;
   padding: 0 var(--space-small);
