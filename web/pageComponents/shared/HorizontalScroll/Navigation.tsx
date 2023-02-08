@@ -33,6 +33,9 @@ const StyledButton = styled(Button)`
     background: var(--black-80);
     color: var(--white-100);
   }
+  @media (max-width: 425px) {
+    display: none;
+  }
 `
 
 type NavigationType = 'prev' | 'next'
