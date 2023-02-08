@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React from 'react'
 
 import { useId } from '@reach/auto-id'
 import { Select } from '@sanity/ui'
@@ -6,7 +6,7 @@ import timezones from '../../helpers/timezones'
 // eslint-disable-next-line import/no-unresolved
 import { set, unset, StringInputProps } from 'sanity'
 
-const TimezoneInput = forwardRef((props: StringInputProps) => {
+const TimezoneInput = (props: StringInputProps) => {
   const { value = '', onChange, elementProps } = props
   const id = useId()
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
@@ -22,6 +22,5 @@ const TimezoneInput = forwardRef((props: StringInputProps) => {
       ))}
     </Select>
   )
-})
-
+}
 export default TimezoneInput
