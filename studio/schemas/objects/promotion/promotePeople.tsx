@@ -2,7 +2,6 @@ import React from 'react'
 
 import type { Rule, Reference } from '@sanity/types'
 import type { ImageWithAlt } from '../imageWithAlt'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import { contacts } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../icons'
 import { getLinkSelectorFields } from '../linkSelector'
@@ -95,7 +94,7 @@ export default {
               placeholder: '+47 999 99 999',
               hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
             },
-            ...getLinkSelectorFields(undefined, true)
+            ...getLinkSelectorFields(undefined, true),
           ],
           preview: {
             select: {

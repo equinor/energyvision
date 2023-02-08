@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useEffect, useState } from 'react'
+import React, { forwardRef, useCallback, useState } from 'react'
 
 import { useId } from '@reach/auto-id'
 

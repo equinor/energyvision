@@ -1,8 +1,7 @@
 import { library_books } from '@equinor/eds-icons'
-import type { Rule, Reference, ValidationContext } from '@sanity/types'
+import type { Rule, Reference } from '@sanity/types'
 import { filterMagazineByLang } from '../../../helpers/referenceFilters'
 import { EdsIcon } from '../../../icons'
-import { Flags } from '../../../src/lib/datasetHelpers'
 
 export type MagazinePromotion = {
   manuallySelectArticles: boolean

@@ -1,7 +1,7 @@
 import { configureTitleBlockContent, configureBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import CharCounterEditor from '../../components/CharCounterEditor'
-import type { Rule, ValidationContext, Block } from '@sanity/types'
+import type { Rule, ValidationContext } from '@sanity/types'
 import type { IFrame } from '../iframe'
 
 const titleContentType = configureTitleBlockContent()
