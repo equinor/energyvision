@@ -68,7 +68,7 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: Event }
-          if (!parent.useTags) return true
+          if (!parent.useTags || parent?.manuallySelectEvents === true) return true
           if (!value || value.length === 0) return 'You must select at least one tag'
           return true
         }).unique(),
