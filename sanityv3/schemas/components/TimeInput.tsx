@@ -1,10 +1,13 @@
-import React, { forwardRef, useCallback, useState } from 'react'
-
+import React, { useCallback, useState } from 'react'
 import { useId } from '@reach/auto-id'
-
 import { ResetIcon } from '@sanity/icons'
-import { Box, Button, Flex, Select, Text, useForwardedRef } from '@sanity/ui'
-import { FormField, PatchEvent, set, unset } from 'sanity'
+import { Box, Button, Flex, Select, Text } from '@sanity/ui'
+import { set, unset, ObjectInputProps } from 'sanity'
+
+export interface TimeInput {
+  hours: string
+  minutes: string
+}
 
 export const EMPTY = '--'
 export const INVALID_TIME_FORMAT = 'Invalid time format'
@@ -37,43 +40,29 @@ const formatTime = (value: string | undefined): TimeType => {
   }
 }
 
-type Props = {
-  value?: string
-  markers: any[]
-  presence: any
-  onChange: (event: any) => void
-  type: {
-    name: string
-    title: string
-    description?: string
-    placeholder?: string
-  }
-}
-
 type TimeType = {
   hours: string
   minutes: string
 }
 
-const TimeInput = forwardRef((props: Props, forwardedRef: React.ForwardedRef<HTMLDivElement>) => {
-  const { value, onChange, presence, type, markers } = props
-  const [warning, setWarning] = useState('')
+const TimeInput = (props: ObjectInputProps<string>) => {
+  const { value, onChange, elementProps, validation } = props
   const [time, setTime] = useState(formatTime(value))
 
   const updateValue = useCallback(
     (time: TimeType) => {
       setTime(time)
-      setWarning('')
+      console.log(validation)
 
       const newValue = outgoingValue(time)
+      console.log(newValue)
 
       if (isValid(time)) {
-        onChange(createPatchFrom(newValue))
+        onChange(set(newValue))
       } else if (time.hours === EMPTY && time.minutes === EMPTY) {
-        onChange(createPatchFrom(''))
+        onChange(unset())
       } else {
-        setWarning(INVALID_TIME_FORMAT)
-        onChange(createPatchFrom(newValue))
+        onChange(set(newValue))
       }
     },
     [onChange],
@@ -96,60 +85,47 @@ const TimeInput = forwardRef((props: Props, forwardedRef: React.ForwardedRef<HTM
   const handleReset = useCallback(() => {
     updateValue({ hours: EMPTY, minutes: EMPTY })
   }, [updateValue])
-
-  const ref = useForwardedRef(forwardedRef)
-
-  const createPatchFrom = (value: string) => PatchEvent.from(value === '' ? unset() : set(value))
-
   const id = useId()
 
   return (
-    <FormField
-      __unstable_markers={
-        warning && !markers.some((e) => e.item.message === INVALID_TIME_FORMAT)
-          ? [
-              ...markers,
-              {
-                type: 'validation',
-                level: 'warning',
-                item: { message: warning, paths: [] },
-              } as unknown,
-            ]
-          : markers
-      }
-      __unstable_presence={presence}
-      inputId={id}
-      title={type.title}
-      description={type.description}
-    >
-      <Flex ref={ref} align="center" flex={1}>
-        <Box>
-          <Select id={id} aria-label="Select hour" value={value?.split(':')[0] ?? EMPTY} onChange={handleHoursChange}>
-            {[EMPTY, ...HOURS_24].map((h) => (
-              <option key={h} value={`${h}`.padStart(2, '0')}>
-                {`${h}`.padStart(2, '0')}
-              </option>
-            ))}
-          </Select>
-        </Box>
-        <Box paddingX={1}>
-          <Text>:</Text>
-        </Box>
-        <Box>
-          <Select aria-label="Select minutes" value={value?.split(':')[1] ?? EMPTY} onChange={handleMinutesChange}>
-            {[EMPTY, ...MINUTES].map((m) => (
-              <option key={m} value={`${m}`.padStart(2, '0')}>
-                {`${m}`.padStart(2, '0')}
-              </option>
-            ))}
-          </Select>
-        </Box>
-        <Box paddingLeft={2}>
-          <Button icon={ResetIcon} text="Clear" onClick={handleReset} />
-        </Box>
-      </Flex>
-    </FormField>
+    <Flex align="center" flex={1}>
+      <Box>
+        <Select
+          {...elementProps}
+          id={id}
+          aria-label="Select hour"
+          value={value?.split(':')[0] ?? 'Pad'}
+          onChange={handleHoursChange}
+        >
+          {[EMPTY, ...HOURS_24].map((h) => (
+            <option key={h} value={`${h}`.padStart(2, '0')}>
+              {`${h}`.padStart(2, '0')}
+            </option>
+          ))}
+        </Select>
+      </Box>
+      <Box paddingX={1}>
+        <Text>:</Text>
+      </Box>
+      <Box>
+        <Select
+          {...elementProps}
+          aria-label="Select minutes"
+          value={value?.split(':')[1] ?? EMPTY}
+          onChange={handleMinutesChange}
+        >
+          {[EMPTY, ...MINUTES].map((m) => (
+            <option key={m} value={`${m}`.padStart(2, '0')}>
+              {`${m}`.padStart(2, '0')}
+            </option>
+          ))}
+        </Select>
+      </Box>
+      <Box paddingLeft={2}>
+        <Button icon={ResetIcon} text="Clear" onClick={handleReset} />
+      </Box>
+    </Flex>
   )
-})
+}
 
 export default TimeInput
