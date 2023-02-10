@@ -1,44 +1,17 @@
-import React, { forwardRef, useCallback } from 'react'
-// eslint-disable-next-line import/no-unresolved
 import { Box, Label, TextArea } from '@sanity/ui'
-import { FormField } from 'sanity'
-// eslint-disable-next-line import/no-unresolved
-import { PatchEvent, Rule, set } from 'sanity'
+import { Rule } from 'sanity'
 import { SchemaType } from '../../types'
-//const createPatchFrom = (value) => PatchEvent.from(value === '' ? unset() : set(value))
-
-type TextAreaWithCharsProps = {
-  value: string
-  type: { title: 'string'; description: string }
-  onChange: any
-  markers: any
-  presence: any
-}
 
 // eslint-disable-next-line react/display-name
-const TextAreaWithChars = forwardRef<HTMLTextAreaElement, TextAreaWithCharsProps>(
-  ({ value = '', type, markers, presence, onChange }, ref) => {
-    const length = value.split('').length
-
-    const handleChange = useCallback(
-      (event: React.FormEvent<HTMLTextAreaElement>) => {
-        onChange(PatchEvent.from(set((event.target as HTMLTextAreaElement).value)))
-      },
-      [onChange],
-    )
-
-    return (
-      <div>
-        <FormField label={type.title} description={type.description} markers={markers} presence={presence}>
-          <TextArea type="text" ref={ref} value={value} onChange={handleChange} rows={5} />
-        </FormField>
-        <Box marginTop={2}>
-          <Label size={1}>Characters: {length}</Label>
-        </Box>
-      </div>
-    )
-  },
-)
+export function TextAreaWithChars() {
+  return (
+    <div>
+      <Box marginTop={2}>
+        <Label size={1}>Characters: {length}</Label>
+      </Box>
+    </div>
+  )
+}
 
 export default {
   title: 'Fields for title and description meta',
@@ -67,9 +40,7 @@ export default {
       description: `Meta descriptions are HTML attributes that provide concise summaries of webpages.
       It shows up in search results and in social media. Should be max. 160 chars`,
       type: 'text',
-      components: {
-        input: TextAreaWithChars,
-      },
+      inputComponent: TextAreaWithChars,
     },
   ],
 }
