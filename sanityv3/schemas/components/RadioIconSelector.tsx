@@ -1,6 +1,6 @@
 import { Box, Inline } from '@sanity/ui'
 import React, { useCallback, useState } from 'react'
-import { FormField, PatchEvent, set } from 'sanity'
+import { PatchEvent, set } from 'sanity'
 import styled from 'styled-components'
 
 type StyledBoxProps = {
@@ -37,18 +37,10 @@ type RadioIconSelectorProps = {
   options: RadioIconSelectorOption[]
   currentValue: string
   defaultValue: string
-  type: { title: 'string'; description: string }
   onChange: any
 }
 
-export const RadioIconSelector = ({
-  name,
-  options,
-  currentValue,
-  defaultValue,
-  type,
-  onChange,
-}: RadioIconSelectorProps) => {
+export const RadioIconSelector = ({ name, options, currentValue, defaultValue, onChange }: RadioIconSelectorProps) => {
   const [value, setValue] = useState(currentValue || defaultValue)
 
   const handleChange = useCallback(
@@ -61,24 +53,22 @@ export const RadioIconSelector = ({
   )
 
   return (
-    <FormField label={type.title} description={type.description}>
-      <Inline space={3}>
-        {options.map((option: RadioIconSelectorOption) => (
-          <div key={`container_${option.value}`}>
-            <StyledRadio
-              type="radio"
-              checked={value === option.value}
-              onChange={handleChange}
-              name={name}
-              value={option.value}
-              id={`id_${option.value.replace(/ /g, '')}`}
-            />
-            <label htmlFor={`id_${option.value.replace(/ /g, '')}`}>
-              <StyledBox>{option.icon()}</StyledBox>
-            </label>
-          </div>
-        ))}
-      </Inline>
-    </FormField>
+    <Inline space={3}>
+      {options.map((option: RadioIconSelectorOption) => (
+        <div key={`container_${option.value}`}>
+          <StyledRadio
+            type="radio"
+            checked={value === option.value}
+            onChange={handleChange}
+            name={name}
+            value={option.value}
+            id={`id_${option.value.replace(/ /g, '')}`}
+          />
+          <label htmlFor={`id_${option.value.replace(/ /g, '')}`}>
+            <StyledBox>{option.icon()}</StyledBox>
+          </label>
+        </div>
+      ))}
+    </Inline>
   )
 }
