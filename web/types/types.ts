@@ -189,6 +189,7 @@ export type HeroType = {
   background?: BackgroundColours
   video?: VideoHeroData
   loopingVideo?: LoopingVideoData
+  hideImageCaption?: boolean
 }
 
 export type ContentType =

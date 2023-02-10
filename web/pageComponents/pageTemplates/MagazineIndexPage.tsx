@@ -80,7 +80,7 @@ const MagazineIndexPage = ({
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main>
-        <SharedBanner title={title} hero={hero} />
+        <SharedBanner title={title} hero={hero} hideImageCaption={true} />
         {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
           <SharedTitle title={title} styles={{ backgroundColor: ingress.background, negativeBottomSpace: true }} />
         )}
