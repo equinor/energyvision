@@ -43,8 +43,14 @@ const types = [
 
 const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
+/**
+ *
+ * @param labelFieldset use this if you want display the label inside a fieldset
+ * @param flag the name of the boolean field from the parent that works as a switch to toggle link fields
+ *
+ */
 export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => {
-  const shouldIgnore = (parent: LinkSelector) => Flags.IS_DEV && flag && !parent?.[flag]
+  const isHidden = (parent: LinkSelector) => Flags.IS_DEV && flag && !parent?.[flag]
 
   return [
     {
@@ -52,18 +58,18 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       type: 'boolean',
       title: 'Link to a different language',
       description: 'Use this if you want to create a link to a page of a different language',
-      hidden: ({ parent }: { parent: LinkSelector }) => !Flags.IS_DEV || shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => !Flags.IS_DEV || isHidden(parent),
     },
     {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) => parent?.linkToOtherLanguage || shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => parent?.linkToOtherLanguage || isHidden(parent),
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
           const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
-          if (shouldIgnore(parent)) return true
+          if (isHidden(parent)) return true
           if (parent?.linkToOtherLanguage) return true
           if (Flags.IS_DEV && value?._ref) {
             const referenceLang = await client
@@ -86,11 +92,11 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) => !parent?.linkToOtherLanguage || shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => !parent?.linkToOtherLanguage || isHidden(parent),
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (shouldIgnore(parent)) return true
+          if (isHidden(parent)) return true
           if (!parent?.linkToOtherLanguage) return true
           return validateInternalOrExternalUrl(value, parent?.url)
         }),
@@ -108,18 +114,18 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (shouldIgnore(parent)) return true
+          if (isHidden(parent)) return true
           const connectedField = parent?.linkToOtherLanguage ? parent?.referenceToOtherLanguage : parent?.reference
           return validateInternalOrExternalUrl(value, connectedField)
         }),
-      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'anchorReference',
       title: 'Anchor reference',
       type: 'anchorReferenceField',
       description: AnchorLinkDescription(),
-      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'label',
@@ -130,10 +136,10 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (shouldIgnore(parent)) return true
+          if (isHidden(parent)) return true
           return value ? true : 'You must add a label'
         }),
-      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'ariaLabel',
@@ -141,7 +147,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       description: 'A text used for providing screen readers with additional information',
       type: 'string',
       fieldset: labelFieldset,
-      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
   ]
 }
