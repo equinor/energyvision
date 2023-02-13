@@ -77,7 +77,7 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption }: HeroType) => 
     <>
       <div>{getHero()}</div>
       <div>
-        {figure?.image?.asset && (!Flags.IS_DEV || (Flags.IS_DEV && !hideImageCaption)) && (
+        {figure?.image?.asset && !hideImageCaption && (
           <StyledCaption attribution={figure.attribution} caption={figure.caption} />
         )}
       </div>
