@@ -29,8 +29,8 @@ export default {
       group: 'group',
     },
     prepare({ group }: { group: PromoTile[] }) {
-      const getTitle = (promoTitle: PromoTile) => {
-        return blocksToText(promoTitle.title as unknown as any[])
+      const getTitle = (promoTile: PromoTile) => {
+        return promoTile.linkLabelAsTitle ? promoTile.link?.label : blocksToText(promoTile.title as unknown as any[])
       }
       return {
         title: group ? getTitle(group[0]) + ' | ' + (getTitle(group[1]) || '') : 'Missing content',

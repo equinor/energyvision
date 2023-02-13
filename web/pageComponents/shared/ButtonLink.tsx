@@ -32,3 +32,25 @@ export const ButtonLink = ({ action, ...rest }: { action: LinkData }) => {
     </Link>
   )
 }
+
+export const ButtonLinkV2 = ({ action, children, ...rest }: { action: LinkData; children?: React.ReactNode }) => {
+  const { label, ariaLabel, extension, type } = action
+
+  const url = getUrlFromAction(action)
+  if (!url) {
+    console.warn(`Missing URL on 'ButtonLink' link with type: '${type}' and label: '${label}'`)
+    return null
+  }
+  // If the URL is a static AEM page it should behave as an internal link in the web
+  const locale = getLocaleFromName(action.link?.lang)
+
+  return (
+    <NextLink passHref locale={Flags.IS_DEV ? locale : undefined} href={url} aria-label={ariaLabel} {...rest}>
+      {children || (
+        <Link>
+          {label} {extension && type !== 'internalUrl' && `(${extension.toUpperCase()})`}
+        </Link>
+      )}
+    </NextLink>
+  )
+}

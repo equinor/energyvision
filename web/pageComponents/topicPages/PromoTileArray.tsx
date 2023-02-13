@@ -3,11 +3,11 @@ import { tokens } from '@equinor/eds-tokens'
 import { PortableTextBlock } from '@portabletext/types'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import type { ImageWithAlt, PromoTileArrayData, PromoTileData } from '../../types/types'
-import { ButtonLink } from '../shared/ButtonLink'
+import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image from '../shared/Image'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { Ratios } from '../shared/SanityImage'
+import { PromoTileButton } from './PromoTileButton'
 
 const { Header, Action, Media } = Card
 
@@ -39,29 +39,18 @@ const ImageWithRoundedUpperCorners = styled(Image)`
 const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
   if (!data.group) return null
 
-  const richTitle = (image: ImageWithAlt, title: PortableTextBlock[]) => {
+  const richTitle = (title: PortableTextBlock[], hasImage: boolean) => {
     return (
       <Header>
-        {image?.asset ? (
-          <PromotileTitleText
-            style={
-              {
-                '--card-title-fontWeight': '450',
-              } as CSSProperties
-            }
-            value={title}
-          />
-        ) : (
-          <PromotileTitleText
-            style={
-              {
-                '--card-title-fontSize': 'var(--typeScale-4)',
-                '--card-title-fontWeight': '400',
-              } as CSSProperties
-            }
-            value={title}
-          />
-        )}
+        <PromotileTitleText
+          style={
+            {
+              '--card-title-fontSize': hasImage ? undefined : 'var(--typeScale-4)',
+              '--card-title-fontWeight': hasImage ? '450' : '400',
+            } as CSSProperties
+          }
+          value={title}
+        />
       </Header>
     )
   }
@@ -69,8 +58,24 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     <div className="background-none" id={anchor}>
       <Container>
         {data.group.map((tile: PromoTileData) => {
-          const { id, designOptions, image, title, action } = tile
+          const { id, designOptions, image, title, action, linkLabelAsTitle } = tile
           const { background } = designOptions
+          const hasImage = !!image?.asset
+
+          const Content = () =>
+            linkLabelAsTitle ? (
+              <PromoTileButton action={action} template="icon" hasImage={hasImage} />
+            ) : (
+              <>
+                {<>{richTitle(title, hasImage)}</>}
+                {action.label && (
+                  <Action>
+                    <PromoTileButton action={action} hasImage={hasImage} />
+                  </Action>
+                )}
+              </>
+            )
+
           return (
             /* Sneaky little hack to make it work with the bg colour See #667 */
             <StyledBackgroundContainer disableContainerWrapper={true} background={background} key={id}>
@@ -86,12 +91,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
                     />
                   </Media>
                 )}
-                {<>{richTitle(image, title)}</>}
-                {action.label && (
-                  <Action>
-                    <ButtonLink action={action} />
-                  </Action>
-                )}
+                <Content />
               </Card>
             </StyledBackgroundContainer>
           )

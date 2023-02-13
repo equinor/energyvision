@@ -94,7 +94,7 @@ export default {
               placeholder: '+47 999 99 999',
               hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
             },
-            ...getLinkSelectorFields(undefined, true),
+            ...getLinkSelectorFields(undefined, 'isLink'),
           ],
           preview: {
             select: {

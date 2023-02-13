@@ -173,6 +173,6 @@ export default createSchema({
     ...NewsSchemas,
     ...NewsRoomSchema,
     ...RemainingSchemas,
-    ...(Flags.IS_DEV ? [imageCarousel,iframeCarousel] : []),
+    ...(Flags.IS_DEV ? [imageCarousel, iframeCarousel] : []),
   ]),
 })

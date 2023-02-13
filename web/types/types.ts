@@ -377,6 +377,7 @@ export type PromoTileData = {
   image: ImageWithAlt
   action: LinkData
   designOptions: DesignOptions
+  linkLabelAsTitle?: boolean
 }
 
 export type PromoTileArrayData = {

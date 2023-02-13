@@ -8,7 +8,6 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import { AnchorLinkDescription } from './anchorReferenceField'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
-import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
 
 export type ReferenceTarget = {
   type: string
@@ -22,10 +21,7 @@ export type LinkSelector = {
   url?: string
   label?: string
   ariaLabel?: string
-} & {
-  // Hack for promotion type
-  isLink?: boolean
-}
+} & Record<string, boolean> // Hack for flags
 
 const types = [
   Flags.HAS_NEWS && {
@@ -47,38 +43,37 @@ const types = [
 
 const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
-export const getLinkSelectorFields = (labelFieldset: string | undefined, checkForIsLink = false) => {
-  const isLinkCheck = (parent: LinkSelector) => checkForIsLink && !parent?.isLink
+export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => {
+  const shouldIgnore = (parent: LinkSelector) => Flags.IS_DEV && flag && !parent?.[flag]
+
   return [
     {
       name: 'linkToOtherLanguage',
       type: 'boolean',
       title: 'Link to a different language',
       description: 'Use this if you want to create a link to a page of a different language',
-      hidden: ({ parent }: { parent: LinkSelector }) => !Flags.IS_DEV || (Flags.IS_DEV && isLinkCheck(parent)),
+      hidden: ({ parent }: { parent: LinkSelector }) => !Flags.IS_DEV || shouldIgnore(parent),
     },
     {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) =>
-        parent.linkToOtherLanguage || (Flags.IS_DEV && isLinkCheck(parent)),
+      hidden: ({ parent }: { parent: LinkSelector }) => parent?.linkToOtherLanguage || shouldIgnore(parent),
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
           const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
-          if (Flags.IS_DEV && isLinkCheck(parent)) return true
-          if (parent.linkToOtherLanguage) return true
+          if (shouldIgnore(parent)) return true
+          if (parent?.linkToOtherLanguage) return true
           if (Flags.IS_DEV && value?._ref) {
-            const referenceLang = await client.fetch(
-              /* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`,
-              {
+            const referenceLang = await client
+              .withConfig({ apiVersion: '2023-02-10' })
+              .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`, {
                 id: value._ref,
-              },
-            )
+              })
             if (document._lang !== referenceLang) return 'Reference must have the same language as the document'
           }
-          return validateInternalOrExternalUrl(value, parent.url)
+          return validateInternalOrExternalUrl(value, parent?.url)
         }),
       to: defaultReferenceTargets,
       options: {
@@ -91,14 +86,13 @@ export const getLinkSelectorFields = (labelFieldset: string | undefined, checkFo
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) =>
-        !parent.linkToOtherLanguage || (Flags.IS_DEV && isLinkCheck(parent)),
+      hidden: ({ parent }: { parent: LinkSelector }) => !parent?.linkToOtherLanguage || shouldIgnore(parent),
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (Flags.IS_DEV && isLinkCheck(parent)) return true
-          if (!parent.linkToOtherLanguage) return true
-          return validateInternalOrExternalUrl(value, parent.url)
+          if (shouldIgnore(parent)) return true
+          if (!parent?.linkToOtherLanguage) return true
+          return validateInternalOrExternalUrl(value, parent?.url)
         }),
       to: defaultReferenceTargets,
       options: {
@@ -114,18 +108,18 @@ export const getLinkSelectorFields = (labelFieldset: string | undefined, checkFo
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (Flags.IS_DEV && isLinkCheck(parent)) return true
-          const connectedField = parent.linkToOtherLanguage ? parent.referenceToOtherLanguage : parent.reference
+          if (shouldIgnore(parent)) return true
+          const connectedField = parent?.linkToOtherLanguage ? parent?.referenceToOtherLanguage : parent?.reference
           return validateInternalOrExternalUrl(value, connectedField)
         }),
-      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
     },
     {
       name: 'anchorReference',
       title: 'Anchor reference',
       type: 'anchorReferenceField',
       description: AnchorLinkDescription(),
-      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
     },
     {
       name: 'label',
@@ -136,10 +130,10 @@ export const getLinkSelectorFields = (labelFieldset: string | undefined, checkFo
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (Flags.IS_DEV && isLinkCheck(parent)) return true
-          return validateRequiredIfVisible(!isLinkCheck(parent), value, 'You must add a label')
+          if (shouldIgnore(parent)) return true
+          return value ? true : 'You must add a label'
         }),
-      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
     },
     {
       name: 'ariaLabel',
@@ -147,7 +141,7 @@ export const getLinkSelectorFields = (labelFieldset: string | undefined, checkFo
       description: 'A text used for providing screen readers with additional information',
       type: 'string',
       fieldset: labelFieldset,
-      hidden: ({ parent }: { parent: LinkSelector }) => isLinkCheck(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => shouldIgnore(parent),
     },
   ]
 }
@@ -178,20 +172,6 @@ const LinkField = {
       }
     },
   },
-}
-
-// Used to generate a linkSelector field with dynamic reference targets
-// Might be a better way of doing this, but doesn't seem like we can pass
-// params to a schema field
-export const FilteredLinkField = (
-  fieldName = 'link',
-  referenceTargets: ReferenceTarget[] = defaultReferenceTargets,
-) => {
-  const FilteredLink = { ...LinkField }
-  FilteredLink.name = fieldName
-  FilteredLink.fields[1].to = referenceTargets
-
-  return FilteredLink
 }
 
 export default LinkField

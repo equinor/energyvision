@@ -139,6 +139,7 @@ const pageContentFields = /* groq */ `
     "group": group[]{
       "id": _key,
       title,
+      linkLabelAsTitle,
       "image": {
         "asset": image.asset,
         "alt": image.alt,
