@@ -50,7 +50,7 @@ const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget
  *
  */
 export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => {
-  const isHidden = (parent: LinkSelector) => Flags.IS_DEV && flag && !parent?.[flag]
+  const isHidden = (parent: LinkSelector) => !Flags.IS_DEV || (Flags.IS_DEV && flag && !parent?.[flag])
 
   return [
     {
@@ -58,7 +58,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       type: 'boolean',
       title: 'Link to a different language',
       description: 'Use this if you want to create a link to a page of a different language',
-      hidden: ({ parent }: { parent: LinkSelector }) => !Flags.IS_DEV || isHidden(parent),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'reference',
