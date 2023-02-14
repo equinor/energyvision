@@ -6,7 +6,7 @@ import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
+import { sameLang, fixPreviewForDrafts, noDrafts } from './common/langAndDrafts'
 
 const footerComponentFields = /* groq */ `
   title,
@@ -44,7 +44,7 @@ export const magazineQuery = /* groq */ `
           ${pageContentFields}
       },
       ${slugsForNewsAndMagazine('magazine')},
-    "footerComponent": *[_id == 'magazineIndex'][0]{
+    "footerComponent": *[_type == 'magazineIndex' && _lang == $lang && ${noDrafts}][0]{
       "data": footerComponent{
         ${footerComponentFields}
       }
