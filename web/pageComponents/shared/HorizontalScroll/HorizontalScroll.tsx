@@ -76,6 +76,7 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
     left: 0;
     margin: 0 var(--space-3xLarge);
     width: calc(100% - (var(--space-3xLarge) * 2));
+    z-index: 1;
   }
 `
 
