@@ -4,6 +4,7 @@ import { EdsIcon } from '../../icons'
 import type { Rule } from '@sanity/types'
 import type { PromoTile } from './promoTile'
 import blocksToText from '../../helpers/blocksToText'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
@@ -15,6 +16,14 @@ export default {
   name: 'promoTileArray',
   title: 'Promo tiles',
   fields: [
+    Flags.IS_DEV && {
+      name: 'useHorizontalScroll',
+      title: 'Use horizontal scroll',
+      description:
+        'When this is enabled, the promo tiles will use horizontal scroll if the amount of content is greater than the screen size allows. This feature is enabled by default for smaller screen sizes.',
+      type: 'boolean',
+      initialValue: false,
+    },
     {
       type: 'array',
       name: 'group',

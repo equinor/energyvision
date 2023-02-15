@@ -136,6 +136,7 @@ const pageContentFields = /* groq */ `
   _type == "promoTileArray"=>{
     "type": _type,
     "id": _key,
+    "useHorizontalScroll": useHorizontalScroll,
     "group": group[]{
       "id": _key,
       title,

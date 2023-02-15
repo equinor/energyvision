@@ -384,6 +384,7 @@ export type PromoTileArrayData = {
   type: string
   id: string
   group: PromoTileData[]
+  useHorizontalScroll: boolean
 }
 
 export type MenuLinkData = {

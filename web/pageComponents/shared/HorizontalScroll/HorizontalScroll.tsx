@@ -58,7 +58,7 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
       case 'iframe':
         return IframeCarouselStyles
       default:
-        return ''
+        return CardCarouselStyles
     }
   }}
 
