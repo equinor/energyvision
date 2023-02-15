@@ -1,5 +1,6 @@
 import { ButtonLink as Link } from '@components'
 import NextLink from 'next/link'
+import { HTMLAttributes } from 'react'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
@@ -33,7 +34,11 @@ export const ButtonLink = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const ButtonLinkV2 = ({ action, children, ...rest }: { action: LinkData; children?: React.ReactNode }) => {
+type Props = {
+  action: LinkData
+} & HTMLAttributes<HTMLAnchorElement>
+
+export const ButtonLinkV2 = ({ action, children, ...rest }: Props) => {
   const { label, ariaLabel, extension, type } = action
 
   const url = getUrlFromAction(action)
@@ -45,9 +50,9 @@ export const ButtonLinkV2 = ({ action, children, ...rest }: { action: LinkData; 
   const locale = getLocaleFromName(action.link?.lang)
 
   return (
-    <NextLink passHref locale={Flags.IS_DEV ? locale : undefined} href={url} aria-label={ariaLabel} {...rest}>
+    <NextLink href={url} passHref legacyBehavior locale={Flags.IS_DEV ? locale : undefined} {...rest}>
       {children || (
-        <Link>
+        <Link aria-label={ariaLabel}>
           {label} {extension && type !== 'internalUrl' && `(${extension.toUpperCase()})`}
         </Link>
       )}
