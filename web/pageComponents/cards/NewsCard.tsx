@@ -23,7 +23,6 @@ const StyledTitle = styled(Title)`
   overflow: hidden;
   line-clamp: 2;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
 `
 
 const StyledIngress = styled(Text)`
@@ -32,7 +31,6 @@ const StyledIngress = styled(Text)`
   overflow: hidden;
   line-clamp: 5;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
 `
 
 type NewsCardProp = {
