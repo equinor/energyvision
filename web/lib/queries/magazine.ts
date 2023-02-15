@@ -29,7 +29,7 @@ const footerComponentFields = /* groq */ `
   },
 `
 
-const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang}][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
+const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang} && ${noDrafts}][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
 
 export const magazineQuery = /* groq */ `
 *[_type == "magazine" && slug.current == $slug && ${fixPreviewForDrafts}] {
@@ -44,7 +44,7 @@ export const magazineQuery = /* groq */ `
           ${pageContentFields}
       },
       ${slugsForNewsAndMagazine('magazine')},
-    "footerComponent": *[_type == 'magazineIndex' && _lang == $lang && ${noDrafts}][0]{
+    "footerComponent": *[_type == 'magazineIndex' && ${sameLang} && ${noDrafts}][0]{
       "data": footerComponent{
         ${footerComponentFields}
       }
