@@ -26,7 +26,7 @@ const StyledButtonLink = styled(Button)`
   }
 `
 
-type ButtonLinkProps = ButtonProps
+export type ButtonLinkProps = ButtonProps
 
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
   { children, ...rest },

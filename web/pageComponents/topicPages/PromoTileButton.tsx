@@ -1,5 +1,5 @@
 import { LinkData } from '../../types/types'
-import { ButtonLink, ButtonLinkV2 } from '../shared/ButtonLink'
+import { ButtonLink } from '../shared/ButtonLink'
 import { Card, Link } from '@components'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
@@ -17,7 +17,7 @@ const StyledLink = styled(Link)`
 
 const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: boolean }) => {
   return (
-    <ButtonLinkV2 action={action} style={{ textDecoration: 'none' }}>
+    <ButtonLink legacyBehavior action={action} style={{ textDecoration: 'none' }}>
       <StyledLink variant="contentLink" underline={false} aria-label={action.ariaLabel}>
         <Card.Title
           style={
@@ -30,7 +30,7 @@ const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: bool
           {action.label}
         </Card.Title>
       </StyledLink>
-    </ButtonLinkV2>
+    </ButtonLink>
   )
 }
 
