@@ -1,5 +1,7 @@
 // Or "topLevelGroups": group[reference._ref == ^.^._id]
 
+import { Flags } from '../../../common/helpers/datasetHelpers'
+
 export const landingPageContentFields = /* groq */ `
  "ingress": content->ingress,
   "id": _id,
@@ -10,10 +12,15 @@ export const landingPageContentFields = /* groq */ `
       href,
       "link": route->{
         "type": _type,
-        "slug": slug.current,            
+        "slug": slug.current,
       },
-        "image": coalesce(route->content->
-          heroFigure.image, route->content->openGraphImage)
+      "image": ${
+        Flags.IS_DEV
+          ? `select(
+            route->content->heroType == 'loopingVideo' => route->content->heroLoopingVideo->thumbnail,
+            coalesce(route->content->heroFigure.image, route->content->openGraphImage))`
+          : `coalesce(route->content->heroFigure.image, route->content->openGraphImage)`
+      },
     },
     "id": _key,
     label,
@@ -31,10 +38,15 @@ export const landingPageById = /* groq */ `
       href,
       "link": route->{
         "type": _type,
-        "slug": slug.current,            
+        "slug": slug.current,
       },
-        "image": route->content->
-          heroFigure.image,
+      "image": ${
+        Flags.IS_DEV
+          ? `select(
+            route->content->heroType == 'loopingVideo' => route->content->heroLoopingVideo->thumbnail,
+            coalesce(route->content->heroFigure.image, route->content->openGraphImage))`
+          : `coalesce(route->content->heroFigure.image, route->content->openGraphImage)`
+      },
     },
     "id": _key,
     label,

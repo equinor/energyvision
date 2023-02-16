@@ -4,6 +4,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
+import { HeroTypes } from '../HeroTypes'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -87,13 +88,19 @@ export default (isoCode: string, title: string) => {
         title: 'content.title',
         slug: 'slug.current',
         media: 'content.heroFigure.image',
+        video: 'content.heroLoopingVideo.thumbnail',
+        heroType: 'content.heroType',
         type: 'content._type',
       },
       prepare(selection: any) {
-        const { title, slug, media, type } = selection
+        const { title, slug, media, type, heroType, video } = selection
         const plainTitle = title ? blocksToText(title) : ''
-
-        const thumbnail = media ? media : type === 'event' ? EdsIcon(calendar_event) : TopicDocuments
+        let thumbnail
+        if (heroType === HeroTypes.LOOPING_VIDEO) {
+          thumbnail = video
+        } else {
+          thumbnail = media ? media : type === 'event' ? EdsIcon(calendar_event) : TopicDocuments
+        }
 
         return {
           title: plainTitle,

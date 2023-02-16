@@ -1,3 +1,4 @@
+import { Flags } from '../../../common/helpers/datasetHelpers'
 import linkSelectorFields from './actions/linkSelectorFields'
 
 export const heroFields = /* groq */ `{
@@ -6,7 +7,14 @@ export const heroFields = /* groq */ `{
     "title": heroTitle,
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
-    "figure": heroFigure,
+    "figure":  ${
+      Flags.IS_DEV
+        ? `select(
+              heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
+              heroFigure
+            )`
+        : `heroFigure`
+    },
     "loopingVideo": {
       "title": heroLoopingVideo->title,
       "thumbnail": heroLoopingVideo->thumbnail,
