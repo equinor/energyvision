@@ -155,6 +155,7 @@ const RemainingSchemas = [
   video,
   excludeFromSearch,
   videoFile,
+  iframeCarousel,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
@@ -173,6 +174,6 @@ export default createSchema({
     ...NewsSchemas,
     ...NewsRoomSchema,
     ...RemainingSchemas,
-    ...(Flags.IS_DEV ? [imageCarousel, iframeCarousel] : []),
+    ...(Flags.IS_DEV ? [imageCarousel] : []),
   ]),
 })
