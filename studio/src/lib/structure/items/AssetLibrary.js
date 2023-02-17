@@ -25,8 +25,8 @@ const assetLibraryItems = [
       .title('Video Assets')
       .icon(() => EdsIcon(play_circle_outlined))
       .child(S.documentTypeList('videoFile').id('videoFiles').title('Video Files')),
-  Flags.IS_DEV && S.divider(),
-  Flags.IS_DEV && UnusedAssetFilters(),
+  S.divider(),
+  UnusedAssetFilters(),
 ].filter((e) => e)
 
 export const AssetLibrary = S.listItem()
