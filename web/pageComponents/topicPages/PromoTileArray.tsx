@@ -41,6 +41,7 @@ const HorizontalWrapper = styled.div`
  */
 const StyledBackgroundContainer = styled(BackgroundContainer)`
   border-radius: ${tokens.shape.corners.borderRadius};
+  box-shadow: var(--card-box-shadow);
 `
 const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;

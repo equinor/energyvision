@@ -20,7 +20,7 @@ const StyledDiv = styled.section`
     'icon text'
     '. .';
   border-radius: var(--border-radius);
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--card-box-shadow);
   background-color: var(--white-100);
 
   &:before {

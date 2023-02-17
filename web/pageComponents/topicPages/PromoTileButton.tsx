@@ -15,22 +15,31 @@ const StyledLink = styled(Link)`
   border-bottom: none;
 `
 
+const StyledButtonLink = styled(ButtonLink)`
+  text-decoration: none;
+`
+const Wrapper = styled.div`
+  padding: 0 var(--space-medium);
+`
+
 const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: boolean }) => {
   return (
-    <ButtonLink legacyBehavior action={action} style={{ textDecoration: 'none' }}>
-      <StyledLink variant="contentLink" underline={false} aria-label={action.ariaLabel}>
-        <Card.Title
-          style={
-            {
-              '--card-title-fontSize': hasImage ? 'var(--typeScale-2)' : 'var(--typeScale-4)',
-              '--card-title-fontWeight': hasImage ? '450' : '400',
-            } as CSSProperties
-          }
-        >
-          {action.label}
-        </Card.Title>
-      </StyledLink>
-    </ButtonLink>
+    <Wrapper>
+      <StyledButtonLink legacyBehavior action={action}>
+        <StyledLink variant="contentLink" underline={false} aria-label={action.ariaLabel}>
+          <Card.Title
+            style={
+              {
+                '--card-title-fontSize': hasImage ? 'var(--typeScale-2)' : 'var(--typeScale-4)',
+                '--card-title-fontWeight': hasImage ? '450' : '400',
+              } as CSSProperties
+            }
+          >
+            {action.label}
+          </Card.Title>
+        </StyledLink>
+      </StyledButtonLink>
+    </Wrapper>
   )
 }
 

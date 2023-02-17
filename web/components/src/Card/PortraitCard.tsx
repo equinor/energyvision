@@ -32,7 +32,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
           ref={ref}
           style={
             {
-              '--card-shadow': '0px 6px 20px rgba(0, 0, 0, 0.2)',
+              '--card-shadow': 'var(--card-box-shadow)',
               '--card-background': 'var(--ui-background-default)',
               '--card-padding': '0 0 var(--space-small) 0',
               ...style,

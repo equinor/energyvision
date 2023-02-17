@@ -214,4 +214,9 @@ export const componentSettings = css`
     --eds_button__fullwidth__icon__margin_x: calc(8 / 14 * 1em);
     --eds_button__fullwidth__label__margin_x: calc(32 / 14 * 1em);
   }
+
+  /* Card */
+  :root {
+    --card-box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+  }
 `
