@@ -71,7 +71,7 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const locale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink href={url} locale={Flags.IS_DEV ? locale : undefined} passHref legacyBehavior>
+      <NextLink href={url} locale={locale} passHref legacyBehavior>
         <Link variant="readMore" aria-label={action.ariaLabel}>
           {action.label}
         </Link>
