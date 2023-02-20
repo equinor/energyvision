@@ -5,7 +5,6 @@ import { default as NextLink } from 'next/link'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import styled from 'styled-components'
 import { getLocaleFromName } from '../../lib/localization'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const StyledHeading = styled(Heading)`
   margin: var(--related-titleMargin, 0 0 var(--space-xLarge) 0);
@@ -40,7 +39,7 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
               <Fragment key={id}>
                 {type === 'internalUrl' ? (
                   <Item>
-                    <NextLink href={url} locale={Flags.IS_DEV ? linkLocale : undefined} passHref legacyBehavior>
+                    <NextLink href={url} locale={linkLocale} passHref legacyBehavior>
                       <Link variant="contentLink" type={type} aria-label={ariaLabel}>
                         {label}
                       </Link>

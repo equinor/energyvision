@@ -5,7 +5,6 @@ import { default as NextLink } from 'next/link'
 import { ButtonLink } from '../shared/ButtonLink'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Item } = List
 
@@ -39,7 +38,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             {type === 'internalUrl' ? (
               <Item>
-                <NextLink href={url} locale={Flags.IS_DEV ? linkLocale : undefined} passHref legacyBehavior>
+                <NextLink href={url} locale={linkLocale} passHref legacyBehavior>
                   <Link variant="contentLink" type={type} aria-label={ariaLabel}>
                     {label}
                   </Link>
