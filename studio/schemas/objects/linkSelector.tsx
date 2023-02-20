@@ -50,7 +50,7 @@ const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget
  *
  */
 export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => {
-  const isHidden = (parent: LinkSelector) => !Flags.IS_DEV || (Flags.IS_DEV && flag && !parent?.[flag])
+  const isHidden = (parent: LinkSelector) => flag && !parent?.[flag]
 
   return [
     {
@@ -71,7 +71,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
           const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
           if (isHidden(parent)) return true
           if (parent?.linkToOtherLanguage) return true
-          if (Flags.IS_DEV && value?._ref) {
+          if (value?._ref) {
             const referenceLang = await client
               .withConfig({ apiVersion: '2023-02-10' })
               .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`, {
