@@ -7,7 +7,6 @@ import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
 
 import { getLocaleFromName } from '../../lib/localization'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import type { CellData, LinkData, TableData } from '../../types/types'
 
 const { Head, Row, Cell, Body } = EnvisTable
@@ -83,12 +82,7 @@ const renderCellByType = (cellData: CellData) => {
       )
     case 'linkSelector':
       return (
-        <NextLink
-          href={getLink(cellData)}
-          locale={Flags.IS_DEV ? getLocale(cellData) : undefined}
-          passHref
-          legacyBehavior
-        >
+        <NextLink href={getLink(cellData)} locale={getLocale(cellData)} passHref legacyBehavior>
           <StyledTableLink>{cellData.label}</StyledTableLink>
         </NextLink>
       )
