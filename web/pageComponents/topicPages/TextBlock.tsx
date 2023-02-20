@@ -51,7 +51,7 @@ type TextBlockProps = {
 const TextBlock = ({ data, anchor }: TextBlockProps) => {
   const { overline, title, ingress, text, designOptions, callToActions, splitList, overrideButtonStyle = false } = data
   /* Don't render the component if it only has an eyebrow */
-  if (!title && !ingress && !text) return null
+  if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
   const { background } = designOptions
 
   return (
