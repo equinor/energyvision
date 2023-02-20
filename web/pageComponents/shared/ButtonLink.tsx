@@ -1,6 +1,5 @@
 import { ButtonLink as Link, ButtonLinkProps } from '@components'
 import NextLink, { LinkProps } from 'next/link'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
 import type { LinkData } from '../../types/types'
@@ -23,7 +22,7 @@ export const ButtonLink = ({ action, children, ...rest }: Props) => {
   if (type === 'internalUrl') {
     const locale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink passHref locale={Flags.IS_DEV ? locale : undefined} href={url} legacyBehavior>
+      <NextLink passHref locale={locale} href={url} legacyBehavior>
         {children || (
           <Link aria-label={ariaLabel} {...(rest as ButtonLinkProps)}>
             {label}
