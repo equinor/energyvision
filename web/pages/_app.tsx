@@ -14,7 +14,7 @@ import useConsentState from '../lib/hooks/useConsentState'
 import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
-import { SkipNavLink as NewSkipNavLink, SkipNavContent } from '@chakra-ui/skip-nav'
+import { SkipNavLink, SkipNavContent } from '@chakra-ui/skip-nav'
 import styled from 'styled-components'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
@@ -65,7 +65,7 @@ const HandleBoundaryError = (error: Error, info: { componentStack: string }) => 
   console.error('ErrorBoundary caught error: ', error, info)
 }
 
-const StyledSkipLink = styled(NewSkipNavLink)`
+const StyledSkipLink = styled(SkipNavLink)`
   &:focus {
     background: white;
     padding: var(--space-medium);
