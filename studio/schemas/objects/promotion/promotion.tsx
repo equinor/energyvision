@@ -117,7 +117,7 @@ export default {
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
-    Flags.IS_DEV && {
+    {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
       description:

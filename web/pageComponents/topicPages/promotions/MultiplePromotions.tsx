@@ -11,7 +11,6 @@ import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
 import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 
 const CardsWrapper = styled.div`
@@ -113,7 +112,7 @@ const MultiplePromotions = ({
     )
   }
 
-  if (Flags.IS_DEV && renderScroll) {
+  if (renderScroll) {
     return (
       <HorizontalScroll type="card">
         {data.map((item) => {

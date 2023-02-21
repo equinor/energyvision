@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
 import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const PairWrapper = styled.div`
   --card-minWidth: 250px;
@@ -79,7 +78,7 @@ const MultipleEventCards = ({
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
 
-  if (Flags.IS_DEV && renderScroll) {
+  if (renderScroll) {
     return (
       <HorizontalScroll type="card">
         {data.map((item) => {
