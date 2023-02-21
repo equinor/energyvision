@@ -47,6 +47,10 @@ const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
 `
 
+const StyledAction = styled(Action)`
+  flex-grow: 0;
+`
+
 const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
   const { width } = useWindowSize()
 
@@ -95,9 +99,9 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
               <>
                 {<>{richTitle(title, hasImage)}</>}
                 {action.label && (
-                  <Action>
+                  <StyledAction>
                     <PromoTileButton action={action} hasImage={hasImage} />
-                  </Action>
+                  </StyledAction>
                 )}
               </>
             )
