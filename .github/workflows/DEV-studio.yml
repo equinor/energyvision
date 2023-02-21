@@ -9,6 +9,8 @@ on:
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
+permissions:
+  id-token: write
 jobs:
   check-code:
     runs-on: ubuntu-latest
@@ -53,7 +55,6 @@ jobs:
       matrix:
         dataset: [global-development]
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:

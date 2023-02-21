@@ -17,6 +17,8 @@ on:
           - equinorfunds
           - southkorea
           - celticsea
+permissions:
+  id-token: write
 jobs:
   deploy-global:
     if: github.event.inputs.site == 'global'
@@ -223,7 +225,6 @@ jobs:
     environment:
       name: production
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:

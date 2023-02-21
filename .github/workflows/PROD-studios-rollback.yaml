@@ -6,6 +6,8 @@ on:
         description: 'The commit sha of the image to rollback to'
         required: true
         type: string
+permissions:
+  id-token: write
 jobs:
   find-image:
     runs-on: ubuntu-latest
@@ -232,7 +234,6 @@ jobs:
       name: production
       url: https://equinor.com
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:

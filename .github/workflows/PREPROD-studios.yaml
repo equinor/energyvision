@@ -5,6 +5,8 @@ on:
     workflows: ['TEST - Build & deploy studio for global-test']
     types:
       - completed
+permissions:
+  id-token: write
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
@@ -81,7 +83,6 @@ jobs:
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:

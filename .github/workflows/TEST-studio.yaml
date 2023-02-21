@@ -1,6 +1,8 @@
 name: TEST - Build & deploy studio for global-test
 on:
   workflow_dispatch:
+permissions:
+  id-token: write
 jobs:
   check-code:
     runs-on: ubuntu-latest
@@ -90,7 +92,6 @@ jobs:
       matrix:
         dataset: [global-test]
     env:
-      APP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.RADIX_MACHINE_USER_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
