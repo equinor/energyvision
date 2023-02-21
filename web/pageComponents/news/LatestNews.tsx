@@ -5,23 +5,8 @@ import type { CardData } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(calc(15 * var(--space-medium)), 1fr));
-  grid-row-gap: calc(4 * var(--space-medium));
-  grid-column-gap: var(--space-xLarge);
-  /** @TODO: Clamp? */
-  @media (min-width: 1300px) {
-    grid-column-gap: calc(4 * var(--space-medium)); // TODO: 64 Missing from spacings, try 56 (--space-3xLarge)
-  }
-  @media (min-width: 1900px) {
-    grid-column-gap: var(--space-4xLarge);
-  }
-`
-
-const DevWrapper = styled.div`
   --card-maxWidth: 400px;
 
   display: flex;
@@ -49,43 +34,27 @@ const LatestNews = ({ data }: LatestNewsProp) => {
   const { width } = useWindowSize()
   const renderScroll = Boolean(width && width <= 800)
 
-  if (Flags.IS_DEV) {
-    return (
-      <>
-        <StyledHeading size="xl" level="h2" center>
-          <FormattedMessage id="latest_news" defaultMessage="Latest News" />
-        </StyledHeading>
-
-        {renderScroll ? (
-          <HorizontalScroll type="card">
-            {data.map((newsItem: CardData) => (
-              <HorizontalScrollItem key={newsItem.id}>
-                <StyledNewsCard data={newsItem} key={newsItem.id} />
-              </HorizontalScrollItem>
-            ))}
-          </HorizontalScroll>
-        ) : (
-          <DevWrapper>
-            {data.map((newsItem: CardData) => {
-              return <StyledNewsCard data={newsItem} key={newsItem.id} />
-            })}
-          </DevWrapper>
-        )}
-      </>
-    )
-  }
-
   return (
     <>
       <StyledHeading size="xl" level="h2" center>
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
       </StyledHeading>
 
-      <Wrapper>
-        {data.map((newsItem: CardData) => {
-          return <NewsCard data={newsItem} key={newsItem.id} />
-        })}
-      </Wrapper>
+      {renderScroll ? (
+        <HorizontalScroll type="card">
+          {data.map((newsItem: CardData) => (
+            <HorizontalScrollItem key={newsItem.id}>
+              <StyledNewsCard data={newsItem} key={newsItem.id} />
+            </HorizontalScrollItem>
+          ))}
+        </HorizontalScroll>
+      ) : (
+        <Wrapper>
+          {data.map((newsItem: CardData) => {
+            return <StyledNewsCard data={newsItem} key={newsItem.id} />
+          })}
+        </Wrapper>
+      )}
     </>
   )
 }
