@@ -7,4 +7,5 @@ jobs:
     with:
       azureResourceGroupName: 'S166-rg-envis-dev'
       functionAppName: 'S166-func-algoliaindexers-dev'
+      env: 'dev'
     secrets: inherit
