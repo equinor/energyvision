@@ -7,6 +7,7 @@ on:
       - completed
 permissions:
   id-token: write
+  packages: write
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest

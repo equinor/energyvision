@@ -17,17 +17,6 @@ on:
 permissions:
   id-token: write
   packages: write
-  actions: read
-  checks: read
-  contents: read
-  deployments: read
-  issues: read
-  discussions: read
-  pages: read
-  pull-requests: read
-  repository-projects: read
-  security-events: read
-  statuses: read
 jobs:
   check-code:
     runs-on: ubuntu-latest
