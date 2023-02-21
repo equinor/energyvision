@@ -8,6 +8,7 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import { AnchorLinkDescription } from './anchorReferenceField'
 // eslint-disable-next-line import/no-unresolved
 import client from 'part:@sanity/base/client'
+import { defaultLanguage } from '../../languages'
 
 export type ReferenceTarget = {
   type: string
@@ -77,7 +78,8 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
               .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`, {
                 id: value._ref,
               })
-            if (document._lang !== referenceLang) return 'Reference must have the same language as the document'
+            if (document._lang ? document._lang !== referenceLang : defaultLanguage.name !== referenceLang)
+              return 'Reference must have the same language as the document'
           }
           return validateInternalOrExternalUrl(value, parent?.url)
         }),
