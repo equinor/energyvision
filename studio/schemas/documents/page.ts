@@ -65,7 +65,7 @@ export default {
         Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'anchorLink' },
         Flags.HAS_MUX && { type: 'video' },
-        Flags.IS_DEV && { type: 'imageCarousel' },
+        { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
       ].filter((e) => e),
     },
