@@ -1,0 +1,10 @@
+name: DEV - Equinor Algolia Indexers
+on:
+  workflow_dispatch:
+jobs:
+  call-workflow-passing-data:
+    uses: ./.github/workflows/equinor-algolia-indexers.yaml
+    with:
+      azureResourceGroupName: 'S166-rg-envis-dev'
+      functionAppName: 'S166-func-algoliaindexers-dev'
+    secrets: inherit
