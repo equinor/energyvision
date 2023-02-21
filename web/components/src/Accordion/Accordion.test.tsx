@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import { render, cleanup, screen } from '@testing-library/react'
 import 'jest-styled-components'
-import styled from 'styled-components'
 import { Accordion } from './index'
 
 const { Item, Header, Panel } = Accordion
@@ -33,22 +32,7 @@ useDivHeight.mockImplementation(() => ({
 
 afterEach(cleanup)
 
-const StyledAccordion = styled(Accordion)`
-  clip-path: unset;
-`
-
 describe('Accordion', () => {
-  it('Can extend the css for the component', () => {
-    const { container } = render(
-      <StyledAccordion id="1">
-        <Item id={0}>
-          <Header>Header 1</Header>
-          <Panel>Content 1</Panel>
-        </Item>
-      </StyledAccordion>,
-    )
-    expect(container.firstChild).toHaveStyleRule('clip-path', 'unset')
-  })
   it('Can have a title', () => {
     const title = 'Accordion item title'
     render(
