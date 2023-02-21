@@ -4,7 +4,6 @@ import type { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle } from '../styles/globalStyles'
-import { SkipNavLink } from '@reach/skip-nav'
 import 'focus-visible'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
@@ -16,7 +15,6 @@ import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponen
 import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
 import { SkipNavLink as NewSkipNavLink, SkipNavContent } from '@chakra-ui/skip-nav'
-import { Flags } from '../common/helpers/datasetHelpers'
 import styled from 'styled-components'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
@@ -120,20 +118,15 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   return (
     <SWRConfig>
       <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
-        {Flags.IS_DEV && <StyledSkipLink>Skip to Content</StyledSkipLink>}
+        <StyledSkipLink>Skip to Content</StyledSkipLink>
         <>
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
           </Head>
           <GlobalStyle />
-          <SkipNavLink />
           {IS_LIVE && <CookieBot locale={router.locale} />}
           <PreviewContextProvider>
-            {Flags.IS_DEV ? (
-              <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
-            ) : (
-              <>{getLayout(<Component {...pageProps} />)}</>
-            )}
+            <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
           </PreviewContextProvider>
         </>
       </ErrorBoundary>
