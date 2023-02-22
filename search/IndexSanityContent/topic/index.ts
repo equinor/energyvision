@@ -8,36 +8,32 @@ import { TopicIndex, update, generateIndexName, getEnvironment, Language, getSan
 import { fetchData, TopicPage } from './sanity'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
-import { getDevEnvironment } from '../../common/env'
 
 const indexIdentifier = 'TOPICS'
 
-export const indexTopic = (language: Language) => (docId: string) => (isDev: boolean) => {
-  const indexName = flow(
-    isDev ? getDevEnvironment : getEnvironment,
-    E.map(generateIndexName(indexIdentifier)(language.isoCode)),
-  )
+export const indexTopic = (language: Language) => (docId: string) => {
+  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
   type RemoveAndMapType = (pages: TopicPage[]) => TopicIndex[]
   const removeAndMap: RemoveAndMapType = (pages) => {
-      pages
-        .filter((page) => page.docToClear)
-        .map((page) =>
-          pipe(
-            removeIndexFromAlgolia(),
-            E.ap(E.of(page.slug)),
-            TE.fromEither,
-            TE.flatten,
-            T.map(E.fold(console.error, console.log)),
-          )(),
-        )
-      return pipe(pages.map(mapData), flatten)
-    }
+    pages
+      .filter((page) => page.docToClear)
+      .map((page) =>
+        pipe(
+          removeIndexFromAlgolia(),
+          E.ap(E.of(page.slug)),
+          TE.fromEither,
+          TE.flatten,
+          T.map(E.fold(console.error, console.log)),
+        )(),
+      )
+    return pipe(pages.map(mapData), flatten)
+  }
 
   return pipe(
-    getSanityClient(isDev)(),
+    getSanityClient(),
     TE.fromEither,
     TE.chainW(fetchData(language, docId)),
     TE.map(removeAndMap),

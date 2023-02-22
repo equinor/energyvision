@@ -8,15 +8,11 @@ import { update, remove, generateIndexName, getEnvironment, Language, getSanityC
 import { fetchData, NewsArticle } from './sanity'
 import { indexSettings } from '../common/news/algolia'
 import { mapData } from './mapper'
-import { getDevEnvironment } from '../../common/env'
 
 const indexIdentifier = 'NEWS'
 
-export const indexNews = (language: Language) => (docId: string) => (isDev: boolean) => {
-  const indexName = flow(
-    isDev ? getDevEnvironment : getEnvironment,
-    E.map(generateIndexName(indexIdentifier)(language.isoCode)),
-  )
+export const indexNews = (language: Language) => (docId: string) => {
+  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
@@ -37,7 +33,7 @@ export const indexNews = (language: Language) => (docId: string) => (isDev: bool
   }
 
   return pipe(
-    getSanityClient(isDev)(),
+    getSanityClient(),
     TE.fromEither,
     TE.chainW(fetchData(language, docId)),
     TE.map(removeAndMap),

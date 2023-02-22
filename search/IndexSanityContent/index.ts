@@ -15,7 +15,7 @@ import * as T from 'fp-ts/lib/Task'
 const indexes = ['EVENTS', 'TOPICS', 'MAGAZINE', 'NEWS', 'LOCALNEWS']
 
 const indexTasks: {
-  [key: string]: (language: Language) => (docId: string) => (isDev: boolean) => T.Task<void>
+  [key: string]: (language: Language) => (docId: string) => T.Task<void>
 } = {
   EVENTS: indexEvents,
   MAGAZINE: indexMagazine,
@@ -38,13 +38,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     E.fromNullable('no index specified'),
     E.getOrElse(() => indexes),
   )
-  const getEnvironment = () => O.fromNullable(req.body?.isDev)
-  const getDocId = O.getOrElse(() => 'no id')(O.fromNullable(req.body?.docToClear))
-  const isDev = O.getOrElse(() => false)(getEnvironment())
 
-  pipe(getIndex, (indexArray) =>
-    indexArray.map((index) => indexTasks[index](language)(getDocId)(isDev)().catch(logger.error)),
-  )
+  const getDocId = O.getOrElse(() => 'no id')(O.fromNullable(req.body?.docToClear))
+
+  pipe(getIndex, (indexArray) => indexArray.map((index) => indexTasks[index](language)(getDocId)().catch(logger.error)))
 }
 
 export default httpTrigger

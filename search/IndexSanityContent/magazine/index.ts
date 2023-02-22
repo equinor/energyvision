@@ -4,19 +4,23 @@ import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { MagazineIndex, update, remove, generateIndexName, getEnvironment, Language, getSanityClient } from '../../common'
+import {
+  MagazineIndex,
+  update,
+  remove,
+  generateIndexName,
+  getEnvironment,
+  Language,
+  getSanityClient,
+} from '../../common'
 import { fetchData, MagazineArticle } from './sanity'
 import { indexSettings } from './algolia'
 import { mapData } from './mapper'
-import { getDevEnvironment } from '../../common/env'
 
 const indexIdentifier = 'MAGAZINE'
 
-export const indexMagazine = (language: Language) => (docId: string) => (isDev: boolean) => {
-  const indexName = flow(
-    isDev ? getDevEnvironment : getEnvironment,
-    E.map(generateIndexName(indexIdentifier)(language.isoCode)),
-  )
+export const indexMagazine = (language: Language) => (docId: string) => {
+  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
@@ -36,7 +40,7 @@ export const indexMagazine = (language: Language) => (docId: string) => (isDev: 
     return pipe(pages.map(mapData), flatten)
   }
   return pipe(
-    getSanityClient(isDev)(),
+    getSanityClient(),
     TE.fromEither,
     TE.chainW(fetchData(language, docId)),
     TE.map(removeAndMap),

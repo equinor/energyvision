@@ -17,6 +17,3 @@ export const getSanityProjectId: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Sainty Project ID')(process.env.SANITY_PROJECT_ID)
 export const getSanityApiToken: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Sanity API token')(process.env.SANITY_API_TOKEN)
-export const getDevEnvironment: GetProcessEnvType = () => E.fromNullable('Unable to find environment')('dev')
-export const getSanityDevDataset: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find Sanity dataset')('global-development')
