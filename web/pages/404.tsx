@@ -18,7 +18,7 @@ const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPag
 const Grid = styled.div`
   display: grid;
   height: calc(100vh - var(--topbar-height));
-  grid-template-rows: min-content 0 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
 `
 
 type Custom404Props = {
