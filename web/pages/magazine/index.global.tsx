@@ -13,7 +13,6 @@ import { defaultLanguage } from '../../languages'
 import MagazineIndexPage from '../../pageComponents/pageTemplates/MagazineIndexPage'
 import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
-import { SkipNavContent } from '@reach/skip-nav'
 
 export default function MagazineIndex({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -59,7 +58,6 @@ MagazineIndex.getLayout = (page: AppProps) => {
     >
       <>
         <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
         {page}
         <Footer footerData={data?.footerData} />
       </>

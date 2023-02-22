@@ -3,7 +3,7 @@ import { normalize } from 'styled-normalize'
 import { colors, typography, spacings, componentSettings, strictLineBreak } from './settings'
 import { generic } from './generic'
 import { elements } from './elements'
-import { skipNavLink, cookieBot, algolia } from './components'
+import { cookieBot, algolia } from './components'
 
 /* We use ITCSS to structure the (few) global styles we need */
 export const GlobalStyle = createGlobalStyle`
@@ -19,7 +19,6 @@ export const GlobalStyle = createGlobalStyle`
   /* Elements */
   ${elements}
   /* Components */
-  ${skipNavLink}
   ${cookieBot}
   /* This is temporary. Will be different with the hooks version of the lib*/
   ${algolia}

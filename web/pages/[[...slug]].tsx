@@ -4,7 +4,6 @@ import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
-import { SkipNavContent } from '@reach/skip-nav'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { Layout } from '../pageComponents/shared/Layout'
@@ -91,7 +90,6 @@ Page.getLayout = (page: AppProps) => {
     <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
       <>
         <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
         {page}
       </>
     </Layout>

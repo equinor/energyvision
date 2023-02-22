@@ -1,7 +1,6 @@
 import { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import { useWindowSize } from '@reach/window-size'
 import useWindowDimensions from '../../../lib/hooks/useWindowSize'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
@@ -13,7 +12,6 @@ import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
 import { useCompare } from './hooks/useCompare'
 import { getAllSitesLink } from '../../../common/helpers/getAllSitesLink'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 import { LogoLink } from '../LogoLink'
 
@@ -49,11 +47,10 @@ export type MenuProps = {
 
 const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
-  const { width } = useWindowSize()
-  const { width: newWidth } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const [isOpen, setIsOpen] = useState(false)
   const [indices, setIndices] = useState<number[]>([])
-  const hasWidthChanged = useCompare(newWidth)
+  const hasWidthChanged = useCompare(width)
   const DESKTOP_MIN_WIDTH = 1300
   const intl = useIntl()
 
@@ -73,10 +70,9 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   device and then resize their window size to above the breakpoint for the desktop
   version where only one items is allowed */
     if (hasWidthChanged) {
-      if (Flags.IS_DEV && newWidth && newWidth >= DESKTOP_MIN_WIDTH && indices.length > 1) setIndices([])
-      if (!Flags.IS_DEV && width >= DESKTOP_MIN_WIDTH && indices.length > 1) setIndices([])
+      if (width && width >= DESKTOP_MIN_WIDTH && indices.length > 1) setIndices([])
     }
-  }, [newWidth, width, indices.length, hasWidthChanged])
+  }, [width, indices.length, hasWidthChanged])
 
   function onMenuButtonClick() {
     setIsOpen(!isOpen)
@@ -84,7 +80,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
 
   function toggleItem(toggledIndex: number) {
     // @TODO Mobile or desktop first
-    if (newWidth || width >= DESKTOP_MIN_WIDTH) {
+    if (width && width >= DESKTOP_MIN_WIDTH) {
       // This menu item is  open, so let's close the menu by removing it from the list
       if (indices[0] === toggledIndex) {
         return setIndices([])

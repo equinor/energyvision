@@ -13,7 +13,6 @@ import { defaultLanguage } from '../../languages'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
-import { SkipNavContent } from '@reach/skip-nav'
 
 export default function NewsRoom({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -60,7 +59,6 @@ NewsRoom.getLayout = (page: AppProps) => {
     >
       <>
         <Header slugs={slugs} menuData={data?.menuData} />
-        <SkipNavContent />
         {page}
         <Footer footerData={data?.footerData} />
       </>

@@ -186,12 +186,6 @@ export const componentSettings = css`
     --menu-paddingVertical: calc(8rem - var(--topbar-height));
   }
 
-  /* Because Jest hates you when you do an import style in the component */
-  :root {
-    --reach-accordion: 1;
-    --reach-skip-nav: 1;
-  }
-
   /* Use relative units in EDS Table */
   :root {
     --eds_table__font_size: calc(14 / 16 * 1rem); // TODO: Override

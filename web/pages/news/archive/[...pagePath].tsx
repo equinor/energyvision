@@ -1,4 +1,3 @@
-import { SkipNavContent } from '@reach/skip-nav'
 import * as fs from 'fs'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
@@ -140,7 +139,6 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
     <Layout intl={data?.intl} footerData={data?.footerData}>
       <>
         <Header slugs={slugData} menuData={data?.menuData} />
-        <SkipNavContent />
         {page}
       </>
     </Layout>

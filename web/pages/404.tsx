@@ -2,7 +2,6 @@ import { GetStaticProps } from 'next'
 import styled from 'styled-components'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import { SkipNavContent } from '@reach/skip-nav'
 import dynamic from 'next/dynamic'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { pageNotFoundQuery } from '../lib/queries/pageNotFound'
@@ -61,7 +60,6 @@ Custom404.getLayout = (page: AppProps) => {
         <Grid>
           <>
             <Header slugs={slugs} menuData={data?.menuData} />
-            <SkipNavContent />
             {page}
             <Footer footerData={data?.footerData} />
           </>

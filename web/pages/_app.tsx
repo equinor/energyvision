@@ -74,6 +74,7 @@ const StyledSkipLink = styled(SkipNavLink)`
     border-radius: 7px;
     margin: var(--space-medium);
     top: 10%;
+    z-index: 10;
   }
 `
 
