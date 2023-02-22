@@ -39,7 +39,6 @@ const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps
   const replaceUrl = useRouterReplace()
   // Query is an empty object initially https://nextjs.org/docs/routing/dynamic-routes#caveats
   const [indices, setIndices] = useState<number[]>([])
-  const [animate, setAnimate] = useState(false)
 
   useEffect(() => {
     if (!router.isReady) return
@@ -48,7 +47,6 @@ const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps
 
   function toggleItem(toggledIndex: number) {
     let expandedItems = []
-    setAnimate(true)
     if (indices.includes(toggledIndex)) {
       expandedItems = indices.filter((currentIndex) => currentIndex !== toggledIndex)
     } else {
@@ -65,7 +63,7 @@ const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps
         return (
           <Item key={id} id={idx}>
             <Header headingLevel={hasTitle ? 'h3' : 'h2'}>{itemTitle}</Header>
-            <Panel animate={animate}>{content && <RichText value={content} />}</Panel>
+            <Panel>{content && <RichText value={content} />}</Panel>
           </Item>
         )
       })}

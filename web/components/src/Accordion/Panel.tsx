@@ -3,9 +3,7 @@ import { useDivHeight } from './hooks/useDivHeight'
 import styled from 'styled-components'
 import { AccordionPanel, AccordionPanelProps as ChakraAccordionPanelProps } from '@chakra-ui/react'
 
-export type AccordionPanelProps = {
-  animate?: boolean
-} & ChakraAccordionPanelProps
+export type AccordionPanelProps = ChakraAccordionPanelProps
 
 const StyledPanel = styled.div`
   padding: var(--space-small) var(--space-small) var(--space-large) 0;
