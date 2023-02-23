@@ -1,8 +1,17 @@
 name: DEV - Equinor Algolia Indexers
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'search/**/*'
+      - './FeatureFlags.js'
+      - '!./README.md'
+      - '!./.env.development.template'
 jobs:
   call-workflow-passing-data:
+    name: 'Build & deploy search indexers to DEV'
     uses: ./.github/workflows/equinor-algolia-indexers.yaml
     with:
       azureResourceGroupName: 'S166-rg-envis-dev'
