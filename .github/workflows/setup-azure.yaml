@@ -4,6 +4,10 @@ on: workflow_dispatch
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
