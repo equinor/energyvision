@@ -31,7 +31,10 @@ const StyledIngress = styled(Text)`
   overflow: hidden;
   line-clamp: 5;
   display: -webkit-box;
-  max-height: 7.6em;
+
+  @media (max-width: 520px) {
+    max-height: 7.6em;
+  }
 `
 
 type NewsCardProp = {
