@@ -4,10 +4,6 @@ on: workflow_dispatch
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -16,8 +12,7 @@ jobs:
         id: login-to-azure
         uses: azure/login@v1
         with:
-          client-id: 57db4075-7cfd-4b28-a0ae-273857a642a0
-          tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0
+          creds: ${{ secrets.ENVIS_ACTIONS_SERVICE_PRINCIPAL }}
           allow-no-subscriptions: true
       - name: Show Azure account
         run: az account show
