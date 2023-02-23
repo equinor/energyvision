@@ -1,0 +1,44 @@
+name: Set up Azure environment
+on: workflow_dispatch
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to azure
+        id: login-to-azure
+        uses: azure/login@v1
+        with:
+          client-id: 57db4075-7cfd-4b28-a0ae-273857a642a0
+          tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0
+          allow-no-subscriptions: true
+      - name: Show Azure account
+        run: az account show
+      # Checkout internal repository where the bicep files are located
+      - name: Checout internal
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+      # Do the actual deployment
+      - name: deploy
+        id: deploy
+        uses: azure/arm-deploy@v1
+        with:
+          scope: subscription
+          region: northeurope
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          template: ci/biceps/main.bicep
+          parameters: 'location=northeurope'
+          failOnStdErr: false
+      - name: log-errors-to-slack
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
