@@ -30,8 +30,18 @@ const IframeCarouselStyles = css`
   }
 `
 
+const PromoTileStyles = css`
+  --card-maxWidth: 400px;
+  padding: 0 var(--space-large);
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+    padding: 0 var(--space-large);
+  }
+`
+
 // more to be added
-export type CarouselTypes = 'card' | 'iframe'
+export type CarouselTypes = 'card' | 'iframe' | 'promoTile'
 
 export type StyledSwiperTypes = {
   $carouselType?: CarouselTypes
@@ -57,6 +67,8 @@ const StyledSwiper = styled(Swiper)<StyledSwiperTypes>`
         return CardCarouselStyles
       case 'iframe':
         return IframeCarouselStyles
+      case 'promoTile':
+        return PromoTileStyles
       default:
         return CardCarouselStyles
     }

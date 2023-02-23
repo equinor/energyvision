@@ -29,7 +29,11 @@ const Container = styled.div`
 `
 
 const HorizontalWrapper = styled.div`
-  --card-maxWidth: 360px;
+  --card-maxWidth: 400px;
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+  }
 
   margin-top: var(--space-3xLarge);
   margin-bottom: var(--space-3xLarge);
@@ -49,6 +53,10 @@ const ImageWithRoundedUpperCorners = styled(Image)`
 
 const StyledAction = styled(Action)`
   flex-grow: 0;
+`
+
+const StyledCard = styled(Card)`
+  width: var(--card-maxWidth, 100%);
 `
 
 const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
@@ -78,7 +86,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     Flags.IS_DEV && renderScroll
       ? ({ children }: { children: React.ReactNode }) => (
           <HorizontalWrapper>
-            <HorizontalScroll>{children}</HorizontalScroll>
+            <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
           </HorizontalWrapper>
         )
       : Container
@@ -110,7 +118,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
             /* Sneaky little hack to make it work with the bg colour See #667 */
             <CardWrapper key={id}>
               <StyledBackgroundContainer disableContainerWrapper={true} background={background}>
-                <Card type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
+                <StyledCard type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
                   {image && (
                     <Media>
                       <ImageWithRoundedUpperCorners
@@ -123,7 +131,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
                     </Media>
                   )}
                   <Content />
-                </Card>
+                </StyledCard>
               </StyledBackgroundContainer>
             </CardWrapper>
           )
