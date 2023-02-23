@@ -5,10 +5,9 @@ on:
     branches:
       - main
     paths:
-      - 'search/**/*'
-      - './FeatureFlags.js'
+      - 'search/**'
       - '!./README.md'
-      - '!./.env.development.template'
+      - '!./.env.template'
 jobs:
   call-workflow-passing-data:
     name: 'Build & deploy search indexers to DEV'
