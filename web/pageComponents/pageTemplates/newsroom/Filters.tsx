@@ -5,6 +5,19 @@ import styled from 'styled-components'
 import FilterHeader from './FilterHeader'
 import { RefinementList } from './RefinementList'
 import UncontrolledSearchBox from './UncontrolledSearchBox'
+import {
+  Accordion as CAccordion,
+  AccordionItem as CAccordionItem,
+  AccordionPanel as CAccordionPanel,
+} from '@chakra-ui/react'
+import { Flags } from '../../../common/helpers/datasetHelpers'
+
+const ChakraStyledAccordion = styled(CAccordion)`
+  @media (min-width: 800px) {
+    padding: 0 0 var(--space-large) var(--space-medium);
+    border-left: 1px solid var(--slate-blue-50);
+  }
+`
 
 const StyledAccordion = styled(Accordion)`
   @media (min-width: 800px) {
@@ -42,29 +55,53 @@ const Filters = ({ ...rest }) => {
       <SearchBoxContainer>
         <UncontrolledSearchBox />
       </SearchBoxContainer>
-
-      <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
-        <AccordionItem>
-          <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
-          <AccordionPanel>
-            <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
-          <AccordionPanel>
-            <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <FilterHeader
-            label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
-          ></FilterHeader>
-          <AccordionPanel>
-            <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
-          </AccordionPanel>
-        </AccordionItem>
-      </StyledAccordion>
+      {Flags.IS_DEV ? (
+        <ChakraStyledAccordion id="filters" index={indices} onChange={toggleItem}>
+          <CAccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
+            <CAccordionPanel>
+              <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
+            </CAccordionPanel>
+          </CAccordionItem>
+          <CAccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
+            <CAccordionPanel>
+              <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
+            </CAccordionPanel>
+          </CAccordionItem>
+          <CAccordionItem>
+            <FilterHeader
+              label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
+            ></FilterHeader>
+            <CAccordionPanel>
+              <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
+            </CAccordionPanel>
+          </CAccordionItem>
+        </ChakraStyledAccordion>
+      ) : (
+        <StyledAccordion id="filters" index={indices} onChange={toggleItem}>
+          <AccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
+            <AccordionPanel>
+              <RefinementList /*  sortBy={['name:asc']} */ limit={50} attribute="topicTags" />
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <FilterHeader label={intl.formatMessage({ id: 'newsroom_country_filter', defaultMessage: 'Country' })} />
+            <AccordionPanel>
+              <RefinementList /* sortBy={['name:asc']} */ attribute="countryTags" />
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <FilterHeader
+              label={intl.formatMessage({ id: 'newsroom_year_filter', defaultMessage: 'Year' })}
+            ></FilterHeader>
+            <AccordionPanel>
+              <RefinementList sortBy={['name:desc']} attribute="year" limit={50} />
+            </AccordionPanel>
+          </AccordionItem>
+        </StyledAccordion>
+      )}
     </StyledFilters>
   )
 }

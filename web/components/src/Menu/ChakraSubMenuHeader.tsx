@@ -1,18 +1,17 @@
 import { forwardRef, CSSProperties } from 'react'
 import styled from 'styled-components'
 import {
-  AccordionButton as RAccordionButton,
-  AccordionButtonProps as RAccordionButtonProps,
-  useAccordionItemContext,
-} from '@reach/accordion'
-import { AccordionButtonProps as ChakraAccordionButtonProps } from '@chakra-ui/react'
+  AccordionButton as CAccordionButton,
+  useAccordionItemState,
+  AccordionButtonProps as ChakraAccordionButtonProps,
+} from '@chakra-ui/react'
 import { Icon, Typography, TypographyProps } from '@equinor/eds-core-react'
 import { add, minimize } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
 
 const { outline } = Tokens
 
-const StyledButton = styled(RAccordionButton)`
+const StyledButton = styled(CAccordionButton)`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,43 +58,38 @@ const StyledTypography = styled(Typography)`
 export type SubMenuHeaderProps = {
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
 } & ChakraAccordionButtonProps &
-  RAccordionButtonProps &
   TypographyProps
 
-export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(function SubMenuHeader(
-  { children, style, ...rest },
+export const ChakraSubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(function SubMenuHeader(
+  { children, style },
   ref,
 ) {
-  const context = useAccordionItemContext()
-  const isExpanded = context.isExpanded
+  const { isOpen } = useAccordionItemState()
 
   return (
-    <>
-      <StyledHeader
-        forwardedAs="h2"
-        style={
-          {
-            ...style,
-            '--border-bottom-color': isExpanded ? 'var(--moss-green-95)' : 'transparent ',
-          } as CSSProperties
-        }
-        {...rest}
-      >
-        <StyledButton ref={ref}>
-          <StyledTypography
-            forwardedAs="span"
-            style={
-              {
-                '--font-weight': isExpanded ? '700' : '400',
-                fontSize: 'var(--typeScale-1)', // TODO: Update EDS Typography component
-              } as CSSProperties
-            }
-          >
-            {children}
-          </StyledTypography>
-          {isExpanded ? <StyledIcon data={minimize} /> : <StyledIcon data={add} />}
-        </StyledButton>
-      </StyledHeader>
-    </>
+    <StyledHeader
+      forwardedAs="h2"
+      style={
+        {
+          ...style,
+          '--border-bottom-color': isOpen ? 'var(--moss-green-95)' : 'transparent ',
+        } as CSSProperties
+      }
+    >
+      <StyledButton ref={ref}>
+        <StyledTypography
+          forwardedAs="span"
+          style={
+            {
+              '--font-weight': isOpen ? '700' : '400',
+              fontSize: 'var(--typeScale-1)', // TODO: Update EDS Typography component
+            } as CSSProperties
+          }
+        >
+          {children}
+        </StyledTypography>
+        {isOpen ? <StyledIcon data={minimize} /> : <StyledIcon data={add} />}
+      </StyledButton>
+    </StyledHeader>
   )
 })
