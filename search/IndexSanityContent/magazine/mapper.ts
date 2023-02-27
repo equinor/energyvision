@@ -15,6 +15,7 @@ type MappableObjectType = {
   heroFigure?: ImageWithAltAndCaption
   heroVideo?: VideoData
   heroTypes?: HeroTypes
+  publishDateTime?: string
 }
 
 type MapperFunctionType = (article: MagazineArticle) => (obj: MappableObjectType) => MagazineIndex
@@ -46,6 +47,7 @@ const mapperFunction: MapperFunctionType =
     heroImage: getHeroImage(article),
     heroVideo: article.heroVideo,
     heroType: article.heroType,
+    publishDateTime: article.publishDateTime,
   })
 
 type MapDataType = (article: MagazineArticle) => MagazineIndex[]

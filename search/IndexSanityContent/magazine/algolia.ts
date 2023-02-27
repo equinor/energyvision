@@ -7,5 +7,5 @@ export const indexSettings: Settings = {
   attributeForDistinct: 'slug',
   distinct: 1,
   advancedSyntax: true,
-  ranking: ['typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
+  ranking: ['desc(publishDateTime)', 'typo', 'geo', 'words', 'filters', 'proximity', 'attribute', 'exact', 'custom'],
 }

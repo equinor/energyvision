@@ -4,6 +4,14 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 
+const publishDateTimeQuery = /* groq */ `
+  select(
+    customPublicationDate == true =>
+      publishDateTime,
+      coalesce(firstPublishedAt, _createdAt)
+  )
+`
+
 export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
@@ -28,6 +36,7 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
     playbackId,
   },
   "heroType": coalesce(heroType, 'default'),
+  "publishDateTime": ${publishDateTimeQuery},
   "docToClear": _id match $id
 }
 `
@@ -102,6 +111,7 @@ export type MagazineArticle = {
   docToClear?: boolean
   heroVideo: VideoData
   heroType: HeroTypes
+  publishDateTime?: string
 }
 
 type FetchDataType = (
