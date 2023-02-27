@@ -1,4 +1,4 @@
-import type { Rule, SanityDocument } from '@sanity/types'
+import type { Block, Image, Rule, SanityDocument } from '@sanity/types'
 import slugify from 'slugify'
 import { magazineSlug } from '../../../satellitesConfig'
 import blocksToText from '../../helpers/blocksToText'
@@ -9,6 +9,7 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import SlugInput from '../components/SlugInput'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
+import { HeroTypes } from '../HeroTypes'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { withSlugValidation } from '../validations/validateSlug'
 import sharedHeaderFields from './header/sharedHeaderFields'
@@ -183,12 +184,13 @@ export default {
   preview: {
     select: {
       title: 'title',
-      media: 'heroFigure.image',
+      image: 'heroFigure.image',
+      video: 'heroLoopingVideo.thumbnail',
+      type: 'heroType',
     },
-    prepare(selection: Record<string, any>) {
-      const { title, media } = selection
+    prepare({ title, image, video, type }: { title: Block[]; image: Image; video: Image; type: HeroTypes }) {
       const plainTitle = title ? blocksToText(title) : ''
-
+      const media = type === HeroTypes.LOOPING_VIDEO ? video : image
       return {
         title: plainTitle,
         subtitle: 'Magazine',

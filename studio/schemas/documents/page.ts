@@ -4,6 +4,8 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
+import type { Block, Image } from '@sanity/types'
+
 // import { done } from '@equinor/eds-icons'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
@@ -86,8 +88,7 @@ export default {
       video: 'heroLoopingVideo.thumbnail',
       type: 'heroType',
     },
-    prepare(selection: any) {
-      const { title, image, video, type } = selection
+    prepare({ title, image, video, type }: { title: Block[]; image: Image; video: Image; type: HeroTypes }) {
       const plainTitle = title ? blocksToText(title) : ''
       const media = type === HeroTypes.LOOPING_VIDEO ? video : image
       return {

@@ -8,6 +8,7 @@ import type { Block, Rule, Image, Reference } from '@sanity/types'
 import routes from '../../routes'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
+import { HeroTypes } from '../../HeroTypes'
 
 const introBlockContentType = configureBlockContent({
   h1: false,
@@ -71,27 +72,40 @@ export default {
           preview: {
             select: {
               topicTitle: 'reference.content.title',
-              magazineTitle: 'reference.title',
               topicMedia: 'reference.content.heroFigure.image',
+              topicVideo: 'reference.content.heroLoopingVideo.thumbnail',
+              topicHeroType: 'reference.content.heroType',
+              magazineTitle: 'reference.title',
               magazineMedia: 'reference.heroFigure.image',
+              magazineVideo: 'reference.heroLoopingVideo.thumbnail',
+              magazineHeroType: 'reference.heroType',
             },
             prepare({
               topicTitle,
-              magazineTitle,
               topicMedia,
+              topicVideo,
+              topicHeroType,
+              magazineTitle,
               magazineMedia,
+              magazineVideo,
+              magazineHeroType,
             }: {
               topicTitle: Block[]
-              magazineTitle: Block[]
               topicMedia: Image
+              topicVideo: Image
+              topicHeroType: HeroTypes
+              magazineTitle: Block[]
               magazineMedia: Image
+              magazineVideo: Image
+              magazineHeroType: HeroTypes
             }) {
               const title = topicTitle || magazineTitle || ''
               const plainTitle = title ? blocksToText(title) : ''
+              const isVideo = topicHeroType === HeroTypes.LOOPING_VIDEO || magazineHeroType === HeroTypes.LOOPING_VIDEO
 
               return {
                 title: plainTitle,
-                media: topicMedia || magazineMedia,
+                media: isVideo ? topicVideo || magazineVideo : topicMedia || magazineMedia,
               }
             },
           },
