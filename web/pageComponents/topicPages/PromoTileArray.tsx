@@ -10,7 +10,6 @@ import { Ratios } from '../shared/SanityImage'
 import { PromoTileButton } from './PromoTileButton'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Header, Action, Media } = Card
 
@@ -82,15 +81,14 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     )
   }
 
-  const Wrapper =
-    Flags.IS_DEV && renderScroll
-      ? ({ children }: { children: React.ReactNode }) => (
-          <HorizontalWrapper>
-            <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
-          </HorizontalWrapper>
-        )
-      : Container
-  const CardWrapper = Flags.IS_DEV && renderScroll ? HorizontalScrollItem : Fragment
+  const Wrapper = renderScroll
+    ? ({ children }: { children: React.ReactNode }) => (
+        <HorizontalWrapper>
+          <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
+        </HorizontalWrapper>
+      )
+    : Container
+  const CardWrapper = renderScroll ? HorizontalScrollItem : Fragment
 
   return (
     <div className="background-none" id={anchor}>

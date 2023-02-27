@@ -4,7 +4,6 @@ import { EdsIcon } from '../../icons'
 import type { Rule } from '@sanity/types'
 import type { PromoTile } from './promoTile'
 import blocksToText from '../../helpers/blocksToText'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
@@ -16,7 +15,7 @@ export default {
   name: 'promoTileArray',
   title: 'Promo tiles',
   fields: [
-    Flags.IS_DEV && {
+    {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
       description:
