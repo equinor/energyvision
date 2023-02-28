@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import Image from '../Image'
-import { Ratios } from '../SanityImage'
+import Image, { Ratios } from '../SanityImage'
 import { Caption } from '../image/Caption'
 import { EdsProvider } from '@equinor/eds-core-react'
 import { NavButton } from './Navigation'
@@ -67,7 +66,6 @@ export const CarouselItem = ({ image, caption, attribution }: CarouselItemProps)
             (max-width: 1700px) 1270px,
             1420px
           "
-        layout="responsive"
         priority
       />
       <CaptionContainer>
