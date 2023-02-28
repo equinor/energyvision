@@ -6,7 +6,7 @@ const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   justify-content: center;
   display: flex;
   background-color: var(--grey-10);
-  min-width: 100vw;
+  min-width: 100%;
   margin: 0;
   ${({ ratio }) =>
     ratio === 'narrow' && {
