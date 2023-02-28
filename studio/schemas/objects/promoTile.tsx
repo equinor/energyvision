@@ -49,7 +49,6 @@ export default {
       title: 'Use link label as title',
       type: 'boolean',
       initialValue: false,
-      hidden: !Flags.IS_DEV,
     },
     {
       name: 'title',
