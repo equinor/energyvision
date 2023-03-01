@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-     paths:
+    paths:
       - 'web/components/**'
       - 'web/.storybook/**'
       - 'web/package.json'
@@ -13,7 +13,6 @@ jobs:
   call-workflow-passing-data:
     name: 'Build & deploy storybook to DEV'
     uses: ./.github/workflows/storybook-pro.yaml
-    with:
-      azureResourceGroupName: 'S166-rg-envis-dev'
-      storageAccountName: 'stenvisdev'
+    environment:
+      name: development
     secrets: inherit

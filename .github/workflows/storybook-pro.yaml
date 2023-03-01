@@ -1,16 +1,9 @@
 name: Build & deploy Storybook
 on:
   workflow_call:
-    inputs:
-      azureResourceGroupName:
-        required: true
-        type: string
-      storageAccountName:
-        required: true
-        type: string
 env:
-  AZURE_RESOURCE_GROUP_NAME: ${{ inputs.azureResourceGroupName }}
-  AZURE_STORAGE_ACCOUNT_NAME: ${{ inputs.azureStorageAccountName }}
+  AZURE_RESOURCE_GROUP_NAME: ${{ vars.AZ_RESOURCE_GROUP_NAME }}
+  AZURE_STORAGE_ACCOUNT_NAME: ${{ vars.AZ_STORAGE_ACCOUNT_NAME }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 jobs:
   upload:
