@@ -14,6 +14,8 @@ const docsWithNormalPreview = [
   'magazineIndex',
   'page',
   'event',
+  'pageNotFound',
+  'internalServerError',
 ]
 const docsWithRoute = ['page', 'event']
 const tagDocTypes = ['tag', 'localNewsTag', 'countryTag', 'magazineTag', 'eventTag', 'assetTag']
