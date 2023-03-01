@@ -11,8 +11,10 @@ on:
       - 'pnpm-lock.yaml'
 jobs:
   call-workflow-passing-data:
-    name: 'Build & deploy storybook to DEV'
+    runs-on: ubuntu-latest
     environment:
       name: development
+  steps:
+    name: 'Build & deploy storybook to DEV'
     uses: ./.github/workflows/storybook-pro.yaml
     secrets: inherit
