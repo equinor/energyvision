@@ -3,7 +3,6 @@ import React from 'react'
 import { useId } from '@reach/auto-id'
 import { Select } from '@sanity/ui'
 import timezones from '../../helpers/timezones'
-// eslint-disable-next-line import/no-unresolved
 import { set, unset, StringInputProps } from 'sanity'
 
 const TimezoneInput = (props: StringInputProps) => {

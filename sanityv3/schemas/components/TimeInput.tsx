@@ -52,11 +52,7 @@ const TimeInput = (props: ObjectInputProps<string>) => {
   const updateValue = useCallback(
     (time: TimeType) => {
       setTime(time)
-      console.log(validation)
-
       const newValue = outgoingValue(time)
-      console.log(newValue)
-
       if (isValid(time)) {
         onChange(set(newValue))
       } else if (time.hours === EMPTY && time.minutes === EMPTY) {
