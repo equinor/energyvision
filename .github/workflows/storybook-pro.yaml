@@ -1,13 +1,22 @@
 name: Build & deploy Storybook
 on:
-  workflow_call:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment for storybook'
+        required: true
+        type: choice
+        options:
+          - development
+          - production
+        default: development
 env:
-  AZURE_RESOURCE_GROUP_NAME: ${{ vars.AZ_RESOURCE_GROUP_NAME }}
-  AZURE_STORAGE_ACCOUNT_NAME: ${{ vars.AZ_STORAGE_ACCOUNT_NAME }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 jobs:
   upload:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
@@ -58,7 +67,7 @@ jobs:
         with:
           inlineScript: |
             $connString = ""
-            $connString = (Get-AzStorageAccount -ResourceGroupName $env:AZURE_RESOURCE_GROUP_NAME -Name $env:AZURE_STORAGE_ACCOUNT_NAME).Context.ConnectionString
+            $connString = (Get-AzStorageAccount -ResourceGroupName ${{ vars.AZ_RESOURCE_GROUP_NAME }} -Name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }}).Context.ConnectionString
             Write-Output "connectionString=$connString" >> $GITHUB_OUTPUT
             Remove-Variable connString
           azPSVersion: 'latest'
