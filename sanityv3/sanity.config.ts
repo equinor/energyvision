@@ -2,7 +2,7 @@ import { visionTool } from '@sanity/vision'
 import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
 import { muxInput } from 'sanity-plugin-mux-input'
 import { deskTool, StructureBuilder } from 'sanity/desk'
-import deskStructure from './deskStructure'
+import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 
 export default defineConfig({
@@ -17,6 +17,7 @@ export default defineConfig({
       structure: (S: StructureBuilder, context: ConfigContext) => {
         return deskStructure(S, context)
       },
+      defaultDocumentNode: defaultDocumentNodeResolver,
       name: 'desk',
       title: 'Desk',
     }),
