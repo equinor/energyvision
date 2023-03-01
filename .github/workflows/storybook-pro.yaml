@@ -1,0 +1,87 @@
+name: Build & deploy Storybook
+on:
+  workflow_call:
+    inputs:
+      azureResourceGroupName:
+        required: true
+        type: string
+      storageAccountName:
+        required: true
+        type: string
+env:
+  AZURE_RESOURCE_GROUP_NAME: ${{ inputs.azureResourceGroupName }}
+  AZURE_STORAGE_ACCOUNT_NAME: ${{ inputs.azureStorageAccountName }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Cache pnpm modules 💾
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-pnpm-modules
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: '^7.2.1'
+      - name: Install dependencies 🔽
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm install --filter energy-vision-web
+      - name: Lint components 🔎
+        id: lint
+        run: |
+          pnpm lint:components
+      - name: Run tests 🕵️‍♀️
+        id: test
+        run: |
+          pnpm test ./components/ --filter energy-vision-web
+      - name: Build storybook 🔧
+        id: build
+        run: |
+          pnpm --filter energy-vision-web build-storybook
+
+      - name: Login to Azure 🌥️
+        id: login-to-azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Fetching Azure Storage Account Connection String
+        id: fetch-connection-string
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $connString = ""
+            $connString = (Get-AzStorageAccount -ResourceGroupName $env:AZURE_RESOURCE_GROUP_NAME -Name $env:AZURE_STORAGE_ACCOUNT_NAME).Context.ConnectionString
+            Write-Output "connectionString=$connString" >> $GITHUB_OUTPUT
+            Remove-Variable connString
+          azPSVersion: 'latest'
+
+      - name: Deploy 🚀
+        id: deploy
+        # change back to v2 when v2.0.1 releases, see #1332
+        uses: bacongobbler/azure-blob-storage-upload@main
+        with:
+          source_dir: './web/storybook-static'
+          container_name: '$web'
+          connection_string: ${{ steps.fetch-connection-string.outputs.connectionString }}
+          sync: true
+
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

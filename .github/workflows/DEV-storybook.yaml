@@ -1,0 +1,19 @@
+name: DEV - Equinor Algolia Indexers
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+     paths:
+      - 'web/components/**'
+      - 'web/.storybook/**'
+      - 'web/package.json'
+      - 'pnpm-lock.yaml'
+jobs:
+  call-workflow-passing-data:
+    name: 'Build & deploy search indexers to DEV'
+    uses: ./.github/workflows/storybook-pro.yaml
+    with:
+      azureResourceGroupName: 'S166-rg-envis-dev'
+      storageAccountName: 'stenvisdev'
+    secrets: inherit
