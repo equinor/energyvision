@@ -13,5 +13,6 @@ jobs:
   call-workflow-passing-data:
     name: 'Build & deploy storybook to DEV'
     uses: ./.github/workflows/storybook-pro.yaml
-    environment: development
+    environment:
+      name: development
     secrets: inherit
