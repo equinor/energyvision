@@ -1,4 +1,4 @@
-name: DEV - Equinor Algolia Indexers
+name: DEV - EnergyVision Storybook
 on:
   workflow_dispatch:
   push:
@@ -11,7 +11,7 @@ on:
       - 'pnpm-lock.yaml'
 jobs:
   call-workflow-passing-data:
-    name: 'Build & deploy search indexers to DEV'
+    name: 'Build & deploy storybook to DEV'
     uses: ./.github/workflows/storybook-pro.yaml
     with:
       azureResourceGroupName: 'S166-rg-envis-dev'
