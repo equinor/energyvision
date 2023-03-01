@@ -12,7 +12,7 @@ on:
 jobs:
   call-workflow-passing-data:
     name: 'Build & deploy storybook to DEV'
-    uses: ./.github/workflows/storybook-pro.yaml
     environment:
       name: development
+    uses: ./.github/workflows/storybook-pro.yaml
     secrets: inherit
