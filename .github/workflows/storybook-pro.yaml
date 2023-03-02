@@ -76,6 +76,7 @@ jobs:
           inlineScript: |
             $connString = ""
             $connString = (Get-AzStorageAccount -ResourceGroupName ${{ vars.AZ_RESOURCE_GROUP_NAME }} -Name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }}).Context.ConnectionString
+            $connString = $connString.Replace("`r", "").Replace("`n", "")
             Write-Output "connectionString=$connString" >> $GITHUB_OUTPUT
             Remove-Variable connString
           azPSVersion: 'latest'
@@ -84,7 +85,6 @@ jobs:
         # change back to v2 when v2.0.1 releases, see #1332
         uses: bacongobbler/azure-blob-storage-upload@main
         with:
-          run: 'echo ${{ steps.fetch-connection-string.outputs.connectionString }}'
           source_dir: './web/storybook-static'
           container_name: '$web'
           connection_string: ${{ steps.fetch-connection-string.outputs.connectionString }}
