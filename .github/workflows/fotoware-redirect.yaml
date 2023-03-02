@@ -19,7 +19,6 @@ env:
 
 jobs:
   build-function-application:
-    needs: check-code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout fotoware redirect code🛎️
