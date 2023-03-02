@@ -1,0 +1,198 @@
+name: Fotoware redirect workflow
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment for fotoware redirect'
+        required: true
+        type: choice
+        options:
+          - development
+          - production
+        default: development
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  BUILD_OUTPUT_PATH: ${{ github.workspace }}/fotoware
+  BUILD_PACKAGE_NAME: fotoware.zip
+  BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
+
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    env:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: '^7.2.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          # cache: 'npm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pushd search
+          pnpm install
+          popd
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:search
+      - name: Run tests 🔍
+        id: test
+        run: |
+          pnpm search-indexers test
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-az-infrastructure:
+    needs: check-code
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Login to Azure 🌥️
+        id: login-to-azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+
+      # Makes source code accessible via $github.workspace
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PAT }}
+
+      - name: 'Creating Azure Function App'
+        id: create-azure-app
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az deployment group create \
+            --name az-func-algolia-sanity-deploy \
+            --resource-group ${{ vars.AZ_RESOURCE_GROUP_NAME }} \
+            --template-file $GITHUB_WORKSPACE/ci/biceps/algolia-indexers/function-app.bicep \
+            --mode incremental \
+            --parameters $GITHUB_WORKSPACE/ci/biceps/algolia-indexers/${{ inputs.env }}-parameters.json \
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  build-function-application:
+    needs: check-code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fotoware redirect code🛎️
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-fotoware-redirect'
+          ref: main
+          token: ${{ secrets.PAT }}
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: '^7.2.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          # cache: 'npm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          npm install
+      - name: Build ⚙
+        id: build-functions
+        run: |
+          pnpm build
+          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
+          pushd ${{ env.BUILD_OUTPUT_PATH }}
+          zip -r ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
+          popd
+      - name: Package Azure Function release build
+        id: package-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
+          path: ${{ env.BUILD_ARTIFACT_PATH }}
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-function-application:
+    environment:
+      name: production
+    needs: [build-function-application, deploy-az-infrastructure]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Azure 🌥️
+        id: login-to-azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Fetching Azure Functions Publishing Profile
+        id: fetch-publishing-profile
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $profile = ""
+            $profile = Get-AzWebAppPublishingProfile -ResourceGroupName ${{ vars.AZ_RESOURCE_GROUP_NAME }} -Name ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
+            $profile = $profile.Replace("`r", "").Replace("`n", "")
+            Write-Output "pubprofile=$profile" >> $GITHUB_OUTPUT
+            Remove-Variable profile
+          azPSVersion: 'latest'
+
+      - name: 'Create output directory'
+        shell: bash
+        run: |
+          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
+
+      # Fetch published code
+      - name: Download Azure function release build
+        id: download-artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
+          path: ${{ env.BUILD_ARTIFACT_PATH }}
+
+      # Deploy Azure functions code
+      - name: Run Azure Functions Action
+        id: deploy
+        uses: azure/functions-action@v1
+        with:
+          app-name: ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
+          package: ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
+          publish-profile: ${{ steps.fetch-publishing-profile.outputs.pubprofile }}
+
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
