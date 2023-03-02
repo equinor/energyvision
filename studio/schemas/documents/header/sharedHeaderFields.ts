@@ -170,7 +170,7 @@ const heroLoopingVideoRatio = {
   name: 'heroLoopingVideoRatio',
   type: 'string',
   options: {
-    list: [ { title: 'Original', value: 'original' }, { title: 'Narrow', value: 'narrow' }].filter(
+    list: [Flags.IS_DEV && { title: 'Original', value: 'original' }, { title: 'Narrow', value: 'narrow' }].filter(
       (e) => e,
     ),
   },
