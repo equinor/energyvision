@@ -1,21 +1,25 @@
 name: Equinor Algolia indexers workflow
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
-      azureResourceGroupName:
+      environment:
+        description: 'Environment for algolia indexers'
         required: true
-        type: string
-      functionAppName:
-        required: true
-        type: string
-      env:
-        required: true
-        type: string
+        type: choice
+        options:
+          - development
+          - production
+        default: development
+    push:
+      branches:
+        - main
+      paths:
+        - 'search/**'
+        - '!./README.md'
+        - '!./.env.template'
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  AZURE_RESOURCE_GROUP_NAME: ${{inputs.azureResourceGroupName}}
-  AZURE_FUNCTIONAPP_NAME: ${{inputs.functionAppName}}
   BUILD_OUTPUT_PATH: ${{ github.workspace }}/search
   BUILD_PACKAGE_NAME: indexers.zip
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
@@ -23,6 +27,8 @@ env:
 jobs:
   check-code:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
     env:
       DOCKER_BUILDKIT: 1
     steps:
@@ -52,46 +58,6 @@ jobs:
         id: test
         run: |
           pnpm search-indexers test
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-  deploy-az-infrastructure:
-    needs: check-code
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Login to Azure 🌥️
-        id: login-to-azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
-
-      # Makes source code accessible via $github.workspace
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }}
-
-      - name: 'Creating Azure Function App'
-        id: create-azure-app
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az deployment group create \
-            --name az-func-algolia-sanity-deploy \
-            --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
-            --template-file $GITHUB_WORKSPACE/ci/biceps/algolia-indexers/function-app.bicep \
-            --mode incremental \
-            --parameters $GITHUB_WORKSPACE/ci/biceps/algolia-indexers/${{ inputs.env }}-parameters.json \
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
         with:
@@ -133,7 +99,7 @@ jobs:
         id: package-artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          name: ${{ vars.AZ_ALGOLIA_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
@@ -145,7 +111,7 @@ jobs:
   deploy-function-application:
     environment:
       name: production
-    needs: [build-function-application, deploy-az-infrastructure]
+    needs: [build-function-application]
     runs-on: ubuntu-latest
     steps:
       - name: Login to Azure 🌥️
@@ -153,19 +119,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
-          enable-AzPSSession: true
-
-      - name: Fetching Azure Functions Publishing Profile
-        id: fetch-publishing-profile
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            $profile = ""
-            $profile = Get-AzWebAppPublishingProfile -ResourceGroupName $env:AZURE_RESOURCE_GROUP_NAME -Name $env:AZURE_FUNCTIONAPP_NAME
-            $profile = $profile.Replace("`r", "").Replace("`n", "")
-            Write-Output "pubprofile=$profile" >> $GITHUB_OUTPUT
-            Remove-Variable profile
-          azPSVersion: 'latest'
 
       - name: 'Create output directory'
         shell: bash
@@ -177,7 +130,7 @@ jobs:
         id: download-artifacts
         uses: actions/download-artifact@v3
         with:
-          name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          name: ${{ vars.AZ_ALGOLIA_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
 
       # Deploy Azure functions code
@@ -185,9 +138,8 @@ jobs:
         id: deploy
         uses: azure/functions-action@v1
         with:
-          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          app-name: ${{ vars.AZ_ALGOLIA_FUNC_APP_NAME }}
           package: ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
-          publish-profile: ${{ steps.fetch-publishing-profile.outputs.pubprofile }}
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
