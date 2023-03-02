@@ -58,46 +58,6 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-az-infrastructure:
-    needs: check-code
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - name: Login to Azure 🌥️
-        id: login-to-azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
-
-      # Makes source code accessible via $github.workspace
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }}
-
-      - name: 'Creating Azure Function App'
-        id: create-azure-app
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az deployment group create \
-            --name az-func-algolia-sanity-deploy \
-            --resource-group ${{ vars.AZ_RESOURCE_GROUP_NAME }} \
-            --template-file $GITHUB_WORKSPACE/ci/biceps/algolia-indexers/function-app.bicep \
-            --mode incremental \
-            --parameters $GITHUB_WORKSPACE/ci/biceps/algolia-indexers/${{ inputs.env }}-parameters.json \
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
   build-function-application:
     needs: check-code
     runs-on: ubuntu-latest
@@ -107,7 +67,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
           ref: main
-          token: ${{ secrets.PAT }}
+          ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
@@ -145,8 +105,8 @@ jobs:
 
   deploy-function-application:
     environment:
-      name: production
-    needs: [build-function-application, deploy-az-infrastructure]
+      name: ${{ github.event.inputs.environment }}
+    needs: [build-function-application]
     runs-on: ubuntu-latest
     steps:
       - name: Login to Azure 🌥️
@@ -154,19 +114,6 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
-          enable-AzPSSession: true
-
-      - name: Fetching Azure Functions Publishing Profile
-        id: fetch-publishing-profile
-        uses: azure/powershell@v1
-        with:
-          inlineScript: |
-            $profile = ""
-            $profile = Get-AzWebAppPublishingProfile -ResourceGroupName ${{ vars.AZ_RESOURCE_GROUP_NAME }} -Name ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
-            $profile = $profile.Replace("`r", "").Replace("`n", "")
-            Write-Output "pubprofile=$profile" >> $GITHUB_OUTPUT
-            Remove-Variable profile
-          azPSVersion: 'latest'
 
       - name: 'Create output directory'
         shell: bash
@@ -188,7 +135,6 @@ jobs:
         with:
           app-name: ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
           package: ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }}
-          publish-profile: ${{ steps.fetch-publishing-profile.outputs.pubprofile }}
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
