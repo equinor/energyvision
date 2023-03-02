@@ -13,7 +13,6 @@ on:
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  BUILD_OUTPUT_PATH: ${{ github.workspace }}/fotoware
   BUILD_PACKAGE_NAME: fotoware.zip
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
 
@@ -45,9 +44,8 @@ jobs:
         run: |
           pnpm build
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          pushd ${{ env.BUILD_OUTPUT_PATH }}
           zip -r ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
-          popd
+
       - name: Package Azure Function release build
         id: package-artifact
         uses: actions/upload-artifact@v3
