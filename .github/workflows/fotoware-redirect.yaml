@@ -18,46 +18,6 @@ env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
 
 jobs:
-  check-code:
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.event.inputs.environment }}
-    env:
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-      - name: Install pnpm 📦
-        id: install-pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: '^7.2.1'
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          # cache: 'npm'
-      - name: Install dependencies 🔧
-        id: install-dependencies
-        run: |
-          pushd search
-          pnpm install
-          popd
-      - name: Run ESLint 🔎
-        id: lint
-        run: |
-          pnpm lint:search
-      - name: Run tests 🔍
-        id: test
-        run: |
-          pnpm search-indexers test
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
   build-function-application:
     needs: check-code
     runs-on: ubuntu-latest
@@ -66,7 +26,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
-          ref: main
           ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
       - name: Install pnpm 📦
         id: install-pnpm
