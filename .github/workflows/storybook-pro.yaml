@@ -66,29 +66,23 @@ jobs:
         id: login-to-azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
-          enable-AzPSSession: true
-
-      - name: Fetching Azure Storage Account Connection String
-        id: fetch-connection-string
-        uses: azure/powershell@v1
+          creds: ${{ secrets.ENVIS_ACTIONS_SERVICE_PRINCIPAL }}
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
         with:
           inlineScript: |
-            $connString = ""
-            $connString = (Get-AzStorageAccount -ResourceGroupName ${{ vars.AZ_RESOURCE_GROUP_NAME }} -Name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }}).Context.ConnectionString
-            $connString = $connString.Replace("`r", "").Replace("`n", "")
-            Write-Output "connectionString=$connString" >> $GITHUB_OUTPUT
-            Remove-Variable connString
-          azPSVersion: 'latest'
-      - name: Deploy 🚀
-        id: deploy
-        # change back to v2 when v2.0.1 releases, see #1332
-        uses: bacongobbler/azure-blob-storage-upload@main
+            az storage blob upload-batch --account-name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }} --auth-mode key -d '$web' -s ./web/storybook-static
+      - name: Purge CDN endpoint
+        uses: azure/CLI@v1
         with:
-          source_dir: './web/storybook-static'
-          container_name: '$web'
-          connection_string: ${{ steps.fetch-connection-string.outputs.connectionString }}
-          sync: true
+          inlineScript: |
+            az cdn endpoint purge --content-paths  "/*" --profile-name ${{ vars.AZ_CDN_PROFILE_NAME }} --name ${{ vars.AZ_CDN_ENDPOINT_NAME}} --resource-group ${{ vars.AZ_RESOURCE_GROUP_NAME}}
+
+      # Azure logout
+      - name: logout
+        run: |
+          az logout
+        if: always()
 
       - uses: act10ns/slack@v2
         with:
