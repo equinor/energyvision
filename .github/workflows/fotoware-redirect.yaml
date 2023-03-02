@@ -19,6 +19,8 @@ env:
 jobs:
   build-function-application:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout fotoware redirect code🛎️
         uses: actions/checkout@v3
