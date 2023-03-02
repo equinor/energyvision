@@ -79,12 +79,12 @@ jobs:
             Write-Output "connectionString=$connString" >> $GITHUB_OUTPUT
             Remove-Variable connString
           azPSVersion: 'latest'
-
       - name: Deploy 🚀
         id: deploy
         # change back to v2 when v2.0.1 releases, see #1332
         uses: bacongobbler/azure-blob-storage-upload@main
         with:
+          run: 'echo ${{ steps.fetch-connection-string.outputs.connectionString }}'
           source_dir: './web/storybook-static'
           container_name: '$web'
           connection_string: ${{ steps.fetch-connection-string.outputs.connectionString }}
