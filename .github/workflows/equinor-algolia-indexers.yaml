@@ -68,6 +68,8 @@ jobs:
   build-function-application:
     needs: check-code
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -110,7 +112,7 @@ jobs:
 
   deploy-function-application:
     environment:
-      name: production
+      name: ${{ github.event.inputs.environment }}
     needs: [build-function-application]
     runs-on: ubuntu-latest
     steps:
