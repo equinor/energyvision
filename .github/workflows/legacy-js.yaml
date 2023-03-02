@@ -1,6 +1,15 @@
 name: Export javascript for AEM content to Azure container
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment for legacy javascript'
+        required: true
+        type: choice
+        options:
+          - development
+          - production
+        default: development
   push:
     branches:
       - main
@@ -12,7 +21,10 @@ on:
       - '!legacy/js/dist/**'
 jobs:
   build:
+    name: 'Upload legacy javascript to azure container'
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -35,10 +47,13 @@ jobs:
         working-directory: ./legacy/js
         run: |
           pnpm install
-      - name: Export to Azure
-        uses: bacongobbler/azure-blob-storage-upload@v1.2.0
+      - name: Login to Azure 🌥️
+        id: login-to-azure
+        uses: azure/login@v1
         with:
-          source_dir: ./legacy/js/dist/js
-          container_name: equinor-archive-content
-          connection_string: ${{ secrets.AZ_CONNECTION_STRING }}
-          sync: false
+          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+      - name: Export to Azure
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload --account-name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }} --auth-mode key -c ${{vars.STORAGE_CONTAINER_NAME}} -f ./legacy/js/dist/js/legacy.minified.js -n legacy.minified.js
