@@ -71,7 +71,7 @@ jobs:
         id: login-to-azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+          creds: ${{ secrets.ENVIS_ACTIONS_SERVICE_PRINCIPAL }}
 
       - name: 'Create output directory'
         shell: bash
