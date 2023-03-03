@@ -21,7 +21,6 @@ const StyledAccordionButton = styled(AccordionButton)`
     ${outlineTemplate(outline)}
   }
 `
-
 const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-2);
@@ -44,14 +43,12 @@ const FilterHeader = ({ label }: { label: string }) => {
 
   const iconSize = 24
   return (
-    <>
-      <StyledAccordionButton>
-        <StyledTypography isExpanded={isExpanded} forwardedAs="span">
-          {label}
-        </StyledTypography>
-        {isExpanded ? <Icon size={iconSize} data={chevron_up} /> : <Icon size={iconSize} data={chevron_down} />}
-      </StyledAccordionButton>
-    </>
+    <StyledAccordionButton>
+      <StyledTypography isExpanded={isExpanded} forwardedAs="span">
+        {label}
+      </StyledTypography>
+      {isExpanded ? <Icon size={iconSize} data={chevron_up} /> : <Icon size={iconSize} data={chevron_down} />}
+    </StyledAccordionButton>
   )
 }
 
