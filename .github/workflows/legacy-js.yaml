@@ -28,15 +28,6 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - name: Cache pnpm modules 💾
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-pnpm-modules
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - name: Build legacy js
         id: build-legacy-js
         working-directory: ./legacy/js
@@ -51,4 +42,10 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload --account-name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }} --auth-mode key -c ${{vars.STORAGE_CONTAINER_NAME}} -f ./legacy/js/dist/js/legacy.minified.js -n legacy.minified.js
+            az storage blob upload --account-name ${{ vars.AZ_STORAGE_ACCOUNT_NAME }} --auth-mode key -c ${{ vars.STORAGE_CONTAINER_NAME }} -f ./legacy/js/dist/js/legacy.minified.js -n legacy.minified.js
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
