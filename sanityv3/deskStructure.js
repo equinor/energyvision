@@ -1,7 +1,8 @@
 import items from './src/lib/structure'
 import FilePreview from './src/previews/file/filePreview'
-import Preview from './src/previews/Preview'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+import Iframe from 'sanity-plugin-iframe-pane'
+import { resolvePreviewUrl } from './src/lib/preview'
 
 export default (S, context) => S.list().title('Content').items(items(S, context))
 
@@ -24,7 +25,21 @@ const fileDocTypes = ['assetFile', 'videoFile']
 export const defaultDocumentNodeResolver = (S, { schemaType }) => {
   const views = [S.view.form()]
 
-  if (docsWithNormalPreview.includes(schemaType)) views.push(S.view.component(Preview).title('Preview'))
+  if (docsWithNormalPreview.includes(schemaType)) {
+    // @TODO: remove old preview if we go with this component
+    views.push(
+      S.view
+        .component(Iframe)
+        .options({
+          url: (doc) => resolvePreviewUrl(doc),
+          loader: 'Loading preview...',
+          reload: {
+            button: true,
+          },
+        })
+        .title('Preview'),
+    )
+  }
 
   if (docsWithRoute.includes(schemaType))
     views.push(
