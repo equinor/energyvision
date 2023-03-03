@@ -1,12 +1,12 @@
-import { AccordionButton, useAccordionItemContext } from '@reach/accordion'
 import styled from 'styled-components'
 import { Typography, Icon } from '@equinor/eds-core-react'
 import { chevron_down, chevron_up } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
+import { AccordionButton as CAccordionButton, useAccordionItemState } from '@chakra-ui/react'
 
 const { outline } = Tokens
 
-const StyledAccordionButton = styled(AccordionButton)`
+const ChakraStyledAccordionButton = styled(CAccordionButton)`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -39,20 +39,20 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
     }} */
 `
 
-const FilterHeader = ({ label }: { label: string }) => {
-  const { isExpanded } = useAccordionItemContext()
+const ChakraFilterHeader = ({ label }: { label: string }) => {
+  const { isOpen } = useAccordionItemState()
 
   const iconSize = 24
   return (
     <>
-      <StyledAccordionButton>
-        <StyledTypography isExpanded={isExpanded} forwardedAs="span">
+      <ChakraStyledAccordionButton>
+        <StyledTypography isExpanded={isOpen} forwardedAs="span">
           {label}
         </StyledTypography>
-        {isExpanded ? <Icon size={iconSize} data={chevron_up} /> : <Icon size={iconSize} data={chevron_down} />}
-      </StyledAccordionButton>
+        {isOpen ? <Icon size={iconSize} data={chevron_up} /> : <Icon size={iconSize} data={chevron_down} />}
+      </ChakraStyledAccordionButton>
     </>
   )
 }
 
-export default FilterHeader
+export default ChakraFilterHeader
