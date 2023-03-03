@@ -82,7 +82,7 @@ const getItems = (S, context) => {
     AssetLibrary(S),
     S.divider(),
     Settings(S),
-  ]
+  ].filter((e) => e)
   if (isAdmin) {
     return ADMIN_ITEMS(S)
   } else if (isSubEditor) {
