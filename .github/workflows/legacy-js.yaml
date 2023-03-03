@@ -37,16 +37,11 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-      - name: Install pnpm 📦
-        id: install-pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: '^7.2.1'
       - name: Build legacy js
         id: build-legacy-js
         working-directory: ./legacy/js
         run: |
-          pnpm install
+          npm install
       - name: Login to Azure 🌥️
         id: login-to-azure
         uses: azure/login@v1
