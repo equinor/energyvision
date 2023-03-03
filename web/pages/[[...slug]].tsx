@@ -31,9 +31,7 @@ export default function Page({ data, preview = false }: any) {
   const { setIsPreview } = useContext(PreviewContext)
 
   useEffect(() => {
-    if (Flags.IS_DEV) {
-      setIsPreview(preview)
-    }
+    setIsPreview(preview)
   }, [setIsPreview, preview])
 
   const { pageData } = data
