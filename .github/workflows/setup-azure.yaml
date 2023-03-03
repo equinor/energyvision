@@ -1,5 +1,11 @@
 name: Set up Azure environment
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Please type the environment to deploy. Allowed values "dev" or "prod"'
+        type: string
+        required: true
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -33,7 +39,7 @@ jobs:
           region: northeurope
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
           template: ci/biceps/main.bicep
-          parameters: 'location=northeurope'
+          parameters: 'location=northeurope env=${{ inputs.env }}'
           failOnStdErr: false
       - name: log-errors-to-slack
         uses: act10ns/slack@v2
