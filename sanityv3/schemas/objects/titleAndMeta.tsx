@@ -2,7 +2,6 @@ import { Box, Label, TextArea } from '@sanity/ui'
 import { Rule } from 'sanity'
 import { SchemaType } from '../../types'
 
-// eslint-disable-next-line react/display-name
 export function TextAreaWithChars() {
   return (
     <div>
@@ -40,9 +39,6 @@ export default {
       description: `Meta descriptions are HTML attributes that provide concise summaries of webpages.
       It shows up in search results and in social media. Should be max. 160 chars`,
       type: 'text',
-      components: {
-        input: TextAreaWithChars,
-      },
     },
   ],
 }
