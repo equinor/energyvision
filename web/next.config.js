@@ -1,6 +1,6 @@
+const archiveServerHostname =
+  process.env.ARCHIVE_CONTENT_LINK || 'https://envis-legacy.azureedge.net/equinor-archive-content'
 /* eslint-disable @typescript-eslint/no-var-requires */
-const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
-
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
