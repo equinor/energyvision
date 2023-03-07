@@ -1,14 +1,25 @@
-import { Box, Label, TextArea } from '@sanity/ui'
-import { Rule } from 'sanity'
+import { useCallback } from 'react'
+import { Stack, Text, TextArea } from '@sanity/ui'
+import { set, unset } from 'sanity'
 import { SchemaType } from '../../types'
+import { Rule } from 'sanity'
 
-export function TextAreaWithChars() {
+export const TextAreaWithChars = (props: any) => {
+  const { elementProps, onChange, value = '' } = props
+
+  const handleChange = useCallback(
+    (event: any) => {
+      const nextValue = event.currentTarget.value
+      onChange(nextValue ? set(nextValue) : unset())
+    },
+    [onChange],
+  )
+
   return (
-    <div>
-      <Box marginTop={2}>
-        <Label size={1}>Characters: {length}</Label>
-      </Box>
-    </div>
+    <Stack space={2}>
+      <TextArea {...elementProps} onChange={handleChange} value={value} rows={5} />
+      <Text size={1}>Characters: {value.length}</Text>
+    </Stack>
   )
 }
 
@@ -39,6 +50,9 @@ export default {
       description: `Meta descriptions are HTML attributes that provide concise summaries of webpages.
       It shows up in search results and in social media. Should be max. 160 chars`,
       type: 'text',
+      components: {
+        input: TextAreaWithChars,
+      },
     },
   ],
 }
