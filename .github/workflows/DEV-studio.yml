@@ -73,9 +73,9 @@ jobs:
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
           fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
           fotowareTenantUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
-          fotowareRedirectOrigin: ${{ secrets.DEV_SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
-          fotowareAfExportUrl: ${{ secrets.DEV_SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
-          fotowareAfExportKey: ${{ secrets.DEV_SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
+          fotowareRedirectOrigin: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
+          fotowareAfExportUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
+          fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:
