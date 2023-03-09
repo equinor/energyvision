@@ -7,6 +7,7 @@ import Image from '../shared/Image'
 import RichText from '../shared/portableText/RichText'
 import { Ratios } from '../shared/SanityImage'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { Text as ChakraText } from '@chakra-ui/react'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
@@ -23,18 +24,6 @@ const StyledTitle = styled(Title)`
   overflow: hidden;
   line-clamp: 2;
   display: -webkit-box;
-`
-
-const StyledIngress = styled(Text)`
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  overflow: hidden;
-  line-clamp: 5;
-  display: -webkit-box;
-
-  @media (max-width: 520px) {
-    max-height: 7.6em;
-  }
 `
 
 type NewsCardProp = {
@@ -89,9 +78,28 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
           </Header>
           {ingress &&
             (Flags.IS_DEV ? (
-              <StyledIngress>
-                <RichText value={ingress}></RichText>
-              </StyledIngress>
+              <ChakraText noOfLines={5} style={{ margin: '0' }}>
+                <RichText
+                  value={ingress}
+                  components={{
+                    block: {
+                      normal: ({ children }) => {
+                        return (
+                          <Text
+                            style={{
+                              marginBottom: '0',
+                              fontSize: 'var(--typeScale-1)',
+                              lineHeight: 'var(--lineHeight-3)',
+                            }}
+                          >
+                            {children}
+                          </Text>
+                        )
+                      },
+                    },
+                  }}
+                ></RichText>
+              </ChakraText>
             ) : (
               <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
                 <RichText value={ingress}></RichText>
