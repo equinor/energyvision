@@ -107,7 +107,7 @@ runs:
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
-          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --build-arg BUILDKIT_INLINE_CACHE=1
           --no-cache
     - name: Push the image to GHCR ☁
       id: push-to-ghcr
