@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Stack, Text, TextArea } from '@sanity/ui'
+import { Stack, TextArea, Label } from '@sanity/ui'
 import { set, unset } from 'sanity'
 import { SchemaType } from '../../types'
 import { Rule } from 'sanity'
@@ -18,7 +18,7 @@ export const TextAreaWithChars = (props: any) => {
   return (
     <Stack space={2}>
       <TextArea {...elementProps} onChange={handleChange} value={value} rows={5} />
-      <Text size={1}>Characters: {value.length}</Text>
+      <Label size={1}>Characters: {value.length}</Label>
     </Stack>
   )
 }
