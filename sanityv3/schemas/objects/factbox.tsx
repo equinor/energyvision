@@ -82,14 +82,13 @@ export default {
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ImagePosition({ type, onChange, value }: { type: any; onChange: any; value: string }) {
+        input: function ImagePosition({ onChange, value }: { onChange: any; value: string }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"
               options={imageAlignmentOptions}
               defaultValue="left"
               currentValue={value}
-              type={type}
               onChange={onChange}
             />
           )
