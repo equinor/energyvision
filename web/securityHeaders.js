@@ -26,7 +26,10 @@ const iframeSrcs = [
   'https://vds.issgovernance.com',
   'https://eac.plaii.no',
   'https://livestream.com',
-].join(' ')
+  dataset === 'global-development' && 'https://careers.peopleclick.eu.com/',
+]
+  .filter((e) => e)
+  .join(' ')
 
 const ContentSecurityPolicy = `
    default-src 'self' cdn.sanity.io cdn.equinor.com;
