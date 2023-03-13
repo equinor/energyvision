@@ -3,6 +3,8 @@ import { getFileAsset } from '@sanity/asset-utils'
 import type { Reference, Rule } from '@sanity/types'
 import { EdsIcon } from '../../icons/edsIcons'
 import { dataset, projectId } from '../../src/lib/datasetHelpers'
+import VideoSelector from '../components/VideoSelector'
+import { description } from './iframe/sharedIframeFields'
 
 export default {
   type: 'document',
@@ -15,6 +17,17 @@ export default {
       type: 'string',
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      title: 'Video',
+      description: 'A nice video description',
+      name: 'screen9video',
+      type: 'screen9video',
+      validation: (Rule: Rule) => Rule.required(),
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
     },
     {
       name: 'video',
