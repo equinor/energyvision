@@ -88,18 +88,16 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
           </Header>
           {ingress &&
             (Flags.IS_DEV ? (
-              <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-                <RichText
-                  value={ingress}
-                  components={{
-                    block: {
-                      normal: ({ children }) => {
-                        return <StyledIngress>{children}</StyledIngress>
-                      },
+              <RichText
+                value={ingress}
+                components={{
+                  block: {
+                    normal: ({ children }) => {
+                      return <StyledIngress>{children}</StyledIngress>
                     },
-                  }}
-                ></RichText>
-              </Text>
+                  },
+                }}
+              ></RichText>
             ) : (
               <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
                 <RichText value={ingress}></RichText>
