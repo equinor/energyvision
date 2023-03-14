@@ -36,6 +36,12 @@ const StyledIngress = styled(Text)`
   line-height: var(--lineHeight-3);
 `
 
+const StyledWrapper = styled(Text)`
+  margin-top: calc(var(--space-small) * -1);
+  padding-left: 0;
+  padding-right: 0;
+`
+
 type NewsCardProp = {
   data: CardData
   fitToContent?: boolean
@@ -88,16 +94,21 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
           </Header>
           {ingress &&
             (Flags.IS_DEV ? (
-              <RichText
-                value={ingress}
-                components={{
-                  block: {
-                    normal: ({ children }) => {
-                      return <StyledIngress>{children}</StyledIngress>
+              <StyledWrapper>
+                <RichText
+                  value={ingress}
+                  components={{
+                    block: {
+                      normal: ({ children }) => {
+                        return <StyledIngress>{children}</StyledIngress>
+                      },
+                      smallText: ({ children }) => {
+                        return <StyledIngress>{children}</StyledIngress>
+                      },
                     },
-                  },
-                }}
-              ></RichText>
+                  }}
+                ></RichText>
+              </StyledWrapper>
             ) : (
               <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
                 <RichText value={ingress}></RichText>
