@@ -2,8 +2,9 @@ import styled from 'styled-components'
 import type { HeroType, ImageWithCaptionData } from 'types'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
-import Image, { Ratios } from '../SanityImage'
+import Image from '../Image'
 import { StyledCaption } from '../image/StyledCaption'
+import { Ratios } from '../SanityImage'
 
 const ImgWrapper = styled.div`
   height: calc(100vh - var(--topbar-height));
@@ -20,7 +21,11 @@ const imageSizes = '100vw'
 const FullScreenHero = ({ figure }: FullImageHeroType) => {
   return (
     <ImgWrapper>
-      <Image maxWidth={4096} image={figure.image} fill sizes={imageSizes} priority />
+      {Flags.IS_DEV ? (
+        <Image maxWidth={4096} image={figure.image} fill sizes={imageSizes} priority />
+      ) : (
+        <Image maxWidth={4096} image={figure.image} layout={'fill'} objectFit={'cover'} priority />
+      )}
     </ImgWrapper>
   )
 }
@@ -30,7 +35,16 @@ const NarrowHero = ({ figure }: FullImageHeroType) => {
   // 4:3 for small screens and 10:3 for large screens
   const aspectRatio = width && width < 750 ? Ratios.THREE_TO_FOUR : Ratios.THREE_TO_TEN
 
-  return <Image maxWidth={4096} aspectRatio={aspectRatio} image={figure.image} sizes={imageSizes} priority />
+  return (
+    <Image
+      maxWidth={4096}
+      aspectRatio={aspectRatio}
+      image={figure.image}
+      layout="responsive"
+      sizes={imageSizes}
+      priority
+    />
+  )
 }
 
 const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
@@ -39,6 +53,7 @@ const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
       maxWidth={4096}
       aspectRatio={Number(ratio) || Ratios.ONE_TO_TWO}
       image={figure.image}
+      layout="responsive"
       sizes={imageSizes}
       priority
     />

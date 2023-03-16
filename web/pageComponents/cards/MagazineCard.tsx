@@ -4,8 +4,9 @@ import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import Image, { Ratios } from '../shared/SanityImage'
+import { Ratios } from '../../pageComponents/shared/SanityImage'
 import { HeroTypes, ImageWithAlt, MagazineCardData } from '../../types/types'
+import Image from '../shared/Image'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -75,6 +76,7 @@ const getThumbnail = (data: MagazineCardData) => {
       }
       maxWidth={400}
       aspectRatio={Ratios.NINE_TO_SIXTEEN}
+      layout="responsive"
       sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
     />
   )
