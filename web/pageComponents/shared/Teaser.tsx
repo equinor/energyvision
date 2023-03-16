@@ -4,9 +4,11 @@ import { default as NextLink } from 'next/link'
 import IngressText from './portableText/IngressText'
 import TitleText from './portableText/TitleText'
 import { urlFor } from '../../common/helpers'
-import Img from 'next/image'
-import Image from './SanityImage'
+import NewImg from 'next/image'
+import Img from 'next/legacy/image'
+import Image from './Image'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
 import { getLocaleFromName } from '../../lib/localization'
@@ -31,13 +33,26 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   return (
     <>
       {image.extension === 'svg' ? (
-        <Image image={image} alt={altTag} maxWidth={720} />
+        Flags.IS_DEV ? (
+          <Image image={image} alt={altTag} maxWidth={720} />
+        ) : (
+          <Image image={image} alt={altTag} maxWidth={720} layout="responsive" />
+        )
+      ) : Flags.IS_DEV ? (
+        <NewImg
+          src={imageSrc}
+          alt={altTag}
+          style={{ objectFit: 'cover' }}
+          layout="fill"
+          role={image?.isDecorative ? 'presentation' : undefined}
+        />
       ) : (
         <Img
           src={imageSrc}
           alt={altTag}
-          style={{ objectFit: 'cover' }}
-          fill
+          objectFit="cover"
+          layout="fill"
+          unoptimized
           role={image?.isDecorative ? 'presentation' : undefined}
         />
       )}

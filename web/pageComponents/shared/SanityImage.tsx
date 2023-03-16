@@ -8,7 +8,6 @@ type Props = Omit<ImageProps, 'src' | 'alt'> & {
   image: ImageWithAlt
   maxWidth?: number
   aspectRatio?: number
-  alt?: string
 }
 
 export enum Ratios {

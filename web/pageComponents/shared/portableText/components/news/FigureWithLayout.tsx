@@ -2,7 +2,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 
 import { FigureCaption } from '@components'
 import styled from 'styled-components'
-import Image from '../../../SanityImage'
+import Image from '../../../Image'
 import type { ImageWithAlt } from '../../../../../types/types'
 
 type Layout = 'full' | 'left' | 'right'
@@ -64,30 +64,32 @@ export const FigureWithLayout = (block: BlockProps) => {
       {layout === 'full' ? (
         <Image
           image={image}
+          layout="responsive"
           sizes="
-            (max-width: 340px) 295px,
-            (max-width: 600px) 451px,
-            (max-width: 950px) 642px,
-            (max-width: 1250px) 805px,
-            (max-width: 1450px) 915px,
-            (max-width: 1700px) 1049px,
-            1184px
-          "
+        (max-width: 340px) 295px,
+        (max-width: 600px) 451px,
+        (max-width: 950px) 642px,
+        (max-width: 1250px) 805px,
+        (max-width: 1450px) 915px,
+        (max-width: 1700px) 1049px,
+        1184px
+        "
           maxWidth={1184}
         />
       ) : (
         <Image
           image={image}
           sizes="
-            (max-width: 340px) 295px,
-            (max-width: 600px) 451px,
-            (max-width: 800px) 560px,
-            (max-width: 900px) 290px,
-            (max-width: 1250px) 390px,
-            (max-width: 1450px) 436px,
-            (max-width: 1700px) 503px,
-            570px
-          "
+          (max-width: 340px) 295px,
+          (max-width: 600px) 451px,
+          (max-width: 800px) 560px,
+          (max-width: 900px) 290px,
+          (max-width: 1250px) 390px,
+          (max-width: 1450px) 436px,
+          (max-width: 1700px) 503px,
+        570px
+        "
+          layout="responsive"
           maxWidth={570}
         />
       )}

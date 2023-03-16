@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import Image from '../SanityImage'
+import Image from '../Image'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
 import type { LinkData, HeroType } from '../../../types/types'
@@ -70,7 +70,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const linkLocale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink href={url} locale={Flags.IS_DEV ? linkLocale : undefined} passHref legacyBehavior>
+      <NextLink href={url} locale={Flags.IS_DEV? linkLocale: undefined} passHref legacyBehavior>
         <Link variant="readMore" aria-label={ariaLabel} {...rest}>
           {action.label}
         </Link>
@@ -89,16 +89,27 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
     <>
       <StyledHero background={background}>
         <StyledMedia>
-          {figure && (
-            <Image
-              maxWidth={4096}
-              sizes="(max-width: 800px) 100vw, 800px"
-              image={figure.image}
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
-          )}
+          {Flags.IS_DEV
+            ? figure && (
+                <Image
+                  maxWidth={4096}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  image={figure.image}
+                  layout="fill"
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              )
+            : figure && (
+                <Image
+                  maxWidth={4096}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  image={figure.image}
+                  layout={'fill'}
+                  objectFit={'cover'}    
+                  priority
+                />
+              )}
         </StyledMedia>
         <StyledContent>
           {title && <StyledHeroTitle value={title} level="h1" size="xl" />}
