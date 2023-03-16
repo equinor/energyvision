@@ -3,9 +3,8 @@ import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
-import Image from '../shared/Image'
+import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'
-import { Ratios } from '../shared/SanityImage'
 import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
@@ -68,7 +67,6 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
                 image={heroImage.image}
                 maxWidth={400}
                 aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                layout="responsive"
                 sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
               />
             )}

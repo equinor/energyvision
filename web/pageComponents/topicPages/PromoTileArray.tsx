@@ -4,9 +4,8 @@ import { PortableTextBlock } from '@portabletext/types'
 import { CSSProperties, Fragment } from 'react'
 import styled from 'styled-components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
-import Image from '../shared/Image'
+import Image, { Ratios } from '../shared/SanityImage'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
-import { Ratios } from '../shared/SanityImage'
 import { PromoTileButton } from './PromoTileButton'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
@@ -124,7 +123,6 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
                         alt={image.alt}
                         maxWidth={400}
                         aspectRatio={Ratios.FOUR_TO_FIVE}
-                        layout="responsive"
                       />
                     </Media>
                   )}

@@ -1,7 +1,6 @@
 import { PullQuote } from '@components'
 import type { QuoteData } from '../../types/types'
-import Image from './Image'
-import { Ratios } from './SanityImage'
+import Image, { Ratios } from './SanityImage'
 
 const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: { data: QuoteData }) => (
   <PullQuote imagePosition={designOptions?.imagePosition || 'left'}>
@@ -21,7 +20,6 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
               (max-width: 1440px) 164px,
               220px
               "
-          layout="responsive"
         />
       </PullQuote.Media>
     )}
