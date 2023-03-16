@@ -9,7 +9,6 @@ import { Hits } from '../searchIndexPages/magazineIndex/Hits'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import { UnpaddedText } from './newsroom/StyledComponents'
-//import { history } from 'instantsearch.js/es/lib/routers'
 import { useRef } from 'react'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import Seo from '../../pageComponents/shared/Seo'
@@ -19,6 +18,9 @@ import { PaginationContextProvider } from '../shared/search/pagination/Paginatio
 import Teaser from '../shared/Teaser'
 import { SharedBanner } from './shared/SharedBanner'
 import SharedTitle from './shared/SharedTitle'
+import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
+import singletonRouter from 'next/router'
+import type { UiState } from 'instantsearch.js'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -57,15 +59,10 @@ type MagazineIndexTemplateProps = {
   locale: string
   pageData: MagazineIndexPageType
   slug?: string
-  // url: string
+  url: string
 }
 
-const MagazineIndexPage = ({
-  isServerRendered = false,
-  locale,
-  pageData,
-  slug /* url */,
-}: MagazineIndexTemplateProps) => {
+const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const { ingress, title, hero, seoAndSome, magazineTags, footerComponent } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -97,10 +94,12 @@ const MagazineIndexPage = ({
         <InstantSearch
           searchClient={isServerRendered ? searchClientServer : searchClient}
           indexName={indexName}
-          /* routing={{
-              // @TODO If this is enabled, the app will freeze with browser back
-              router: history({
-                createURL({ qsModule, routeState, location }) {
+          routing={{
+            router: createInstantSearchRouterNext({
+              singletonRouter,
+              serverUrl: url,
+              routerOptions: {
+                createURL: ({ qsModule, routeState, location }) => {
                   const isIndexpageUrl = location.pathname.split('/').length === (locale === 'en' ? 2 : 3)
 
                   if (!isIndexpageUrl) {
@@ -110,18 +109,19 @@ const MagazineIndexPage = ({
 
                   const queryParameters: any = {}
                   if (routeState.query) {
-                    queryParameters.query = encodeURIComponent(routeState.query as string)
+                    queryParameters.query = routeState.query
                   }
-                  if (routeState.page !== 1) {
+                  if (routeState.page) {
                     queryParameters.page = routeState.page
                   }
                   if (routeState.magazineTags) {
-                    queryParameters.tag = encodeURIComponent(routeState.magazineTags as string)
+                    queryParameters.tag = routeState.magazineTags
                   }
 
                   const queryString = qsModule.stringify(queryParameters, {
                     addQueryPrefix: true,
                     arrayFormat: 'repeat',
+                    format: 'RFC1738',
                   })
                   const href = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
 
@@ -129,47 +129,43 @@ const MagazineIndexPage = ({
                 },
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct
-                parseURL({ qsModule, location }) {
+                parseURL: ({ qsModule, location }) => {
                   const { query = '', page, tag = '' }: any = qsModule.parse(location.search.slice(1))
                   return {
-                    query: decodeURIComponent(query),
+                    query: query,
                     page,
-                    magazineTags: decodeURIComponent(tag),
-                  }
-                },
-                getLocation() {
-                  if (typeof window === 'undefined') {
-                    return new URL(url!) as unknown as Location
-                  }
-
-                  return window.location
-                },
-              }),
-
-              stateMapping: {
-                // eslint-disable-next-line
-                // @ts-ignore: @TODO: The types are not correct
-                stateToRoute(uiState) {
-                  const indexUiState = uiState[indexName] || {}
-                  return {
-                    query: indexUiState.query,
-                    magazineTags: indexUiState.menu && indexUiState.menu.magazineTags,
-                  }
-                },
-                // eslint-disable-next-line
-                // @ts-ignore: @TODO: The types are not correct
-                routeToState(routeState) {
-                  return {
-                    [indexName]: {
-                      query: routeState.query,
-                      menu: {
-                        magazineTags: routeState.magazineTags,
-                      },
-                    },
+                    magazineTags: tag,
                   }
                 },
               },
-            }}*/
+            }),
+
+            stateMapping: {
+              // eslint-disable-next-line
+              // @ts-ignore: @TODO: The types are not correct
+              stateToRoute(uiState) {
+                const indexUiState = uiState[indexName] || {}
+                return {
+                  query: indexUiState.query,
+                  magazineTags: indexUiState.menu && indexUiState.menu.magazineTags,
+                  page: indexUiState.page,
+                }
+              },
+              // eslint-disable-next-line
+              // @ts-ignore: @TODO: The types are not correct
+              routeToState(routeState) {
+                return {
+                  [indexName]: {
+                    query: routeState.query,
+                    page: routeState.page,
+                    menu: {
+                      magazineTags: routeState.magazineTags,
+                    },
+                  },
+                }
+              },
+            },
+          }}
         >
           <Configure facetingAfterDistinct maxFacetHits={50} maxValuesPerFacet={100} hitsPerPage={HITS_PER_PAGE} />
           {magazineTags && (
