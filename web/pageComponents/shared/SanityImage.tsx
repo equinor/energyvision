@@ -34,7 +34,7 @@ const useSanityLoader = (image: ImageWithAlt, maxWidth: number, aspectRatio: num
         ? Math.round(width * aspectRatio)
         : Math.round(width * (cropped.height / cropped.width))
 
-      return imageUrlBuilder.width(width).height(height).quality(70)
+      return imageUrlBuilder.width(width).height(height).auto('format').quality(70)
     },
   })
 
@@ -64,7 +64,7 @@ const Image = ({
     props = {
       width,
       height,
-      style: { ...style, width: '100%', height: 'auto' },
+      style: { ...style, display: 'flex', width: '100%', height: 'auto' },
     }
   }
 
