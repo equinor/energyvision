@@ -3,9 +3,8 @@ import { outlineTemplate, Tokens } from '@utils'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { Flags } from '../../../common/helpers/datasetHelpers'
-import { Ratios } from '../../../pageComponents/shared/SanityImage'
+import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import type { PeopleCardData } from '../../../types/types'
-import Image from '../../shared/Image'
 import CV from './CV'
 
 const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
@@ -164,16 +163,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
     >
       <StyledMedia>
         <ImageContainer>
-          {/*   @TODO Final size adjustments */}
-
-          {image && (
-            <RoundedImage
-              image={image}
-              maxWidth={200}
-              aspectRatio={Ratios.ONE_TO_ONE}
-              layout={Flags.IS_DEV ? 'responsive' : 'intrinsic'}
-            />
-          )}
+          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />}
         </ImageContainer>
       </StyledMedia>
       <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>
