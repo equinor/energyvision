@@ -3,12 +3,11 @@ import { toPlainText } from '@portabletext/react'
 import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import Image from '../shared/Image'
+import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'
 
 import type { PortableTextBlock } from '@portabletext/types'
 import type { CardData } from '../../types/types'
-import { Ratios } from '../shared/SanityImage'
 
 const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 
@@ -52,7 +51,6 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
                 image={thumbnail}
                 maxWidth={400}
                 aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                layout="responsive"
                 sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
               />
             )}
