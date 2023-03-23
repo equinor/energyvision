@@ -91,6 +91,7 @@ export const Pagination = ({ totalPages, onPageChange, inverted = false }: Pagin
         .filter((page) => {
           const lowerBound = Math.max(currentPage - 1, 0)
           const upperBound = Math.min(currentPage + 1, totalPages - 1)
+          if (totalPages === 3 || currentPage === totalPages - 1) return page <= 2
           if (currentPage === 0) return page <= 2 || (page >= lowerBound && page <= upperBound)
           if (currentPage === totalPages - 1) return page >= 2 || (page >= lowerBound && page <= upperBound)
           return page === lowerBound || page === currentPage || page === upperBound
