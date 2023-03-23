@@ -17,6 +17,7 @@ import {
 } from './utils'
 import { Content, ErrorMessage, LoadingContent, FotowareWidget } from './components'
 import type { FWAsset, FWAttributeField } from './types'
+import { Flags } from '../../../src/lib/datasetHelpers'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
@@ -40,7 +41,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     (event: any) => {
       if (!newWindow.current || !event || !event.data) return false
 
-      if (event.origin !== REDIRECT_ORIGIN) {
+      if (event.origin !== REDIRECT_ORIGIN && !Flags.IS_DEV) {
         console.warn('Fotoware: invalid event origin')
         return false
       }
