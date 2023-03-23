@@ -18,12 +18,11 @@ const PaginationList = styled.ul`
 
 type PaginationProps = {
   totalPages: number
-  padding: number
   inverted?: boolean
   onPageChange: any
 }
 
-export const Pagination = ({ totalPages, padding, onPageChange, inverted = false }: PaginationProps) => {
+export const Pagination = ({ totalPages, onPageChange, inverted = false }: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState(0)
   const { resultsRef } = useContext(PaginationContext)
   const prevPage = useRef(currentPage)
@@ -90,9 +89,11 @@ export const Pagination = ({ totalPages, padding, onPageChange, inverted = false
 
       {pages
         .filter((page) => {
-          const lowerBound = currentPage - padding
-          const upperBound = currentPage + padding
-          return page === 0 || page === totalPages - 1 || (page >= lowerBound && page <= upperBound)
+          const lowerBound = Math.max(currentPage - 1, 0)
+          const upperBound = Math.min(currentPage + 1, totalPages - 1)
+          if (currentPage === 0) return page <= 2 || (page >= lowerBound && page <= upperBound)
+          if (currentPage === totalPages - 1) return page >= 2 || (page >= lowerBound && page <= upperBound)
+          return page === lowerBound || page === currentPage || page === upperBound
         })
         .map((page) => (
           <PaginationItem

@@ -65,11 +65,7 @@ const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: stri
         )}
       </Articles>
       {Flags.IS_DEV && (
-        <Pagination
-          totalPages={totalPages}
-          padding={2}
-          onPageChange={(pageNumber: number) => handlePageChange(pageNumber)}
-        />
+        <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />
       )}
     </Wrapper>
   )
