@@ -1,9 +1,0 @@
-{
-  "parts": [
-    {
-      "name": "part:asset-source-mediabank/image-asset-source",
-      "implements": "part:@sanity/form-builder/input/image/asset-source",
-      "path": "index.ts"
-    }
-  ]
-}
