@@ -1,43 +1,33 @@
 import React, { useState, useCallback, useEffect, useRef, forwardRef } from 'react'
-import {
-  Button,
-  Card,
-  Dialog,
-  Flex,
-  Label,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  Popover,
-  Stack,
-  Text,
-  TextInput,
-} from '@sanity/ui'
+import { Button, Card, Dialog, Label, Menu, MenuButton, MenuDivider, MenuItem, Stack, TextInput } from '@sanity/ui'
 import { createPortal } from 'react-dom'
 import { PatchEvent, set, unset } from '@sanity/form-builder/PatchEvent'
-import { UploadIcon, ResetIcon, DotIcon, EllipsisVerticalIcon, ComponentIcon } from '@sanity/icons'
+import { UploadIcon, ResetIcon, EllipsisVerticalIcon, ComponentIcon } from '@sanity/icons'
 import { ChangeIndicatorCompareValueProvider, FormField } from '@sanity/base/components'
 import { useId } from '@reach/auto-id'
 import { SanityDocument, Marker } from '@sanity/types'
 import { Content } from '../../plugins/asset-source-fotoware/src/components'
-import BrandmasterIcon from '../../plugins/asset-source-mediabank/src/Icon'
+import HLSPlayer from './HLSPlayer'
 
-const MEDIABANK_URL = process.env.SANITY_STUDIO_MEDIABANK_URL || ''
-const MEDIABANK_SOURCE =
-  MEDIABANK_URL +
-  '/dam2/archive?p_com_id=12366&p_oty_id=146867&p_ptl_id=16613&p_lae_id=2&p_mode=plugin_object&p_filter=status:1;sort:obt_id%20desc;type:AND;viewers:VIDEO_VIEWER'
+const MEDIABANK_DOMAIN = 'https://communicationtoolbox.equinor.com'
+const MEDIABANK_URL =
+  MEDIABANK_DOMAIN +
+  '/dam2/archive?p_com_id=12366&p_oty_id=146867&p_ptl_id=16613&p_lae_id=2&p_mode=plugin_object&p_filter=status:1;sort:obt_id%20desc;type:AND;viewers:VIDEO_VIEWER;localCategories:822833'
 const MEDIABANK_IMPORT_TYPE = 'dam:assets-imported'
 
-type VideoPlayer = {
+const SCREEN9_ACCOUNT_ID = '985917'
+const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN
+const SCREEN9_AUTH = Buffer.from(`${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`).toString('base64')
+
+type VideoSelector = {
   title: string
   url: string
 }
 
 interface Props {
   children?: React.ReactNode
-  value?: VideoPlayer
-  compareValue?: VideoPlayer
+  value?: VideoSelector
+  compareValue?: VideoSelector
   onChange: (event: PatchEvent) => void
   type: { title: string; description: string }
   level: number
@@ -46,7 +36,10 @@ interface Props {
   presence: any
 }
 
-const VideoPlayer = forwardRef(function VideoPlayer(props: Props, forwardedRef: React.ForwardedRef<HTMLVideoElement>) {
+const VideoSelector = forwardRef(function VideoSelector(
+  props: Props,
+  forwardedRef: React.ForwardedRef<HTMLDivElement>,
+) {
   const { children, value, compareValue, onChange, type, level, markers, presence } = props
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const [error, setError] = useState('')
@@ -63,29 +56,41 @@ const VideoPlayer = forwardRef(function VideoPlayer(props: Props, forwardedRef: 
   }
 
   const handleMediaBankEvent = useCallback(
-    (event: MessageEvent) => {
-      if (!event || !event.data || event.origin !== MEDIABANK_URL) return false
+    async (event: MessageEvent) => {
+      if (!event || !event.data || event.origin !== MEDIABANK_DOMAIN) return false
 
       const message = JSON.parse(event.data)
 
       if (message?.type === MEDIABANK_IMPORT_TYPE) {
         const file = message.data.assets[0]
 
-        if (file.viewer === 'VIDEO_VIEWER') {
-          console.log(message)
-          const url = MEDIABANK_URL + message.data.files[0].fileRef
-          const video = {
-            title: file.title,
-            url: url,
+        if (file.viewer === 'VIDEO_VIEWER' && file.screen9Connected) {
+          const videoId = file.flvVideoRef
+          const endpoint = `http://localhost:3000/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/streams?ssl=true`
+
+          const data = await fetch(endpoint, {
+            headers: {
+              Authorization: `Basic ${SCREEN9_AUTH}`,
+            },
+          }).then((res) =>
+            res.status !== 200
+              ? setError(`Could not retrieve url from Screen9. Please report the error to the dev team.`)
+              : res.json(),
+          )
+
+          if (!data.error) {
+            const video = {
+              title: file.title,
+              url: data.streams.hls,
+            }
+            // save to document
+            onChange(PatchEvent.from(set(video)))
           }
-          // save to document
-          onChange(PatchEvent.from(set(video)))
         } else {
-          setError('File type is not supported. Please select a video file.')
+          setError('File is not supported. Please select a equinor.com video file.')
         }
         closeModal()
       }
-      // link to the origial, non-resized, version of the file
     },
     [onChange],
   )
@@ -106,8 +111,18 @@ const VideoPlayer = forwardRef(function VideoPlayer(props: Props, forwardedRef: 
   }
 
   const handleOpenModal = () => {
+    const height = 800
+    const width = 1200
+
+    const left = window.screen.width / 2 - width / 2
+    const top = window.screen.height / 2 - height / 2
+
     if (container) {
-      newWindow.current = window.open(MEDIABANK_SOURCE, 'Media Bank', 'width=1200,height=800,left=200,top=200')
+      newWindow.current = window.open(
+        MEDIABANK_URL,
+        'Media Bank',
+        `height=${height},width=${width},left=${left},top=${top}`,
+      )
 
       if (newWindow.current) {
         newWindow.current.document.body.appendChild(container)
@@ -140,19 +155,16 @@ const VideoPlayer = forwardRef(function VideoPlayer(props: Props, forwardedRef: 
               <Label as="label" htmlFor="asset" size={1}>
                 Asset
               </Label>
-              <div id="asset" style={{ position: 'relative' }}>
+              <div ref={forwardedRef} id="asset" style={{ position: 'relative' }}>
                 <Card border paddingX={6} tone="transparent">
-                  {
-                    // eslint-disable-next-line jsx-a11y/media-has-caption
-                    <video
-                      ref={forwardedRef}
-                      src={value?.url}
-                      controls={true}
-                      width="100%"
-                      height="350px"
-                      style={{ marginBottom: '-5px', background: 'black' }}
-                    />
-                  }
+                  <HLSPlayer
+                    // src="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+                    src={value.url}
+                    controls={true}
+                    width="100%"
+                    height="350px"
+                    style={{ marginBottom: '-5px', background: 'black' }}
+                  />
                 </Card>
                 <div style={{ position: 'absolute', top: '8px', right: '8px' }}>
                   <MenuButton
@@ -210,4 +222,4 @@ const VideoPlayer = forwardRef(function VideoPlayer(props: Props, forwardedRef: 
   )
 })
 
-export default VideoPlayer
+export default VideoSelector
