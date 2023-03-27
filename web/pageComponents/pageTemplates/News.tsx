@@ -203,22 +203,26 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                 <StyledHeading level="h1" size="2xl" inverted>
                   {title}
                 </StyledHeading>
-                <DateWrapper>
-                  <Icon data={calendar} />
-                  <DateContainer>
-                    <FormattedDateTime uppercase datetime={publishDateTime} timezone />
-                    {isDateAfter(
-                      modifiedDate,
-                      // publishDateTime + 5 minutes
-                      new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
-                    ) && (
-                      <>
-                        <LastModifiedLabel>Last modified</LastModifiedLabel>
-                        <FormattedDateTime uppercase datetime={modifiedDate} />
-                      </>
-                    )}
-                  </DateContainer>
-                </DateWrapper>
+                {publishDateTime && (
+                  <DateWrapper>
+                    <Icon data={calendar} />
+                    <DateContainer>
+                      <FormattedDateTime uppercase datetime={publishDateTime} timezone />
+                      {
+                        // publishDateTime + 5 minutes
+                        isDateAfter(
+                          modifiedDate,
+                          new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
+                        ) && (
+                          <>
+                            <LastModifiedLabel>Last modified</LastModifiedLabel>
+                            <FormattedDateTime uppercase datetime={modifiedDate} />
+                          </>
+                        )
+                      }
+                    </DateContainer>
+                  </DateWrapper>
+                )}
               </HeaderInner>
             </Header>
             <Image>{heroImage && <DefaulHeroImage data={heroImage} />}</Image>
