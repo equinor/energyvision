@@ -116,7 +116,6 @@ dependencies:
   '@sanity/image-url': 1.0.1
   '@sanity/webhook': 2.0.0
   '@types/easy-soap-request': 4.1.1
-  '@types/http-proxy': 1.17.10
   '@types/uuid': 8.3.4
   '@types/xml2js': 0.4.9
   algoliasearch: 4.13.0
@@ -171,6 +170,7 @@ devDependencies:
   '@storybook/react': 6.5.15_w43nu4ymmgkpjvrk4urrulune4
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
+  '@types/http-proxy': 1.17.10
   '@types/jest': 27.5.1
   '@types/node': 17.0.35
   '@types/react': 18.0.9
@@ -6819,7 +6819,7 @@ packages:
     resolution: {integrity: sha512-Qs5aULi+zV1bwKAg5z1PWnDXWmsn+LxIvUGv6E2+OOMYhclZMO+OXd9pYVf2gLykf2I7IV2u7oTHwChPNsvJ7g==}
     dependencies:
       '@types/node': 17.0.45
-    dev: false
+    dev: true
 
   /@types/is-function/1.0.1:
     resolution: {integrity: sha512-A79HEEiwXTFtfY+Bcbo58M2GRYzCr9itHWzbzHVFNEYCcoU/MMGwYYf721gBrnhpj1s6RGVVha/IgNFnR0Iw/Q==}
