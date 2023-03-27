@@ -7,6 +7,7 @@ import { ChangeIndicatorCompareValueProvider, FormField } from '@sanity/base/com
 import { useId } from '@reach/auto-id'
 import { SanityDocument, Marker } from '@sanity/types'
 import { Content } from '../../plugins/asset-source-fotoware/src/components'
+import { baseUrl } from '../../resolveProductionUrl'
 import HLSPlayer from './HLSPlayer'
 
 const MEDIABANK_DOMAIN = 'https://communicationtoolbox.equinor.com'
@@ -66,7 +67,7 @@ const VideoSelector = forwardRef(function VideoSelector(
 
         if (file.viewer === 'VIDEO_VIEWER' && file.screen9Connected) {
           const videoId = file.flvVideoRef
-          const endpoint = `http://localhost:3000/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/streams?ssl=true`
+          const endpoint = `${baseUrl}/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/streams?ssl=true`
 
           const data = await fetch(endpoint, {
             headers: {
