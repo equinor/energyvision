@@ -16,7 +16,7 @@ const MEDIABANK_URL =
   '/dam2/archive?p_com_id=12366&p_oty_id=146867&p_ptl_id=16613&p_lae_id=2&p_mode=plugin_object&p_filter=status:1;sort:obt_id%20desc;type:AND;viewers:VIDEO_VIEWER;localCategories:822833'
 const MEDIABANK_IMPORT_TYPE = 'dam:assets-imported'
 
-const SCREEN9_ACCOUNT_ID = '985917'
+const SCREEN9_ACCOUNT_ID = process.env.SANITY_STUDIO_SCREEN9_ACCOUNT_ID
 const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN
 const SCREEN9_AUTH = Buffer.from(`${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`).toString('base64')
 
