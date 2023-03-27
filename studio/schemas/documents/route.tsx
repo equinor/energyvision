@@ -5,6 +5,7 @@ import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { HeroTypes } from '../HeroTypes'
+import { breadcrumbs } from '../objects/breadcrumbs'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -21,7 +22,15 @@ export default (isoCode: string, title: string) => {
           collapsed: false,
         },
       },
-    ],
+      Flags.IS_DEV && {
+        title: 'Breadcrumbs',
+        name: 'breadcrumbs',
+        options: {
+          collapsible: true,
+          collapsed: false,
+        },
+      },
+    ].filter((e) => e),
     // @TODO: Temp. solution aka 1. iteration.
     fields: [
       {
@@ -78,11 +87,19 @@ export default (isoCode: string, title: string) => {
         fieldset: 'slug',
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
+      Flags.IS_DEV && {
+        type: 'string',
+        name: 'breadcrumbsInput',
+        title: 'Breadcrumbs input',
+        description: 'Enter the desired breadcrumbs here, for example "about/equinor/contact"',
+        fieldset: 'breadcrumbs',
+      },
+      Flags.IS_DEV && breadcrumbs('breadcrumbsInput', 'breadcrumbs'),
       {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',
       },
-    ],
+    ].filter((e) => e),
     preview: {
       select: {
         title: 'content.title',
