@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  react-instantsearch-hooks-server@6.35.0:
+    hash: anrucxwvwnfcoo56oomnvhabgy
+    path: patches/react-instantsearch-hooks-server@6.35.0.patch
+
 specifiers:
   '@algolia/client-search': ^4.13.1
   '@babel/core': ^7.9.6
@@ -139,7 +144,7 @@ dependencies:
   react-error-boundary: 3.1.4_react@18.2.0
   react-focus-lock: 2.9.2_ulhmhxukhxjgxaybrsjlob7ffu
   react-hook-form: 7.42.0_react@18.2.0
-  react-instantsearch-hooks-server: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
+  react-instantsearch-hooks-server: 6.35.0_anrucxwvwnfcoo56oomnvhabgy_q6yhanr4arcizpfsqrdxn2ic6e
   react-instantsearch-hooks-web: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
   react-intl: 6.0.2_uz2ogxeagc4rbieizlfzyaazee
   react-is: 18.1.0
@@ -14535,7 +14540,7 @@ packages:
       react: 18.2.0
     dev: true
 
-  /react-instantsearch-hooks-server/6.35.0_q6yhanr4arcizpfsqrdxn2ic6e:
+  /react-instantsearch-hooks-server/6.35.0_anrucxwvwnfcoo56oomnvhabgy_q6yhanr4arcizpfsqrdxn2ic6e:
     resolution: {integrity: sha512-JAecQWpRMz9J/vktT0DOXdoleQtZqX/l7yEFMdVKUfCCWhA1LLR0F5xEzZmn0W0xo1K3gbrtByXIu6yfX18WLA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 5'
@@ -14549,6 +14554,7 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-instantsearch-hooks: 6.35.0_ohavwpeck6v6q5jdmjvgcmzzqq
     dev: false
+    patched: true
 
   /react-instantsearch-hooks-web/6.35.0_q6yhanr4arcizpfsqrdxn2ic6e:
     resolution: {integrity: sha512-E6m5g+wYJzGwsenm9VPNyeo/r4CLw/l4NIIJu6M0+hsFigDBYBtnGn2wrMwKdyGkz8m4Q+FH/kQuk+yYbmmj4w==}
