@@ -143,7 +143,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
             stateMapping: {
               // eslint-disable-next-line
               // @ts-ignore: @TODO: The types are not correct
-              stateToRoute(uiState) {
+              stateToRoute(uiState: UiState) {
                 const indexUiState = uiState[indexName] || {}
                 return {
                   query: indexUiState.query,

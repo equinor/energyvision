@@ -1,14 +1,10 @@
 import { Tabs } from '@components'
-import { useRouter } from 'next/router'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { RefObject, useContext, useEffect, useState } from 'react'
 import { Index, useHits } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { getIsoFromLocale } from '../../lib/localization' // grrr ../
-import { Pagination } from '../shared/search/pagination/Pagination'
-import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 import EventHit from './EventHit'
 import Hits from './Hits'
 import MagazineHit from './MagazineHit'
@@ -17,15 +13,24 @@ import NumberOfHits from './NumberOfHits'
 import { SearchContext } from './SearchContext'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
+import { useConnector, AdditionalWidgetProperties } from 'react-instantsearch-hooks-web'
+import connectSortBy, {
+  SortByConnectorParams,
+  SortByWidgetDescription,
+} from 'instantsearch.js/es/connectors/sort-by/connectSortBy'
+
+export type UseSortByProps = SortByConnectorParams
+
+export function useSortBy(props: UseSortByProps, additionalWidgetProperties: AdditionalWidgetProperties) {
+  // eslint-disable-next-line
+  // @ts-ignore: @TODO: The types are not correct
+  return useConnector<SortByConnectorParams, SortByWidgetDescription>(connectSortBy, props, additionalWidgetProperties)
+}
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
 `
 
-const StyledPagination = styled(Pagination)`
-  margin-top: var(--space-xLarge);
-  justify-content: center;
-`
 const TabText = styled.span`
   font-size: var(--typeScale-05);
 `
@@ -46,12 +51,30 @@ const tabMap = [
   { id: 3, name: 'magazine' },
 ]
 
-const SearchResults = () => {
-  const router = useRouter()
-  //const replaceUrl = useRouterReplace()
-  const padding = usePaginationPadding()
+type SearchResultsProps = {
+  locale?: string
+  resultsRef: RefObject<HTMLDivElement> | undefined
+} & UseSortByProps
+const SearchResults = (props: SearchResultsProps) => {
+  const { locale, resultsRef } = props
+  const { refine, currentRefinement } = useSortBy(props, {
+    $$widgetType: 'energyvision.switch-index',
+  })
+  const isoCode = getIsoFromLocale(locale)
+  const getTabFromIndex = (index: string) => {
+    return index.replaceAll(isoCode, '').replaceAll(envPrefix, '').replaceAll('_', '').toLowerCase()
+  }
+  const getIndexFromTab = (tab: string) => {
+    return `${envPrefix}_${tab.toUpperCase()}_${isoCode}`
+  }
+  // @TODO How can we make this robust?
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const { results } = useHits()
-  const [currentTab, setCurrentTab] = useState<string>((router.query.tab as string) || 'topics')
+  const [currentTab, setCurrentTab] = useState(getTabFromIndex(currentRefinement))
+
+  useEffect(() => {
+    setCurrentTab(getTabFromIndex(currentRefinement))
+  }, [currentRefinement])
 
   const { userTyped } = useContext(SearchContext)
   const [userClicked, setUserClicked] = useState(false)
@@ -62,65 +85,43 @@ const SearchResults = () => {
     magazine: false,
   })
 
-  const resultsRef = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     if (!userTyped) return
     const tabWithHits = Object.keys(tabResults).find((key) => tabResults[key])
     if (tabWithHits && !userClicked) {
-      setCurrentTab(tabWithHits)
+      refine(getIndexFromTab(tabWithHits))
     }
   }, [userTyped, tabResults, userClicked])
-
-  // state to route
-  useEffect(() => {
-    router.replace(
-      {
-        query: {
-          ...router.query,
-          tab: router.query.query ? currentTab : '',
-        },
-      },
-      undefined,
-      { shallow: true },
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTab, router.query.query])
 
   const handleTabChange = (index: number) => {
     setUserClicked(true)
     const activeTab = tabMap.find((tab) => tab.id === index)
     if (activeTab) {
-      setCurrentTab(activeTab.name)
+      refine(getIndexFromTab(activeTab?.name))
     }
   }
 
-  const isoCode = getIsoFromLocale(router.locale)
-
   const hasQuery = results && results.query !== ''
-
-  // @TODO How can we make this robust?
-  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-
-  const activeTab = tabMap.find((tab) => tab.name === currentTab)
-
+  const activeTab = tabMap.find((it) => it.name === currentTab)
   return (
-    <PaginationContextProvider defaultRef={resultsRef}>
+    <>
       {hasQuery && (
         <Results ref={resultsRef}>
           <Tabs index={activeTab?.id || 0} onChange={handleTabChange}>
             <TabList>
               <Tab inverted>
-                <TabText>
-                  <FormattedMessage id="search_topics_tab" defaultMessage="Topics" />
-                  <NumberOfHits />
-                </TabText>
+                <Index indexName={`${envPrefix}_TOPICS_${isoCode}`} indexId={`${envPrefix}_TOPICS_${isoCode}`}>
+                  <TabText>
+                    <FormattedMessage id="search_topics_tab" defaultMessage="Topics" />
+                    <NumberOfHits setTabResults={setTabResults} category="topics" />
+                  </TabText>
+                </Index>
               </Tab>
               <Tab inverted>
                 <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
                   <TabText>
                     <FormattedMessage id="search_events_tab" defaultMessage="Events" />
-                    <NumberOfHits />
+                    <NumberOfHits setTabResults={setTabResults} category="events" />
                   </TabText>
                 </Index>
               </Tab>
@@ -128,7 +129,7 @@ const SearchResults = () => {
                 <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
                   <TabText>
                     <FormattedMessage id="search_news_tab" defaultMessage="News" />
-                    <NumberOfHits />
+                    <NumberOfHits setTabResults={setTabResults} category="news" />
                   </TabText>
                 </Index>
               </Tab>
@@ -136,7 +137,7 @@ const SearchResults = () => {
                 <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
                   <TabText>
                     <FormattedMessage id="search_magazine_tab" defaultMessage="Magazine" />
-                    <NumberOfHits />
+                    <NumberOfHits setTabResults={setTabResults} category="magazine" />
                   </TabText>
                 </Index>
               </Tab>
@@ -144,35 +145,25 @@ const SearchResults = () => {
             <TabPanels>
               <TabPanel>
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                <Hits setTabResults={setTabResults} hitComponent={TopicHit} category="topics" />
-                <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
+                <Hits hitComponent={TopicHit} />
               </TabPanel>
               <TabPanel>
-                <Index indexName={`${envPrefix}_EVENTS_${isoCode}`} indexId={`${envPrefix}_EVENTS_${isoCode}`}>
-                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits setTabResults={setTabResults} hitComponent={EventHit} category="events" />
-                  <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
-                </Index>
+                <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                <Hits hitComponent={EventHit} />
               </TabPanel>
               <TabPanel>
-                <Index indexName={`${envPrefix}_NEWS_${isoCode}`} indexId={`${envPrefix}_NEWS_${isoCode}`}>
-                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits setTabResults={setTabResults} hitComponent={NewsHit} category="news" />
-                  <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
-                </Index>
+                <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                <Hits hitComponent={NewsHit} />
               </TabPanel>
               <TabPanel>
-                <Index indexName={`${envPrefix}_MAGAZINE_${isoCode}`} indexId={`${envPrefix}_MAGAZINE_${isoCode}`}>
-                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits setTabResults={setTabResults} hitComponent={MagazineHit} category="magazine" />
-                  <StyledPagination padding={padding} hitsPerPage={HITS_PER_PAGE} inverted />
-                </Index>
+                <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                <Hits hitComponent={MagazineHit} />
               </TabPanel>
             </TabPanels>
           </Tabs>
         </Results>
       )}
-    </PaginationContextProvider>
+    </>
   )
 }
 
