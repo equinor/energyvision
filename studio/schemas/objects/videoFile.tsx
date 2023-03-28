@@ -21,7 +21,7 @@ export default {
       description: 'A nice video description',
       name: 'screen9video',
       type: 'screen9video',
-      validation: (Rule: Rule) => Rule.required(),
+      // validation: (Rule: Rule) => Rule.required(),
       hidden: !Flags.IS_DEV,
     },
     {
