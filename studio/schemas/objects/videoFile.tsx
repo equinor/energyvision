@@ -16,13 +16,12 @@ export default {
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
     },
-    {
+    Flags.IS_DEV && {
       title: 'Video',
       description: 'A nice video description',
       name: 'screen9video',
       type: 'screen9video',
-      // validation: (Rule: Rule) => Rule.required(),
-      hidden: !Flags.IS_DEV,
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'video',
@@ -51,7 +50,7 @@ export default {
       },
       validation: (Rule: Rule) => Rule.required(),
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
