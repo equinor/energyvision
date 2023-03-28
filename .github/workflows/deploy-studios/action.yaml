@@ -43,6 +43,12 @@ inputs:
   sanityApiToken:
     description: 'Sanity API token'
     required: true
+  screen9accountId:
+    description: 'Screen 9 Account Id'
+    required: true
+  screen9token:
+    description: 'Screen9 API token'
+    required: true
 
 outputs:
   copied-files:
