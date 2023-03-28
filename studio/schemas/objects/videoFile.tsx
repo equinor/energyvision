@@ -2,7 +2,7 @@ import { play_circle } from '@equinor/eds-icons'
 import { getFileAsset } from '@sanity/asset-utils'
 import type { Reference, Rule } from '@sanity/types'
 import { EdsIcon } from '../../icons/edsIcons'
-import { dataset, projectId } from '../../src/lib/datasetHelpers'
+import { dataset, Flags, projectId } from '../../src/lib/datasetHelpers'
 
 export default {
   type: 'document',
@@ -14,6 +14,13 @@ export default {
       name: 'title',
       type: 'string',
       title: 'Title',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    Flags.IS_DEV && {
+      title: 'Video',
+      description: 'A nice video description',
+      name: 'screen9video',
+      type: 'screen9video',
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -43,7 +50,7 @@ export default {
       },
       validation: (Rule: Rule) => Rule.required(),
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',

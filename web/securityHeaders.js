@@ -28,6 +28,7 @@ const iframeSrcs = [
   'https://livestream.com',
   dataset === 'global-development' && 'https://careers.peopleclick.eu.com/',
   'https://h61q9gi9.api.sanity.io',
+  'http://localhost:3333',
 ]
   .filter((e) => e)
   .join(' ')
