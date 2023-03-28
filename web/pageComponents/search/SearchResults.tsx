@@ -70,11 +70,7 @@ const SearchResults = (props: SearchResultsProps) => {
   // @TODO How can we make this robust?
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const { results } = useHits()
-  const [currentTab, setCurrentTab] = useState(getTabFromIndex(currentRefinement))
-
-  useEffect(() => {
-    setCurrentTab(getTabFromIndex(currentRefinement))
-  }, [currentRefinement])
+  const currentTab = getTabFromIndex(currentRefinement)
 
   const { userTyped } = useContext(SearchContext)
   const [userClicked, setUserClicked] = useState(false)
@@ -86,8 +82,19 @@ const SearchResults = (props: SearchResultsProps) => {
   })
 
   useEffect(() => {
+    refine(getIndexFromTab(currentTab))
+  }, [currentTab])
+
+  useEffect(() => {
     if (!userTyped) return
-    const tabWithHits = Object.keys(tabResults).find((key) => tabResults[key])
+    const tabWithHits = (
+      tabMap.find((tab) =>
+        Object.keys(tabResults)
+          .filter((key) => tabResults[key])
+          .includes(tab.name),
+      ) || tabMap[0]
+    ).name
+
     if (tabWithHits && !userClicked) {
       refine(getIndexFromTab(tabWithHits))
     }

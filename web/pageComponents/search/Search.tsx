@@ -68,7 +68,7 @@ const Search = () => {
     return {
       query: query,
       page: page,
-      tab: query ? tab : '',
+      tab: tab,
     }
   }
 
