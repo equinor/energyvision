@@ -213,7 +213,6 @@ export type ContentType =
 
 export type PageSchema = {
   slug: string
-  magazineTags?: string[]
   title: PortableTextBlock[]
   hero: HeroType
   template: Templates
@@ -223,20 +222,9 @@ export type PageSchema = {
   type: string
 }
 
-export type PageSchemaV2 = {
-  slug: string
-  title: PortableTextBlock[]
-  hero: HeroType
-  template: Templates
-  seoAndSome: SeoData
-  content?: ContentType[]
-  id: string
-  type: string
-}
+export type TopicPageSchema = PageSchema
 
-export type TopicPageSchema = PageSchemaV2
-
-export type MagazinePageSchema = PageSchemaV2 & {
+export type MagazinePageSchema = PageSchema & {
   magazineTags?: string[]
   footerComponent?: {
     data?: TeaserData

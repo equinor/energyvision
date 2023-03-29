@@ -30,12 +30,11 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
     "ingress": pt::text(ingress)
   },
   "magazineTags": magazineTags[]->.title[$lang],
-  heroFigure,
+  "heroFigure": select(
+    heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
+    heroFigure
+  ),
   openGraphImage,
-  "heroVideo":heroVideo.asset->{
-    playbackId,
-  },
-  "heroType": coalesce(heroType, 'default'),
   "publishDateTime": ${publishDateTimeQuery},
   "docToClear": _id match $id
 }
@@ -85,6 +84,7 @@ export enum HeroTypes {
   DEFAULT = 'default',
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
+  LOOPING_VIDEO = 'loopingVideo',
   VIDEO_HERO = 'videoHero',
 }
 
@@ -106,11 +106,10 @@ export type MagazineArticle = {
   }[]
   _id: string
   magazineTags?: string[]
-  heroFigure?: ImageWithAltAndCaption
+  heroFigure?: { image: ImageWithAlt } | ImageWithAltAndCaption
   openGraphImage?: ImageWithAlt
   docToClear?: boolean
   heroVideo: VideoData
-  heroType: HeroTypes
   publishDateTime?: string
 }
 
