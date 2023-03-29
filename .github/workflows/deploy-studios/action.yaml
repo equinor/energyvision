@@ -49,7 +49,6 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
-
 outputs:
   copied-files:
     description: 'Number of files copied'
