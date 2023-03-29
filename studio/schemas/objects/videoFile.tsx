@@ -4,6 +4,8 @@ import type { Reference, Rule } from '@sanity/types'
 import { EdsIcon } from '../../icons/edsIcons'
 import { dataset, Flags, projectId } from '../../src/lib/datasetHelpers'
 
+console.log('Debug:', { isDev: Flags.IS_DEV, isProd: Flags.IS_GLOBAL_PROD, dataset })
+
 export default {
   type: 'document',
   title: 'Video file',
