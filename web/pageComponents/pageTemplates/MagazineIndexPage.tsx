@@ -108,9 +108,6 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                   }
 
                   const queryParameters: any = {}
-                  if (routeState.query) {
-                    queryParameters.query = routeState.query
-                  }
                   if (routeState.page) {
                     queryParameters.page = routeState.page
                   }
@@ -123,16 +120,15 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     arrayFormat: 'repeat',
                     format: 'RFC1738',
                   })
-                  const href = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
+                  const href: string = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
 
                   return href
                 },
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct
                 parseURL: ({ qsModule, location }) => {
-                  const { query = '', page, tag = '' }: any = qsModule.parse(location.search.slice(1))
+                  const { page, tag = '' }: any = qsModule.parse(location.search.slice(1))
                   return {
-                    query: query,
                     page,
                     magazineTags: tag,
                   }
@@ -146,7 +142,6 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               stateToRoute(uiState: UiState) {
                 const indexUiState = uiState[indexName] || {}
                 return {
-                  query: indexUiState.query,
                   magazineTags: indexUiState.menu && indexUiState.menu.magazineTags,
                   page: indexUiState.page,
                 }
@@ -156,7 +151,6 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               routeToState(routeState) {
                 return {
                   [indexName]: {
-                    query: routeState.query,
                     page: routeState.page,
                     menu: {
                       magazineTags: routeState.magazineTags,
