@@ -161,6 +161,8 @@ export default {
         { type: 'promoTileArray' },
         { type: 'promotion' },
         { type: 'iframe' },
+        { type: 'imageCarousel' },
+        { type: 'iframeCarousel' },
       ],
     },
     {

@@ -1,6 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
-import { CustomValidator, SanityDocument, Rule, SlugParent, SlugSchemaType } from '@sanity/types'
+import {
+  CustomValidator,
+  SanityDocument,
+  Rule,
+  SlugParent,
+  SlugSchemaType,
+  Slug,
+  ValidationContext,
+} from '@sanity/types'
 import slugify from 'slugify'
 import SlugInput from '../components/SlugInput'
 
@@ -28,6 +37,7 @@ const formatBreadcrumbs = (value: string) =>
 export function breadcrumbs(source = `breadcrumbsInput`, fieldset: string) {
   return {
     title: 'Custom breadcrumbs for this page',
+    description: 'Use the "generate" button to create the breadcrumbs.',
     name: 'breadcrumbs',
     type: 'slug',
     inputComponent: SlugInput,
@@ -37,19 +47,29 @@ export function breadcrumbs(source = `breadcrumbsInput`, fieldset: string) {
       slugify: formatBreadcrumbs,
       isUnique: validateIsUniqueWithinLocale,
     },
-    validation: (Rule: Rule) => Rule.custom((value, context) => slugValidator(value, context)),
+    validation: (Rule: Rule) => Rule.custom((value: Slug, context: ValidationContext) => slugValidator(value, context)),
   }
 }
 
-export const slugValidator: CustomValidator = async (value, context) => {
-  if (!value) {
-    return true
-  }
-  if (typeof value !== 'object') {
-    return 'Breadcrumbs must be an object'
+const checkSlugParts = async (slug: string): Promise<string | null> => {
+  const slugPartExists =
+    (await client.fetch(`*[slug.current == $slug && !(_id in path("drafts.**"))]`, { slug: `/${slug}` })).length > 0
+
+  if (!slugPartExists) {
+    return `'${slug}' is not a valid route`
   }
 
-  const slugValue = (value as { current?: string }).current
+  return null
+}
+
+// @ts-ignore - possible error in @sanity/types with CustomValidatorResult
+export const slugValidator: CustomValidator = async (slug: Slug, context) => {
+  if (!slug) {
+    return true
+  }
+
+  const slugValue = slug.current
+
   if (!slugValue) {
     return 'Breadcrumbs must have a value'
   }
@@ -63,10 +83,22 @@ export const slugValidator: CustomValidator = async (value, context) => {
     defaultIsUnique: validateIsUniqueWithinLocale,
   }
 
-  const wasUnique = await validateIsUniqueWithinLocale(slugValue, slugContext)
-  if (wasUnique) {
-    return true
+  const breadcrumbsIsUnique = await validateIsUniqueWithinLocale(slugValue, slugContext)
+  if (!breadcrumbsIsUnique) {
+    return 'Breadcrumbs already in use'
   }
 
-  return 'Breadcrumbs already in use'
+  const slugParts = slugValue.split('/')
+
+  const hasDuplicates = slugParts.some((val, i) => slugParts.indexOf(val) !== i)
+  if (hasDuplicates) {
+    return 'Breadcrumbs cannot contain duplicate parts'
+  }
+
+  const hasInvalidParts = (await Promise.all(slugParts.map(checkSlugParts))).filter((e) => e)
+  if (hasInvalidParts.length > 0) {
+    return hasInvalidParts as string[]
+  }
+
+  return true
 }

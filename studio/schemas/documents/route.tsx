@@ -91,7 +91,8 @@ export default (isoCode: string, title: string) => {
         type: 'string',
         name: 'breadcrumbsInput',
         title: 'Breadcrumbs input',
-        description: 'Enter the desired breadcrumbs here, for example "about/equinor/contact"',
+        description:
+          'Enter the desired breadcrumbs here, for example "about/equinor/contact". Breadcrumbs must be built from existing and published routes.',
         fieldset: 'breadcrumbs',
       },
       Flags.IS_DEV && breadcrumbs('breadcrumbsInput', 'breadcrumbs'),
