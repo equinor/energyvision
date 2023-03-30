@@ -1,11 +1,12 @@
 import { slugWithRef } from '../objects/slugWithRef'
-import type { Rule } from '@sanity/types'
+import type { Rule, Reference } from '@sanity/types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { HeroTypes } from '../HeroTypes'
-import { breadcrumbs } from '../objects/breadcrumbs'
+import routes from '../routes'
+import { filterByRoute } from '../../helpers/referenceFilters'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -88,14 +89,45 @@ export default (isoCode: string, title: string) => {
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
       Flags.IS_DEV && {
-        type: 'string',
-        name: 'breadcrumbsInput',
-        title: 'Breadcrumbs input',
-        description:
-          'Enter the desired breadcrumbs here, for example "about/equinor/contact". Breadcrumbs must be built from existing and published routes.',
+        name: 'enableBreadcrumbs',
+        type: 'boolean',
         fieldset: 'breadcrumbs',
+        title: 'Enable breadcrumbs for this page',
       },
-      Flags.IS_DEV && breadcrumbs('breadcrumbsInput', 'breadcrumbs'),
+      Flags.IS_DEV && {
+        name: 'customBreadcrumbs',
+        type: 'array',
+        title: 'Custom breadcrumbs',
+        description:
+          'Create custom breadcrumbs for this page. If left empty and breadcrumbs are enabled, they will be generated automatically based on the slug of this page. This component will be improved in version 3 of the Sanity Studio.',
+        fieldset: 'breadcrumbs',
+        of: [
+          {
+            name: 'reference',
+            title: 'Breadcrumb segment',
+            description:
+              "Use this field to link to an internal page. The last part of the linked page's route will be used to build the breadcrumbs. For example when linking to '/energy/sustainability', the 'sustainability' part will be used as label for this segment",
+            type: 'reference',
+            validation: (Rule: Rule) =>
+              Rule.required().custom((value: Reference, context) => {
+                const { document } = context
+                if (document && document._id.replace('drafts.', '') === value._ref)
+                  return 'Breadcrumbs cannot link to themselves'
+
+                return true
+              }),
+            to: routes,
+            options: {
+              filter: filterByRoute,
+              disableNew: true,
+            },
+          },
+        ],
+        validation: (Rule: Rule) => Rule.unique(),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        hidden: ({ parent }) => !parent.enableBreadcrumbs,
+      },
       {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',
