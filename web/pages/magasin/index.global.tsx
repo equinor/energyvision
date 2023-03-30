@@ -12,6 +12,7 @@ import { defaultLanguage } from '../../languages'
 import MagazineIndexPage from '../../pageComponents/pageTemplates/MagazineIndexPage'
 import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
+import { renderToString } from 'react-dom/server'
 
 export default function MagazineIndexNorwegian({
   serverState,
@@ -110,6 +111,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
       }}
       url={url}
     />,
+    { renderToString },
   )
 
   return {

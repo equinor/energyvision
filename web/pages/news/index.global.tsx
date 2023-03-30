@@ -12,6 +12,7 @@ import { defaultLanguage } from '../../languages'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
+import { renderToString } from 'react-dom/server'
 
 export default function NewsRoom({ serverState, isServerRendered = false, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -106,6 +107,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
       }}
       url={url}
     />,
+    { renderToString },
   )
 
   return {
