@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { AccordionItem as CAccordionItem } from '@chakra-ui/react'
+import { AccordionItem } from '@chakra-ui/react'
 
-const StyledItem = styled(CAccordionItem)`
+const StyledItem = styled(AccordionItem)`
   border-bottom: 1px solid var(--grey-40);
 `
 export type AccordionItemProps = {

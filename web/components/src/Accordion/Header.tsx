@@ -4,7 +4,7 @@ import { Icon, Typography } from '@equinor/eds-core-react'
 import { add_circle_outlined, remove_outlined, add_circle_filled, remove } from '@equinor/eds-icons'
 
 import {
-  AccordionButton as CAccordionButton,
+  AccordionButton,
   useAccordionItemState,
   AccordionButtonProps as ChakraAccordionButtonProps,
 } from '@chakra-ui/react'
@@ -16,7 +16,7 @@ export type AccordionHeaderProps = {
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
 } & ChakraAccordionButtonProps
 
-const StyledCAccordionButton = styled(CAccordionButton)`
+const StyledCAccordionButton = styled(AccordionButton)`
   display: flex;
   align-items: center;
   width: 100%;

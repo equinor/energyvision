@@ -1,13 +1,13 @@
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import { AccordionButton as RAccordionButton, useAccordionItemContext } from '@reach/accordion'
 import { Icon, Typography, TypographyProps } from '@equinor/eds-core-react'
 import { add, minimize } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
+import { AccordionButton, useAccordionItemState } from '@chakra-ui/react'
 
 const { outline } = Tokens
 
-const StyledButton = styled(RAccordionButton)`
+const StyledButton = styled(AccordionButton)`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,8 +32,8 @@ const StyledTypography = styled(Typography)`
 type SimpleHeaderProps = TypographyProps
 
 export const SimpleHeader = ({ children, ...rest }: SimpleHeaderProps) => {
-  const context = useAccordionItemContext()
-  const isExpanded = context.isExpanded
+  const { isOpen } = useAccordionItemState()
+
   return (
     <Typography as="h2" {...rest}>
       <StyledButton>
@@ -41,13 +41,13 @@ export const SimpleHeader = ({ children, ...rest }: SimpleHeaderProps) => {
           forwardedAs="span"
           style={
             {
-              '--font-weight': isExpanded ? '700' : '400',
+              '--font-weight': isOpen ? '700' : '400',
             } as CSSProperties
           }
         >
           {children}
         </StyledTypography>
-        {isExpanded ? <Icon data={minimize} /> : <Icon data={add} />}
+        {isOpen ? <Icon data={minimize} /> : <Icon data={add} />}
       </StyledButton>
     </Typography>
   )

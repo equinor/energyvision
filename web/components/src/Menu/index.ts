@@ -4,8 +4,6 @@ import { SubMenu, SubMenuProps } from './SubMenu'
 import { SubMenuHeader, SubMenuHeaderProps } from './SubMenuHeader'
 import { SubMenuPanel, SubMenuPanelProps } from './SubMenuPanel'
 import { SubMenuGroups, SubMenuGroupsProps } from './SubMenuGroups'
-import { ChakraSubMenuHeader } from './ChakraSubMenuHeader'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 type MenuCompoundProps = typeof MenuWrapper & {
   SubMenu: typeof SubMenu
@@ -16,7 +14,7 @@ type MenuCompoundProps = typeof MenuWrapper & {
 
 const Menu = MenuWrapper as MenuCompoundProps
 Menu.SubMenu = SubMenu
-Menu.SubMenuHeader = Flags.IS_DEV ? ChakraSubMenuHeader : SubMenuHeader
+Menu.SubMenuHeader = SubMenuHeader
 Menu.SubMenuPanel = SubMenuPanel
 Menu.SubMenuGroups = SubMenuGroups
 

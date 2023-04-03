@@ -1,8 +1,8 @@
-import { AccordionButton, useAccordionItemContext } from '@reach/accordion'
 import styled from 'styled-components'
 import { Typography, Icon } from '@equinor/eds-core-react'
 import { chevron_down, chevron_up } from '@equinor/eds-icons'
 import { outlineTemplate, Tokens } from '@utils'
+import { AccordionButton, useAccordionItemState } from '@chakra-ui/react'
 
 const { outline } = Tokens
 
@@ -21,7 +21,8 @@ const StyledAccordionButton = styled(AccordionButton)`
     ${outlineTemplate(outline)}
   }
 `
-const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
+
+const StyledTypography = styled(Typography)`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-2);
   display: inline-block;
@@ -31,23 +32,16 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   .inverted-background & {
     color: var(--inverted-text);
   }
-
-  /* ${({ isExpanded }) =>
-    isExpanded && {
-      fontWeight: 700,
-    }} */
 `
 
 const FilterHeader = ({ label }: { label: string }) => {
-  const { isExpanded } = useAccordionItemContext()
+  const { isOpen } = useAccordionItemState()
 
   const iconSize = 24
   return (
     <StyledAccordionButton>
-      <StyledTypography isExpanded={isExpanded} forwardedAs="span">
-        {label}
-      </StyledTypography>
-      {isExpanded ? <Icon size={iconSize} data={chevron_up} /> : <Icon size={iconSize} data={chevron_down} />}
+      <StyledTypography forwardedAs="span">{label}</StyledTypography>
+      {isOpen ? <Icon size={iconSize} data={chevron_up} /> : <Icon size={iconSize} data={chevron_down} />}
     </StyledAccordionButton>
   )
 }

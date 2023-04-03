@@ -1,20 +1,9 @@
 import styled from 'styled-components'
-import { Accordion as RAccordion, AccordionProps as RAccordionProps } from '@reach/accordion'
-import { Accordion as CAccordion, AccordionProps as ChakraAccordionProps } from '@chakra-ui/react'
-import { Flags } from '../../../../common/helpers/datasetHelpers'
+import { Accordion, AccordionProps } from '@chakra-ui/react'
 
-export type MenuProps = RAccordionProps & ChakraAccordionProps
+export type MenuProps = AccordionProps
 
-const ChakraStyledAccordion = styled(CAccordion)`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  @media (min-width: 700px) {
-    margin: 0 auto;
-    max-width: var(--layout-maxContent-narrow);
-  }
-`
-const StyledAccordion = styled(RAccordion)`
+const StyledAccordion = styled(Accordion)`
   margin: 0;
   padding: 0;
   list-style: none;
@@ -26,18 +15,8 @@ const StyledAccordion = styled(RAccordion)`
 
 export const SimpleMenuWrapper = ({ children, ...rest }: MenuProps) => {
   return (
-    <>
-      {Flags.IS_DEV ? (
-        <ChakraStyledAccordion forwardedAs="ul" {...rest} id="menu-accordion">
-          {children}
-        </ChakraStyledAccordion>
-      ) : (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore: @TODO: Lets look into this at some point
-        <StyledAccordion forwardedAs="ul" {...rest} id="menu-accordion">
-          {children}
-        </StyledAccordion>
-      )}
-    </>
+    <StyledAccordion forwardedAs="ul" {...rest} id="menu-accordion">
+      {children}
+    </StyledAccordion>
   )
 }
