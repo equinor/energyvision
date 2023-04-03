@@ -5,6 +5,8 @@ import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
+import { Breadcrumbs } from '../topicPages/Breadcrumbs'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -43,6 +45,15 @@ const TopicPage = ({ data }: TopicPageProps) => {
       />
       <TopicPageLayout>
         <SharedBanner title={data.title} hero={data.hero} />
+
+        {Flags.IS_DEV && data.enableBreadcrumbs && (
+          <Breadcrumbs
+            slug={data?.slug}
+            defaultBreadcrumbs={data?.defaultBreadcrumbs}
+            customBreadcrumbs={data?.customBreadcrumbs}
+          />
+        )}
+
         {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} styles={titleStyles} />}
         <PageContent data={data} />
       </TopicPageLayout>

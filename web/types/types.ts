@@ -220,6 +220,9 @@ export type PageSchema = {
   content?: ContentType[]
   id: string
   type: string
+  enableBreadcrumbs: boolean
+  defaultBreadcrumbs: string[]
+  customBreadcrumbs: string[] | [] | null
 }
 
 export type TopicPageSchema = PageSchema

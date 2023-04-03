@@ -22,6 +22,12 @@ export const routeQuery = /* groq */ `
     "seoAndSome": content->${seoAndSomeFields},
     "hero": content->${heroFields},
     "template": content->_type,
+    "enableBreadcrumbs": coalesce(enableBreadcrumbs, false),
+    "defaultBreadcrumbs": [
+      parent->slug.current,
+      slug.current
+    ],
+    "customBreadcrumbs": coalesce(customBreadcrumbs[]->slug.current, null),
      content->_type == "landingPage" => {
         ${landingPageContentFields}
     },
