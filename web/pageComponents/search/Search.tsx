@@ -14,8 +14,8 @@ import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
-import EmptyQueryBoundary from './EmptyQueryBoundary'
 import { useIntl } from 'react-intl'
+import { SearchClient } from 'algoliasearch/lite'
 
 const SearchResults = dynamic(() => import('./SearchResults'))
 
@@ -23,6 +23,29 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
   justify-content: center;
 `
+const queriedSearchClient: SearchClient = {
+  ...searchClient,
+  search(requests: any) {
+    if (requests.every(({ params }: any) => !params.query)) {
+      return Promise.resolve({
+        results: requests.map(() => ({
+          hits: [],
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          processingTimeMS: 0,
+          hitsPerPage: 0,
+          exhaustiveNbHits: false,
+          query: '',
+          params: '',
+        })),
+      })
+    }
+
+    return searchClient.search(requests)
+  },
+}
+
 const Search = () => {
   const router = useRouter()
   const intl = useIntl()
@@ -86,9 +109,9 @@ const Search = () => {
   const parseURL = ({ qsModule, location }) => {
     const { query = '', page, tab = '' }: any = qsModule.parse(location.search.slice(1))
     return {
-      query: query,
-      page: page as number,
-      tab: tab,
+      ...(query && { query: query }),
+      ...(page && { page: page as number }),
+      ...(tab && { tab: tab }),
     }
   }
 
@@ -104,19 +127,23 @@ const Search = () => {
       stateToRoute(uiState: UiState) {
         const indexUiState = uiState[mainIndex]
         return {
-          tab: indexUiState.sortBy
-            ? indexUiState.sortBy.replaceAll(isoCode, '').replaceAll(envPrefix, '').replaceAll('_', '').toLowerCase()
-            : undefined,
-          query: indexUiState?.query,
-          page: indexUiState?.page,
+          ...(indexUiState.sortBy && {
+            tab: indexUiState.sortBy
+              .replaceAll(isoCode, '')
+              .replaceAll(envPrefix, '')
+              .replaceAll('_', '')
+              .toLowerCase(),
+          }),
+          ...(indexUiState?.query && { query: indexUiState.query }),
+          ...(indexUiState?.page && { page: indexUiState?.page }),
         }
       },
       routeToState(routeState: any) {
         return {
           [mainIndex]: {
-            query: routeState.query,
-            page: routeState.page as number,
-            sortBy: routeState.tab ? `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}` : undefined,
+            ...(routeState.query && { query: routeState.query }),
+            ...(routeState.page && { page: routeState.page as number }),
+            ...(routeState.tab && { sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}` }),
           },
         }
       },
@@ -124,19 +151,18 @@ const Search = () => {
   }
 
   return (
-    <InstantSearch searchClient={searchClient} indexName={mainIndex} routing={routing}>
+    <InstantSearch searchClient={queriedSearchClient} indexName={mainIndex} routing={routing}>
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
+      {indices.map((index) => (
+        <Index indexName={index.value} key={index.label} indexId={index.value} />
+      ))}
+
       <SearchContextProvider>
         <SearchBox />
-        {indices.map((index) => (
-          <Index indexName={index.value} indexId={index.value} key={index.label} />
-        ))}
-        <EmptyQueryBoundary fallback={null}>
-          <SearchResults resultsRef={resultsRef} items={indices} />
-          <PaginationContextProvider defaultRef={resultsRef}>
-            <StyledPagination padding={padding} hitsPerPage={5} inverted />
-          </PaginationContextProvider>
-        </EmptyQueryBoundary>
+        <SearchResults resultsRef={resultsRef} items={indices} />
+        <PaginationContextProvider defaultRef={resultsRef}>
+          <StyledPagination padding={padding} hitsPerPage={5} inverted />
+        </PaginationContextProvider>
       </SearchContextProvider>
     </InstantSearch>
   )

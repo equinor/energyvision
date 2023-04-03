@@ -1,7 +1,6 @@
 import { Tabs } from '@components'
 import { RefObject, useContext, useEffect, useState } from 'react'
 import { useHits, useInstantSearch } from 'react-instantsearch-hooks-web'
-import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import EventHit from './EventHit'
 import Hits from './Hits'
@@ -10,19 +9,7 @@ import NewsHit from './NewsHit'
 import { SearchContext } from './SearchContext'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
-import { useConnector, AdditionalWidgetProperties } from 'react-instantsearch-hooks-web'
-import connectSortBy, {
-  SortByConnectorParams,
-  SortByWidgetDescription,
-} from 'instantsearch.js/es/connectors/sort-by/connectSortBy'
-
-export type UseSortByProps = SortByConnectorParams
-
-export function useSortBy(props: UseSortByProps, additionalWidgetProperties: AdditionalWidgetProperties) {
-  // eslint-disable-next-line
-  // @ts-ignore: @TODO: The types are not correct
-  return useConnector<SortByConnectorParams, SortByWidgetDescription>(connectSortBy, props, additionalWidgetProperties)
-}
+import { useSortBy, UseSortByProps, SortByProps } from 'react-instantsearch-hooks-web'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -45,9 +32,7 @@ type SearchResultsProps = {
 } & UseSortByProps
 const SearchResults = (props: SearchResultsProps) => {
   const { resultsRef } = props
-  const { refine, currentRefinement, options } = useSortBy(props, {
-    $$widgetType: 'energyvision.switch-index',
-  })
+  const { refine, currentRefinement, options } = useSortBy(props)
 
   const { results } = useHits()
   const { scopedResults, indexUiState } = useInstantSearch()
@@ -93,36 +78,41 @@ const SearchResults = (props: SearchResultsProps) => {
     }
   }
   const activeTab = options.findIndex((it) => it.value === currentRefinement)
+  const hasQuery = results && results.query !== ''
   return (
-    <Results ref={resultsRef}>
-      <Tabs index={activeTab || 0} onChange={handleTabChange}>
-        <TabList>
-          {options.map((item) => (
-            <Tab inverted key={item.label}>
-              <TabText>
-                <FormattedMessage id="search_topics_tabz" defaultMessage={item.label} />
-                <HitsContainer>
-                  (
-                  {
-                    scopedResults.find((it) => it.indexId === item.value && it.indexId === it.results?.index)?.results
-                      ?.nbHits
-                  }
-                  )
-                </HitsContainer>
-              </TabText>
-            </Tab>
-          ))}
-        </TabList>
-        <TabPanels>
-          {options.map((it) => (
-            <TabPanel key={it.label}>
-              <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-              <Hits hitComponent={getHitProps(it.label)} />
-            </TabPanel>
-          ))}
-        </TabPanels>
-      </Tabs>
-    </Results>
+    <>
+      {hasQuery && (
+        <Results ref={resultsRef}>
+          <Tabs index={activeTab || 0} onChange={handleTabChange}>
+            <TabList>
+              {options.map((item) => (
+                <Tab inverted key={item.label}>
+                  <TabText>
+                    {item.label}
+                    <HitsContainer>
+                      (
+                      {
+                        scopedResults.find((it) => it.indexId === item.value && it.indexId === it.results?.index)
+                          ?.results?.nbHits
+                      }
+                      )
+                    </HitsContainer>
+                  </TabText>
+                </Tab>
+              ))}
+            </TabList>
+            <TabPanels>
+              {options.map((it) => (
+                <TabPanel key={it.label}>
+                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                  <Hits hitComponent={getHitProps(it.label)} />
+                </TabPanel>
+              ))}
+            </TabPanels>
+          </Tabs>
+        </Results>
+      )}
+    </>
   )
 }
 
