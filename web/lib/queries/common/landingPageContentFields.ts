@@ -1,7 +1,5 @@
 // Or "topLevelGroups": group[reference._ref == ^.^._id]
 
-import { HeroTypes } from '../../../types'
-
 export const landingPageContentFields = /* groq */ `
  "ingress": content->ingress,
   "id": _id,
@@ -15,7 +13,7 @@ export const landingPageContentFields = /* groq */ `
         "slug": slug.current,
       },
       "image":select(
-        route->content->heroType == ${HeroTypes.LOOPING_VIDEO} => route->content->heroLoopingVideo->thumbnail,
+        route->content->heroType == 'loopingVideo' => route->content->heroLoopingVideo->thumbnail,
         coalesce(route->content->heroFigure.image, route->content->openGraphImage)
       ),
     },
@@ -38,7 +36,7 @@ export const landingPageById = /* groq */ `
         "slug": slug.current,
       },
       "image": select(
-        route->content->heroType == ${HeroTypes.LOOPING_VIDEO} => route->content->heroLoopingVideo->thumbnail,
+        route->content->heroType == 'loopingVideo' => route->content->heroLoopingVideo->thumbnail,
         coalesce(route->content->heroFigure.image, route->content->openGraphImage))
     },
     "id": _key,

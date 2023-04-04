@@ -1,4 +1,3 @@
-import { HeroTypes } from '../../../types'
 import { iframeCarouselFields } from '../iframeCarouselFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
@@ -261,7 +260,7 @@ const pageContentFields = /* groq */ `
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,
             "heroImage": select(
-              reference->content->heroType == ${HeroTypes.LOOPING_VIDEO} =>
+              reference->content->heroType == 'loopingVideo' =>
                 { "image": reference->content->heroLoopingVideo->thumbnail },
                 reference->content->heroFigure),
             },
@@ -275,9 +274,7 @@ const pageContentFields = /* groq */ `
          reference->_type == 'magazine' => {
           "title": reference->title,
           "heroImage": select(
-              reference->heroType == ${
-                HeroTypes.LOOPING_VIDEO
-              } => { "image": reference->content->heroLoopingVideo->thumbnail },
+              reference->heroType == 'loopingVideo' => { "image": reference->content->heroLoopingVideo->thumbnail },
               reference->heroFigure),
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
