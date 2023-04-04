@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { Breadcrumbs as BreadcrumbsList } from '@components'
+import { BreadcrumbsList } from '@components'
+
+const { BreadcrumbsListItem } = BreadcrumbsList
 
 const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
@@ -44,13 +46,13 @@ export const Breadcrumbs = ({ slug, defaultBreadcrumbs, customBreadcrumbs }: Bre
       <BreadcrumbsList>
         {crumbs.map((item) => {
           if (item.slug === slug) {
-            return <li key={item.slug}>{item.label}</li>
+            return <BreadcrumbsListItem key={item.slug}>{item.label}</BreadcrumbsListItem>
           }
 
           return (
-            <li key={item.slug}>
+            <BreadcrumbsListItem key={item.slug}>
               <NextLink href={item.slug}>{item.label}</NextLink>
-            </li>
+            </BreadcrumbsListItem>
           )
         })}
       </BreadcrumbsList>
