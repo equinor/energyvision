@@ -77,6 +77,7 @@ import twitterEmbed from './objects/twitterEmbed'
 import video from './objects/video'
 import videoFile from './objects/videoFile'
 import imageCarousel from './objects/imageCarousel'
+import iframeCarousel from './objects/iframeCarousel'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -148,6 +149,7 @@ const RemainingSchemas = [
   excludeFromSearch,
   videoFile,
   imageCarousel,
+  iframeCarousel,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
