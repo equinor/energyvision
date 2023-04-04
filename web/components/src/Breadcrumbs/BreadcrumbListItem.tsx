@@ -24,9 +24,13 @@ const StyledListItem = styled(EdsItem)`
   }
 `
 
-export const BreadcrumbsListItem = forwardRef<HTMLLIElement, BreadcrumbsListItemProps>(function Breadcrumbs({
-  children,
-  ...rest
-}) {
-  return <StyledListItem {...rest}>{children}</StyledListItem>
+export const BreadcrumbsListItem = forwardRef<HTMLLIElement, BreadcrumbsListItemProps>(function Breadcrumbs(
+  { children, ...rest },
+  forwardedRef,
+) {
+  return (
+    <StyledListItem ref={forwardedRef} {...rest}>
+      {children}
+    </StyledListItem>
+  )
 })

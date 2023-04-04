@@ -12,12 +12,12 @@ const List = styled(EdsList)`
 
 export type BreadcrumbsProps = HTMLAttributes<HTMLOListElement>
 
-export const BreadcrumbsList = forwardRef<HTMLOListElement, BreadcrumbsProps>(function Breadcrumbs({
-  children,
-  ...rest
-}) {
+export const BreadcrumbsList = forwardRef<HTMLOListElement, BreadcrumbsProps>(function Breadcrumbs(
+  { children, ...rest },
+  forwardedRef,
+) {
   return (
-    <List variant="numbered" {...rest}>
+    <List ref={forwardedRef} variant="numbered" {...rest}>
       {children}
     </List>
   )
