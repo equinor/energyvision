@@ -221,6 +221,7 @@ export type PageSchema = {
   id: string
   type: string
   enableBreadcrumbs: boolean
+  useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: string[]
   customBreadcrumbs: string[] | [] | null
 }

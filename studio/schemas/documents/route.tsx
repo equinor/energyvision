@@ -93,6 +93,15 @@ export default (isoCode: string, title: string) => {
         type: 'boolean',
         fieldset: 'breadcrumbs',
         title: 'Enable breadcrumbs for this page',
+        description: 'Toggle this if you want this page to display breadcrumbs',
+      },
+      Flags.IS_DEV && {
+        name: 'useCustomBreadcrumbs',
+        type: 'boolean',
+        fieldset: 'breadcrumbs',
+        title: 'Use custom breadcrumbs',
+        description: 'Toggle this if you want to create custom breadcrumbs for this page',
+        initialValue: false,
       },
       Flags.IS_DEV && {
         name: 'customBreadcrumbs',
@@ -126,7 +135,7 @@ export default (isoCode: string, title: string) => {
         validation: (Rule: Rule) => Rule.unique(),
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        hidden: ({ parent }) => !parent.enableBreadcrumbs,
+        hidden: ({ parent }) => !parent.enableBreadcrumbs || !parent.useCustomBreadcrumbs,
       },
       {
         type: 'excludeFromSearch',

@@ -49,6 +49,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         {Flags.IS_DEV && data.enableBreadcrumbs && (
           <Breadcrumbs
             slug={data?.slug}
+            useCustomBreadcrumbs={data?.useCustomBreadcrumbs}
             defaultBreadcrumbs={data?.defaultBreadcrumbs}
             customBreadcrumbs={data?.customBreadcrumbs}
           />

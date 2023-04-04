@@ -23,6 +23,7 @@ export const routeQuery = /* groq */ `
     "hero": content->${heroFields},
     "template": content->_type,
     "enableBreadcrumbs": coalesce(enableBreadcrumbs, false),
+    "useCustomBreadcrumbs": coalesce(useCustomBreadcrumbs, false),
     "defaultBreadcrumbs": [
       parent->slug.current,
       slug.current

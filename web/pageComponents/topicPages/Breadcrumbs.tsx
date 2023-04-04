@@ -22,6 +22,7 @@ type Breadcrumbs = {
 
 type BreadcrumbsProps = {
   slug: string
+  useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: string[]
   customBreadcrumbs: string[] | [] | null
 }
@@ -58,12 +59,16 @@ const parseBreadcrumbs = (crumbs: string[]): Breadcrumbs => {
   ]
 }
 
-export const Breadcrumbs = ({ slug, defaultBreadcrumbs, customBreadcrumbs }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({
+  slug,
+  useCustomBreadcrumbs,
+  defaultBreadcrumbs,
+  customBreadcrumbs,
+}: BreadcrumbsProps) => {
   const router = useRouter()
 
-  const crumbs = parseBreadcrumbs(
-    customBreadcrumbs && customBreadcrumbs.length > 0 ? [...customBreadcrumbs, slug] : defaultBreadcrumbs,
-  )
+  const shouldUseCustom = useCustomBreadcrumbs && customBreadcrumbs && customBreadcrumbs.length > 0
+  const crumbs = parseBreadcrumbs(shouldUseCustom ? [...customBreadcrumbs, slug] : defaultBreadcrumbs)
 
   if (crumbs.length < 2) return null
 
