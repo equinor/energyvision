@@ -9,7 +9,6 @@ export type BreadcrumbsListItemProps = HTMLAttributes<HTMLLIElement>
 const StyledListItem = styled(EdsItem)`
   display: inline-block;
   padding-right: var(--space-small);
-  text-transform: capitalize;
 
   &:after {
     content: '>';
