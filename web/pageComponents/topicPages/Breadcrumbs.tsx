@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { BreadcrumbsList } from '@components'
+import { BreadcrumbsList, Link } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
@@ -62,7 +62,7 @@ export const Breadcrumbs = ({ slug, defaultBreadcrumbs, customBreadcrumbs }: Bre
   const router = useRouter()
 
   const crumbs = parseBreadcrumbs(
-    customBreadcrumbs && customBreadcrumbs.length > 0 ? customBreadcrumbs : defaultBreadcrumbs,
+    customBreadcrumbs && customBreadcrumbs.length > 0 ? [...customBreadcrumbs, slug] : defaultBreadcrumbs,
   )
 
   if (crumbs.length < 2) return null
@@ -77,7 +77,11 @@ export const Breadcrumbs = ({ slug, defaultBreadcrumbs, customBreadcrumbs }: Bre
 
           return (
             <BreadcrumbsListItem key={item.slug}>
-              <NextLink href={item.slug}>{item.label}</NextLink>
+              <NextLink href={item.slug} passHref legacyBehavior>
+                <Link variant="regular" underline={false}>
+                  {item.label}
+                </Link>
+              </NextLink>
             </BreadcrumbsListItem>
           )
         })}
