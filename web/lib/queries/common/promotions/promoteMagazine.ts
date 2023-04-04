@@ -2,7 +2,7 @@ import { sameLang, noDrafts } from './../langAndDrafts'
 import markDefs from '../blockEditorMarks'
 import { publishDateTimeQuery } from '../publishDateTime'
 import { heroFields } from '../../common/heroFields'
-import { Flags } from '../../../../common/helpers/datasetHelpers'
+import { HeroTypes } from '../../../../types'
 
 const promotedMagazineFields = /* groq */ `
   "id": _id,
@@ -16,14 +16,10 @@ const promotedMagazineFields = /* groq */ `
     ...,
     ${markDefs},
   },
-  "heroImage": ${
-    Flags.IS_DEV
-      ? `select(
-          heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
-          heroFigure
-        )`
-      : `heroFigure`
-  },
+  "heroImage": select(
+    heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": heroLoopingVideo->thumbnail },
+    heroFigure
+  ),
   openGraphImage,
   "heroType": coalesce(heroType, 'default'),
   "heroVideo": heroVideo.asset->{
