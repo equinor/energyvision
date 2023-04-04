@@ -26,6 +26,7 @@ export default {
       },
       validation: (Rule: Rule) =>
         Rule.custom(async (value: string) => {
+          if (!value) return 'Field is required.'
           const videoAsset = getFileAsset(value, {
             projectId: projectId,
             dataset: dataset,
