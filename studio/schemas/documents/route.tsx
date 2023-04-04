@@ -26,6 +26,7 @@ export default (isoCode: string, title: string) => {
       Flags.IS_DEV && {
         title: 'Breadcrumbs',
         name: 'breadcrumbs',
+        description: '🔜 This feature will be improved upon in version 3 of the Sanity Studio',
         options: {
           collapsible: true,
           collapsed: false,
@@ -93,14 +94,16 @@ export default (isoCode: string, title: string) => {
         type: 'boolean',
         fieldset: 'breadcrumbs',
         title: 'Enable breadcrumbs for this page',
-        description: 'Toggle this if you want this page to display breadcrumbs',
+        description:
+          'Toggle this if you want this page to display breadcrumbs. By default, the slug of the page will be used as breadcrumbs (e.g. Home > Energy > Hydro).',
       },
       Flags.IS_DEV && {
         name: 'useCustomBreadcrumbs',
         type: 'boolean',
         fieldset: 'breadcrumbs',
         title: 'Use custom breadcrumbs',
-        description: 'Toggle this if you want to create custom breadcrumbs for this page',
+        description:
+          'Toggle this if you want to create custom breadcrumbs for this page. These will overwrite the default breadcrumbs.',
         initialValue: false,
       },
       Flags.IS_DEV && {
@@ -108,7 +111,7 @@ export default (isoCode: string, title: string) => {
         type: 'array',
         title: 'Custom breadcrumbs',
         description:
-          'Create custom breadcrumbs for this page. If left empty and breadcrumbs are enabled, they will be generated automatically based on the slug of this page. This component will be improved in version 3 of the Sanity Studio.',
+          'Add the pages that you wish to compose the breadcrumbs with, in the order that you want them to be displayed in. ⚠️ Note: You do not have to add the homepage or the page you are currently creating/editing. These will be added automatically.',
         fieldset: 'breadcrumbs',
         of: [
           {
