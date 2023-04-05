@@ -52,6 +52,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
             useCustomBreadcrumbs={data?.useCustomBreadcrumbs}
             defaultBreadcrumbs={data?.defaultBreadcrumbs}
             customBreadcrumbs={data?.customBreadcrumbs}
+            hasTopMargin={data.hero.type !== 'default'}
           />
         )}
 

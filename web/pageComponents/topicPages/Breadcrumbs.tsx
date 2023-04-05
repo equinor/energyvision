@@ -8,11 +8,16 @@ import { getFullUrl } from '../../common/helpers/getFullUrl'
 
 const { BreadcrumbsListItem } = BreadcrumbsList
 
-const Container = styled.div`
+const Container = styled.div<{ $hasTopMargin?: boolean }>`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
+
+  ${({ $hasTopMargin }) =>
+    $hasTopMargin && {
+      paddingTop: 'var(--space-xLarge)',
+    }}
 `
 
 type Breadcrumbs = {
@@ -25,6 +30,7 @@ type BreadcrumbsProps = {
   useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: string[]
   customBreadcrumbs: string[] | [] | null
+  hasTopMargin?: boolean
 }
 
 const buildJsonLdElements = (crumbs: Breadcrumbs, router: NextRouter) => {
@@ -64,6 +70,7 @@ export const Breadcrumbs = ({
   useCustomBreadcrumbs,
   defaultBreadcrumbs,
   customBreadcrumbs,
+  hasTopMargin = false,
 }: BreadcrumbsProps) => {
   const router = useRouter()
 
@@ -73,7 +80,7 @@ export const Breadcrumbs = ({
   if (crumbs.length < 2) return null
 
   return (
-    <Container>
+    <Container $hasTopMargin={hasTopMargin}>
       <BreadcrumbsList>
         {crumbs.map((item) => {
           if (item.slug === slug) {
