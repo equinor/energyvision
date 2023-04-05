@@ -1,3 +1,4 @@
+import { HeroTypes } from '../../types'
 import { sameLang } from './common/langAndDrafts'
 import { publishDateTimeQuery } from './common/publishDateTime'
 
@@ -42,7 +43,7 @@ export const menuQuery = /* groq */ `
         "routeContentType": content->_type,
         "title": content->title,
         "heroImage": select(
-            content->heroType == 'loopingVideo' => { "image": content->heroLoopingVideo->thumbnail},
+            content->heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": content->heroLoopingVideo->thumbnail},
             content->heroFigure),
         "eventDate": content->eventDate,
         "location": content->location,

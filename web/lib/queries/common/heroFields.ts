@@ -1,3 +1,4 @@
+import { HeroTypes } from '../../../types'
 import linkSelectorFields from './actions/linkSelectorFields'
 
 export const heroFields = /* groq */ `{
@@ -7,12 +8,12 @@ export const heroFields = /* groq */ `{
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure":  select(
-      heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
+      heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
     "loopingVideo": {
-      "title": heroLoopingVideo->video.title,
+      "title": heroLoopingVideo->title,
       "thumbnail": heroLoopingVideo->thumbnail,
-      "url": heroLoopingVideo->video.url,
+      "url": heroLoopingVideo->video.asset->url,
       "ratio": heroLoopingVideoRatio,
     },
     "video": {
