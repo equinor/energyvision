@@ -4,6 +4,7 @@ import { muxInput } from 'sanity-plugin-mux-input'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
+import { initialValueTemplates } from './initialValueTemplates'
 
 export default defineConfig({
   name: 'default',
@@ -27,6 +28,7 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
+    templates: (prev) => [...prev, ...initialValueTemplates],
   },
 
   auth: createAuthStore({

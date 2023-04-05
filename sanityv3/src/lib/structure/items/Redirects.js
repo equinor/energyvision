@@ -3,7 +3,7 @@ import { EdsIcon } from '../../../../icons'
 import flags from '../../../../icons/countries'
 import { languages } from '../../../../languages'
 
-const redirects = (S) => () =>
+const redirects = (S) =>
   languages.map((lang) =>
     S.listItem()
       .title(`${lang.title} Redirects`)
@@ -34,4 +34,4 @@ export const Redirects = (S) =>
   S.listItem()
     .icon(() => EdsIcon(directions))
     .title('Redirects')
-    .child(() => S.list('redirects').id('redirects').title('Redirects').items(redirects(S)))
+    .child(S.list().id('redirects').title('Redirects').items(redirects(S)))

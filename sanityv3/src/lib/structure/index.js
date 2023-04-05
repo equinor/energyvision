@@ -16,7 +16,7 @@ import { TopicContent } from './items/TopicContent'
 
 const News = (S) => Flags.HAS_NEWS && NewsStructure(S)
 const Magazine = (S) => Flags.HAS_MAGAZINE && MagazineStructure(S)
-const LocalNews = (S) => Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S)
+const LocalNews = (S, context) => Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S, context)
 const LandingPage = (S) => Flags.HAS_LANDING_PAGE && LandingPageStructure(S)
 const Event = (S) => Flags.HAS_EVENT && EventStructure(S)
 
@@ -66,7 +66,7 @@ const getItems = (S, context) => {
   const isLocalNewsEditor = userRoles.some((role) => role.startsWith('local-news-editor'))
   return [
     News(S),
-    // LocalNews(S),
+    LocalNews(S, context),
     TopicContent(S),
     LandingPage(S),
     Event(S),
@@ -74,7 +74,7 @@ const getItems = (S, context) => {
     Misc(S),
     S.divider(),
     Homepage(S),
-    // Routes(S),
+    Routes(S, context),
     S.divider(),
     Menu(S),
     Footer(S),
