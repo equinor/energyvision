@@ -21,6 +21,7 @@ const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN
 const SCREEN9_AUTH = Buffer.from(`${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`).toString('base64')
 
 type VideoSelector = {
+  id: string
   title: string
   url: string
 }
@@ -81,6 +82,7 @@ const VideoSelector = forwardRef(function VideoSelector(
 
           if (!data.error) {
             const video = {
+              id: videoId,
               title: file.title,
               url: data.streams.hls,
             }

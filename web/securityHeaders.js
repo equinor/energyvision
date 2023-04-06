@@ -38,7 +38,7 @@ const ContentSecurityPolicy = `
    style-src 'report-sample' 'self' 'unsafe-inline' https://eds-static.equinor.com https://platform.twitter.com https://*.twimg.com;
    script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: https://*.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/ https://www.youtube.com;
    img-src 'self' data: https://image.mux.com https://eds-static.equinor.com https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com https://i.ytimg.com;
-   connect-src 'self' https://h61q9gi9.api.sanity.io https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu  https://*.mux.com ${
+   connect-src 'self' https://bcdn.screen9.com https://h61q9gi9.api.sanity.io https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu  https://*.mux.com ${
      isProduction ? '' : 'ws:'
    };
    child-src  blob:;
