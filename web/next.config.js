@@ -122,7 +122,7 @@ export default withBundle(
             },
           ],
           permanent: true,
-          destination: '/not-supported.html',
+          destination: dataset === 'global-development' ? '/not-supported-dev.html' : '/not-supported.html',
         },
       ]
     },
