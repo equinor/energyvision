@@ -36,15 +36,22 @@ const ADMIN_ITEMS = (S) =>
     Menu(S),
     Footer(S),
     S.divider(),
-    AssetLibrary(S),
+    AssetLibrary(S, context),
     S.divider(),
     Settings(S),
   ].filter((e) => e)
 
 const SUB_EDITOR_ITEMS = (S) =>
-  [News(S), LocalNews(S), TopicContent(S), LandingPage(S), Magazine(S), Event(S), S.divider(), AssetLibrary(S)].filter(
-    (e) => e,
-  )
+  [
+    News(S),
+    LocalNews(S),
+    TopicContent(S),
+    LandingPage(S),
+    Magazine(S),
+    Event(S),
+    S.divider(),
+    AssetLibrary(S, context),
+  ].filter((e) => e)
 
 const LOCAL_NEWS_EDITOR_ITEMS = (S) => [LocalNews(S)].filter((e) => e)
 
@@ -79,7 +86,7 @@ const getItems = (S, context) => {
     Menu(S),
     Footer(S),
     S.divider(),
-    AssetLibrary(S),
+    AssetLibrary(S, context),
     S.divider(),
     Settings(S),
   ].filter((e) => e)
