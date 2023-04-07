@@ -11,7 +11,7 @@ const footers = (S) =>
       icon: flags[lang.id],
       child: S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
         .id(`${lang.id}-footer`)
-        // .title(`psfa f${lang.title} footer`)
+        .title(`${lang.title} footer`)
         .views([S.view.form()]),
     }),
   )
