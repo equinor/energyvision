@@ -1,7 +1,0 @@
-packages:
-  - 'web'
-  - 'e2e'
-  - 'search'
-  - 'sanityv3'
-  - '!studio'
-  - '!legacy'
