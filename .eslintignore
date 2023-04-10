@@ -1,9 +1,0 @@
-node_modules
-storybook-static
-.next
-studio/dist
-legacy/js/src
-legacy/js/dist
-legacy/css
-web/public/legacy/legacy.minified.js
-legacy
