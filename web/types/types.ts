@@ -210,6 +210,7 @@ export type ContentType =
   | StockValuesData
   | TwitterEmbedData
   | VideoData
+  | VideoPlayerData
 
 export type PageSchema = {
   slug: string
@@ -627,6 +628,31 @@ export type VideoData = {
   designOptions: {
     background: BackgroundColours
   }
+}
+
+export type VideoPlayerData = {
+  id: string
+  type: string
+  video: {
+    title: string
+    url: string
+    thumbnail: ImageWithAlt
+  }
+  videoControls: {
+    controls: boolean
+    loop: boolean
+    allowFullScreen: boolean
+    autoPlay: boolean
+    muted: boolean
+  }
+  designOptions: {
+    aspectRatio: string
+    height?: number
+    background: BackgroundColours
+  }
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  action?: LinkData
 }
 
 export type VideoHeroData = {

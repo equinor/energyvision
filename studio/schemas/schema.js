@@ -42,6 +42,8 @@ import accordionItem from './objects/accordionItem'
 import anchorLink from './objects/anchorLink'
 import anchorReferenceField from './objects/anchorReferenceField'
 import basicIframe from './objects/basicIframe'
+import videoPlayer from './objects/videoPlayer'
+import videoControls from './objects/videoControls'
 import contactList from './objects/contactList'
 import cookieDeclaration from './objects/cookieDeclaration'
 import downloadableImage from './objects/downloadableImage'
@@ -136,6 +138,8 @@ const RemainingSchemas = [
   stockValuesApi,
   iframe,
   basicIframe,
+  videoPlayer,
+  videoControls,
   footer,
   promotion,
   promoteTopics,

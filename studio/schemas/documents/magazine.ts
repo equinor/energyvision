@@ -160,7 +160,8 @@ export default {
         { type: 'iframe' },
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
-      ],
+        Flags.IS_DEV && { type: 'videoPlayer' },
+      ].filter((e) => e),
     },
     {
       type: 'excludeFromSearch',

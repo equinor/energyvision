@@ -1,5 +1,6 @@
 import { HeroTypes } from '../../../types'
 import { iframeCarouselFields } from '../iframeCarouselFields'
+import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
@@ -519,8 +520,10 @@ const pageContentFields = /* groq */ `
   },
   _type == "iframeCarousel" =>{
     ${iframeCarouselFields}
-  }
-
+  },
+  _type == "videoPlayer" => {
+    ${videoPlayerFields}
+  },
 `
 
 export default pageContentFields
