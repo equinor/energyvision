@@ -42,6 +42,8 @@ import accordionItem from './objects/accordionItem'
 import anchorLink from './objects/anchorLink'
 import anchorReferenceField from './objects/anchorReferenceField'
 import basicIframe from './objects/basicIframe'
+import videoPlayer from './objects/videoPlayer'
+import videoControls from './objects/videoControls'
 import contactList from './objects/contactList'
 import cookieDeclaration from './objects/cookieDeclaration'
 import downloadableImage from './objects/downloadableImage'
@@ -85,7 +87,7 @@ import video from './objects/video'
 import videoFile from './objects/videoFile'
 import imageCarousel from './objects/imageCarousel'
 import iframeCarousel from './objects/iframeCarousel'
-import screen9video from './objects/screen9video'
+import hlsVideo from './objects/hlsVideo'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -136,6 +138,8 @@ const RemainingSchemas = [
   stockValuesApi,
   iframe,
   basicIframe,
+  videoPlayer,
+  videoControls,
   footer,
   promotion,
   promoteTopics,
@@ -158,7 +162,7 @@ const RemainingSchemas = [
   videoFile,
   iframeCarousel,
   imageCarousel,
-  screen9video,
+  hlsVideo,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

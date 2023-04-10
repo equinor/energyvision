@@ -69,6 +69,7 @@ export default {
         Flags.HAS_MUX && { type: 'video' },
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
+        Flags.IS_DEV && { type: 'videoPlayer' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

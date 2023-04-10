@@ -2,9 +2,14 @@ import VideoSelector from '../components/VideoSelector'
 
 export default {
   title: 'Video',
-  name: 'screen9video',
+  name: 'hlsVideo',
   type: 'object',
   fields: [
+    {
+      name: 'id',
+      type: 'string',
+      hidden: true,
+    },
     {
       name: 'title',
       type: 'string',
