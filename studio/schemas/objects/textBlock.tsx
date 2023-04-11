@@ -10,6 +10,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { Rule, Reference } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -44,6 +45,15 @@ export default {
   title: 'Text block',
   type: 'object',
   fieldsets: [
+    Flags.IS_DEV && {
+      title: 'Thumbnail Image',
+      name: 'thumbnail',
+      description: 'A small image acting as a thumbnail above the title.',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
     {
       title: 'Eyebrow headline',
       name: 'eyebrow',
@@ -77,6 +87,14 @@ export default {
     },
   ],
   fields: [
+    Flags.IS_DEV && {
+      name: 'image',
+      type: 'imageWithAlt',
+      options: {
+        hotspot: true,
+      },
+      fieldset: 'thumbnail',
+    },
     {
       name: 'overline',
       title: 'Eyebrow',

@@ -195,6 +195,7 @@ export type HeroType = {
 export type ContentType =
   | TeaserData
   | TextBlockData
+  | TextBlockDataV2
   | FullWidthImageData
   | FigureData
   | TextWithIconArrayData
@@ -258,6 +259,21 @@ export type TextBlockData = {
   type: string
   id: string
   title: PortableTextBlock[]
+  overline?: string
+  text: PortableTextBlock[]
+  ingress: PortableTextBlock[]
+  callToActions?: LinkData[]
+  splitList?: boolean
+  overrideButtonStyle?: boolean
+  anchor?: string
+  designOptions: DesignOptions
+}
+
+export type TextBlockDataV2 = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  image?: ImageWithAlt
   overline?: string
   text: PortableTextBlock[]
   ingress: PortableTextBlock[]

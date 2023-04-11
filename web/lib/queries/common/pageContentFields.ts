@@ -38,6 +38,7 @@ const pageContentFields = /* groq */ `
   _type == "textBlock"=>{
     "type": _type,
     "id": _key,
+    image,
     overline,
     title,
     ingress[]{
