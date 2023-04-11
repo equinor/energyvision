@@ -13,7 +13,7 @@ const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.stud
 const studioUrlsOldCluster = envs.map((env) => `https://studio-${dataset}-energyvision-${env}.radix.equinor.com/`)
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com/`)
 const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl, secretUrl].filter((e) => e).join(' ')
-const edsCdnUrl = dataset === 'global-development' ? 'https://cdn.eds.equinor.com ' : 'https://eds-static.equinor.com'
+const edsCdnUrl = 'https://cdn.eds.equinor.com '
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
   'https://lt.morningstar.com',
