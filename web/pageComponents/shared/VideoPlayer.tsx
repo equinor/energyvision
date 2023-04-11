@@ -30,7 +30,7 @@ const StyledFigure = styled.figure<{ allowFullScreen: boolean }>`
   }
 `
 
-const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height?: number }>`
+export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height?: number }>`
   object-fit: cover;
 
   ${({ $aspectRatio, $height }) => {

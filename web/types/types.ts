@@ -211,6 +211,7 @@ export type ContentType =
   | TwitterEmbedData
   | VideoData
   | VideoPlayerData
+  | VideoPlayerCarouselData
 
 export type PageSchema = {
   slug: string
@@ -647,12 +648,31 @@ export type VideoPlayerData = {
   }
   designOptions: {
     aspectRatio: string
-    height?: number
     background: BackgroundColours
+    height?: number
   }
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
+}
+
+export type VideoPlayerCarouselData = {
+  id: string
+  type: string
+  items: {
+    id: string
+    title: PortableTextBlock[]
+    video: {
+      title: string
+      url: string
+      thumbnail: ImageWithAlt
+    }
+  }[]
+  designOptions: {
+    aspectRatio: string
+    background: BackgroundColours
+  }
+  title?: PortableTextBlock[]
 }
 
 export type VideoHeroData = {

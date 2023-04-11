@@ -42,8 +42,6 @@ import accordionItem from './objects/accordionItem'
 import anchorLink from './objects/anchorLink'
 import anchorReferenceField from './objects/anchorReferenceField'
 import basicIframe from './objects/basicIframe'
-import videoPlayer from './objects/videoPlayer'
-import videoControls from './objects/videoControls'
 import contactList from './objects/contactList'
 import cookieDeclaration from './objects/cookieDeclaration'
 import downloadableImage from './objects/downloadableImage'
@@ -85,6 +83,10 @@ import titleAndMeta from './objects/titleAndMeta'
 import twitterEmbed from './objects/twitterEmbed'
 import video from './objects/video'
 import videoFile from './objects/videoFile'
+import videoPlayer from './objects/videoPlayer'
+import videoControls from './objects/videoControls'
+import videoPlayerCarousel from './objects/videoPlayerCarousel'
+
 import imageCarousel from './objects/imageCarousel'
 import iframeCarousel from './objects/iframeCarousel'
 import hlsVideo from './objects/hlsVideo'
@@ -140,6 +142,7 @@ const RemainingSchemas = [
   basicIframe,
   videoPlayer,
   videoControls,
+  videoPlayerCarousel,
   footer,
   promotion,
   promoteTopics,

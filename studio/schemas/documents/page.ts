@@ -70,6 +70,7 @@ export default {
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
         Flags.IS_DEV && { type: 'videoPlayer' },
+        Flags.IS_DEV && { type: 'videoPlayerCarousel' },
       ].filter((e) => e),
     },
   ].filter((e) => e),
