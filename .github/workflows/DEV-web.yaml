@@ -86,6 +86,7 @@ jobs:
           dynatraceEnvironment: ${{ secrets.DYNATRACE_ENVIRONMENT }}
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
+          archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
         with:
