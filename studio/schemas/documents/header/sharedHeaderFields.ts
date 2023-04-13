@@ -185,22 +185,6 @@ const heroLoopingVideoRatio = {
   fieldset: 'header',
 }
 
-const heroVideo = {
-  title: 'Hero video',
-  name: 'heroVideo',
-  type: 'mux.video',
-  fieldset: 'header',
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.VIDEO_HERO && !value) return 'Field is required'
-      return true
-    }),
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-}
-
 const heroVideoLoop = {
   title: 'Play in loop',
   name: 'heroVideoLoop',
@@ -235,7 +219,6 @@ export default [
   heroImage,
   heroLoopingVideoRatio,
   heroLoopingVideo,
-  heroVideo,
   heroVideoAutoPlay,
   heroVideoLoop,
 ]

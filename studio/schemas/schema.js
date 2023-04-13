@@ -81,7 +81,6 @@ import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
 import titleAndMeta from './objects/titleAndMeta'
 import twitterEmbed from './objects/twitterEmbed'
-import video from './objects/video'
 import videoFile from './objects/videoFile'
 import imageCarousel from './objects/imageCarousel'
 import iframeCarousel from './objects/iframeCarousel'
@@ -153,7 +152,6 @@ const RemainingSchemas = [
   externalRedirect,
   twitterEmbed,
   anchorLink,
-  video,
   excludeFromSearch,
   videoFile,
   iframeCarousel,
