@@ -22,13 +22,15 @@ export const routeQuery = /* groq */ `
     "seoAndSome": content->${seoAndSomeFields},
     "hero": content->${heroFields},
     "template": content->_type,
-    "enableBreadcrumbs": coalesce(enableBreadcrumbs, false),
-    "useCustomBreadcrumbs": coalesce(useCustomBreadcrumbs, false),
-    "defaultBreadcrumbs": [
-      parent->slug.current,
-      slug.current
-    ],
-    "customBreadcrumbs": coalesce(customBreadcrumbs[]->slug.current, null),
+    "breadcrumbs": {
+      "enableBreadcrumbs": coalesce(breadcrumbs.enableBreadcrumbs, false),
+      "useCustomBreadcrumbs": coalesce(breadcrumbs.useCustomBreadcrumbs, false),
+      "defaultBreadcrumbs": [
+        parent->slug.current,
+        slug.current
+      ],
+      "customBreadcrumbs": coalesce(breadcrumbs.customBreadcrumbs[]->slug.current, null),
+    },
      content->_type == "landingPage" => {
         ${landingPageContentFields}
     },

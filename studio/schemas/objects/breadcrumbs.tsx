@@ -1,104 +1,59 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// eslint-disable-next-line import/no-unresolved
-import sanityClient from 'part:@sanity/base/client'
-import {
-  CustomValidator,
-  SanityDocument,
-  Rule,
-  SlugParent,
-  SlugSchemaType,
-  Slug,
-  ValidationContext,
-} from '@sanity/types'
-import slugify from 'slugify'
-import SlugInput from '../components/SlugInput'
+import { Reference, Rule } from '@sanity/types'
+import routes from '../routes'
+import { filterByRoute } from '../../helpers/referenceFilters'
 
-const client = sanityClient.withConfig({
-  apiVersion: '2022-06-22',
-})
-
-const validateIsUniqueWithinLocale = async (breadcrumbs: string, { document }: { document: SanityDocument }) => {
-  const baseId = document._id.replace('drafts.', '').substring(0, 36)
-  const query = /* groq */ `*[_type == $type && breadcrumbs.current == $breadcrumbs && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
-
-  const params = { type: document._type, baseId, breadcrumbs }
-  const matchingBreadcrumbs = await client.fetch(query, params)
-
-  return matchingBreadcrumbs.length === 0
-}
-
-const formatBreadcrumbs = (value: string) =>
-  value
-    .split('/')
-    .map((i) => slugify(i, { lower: true }))
-    .filter((e) => e)
-    .join('/')
-
-export function breadcrumbs(source = `breadcrumbsInput`, fieldset: string) {
-  return {
-    title: 'Custom breadcrumbs for this page',
-    description: 'Use the "generate" button to create the breadcrumbs.',
-    name: 'breadcrumbs',
-    type: 'slug',
-    inputComponent: SlugInput,
-    fieldset: fieldset,
-    options: {
-      source: source,
-      slugify: formatBreadcrumbs,
-      isUnique: validateIsUniqueWithinLocale,
+export default {
+  name: 'breadcrumbs',
+  title: 'Breadcrumbs',
+  type: 'object',
+  fields: [
+    {
+      name: 'enableBreadcrumbs',
+      type: 'boolean',
+      title: 'Enable breadcrumbs for this page',
+      description:
+        'Toggle this if you want this page to display breadcrumbs. By default, the slug of the page will be used as breadcrumbs (e.g. Home > Energy > Hydro).',
     },
-    validation: (Rule: Rule) => Rule.custom((value: Slug, context: ValidationContext) => slugValidator(value, context)),
-  }
-}
+    {
+      name: 'useCustomBreadcrumbs',
+      type: 'boolean',
+      title: 'Use custom breadcrumbs',
+      description:
+        'Toggle this if you want to create custom breadcrumbs for this page. These will overwrite the default breadcrumbs.',
+      initialValue: false,
+    },
+    {
+      name: 'customBreadcrumbs',
+      type: 'array',
+      title: 'Custom breadcrumbs',
+      description:
+        'Add the pages that you wish to compose the breadcrumbs with, in the order that you want them to be displayed in. ⚠️ Note: You do not have to add the homepage or the page you are currently creating/editing. These will be added automatically.',
+      of: [
+        {
+          name: 'reference',
+          title: 'Breadcrumb segment',
+          description:
+            "Use this field to link to an internal page. The last part of the linked page's route will be used to build the breadcrumbs. For example when linking to '/energy/sustainability', the 'sustainability' part will be used as label for this segment",
+          type: 'reference',
+          validation: (Rule: Rule) =>
+            Rule.required().custom((value: Reference, context) => {
+              const { document } = context
+              if (document && document._id.replace('drafts.', '') === value._ref)
+                return 'Breadcrumbs cannot link to themselves'
 
-const checkSlugParts = async (slug: string): Promise<string | null> => {
-  const slugPartExists =
-    (await client.fetch(`*[slug.current == $slug && !(_id in path("drafts.**"))]`, { slug: `/${slug}` })).length > 0
-
-  if (!slugPartExists) {
-    return `'${slug}' is not a valid route`
-  }
-
-  return null
-}
-
-// @ts-ignore - possible error in @sanity/types with CustomValidatorResult
-export const slugValidator: CustomValidator = async (slug: Slug, context) => {
-  if (!slug) {
-    return true
-  }
-
-  const slugValue = slug.current
-
-  if (!slugValue) {
-    return 'Breadcrumbs must have a value'
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const slugContext: SlugValidationContext = {
-    ...context,
-    parent: context.parent as SlugParent,
-    type: context.type as SlugSchemaType,
-    defaultIsUnique: validateIsUniqueWithinLocale,
-  }
-
-  const breadcrumbsIsUnique = await validateIsUniqueWithinLocale(slugValue, slugContext)
-  if (!breadcrumbsIsUnique) {
-    return 'Breadcrumbs already in use'
-  }
-
-  const slugParts = slugValue.split('/')
-
-  const hasDuplicates = slugParts.some((val, i) => slugParts.indexOf(val) !== i)
-  if (hasDuplicates) {
-    return 'Breadcrumbs cannot contain duplicate parts'
-  }
-
-  const hasInvalidParts = (await Promise.all(slugParts.map(checkSlugParts))).filter((e) => e)
-  if (hasInvalidParts.length > 0) {
-    return hasInvalidParts as string[]
-  }
-
-  return true
+              return true
+            }),
+          to: routes,
+          options: {
+            filter: filterByRoute,
+            disableNew: true,
+          },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.unique(),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      hidden: ({ parent }) => !parent.enableBreadcrumbs || !parent.useCustomBreadcrumbs,
+    },
+  ],
 }
