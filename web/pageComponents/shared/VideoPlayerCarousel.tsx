@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import type { VideoPlayerCarouselData } from '../../types/types'
+import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
 import { urlFor } from '../../common/helpers'
-import { StyledHLSPlayer } from './VideoPlayer'
+import { StyledHLSPlayer, getThumbnailRatio } from './VideoPlayer'
 import { Carousel } from './Carousel'
 
 const StyledHeading = styled(TitleText)`
@@ -24,7 +24,7 @@ const Container = styled.div`
 const VideoItem = styled.div<{ $aspectRatio: string }>`
   display: flex;
   flex-direction: column;
-  ${({ $aspectRatio }) => ($aspectRatio === '16:9' ? { minWidth: '90%' } : { minWidth: 'auto' })};
+  ${({ $aspectRatio }) => ($aspectRatio === VideoPlayerRatios['16:9'] ? { minWidth: '90%' } : { minWidth: 'auto' })};
 
   h3 {
     padding: var(--space-medium) var(--space-small);
@@ -35,18 +35,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
   const { title, items, designOptions } = data
   const { background, aspectRatio } = designOptions
 
-  let width: number, height: number
-
-  if (aspectRatio === '16:9') {
-    width = 1380
-    height = 777
-  } else if (aspectRatio === '9:16') {
-    width = 336
-    height = 600
-  } else {
-    width = 600
-    height = 600
-  }
+  const { width: w, height: h } = getThumbnailRatio(aspectRatio)
 
   return (
     <BackgroundContainer background={background} id={anchor}>
@@ -59,13 +48,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
                 $aspectRatio={aspectRatio}
                 src={item.video.url}
                 title={item.video.title}
-                poster={urlFor(item.video.thumbnail)
-                  .width(width)
-                  .height(height)
-                  .focalPoint(item.video.thumbnail.hotspot?.x || 0, item.video.thumbnail.hotspot?.y || 0)
-                  .crop('focalpoint')
-                  .fit('crop')
-                  .url()}
+                poster={urlFor(item.video.thumbnail).width(w).height(h).url()}
                 playButton
                 playsInline
               />

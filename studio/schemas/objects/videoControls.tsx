@@ -6,18 +6,27 @@ export default {
   type: 'object',
   fields: [
     {
+      name: 'playButton',
+      type: 'boolean',
+      title: 'Play Button',
+      initialValue: false,
+    },
+    {
       name: 'controls',
       type: 'boolean',
-      title: 'Display Controls',
+      title: 'Controls',
       initialValue: true,
       validation: (Rule: ValidationRule) =>
         Rule.custom((value: boolean, context: ValidationContext) => {
           const { parent } = context
-          if (!value && !parent.autoPlay) {
-            return 'Hiding controls is only allowed if Auto Play is enabled'
+          if (!value && !parent.autoPlay && !parent.playButton) {
+            return 'Hiding controls is only allowed if Play Button or Auto Play is enabled'
           }
           return true
         }),
+      hidden: ({ parent }: ValidationContext) => {
+        return parent?.playButton
+      },
     },
     {
       name: 'autoPlay',
@@ -32,6 +41,9 @@ export default {
           }
           return true
         }),
+      hidden: ({ parent }: ValidationContext) => {
+        return parent?.playButton
+      },
     },
     {
       name: 'muted',

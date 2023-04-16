@@ -631,6 +631,12 @@ export type VideoData = {
   }
 }
 
+export enum VideoPlayerRatios {
+  '16:9' = '16:9',
+  '9:16' = '9:16',
+  '1:1' = '1:1',
+}
+
 export type VideoPlayerData = {
   id: string
   type: string
@@ -640,6 +646,7 @@ export type VideoPlayerData = {
     thumbnail: ImageWithAlt
   }
   videoControls: {
+    playButton: boolean
     controls: boolean
     loop: boolean
     allowFullScreen: boolean
@@ -647,7 +654,7 @@ export type VideoPlayerData = {
     muted: boolean
   }
   designOptions: {
-    aspectRatio: string
+    aspectRatio: VideoPlayerRatios
     background: BackgroundColours
     height?: number
   }
@@ -669,7 +676,7 @@ export type VideoPlayerCarouselData = {
     }
   }[]
   designOptions: {
-    aspectRatio: string
+    aspectRatio: VideoPlayerRatios
     background: BackgroundColours
   }
   title?: PortableTextBlock[]

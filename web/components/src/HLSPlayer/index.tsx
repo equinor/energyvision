@@ -14,6 +14,8 @@ type Props = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
 const Wrapper = styled.div`
   position: relative;
   height: 100%;
+  width: 100%;
+  display: flex;
 `
 
 const StyledButton = styled.button`
@@ -29,7 +31,13 @@ const StyledButton = styled.button`
   cursor: pointer;
 `
 
-export const HLSPlayer: React.FC<Props> = ({ src, controls = false, playButton = false, ...props }) => {
+export const HLSPlayer: React.FC<Props> = ({
+  src,
+  controls = false,
+  playButton = false,
+  autoPlay = false,
+  ...props
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const hlsRef = useRef<Hls | null>(null)
   const [showPlayButton, setShowPlayButton] = useState(playButton)
@@ -51,6 +59,10 @@ export const HLSPlayer: React.FC<Props> = ({ src, controls = false, playButton =
   }, [src])
 
   useEffect(() => {
+    if (playButton) setShowControls(false)
+  }, [playButton])
+
+  useEffect(() => {
     const hls = hlsRef.current
     if (hls) {
       hls.on(Hls.Events.ERROR, (_, data) => {
@@ -68,7 +80,7 @@ export const HLSPlayer: React.FC<Props> = ({ src, controls = false, playButton =
   if (playButton)
     return (
       <Wrapper>
-        <video ref={videoRef} controls={showControls} {...props} />
+        <video ref={videoRef} autoPlay={false} controls={showControls} {...props} />
         {showPlayButton && (
           <StyledButton onClick={handlePlayButton}>
             <Icon size={48} color="white" data={play_circle} />
@@ -77,5 +89,5 @@ export const HLSPlayer: React.FC<Props> = ({ src, controls = false, playButton =
       </Wrapper>
     )
 
-  return <video ref={videoRef} controls={controls} {...props} />
+  return <video ref={videoRef} controls={controls} autoPlay={autoPlay} {...props} />
 }

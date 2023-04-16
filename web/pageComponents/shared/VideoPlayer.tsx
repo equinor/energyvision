@@ -1,10 +1,12 @@
 import styled from 'styled-components'
-import type { VideoPlayerData } from '../../types/types'
+import { VideoPlayerData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer, HLSPlayer } from '@components'
 import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
+
+export enum VideoRatios {}
 
 const StyledHeading = styled(TitleText)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
@@ -31,13 +33,21 @@ const StyledFigure = styled.figure<{ allowFullScreen: boolean }>`
   }
 `
 
+const Ingress = styled.div`
+  margin-bottom: var(--space-large);
+`
+
+const ButtonWrapper = styled.div`
+  margin-bottom: var(--space-xLarge);
+`
+
 export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height?: number }>`
   object-fit: cover;
 
   ${({ $aspectRatio, $height }) => {
     if (!$height) {
       switch ($aspectRatio) {
-        case '1:1':
+        case VideoPlayerRatios['1:1']:
           return {
             height: '320px',
             width: '320px',
@@ -54,12 +64,12 @@ export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height
               width: '600px',
             },
           }
-        case '16:9':
+        case VideoPlayerRatios['16:9']:
           return {
             height: '56.25%',
             width: '100%',
           }
-        case '9:16':
+        case VideoPlayerRatios['9:16']:
           return {
             height: '569px',
             width: '320px',
@@ -77,18 +87,36 @@ export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height
   }}
 `
 
-const Ingress = styled.div`
-  margin-bottom: var(--space-large);
-`
-
-const ButtonWrapper = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
+export const getThumbnailRatio = (aspectRatio: string, height?: number) => {
+  switch (aspectRatio) {
+    case VideoPlayerRatios['16:9']:
+      return {
+        width: 1380,
+        height: 777,
+      }
+    case VideoPlayerRatios['9:16']:
+      return {
+        width: 336,
+        height: 600,
+      }
+    case VideoPlayerRatios['1:1']:
+      return {
+        width: 600,
+        height: 600,
+      }
+    default:
+      return {
+        width: 0,
+        height: height || 0,
+      }
+  }
+}
 
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
   const { background, height, aspectRatio } = designOptions
   const { allowFullScreen, ...controls } = videoControls
+  const { width: w, height: h } = getThumbnailRatio(aspectRatio)
 
   return (
     <BackgroundContainer background={background} id={anchor}>
@@ -110,7 +138,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
             $height={height}
             src={video.url}
             title={video.title}
-            poster={urlFor(video.thumbnail).url()}
+            poster={urlFor(video.thumbnail).width(w).height(h).url()}
             playsInline
             {...controls}
           />

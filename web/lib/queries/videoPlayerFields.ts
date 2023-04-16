@@ -18,6 +18,7 @@ export const videoPlayerFields = /* groq */ `
     "thumbnail": videoFile->thumbnail,
   },
   videoControls {
+    playButton,
     controls,
     loop,
     allowFullScreen,
