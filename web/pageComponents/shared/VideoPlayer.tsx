@@ -6,8 +6,6 @@ import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
 
-export enum VideoRatios {}
-
 const StyledHeading = styled(TitleText)`
   padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
   text-align: var(--iframe-titleAlign, left);
