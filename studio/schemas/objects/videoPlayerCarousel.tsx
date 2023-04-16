@@ -1,11 +1,12 @@
 import { Colors } from '../../helpers/ColorListValues'
 import { EdsIcon } from '../../icons'
-import { library_image } from '@equinor/eds-icons'
+import { play_circle } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
-import type { Rule } from '@sanity/types'
+import type { Reference, Rule } from '@sanity/types'
 import { title } from './iframe/sharedIframeFields'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import { PortableTextBlock } from '@portabletext/types'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -29,11 +30,11 @@ export default {
     {
       type: 'array',
       name: 'items',
-      description: 'Add more iframes',
-      title: 'Scrollable iframe items',
+      description: 'Add more videos',
+      title: 'Scrollable video items',
       of: [
         {
-          title: 'Iframe item',
+          title: 'Video item',
           type: 'object',
           fields: [
             {
@@ -52,6 +53,28 @@ export default {
               validation: (Rule: Rule) => Rule.required(),
             },
           ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'videoFile.video.title',
+              image: 'videoFile.thumbnail',
+            },
+            prepare({
+              title = [],
+              subtitle,
+              image,
+            }: {
+              title: PortableTextBlock[]
+              subtitle: string
+              image: Reference
+            }) {
+              return {
+                title: blocksToText(title),
+                subtitle: subtitle,
+                media: image,
+              }
+            },
+          },
         },
       ],
       validation: (Rule: Rule) => Rule.required().min(2),
@@ -99,9 +122,9 @@ export default {
       const length = items ? items.length : 0
 
       return {
-        title: title ? blocksToText(title) : 'Untitled horizontal scroll iframe',
-        subtitle: `Horizontal scroll iframe carousel with ${length} items`,
-        media: EdsIcon(library_image),
+        title: title ? blocksToText(title) : 'Untitled horizontal scroll video',
+        subtitle: `Horizontal scroll video carousel with ${length} items`,
+        media: EdsIcon(play_circle),
       }
     },
   },

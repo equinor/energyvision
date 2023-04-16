@@ -2,9 +2,8 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import { useRef, HTMLProps, useEffect, useState } from 'react'
 import Hls from 'hls.js'
-import { IconButton } from '@chakra-ui/react'
-import { Button, Icon } from '@equinor/eds-core-react'
-import { play_circle, play_circle_outlined } from '@equinor/eds-icons'
+import { Icon } from '@equinor/eds-core-react'
+import { play_circle } from '@equinor/eds-icons'
 import styled from 'styled-components'
 
 type Props = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
@@ -20,7 +19,7 @@ const Wrapper = styled.div`
 const StyledButton = styled.button`
   position: absolute;
   margin: auto;
-  z-index: 10;
+  z-index: 1;
   top: 0;
   bottom: 0;
   right: 0;

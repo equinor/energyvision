@@ -21,7 +21,8 @@ const StyledFigure = styled.figure<{ allowFullScreen: boolean }>`
   justify-content: center;
   display: flex;
   margin: 0;
-  background-color: var(--grey-100);
+  /* background-color: var(--grey-100); */
+  background-color: transparent;
   video::-webkit-media-controls-fullscreen-button {
     ${({ allowFullScreen }) =>
       !allowFullScreen && {
@@ -81,7 +82,7 @@ const Ingress = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  margin-top: var(--space-xLarge);
+  margin-bottom: var(--space-xLarge);
 `
 
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
@@ -98,6 +99,11 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
             <IngressText value={ingress} />
           </Ingress>
         )}
+        {action && action.label && (
+          <ButtonWrapper>
+            <ButtonLink action={action} />
+          </ButtonWrapper>
+        )}
         <StyledFigure allowFullScreen={allowFullScreen}>
           <StyledHLSPlayer
             $aspectRatio={aspectRatio}
@@ -109,11 +115,6 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
             {...controls}
           />
         </StyledFigure>
-        {action && action.label && (
-          <ButtonWrapper>
-            <ButtonLink action={action} />
-          </ButtonWrapper>
-        )}
       </Container>
     </BackgroundContainer>
   )

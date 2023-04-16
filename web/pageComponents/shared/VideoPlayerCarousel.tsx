@@ -1,65 +1,79 @@
 import styled from 'styled-components'
 import type { VideoPlayerCarouselData } from '../../types/types'
-import { BackgroundContainer, HLSPlayer } from '@components'
+import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
 import { urlFor } from '../../common/helpers'
-import IngressText from './portableText/IngressText'
-import { ButtonLink } from './ButtonLink'
 import { StyledHLSPlayer } from './VideoPlayer'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right } from '@equinor/eds-icons'
-import { useRef, useState } from 'react'
-import { BackgroundColours } from '../../types/types'
+import { useEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
+  padding: var(
+    --iframe-innerPadding,
+    var(--space-xxLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large)
+  );
+  margin-bottom: calc(-1 * var(--space-small));
   text-align: var(--iframe-titleAlign, left);
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-xxLarge) var(--layout-paddingHorizontal-large));
+  padding: var(--iframe-innerPadding, var(--space-xxLarge) var(--layout-paddingHorizontal-medium));
   max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
   margin: auto;
 `
 
 const StyledButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   margin-top: auto;
   margin-bottom: auto;
+  min-height: 32px;
+  min-width: 32px;
+  background-color: white;
+  border-radius: 100px;
+  opacity: 0.6;
   top: 0;
-  bottom: var(--space-64);
-  z-index: 100;
+  bottom: 0;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+  z-index: 2;
   height: min-content;
-  background: none;
   border: none;
+  padding: 0;
+  transition: all 0.5s ease;
   cursor: pointer;
+  :hover {
+    opacity: 1;
+    background-color: var(--energy-red-100);
+    fill: white;
+  }
 `
 
-const StyledLeftButton = styled(StyledButton)`
+const StyledLeftButton = styled(StyledButton)<{ $isScrollable: boolean }>`
+  ${({ $isScrollable }) => !$isScrollable && { display: 'none' }};
   left: 0;
-  margin-left: calc(-1 * var(--space-3xLarge));
-  @media (min-width: 700px) {
-    margin-left: calc(-1 * var(--space-4xLarge));
-  }
+  margin-left: calc(-1 * (var(--space-12) + var(--space-2) + var(--space-1)));
 `
 
-const StyledRightButton = styled(StyledButton)`
+const StyledRightButton = styled(StyledButton)<{ $isScrollable: boolean }>`
+  ${({ $isScrollable }) => !$isScrollable && { display: 'none' }};
   right: 0;
-  margin-right: calc(-1 * var(--space-3xLarge));
-  @media (min-width: 700px) {
-    margin-right: calc(-1 * var(--space-4xLarge));
-  }
+  margin-right: calc(-1 * (var(--space-12) + var(--space-2) + var(--space-1)));
 `
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $isScrollable: boolean }>`
+  ${({ $isScrollable }) => !$isScrollable && { justifyContent: 'center' }};
   display: flex;
-  align-items: center;
+  align-items: start;
   overflow-x: auto;
   gap: var(--space-medium);
   padding-bottom: var(--space-small);
   ::-webkit-scrollbar {
     height: 5px;
+    cursor: pointer;
   }
   ::-webkit-scrollbar-thumb {
     background-color: var(--energy-red-100);
@@ -89,12 +103,14 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
   const { background, aspectRatio } = designOptions
   const scrollRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
+  const [isScrollable, setIsScrollable] = useState<boolean>(true)
 
   const handleScroll = (scrollType: string) => {
     const container = scrollRef.current
     if (container) {
+      const offset = Math.max(0.5 * container.offsetWidth, 320)
       container.scrollBy({
-        left: scrollType === 'forward' ? 400 : -400,
+        left: scrollType === 'forward' ? offset : -offset,
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
       })
     }
@@ -103,8 +119,8 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
   let width: number, height: number
 
   if (aspectRatio === '16:9') {
-    width = 920
-    height = 518
+    width = 1380
+    height = 777
   } else if (aspectRatio === '9:16') {
     width = 336
     height = 600
@@ -113,17 +129,36 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
     height = 600
   }
 
+  useEffect(() => {
+    const checkIfScrollable = function (el: HTMLDivElement) {
+      if (!el) return false
+      const hasScrollableContent = el?.scrollWidth > el?.clientWidth
+      const overflowYStyle = window.getComputedStyle(el).overflowX
+      const isOverflowHidden = overflowYStyle.indexOf('hidden') !== -1
+      return hasScrollableContent && !isOverflowHidden
+    }
+
+    const container = scrollRef.current
+    if (container) {
+      setIsScrollable(checkIfScrollable(container))
+      window.addEventListener('resize', () => setIsScrollable(checkIfScrollable(container)))
+      return () => {
+        window.removeEventListener('resize', () => setIsScrollable(checkIfScrollable(container)))
+      }
+    }
+  }, [scrollRef])
+
   return (
     <BackgroundContainer background={background} id={anchor}>
+      {title && <StyledHeading value={title} />}
       <Container>
-        {title && <StyledHeading value={title} />}
         <div style={{ position: 'relative' }}>
-          <Wrapper ref={scrollRef}>
-            <StyledLeftButton onClick={() => handleScroll('back')}>
-              <Icon size={48} color={background === 'Slate Blue' ? 'white' : 'inherit'} data={chevron_left} />
+          <Wrapper ref={scrollRef} $isScrollable={isScrollable}>
+            <StyledLeftButton $isScrollable={isScrollable} onClick={() => handleScroll('back')}>
+              <Icon color="inherit" size={24} data={chevron_left} />
             </StyledLeftButton>
-            <StyledRightButton onClick={() => handleScroll('forward')}>
-              <Icon size={48} color={background === 'Slate Blue' ? 'white' : 'inherit'} data={chevron_right} />
+            <StyledRightButton $isScrollable={isScrollable} onClick={() => handleScroll('forward')}>
+              <Icon color="inherit" size={24} data={chevron_right} />
             </StyledRightButton>
             {items.map((item) => (
               <VideoItem key={item.id} $aspectRatio={aspectRatio}>
