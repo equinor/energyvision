@@ -21,6 +21,11 @@ const Container = styled.div`
   margin: auto;
 `
 
+const HeadingWrapper = styled.div`
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
+`
+
 const VideoItem = styled.div<{ $aspectRatio: string }>`
   display: flex;
   flex-direction: column;
@@ -39,7 +44,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
 
   return (
     <BackgroundContainer background={background} id={anchor}>
-      {title && <StyledHeading value={title} />}
+      <HeadingWrapper>{title && <StyledHeading value={title} />}</HeadingWrapper>
       <Container>
         <Carousel>
           {items.map((item) => (
