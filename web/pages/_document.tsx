@@ -79,14 +79,7 @@ export default class MyDocument extends Document {
     return (
       <Html data-dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}>
         <Head>
-          <link
-            rel="stylesheet"
-            href={
-              Flags.IS_DEV
-                ? 'https://cdn.eds.equinor.com/font/equinor-uprights-vf.css'
-                : 'https://eds-static.equinor.com/font/equinor-uprights-vf.css'
-            }
-          />
+          <link rel="stylesheet" href="https://cdn.eds.equinor.com/font/equinor-uprights-vf.css" />
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
           {GTM_ID && (

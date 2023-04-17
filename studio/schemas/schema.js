@@ -90,6 +90,7 @@ import videoPlayerCarousel from './objects/videoPlayerCarousel'
 import imageCarousel from './objects/imageCarousel'
 import iframeCarousel from './objects/iframeCarousel'
 import hlsVideo from './objects/hlsVideo'
+import breadcrumbs from './objects/breadcrumbs'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -166,6 +167,7 @@ const RemainingSchemas = [
   iframeCarousel,
   imageCarousel,
   hlsVideo,
+  breadcrumbs,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

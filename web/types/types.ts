@@ -195,6 +195,7 @@ export type HeroType = {
 export type ContentType =
   | TeaserData
   | TextBlockData
+  | TextBlockDataV2
   | FullWidthImageData
   | FigureData
   | TextWithIconArrayData
@@ -222,10 +223,12 @@ export type PageSchema = {
   content?: ContentType[]
   id: string
   type: string
-  enableBreadcrumbs: boolean
-  useCustomBreadcrumbs: boolean
-  defaultBreadcrumbs: string[]
-  customBreadcrumbs: string[] | [] | null
+  breadcrumbs: {
+    enableBreadcrumbs: boolean
+    useCustomBreadcrumbs: boolean
+    defaultBreadcrumbs: string[]
+    customBreadcrumbs: string[] | [] | null
+  }
 }
 
 export type TopicPageSchema = PageSchema
@@ -260,6 +263,21 @@ export type TextBlockData = {
   type: string
   id: string
   title: PortableTextBlock[]
+  overline?: string
+  text: PortableTextBlock[]
+  ingress: PortableTextBlock[]
+  callToActions?: LinkData[]
+  splitList?: boolean
+  overrideButtonStyle?: boolean
+  anchor?: string
+  designOptions: DesignOptions
+}
+
+export type TextBlockDataV2 = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  image?: ImageWithAlt
   overline?: string
   text: PortableTextBlock[]
   ingress: PortableTextBlock[]

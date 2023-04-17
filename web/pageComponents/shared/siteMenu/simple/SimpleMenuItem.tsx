@@ -43,7 +43,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
       {label && <SimpleHeader>{label}</SimpleHeader>}
       <SimplePanel>
         <PanelContentWrapper>
-          {readMoreLink && (
+          {!!readMoreLink?.link?.slug && (
             <NextLink href={readMoreLink.link?.slug} passHref legacyBehavior>
               <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
             </NextLink>

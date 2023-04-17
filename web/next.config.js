@@ -1,5 +1,4 @@
-const archiveServerHostname =
-  process.env.ARCHIVE_CONTENT_LINK || 'https://envis-legacy.azureedge.net/equinor-archive-content'
+const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 /* eslint-disable @typescript-eslint/no-var-requires */
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
@@ -122,7 +121,7 @@ export default withBundle(
             },
           ],
           permanent: true,
-          destination: dataset === 'global-development' ? '/not-supported-dev.html' : '/not-supported.html',
+          destination: '/not-supported.html',
         },
       ]
     },
