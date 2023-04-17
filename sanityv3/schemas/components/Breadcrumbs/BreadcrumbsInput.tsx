@@ -32,17 +32,21 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
     const resolveReferences = async (references: Reference[]) => {
       if (!slug.current) return false
 
-      const query = `*[_id in $refs]{ "slug": slug.current }`
+      const query = `*[_id in $refs]{ _id, "slug": slug.current }`
       const params = { refs: references.map((ref: Reference) => ref._ref) }
 
       const results = await client.fetch(query, params)
 
       if (results && results.length > 0) {
+        const orderedResults = references.map((i: Reference) =>
+          results.find((j: { _id: string; slug: string }) => j._id === i._ref),
+        )
+
         return setBreadcrumbs(
           constructBreadcrumbs(
             'home',
             slug.current,
-            results.map((item: { slug: string }) => item.slug),
+            orderedResults.map((item: { slug: string }) => item.slug),
           ),
         )
       }
@@ -52,6 +56,7 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
 
     if (value) {
       if (value?.useCustomBreadcrumbs && value?.customBreadcrumbs) {
+        console.log(value?.customBreadcrumbs)
         const { customBreadcrumbs } = value
 
         if (customBreadcrumbs.length == 0) return setBreadcrumbs(defaultBreadcrumbs)
