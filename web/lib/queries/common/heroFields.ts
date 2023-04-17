@@ -11,9 +11,9 @@ export const heroFields = /* groq */ `{
       heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
     "loopingVideo": {
-      "title": heroLoopingVideo->title,
+      "title": heroLoopingVideo->video.title,
       "thumbnail": heroLoopingVideo->thumbnail,
-      "url": heroLoopingVideo->video.asset->url,
+      "url": heroLoopingVideo->video.url,
       "ratio": heroLoopingVideoRatio,
     },
     "video": {

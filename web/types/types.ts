@@ -211,6 +211,8 @@ export type ContentType =
   | StockValuesData
   | TwitterEmbedData
   | VideoData
+  | VideoPlayerData
+  | VideoPlayerCarouselData
 
 export type PageSchema = {
   slug: string
@@ -645,6 +647,57 @@ export type VideoData = {
   designOptions: {
     background: BackgroundColours
   }
+}
+
+export enum VideoPlayerRatios {
+  '16:9' = '16:9',
+  '9:16' = '9:16',
+  '1:1' = '1:1',
+}
+
+export type VideoPlayerData = {
+  id: string
+  type: string
+  video: {
+    title: string
+    url: string
+    thumbnail: ImageWithAlt
+  }
+  videoControls: {
+    playButton: boolean
+    controls: boolean
+    loop: boolean
+    allowFullScreen: boolean
+    autoPlay: boolean
+    muted: boolean
+  }
+  designOptions: {
+    aspectRatio: VideoPlayerRatios
+    background: BackgroundColours
+    height?: number
+  }
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  action?: LinkData
+}
+
+export type VideoPlayerCarouselData = {
+  id: string
+  type: string
+  items: {
+    id: string
+    title: PortableTextBlock[]
+    video: {
+      title: string
+      url: string
+      thumbnail: ImageWithAlt
+    }
+  }[]
+  designOptions: {
+    aspectRatio: VideoPlayerRatios
+    background: BackgroundColours
+  }
+  title?: PortableTextBlock[]
 }
 
 export type VideoHeroData = {
