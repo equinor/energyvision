@@ -60,7 +60,7 @@ specifiers:
   next: 13.0.5
   next-sanity: ^4.1.7
   next-sanity-image: ^6.0.0
-  next-seo: ^5.1.0
+  next-seo: ^6.0.0
   next-transpile-modules: 10.0.0
   only-allow: ^1.1.1
   prettier: 2.6.2
@@ -124,7 +124,7 @@ dependencies:
   next: 13.0.5_t7ss3ubh4wigfvyfclbvqff3gm
   next-sanity: 4.1.7_tbefy6flnukvqlnx7xiy3q6hgu
   next-sanity-image: 6.0.0_gazxunr7ur4zhsnz5lnx4mqmoa
-  next-seo: 5.4.0_7iuvftg57tblwyxclfkwku5xo4
+  next-seo: 6.0.0_7iuvftg57tblwyxclfkwku5xo4
   next-transpile-modules: 10.0.0
   only-allow: 1.1.1
   query-string: 7.1.1
@@ -9479,7 +9479,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -14214,8 +14214,8 @@ packages:
       - supports-color
     dev: false
 
-  /next-seo/5.4.0_7iuvftg57tblwyxclfkwku5xo4:
-    resolution: {integrity: sha512-R9DhajPwJnR/lsF2hZ8cN8uqr5CVITsRrCG1AF5+ufcaybKYOvnH8sH9MaH4/hpkps3PQ9H71S7J7SPYixAYzQ==}
+  /next-seo/6.0.0_7iuvftg57tblwyxclfkwku5xo4:
+    resolution: {integrity: sha512-jKKt1p1z4otMA28AyeoAONixVjdYmgFCWwpEFtu+DwRHQDllVX3RjtyXbuCQiUZEfQ9rFPBpAI90vDeLZlMBdg==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0
       react: '>=16.0.0'
@@ -15191,6 +15191,17 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
+    dev: true
+
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
     dev: true
 
   /promise.allsettled/1.0.6:
