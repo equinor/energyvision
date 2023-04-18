@@ -70,7 +70,7 @@ specifiers:
   react-dom: ^18.2.0
   react-error-boundary: ^3.1.4
   react-focus-lock: ^2.9.2
-  react-hook-form: 7.42.0
+  react-hook-form: 7.43.9
   react-instantsearch-hooks-server: ^6.35.0
   react-instantsearch-hooks-web: ^6.35.0
   react-intl: ^6.0.2
@@ -133,7 +133,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-error-boundary: 3.1.4_react@18.2.0
   react-focus-lock: 2.9.2_ulhmhxukhxjgxaybrsjlob7ffu
-  react-hook-form: 7.42.0_react@18.2.0
+  react-hook-form: 7.43.9_react@18.2.0
   react-instantsearch-hooks-server: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
   react-instantsearch-hooks-web: 6.35.0_q6yhanr4arcizpfsqrdxn2ic6e
   react-intl: 6.0.2_uz2ogxeagc4rbieizlfzyaazee
@@ -8386,7 +8386,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -14152,6 +14152,17 @@ packages:
         optional: true
     dev: true
 
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
+    dev: true
+
   /promise.allsettled/1.0.6:
     resolution: {integrity: sha512-22wJUOD3zswWFqgwjNHa1965LvqTX87WPu/lreY2KSd7SVcERfuZ4GfUaOnJNnvtoIv2yXT/W00YIGMetXtFXg==}
     engines: {node: '>= 0.4'}
@@ -14443,8 +14454,8 @@ packages:
       use-sidecar: 1.1.2_ulhmhxukhxjgxaybrsjlob7ffu
     dev: false
 
-  /react-hook-form/7.42.0_react@18.2.0:
-    resolution: {integrity: sha512-XDEjSUZmT68FOSv2FaD3XlN1sa2HB9vIQ9SVKsogGrHUY43o2aANQDC9LgHa4zusqCMKLG3qitpTcEhpYWHBFw==}
+  /react-hook-form/7.43.9_react@18.2.0:
+    resolution: {integrity: sha512-AUDN3Pz2NSeoxQ7Hs6OhQhDr6gtF9YRuutGDwPQqhSUAHJSgGl2VeY3qN19MG0SucpjgDiuMJ4iC5T5uB+eaNQ==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
