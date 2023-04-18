@@ -56,7 +56,6 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
 
     if (value) {
       if (value?.useCustomBreadcrumbs && value?.customBreadcrumbs) {
-        console.log(value?.customBreadcrumbs)
         const { customBreadcrumbs } = value
 
         if (customBreadcrumbs.length == 0) return setBreadcrumbs(defaultBreadcrumbs)
