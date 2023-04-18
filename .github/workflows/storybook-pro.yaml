@@ -4,7 +4,6 @@ on:
     inputs:
       environment:
         description: 'Environment for storybook'
-        required: true
         type: choice
         options:
           - development
