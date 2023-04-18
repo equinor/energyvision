@@ -44,7 +44,7 @@ specifiers:
   algoliasearch: ^4.13.0
   babel-plugin-styled-components: ^2.0.6
   date-fns: ^2.29.3
-  date-fns-tz: ^1.3.7
+  date-fns-tz: ^2.0.0
   easy-soap-request: ^4.6.0
   focus-visible: ^5.2.0
   framer-motion: ^6
@@ -111,7 +111,7 @@ dependencies:
   '@types/xml2js': 0.4.11
   algoliasearch: 4.13.0
   date-fns: 2.29.3
-  date-fns-tz: 1.3.7_date-fns@2.29.3
+  date-fns-tz: 2.0.0_date-fns@2.29.3
   easy-soap-request: 4.7.0
   focus-visible: 5.2.0
   framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
@@ -10270,8 +10270,8 @@ packages:
       whatwg-url: 11.0.0
     dev: true
 
-  /date-fns-tz/1.3.7_date-fns@2.29.3:
-    resolution: {integrity: sha512-1t1b8zyJo+UI8aR+g3iqr5fkUHWpd58VBx8J/ZSQ+w7YrGlw80Ag4sA86qkfCXRBLmMc4I2US+aPMd4uKvwj5g==}
+  /date-fns-tz/2.0.0_date-fns@2.29.3:
+    resolution: {integrity: sha512-OAtcLdB9vxSXTWHdT8b398ARImVwQMyjfYGkKD2zaGpHseG2UPHbHjXELReErZFxWdSLph3c2zOaaTyHfOhERQ==}
     peerDependencies:
       date-fns: '>=2.0.0'
     dependencies:
