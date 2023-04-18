@@ -39,7 +39,6 @@ const heroType = {
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
       Flags.IS_DEV && { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
-      Flags.IS_DEV && { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
     ].filter((e) => e),
   },
   initialValue: 'default',
@@ -117,26 +116,6 @@ const heroLink = {
   validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
 }
 
-const background = {
-  title: 'Hero Background',
-  description: 'Pick a colour for the background. Default is white.',
-  name: 'heroBackground',
-  type: 'colorlist',
-  options: {
-    borderradius: {
-      outer: '100%',
-      inner: '100%',
-    },
-    tooltip: true,
-    list: Colors,
-  },
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
-  },
-  fieldset: 'header',
-  initialValue: Colors[0],
-}
-
 const heroImage = {
   title: 'Hero image',
   name: 'heroFigure',
@@ -193,22 +172,6 @@ const heroLoopingVideoRatio = {
   fieldset: 'header',
 }
 
-const heroVideo = {
-  title: 'Hero video',
-  name: 'heroVideo',
-  type: 'mux.video',
-  fieldset: 'header',
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.VIDEO_HERO && !value) return 'Field is required'
-      return true
-    }),
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-}
-
 const heroVideoLoop = {
   title: 'Play in loop',
   name: 'heroVideoLoop',
@@ -243,7 +206,6 @@ export default [
   heroImage,
   heroLoopingVideoRatio,
   heroLoopingVideo,
-  heroVideo,
   heroVideoAutoPlay,
   heroVideoLoop,
 ]

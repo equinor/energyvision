@@ -20,7 +20,6 @@ specifiers:
   sanity: ^3.0.0
   sanity-plugin-documents-pane: ^2.1.0
   sanity-plugin-iframe-pane: ^2.2.0
-  sanity-plugin-mux-input: ^2.0.7
   slugify: ^1.6.5
   speakingurl: ^14.0.1
   styled-components: ^5.3.6
@@ -41,7 +40,6 @@ dependencies:
   sanity: 3.2.6_uzkadyugscbibgo6xwbyewzpjq
   sanity-plugin-documents-pane: 2.1.0_hfs3wd77liajulqli2qbldk5tq
   sanity-plugin-iframe-pane: 2.2.0_hfs3wd77liajulqli2qbldk5tq
-  sanity-plugin-mux-input: 2.0.8_p7mn2tnqd4vu6wsp7dsk2i4qju
   slugify: 1.6.5
   speakingurl: 14.0.1
   styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
@@ -1856,40 +1854,6 @@ packages:
     dependencies:
       '@motionone/dom': 10.15.5
       tslib: 2.5.0
-    dev: false
-
-  /@mux/mux-video-react/0.7.3_5ndqzdd6t4rivxsukjv3i3ak2q:
-    resolution: {integrity: sha512-e0rDfEzWBsUZTQJ9+YNyq+5MmAixjWR6CPVU5YAcOG/9jTjN7zPb/lPnivcbBNCp/IbtFqntVSm11qKDS4Fp+Q==}
-    peerDependencies:
-      '@types/react': ^17.0.0 || ^18
-      '@types/react-dom': '*'
-      react: ^17.0.2 || ^18
-      react-dom: ^17.0.2 || ^18
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-    dependencies:
-      '@mux/playback-core': 0.15.1
-      '@types/react': 18.0.27
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /@mux/playback-core/0.15.1:
-    resolution: {integrity: sha512-1e2rtTA5CGBao8kk2USZRHRkvrU3VBJjsoYp7Mp9xNp4IrPmTzka54mg+zaiA2phRRrDJaycAdcVy/2oAJVETg==}
-    dependencies:
-      hls.js: 1.2.3
-      mux-embed: 4.18.0
-    dev: false
-
-  /@mux/upchunk/3.0.2:
-    resolution: {integrity: sha512-IDNwH84hYl6saWDlpfc6QVnEf72xtK6vsoFJTGET4o4aDPba25StMqFQjCN16rz82fy7Y14uepS9hivQP4sbOA==}
-    dependencies:
-      event-target-shim: 6.0.2
-      xhr: 2.6.0
     dev: false
 
   /@nicolo-ribaudo/eslint-scope-5-internals/5.1.1-v1:
@@ -5120,10 +5084,6 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: false
 
-  /mux-embed/4.18.0:
-    resolution: {integrity: sha512-9tgHLg8plmJAOiOzG2Tvi1MO7LO44DaC4V9W67kxrfzqco37UmreiKBwvrykncW4VUwU7+nectz8AUjcYBCz4g==}
-    dev: false
-
   /nano-pubsub/1.0.2:
     resolution: {integrity: sha512-HtPs1RbULM/z8wt3BbeeZlxVNiJbl+zQAwwrbc0KAq5NHaCG3MmffOVCpRhNTs+TK67MdN6aZ+5wzPtRZvME+w==}
     dev: false
@@ -5982,41 +5942,6 @@ packages:
       - react-dom
       - react-is
       - styled-components
-    dev: false
-
-  /sanity-plugin-mux-input/2.0.8_p7mn2tnqd4vu6wsp7dsk2i4qju:
-    resolution: {integrity: sha512-FjZHC8LpSsRCw5cOUfiZJL7iybeEYk1YKVSXr+u4SMorUsWfH28D9M0O5iwXDVMjVVOENqi7o+6XBB9q3gIdIQ==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: ^18
-      react-is: ^18
-      sanity: ^3
-      styled-components: ^5.2
-    dependencies:
-      '@mux/mux-video-react': 0.7.3_5ndqzdd6t4rivxsukjv3i3ak2q
-      '@mux/upchunk': 3.0.2
-      '@sanity/icons': 2.2.2_react@18.2.0
-      '@sanity/incompatible-plugin': 1.0.4_biqbaboplfbrettd7655fr4n2y
-      '@sanity/ui': 1.2.0_23mhwjhnzfjwvdn7ol54k26zom
-      '@sanity/uuid': 3.0.1
-      classnames: 2.3.2
-      jsonwebtoken-esm: 1.0.5
-      media-chrome: 0.17.1
-      motion: 10.15.5
-      react: 18.2.0
-      react-is: 18.2.0
-      rxjs: 7.8.0
-      sanity: 3.2.6_uzkadyugscbibgo6xwbyewzpjq
-      scroll-into-view-if-needed: 3.0.4
-      styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
-      suspend-react: 0.0.9_react@18.2.0
-      swr: 2.0.3_react@18.2.0
-      use-device-pixel-ratio: 1.1.2_react@18.2.0
-      use-error-boundary: 2.0.6_biqbaboplfbrettd7655fr4n2y
-    transitivePeerDependencies:
-      - '@types/react'
-      - '@types/react-dom'
-      - react-dom
     dev: false
 
   /sanity/3.2.6_uzkadyugscbibgo6xwbyewzpjq:
