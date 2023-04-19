@@ -123,78 +123,16 @@ const heroImage = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if ((parent?.heroType === HeroTypes.VIDEO_HERO || parent?.heroType === HeroTypes.LOOPING_VIDEO) && !value)
+      if ((parent?.heroType === HeroTypes.LOOPING_VIDEO) && !value)
         return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType === HeroTypes.VIDEO_HERO || parent?.heroType === HeroTypes.LOOPING_VIDEO
+    return  parent?.heroType === HeroTypes.LOOPING_VIDEO
   },
   fieldset: 'header',
 }
 
-const heroLoopingVideo = {
-  title: 'Video',
-  name: 'heroLoopingVideo',
-  type: 'reference',
-  to: [{ type: 'videoFile' }],
-  fieldset: 'header',
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
-      return true
-    }),
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
-  },
-}
-
-const heroLoopingVideoRatio = {
-  title: 'Video ratio',
-  name: 'heroLoopingVideoRatio',
-  type: 'string',
-  options: {
-    list: [
-      { title: 'Original', value: 'original' },
-      { title: 'Narrow', value: 'narrow' },
-    ],
-  },
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
-  },
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
-      return true
-    }),
-  fieldset: 'header',
-}
-
-const heroVideoLoop = {
-  title: 'Play in loop',
-  name: 'heroVideoLoop',
-  type: 'boolean',
-  description: 'Enable this to play the hero video in loop.',
-  fieldset: 'header',
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-  initialValue: true,
-}
-
-const heroVideoAutoPlay = {
-  title: 'Auto play hero video',
-  name: 'heroVideoAutoPlay',
-  description: 'Autoplay muted hero video when page is loaded.',
-  type: 'boolean',
-  fieldset: 'header',
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-  initialValue: true,
-}
 export default [
   title,
   heroType,
@@ -203,9 +141,5 @@ export default [
   heroIngress,
   heroLink,
   // background,
-  heroImage,
-  heroLoopingVideoRatio,
-  heroLoopingVideo,
-  heroVideoAutoPlay,
-  heroVideoLoop,
+  heroImage
 ]
