@@ -1,5 +1,6 @@
 import { visionTool } from '@sanity/vision'
 import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
+import { scheduledPublishing } from "@sanity/scheduled-publishing";
 import { muxInput } from 'sanity-plugin-mux-input'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
@@ -23,6 +24,7 @@ export default defineConfig({
       title: 'Desk',
     }),
     visionTool(),
+    scheduledPublishing(),
     muxInput(),
   ],
 
