@@ -9,14 +9,14 @@ on:
           - development
           - production
         default: development
-    push:
-      branches:
-        - main
-      paths:
-        - 'web/components/**'
-        - 'web/.storybook/**'
-        - 'web/package.json'
-        - 'pnpm-lock.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/components/**'
+      - 'web/.storybook/**'
+      - 'web/package.json'
+      - 'pnpm-lock.yaml'
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 jobs:
