@@ -1,3 +1,4 @@
+import { HLSPlayer } from '@components'
 import styled from 'styled-components'
 import { urlFor } from '../../../common/helpers'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
@@ -17,23 +18,21 @@ const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const { title, url, thumbnail, ratio } = video
   const style: React.CSSProperties = {
-    minWidth: '60vw',
+    width: '100%',
     objectFit: ratio === 'narrow' ? 'cover' : undefined,
   }
   return (
     <StyledFigure ratio={ratio}>
-      <video
+      <HLSPlayer
         loop
         muted
         autoPlay
         playsInline
         title={title}
         poster={urlFor(thumbnail).url()}
-        src={url.replace('cdn.sanity.io', 'cdn.equinor.com')}
+        src={url}
         style={style}
-      >
-        <source type={'video/mp4'} />
-      </video>
+      />
     </StyledFigure>
   )
 }

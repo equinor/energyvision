@@ -34,6 +34,7 @@ type TopicPageProps = {
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
+  const { breadcrumbs } = data
 
   return (
     <>
@@ -46,12 +47,12 @@ const TopicPage = ({ data }: TopicPageProps) => {
       <TopicPageLayout>
         <SharedBanner title={data.title} hero={data.hero} />
 
-        {Flags.IS_DEV && data.enableBreadcrumbs && (
+        {Flags.IS_DEV && breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             slug={data?.slug}
-            useCustomBreadcrumbs={data?.useCustomBreadcrumbs}
-            defaultBreadcrumbs={data?.defaultBreadcrumbs}
-            customBreadcrumbs={data?.customBreadcrumbs}
+            useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
+            defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
+            customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
             hasTopMargin={data.hero.type !== 'default'}
           />
         )}
