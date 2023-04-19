@@ -66,6 +66,7 @@ export default {
         { type: 'anchorLink' },
         Flags.HAS_MUX && { type: 'video' },
         { type: 'imageCarousel' },
+        { type: 'iframeCarousel' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

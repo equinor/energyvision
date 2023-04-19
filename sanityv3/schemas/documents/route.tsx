@@ -77,6 +77,10 @@ export default (isoCode: string, title: string) => {
         fieldset: 'slug',
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
+      Flags.IS_DEV && {
+        name: 'breadcrumbs',
+        type: 'breadcrumbs',
+      },
       {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',

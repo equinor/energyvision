@@ -4,7 +4,6 @@ import TitleText from '../shared/portableText/TitleText'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/types'
 import { useState } from 'react'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const Wrapper = styled.div`
   padding: 0 var(--layout-paddingHorizontal-medium);
@@ -50,23 +49,11 @@ const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: stri
     <Wrapper id={anchor}>
       {title && <StyledHeading value={title} level="h2" size="xl" />}
       <Articles {...rest}>
-        {Flags.IS_DEV ? (
-          <>
-            {pagedArticles.map((article) => (
-              <NewsCard key={article.id} data={article} />
-            ))}
-          </>
-        ) : (
-          <>
-            {articles.map((article) => (
-              <NewsCard data={article} key={article.id} />
-            ))}
-          </>
-        )}
+        {pagedArticles.map((article) => (
+          <NewsCard key={article.id} data={article} />
+        ))}
       </Articles>
-      {Flags.IS_DEV && (
-        <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />
-      )}
+      <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />
     </Wrapper>
   )
 }

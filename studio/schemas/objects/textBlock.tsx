@@ -45,6 +45,15 @@ export default {
   type: 'object',
   fieldsets: [
     {
+      title: 'Thumbnail Image',
+      name: 'thumbnail',
+      description: 'A small image acting as a thumbnail above the title.',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+    {
       title: 'Eyebrow headline',
       name: 'eyebrow',
       description: 'A descriptive keyword, category or phrase that appears over the main headline.',
@@ -77,6 +86,14 @@ export default {
     },
   ],
   fields: [
+    {
+      name: 'image',
+      type: 'imageWithAlt',
+      options: {
+        hotspot: true,
+      },
+      fieldset: 'thumbnail',
+    },
     {
       name: 'overline',
       title: 'Eyebrow',

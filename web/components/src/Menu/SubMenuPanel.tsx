@@ -1,23 +1,8 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { AccordionPanel as CAccordionPanel, AccordionPanelProps as ChakraAccordionPanelProps } from '@chakra-ui/react'
-import { AccordionPanel as RAccordionPanel, AccordionPanelProps as RAccordionPanelProps } from '@reach/accordion'
-import { Flags } from '../../../common/helpers/datasetHelpers'
+import { AccordionPanel, AccordionPanelProps } from '@chakra-ui/react'
 
-const StyledPanel = styled(RAccordionPanel)`
-  background-color: var(--background-color);
-  @media (min-width: 1300px) {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background-color: var(--ui-background-default);
-    padding: var(--space-medium) 0;
-    /* @TODO: Find a nice value */
-    max-width: 1700px;
-    margin: 0 auto;
-  }
-`
-const ChakraStyledPanel = styled(CAccordionPanel)`
+const StyledPanel = styled(AccordionPanel)`
   background-color: var(--background-color);
   @media (min-width: 1300px) {
     position: absolute;
@@ -40,8 +25,7 @@ const PanelContainer = styled.div`
 
 export type SubMenuPanelProps = {
   animate?: boolean
-} & ChakraAccordionPanelProps &
-  RAccordionPanelProps &
+} & AccordionPanelProps &
   HTMLAttributes<HTMLDivElement>
 
 export const SubMenuPanel = forwardRef<HTMLDivElement, SubMenuPanelProps>(function SubMenuPanel(
@@ -49,16 +33,8 @@ export const SubMenuPanel = forwardRef<HTMLDivElement, SubMenuPanelProps>(functi
   ref,
 ) {
   return (
-    <>
-      {Flags.IS_DEV ? (
-        <ChakraStyledPanel ref={ref} {...rest}>
-          <PanelContainer>{children}</PanelContainer>
-        </ChakraStyledPanel>
-      ) : (
-        <StyledPanel ref={ref} {...rest}>
-          <PanelContainer>{children}</PanelContainer>
-        </StyledPanel>
-      )}
-    </>
+    <StyledPanel ref={ref} {...rest}>
+      <PanelContainer>{children}</PanelContainer>
+    </StyledPanel>
   )
 })

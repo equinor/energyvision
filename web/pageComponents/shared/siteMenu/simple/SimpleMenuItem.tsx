@@ -4,10 +4,7 @@ import NextLink from 'next/link'
 import { Link, List, Menu } from '@components'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
-import { ChakraSimpleHeader } from './ChakraSimpleHeader'
-
 import type { SimpleGroupData } from '../../../../types/types'
-import { Flags } from '../../../../common/helpers/datasetHelpers'
 
 const { SubMenu } = Menu
 const { Item } = List
@@ -43,14 +40,10 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
 
   return (
     <SimpleSubMenu id={index}>
-      {label && Flags.IS_DEV ? (
-        <ChakraSimpleHeader>{label}</ChakraSimpleHeader>
-      ) : (
-        label && <SimpleHeader>{label}</SimpleHeader>
-      )}
+      {label && <SimpleHeader>{label}</SimpleHeader>}
       <SimplePanel>
         <PanelContentWrapper>
-          {readMoreLink && (
+          {!!readMoreLink?.link?.slug && (
             <NextLink href={readMoreLink.link?.slug} passHref legacyBehavior>
               <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
             </NextLink>

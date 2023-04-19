@@ -1,13 +1,12 @@
 import { list, tag as tagIcon } from '@equinor/eds-icons'
 import { map } from 'rxjs/operators'
-import { useDocumentStore } from 'sanity'
 import { EdsIcon, NewsDocuments } from '../../../../icons'
 import { i18n } from '../../../../schemas/documentTranslation'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
-const localNewsStructure = (S) => {
-  const documentStore = useDocumentStore()
+const localNewsStructure = (S, context) => {
+  const { documentStore } = context
   const documentName = 'localNews'
 
   return () =>
@@ -61,7 +60,7 @@ const localNewsStructure = (S) => {
     )
 }
 
-export const LocalNews = (S) =>
+export const LocalNews = (S, context) =>
   Flags.HAS_LOCAL_NEWS
-    ? S.listItem().title('Local news').icon(NewsDocuments).schemaType('localNews').child(localNewsStructure(S))
+    ? S.listItem().title('Local news').icon(NewsDocuments).schemaType('localNews').child(localNewsStructure(S, context))
     : EmptyItem

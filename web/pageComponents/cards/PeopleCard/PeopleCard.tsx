@@ -2,7 +2,6 @@ import { Card, Heading } from '@components'
 import { outlineTemplate, Tokens } from '@utils'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import type { PeopleCardData } from '../../../types/types'
 import CV from './CV'
@@ -131,6 +130,7 @@ const StyledMedia = styled(Media)`
 const CardContent = styled.div`
   height: 100%;
   display: flex;
+  max-width: 250px;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;

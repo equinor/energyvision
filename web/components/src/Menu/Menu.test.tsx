@@ -16,19 +16,6 @@ describe('Menu', () => {
   const header = 'Header'
   const content = 'Content'
 
-  it('Can extend the css for the component', () => {
-    const { container } = render(
-      <StyledMenu>
-        <SubMenu id={0}>
-          <SubMenuHeader>{header}</SubMenuHeader>
-          <SubMenuPanel>
-            <SubMenuGroups>{content}</SubMenuGroups>
-          </SubMenuPanel>
-        </SubMenu>
-      </StyledMenu>,
-    )
-    expect(container.firstChild).toHaveStyleRule('clip-path', 'unset')
-  })
   it('Can have a top level title', () => {
     const { getByText } = render(
       <StyledMenu>

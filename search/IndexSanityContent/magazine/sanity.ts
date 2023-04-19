@@ -4,6 +4,14 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 
+export enum HeroTypes {
+  DEFAULT = 'default',
+  FIFTY_FIFTY = 'fiftyFifty',
+  FULL_WIDTH_IMAGE = 'fullWidthImage',
+  LOOPING_VIDEO = 'loopingVideo',
+  VIDEO_HERO = 'videoHero',
+}
+
 const publishDateTimeQuery = /* groq */ `
   select(
     customPublicationDate == true =>
@@ -31,9 +39,8 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   },
   "magazineTags": magazineTags[]->.title[$lang],
   "heroFigure": select(
-    heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
-    heroFigure
-  ),
+    heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": heroLoopingVideo->thumbnail },
+    heroFigure),
   openGraphImage,
   "publishDateTime": ${publishDateTimeQuery},
   "docToClear": _id match $id
@@ -78,14 +85,6 @@ export type ImageWithAltAndCaption = {
 
 export type VideoData = {
   playbackId: string
-}
-
-export enum HeroTypes {
-  DEFAULT = 'default',
-  FIFTY_FIFTY = 'fiftyFifty',
-  FULL_WIDTH_IMAGE = 'fullWidthImage',
-  LOOPING_VIDEO = 'loopingVideo',
-  VIDEO_HERO = 'videoHero',
 }
 
 export type MagazineArticle = {

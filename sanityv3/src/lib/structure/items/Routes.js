@@ -1,6 +1,5 @@
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../../../icons'
-
 import { languages } from '../../../../languages'
 
 import flags from '../../../../icons/countries'
@@ -22,12 +21,13 @@ const views = (S) => [S.view.form().title('Edit route'), S.view.component(Previe
 
 const schema = 'route'
 
-const topicRoutes = (S) =>
+const topicRoutes = (S, context) =>
   languages.map((lang) =>
-    S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(S, schema, lang.name)),
+    S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(S, context, lang.name)),
   )
 
-function routeStructure(S, schema, isoCode) {
+function routeStructure(S, context, isoCode) {
+  const { documentStore } = context
   const documentName = `${schema}_${isoCode}`
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
   const categoryParentsWithDrafts = `_type == "${documentName}" && !defined(parent)`
@@ -40,7 +40,7 @@ function routeStructure(S, schema, isoCode) {
           .items([
             S.listItem()
               .title('Top Level Routes')
-              .child(() =>
+              .child(
                 S.documentList()
                   .title('Topic Categories')
                   .schemaType(documentName)
@@ -55,7 +55,7 @@ function routeStructure(S, schema, isoCode) {
                 .id(`${parent._id}`)
                 .title(`${parent.slug?.current || 'Missing slug'}`)
                 .icon(RouteDocuments)
-                .child(() =>
+                .child(
                   S.documentList()
                     .title('Child Routes')
                     .schemaType(documentName)
@@ -77,8 +77,8 @@ function routeStructure(S, schema, isoCode) {
     )
 }
 
-export const Routes = (S) =>
+export const Routes = (S, context) =>
   S.listItem()
     .title('Topic Routes')
     .icon(RouteDocuments)
-    .child(S.list().id('routes').title('Routes').items(topicRoutes(S)))
+    .child(S.list().id('routes').title('Routes').items(topicRoutes(S, context)))

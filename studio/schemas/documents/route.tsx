@@ -5,7 +5,6 @@ import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { HeroTypes } from '../HeroTypes'
-import { breadcrumbs } from '../objects/breadcrumbs'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -25,6 +24,7 @@ export default (isoCode: string, title: string) => {
       Flags.IS_DEV && {
         title: 'Breadcrumbs',
         name: 'breadcrumbs',
+        description: '🔜 This feature will be improved upon in version 3 of the Sanity Studio',
         options: {
           collapsible: true,
           collapsed: false,
@@ -88,14 +88,10 @@ export default (isoCode: string, title: string) => {
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
       Flags.IS_DEV && {
-        type: 'string',
-        name: 'breadcrumbsInput',
-        title: 'Breadcrumbs input',
-        description:
-          'Enter the desired breadcrumbs here, for example "about/equinor/contact". Breadcrumbs must be built from existing and published routes.',
-        fieldset: 'breadcrumbs',
+        name: 'breadcrumbs',
+        title: 'Breadcrumbs',
+        type: 'breadcrumbs',
       },
-      Flags.IS_DEV && breadcrumbs('breadcrumbsInput', 'breadcrumbs'),
       {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',
