@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Table, TableProps, BackgroundContainer, Link } from '@components'
 import styled from 'styled-components'
 
@@ -26,7 +26,7 @@ const TableWrapper = styled.div`
   display: flex;
   place-content: center;
 `
-export const Default: Story<TableProps> = (args) => (
+export const Default: StoryFn<TableProps> = (args) => (
   <Table {...args}>
     <Table.Caption>Table caption</Table.Caption>
     <Table.Head>
@@ -58,7 +58,7 @@ export const Default: Story<TableProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const WithDifferentInputs: Story<TableProps> = ({}) => (
+export const WithDifferentInputs: StoryFn<TableProps> = ({}) => (
   <Table>
     <Table.Caption>Table caption</Table.Caption>
     <Table.Head>
@@ -92,7 +92,7 @@ WithDifferentInputs.parameters = {
     },
   },
 }
-export const OnSmallScreens: Story<TableProps> = ({}) => (
+export const OnSmallScreens: StoryFn<TableProps> = ({}) => (
   <Table>
     <Table.Caption>Table caption</Table.Caption>
     <Table.Head>
@@ -150,7 +150,7 @@ OnSmallScreens.parameters = {
   },
 }
 
-export const WithCenteredCaption: Story<TableProps> = ({}) => (
+export const WithCenteredCaption: StoryFn<TableProps> = ({}) => (
   <Table>
     <Table.Caption center>Table caption</Table.Caption>
     <Table.Head>
@@ -189,7 +189,7 @@ WithCenteredCaption.parameters = {
   },
 }
 
-export const WithDifferentBackgrounds: Story<TableProps> = ({}) => (
+export const WithDifferentBackgrounds: StoryFn<TableProps> = ({}) => (
   <Grid>
     <BackgroundContainer background="Moss Green Light">
       <TableWrapper>

@@ -1,5 +1,5 @@
-import { Story, Meta } from '@storybook/react/types-6-0'
-import { Topbar, Logo } from '@components'
+import type { StoryFn, Meta } from '@storybook/react'
+import { Topbar, LogoPrimary } from '@components'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -32,7 +32,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story = () => (
+export const Default: StoryFn = () => (
   <Wrapper>
     <Topbar>
       <p>This is the topbar</p>
@@ -45,10 +45,10 @@ export const Default: Story = () => (
   </Wrapper>
 )
 
-export const WithLogo: Story = () => (
+export const WithLogo: StoryFn = () => (
   <Wrapper>
     <Topbar>
-      <Logo />
+      <LogoPrimary />
     </Topbar>
     <BodyWrapper>
       <p>Top of page</p>

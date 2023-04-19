@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { FigureCaption, FigureCaptionProps } from '@components'
 
 export default {
@@ -19,7 +19,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<FigureCaptionProps> = (args) => (
+export const Default: StoryFn<FigureCaptionProps> = (args) => (
   <FigureCaption {...args}>
     <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
     <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
@@ -28,7 +28,7 @@ export const Default: Story<FigureCaptionProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const Medium: Story<FigureCaptionProps> = () => (
+export const Medium: StoryFn<FigureCaptionProps> = () => (
   <FigureCaption size="medium">
     <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
     <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
@@ -37,7 +37,7 @@ export const Medium: Story<FigureCaptionProps> = () => (
 
 Medium.storyName = 'With larger font size'
 
-export const WithCaptionOnly: Story<FigureCaptionProps> = () => (
+export const WithCaptionOnly: StoryFn<FigureCaptionProps> = () => (
   <FigureCaption>
     <FigureCaption.Caption>Exciting opportunities abroad</FigureCaption.Caption>
   </FigureCaption>
@@ -45,7 +45,7 @@ export const WithCaptionOnly: Story<FigureCaptionProps> = () => (
 
 WithCaptionOnly.storyName = 'With just caption'
 
-export const WithAttributionOnly: Story<FigureCaptionProps> = () => (
+export const WithAttributionOnly: StoryFn<FigureCaptionProps> = () => (
   <FigureCaption>
     <FigureCaption.Attribution>Photo: Carl Oscar von der Linné</FigureCaption.Attribution>
   </FigureCaption>

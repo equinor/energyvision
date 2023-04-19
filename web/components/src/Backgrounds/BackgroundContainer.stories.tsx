@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { BackgroundContainer, BackgroundContainerProps, Text, Heading } from '@components'
 import styled from 'styled-components'
 
@@ -20,7 +20,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<BackgroundContainerProps> = (args) => (
+export const Default: StoryFn<BackgroundContainerProps> = (args) => (
   <BackgroundContainer {...args}>
     <Content>
       <Heading>Content</Heading>

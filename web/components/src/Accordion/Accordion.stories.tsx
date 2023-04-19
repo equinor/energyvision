@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Story, Meta } from '@storybook/react/types-6-0'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Accordion, AccordionProps, BackgroundContainer, Text } from '@components'
 
 export default {
@@ -12,7 +12,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<AccordionProps> = (args) => (
+export const Default: StoryFn<AccordionProps> = (args) => (
   <Accordion {...args}>
     <Accordion.Item id={2}>
       <Accordion.Header>Produced and processed water</Accordion.Header>
@@ -28,7 +28,7 @@ export const Default: Story<AccordionProps> = (args) => (
   </Accordion>
 )
 
-export const WithMultipleItems: Story<AccordionProps> = () => (
+export const WithMultipleItems: StoryFn<AccordionProps> = () => (
   <Accordion id="accordion">
     <Accordion.Item id={1}>
       <Accordion.Header>Produced and processed water</Accordion.Header>
@@ -78,7 +78,7 @@ export const WithMultipleItems: Story<AccordionProps> = () => (
     </Accordion.Item>
   </Accordion>
 )
-export const WithAnotherHeaderLevel: Story<AccordionProps> = () => (
+export const WithAnotherHeaderLevel: StoryFn<AccordionProps> = () => (
   <Accordion id="header">
     <Accordion.Item id={2}>
       <Accordion.Header headingLevel="h2">Produced and processed water</Accordion.Header>
@@ -96,7 +96,7 @@ export const WithAnotherHeaderLevel: Story<AccordionProps> = () => (
 
 WithAnotherHeaderLevel.storyName = 'With another header level (h2)'
 
-export const ControlledAccordion: Story<AccordionProps> = () => {
+export const ControlledAccordion: StoryFn<AccordionProps> = () => {
   const [indices, setIndices] = useState([0, 2])
 
   function toggleItem(toggledIndex: number) {
@@ -166,7 +166,7 @@ ControlledAccordion.parameters = {
   },
 }
 
-export const WithBackgroundColours: Story<AccordionProps> = () => (
+export const WithBackgroundColours: StoryFn<AccordionProps> = () => (
   <>
     <BackgroundContainer background="Moss Green">
       <Accordion id="bg">

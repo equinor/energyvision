@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { MenuButton, MenuButtonProps } from '@components'
 
 export default {
@@ -16,15 +16,15 @@ export default {
   },
 } as Meta
 
-export const Default: Story<MenuButtonProps> = (args) => <MenuButton {...args} title="Menu"></MenuButton>
+export const Default: StoryFn<MenuButtonProps> = (args) => <MenuButton {...args} title="Menu"></MenuButton>
 
 Default.storyName = 'Default'
 
-export const Open: Story<MenuButtonProps> = () => <MenuButton expanded title="Menu"></MenuButton>
+export const Open: StoryFn<MenuButtonProps> = () => <MenuButton expanded title="Menu"></MenuButton>
 
 Open.storyName = 'Open menu'
 
-export const WithAria: Story<MenuButtonProps> = () => (
+export const WithAria: StoryFn<MenuButtonProps> = () => (
   <>
     <MenuButton aria-expanded={false} title="Menu"></MenuButton>
     <MenuButton aria-expanded={true} expanded title="Menu"></MenuButton>
