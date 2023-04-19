@@ -5,6 +5,7 @@ on:
       environment:
         description: 'Environment for storybook'
         type: choice
+        required: true
         options:
           - development
           - production
