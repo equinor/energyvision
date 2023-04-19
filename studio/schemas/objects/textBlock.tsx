@@ -45,7 +45,7 @@ export default {
   title: 'Text block',
   type: 'object',
   fieldsets: [
-    Flags.IS_DEV && {
+    {
       title: 'Thumbnail Image',
       name: 'thumbnail',
       description: 'A small image acting as a thumbnail above the title.',
@@ -87,7 +87,7 @@ export default {
     },
   ],
   fields: [
-    Flags.IS_DEV && {
+    {
       name: 'image',
       type: 'imageWithAlt',
       options: {
