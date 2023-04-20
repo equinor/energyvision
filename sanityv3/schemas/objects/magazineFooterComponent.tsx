@@ -8,7 +8,7 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
@@ -39,7 +39,7 @@ export type Teaser = {
   action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   image: ImageWithAlt
   imagePosition?: string
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {
@@ -105,7 +105,7 @@ export default {
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ({ onChange, value }: {  onChange: any; value: string }) {
+        input: function ({ onChange, value }: { onChange: any; value: string }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import blocksToText from '../../../helpers/blocksToText'
-import { Colors } from '../../../helpers/ColorListValues'
+import { defaultColors } from '../../components/ColorSelector'
 import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
@@ -9,7 +9,7 @@ import type { TopicPromotion } from './promoteTopic'
 
 import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
 import type { CustomValidatorResult, PortableTextBlock, Rule, ValidationError } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { EdsIcon } from '../../../icons'
 import { Flags } from '../../../src/lib/datasetHelpers'
 
@@ -43,7 +43,7 @@ export type Promotion = {
   ingress?: PortableTextBlock[]
   promotion: TopicPromotion | MagazinePromotion | any // @TODO: add other types
   useHorizontalScroll: boolean
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
@@ -58,7 +58,7 @@ const ingressContentType = configureBlockContent({
   attachment: false,
 })
 const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
-const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
+const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {
   title: 'Promotion',
   name: 'promotion',

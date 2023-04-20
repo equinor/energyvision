@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
 import blocksToText from '../../helpers/blocksToText'
 import { AccordionComponent } from '../../icons'
 import CharCounterEditor from '../components/CharCounterEditor'
@@ -8,13 +7,15 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
+import { defaultColors } from '../components/ColorSelector'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 
 export type Accordion = {
   _type: 'accordion'
   title: any
   ingress?: any
   accordion: any[]
-  background: ColorListValue
+  background: ColorSelectorValue
 }
 
 const titleContentType = configureTitleBlockContent()
@@ -97,16 +98,8 @@ export default {
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
+      initialValue: defaultColors[0],
     }, */
   ].filter((e) => e),
   preview: {

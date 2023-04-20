@@ -1,17 +1,17 @@
 import blocksToText from '../../helpers/blocksToText'
-import { Colors } from '../../helpers/ColorListValues'
+import { defaultColors } from '../components/ColorSelector'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 
 import { PortableTextBlock, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 
 export type Table = {
   _type: 'promotion'
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 const titleContentType = configureTitleBlockContent()
@@ -45,7 +45,7 @@ const headerCellContentType = configureBlockContent({
 })
  */
 const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
-const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
+const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {
   title: 'Table',
   name: 'table',
@@ -211,11 +211,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
         list: backgroundColors,
       },
       fieldset: 'design',

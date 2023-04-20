@@ -1,5 +1,5 @@
 import blocksToText from '../../helpers/blocksToText'
-import { Colors } from '../../helpers/ColorListValues'
+import { defaultColors } from '../components/ColorSelector'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
@@ -52,7 +52,7 @@ export default {
         { type: 'fullWidthImage' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'pullQuote', initialValue: { background: Colors[0] } },
+        { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },

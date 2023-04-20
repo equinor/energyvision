@@ -3,7 +3,7 @@
 
 import { code } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CharCounterEditor from '../components/CharCounterEditor'
@@ -25,7 +25,7 @@ export type IFrame = {
   url: string
   aspectRatio: string
   height?: number
-  background?: ColorListValue
+  background?: ColorSelectorValue
   cookiePolicy: 'none' | 'marketing' | 'statistics'
 }
 

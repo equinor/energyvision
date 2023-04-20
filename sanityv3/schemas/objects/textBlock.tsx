@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
 import type { Reference, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
@@ -35,7 +35,7 @@ type TextBlock = {
   action?: Reference[]
   splitList?: boolean
   overrideButtonStyle?: boolean
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {

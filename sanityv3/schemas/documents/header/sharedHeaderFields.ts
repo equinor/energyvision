@@ -1,5 +1,5 @@
 import { Rule, ValidationContext } from 'sanity'
-import { Colors } from '../../../helpers/ColorListValues'
+import { defaultColors } from '../../components/ColorSelector'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
@@ -122,19 +122,11 @@ const background = {
   description: 'Pick a colour for the background. Default is white.',
   name: 'heroBackground',
   type: 'colorlist',
-  options: {
-    borderradius: {
-      outer: '100%',
-      inner: '100%',
-    },
-    tooltip: true,
-    list: Colors,
-  },
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY
   },
   fieldset: 'header',
-  initialValue: Colors[0],
+  initialValue: defaultColors[0],
 }
 
 const heroImage = {

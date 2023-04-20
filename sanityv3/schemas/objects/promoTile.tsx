@@ -1,6 +1,6 @@
 import { label } from '@equinor/eds-icons'
 import type { Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
@@ -16,7 +16,7 @@ export type PromoTile = {
   title: any[]
   image?: ImageWithAlt
   link?: LinkSelector
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {

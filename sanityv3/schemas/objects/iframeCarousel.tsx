@@ -1,4 +1,4 @@
-import { Colors } from '../../helpers/ColorListValues'
+import { defaultColors } from '../components/ColorSelector'
 import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
@@ -61,16 +61,8 @@ export default {
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: false,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
+      initialValue: defaultColors[0],
     },*/
   ],
   preview: {
