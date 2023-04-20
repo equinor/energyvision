@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
@@ -80,38 +79,27 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
                 />
               </Eyebrow>
             )}
-            {Flags.IS_DEV ? (
-              <StyledTitle>
-                <>{title}</>
-              </StyledTitle>
-            ) : (
-              <Title>
-                <>{title}</>
-              </Title>
-            )}
+            <StyledTitle>
+              <>{title}</>
+            </StyledTitle>
           </Header>
-          {ingress &&
-            (Flags.IS_DEV ? (
-              <StyledWrapper>
-                <RichText
-                  value={ingress}
-                  components={{
-                    block: {
-                      normal: ({ children }) => {
-                        return <StyledIngress>{children}</StyledIngress>
-                      },
-                      smallText: ({ children }) => {
-                        return <StyledIngress>{children}</StyledIngress>
-                      },
+          {ingress && (
+            <StyledWrapper>
+              <RichText
+                value={ingress}
+                components={{
+                  block: {
+                    normal: ({ children }) => {
+                      return <StyledIngress>{children}</StyledIngress>
                     },
-                  }}
-                ></RichText>
-              </StyledWrapper>
-            ) : (
-              <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-                <RichText value={ingress}></RichText>
-              </Text>
-            ))}
+                    smallText: ({ children }) => {
+                      return <StyledIngress>{children}</StyledIngress>
+                    },
+                  },
+                }}
+              ></RichText>
+            </StyledWrapper>
+          )}
           <Action>
             <Arrow />
           </Action>
