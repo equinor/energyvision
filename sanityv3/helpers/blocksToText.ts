@@ -1,8 +1,20 @@
-const defaults = { nonTextBehavior: 'remove' }
+interface Block {
+  _type: string
+  children?: {
+    text: string
+  }[]
+}
 
-const blocksToText = (blocks: any[], opts = {}): string => {
+interface Options {
+  nonTextBehavior?: 'remove' | 'keep'
+}
+
+const defaults: Options = { nonTextBehavior: 'remove' }
+
+const blocksToText = (blocks: Block[] | undefined, opts: Options = {}) => {
   const options = Object.assign({}, defaults, opts)
-  if (!blocks) return ''
+  if (!Array.isArray(blocks)) return blocks
+
   return blocks
     .map((block) => {
       if (block._type !== 'block' || !block.children) {
