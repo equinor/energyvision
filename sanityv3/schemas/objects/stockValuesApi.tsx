@@ -51,7 +51,7 @@ export default {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
-      type: 'backgroundColor',
+      type: 'colorlist',
       fieldset: 'design',
       initialValue: defaultColors[0],
     },

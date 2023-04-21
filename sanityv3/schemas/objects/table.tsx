@@ -205,7 +205,7 @@ export default {
         },
       ],
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
@@ -215,7 +215,7 @@ export default {
       },
       fieldset: 'design',
       initialValue: backgroundColors[0],
-    }, */
+    },
   ],
   preview: {
     select: {

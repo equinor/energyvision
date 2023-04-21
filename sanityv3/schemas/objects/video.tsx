@@ -5,6 +5,7 @@ import { EdsIcon } from '../../icons'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { defaultColors } from '../components/ColorSelector'
 
 export type AnchorLink = {
   _type: 'anchorLink'
@@ -63,22 +64,14 @@ export default {
       // @ts-ignore
       // Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {

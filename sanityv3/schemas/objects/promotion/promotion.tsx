@@ -6,7 +6,6 @@ import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import type { MagazinePromotion } from './promoteMagazine'
 import type { TopicPromotion } from './promoteTopic'
-
 import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
 import type { CustomValidatorResult, PortableTextBlock, Rule, ValidationError } from 'sanity'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
@@ -127,22 +126,17 @@ export default {
       type: 'boolean',
       initialValue: false,
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
       options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
         list: backgroundColors,
       },
       fieldset: 'design',
       initialValue: backgroundColors[0],
-    }, */
+    },
   ].filter((e) => e),
   preview: {
     select: {

@@ -231,7 +231,7 @@ export default [
   heroTitle,
   heroIngress,
   heroLink,
-  // background,
+  background,
   heroImage,
   heroLoopingVideoRatio,
   heroLoopingVideo,

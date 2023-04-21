@@ -1,6 +1,7 @@
 import { label } from '@equinor/eds-icons'
 import type { Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { defaultColors } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
@@ -60,22 +61,14 @@ export default {
       type: 'linkSelector',
       validation: (Rule: Rule) => Rule.required(),
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {

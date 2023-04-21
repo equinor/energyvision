@@ -1,5 +1,6 @@
 import type { Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { defaultColors } from '../components/ColorSelector'
 import type { ImageWithAltAndCaption } from './imageWithAltAndCaption'
 
 export type Figure = {
@@ -27,22 +28,14 @@ export default {
       type: 'imageWithAltAndCaption',
       validation: (Rule: Rule) => Rule.required(),
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {

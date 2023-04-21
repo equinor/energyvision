@@ -93,14 +93,14 @@ export default {
       of: [{ type: 'accordionItem' }],
       validation: (Rule: Rule) => Rule.required(),
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
       initialValue: defaultColors[0],
-    }, */
+    },
   ].filter((e) => e),
   preview: {
     select: {

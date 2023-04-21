@@ -56,14 +56,14 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
-    /*  {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
       initialValue: defaultColors[0],
-    },*/
+    },
   ],
   preview: {
     select: {

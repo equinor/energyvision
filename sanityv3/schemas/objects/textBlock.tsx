@@ -2,6 +2,7 @@
 import { text_field } from '@equinor/eds-icons'
 import type { Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { defaultColors } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
@@ -170,23 +171,14 @@ export default {
         return !(parent.action && parent?.action.length === 1)
       },
     },
-
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ].filter((e) => e),
   preview: {
     select: {

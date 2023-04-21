@@ -65,14 +65,14 @@ export default {
       initialValue: true,
       fieldset: 'carouselOptions',
     },
-    // {
-    //   title: 'Background',
-    //   description: 'Pick a colour for the background. Default is white.',
-    //   name: 'background',
-    //   type: 'colorlist',
-    //   fieldset: 'design',
-    //   initialValue: defaultColors[0],
-    // },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {
