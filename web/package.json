@@ -28,7 +28,7 @@
     "@equinor/eds-core-react": "0.30.0",
     "@equinor/eds-icons": "^0.19.1",
     "@equinor/eds-tokens": "^0.9.0",
-    "@mux/mux-video": "^0.12.0",
+    "@mux/mux-video": "^0.14.1",
     "@next/bundle-analyzer": "^12.1.0",
     "@portabletext/react": "^1.0.6",
     "@portabletext/types": "^1.0.3",
