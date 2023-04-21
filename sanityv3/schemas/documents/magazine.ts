@@ -5,7 +5,6 @@ import blocksToText from '../../helpers/blocksToText'
 import { Colors } from '../../helpers/ColorListValues'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
-import CharCounterEditor from '../components/CharCounterEditor'
 import SlugInput from '../components/SlugInput'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
@@ -102,9 +101,6 @@ export default {
       title: 'Description',
       description: 'Shown in newsletters and promotions. Max 400 characters',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressBlockContentType],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },

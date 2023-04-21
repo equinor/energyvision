@@ -2,7 +2,6 @@
 import { movie } from '@equinor/eds-icons'
 import { Rule } from 'sanity'
 import { EdsIcon } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 
@@ -50,9 +49,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {

@@ -1,7 +1,6 @@
 import { Rule, ValidationContext } from 'sanity'
 import { Colors } from '../../../helpers/ColorListValues'
 import { Flags } from '../../../src/lib/datasetHelpers'
-import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
@@ -94,9 +93,6 @@ const heroIngress = {
   title: 'Hero Ingress',
   name: 'heroIngress',
   type: 'array',
-  components: {
-    input: CharCounterEditor,
-  },
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY
