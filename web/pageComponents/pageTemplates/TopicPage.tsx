@@ -6,7 +6,6 @@ import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
 import { Breadcrumbs } from '../topicPages/Breadcrumbs'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
