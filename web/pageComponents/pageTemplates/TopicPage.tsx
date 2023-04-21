@@ -47,7 +47,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
       <TopicPageLayout>
         <SharedBanner title={data.title} hero={data.hero} />
 
-        {Flags.IS_DEV && breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
+        {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             slug={data?.slug}
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
