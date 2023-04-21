@@ -48,7 +48,8 @@ export const ColorSelector = ({ value, onChange, list = defaultColors }: ColorSe
     (selected: ColorSelectorValue) => {
       if (selected === value) return
 
-      onChange(set(selected))
+      onChange(set(selected.title, ['title']))
+      onChange(set(selected.value, ['value']))
     },
     [onChange, value],
   )
