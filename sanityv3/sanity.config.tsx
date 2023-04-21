@@ -1,11 +1,13 @@
 import { visionTool } from '@sanity/vision'
 import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
-import { scheduledPublishing } from "@sanity/scheduled-publishing";
+import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { muxInput } from 'sanity-plugin-mux-input'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
+import { CharCounterEditor } from './schemas/components/CharCounterEditor'
+import { isArrayOfBlocksSchemaType } from 'sanity'
 
 export default defineConfig({
   name: 'default',
@@ -13,6 +15,13 @@ export default defineConfig({
 
   projectId: 'h61q9gi9',
   dataset: 'global-development',
+
+  form: {
+    components: {
+      input: (props) =>
+        isArrayOfBlocksSchemaType(props.schemaType) ? <CharCounterEditor {...props} /> : props.renderDefault(props),
+    },
+  },
 
   plugins: [
     deskTool({

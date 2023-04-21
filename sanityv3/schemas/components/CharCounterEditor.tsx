@@ -1,29 +1,8 @@
-/* import React, { forwardRef } from 'react'
-// eslint-disable-next-line import/no-unresolved
-import { BlockEditor } from 'part:@sanity/form-builder'
-import blocksToText from '../../helpers/blocksToText'
-
-type CharCounterEditorProps = {
-  value: []
-} */
-/* export const CharCounterEditor = forwardRef(function CharCounterEditor({
-  value = [],
-  ...rest
-}: CharCounterEditorProps): JSX.Element {
-  const plainText = blocksToText(value)
-  return (
-    <div>
-      <BlockEditor value={value} {...rest} />
-      <div style={{ color: 'var(--card-muted-fg-color)', fontSize: '0.8125rem' }}>Characters: {plainText.length}</div>
-    </div>
-  )
-})
- */
-
 import { PureComponent } from 'react'
 // eslint-disable-next-line import/no-unresolved
 import { BlockEditor, PortableTextInputProps } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
+import { Stack, Text } from '@sanity/ui'
 
 export default class CustomEditor extends PureComponent {
   render() {
@@ -38,4 +17,17 @@ export default class CustomEditor extends PureComponent {
       </>
     )
   }
+}
+
+// @TODO: set correct props type, waiting to hear back from Sanity
+export function CharCounterEditor(props: any) {
+  const content = props.value ? blocksToText(props.value) : []
+  return (
+    <Stack space={3}>
+      {props.renderDefault(props)}
+      <Text muted size={1}>
+        Characters: {content?.length || 0}
+      </Text>
+    </Stack>
+  )
 }
