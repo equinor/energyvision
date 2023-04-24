@@ -1,6 +1,7 @@
 import { Card, Flex, Stack } from '@sanity/ui'
 import { useCallback } from 'react'
-import { ObjectInputProps, set } from 'sanity'
+import { set } from 'sanity'
+import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
 import { defaultColors } from './defaultColors'
 
