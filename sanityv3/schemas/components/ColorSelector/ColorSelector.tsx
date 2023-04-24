@@ -58,11 +58,7 @@ export const ColorSelector = ({ value, onChange, list = defaultColors }: ColorSe
   return (
     <Stack space={3}>
       {list && (
-        <Card
-          style={{
-            transform: 'translateX(-4px)',
-          }}
-        >
+        <Card>
           <Flex direction={'row'} wrap={'wrap'}>
             {list.map((colorItem) => {
               return (
