@@ -1,9 +1,9 @@
 import blocksToText from '../../helpers/blocksToText'
 import { Stack, Text } from '@sanity/ui'
+import { ArrayOfObjectsInputProps, PortableTextBlock } from 'sanity'
 
-// @TODO: set correct props type, waiting to hear back from Sanity
-export function CharCounterEditor(props: any) {
-  const content = props.value ? blocksToText(props.value) : []
+export function CharCounterEditor(props: ArrayOfObjectsInputProps) {
+  const content = props.value ? blocksToText(props.value as PortableTextBlock[]) : []
   return (
     <Stack space={3}>
       {props.renderDefault(props)}

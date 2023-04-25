@@ -1,5 +1,13 @@
 import { visionTool } from '@sanity/vision'
-import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
+import { createAuthStore, defineConfig } from 'sanity'
+import type {
+  InputProps,
+  ConfigContext,
+  SchemaTypeDefinition,
+  ArrayOfObjectsInputProps,
+  SchemaType,
+  ArraySchemaType,
+} from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { muxInput } from 'sanity-plugin-mux-input'
 import { deskTool, StructureBuilder } from 'sanity/desk'
@@ -7,7 +15,23 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { isArrayOfBlocksSchemaType } from 'sanity'
+
+// @TODO:
+// isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
+// refactor to use that once stable
+const isArraySchemaType = (schema: SchemaType): schema is ArraySchemaType => schema.name === 'array'
+const isPortableTextEditor = (schema: SchemaType) => {
+  if (!isArraySchemaType(schema)) return false
+
+  return schema?.of && Array.isArray(schema.of) && schema.of[0]?.name === 'block'
+}
+
+const handleInputComponents = (inputProps: InputProps) => {
+  if (isPortableTextEditor(inputProps.schemaType))
+    return <CharCounterEditor {...(inputProps as ArrayOfObjectsInputProps)} />
+
+  return inputProps.renderDefault(inputProps)
+}
 
 export default defineConfig({
   name: 'default',
@@ -18,8 +42,7 @@ export default defineConfig({
 
   form: {
     components: {
-      input: (props) =>
-        isArrayOfBlocksSchemaType(props.schemaType) ? <CharCounterEditor {...props} /> : props.renderDefault(props),
+      input: handleInputComponents,
     },
   },
 
