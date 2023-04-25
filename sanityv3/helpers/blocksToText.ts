@@ -1,3 +1,5 @@
+import { PortableTextBlock } from 'sanity'
+
 interface Block {
   _type: string
   children?: {
@@ -11,13 +13,13 @@ interface Options {
 
 const defaults: Options = { nonTextBehavior: 'remove' }
 
-const blocksToText = (blocks: Block[] | undefined, opts: Options = {}) => {
+const blocksToText = (blocks: Block[] | PortableTextBlock[] | undefined, opts: Options = {}) => {
   const options = Object.assign({}, defaults, opts)
   if (!Array.isArray(blocks)) return blocks
 
   return blocks
     .map((block) => {
-      if (block._type !== 'block' || !block.children) {
+      if (block._type !== 'block' || !block.children || !Array.isArray(block.children)) {
         return options.nonTextBehavior === 'remove' ? '' : `[${block._type} block]`
       }
 
