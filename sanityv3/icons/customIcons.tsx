@@ -39,13 +39,13 @@ export const FullSizeImage = (): JSX.Element => (
   >
     <title id="fullSizeTitle">Full size</title>
 
-    <path d="M43 15H27" stroke="#3D3D3D" strokeWidth="2" />
-    <path d="M43 21H27" stroke="#3D3D3D" strokeWidth="2" />
-    <path d="M43 27H27" stroke="#3D3D3D" strokeWidth="2" />
-    <path d="M43 33H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 15H27" stroke="currentColor" strokeWidth="2" />
+    <path d="M43 21H27" stroke="currentColor" strokeWidth="2" />
+    <path d="M43 27H27" stroke="currentColor" strokeWidth="2" />
+    <path d="M43 33H27" stroke="currentColor" strokeWidth="2" />
     <path
       d="M23.5 14H4.5C4.22386 14 4 14.4477 4 15V33C4 33.5523 4.22386 34 4.5 34H23.5C23.7761 34 24 33.5523 24 33V15C24 14.4477 23.7761 14 23.5 14Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
   </svg>
 )
@@ -60,13 +60,13 @@ export const SmallSizeImage = (): JSX.Element => (
     aria-labelledby="smallSizeTitle"
   >
     <title id="smallSizeTitle">Small size</title>
-    <path d="M43 15H27" stroke="#3D3D3D" strokeWidth="2" />
-    <path d="M43 21H27" stroke="#3D3D3D" strokeWidth="2" />
-    <path d="M43 27H27" stroke="#3D3D3D" strokeWidth="2" />
-    <path d="M43 33H27" stroke="#3D3D3D" strokeWidth="2" />
+    <path d="M43 15H27" stroke="currentColor" strokeWidth="2" />
+    <path d="M43 21H27" stroke="currentColor" strokeWidth="2" />
+    <path d="M43 27H27" stroke="currentColor" strokeWidth="2" />
+    <path d="M43 33H27" stroke="currentColor" strokeWidth="2" />
     <path
       d="M18.7 18H7.3C7.13432 18 7 18.2686 7 18.6V29.4C7 29.7314 7.13432 30 7.3 30H18.7C18.8657 30 19 29.7314 19 29.4V18.6C19 18.2686 18.8657 18 18.7 18Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
   </svg>
 )
@@ -77,8 +77,8 @@ export const LeftAlignedImage = (): JSX.Element => (
     height="48"
     viewBox="0 0 48 48"
     aria-labelledby="leftAlignedTitle"
-    fill="#3d3d3d"
-    stroke="#3d3d3d"
+    fill="currentColor"
+    stroke="currentColor"
     strokeWidth="2"
   >
     <title id="leftAlignedTitle">Left aligned</title>
@@ -96,8 +96,8 @@ export const RightAlignedImage = (): JSX.Element => (
     height="48"
     viewBox="0 0 48 48"
     aria-labelledby="rightAlignedTitle"
-    fill="#3d3d3d"
-    stroke="#3d3d3d"
+    fill="currentColor"
+    stroke="currentColor"
     strokeWidth="2"
   >
     <title id="rightAlignedTitle">Right aligned</title>
@@ -115,8 +115,8 @@ export const InlineImageFullWidth = (): JSX.Element => (
     height="48"
     viewBox="0 0 48 48"
     role="img"
-    fill="#3d3d3d"
-    stroke="#3d3d3d"
+    fill="currentColor"
+    stroke="currentColor"
     strokeWidth="2"
     aria-labelledby="fullWidthTitle"
   >
@@ -132,8 +132,8 @@ export const InlineImageLeftAlign = (): JSX.Element => (
     width="48"
     height="48"
     viewBox="0 0 48 48"
-    fill="#3d3d3d"
-    stroke="#3d3d3d"
+    fill="currentColor"
+    stroke="currentColor"
     strokeWidth="2"
     aria-labelledby="leftAlignedTitle"
   >
@@ -153,8 +153,8 @@ export const InlineImageRightAlign = (): JSX.Element => (
     width="48"
     height="48"
     viewBox="0 0 48 48"
-    fill="#3d3d3d"
-    stroke="#3d3d3d"
+    fill="currentColor"
+    stroke="currentColor"
     strokeWidth="2"
     aria-labelledby="rightAlignedTitle"
   >
@@ -178,23 +178,23 @@ export const RouteDocuments = () => (
     />
     <path
       d="M43.375 7H19.625C19.2799 7 19 7.02239 19 7.05V7.95C19 7.97761 19.2799 8 19.625 8H43.375C43.7201 8 44 7.97761 44 7.95V7.05C44 7.02239 43.7201 7 43.375 7Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M23.975 10H23.025C23.0112 10 23 10.1791 23 10.4V17.6C23 17.8209 23.0112 18 23.025 18H23.975C23.9888 18 24 17.8209 24 17.6V10.4C24 10.1791 23.9888 10 23.975 10Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.675 36H30.325C30.1455 36 30 36.1791 30 36.4V43.6C30 43.8209 30.1455 44 30.325 44H42.675C42.8545 44 43 43.8209 43 43.6V36.4C43 36.1791 42.8545 36 42.675 36Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M29.675 20H17.325C17.1455 20 17 20.1791 17 20.4V27.6C17 27.8209 17.1455 28 17.325 28H29.675C29.8545 28 30 27.8209 30 27.6V20.4C30 20.1791 29.8545 20 29.675 20Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M36.975 10H36.025C36.0112 10 36 10.5372 36 11.2V32.8C36 33.4628 36.0112 34 36.025 34H36.975C36.9888 34 37 33.4628 37 32.8V11.2C37 10.5372 36.9888 10 36.975 10Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
   </svg>
 )
@@ -207,31 +207,31 @@ export const NewsDocuments = () => (
     />
     <path
       d="M42.05 9H5.95C5.4254 9 5 9.04477 5 9.1V10.9C5 10.9552 5.4254 11 5.95 11H42.05C42.5746 11 43 10.9552 43 10.9V9.1C43 9.04477 42.5746 9 42.05 9Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.4 13H19.6C19.2687 13 19 13.0448 19 13.1V14.9C19 14.9552 19.2687 15 19.6 15H42.4C42.7313 15 43 14.9552 43 14.9V13.1C43 13.0448 42.7313 13 42.4 13Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.4 17H19.6C19.2687 17 19 17.0448 19 17.1V18.9C19 18.9552 19.2687 19 19.6 19H42.4C42.7313 19 43 18.9552 43 18.9V17.1C43 17.0448 42.7313 17 42.4 17Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.4 21H19.6C19.2687 21 19 21.0448 19 21.1V22.9C19 22.9552 19.2687 23 19.6 23H42.4C42.7313 23 43 22.9552 43 22.9V21.1C43 21.0448 42.7313 21 42.4 21Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.05 29H5.95C5.4254 29 5 29.0448 5 29.1V30.9C5 30.9552 5.4254 31 5.95 31H42.05C42.5746 31 43 30.9552 43 30.9V29.1C43 29.0448 42.5746 29 42.05 29Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.05 33H5.95C5.4254 33 5 33.0448 5 33.1V34.9C5 34.9552 5.4254 35 5.95 35H42.05C42.5746 35 43 34.9552 43 34.9V33.1C43 33.0448 42.5746 33 42.05 33Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.05 37H5.95C5.4254 37 5 37.0448 5 37.1V38.9C5 38.9552 5.4254 39 5.95 39H42.05C42.5746 39 43 38.9552 43 38.9V37.1C43 37.0448 42.5746 37 42.05 37Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
   </svg>
 )
@@ -244,11 +244,11 @@ export const TopicDocuments = () => (
     />
     <path
       d="M21.575 26H5.425C5.19031 26 5 26.3134 5 26.7V39.3C5 39.6866 5.19031 40 5.425 40H21.575C21.8097 40 22 39.6866 22 39.3V26.7C22 26.3134 21.8097 26 21.575 26Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
     <path
       d="M42.575 26H26.425C26.1903 26 26 26.3134 26 26.7V39.3C26 39.6866 26.1903 40 26.425 40H42.575C42.8097 40 43 39.6866 43 39.3V26.7C43 26.3134 42.8097 26 42.575 26Z"
-      fill="#3D3D3D"
+      fill="currentColor"
     />
   </svg>
 )
@@ -256,27 +256,27 @@ export const AccordionComponent = () => (
   <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden={true}>
     <path
       d="M5.95 8.5H42.05C42.2166 8.5 42.3476 8.55045 42.4251 8.60756C42.463 8.63544 42.4826 8.66065 42.4917 8.67646C42.4999 8.69076 42.5 8.6977 42.5 8.7V21.3C42.5 21.3023 42.4999 21.3092 42.4917 21.3235C42.4826 21.3393 42.463 21.3646 42.4251 21.3924C42.3476 21.4496 42.2166 21.5 42.05 21.5H5.95C5.78339 21.5 5.65238 21.4496 5.57486 21.3924C5.53702 21.3646 5.51736 21.3393 5.50829 21.3235C5.50008 21.3092 5.5 21.3023 5.5 21.3V8.7C5.5 8.6977 5.50008 8.69076 5.50829 8.67646C5.51736 8.66065 5.53702 8.63544 5.57486 8.60756C5.65238 8.55045 5.78339 8.5 5.95 8.5Z"
-      stroke="#3D3D3D"
+      stroke="currentColor"
     />
     <path
       d="M5.95 26.5H42.05C42.2166 26.5 42.3476 26.5504 42.4251 26.6076C42.463 26.6354 42.4826 26.6607 42.4917 26.6765C42.4999 26.6908 42.5 26.6977 42.5 26.7V39.3C42.5 39.3023 42.4999 39.3092 42.4917 39.3235C42.4826 39.3393 42.463 39.3646 42.4251 39.3924C42.3476 39.4496 42.2166 39.5 42.05 39.5H5.95C5.78339 39.5 5.65238 39.4496 5.57486 39.3924C5.53702 39.3646 5.51736 39.3393 5.50829 39.3235C5.50008 39.3092 5.5 39.3023 5.5 39.3V26.7C5.5 26.6977 5.50008 26.6908 5.50829 26.6765C5.51736 26.6607 5.53702 26.6354 5.57486 26.6076C5.65238 26.5504 5.78339 26.5 5.95 26.5Z"
-      stroke="#3D3D3D"
+      stroke="currentColor"
     />
-    <line x1="8" y1="14.5" x2="28" y2="14.5" stroke="black" />
-    <path d="M30.9091 12L35 16.5L39.0909 12L40 12.75L35 18L30 12.75L30.9091 12Z" fill="#3D3D3D" />
-    <line x1="8" y1="33.5" x2="28" y2="33.5" stroke="black" />
-    <path d="M30.9091 31L35 35.5L39.0909 31L40 31.75L35 37L30 31.75L30.9091 31Z" fill="#3D3D3D" />
+    <line x1="8" y1="14.5" x2="28" y2="14.5" stroke="currentColor" />
+    <path d="M30.9091 12L35 16.5L39.0909 12L40 12.75L35 18L30 12.75L30.9091 12Z" fill="currentColor" />
+    <line x1="8" y1="33.5" x2="28" y2="33.5" stroke="currentColor" />
+    <path d="M30.9091 31L35 35.5L39.0909 31L40 31.75L35 37L30 31.75L30.9091 31Z" fill="currentColor" />
   </svg>
 )
 
 export const MenuIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path fillRule="evenodd" clipRule="evenodd" d="M3 8V6h18v2H3zm0 5h18v-2H3v2zm0 5h18v-2H3v2z" />
   </svg>
 )
 
 export const LibraryIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -286,7 +286,7 @@ export const LibraryIcon = () => (
 )
 
 export const PdfIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -296,13 +296,13 @@ export const PdfIcon = () => (
 )
 
 export const ExcelIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path d="M14 3 2 5v14l12 2v-2h7a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-7V3zm-2 2.361V18.64l-8-1.332V6.693l8-1.332zM14 7h2v2h-2V7zm4 0h2v2h-2V7zM5.176 8.297l1.885 3.697L5 15.704h1.736l1.123-2.395c.075-.23.126-.4.15-.514h.016c.041.238.091.407.133.492l1.113 2.414H11l-1.994-3.734 1.937-3.67h-1.62l-1.03 2.197c-.1.285-.167.505-.201.647h-.026a4.519 4.519 0 0 0-.19-.63l-.923-2.214H5.176zM14 11h2v2h-2v-2zm4 0h2v2h-2v-2zm-4 4h2v2h-2v-2zm4 0h2v2h-2v-2z" />
   </svg>
 )
 
 export const FileIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -312,7 +312,7 @@ export const FileIcon = () => (
 )
 
 export const TagIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -322,7 +322,7 @@ export const TagIcon = () => (
 )
 
 export const TagMoreIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
     <path d="M6.657 6.657a1.358 1.358 0 0 1 1.914 0 1.358 1.358 0 0 1 0 1.914 1.358 1.358 0 0 1-1.914 0 1.358 1.358 0 0 1 0-1.914zM12.4 12.4a1.358 1.358 0 0 1 1.913 0 1.358 1.358 0 0 1 0 1.914 1.358 1.358 0 0 1-1.914 0 1.358 1.358 0 0 1 0-1.915zM11.442 9.528a1.358 1.358 0 0 0-1.914 0 1.357 1.357 0 0 0 0 1.914 1.357 1.357 0 0 0 1.914 0 1.357 1.357 0 0 0 0-1.914z" />
     <path
       fillRule="evenodd"
