@@ -19,7 +19,7 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
 
   const [breadcrumbs, setBreadcrumbs] = useState<string[]>([])
   const [defaultBreadcrumbs, setDefaultBreadcrumbs] = useState<string[]>(
-    constructBreadcrumbs('home', slug.current || ''),
+    constructBreadcrumbs('home', slug?.current || ''),
   )
 
   useEffect(() => {
