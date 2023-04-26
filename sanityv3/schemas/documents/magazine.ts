@@ -159,6 +159,7 @@ export default {
         { type: 'iframe' },
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
+        { type: 'videoPlayer' },
       ],
     },
     {
