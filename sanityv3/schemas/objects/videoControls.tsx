@@ -38,6 +38,8 @@ export default {
           const { parent } = context
           if (value && !parent.muted) {
             return 'Auto play is only allowed if video is Muted'
+          } else if (value && !parent.loop && !parent.controls) {
+            return 'Auto play is only allowed if Controls or Loop is enabled'
           }
           return true
         }),
