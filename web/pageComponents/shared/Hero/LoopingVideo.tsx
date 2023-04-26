@@ -23,16 +23,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   }
   return (
     <StyledFigure ratio={ratio}>
-      <HLSPlayer
-        loop
-        muted
-        autoPlay
-        playsInline
-        title={title}
-        poster={urlFor(thumbnail).url()}
-        src={url}
-        style={style}
-      />
+      <HLSPlayer loop muted autoPlay title={title} poster={urlFor(thumbnail).url()} src={url} style={style} />
     </StyledFigure>
   )
 }

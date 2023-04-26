@@ -45,7 +45,7 @@ const ContentSecurityPolicy = `
    frame-src 'self' ${iframeSrcs};
    frame-ancestors ${xFrameUrls};
    font-src 'self' ${edsCdnUrl} data:;
-   media-src 'self' blob: https://stream.mux.com/ https://cdn.sanity.io/ https://cdn.equinor.com/;
+   media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
 
  `
 
