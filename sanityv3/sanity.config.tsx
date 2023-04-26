@@ -15,6 +15,7 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
+import { withDocumentI18nPlugin } from '@sanity/document-internationalization'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -46,19 +47,25 @@ export default defineConfig({
     },
   },
 
-  plugins: [
-    deskTool({
-      structure: (S: StructureBuilder, context: ConfigContext) => {
-        return deskStructure(S, context)
-      },
-      defaultDocumentNode: defaultDocumentNodeResolver,
-      name: 'desk',
-      title: 'Desk',
-    }),
-    visionTool(),
-    scheduledPublishing(),
-    muxInput(),
-  ],
+  plugins: withDocumentI18nPlugin(
+    [
+      deskTool({
+        structure: (S: StructureBuilder, context: ConfigContext) => {
+          return deskStructure(S, context)
+        },
+        defaultDocumentNode: defaultDocumentNodeResolver,
+        name: 'desk',
+        title: 'Desk',
+      }),
+
+      visionTool(),
+      scheduledPublishing(),
+      muxInput(),
+    ],
+    {
+      includeDeskTool: false,
+    },
+  ),
 
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
