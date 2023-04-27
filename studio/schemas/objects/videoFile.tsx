@@ -24,7 +24,7 @@ export default {
       },
       validation: (Rule: Rule) => Rule.required(),
     },
-  ].filter((e) => e),
+  ],
   preview: {
     select: {
       title: 'video.title',

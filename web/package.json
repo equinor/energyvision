@@ -46,7 +46,7 @@
     "focus-visible": "^5.2.0",
     "framer-motion": "^6",
     "friendly-challenge": "^0.9.6",
-    "hls.js": "^1.1.5",
+    "hls.js": "^1.4.0",
     "html-entities": "^2.3.2",
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",

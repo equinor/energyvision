@@ -2,7 +2,6 @@
 import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, LeftAlignedImage, RightAlignedImage, SmallSizeImage } from '../../icons'
 import { RadioIconSelector } from '../components'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
@@ -93,9 +92,6 @@ export default {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),

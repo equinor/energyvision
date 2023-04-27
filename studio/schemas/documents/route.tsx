@@ -21,7 +21,7 @@ export default (isoCode: string, title: string) => {
           collapsed: false,
         },
       },
-      Flags.IS_DEV && {
+      {
         title: 'Breadcrumbs',
         name: 'breadcrumbs',
         description: '🔜 This feature will be improved upon in version 3 of the Sanity Studio',

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import blocksToText from '../../../helpers/blocksToText'
 import { Colors } from '../../../helpers/ColorListValues'
-import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import type { MagazinePromotion } from './promoteMagazine'
@@ -99,9 +98,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {

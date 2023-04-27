@@ -1,7 +1,6 @@
 import { Rule, ValidationContext } from 'sanity'
 import { Colors } from '../../../helpers/ColorListValues'
 import { Flags } from '../../../src/lib/datasetHelpers'
-import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
@@ -38,7 +37,7 @@ const heroType = {
       { title: 'Default', value: HeroTypes.DEFAULT },
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
-      Flags.IS_DEV && { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
+      { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
     ].filter((e) => e),
   },
   initialValue: 'default',
@@ -93,9 +92,6 @@ const heroIngress = {
   title: 'Hero Ingress',
   name: 'heroIngress',
   type: 'array',
-  components: {
-    input: CharCounterEditor,
-  },
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY

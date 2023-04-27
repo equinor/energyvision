@@ -6,7 +6,6 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import type { ColorListValue } from 'sanity-plugin-color-list'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { title, frameTitle, description, cookiePolicy, aspectRatio, url, height } from './iframe/sharedIframeFields'
 
@@ -58,9 +57,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     frameTitle,

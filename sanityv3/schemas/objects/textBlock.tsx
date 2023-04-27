@@ -5,7 +5,6 @@ import type { ColorListValue } from 'sanity-plugin-color-list'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
@@ -124,18 +123,12 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [blockContentType],
     },
     {

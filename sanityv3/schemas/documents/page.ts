@@ -66,6 +66,8 @@ export default {
         { type: 'anchorLink' },
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
+        { type: 'videoPlayer' },
+        { type: 'videoPlayerCarousel' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

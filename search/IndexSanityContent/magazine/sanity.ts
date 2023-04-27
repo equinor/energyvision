@@ -38,7 +38,7 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   },
   "magazineTags": magazineTags[]->.title[$lang],
   "heroFigure": select(
-    heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": heroLoopingVideo->thumbnail },
+    heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
     heroFigure),
   openGraphImage,
   "publishDateTime": ${publishDateTimeQuery},
