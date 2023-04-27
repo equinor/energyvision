@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { MemberField, useClient, useDocumentStore, useFormValue } from 'sanity'
+import { MemberField, useClient, useFormValue } from 'sanity'
 import type { Reference, SlugValue, ObjectInputProps } from 'sanity'
 import { Text, Card, Grid, Stack } from '@sanity/ui'
 import { BreadcrumbsPreview } from './BreadcrumbsPreview'
