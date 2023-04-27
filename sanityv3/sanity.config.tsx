@@ -1,4 +1,8 @@
 import { visionTool } from '@sanity/vision'
+<<<<<<< HEAD:sanityv3/sanity.config.ts
+import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
+import { scheduledPublishing } from "@sanity/scheduled-publishing";
+=======
 import { createAuthStore, defineConfig } from 'sanity'
 import type {
   InputProps,
@@ -10,6 +14,7 @@ import type {
 } from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { muxInput } from 'sanity-plugin-mux-input'
+>>>>>>> main:sanityv3/sanity.config.tsx
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
@@ -41,6 +46,20 @@ export default defineConfig({
   projectId: 'h61q9gi9',
   dataset: 'global-development',
 
+<<<<<<< HEAD:sanityv3/sanity.config.ts
+  plugins: [
+    deskTool({
+      structure: (S: StructureBuilder, context: ConfigContext) => {
+        return deskStructure(S, context)
+      },
+      defaultDocumentNode: defaultDocumentNodeResolver,
+      name: 'desk',
+      title: 'Desk',
+    }),
+    visionTool(),
+    scheduledPublishing(),
+  ],
+=======
   form: {
     components: {
       input: handleInputComponents,
@@ -66,6 +85,7 @@ export default defineConfig({
       includeDeskTool: false,
     },
   ),
+>>>>>>> main:sanityv3/sanity.config.tsx
 
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],

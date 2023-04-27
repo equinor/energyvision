@@ -9,7 +9,6 @@ export enum HeroTypes {
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
-  VIDEO_HERO = 'videoHero',
 }
 
 const publishDateTimeQuery = /* groq */ `

@@ -4,7 +4,6 @@ import { DefaultHero } from '../../shared/Hero/DefaultHero'
 import { FiftyFiftyHero } from '../../shared/Hero/FiftyFiftyHero'
 import { FullImageHero } from '../../shared/Hero/FullImageHero'
 import { LoopingVideo } from '../../shared/Hero/LoopingVideo'
-import { VideoHero } from '../../shared/Hero/VideoHero'
 
 type BannerProps = {
   title: PortableTextBlock[]
@@ -26,8 +25,6 @@ export const SharedBanner = ({ title, hero, hideImageCaption }: BannerProps) => 
           background={hero.background}
         />
       )
-    case HeroTypes.VIDEO_HERO:
-      return <VideoHero video={hero.video} />
     case HeroTypes.LOOPING_VIDEO:
       return <LoopingVideo video={hero.loopingVideo as LoopingVideoData} />
     default:
