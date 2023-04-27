@@ -1,6 +1,17 @@
 import { play_circle } from '@equinor/eds-icons'
 import type { Reference, Rule } from '@sanity/types'
 import { EdsIcon } from '../../icons/edsIcons'
+import { SanityImageCrop, SanityImageHotspot, SanityImageObject } from '@sanity/image-url/lib/types/types'
+
+type ImageWithAlt = {
+  isDecorative: boolean
+  alt?: string
+  asset: SanityImageObject
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
+  _type: 'imageWithAlt'
+  extension?: string
+}
 
 export default {
   type: 'document',
@@ -22,7 +33,7 @@ export default {
       initialValue: {
         isDecorative: true,
       },
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.custom((value: ImageWithAlt) => (!value.asset ? 'Image is required' : true)),
     },
   ],
   preview: {

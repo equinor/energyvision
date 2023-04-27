@@ -40,6 +40,7 @@ export const HLSPlayer: React.FC<Props> = ({
   ...props
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
+
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
 
@@ -49,12 +50,6 @@ export const HLSPlayer: React.FC<Props> = ({
       setShowPlayButton(false)
       setShowControls(true)
     }
-  }, [])
-
-  const handleClick = useCallback(() => {
-    const video = videoRef.current
-    if (!video) return
-    video.paused ? video.play() : video.pause()
   }, [])
 
   useEffect(() => {
@@ -92,5 +87,5 @@ export const HLSPlayer: React.FC<Props> = ({
       </Wrapper>
     )
 
-  return <video playsInline ref={videoRef} controls={controls} autoPlay={autoPlay} onClick={handleClick} {...props} />
+  return <video playsInline ref={videoRef} controls={controls} autoPlay={autoPlay} {...props} />
 }
