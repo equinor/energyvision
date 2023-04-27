@@ -63,7 +63,7 @@ export default {
       name: 'allowFullScreen',
       type: 'boolean',
       title: 'Allow Full Screen',
-      initialValue: false,
+      initialValue: true,
     },
   ],
 }
