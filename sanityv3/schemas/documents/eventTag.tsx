@@ -1,6 +1,6 @@
 import { defaultLanguage, languages } from '../../languages'
 import { TagIcon } from '../../icons'
-import { Rule } from 'sanity/dist/dts'
+import type { Rule } from 'sanity'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
