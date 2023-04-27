@@ -3,7 +3,7 @@ import { MemberField, useClient, useFormValue } from 'sanity'
 import type { Reference, SlugValue, ObjectInputProps } from 'sanity'
 import { Text, Card, Grid, Stack } from '@sanity/ui'
 import { BreadcrumbsPreview } from './BreadcrumbsPreview'
-import { getMemberField } from './utils/getMemberField'
+import { getObjectMemberField } from '../utils/getObjectMemberField'
 import { constructBreadcrumbs } from './utils/constructBreadcrumbs'
 
 type BreadCrumbsInputProps = {
@@ -67,9 +67,9 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
     }
   }, [value, slug, defaultBreadcrumbs])
 
-  const enableBreadcrumbs = getMemberField(members, 'enableBreadcrumbs')
-  const useCustomBreadcrumbs = getMemberField(members, 'useCustomBreadcrumbs')
-  const customBreadcrumbs = getMemberField(members, 'customBreadcrumbs')
+  const enableBreadcrumbs = getObjectMemberField(members, 'enableBreadcrumbs')
+  const useCustomBreadcrumbs = getObjectMemberField(members, 'useCustomBreadcrumbs')
+  const customBreadcrumbs = getObjectMemberField(members, 'customBreadcrumbs')
 
   if (!enableBreadcrumbs || !useCustomBreadcrumbs || !customBreadcrumbs) return null
 
