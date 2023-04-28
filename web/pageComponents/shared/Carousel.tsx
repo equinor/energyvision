@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right } from '@equinor/eds-icons'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
+export type CarouselTypes = 'card' | 'iframe' | 'promoTile'
+
+// TODO: Move buttons to own component
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
@@ -45,9 +48,11 @@ const StyledRightButton = styled(StyledButton)`
 const CarouselWrapper = styled.div`
   position: relative;
 `
-
-const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
+// If cards require more styling, move to styled switch statement
+const CarouselDiv = styled.div<{ $isScrollable: boolean; $carouselType: any }>`
   ${({ $isScrollable }) => !$isScrollable && { justifyContent: 'center' }};
+  ${({ $carouselType }) => $carouselType && { paddingRight: '13px' }};
+
   display: flex;
   align-items: start;
   overflow-x: auto;
@@ -69,12 +74,55 @@ const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
   }
 `
 
+const CardCarouselStyles = css`
+  --card-maxWidth: 360px;
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+  }
+`
+
+const IframeCarouselStyles = css`
+  --card-maxWidth: 480px;
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+    padding: 0 var(--space-large);
+  }
+`
+
+const PromoTileStyles = css`
+  --card-maxWidth: 400px;
+  padding: 0 var(--space-large);
+
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+    padding: 0 var(--space-large);
+  }
+`
+
+const StyledSwiper = styled.div`
+  ${({ $carouselType }: any) => {
+    switch ($carouselType) {
+      case 'card':
+        return CardCarouselStyles
+      case 'iframe':
+        return IframeCarouselStyles
+      case 'promoTile':
+        return PromoTileStyles
+      default:
+        return CardCarouselStyles
+    }
+  }}
+`
+
 type CarouselType = {
   children: React.ReactNode
   scrollOffset?: number
+  type?: CarouselTypes
 }
 
-export const Carousel = ({ children, scrollOffset }: CarouselType) => {
+export const Carousel = ({ children, scrollOffset, type }: CarouselType) => {
   const [isScrollable, setIsScrollable] = useState<boolean>(true)
   const scrollRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -111,16 +159,16 @@ export const Carousel = ({ children, scrollOffset }: CarouselType) => {
 
   return (
     <CarouselWrapper>
-      <CarouselDiv ref={scrollRef} $isScrollable={isScrollable}>
+      <CarouselDiv ref={scrollRef} $isScrollable={isScrollable} $carouselType={type}>
         {isScrollable && (
-          <>
+          <StyledSwiper>
             <StyledLeftButton onClick={() => handleScroll('back')}>
               <Icon color="inherit" size={24} data={chevron_left} />
             </StyledLeftButton>
             <StyledRightButton onClick={() => handleScroll('forward')}>
               <Icon color="inherit" size={24} data={chevron_right} />
             </StyledRightButton>
-          </>
+          </StyledSwiper>
         )}
         {children}
       </CarouselDiv>

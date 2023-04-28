@@ -10,6 +10,8 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import CoreIFrame from '../iframe/IFrame'
 import RichText from '../portableText/RichText'
+import { Flags } from '../../../common/helpers/datasetHelpers'
+import { Carousel } from '../../shared/Carousel'
 
 const Container = styled.div`
   padding: var(--space-3xLarge) calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
@@ -56,10 +58,10 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
     <BackgroundContainer background={background} {...rest} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
-        <HorizontalScroll type="iframe">
-          {items.map((item) => (
-            <HorizontalScrollItem key={item._key}>
-              <ItemContainer>
+        {Flags.IS_DEV ? (
+          <Carousel type="iframe">
+            {items.map((item) => (
+              <ItemContainer key={item._key}>
                 {item.title && <StyledItemHeading value={item.title} size="md" />}
                 {item.description ? (
                   <Figure>
@@ -86,9 +88,43 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
                   />
                 )}
               </ItemContainer>
-            </HorizontalScrollItem>
-          ))}
-        </HorizontalScroll>
+            ))}
+          </Carousel>
+        ) : (
+          <HorizontalScroll type="iframe">
+            {items.map((item) => (
+              <HorizontalScrollItem key={item._key}>
+                <ItemContainer>
+                  {item.title && <StyledItemHeading value={item.title} size="md" />}
+                  {item.description ? (
+                    <Figure>
+                      <CoreIFrame
+                        frameTitle={item.frameTitle}
+                        url={item.url}
+                        cookiePolicy={item.cookiePolicy}
+                        aspectRatio={item.aspectRatio}
+                        height={item.height}
+                        hasSectionTitle={!!title}
+                      />
+                      <FigureCaption size="medium">
+                        <RichText value={item.description} />
+                      </FigureCaption>
+                    </Figure>
+                  ) : (
+                    <CoreIFrame
+                      frameTitle={item.frameTitle}
+                      url={item.url}
+                      cookiePolicy={item.cookiePolicy}
+                      aspectRatio={item.aspectRatio || '16:9'}
+                      height={item.height}
+                      hasSectionTitle={!!item.title}
+                    />
+                  )}
+                </ItemContainer>
+              </HorizontalScrollItem>
+            ))}
+          </HorizontalScroll>
+        )}
       </Container>
     </BackgroundContainer>
   )

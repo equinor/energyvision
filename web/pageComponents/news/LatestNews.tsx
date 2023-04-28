@@ -4,6 +4,8 @@ import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
+import { Carousel } from '../shared/Carousel'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import useWindowSize from '../../lib/hooks/useWindowSize'
 
 const Wrapper = styled.div`
@@ -41,13 +43,23 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       </StyledHeading>
 
       {renderScroll ? (
-        <HorizontalScroll type="card">
-          {data.map((newsItem: CardData) => (
-            <HorizontalScrollItem key={newsItem.id}>
-              <StyledNewsCard data={newsItem} key={newsItem.id} />
-            </HorizontalScrollItem>
-          ))}
-        </HorizontalScroll>
+        <>
+          {Flags.IS_DEV ? (
+            <Carousel type="card">
+              {data.map((newsItem: CardData) => (
+                <StyledNewsCard data={newsItem} key={newsItem.id} />
+              ))}
+            </Carousel>
+          ) : (
+            <HorizontalScroll type="card">
+              {data.map((newsItem: CardData) => (
+                <HorizontalScrollItem key={newsItem.id}>
+                  <StyledNewsCard data={newsItem} key={newsItem.id} />
+                </HorizontalScrollItem>
+              ))}
+            </HorizontalScroll>
+          )}
+        </>
       ) : (
         <Wrapper>
           {data.map((newsItem: CardData) => {
