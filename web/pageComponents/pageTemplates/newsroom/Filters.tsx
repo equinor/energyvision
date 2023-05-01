@@ -27,22 +27,14 @@ const StyledFilters = styled.div`
 `
 
 const Filters = ({ ...rest }) => {
-  const [indices, setIndices] = useState<number[]>([])
   const intl = useIntl()
-  function toggleItem(toggledIndex: number) {
-    if (indices.includes(toggledIndex)) {
-      setIndices(indices.filter((currentIndex) => currentIndex !== toggledIndex))
-    } else {
-      setIndices([...indices, toggledIndex].sort())
-    }
-  }
 
   return (
     <StyledFilters {...rest}>
       <SearchBoxContainer>
         <UncontrolledSearchBox />
       </SearchBoxContainer>
-      <StyledAccordion id="filters" ref={indices} allowMultiple>
+      <StyledAccordion id="filters" allowMultiple>
         <AccordionItem>
           <FilterHeader label={intl.formatMessage({ id: 'newsroom_topic_filter', defaultMessage: 'Topics' })} />
           <AccordionPanel>
