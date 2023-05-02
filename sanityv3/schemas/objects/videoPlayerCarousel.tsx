@@ -1,4 +1,3 @@
-import { Colors } from '../../helpers/ColorListValues'
 import { EdsIcon } from '../../icons'
 import { play_circle } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
@@ -6,6 +5,7 @@ import type { Reference, Rule, PortableTextBlock } from 'sanity'
 import { title } from './iframe/sharedIframeFields'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
+import { defaultColors } from '../components/ColorSelector'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -94,22 +94,14 @@ export default {
       fieldset: 'design',
       validation: (Rule: Rule) => Rule.required(),
     },
-    /* {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: false,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    },*/
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {
