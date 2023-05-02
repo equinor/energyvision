@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import styled from 'styled-components'
 import { VideoPlayerData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer, HLSPlayer } from '@components'
@@ -50,8 +51,8 @@ export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height
             height: '320px',
             width: '320px',
             '@media (min-width: 375px)': {
-              height: '375px',
-              width: '375px',
+              height: '350px',
+              width: '350px',
             },
             '@media (min-width: 800px)': {
               height: '487px',

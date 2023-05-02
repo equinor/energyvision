@@ -2,7 +2,6 @@
 import type { Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { AccordionComponent } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
@@ -62,9 +61,6 @@ export default {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {

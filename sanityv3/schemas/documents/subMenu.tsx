@@ -1,7 +1,6 @@
 import { format_line_spacing } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { configureBlockContent } from '../editors/blockContentType'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
@@ -108,9 +107,6 @@ export default {
       title: 'Intro text',
       description: 'A short and catchy introduction text for this menu item (max. 215 chars)',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [introBlockContentType],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215)),
     },

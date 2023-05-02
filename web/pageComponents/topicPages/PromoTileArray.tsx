@@ -9,6 +9,8 @@ import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import { Carousel } from '../shared/Carousel'
 
 const { Header, Action, Media } = Card
 
@@ -83,7 +85,11 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
   const Wrapper = renderScroll
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
-          <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
+          {Flags.IS_DEV ? (
+            <Carousel>{children}</Carousel>
+          ) : (
+            <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
+          )}
         </HorizontalWrapper>
       )
     : Container

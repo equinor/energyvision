@@ -54,7 +54,7 @@ export default withBundle(
       archiveStorageURL: archiveServerHostname,
     },
     images: {
-      domains: ['cdn.sanity.io', 'cdn.equinor.com', 'image.mux.com'],
+      domains: ['cdn.sanity.io', 'cdn.equinor.com'],
       dangerouslyAllowSVG: true,
       contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },

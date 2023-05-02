@@ -7,7 +7,6 @@ import { defaultColors } from '../components/ColorSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { title, frameTitle, description, cookiePolicy, aspectRatio, url, height } from './iframe/sharedIframeFields'
 
@@ -59,9 +58,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     frameTitle,

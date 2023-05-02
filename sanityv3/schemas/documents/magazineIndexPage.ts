@@ -1,5 +1,4 @@
 import blocksToText from '../../helpers/blocksToText'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { defaultColors } from '../components/ColorSelector'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
@@ -58,9 +57,6 @@ export default {
       title: 'Text',
       name: 'ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [textContentType],
       fieldset: 'header',
     },

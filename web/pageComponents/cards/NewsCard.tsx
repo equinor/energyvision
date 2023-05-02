@@ -1,7 +1,7 @@
 import { Card, FormattedDate } from '@components'
 import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'
@@ -9,8 +9,12 @@ import RichText from '../shared/portableText/RichText'
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const StyledCard = styled(Card)`
-  height: var(--height);
   --card-gap: var(--space-large);
+  height: 100%;
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+    height: 400px;
+  }
 `
 const StyledLink = styled(CardLink)`
   display: inline-block;

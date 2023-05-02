@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest } from 'next'
 import { validateCaptcha } from './validateCaptcha'
 
 export async function validateFormRequest(req: NextApiRequest, formName: string) {

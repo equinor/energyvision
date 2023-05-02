@@ -1,7 +1,6 @@
 import { Rule, ValidationContext } from 'sanity'
 import { defaultColors } from '../../components/ColorSelector'
 import { Flags } from '../../../src/lib/datasetHelpers'
-import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
@@ -38,8 +37,7 @@ const heroType = {
       { title: 'Default', value: HeroTypes.DEFAULT },
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
-      Flags.IS_DEV && { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
-      Flags.IS_DEV && { title: 'Full Video', value: HeroTypes.VIDEO_HERO },
+      { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
     ].filter((e) => e),
   },
   initialValue: 'default',
@@ -94,9 +92,6 @@ const heroIngress = {
   title: 'Hero Ingress',
   name: 'heroIngress',
   type: 'array',
-  components: {
-    input: CharCounterEditor,
-  },
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY
@@ -136,12 +131,11 @@ const heroImage = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType
-      if ((parent?.heroType === HeroTypes.VIDEO_HERO || parent?.heroType === HeroTypes.LOOPING_VIDEO) && !value)
-        return 'Field is required'
+      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType === HeroTypes.VIDEO_HERO || parent?.heroType === HeroTypes.LOOPING_VIDEO
+    return parent?.heroType === HeroTypes.LOOPING_VIDEO
   },
   fieldset: 'header',
 }
@@ -185,45 +179,6 @@ const heroLoopingVideoRatio = {
   fieldset: 'header',
 }
 
-const heroVideo = {
-  title: 'Hero video',
-  name: 'heroVideo',
-  type: 'mux.video',
-  fieldset: 'header',
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.VIDEO_HERO && !value) return 'Field is required'
-      return true
-    }),
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-}
-
-const heroVideoLoop = {
-  title: 'Play in loop',
-  name: 'heroVideoLoop',
-  type: 'boolean',
-  description: 'Enable this to play the hero video in loop.',
-  fieldset: 'header',
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-  initialValue: true,
-}
-
-const heroVideoAutoPlay = {
-  title: 'Auto play hero video',
-  name: 'heroVideoAutoPlay',
-  description: 'Autoplay muted hero video when page is loaded.',
-  type: 'boolean',
-  fieldset: 'header',
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.VIDEO_HERO
-  },
-  initialValue: true,
-}
 export default [
   title,
   heroType,
@@ -233,9 +188,6 @@ export default [
   heroLink,
   background,
   heroImage,
-  heroLoopingVideoRatio,
   heroLoopingVideo,
-  heroVideo,
-  heroVideoAutoPlay,
-  heroVideoLoop,
+  heroLoopingVideoRatio,
 ]

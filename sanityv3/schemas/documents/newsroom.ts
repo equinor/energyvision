@@ -1,5 +1,4 @@
 import blocksToText from '../../helpers/blocksToText'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
@@ -64,9 +63,6 @@ export default {
       title: 'Text',
       name: 'ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [textContentType],
     },
   ],
