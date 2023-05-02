@@ -82,6 +82,7 @@ import colorList from './objects/colorList'
 import videoPlayer from './objects/videoPlayer'
 import videoPlayerCarousel from './objects/videoPlayerCarousel'
 import videoControls from './objects/videoControls'
+import hlsVideo from './objects/hlsVideo'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -158,6 +159,7 @@ const RemainingSchemas = [
   videoPlayer,
   videoPlayerCarousel,
   videoControls,
+  hlsVideo,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

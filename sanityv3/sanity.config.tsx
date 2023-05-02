@@ -1,14 +1,9 @@
 import { visionTool } from '@sanity/vision'
-import { createAuthStore, defineConfig } from 'sanity'
+
+import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
+import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType } from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
-import type {
-  InputProps,
-  ConfigContext,
-  SchemaTypeDefinition,
-  ArrayOfObjectsInputProps,
-  SchemaType,
-  ArraySchemaType,
-} from 'sanity'
+
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
