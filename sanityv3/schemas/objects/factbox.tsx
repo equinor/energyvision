@@ -1,11 +1,11 @@
 import { info_circle } from '@equinor/eds-icons'
 import { PortableTextBlock } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
-import { Colors } from '../../helpers/ColorListValues'
+import { defaultColors } from '../components/ColorSelector'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import { configureBlockContent } from '../editors/blockContentType'
 import type { ImageWithAlt } from './imageWithAlt'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -13,7 +13,7 @@ const imageAlignmentOptions = [
 ]
 
 const chosenColors = ['White', 'Moss Green', 'Spruce Wood']
-const backgroundColors = Colors.filter((color) => chosenColors.includes(color.title))
+const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 const blockContentType = configureBlockContent({
   h1: false,
   h2: false,
@@ -30,7 +30,7 @@ export type Factbox = {
   title?: string
   content?: PortableTextBlock[]
   image?: ImageWithAlt
-  background?: ColorListValue
+  background?: ColorSelectorValue
   imagePosition?: string
   dynamicHeight?: boolean
 }
@@ -63,18 +63,14 @@ export default {
       title: 'Image',
       type: 'imageWithAlt',
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        tooltip: true,
-        list: backgroundColors,
-      },
       fieldset: 'design',
       initialValue: backgroundColors[0],
-    }, */
+    },
     {
       name: 'imagePosition',
       title: 'Image position',

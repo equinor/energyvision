@@ -2,6 +2,7 @@ import { view_module } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
+import { defaultColors } from '../components/ColorSelector'
 
 export default {
   type: 'object',
@@ -21,22 +22,14 @@ export default {
       of: [{ type: 'textWithIcon' }],
       validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {

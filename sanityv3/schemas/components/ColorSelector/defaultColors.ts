@@ -1,6 +1,4 @@
-export type ColorListValues = { title: string; value: string }[]
-
-export const Colors: ColorListValues = [
+export const defaultColors = [
   { title: 'White', value: 'hsl(0, 0%, 100%)' },
   { title: 'Moss Green', value: 'hsl(184, 31%, 74%)' },
   { title: 'Moss Green Light', value: 'hsl(184, 30%, 96%)' },

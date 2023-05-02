@@ -1,5 +1,5 @@
 import { Rule, ValidationContext } from 'sanity'
-import { Colors } from '../../../helpers/ColorListValues'
+import { defaultColors } from '../../components/ColorSelector'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
@@ -112,6 +112,18 @@ const heroLink = {
   validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
 }
 
+const background = {
+  title: 'Hero Background',
+  description: 'Pick a colour for the background. Default is white.',
+  name: 'heroBackground',
+  type: 'colorlist',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+  },
+  fieldset: 'header',
+  initialValue: defaultColors[0],
+}
+
 const heroImage = {
   title: 'Hero image',
   name: 'heroFigure',
@@ -174,7 +186,7 @@ export default [
   heroTitle,
   heroIngress,
   heroLink,
-  // background,
+  background,
   heroImage,
   heroLoopingVideo,
   heroLoopingVideoRatio,

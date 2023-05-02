@@ -5,9 +5,9 @@ import { RadioIconSelector } from '../components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
+import { defaultColors } from '../components/ColorSelector'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
@@ -38,7 +38,7 @@ export type Teaser = {
   action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   image: ImageWithAlt
   imagePosition?: string
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {
@@ -114,22 +114,14 @@ export default {
         },
       },
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: false,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {

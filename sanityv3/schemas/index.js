@@ -78,6 +78,7 @@ import videoFile from './objects/videoFile'
 import imageCarousel from './objects/imageCarousel'
 import iframeCarousel from './objects/iframeCarousel'
 import breadcrumbs from './objects/Breadcrumbs'
+import colorList from './objects/colorList'
 import videoPlayer from './objects/videoPlayer'
 import videoPlayerCarousel from './objects/videoPlayerCarousel'
 import videoControls from './objects/videoControls'
@@ -153,6 +154,7 @@ const RemainingSchemas = [
   imageCarousel,
   iframeCarousel,
   breadcrumbs,
+  colorList,
   videoPlayer,
   videoPlayerCarousel,
   videoControls,
