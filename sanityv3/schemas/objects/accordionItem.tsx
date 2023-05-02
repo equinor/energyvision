@@ -1,7 +1,6 @@
 import { text_field } from '@equinor/eds-icons'
-import type {PortableTextBlock, Rule } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import { EdsIcon } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { configureBlockContent } from '../editors/blockContentType'
 
 export type AccordionItem = {
@@ -33,9 +32,6 @@ export default {
       title: 'Content',
       name: 'content',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [contentType],
     },
   ],

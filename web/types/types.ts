@@ -95,7 +95,6 @@ export type CardData = {
   heroImage: ImageWithCaptionData
   openGraphImage?: ImageWithAlt
   ingress?: PortableTextBlock[]
-  heroVideo?: VideoHeroData
   heroType?: HeroTypes
 }
 
@@ -105,7 +104,6 @@ export type MagazineCardData = {
   tags?: string[]
   openGraphImage?: ImageWithAlt
   heroImage?: ImageWithAlt
-  heroVideo?: VideoHeroData
   heroType?: HeroTypes
   hero?: HeroType
 }
@@ -176,7 +174,6 @@ export enum HeroTypes {
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
-  VIDEO_HERO = 'videoHero',
 }
 
 export type HeroType = {
@@ -187,7 +184,6 @@ export type HeroType = {
   type?: HeroTypes
   ratio?: string
   background?: BackgroundColours
-  video?: VideoHeroData
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
 }

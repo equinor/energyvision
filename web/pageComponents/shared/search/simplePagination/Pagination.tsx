@@ -19,7 +19,7 @@ const PaginationList = styled.ul`
 type PaginationProps = {
   totalPages: number
   inverted?: boolean
-  onPageChange: any
+  onPageChange: (val: number) => void
 }
 
 export const Pagination = ({ totalPages, onPageChange, inverted = false }: PaginationProps) => {

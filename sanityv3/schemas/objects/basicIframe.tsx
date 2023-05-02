@@ -4,10 +4,10 @@ import { code } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -18,7 +18,7 @@ export type IFrame = {
   url: string
   aspectRatio: string
   height?: number
-  background?: ColorListValue
+  background?: ColorSelectorValue
   cookiePolicy: 'none' | 'marketing' | 'statistics'
 }
 

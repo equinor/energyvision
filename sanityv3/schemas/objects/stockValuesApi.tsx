@@ -1,8 +1,9 @@
 import { dollar } from '@equinor/eds-icons'
 import { Box, Heading, Text } from '@sanity/ui'
-import type { ColorListValue } from 'sanity-plugin-color-list'
 import styled from 'styled-components'
 import { EdsIcon } from '../../icons'
+import { defaultColors } from '../components/ColorSelector'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const StyledText = styled(Text)`
   margin: 1em 0;
@@ -24,7 +25,7 @@ const ApiDescription = () => {
 export type StockValues = {
   _type: 'stockValuesApi'
   description: string
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {
@@ -46,22 +47,14 @@ export default {
         input: ApiDescription,
       },
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     prepare() {

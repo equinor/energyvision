@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
 import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
+import { Flags } from '../../../common/helpers/datasetHelpers'
+import { Carousel } from '../../shared/Carousel'
 
 const PairWrapper = styled.div`
   --card-minWidth: 250px;
@@ -59,6 +61,11 @@ const StyledEventsCard = styled(EventsCard)`
   width: var(--card-minWidth);
 `
 
+const StyledCarousel = styled(Carousel)`
+  padding-right: var(--space-medium);
+  padding-left: var(--space-medium);
+`
+
 const MultipleEventCards = ({
   data,
   hasSectionTitle,
@@ -80,15 +87,25 @@ const MultipleEventCards = ({
 
   if (renderScroll) {
     return (
-      <HorizontalScroll type="card">
-        {data.map((item) => {
-          return (
-            <HorizontalScrollItem key={item.id}>
-              <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-            </HorizontalScrollItem>
-          )
-        })}
-      </HorizontalScroll>
+      <>
+        {Flags.IS_DEV ? (
+          <StyledCarousel>
+            {data.map((item) => {
+              return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+            })}
+          </StyledCarousel>
+        ) : (
+          <HorizontalScroll type="card">
+            {data.map((item) => {
+              return (
+                <HorizontalScrollItem key={item.id}>
+                  <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+                </HorizontalScrollItem>
+              )
+            })}
+          </HorizontalScroll>
+        )}
+      </>
     )
   }
 

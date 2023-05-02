@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { HTMLAttributes, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right } from '@equinor/eds-icons'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
+// TODO: Move buttons to own component
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
@@ -35,24 +36,31 @@ const StyledButton = styled.button`
 const StyledLeftButton = styled(StyledButton)`
   left: 0;
   margin-left: calc(-1 * (var(--space-12) + var(--space-2) + var(--space-1)));
+  @media (min-width: 520px) {
+    margin-left: calc(-1 * (var(--space-32)));
+  }
 `
 
 const StyledRightButton = styled(StyledButton)`
   right: 0;
   margin-right: calc(-1 * (var(--space-12) + var(--space-2) + var(--space-1)));
+  @media (min-width: 520px) {
+    margin-right: calc(-1 * (var(--space-32)));
+  }
 `
 
 const CarouselWrapper = styled.div`
   position: relative;
 `
-
+// If cards require more styling, move to styled switch statement
 const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
   ${({ $isScrollable }) => !$isScrollable && { justifyContent: 'center' }};
   display: flex;
-  align-items: start;
+  align-items: stretch;
   overflow-x: auto;
   gap: var(--space-medium);
   padding-bottom: var(--space-medium);
+
   ::-webkit-scrollbar {
     height: 5px;
     cursor: pointer;
@@ -72,9 +80,9 @@ const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
 type CarouselType = {
   children: React.ReactNode
   scrollOffset?: number
-}
+} & HTMLAttributes<HTMLDivElement>
 
-export const Carousel = ({ children, scrollOffset }: CarouselType) => {
+export const Carousel = ({ children, scrollOffset, ...props }: CarouselType) => {
   const [isScrollable, setIsScrollable] = useState<boolean>(true)
   const scrollRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -111,7 +119,7 @@ export const Carousel = ({ children, scrollOffset }: CarouselType) => {
 
   return (
     <CarouselWrapper>
-      <CarouselDiv ref={scrollRef} $isScrollable={isScrollable}>
+      <CarouselDiv ref={scrollRef} $isScrollable={isScrollable} {...props}>
         {isScrollable && (
           <>
             <StyledLeftButton onClick={() => handleScroll('back')}>

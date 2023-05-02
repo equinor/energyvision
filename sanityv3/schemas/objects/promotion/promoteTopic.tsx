@@ -1,5 +1,4 @@
 import blocksToText from '../../../helpers/blocksToText'
-import CharCounterEditor from '../../components/CharCounterEditor'
 import { configureBlockContent } from '../../editors/blockContentType'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
@@ -62,9 +61,6 @@ export default {
               title: 'Ingress',
               description: 'A short and catchy introduction text for this topic content card (max. 215 chars)',
               type: 'array',
-              components: {
-                input: CharCounterEditor,
-              },
               of: [introBlockContentType],
               validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215)),
             },

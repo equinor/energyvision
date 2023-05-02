@@ -1,41 +1,15 @@
-/* import React, { forwardRef } from 'react'
-// eslint-disable-next-line import/no-unresolved
-import { BlockEditor } from 'part:@sanity/form-builder'
 import blocksToText from '../../helpers/blocksToText'
+import { Stack, Text } from '@sanity/ui'
+import { ArrayOfObjectsInputProps, PortableTextBlock } from 'sanity'
 
-type CharCounterEditorProps = {
-  value: []
-} */
-/* export const CharCounterEditor = forwardRef(function CharCounterEditor({
-  value = [],
-  ...rest
-}: CharCounterEditorProps): JSX.Element {
-  const plainText = blocksToText(value)
+export function CharCounterEditor(props: ArrayOfObjectsInputProps) {
+  const content = props.value ? blocksToText(props.value as PortableTextBlock[]) : []
   return (
-    <div>
-      <BlockEditor value={value} {...rest} />
-      <div style={{ color: 'var(--card-muted-fg-color)', fontSize: '0.8125rem' }}>Characters: {plainText.length}</div>
-    </div>
+    <Stack space={3}>
+      {props.renderDefault(props)}
+      <Text muted size={1}>
+        Characters: {content?.length || 0}
+      </Text>
+    </Stack>
   )
-})
- */
-
-import { PureComponent } from 'react'
-// eslint-disable-next-line import/no-unresolved
-import { BlockEditor, PortableTextInputProps } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-
-export default class CustomEditor extends PureComponent {
-  render() {
-    // eslint-disable-next-line
-    // @ts-ignore: How to do this with classes
-    const { value = [] } = this.props
-    const plainText = blocksToText(value)
-    return (
-      <>
-        <BlockEditor {...(this.props as PortableTextInputProps)} />
-        <div>Characters: {plainText.length}</div>
-      </>
-    )
-  }
 }

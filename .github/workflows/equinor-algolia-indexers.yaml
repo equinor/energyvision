@@ -28,7 +28,7 @@ jobs:
   check-code:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'development'}}
     env:
       DOCKER_BUILDKIT: 1
     steps:
@@ -112,7 +112,7 @@ jobs:
 
   deploy-function-application:
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'development'}}
     needs: [build-function-application]
     runs-on: ubuntu-latest
     steps:
