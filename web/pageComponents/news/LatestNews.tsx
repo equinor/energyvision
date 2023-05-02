@@ -45,7 +45,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       {renderScroll ? (
         <>
           {Flags.IS_DEV ? (
-            <Carousel type="card">
+            <Carousel>
               {data.map((newsItem: CardData) => (
                 <StyledNewsCard data={newsItem} key={newsItem.id} />
               ))}

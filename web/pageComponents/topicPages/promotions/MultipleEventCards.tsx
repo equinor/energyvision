@@ -84,7 +84,7 @@ const MultipleEventCards = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <Carousel type="card">
+          <Carousel>
             {data.map((item) => {
               return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
             })}

@@ -59,7 +59,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
       <Container>
         {title && <StyledHeading value={title} />}
         {Flags.IS_DEV ? (
-          <Carousel type="iframe">
+          <Carousel>
             {items.map((item) => (
               <ItemContainer key={item._key}>
                 {item.title && <StyledItemHeading value={item.title} size="md" />}

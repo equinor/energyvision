@@ -118,7 +118,7 @@ const MultiplePromotions = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <Carousel type="card">
+          <Carousel>
             {data.map((item) => {
               const card = getCard(item)
               if (card) {

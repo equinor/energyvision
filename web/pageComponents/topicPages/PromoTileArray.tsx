@@ -86,7 +86,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
           {Flags.IS_DEV ? (
-            <Carousel type="promoTile">{children}</Carousel>
+            <Carousel>{children}</Carousel>
           ) : (
             <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
           )}
