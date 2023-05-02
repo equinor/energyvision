@@ -1,7 +1,7 @@
 import { Card, FormattedDate } from '@components'
 import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import type { CardData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'

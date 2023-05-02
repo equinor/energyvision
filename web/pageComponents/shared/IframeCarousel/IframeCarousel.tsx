@@ -45,6 +45,11 @@ const StyledItemHeading = styled(TitleText)`
   -webkit-box-orient: vertical;
 `
 
+const StyledCarousel = styled(Carousel)`
+  padding-right: var(--space-medium);
+  padding-left: var(--space-medium);
+`
+
 type IframeCarouselProps = {
   data: IframeCarouselData
   anchor?: string
@@ -59,7 +64,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
       <Container>
         {title && <StyledHeading value={title} />}
         {Flags.IS_DEV ? (
-          <Carousel>
+          <StyledCarousel>
             {items.map((item) => (
               <ItemContainer key={item._key}>
                 {item.title && <StyledItemHeading value={item.title} size="md" />}
@@ -89,7 +94,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
                 )}
               </ItemContainer>
             ))}
-          </Carousel>
+          </StyledCarousel>
         ) : (
           <HorizontalScroll type="iframe">
             {items.map((item) => (

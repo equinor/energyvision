@@ -70,6 +70,10 @@ const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
 
+const StyledCarousel = styled(Carousel)`
+  padding-right: var(--space-medium);
+  padding-left: var(--space-medium);
+`
 type CardProps = CardData | PeopleCardData | EventCardData
 
 const MultiplePromotions = ({
@@ -118,14 +122,14 @@ const MultiplePromotions = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <Carousel>
+          <StyledCarousel>
             {data.map((item) => {
               const card = getCard(item)
               if (card) {
                 return <>{card}</>
               }
             })}
-          </Carousel>
+          </StyledCarousel>
         ) : (
           <HorizontalScroll type="card">
             {data.map((item) => {

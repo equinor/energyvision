@@ -61,6 +61,11 @@ const StyledEventsCard = styled(EventsCard)`
   width: var(--card-minWidth);
 `
 
+const StyledCarousel = styled(Carousel)`
+  padding-right: var(--space-medium);
+  padding-left: var(--space-medium);
+`
+
 const MultipleEventCards = ({
   data,
   hasSectionTitle,
@@ -84,11 +89,11 @@ const MultipleEventCards = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <Carousel>
+          <StyledCarousel>
             {data.map((item) => {
               return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
             })}
-          </Carousel>
+          </StyledCarousel>
         ) : (
           <HorizontalScroll type="card">
             {data.map((item) => {

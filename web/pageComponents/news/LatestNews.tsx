@@ -28,6 +28,11 @@ const StyledNewsCard = styled(NewsCard)`
   flex-grow: 1;
 `
 
+const StyledCarousel = styled(Carousel)`
+  padding-right: var(--space-medium);
+  padding-left: var(--space-medium);
+`
+
 type LatestNewsProp = {
   data: CardData[]
 }
@@ -45,11 +50,11 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       {renderScroll ? (
         <>
           {Flags.IS_DEV ? (
-            <Carousel>
+            <StyledCarousel>
               {data.map((newsItem: CardData) => (
                 <StyledNewsCard data={newsItem} key={newsItem.id} />
               ))}
-            </Carousel>
+            </StyledCarousel>
           ) : (
             <HorizontalScroll type="card">
               {data.map((newsItem: CardData) => (
