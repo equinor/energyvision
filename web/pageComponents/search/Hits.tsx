@@ -3,15 +3,12 @@ import { List, Heading } from '@components'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import type { HitProps } from './EventHit'
-import { Dispatch, SetStateAction, useEffect } from 'react'
 
 const { Item } = List
 
 type HitsProps = {
   // Let's consider to create a compound component instead of this Algolia example way of doing it
   hitComponent: React.FC<HitProps>
-  setTabResults: Dispatch<SetStateAction<Record<string, boolean>>>
-  category: string
 }
 
 const HitItem = styled(Item)`
@@ -41,16 +38,8 @@ const WarningContainer = styled.div`
 
 const WarningText = styled.p``
 
-const Hits = ({ hitComponent: Hit, setTabResults, category }: HitsProps) => {
+const Hits = ({ hitComponent: Hit }: HitsProps) => {
   const { hits } = useHits()
-
-  useEffect(() => {
-    setTabResults((prev) => ({
-      ...prev,
-      [category]: hits.length > 0,
-    }))
-  }, [hits, setTabResults, category])
-
   if (!hits || hits.length === 0) {
     return (
       <WarningContainer>

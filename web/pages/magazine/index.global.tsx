@@ -2,7 +2,6 @@ import { GetServerSideProps } from 'next'
 import { InstantSearchSSRProvider } from 'react-instantsearch-hooks-web'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
-//import { history } from 'instantsearch.js/es/lib/routers/index.js'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
@@ -13,8 +12,9 @@ import { defaultLanguage } from '../../languages'
 import MagazineIndexPage from '../../pageComponents/pageTemplates/MagazineIndexPage'
 import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
+import { renderToString } from 'react-dom/server'
 
-export default function MagazineIndex({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
+export default function MagazineIndex({ serverState, isServerRendered = false, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = intl?.locale || defaultLocale
@@ -30,6 +30,7 @@ export default function MagazineIndex({ serverState, isServerRendered = false, d
           locale={locale}
           pageData={pageData as MagazineIndexPageType}
           slug={slug}
+          url={url}
         />
       </IntlProvider>
     </InstantSearchSSRProvider>
@@ -94,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
-  // const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <MagazineIndex
       isServerRendered
@@ -103,14 +104,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         pageData,
         slug,
       }}
-      //url={url}
+      url={url}
     />,
+    { renderToString },
   )
 
   return {
     props: {
       serverState,
-      //url,
+      url,
       data: {
         menuData,
         footerData,
