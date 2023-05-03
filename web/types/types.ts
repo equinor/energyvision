@@ -209,6 +209,11 @@ export type ContentType =
   | VideoPlayerData
   | VideoPlayerCarouselData
 
+export type Breadcrumb = {
+  label: string
+  slug: string
+}
+
 export type PageSchema = {
   slug: string
   title: PortableTextBlock[]
@@ -221,8 +226,8 @@ export type PageSchema = {
   breadcrumbs: {
     enableBreadcrumbs: boolean
     useCustomBreadcrumbs: boolean
-    defaultBreadcrumbs: string[]
-    customBreadcrumbs: string[] | [] | null
+    defaultBreadcrumbs: Breadcrumb[]
+    customBreadcrumbs: Breadcrumb[]
   }
 }
 

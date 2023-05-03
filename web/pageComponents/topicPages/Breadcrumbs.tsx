@@ -5,6 +5,7 @@ import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
+import { Breadcrumb } from '../../types'
 
 const { BreadcrumbsListItem } = BreadcrumbsList
 
@@ -20,20 +21,15 @@ const Container = styled.div<{ $hasTopMargin?: boolean }>`
     }}
 `
 
-type Breadcrumbs = {
-  label: string
-  slug: string
-}[]
-
 type BreadcrumbsProps = {
   slug: string
   useCustomBreadcrumbs: boolean
-  defaultBreadcrumbs: string[]
-  customBreadcrumbs: string[] | [] | null
+  defaultBreadcrumbs: Breadcrumb[]
+  customBreadcrumbs: Breadcrumb[]
   hasTopMargin?: boolean
 }
 
-const buildJsonLdElements = (crumbs: Breadcrumbs, router: NextRouter) => {
+const buildJsonLdElements = (crumbs: Breadcrumb[], router: NextRouter) => {
   const { pathname, locale } = router
 
   return crumbs.map((item, index) => {
@@ -47,23 +43,16 @@ const buildJsonLdElements = (crumbs: Breadcrumbs, router: NextRouter) => {
   })
 }
 
-const parseBreadcrumbs = (crumbs: string[]): Breadcrumbs => {
-  return [
-    {
-      label: 'Home',
-      slug: '/',
-    },
-    ...crumbs
-      .filter((e) => e)
-      .map((item) => {
-        const label = item.split('/').at(-1) || item
-        return {
-          label: label[0].toUpperCase() + label.slice(1),
-          slug: item,
-        }
-      }),
-  ]
+const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
+  return crumbs
+    .filter((item) => item.slug && item.label)
+    .map((item) => ({
+      ...item,
+      label: capitalize(item.label.replace('-', ' ')),
+    }))
 }
+
+const capitalize = (string: string): string => string[0].toUpperCase() + string.slice(1)
 
 export const Breadcrumbs = ({
   slug,
@@ -74,24 +63,26 @@ export const Breadcrumbs = ({
 }: BreadcrumbsProps) => {
   const router = useRouter()
 
-  const shouldUseCustom = useCustomBreadcrumbs && customBreadcrumbs && customBreadcrumbs.length > 0
-  const crumbs = parseBreadcrumbs(shouldUseCustom ? [...customBreadcrumbs, slug] : defaultBreadcrumbs)
+  const crumbs =
+    useCustomBreadcrumbs && customBreadcrumbs && customBreadcrumbs.length >= 3
+      ? parseBreadcrumbs(customBreadcrumbs)
+      : parseBreadcrumbs(defaultBreadcrumbs)
 
   if (crumbs.length < 2) return null
 
   return (
     <Container $hasTopMargin={hasTopMargin}>
       <BreadcrumbsList>
-        {crumbs.map((item) => {
+        {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
-            return <BreadcrumbsListItem key={item.slug}>{item.label}</BreadcrumbsListItem>
+            return <BreadcrumbsListItem key={item.slug}>{capitalize(item.label)}</BreadcrumbsListItem>
           }
 
           return (
             <BreadcrumbsListItem key={item.slug}>
               <NextLink href={item.slug} passHref legacyBehavior>
                 <Link variant="regular" underline={false}>
-                  {item.label}
+                  {capitalize(item.label)}
                 </Link>
               </NextLink>
             </BreadcrumbsListItem>
