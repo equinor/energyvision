@@ -75,14 +75,14 @@ export const Breadcrumbs = ({
       <BreadcrumbsList>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
-            return <BreadcrumbsListItem key={item.slug}>{capitalize(item.label)}</BreadcrumbsListItem>
+            return <BreadcrumbsListItem key={item.slug}>{item.label}</BreadcrumbsListItem>
           }
 
           return (
             <BreadcrumbsListItem key={item.slug}>
               <NextLink href={item.slug} passHref legacyBehavior>
                 <Link variant="regular" underline={false}>
-                  {capitalize(item.label)}
+                  {item.label}
                 </Link>
               </NextLink>
             </BreadcrumbsListItem>
