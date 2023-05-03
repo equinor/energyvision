@@ -1,6 +1,6 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable jsx-a11y/media-has-caption */
-import { useRef, HTMLProps, useEffect, useState } from 'react'
+import { useRef, HTMLProps, useEffect, useState, useCallback } from 'react'
 import Hls from 'hls.js'
 import { Icon } from '@equinor/eds-core-react'
 import { play_circle } from '@equinor/eds-icons'
@@ -40,55 +40,52 @@ export const HLSPlayer: React.FC<Props> = ({
   ...props
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const hlsRef = useRef<Hls | null>(null)
+
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
 
+  const handlePlayButton = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.play()
+      setShowPlayButton(false)
+      setShowControls(true)
+    }
+  }, [])
+
   useEffect(() => {
     const video = videoRef.current
-    if (video && Hls.isSupported()) {
-      const hls = new Hls()
-      hlsRef.current = hls
+    if (!video) return
 
+    if (Hls.isSupported()) {
+      const hls = new Hls()
       hls.loadSource(src)
       hls.attachMedia(video)
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = src
+    }
 
-      return () => {
-        hls.destroy()
+    return () => {
+      if (video) {
+        video.removeAttribute('src')
       }
     }
   }, [src])
 
   useEffect(() => {
-    if (playButton) setShowControls(false)
+    playButton && setShowControls(false)
   }, [playButton])
-
-  useEffect(() => {
-    const hls = hlsRef.current
-    if (hls) {
-      hls.on(Hls.Events.ERROR, (_, data) => {
-        console.error('Error', data)
-      })
-    }
-  }, [])
-
-  const handlePlayButton = () => {
-    if (videoRef.current) videoRef.current.play()
-    setShowPlayButton(false)
-    setShowControls(true)
-  }
 
   if (playButton)
     return (
       <Wrapper>
-        <video ref={videoRef} autoPlay={false} controls={showControls} {...props} />
+        <video playsInline ref={videoRef} controls={showControls} {...props} />
         {showPlayButton && (
           <StyledButton onClick={handlePlayButton}>
-            <Icon size={48} color="white" data={play_circle} />
+            <Icon size={48} color="white" style={{ opacity: 0.8 }} data={play_circle} />
           </StyledButton>
         )}
       </Wrapper>
     )
 
-  return <video ref={videoRef} controls={controls} autoPlay={autoPlay} {...props} />
+  return <video playsInline ref={videoRef} controls={controls} autoPlay={autoPlay} {...props} />
 }

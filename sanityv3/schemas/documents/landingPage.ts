@@ -3,7 +3,6 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByLang } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
@@ -61,9 +60,6 @@ export default {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {

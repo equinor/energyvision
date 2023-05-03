@@ -45,16 +45,12 @@ import {
   IframeCarouselData,
   VideoPlayerData,
   VideoPlayerCarouselData,
-  TextBlockDataV2,
 } from '../../../types/types'
-import { Flags } from '../../../common/helpers/datasetHelpers'
-import TextBlockV2 from '../../../pageComponents/topicPages/TextBlockV2'
 
 // How could we do this for several different component types?
 type ComponentProps =
   | TeaserData
   | TextBlockData
-  | TextBlockDataV2
   | FullWidthImageData
   | FigureData
   | TextWithIconArrayData
@@ -87,11 +83,7 @@ export const PageContent = ({ data }: PageContentProps) => {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
       case 'textBlock':
-        return Flags.IS_DEV ? (
-          <TextBlockV2 key={c.id} data={c as TextBlockDataV2} anchor={anchorReference} />
-        ) : (
-          <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
-        )
+        return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'figure':

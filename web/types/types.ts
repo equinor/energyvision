@@ -95,7 +95,6 @@ export type CardData = {
   heroImage: ImageWithCaptionData
   openGraphImage?: ImageWithAlt
   ingress?: PortableTextBlock[]
-  heroVideo?: VideoHeroData
   heroType?: HeroTypes
 }
 
@@ -105,7 +104,6 @@ export type MagazineCardData = {
   tags?: string[]
   openGraphImage?: ImageWithAlt
   heroImage?: ImageWithAlt
-  heroVideo?: VideoHeroData
   heroType?: HeroTypes
   hero?: HeroType
 }
@@ -176,7 +174,6 @@ export enum HeroTypes {
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
-  VIDEO_HERO = 'videoHero',
 }
 
 export type HeroType = {
@@ -187,7 +184,6 @@ export type HeroType = {
   type?: HeroTypes
   ratio?: string
   background?: BackgroundColours
-  video?: VideoHeroData
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
 }
@@ -195,7 +191,6 @@ export type HeroType = {
 export type ContentType =
   | TeaserData
   | TextBlockData
-  | TextBlockDataV2
   | FullWidthImageData
   | FigureData
   | TextWithIconArrayData
@@ -258,22 +253,7 @@ export type DesignOptions = {
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
-
 export type TextBlockData = {
-  type: string
-  id: string
-  title: PortableTextBlock[]
-  overline?: string
-  text: PortableTextBlock[]
-  ingress: PortableTextBlock[]
-  callToActions?: LinkData[]
-  splitList?: boolean
-  overrideButtonStyle?: boolean
-  anchor?: string
-  designOptions: DesignOptions
-}
-
-export type TextBlockDataV2 = {
   type: string
   id: string
   title: PortableTextBlock[]

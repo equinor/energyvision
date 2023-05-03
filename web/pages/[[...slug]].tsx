@@ -14,7 +14,6 @@ import getIntl from '../common/helpers/getIntl'
 import { getRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
-import { Flags } from '../common/helpers/datasetHelpers'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
 

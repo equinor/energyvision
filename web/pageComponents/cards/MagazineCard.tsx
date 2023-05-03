@@ -45,22 +45,9 @@ type MagazineCardProp = {
 }
 
 const getThumbnail = (data: MagazineCardData) => {
-  const { openGraphImage, heroVideo, heroImage, hero } = data
+  const { openGraphImage, heroImage, hero } = data
 
-  if (!heroImage?.asset && !openGraphImage?.asset && !heroVideo?.playbackId) return false
-  if (Flags.IS_DEV && !hero?.figure?.asset && !openGraphImage?.asset && !hero?.video?.playbackId) return false
-
-  if (Flags.IS_DEV && data.hero?.type === HeroTypes.VIDEO_HERO && hero?.video?.playbackId) {
-    return (
-      <Img
-        src={`https://image.mux.com/${hero.video?.playbackId}/thumbnail.jpg`}
-        alt="thumbnail"
-        width={400}
-        height={223}
-        sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-      />
-    )
-  }
+  if (!heroImage?.asset && !openGraphImage?.asset) return false
 
   return (
     <Image

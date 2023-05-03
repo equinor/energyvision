@@ -33,7 +33,6 @@ const TWITTER_FEED = [...GLOBAL_DEV, 'germany']
 const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* Allows same slug for different languages */
 const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
-const MUX = [...GLOBAL_DEV]
 const LINE_BREAK_TYPO = ['southkorea']
 
 /**
@@ -56,7 +55,6 @@ export default (dataset) => ({
   HAS_TWITTER_FEED: TWITTER_FEED.includes(dataset),
   HAS_MAGAZINE: MAGAZINE.includes(dataset),
   HAS_SAME_SLUG: SAME_SLUG.includes(dataset),
-  HAS_MUX: MUX.includes(dataset),
   HAS_LINE_BREAK_TYPO: LINE_BREAK_TYPO.includes(dataset),
   IS_GLOBAL_PROD: GLOBAL_PROD.includes(dataset),
   IS_DEV: GLOBAL_DEV.includes(dataset),

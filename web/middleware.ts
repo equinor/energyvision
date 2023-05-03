@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from './common/helpers/redirects'
-// eslint-disable-next-line @next/next/no-server-import-in-page
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from './lib/localization'
 import { Flags } from './common/helpers/datasetHelpers'

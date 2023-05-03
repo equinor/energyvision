@@ -2,17 +2,17 @@
 import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, LeftAlignedImage, RightAlignedImage, SmallSizeImage } from '../../icons'
 import { RadioIconSelector } from '../components'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector'
+import { defaultColors } from '../components/ColorSelector'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -46,7 +46,7 @@ export type Teaser = {
   image: ImageWithAlt
   imagePosition?: string
   imageSize?: string
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {
@@ -93,9 +93,6 @@ export default {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
@@ -158,22 +155,14 @@ export default {
         },
       },
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+      initialValue: defaultColors[0],
+    },
   ],
   preview: {
     select: {

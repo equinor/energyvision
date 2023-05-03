@@ -17,6 +17,7 @@ on:
       - 'web/components/**'
       - 'web/.storybook/**'
       - 'web/package.json'
+      - '!web/components/README.md'
       - 'pnpm-lock.yaml'
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

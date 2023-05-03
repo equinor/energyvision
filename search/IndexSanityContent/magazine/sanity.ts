@@ -9,7 +9,6 @@ export enum HeroTypes {
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
-  VIDEO_HERO = 'videoHero',
 }
 
 const publishDateTimeQuery = /* groq */ `
@@ -39,7 +38,7 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   },
   "magazineTags": magazineTags[]->.title[$lang],
   "heroFigure": select(
-    heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": heroLoopingVideo->thumbnail },
+    heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
     heroFigure),
   openGraphImage,
   "publishDateTime": ${publishDateTimeQuery},

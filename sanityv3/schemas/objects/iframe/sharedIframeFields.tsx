@@ -1,6 +1,5 @@
 import { configureTitleBlockContent, configureBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
-import CharCounterEditor from '../../components/CharCounterEditor'
 import type { Rule, ValidationContext } from 'sanity'
 import type { IFrame } from '../iframe'
 
@@ -103,6 +102,5 @@ export const description = {
   title: 'Description/caption',
   description: `Here you can write a short description of the iframes content. This text will show up as a caption text right below the iframe.`,
   type: 'array',
-  inputComponent: CharCounterEditor,
   of: [descriptionContentType],
 }

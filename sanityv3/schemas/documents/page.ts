@@ -1,5 +1,5 @@
 import blocksToText from '../../helpers/blocksToText'
-import { Colors } from '../../helpers/ColorListValues'
+import { defaultColors } from '../components/ColorSelector'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
@@ -52,7 +52,7 @@ export default {
         { type: 'fullWidthImage' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'pullQuote', initialValue: { background: Colors[0] } },
+        { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
@@ -64,9 +64,10 @@ export default {
         Flags.HAS_NEWS && { type: 'newsList' },
         Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'anchorLink' },
-        Flags.HAS_MUX && { type: 'video' },
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
+        { type: 'videoPlayer' },
+        { type: 'videoPlayerCarousel' },
       ].filter((e) => e),
     },
   ].filter((e) => e),
