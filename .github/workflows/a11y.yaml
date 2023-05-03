@@ -10,6 +10,7 @@ jobs:
       name: development
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      NEXT_PUBLIC_ARCHIVE_CONTENT_LINK: ${{ vars.ARCHIVE_CONTENT_LINK }}
     steps:
       - name: BrowserStack Env Setup 🌎 # Invokes the setup-env action
         id: setup-browserstack-environment
