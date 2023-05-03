@@ -126,7 +126,7 @@ const MultiplePromotions = ({
             {data.map((item) => {
               const card = getCard(item)
               if (card) {
-                return <>{card}</>
+                return <div key={item.id}>{card}</div>
               }
             })}
           </StyledCarousel>
