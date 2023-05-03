@@ -39,7 +39,7 @@ specifiers:
   '@types/styled-components': ^5.1.26
   '@types/testing-library__jest-dom': ^5.14.5
   '@types/uuid': ^8.3.4
-  '@types/xml2js': ^0.4.9
+  '@types/xml2js': ^0.4.11
   algoliasearch: ^4.16.0
   babel-plugin-styled-components: ^2.0.6
   date-fns: ^2.29.3
@@ -51,7 +51,7 @@ specifiers:
   hls.js: ^1.4.0
   html-entities: ^2.3.2
   http-proxy: ^1.18.1
-  ics: ^2.41.0
+  ics: ^3.1.0
   instantsearch.js: ^4.53.0
   jest: ^28.1.0
   jest-environment-jsdom: ^28.1.0
@@ -70,7 +70,7 @@ specifiers:
   react-dom: ^18.2.0
   react-error-boundary: ^3.1.4
   react-focus-lock: ^2.9.2
-  react-hook-form: 7.42.0
+  react-hook-form: 7.43.9
   react-instantsearch-dom: ^6.39.1
   react-instantsearch-hooks-router-nextjs: 6.42.0
   react-instantsearch-hooks-server: ^6.42.0
@@ -89,7 +89,7 @@ specifiers:
   typescript: 4.8.4
   uuid: ^9.0.0
   webpack: ^5.75.0
-  xml2js: ^0.4.23
+  xml2js: ^0.5.0
 
 dependencies:
   '@chakra-ui/react': 2.4.2_uzk7vbycoixen2mv6wyamvmds4
@@ -120,7 +120,7 @@ dependencies:
   hls.js: 1.4.0
   html-entities: 2.3.3
   http-proxy: 1.18.1
-  ics: 2.44.0
+  ics: 3.1.0
   instantsearch.js: 4.54.1_algoliasearch@4.17.0
   next: 13.0.5_t7ss3ubh4wigfvyfclbvqff3gm
   next-sanity: 4.1.7_tbefy6flnukvqlnx7xiy3q6hgu
@@ -135,7 +135,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-error-boundary: 3.1.4_react@18.2.0
   react-focus-lock: 2.9.2_ulhmhxukhxjgxaybrsjlob7ffu
-  react-hook-form: 7.42.0_react@18.2.0
+  react-hook-form: 7.43.9_react@18.2.0
   react-instantsearch-dom: 6.39.1_jkqj3263ob3etl7pry73ztmn6q
   react-instantsearch-hooks-router-nextjs: 6.42.0_6mb3qpon2ls3xpwncalrgjwofm
   react-instantsearch-hooks-server: 6.42.2_jkqj3263ob3etl7pry73ztmn6q
@@ -150,7 +150,7 @@ dependencies:
   swiper: 9.2.3
   swr: 1.3.0_react@18.2.0
   uuid: 9.0.0
-  xml2js: 0.4.23
+  xml2js: 0.5.0
 
 devDependencies:
   '@algolia/client-search': 4.17.0
@@ -5430,7 +5430,7 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.18
       callsites: 3.1.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: true
 
   /@jest/test-result/28.1.0:
@@ -5448,7 +5448,7 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
       '@jest/test-result': 28.1.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-haste-map: 28.1.3
       slash: 3.0.0
     dev: true
@@ -8725,7 +8725,7 @@ packages:
       babel-plugin-istanbul: 6.1.1
       babel-preset-jest: 28.1.3_@babel+core@7.20.12
       chalk: 4.1.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       slash: 3.0.0
     transitivePeerDependencies:
       - supports-color
@@ -9426,7 +9426,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -11925,10 +11925,6 @@ packages:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
     dev: false
 
-  /hls.js/1.2.3:
-    resolution: {integrity: sha512-CC/vHi82ldiiydIhliNI3whlcepRXxI2jdpd/KKb6lyEv+74e7lXs4cGk5PHfTLxZMKOj6+m5LX9VAbvV/r7AQ==}
-    dev: false
-
   /hls.js/1.4.0:
     resolution: {integrity: sha512-VEjg7Rx5FlE9TB3MIn0HPgq3J+vR7EoQnjaqMCk/ISEaCOSZlAFh4g867f1QkSxZiq9kHeUZo+iH16X7VS3jKA==}
     dev: false
@@ -12118,8 +12114,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /ics/2.44.0:
-    resolution: {integrity: sha512-JeiPjNeWkd7Qri/wfHqjZCtglVwRJRqy1MEFKn9QzatzxUyCOsx4YARPlLkU8UnPxpg4VtEjR+VRUG+Cvj6bDg==}
+  /ics/3.1.0:
+    resolution: {integrity: sha512-O48TZKyLYagLlXoZwDmjetXc6SoT54wFkTu2MEYe7zse8kL+C/dgSynYCjRG1OTAv3iHtGtG0PWKG81LbcrKFA==}
     dependencies:
       nanoid: 3.3.6
       yup: 0.32.11
@@ -13218,7 +13214,7 @@ packages:
     engines: {node: '>= 10.14.2'}
     dependencies:
       '@types/node': 17.0.45
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: true
 
   /jest-snapshot/28.1.0:
@@ -13492,7 +13488,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: true
 
   /junk/3.1.0:
@@ -15147,6 +15143,17 @@ packages:
         optional: true
     dev: true
 
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
+    dev: true
+
   /promise.allsettled/1.0.6:
     resolution: {integrity: sha512-22wJUOD3zswWFqgwjNHa1965LvqTX87WPu/lreY2KSd7SVcERfuZ4GfUaOnJNnvtoIv2yXT/W00YIGMetXtFXg==}
     engines: {node: '>= 0.4'}
@@ -15444,8 +15451,8 @@ packages:
       use-sidecar: 1.1.2_ulhmhxukhxjgxaybrsjlob7ffu
     dev: false
 
-  /react-hook-form/7.42.0_react@18.2.0:
-    resolution: {integrity: sha512-XDEjSUZmT68FOSv2FaD3XlN1sa2HB9vIQ9SVKsogGrHUY43o2aANQDC9LgHa4zusqCMKLG3qitpTcEhpYWHBFw==}
+  /react-hook-form/7.43.9_react@18.2.0:
+    resolution: {integrity: sha512-AUDN3Pz2NSeoxQ7Hs6OhQhDr6gtF9YRuutGDwPQqhSUAHJSgGl2VeY3qN19MG0SucpjgDiuMJ4iC5T5uB+eaNQ==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -18097,8 +18104,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /xml2js/0.4.23:
-    resolution: {integrity: sha512-ySPiMjM0+pLDftHgXY4By0uswI3SPKLDw/i3UXbnO8M/p28zqexCUoPmQFrYD+/1BzhGJSs2i1ERWKJAtiLrug==}
+  /xml2js/0.5.0:
+    resolution: {integrity: sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==}
     engines: {node: '>=4.0.0'}
     dependencies:
       sax: 1.2.4
