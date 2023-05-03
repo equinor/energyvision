@@ -30,7 +30,8 @@ export function SearchBox(props: SearchBoxProps) {
   useEffect(() => {
     if (query !== debouncedValue) {
       if (debouncedValue.length === 0) {
-        clear()
+        if (userTyped) clear()
+        else refine(query)
       } else refine(debouncedValue)
     }
     // We want to track when the value coming from the React state changes
