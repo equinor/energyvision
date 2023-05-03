@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Text, TextProps } from '@components'
 import styled from 'styled-components'
 
@@ -29,7 +29,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<TextProps> = (args) => (
+export const Default: StoryFn<TextProps> = (args) => (
   <Text {...args}>
     Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the 13MW
     Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind farm.
@@ -38,7 +38,7 @@ export const Default: Story<TextProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const Sizes: Story<TextProps> = () => (
+export const Sizes: StoryFn<TextProps> = () => (
   <Wrapper>
     <Text>This is just an ordinary piece of text.</Text>
     <Text size="md">
@@ -54,7 +54,7 @@ Sizes.parameters = {
   },
 }
 
-export const MultipleParagraphs: Story<TextProps> = () => (
+export const MultipleParagraphs: StoryFn<TextProps> = () => (
   <>
     <Text>
       The Johan Sverdrup field came on stream on 5 October 2019 – more than two months ahead of schedule and with
@@ -75,7 +75,7 @@ MultipleParagraphs.parameters = {
   },
 }
 
-export const InvertedText: Story<TextProps> = () => (
+export const InvertedText: StoryFn<TextProps> = () => (
   <DarkBackground>
     <Text inverted>
       This text has its color inverted by manually setting the inverted prop to true. Perfect for use on darker

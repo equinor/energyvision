@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { TextWithIcon } from '@components'
 import styled from 'styled-components'
 
@@ -30,7 +30,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story = () => (
+export const Default: StoryFn = () => (
   <TextWithIcon>
     <TextWithIcon.Media>
       <img src="/icon_people.svg" alt="people icon" />
@@ -42,7 +42,7 @@ export const Default: Story = () => (
 
 Default.storyName = 'Default'
 
-export const Variations: Story = () => (
+export const Variations: StoryFn = () => (
   <Wrapper>
     <Group>
       <TextWithIcon>

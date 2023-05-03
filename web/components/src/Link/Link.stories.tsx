@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/react/types-6-0'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Link, LinkProps, ButtonLink } from '@components'
 
 export default {
@@ -15,7 +15,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<LinkProps> = (args) => (
+export const Default: StoryFn<LinkProps> = (args) => (
   <>
     <Link {...args} href="/">
       This is a link
@@ -23,7 +23,7 @@ export const Default: Story<LinkProps> = (args) => (
   </>
 )
 
-export const RegularLink: Story = () => (
+export const RegularLink: StoryFn = () => (
   <>
     <div>
       <Link href="/">This is a link</Link>
@@ -52,7 +52,7 @@ RegularLink.parameters = {
   },
 }
 
-export const ContentLink: Story = () => (
+export const ContentLink: StoryFn = () => (
   <>
     <div>
       <Link variant="contentLink" href="/">
@@ -83,13 +83,13 @@ ContentLink.parameters = {
   },
 }
 
-export const ReadMoreLink: Story = () => (
+export const ReadMoreLink: StoryFn = () => (
   <Link variant="readMore" href="/">
     Read more
   </Link>
 )
 
-export const LinkWithoutUnderline: Story = () => (
+export const LinkWithoutUnderline: StoryFn = () => (
   <Link underline={false} href="/">
     Read more
   </Link>
@@ -101,7 +101,7 @@ LinkWithoutUnderline.parameters = {
   },
 }
 
-export const ButtonLinkExample: Story = () => (
+export const ButtonLinkExample: StoryFn = () => (
   <ButtonLink href="/">Check out our exciting career opportunities</ButtonLink>
 )
 ButtonLinkExample.parameters = {

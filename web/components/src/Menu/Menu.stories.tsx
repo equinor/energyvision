@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Menu, MenuProps, Heading, Link, List } from '@components'
 import styled from 'styled-components'
 
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   height: 300px;
 `
 
-export const Default: Story<MenuProps> = (args) => (
+export const Default: StoryFn<MenuProps> = (args) => (
   <Wrapper>
     <Menu {...args}>
       <Menu.SubMenu id={1}>

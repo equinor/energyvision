@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/react/types-6-0'
+import type { StoryFn, Meta } from '@storybook/react'
 import { PullQuote, PullQuoteProps } from '@components'
 import styled from 'styled-components'
 
@@ -47,7 +47,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<PullQuoteProps> = (args) => (
+export const Default: StoryFn<PullQuoteProps> = (args) => (
   <PullQuote {...args}>
     <PullQuote.Quote>
       In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a
@@ -56,7 +56,7 @@ export const Default: Story<PullQuoteProps> = (args) => (
   </PullQuote>
 )
 
-export const WithAuthor: Story<PullQuoteProps> = () => (
+export const WithAuthor: StoryFn<PullQuoteProps> = () => (
   <PullQuote>
     <PullQuote.Quote>
       In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a
@@ -67,7 +67,7 @@ export const WithAuthor: Story<PullQuoteProps> = () => (
 )
 WithAuthor.storyName = 'With author name'
 
-export const WithAuthorAndTitle: Story<PullQuoteProps> = () => (
+export const WithAuthorAndTitle: StoryFn<PullQuoteProps> = () => (
   <PullQuote>
     <PullQuote.Quote>
       In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a
@@ -78,7 +78,7 @@ export const WithAuthorAndTitle: Story<PullQuoteProps> = () => (
 )
 WithAuthorAndTitle.storyName = 'With author name and title'
 
-export const WithImage: Story<PullQuoteProps> = () => (
+export const WithImage: StoryFn<PullQuoteProps> = () => (
   <PullQuote>
     <PullQuote.Quote>
       In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a
@@ -95,7 +95,7 @@ export const WithImage: Story<PullQuoteProps> = () => (
 )
 WithImage.storyName = 'With image'
 
-export const ShortQuote: Story<PullQuoteProps> = () => (
+export const ShortQuote: StoryFn<PullQuoteProps> = () => (
   <PullQuote>
     <PullQuote.Quote>In the beginning the Universe was created.</PullQuote.Quote>
     <PullQuote.Author title="The Restaurant at the End of the Universe">Douglas Adams</PullQuote.Author>
@@ -108,7 +108,7 @@ ShortQuote.parameters = {
     storyDescription: `When the quote is less than 50 characters, the font size gets bigger`,
   },
 }
-export const LongQuote: Story<PullQuoteProps> = () => (
+export const LongQuote: StoryFn<PullQuoteProps> = () => (
   <PullQuote>
     <PullQuote.Quote>
       I am old, Gandalf. I do not look it, but I am beginning to feel it in my heart of hearts. Well-preserved indeed!

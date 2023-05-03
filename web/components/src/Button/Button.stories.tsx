@@ -1,4 +1,4 @@
-import { Story, Meta } from '@storybook/react/types-6-0'
+import type { StoryFn, Meta } from '@storybook/react'
 import styled from 'styled-components'
 import { Button, ButtonProps } from '@components'
 import { Icon } from '@equinor/eds-core-react'
@@ -16,9 +16,9 @@ export default {
   component: Button,
 } as Meta
 
-export const Default: Story<ButtonProps> = (args) => <Button {...args}>This is a button</Button>
+export const Default: StoryFn<ButtonProps> = (args) => <Button {...args}>This is a button</Button>
 
-export const Contained: Story = () => (
+export const Contained: StoryFn = () => (
   <Wrapper>
     <Button variant="contained">Contained</Button>
   </Wrapper>
@@ -30,7 +30,7 @@ Contained.parameters = {
   },
 }
 
-export const Outlined: Story = () => (
+export const Outlined: StoryFn = () => (
   <Wrapper>
     <Button variant="outlined">Outlined</Button>
   </Wrapper>
@@ -42,7 +42,7 @@ Outlined.parameters = {
   },
 }
 
-export const Ghost: Story = () => (
+export const Ghost: StoryFn = () => (
   <Wrapper>
     <Button variant="ghost">
       Read the story
@@ -57,7 +57,7 @@ Ghost.parameters = {
   },
 }
 
-export const GhostIcon: Story = () => (
+export const GhostIcon: StoryFn = () => (
   <Wrapper>
     <Button variant="ghost_icon">
       <Icon data={arrow_forward} />

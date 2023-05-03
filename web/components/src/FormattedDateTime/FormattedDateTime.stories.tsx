@@ -1,5 +1,5 @@
 import { IntlProvider } from 'react-intl'
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import styled from 'styled-components'
 import { FormattedDate, FormattedTime, FormattedDateTime, DateTimeProps, FormattedTimeProps } from '@components'
 
@@ -30,7 +30,7 @@ export default {
   ],
 } as Meta
 
-export const Default: Story<DateTimeProps> = (args) => {
+export const Default: StoryFn<DateTimeProps> = (args) => {
   const { datetime } = args
   const now = new Date()
   const dtString = datetime ? datetime : now.toString()
@@ -41,7 +41,7 @@ export const Default: Story<DateTimeProps> = (args) => {
     </>
   )
 }
-export const Uppercase: Story<DateTimeProps> = () => {
+export const Uppercase: StoryFn<DateTimeProps> = () => {
   const datetime = new Date()
 
   return (
@@ -56,7 +56,7 @@ Uppercase.parameters = {
   },
 }
 
-export const DateTime: Story<DateTimeProps> = () => {
+export const DateTime: StoryFn<DateTimeProps> = () => {
   const datetime = new Date()
 
   return (
@@ -74,7 +74,7 @@ DateTime.parameters = {
   },
 }
 
-export const JustDate: Story<DateTimeProps> = () => {
+export const JustDate: StoryFn<DateTimeProps> = () => {
   const datetime = new Date()
 
   return (
@@ -91,7 +91,7 @@ JustDate.parameters = {
   },
 }
 
-export const JustTime: Story<FormattedTimeProps> = () => {
+export const JustTime: StoryFn<FormattedTimeProps> = () => {
   const datetime = new Date()
 
   return (
