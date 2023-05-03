@@ -1,11 +1,8 @@
-import { calendar_event } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
+import type { Reference, Rule, ValidationContext } from 'sanity'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
-import { EdsIcon } from '../../../icons'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
-import { EventPromotionInput } from '../../components/EventPromotion'
+import { EventPromotionInput, EventPromotionPreview } from '../../components/EventPromotion'
 
 export type EventPromotion = {
   _key: string
@@ -24,6 +21,7 @@ export default {
   type: 'object',
   components: {
     input: EventPromotionInput,
+    preview: EventPromotionPreview,
   },
   fields: [
     {
@@ -97,51 +95,14 @@ export default {
         }).unique(),
     },
   ].filter((e) => e),
-  // When you play the game of previews, you win or you die
   preview: {
     select: {
+      useTags: 'useTags',
       tags: 'tags',
-      reference1: 'promotedEvents.0.content.title',
-      reference2: 'promotedEvents.1.content.title',
-      reference3: 'promotedEvents.2.content.title',
-      manually: 'manuallySelectEvents',
+      promotedEvents: 'promotedEvents',
+      manuallySelectEvents: 'manuallySelectEvents',
       promotePastEvents: 'promotePastEvents',
       pastEventsCount: 'pastEventsCount',
-    },
-    prepare({
-      tags,
-      reference1,
-      reference2,
-      reference3,
-      manually,
-      promotePastEvents,
-      pastEventsCount,
-    }: {
-      tags?: any
-      reference1: PortableTextBlock[]
-      reference2: PortableTextBlock[]
-      reference3: PortableTextBlock[]
-      manually: boolean
-      pastEventsCount?: number
-      promotePastEvents: boolean
-    }) {
-      let title
-      if (manually) {
-        const plainTitle1 = reference1 ? blocksToText(reference1) : undefined
-        const plainTitle2 = reference2 ? blocksToText(reference2) : undefined
-        const plainTitle3 = reference3 ? blocksToText(reference3) : undefined
-        const hasMoreReferences = Boolean(plainTitle3)
-        const titleText = [plainTitle1, plainTitle2].filter(Boolean).join(', ') || ''
-        title = hasMoreReferences ? `${titleText}...` : titleText
-      } else {
-        const tagText = tags && tags.length > 0 ? `from ${tags.length} tag(s)` : `without tag filters`
-        title = `Showing ${pastEventsCount || 'all'} ${promotePastEvents ? 'past' : 'future'} events ${tagText}`
-      }
-      return {
-        title: title,
-        subtitle: manually ? `Events promotion | Manual` : `Events promotion | Automatic`,
-        media: EdsIcon(calendar_event),
-      }
     },
   },
 }
