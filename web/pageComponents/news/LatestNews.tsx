@@ -33,6 +33,11 @@ const StyledCarousel = styled(Carousel)`
   padding-left: var(--space-medium);
 `
 
+const CarouselContainer = styled.div`
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
+`
+
 type LatestNewsProp = {
   data: CardData[]
 }
@@ -50,11 +55,13 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       {renderScroll ? (
         <>
           {Flags.IS_DEV ? (
-            <StyledCarousel>
-              {data.map((newsItem: CardData) => (
-                <StyledNewsCard data={newsItem} key={newsItem.id} />
-              ))}
-            </StyledCarousel>
+            <CarouselContainer>
+              <StyledCarousel>
+                {data.map((newsItem: CardData) => (
+                  <StyledNewsCard data={newsItem} key={newsItem.id} />
+                ))}
+              </StyledCarousel>
+            </CarouselContainer>
           ) : (
             <HorizontalScroll type="card">
               {data.map((newsItem: CardData) => (

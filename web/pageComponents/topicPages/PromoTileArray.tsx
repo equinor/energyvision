@@ -42,6 +42,12 @@ const StyledCarousel = styled(Carousel)`
   padding-right: var(--space-medium);
   padding-left: var(--space-medium);
 `
+
+const CarouselContainer = styled.div`
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
+`
+
 /**
  * tokens.shape.corners.borderRadius is the value used by the EDS Card component
  * Use same value from @equinor/eds-tokens to ensure consistency
@@ -89,7 +95,9 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
           {Flags.IS_DEV ? (
-            <StyledCarousel>{children}</StyledCarousel>
+            <CarouselContainer>
+              <StyledCarousel>{children}</StyledCarousel>
+            </CarouselContainer>
           ) : (
             <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
           )}

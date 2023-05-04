@@ -66,6 +66,11 @@ const StyledCarousel = styled(Carousel)`
   padding-left: var(--space-medium);
 `
 
+const CarouselContainer = styled.div`
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
+`
+
 const MultipleEventCards = ({
   data,
   hasSectionTitle,
@@ -89,11 +94,13 @@ const MultipleEventCards = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <StyledCarousel>
-            {data.map((item) => {
-              return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-            })}
-          </StyledCarousel>
+          <CarouselContainer>
+            <StyledCarousel>
+              {data.map((item) => {
+                return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+              })}
+            </StyledCarousel>
+          </CarouselContainer>
         ) : (
           <HorizontalScroll type="card">
             {data.map((item) => {

@@ -74,6 +74,12 @@ const StyledCarousel = styled(Carousel)`
   padding-right: var(--space-medium);
   padding-left: var(--space-medium);
 `
+
+const CarouselContainer = styled.div`
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
+`
+
 type CardProps = CardData | PeopleCardData | EventCardData
 
 const MultiplePromotions = ({
@@ -122,14 +128,16 @@ const MultiplePromotions = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <StyledCarousel>
-            {data.map((item) => {
-              const card = getCard(item)
-              if (card) {
-                return <div key={item.id}>{card}</div>
-              }
-            })}
-          </StyledCarousel>
+          <CarouselContainer>
+            <StyledCarousel>
+              {data.map((item) => {
+                const card = getCard(item)
+                if (card) {
+                  return <div key={item.id}>{card}</div>
+                }
+              })}
+            </StyledCarousel>
+          </CarouselContainer>
         ) : (
           <HorizontalScroll type="card">
             {data.map((item) => {

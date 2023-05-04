@@ -50,6 +50,11 @@ const StyledCarousel = styled(Carousel)`
   padding-left: var(--space-medium);
 `
 
+const CarouselContainer = styled.div`
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
+`
+
 type IframeCarouselProps = {
   data: IframeCarouselData
   anchor?: string
@@ -64,37 +69,39 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
       <Container>
         {title && <StyledHeading value={title} />}
         {Flags.IS_DEV ? (
-          <StyledCarousel>
-            {items.map((item) => (
-              <ItemContainer key={item._key}>
-                {item.title && <StyledItemHeading value={item.title} size="md" />}
-                {item.description ? (
-                  <Figure>
+          <CarouselContainer>
+            <StyledCarousel>
+              {items.map((item) => (
+                <ItemContainer key={item._key}>
+                  {item.title && <StyledItemHeading value={item.title} size="md" />}
+                  {item.description ? (
+                    <Figure>
+                      <CoreIFrame
+                        frameTitle={item.frameTitle}
+                        url={item.url}
+                        cookiePolicy={item.cookiePolicy}
+                        aspectRatio={item.aspectRatio}
+                        height={item.height}
+                        hasSectionTitle={!!title}
+                      />
+                      <FigureCaption size="medium">
+                        <RichText value={item.description} />
+                      </FigureCaption>
+                    </Figure>
+                  ) : (
                     <CoreIFrame
                       frameTitle={item.frameTitle}
                       url={item.url}
                       cookiePolicy={item.cookiePolicy}
-                      aspectRatio={item.aspectRatio}
+                      aspectRatio={item.aspectRatio || '16:9'}
                       height={item.height}
-                      hasSectionTitle={!!title}
+                      hasSectionTitle={!!item.title}
                     />
-                    <FigureCaption size="medium">
-                      <RichText value={item.description} />
-                    </FigureCaption>
-                  </Figure>
-                ) : (
-                  <CoreIFrame
-                    frameTitle={item.frameTitle}
-                    url={item.url}
-                    cookiePolicy={item.cookiePolicy}
-                    aspectRatio={item.aspectRatio || '16:9'}
-                    height={item.height}
-                    hasSectionTitle={!!item.title}
-                  />
-                )}
-              </ItemContainer>
-            ))}
-          </StyledCarousel>
+                  )}
+                </ItemContainer>
+              ))}
+            </StyledCarousel>
+          </CarouselContainer>
         ) : (
           <HorizontalScroll type="iframe">
             {items.map((item) => (
