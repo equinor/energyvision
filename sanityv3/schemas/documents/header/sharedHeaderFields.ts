@@ -1,6 +1,5 @@
 import { Rule, ValidationContext } from 'sanity'
 import { defaultColors } from '../../components/ColorSelector'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'

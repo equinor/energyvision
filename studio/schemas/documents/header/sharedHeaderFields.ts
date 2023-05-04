@@ -1,6 +1,5 @@
 import { Rule, ValidationContext } from '@sanity/types/dist/dts'
 import { Colors } from '../../../helpers/ColorListValues'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import CharCounterEditor from '../../components/CharCounterEditor'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
