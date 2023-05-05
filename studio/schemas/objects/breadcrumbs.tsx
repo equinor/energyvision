@@ -1,6 +1,5 @@
-import { Reference, Rule } from '@sanity/types'
+import { Reference, Rule, SanityDocument } from '@sanity/types'
 import routes from '../routes'
-import { filterByRoute } from '../../helpers/referenceFilters'
 
 export default {
   name: 'breadcrumbs',
@@ -45,7 +44,10 @@ export default {
             }),
           to: routes,
           options: {
-            filter: filterByRoute,
+            filter: ({ document }: { document: SanityDocument }) => ({
+              filter: `_type match $routeLang`,
+              params: { routeLang: document._type },
+            }),
             disableNew: true,
           },
         },
