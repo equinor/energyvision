@@ -48,7 +48,7 @@ const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
     .filter((item) => item.slug && item.label)
     .map((item) => ({
       ...item,
-      label: capitalize(item.label.replace('-', ' ')),
+      label: capitalize(item.label.replaceAll('-', ' ')),
     }))
 }
 
