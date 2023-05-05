@@ -1,5 +1,4 @@
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import MagazineFooterComponent from '../objects/magazineFooterComponent'
@@ -66,7 +65,6 @@ export default {
       name: 'ingressBackground',
       type: 'colorlist',
       fieldset: 'header',
-      initialValue: defaultColors[0],
     },
     {
       title: 'Promoted Magazine Tags',

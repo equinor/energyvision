@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import { format_quote } from '@equinor/eds-icons'
 import type { Rule, SanityDocument } from 'sanity'
-import { defaultColors } from '../components/ColorSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
@@ -96,7 +95,6 @@ export default {
       type: 'colorlist',
       hidden: ({ document }: { document: SanityDocument }) => document._type === 'news',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

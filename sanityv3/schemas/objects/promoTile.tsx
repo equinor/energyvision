@@ -1,7 +1,6 @@
 import { label } from '@equinor/eds-icons'
 import type { Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-import { defaultColors } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
@@ -67,7 +66,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

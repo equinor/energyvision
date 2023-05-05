@@ -1,6 +1,5 @@
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
-import { defaultColors } from '../components/ColorSelector'
 import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
@@ -71,7 +70,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

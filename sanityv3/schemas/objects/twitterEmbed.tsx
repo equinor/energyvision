@@ -3,7 +3,6 @@ import { Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
-import { defaultColors } from '../components/ColorSelector'
 
 export type TwitterEmbed = {
   _type: 'twitterEmbed'
@@ -88,7 +87,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

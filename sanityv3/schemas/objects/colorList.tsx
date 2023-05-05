@@ -1,4 +1,4 @@
-import { ColorSelector } from '../components/ColorSelector'
+import { ColorSelector, defaultColors } from '../components/ColorSelector'
 import { defineType, defineField } from 'sanity'
 
 export default defineType({
@@ -15,10 +15,13 @@ export default defineType({
       type: 'string',
     }),
   ],
+  initialValue: {
+    title: defaultColors[0].title,
+    value: defaultColors[0].value,
+  },
   components: {
-    input: ({ schemaType, ...rest }) => {
-      const list = schemaType?.options?.list
-      return <ColorSelector {...rest} {...(list && { list: list })} />
+    input: (props) => {
+      return <ColorSelector {...props} />
     },
   },
 })
