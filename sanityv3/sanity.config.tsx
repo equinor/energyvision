@@ -10,6 +10,7 @@ import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { withDocumentI18nPlugin } from '@sanity/document-internationalization'
+import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -51,6 +52,7 @@ export default defineConfig({
       }),
       visionTool(),
       scheduledPublishing(),
+      FotowareAssetSource(),
     ],
     {
       includeDeskTool: false,

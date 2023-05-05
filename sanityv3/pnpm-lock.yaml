@@ -10,6 +10,7 @@ specifiers:
   '@sanity/icons': ^2.3.1
   '@sanity/scheduled-publishing': ^1.1.1
   '@sanity/ui': ^1.3.2
+  '@sanity/uuid': ^3.0.1
   '@sanity/vision': ^3.9.0
   '@types/react': ^18.0.9
   '@types/styled-components': ^5.1.26
@@ -38,6 +39,7 @@ dependencies:
   '@sanity/icons': 2.3.1_react@18.2.0
   '@sanity/scheduled-publishing': 1.1.1_trc5uxkltmobfdjwklbpc3mrma
   '@sanity/ui': 1.3.2_23mhwjhnzfjwvdn7ol54k26zom
+  '@sanity/uuid': 3.0.1
   '@sanity/vision': 3.9.0_23mhwjhnzfjwvdn7ol54k26zom
   buffer: 6.0.3
   hls.js: 1.4.0
