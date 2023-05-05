@@ -34,8 +34,7 @@ const StyledCarousel = styled(Carousel)`
 `
 
 const CarouselContainer = styled.div`
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
-  margin: auto;
+  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
 `
 
 type LatestNewsProp = {
