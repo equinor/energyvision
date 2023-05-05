@@ -120,9 +120,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     arrayFormat: 'repeat',
                     format: 'RFC1738',
                   })
-                  const href: string = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
-
-                  return href
+                  return `${location.pathname}${queryString}`
                 },
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct

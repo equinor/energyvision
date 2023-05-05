@@ -101,7 +101,7 @@ const Search = () => {
       arrayFormat: 'repeat',
       format: 'RFC1738',
     })
-    return `/search${queryString}`
+    return `${location.pathname}${queryString}`
   }
 
   // eslint-disable-next-line

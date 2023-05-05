@@ -107,7 +107,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       arrayFormat: 'repeat',
       format: 'RFC1738',
     })
-    return `${slug?.split('?')[0]}${queryString}`
+    return `${location.pathname}${queryString}`
   }
 
   // eslint-disable-next-line
