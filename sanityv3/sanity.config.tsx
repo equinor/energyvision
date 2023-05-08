@@ -63,7 +63,12 @@ export default defineConfig({
     types: schemaTypes as SchemaTypeDefinition[],
     templates: (prev) => [...prev, ...initialValueTemplates],
   },
-
+  document: {
+    actions: (prev) =>
+      prev.filter(({ action, name }: any) => {
+        return !(name !== 'DuplicateAction' && action === 'duplicate')
+      }),
+  },
   auth: createAuthStore({
     projectId: 'h61q9gi9',
     dataset: 'global-development',
