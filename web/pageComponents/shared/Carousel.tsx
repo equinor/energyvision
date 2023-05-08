@@ -4,7 +4,6 @@ import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right } from '@equinor/eds-icons'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
-// TODO: Move buttons to own component
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
@@ -52,7 +51,6 @@ const StyledRightButton = styled(StyledButton)`
 const CarouselWrapper = styled.div`
   position: relative;
 `
-// If cards require more styling, move to styled switch statement
 const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
   ${({ $isScrollable }) => !$isScrollable && { justifyContent: 'center' }};
   display: flex;
