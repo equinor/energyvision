@@ -1,11 +1,10 @@
 import { Card } from '@components'
-import Img from 'next/image'
 import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import Image, { Ratios } from '../shared/SanityImage'
-import { HeroTypes, ImageWithAlt, MagazineCardData } from '../../types/types'
+import { ImageWithAlt, MagazineCardData } from '../../types/types'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
