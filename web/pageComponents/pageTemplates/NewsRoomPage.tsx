@@ -1,5 +1,5 @@
 import { Heading } from '@components'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -80,7 +80,6 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
-
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {
@@ -127,10 +126,35 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
     }
   }
 
+  const beforePopState = ({ state, ownBeforePopState, libraryBeforePopState }: any) => {
+    // You can compose your own logic, ignore the library one, it's up to you when you want to trigger SSR.
+    return ownBeforePopState(state) && libraryBeforePopState(state)
+  }
+
+  useEffect(
+    () =>
+      singletonRouter.beforePopState(({ url, as, options }) => {
+        console.log(url)
+        console.log(as)
+        console.log(options)
+        // Check if the user is navigating to a previously loaded page
+        if (as === '/news' || as === '/no/nyheter') {
+          console.log('Forcing SSR')
+          // Perform a server-side redirect to the same page
+          window.location.href = as
+          return false
+        }
+
+        // Allow normal back button behavior for other pages
+        return true
+      }),
+    [singletonRouter],
+  )
   const routing = {
     router: createInstantSearchRouterNext({
       singletonRouter,
       serverUrl: url,
+      beforePopState: beforePopState,
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
