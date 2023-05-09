@@ -11,6 +11,7 @@ import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { withDocumentI18nPlugin } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
+import { createConfirmDialogAction } from './actions/ConfirmDialogAction'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -64,10 +65,17 @@ export default defineConfig({
     templates: (prev) => [...prev, ...initialValueTemplates],
   },
   document: {
-    actions: (prev) =>
-      prev.filter(({ action, name }: any) => {
-        return !(name !== 'DuplicateAction' && action === 'duplicate')
-      }),
+    actions: (prev, context) => {
+      return prev
+        .filter(({ action, name }: any) => {
+          return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
+        })
+        .map((originalAction) =>
+          originalAction.action === 'publish' && context.schemaType === 'news'
+            ? createConfirmDialogAction(originalAction)
+            : originalAction,
+        )
+    },
   },
   auth: createAuthStore({
     projectId: 'h61q9gi9',
