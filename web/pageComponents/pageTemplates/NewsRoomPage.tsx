@@ -131,8 +131,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
     console.log(state)
     console.log('ownBeforePopState ' + ownBeforePopState(state))
     console.log('libraryBeforePopState(state)  ' + libraryBeforePopState(state))
-    const { url, as, options } = state
-    singletonRouter.replace(url, as, { ...options, shallow: false })
+
     return ownBeforePopState(state) && libraryBeforePopState(state)
   }
 
