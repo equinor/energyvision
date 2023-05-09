@@ -141,7 +141,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         if (as === '/news' || as === '/no/nyheter') {
           console.log('Forcing SSR')
           // Perform a server-side redirect to the same page
-          window.location.href = as
+          singletonRouter.replace(url, as, options)
           return false
         }
 
