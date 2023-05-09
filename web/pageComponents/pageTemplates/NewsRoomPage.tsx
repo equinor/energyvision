@@ -128,28 +128,14 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
 
   const beforePopState = ({ state, ownBeforePopState, libraryBeforePopState }: any) => {
     // You can compose your own logic, ignore the library one, it's up to you when you want to trigger SSR.
+    console.log(state)
+    console.log('ownBeforePopState ' + ownBeforePopState(state))
+    console.log('libraryBeforePopState(state)  ' + libraryBeforePopState(state))
+    const { url, as, options } = state
+    singletonRouter.replace(url, as, { ...options, shallow: false })
     return ownBeforePopState(state) && libraryBeforePopState(state)
   }
 
-  useEffect(
-    () =>
-      singletonRouter.beforePopState(({ url, as, options }) => {
-        console.log(url)
-        console.log(as)
-        console.log(options)
-        // Check if the user is navigating to a previously loaded page
-        if (as === '/news' || as === '/no/nyheter') {
-          console.log('Forcing SSR')
-          // Perform a server-side redirect to the same page
-          singletonRouter.replace(url, as, { shallow: false, ...options })
-          return false
-        }
-
-        // Allow normal back button behavior for other pages
-        return true
-      }),
-    [singletonRouter],
-  )
   const routing = {
     router: createInstantSearchRouterNext({
       singletonRouter,
