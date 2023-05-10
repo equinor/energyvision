@@ -1,9 +1,23 @@
-import Brandmaster from './src/BrandmasterAssetSource'
+import BrandmasterPlugin from './src/BrandmasterAssetSource'
 import Icon from './src/Icon'
+import { definePlugin } from 'sanity'
+import type { AssetSource } from 'sanity'
 
-export default {
+const plugin = {
+  icon: Icon,
   name: 'brandmaster',
   title: 'Brandmaster',
-  component: Brandmaster,
-  icon: Icon,
+  component: BrandmasterPlugin,
 }
+
+export const BrandmasterAssetSource = definePlugin({
+  name: 'brandmaster',
+  form: {
+    file: {
+      assetSources: (prev) => [...prev, plugin as AssetSource],
+    },
+    image: {
+      assetSources: (prev) => [...prev, plugin as AssetSource],
+    },
+  },
+})

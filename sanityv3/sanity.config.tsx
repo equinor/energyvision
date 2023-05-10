@@ -11,6 +11,7 @@ import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { withDocumentI18nPlugin } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
+import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { createConfirmDialogAction } from './actions/ConfirmDialogAction'
 
 // @TODO:
@@ -54,6 +55,7 @@ export default defineConfig({
       visionTool(),
       scheduledPublishing(),
       FotowareAssetSource(),
+      BrandmasterAssetSource(),
     ],
     {
       includeDeskTool: false,
