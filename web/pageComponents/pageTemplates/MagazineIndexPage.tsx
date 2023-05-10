@@ -144,6 +144,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               // eslint-disable-next-line
               // @ts-ignore: @TODO: The types are not correct
               stateToRoute(uiState: UiState) {
+                console.log(uiState)
                 const indexUiState = uiState[indexName] || {}
                 return {
                   magazineTags: indexUiState.menu && indexUiState.menu.magazineTags,
@@ -153,6 +154,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
               // eslint-disable-next-line
               // @ts-ignore: @TODO: The types are not correct
               routeToState(routeState) {
+                console.log(routeState)
                 return {
                   [indexName]: {
                     page: routeState.page,

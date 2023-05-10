@@ -165,12 +165,6 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
               topicTags: routeState.topics,
               countryTags: routeState.countries,
             },
-            configure: {
-              facetingAfterDistinct: true,
-              maxFacetHits: 50,
-              maxValuesPerFacet: 100,
-              facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
-            },
             page: routeState.page,
           },
         }
