@@ -85,7 +85,7 @@ export default {
         input: SlugInput,
       },
       options: withSlugValidation({
-        source: async (doc) => {
+        source: (doc) => {
           // translated document ids end with _i18n__lang while base documents don't
           const lastFiveCharacters = doc._id.slice(-5)
           const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]

@@ -1,5 +1,5 @@
 import { Box, Button, Card, Flex, Stack, TextInput } from '@sanity/ui'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import {
   getValueAtPath,
   ObjectInputProps,
@@ -14,16 +14,21 @@ import {
   SlugSourceFn,
   SlugValue,
   unset,
+  useClient,
   useFormBuilder,
+  useFormValue,
 } from 'sanity'
-import { slugify } from './utils/slugify'
 import { useAsync } from './utils/useAsync'
 import { SlugContext, useSlugContext } from './utils/useSlugContext'
+import { slugify as sanitySlugify } from './utils/slugify'
+import slugify from 'slugify'
 
 /**
  * @beta
  */
 export type SlugInputProps = ObjectInputProps<SlugValue, SlugSchemaType>
+
+type PrefixField = string | { _ref: string }
 
 function getSlugSourceContext(valuePath: Path, document: SanityDocument, context: SlugContext): SlugSourceContext {
   const parentPath = valuePath.slice(0, -1)
@@ -45,24 +50,37 @@ async function getNewFromSource(
 /**
  * @beta
  */
-export function SlugInput(props: SlugInputProps) {
+export function SlugInput(props: SlugInputProps & { prefix: string }) {
   const { getDocument } = useFormBuilder().__internal
   const { path, value, schemaType, validation, onChange, readOnly, elementProps } = props
   const sourceField = schemaType.options?.source
   const errors = useMemo(() => validation.filter((item) => item.level === 'error'), [validation])
-
+  const prefixField = useFormValue([props.prefix]) as PrefixField
+  const client = useClient({ apiVersion: '2023-01-01' })
   const slugContext = useSlugContext()
 
   const updateSlug = useCallback(
-    (nextSlug: any) => {
+    async (nextSlug: any) => {
       if (!nextSlug) {
         onChange(PatchEvent.from(unset([])))
         return
       }
 
-      onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(nextSlug, ['current'])]))
+      const getPrefix = async (prefixField: PrefixField) => {
+        if (typeof prefixField === 'string') {
+          return '/' + slugify(prefixField, { lower: true })
+        } else if (prefixField?._ref) {
+          const refId = prefixField._ref
+          return client.fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })
+        } else {
+          return ''
+        }
+      }
+      const prefix = props.prefix ? await getPrefix(prefixField) : ''
+      const newSlug = prefix + nextSlug
+      onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(newSlug, ['current'])]))
     },
-    [onChange, schemaType.name],
+    [onChange, schemaType.name, prefixField],
   )
 
   const [generateState, handleGenerateSlug] = useAsync(() => {
@@ -73,7 +91,7 @@ export function SlugInput(props: SlugInputProps) {
     const doc = getDocument() || ({ _type: schemaType.name } as SanityDocument)
     const sourceContext = getSlugSourceContext(path, doc, slugContext)
     return getNewFromSource(sourceField, doc, sourceContext)
-      .then((newFromSource) => slugify(newFromSource || '', schemaType, sourceContext))
+      .then((newFromSource) => sanitySlugify(newFromSource || '', schemaType, sourceContext))
       .then((newSlug) => updateSlug(newSlug))
   }, [path, updateSlug, getDocument, schemaType, slugContext])
 
