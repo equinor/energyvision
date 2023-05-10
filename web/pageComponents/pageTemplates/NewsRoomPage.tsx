@@ -143,6 +143,9 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
+        push(_url) {
+          // just empty here. To fix browser back.
+        },
       },
     }),
     stateMapping: {
