@@ -132,8 +132,8 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                   }
                 },
                 push(url) {
-                  if (url.split('?')[1]) {
-                    // replace url only if it has query params
+                  if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
+                    // replace url only if there is a change in query params
                     singletonRouter.replace(url, undefined, { scroll: false })
                   }
                 },
