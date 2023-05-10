@@ -134,6 +134,8 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         createURL: createURL,
         parseURL: parseURL,
         push(url) {
+          console.log('old ' + singletonRouter.asPath + ' ---> ' + url)
+          console.log(singletonRouter.asPath.split('?')[1] + ' ---> ' + url.split('?')[1])
           if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
             // replace url only if there is a change in query params
             singletonRouter.replace(url, undefined, { scroll: false })
