@@ -1,7 +1,7 @@
 import FotowarePlugin from './src/FotowareAssetSource'
 import Icon from './src/Icon'
 import { definePlugin } from 'sanity'
-import type { AssetSource, Tool } from 'sanity'
+import type { AssetSource } from 'sanity'
 
 const plugin = {
   icon: Icon,
