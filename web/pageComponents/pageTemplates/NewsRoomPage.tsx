@@ -145,6 +145,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
     }),
     stateMapping: {
       stateToRoute(uiState: UiState) {
+        console.log(uiState)
         const indexUiState = uiState[indexName] || {}
         return {
           query: indexUiState.query,
@@ -155,6 +156,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         }
       },
       routeToState(routeState: any) {
+        console.log(routeState)
         return {
           [indexName]: {
             query: routeState.query,
