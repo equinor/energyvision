@@ -126,25 +126,24 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
     }
   }
 
-  const beforePopState = ({ state, ownBeforePopState, libraryBeforePopState }: any) => {
+  /* const beforePopState = ({ state, ownBeforePopState, libraryBeforePopState }: any) => {
     // You can compose your own logic, ignore the library one, it's up to you when you want to trigger SSR.
     console.log(state)
     console.log('ownBeforePopState ' + ownBeforePopState(state))
     console.log('libraryBeforePopState(state)  ' + libraryBeforePopState(state))
 
     return ownBeforePopState(state) && libraryBeforePopState(state)
-  }
+  }*/
 
   const routing = {
     router: createInstantSearchRouterNext({
       singletonRouter,
       serverUrl: url,
-      beforePopState: beforePopState,
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
-        push(_url) {
-          // just empty here. To fix browser back.
+        push(url) {
+          singletonRouter.replace(url)
         },
       },
     }),
