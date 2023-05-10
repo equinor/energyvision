@@ -144,9 +144,10 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         createURL: createURL,
         parseURL: parseURL,
         push(url) {
-          console.log(url + ' ' + singletonRouter.locale)
-          //singletonRouter.back()
-          if (url.split('?')[1]) singletonRouter.replace(url)
+          if (url.split('?')[1]) {
+            // replace url only if it has
+            singletonRouter.replace(url)
+          }
         },
       },
     }),
