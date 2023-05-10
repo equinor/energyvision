@@ -136,7 +136,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         push(url) {
           if (url.split('?')[1]) {
             // replace url only if it has query params
-            singletonRouter.replace(url)
+            singletonRouter.replace(url, undefined, { scroll: false })
           }
         },
       },
