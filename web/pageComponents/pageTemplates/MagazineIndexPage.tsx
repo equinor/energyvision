@@ -131,6 +131,12 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     magazineTags: tag,
                   }
                 },
+                push(url) {
+                  if (url.split('?')[1]) {
+                    // replace url only if it has query params
+                    singletonRouter.replace(url)
+                  }
+                },
               },
             }),
 

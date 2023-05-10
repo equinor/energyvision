@@ -121,6 +121,12 @@ const Search = () => {
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
+        push(url) {
+          if (url.split('?')[1]) {
+            // replace url only if it has query params
+            singletonRouter.replace(url)
+          }
+        },
       },
     }),
     stateMapping: {
