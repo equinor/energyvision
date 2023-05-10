@@ -204,7 +204,7 @@ export default {
       name: 'background',
       type: 'colorlist',
       options: {
-        list: backgroundColors,
+        colors: backgroundColors,
       },
       fieldset: 'design',
     },
