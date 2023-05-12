@@ -85,6 +85,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
   const createURL = ({ qsModule, routeState, location }) => {
     console.log('------------createURL---------')
     console.log(routeState[indexName] + ' ' + indexName)
+    console.log(routeState)
     const queryParameters: any = {}
 
     if (routeState.query) {
@@ -116,6 +117,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
   // @ts-ignore: @TODO: The types are not correct
   const parseURL = ({ qsModule, location }) => {
     console.log('------------parseURL---------')
+    console.log(location.href)
     const { query = '', page, topics = '', years = '', countries = '' }: any = qsModule.parse(location.search.slice(1))
 
     const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
@@ -166,6 +168,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       routeToState(routeState: any) {
         console.log('------------routeToState---------')
         console.log(routeState.indexName)
+        console.log(routeState)
         return {
           [indexName]: {
             query: routeState.query,
