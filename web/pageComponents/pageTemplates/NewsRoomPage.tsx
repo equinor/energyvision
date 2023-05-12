@@ -83,6 +83,8 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {
+    console.log('------------createURL---------')
+    console.log(routeState[indexName] + ' ' + indexName)
     const queryParameters: any = {}
 
     if (routeState.query) {
@@ -106,23 +108,27 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       arrayFormat: 'repeat',
       format: 'RFC1738',
     })
+    console.log(`${location.pathname}${queryString}`)
     return `${location.pathname}${queryString}`
   }
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const parseURL = ({ qsModule, location }) => {
+    console.log('------------parseURL---------')
     const { query = '', page, topics = '', years = '', countries = '' }: any = qsModule.parse(location.search.slice(1))
 
     const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
     const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
     const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
+    console.log(indexName)
     return {
       query: query,
       page,
       topics: allTopics,
       years: allYears,
       countries: allCountries,
+      indexName: indexName,
     }
   }
 
@@ -145,6 +151,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
     }),
     stateMapping: {
       stateToRoute(uiState: UiState) {
+        console.log('------------stateToRoute---------')
         console.log(uiState)
         const indexUiState = uiState[indexName] || {}
         return {
@@ -153,10 +160,12 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
           topics: indexUiState.refinementList?.topicTags,
           countries: indexUiState.refinementList?.countryTags,
           page: indexUiState?.page,
+          indexName: indexName,
         }
       },
       routeToState(routeState: any) {
-        console.log(routeState)
+        console.log('------------routeToState---------')
+        console.log(routeState.indexName)
         return {
           [indexName]: {
             query: routeState.query,
