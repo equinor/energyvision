@@ -80,12 +80,11 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
+  let eventHandler: any
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {
-    console.log('------------createURL---------')
-    console.log(routeState[indexName] + ' ' + indexName)
-    console.log(routeState)
+    if (singletonRouter.locale !== locale) return location.href
     const queryParameters: any = {}
 
     if (routeState.query) {
@@ -109,21 +108,17 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       arrayFormat: 'repeat',
       format: 'RFC1738',
     })
-    console.log(`${location.pathname}${queryString}`)
     return `${location.pathname}${queryString}`
   }
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const parseURL = ({ qsModule, location }) => {
-    console.log('------------parseURL---------')
-    console.log(location.href)
     const { query = '', page, topics = '', years = '', countries = '' }: any = qsModule.parse(location.search.slice(1))
 
     const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
     const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
     const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
-    console.log(indexName)
     return {
       query: query,
       page,
@@ -142,19 +137,22 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         createURL: createURL,
         parseURL: parseURL,
         push(url) {
-          console.log('old ' + singletonRouter.asPath + ' ---> ' + url)
-          console.log(singletonRouter.asPath.split('?')[1] + ' ---> ' + url.split('?')[1])
           if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
             // replace url only if there is a change in query params
             singletonRouter.replace(url, undefined, { scroll: false })
           }
         },
       },
+      beforeStart(onUpdate) {
+        eventHandler = onUpdate
+        singletonRouter.events.on('routeChangeComplete', eventHandler)
+      },
+      beforeDispose() {
+        singletonRouter.events.off('routeChangeComplete', eventHandler)
+      },
     }),
     stateMapping: {
       stateToRoute(uiState: UiState) {
-        console.log('------------stateToRoute---------')
-        console.log(uiState)
         const indexUiState = uiState[indexName] || {}
         return {
           query: indexUiState.query,
@@ -166,9 +164,6 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
         }
       },
       routeToState(routeState: any) {
-        console.log('------------routeToState---------')
-        console.log(routeState.indexName)
-        console.log(routeState)
         return {
           [indexName]: {
             query: routeState.query,
