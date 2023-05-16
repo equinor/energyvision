@@ -102,7 +102,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -171,7 +171,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
