@@ -143,13 +143,6 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
           }
         },
       },
-      beforeStart(onUpdate) {
-        eventHandler = onUpdate
-        singletonRouter.events.on('routeChangeComplete', eventHandler)
-      },
-      beforeDispose() {
-        singletonRouter.events.off('routeChangeComplete', eventHandler)
-      },
     }),
     stateMapping: {
       stateToRoute(uiState: UiState) {
