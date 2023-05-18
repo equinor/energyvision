@@ -11,7 +11,6 @@
     "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
     "lint:web": "eslint ./web/ --ext .js,.jsx,.ts,.tsx",
     "lint:studio": "eslint ./studio/ --ext .js,.jsx,.ts,.tsx",
-    "lint:sanityv3": "eslint ./sanityv3/ --ext .js,.jsx,.ts,.tsx",
     "lint:search": "eslint ./search/ --ext .ts",
     "lint": "pnpm lint:web && pnpm lint:studio && pnpm lint:search",
     "studio": "yarn --cwd ./studio",
