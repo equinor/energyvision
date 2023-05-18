@@ -11,6 +11,7 @@
     "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
     "lint:web": "eslint ./web/ --ext .js,.jsx,.ts,.tsx",
     "lint:studio": "eslint ./studio/ --ext .js,.jsx,.ts,.tsx",
+    "lint:sanityv3": "eslint ./sanityv3/ --ext .js,.jsx,.ts,.tsx",
     "lint:search": "eslint ./search/ --ext .ts",
     "lint": "pnpm lint:web && pnpm lint:studio && pnpm lint:search",
     "studio": "yarn --cwd ./studio",
@@ -30,6 +31,8 @@
     "start:storybook": "pnpm web storybook",
     "start:web": "pnpm web dev",
     "v3:dev": "pnpm sanityv3 dev",
+    "v3:docker": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/v3 -f sanityv3/Dockerfile .",
+    "v3:run": "docker run -p 3333:3333 envis/v3",
     "docker-studio:build": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/studio -f studio/Dockerfile .",
     "docker-studio:run": "docker run -p 3333:3333 envis/studio",
     "docker-studio:inspect": "docker run -p 3333:3333 -it envis/studio /bin/sh"
