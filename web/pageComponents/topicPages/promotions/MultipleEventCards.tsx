@@ -52,22 +52,13 @@ type MultipleEventCardsProp = {
 }
 
 const StyledEventsCard = styled(EventsCard)`
-  --card-minWidth: 250px;
+  --card-maxWidth: 280px;
 
   @media (min-width: 1000px) {
-    --card-minWidth: 340px;
+    --card-maxWidth: 400px;
   }
 
-  width: var(--card-minWidth);
-`
-
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
-
-const CarouselContainer = styled.div`
-  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
+  min-width: var(--card-maxWidth, 100%);
 `
 
 const MultipleEventCards = ({
@@ -93,13 +84,11 @@ const MultipleEventCards = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <CarouselContainer>
-            <StyledCarousel>
-              {data.map((item) => {
-                return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-              })}
-            </StyledCarousel>
-          </CarouselContainer>
+          <Carousel horizontalPadding={true}>
+            {data.map((item) => {
+              return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+            })}
+          </Carousel>
         ) : (
           <HorizontalScroll type="card">
             {data.map((item) => {

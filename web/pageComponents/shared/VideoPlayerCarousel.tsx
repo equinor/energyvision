@@ -16,7 +16,7 @@ const StyledHeading = styled(TitleText)`
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-xxLarge) var(--layout-paddingHorizontal-medium));
+  padding: var(--iframe-innerPadding, var(--space-xLarge) 0);
   max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
   margin: auto;
 `
