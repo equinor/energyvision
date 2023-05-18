@@ -62,9 +62,8 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       - id: deploy-satellite
-        uses: ./.github/workflows/deploy-studios/
+        uses: ./.github/workflows/deploy-v3/
         with:
-          file: action-v3.yaml
           imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}

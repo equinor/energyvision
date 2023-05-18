@@ -74,10 +74,6 @@ runs:
         repository: 'equinor/energyvision'
         fetch-depth: 0
         ref: '${{ steps.get-long-sha.outputs.sha }}'
-    - uses: actions/setup-node@v3
-      with:
-      node-version: 16
-      cache: 'pnpm'
     - name: Set default image tag 🏷
       if: "${{ inputs.commitSha == '' }}"
       id: set-default-image-tag
