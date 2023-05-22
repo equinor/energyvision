@@ -95,7 +95,6 @@ export type CardData = {
   heroImage: ImageWithCaptionData
   openGraphImage?: ImageWithAlt
   ingress?: PortableTextBlock[]
-  heroVideo?: VideoHeroData
   heroType?: HeroTypes
 }
 
@@ -105,7 +104,6 @@ export type MagazineCardData = {
   tags?: string[]
   openGraphImage?: ImageWithAlt
   heroImage?: ImageWithAlt
-  heroVideo?: VideoHeroData
   heroType?: HeroTypes
   hero?: HeroType
 }
@@ -176,7 +174,6 @@ export enum HeroTypes {
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
-  VIDEO_HERO = 'videoHero',
 }
 
 export type HeroType = {
@@ -187,7 +184,6 @@ export type HeroType = {
   type?: HeroTypes
   ratio?: string
   background?: BackgroundColours
-  video?: VideoHeroData
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
 }
@@ -210,10 +206,16 @@ export type ContentType =
   | StockValuesData
   | TwitterEmbedData
   | VideoData
+  | VideoPlayerData
+  | VideoPlayerCarouselData
+
+export type Breadcrumb = {
+  label: string
+  slug: string
+}
 
 export type PageSchema = {
   slug: string
-  magazineTags?: string[]
   title: PortableTextBlock[]
   hero: HeroType
   template: Templates
@@ -221,22 +223,17 @@ export type PageSchema = {
   content?: ContentType[]
   id: string
   type: string
+  breadcrumbs: {
+    enableBreadcrumbs: boolean
+    useCustomBreadcrumbs: boolean
+    defaultBreadcrumbs: Breadcrumb[]
+    customBreadcrumbs: Breadcrumb[]
+  }
 }
 
-export type PageSchemaV2 = {
-  slug: string
-  title: PortableTextBlock[]
-  hero: HeroType
-  template: Templates
-  seoAndSome: SeoData
-  content?: ContentType[]
-  id: string
-  type: string
-}
+export type TopicPageSchema = PageSchema
 
-export type TopicPageSchema = PageSchemaV2
-
-export type MagazinePageSchema = PageSchemaV2 & {
+export type MagazinePageSchema = PageSchema & {
   magazineTags?: string[]
   footerComponent?: {
     data?: TeaserData
@@ -261,11 +258,11 @@ export type DesignOptions = {
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
-
 export type TextBlockData = {
   type: string
   id: string
   title: PortableTextBlock[]
+  image?: ImageWithAlt
   overline?: string
   text: PortableTextBlock[]
   ingress: PortableTextBlock[]
@@ -635,6 +632,57 @@ export type VideoData = {
   designOptions: {
     background: BackgroundColours
   }
+}
+
+export enum VideoPlayerRatios {
+  '16:9' = '16:9',
+  '9:16' = '9:16',
+  '1:1' = '1:1',
+}
+
+export type VideoPlayerData = {
+  id: string
+  type: string
+  video: {
+    title: string
+    url: string
+    thumbnail: ImageWithAlt
+  }
+  videoControls: {
+    playButton: boolean
+    controls: boolean
+    loop: boolean
+    allowFullScreen: boolean
+    autoPlay: boolean
+    muted: boolean
+  }
+  designOptions: {
+    aspectRatio: VideoPlayerRatios
+    background: BackgroundColours
+    height?: number
+  }
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  action?: LinkData
+}
+
+export type VideoPlayerCarouselData = {
+  id: string
+  type: string
+  items: {
+    id: string
+    title: PortableTextBlock[]
+    video: {
+      title: string
+      url: string
+      thumbnail: ImageWithAlt
+    }
+  }[]
+  designOptions: {
+    aspectRatio: VideoPlayerRatios
+    background: BackgroundColours
+  }
+  title?: PortableTextBlock[]
 }
 
 export type VideoHeroData = {

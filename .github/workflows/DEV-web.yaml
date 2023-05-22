@@ -12,6 +12,7 @@ on:
       - '!web/jest.config.cjs'
       - '!web/jest.setup.ts'
       - './FeatureFlags.js'
+      - '!web/components/README.md'
   repository_dispatch:
     types: [sanity_publish]
 permissions:
@@ -86,6 +87,7 @@ jobs:
           dynatraceEnvironment: ${{ secrets.DYNATRACE_ENVIRONMENT }}
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
+          archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
         with:

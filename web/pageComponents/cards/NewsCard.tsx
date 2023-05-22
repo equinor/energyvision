@@ -3,16 +3,17 @@ import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
-import Image from '../shared/Image'
+import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'
-import { Ratios } from '../shared/SanityImage'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const StyledCard = styled(Card)`
-  height: var(--height);
   --card-gap: var(--space-large);
+  height: 100%;
+  @media (max-width: 800px) {
+    --card-maxWidth: 300px;
+  }
 `
 const StyledLink = styled(CardLink)`
   display: inline-block;
@@ -31,10 +32,15 @@ const StyledIngress = styled(Text)`
   overflow: hidden;
   line-clamp: 5;
   display: -webkit-box;
+  margin-bottom: 0;
+  font-size: var(--typeScale-1);
+  line-height: var(--lineHeight-3);
+`
 
-  @media (max-width: 520px) {
-    max-height: 7.6em;
-  }
+const StyledWrapper = styled(Text)`
+  margin-top: calc(var(--space-small) * -1);
+  padding-left: 0;
+  padding-right: 0;
 `
 
 type NewsCardProp = {
@@ -63,7 +69,6 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
                 image={heroImage.image}
                 maxWidth={400}
                 aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                layout="responsive"
                 sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
               />
             )}
@@ -77,26 +82,27 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
                 />
               </Eyebrow>
             )}
-            {Flags.IS_DEV ? (
-              <StyledTitle>
-                <>{title}</>
-              </StyledTitle>
-            ) : (
-              <Title>
-                <>{title}</>
-              </Title>
-            )}
+            <StyledTitle>
+              <>{title}</>
+            </StyledTitle>
           </Header>
-          {ingress &&
-            (Flags.IS_DEV ? (
-              <StyledIngress>
-                <RichText value={ingress}></RichText>
-              </StyledIngress>
-            ) : (
-              <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-                <RichText value={ingress}></RichText>
-              </Text>
-            ))}
+          {ingress && (
+            <StyledWrapper>
+              <RichText
+                value={ingress}
+                components={{
+                  block: {
+                    normal: ({ children }) => {
+                      return <StyledIngress>{children}</StyledIngress>
+                    },
+                    smallText: ({ children }) => {
+                      return <StyledIngress>{children}</StyledIngress>
+                    },
+                  },
+                }}
+              ></RichText>
+            </StyledWrapper>
+          )}
           <Action>
             <Arrow />
           </Action>

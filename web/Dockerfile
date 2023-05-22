@@ -14,7 +14,7 @@ COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
 RUN \
-  if [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm m i --frozen-lockfile;\
+  if [ -f pnpm-lock.yaml ]; then yarn global add pnpm@^7.2.1 && pnpm m i --frozen-lockfile;\
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -29,12 +29,14 @@ ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_PROJECT_ID
 ARG ARG_ALGOLIA_APP_ID
 ARG ARG_ALGOLIA_SEARCH_API_KEY
+ARG ARG_ARCHIVE_CONTENT_LINK
 
 #ENV SANITY_API_TOKEN ${ARG_SANITY_API_TOKEN}
 ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
 ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 ENV NEXT_PUBLIC_ALGOLIA_APP_ID ${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
+ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK ${ARG_ARCHIVE_CONTENT_LINK}
 # https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 

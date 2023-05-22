@@ -1,6 +1,11 @@
+import { HLSPlayer } from '@components'
+import { Flags } from '../../../common/helpers/datasetHelpers'
+import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
 import { urlFor } from '../../../common/helpers'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
+
+const DEFAULT_MAX_WIDTH = 1440
 
 const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   justify-content: center;
@@ -17,23 +22,21 @@ const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const { title, url, thumbnail, ratio } = video
   const style: React.CSSProperties = {
-    minWidth: '60vw',
+    width: '100%',
     objectFit: ratio === 'narrow' ? 'cover' : undefined,
   }
+  const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, undefined)
   return (
     <StyledFigure ratio={ratio}>
-      <video
+      <HLSPlayer
         loop
         muted
         autoPlay
-        playsInline
         title={title}
-        poster={urlFor(thumbnail).url()}
-        src={url.replace('cdn.sanity.io', 'cdn.equinor.com')}
+        poster={Flags.IS_DEV ? thumbnailURL.src : urlFor(thumbnail).url()}
+        src={url}
         style={style}
-      >
-        <source type={'video/mp4'} />
-      </video>
+      />
     </StyledFigure>
   )
 }

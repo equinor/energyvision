@@ -54,7 +54,7 @@ const IFrame = ({
   if (isPreview) {
     return (
       <IFrameContainer aspectRatioPadding={containerPadding}>
-        <StyledIFrame src={url} title={frameTitle} />
+        <StyledIFrame allowFullScreen src={url} title={frameTitle} />
       </IFrameContainer>
     )
   }
@@ -63,7 +63,7 @@ const IFrame = ({
     <>
       <div className={`cookieconsent-optin-${cookiePolicy}`}>
         <IFrameContainer aspectRatioPadding={containerPadding}>
-          <StyledIFrame src={url} title={frameTitle} data-cookieconsent={cookiePolicy}></StyledIFrame>
+          <StyledIFrame allowFullScreen src={url} title={frameTitle} data-cookieconsent={cookiePolicy}></StyledIFrame>
         </IFrameContainer>
       </div>
       {cookiePolicy !== 'none' && (

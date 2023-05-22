@@ -2,7 +2,7 @@ import type { FigureData } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer, FigureCaption } from '@components'
 import { StyledTextBlockWrapper } from './TextBlock'
-import Image from '../shared/Image'
+import Image from '../shared/SanityImage'
 
 type TeaserProps = {
   data: FigureData
@@ -42,16 +42,13 @@ const FullWidthImage = ({ data, anchor }: TeaserProps) => {
         <Image
           image={image}
           maxWidth={920}
-          sizes="
-          (max-width: 360px) 313px,
-          (max-width: 600px) 415px,
-          (max-width: 950px) 550px,
-          (max-width: 1250px) 655px,
-          (max-width: 1450px) 730px,
-          (max-width: 1700px) 825px,
-          920px
-          "
-          layout="responsive"
+          sizes="(max-width: 360px) 313px,
+            (max-width: 600px) 415px,
+            (max-width: 950px) 550px,
+            (max-width: 1250px) 655px,
+            (max-width: 1450px) 730px,
+            (max-width: 1700px) 825px,
+            920px"
         />
         {(caption || attribution) && (
           <FigureCaption>

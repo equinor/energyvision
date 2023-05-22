@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Teaser, TeaserProps, Heading, Text, Link, Eyebrow, BackgroundContainer } from '@components'
 import { ImagePlaceholder, RatioBox, AspectImagePlaceholder } from '@stories'
 import styled from 'styled-components'
@@ -30,7 +30,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<TeaserProps> = (args) => (
+export const Default: StoryFn<TeaserProps> = (args) => (
   <Teaser {...args}>
     <Teaser.Media>
       <ImagePlaceholder height="150px" />
@@ -53,7 +53,7 @@ export const Default: Story<TeaserProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const WithMedia: Story<TeaserProps> = ({}) => (
+export const WithMedia: StoryFn<TeaserProps> = ({}) => (
   <Teaser>
     <Teaser.Media>
       <ImagePlaceholder height="150px" />
@@ -69,7 +69,7 @@ WithMedia.parameters = {
   },
 }
 
-export const WithEyebrow: Story<TeaserProps> = ({}) => (
+export const WithEyebrow: StoryFn<TeaserProps> = ({}) => (
   <Teaser>
     <Teaser.Media>
       <ImagePlaceholder height="150px" />
@@ -97,7 +97,7 @@ WithEyebrow.parameters = {
   },
 }
 
-export const WithLongContent: Story<TeaserProps> = ({}) => (
+export const WithLongContent: StoryFn<TeaserProps> = ({}) => (
   <Teaser>
     <Teaser.Media>
       <ImagePlaceholder height="150px" />
@@ -129,7 +129,7 @@ WithLongContent.parameters = {
   },
 }
 
-export const WithTheme: Story<TeaserProps> = (args) => (
+export const WithTheme: StoryFn<TeaserProps> = (args) => (
   <>
     <BackgroundContainer background="Moss Green Light">
       <Teaser {...args}>
@@ -179,7 +179,7 @@ WithTheme.parameters = {
   },
 }
 
-export const WithRightPositionedImage: Story<TeaserProps> = (args) => (
+export const WithRightPositionedImage: StoryFn<TeaserProps> = (args) => (
   <Teaser imagePosition="right" {...args}>
     <Teaser.Media>
       <ImagePlaceholder height="150px" />
@@ -206,7 +206,7 @@ WithRightPositionedImage.parameters = {
   },
 }
 
-export const WithConstrainedMediaWidth: Story<TeaserProps> = (args) => (
+export const WithConstrainedMediaWidth: StoryFn<TeaserProps> = (args) => (
   <Teaser {...args}>
     <Teaser.Media size="small" center={true}>
       <RatioBox>

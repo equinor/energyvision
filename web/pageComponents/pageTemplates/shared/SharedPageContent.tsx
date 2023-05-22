@@ -17,6 +17,8 @@ import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import Video from '../../topicPages/Video'
 import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
+import VideoPlayer from '../../shared/VideoPlayer'
+import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
 import {
   AnchorLinkData,
   TopicPageSchema,
@@ -41,6 +43,8 @@ import {
   CookieDeclarationData,
   ImageCarouselData,
   IframeCarouselData,
+  VideoPlayerData,
+  VideoPlayerCarouselData,
 } from '../../../types/types'
 
 // How could we do this for several different component types?
@@ -62,6 +66,8 @@ type ComponentProps =
   | TwitterEmbedData
   | AnchorLinkData
   | VideoData
+  | VideoPlayerData
+  | VideoPlayerCarouselData
   | CookieDeclarationData
 
 type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
@@ -112,6 +118,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <ImageCarousel key={c.id} data={c as ImageCarouselData} anchor={anchorReference} />
       case 'iframeCarousel':
         return <IframeCarousel key={c.id} data={c as IframeCarouselData} anchor={anchorReference} />
+      case 'videoPlayer':
+        return <VideoPlayer key={c.id} data={c as VideoPlayerData} anchor={anchorReference} />
+      case 'videoPlayerCarousel':
+        return <VideoPlayerCarousel key={c.id} data={c as VideoPlayerCarouselData} anchor={anchorReference} />
       default:
         return null
     }

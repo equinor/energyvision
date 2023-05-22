@@ -16,7 +16,7 @@ import { TopicContent } from './items/TopicContent'
 
 const News = (S) => Flags.HAS_NEWS && NewsStructure(S)
 const Magazine = (S) => Flags.HAS_MAGAZINE && MagazineStructure(S)
-const LocalNews = (S) => Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S)
+const LocalNews = (S, context) => Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S, context)
 const LandingPage = (S) => Flags.HAS_LANDING_PAGE && LandingPageStructure(S)
 const Event = (S) => Flags.HAS_EVENT && EventStructure(S)
 
@@ -36,15 +36,22 @@ const ADMIN_ITEMS = (S) =>
     Menu(S),
     Footer(S),
     S.divider(),
-    AssetLibrary(S),
+    AssetLibrary(S, context),
     S.divider(),
     Settings(S),
   ].filter((e) => e)
 
 const SUB_EDITOR_ITEMS = (S) =>
-  [News(S), LocalNews(S), TopicContent(S), LandingPage(S), Magazine(S), Event(S), S.divider(), AssetLibrary(S)].filter(
-    (e) => e,
-  )
+  [
+    News(S),
+    LocalNews(S),
+    TopicContent(S),
+    LandingPage(S),
+    Magazine(S),
+    Event(S),
+    S.divider(),
+    AssetLibrary(S, context),
+  ].filter((e) => e)
 
 const LOCAL_NEWS_EDITOR_ITEMS = (S) => [LocalNews(S)].filter((e) => e)
 
@@ -66,7 +73,7 @@ const getItems = (S, context) => {
   const isLocalNewsEditor = userRoles.some((role) => role.startsWith('local-news-editor'))
   return [
     News(S),
-    // LocalNews(S),
+    LocalNews(S, context),
     TopicContent(S),
     LandingPage(S),
     Event(S),
@@ -74,15 +81,15 @@ const getItems = (S, context) => {
     Misc(S),
     S.divider(),
     Homepage(S),
-    // Routes(S),
+    Routes(S, context),
     S.divider(),
     Menu(S),
     Footer(S),
     S.divider(),
-    AssetLibrary(S),
+    AssetLibrary(S, context),
     S.divider(),
     Settings(S),
-  ]
+  ].filter((e) => e)
   if (isAdmin) {
     return ADMIN_ITEMS(S)
   } else if (isSubEditor) {

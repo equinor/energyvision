@@ -5,6 +5,7 @@ import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
+import { Breadcrumbs } from '../topicPages/Breadcrumbs'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -32,6 +33,7 @@ type TopicPageProps = {
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
+  const { breadcrumbs } = data
 
   return (
     <>
@@ -43,6 +45,17 @@ const TopicPage = ({ data }: TopicPageProps) => {
       />
       <TopicPageLayout>
         <SharedBanner title={data.title} hero={data.hero} />
+
+        {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
+          <Breadcrumbs
+            slug={data?.slug}
+            useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
+            defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
+            customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
+            hasTopMargin={data.hero.type !== 'default'}
+          />
+        )}
+
         {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} styles={titleStyles} />}
         <PageContent data={data} />
       </TopicPageLayout>

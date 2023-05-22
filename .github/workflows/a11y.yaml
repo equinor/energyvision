@@ -6,8 +6,11 @@ on:
 jobs:
   test_for_accessibility_issues:
     runs-on: ubuntu-latest
+    environment:
+      name: development
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      NEXT_PUBLIC_ARCHIVE_CONTENT_LINK: ${{ vars.ARCHIVE_CONTENT_LINK }}
     steps:
       - name: BrowserStack Env Setup 🌎 # Invokes the setup-env action
         id: setup-browserstack-environment
@@ -40,9 +43,9 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install
-          pnpm web install
-          pnpm e2e install
+          pnpm install --filter energy-vision
+          pnpm install --filter energy-vision-web
+          pnpm install --filter energy-vision-e2e-testing
       - name: Build web application ⚙️
         id: build-web-app
         run: pnpm web build

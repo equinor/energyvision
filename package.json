@@ -30,6 +30,8 @@
     "start:storybook": "pnpm web storybook",
     "start:web": "pnpm web dev",
     "v3:dev": "pnpm sanityv3 dev",
+    "v3:docker": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/v3 -f sanityv3/Dockerfile .",
+    "v3:run": "docker run -p 3333:3333 envis/v3",
     "docker-studio:build": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/studio -f studio/Dockerfile .",
     "docker-studio:run": "docker run -p 3333:3333 envis/studio",
     "docker-studio:inspect": "docker run -p 3333:3333 -it envis/studio /bin/sh"
@@ -39,14 +41,14 @@
     "is-ci": "^3.0.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.40.0",
-    "@typescript-eslint/parser": "^5.40.0",
-    "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-typescript": "^2.7.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "only-allow": "^1.1.1",
     "typescript": "4.8.4"

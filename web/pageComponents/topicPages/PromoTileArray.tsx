@@ -4,12 +4,13 @@ import { PortableTextBlock } from '@portabletext/types'
 import { CSSProperties, Fragment } from 'react'
 import styled from 'styled-components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
-import Image from '../shared/Image'
+import Image, { Ratios } from '../shared/SanityImage'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
-import { Ratios } from '../shared/SanityImage'
 import { PromoTileButton } from './PromoTileButton'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import { Carousel } from '../shared/Carousel'
 
 const { Header, Action, Media } = Card
 
@@ -28,14 +29,14 @@ const Container = styled.div`
 `
 
 const HorizontalWrapper = styled.div`
-  --card-maxWidth: 400px;
-
-  @media (max-width: 800px) {
-    --card-maxWidth: 300px;
-  }
+  --card-maxWidth: 280px;
 
   margin-top: var(--space-3xLarge);
   margin-bottom: var(--space-3xLarge);
+
+  @media (min-width: 800px) {
+    --card-maxWidth: 400px;
+  }
 `
 
 /**
@@ -84,11 +85,16 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
   const Wrapper = renderScroll
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
-          <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
+          {Flags.IS_DEV ? (
+            <Carousel horizontalPadding>{children}</Carousel>
+          ) : (
+            <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
+          )}
         </HorizontalWrapper>
       )
     : Container
-  const CardWrapper = renderScroll ? HorizontalScrollItem : Fragment
+
+  const CardWrapper = renderScroll && !Flags.IS_DEV ? HorizontalScrollItem : Fragment
 
   return (
     <div className="background-none" id={anchor}>
@@ -124,7 +130,6 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
                         alt={image.alt}
                         maxWidth={400}
                         aspectRatio={Ratios.FOUR_TO_FIVE}
-                        layout="responsive"
                       />
                     </Media>
                   )}

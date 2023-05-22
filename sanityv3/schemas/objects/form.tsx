@@ -1,6 +1,5 @@
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
@@ -51,9 +50,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {

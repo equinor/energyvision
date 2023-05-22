@@ -78,6 +78,10 @@ export default (isoCode: string, title: string) => {
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
       {
+        name: 'breadcrumbs',
+        type: 'breadcrumbs',
+      },
+      {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',
       },

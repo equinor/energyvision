@@ -9,11 +9,10 @@ const footers = (S) =>
       title: `${lang.title} footer`,
       id: `footer-${lang.id}`,
       icon: flags[lang.id],
-      child: () =>
-        S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
-          .id(`${lang.id}-footer`)
-          .title(`${lang.title} footer`)
-          .views([S.view.form()]),
+      child: S.documentWithInitialValueTemplate('footer-with-locale', { isoCode: `${lang.name}` })
+        .id(`${lang.id}-footer`)
+        .title(`${lang.title} footer`)
+        .views([S.view.form()]),
     }),
   )
 

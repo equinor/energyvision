@@ -4,6 +4,7 @@ import { landingPageContentFields } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
 import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { breadcrumbsQuery } from './common/breadcrumbs'
 
 const allSlugsQuery = /* groq */ `
   "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
@@ -22,7 +23,10 @@ export const routeQuery = /* groq */ `
     "seoAndSome": content->${seoAndSomeFields},
     "hero": content->${heroFields},
     "template": content->_type,
-     content->_type == "landingPage" => {
+    "breadcrumbs": {
+      ${breadcrumbsQuery}
+    },
+    content->_type == "landingPage" => {
         ${landingPageContentFields}
     },
     content->_type == "page" || content->_type == "magazine" => {

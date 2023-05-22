@@ -4,6 +4,13 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 
+export enum HeroTypes {
+  DEFAULT = 'default',
+  FIFTY_FIFTY = 'fiftyFifty',
+  FULL_WIDTH_IMAGE = 'fullWidthImage',
+  LOOPING_VIDEO = 'loopingVideo',
+}
+
 const publishDateTimeQuery = /* groq */ `
   select(
     customPublicationDate == true =>
@@ -30,12 +37,10 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
     "ingress": pt::text(ingress)
   },
   "magazineTags": magazineTags[]->.title[$lang],
-  heroFigure,
+  "heroFigure": select(
+    heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
+    heroFigure),
   openGraphImage,
-  "heroVideo":heroVideo.asset->{
-    playbackId,
-  },
-  "heroType": coalesce(heroType, 'default'),
   "publishDateTime": ${publishDateTimeQuery},
   "docToClear": _id match $id
 }
@@ -81,13 +86,6 @@ export type VideoData = {
   playbackId: string
 }
 
-export enum HeroTypes {
-  DEFAULT = 'default',
-  FIFTY_FIFTY = 'fiftyFifty',
-  FULL_WIDTH_IMAGE = 'fullWidthImage',
-  VIDEO_HERO = 'videoHero',
-}
-
 export type MagazineArticle = {
   slug: string
   title: string
@@ -106,11 +104,10 @@ export type MagazineArticle = {
   }[]
   _id: string
   magazineTags?: string[]
-  heroFigure?: ImageWithAltAndCaption
+  heroFigure?: { image: ImageWithAlt } | ImageWithAltAndCaption
   openGraphImage?: ImageWithAlt
   docToClear?: boolean
   heroVideo: VideoData
-  heroType: HeroTypes
   publishDateTime?: string
 }
 

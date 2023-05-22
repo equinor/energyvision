@@ -4,11 +4,11 @@ import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
 import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
+import { Carousel } from '../shared/Carousel'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import useWindowSize from '../../lib/hooks/useWindowSize'
 
 const Wrapper = styled.div`
-  --card-maxWidth: 400px;
-
   display: flex;
   gap: var(--space-large);
   justify-content: center;
@@ -20,10 +20,11 @@ const StyledHeading = styled(Heading)`
 `
 
 const StyledNewsCard = styled(NewsCard)`
+  width: 100%;
+  --card-maxWidth: 400px;
+  --card-minWidth: 280px;
   min-width: var(--card-minWidth);
   max-width: var(--card-maxWidth);
-  flex-basis: 0;
-  flex-grow: 1;
 `
 
 type LatestNewsProp = {
@@ -40,7 +41,13 @@ const LatestNews = ({ data }: LatestNewsProp) => {
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
       </StyledHeading>
 
-      {renderScroll ? (
+      {Flags.IS_DEV ? (
+        <Carousel horizontalPadding>
+          {data.map((newsItem: CardData) => (
+            <StyledNewsCard data={newsItem} key={newsItem.id} />
+          ))}
+        </Carousel>
+      ) : renderScroll ? (
         <HorizontalScroll type="card">
           {data.map((newsItem: CardData) => (
             <HorizontalScrollItem key={newsItem.id}>

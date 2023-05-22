@@ -18,8 +18,7 @@
     "asset-source-fotoware",
     "media",
     "@sanity/production-preview",
-    "@sanity/document-internationalization",
-    "mux-input"
+    "@sanity/document-internationalization"
   ],
   "env": {
     "development": {

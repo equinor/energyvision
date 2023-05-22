@@ -81,7 +81,7 @@ The legacy packages are currently excluded from the pnpm workspace (see `pnpm-wo
 
 ## Storybook
 
-We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net.
+We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://s166-cdne-envis-storybook-dev.azureedge.net/.
 
 To start Storybook locally during development, run `pnpm web storyboook` from the project root.
 

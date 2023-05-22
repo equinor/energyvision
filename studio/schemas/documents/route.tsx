@@ -21,7 +21,16 @@ export default (isoCode: string, title: string) => {
           collapsed: false,
         },
       },
-    ],
+      {
+        title: 'Breadcrumbs',
+        name: 'breadcrumbs',
+        description: '🔜 This feature will be improved upon in version 3 of the Sanity Studio',
+        options: {
+          collapsible: true,
+          collapsed: false,
+        },
+      },
+    ].filter((e) => e),
     // @TODO: Temp. solution aka 1. iteration.
     fields: [
       {
@@ -79,10 +88,15 @@ export default (isoCode: string, title: string) => {
       },
       slugWithRef('topicSlug', 'parent', 'slug'),
       {
+        name: 'breadcrumbs',
+        title: 'Breadcrumbs',
+        type: 'breadcrumbs',
+      },
+      {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',
       },
-    ],
+    ].filter((e) => e),
     preview: {
       select: {
         title: 'content.title',

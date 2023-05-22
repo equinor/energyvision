@@ -43,6 +43,9 @@ inputs:
   dynatraceImage:
     description: 'Dynatrace image URL'
     required: false
+  archiveContentLink:
+    description: 'Archive storage link'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -101,6 +104,7 @@ runs:
           --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
           --build-arg ARG_DYNATRACE_IMAGE=${{ inputs.dynatraceImage || 'node:16-alpine' }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
+          --build-arg ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \

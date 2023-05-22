@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import NewsCard from '../cards/NewsCard'
 import TitleText from '../shared/portableText/TitleText'
+import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/types'
+import { useState } from 'react'
 
 const Wrapper = styled.div`
   padding: 0 var(--layout-paddingHorizontal-medium);
@@ -31,14 +33,27 @@ const Articles = styled.div`
 const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: string }) => {
   const { title, articles } = data
 
+  const hitsPerPage = 16
+  const totalPages = Math.ceil(articles.length / hitsPerPage)
+  const [currentPage, setCurrentPage] = useState(0)
+
+  const startIndex = currentPage * hitsPerPage
+  const endIndex = (currentPage + 1) * hitsPerPage
+  const pagedArticles = articles.slice(startIndex, endIndex)
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
   return (
     <Wrapper id={anchor}>
       {title && <StyledHeading value={title} level="h2" size="xl" />}
       <Articles {...rest}>
-        {articles.map((article) => (
-          <NewsCard data={article} key={article.id} />
+        {pagedArticles.map((article) => (
+          <NewsCard key={article.id} data={article} />
         ))}
       </Articles>
+      <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />
     </Wrapper>
   )
 }

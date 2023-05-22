@@ -1,9 +1,11 @@
 import { map } from 'rxjs/operators'
 import { TagIcon } from '../../../../icons'
 
-export const AssetTagFilters = (S) => S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList)
+export const AssetTagFilters = (S, context) =>
+  S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList(S, context))
 
-const tagFilterList = () => {
+const tagFilterList = (S, context) => {
+  const { documentStore } = context
   const documentName = 'assetFile'
 
   return () =>

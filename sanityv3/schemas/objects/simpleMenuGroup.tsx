@@ -2,7 +2,7 @@ import { list } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
 import type { SimpleMenuLink } from './simpleMenuLink'
-import type { Rule, Reference } from 'sanity'
+import type { Rule, Reference, ValidationContext } from 'sanity'
 import routes from '../routes'
 import { filterByRoute } from '../../helpers/referenceFilters'
 
@@ -52,6 +52,15 @@ export default {
             filter: filterByRoute,
             disableNew: true,
           },
+          validation: (Rule: Rule) =>
+            Rule.custom((value: Reference, context: ValidationContext) => {
+              const { parent } = context as { parent: { label: string } }
+
+              if (parent?.label && !value)
+                return 'The read more link requires a valid route for it to appear on the web'
+
+              return true
+            }).warning(),
         },
       ],
     },

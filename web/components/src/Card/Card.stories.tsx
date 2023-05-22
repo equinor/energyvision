@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { CSSProperties } from 'react'
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import styled from 'styled-components'
 import { AspectImagePlaceholder, RatioBox, Wrapper, CardLink } from '@stories'
 import { Card, CardProps, Text, ButtonLink, BackgroundContainer } from '@components'
@@ -29,7 +29,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<CardProps> = (args) => (
+export const Default: StoryFn<CardProps> = (args) => (
   <Wrapper>
     <Card {...args}>
       <Card.Media>
@@ -53,7 +53,7 @@ export const Default: Story<CardProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const NewsCard: Story<CardProps> = () => (
+export const NewsCard: StoryFn<CardProps> = () => (
   <Wrapper>
     <CardLink href="#">
       <Card>
@@ -113,7 +113,7 @@ NewsCard.parameters = {
     storyDescription: `A news card should always have an overline/eyebrow with publishing date.`,
   },
 }
-export const PromoTile: Story<CardProps> = () => (
+export const PromoTile: StoryFn<CardProps> = () => (
   <Wrapper>
     <Card type="promo">
       <Card.Media>
@@ -154,7 +154,7 @@ PromoTile.parameters = {
   },
 }
 
-export const Landscape: Story<CardProps> = () => {
+export const Landscape: StoryFn<CardProps> = () => {
   const FakeImage = styled.div`
     height: 200px;
     width: 200px;
@@ -191,7 +191,7 @@ Landscape.parameters = {
     `,
   },
 }
-export const PromoTileWithDifferentLength: Story<CardProps> = () => (
+export const PromoTileWithDifferentLength: StoryFn<CardProps> = () => (
   <Wrapper>
     <Card type="promo">
       <Card.Media>
@@ -230,7 +230,7 @@ PromoTileWithDifferentLength.parameters = {
     storyDescription: `If the title wraps on different numbers of lines, the buttons align to the bottom.`,
   },
 }
-export const PromoTileWithoutImage: Story<CardProps> = () => (
+export const PromoTileWithoutImage: StoryFn<CardProps> = () => (
   <Wrapper>
     <Card type="promo" textOnly>
       <Card.Header>
@@ -264,7 +264,7 @@ PromoTileWithoutImage.parameters = {
     storyDescription: `A promo tile doesn't need to have an image. If that is the case, the promo tile has more top spacing.`,
   },
 }
-export const CardWithBackground: Story<CardProps> = () => (
+export const CardWithBackground: StoryFn<CardProps> = () => (
   <Wrapper>
     <BackgroundContainer background="Moss Green Light">
       <Card type="promo" textOnly>

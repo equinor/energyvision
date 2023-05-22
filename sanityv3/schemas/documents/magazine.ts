@@ -2,10 +2,9 @@ import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
 import { magazineSlug } from '../../../satellitesConfig'
 import blocksToText from '../../helpers/blocksToText'
-import { Colors } from '../../helpers/ColorListValues'
+import { defaultColors } from '../components/ColorSelector'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
-import CharCounterEditor from '../components/CharCounterEditor'
 import SlugInput from '../components/SlugInput'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
@@ -102,9 +101,6 @@ export default {
       title: 'Description',
       description: 'Shown in newsletters and promotions. Max 400 characters',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressBlockContentType],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
@@ -156,11 +152,14 @@ export default {
         { type: 'fullWidthImage' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'pullQuote', initialValue: { background: Colors[0] } },
+        { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
         { type: 'iframe' },
+        { type: 'imageCarousel' },
+        { type: 'iframeCarousel' },
+        { type: 'videoPlayer' },
       ],
     },
     {

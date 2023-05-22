@@ -1,10 +1,9 @@
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../../../icons'
-
 import { languages } from '../../../../languages'
-
+import Iframe from 'sanity-plugin-iframe-pane'
+import { resolvePreviewUrl } from '../../preview'
 import flags from '../../../../icons/countries'
-import Preview from '../../../previews/Preview'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -16,18 +15,32 @@ import Preview from '../../../previews/Preview'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = (S) => [S.view.form().title('Edit route'), S.view.component(Preview).title('Preview')]
+const views = (S) => [
+  S.view.form().title('Edit route'),
+  S.view
+    .component(Iframe)
+    .options({
+      url: (doc) => resolvePreviewUrl(doc),
+      loader: 'Loading preview...',
+      reload: {
+        button: true,
+      },
+      showDisplayUrl: false,
+    })
+    .title('Preview'),
+]
 // Original version without preview pane
 // const views = [S.view.form()]
 
 const schema = 'route'
 
-const topicRoutes = (S) =>
+const topicRoutes = (S, context) =>
   languages.map((lang) =>
-    S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(S, schema, lang.name)),
+    S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(S, context, lang.name)),
   )
 
-function routeStructure(S, schema, isoCode) {
+function routeStructure(S, context, isoCode) {
+  const { documentStore } = context
   const documentName = `${schema}_${isoCode}`
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
   const categoryParentsWithDrafts = `_type == "${documentName}" && !defined(parent)`
@@ -40,7 +53,7 @@ function routeStructure(S, schema, isoCode) {
           .items([
             S.listItem()
               .title('Top Level Routes')
-              .child(() =>
+              .child(
                 S.documentList()
                   .title('Topic Categories')
                   .schemaType(documentName)
@@ -55,7 +68,7 @@ function routeStructure(S, schema, isoCode) {
                 .id(`${parent._id}`)
                 .title(`${parent.slug?.current || 'Missing slug'}`)
                 .icon(RouteDocuments)
-                .child(() =>
+                .child(
                   S.documentList()
                     .title('Child Routes')
                     .schemaType(documentName)
@@ -77,8 +90,8 @@ function routeStructure(S, schema, isoCode) {
     )
 }
 
-export const Routes = (S) =>
+export const Routes = (S, context) =>
   S.listItem()
     .title('Topic Routes')
     .icon(RouteDocuments)
-    .child(S.list().id('routes').title('Routes').items(topicRoutes(S)))
+    .child(S.list().id('routes').title('Routes').items(topicRoutes(S, context)))

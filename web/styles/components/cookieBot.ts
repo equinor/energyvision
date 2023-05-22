@@ -49,14 +49,8 @@ export const cookieBot = css`
   }
 
   #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelectionWrapper {
-    @media (min-width: $screen-xs) and (max-width: 599px) {
-      padding-bottom: 2px;
-      padding-top: 0px;
-    }
-    @media (min-width: 600px) {
-      padding-bottom: var(--space-small) !important;
-      padding-top: var(--space-small);
-    }
+    padding-bottom: var(--space-small) !important;
+    padding-top: var(--space-small);
   }
 
   #CybotCookiebotDialogBodyContentTitle {
@@ -192,7 +186,10 @@ export const cookieBot = css`
 
   #CybotCookiebotDialogBodyLevelButtonsTable {
     #CybotCookiebotDialogBodyLevelButtonsSelectPane {
-      padding: var(--space-small) !important;
+      padding: 0 var(--space-small) !important;
+      .CybotCookiebotDialogBodyLevelButtonWrapper {
+        padding: var(--space-small) 0;
+      }
     }
     #CybotCookiebotDialogBodyLevelDetailsWrapper {
       padding: var(--space-small) !important;

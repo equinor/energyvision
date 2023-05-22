@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
 import type { Reference, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
-import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
@@ -35,7 +34,7 @@ type TextBlock = {
   action?: Reference[]
   splitList?: boolean
   overrideButtonStyle?: boolean
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {
@@ -43,6 +42,15 @@ export default {
   title: 'Text block',
   type: 'object',
   fieldsets: [
+    {
+      title: 'Thumbnail Image',
+      name: 'thumbnail',
+      description: 'A small image acting as a thumbnail above the title.',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
     {
       title: 'Eyebrow headline',
       name: 'eyebrow',
@@ -77,6 +85,14 @@ export default {
   ],
   fields: [
     {
+      name: 'image',
+      type: 'imageWithAlt',
+      options: {
+        hotspot: true,
+      },
+      fieldset: 'thumbnail',
+    },
+    {
       name: 'overline',
       title: 'Eyebrow',
       type: 'string',
@@ -107,18 +123,12 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [blockContentType],
     },
     {
@@ -153,23 +163,13 @@ export default {
         return !(parent.action && parent?.action.length === 1)
       },
     },
-
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+    },
   ].filter((e) => e),
   preview: {
     select: {

@@ -1,7 +1,5 @@
 // Or "topLevelGroups": group[reference._ref == ^.^._id]
 
-import { Flags } from '../../../common/helpers/datasetHelpers'
-
 export const landingPageContentFields = /* groq */ `
  "ingress": content->ingress,
   "id": _id,
@@ -14,13 +12,7 @@ export const landingPageContentFields = /* groq */ `
         "type": _type,
         "slug": slug.current,
       },
-      "image": ${
-        Flags.IS_DEV
-          ? `select(
-            route->content->heroType == 'loopingVideo' => route->content->heroLoopingVideo->thumbnail,
-            coalesce(route->content->heroFigure.image, route->content->openGraphImage))`
-          : `coalesce(route->content->heroFigure.image, route->content->openGraphImage)`
-      },
+      "image": coalesce(route->content->heroFigure.image, route->content->openGraphImage)
     },
     "id": _key,
     label,
@@ -40,13 +32,7 @@ export const landingPageById = /* groq */ `
         "type": _type,
         "slug": slug.current,
       },
-      "image": ${
-        Flags.IS_DEV
-          ? `select(
-            route->content->heroType == 'loopingVideo' => route->content->heroLoopingVideo->thumbnail,
-            coalesce(route->content->heroFigure.image, route->content->openGraphImage))`
-          : `coalesce(route->content->heroFigure.image, route->content->openGraphImage)`
-      },
+      "image": coalesce(route->content->heroFigure.image, route->content->openGraphImage)
     },
     "id": _key,
     label,

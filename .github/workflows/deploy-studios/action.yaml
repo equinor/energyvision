@@ -43,7 +43,12 @@ inputs:
   sanityApiToken:
     description: 'Sanity API token'
     required: true
-
+  screen9accountId:
+    description: 'Screen 9 Account Id'
+    required: true
+  screen9token:
+    description: 'Screen9 API token'
+    required: true
 outputs:
   copied-files:
     description: 'Number of files copied'
@@ -104,6 +109,8 @@ runs:
           --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
+          --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
+          --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \

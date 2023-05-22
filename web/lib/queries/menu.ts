@@ -1,5 +1,3 @@
-import { HeroTypes } from '../../types'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import { sameLang } from './common/langAndDrafts'
 import { publishDateTimeQuery } from './common/publishDateTime'
 
@@ -43,14 +41,9 @@ export const menuQuery = /* groq */ `
       _type match "route_*" => {
         "routeContentType": content->_type,
         "title": content->title,
-        "heroImage": ${
-          Flags.IS_DEV
-            ? `select(
-                content->heroType == ${HeroTypes.LOOPING_VIDEO} => { "image": content->heroLoopingVideo->thumbnail},
-                content->heroFigure
-              )`
-            : `content->heroFigure`
-        },
+        "heroImage": select(
+            content->heroType == 'loopingVideo' => { "image": content->heroLoopingVideo->thumbnail },
+            content->heroFigure),
         "eventDate": content->eventDate,
         "location": content->location,
       }

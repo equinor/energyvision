@@ -1,6 +1,5 @@
+const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 /* eslint-disable @typescript-eslint/no-var-requires */
-const archiveServerHostname = 'https://envis-legacy.azureedge.net/equinor-archive-content'
-
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
@@ -55,7 +54,7 @@ export default withBundle(
       archiveStorageURL: archiveServerHostname,
     },
     images: {
-      domains: ['cdn.sanity.io', 'cdn.equinor.com', 'image.mux.com'],
+      domains: ['cdn.sanity.io', 'cdn.equinor.com'],
       dangerouslyAllowSVG: true,
       contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },

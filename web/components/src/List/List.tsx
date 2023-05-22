@@ -34,6 +34,11 @@ const StyledList = styled(EdsList)<ListProps>`
         gridColumnGap: `var(--space-xLarge)`,
       }}
   }
+
+  /* If the text is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
+    color: var(--inverted-text);
+  }
 `
 
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(

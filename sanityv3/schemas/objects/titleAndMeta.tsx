@@ -1,15 +1,25 @@
-import { Box, Label, TextArea } from '@sanity/ui'
-import { Rule } from 'sanity'
+import { useCallback } from 'react'
+import { Stack, TextArea, Label } from '@sanity/ui'
+import { set, unset } from 'sanity'
 import { SchemaType } from '../../types'
+import { Rule } from 'sanity'
 
-// eslint-disable-next-line react/display-name
-export function TextAreaWithChars() {
+export const TextAreaWithChars = (props: any) => {
+  const { elementProps, onChange, value = '' } = props
+
+  const handleChange = useCallback(
+    (event: any) => {
+      const nextValue = event.currentTarget.value
+      onChange(nextValue ? set(nextValue) : unset())
+    },
+    [onChange],
+  )
+
   return (
-    <div>
-      <Box marginTop={2}>
-        <Label size={1}>Characters: {length}</Label>
-      </Box>
-    </div>
+    <Stack space={2}>
+      <TextArea {...elementProps} onChange={handleChange} value={value} rows={5} />
+      <Label size={1}>Characters: {value.length}</Label>
+    </Stack>
   )
 }
 

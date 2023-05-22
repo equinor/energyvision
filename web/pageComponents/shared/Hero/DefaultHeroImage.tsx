@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import type { ImageWithCaptionData } from '../../../types/types'
-import Image from '../Image'
+import Image, { Ratios } from '../SanityImage'
 import { Caption } from '../image/Caption'
-import { Ratios } from '../SanityImage'
 
 type HeroImageProps = {
   data: ImageWithCaptionData
@@ -30,7 +29,6 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
           (max-width: 1700px) 1270px,
           1420px
         "
-        layout="responsive"
         priority
       />
       <Caption caption={caption} attribution={attribution} />

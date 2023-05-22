@@ -4,7 +4,6 @@ import NextLink from 'next/link'
 import { Link, List, Menu } from '@components'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
-
 import type { SimpleGroupData } from '../../../../types/types'
 
 const { SubMenu } = Menu
@@ -44,7 +43,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
       {label && <SimpleHeader>{label}</SimpleHeader>}
       <SimplePanel>
         <PanelContentWrapper>
-          {readMoreLink && (
+          {!!readMoreLink?.link?.slug && (
             <NextLink href={readMoreLink.link?.slug} passHref legacyBehavior>
               <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
             </NextLink>

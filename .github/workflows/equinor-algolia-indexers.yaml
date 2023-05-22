@@ -10,13 +10,13 @@ on:
           - development
           - production
         default: development
-    push:
-      branches:
-        - main
-      paths:
-        - 'search/**'
-        - '!./README.md'
-        - '!./.env.template'
+  push:
+    branches:
+      - main
+    paths:
+      - 'search/**'
+      - '!./README.md'
+      - '!./.env.template'
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -28,7 +28,7 @@ jobs:
   check-code:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'development'}}
     env:
       DOCKER_BUILDKIT: 1
     steps:
@@ -69,7 +69,7 @@ jobs:
     needs: check-code
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'development'}}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -112,7 +112,7 @@ jobs:
 
   deploy-function-application:
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'development'}}
     needs: [build-function-application]
     runs-on: ubuntu-latest
     steps:
@@ -120,7 +120,7 @@ jobs:
         id: login-to-azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.EQUINOR_ALGOLIA_INDEXERS_CREDENTIALS }}
+          creds: ${{ secrets.ENVIS_ACTIONS_SERVICE_PRINCIPAL }}
 
       - name: 'Create output directory'
         shell: bash
