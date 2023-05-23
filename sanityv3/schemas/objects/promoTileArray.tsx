@@ -32,7 +32,7 @@ export default {
       of: [{ type: 'promoTile' }],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       group: 'group',

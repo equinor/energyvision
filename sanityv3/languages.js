@@ -1,5 +1,5 @@
 import { getLanguages } from '../satellitesConfig'
-import { dataset } from './src/lib/datasetHelpers'
+import { dataset } from './sanity.client'
 
 export const languages = getLanguages(dataset)
 

@@ -41,7 +41,7 @@ export default {
               type: 'array',
               title: 'Title',
               description: 'The (optional) title/heading shown beneath the video.',
-              inputComponent: CompactBlockEditor,
+              components: { input: CompactBlockEditor },
               of: [titleContentType],
             },
             {
