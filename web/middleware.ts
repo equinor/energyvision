@@ -51,12 +51,6 @@ export async function middleware(request: NextRequest) {
     return undefined
   }
 
-  // Redirect for the /50 site
-  if (pathname.startsWith('/50')) {
-    if (pathname.startsWith('/50/en')) return NextResponse.redirect(`${origin}/magazine`, PERMANENT_REDIRECT)
-    else return NextResponse.redirect(`${origin}/no/magasin`, PERMANENT_REDIRECT)
-  }
-
   // Check if it is a DNS redirect
   const host = String(request.headers.get('host'))
   const dnsRedirect = getDnsRedirect(host, pathname)

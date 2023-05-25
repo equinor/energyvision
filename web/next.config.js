@@ -79,6 +79,14 @@ export default withBundle(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
+        dataset === 'global' && {
+          source: '/50/en/:slug*',
+          destination: '/magazine',
+        },
+        dataset === 'global' && {
+          source: '/50/:slug*',
+          destination: '/no/magasin',
+        },
       ].filter((e) => e)
     },
     async headers() {
