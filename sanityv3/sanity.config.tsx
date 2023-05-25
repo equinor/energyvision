@@ -1,6 +1,7 @@
 import { visionTool } from '@sanity/vision'
 
 import {
+  Config,
   ConfigContext,
   createAuthStore,
   defineConfig,
@@ -17,10 +18,10 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { ReferenceBehavior, withDocumentI18nPlugin } from '@sanity/document-internationalization'
+import { ReferenceBehavior, withDocumentI18nPlugin, createPublishAction } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { createConfirmDialogAction } from './actions/ConfirmDialogAction'
+import { createCustomPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'
 import { DatabaseIcon } from '@sanity/icons'
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
@@ -78,27 +79,22 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret: boole
     ].filter((e) => e) as PluginOptions[],
     {
       includeDeskTool: false,
-      referenceBehavior: ReferenceBehavior.WEAK,
       ...i18n,
-      // referenceBehavior: ReferenceBehavior.WEAK,
     },
   ),
-
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
     templates: (prev: Template<any, any>[]) => [...prev, ...initialValueTemplates],
   },
   document: {
-    actions: (prev: DocumentActionComponent[], context: any) => {
+    actions: (prev: DocumentActionComponent[]) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
       return prev
-        .filter(({ action, name }: any) => {
+        .filter(({ action, name }: DocumentActionComponent) => {
           return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
         })
         .map((originalAction) =>
-          originalAction.action === 'publish' && context.schemaType === 'news'
-            ? createConfirmDialogAction(originalAction)
-            : originalAction,
+          originalAction.action === 'publish' ? createCustomPublishAction(createPublishAction(i18n)) : originalAction,
         )
     },
   },
