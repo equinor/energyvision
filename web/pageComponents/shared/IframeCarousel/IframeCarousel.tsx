@@ -28,6 +28,7 @@ const Figure = styled.figure`
 `
 const ItemContainer = styled.div`
   width: 100%;
+  min-width: 90%;
 `
 
 const StyledHeading = styled(TitleText)`
@@ -45,15 +46,6 @@ const StyledItemHeading = styled(TitleText)`
   -webkit-box-orient: vertical;
 `
 
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
-
-const CarouselContainer = styled.div`
-  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
-`
-
 type IframeCarouselProps = {
   data: IframeCarouselData
   anchor?: string
@@ -68,39 +60,37 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
       <Container>
         {title && <StyledHeading value={title} />}
         {Flags.IS_DEV ? (
-          <CarouselContainer>
-            <StyledCarousel>
-              {items.map((item) => (
-                <ItemContainer key={item._key}>
-                  {item.title && <StyledItemHeading value={item.title} size="md" />}
-                  {item.description ? (
-                    <Figure>
-                      <CoreIFrame
-                        frameTitle={item.frameTitle}
-                        url={item.url}
-                        cookiePolicy={item.cookiePolicy}
-                        aspectRatio={item.aspectRatio}
-                        height={item.height}
-                        hasSectionTitle={!!title}
-                      />
-                      <FigureCaption size="medium">
-                        <RichText value={item.description} />
-                      </FigureCaption>
-                    </Figure>
-                  ) : (
+          <Carousel>
+            {items.map((item) => (
+              <ItemContainer key={item._key}>
+                {item.title && <StyledItemHeading value={item.title} size="md" />}
+                {item.description ? (
+                  <Figure>
                     <CoreIFrame
                       frameTitle={item.frameTitle}
                       url={item.url}
                       cookiePolicy={item.cookiePolicy}
-                      aspectRatio={item.aspectRatio || '16:9'}
+                      aspectRatio={item.aspectRatio}
                       height={item.height}
-                      hasSectionTitle={!!item.title}
+                      hasSectionTitle={!!title}
                     />
-                  )}
-                </ItemContainer>
-              ))}
-            </StyledCarousel>
-          </CarouselContainer>
+                    <FigureCaption size="medium">
+                      <RichText value={item.description} />
+                    </FigureCaption>
+                  </Figure>
+                ) : (
+                  <CoreIFrame
+                    frameTitle={item.frameTitle}
+                    url={item.url}
+                    cookiePolicy={item.cookiePolicy}
+                    aspectRatio={item.aspectRatio || '16:9'}
+                    height={item.height}
+                    hasSectionTitle={!!item.title}
+                  />
+                )}
+              </ItemContainer>
+            ))}
+          </Carousel>
         ) : (
           <HorizontalScroll type="iframe">
             {items.map((item) => (

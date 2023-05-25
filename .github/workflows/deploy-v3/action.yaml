@@ -1,4 +1,4 @@
-name: 'Deploy satellite studio'
+name: 'Deploy satellite v3 studio'
 description: 'Steps needed to deploy a satellite studio to Radix'
 inputs:
   imageName:
@@ -43,6 +43,9 @@ inputs:
   sanityApiToken:
     description: 'Sanity API token'
     required: true
+  sanityMutationToken:
+    description: 'Sanity API mutation token'
+    required: true
   screen9accountId:
     description: 'Screen 9 Account Id'
     required: true
@@ -74,11 +77,6 @@ runs:
         repository: 'equinor/energyvision'
         fetch-depth: 0
         ref: '${{ steps.get-long-sha.outputs.sha }}'
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: yarn
-        cache-dependency-path: 'studio/yarn.lock'
     - name: Set default image tag 🏷
       if: "${{ inputs.commitSha == '' }}"
       id: set-default-image-tag
@@ -102,6 +100,7 @@ runs:
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
           --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
+          --build-arg ARG_SANITY_MUTATION_TOKEN=${{ inputs.sanityMutationToken }} \
           --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
           --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
           --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
@@ -111,7 +110,7 @@ runs:
           --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
           --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
-          --file studio/Dockerfile \
+          --file sanityv3/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
           --build-arg BUILDKIT_INLINE_CACHE=1
@@ -121,9 +120,18 @@ runs:
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker push ${{ inputs.imageName }} --all-tags
-    - name: Get token 🔑
-      id: get-token
-      uses: ./.github/workflows/get-auth-token/
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        client-id: 460b889f-89e0-4cc9-965c-31f3e7770226
+        tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0
+        allow-no-subscriptions: true
+    - name: 'Get Azure principal token for Radix'
+      shell: bash
+      run: |
+        token=$(az account get-access-token --resource 6dae42f8-4368-4678-94ff-3960e28e3630 --query=accessToken -otsv)
+        echo "::add-mask::$token"
+        echo "APP_SERVICE_ACCOUNT_TOKEN=$token" >> $GITHUB_ENV
     - name: Deploy API on Radix 🚀
       id: deploy
       uses: equinor/radix-github-actions@master

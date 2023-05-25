@@ -13,8 +13,9 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
-
+import { Flags } from '../../common/helpers/datasetHelpers'
 import type { NewsSchema } from '../../types/types'
+import RichText from '../shared/portableText/RichText'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -101,6 +102,7 @@ const Content = styled.div`
   & h3 {
     margin: var(--space-small) 0;
   }
+  ${Flags.IS_DEV && { padding: '0 var(--layout-paddingHorizontal-large)' }};
 
   /* The max-width makes things easier with 50% floating images */
   max-width: var(--maxViewportWidth);
@@ -234,7 +236,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
             {content && content.length > 0 && (
               <Content>
-                <NewsText value={content}></NewsText>
+                {Flags.IS_DEV ? <RichText value={content}></RichText> : <NewsText value={content}></NewsText>}
               </Content>
             )}
 

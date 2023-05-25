@@ -13,10 +13,9 @@ COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
 COPY ./satellitesConfig.js ./
 COPY ./FeatureFlags.js ./
-COPY ./studio ./studio
+COPY ./sanityv3 ./sanityv3
 
 ARG ARG_SANITY_API_TOKEN
-ARG ARG_SANITY_MUTATION_TOKEN
 ARG ARG_SANITY_PROJECT_ID
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_PREVIEW
@@ -31,7 +30,6 @@ ARG ARG_SCREEN9_ACCOUNT_ID
 ARG ARG_SCREEN9_TOKEN
 
 ENV SANITY_STUDIO_API_TOKEN ${ARG_SANITY_API_TOKEN}
-ENV SANITY_STUDIO_MUTATION_TOKEN ${ARG_SANITY_MUTATION_TOKEN}
 ENV SANITY_STUDIO_API_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 ENV SANITY_STUDIO_API_DATASET ${ARG_SANITY_DATASET}
 ENV SANITY_STUDIO_PREVIEW_SECRET ${ARG_SANITY_PREVIEW}
@@ -45,9 +43,8 @@ ENV SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY ${ARG_FOTOWARE_AF_EXPORT_KEY}
 ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID ${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_SCREEN9_TOKEN ${ARG_SCREEN9_TOKEN}
 
-RUN pnpm install
-RUN pnpm studio
-RUN pnpm studio build
+RUN pnpm m i --frozen-lockfile
+RUN pnpm sanityv3 build
 
 # Run
 FROM node:lts-alpine AS runner
@@ -75,8 +72,8 @@ USER "$UID"
 
 RUN mkdir dist
 
-COPY --from=builder ./opt/app/studio/dist ./dist
-COPY --from=builder ./opt/app/studio/server.js .
+COPY --from=builder ./opt/app/sanityv3/dist ./dist
+COPY --from=builder ./opt/app/sanityv3/server.js .
 
 RUN npm install express@4.16.3 express-history-api-fallback@2.2.1
 

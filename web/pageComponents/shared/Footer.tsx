@@ -49,12 +49,13 @@ const LinkWrapper = styled.section`
 const LinksList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
-
+  grid-row-gap: var(--space-small);
   column-gap: var(--space-medium);
   align-items: self-start;
   @media (min-width: 750px) {
     display: flex;
     flex-direction: column;
+    grid-row-gap: 0px;
   }
 `
 

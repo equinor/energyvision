@@ -234,6 +234,9 @@ jobs:
     steps:
       - id: debug
         run: echo  To be deployed ${{ github.event.inputs.site }}
+      - name: Get token 🔑
+        id: get-token
+        uses: ./.github/workflows/get-auth-token/
       - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master

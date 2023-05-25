@@ -29,22 +29,14 @@ const Container = styled.div`
 `
 
 const HorizontalWrapper = styled.div`
-  --card-maxWidth: 400px;
-
-  @media (max-width: 800px) {
-    --card-maxWidth: 300px;
-  }
+  --card-maxWidth: 280px;
 
   margin-top: var(--space-3xLarge);
   margin-bottom: var(--space-3xLarge);
-`
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
 
-const CarouselContainer = styled.div`
-  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
+  @media (min-width: 800px) {
+    --card-maxWidth: 400px;
+  }
 `
 
 /**
@@ -94,16 +86,15 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
           {Flags.IS_DEV ? (
-            <CarouselContainer>
-              <StyledCarousel>{children}</StyledCarousel>
-            </CarouselContainer>
+            <Carousel horizontalPadding>{children}</Carousel>
           ) : (
             <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
           )}
         </HorizontalWrapper>
       )
     : Container
-  const CardWrapper = renderScroll ? HorizontalScrollItem : Fragment
+
+  const CardWrapper = renderScroll && !Flags.IS_DEV ? HorizontalScrollItem : Fragment
 
   return (
     <div className="background-none" id={anchor}>

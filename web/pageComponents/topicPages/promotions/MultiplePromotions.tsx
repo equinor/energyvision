@@ -70,13 +70,10 @@ const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
 
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
-
-const CarouselContainer = styled.div`
-  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
+const CardWrapper = styled.div`
+  display: flex;
+  min-width: 280px;
+  width: 100%;
 `
 
 type CardProps = CardData | PeopleCardData | EventCardData
@@ -127,16 +124,14 @@ const MultiplePromotions = ({
     return (
       <>
         {Flags.IS_DEV ? (
-          <CarouselContainer>
-            <StyledCarousel>
-              {data.map((item) => {
-                const card = getCard(item)
-                if (card) {
-                  return <div key={item.id}>{card}</div>
-                }
-              })}
-            </StyledCarousel>
-          </CarouselContainer>
+          <Carousel horizontalPadding>
+            {data.map((item) => {
+              const card = getCard(item)
+              if (card) {
+                return <CardWrapper key={item.id}>{card}</CardWrapper>
+              }
+            })}
+          </Carousel>
         ) : (
           <HorizontalScroll type="card">
             {data.map((item) => {

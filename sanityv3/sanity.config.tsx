@@ -1,6 +1,15 @@
 import { visionTool } from '@sanity/vision'
 
-import { ConfigContext, createAuthStore, defineConfig, SchemaTypeDefinition } from 'sanity'
+import {
+  Config,
+  ConfigContext,
+  createAuthStore,
+  defineConfig,
+  DocumentActionComponent,
+  PluginOptions,
+  SchemaTypeDefinition,
+  Template,
+} from 'sanity'
 import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType } from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
@@ -9,10 +18,15 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { withDocumentI18nPlugin } from '@sanity/document-internationalization'
+import { ReferenceBehavior, withDocumentI18nPlugin, createPublishAction } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { createConfirmDialogAction } from './actions/ConfirmDialogAction'
+import { createCustomPublishAction } from './actions/CustomPublishAction'
+import { dataset, projectId } from './sanity.client'
+import { DatabaseIcon } from '@sanity/icons'
+import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
+import { i18n } from './schemas/documentTranslation'
+import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -31,12 +45,13 @@ const handleInputComponents = (inputProps: InputProps) => {
   return inputProps.renderDefault(inputProps)
 }
 
-export default defineConfig({
-  name: 'default',
-  title: 'Equinor',
-
-  projectId: 'h61q9gi9',
-  dataset: 'global-development',
+const getConfig = (datasetParam: string, projectIdParam: string, isSecret: boolean = false) => ({
+  name: 'equinor-' + datasetParam,
+  title: 'Equinor [' + datasetParam + ']',
+  icon: DatabaseIcon,
+  basePath: '/' + datasetParam,
+  projectId: projectIdParam,
+  dataset: datasetParam,
   form: {
     components: {
       input: handleInputComponents,
@@ -56,32 +71,36 @@ export default defineConfig({
       scheduledPublishing(),
       FotowareAssetSource(),
       BrandmasterAssetSource(),
-    ],
+      isSecret &&
+        crossDatasetDuplicator({
+          tool: true,
+          types: ['news', 'tag', 'countryTag'],
+        }),
+    ].filter((e) => e) as PluginOptions[],
     {
       includeDeskTool: false,
+      ...i18n,
     },
   ),
-
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
-    templates: (prev) => [...prev, ...initialValueTemplates],
+    templates: (prev: Template<any, any>[]) => [...prev, ...initialValueTemplates],
   },
   document: {
-    actions: (prev, context) => {
+    actions: (prev: DocumentActionComponent[]) => {
+      if (isSecret) prev.push(ResetCrossDatasetToken)
       return prev
-        .filter(({ action, name }: any) => {
+        .filter(({ action, name }: DocumentActionComponent) => {
           return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
         })
         .map((originalAction) =>
-          originalAction.action === 'publish' && context.schemaType === 'news'
-            ? createConfirmDialogAction(originalAction)
-            : originalAction,
+          originalAction.action === 'publish' ? createCustomPublishAction(createPublishAction(i18n)) : originalAction,
         )
     },
   },
   auth: createAuthStore({
-    projectId: 'h61q9gi9',
-    dataset: 'global-development',
+    projectId: projectIdParam,
+    dataset: datasetParam,
     mode: 'replace',
     redirectOnSingle: true,
     providers: [
@@ -94,3 +113,13 @@ export default defineConfig({
     ],
   }),
 })
+
+export default dataset === 'secret'
+  ? defineConfig(
+      [
+        { dataset: 'secret', projectId: projectId },
+        { dataset: 'global-development', projectId: 'h61q9gi9' },
+        { dataset: 'global', projectId: 'h61q9gi9' },
+      ].map((e) => getConfig(e.dataset, e.projectId, true)),
+    )
+  : getConfig(dataset, projectId)
