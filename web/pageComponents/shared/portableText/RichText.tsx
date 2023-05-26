@@ -1,7 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import { Text, List } from '@components'
-import { h3Heading, h2Heading, Sub, Sup, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
+import {
+  h3Heading,
+  h2Heading,
+  Sub,
+  Sup,
+  ExternalLink,
+  InternalLink,
+  FigureWithLayout,
+  Quote,
+  Fact,
+  BulletList,
+  NumberedList,
+} from './components'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
 
@@ -24,6 +36,11 @@ const defaultSerializers = {
         <>{children}</>
       </Text>
     ),
+  },
+  types: {
+    positionedInlineImage: FigureWithLayout,
+    factbox: Fact,
+    pullQuote: Quote,
   },
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
   list: {
