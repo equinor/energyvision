@@ -1,6 +1,18 @@
 name: TEST - Build & Deploy global-test
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - staging
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.storybook/**'
+      - '!web/.gitignore'
+      - '!web/jest.config.cjs'
+      - '!web/jest.setup.ts'
+      - './FeatureFlags.js'
+      - '!web/components/README.md'
 permissions:
   id-token: write
   packages: write
