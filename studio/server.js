@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 'use strict'
 
+/* a test comment */
+
 const path = require('path')
 const express = require('express')
 const fallback = require('express-history-api-fallback')
