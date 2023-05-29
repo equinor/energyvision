@@ -1,6 +1,14 @@
 name: TEST - Build & deploy studio for global-test
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - staging
+    paths:
+      - 'studio/**/*'
+      - './FeatureFlags.js'
+      - '!./README.md'
+      - '!./.env.development.template'
 permissions:
   id-token: write
   packages: write
