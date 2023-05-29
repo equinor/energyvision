@@ -1,10 +1,6 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ['TEST - Build & deploy studio for global-test']
-    types:
-      - completed
 permissions:
   id-token: write
   packages: write

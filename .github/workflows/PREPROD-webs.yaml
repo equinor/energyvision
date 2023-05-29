@@ -1,10 +1,6 @@
 name: PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ['TEST - Build & Deploy global-test']
-    types:
-      - completed
 permissions:
   id-token: write
   packages: write
