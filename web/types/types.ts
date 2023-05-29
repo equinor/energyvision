@@ -12,8 +12,6 @@ export type CaptionData = {
   caption?: string
 }
 
-/* a test comment */
-
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
   _key?: string
