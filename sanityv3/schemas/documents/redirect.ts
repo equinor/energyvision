@@ -1,11 +1,8 @@
 import type { Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByPages } from '../../helpers/referenceFilters'
-import { sanityClient } from '../../sanity.client'
 import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
-
-const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
 export default {
   title: 'Redirect',
@@ -24,7 +21,7 @@ export default {
           const query = /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
 
           const params = { value, documentId }
-          const redirects = await client.fetch(query, params)
+          const redirects = await context.getClient({ apiVersion: '2023-01-01' }).fetch(query, params)
 
           if (!value) {
             return 'Slug is required'

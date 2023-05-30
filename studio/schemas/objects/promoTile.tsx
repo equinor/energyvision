@@ -10,7 +10,6 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const titleContentType = configureTitleBlockContent()
 

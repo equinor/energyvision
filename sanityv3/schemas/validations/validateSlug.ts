@@ -1,21 +1,23 @@
-import { SanityDocument } from 'sanity'
-import { sanityClient } from '../../sanity.client'
+import { ValidationContext } from 'sanity'
 import { Flags } from '../../src/lib/datasetHelpers'
 
-const client = sanityClient.withConfig({
-  apiVersion: '2022-06-22',
-})
+const validateIsUniqueWithinLocale = async (slug: string, context: ValidationContext) => {
+  const { document, getClient } = context
 
-const validateIsUniqueWithinLocale = async (slug: string, { document }: { document: SanityDocument }) => {
+  if (!document) return
+
   const baseId = document._id.replace('drafts.', '').substring(0, 36)
+
   let query: string
+
   if (document._type.includes('route')) {
-    query = `*[slug.current == $slug && _type == $type && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
+    query = /* groq */ `*[slug.current == $slug && _type == $type && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
   } else {
-    query = `*[slug.current == $slug && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
+    query = /* groq */ `*[slug.current == $slug && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
   }
+
   const params = { type: document._type, baseId, slug }
-  const matchingSlugs = await client.fetch(query, params)
+  const matchingSlugs = await getClient({ apiVersion: '2023-01-01' }).fetch(query, params)
 
   return matchingSlugs.length === 0
 }
