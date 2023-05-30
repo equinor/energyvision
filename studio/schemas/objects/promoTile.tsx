@@ -58,13 +58,11 @@ export default {
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
       validation: (Rule: Rule) =>
-        Flags.IS_DEV
-          ? Rule.custom((value: any, context: ValidationContext) => {
-              const { parent } = context as { parent: PromoTile }
-              if (parent?.linkLabelAsTitle || value) return true
-              return 'Required'
-            })
-          : Rule.required(),
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: PromoTile }
+          if (parent?.linkLabelAsTitle || value) return true
+          return 'Required'
+        }),
     },
     {
       name: 'image',
