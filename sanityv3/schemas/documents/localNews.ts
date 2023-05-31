@@ -1,12 +1,10 @@
-import type { Rule } from 'sanity'
+import { Rule } from 'sanity'
 import slugify from 'slugify'
 import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { defaultLanguage } from '../../languages'
-import { sanityClient } from '../../sanity.client'
-import SlugInput from '../components/SlugInput/index'
+import SlugInput from '../components/SlugInput'
 import { i18n } from '../documentTranslation'
-
 import { withSlugValidation } from '../validations/validateSlug'
 import {
   content,
@@ -88,22 +86,25 @@ export default {
       },
       options: withSlugValidation({
         source: async (doc: any) => {
-          // translated document ids end with _i18n__lang while base documents don't
-          const lastFiveCharacters = doc._id.slice(-5)
-          const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
-
-          const localNewsTag = await sanityClient.fetch(`*[_id == $id && _type == 'localNewsTag'][0]`, {
-            id: doc.localNewsTag._ref,
-          })
-          const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
-
           return doc.newsSlug
-            ? `/${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slugify(doc.newsSlug, {
+            ? `${slugify(doc.newsSlug, {
                 lower: true,
               })}`
             : ''
         },
-        slugify: (value: string) => value,
+        slugify: async (input: any, _schemaType: any, context: any) => {
+          const slug = slugify(input)
+          const { client, parent: document } = context
+          const query = /* groq */ `*[_id == $id && _type == "localNewsTag"][0]`
+          const params = { id: document.localNewsTag._ref }
+          return client.fetch(query, params).then((localNewsTag: any) => {
+            const translatedNews = document._lang
+              ? `/${newsSlug[document._lang]}`
+              : `/${newsSlug[defaultLanguage.name]}`
+            const localNewsPath = document._lang ? localNewsTag[document._lang] : localNewsTag[defaultLanguage.name]
+            return `${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slug}`
+          })
+        },
       }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),

@@ -1,5 +1,5 @@
 import { Box, Button, Card, Flex, Stack, TextInput } from '@sanity/ui'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import {
   getValueAtPath,
   ObjectInputProps,
@@ -14,21 +14,16 @@ import {
   SlugSourceFn,
   SlugValue,
   unset,
-  useClient,
   useFormBuilder,
-  useFormValue,
 } from 'sanity'
 import { useAsync } from './utils/useAsync'
 import { SlugContext, useSlugContext } from './utils/useSlugContext'
 import { slugify as sanitySlugify } from './utils/slugify'
-import slugify from 'slugify'
 
 /**
  * @beta
  */
 export type SlugInputProps = ObjectInputProps<SlugValue, SlugSchemaType>
-
-type PrefixField = string | { _ref: string }
 
 function getSlugSourceContext(valuePath: Path, document: SanityDocument, context: SlugContext): SlugSourceContext {
   const parentPath = valuePath.slice(0, -1)
@@ -55,8 +50,6 @@ export function SlugInput(props: SlugInputProps & { prefix: string }) {
   const { path, value, schemaType, validation, onChange, readOnly, elementProps } = props
   const sourceField = schemaType.options?.source
   const errors = useMemo(() => validation.filter((item) => item.level === 'error'), [validation])
-  const prefixField = useFormValue([props.prefix]) as PrefixField
-  const client = useClient({ apiVersion: '2023-01-01' })
   const slugContext = useSlugContext()
 
   const updateSlug = useCallback(
@@ -65,22 +58,10 @@ export function SlugInput(props: SlugInputProps & { prefix: string }) {
         onChange(PatchEvent.from(unset([])))
         return
       }
-
-      const getPrefix = async (prefixField: PrefixField) => {
-        if (typeof prefixField === 'string') {
-          return '/' + slugify(prefixField, { lower: true })
-        } else if (prefixField?._ref) {
-          const refId = prefixField._ref
-          return client.fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })
-        } else {
-          return ''
-        }
-      }
-      const prefix = props.prefix ? await getPrefix(prefixField) : ''
-      const newSlug = prefix + nextSlug
+      const newSlug = nextSlug
       onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(newSlug, ['current'])]))
     },
-    [onChange, schemaType.name, prefixField],
+    [onChange, schemaType.name],
   )
 
   const [generateState, handleGenerateSlug] = useAsync(() => {
