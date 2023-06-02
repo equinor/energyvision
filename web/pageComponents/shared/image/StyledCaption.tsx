@@ -1,16 +1,27 @@
-import { CaptionData } from '../../../types'
+import { BackgroundColours, CaptionData } from '../../../types'
 import styled from 'styled-components'
 import { Caption } from './Caption'
+import { getBackgroundByColorName } from '@components'
 
-const CaptionWrapper = styled.div`
+type CaptionProps = CaptionData & { background?: BackgroundColours }
+
+const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
   margin: 0 auto;
-  padding: 0 var(--layout-paddingHorizontal-small);
+  padding: 0.1px var(--layout-paddingHorizontal-small);
   max-width: var(--maxViewportWidth);
+
+  ${({ background }) => {
+    // Captions's background color is defined by its following component
+    const bgColor = background && {
+      background: getBackgroundByColorName(background),
+    }
+    return { ...bgColor }
+  }}
 `
 
-export const StyledCaption = ({ caption, attribution }: CaptionData) => {
+export const StyledCaption = ({ attribution, caption, background }: CaptionProps) => {
   return (
-    <CaptionWrapper>
+    <CaptionWrapper background={background}>
       <Caption attribution={attribution} caption={caption} />
     </CaptionWrapper>
   )

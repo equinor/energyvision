@@ -34,7 +34,7 @@ type TopicPageProps = {
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
-
+  data.hero.background = data.hero.type !== HeroTypes.DEFAULT ? titleStyles.backgroundColor : data.hero.background
   return (
     <>
       <Seo
@@ -52,7 +52,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-            hasTopMargin={data.hero.type !== 'default'}
+            containerStyles={{
+              hasTopMargin: data.hero.type !== 'default',
+              backgroundColor: titleStyles.backgroundColor,
+            }}
           />
         )}
 
