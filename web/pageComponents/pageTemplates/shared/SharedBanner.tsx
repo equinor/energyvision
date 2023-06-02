@@ -14,7 +14,14 @@ type BannerProps = {
 export const SharedBanner = ({ title, hero, hideImageCaption }: BannerProps) => {
   switch (hero.type) {
     case HeroTypes.FULL_WIDTH_IMAGE:
-      return <FullImageHero ratio={hero.ratio as string} figure={hero.figure} hideImageCaption={hideImageCaption} />
+      return (
+        <FullImageHero
+          ratio={hero.ratio as string}
+          figure={hero.figure}
+          hideImageCaption={hideImageCaption}
+          background={hero.background}
+        />
+      )
     case HeroTypes.FIFTY_FIFTY:
       return (
         <FiftyFiftyHero
