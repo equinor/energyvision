@@ -58,8 +58,7 @@ export function SlugInput(props: SlugInputProps & { prefix: string }) {
         onChange(PatchEvent.from(unset([])))
         return
       }
-      const newSlug = nextSlug
-      onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(newSlug, ['current'])]))
+      onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(nextSlug, ['current'])]))
     },
     [onChange, schemaType.name],
   )

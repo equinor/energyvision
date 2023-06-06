@@ -129,8 +129,8 @@ export default {
         input: SlugInput,
       },
       options: withSlugValidation({
-        source: async (doc: SanityDocument) => {
-          const translatedMagazine = doc._lang ? magazineSlug[doc._lang] : magazineSlug[defaultLanguage.name]
+        source: (doc: SanityDocument) => {
+          const translatedMagazine = doc._lang ? magazineSlug[doc._lang as string] : magazineSlug[defaultLanguage.name]
           return doc.magazineSlug
             ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string, { lower: true })}`
             : ''
