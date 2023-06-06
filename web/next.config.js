@@ -105,12 +105,12 @@ export default withBundle(
           destination: '/not-supported.html',
         },
         // redirects for /50 site
-        dataset in ['global', 'global-development'] && {
+        ['global', 'global-development', 'global-test'].includes(dataset) && {
           source: '/50/en/:slug*',
           destination: '/magazine',
           permanent: true,
         },
-        dataset in ['global', 'global-development'] && {
+        ['global', 'global-development', 'global-test'].includes(dataset) && {
           source: '/50/:slug*',
           destination: '/no/magasin',
           permanent: true,
