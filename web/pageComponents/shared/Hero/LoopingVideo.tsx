@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { urlFor } from '../../../common/helpers'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
 
-const DEFAULT_MAX_WIDTH = 1440
+const DEFAULT_MAX_WIDTH = 1920
 
 const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   justify-content: center;
