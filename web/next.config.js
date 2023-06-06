@@ -79,14 +79,6 @@ export default withBundle(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
-        dataset === 'global' && {
-          source: '/50/en/:slug*',
-          destination: '/magazine',
-        },
-        dataset === 'global' && {
-          source: '/50/:slug*',
-          destination: '/no/magasin',
-        },
       ].filter((e) => e)
     },
     async headers() {
@@ -112,7 +104,18 @@ export default withBundle(
           permanent: true,
           destination: '/not-supported.html',
         },
-      ]
+        // redirects for /50 site
+        dataset in ['global', 'global-development'] && {
+          source: '/50/en/:slug*',
+          destination: '/magazine',
+          permanent: true,
+        },
+        dataset in ['global', 'global-development'] && {
+          source: '/50/:slug*',
+          destination: '/no/magasin',
+          permanent: true,
+        },
+      ].filter((e) => e)
     },
   }),
 )
