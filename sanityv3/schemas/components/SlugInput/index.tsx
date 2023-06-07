@@ -45,7 +45,7 @@ async function getNewFromSource(
 /**
  * @beta
  */
-export function SlugInput(props: SlugInputProps & { prefix: string }) {
+export function SlugInput(props: SlugInputProps) {
   const { getDocument } = useFormBuilder().__internal
   const { path, value, schemaType, validation, onChange, readOnly, elementProps } = props
   const sourceField = schemaType.options?.source
