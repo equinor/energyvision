@@ -17,6 +17,10 @@ const Container = styled.div`
 `
 const ContainerWithBottomSpace = styled(Container)`
   margin-bottom: var(--space-medium);
+
+  :only-child {
+    padding: 0;
+  }
 `
 
 const defaultSerializers = {
