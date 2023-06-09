@@ -23,7 +23,7 @@ const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
 
-// @TODO Improve types here, don't use any
+// @TODO Improve types here, don't use any.
 export default function Page({ data, preview = false }: any) {
   const router = useRouter()
 
