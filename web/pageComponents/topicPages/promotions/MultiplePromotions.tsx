@@ -10,10 +10,8 @@ import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
-import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Carousel } from '../../shared/Carousel'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -123,29 +121,14 @@ const MultiplePromotions = ({
   if (renderScroll) {
     return (
       <>
-        {Flags.IS_DEV ? (
-          <Carousel horizontalPadding>
-            {data.map((item) => {
-              const card = getCard(item)
-              if (card) {
-                return <CardWrapper key={item.id}>{card}</CardWrapper>
-              }
-            })}
-          </Carousel>
-        ) : (
-          <HorizontalScroll type="card">
-            {data.map((item) => {
-              const card = getCard(item)
-              if (card) {
-                return (
-                  <HorizontalScrollItem autoSlideWidth={variant === 'promotePeople'} key={item.id}>
-                    {card}
-                  </HorizontalScrollItem>
-                )
-              }
-            })}
-          </HorizontalScroll>
-        )}
+        <Carousel horizontalPadding>
+          {data.map((item) => {
+            const card = getCard(item)
+            if (card) {
+              return <CardWrapper key={item.id}>{card}</CardWrapper>
+            }
+          })}
+        </Carousel>
       </>
     )
   }

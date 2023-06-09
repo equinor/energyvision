@@ -49,9 +49,13 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
       - name: Get token 🔑
         id: get-token
         uses: ./.github/workflows/get-auth-token/
+
       - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master

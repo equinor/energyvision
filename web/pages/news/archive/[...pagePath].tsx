@@ -56,7 +56,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
     }
   })
 
-  if (!router.isFallback && !data.news) {
+  if (!router.isFallback && !data?.news) {
     setIsArchivePage(false)
     return <ErrorPage statusCode={404} />
   }

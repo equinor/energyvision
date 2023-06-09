@@ -1,10 +1,9 @@
 import React from 'react'
 import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import type { Rule } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import type { PromoTile } from './promoTile'
 import blocksToText from '../../helpers/blocksToText'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
@@ -16,7 +15,7 @@ export default {
   name: 'promoTileArray',
   title: 'Promo tiles',
   fields: [
-    Flags.IS_DEV && {
+    {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
       description:
@@ -38,8 +37,8 @@ export default {
       group: 'group',
     },
     prepare({ group }: { group: PromoTile[] }) {
-      const getTitle = (promoTitle: PromoTile) => {
-        return blocksToText(promoTitle.title as unknown as any[])
+      const getTitle = (promoTile: PromoTile) => {
+        return promoTile.linkLabelAsTitle ? promoTile.link?.label : blocksToText(promoTile.title as PortableTextBlock[])
       }
       return {
         title: group ? getTitle(group[0]) + ' | ' + (getTitle(group[1]) || '') : 'Missing content',

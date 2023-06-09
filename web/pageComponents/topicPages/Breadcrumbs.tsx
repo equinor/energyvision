@@ -43,12 +43,13 @@ const buildJsonLdElements = (crumbs: Breadcrumb[], router: NextRouter) => {
   })
 }
 
-const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
+const parseBreadcrumbs = (crumbs: Breadcrumb[], custom = false) => {
   return crumbs
     .filter((item) => item.slug && item.label)
     .map((item) => ({
       ...item,
-      label: capitalize(item.label.replaceAll('-', ' ')),
+      // @TODO: the item.type check can be removed once all existing custom breadcrumbs have been updated to use the segment type
+      label: capitalize(custom && item.type == 'segment' ? item.label : item.label.replaceAll('-', ' ')),
     }))
 }
 
@@ -65,7 +66,7 @@ export const Breadcrumbs = ({
 
   const crumbs =
     useCustomBreadcrumbs && customBreadcrumbs && customBreadcrumbs.length >= 3
-      ? parseBreadcrumbs(customBreadcrumbs)
+      ? parseBreadcrumbs(customBreadcrumbs, true)
       : parseBreadcrumbs(defaultBreadcrumbs)
 
   if (crumbs.length < 2) return null

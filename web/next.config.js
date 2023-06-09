@@ -3,7 +3,7 @@ const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
-import securityHeaders, { UnsafeContentSecurityPolicy } from './securityHeaders.js'
+import securityHeaders from './securityHeaders.js'
 
 const withTM = nextTranspileModules(['friendly-challenge'])
 
@@ -79,11 +79,6 @@ export default withBundle(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
-        // Add 50 years celebration page to equinor
-        dataset === 'global' && {
-          source: '/50/:slug*',
-          destination: 'https://equinor-50-historier.vercel.app/50/:slug*',
-        },
       ].filter((e) => e)
     },
     async headers() {
@@ -91,20 +86,6 @@ export default withBundle(
         {
           source: '/:path*',
           headers: securityHeaders,
-        },
-        // Disable security headers for 50 years celebration page
-        dataset === 'global' && {
-          source: '/50/:path*',
-          headers: [
-            {
-              key: 'Content-Security-Policy',
-              value: UnsafeContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-            },
-            {
-              key: 'Content-Security-Policy-Report-Only',
-              value: UnsafeContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-            },
-          ],
         },
       ].filter((e) => e)
     },
@@ -123,7 +104,18 @@ export default withBundle(
           permanent: true,
           destination: '/not-supported.html',
         },
-      ]
+        // redirects for /50 site
+        ['global', 'global-development', 'global-test'].includes(dataset) && {
+          source: '/50/en/:slug*',
+          destination: '/magazine',
+          permanent: true,
+        },
+        ['global', 'global-development', 'global-test'].includes(dataset) && {
+          source: '/50/:slug*',
+          destination: '/no/magasin',
+          permanent: true,
+        },
+      ].filter((e) => e)
     },
   }),
 )

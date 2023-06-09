@@ -214,6 +214,7 @@ export type ContentType =
 export type Breadcrumb = {
   label: string
   slug: string
+  type?: string
 }
 
 export type PageSchema = {

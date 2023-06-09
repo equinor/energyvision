@@ -1,16 +1,8 @@
-import React from 'react'
-
-import { validateInternalOrExternalUrl } from '../../validations/validateInternalOrExternalUrl'
-import { validateRequiredIfVisible } from '../../validations/validateRequiredIfVisible'
-
-import type { Rule, Reference, ValidationContext } from 'sanity'
+import type { Rule, Reference } from 'sanity'
 import type { ImageWithAlt } from '../imageWithAlt'
-import routes from '../../routes'
-import { AnchorLinkDescription } from '../anchorReferenceField'
-import { filterByPages } from '../../../helpers/referenceFilters'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import { contacts } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../icons'
+import { getLinkSelectorFields } from '../linkSelector'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -30,16 +22,6 @@ export type ReferenceTarget = {
 function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
-
-const newsType = Flags.HAS_NEWS
-  ? [
-      {
-        type: 'news',
-      },
-    ]
-  : []
-
-const defaultReferenceTargets: ReferenceTarget[] = [...newsType, ...routes]
 
 export default {
   title: 'People promotion',
@@ -105,65 +87,7 @@ export default {
               placeholder: '+47 999 99 999',
               hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
             },
-            {
-              name: 'reference',
-              title: 'Internal link',
-              description: 'Use this field to reference an internal page.',
-              type: 'reference',
-              validation: (Rule: Rule) =>
-                Rule.custom((value: string, context: ValidationContext) => {
-                  const { parent } = context as { parent: Promotion }
-                  if (!parent?.isLink) return true
-                  return validateInternalOrExternalUrl(value, parent.url)
-                }),
-              to: defaultReferenceTargets,
-              options: {
-                filter: filterByPages,
-                disableNew: true,
-              },
-              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
-            },
-            {
-              name: 'url',
-              title: 'External URL',
-              description: 'Use this field to link to an external site.',
-              type: 'url',
-              validation: (Rule: Rule) =>
-                Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom(
-                  (value: any, context: ValidationContext) => {
-                    const { parent } = context as { parent: Promotion }
-                    if (!parent?.isLink) return true
-                    return validateInternalOrExternalUrl(value, parent.reference)
-                  },
-                ),
-              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
-            },
-            {
-              name: 'anchorReference',
-              title: 'Anchor reference',
-              type: 'anchorReferenceField',
-              description: AnchorLinkDescription(),
-              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
-            },
-            {
-              name: 'label',
-              title: 'Visible label',
-              description: 'The visible text on the link/button.',
-              type: 'string',
-              validation: (Rule: Rule) =>
-                Rule.custom((value: string, context: ValidationContext) => {
-                  const { parent } = context as { parent: Promotion }
-                  return validateRequiredIfVisible(parent.isLink, value, 'You must add a label')
-                }),
-              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
-            },
-            {
-              name: 'ariaLabel',
-              title: '♿ Screenreader label',
-              description: 'A text used for providing screen readers with additional information',
-              type: 'string',
-              hidden: ({ parent }: { parent: Promotion }) => !parent?.isLink,
-            },
+            ...getLinkSelectorFields(undefined, 'isLink'),
           ],
           preview: {
             select: {
