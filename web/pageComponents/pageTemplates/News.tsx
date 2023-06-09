@@ -102,7 +102,6 @@ const Content = styled.div`
   & h3 {
     margin: var(--space-small) 0;
   }
-  ${Flags.IS_DEV && { padding: '0 var(--layout-paddingHorizontal-large)' }};
 
   /* The max-width makes things easier with 50% floating images */
   max-width: var(--maxViewportWidth);
@@ -236,7 +235,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
             {content && content.length > 0 && (
               <Content>
-                {Flags.IS_DEV ? <RichText value={content}></RichText> : <NewsText value={content}></NewsText>}
+                <NewsText value={content}></NewsText>
               </Content>
             )}
 
