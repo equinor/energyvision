@@ -47,7 +47,7 @@ RUN fish install --noninteractive
 VOLUME [ "/var/lib/docker" ]
 
 # [Optional] Uncomment if you want to install more global node packages
-RUN su node -c "npm install -g pnpm@7.2.1"
+RUN su node -c "npm install -g pnpm@8.5.1"
 RUN su node -c "npm install -g gitmoji-cli"
 RUN su node -c "npm install -g azure-functions-core-tools@4 --unsafe-perm true"
 RUN su node -c "npm install -g azurite"
