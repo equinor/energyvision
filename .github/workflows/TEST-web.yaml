@@ -67,6 +67,8 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        with:
+          ref: staging
       - name: Set image tag 🏷
         shell: bash
         id: set-default-image-tag
@@ -79,8 +81,8 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-      - name: Modify radixconfig tag for test on main branch 🗒️
-        if: github.ref == 'refs/heads/main'
+      - name: Modify radixconfig tag for test on staging branch 🗒️
+        if: github.ref == 'refs/heads/staging'
         shell: bash
         id: modify-radix
         run: |
@@ -119,6 +121,8 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        with:
+          ref: staging
       - id: deploy-global
         uses: ./.github/workflows/deploy-websites/
         with:
