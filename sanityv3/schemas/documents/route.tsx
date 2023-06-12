@@ -1,11 +1,12 @@
 import slugify from 'slugify'
-import { Rule } from 'sanity'
+import { Reference, Rule, SlugParent, SlugSchemaType, SlugSourceContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { withSlugValidation } from '../validations/validateSlug'
 import SlugInput from '../components/SlugInput'
+import { SanityClient, SanityDocument } from '@sanity/client'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -78,7 +79,6 @@ export default (isoCode: string, title: string) => {
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
       },
-      //slugWithRef('topicSlug', 'parent', 'slug'),
       {
         title: 'Complete URL for this page',
         name: 'slug',
@@ -88,10 +88,15 @@ export default (isoCode: string, title: string) => {
           input: SlugInput,
         },
         options: withSlugValidation({
-          source: (doc: any) => slugify(doc['topicSlug'], { lower: true }),
-          slugify: async (input: any, _schemaType: any, context: any) => {
+          source: (doc: SanityDocument) => slugify(doc['topicSlug'], { lower: true }),
+          slugify: async (
+            input: string,
+            _schemaType: SlugSchemaType,
+            context: SlugSourceContext & { client: SanityClient },
+          ) => {
             const slug = slugify(input)
-            const { client, parent: document } = context
+            const { client, parent } = context
+            const document = parent as SlugParent & { parent: Reference }
             const refId = document.parent._ref
             return client
               .fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })

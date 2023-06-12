@@ -45,7 +45,7 @@ async function getNewFromSource(
 /**
  * @beta
  */
-export function SlugInput(props: SlugInputProps & { prefix: string }) {
+export function SlugInput(props: SlugInputProps) {
   const { getDocument } = useFormBuilder().__internal
   const { path, value, schemaType, validation, onChange, readOnly, elementProps } = props
   const sourceField = schemaType.options?.source
@@ -58,8 +58,7 @@ export function SlugInput(props: SlugInputProps & { prefix: string }) {
         onChange(PatchEvent.from(unset([])))
         return
       }
-      const newSlug = nextSlug
-      onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(newSlug, ['current'])]))
+      onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(nextSlug, ['current'])]))
     },
     [onChange, schemaType.name],
   )

@@ -84,13 +84,12 @@ export default {
       components: {
         input: SlugInput,
       },
-      //readOnly: true,
       options: withSlugValidation({
         source: (doc) => {
           // translated document ids end with _i18n__lang while base documents don't
           return doc.newsSlug ? `${slugify(doc.newsSlug, { lower: true })}` : ''
         },
-        slugify: async (input, _schemaType, context) => {
+        slugify: (input, _schemaType, context) => {
           const slug = slugify(input)
           const { parent: document } = context
           const translatedNews = document._lang ? `/${newsSlug[document._lang]}` : `/${newsSlug[defaultLanguage.name]}`

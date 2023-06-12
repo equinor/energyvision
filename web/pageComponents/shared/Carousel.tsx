@@ -147,10 +147,10 @@ export const Carousel = ({ children, scrollOffset, horizontalPadding = false, ..
         <CarouselDiv ref={scrollRef} $isScrollable={isScrollable} $horizontalPadding={horizontalPadding} {...props}>
           {isScrollable && (
             <>
-              <StyledLeftButton onClick={() => handleScroll('back')}>
+              <StyledLeftButton aria-label="Left Arrow" onClick={() => handleScroll('back')}>
                 <StyledIcon color="inherit" data={chevron_left} />
               </StyledLeftButton>
-              <StyledRightButton onClick={() => handleScroll('forward')}>
+              <StyledRightButton aria-label="Right Arrow" onClick={() => handleScroll('forward')}>
                 <StyledIcon color="inherit" data={chevron_right} />
               </StyledRightButton>
             </>

@@ -1,8 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-pnpm lint
-pnpm web type-check
-pnpm web test
-pnpm search-indexers test
-
+pnpm lint-staged

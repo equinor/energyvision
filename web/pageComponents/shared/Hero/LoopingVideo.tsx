@@ -1,11 +1,9 @@
 import { HLSPlayer } from '@components'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
-import { urlFor } from '../../../common/helpers'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
 
-const DEFAULT_MAX_WIDTH = 1440
+const DEFAULT_MAX_WIDTH = 1920
 
 const StyledFigure = styled.figure<{ ratio: LoopingVideoRatio }>`
   justify-content: center;
@@ -28,15 +26,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, undefined)
   return (
     <StyledFigure ratio={ratio}>
-      <HLSPlayer
-        loop
-        muted
-        autoPlay
-        title={title}
-        poster={Flags.IS_DEV ? thumbnailURL.src : urlFor(thumbnail).url()}
-        src={url}
-        style={style}
-      />
+      <HLSPlayer loop muted autoPlay title={title} poster={thumbnailURL.src} src={url} style={style} />
     </StyledFigure>
   )
 }
