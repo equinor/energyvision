@@ -44,7 +44,7 @@ const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
   )
 }
 
-export const FullImageHero = ({ ratio, figure, background, hideImageCaption }: HeroType) => {
+export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: HeroType) => {
   const getHero = () => {
     if (figure)
       switch (ratio) {
@@ -61,7 +61,7 @@ export const FullImageHero = ({ ratio, figure, background, hideImageCaption }: H
     <>
       {getHero()}
       {figure?.image?.asset && !hideImageCaption && (
-        <StyledCaption background={background} attribution={figure.attribution} caption={figure.caption} />
+        <StyledCaption background={captionBg} attribution={figure.attribution} caption={figure.caption} />
       )}
     </>
   )

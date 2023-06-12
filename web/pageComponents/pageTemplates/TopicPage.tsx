@@ -34,7 +34,6 @@ type TopicPageProps = {
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
-  data.hero.background = data.hero.type !== HeroTypes.DEFAULT ? titleStyles.backgroundColor : data.hero.background
   return (
     <>
       <Seo
@@ -44,8 +43,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         pageTitle={data?.title}
       />
       <TopicPageLayout>
-        <SharedBanner title={data.title} hero={data.hero} />
-
+        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.backgroundColor} />
         {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             slug={data?.slug}

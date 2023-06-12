@@ -1,5 +1,5 @@
 import { PortableTextBlock } from '@portabletext/types'
-import { HeroType, HeroTypes, LoopingVideoData } from '../../../types/types'
+import { BackgroundColours, HeroType, HeroTypes, LoopingVideoData } from '../../../types/types'
 import { DefaultHero } from '../../shared/Hero/DefaultHero'
 import { FiftyFiftyHero } from '../../shared/Hero/FiftyFiftyHero'
 import { FullImageHero } from '../../shared/Hero/FullImageHero'
@@ -9,9 +9,10 @@ type BannerProps = {
   title: PortableTextBlock[]
   hero: HeroType
   hideImageCaption?: boolean
+  captionBg?: BackgroundColours
 }
 
-export const SharedBanner = ({ title, hero, hideImageCaption }: BannerProps) => {
+export const SharedBanner = ({ title, hero, hideImageCaption, captionBg }: BannerProps) => {
   switch (hero.type) {
     case HeroTypes.FULL_WIDTH_IMAGE:
       return (
@@ -20,6 +21,7 @@ export const SharedBanner = ({ title, hero, hideImageCaption }: BannerProps) => 
           figure={hero.figure}
           hideImageCaption={hideImageCaption}
           background={hero.background}
+          captionBg={captionBg}
         />
       )
     case HeroTypes.FIFTY_FIFTY:
