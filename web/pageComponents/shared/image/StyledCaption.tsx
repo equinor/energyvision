@@ -6,8 +6,9 @@ import { getBackgroundByColorName } from '@components'
 type CaptionProps = CaptionData & { background?: BackgroundColours }
 
 const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
+  display: flex;
   margin: 0 auto;
-  padding: 0.1px var(--layout-paddingHorizontal-small);
+  padding: 0 var(--layout-paddingHorizontal-small);
   max-width: var(--maxViewportWidth);
 
   ${({ background }) => {

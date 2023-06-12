@@ -14,19 +14,19 @@ type ContainerStyles = {
   backgroundColor: BackgroundColours
 }
 
-const Container = styled.div<{ containerStyles?: ContainerStyles }>`
+const Container = styled.div<{ $containerStyles?: ContainerStyles }>`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
 
-  ${({ containerStyles }) => {
-    const hasTopMargin = containerStyles?.hasTopMargin && {
+  ${({ $containerStyles }) => {
+    const hasTopMargin = $containerStyles?.hasTopMargin && {
       paddingTop: 'var(--space-xLarge)',
     }
     // BreadCrumbs's background color is defined by its following component
-    const bgColor = containerStyles?.backgroundColor && {
-      background: getBackgroundByColorName(containerStyles.backgroundColor),
+    const bgColor = $containerStyles?.backgroundColor && {
+      background: getBackgroundByColorName($containerStyles.backgroundColor),
     }
     return { ...hasTopMargin, ...bgColor }
   }}
@@ -83,7 +83,7 @@ export const Breadcrumbs = ({
   if (crumbs.length < 2) return null
 
   return (
-    <Container containerStyles={containerStyles}>
+    <Container $containerStyles={containerStyles}>
       <BreadcrumbsList>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
