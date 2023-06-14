@@ -3,7 +3,13 @@ import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 
 export const Content = styled.div`
-  margin: 2em;
+  margin: 1.5em;
+
+  pre {
+    background: #f3f3f3;
+    padding: 1em;
+    white-space: break-spaces;
+  }
 `
 
 export const StyledIframe = styled.iframe`
