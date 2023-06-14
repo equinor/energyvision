@@ -50,6 +50,7 @@ export default {
         { type: 'textBlock' },
         { type: 'teaser' },
         { type: 'fullWidthImage' },
+        { type: 'fullWidthVideo' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
