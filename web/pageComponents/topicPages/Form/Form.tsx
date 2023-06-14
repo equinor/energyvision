@@ -31,7 +31,7 @@ const Form = ({ data, anchor }: { data: FormData; anchor?: string }) => {
       case 'subscribeForm':
         return <SubscribeForm />
       case 'contactEquinorForm':
-        return <ContactEquinorForm />
+        return <ContactEquinorForm isHumanRightsRequest={data.isHumanRightsRequest} />
       case 'careerFairAndVisitsForm':
         return <CareerFairForm />
       case 'careersContactForm':

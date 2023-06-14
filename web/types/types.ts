@@ -583,6 +583,7 @@ export type FormData = {
   ingress?: PortableTextBlock[]
   form: string
   downloads: LinkData[]
+  isHumanRightsRequest?: boolean
 }
 
 export type NewsListData = {
