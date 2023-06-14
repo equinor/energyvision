@@ -36,31 +36,58 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
 
+  const validateAuthEvent = useCallback(
+    (event: any) => {
+      const handleError = (msg: string) => {
+        console.warn('Fotoware:', msg)
+        setError(
+          `<p>An error occured authenticating with Fotoware.</p> <p>The following message was received:</p> <pre><code>${msg}</code></pre>`,
+        )
+
+        if (newWindow.current) {
+          newWindow.current.close()
+        }
+
+        return false
+      }
+
+      delete event.data.access_token
+
+      if (event.origin !== REDIRECT_ORIGIN) {
+        return handleError(`Invalid event origin: ${event.origin}`)
+      }
+
+      if (!event?.data?.access_token) {
+        return handleError(
+          'Missing access token. Make sure you have permission to access Fotoware and try again. If this keeps happening, please contact support.',
+        )
+      }
+
+      if (!checkAuthData(event.data)) {
+        return handleError('Invalid event data')
+      }
+
+      if (event.data.state !== requestState) {
+        return handleError('Redirect state did not match request state')
+      }
+
+      return true
+    },
+    [requestState, setError],
+  )
+
   // Login & store access token
   const handleAuthEvent = useCallback(
     (event: any) => {
       if (!newWindow.current || !event || !event.data) return false
 
-      if (event.origin !== REDIRECT_ORIGIN) {
-        console.warn('Fotoware: invalid event origin')
-        return false
-      }
-
-      if (!checkAuthData(event.data)) {
-        console.warn('Fotoware: invalid event data')
-        return false
-      }
-
-      if (event.data.state !== requestState) {
-        console.warn('Fotoware: redirect state did not match request state')
-        return false
-      }
+      if (!validateAuthEvent(event)) return false
 
       storeAccessToken(event.data)
       setAccessToken(event.data.access_token)
       newWindow.current.close()
     },
-    [requestState],
+    [validateAuthEvent],
   )
 
   const handleWidgetEvent = useCallback(
@@ -186,7 +213,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   if (error) {
     return (
       <ErrorMessage onClose={onClose} ref={ref}>
-        <p>{error}</p>
+        <div dangerouslySetInnerHTML={{ __html: error }}></div>
       </ErrorMessage>
     )
   }
