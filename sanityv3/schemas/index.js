@@ -45,6 +45,7 @@ import figure from './objects/figure'
 import downloadableFile from './objects/files'
 import form from './objects/form'
 import fullWidthImage from './objects/fullWidthImage'
+import fullWidthVideo from './objects/fullWidthVideo'
 import iframe from './objects/iframe'
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
@@ -124,6 +125,7 @@ const RemainingSchemas = [
   accordion,
   accordionItem,
   fullWidthImage,
+  fullWidthVideo,
   figure,
   textWithIcon,
   textWithIconArray,
