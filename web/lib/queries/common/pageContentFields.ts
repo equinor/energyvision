@@ -427,6 +427,7 @@ const pageContentFields = /* groq */ `
     },
     "form": form,
     "downloads": downloads[]{${downloadableFileFields}},
+    isHumanRightsRequest
   },
 
   _type == "newsList" => {

@@ -207,14 +207,14 @@ const snippets: textSnippet = {
     defaultValue: 'Category',
     group: groups.contactForm,
   },
-  contact_form_reaching_out: {
-    title: 'Who are you trying to reach?',
-    defaultValue: 'Who are you trying to reach?',
-    group: groups.contactForm,
-  },
   contact_form_how_to_help: {
     title: 'How can we help you?',
     defaultValue: 'How can we help you?',
+    group: groups.contactForm,
+  },
+  contact_form_how_to_help_placeholder: {
+    title: `Please don't enter any personal information`,
+    defaultValue: `Please don't enter any personal information`,
     group: groups.contactForm,
   },
   contact_form_how_to_help_validation: {
@@ -645,7 +645,7 @@ const snippets: textSnippet = {
     title: 'Stock API: NYSE time delay message',
     defaultValue: 'at least 20 minutes delayed',
     group: groups.others,
-    hidden: Flags.IS_SATELLITE
+    hidden: Flags.IS_SATELLITE,
   },
 }
 

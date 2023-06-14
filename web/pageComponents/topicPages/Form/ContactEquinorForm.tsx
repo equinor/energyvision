@@ -8,16 +8,19 @@ import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { ContactFormCatalogType } from '../../../types'
 
+type ContactEquinorFormProps = {
+  isHumanRightsRequest?: boolean
+}
 type FormValues = {
   name: string
   email: string
   category: string
-  receiver: string
   message: string
 }
 
-const ContactEquinorForm = () => {
+const ContactEquinorForm = (props: ContactEquinorFormProps) => {
   const intl = useIntl()
+  const { isHumanRightsRequest } = props
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
@@ -74,12 +77,16 @@ const ContactEquinorForm = () => {
     defaultValues: {
       name: '',
       email: '',
-      receiver: '',
       message: '',
-      category: intl.formatMessage({
-        id: 'contact_form_ask_us',
-        defaultMessage: 'Ask us a question',
-      }),
+      category: isHumanRightsRequest
+        ? intl.formatMessage({
+            id: 'contact_form_human_rights_information_request',
+            defaultMessage: 'Human Rights Information Request',
+          })
+        : intl.formatMessage({
+            id: 'contact_form_ask_us',
+            defaultMessage: 'Ask us a question',
+          }),
     },
   })
   return (
@@ -103,25 +110,28 @@ const ContactEquinorForm = () => {
                   defaultMessage: 'Please fill out your name',
                 }),
               }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
-                  {...props}
-                  id={props.name}
-                  label={intl.formatMessage({
-                    id: 'contact_form_name',
-                    defaultMessage: 'Name',
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: 'contact_form_name_placeholder',
-                    defaultMessage: 'Jane Doe',
-                  })}
-                  inputRef={ref}
-                  aria-required="true"
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                const { name } = props
+                return (
+                  <FormTextField
+                    {...props}
+                    id={name}
+                    label={intl.formatMessage({
+                      id: 'contact_form_name',
+                      defaultMessage: 'Name',
+                    })}
+                    placeholder={intl.formatMessage({
+                      id: 'contact_form_name_placeholder',
+                      defaultMessage: 'Jane Doe',
+                    })}
+                    inputRef={ref}
+                    aria-required="true"
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )
+              }}
             />
             <Controller
               name="email"
@@ -139,87 +149,79 @@ const ContactEquinorForm = () => {
                   }),
                 },
               }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
-                  {...props}
-                  id={props.name}
-                  label={intl.formatMessage({
-                    id: 'contact_form_email',
-                    defaultMessage: 'Email',
-                  })}
-                  inputRef={ref}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  aria-required="true"
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                const { name } = props
+                return (
+                  <FormTextField
+                    {...props}
+                    id={name}
+                    label={intl.formatMessage({
+                      id: 'contact_form_email',
+                      defaultMessage: 'Email',
+                    })}
+                    inputRef={ref}
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    aria-required="true"
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )
+              }}
             />
             <Controller
               name="category"
               control={control}
-              render={({ field: { ref, ...props } }) => (
-                <FormSelect
-                  {...props}
-                  selectRef={ref}
-                  id={props.name}
-                  label={intl.formatMessage({ id: 'contact_form_category', defaultMessage: 'Category' })}
-                >
-                  <option>
-                    {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'contact_form_report_error',
-                      defaultMessage: 'Report an error on our website',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'contact_form_contact_department',
-                      defaultMessage: 'Contact a department or member of staff',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'contact_form_investor_relations',
-                      defaultMessage: 'Investor relations',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'contact_form_human_rights_information_request',
-                      defaultMessage: 'Human Rights Information Request',
-                    })}
-                  </option>
+              render={({ field: { ref, ...props } }) => {
+                const { name } = props
+                return (
+                  <FormSelect
+                    {...props}
+                    selectRef={ref}
+                    id={name}
+                    disabled={isHumanRightsRequest}
+                    label={intl.formatMessage({ id: 'contact_form_category', defaultMessage: 'Category' })}
+                  >
+                    <option>
+                      {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
+                    </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_report_error',
+                        defaultMessage: 'Report an error on our website',
+                      })}
+                    </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_contact_department',
+                        defaultMessage: 'Contact a department or member of staff',
+                      })}
+                    </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_investor_relations',
+                        defaultMessage: 'Investor relations',
+                      })}
+                    </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_human_rights_information_request',
+                        defaultMessage: 'Human Rights Information Request',
+                      })}
+                    </option>
 
-                  <option>
-                    {intl.formatMessage({
-                      id: 'contact_form_login_issues',
-                      defaultMessage: 'Login Issues',
-                    })}
-                  </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_login_issues',
+                        defaultMessage: 'Login Issues',
+                      })}
+                    </option>
 
-                  <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
-                </FormSelect>
-              )}
+                    <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
+                  </FormSelect>
+                )
+              }}
             />
 
-            <Controller
-              name="receiver"
-              control={control}
-              render={({ field: { ref, ...props } }) => (
-                <FormTextField
-                  {...props}
-                  id={props.name}
-                  label={intl.formatMessage({
-                    id: 'contact_form_reaching_out',
-                    defaultMessage: 'Who are you trying to reach?',
-                  })}
-                  inputRef={ref}
-                />
-              )}
-            />
             <Controller
               name="message"
               control={control}
@@ -229,23 +231,30 @@ const ContactEquinorForm = () => {
                   defaultMessage: 'Please let us know how we may help you',
                 }),
               }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
-                  {...props}
-                  id={props.name}
-                  label={intl.formatMessage({
-                    id: 'contact_form_how_to_help',
-                    defaultMessage: 'How can we help you?',
-                  })}
-                  inputRef={ref}
-                  multiline
-                  rowsMax={10}
-                  aria-required="true"
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                const { name } = props
+                return (
+                  <FormTextField
+                    {...props}
+                    id={name}
+                    placeholder={intl.formatMessage({
+                      id: 'contact_form_how_to_help_placeholder',
+                      defaultMessage: `Please don't enter any personal information`,
+                    })}
+                    label={intl.formatMessage({
+                      id: 'contact_form_how_to_help',
+                      defaultMessage: 'How can we help you?',
+                    })}
+                    inputRef={ref}
+                    multiline
+                    rowsMax={10}
+                    aria-required="true"
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )
+              }}
             />
 
             <FriendlyCaptcha
