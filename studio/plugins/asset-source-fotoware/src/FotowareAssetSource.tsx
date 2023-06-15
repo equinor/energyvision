@@ -56,6 +56,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         return handleError(`Invalid event origin: ${event.origin}`)
       }
 
+      if (event.data?.error) {
+        const { error, error_description } = event.data
+        return handleError(`Error: ${error} - description: ${error_description}`)
+      }
+
       if (!event?.data?.access_token) {
         return handleError('Missing access token. Make sure you have permission to access Fotoware and try again.')
       }
