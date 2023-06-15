@@ -25,7 +25,7 @@ const formatPath = ({ slug, locale: urlLocale }: PathType) => {
   return locale ? `/${locale}${path}` : path
 }
 
-const getSitemapUrls = (domain: string, paths: PathType[], additionalPaths: PathType[] | null = null) =>
+const getSitemapUrls = (domain: string, paths: PathType[]) =>
   `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${paths
@@ -38,17 +38,6 @@ const getSitemapUrls = (domain: string, paths: PathType[], additionalPaths: Path
         `,
       )
       .join('')}
-      ${
-        additionalPaths &&
-        additionalPaths.map(
-          (path) => `
-        <url>
-          <loc>${domain}${path.slug}</loc>
-          <lastmod>${path.updatedAt}</lastmod>
-        </url>
-      `,
-        )
-      }
     </urlset>`
 
 const getSitemapIndex = (domain: string, locales: string[]) =>
@@ -64,22 +53,6 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
       )
       .join('')}
     </sitemapindex>`
-
-const getAnniversarySitemap = async (locale: string): Promise<PathType[] | null> => {
-  if (!Flags.IS_GLOBAL_PROD) return null
-
-  const response = await fetch(`https://www.equinor.com/50/api/sitemap`)
-
-  if (response) {
-    const data = await response.json()
-
-    if (data) {
-      return data.filter((item: PathType) => item.locale === locale)
-    }
-  }
-
-  return null
-}
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
   let locale = ''
@@ -128,8 +101,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
     }
   }
 
-  const anniversarySitemap = await getAnniversarySitemap(locale)
-  const sitemap = getSitemapUrls(domain, paths, anniversarySitemap)
+  const sitemap = getSitemapUrls(domain, paths)
 
   res.setHeader('Content-Type', 'text/xml')
   res.write(sitemap)

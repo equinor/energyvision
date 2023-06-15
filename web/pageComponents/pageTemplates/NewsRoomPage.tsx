@@ -21,6 +21,7 @@ import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
+import { RouterProps } from 'instantsearch.js/es/middlewares'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -154,7 +155,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
           countries: indexUiState.refinementList?.countryTags,
           page: indexUiState?.page,
           indexName: indexName,
-        }
+        } as { query: any; page: any; topics: any[]; years: any[]; countries: any[]; indexName: string }
       },
       routeToState(routeState: any) {
         return {
