@@ -17,7 +17,6 @@ import {
 } from './utils'
 import { Content, ErrorMessage, LoadingContent, FotowareWidget } from './components'
 import type { FWAsset, FWAttributeField } from './types'
-import { Flags } from '../../../src/lib/datasetHelpers'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
