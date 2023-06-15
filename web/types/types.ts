@@ -173,6 +173,7 @@ export enum HeroTypes {
   DEFAULT = 'default',
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
+  FULL_WIDTH_VIDEO = 'fullWidthVideo',
   LOOPING_VIDEO = 'loopingVideo',
 }
 
@@ -193,6 +194,7 @@ export type ContentType =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
+  | FullWidthVideoData
   | FigureData
   | TextWithIconArrayData
   | QuoteData
@@ -320,6 +322,12 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
+}
+
+export type FullWidthVideoData = {
+  type: string
+  id: string
+  video: VideoData
 }
 
 export type FigureData = {

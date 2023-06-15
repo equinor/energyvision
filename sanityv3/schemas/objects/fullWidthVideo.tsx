@@ -37,14 +37,6 @@ export default {
       of: [ingressContentType],
     },
     {
-      name: 'action',
-      title: 'Link/action',
-      description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
-      type: 'array',
-      of: [{ type: 'linkSelector', title: 'Link' }],
-      validation: (Rule: Rule) => Rule.max(1),
-    },
-    {
       name: 'videoFile',
       type: 'reference',
       title: 'Video',
@@ -81,13 +73,6 @@ export default {
       title: 'Height',
       description: 'Set a fixed height in pixels for the video. Note: this will override the aspect ratio setting.',
       validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
-    },
-
-    {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
     },
   ],
   preview: {
