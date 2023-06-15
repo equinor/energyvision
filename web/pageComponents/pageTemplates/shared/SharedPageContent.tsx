@@ -1,6 +1,7 @@
 import Teaser from '../../shared/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
+import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure from '../../topicPages/Figure'
 import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
@@ -26,6 +27,7 @@ import {
   TeaserData,
   TextBlockData,
   FullWidthImageData,
+  FullWidthVideoData,
   FigureData,
   TextWithIconArrayData,
   CallToActionData,
@@ -86,6 +88,8 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
+      case 'fullWidthVideo':
+        return <FullWidthVideo key={c.id} data={c as FullWidthVideoData} anchor={anchorReference} />
       case 'figure':
         return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} />
       case 'textWithIconArray':
