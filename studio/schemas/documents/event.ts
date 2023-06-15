@@ -4,7 +4,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent, configureBlockContent } from '../editors'
 import type { Rule, ValidationContext, Block } from '@sanity/types'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
-import { calendar_event } from '@equinor/eds-icons'
+import { calendar_event, image } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { EventDate } from '../objects/eventDate'
@@ -37,6 +37,7 @@ export default {
   type: 'document',
   title: 'Event',
   name: 'event',
+  icon: () => EdsIcon(image),
   i18n,
   fieldsets: [
     {

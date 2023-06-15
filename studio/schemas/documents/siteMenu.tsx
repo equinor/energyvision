@@ -1,12 +1,14 @@
 import React from 'react'
 import type { Rule } from '@sanity/types'
 import { filterByLang } from '../../helpers/referenceFilters'
-import { MenuIcon } from '../../icons'
+import { EdsIcon, MenuIcon } from '../../icons'
+import { menu } from '@equinor/eds-icons'
 
 export default {
   type: 'document',
   title: 'Site menu',
   name: 'siteMenu',
+  icon: () => EdsIcon(menu),
   __experimental_actions: ['create', 'update', 'publish' /*,"delete"*/],
   fields: [
     {

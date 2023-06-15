@@ -6,7 +6,7 @@ export default {
   title: 'Asset tag',
   type: 'document',
   name: 'assetTag',
-  icon: EdsIcon(tag),
+  icon: () => EdsIcon(tag),
   fields: [
     {
       title: 'Title',

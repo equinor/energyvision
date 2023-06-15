@@ -1,4 +1,4 @@
-import { flight_land } from '@equinor/eds-icons'
+import { collection_5, flight_land } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
@@ -24,6 +24,7 @@ export default {
   type: 'document',
   title: `500 page`,
   name: `internalServerError`,
+  icon: () => EdsIcon(collection_5),
   i18n,
   fieldsets: [
     {
