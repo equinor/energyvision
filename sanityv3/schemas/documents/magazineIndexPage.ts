@@ -3,6 +3,8 @@ import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import MagazineFooterComponent from '../objects/magazineFooterComponent'
 import sharedHeroFields from './header/sharedHeaderFields'
+import { EdsIcon } from '../../icons'
+import { bookmarks } from '@equinor/eds-icons'
 
 import type { PortableTextBlock, Rule } from 'sanity'
 
@@ -21,6 +23,7 @@ export default {
   type: 'document',
   title: 'Magazine Index Page',
   name: 'magazineIndex',
+  icon: () => EdsIcon(bookmarks),
   i18n,
   fieldsets: [
     {

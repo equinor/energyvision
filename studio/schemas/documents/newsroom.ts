@@ -7,6 +7,8 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 
 import type { Rule, Block } from '@sanity/types'
+import { file } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
@@ -24,6 +26,7 @@ export default {
   type: 'document',
   title: 'Newsroom',
   name: 'newsroom',
+  icon: () => EdsIcon(file),
   i18n,
   fieldsets: [
     {

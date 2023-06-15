@@ -1,11 +1,13 @@
 import slugify from 'slugify'
 import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
+import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput/index'
 import { i18n } from '../documentTranslation'
 import { withSlugValidation } from '../validations/validateSlug'
+import { file_add } from '@equinor/eds-icons'
 import {
   content,
   countryTags,
@@ -29,6 +31,7 @@ export default {
   name: 'news',
   type: 'document',
   i18n,
+  icon: () => EdsIcon(file_add),
   fieldsets: [
     {
       title: 'SEO & metadata',

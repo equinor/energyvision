@@ -1,5 +1,6 @@
 import { defaultLanguage, languages } from '../../languages'
-import { TagIcon } from '../../icons'
+import { EdsIcon, TagIcon } from '../../icons'
+import { world } from '@equinor/eds-icons'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -15,6 +16,7 @@ export default {
   type: 'document',
   name: `countryTag`,
   title: `Country`,
+  icon: () => EdsIcon(world),
   fields: [
     {
       type: 'object',
