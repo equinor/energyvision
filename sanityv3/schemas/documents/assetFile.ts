@@ -7,6 +7,7 @@ import {
   file,
   library_books,
   calendar_event,
+  attach_file,
 } from '@equinor/eds-icons'
 import type { Rule } from 'sanity'
 
@@ -48,7 +49,7 @@ export default {
   title: 'File',
   type: 'document',
   name: 'assetFile',
-  icon: EdsIcon(library_books),
+  icon: () => EdsIcon(attach_file),
   fields: [
     {
       title: 'Title',

@@ -6,6 +6,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
+import { collection_4 } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
@@ -24,7 +25,7 @@ export default {
   type: 'document',
   title: `404 page`,
   name: `pageNotFound`,
-
+  icon: () => EdsIcon(collection_4),
   i18n,
   fieldsets: [
     {

@@ -6,6 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { i18n } from '../documentTranslation'
 import SlugInput from '../components/SlugInput'
 import { withSlugValidation } from '../validations/validateSlug'
+import { file_add } from '@equinor/eds-icons'
 import {
   content,
   countryTags,
@@ -23,12 +24,14 @@ import {
   tags,
   title,
 } from './news/sharedNewsFields'
+import { EdsIcon } from '../../icons'
 
 export default {
   title: 'News',
   name: 'news',
   type: 'document',
   i18n,
+  icon: () => EdsIcon(file_add),
   fieldsets: [
     {
       title: 'SEO & metadata',

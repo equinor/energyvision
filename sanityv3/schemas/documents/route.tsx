@@ -7,12 +7,14 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { withSlugValidation } from '../validations/validateSlug'
 import SlugInput from '../components/SlugInput'
 import { SanityClient, SanityDocument } from '@sanity/client'
+import { library_books } from '@equinor/eds-icons'
 
 export default (isoCode: string, title: string) => {
   return {
     type: 'document',
     title: `Page Routes ${title}`,
     name: `route_${isoCode}`,
+    icon: () => EdsIcon(library_books),
     fieldsets: [
       {
         title: 'Slug',

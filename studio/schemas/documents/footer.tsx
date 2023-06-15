@@ -2,6 +2,8 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
 import { filterByRoute } from '../../helpers/referenceFilters'
+import { EdsIcon } from '../../icons'
+import { format_color_text } from '@equinor/eds-icons'
 
 export type ColumnLink = {
   _type: 'link'
@@ -14,6 +16,7 @@ export default {
   type: 'document',
   title: `Footer`,
   name: `footer`,
+  icon: () => EdsIcon(format_color_text),
 
   fields: [
     {

@@ -5,7 +5,7 @@ import { configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
-import { flight_land } from '@equinor/eds-icons'
+import { collection_5 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule, Block } from '@sanity/types'
 
@@ -26,6 +26,7 @@ export default {
   type: 'document',
   title: `500 page`,
   name: `internalServerError`,
+  icon: () => EdsIcon(collection_5),
   i18n,
   fieldsets: [
     {
@@ -80,7 +81,7 @@ export default {
       return {
         title: plainTitle,
         subtitle: 'Internal server error',
-        media: EdsIcon(flight_land),
+        media: EdsIcon(collection_5),
       }
     },
   },

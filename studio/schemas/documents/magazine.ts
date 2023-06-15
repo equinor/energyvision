@@ -13,6 +13,8 @@ import { HeroTypes } from '../HeroTypes'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { withSlugValidation } from '../validations/validateSlug'
 import sharedHeaderFields from './header/sharedHeaderFields'
+import { EdsIcon } from '../../icons'
+import { bookmarks } from '@equinor/eds-icons'
 
 const ingressBlockContentType = configureBlockContent({
   h1: false,
@@ -29,6 +31,7 @@ export default {
   type: 'document',
   name: 'magazine',
   title: 'Magazine page',
+  icon: () => EdsIcon(bookmarks),
   i18n,
   fieldsets: [
     {
