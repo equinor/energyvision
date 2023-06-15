@@ -67,6 +67,21 @@ const pageContentFields = /* groq */ `
     "id": _key,
     image
   },
+  _type == "fullWidthVideo"=>{
+    "type": _type,
+    "id": _key,
+    title,
+    ingress[]{
+        ...,
+        ${markDefs},
+      },
+	  "asset":video.asset->{
+      playbackId,
+			},
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+    },
+  },
   _type == "figure"=>{
     "type": _type,
     "id": _key,
