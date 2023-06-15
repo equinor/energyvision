@@ -41,7 +41,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       const handleError = (msg: string) => {
         console.warn('Fotoware:', msg)
         setError(
-          `<p>An error occured authenticating with Fotoware.</p> <p>The following message was received:</p> <pre><code>${msg}</code></pre>`,
+          `<p>An error occured while authenticating with Fotoware.</p> <p>The following message was received:</p> <pre><code>${msg}</code></pre>`,
         )
 
         if (newWindow.current) {
@@ -58,9 +58,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       }
 
       if (!event?.data?.access_token) {
-        return handleError(
-          'Missing access token. Make sure you have permission to access Fotoware and try again. If this keeps happening, please contact support.',
-        )
+        return handleError('Missing access token. Make sure you have permission to access Fotoware and try again.')
       }
 
       if (!checkAuthData(event.data)) {
