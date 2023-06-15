@@ -50,8 +50,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         return false
       }
 
-      delete event.data.access_token
-
       if (event.origin !== REDIRECT_ORIGIN) {
         return handleError(`Invalid event origin: ${event.origin}`)
       }
