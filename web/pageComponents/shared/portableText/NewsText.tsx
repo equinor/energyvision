@@ -14,20 +14,13 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  :li {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
 `
 const ContainerWithBottomSpace = styled(Container)`
+  margin-bottom: var(--space-medium);
+
   :only-child {
     padding: 0;
   }
-
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
 `
 
 const defaultSerializers = {
@@ -79,7 +72,7 @@ const defaultSerializers = {
     ),
   },
   listItem: ({ children }: PortableTextBlock) => (
-    <Item style={{ margin: 'unset' }}>
+    <Item>
       <>{children}</>
     </Item>
   ),
