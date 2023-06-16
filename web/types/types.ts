@@ -327,7 +327,18 @@ export type FullWidthImageData = {
 export type FullWidthVideoData = {
   type: string
   id: string
-  video: VideoData
+  video: {
+    title: string
+    url: string
+    thumbnail: ImageWithAlt
+  }
+  spacing?: boolean
+  title?: PortableTextBlock[]
+  action?: LinkData
+  designOptions: {
+    aspectRatio: VideoPlayerRatios
+    background: BackgroundColours
+  }
 }
 
 export type FigureData = {
@@ -648,6 +659,9 @@ export enum VideoPlayerRatios {
   '16:9' = '16:9',
   '9:16' = '9:16',
   '1:1' = '1:1',
+  '2:1' = '2:1',
+  'fullscreen' = 'fullscreen',
+  'narrow' = 'narrow',
 }
 
 export type VideoPlayerData = {

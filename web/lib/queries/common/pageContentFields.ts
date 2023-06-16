@@ -71,16 +71,11 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
     title,
-    ingress[]{
-        ...,
-        ${markDefs},
-      },
+    spacing,
 	  "asset":video.asset->{
       playbackId,
 			},
-    "designOptions": {
-      "background": coalesce(background.title, 'White'),
-    },
+    ${videoPlayerFields}
   },
   _type == "figure"=>{
     "type": _type,
