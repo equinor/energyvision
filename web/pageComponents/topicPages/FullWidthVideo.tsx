@@ -7,7 +7,7 @@ const Container = styled.div`
   margin: auto;
 `
 
-const StyledFigure = styled.figure<{ allowFullScreen: boolean }>`
+const StyledFigure = styled.figure`
   justify-content: center;
   display: flex;
   margin: 0;
@@ -66,7 +66,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
   return (
     <BackgroundContainer background={background} id={anchor}>
       <Container style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
-        <StyledFigure allowFullScreen={false}>
+        <StyledFigure>
           <StyledHLSPlayer
             $aspectRatio={aspectRatio}
             src={video.url}
