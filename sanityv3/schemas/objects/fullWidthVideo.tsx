@@ -1,21 +1,13 @@
 import { play_circle } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
 import { ImageWithAlt } from './imageWithAlt'
 
 const titleContentType = configureTitleBlockContent()
-
-const ingressContentType = configureBlockContent({
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   name: 'fullWidthVideo',
@@ -25,16 +17,10 @@ export default {
     {
       name: 'title',
       type: 'array',
-      title: 'Title',
-      description: 'The (optional) title/heading shown above the video.',
+      title: 'Videodescription',
+      description: 'The (optional) videodescription',
       components: { input: CompactBlockEditor },
       of: [titleContentType],
-    },
-    {
-      name: 'ingress',
-      title: 'Ingress',
-      type: 'array',
-      of: [ingressContentType],
     },
     {
       name: 'videoFile',
@@ -44,13 +30,10 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: 'videoControls',
-      type: 'videoControls',
-      title: 'Video Controls',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
+      name: 'spacing',
+      type: 'boolean',
+      title: 'Space between other components',
+      initialValue: false,
     },
     {
       name: 'aspectRatio',
@@ -58,21 +41,17 @@ export default {
       title: 'Aspect ratio',
       options: {
         list: [
+          { title: 'fullscreen', value: 'fullscreen' },
+          { title: 'narrow', value: 'narrow' },
           { title: '16:9', value: '16:9' },
           { title: '9:16', value: '9:16' },
+          { title: '2:1', value: '2:1' },
           { title: '1:1', value: '1:1' },
         ],
         layout: 'dropdown',
       },
       initialValue: '16:9',
       validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: 'height',
-      type: 'number',
-      title: 'Height',
-      description: 'Set a fixed height in pixels for the video. Note: this will override the aspect ratio setting.',
-      validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
     },
   ],
   preview: {
@@ -86,7 +65,7 @@ export default {
 
       return {
         title: plainTitle || videoTitle,
-        subtitle: `Video component`,
+        subtitle: `Full width video component`,
         media: media || EdsIcon(play_circle),
       }
     },
