@@ -11,14 +11,14 @@ const titleContentType = configureTitleBlockContent()
 
 export default {
   name: 'fullWidthVideo',
-  title: 'Video Player',
+  title: 'Full Width Video Player',
   type: 'object',
   fields: [
     {
       name: 'title',
       type: 'array',
-      title: 'Videodescription',
-      description: 'The (optional) videodescription',
+      title: 'Video Description',
+      description: 'The (optional) video description',
       components: { input: CompactBlockEditor },
       of: [titleContentType],
     },
