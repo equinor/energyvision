@@ -50,7 +50,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🚀 Deploy studios to preprod for tag ${{ steps.get-test-sha.outputs.sha }}"
+            git commit -am "🚀 Deploy studios to preprod for tag ${{ env.IMAGE_TAG_SHA }}"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
