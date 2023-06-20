@@ -59,11 +59,19 @@ const ImageCarousel = ({ data, anchor, ...rest }: ImageCarouselProps) => {
               }
             : {})}
         >
-          {items.map((item) => (
-            <SwiperSlide key={item._key}>
-              <CarouselItem image={item.image} caption={item.caption} attribution={item.attribution} />
-            </SwiperSlide>
-          ))}
+          {items.map((item, index, array) => {
+            const pagination = (index + 1).toString() + ' / ' + array.length.toString()
+            return (
+              <SwiperSlide key={item._key}>
+                <CarouselItem
+                  image={item.image}
+                  caption={item.caption}
+                  attribution={item.attribution}
+                  pagination={pagination}
+                />
+              </SwiperSlide>
+            )
+          })}
         </Swiper>
       </Container>
     </BackgroundContainer>

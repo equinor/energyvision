@@ -45,11 +45,12 @@ const PaginationContainer = styled.div.attrs({ className: 'paginationWrapper' })
 
 type CarouselItemProps = {
   image: ImageWithAlt
+  pagination: string
   caption?: string
   attribution?: string
 }
 
-export const CarouselItem = ({ image, caption, attribution }: CarouselItemProps) => {
+export const CarouselItem = ({ image, pagination, caption, attribution }: CarouselItemProps) => {
   return (
     <StyledFigure>
       <Image
@@ -73,7 +74,7 @@ export const CarouselItem = ({ image, caption, attribution }: CarouselItemProps)
         <NavContainer>
           <EdsProvider density="compact">
             <NavButton type="prev" />
-            <PaginationContainer></PaginationContainer>
+            <PaginationContainer>{pagination}</PaginationContainer>
             <NavButton type="next" />
           </EdsProvider>
         </NavContainer>
