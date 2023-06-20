@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { SubscribeFormParameters } from '../../../types/types'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'

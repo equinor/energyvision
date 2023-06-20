@@ -13,8 +13,9 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
-
+import { Flags } from '../../common/helpers/datasetHelpers'
 import type { NewsSchema } from '../../types/types'
+import RichText from '../shared/portableText/RichText'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);

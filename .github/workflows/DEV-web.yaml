@@ -12,6 +12,7 @@ on:
       - '!web/jest.config.cjs'
       - '!web/jest.setup.ts'
       - './FeatureFlags.js'
+      - '!web/components/README.md'
   repository_dispatch:
     types: [sanity_publish]
 permissions:
@@ -30,7 +31,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v3
         with:

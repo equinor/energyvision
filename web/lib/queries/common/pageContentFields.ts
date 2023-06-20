@@ -1,5 +1,6 @@
-import { HeroTypes } from '../../../types'
 import { iframeCarouselFields } from '../iframeCarouselFields'
+import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
+import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
@@ -262,7 +263,7 @@ const pageContentFields = /* groq */ `
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,
             "heroImage": select(
-              reference->content->heroType == ${HeroTypes.LOOPING_VIDEO} =>
+              reference->content->heroType == 'loopingVideo' =>
                 { "image": reference->content->heroLoopingVideo->thumbnail },
                 reference->content->heroFigure),
             "openGraphImage": reference->content->openGraphImage,
@@ -275,10 +276,9 @@ const pageContentFields = /* groq */ `
          reference->_type == 'magazine' => {
           "title": reference->title,
           "heroImage": select(
-              reference->heroType == ${
-                HeroTypes.LOOPING_VIDEO
-              } => { "image": reference->content->heroLoopingVideo->thumbnail },
-              reference->heroFigure),
+              reference->heroType == 'loopingVideo' =>
+                { "image": reference->content->heroLoopingVideo->thumbnail },
+                reference->heroFigure),
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
           "heroVideo": reference->heroVideo.asset->{
@@ -520,8 +520,13 @@ const pageContentFields = /* groq */ `
   },
   _type == "iframeCarousel" =>{
     ${iframeCarouselFields}
-  }
-
+  },
+  _type == "videoPlayer" => {
+    ${videoPlayerFields}
+  },
+  _type == "videoPlayerCarousel" => {
+    ${videoPlayerCarouselFields}
+  },
 `
 
 export default pageContentFields

@@ -17,6 +17,8 @@ import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import Video from '../../topicPages/Video'
 import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
+import VideoPlayer from '../../shared/VideoPlayer'
+import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
 import {
   AnchorLinkData,
   TopicPageSchema,
@@ -41,16 +43,14 @@ import {
   CookieDeclarationData,
   ImageCarouselData,
   IframeCarouselData,
-  TextBlockDataV2,
+  VideoPlayerData,
+  VideoPlayerCarouselData,
 } from '../../../types/types'
-import { Flags } from '../../../common/helpers/datasetHelpers'
-import TextBlockV2 from '../../../pageComponents/topicPages/TextBlockV2'
 
 // How could we do this for several different component types?
 type ComponentProps =
   | TeaserData
   | TextBlockData
-  | TextBlockDataV2
   | FullWidthImageData
   | FigureData
   | TextWithIconArrayData
@@ -66,6 +66,8 @@ type ComponentProps =
   | TwitterEmbedData
   | AnchorLinkData
   | VideoData
+  | VideoPlayerData
+  | VideoPlayerCarouselData
   | CookieDeclarationData
 
 type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
@@ -81,11 +83,7 @@ export const PageContent = ({ data }: PageContentProps) => {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
       case 'textBlock':
-        return Flags.IS_DEV ? (
-          <TextBlockV2 key={c.id} data={c as TextBlockDataV2} anchor={anchorReference} />
-        ) : (
-          <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
-        )
+        return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'figure':
@@ -120,6 +118,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <ImageCarousel key={c.id} data={c as ImageCarouselData} anchor={anchorReference} />
       case 'iframeCarousel':
         return <IframeCarousel key={c.id} data={c as IframeCarouselData} anchor={anchorReference} />
+      case 'videoPlayer':
+        return <VideoPlayer key={c.id} data={c as VideoPlayerData} anchor={anchorReference} />
+      case 'videoPlayerCarousel':
+        return <VideoPlayerCarousel key={c.id} data={c as VideoPlayerCarouselData} anchor={anchorReference} />
       default:
         return null
     }

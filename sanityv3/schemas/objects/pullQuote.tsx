@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import { format_quote } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { Rule, SanityDocument } from 'sanity'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import type { ImageWithAlt } from './imageWithAlt'
@@ -13,7 +13,7 @@ export type PullQuote = {
   authorTitle?: string
   image?: ImageWithAlt
   imagePosition?: string
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 const imageAlignmentOptions = [
@@ -88,22 +88,14 @@ export default {
         },
       },
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
       hidden: ({ document }: { document: SanityDocument }) => document._type === 'news',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-    }, */
+    },
   ],
   preview: {
     select: {

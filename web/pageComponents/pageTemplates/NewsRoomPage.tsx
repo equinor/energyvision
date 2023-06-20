@@ -1,5 +1,5 @@
 import { Heading } from '@components'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -18,6 +18,10 @@ import Filters from './newsroom/Filters'
 import Hit from './newsroom/Hit'
 import { Hits } from './newsroom/Hits'
 import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
+import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
+import singletonRouter from 'next/router'
+import type { UiState } from 'instantsearch.js'
+import { RouterProps } from 'instantsearch.js/es/middlewares'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -67,15 +71,107 @@ type NewsRoomTemplateProps = {
   locale: string
   pageData: NewsRoomPageType | undefined
   slug?: string
+  url: string
 }
 
-const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: NewsRoomTemplateProps) => {
+const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }: NewsRoomTemplateProps) => {
   const { ingress, title, seoAndSome } = pageData || {}
   const padding = usePaginationPadding()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
+  let eventHandler: any
+  // eslint-disable-next-line
+  // @ts-ignore: @TODO: The types are not correct
+  const createURL = ({ qsModule, routeState, location }) => {
+    if (singletonRouter.locale !== locale) return location.href
+    const queryParameters: any = {}
+
+    if (routeState.query) {
+      queryParameters.query = routeState.query
+    }
+    if (routeState.page !== 1) {
+      queryParameters.page = routeState.page
+    }
+    if (routeState.topics) {
+      queryParameters.topics = routeState.topics
+    }
+    if (routeState.years) {
+      queryParameters.years = routeState.years
+    }
+    if (routeState.countries) {
+      queryParameters.countries = routeState.countries
+    }
+
+    const queryString = qsModule.stringify(queryParameters, {
+      addQueryPrefix: true,
+      arrayFormat: 'repeat',
+      format: 'RFC1738',
+    })
+    return `${location.pathname}${queryString}`
+  }
+
+  // eslint-disable-next-line
+  // @ts-ignore: @TODO: The types are not correct
+  const parseURL = ({ qsModule, location }) => {
+    const { query = '', page, topics = '', years = '', countries = '' }: any = qsModule.parse(location.search.slice(1))
+
+    const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
+    const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
+    const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
+    return {
+      query: query,
+      page,
+      topics: allTopics,
+      years: allYears,
+      countries: allCountries,
+      indexName: indexName,
+    }
+  }
+
+  const routing = {
+    router: createInstantSearchRouterNext({
+      singletonRouter,
+      serverUrl: url,
+      routerOptions: {
+        createURL: createURL,
+        parseURL: parseURL,
+        push(url) {
+          if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
+            // replace url only if there is a change in query params
+            singletonRouter.replace(url, undefined, { scroll: false })
+          }
+        },
+      },
+    }),
+    stateMapping: {
+      stateToRoute(uiState: UiState) {
+        const indexUiState = uiState[indexName] || {}
+        return {
+          query: indexUiState.query,
+          years: indexUiState.refinementList?.year,
+          topics: indexUiState.refinementList?.topicTags,
+          countries: indexUiState.refinementList?.countryTags,
+          page: indexUiState?.page,
+          indexName: indexName,
+        } as { query: any; page: any; topics: any[]; years: any[]; countries: any[]; indexName: string }
+      },
+      routeToState(routeState: any) {
+        return {
+          [indexName]: {
+            query: routeState.query,
+            refinementList: {
+              year: routeState.years,
+              topicTags: routeState.topics,
+              countryTags: routeState.countries,
+            },
+            page: routeState.page,
+          },
+        }
+      },
+    },
+  }
 
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
@@ -107,7 +203,11 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug }: News
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
           <News>
-            <InstantSearch searchClient={isServerRendered ? searchClientServer : searchClient} indexName={indexName}>
+            <InstantSearch
+              searchClient={isServerRendered ? searchClientServer : searchClient}
+              indexName={indexName}
+              routing={routing}
+            >
               <Configure
                 facetingAfterDistinct
                 maxFacetHits={50}

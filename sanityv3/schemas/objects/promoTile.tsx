@@ -1,6 +1,6 @@
 import { label } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
@@ -14,9 +14,10 @@ const titleContentType = configureTitleBlockContent()
 export type PromoTile = {
   _type: 'promoTile'
   title: any[]
+  linkLabelAsTitle?: boolean
   image?: ImageWithAlt
   link?: LinkSelector
-  background?: ColorListValue
+  background?: ColorSelectorValue
 }
 
 export default {
@@ -41,14 +42,24 @@ export default {
   ],
   fields: [
     {
+      name: 'linkLabelAsTitle',
+      title: 'Use link label as title',
+      type: 'boolean',
+      initialValue: false,
+    },
+    {
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
+      inputComponent: CompactBlockEditor,
       of: [titleContentType],
       title: 'Title',
-      validation: (Rule: Rule) => Rule.required(),
+      hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[], context: ValidationContext) => {
+          const { parent } = context as { parent: PromoTile }
+          if (parent?.linkLabelAsTitle || value) return true
+          return 'Required'
+        }),
     },
     {
       name: 'image',
@@ -60,31 +71,34 @@ export default {
       type: 'linkSelector',
       validation: (Rule: Rule) => Rule.required(),
     },
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+    },
   ],
   preview: {
     select: {
       title: 'title',
       imageUrl: 'image.asset.url',
+      linkLabelAsTitle: 'linkLabelAsTitle',
+      link: 'link.label',
     },
-    prepare({ title, imageUrl }: { title: any[]; imageUrl: string }) {
+    prepare({
+      title,
+      imageUrl,
+      linkLabelAsTitle,
+      link,
+    }: {
+      title: any[]
+      imageUrl: string
+      linkLabelAsTitle: boolean
+      link: string
+    }) {
       return {
-        title: blocksToText(title as any[]),
+        title: linkLabelAsTitle ? link : blocksToText(title as any[]),
         subtitle: `Promo tile component`,
         media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
       }

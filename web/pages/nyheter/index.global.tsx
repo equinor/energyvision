@@ -12,8 +12,9 @@ import { defaultLanguage } from '../../languages'
 import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
+import { renderToString } from 'react-dom/server'
 
-export default function NorwegianNewsRoom({ serverState, isServerRendered = false, data }: AlgoliaIndexPageType) {
+export default function NorwegianNewsRoom({ serverState, isServerRendered = false, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = intl?.locale || defaultLocale
@@ -30,6 +31,7 @@ export default function NorwegianNewsRoom({ serverState, isServerRendered = fals
           locale={locale}
           pageData={pageData as NewsRoomPageType}
           slug={slug}
+          url={url}
         />
       </IntlProvider>
     </InstantSearchSSRProvider>
@@ -77,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 
-  //const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const queryParams = {
     lang,
   }
@@ -99,15 +101,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         intl,
         pageData,
         slug,
-      }} /* url={url} */
+      }}
+      url={url}
     />,
+    { renderToString },
   )
 
   return {
     props: {
       locale,
       serverState,
-      // url,
+      url,
       data: {
         menuData,
         footerData,

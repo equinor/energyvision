@@ -42,7 +42,7 @@ Most of the general styles (such as colours and fonts) are based on the [Equinor
 
 ## Storybook
 
-We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://envis-storybook.azureedge.net.
+We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://s166-cdne-envis-storybook-dev.azureedge.net.
 
 To start Storybook locally during development, run the following command from the project root:
 

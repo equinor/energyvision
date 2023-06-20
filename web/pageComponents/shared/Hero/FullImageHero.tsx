@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import type { HeroType, ImageWithCaptionData } from 'types'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import Image, { Ratios } from '../SanityImage'
 import { StyledCaption } from '../image/StyledCaption'

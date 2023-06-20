@@ -2,9 +2,9 @@ import { Eyebrow, BackgroundContainer } from '@components'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
-
-import type { TextBlockData } from '../../types/types'
+import Image, { Ratios } from '../shared/SanityImage'
 import styled from 'styled-components'
+import type { TextBlockData } from '../../types/types'
 import CallToActions from './CallToActions'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
@@ -42,6 +42,9 @@ const StyledTextBlock = styled.section`
 const TextContainer = styled.div`
   margin-bottom: var(--space-medium);
 `
+const ImgContainer = styled.div`
+  width: 300px;
+`
 
 type TextBlockProps = {
   data: TextBlockData
@@ -49,7 +52,17 @@ type TextBlockProps = {
 }
 
 const TextBlock = ({ data, anchor }: TextBlockProps) => {
-  const { overline, title, ingress, text, designOptions, callToActions, splitList, overrideButtonStyle = false } = data
+  const {
+    image,
+    overline,
+    title,
+    ingress,
+    text,
+    designOptions,
+    callToActions,
+    splitList,
+    overrideButtonStyle = false,
+  } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
   const { background } = designOptions
@@ -57,6 +70,11 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   return (
     <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>
+        {image?.asset && (
+          <ImgContainer>
+            <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} />
+          </ImgContainer>
+        )}
         {overline && <Eyebrow>{overline}</Eyebrow>}
         {title && <TitleText value={title} />}
         {ingress && <IngressText value={ingress} />}

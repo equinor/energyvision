@@ -29,7 +29,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -68,6 +68,7 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityMutationToken: ${{ secrets.SANITY_STUDIO_MUTATION_TOKEN }}
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}

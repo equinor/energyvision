@@ -1,11 +1,25 @@
-const defaults = { nonTextBehavior: 'remove' }
+import { PortableTextBlock } from 'sanity'
 
-const blocksToText = (blocks: any[], opts = {}): string => {
+interface Block {
+  _type: string
+  children?: {
+    text: string
+  }[]
+}
+
+interface Options {
+  nonTextBehavior?: 'remove' | 'keep'
+}
+
+const defaults: Options = { nonTextBehavior: 'remove' }
+
+const blocksToText = (blocks: Block[] | PortableTextBlock[] | undefined, opts: Options = {}) => {
   const options = Object.assign({}, defaults, opts)
-  if (!blocks) return ''
+  if (!Array.isArray(blocks)) return blocks
+
   return blocks
     .map((block) => {
-      if (block._type !== 'block' || !block.children) {
+      if (block._type !== 'block' || !block.children || !Array.isArray(block.children)) {
         return options.nonTextBehavior === 'remove' ? '' : `[${block._type} block]`
       }
 

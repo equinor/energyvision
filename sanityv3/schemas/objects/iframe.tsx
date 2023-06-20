@@ -3,10 +3,9 @@
 
 import { code } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule } from 'sanity'
-import type { ColorListValue } from 'sanity-plugin-color-list'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import CharCounterEditor from '../components/CharCounterEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { title, frameTitle, description, cookiePolicy, aspectRatio, url, height } from './iframe/sharedIframeFields'
 
@@ -25,7 +24,7 @@ export type IFrame = {
   url: string
   aspectRatio: string
   height?: number
-  background?: ColorListValue
+  background?: ColorSelectorValue
   cookiePolicy: 'none' | 'marketing' | 'statistics'
 }
 
@@ -58,9 +57,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CharCounterEditor,
-      },
       of: [ingressContentType],
     },
     frameTitle,
@@ -77,23 +73,13 @@ export default {
       of: [{ type: 'linkSelector', title: 'Link' }],
       validation: (Rule: Rule) => Rule.max(1),
     },
-
-    /*     {
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        borderradius: {
-          outer: '100%',
-          inner: '100%',
-        },
-        tooltip: true,
-        list: Colors,
-      },
       fieldset: 'design',
-      initialValue: Colors[0],
-    }, */
+    },
   ],
   preview: {
     select: {

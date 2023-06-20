@@ -1,9 +1,6 @@
 import { world } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons'
-import { sanityClient } from '../../sanity.client'
-
-const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
 export default {
   title: 'External Redirect',
@@ -19,9 +16,9 @@ export default {
         Rule.custom(async (value: string, context: ValidationContext) => {
           const { document } = context
           const documentId = document?._id
-          const query = `*[_type == 'externalRedirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId && !(_id in path("drafts.**"))]`
+          const query = /* groq */ `*[_type == 'externalRedirect' && from == $value && _id != $documentId && "drafts." + _id != $documentId && !(_id in path("drafts.**"))]`
           const params = { value, documentId }
-          const redirects = await client.fetch(query, params)
+          const redirects = await context.getClient({ apiVersion: '2023-01-01' }).fetch(query, params)
 
           if (!value) {
             return 'Slug is required'

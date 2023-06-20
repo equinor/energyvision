@@ -6,7 +6,6 @@ import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
 import { Breadcrumbs } from '../topicPages/Breadcrumbs'
-import { Flags } from '../../common/helpers/datasetHelpers'
 
 const TopicPageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
@@ -34,6 +33,7 @@ type TopicPageProps = {
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
+  const { breadcrumbs } = data
 
   return (
     <>
@@ -46,12 +46,12 @@ const TopicPage = ({ data }: TopicPageProps) => {
       <TopicPageLayout>
         <SharedBanner title={data.title} hero={data.hero} />
 
-        {Flags.IS_DEV && data.enableBreadcrumbs && (
+        {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             slug={data?.slug}
-            useCustomBreadcrumbs={data?.useCustomBreadcrumbs}
-            defaultBreadcrumbs={data?.defaultBreadcrumbs}
-            customBreadcrumbs={data?.customBreadcrumbs}
+            useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
+            defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
+            customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
             hasTopMargin={data.hero.type !== 'default'}
           />
         )}

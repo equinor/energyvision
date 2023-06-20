@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Heading, HeadingProps } from '@components'
 import styled from 'styled-components'
 export default {
@@ -29,11 +29,11 @@ const DarkBackground = styled.div`
   grid-gap: 1rem;
 `
 
-export const Default: Story<HeadingProps> = (args) => <Heading {...args}>Have a nice day</Heading>
+export const Default: StoryFn<HeadingProps> = (args) => <Heading {...args}>Have a nice day</Heading>
 
 Default.storyName = 'Default'
 
-export const HeaderLevels: Story<HeadingProps> = () => (
+export const HeaderLevels: StoryFn<HeadingProps> = () => (
   <Wrapper>
     <Heading level="h1" size="2xl">
       Renewables and low-carbon{' '}
@@ -58,7 +58,7 @@ export const HeaderLevels: Story<HeadingProps> = () => (
 
 HeaderLevels.storyName = 'Header levels'
 
-export const FontWeight: Story<HeadingProps> = () => (
+export const FontWeight: StoryFn<HeadingProps> = () => (
   <Wrapper>
     <Heading level="h1" size="2xl">
       I'm bold
@@ -76,7 +76,7 @@ FontWeight.parameters = {
   },
 }
 
-export const Sizes: Story<HeadingProps> = () => (
+export const Sizes: StoryFn<HeadingProps> = () => (
   <Wrapper>
     <Heading level="h1" size="xs">
       We are all h1 headers
@@ -105,7 +105,7 @@ Sizes.parameters = {
   },
 }
 
-export const Long: Story<HeadingProps> = () => (
+export const Long: StoryFn<HeadingProps> = () => (
   <Wrapper>
     <Heading level="h6" size="xs">
       Equinor is in a unique position to make a difference in the global energy future. We will seize this opportunity.
@@ -130,13 +130,13 @@ export const Long: Story<HeadingProps> = () => (
 
 Long.storyName = 'With a long text'
 
-export const Uppercase: Story<HeadingProps> = () => (
+export const Uppercase: StoryFn<HeadingProps> = () => (
   <Heading uppercase level="h1" size="xs">
     I'm uppercase
   </Heading>
 )
 
-export const InvertedHeading: Story<HeadingProps> = () => (
+export const InvertedHeading: StoryFn<HeadingProps> = () => (
   <DarkBackground>
     <Heading inverted>This Heading has its color inverted by manually setting the inverted prop to true.</Heading>
     <Heading inverted>Perfect for use on darker backgrounds.</Heading>

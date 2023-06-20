@@ -41,14 +41,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     (event: any) => {
       if (!newWindow.current || !event || !event.data) return false
 
-      if (event.origin !== REDIRECT_ORIGIN && !Flags.IS_DEV) {
+      if (event.origin !== REDIRECT_ORIGIN) {
         console.warn('Fotoware: invalid event origin')
         return false
-      }
-
-      if (Flags.IS_DEV) {
-        console.log('Event', event)
-        console.log('REDIRECT_ORIGIN', REDIRECT_ORIGIN)
       }
 
       if (!checkAuthData(event.data)) {

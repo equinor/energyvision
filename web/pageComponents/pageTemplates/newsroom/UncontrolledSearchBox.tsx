@@ -6,9 +6,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import VisuallyHidden from '../../shared/VisuallyHidden'
-
 import { useIntl } from 'react-intl'
-import useDebounce from '../../../lib/hooks/useDebounce'
 
 const Input = styled.input`
   border: 1px solid var(--slate-blue-70);
@@ -45,12 +43,19 @@ const Input = styled.input`
 export type SearchBoxProps = UseSearchBoxProps
 
 const DEBOUNCE_TIME = 300
+let timerId: any = undefined
+
+const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {
+  if (timerId) {
+    clearTimeout(timerId)
+  }
+  timerId = setTimeout(() => search(query), DEBOUNCE_TIME)
+}
 
 const UncontrolledSearchBox = (props: SearchBoxProps) => {
   // @TODO Cannot figure out exactly what this isSearchStalled is supposed to do
-  const { query, refine /* isSearchStalled */ } = useSearchBox(props)
+  const { query, refine /* isSearchStalled */, clear } = useSearchBox({ ...props, queryHook })
   const [inputValue, setInputValue] = useState(query)
-  const debouncedValue = useDebounce<string>(inputValue, DEBOUNCE_TIME)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const intl = useIntl()
@@ -69,29 +74,16 @@ const UncontrolledSearchBox = (props: SearchBoxProps) => {
     event.stopPropagation()
 
     setInputValue('')
+    clear()
 
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }
 
-  // Track when the value coming from the React state changes to synchronize
-  // it with InstantSearch.
   useEffect(() => {
-    if (query !== debouncedValue) {
-      refine(debouncedValue)
-    }
-  }, [debouncedValue, refine, query])
-
-  // Track when the InstantSearch query changes to synchronize it with
-  // the React state.
-  useEffect(() => {
-    // Bypass the state update if the input is focused to avoid concurrent
-    // updates when typing.
-    if (document.activeElement !== inputRef.current && query !== debouncedValue) {
-      setInputValue(query)
-    }
-  }, [query, debouncedValue])
+    setInputValue(query)
+  }, [query])
 
   const search = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
@@ -112,7 +104,10 @@ const UncontrolledSearchBox = (props: SearchBoxProps) => {
           maxLength={512}
           type="search"
           value={inputValue}
-          onChange={(event) => setInputValue(event.currentTarget.value)}
+          onChange={(event) => {
+            setInputValue(event.currentTarget.value)
+            refine(event.currentTarget.value)
+          }}
         />
       </form>
     </div>

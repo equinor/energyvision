@@ -36,6 +36,7 @@ export const defaultDocumentNodeResolver = (S, { schemaType }) => {
           reload: {
             button: true,
           },
+          showDisplayUrl: false,
         })
         .title('Preview'),
     )

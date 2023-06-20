@@ -1,10 +1,18 @@
 name: PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ['TEST - Build & Deploy global-test']
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.storybook/**'
+      - '!web/.gitignore'
+      - '!web/jest.config.cjs'
+      - '!web/jest.setup.ts'
+      - './FeatureFlags.js'
+      - '!web/components/README.md'
 permissions:
   id-token: write
   packages: write
@@ -15,9 +23,16 @@ jobs:
       name: preprod
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    outputs:
-      commitSha: ${{ steps.get-test-sha.outputs.sha }}
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v3
@@ -25,13 +40,7 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-      - name: Get test sha 🏷️
-        id: get-test-sha
-        shell: bash
-        run: |
-          # Install pre-requisite
-          python -m pip install --user ruamel.yaml
-          echo "sha=$(python ci/returnComponentVersion.py test web-global-test)" >> $GITHUB_OUTPUT
+
       - name: Modify radixconfig tag for preprod on main branch 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -39,13 +48,13 @@ jobs:
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
-          python ci/upgradeEnvironment.py web ${{ steps.get-test-sha.outputs.sha }} ${{ secrets.ENV }}
+          python ci/upgradeEnvironment.py web ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🚀 Deploy webs to preprod with tag ${{ steps.get-test-sha.outputs.sha }}" --allow-empty
+            git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -72,7 +81,6 @@ jobs:
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-secret
-          commitSha: ${{ needs.update-radix-config.outputs.commitSha }}
           projectId: w3b4om14
           datasetName: secret
           githubToken: ${{ secrets.GITHUB_TOKEN }}
@@ -127,7 +135,6 @@ jobs:
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
-          commitSha: ${{ needs.update-radix-config.outputs.commitSha }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
@@ -139,6 +146,7 @@ jobs:
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           environment: ${{ secrets.ENV }}
+          archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

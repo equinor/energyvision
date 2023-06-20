@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { List, ListProps } from '@components'
 import styled from 'styled-components'
 
@@ -19,7 +19,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<ListProps> = (args) => (
+export const Default: StoryFn<ListProps> = (args) => (
   <List {...args}>
     <List.Item>
       One barrel of oil produced at Johan Sverdrup during the first year has emitted 0.17kg CO₂ – almost 100 times lower
@@ -48,7 +48,7 @@ export const Default: Story<ListProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const Numbered: Story<ListProps> = () => (
+export const Numbered: StoryFn<ListProps> = () => (
   <List variant="numbered">
     <List.Item>
       One barrel of oil produced at Johan Sverdrup during the first year has emitted 0.17kg CO₂ – almost 100 times lower
@@ -75,7 +75,7 @@ export const Numbered: Story<ListProps> = () => (
   </List>
 )
 
-export const Unstyled: Story<ListProps> = () => {
+export const Unstyled: StoryFn<ListProps> = () => {
   const Box = styled.li`
     border: 1px solid grey;
     padding: var(--space-medium);

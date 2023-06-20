@@ -4,27 +4,28 @@ on:
     inputs:
       environment:
         description: 'Environment for storybook'
-        required: true
         type: choice
+        required: true
         options:
           - development
           - production
         default: development
-    push:
-      branches:
-        - main
-      paths:
-        - 'web/components/**'
-        - 'web/.storybook/**'
-        - 'web/package.json'
-        - 'pnpm-lock.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/components/**'
+      - 'web/.storybook/**'
+      - 'web/package.json'
+      - '!web/components/README.md'
+      - 'pnpm-lock.yaml'
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 jobs:
   upload:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment }}
+      name: ${{ github.event.inputs.environment || 'development'}}
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
@@ -43,7 +44,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Install dependencies 🔽
         id: install-dependencies
         run: |

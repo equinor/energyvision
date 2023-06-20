@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Story, Meta } from '@storybook/react/types-6-0'
+import type { StoryFn, Meta } from '@storybook/react'
 import { Tabs, TabsProps, Text, BackgroundContainer } from '@components'
 
 export default {
@@ -13,7 +13,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<TabsProps> = (args) => (
+export const Default: StoryFn<TabsProps> = (args) => (
   <Tabs {...args}>
     <Tabs.TabList>
       <Tabs.Tab>One</Tabs.Tab>
@@ -34,7 +34,7 @@ export const Default: Story<TabsProps> = (args) => (
   </Tabs>
 )
 
-export const WithDarkBackground: Story<TabsProps> = () => (
+export const WithDarkBackground: StoryFn<TabsProps> = () => (
   <BackgroundContainer background="Slate Blue">
     <Tabs>
       <Tabs.TabList>
@@ -59,7 +59,7 @@ export const WithDarkBackground: Story<TabsProps> = () => (
 
 WithDarkBackground.storyName = 'With a dark background'
 
-export const ControlledTabs: Story<TabsProps> = () => {
+export const ControlledTabs: StoryFn<TabsProps> = () => {
   const [tabIndex, setTabIndex] = useState(1)
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +101,7 @@ ControlledTabs.parameters = {
   },
 }
 
-export const WithLongNames: Story<TabsProps> = () => (
+export const WithLongNames: StoryFn<TabsProps> = () => (
   <Tabs>
     <Tabs.TabList>
       <Tabs.Tab>My tab number one</Tabs.Tab>

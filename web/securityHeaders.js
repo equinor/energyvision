@@ -12,7 +12,10 @@ const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
 const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
 const studioUrlsOldCluster = envs.map((env) => `https://studio-${dataset}-energyvision-${env}.radix.equinor.com/`)
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com/`)
-const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl, secretUrl].filter((e) => e).join(' ')
+const studioV3Url = 'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
+const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, studioV3Url, globalUrl, secretUrl]
+  .filter((e) => e)
+  .join(' ')
 const edsCdnUrl = 'https://cdn.eds.equinor.com '
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
@@ -37,28 +40,17 @@ const ContentSecurityPolicy = `
    default-src 'self' cdn.sanity.io cdn.equinor.com;
    style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} https://platform.twitter.com https://*.twimg.com;
    script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: https://*.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/ https://www.youtube.com;
-   img-src 'self' data: https://image.mux.com ${edsCdnUrl} https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com https://i.ytimg.com;
-   connect-src 'self' https://h61q9gi9.api.sanity.io https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu  https://*.mux.com ${
+   img-src 'self' data: ${edsCdnUrl} https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com https://i.ytimg.com;
+   connect-src 'self' https://bcdn.screen9.com https://h61q9gi9.api.sanity.io https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu ${
      isProduction ? '' : 'ws:'
    };
    child-src  blob:;
    frame-src 'self' ${iframeSrcs};
    frame-ancestors ${xFrameUrls};
    font-src 'self' ${edsCdnUrl} data:;
-   media-src 'self' blob: https://stream.mux.com/ https://cdn.sanity.io/ https://cdn.equinor.com/;
+   media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
 
  `
-
-export const UnsafeContentSecurityPolicy = `
- default-src * data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval';
- script-src * data: blob: 'unsafe-inline' 'unsafe-eval';
- connect-src * data: blob: 'unsafe-inline';
- img-src * data: blob: 'unsafe-inline';
- frame-src * data: blob: ;
- style-src * data: blob: 'unsafe-inline';
- font-src * data: blob: 'unsafe-inline';
- frame-ancestors * data: blob:;
-`
 
 export default [
   {

@@ -81,11 +81,15 @@ import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
 import titleAndMeta from './objects/titleAndMeta'
 import twitterEmbed from './objects/twitterEmbed'
-import video from './objects/video'
 import videoFile from './objects/videoFile'
+import videoPlayer from './objects/videoPlayer'
+import videoControls from './objects/videoControls'
+import videoPlayerCarousel from './objects/videoPlayerCarousel'
+
 import imageCarousel from './objects/imageCarousel'
 import iframeCarousel from './objects/iframeCarousel'
-import screen9video from './objects/screen9video'
+import hlsVideo from './objects/hlsVideo'
+import breadcrumbs from './objects/breadcrumbs'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -136,6 +140,9 @@ const RemainingSchemas = [
   stockValuesApi,
   iframe,
   basicIframe,
+  videoPlayer,
+  videoControls,
+  videoPlayerCarousel,
   footer,
   promotion,
   promoteTopics,
@@ -153,12 +160,12 @@ const RemainingSchemas = [
   externalRedirect,
   twitterEmbed,
   anchorLink,
-  video,
   excludeFromSearch,
   videoFile,
   iframeCarousel,
   imageCarousel,
-  screen9video,
+  hlsVideo,
+  breadcrumbs,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

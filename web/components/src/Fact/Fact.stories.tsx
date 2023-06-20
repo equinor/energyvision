@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Story, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 import { FactBox, FactProps, Heading, Text, List } from '@components'
 import { AspectImagePlaceholder } from '@stories'
 
@@ -21,7 +21,7 @@ export default {
   },
 } as Meta
 
-export const Default: Story<FactProps> = (args) => (
+export const Default: StoryFn<FactProps> = (args) => (
   <FactBox {...args}>
     <FactBox.Content>
       <Heading size="xl" level="h3">
@@ -39,7 +39,7 @@ export const Default: Story<FactProps> = (args) => (
 
 Default.storyName = 'Default'
 
-export const WithBulletPoints: Story<FactProps> = (args) => (
+export const WithBulletPoints: StoryFn<FactProps> = (args) => (
   <FactBox {...args}>
     <FactBox.Content>
       <Heading size="xl" level="h3">
@@ -67,7 +67,7 @@ export const WithBulletPoints: Story<FactProps> = (args) => (
   </FactBox>
 )
 
-export const WithDifferentBackgrounds: Story<FactProps> = () => (
+export const WithDifferentBackgrounds: StoryFn<FactProps> = () => (
   <>
     <FactBox background="none">
       <FactBox.Content>
@@ -118,7 +118,7 @@ type WithImageProps = {
   dynamicHeight: boolean
 } & FactProps
 
-export const WithImage: Story<WithImageProps> = ({
+export const WithImage: StoryFn<WithImageProps> = ({
   background = 'warm',
   imagePosition = 'left',
   dynamicHeight = false,
@@ -173,7 +173,7 @@ WithImage.argTypes = {
   },
 }
 
-export const WithLongText: Story<WithImageProps> = ({ background = 'warm', dynamicHeight = false }) => (
+export const WithLongText: StoryFn<WithImageProps> = ({ background = 'warm', dynamicHeight = false }) => (
   <>
     <FactBox background={background}>
       <FactBox.Content dynamicHeight={dynamicHeight}>

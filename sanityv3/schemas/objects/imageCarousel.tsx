@@ -1,6 +1,5 @@
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
-import { Colors } from '../../helpers/ColorListValues'
 import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
@@ -36,7 +35,9 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
       title: 'Title',
     },
@@ -65,22 +66,13 @@ export default {
       initialValue: true,
       fieldset: 'carouselOptions',
     },
-    // {
-    //   title: 'Background',
-    //   description: 'Pick a colour for the background. Default is white.',
-    //   name: 'background',
-    //   type: 'colorlist',
-    //   options: {
-    //     borderradius: {
-    //       outer: '100%',
-    //       inner: '100%',
-    //     },
-    //     tooltip: false,
-    //     list: Colors,
-    //   },
-    //   fieldset: 'design',
-    //   initialValue: Colors[0],
-    // },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+    },
   ],
   preview: {
     select: {
