@@ -367,6 +367,7 @@ export type AccordionData = {
   accordion: AccordionListData[]
   anchor?: string
   designOptions: DesignOptions
+  enableStructuredMarkup?: boolean
 }
 
 export type PromoTileData = {

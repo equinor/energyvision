@@ -123,6 +123,7 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
+    enableStructuredMarkup,
     "accordion": accordion[]{
       "id": _key,
       title,
