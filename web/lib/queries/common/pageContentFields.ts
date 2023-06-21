@@ -296,6 +296,7 @@ const pageContentFields = /* groq */ `
           name,
           title,
           department,
+          enableStructuredMarkup,
           isLink,
           !isLink => {
             email,
