@@ -1,7 +1,7 @@
 import { BackgroundContainer, Card } from '@components'
 import { tokens } from '@equinor/eds-tokens'
 import { PortableTextBlock } from '@portabletext/types'
-import { CSSProperties, Fragment } from 'react'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
