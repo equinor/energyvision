@@ -17,10 +17,11 @@ export default {
     {
       name: 'title',
       type: 'array',
-      title: 'Video Description',
-      description: 'The (optional) video description',
+      title: 'Hidden Video Description',
+      description: 'The hidden video description',
       components: { input: CompactBlockEditor },
       of: [titleContentType],
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'videoFile',
