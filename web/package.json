@@ -85,7 +85,7 @@
     "@algolia/client-search": "^4.16.0",
     "@babel/core": "^7.21.4",
     "@mdx-js/react": "^2.1.5",
-    "@next/eslint-plugin-next": "^12.1.0",
+    "@next/eslint-plugin-next": "^13.4.7",
     "@storybook/addon-docs": "^7.0.6",
     "@storybook/addon-essentials": "^7.0.6",
     "@storybook/addon-links": "^7.0.6",
