@@ -22,6 +22,7 @@ export default {
   title: 'Landing page',
   name: 'landingPage',
   i18n,
+  icon: () => EdsIcon(flight_land),
   fieldsets: [
     {
       title: 'SEO & metadata',

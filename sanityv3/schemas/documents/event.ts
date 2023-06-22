@@ -1,4 +1,4 @@
-import { calendar_event } from '@equinor/eds-icons'
+import { calendar_event, image } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
@@ -36,6 +36,7 @@ export default {
   type: 'document',
   title: 'Event',
   name: 'event',
+  icon: () => EdsIcon(image),
   i18n,
   fieldsets: [
     {

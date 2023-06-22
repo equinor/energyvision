@@ -22,11 +22,14 @@ import {
   seo,
   title,
 } from './news/sharedNewsFields'
+import { EdsIcon } from '../../icons'
+import { file_description } from '@equinor/eds-icons'
 
 export default {
   title: 'Local news',
   name: 'localNews',
   type: 'document',
+  icon: () => EdsIcon(file_description),
   i18n,
   // @todo: restrict to correct role(s)
   // readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>

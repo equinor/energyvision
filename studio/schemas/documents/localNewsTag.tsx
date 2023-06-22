@@ -2,6 +2,8 @@ import React from 'react'
 import { languages } from '../../languages'
 import type { CurrentUser } from '@sanity/types'
 import styled from 'styled-components'
+import { EdsIcon } from '../../icons'
+import { tag_more } from '@equinor/eds-icons'
 
 const StyledSpan = styled.span`
   display: block;
@@ -33,6 +35,7 @@ export default {
   type: 'document',
   title: `Local news tag`,
   name: `localNewsTag`,
+  icon: () => EdsIcon(tag_more),
   readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>
     !currentUser.roles.find((role) => ['administrator'].includes(role.name)),
   fieldsets: [

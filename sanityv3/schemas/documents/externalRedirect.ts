@@ -1,4 +1,4 @@
-import { world } from '@equinor/eds-icons'
+import { directions, world } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons'
 
@@ -6,6 +6,7 @@ export default {
   title: 'External Redirect',
   name: 'externalRedirect',
   type: 'document',
+  icon: () => EdsIcon(directions),
   fields: [
     {
       title: 'From:',

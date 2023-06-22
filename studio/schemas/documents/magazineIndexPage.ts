@@ -8,6 +8,8 @@ import sharedHeroFields from './header/sharedHeaderFields'
 
 import type { Rule, Block } from '@sanity/types'
 import { Colors } from '../../helpers/ColorListValues'
+import { EdsIcon } from '../../icons'
+import { bookmarks } from '@equinor/eds-icons'
 
 const textContentType = configureBlockContent({
   h1: false,
@@ -24,6 +26,7 @@ export default {
   type: 'document',
   title: 'Magazine Index Page',
   name: 'magazineIndex',
+  icon: () => EdsIcon(bookmarks),
   i18n,
   fieldsets: [
     {
