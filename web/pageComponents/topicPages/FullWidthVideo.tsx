@@ -14,28 +14,25 @@ const StyledFigure = styled.figure`
   background-color: transparent;
 `
 
-export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string }>`
-  object-fit: cover;
+interface StyledHLSPlayerProps {
+  aspectRatio: VideoPlayerRatios
+}
 
-  ${({ $aspectRatio }) => {
-    switch ($aspectRatio) {
+const StyledHLSPlayer = styled(HLSPlayer)<StyledHLSPlayerProps>`
+  object-fit: cover;
+  width: 100%;
+  height: ${(props) => {
+    switch (props.aspectRatio) {
+      case VideoPlayerRatios.narrow:
+        return '40vh'
+      case VideoPlayerRatios.fullScreen:
+        return '100vh'
       case VideoPlayerRatios['2:1']:
-        return {
-          height: '50%',
-          width: '100%',
-        }
-      case VideoPlayerRatios['narrow']:
-        return {
-          height: '25%',
-          width: '100%',
-        }
-      case VideoPlayerRatios['fullscreen']:
-        return {
-          height: '100vh',
-          width: '100%',
-        }
+        return '50%'
+      default:
+        return '50%'
     }
-  }}}
+  }};
 `
 
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
@@ -46,7 +43,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
       <Container style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
         <StyledFigure>
           <StyledHLSPlayer
-            $aspectRatio={aspectRatio}
+            aspectRatio={aspectRatio}
             src={video.url}
             title={video.title}
             playsInline
