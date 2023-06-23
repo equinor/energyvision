@@ -42,8 +42,8 @@ export default {
       title: 'Aspect ratio',
       options: {
         list: [
-          { title: 'fullscreen', value: 'fullscreen' },
-          { title: 'narrow', value: 'narrow' },
+          { title: 'Full screen', value: 'fullScreen' },
+          { title: 'Narrow', value: 'narrow' },
           { title: '2:1', value: '2:1' },
         ],
         layout: 'dropdown',

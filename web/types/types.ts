@@ -660,7 +660,7 @@ export enum VideoPlayerRatios {
   '9:16' = '9:16',
   '1:1' = '1:1',
   '2:1' = '2:1',
-  'fullscreen' = 'fullscreen',
+  'fullScreen' = 'fullScreen',
   'narrow' = 'narrow',
 }
 
