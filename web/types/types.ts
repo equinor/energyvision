@@ -336,10 +336,12 @@ export type FullWidthVideoData = {
   title?: PortableTextBlock[]
   action?: LinkData
   designOptions: {
-    aspectRatio: VideoPlayerRatios
+    aspectRatio: FullWidthVideoRatio
     background: BackgroundColours
   }
 }
+
+export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
 
 export type FigureData = {
   type: string
@@ -659,9 +661,6 @@ export enum VideoPlayerRatios {
   '16:9' = '16:9',
   '9:16' = '9:16',
   '1:1' = '1:1',
-  '2:1' = '2:1',
-  'fullScreen' = 'fullScreen',
-  'narrow' = 'narrow',
 }
 
 export type VideoPlayerData = {

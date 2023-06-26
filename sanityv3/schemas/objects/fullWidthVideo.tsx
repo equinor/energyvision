@@ -48,7 +48,7 @@ export default {
         ],
         layout: 'dropdown',
       },
-      initialValue: 'fullscreen',
+      initialValue: 'fullScreen',
       validation: (Rule: Rule) => Rule.required(),
     },
   ],
