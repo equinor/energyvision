@@ -1,4 +1,4 @@
-import { FullWidthVideoData, VideoPlayerRatios } from '../../types/types'
+import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer, HLSPlayer } from '@components'
 
@@ -14,20 +14,16 @@ const StyledFigure = styled.figure`
   background-color: transparent;
 `
 
-interface StyledHLSPlayerProps {
-  aspectRatio: VideoPlayerRatios
-}
-
-const StyledHLSPlayer = styled(HLSPlayer)<StyledHLSPlayerProps>`
+const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio?: FullWidthVideoRatio }>`
   object-fit: cover;
   width: 100%;
-  height: ${(props) => {
-    switch (props.aspectRatio) {
-      case VideoPlayerRatios.narrow:
-        return '40vh'
-      case VideoPlayerRatios.fullScreen:
+  height: ${({ $aspectRatio }) => {
+    switch ($aspectRatio) {
+      case 'narrow':
+        return '30vh'
+      case 'fullScreen':
         return '100vh'
-      case VideoPlayerRatios['2:1']:
+      case '2:1':
         return '50%'
       default:
         return '50%'
@@ -43,7 +39,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
       <Container style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
         <StyledFigure>
           <StyledHLSPlayer
-            aspectRatio={aspectRatio}
+            $aspectRatio={aspectRatio}
             src={video.url}
             title={video.title}
             playsInline
