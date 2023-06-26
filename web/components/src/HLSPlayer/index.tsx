@@ -3,7 +3,7 @@
 import { useRef, HTMLProps, useEffect, useState, useCallback } from 'react'
 import Hls from 'hls.js'
 import { Icon } from '@equinor/eds-core-react'
-import { play_circle } from '@equinor/eds-icons'
+import { play_circle, pause_circle } from '@equinor/eds-icons'
 import styled from 'styled-components'
 
 type Props = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
@@ -32,6 +32,17 @@ const StyledButton = styled.button`
   cursor: pointer;
 `
 
+const SmallStyledButton = styled.button`
+  position: absolute;
+  margin: auto;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+`
+
 export const HLSPlayer: React.FC<Props> = ({
   src,
   controls = false,
@@ -43,12 +54,19 @@ export const HLSPlayer: React.FC<Props> = ({
 
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
+  const [isPlaying, setIsPlaying] = useState(autoPlay)
 
   const handlePlayButton = useCallback(() => {
     if (videoRef.current) {
-      videoRef.current.play()
-      setShowPlayButton(false)
-      setShowControls(true)
+      if (videoRef.current.paused) {
+        videoRef.current.play()
+        setShowPlayButton(false)
+        setShowControls(true)
+        setIsPlaying(true)
+      } else {
+        videoRef.current.pause()
+        setIsPlaying(false)
+      }
     }
   }, [])
 
@@ -75,6 +93,14 @@ export const HLSPlayer: React.FC<Props> = ({
     playButton && setShowControls(false)
   }, [playButton])
 
+  useEffect(() => {
+    if (autoPlay && videoRef.current) {
+      videoRef.current.play()
+      setShowControls(true)
+      setShowPlayButton(false)
+    }
+  }, [autoPlay])
+
   if (playButton)
     return (
       <Wrapper>
@@ -84,6 +110,16 @@ export const HLSPlayer: React.FC<Props> = ({
             <Icon size={48} color="white" style={{ opacity: 0.8 }} data={play_circle} />
           </StyledButton>
         )}
+      </Wrapper>
+    )
+
+  if (autoPlay)
+    return (
+      <Wrapper>
+        <video playsInline ref={videoRef} controls={false} {...props} />
+        <SmallStyledButton onClick={handlePlayButton}>
+          <Icon size={24} color="white" style={{ opacity: 0.4 }} data={isPlaying ? pause_circle : play_circle} />
+        </SmallStyledButton>
       </Wrapper>
     )
 
