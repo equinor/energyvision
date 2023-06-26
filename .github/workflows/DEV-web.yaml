@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - staging
     paths:
       - 'web/**'
       - '!web/README.md'
@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        with:
+          ref: staging
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
