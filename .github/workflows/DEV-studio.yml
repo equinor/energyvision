@@ -1,14 +1,14 @@
 name: DEV - Build & deploy studio for equinor.com
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'studio/**/*'
-      - './FeatureFlags.js'
-      - '!./README.md'
-      - '!./.env.development.template'
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'studio/**/*'
+  #     - './FeatureFlags.js'
+  #     - '!./README.md'
+  #     - '!./.env.development.template'
 permissions:
   id-token: write
   packages: write
