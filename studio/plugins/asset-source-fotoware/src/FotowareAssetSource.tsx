@@ -85,9 +85,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const handleWidgetEvent = useCallback(
     (event: any) => {
-      if (!event || !event.data) return false
-
-      console.log('FW widget event', event)
+      if (!event || !event.data || event.origin === REDIRECT_ORIGIN) return false
 
       if (event.origin !== TENANT_URL) {
         console.log('Fotoware: invalid event origin', event.origin)
