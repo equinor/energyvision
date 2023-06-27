@@ -115,7 +115,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
           const response = await fetch(url).catch((error) => {
             console.error('An error occured while retrieving base64 image', error)
-            setError('An error occured while retrieving the image. If this keeps happening, please contact support.')
+            handleRequestError('Could not retrieve base64 image', setError, 'export', newWindow)
           })
 
           if (response) {
