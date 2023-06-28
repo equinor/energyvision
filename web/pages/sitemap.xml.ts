@@ -11,6 +11,7 @@ import {
 } from '../common/helpers/getPaths'
 import { Flags } from '../common/helpers/datasetHelpers'
 import archivedNews from '../lib/archive/archivedNewsPaths.json'
+import { crawlableDomains } from './robots.txt'
 
 const Sitemap = () => {
   return 'Loading...'
@@ -59,6 +60,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   let paths: PathType[]
   let domain = String(req.headers.host)
   domain = domain.startsWith('www') ? `https://${domain}` : domain
+
+  if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
+    return {
+      notFound: true,
+    }
+  }
+
   const locales = languages.map((lang) => lang.locale)
 
   const isMultilanguage = locales.length > 1

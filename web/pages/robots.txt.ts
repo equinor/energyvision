@@ -1,10 +1,11 @@
+import { Flags } from '../common/helpers/datasetHelpers'
 import { GetServerSideProps } from 'next'
 
 const Robots = () => {
   return 'Loading...'
 }
 
-const crawlableDomains = [
+export const crawlableDomains = [
   'www.equinor.com',
   'www.equinor.ar',
   'www.equinor.pl',
@@ -25,6 +26,13 @@ ${domain === 'www.equinor.com' ? 'Crawl-delay: 10' : ''}`
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const domain = String(req.headers.host)
+
+  if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
+    return {
+      notFound: true,
+    }
+  }
+
   res.setHeader('Content-Type', 'text/plain')
   res.write(robots(domain))
   res.end()
