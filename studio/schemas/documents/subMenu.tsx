@@ -7,7 +7,7 @@ import { validateCharCounterEditor } from '../validations/validateCharCounterEdi
 
 import type { Rule, ValidationContext, Reference } from '@sanity/types'
 import routes from '../routes'
-import { filterByRoute, filterByRouteNewsAndTitle } from '../../helpers/referenceFilters'
+import { filterByRoute, filterByRouteNewsMagazineAndTitle } from '../../helpers/referenceFilters'
 import { Flags } from '../../src/lib/datasetHelpers'
 
 export type SubMenu = {
@@ -98,9 +98,9 @@ export default {
       name: 'featuredContent',
       type: 'reference',
       title: 'Featured content',
-      to: [Flags.HAS_NEWS && { type: 'news' }, ...routes].filter((e) => e),
+      to: [Flags.HAS_NEWS && { type: 'news' }, Flags.HAS_MAGAZINE && { type: 'magazine' }, ...routes].filter((e) => e),
       options: {
-        filter: filterByRouteNewsAndTitle,
+        filter: filterByRouteNewsMagazineAndTitle,
         disableNew: true,
       },
     },
