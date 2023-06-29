@@ -70,7 +70,6 @@ const pageContentFields = /* groq */ `
   _type == "fullWidthVideo"=>{
     "type": _type,
     "id": _key,
-    title,
     spacing,
 	  "asset":video.asset->{
       playbackId,
