@@ -1,4 +1,5 @@
 'use strict'
+/* eslint-disable @typescript-eslint/no-var-requires */
 
 const path = require('path')
 const express = require('express')
