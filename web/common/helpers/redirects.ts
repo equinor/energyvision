@@ -76,4 +76,8 @@ const dnsRedirects = [
     from: 'equinor.com.au',
     to: '/en/where-we-are/australia',
   },
+  {
+    from: 'digitalfieldworker.equinor.com',
+    to: '/energy/digitalfieldworker',
+  },
 ]
