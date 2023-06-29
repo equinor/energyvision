@@ -85,15 +85,6 @@ const localNewsWithTagTemplate: Template<any, any> = {
   }),
 }
 
-const promotedMagazineTagTemplate: Template<any, any> = {
-  id: `promoted-magazine-tags`,
-  title: `Promoted magazine tags`,
-  schemaType: `promotedMagazineTags`,
-  value: () => {
-    return { tags: [] }
-  },
-}
-
 export const initialValueTemplates = [
   //promotedMagazineTagTemplate,
   localNewsWithTagTemplate,

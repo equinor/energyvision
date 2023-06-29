@@ -5,7 +5,6 @@ import {
   microsoft_powerpoint,
   library_pdf,
   file,
-  library_books,
   calendar_event,
   attach_file,
 } from '@equinor/eds-icons'

@@ -46,7 +46,7 @@ type TimeType = {
 }
 
 const TimeInput = (props: ObjectInputProps<string>) => {
-  const { value, onChange, elementProps, validation } = props
+  const { value, onChange, elementProps } = props
   const [time, setTime] = useState(formatTime(value))
 
   const updateValue = useCallback(
