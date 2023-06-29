@@ -15,15 +15,6 @@ export default {
   type: 'object',
   fields: [
     {
-      name: 'title',
-      type: 'array',
-      title: 'Hidden Video Description',
-      description: 'The hidden video description',
-      components: { input: CompactBlockEditor },
-      of: [titleContentType],
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
       name: 'videoFile',
       type: 'reference',
       title: 'Video',
