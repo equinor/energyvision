@@ -1,5 +1,5 @@
 import { Box, Button, Card, Flex, Stack, TextInput } from '@sanity/ui'
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import {
   getValueAtPath,
   ObjectInputProps,
@@ -77,7 +77,7 @@ export function SlugInput(props: SlugInputProps) {
 
   const isUpdating = generateState?.status === 'pending'
 
-  const handleChange = React.useCallback((event: any) => updateSlug(event.currentTarget.value), [updateSlug])
+  const handleChange = useCallback((event: any) => updateSlug(event.currentTarget.value), [updateSlug])
 
   return (
     <Stack space={3}>

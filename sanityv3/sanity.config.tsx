@@ -1,7 +1,6 @@
 import { visionTool } from '@sanity/vision'
 
 import {
-  Config,
   ConfigContext,
   createAuthStore,
   defineConfig,
@@ -45,7 +44,7 @@ const handleInputComponents = (inputProps: InputProps) => {
   return inputProps.renderDefault(inputProps)
 }
 
-const getConfig = (datasetParam: string, projectIdParam: string, isSecret: boolean = false) => ({
+const getConfig = (datasetParam: string, projectIdParam: string, isSecret = false) => ({
   name: 'equinor-' + datasetParam,
   title: 'Equinor [' + datasetParam + ']',
   icon: DatabaseIcon,

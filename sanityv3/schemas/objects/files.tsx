@@ -1,4 +1,3 @@
-import React from 'react'
 import { library_pdf, microsoft_excel, file } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule, File } from 'sanity'

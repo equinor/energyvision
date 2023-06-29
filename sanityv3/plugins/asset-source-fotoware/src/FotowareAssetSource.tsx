@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
+import { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
 // @ts-ignore
 import { createPortal } from 'react-dom'
 import { Dialog, Spinner } from '@sanity/ui'

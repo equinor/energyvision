@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
+import { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
@@ -19,6 +19,7 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const handleBrandmasterEvent = useCallback(
     (event) => {
+      console.log('brandmaster', event)
       if (!event || !event.data || event.origin !== BM_URL) return false
 
       const data = JSON.parse(event.data)

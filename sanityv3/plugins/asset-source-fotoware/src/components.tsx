@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import { ReactNode, forwardRef } from 'react'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'
 
@@ -37,7 +37,7 @@ export const FullScreenDialog = styled(Dialog)`
 type ErrorMessageProps = {
   onClose: any
   ref: any
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 export const ErrorMessage = forwardRef<HTMLDivElement, ErrorMessageProps>((props, ref) => {

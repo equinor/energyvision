@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React from 'react'
+import { ReactNode } from 'react'
 import { useToast, Button, Tooltip, Box, Text } from '@sanity/ui'
 import { CopyIcon } from '@sanity/icons'
 
@@ -19,11 +19,11 @@ const StyledButton = styled(Button)`
 
 type Props = {
   src: string
-  children: React.ReactNode
+  children: ReactNode
   shareable?: boolean
 }
 
-export const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
+const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
   const toast = useToast()
   const handleClick = () => {
     navigator.clipboard.writeText(src)
@@ -54,3 +54,4 @@ export const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
     </StyledWrapper>
   )
 }
+export default PreviewWrapper
