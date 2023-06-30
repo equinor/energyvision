@@ -31,7 +31,7 @@ const ADMIN_ITEMS = (S, context) =>
     Misc(S),
     S.divider(),
     Homepage(S),
-    Routes(S),
+    Routes(S, context),
     S.divider(),
     Menu(S),
     Footer(S),
@@ -80,25 +80,7 @@ const getItems = (S, context) => {
   } else if (isLocalNewsEditor) {
     return LOCAL_NEWS_EDITOR_ITEMS(S)
   } else {
-    return [
-      News(S),
-      LocalNews(S, context),
-      TopicContent(S),
-      LandingPage(S),
-      Event(S),
-      Magazine(S),
-      Misc(S),
-      S.divider(),
-      Homepage(S),
-      Routes(S, context),
-      S.divider(),
-      Menu(S),
-      Footer(S),
-      S.divider(),
-      AssetLibrary(S, context),
-      S.divider(),
-      Settings(S),
-    ].filter((e) => e)
+    return []
   }
 }
 
