@@ -37,7 +37,7 @@ export default {
           type: 'object',
           name: 'people',
           title: 'People',
-          fieldset: [
+          fieldsets: [
             {
               name: 'seo',
               title: 'SEO',
