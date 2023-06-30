@@ -5,6 +5,8 @@ import routes from '../routes'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
 import { Flags } from '../../src/lib/datasetHelpers'
+import { EdsIcon } from '../../icons'
+import { directions } from '@equinor/eds-icons'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
 
@@ -12,6 +14,7 @@ export default {
   title: 'Redirect',
   name: 'redirect',
   type: 'document',
+  icon: () => EdsIcon(directions),
   fields: [
     {
       title: 'From:',

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, ChangeEvent, ComponentProps, useContext } from 'react'
-import { useSearchBox, UseSearchBoxProps, UseSortByProps } from 'react-instantsearch-hooks-web'
+import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
 import ControlledSearchBox from './ControlledSearchBox'
 import { SearchContext } from './SearchContext'
 
@@ -21,7 +21,7 @@ export function SearchBox(props: SearchBoxProps) {
   // spinner if search is slow? Do we need a spinner if this happens?
   const { query, refine /* isSearchStalled */, clear } = useSearchBox({ ...props, queryHook })
   const [value, setValue] = useState(query)
-  const { userTyped, setUserTyped } = useContext(SearchContext)
+  const { setUserTyped } = useContext(SearchContext)
   const inputRef = useRef<HTMLInputElement>(null)
 
   function onReset() {

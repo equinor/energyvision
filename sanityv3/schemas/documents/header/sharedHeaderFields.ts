@@ -1,5 +1,4 @@
 import { Rule, ValidationContext } from 'sanity'
-import { defaultColors } from '../../components/ColorSelector'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
@@ -120,7 +119,6 @@ const background = {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY
   },
   fieldset: 'header',
-  initialValue: defaultColors[0],
 }
 
 const heroImage = {

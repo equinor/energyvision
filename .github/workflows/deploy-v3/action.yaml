@@ -1,0 +1,152 @@
+name: 'Deploy satellite v3 studio'
+description: 'Steps needed to deploy a satellite studio to Radix'
+inputs:
+  imageName:
+    description: 'The path to where the image is to be copied'
+    required: true
+  commitSha:
+    description: 'sha of image to be used'
+    required: false
+  datasetName:
+    description: 'Name of dataset to be used for Sanity'
+    required: true
+  githubToken:
+    description: 'GitHub token'
+    required: true
+  sanityPreviewToken:
+    description: 'Sanity Preview token'
+    required: true
+  brandmasterUrl:
+    description: 'Sanity Studio Brandmaster Url'
+    required: true
+  brandmasterPluginSource:
+    description: 'Sanity Studio Brandmaster Plugin Source'
+    required: true
+  fotowareClientId:
+    description: 'Client ID for Fotoware integration'
+    required: true
+  fotowareTenantUrl:
+    description: 'Tenant URL for Fotoware application'
+    required: true
+  fotowareRedirectOrigin:
+    description: 'Redirect URL for Fotoware auth'
+    required: true
+  fotowareAfExportUrl:
+    description: 'Azure Function img export URL'
+    required: true
+  fotowareAfExportKey:
+    description: 'Azure Function img export function key'
+    required: true
+  environment:
+    description: 'dev, preprod or prod'
+    required: true
+  sanityApiToken:
+    description: 'Sanity API token'
+    required: true
+  sanityMutationToken:
+    description: 'Sanity API mutation token'
+    required: true
+  screen9accountId:
+    description: 'Screen 9 Account Id'
+    required: true
+  screen9token:
+    description: 'Screen9 API token'
+    required: true
+outputs:
+  copied-files:
+    description: 'Number of files copied'
+    value: ${{ steps.random-number-generator.outputs.filesNo }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout 🛎️
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get long sha ️🏷️
+      if: "${{ inputs.commitSha != '' }}"
+      id: get-long-sha
+      shell: bash
+      run: |
+        echo "sha=$(git rev-parse ${{ inputs.commitSha }})" >> $GITHUB_OUTPUT
+    - name: Checkout specific branch 🛎️
+      if: "${{ inputs.commitSha != '' }}"
+      id: checkout-specific-branch
+      uses: actions/checkout@v3
+      with:
+        repository: 'equinor/energyvision'
+        fetch-depth: 0
+        ref: '${{ steps.get-long-sha.outputs.sha }}'
+    - name: Set default image tag 🏷
+      if: "${{ inputs.commitSha == '' }}"
+      id: set-default-image-tag
+      shell: bash
+      run: |
+        echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+    - name: Set image tags based on commit sha 🏷
+      if: "${{ inputs.commitSha != '' }}"
+      shell: bash
+      id: set-image-tag
+      run: |
+        echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
+        echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
+    - name: Build sanity container ⚙️
+      id: build
+      shell: bash
+      run: |
+        docker build . \
+          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
+          --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
+          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
+          --build-arg ARG_SANITY_MUTATION_TOKEN=${{ inputs.sanityMutationToken }} \
+          --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
+          --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
+          --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
+          --build-arg ARG_FOTOWARE_TENANT_URL="${{ inputs.fotowareTenantUrl }}" \
+          --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
+          --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
+          --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
+          --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
+          --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
+          --file sanityv3/Dockerfile \
+          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
+          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
+          --build-arg BUILDKIT_INLINE_CACHE=1
+    - name: Push the image to GHCR ☁
+      id: push-to-ghcr
+      shell: bash
+      run: |
+        echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        docker push ${{ inputs.imageName }} --all-tags
+    - name: 'Az CLI login'
+      uses: azure/login@v1
+      with:
+        client-id: 460b889f-89e0-4cc9-965c-31f3e7770226
+        tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0
+        allow-no-subscriptions: true
+    - name: 'Get Azure principal token for Radix'
+      shell: bash
+      run: |
+        token=$(az account get-access-token --resource 6dae42f8-4368-4678-94ff-3960e28e3630 --query=accessToken -otsv)
+        echo "::add-mask::$token"
+        echo "APP_SERVICE_ACCOUNT_TOKEN=$token" >> $GITHUB_ENV
+    - name: Deploy API on Radix 🚀
+      id: deploy
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          create job
+          deploy
+          --token-environment
+          --context platform2
+          -a equinor-web-sites
+          -e ${{ inputs.environment }}
+          -f
+    - name: log-errors-to-slack 📄
+      uses: act10ns/slack@v2
+      with:
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+      if: failure()

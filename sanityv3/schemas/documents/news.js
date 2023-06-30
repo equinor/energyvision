@@ -3,9 +3,10 @@ import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
-import SlugInput from '../components/SlugInput/index'
 import { i18n } from '../documentTranslation'
+import SlugInput from '../components/SlugInput'
 import { withSlugValidation } from '../validations/validateSlug'
+import { file_add } from '@equinor/eds-icons'
 import {
   content,
   countryTags,
@@ -23,12 +24,14 @@ import {
   tags,
   title,
 } from './news/sharedNewsFields'
+import { EdsIcon } from '../../icons'
 
 export default {
   title: 'News',
   name: 'news',
   type: 'document',
   i18n,
+  icon: () => EdsIcon(file_add),
   fieldsets: [
     {
       title: 'SEO & metadata',
@@ -85,13 +88,16 @@ export default {
         input: SlugInput,
       },
       options: withSlugValidation({
-        source: async (doc) => {
+        source: (doc) => {
           // translated document ids end with _i18n__lang while base documents don't
-          const lastFiveCharacters = doc._id.slice(-5)
-          const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
-          return doc.newsSlug ? `/${translatedNews}/${slugify(doc.newsSlug, { lower: true })}` : ''
+          return doc.newsSlug ? `${slugify(doc.newsSlug, { lower: true })}` : ''
         },
-        slugify: (value) => value,
+        slugify: (input, _schemaType, context) => {
+          const slug = slugify(input)
+          const { parent: document } = context
+          const translatedNews = document._lang ? `/${newsSlug[document._lang]}` : `/${newsSlug[defaultLanguage.name]}`
+          return `${translatedNews}/${slug}`
+        },
       }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule) => Rule.required(),

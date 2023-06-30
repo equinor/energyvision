@@ -16,7 +16,7 @@ const StyledHeading = styled(TitleText)`
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-xxLarge) var(--layout-paddingHorizontal-medium));
+  padding: var(--iframe-innerPadding, var(--space-xLarge) 0);
   max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
   margin: auto;
 `
@@ -27,6 +27,7 @@ const HeadingWrapper = styled.div`
 `
 
 const VideoItem = styled.div<{ $aspectRatio: string }>`
+  height: 100%;
   display: flex;
   flex-direction: column;
   ${({ $aspectRatio }) => ($aspectRatio === VideoPlayerRatios['16:9'] ? { minWidth: '90%' } : { minWidth: 'auto' })};
@@ -39,7 +40,6 @@ const VideoItem = styled.div<{ $aspectRatio: string }>`
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?: string }) => {
   const { title, items, designOptions } = data
   const { background, aspectRatio } = designOptions
-
   const { width: w, height: h } = getThumbnailRatio(aspectRatio)
 
   return (

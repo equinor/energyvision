@@ -69,7 +69,9 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: backgroundColors[0],
+      options: {
+        colors: backgroundColors,
+      },
     },
     {
       name: 'imagePosition',

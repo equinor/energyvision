@@ -1,5 +1,5 @@
 import { Heading } from '@components'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -21,6 +21,7 @@ import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
+import { RouterProps } from 'instantsearch.js/es/middlewares'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -80,10 +81,11 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
-
+  let eventHandler: any
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {
+    if (singletonRouter.locale !== locale) return location.href
     const queryParameters: any = {}
 
     if (routeState.query) {
@@ -107,7 +109,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       arrayFormat: 'repeat',
       format: 'RFC1738',
     })
-    return `${slug?.split('?')[0]}${queryString}`
+    return `${location.pathname}${queryString}`
   }
 
   // eslint-disable-next-line
@@ -124,6 +126,7 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       topics: allTopics,
       years: allYears,
       countries: allCountries,
+      indexName: indexName,
     }
   }
 
@@ -134,6 +137,12 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
+        push(url) {
+          if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
+            // replace url only if there is a change in query params
+            singletonRouter.replace(url, undefined, { scroll: false })
+          }
+        },
       },
     }),
     stateMapping: {
@@ -145,7 +154,8 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
           topics: indexUiState.refinementList?.topicTags,
           countries: indexUiState.refinementList?.countryTags,
           page: indexUiState?.page,
-        }
+          indexName: indexName,
+        } as { query: any; page: any; topics: any[]; years: any[]; countries: any[]; indexName: string }
       },
       routeToState(routeState: any) {
         return {

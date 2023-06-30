@@ -13,7 +13,6 @@ const StyledCard = styled(Card)`
   height: 100%;
   @media (max-width: 800px) {
     --card-maxWidth: 300px;
-    height: 400px;
   }
 `
 const StyledLink = styled(CardLink)`

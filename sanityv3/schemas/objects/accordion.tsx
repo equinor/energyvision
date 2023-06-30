@@ -6,7 +6,6 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
-import { defaultColors } from '../components/ColorSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 
 export type Accordion = {
@@ -95,7 +94,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ].filter((e) => e),
   preview: {

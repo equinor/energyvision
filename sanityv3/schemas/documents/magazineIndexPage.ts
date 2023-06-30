@@ -1,9 +1,10 @@
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import MagazineFooterComponent from '../objects/magazineFooterComponent'
 import sharedHeroFields from './header/sharedHeaderFields'
+import { EdsIcon } from '../../icons'
+import { bookmarks } from '@equinor/eds-icons'
 
 import type { PortableTextBlock, Rule } from 'sanity'
 
@@ -22,6 +23,7 @@ export default {
   type: 'document',
   title: 'Magazine Index Page',
   name: 'magazineIndex',
+  icon: () => EdsIcon(bookmarks),
   i18n,
   fieldsets: [
     {
@@ -66,7 +68,6 @@ export default {
       name: 'ingressBackground',
       type: 'colorlist',
       fieldset: 'header',
-      initialValue: defaultColors[0],
     },
     {
       title: 'Promoted Magazine Tags',

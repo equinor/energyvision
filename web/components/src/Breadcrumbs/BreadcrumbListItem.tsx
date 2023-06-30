@@ -9,6 +9,7 @@ export type BreadcrumbsListItemProps = HTMLAttributes<HTMLLIElement>
 const StyledListItem = styled(EdsItem)`
   display: inline-block;
   padding-right: var(--space-small);
+  font-weight: var(--fontWeight-bold);
 
   &:after {
     content: '>';
@@ -16,7 +17,8 @@ const StyledListItem = styled(EdsItem)`
   }
 
   &:last-child {
-    color: var(--slate-blue-80);
+    color: var(--slate-blue-90);
+    font-weight: var(--fontWeight-medium);
 
     &:after {
       content: '';

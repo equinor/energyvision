@@ -2,8 +2,6 @@ import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
-import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import { Carousel } from '../../shared/Carousel'
 
 const PairWrapper = styled.div`
@@ -24,6 +22,18 @@ const PairWrapper = styled.div`
     padding: 0 var(--layout-paddingHorizontal-medium);
     justify-content: center;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr));
+  }
+`
+
+const SingleEventCard = styled.div`
+  /* max-width: 350px; */
+  margin-top: var(--space-xLarge);
+  padding: 0 var(--space-xLarge);
+  margin-left: auto;
+  margin-right: auto;
+  @media (min-width: 700px) {
+    padding: 0 var(--layout-paddingHorizontal-large);
+    max-width: var(--maxViewportWidth);
   }
 `
 
@@ -52,23 +62,13 @@ type MultipleEventCardsProp = {
 }
 
 const StyledEventsCard = styled(EventsCard)`
-  --card-minWidth: 250px;
+  --card-maxWidth: 280px;
 
   @media (min-width: 1000px) {
-    --card-minWidth: 340px;
+    --card-maxWidth: 400px;
   }
 
-  width: var(--card-minWidth);
-`
-
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
-
-const CarouselContainer = styled.div`
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
-  margin: auto;
+  min-width: var(--card-maxWidth, 100%);
 `
 
 const MultipleEventCards = ({
@@ -93,32 +93,24 @@ const MultipleEventCards = ({
   if (renderScroll) {
     return (
       <>
-        {Flags.IS_DEV ? (
-          <CarouselContainer>
-            <StyledCarousel>
-              {data.map((item) => {
-                return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-              })}
-            </StyledCarousel>
-          </CarouselContainer>
-        ) : (
-          <HorizontalScroll type="card">
-            {data.map((item) => {
-              return (
-                <HorizontalScrollItem key={item.id}>
-                  <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-                </HorizontalScrollItem>
-              )
-            })}
-          </HorizontalScroll>
-        )}
+        <Carousel horizontalPadding={true}>
+          {data.map((item) => {
+            return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+          })}
+        </Carousel>
       </>
     )
   }
 
   return (
     <>
-      {data.length === 2 ? (
+      {data.length === 1 ? (
+        <SingleEventCard>
+          {data.map((item: EventCardData) => {
+            return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+          })}
+        </SingleEventCard>
+      ) : data.length === 2 ? (
         <PairWrapper>
           {data.map((item: EventCardData) => {
             return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />

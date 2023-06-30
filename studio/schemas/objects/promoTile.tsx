@@ -10,7 +10,6 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
-import { Flags } from '../../src/lib/datasetHelpers'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -58,13 +57,11 @@ export default {
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
       validation: (Rule: Rule) =>
-        Flags.IS_DEV
-          ? Rule.custom((value: any, context: ValidationContext) => {
-              const { parent } = context as { parent: PromoTile }
-              if (parent?.linkLabelAsTitle || value) return true
-              return 'Required'
-            })
-          : Rule.required(),
+        Rule.custom((value: any, context: ValidationContext) => {
+          const { parent } = context as { parent: PromoTile }
+          if (parent?.linkLabelAsTitle || value) return true
+          return 'Required'
+        }),
     },
     {
       name: 'image',

@@ -1,15 +1,13 @@
 import { BackgroundContainer, Card } from '@components'
 import { tokens } from '@equinor/eds-tokens'
 import { PortableTextBlock } from '@portabletext/types'
-import { CSSProperties, Fragment } from 'react'
+import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
-import { HorizontalScroll, HorizontalScrollItem } from '../shared/HorizontalScroll'
 import useWindowSize from '../../lib/hooks/useWindowSize'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import { Carousel } from '../shared/Carousel'
 
 const { Header, Action, Media } = Card
@@ -29,23 +27,14 @@ const Container = styled.div`
 `
 
 const HorizontalWrapper = styled.div`
-  --card-maxWidth: 400px;
-
-  @media (max-width: 800px) {
-    --card-maxWidth: 300px;
-  }
+  --card-maxWidth: 280px;
 
   margin-top: var(--space-3xLarge);
   margin-bottom: var(--space-3xLarge);
-`
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
 
-const CarouselContainer = styled.div`
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
-  margin: auto;
+  @media (min-width: 800px) {
+    --card-maxWidth: 400px;
+  }
 `
 
 /**
@@ -94,17 +83,10 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
   const Wrapper = renderScroll
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
-          {Flags.IS_DEV ? (
-            <CarouselContainer>
-              <StyledCarousel>{children}</StyledCarousel>
-            </CarouselContainer>
-          ) : (
-            <HorizontalScroll type="promoTile">{children}</HorizontalScroll>
-          )}
+          <Carousel horizontalPadding>{children}</Carousel>
         </HorizontalWrapper>
       )
     : Container
-  const CardWrapper = renderScroll ? HorizontalScrollItem : Fragment
 
   return (
     <div className="background-none" id={anchor}>
@@ -130,23 +112,21 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
 
           return (
             /* Sneaky little hack to make it work with the bg colour See #667 */
-            <CardWrapper key={id}>
-              <StyledBackgroundContainer disableContainerWrapper={true} background={background}>
-                <StyledCard type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
-                  {image && (
-                    <Media>
-                      <ImageWithRoundedUpperCorners
-                        image={image}
-                        alt={image.alt}
-                        maxWidth={400}
-                        aspectRatio={Ratios.FOUR_TO_FIVE}
-                      />
-                    </Media>
-                  )}
-                  <Content />
-                </StyledCard>
-              </StyledBackgroundContainer>
-            </CardWrapper>
+            <StyledBackgroundContainer disableContainerWrapper={true} background={background} key={id}>
+              <StyledCard type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
+                {image && (
+                  <Media>
+                    <ImageWithRoundedUpperCorners
+                      image={image}
+                      alt={image.alt}
+                      maxWidth={400}
+                      aspectRatio={Ratios.FOUR_TO_FIVE}
+                    />
+                  </Media>
+                )}
+                <Content />
+              </StyledCard>
+            </StyledBackgroundContainer>
           )
         })}
       </Wrapper>

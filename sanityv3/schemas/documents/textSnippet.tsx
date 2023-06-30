@@ -1,3 +1,5 @@
+import { text_field } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
 import { languages } from '../../languages'
 
 const fields = languages.map((lang) => ({
@@ -11,6 +13,6 @@ export default {
   type: 'document',
   title: `Text Snippet`,
   name: `textSnippet`,
+  icon: () => EdsIcon(text_field),
   fields: fields,
 }
-

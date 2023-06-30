@@ -2,7 +2,6 @@ import { view_module } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
-import { defaultColors } from '../components/ColorSelector'
 
 export default {
   type: 'object',
@@ -28,7 +27,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

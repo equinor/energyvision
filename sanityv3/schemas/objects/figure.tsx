@@ -1,6 +1,5 @@
 import type { Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-import { defaultColors } from '../components/ColorSelector'
 import type { ImageWithAltAndCaption } from './imageWithAltAndCaption'
 
 export type Figure = {
@@ -34,7 +33,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

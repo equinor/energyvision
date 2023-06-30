@@ -1,12 +1,21 @@
-import type { Rule } from 'sanity'
+import { file_description } from '@equinor/eds-icons'
+import {
+  defineType,
+  Rule,
+  SanityDocument,
+  SlugSchemaType,
+  SlugSourceContext,
+  SlugParent as DefaultSlugParent,
+  Reference,
+  SanityClient,
+} from 'sanity'
 import slugify from 'slugify'
 import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
+import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
-import { sanityClient } from '../../sanity.client'
-import SlugInput from '../components/SlugInput/index'
+import SlugInput from '../components/SlugInput'
 import { i18n } from '../documentTranslation'
-
 import { withSlugValidation } from '../validations/validateSlug'
 import {
   content,
@@ -23,10 +32,16 @@ import {
   title,
 } from './news/sharedNewsFields'
 
+type SlugParent = {
+  _lang: string
+  localNewsTag: Reference
+} & DefaultSlugParent
+
 export default {
   title: 'Local news',
   name: 'localNews',
   type: 'document',
+  icon: () => EdsIcon(file_description),
   i18n,
   // @todo: restrict to correct role(s)
   // readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>
@@ -87,23 +102,33 @@ export default {
         input: SlugInput,
       },
       options: withSlugValidation({
-        source: async (doc: any) => {
-          // translated document ids end with _i18n__lang while base documents don't
-          const lastFiveCharacters = doc._id.slice(-5)
-          const translatedNews = newsSlug[lastFiveCharacters] || newsSlug[defaultLanguage.name]
-
-          const localNewsTag = await sanityClient.fetch(`*[_id == $id && _type == 'localNewsTag'][0]`, {
-            id: doc.localNewsTag._ref,
-          })
-          const localNewsPath = localNewsTag[lastFiveCharacters] || localNewsTag[defaultLanguage.name]
-
+        source: (doc: SanityDocument) => {
           return doc.newsSlug
-            ? `/${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slugify(doc.newsSlug, {
+            ? `${slugify(doc.newsSlug as string, {
                 lower: true,
               })}`
             : ''
         },
-        slugify: (value: string) => value,
+        slugify: async (
+          input: string,
+          _schemaType: SlugSchemaType,
+          context: SlugSourceContext & { client: SanityClient },
+        ) => {
+          const slug = slugify(input)
+          const { client, parent } = context
+          const document = parent as SlugParent
+          const query = /* groq */ `*[_id == $id && _type == "localNewsTag"][0]`
+          const params = { id: document.localNewsTag._ref }
+          return client.fetch(query, params).then((localNewsTag: SanityDocument) => {
+            const translatedNews = document._lang
+              ? `/${newsSlug[document._lang]}`
+              : `/${newsSlug[defaultLanguage.name]}`
+            const localNewsPath = document._lang
+              ? (localNewsTag[document._lang] as string)
+              : (localNewsTag[defaultLanguage.name] as string)
+            return `${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slug}`
+          })
+        },
       }),
       description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),

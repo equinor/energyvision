@@ -12,7 +12,10 @@ const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
 const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
 const studioUrlsOldCluster = envs.map((env) => `https://studio-${dataset}-energyvision-${env}.radix.equinor.com/`)
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com/`)
-const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, globalUrl, secretUrl].filter((e) => e).join(' ')
+const studioV3Url = 'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
+const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, studioV3Url, globalUrl, secretUrl]
+  .filter((e) => e)
+  .join(' ')
 const edsCdnUrl = 'https://cdn.eds.equinor.com '
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
@@ -48,17 +51,6 @@ const ContentSecurityPolicy = `
    media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
 
  `
-
-export const UnsafeContentSecurityPolicy = `
- default-src * data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval';
- script-src * data: blob: 'unsafe-inline' 'unsafe-eval';
- connect-src * data: blob: 'unsafe-inline';
- img-src * data: blob: 'unsafe-inline';
- frame-src * data: blob: ;
- style-src * data: blob: 'unsafe-inline';
- font-src * data: blob: 'unsafe-inline';
- frame-ancestors * data: blob:;
-`
 
 export default [
   {

@@ -14,6 +14,7 @@ jobs:
       SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
       SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+      SANITY_STUDIO_MUTATION_TOKEN: ${{ secrets.SANITY_STUDIO_MUTATION_TOKEN }}
       SANITY_STUDIO_API_DATASET: global
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
@@ -66,7 +67,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -148,7 +149,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^7.2.1'
+          version: '^8.5.1'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
@@ -211,19 +212,13 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
     steps:
-       # Could be made a reusable workflow to avoid duplication
-      - name: 'Az CLI login'
-        uses: azure/login@v1
-        with:
-          client-id: 460b889f-89e0-4cc9-965c-31f3e7770226
-          tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0
-          allow-no-subscriptions: true
-      - name: 'Get Azure principal token for Radix'
-        shell: bash
-        run: |
-          token=$(az account get-access-token --resource 6dae42f8-4368-4678-94ff-3960e28e3630 --query=accessToken -otsv)
-          echo "::add-mask::$token"
-          echo "APP_SERVICE_ACCOUNT_TOKEN=$token" >> $GITHUB_ENV
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Get token 🔑
+        id: get-token
+        uses: ./.github/workflows/get-auth-token/
+
       - name: Deploy website on Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master

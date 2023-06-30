@@ -12,7 +12,8 @@ const StyledList = styled(EdsList)<ListProps>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-3);
   /* EDS list removes margin */
-  margin: var(--space-medium);
+  margin-left: var(--space-medium);
+  margin-right: var(--space-medium);
   padding-left: var(--space-medium);
   list-style-position: outside;
   ${({ unstyled }) =>
@@ -33,6 +34,11 @@ const StyledList = styled(EdsList)<ListProps>`
         gridTemplateColumns: 'repeat(2, 1fr)',
         gridColumnGap: `var(--space-xLarge)`,
       }}
+  }
+
+  /* If the text is used inside a inverted component, the text colour must also be inverted */
+  .inverted-background & {
+    color: var(--inverted-text);
   }
 `
 

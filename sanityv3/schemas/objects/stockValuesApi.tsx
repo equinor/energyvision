@@ -2,7 +2,6 @@ import { dollar } from '@equinor/eds-icons'
 import { Box, Heading, Text } from '@sanity/ui'
 import styled from 'styled-components'
 import { EdsIcon } from '../../icons'
-import { defaultColors } from '../components/ColorSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const StyledText = styled(Text)`
@@ -53,7 +52,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

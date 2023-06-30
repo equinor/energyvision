@@ -1,6 +1,7 @@
 import { defaultLanguage, languages } from '../../languages'
-import { TagIcon } from '../../icons'
+import { TagIcon, EdsIcon } from '../../icons'
 import type { Rule } from 'sanity'
+import { tag_main_equipment } from '@equinor/eds-icons'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -16,6 +17,7 @@ export default {
   type: 'document',
   name: 'magazineTag',
   title: 'MagazineTag',
+  icon: () => EdsIcon(tag_main_equipment),
   fields: [
     {
       type: 'object',
@@ -58,7 +60,7 @@ export default {
       // For debugging purposes
       return {
         title: title,
-        media: TagIcon,
+        media: EdsIcon(tag_main_equipment),
       }
     },
   },

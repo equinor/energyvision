@@ -2,7 +2,6 @@
 import { text_field } from '@equinor/eds-icons'
 import type { Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-import { defaultColors } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
@@ -170,7 +169,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ].filter((e) => e),
   preview: {

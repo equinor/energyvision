@@ -39,12 +39,12 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
   </Card>
 )
 
-type ColorSelectorProps = ObjectInputProps & {
-  list: ColorSelectorValue[]
-  value: ColorSelectorValue
-}
+type ColorSelectorProps = ObjectInputProps
 
-export const ColorSelector = ({ value, onChange, list = defaultColors }: ColorSelectorProps) => {
+export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProps) => {
+  const { options } = schemaType
+  const colors = (options?.colors as ColorSelectorValue[]) || defaultColors
+
   const handleSelect = useCallback(
     (selected: ColorSelectorValue) => {
       if (selected === value) return
@@ -57,10 +57,10 @@ export const ColorSelector = ({ value, onChange, list = defaultColors }: ColorSe
 
   return (
     <Stack space={3}>
-      {list && (
+      {colors && (
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
-            {list.map((colorItem) => {
+            {colors.map((colorItem: ColorSelectorValue) => {
               return (
                 <ColorCircle
                   key={colorItem.value}

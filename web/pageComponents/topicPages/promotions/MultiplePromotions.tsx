@@ -10,10 +10,8 @@ import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
-import { HorizontalScroll, HorizontalScrollItem } from '../../shared/HorizontalScroll'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Carousel } from '../../shared/Carousel'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -70,14 +68,10 @@ const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
 
-const StyledCarousel = styled(Carousel)`
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-`
-
-const CarouselContainer = styled.div`
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
-  margin: auto;
+const CardWrapper = styled.div`
+  display: flex;
+  min-width: 280px;
+  width: 100%;
 `
 
 type CardProps = CardData | PeopleCardData | EventCardData
@@ -127,31 +121,14 @@ const MultiplePromotions = ({
   if (renderScroll) {
     return (
       <>
-        {Flags.IS_DEV ? (
-          <CarouselContainer>
-            <StyledCarousel>
-              {data.map((item) => {
-                const card = getCard(item)
-                if (card) {
-                  return <div key={item.id}>{card}</div>
-                }
-              })}
-            </StyledCarousel>
-          </CarouselContainer>
-        ) : (
-          <HorizontalScroll type="card">
-            {data.map((item) => {
-              const card = getCard(item)
-              if (card) {
-                return (
-                  <HorizontalScrollItem autoSlideWidth={variant === 'promotePeople'} key={item.id}>
-                    {card}
-                  </HorizontalScrollItem>
-                )
-              }
-            })}
-          </HorizontalScroll>
-        )}
+        <Carousel horizontalPadding>
+          {data.map((item) => {
+            const card = getCard(item)
+            if (card) {
+              return <CardWrapper key={item.id}>{card}</CardWrapper>
+            }
+          })}
+        </Carousel>
       </>
     )
   }

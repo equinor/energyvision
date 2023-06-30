@@ -1,7 +1,6 @@
-import type { Reference, Rule } from 'sanity'
+import type { Reference, Rule, SanityDocument } from 'sanity'
 import { BreadcrumbsInput } from '../components/Breadcrumbs'
 import routes from '../routes'
-import { filterByRoute } from '../../helpers/referenceFilters'
 
 export default {
   type: 'object',
@@ -40,7 +39,10 @@ export default {
             }),
           to: routes,
           options: {
-            filter: filterByRoute,
+            filter: ({ document }: { document: SanityDocument }) => ({
+              filter: `_type match $routeLang`,
+              params: { routeLang: document._type },
+            }),
             disableNew: true,
           },
         },

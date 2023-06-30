@@ -8,7 +8,6 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
 import { ImageWithAlt } from './imageWithAlt'
-import { defaultColors } from '../components/ColorSelector'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -30,7 +29,7 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the video.',
-      inputComponent: CompactBlockEditor,
+      components: { input: CompactBlockEditor },
       of: [titleContentType],
     },
     {
@@ -91,7 +90,6 @@ export default {
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

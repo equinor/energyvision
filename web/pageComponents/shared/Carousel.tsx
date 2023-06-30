@@ -4,7 +4,6 @@ import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right } from '@equinor/eds-icons'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
-// TODO: Move buttons to own component
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
@@ -12,11 +11,11 @@ const StyledButton = styled.button`
   position: absolute;
   margin-top: auto;
   margin-bottom: auto;
-  min-height: 32px;
-  min-width: 32px;
+  min-height: 30px;
+  min-width: 30px;
   background-color: white;
   border-radius: 100px;
-  opacity: 0.6;
+  outline: 0.5px solid var(--grey-30);
   top: 0;
   bottom: 0;
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
@@ -26,40 +25,64 @@ const StyledButton = styled.button`
   padding: 0;
   transition: all 0.5s ease;
   cursor: pointer;
+
   :hover {
     opacity: 1;
-    background-color: var(--energy-red-100);
     fill: white;
+    background-color: var(--energy-red-100);
+    outline: transparent;
+  }
+
+  @media (min-width: 520px) {
+    min-height: 32px;
+    min-width: 32px;
+  }
+`
+
+const StyledIcon = styled(Icon)`
+  height: 22px;
+  width: 22px;
+
+  @media (min-width: 520px) {
+    min-height: 24px;
+    min-width: 24px;
   }
 `
 
 const StyledLeftButton = styled(StyledButton)`
   left: 0;
-  margin-left: calc(-1 * (var(--space-12) + var(--space-2) + var(--space-1)));
+  margin-left: calc(-1 * (var(--space-12)));
   @media (min-width: 520px) {
-    margin-left: calc(-1 * (var(--space-32)));
+    margin-left: calc(-1 * (var(--space-40)));
   }
 `
 
 const StyledRightButton = styled(StyledButton)`
   right: 0;
-  margin-right: calc(-1 * (var(--space-12) + var(--space-2) + var(--space-1)));
+  margin-right: calc(-1 * (var(--space-12)));
   @media (min-width: 520px) {
-    margin-right: calc(-1 * (var(--space-32)));
+    margin-right: calc(-1 * (var(--space-40)));
   }
+`
+
+const Container = styled.div`
+  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
+  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  margin: auto;
 `
 
 const CarouselWrapper = styled.div`
   position: relative;
 `
-// If cards require more styling, move to styled switch statement
-const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
+const CarouselDiv = styled.div<{ $isScrollable: boolean; $horizontalPadding: boolean }>`
   ${({ $isScrollable }) => !$isScrollable && { justifyContent: 'center' }};
+  ${({ $horizontalPadding }) => $horizontalPadding && { padding: '0 var(--space-large)' }};
+  padding-bottom: var(--space-large);
+  padding-top: var(--space-large);
   display: flex;
   align-items: stretch;
   overflow-x: auto;
   gap: var(--space-medium);
-  padding-bottom: var(--space-medium);
 
   ::-webkit-scrollbar {
     height: 5px;
@@ -80,9 +103,10 @@ const CarouselDiv = styled.div<{ $isScrollable: boolean }>`
 type CarouselType = {
   children: React.ReactNode
   scrollOffset?: number
+  horizontalPadding?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export const Carousel = ({ children, scrollOffset, ...props }: CarouselType) => {
+export const Carousel = ({ children, scrollOffset, horizontalPadding = false, ...props }: CarouselType) => {
   const [isScrollable, setIsScrollable] = useState<boolean>(true)
   const scrollRef = useRef<HTMLDivElement>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -118,20 +142,22 @@ export const Carousel = ({ children, scrollOffset, ...props }: CarouselType) => 
   }, [scrollRef, children])
 
   return (
-    <CarouselWrapper>
-      <CarouselDiv ref={scrollRef} $isScrollable={isScrollable} {...props}>
-        {isScrollable && (
-          <>
-            <StyledLeftButton onClick={() => handleScroll('back')}>
-              <Icon color="inherit" size={24} data={chevron_left} />
-            </StyledLeftButton>
-            <StyledRightButton onClick={() => handleScroll('forward')}>
-              <Icon color="inherit" size={24} data={chevron_right} />
-            </StyledRightButton>
-          </>
-        )}
-        {children}
-      </CarouselDiv>
-    </CarouselWrapper>
+    <Container>
+      <CarouselWrapper>
+        <CarouselDiv ref={scrollRef} $isScrollable={isScrollable} $horizontalPadding={horizontalPadding} {...props}>
+          {isScrollable && (
+            <>
+              <StyledLeftButton aria-label="Left Arrow" onClick={() => handleScroll('back')}>
+                <StyledIcon color="inherit" data={chevron_left} />
+              </StyledLeftButton>
+              <StyledRightButton aria-label="Right Arrow" onClick={() => handleScroll('forward')}>
+                <StyledIcon color="inherit" data={chevron_right} />
+              </StyledRightButton>
+            </>
+          )}
+          {children}
+        </CarouselDiv>
+      </CarouselWrapper>
+    </Container>
   )
 }

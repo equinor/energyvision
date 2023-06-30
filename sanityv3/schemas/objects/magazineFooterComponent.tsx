@@ -5,7 +5,6 @@ import { RadioIconSelector } from '../components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { defaultColors } from '../components/ColorSelector'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import type { DownloadableImage } from './downloadableImage'
@@ -120,7 +119,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

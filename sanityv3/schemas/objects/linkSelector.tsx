@@ -1,13 +1,13 @@
 import { link } from '@equinor/eds-icons'
-import { Reference, Rule, useClient, ValidationContext } from 'sanity'
+import type { Reference, Rule, ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
-import { sanityClient } from '../../sanity.client'
 import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { AnchorLinkDescription } from './anchorReferenceField'
-import { getClient } from '../../../web/lib/sanity.server'
+// eslint-disable-next-line import/no-unresolved
+import { defaultLanguage } from '../../languages'
 
 export type ReferenceTarget = {
   type: string
@@ -21,7 +21,7 @@ export type LinkSelector = {
   url?: string
   label?: string
   ariaLabel?: string
-}
+} & Record<string, boolean> // Hack for flags
 
 const types = [
   Flags.HAS_NEWS && {
@@ -43,50 +43,44 @@ const types = [
 
 const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
-const LinkField = {
-  name: 'linkSelector',
-  title: 'Link',
-  type: 'object',
-  description: 'Select either an internal or external URL',
-  fieldsets: [
-    {
-      name: 'label',
-      title: 'Label',
-      description: 'The label that the link/button should have.',
-    },
-  ],
-  fields: [
+/**
+ *
+ * @param labelFieldset use this if you want display the label inside a fieldset
+ * @param flag the name of the boolean field from the parent that works as a switch to toggle link fields
+ *
+ */
+export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => {
+  const isHidden = (parent: LinkSelector) => flag && !parent?.[flag]
+
+  return [
     {
       name: 'linkToOtherLanguage',
       type: 'boolean',
       title: 'Link to a different language',
-      hidden: !Flags.IS_DEV,
       description: 'Use this if you want to create a link to a page of a different language',
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'reference',
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) => parent.linkToOtherLanguage,
+      hidden: ({ parent }: { parent: LinkSelector }) => parent?.linkToOtherLanguage || isHidden(parent),
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
-          const { parent, document, getClient } = context as ValidationContext & {
-            parent: LinkSelector
-            document: { _lang?: string }
-          }
-          const client = getClient({ apiVersion: '2023-02-02' })
-          if (parent.linkToOtherLanguage) return true
-          if (Flags.IS_DEV && value?._ref) {
-            const referenceLang = await client.fetch(
-              /* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`,
-              {
+          const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
+          if (isHidden(parent)) return true
+          if (parent?.linkToOtherLanguage) return true
+          if (value?._ref) {
+            const referenceLang = await context
+              .getClient({ apiVersion: '2023-01-01' })
+              .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`, {
                 id: value._ref,
-              },
-            )
-            if (document._lang !== referenceLang) return 'Reference must have the same language as the document'
+              })
+            if (document._lang ? document._lang !== referenceLang : defaultLanguage.name !== referenceLang)
+              return 'Reference must have the same language as the document'
           }
-          return validateInternalOrExternalUrl(value, parent.url)
+          return validateInternalOrExternalUrl(value, parent?.url)
         }),
       to: defaultReferenceTargets,
       options: {
@@ -99,12 +93,13 @@ const LinkField = {
       title: 'Internal link',
       description: 'Use this field to reference an internal page.',
       type: 'reference',
-      hidden: ({ parent }: { parent: LinkSelector }) => !parent.linkToOtherLanguage,
+      hidden: ({ parent }: { parent: LinkSelector }) => !parent?.linkToOtherLanguage || isHidden(parent),
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          if (!parent.linkToOtherLanguage) return true
-          return validateInternalOrExternalUrl(value, parent.url)
+          if (isHidden(parent)) return true
+          if (!parent?.linkToOtherLanguage) return true
+          return validateInternalOrExternalUrl(value, parent?.url)
         }),
       to: defaultReferenceTargets,
       options: {
@@ -120,32 +115,57 @@ const LinkField = {
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
-          const connectedField = parent.linkToOtherLanguage ? parent.referenceToOtherLanguage : parent.reference
+          if (isHidden(parent)) return true
+          const connectedField = parent?.linkToOtherLanguage ? parent?.referenceToOtherLanguage : parent?.reference
           return validateInternalOrExternalUrl(value, connectedField)
         }),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'anchorReference',
       title: 'Anchor reference',
       type: 'anchorReferenceField',
       description: AnchorLinkDescription(),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'label',
       title: 'Visible label',
       description: 'The visible text on the link/button.',
       type: 'string',
-      fieldset: 'label',
-      validation: (Rule: Rule) => Rule.required(),
+      fieldset: labelFieldset,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as { parent: LinkSelector }
+          if (isHidden(parent)) return true
+          return value ? true : 'You must add a label'
+        }),
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
     {
       name: 'ariaLabel',
       title: '♿ Screenreader label',
       description: 'A text used for providing screen readers with additional information',
       type: 'string',
-      fieldset: 'label',
+      fieldset: labelFieldset,
+      hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
+    },
+  ]
+}
+
+const LinkField = {
+  name: 'linkSelector',
+  title: 'Link',
+  type: 'object',
+  description: 'Select either an internal or external URL',
+  fieldsets: [
+    {
+      name: 'label',
+      title: 'Label',
+      description: 'The label that the link/button should have.',
     },
   ],
+  fields: [...getLinkSelectorFields('label')],
   preview: {
     select: {
       title: 'label',
@@ -159,21 +179,6 @@ const LinkField = {
       }
     },
   },
-}
-
-// Used to generate a linkSelector field with dynamic reference targets
-// Might be a better way of doing this, but doesn't seem like we can pass
-// params to a schema field
-export const FilteredLinkField = (
-  fieldName = 'link',
-  referenceTargets: ReferenceTarget[] = defaultReferenceTargets,
-) => {
-  const client = useClient()
-  const FilteredLink = { ...LinkField }
-  FilteredLink.name = fieldName
-  FilteredLink.fields[1].to = referenceTargets
-
-  return FilteredLink
 }
 
 export default LinkField

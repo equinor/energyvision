@@ -11,7 +11,6 @@ import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector'
-import { defaultColors } from '../components/ColorSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const titleContentType = configureTitleBlockContent()
@@ -161,7 +160,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

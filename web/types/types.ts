@@ -186,6 +186,7 @@ export type HeroType = {
   background?: BackgroundColours
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
+  captionBg?: BackgroundColours
 }
 
 export type ContentType =
@@ -212,6 +213,7 @@ export type ContentType =
 export type Breadcrumb = {
   label: string
   slug: string
+  type?: string
 }
 
 export type PageSchema = {

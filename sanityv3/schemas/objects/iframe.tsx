@@ -3,7 +3,6 @@
 
 import { code } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule } from 'sanity'
-import { defaultColors } from '../components/ColorSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
@@ -80,7 +79,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
     },
   ],
   preview: {

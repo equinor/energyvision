@@ -120,9 +120,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                     arrayFormat: 'repeat',
                     format: 'RFC1738',
                   })
-                  const href: string = locale === 'en' ? `/magazine${queryString}` : `/no/magasin${queryString}`
-
-                  return href
+                  return `${location.pathname}${queryString}`
                 },
                 // eslint-disable-next-line
                 // @ts-ignore: @TODO: The types are not correct
@@ -131,6 +129,12 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                   return {
                     page,
                     magazineTags: tag,
+                  }
+                },
+                push(url) {
+                  if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
+                    // replace url only if there is a change in query params
+                    singletonRouter.replace(url, undefined, { scroll: false })
                   }
                 },
               },

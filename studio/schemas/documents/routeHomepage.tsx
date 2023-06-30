@@ -1,6 +1,6 @@
 import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
-import { calendar_event } from '@equinor/eds-icons'
+import { calendar_event, home } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { HeroTypes } from '../HeroTypes'
 
@@ -8,6 +8,7 @@ export default (isoCode: string, title: string) => ({
   type: 'document',
   title: `Home Page Route ${title}`,
   name: `route_${isoCode}_homepage`,
+  icon: () => EdsIcon(home),
   fields: [
     {
       title: 'Content',

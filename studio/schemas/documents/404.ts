@@ -5,7 +5,7 @@ import { configureTitleBlockContent } from '../editors'
 import CharCounterEditor from '../components/CharCounterEditor'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
-import { flight_land } from '@equinor/eds-icons'
+import { collection_4 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule, Block } from '@sanity/types'
 
@@ -26,7 +26,7 @@ export default {
   type: 'document',
   title: `404 page`,
   name: `pageNotFound`,
-
+  icon: () => EdsIcon(collection_4),
   i18n,
   fieldsets: [
     {
@@ -81,7 +81,7 @@ export default {
       return {
         title: plainTitle,
         subtitle: 'Page not found',
-        media: EdsIcon(flight_land),
+        media: EdsIcon(collection_4),
       }
     },
   },
