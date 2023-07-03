@@ -4,6 +4,9 @@ inputs:
   imageName:
     description: 'The path to where the image is to be copied'
     required: true
+  branch:
+    description: 'The name of the branch to be deployed. Defaults to main.'
+    required: false
   commitSha:
     description: 'sha of image to be used'
     required: false
@@ -70,13 +73,13 @@ runs:
       run: |
         echo "sha=$(git rev-parse ${{ inputs.commitSha }})" >> $GITHUB_OUTPUT
     - name: Checkout specific branch 🛎️
-      if: "${{ inputs.commitSha != '' }}"
+      if: "${{ inputs.commitSha != '' || inputs.branch != ''}}"
       id: checkout-specific-branch
       uses: actions/checkout@v3
       with:
         repository: 'equinor/energyvision'
         fetch-depth: 0
-        ref: '${{ steps.get-long-sha.outputs.sha }}'
+        ref: '${{ steps.get-long-sha.outputs.sha || inputs.branch }}'
     - name: Set default image tag 🏷
       if: "${{ inputs.commitSha == '' }}"
       id: set-default-image-tag
