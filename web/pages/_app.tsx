@@ -82,7 +82,7 @@ const StyledSkipLink = styled(SkipNavLink)`
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
-  const IS_LIVE = process.env.NODE_ENV === 'development'
+  const IS_LIVE = process.env.NODE_ENV !== 'development'
 
   useEffect(() => {
     if (!GTM_ID) return
