@@ -693,7 +693,7 @@ export type VideoHeroData = {
   autoplay: boolean
 }
 
-export type LoopingVideoRatio = 'original' | 'narrow'
+export type LoopingVideoRatio = '1:2' | 'narrow'
 
 export type LoopingVideoData = {
   title: string
