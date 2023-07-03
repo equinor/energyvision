@@ -44,7 +44,7 @@ const SmallStyledButton = styled.button`
   opacity: 0.4;
   color: white;
   &:hover {
-    opacity: 0.2;
+    opacity: 0.6;
   }
 `
 
