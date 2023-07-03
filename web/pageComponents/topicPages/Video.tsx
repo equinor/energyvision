@@ -22,7 +22,7 @@ const StyledTitle = styled(TitleText)`
 `
 
 const Video = ({ data, anchor }: VideoProps) => {
-  const { asset, designOptions, title, ingress } = data
+  const { designOptions, title, ingress } = data
   return (
     <>
       <BackgroundContainer background={designOptions.background} id={anchor}>

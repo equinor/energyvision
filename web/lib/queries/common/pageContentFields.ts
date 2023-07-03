@@ -67,6 +67,12 @@ const pageContentFields = /* groq */ `
     "id": _key,
     image
   },
+  _type == "fullWidthVideo"=>{
+    "type": _type,
+    "id": _key,
+    spacing,
+    ${videoPlayerFields}
+  },
   _type == "figure"=>{
     "type": _type,
     "id": _key,
@@ -267,9 +273,6 @@ const pageContentFields = /* groq */ `
                 { "image": reference->content->heroLoopingVideo->thumbnail },
                 reference->content->heroFigure),
             "openGraphImage": reference->content->openGraphImage,
-            "heroVideo": reference->content->heroVideo.asset->{
-              playbackId,
-            },
             "heroType": coalesce(reference->content->heroType, 'default'),
           },
 
@@ -281,9 +284,6 @@ const pageContentFields = /* groq */ `
                 reference->heroFigure),
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
-          "heroVideo": reference->heroVideo.asset->{
-            playbackId,
-          },
          },
        },
       },
@@ -497,22 +497,6 @@ const pageContentFields = /* groq */ `
     "type": _type,
     "id": _key,
     anchorReference
-  },
-
-  _type == "video" =>{
-    "type": _type,
-    "id": _key,
-    title,
-    ingress[]{
-        ...,
-        ${markDefs},
-      },
-	  "asset":video.asset->{
-      playbackId,
-			},
-    "designOptions": {
-      "background": coalesce(background.title, 'White'),
-    },
   },
 
   _type == "imageCarousel" =>{

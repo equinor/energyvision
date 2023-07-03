@@ -628,9 +628,6 @@ export type VideoData = {
   videoURL: string
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  asset: {
-    playbackId: string
-  }
   designOptions: {
     background: BackgroundColours
   }
@@ -688,7 +685,6 @@ export type VideoPlayerCarouselData = {
 }
 
 export type VideoHeroData = {
-  playbackId: string
   loop: boolean
   autoplay: boolean
 }
