@@ -41,6 +41,11 @@ const SmallStyledButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  opacity: 0.4;
+  color: white;
+  &:hover {
+    opacity: 0.2;
+  }
 `
 
 export const HLSPlayer: React.FC<Props> = ({
@@ -110,7 +115,7 @@ export const HLSPlayer: React.FC<Props> = ({
       <Wrapper>
         <video playsInline autoPlay ref={videoRef} controls={false} {...props} />
         <SmallStyledButton onClick={handlePlayButton}>
-          <Icon size={24} color="white" style={{ opacity: 0.4 }} data={isPlaying ? pause_circle : play_circle} />
+          <Icon size={24} data={isPlaying ? pause_circle : play_circle} />
         </SmallStyledButton>
       </Wrapper>
     )
