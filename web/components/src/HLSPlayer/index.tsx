@@ -93,14 +93,6 @@ export const HLSPlayer: React.FC<Props> = ({
     playButton && setShowControls(false)
   }, [playButton])
 
-  useEffect(() => {
-    if (autoPlay && videoRef.current) {
-      videoRef.current.play()
-      setShowControls(true)
-      setShowPlayButton(false)
-    }
-  }, [autoPlay])
-
   if (playButton)
     return (
       <Wrapper>
@@ -116,7 +108,7 @@ export const HLSPlayer: React.FC<Props> = ({
   if (autoPlay)
     return (
       <Wrapper>
-        <video playsInline ref={videoRef} controls={false} {...props} />
+        <video playsInline autoPlay ref={videoRef} controls={false} {...props} />
         <SmallStyledButton onClick={handlePlayButton}>
           <Icon size={24} color="white" style={{ opacity: 0.4 }} data={isPlaying ? pause_circle : play_circle} />
         </SmallStyledButton>
