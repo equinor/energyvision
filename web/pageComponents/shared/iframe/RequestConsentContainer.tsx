@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { Text, Button, Heading } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { useRouter } from 'next/router'
+import { defaultLanguage } from '../../../languages'
 
 declare global {
   interface Window {
@@ -81,9 +83,12 @@ type RequestConsentContainerProps = {
   cookiePolicy: string
 }
 
-const handleCookiebotRenew = () => {
+const handleCookiebotRenew = (locale?: string) => {
   if (window?.Cookiebot) {
     try {
+      window.document
+        .getElementById('Cookiebot')
+        ?.setAttribute('data-culture', locale == 'no' ? 'nb' : locale || defaultLanguage.locale)
       window.Cookiebot?.renew()
     } catch (error) {
       console.error('An error occured while trying to run the Cookiebot script: ', error)
@@ -92,6 +97,7 @@ const handleCookiebotRenew = () => {
 }
 
 const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
+  const router = useRouter()
   const intl = useIntl()
   const typeOfCookie =
     cookiePolicy === 'statistics'
@@ -156,8 +162,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
             }}
           />
         </StyledText>
-
-        <LeftAlignedButton onClick={handleCookiebotRenew} color="secondary" variant="outlined">
+        <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
         </LeftAlignedButton>
       </Content>
