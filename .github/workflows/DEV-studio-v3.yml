@@ -67,7 +67,6 @@ jobs:
         uses: ./.github/workflows/deploy-v3/
         with:
           imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}
-          branch: staging
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
