@@ -137,7 +137,7 @@ export const cookieBot = css`
         height: 211px;
 
         a {
-          font-size: var(--typeScale-0);
+          font-size: var(--typeScale-1);
         }
 
         #CybotCookiebotDialogDetailBodyContentTextOverview {
