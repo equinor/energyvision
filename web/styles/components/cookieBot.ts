@@ -137,7 +137,7 @@ export const cookieBot = css`
         height: 211px;
 
         a {
-          font-size: var(--typeScale-1);
+          font-size: var(--typeScale-0);
         }
 
         #CybotCookiebotDialogDetailBodyContentTextOverview {
@@ -163,9 +163,12 @@ export const cookieBot = css`
 
         #CybotCookiebotDialogDetailBodyContentTextAbout,
         .CybotCookiebotDialogDetailBodyContentCookieTypeIntro {
-          p {
+          p,
+          a {
             font-size: var(--typeScale-1);
             line-height: var(--lineHeight-2);
+          }
+          p {
             padding-bottom: 10px;
           }
         }
