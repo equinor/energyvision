@@ -684,10 +684,6 @@ export type VideoPlayerCarouselData = {
   title?: PortableTextBlock[]
 }
 
-export type VideoHeroData = {
-  loop: boolean
-  autoplay: boolean
-}
 
 export type LoopingVideoRatio = 'original' | 'narrow'
 
