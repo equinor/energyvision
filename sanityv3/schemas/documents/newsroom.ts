@@ -3,7 +3,8 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
-
+import { file } from '@equinor/eds-icons'
+import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule } from 'sanity'
 
 const titleContentType = configureTitleBlockContent()
@@ -22,6 +23,7 @@ export default {
   type: 'document',
   title: 'Newsroom',
   name: 'newsroom',
+  icon: () => EdsIcon(file),
   i18n,
   fieldsets: [
     {

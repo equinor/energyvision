@@ -5,12 +5,14 @@ import { calendar_event } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { HeroTypes } from '../HeroTypes'
+import { library_books } from '@equinor/eds-icons'
 
 export default (isoCode: string, title: string) => {
   return {
     type: 'document',
     title: `Page Routes ${title}`,
     name: `route_${isoCode}`,
+    icon: () => EdsIcon(library_books),
     fieldsets: [
       {
         title: 'Slug',

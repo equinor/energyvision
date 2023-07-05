@@ -1,4 +1,4 @@
-import { format_line_spacing } from '@equinor/eds-icons'
+import { format_line_spacing, playlist_add } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { configureBlockContent } from '../editors/blockContentType'
 import CharCounterEditor from '../components/CharCounterEditor'
@@ -36,6 +36,7 @@ export default {
   type: 'document',
   name: 'subMenu',
   title: 'Menu item',
+  icon: () => EdsIcon(playlist_add),
   fieldsets: [
     {
       title: 'Top level/landing page link',

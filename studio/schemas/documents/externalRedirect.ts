@@ -1,7 +1,7 @@
 import type { Rule, ValidationContext } from '@sanity/types'
 // eslint-disable-next-line import/no-unresolved
 import sanityClient from 'part:@sanity/base/client'
-import { world } from '@equinor/eds-icons'
+import { directions, world } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 
 const client = sanityClient.withConfig({ apiVersion: '2021-05-19' })
@@ -10,6 +10,7 @@ export default {
   title: 'External Redirect',
   name: 'externalRedirect',
   type: 'document',
+  icon: () => EdsIcon(directions),
   fields: [
     {
       title: 'From:',

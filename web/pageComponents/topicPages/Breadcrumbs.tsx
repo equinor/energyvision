@@ -1,24 +1,35 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { BreadcrumbsList, Link } from '@components'
+import { BreadcrumbsList, getBackgroundByColorName, Link } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
-import { Breadcrumb } from '../../types'
+import { BackgroundColours, Breadcrumb } from '../../types'
 
 const { BreadcrumbsListItem } = BreadcrumbsList
 
-const Container = styled.div<{ $hasTopMargin?: boolean }>`
+type ContainerStyles = {
+  hasTopMargin?: boolean
+  backgroundColor: BackgroundColours
+}
+
+const Container = styled.div<{ $containerStyles?: ContainerStyles }>`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
 
-  ${({ $hasTopMargin }) =>
-    $hasTopMargin && {
+  ${({ $containerStyles }) => {
+    const hasTopMargin = $containerStyles?.hasTopMargin && {
       paddingTop: 'var(--space-xLarge)',
-    }}
+    }
+    // BreadCrumbs's background color is defined by its following component
+    const bgColor = $containerStyles?.backgroundColor && {
+      background: getBackgroundByColorName($containerStyles.backgroundColor),
+    }
+    return { ...hasTopMargin, ...bgColor }
+  }}
 `
 
 type BreadcrumbsProps = {
@@ -26,7 +37,7 @@ type BreadcrumbsProps = {
   useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: Breadcrumb[]
   customBreadcrumbs: Breadcrumb[]
-  hasTopMargin?: boolean
+  containerStyles: ContainerStyles
 }
 
 const buildJsonLdElements = (crumbs: Breadcrumb[], router: NextRouter) => {
@@ -60,7 +71,7 @@ export const Breadcrumbs = ({
   useCustomBreadcrumbs,
   defaultBreadcrumbs,
   customBreadcrumbs,
-  hasTopMargin = false,
+  containerStyles,
 }: BreadcrumbsProps) => {
   const router = useRouter()
 
@@ -72,7 +83,7 @@ export const Breadcrumbs = ({
   if (crumbs.length < 2) return null
 
   return (
-    <Container $hasTopMargin={hasTopMargin}>
+    <Container $containerStyles={containerStyles}>
       <BreadcrumbsList>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {

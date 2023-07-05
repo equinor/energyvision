@@ -5,6 +5,8 @@ import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
 import type { Block, Image } from '@sanity/types'
+import { EdsIcon } from '../../icons'
+import { paste } from '@equinor/eds-icons'
 
 // import { done } from '@equinor/eds-icons'
 
@@ -13,6 +15,7 @@ export default {
   type: 'document',
   name: 'page',
   title: 'Topic page',
+  icon: () => EdsIcon(paste),
   i18n,
   fieldsets: [
     {
@@ -52,6 +55,7 @@ export default {
         { type: 'textBlock' },
         { type: 'teaser' },
         { type: 'fullWidthImage' },
+        { type: 'fullWidthVideo' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
         { type: 'pullQuote', initialValue: { background: Colors[0] } },

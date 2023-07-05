@@ -67,6 +67,15 @@ const pageContentFields = /* groq */ `
     "id": _key,
     image
   },
+  _type == "fullWidthVideo"=>{
+    "type": _type,
+    "id": _key,
+    spacing,
+	  "asset":video.asset->{
+      playbackId,
+			},
+    ${videoPlayerFields}
+  },
   _type == "figure"=>{
     "type": _type,
     "id": _key,

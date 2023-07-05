@@ -1,3 +1,4 @@
+import { file_description } from '@equinor/eds-icons'
 import {
   defineType,
   Rule,
@@ -11,6 +12,7 @@ import {
 import slugify from 'slugify'
 import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
+import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
 import SlugInput from '../components/SlugInput'
 import { i18n } from '../documentTranslation'
@@ -39,6 +41,7 @@ export default {
   title: 'Local news',
   name: 'localNews',
   type: 'document',
+  icon: () => EdsIcon(file_description),
   i18n,
   // @todo: restrict to correct role(s)
   // readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>

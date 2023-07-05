@@ -22,6 +22,7 @@ export default {
   type: 'document',
   title: 'Landing page',
   name: 'landingPage',
+  icon: () => EdsIcon(flight_land),
   i18n,
   fieldsets: [
     {

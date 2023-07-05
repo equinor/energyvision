@@ -3,11 +3,14 @@ import blocksToText from '../../helpers/blocksToText'
 import { filterByPages } from '../../helpers/referenceFilters'
 import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
+import { EdsIcon } from '../../icons'
+import { directions } from '@equinor/eds-icons'
 
 export default {
   title: 'Redirect',
   name: 'redirect',
   type: 'document',
+  icon: () => EdsIcon(directions),
   fields: [
     {
       title: 'From:',

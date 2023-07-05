@@ -15,7 +15,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
     }
   }, [container, doneCallback, errorCallback])
 
-  return <div ref={container} className="frc-captcha" data-sitekey="FCMJCLB7MR20RMO6" />
+  return <div ref={container} className="frc-captcha" data-sitekey="FCMLCFU23ASH8D84" />
 }
 
 export default FriendlyCaptcha

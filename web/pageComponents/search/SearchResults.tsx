@@ -1,6 +1,5 @@
 import { Tabs } from '@components'
 import { RefObject, useContext, useEffect, useState } from 'react'
-import { useHits, useInstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import EventHit from './EventHit'
 import Hits from './Hits'
@@ -9,7 +8,7 @@ import NewsHit from './NewsHit'
 import { SearchContext } from './SearchContext'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
-import { useSortBy, UseSortByProps, SortByProps } from 'react-instantsearch-hooks-web'
+import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch-hooks-web'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
