@@ -193,6 +193,7 @@ export type ContentType =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
+  | FullWidthVideoData
   | FigureData
   | TextWithIconArrayData
   | QuoteData
@@ -321,6 +322,25 @@ export type FullWidthImageData = {
   id: string
   image: ImageWithCaptionData
 }
+
+export type FullWidthVideoData = {
+  type: string
+  id: string
+  video: {
+    title: string
+    url: string
+    thumbnail: ImageWithAlt
+  }
+  spacing?: boolean
+  title?: PortableTextBlock[]
+  action?: LinkData
+  designOptions: {
+    aspectRatio: FullWidthVideoRatio
+    background: BackgroundColours
+  }
+}
+
+export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
 
 export type FigureData = {
   type: string

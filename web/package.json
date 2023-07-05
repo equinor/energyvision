@@ -66,7 +66,7 @@
     "react-focus-lock": "^2.9.2",
     "react-hook-form": "7.44.3",
     "react-instantsearch-dom": "^6.39.1",
-    "react-instantsearch-hooks-router-nextjs": "6.42.0",
+    "react-instantsearch-hooks-router-nextjs": "6.42.2",
     "react-instantsearch-hooks-server": "^6.42.0",
     "react-instantsearch-hooks-web": "^6.42.0",
     "react-intl": "^6.0.2",

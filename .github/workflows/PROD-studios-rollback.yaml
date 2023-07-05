@@ -96,7 +96,7 @@ jobs:
           ref: '${{ steps.get-long-sha.outputs.sha }}'
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: yarn
           cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
@@ -165,7 +165,7 @@ jobs:
           ref: '${{ steps.get-long-sha.outputs.sha }}'
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: yarn
           cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦

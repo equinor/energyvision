@@ -1,14 +1,14 @@
 name: TEST - Build & deploy studio for global-test
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - staging
-    paths:
-      - 'studio/**/*'
-      - './FeatureFlags.js'
-      - '!./README.md'
-      - '!./.env.development.template'
+  # push:
+  #   branches:
+  #     - staging
+  #   paths:
+  #     - 'studio/**/*'
+  #     - './FeatureFlags.js'
+  #     - '!./README.md'
+  #     - '!./.env.development.template'
 permissions:
   id-token: write
   packages: write
@@ -24,7 +24,7 @@ jobs:
           ref: staging
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: yarn
           cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
