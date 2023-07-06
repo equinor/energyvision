@@ -137,8 +137,8 @@ dependencies:
     specifier: ^6.39.1
     version: 6.39.1(algoliasearch@4.16.0)(react-dom@18.2.0)(react@18.2.0)
   react-instantsearch-hooks-router-nextjs:
-    specifier: 6.42.0
-    version: 6.42.0(algoliasearch@4.16.0)(next@13.0.5)(react@18.2.0)
+    specifier: 6.42.2
+    version: 6.42.2(algoliasearch@4.16.0)(next@13.0.5)(react@18.2.0)
   react-instantsearch-hooks-server:
     specifier: ^6.42.0
     version: 6.42.0(algoliasearch@4.16.0)(react-dom@18.2.0)(react@18.2.0)
@@ -6470,7 +6470,7 @@ packages:
   /@types/react-copy-to-clipboard@5.0.4:
     resolution: {integrity: sha512-otTJsJpofYAeaIeOwV5xBUGpo6exXG2HX7X4nseToCB2VgPEBxGBHCm/FecZ676doNR7HCSTVtmohxfG2b3/yQ==}
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.2.13
     dev: false
 
   /@types/react-dom@18.0.5:
@@ -6512,7 +6512,7 @@ packages:
   /@types/react-is@18.2.1:
     resolution: {integrity: sha512-wyUkmaaSZEzFZivD8F2ftSyAfk6L+DfFliVj/mYdOXbVjRcS87fQJLTnhk6dRZPuJjI+9g6RZJO4PNCngUrmyw==}
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.2.13
     dev: false
 
   /@types/react@18.0.9:
@@ -8176,7 +8176,7 @@ packages:
     dev: false
 
   /date-now@1.0.1:
-    resolution: {integrity: sha1-u30IZDjevkGCpIX7PfP7+5nWFTw=}
+    resolution: {integrity: sha512-yiizelQCqYLUEVT4zqYihOW6Ird7Qyc6fD3Pv5xGxk4+Jz0rsB1dMN2KyNV6jgOHYh5K+sPGCSOknQN4Upa3pg==}
     dev: false
 
   /debounce@1.0.0:
@@ -9911,6 +9911,27 @@ packages:
 
   /instantsearch.js@4.53.0(algoliasearch@4.16.0):
     resolution: {integrity: sha512-YsKZo8yF/2/lc1FHwyP73k8IoIMPesP+8R4VSmWDf/No8EgELgpC7qgZOlQl/vLIoAAaDrKD/BfstposfMF8KQ==}
+    peerDependencies:
+      algoliasearch: '>= 3.1 < 6'
+    dependencies:
+      '@algolia/events': 4.0.1
+      '@algolia/ui-components-highlight-vdom': 1.2.1
+      '@algolia/ui-components-shared': 1.2.1
+      '@types/dom-speech-recognition': 0.0.1
+      '@types/google.maps': 3.53.4
+      '@types/hogan.js': 3.0.1
+      '@types/qs': 6.9.7
+      algoliasearch: 4.16.0
+      algoliasearch-helper: 3.13.3(algoliasearch@4.16.0)
+      hogan.js: 3.0.2
+      htm: 3.1.1
+      preact: 10.15.1
+      qs: 6.9.7
+      search-insights: 2.6.0
+    dev: false
+
+  /instantsearch.js@4.54.1(algoliasearch@4.16.0):
+    resolution: {integrity: sha512-0nY3yktw88qdE68JNC0QMJcguJWtlCojTAoTY7RKAn1sSHOxkvoPBhkAHPb5pEPQioc3Saw0ILmLJ+FY8IrbSg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
     dependencies:
@@ -12012,7 +12033,7 @@ packages:
     resolution: {integrity: sha512-QzsYKWhXTWx8h1kIvqfnC++o0pEmpRQA/aenALsL2F4pqNVr7YzcdMlDij5WBnwftRbJCNJL/O7zdKaxKPHqgQ==}
 
   /nopt@1.0.10:
-    resolution: {integrity: sha1-bd0hvSoxQXuScn3Vhfim83YI6+4=}
+    resolution: {integrity: sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==}
     hasBin: true
     dependencies:
       abbrev: 1.1.1
@@ -12970,12 +12991,12 @@ packages:
       react-instantsearch-core: 6.39.1(algoliasearch@4.16.0)(react@18.2.0)
     dev: false
 
-  /react-instantsearch-hooks-router-nextjs@6.42.0(algoliasearch@4.16.0)(next@13.0.5)(react@18.2.0):
-    resolution: {integrity: sha512-Pi10V9Mb6YKZmY4u/dLh6b8tkbUqdZ7Fo9omALJERIKeP+AWpLO+XlOYXBrsecnA+wNdB7fwtpMpeL1OA4UtSA==}
+  /react-instantsearch-hooks-router-nextjs@6.42.2(algoliasearch@4.16.0)(next@13.0.5)(react@18.2.0):
+    resolution: {integrity: sha512-XxgPXlZjOnncHLvdazKoW7tV+tXThHBxjRTUrLxABNKlmYehCat8e/PXO8j6vCKfEytNxQACraIHqMxmmIpmjQ==}
     peerDependencies:
       next: '>= 9 && < 14'
     dependencies:
-      instantsearch.js: 4.53.0(algoliasearch@4.16.0)
+      instantsearch.js: 4.54.1(algoliasearch@4.16.0)
       next: 13.0.5(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
       react-instantsearch-hooks: 6.38.3(algoliasearch@4.16.0)(react@18.2.0)
     transitivePeerDependencies:
@@ -13022,7 +13043,7 @@ packages:
       '@babel/runtime': 7.22.5
       algoliasearch: 4.16.0
       algoliasearch-helper: 3.13.3(algoliasearch@4.16.0)
-      instantsearch.js: 4.53.0(algoliasearch@4.16.0)
+      instantsearch.js: 4.54.1(algoliasearch@4.16.0)
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
@@ -15319,7 +15340,7 @@ packages:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
   /xregexp@2.0.0:
-    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
+    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
     dev: false
 
   /xtend@4.0.2:

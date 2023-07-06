@@ -126,6 +126,7 @@ export type PeopleCardData = {
   phone?: string
   isLink: boolean
   cv?: LinkData
+  enableStructuredMarkup?: boolean
 }
 
 export type EventPromotionSettings = {
@@ -193,6 +194,7 @@ export type ContentType =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
+  | FullWidthVideoData
   | FigureData
   | TextWithIconArrayData
   | QuoteData
@@ -322,6 +324,25 @@ export type FullWidthImageData = {
   image: ImageWithCaptionData
 }
 
+export type FullWidthVideoData = {
+  type: string
+  id: string
+  video: {
+    title: string
+    url: string
+    thumbnail: ImageWithAlt
+  }
+  spacing?: boolean
+  title?: PortableTextBlock[]
+  action?: LinkData
+  designOptions: {
+    aspectRatio: FullWidthVideoRatio
+    background: BackgroundColours
+  }
+}
+
+export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
+
 export type FigureData = {
   type: string
   id: string
@@ -368,6 +389,7 @@ export type AccordionData = {
   accordion: AccordionListData[]
   anchor?: string
   designOptions: DesignOptions
+  enableStructuredMarkup?: boolean
 }
 
 export type PromoTileData = {
