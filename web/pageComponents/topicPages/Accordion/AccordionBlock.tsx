@@ -4,8 +4,10 @@ import Image, { Ratios } from '../../shared/SanityImage'
 import IngressText from '../../shared/portableText/IngressText'
 import TitleText from '../../shared/portableText/TitleText'
 import Accordion from './Accordion'
+import { FAQPageJsonLd } from 'next-seo'
 
-import type { AccordionData } from '../../../types/types'
+import type { AccordionData, AccordionListData } from '../../../types/types'
+import { toPlainText } from '@portabletext/react'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -38,24 +40,36 @@ type AccordionBlockProps = {
   anchor?: string
 }
 
+const buildJsonLdElements = (data: AccordionListData[]) => {
+  return data.map((item) => {
+    return {
+      questionName: item.title,
+      acceptedAnswerText: toPlainText(item.content),
+    }
+  })
+}
+
 const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
-  const { title, ingress, designOptions, accordion, id, image } = data
+  const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
   const { background } = designOptions
   return (
-    <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
-      <StyledTextBlock>
-        {image?.asset && (
-          <ImgContainer>
-            <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
-          </ImgContainer>
-        )}
-        {title && <StyledHeading value={title} />}
-        {ingress && <IngressText value={ingress} />}
-        {accordion && accordion.length > 0 && (
-          <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
-        )}
-      </StyledTextBlock>
-    </StyledTextBlockWrapper>
+    <>
+      <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
+        <StyledTextBlock>
+          {image?.asset && (
+            <ImgContainer>
+              <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
+            </ImgContainer>
+          )}
+          {title && <StyledHeading value={title} />}
+          {ingress && <IngressText value={ingress} />}
+          {accordion && accordion.length > 0 && (
+            <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
+          )}
+        </StyledTextBlock>
+      </StyledTextBlockWrapper>
+      {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
+    </>
   )
 }
 

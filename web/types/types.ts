@@ -126,6 +126,7 @@ export type PeopleCardData = {
   phone?: string
   isLink: boolean
   cv?: LinkData
+  enableStructuredMarkup?: boolean
 }
 
 export type EventPromotionSettings = {
@@ -388,6 +389,7 @@ export type AccordionData = {
   accordion: AccordionListData[]
   anchor?: string
   designOptions: DesignOptions
+  enableStructuredMarkup?: boolean
 }
 
 export type PromoTileData = {
