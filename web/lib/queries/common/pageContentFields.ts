@@ -129,7 +129,6 @@ const pageContentFields = /* groq */ `
       ...,
       ${markDefs},
     },
-    enableStructuredMarkup,
     "accordion": accordion[]{
       "id": _key,
       title,
@@ -296,7 +295,6 @@ const pageContentFields = /* groq */ `
           name,
           title,
           department,
-          enableStructuredMarkup,
           isLink,
           !isLink => {
             email,

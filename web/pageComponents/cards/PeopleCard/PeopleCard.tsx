@@ -5,8 +5,6 @@ import styled from 'styled-components'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import type { PeopleCardData } from '../../../types/types'
 import CV from './CV'
-import { SocialProfileJsonLd } from 'next-seo'
-import { urlFor } from '../../../common/helpers'
 
 const { Media, Text, StyledPortraitCard, StyledLandscapeCard } = Card
 const { outline } = Tokens
@@ -150,66 +148,47 @@ type PeopleCardProp = {
 }
 
 const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: PeopleCardProp) => {
-  const { name, image, title, department, isLink, phone, email, cv, enableStructuredMarkup } = data
+  const { name, image, title, department, isLink, phone, email, cv } = data
 
   return (
-    <>
-      <StyledCard
-        orientation={orientation}
-        style={
-          {
-            '--height': 'auto',
-            '--card-padding': '0 0 var(--space-medium) 0',
-          } as CSSProperties
-        }
-        {...rest}
-      >
-        <StyledMedia>
-          <ImageContainer>
-            {image && <RoundedImage image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />}
-          </ImageContainer>
-        </StyledMedia>
-        <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>
-          <CardContent>
-            <div>
-              <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>
-                {name}
-              </Name>
+    <StyledCard
+      orientation={orientation}
+      style={
+        {
+          '--height': 'auto',
+          '--card-padding': '0 0 var(--space-medium) 0',
+        } as CSSProperties
+      }
+      {...rest}
+    >
+      <StyledMedia>
+        <ImageContainer>
+          {image && <RoundedImage image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />}
+        </ImageContainer>
+      </StyledMedia>
+      <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>
+        <CardContent>
+          <div>
+            <Name size="sm" level={hasSectionTitle ? 'h3' : 'h2'}>
+              {name}
+            </Name>
 
-              {title && <Detail>{title}</Detail>}
-              {department && <Detail>{department}</Detail>}
-            </div>
-            <Contact>
-              {isLink && cv ? (
-                <CV data={cv} />
-              ) : (
-                <>
-                  {email && <ContactLink href={`mailto:${email}`}>{email}</ContactLink>}
-                  {phone && <ContactLink href={`tel:${phone}`}>{phone}</ContactLink>}
-                </>
-              )}
-            </Contact>
-          </CardContent>
-        </TextContent>
-      </StyledCard>
-      {enableStructuredMarkup && (
-        <SocialProfileJsonLd
-          type="Person"
-          name={name}
-          jobTitle={title}
-          url=""
-          sameAs={['']}
-          worksFor={{
-            type: 'Organization',
-            name: 'Equinor',
-            url: 'https://www.equinor.com',
-          }}
-          image={image ? urlFor(image).url : undefined}
-          telephone={phone}
-          email={email}
-        />
-      )}
-    </>
+            {title && <Detail>{title}</Detail>}
+            {department && <Detail>{department}</Detail>}
+          </div>
+          <Contact>
+            {isLink && cv ? (
+              <CV data={cv} />
+            ) : (
+              <>
+                {email && <ContactLink href={`mailto:${email}`}>{email}</ContactLink>}
+                {phone && <ContactLink href={`tel:${phone}`}>{phone}</ContactLink>}
+              </>
+            )}
+          </Contact>
+        </CardContent>
+      </TextContent>
+    </StyledCard>
   )
 }
 

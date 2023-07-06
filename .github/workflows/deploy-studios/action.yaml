@@ -76,7 +76,7 @@ runs:
         ref: '${{ steps.get-long-sha.outputs.sha }}'
     - uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version: 16
         cache: yarn
         cache-dependency-path: 'studio/yarn.lock'
     - name: Set default image tag 🏷

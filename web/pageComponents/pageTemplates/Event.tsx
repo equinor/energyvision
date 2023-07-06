@@ -15,7 +15,6 @@ import Promotion from '../topicPages/Promotion'
 import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
-import { EventJsonLd } from 'next-seo'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -143,9 +142,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   return (
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
-      {eventDate?.date && start && end && (
-        <EventJsonLd name={plainTitle} startDate={start} endDate={end} location={location} />
-      )}
       <main>
         <EventLayout>
           <Header>

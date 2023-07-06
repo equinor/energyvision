@@ -42,21 +42,7 @@ export default {
           name: 'people',
           title: 'People',
 
-          fieldsets: [
-            {
-              name: 'seo',
-              title: 'SEO',
-              description: 'Enable structured markup to show rich results on Google search',
-            },
-          ],
           fields: [
-            {
-              name: 'enableStructuredMarkup',
-              type: 'boolean',
-              title: 'Show the people card content as rich results',
-              description: 'Enable this only if its about a person',
-              fieldset: 'seo',
-            },
             {
               title: 'Image',
               name: 'image',
