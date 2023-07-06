@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo'
+import { NewsArticleJsonLd, NextSeo } from 'next-seo'
 import { Heading, FormattedDateTime } from '@components'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
@@ -13,9 +13,8 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import type { NewsSchema } from '../../types/types'
-import RichText from '../shared/portableText/RichText'
+import { toPlainText } from '@portabletext/react'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -173,6 +172,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
 
+  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
   return (
     <>
@@ -188,7 +188,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             modifiedTime: modifiedDate,
           },
           url: fullUrl,
-          images: getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image),
+          images: openGraphImages,
         }}
         // twitter={{
         //   handle: '@handle',
@@ -196,6 +196,21 @@ const NewsPage = ({ data: news }: ArticleProps) => {
         //   cardType: 'summary_large_image',
         // }}
       ></NextSeo>
+      <NewsArticleJsonLd
+        url={fullUrl}
+        title={title}
+        images={openGraphImages.map((it) => it.url)}
+        dateCreated={publishDateTime}
+        datePublished={publishDateTime}
+        dateModified={modifiedDate}
+        section=""
+        keywords=""
+        authorName=""
+        publisherName="Equinor"
+        publisherLogo="https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red"
+        description={toPlainText(ingress)}
+        body={toPlainText(content)}
+      />
       <main>
         <article>
           <NewsLayout>

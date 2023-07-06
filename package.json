@@ -35,7 +35,7 @@
     "docker-studio:build": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/studio -f studio/Dockerfile .",
     "docker-studio:run": "docker run -p 3333:3333 envis/studio",
     "docker-studio:inspect": "docker run -p 3333:3333 -it envis/studio /bin/sh",
-    "lint-staged": "lint-staged -c './lint-staged-config.js'"
+    "lint-staged": "lint-staged -c ./lint-staged-config.js"
   },
   "dependencies": {
     "husky": "^7.0.4",
