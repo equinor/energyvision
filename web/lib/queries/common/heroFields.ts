@@ -15,7 +15,6 @@ export const heroFields = /* groq */ `{
       "url": heroLoopingVideo->video.url,
       "ratio": heroLoopingVideoRatio,
     },
-  },
     "link": heroLink[0]{
       ${linkSelectorFields}
     }
