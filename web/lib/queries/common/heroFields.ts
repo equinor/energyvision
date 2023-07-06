@@ -15,9 +15,6 @@ export const heroFields = /* groq */ `{
       "url": heroLoopingVideo->video.url,
       "ratio": heroLoopingVideoRatio,
     },
-    // @TODO: Move 'loop' and 'autoplay' inside 'video' object.
-    "loop": coalesce(heroVideoLoop,false),
-    "autoplay": coalesce(heroVideoAutoPlay,false)
   },
     "link": heroLink[0]{
       ${linkSelectorFields}

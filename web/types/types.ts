@@ -208,7 +208,6 @@ export type ContentType =
   | NewsListData
   | StockValuesData
   | TwitterEmbedData
-  | VideoData
   | VideoPlayerData
   | VideoPlayerCarouselData
 
@@ -643,17 +642,6 @@ export type AnchorLinkData = {
   id: string
   type: string
   anchorReference: string
-}
-
-export type VideoData = {
-  id: string
-  type: string
-  videoURL: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  designOptions: {
-    background: BackgroundColours
-  }
 }
 
 export enum VideoPlayerRatios {
