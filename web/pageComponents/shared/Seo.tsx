@@ -1,4 +1,4 @@
-import { NextSeo } from 'next-seo'
+import { NextSeo, WebPageJsonLd } from 'next-seo'
 import { ImageWithAlt } from '../../types/types'
 import { metaTitleSuffix } from '../../languages'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
@@ -31,17 +31,27 @@ const Seo = (props: SeoProps) => {
   }
 
   return (
-    <NextSeo
-      title={`${seoAndSome?.documentTitle || title} - ${metaTitleSuffix}`}
-      description={seoAndSome?.metaDescription}
-      openGraph={{
-        title: title,
-        description: seoAndSome?.metaDescription,
-        type: 'website',
-        url: fullUrl(),
-        images: ogImage ? getOpenGraphImages(ogImage) : undefined,
-      }}
-    ></NextSeo>
+    <>
+      <NextSeo
+        title={`${seoAndSome?.documentTitle || title} - ${metaTitleSuffix}`}
+        description={seoAndSome?.metaDescription}
+        openGraph={{
+          title: title,
+          description: seoAndSome?.metaDescription,
+          type: 'website',
+          url: fullUrl(),
+          images: ogImage ? getOpenGraphImages(ogImage) : undefined,
+        }}
+      ></NextSeo>
+      <WebPageJsonLd
+        id={fullUrl() || ''}
+        description={title}
+        publisher={{
+          '@type': 'Organization',
+          name: 'Equinor',
+        }}
+      />
+    </>
   )
 }
 export default Seo
