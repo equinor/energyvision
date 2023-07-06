@@ -2,7 +2,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { ap } from 'fp-ts/lib/Identity'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
-import { ImageWithAlt, MagazineArticle, VideoData } from './sanity'
+import { ImageWithAlt, MagazineArticle } from './sanity'
 import { MagazineIndex } from '../../common'
 import type { ImageWithAltAndCaption } from './sanity'
 
@@ -13,7 +13,6 @@ type MappableObjectType = {
   text: string
   magazineTags?: string[]
   heroFigure?: ImageWithAltAndCaption
-  heroVideo?: VideoData
   publishDateTime?: string
 }
 
@@ -44,7 +43,6 @@ const mapperFunction: MapperFunctionType =
     text,
     magazineTags: article.magazineTags,
     heroImage: getHeroImage(article),
-    heroVideo: article.heroVideo,
     publishDateTime: article.publishDateTime,
   })
 
