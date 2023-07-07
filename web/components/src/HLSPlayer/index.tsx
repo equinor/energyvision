@@ -47,6 +47,13 @@ const SmallStyledButton = styled.button`
   &:hover {
     opacity: 0.6;
   }
+
+  @media (min-width: 767px) {
+    svg {
+      height: 32px;
+      width: 32px;
+    }
+  }
 `
 
 export const HLSPlayer: React.FC<Props> = ({
