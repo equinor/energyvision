@@ -1,14 +1,14 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'studio/**/*'
-  #     - './FeatureFlags.js'
-  #     - '!./README.md'
-  #     - '!./.env.development.template'
+  push:
+    branches:
+      - main
+    paths:
+      - 'sanityv3/**/*'
+      - './FeatureFlags.js'
+      - '!./README.md'
+      - '!./.env.development.template'
 permissions:
   id-token: write
   packages: write
@@ -95,7 +95,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       - id: deploy-satellite
-        uses: ./.github/workflows/deploy-studios/
+        uses: ./.github/workflows/deploy-v3/
         with:
           imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
