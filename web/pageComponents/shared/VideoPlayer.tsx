@@ -136,6 +136,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
             $aspectRatio={aspectRatio}
             $height={height}
             src={video.url}
+            width={w}
             title={video.title}
             poster={urlFor(video.thumbnail).width(w).height(h).url()}
             playsInline

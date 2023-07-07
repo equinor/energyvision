@@ -11,10 +11,11 @@ type Props = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   playButton?: boolean
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $width?: any }>`
+  width: 100%;
+  ${({ $width }) => $width && `width: ${$width}px;`}
   position: relative;
   height: 100%;
-  width: 100%;
   display: flex;
   justify-content: center;
 `
@@ -98,7 +99,7 @@ export const HLSPlayer: React.FC<Props> = ({
     playButton && setShowControls(false)
   }, [playButton])
 
-  if (playButton)
+  if (playButton) {
     return (
       <Wrapper>
         <video playsInline ref={videoRef} controls={showControls} {...props} />
@@ -109,10 +110,11 @@ export const HLSPlayer: React.FC<Props> = ({
         )}
       </Wrapper>
     )
+  }
 
   if (autoPlay)
     return (
-      <Wrapper>
+      <Wrapper $width={props.width}>
         <video playsInline autoPlay ref={videoRef} controls={false} {...props} />
         <SmallStyledButton onClick={handlePlayButton}>
           <Icon size={24} data={isPlaying ? pause_circle : play_circle} />
