@@ -74,3 +74,32 @@ export const getExportWidgetURL = (accessToken: string, href: string) => {
 
   return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/publish?${params}`
 }
+
+type ErrorTypes = 'generic' | 'auth' | 'export'
+
+export const handleRequestError = (
+  message: string,
+  setError: (arg0: string) => void,
+  type: ErrorTypes = 'generic',
+  window: React.MutableRefObject<Window | null> | null = null,
+): false => {
+  const prefix = ((type) => {
+    switch (type) {
+      case 'auth':
+        return `An error occured while authenticating with Fotoware.`
+      case 'export':
+        return `An error occured while attempting to retrieve the image.`
+      default:
+        return `An error occured with the Fotoware integration.`
+    }
+  })(type)
+
+  console.error(`A Fotoware error occured`, message)
+  setError(`<p>${prefix}</p><p>The following message was received:</p> <pre><code>${message}</code></pre>`)
+
+  if (window && window?.current) {
+    window.current.close()
+  }
+
+  return false
+}

@@ -3,7 +3,7 @@ ARG ARG_DYNATRACE_IMAGE='node:16-alpine'
 #spa-equinor.kanari.com/e/<environment>/linux/oneagent-codemodules-musl:all
 FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
 
-FROM node:16-alpine AS deps
+FROM node:18-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -18,7 +18,7 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-FROM node:16-alpine AS builder
+FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
@@ -43,7 +43,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN cd web && yarn build
 
 # Production image, copy all the files and run next
-FROM node:16-alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production

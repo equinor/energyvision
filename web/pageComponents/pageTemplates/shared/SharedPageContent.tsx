@@ -1,6 +1,7 @@
 import Teaser from '../../shared/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
+import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure from '../../topicPages/Figure'
 import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
@@ -14,7 +15,6 @@ import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
 import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
-import Video from '../../topicPages/Video'
 import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
@@ -26,6 +26,7 @@ import {
   TeaserData,
   TextBlockData,
   FullWidthImageData,
+  FullWidthVideoData,
   FigureData,
   TextWithIconArrayData,
   CallToActionData,
@@ -39,7 +40,6 @@ import {
   NewsListData,
   StockValuesData,
   TwitterEmbedData,
-  VideoData,
   CookieDeclarationData,
   ImageCarouselData,
   IframeCarouselData,
@@ -65,7 +65,6 @@ type ComponentProps =
   | StockValuesData
   | TwitterEmbedData
   | AnchorLinkData
-  | VideoData
   | VideoPlayerData
   | VideoPlayerCarouselData
   | CookieDeclarationData
@@ -86,6 +85,8 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
+      case 'fullWidthVideo':
+        return <FullWidthVideo key={c.id} data={c as FullWidthVideoData} anchor={anchorReference} />
       case 'figure':
         return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} />
       case 'textWithIconArray':
@@ -112,8 +113,6 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <StockValues key={c.id} data={c as StockValuesData} anchor={anchorReference} />
       case 'twitterEmbed':
         return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} />
-      case 'video':
-        return <Video key={c.id} data={c as VideoData} anchor={anchorReference} />
       case 'imageCarousel':
         return <ImageCarousel key={c.id} data={c as ImageCarouselData} anchor={anchorReference} />
       case 'iframeCarousel':

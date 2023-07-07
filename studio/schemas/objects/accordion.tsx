@@ -46,8 +46,20 @@ export default {
         collapsed: true,
       },
     },
+    {
+      name: 'seo',
+      title: 'SEO',
+      description: 'Enable structured markup to show rich results on Google search',
+    },
   ],
   fields: [
+    {
+      name: 'enableStructuredMarkup',
+      type: 'boolean',
+      title: "Show the accordion content (FAQ's) as rich results",
+      description: 'Enable this only if its an FAQ',
+      fieldset: 'seo',
+    },
     {
       name: 'title',
       type: 'array',
