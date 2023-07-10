@@ -1,14 +1,14 @@
 name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'sanityv3/**/*'
-      - './FeatureFlags.js'
-      - '!./README.md'
-      - '!./.env.development.template'
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'sanityv3/**/*'
+  #     - './FeatureFlags.js'
+  #     - '!./README.md'
+  #     - '!./.env.development.template'
 permissions:
   id-token: write
   packages: write
