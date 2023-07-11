@@ -6,15 +6,14 @@ import { Icon } from '@equinor/eds-core-react'
 import { play_circle, pause_circle } from '@equinor/eds-icons'
 import styled from 'styled-components'
 
-type Props = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
+type HLSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
   playButton?: boolean
 }
 
-const Wrapper = styled.div<{ $width?: any }>`
-  width: 100%;
-  ${({ $width }) => $width && `width: ${$width}px;`}
+const Wrapper = styled.div`
   position: relative;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -56,7 +55,7 @@ const SmallStyledButton = styled.button`
   }
 `
 
-export const HLSPlayer: React.FC<Props> = ({
+export const HLSPlayer: React.FC<HLSProps> = ({
   src,
   controls = false,
   playButton = false,
@@ -121,7 +120,7 @@ export const HLSPlayer: React.FC<Props> = ({
 
   if (autoPlay)
     return (
-      <Wrapper $width={props.width}>
+      <Wrapper>
         <video playsInline autoPlay ref={videoRef} controls={false} {...props} />
         <SmallStyledButton onClick={handlePlayButton}>
           <Icon size={24} data={isPlaying ? pause_circle : play_circle} />

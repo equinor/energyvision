@@ -1,6 +1,12 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import styled from 'styled-components'
-import { VideoPlayerData, VideoPlayerRatios } from '../../types/types'
+import {
+  VideoControlsType,
+  VideoPlayerData,
+  VideoPlayerRatios,
+  VideoType,
+  VideoDesignOptionsType,
+} from '../../types/types'
 import { BackgroundContainer, HLSPlayer } from '@components'
 import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
@@ -18,30 +24,14 @@ const Container = styled.div`
   margin: auto;
 `
 
-const StyledFigure = styled.figure<{ allowFullScreen: boolean }>`
-  justify-content: center;
-  display: flex;
-  margin: 0;
-  /* background-color: var(--grey-100); */
-  background-color: transparent;
+const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
+  margin: 0 auto;
   video::-webkit-media-controls-fullscreen-button {
-    ${({ allowFullScreen }) =>
-      !allowFullScreen && {
+    ${({ $allowFullScreen }) =>
+      !$allowFullScreen && {
         display: 'none',
       }}
   }
-`
-
-const Ingress = styled.div`
-  margin-bottom: var(--space-large);
-`
-
-const ButtonWrapper = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
-
-export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height?: number }>`
-  object-fit: cover;
 
   ${({ $aspectRatio, $height }) => {
     if (!$height) {
@@ -86,7 +76,20 @@ export const StyledHLSPlayer = styled(HLSPlayer)<{ $aspectRatio: string; $height
   }}
 `
 
-export const getThumbnailRatio = (aspectRatio: string, height?: number) => {
+const Ingress = styled.div`
+  margin-bottom: var(--space-large);
+`
+
+const ButtonWrapper = styled.div`
+  margin-bottom: var(--space-xLarge);
+`
+
+const StyledHLSPlayer = styled(HLSPlayer)`
+  object-fit: cover;
+  width: inherit;
+`
+
+const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   switch (aspectRatio) {
     case VideoPlayerRatios['16:9']:
       return {
@@ -111,11 +114,35 @@ export const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   }
 }
 
+type HLSVideoComponentType = {
+  video: VideoType
+  videoControls: VideoControlsType
+  designOptions: VideoDesignOptionsType
+}
+
+export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVideoComponentType) => {
+  const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
+
+  return (
+    <StyledFigure
+      $allowFullScreen={videoControls?.allowFullScreen || true}
+      $aspectRatio={designOptions.aspectRatio}
+      $height={designOptions.height}
+    >
+      <StyledHLSPlayer
+        src={video.url}
+        title={video.title}
+        poster={urlFor(video.thumbnail).width(w).height(h).url()}
+        playsInline
+        {...videoControls}
+      />
+    </StyledFigure>
+  )
+}
+
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
-  const { background, height, aspectRatio } = designOptions
-  const { allowFullScreen, ...controls } = videoControls
-  const { width: w, height: h } = getThumbnailRatio(aspectRatio)
+  const { background } = designOptions
 
   return (
     <BackgroundContainer background={background} id={anchor}>
@@ -131,18 +158,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
             <ButtonLink action={action} />
           </ButtonWrapper>
         )}
-        <StyledFigure allowFullScreen={allowFullScreen}>
-          <StyledHLSPlayer
-            $aspectRatio={aspectRatio}
-            $height={height}
-            src={video.url}
-            width={w}
-            title={video.title}
-            poster={urlFor(video.thumbnail).width(w).height(h).url()}
-            playsInline
-            {...controls}
-          />
-        </StyledFigure>
+        <HLSVideoComponent video={video} designOptions={designOptions} videoControls={videoControls} />
       </Container>
     </BackgroundContainer>
   )
