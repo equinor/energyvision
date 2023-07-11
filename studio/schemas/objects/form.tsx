@@ -82,6 +82,13 @@ export default {
         }).unique(),
       hidden: ({ parent }: { parent: Form }) => parent?.form !== 'orderReportsForm',
     },
+    {
+      type: 'boolean',
+      name: 'isHumanRightsRequest',
+      description: 'This will set the category to human rights request in the form and makes its readonly.',
+      title: 'Preselect human rights request category',
+      hidden: ({ parent }: { parent: Form }) => parent?.form !== 'contactEquinorForm',
+    },
   ],
   preview: {
     select: {

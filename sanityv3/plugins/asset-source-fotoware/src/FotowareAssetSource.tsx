@@ -14,6 +14,7 @@ import {
   getSelectionWidgetURL,
   getExportWidgetURL,
   FotowareEvents,
+  handleRequestError,
 } from './utils'
 import { Content, ErrorMessage, LoadingContent, FotowareWidget } from './components'
 import type { FWAsset, FWAttributeField } from './types'
@@ -35,36 +36,56 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
 
+  const validateAuthEvent = useCallback(
+    (event: any) => {
+      if (event.origin !== REDIRECT_ORIGIN) {
+        return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
+      }
+
+      if (event.data?.error) {
+        const { error, error_description } = event.data
+        return handleRequestError(`Error: ${error} - description: ${error_description}`, setError, 'auth', newWindow)
+      }
+
+      if (!event?.data?.access_token) {
+        return handleRequestError(
+          'Missing access token. Make sure you have permission to access Fotoware and try again.',
+          setError,
+          'auth',
+          newWindow,
+        )
+      }
+
+      if (!checkAuthData(event.data)) {
+        return handleRequestError('Invalid event data', setError, 'auth', newWindow)
+      }
+
+      if (event.data.state !== requestState) {
+        return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
+      }
+
+      return true
+    },
+    [requestState, setError],
+  )
+
   // Login & store access token
   const handleAuthEvent = useCallback(
     (event: any) => {
       if (!newWindow.current || !event || !event.data) return false
 
-      if (event.origin !== REDIRECT_ORIGIN) {
-        console.warn('Fotoware: invalid event origin', event.origin)
-        return false
-      }
-
-      if (!checkAuthData(event.data)) {
-        console.warn('Fotoware: invalid event data')
-        return false
-      }
-
-      if (event.data.state !== requestState) {
-        console.warn('Fotoware: redirect state did not match request state')
-        return false
-      }
+      if (!validateAuthEvent(event)) return false
 
       storeAccessToken(event.data)
       setAccessToken(event.data.access_token)
       newWindow.current.close()
     },
-    [requestState],
+    [validateAuthEvent],
   )
 
   const handleWidgetEvent = useCallback(
     (event: any) => {
-      if (!event || !event.data) return false
+      if (!event || !event.data || event.origin === REDIRECT_ORIGIN) return false
 
       if (event.origin !== TENANT_URL) {
         console.log('Fotoware: invalid event origin', event.origin)
@@ -92,7 +113,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
           const response = await fetch(url).catch((error) => {
             console.error('An error occured while retrieving base64 image', error)
-            setError('An error occured while retrieving the image. If this keeps happening, please contact support.')
+            handleRequestError('Could not retrieve base64 image', setError, 'export', newWindow)
           })
 
           if (response) {
@@ -185,7 +206,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   if (error) {
     return (
       <ErrorMessage onClose={onClose} ref={ref}>
-        <p>{error}</p>
+        <div dangerouslySetInnerHTML={{ __html: error }}></div>
       </ErrorMessage>
     )
   }

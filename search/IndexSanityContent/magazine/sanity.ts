@@ -82,10 +82,6 @@ export type ImageWithAltAndCaption = {
   image: ImageWithAlt
 }
 
-export type VideoData = {
-  playbackId: string
-}
-
 export type MagazineArticle = {
   slug: string
   title: string
@@ -107,7 +103,6 @@ export type MagazineArticle = {
   heroFigure?: { image: ImageWithAlt } | ImageWithAltAndCaption
   openGraphImage?: ImageWithAlt
   docToClear?: boolean
-  heroVideo: VideoData
   publishDateTime?: string
 }
 

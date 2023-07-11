@@ -126,6 +126,7 @@ export type PeopleCardData = {
   phone?: string
   isLink: boolean
   cv?: LinkData
+  enableStructuredMarkup?: boolean
 }
 
 export type EventPromotionSettings = {
@@ -207,7 +208,6 @@ export type ContentType =
   | NewsListData
   | StockValuesData
   | TwitterEmbedData
-  | VideoData
   | VideoPlayerData
   | VideoPlayerCarouselData
 
@@ -388,6 +388,7 @@ export type AccordionData = {
   accordion: AccordionListData[]
   anchor?: string
   designOptions: DesignOptions
+  enableStructuredMarkup?: boolean
 }
 
 export type PromoTileData = {
@@ -604,6 +605,7 @@ export type FormData = {
   ingress?: PortableTextBlock[]
   form: string
   downloads: LinkData[]
+  isHumanRightsRequest?: boolean
 }
 
 export type NewsListData = {
@@ -640,20 +642,6 @@ export type AnchorLinkData = {
   id: string
   type: string
   anchorReference: string
-}
-
-export type VideoData = {
-  id: string
-  type: string
-  videoURL: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  asset: {
-    playbackId: string
-  }
-  designOptions: {
-    background: BackgroundColours
-  }
 }
 
 export enum VideoPlayerRatios {
@@ -707,11 +695,6 @@ export type VideoPlayerCarouselData = {
   title?: PortableTextBlock[]
 }
 
-export type VideoHeroData = {
-  playbackId: string
-  loop: boolean
-  autoplay: boolean
-}
 
 export type LoopingVideoRatio = 'original' | 'narrow'
 

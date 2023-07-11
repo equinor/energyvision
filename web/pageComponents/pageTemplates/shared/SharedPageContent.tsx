@@ -15,7 +15,6 @@ import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
 import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
-import Video from '../../topicPages/Video'
 import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
@@ -41,7 +40,6 @@ import {
   NewsListData,
   StockValuesData,
   TwitterEmbedData,
-  VideoData,
   CookieDeclarationData,
   ImageCarouselData,
   IframeCarouselData,
@@ -67,7 +65,6 @@ type ComponentProps =
   | StockValuesData
   | TwitterEmbedData
   | AnchorLinkData
-  | VideoData
   | VideoPlayerData
   | VideoPlayerCarouselData
   | CookieDeclarationData
@@ -116,8 +113,6 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <StockValues key={c.id} data={c as StockValuesData} anchor={anchorReference} />
       case 'twitterEmbed':
         return <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} />
-      case 'video':
-        return <Video key={c.id} data={c as VideoData} anchor={anchorReference} />
       case 'imageCarousel':
         return <ImageCarousel key={c.id} data={c as ImageCarouselData} anchor={anchorReference} />
       case 'iframeCarousel':

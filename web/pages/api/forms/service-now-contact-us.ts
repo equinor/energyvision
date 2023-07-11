@@ -25,7 +25,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const email = encodeURI(data.email)
   const category = encodeURI(data.category)
   const howCanWeHelp = encodeURI(data.message)
-  const tryingToReach = encodeURI(data.receiver)
   const name = encodeURI(data.name)
 
   const urlString =
@@ -40,8 +39,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     category +
     '&HowCanWeHelp=' +
     howCanWeHelp +
-    '&TryingToReach=' +
-    tryingToReach +
     '&Name=' +
     name
 

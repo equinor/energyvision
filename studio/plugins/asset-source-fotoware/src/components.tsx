@@ -1,9 +1,21 @@
 import React, { forwardRef } from 'react'
-import { Dialog } from '@sanity/ui'
+import { Dialog, Box } from '@sanity/ui'
 import styled from 'styled-components'
 
 export const Content = styled.div`
-  margin: 2em;
+  margin: 1.5em;
+`
+
+const StyledBox = styled(Box)`
+  p {
+    margin-top: 0;
+  }
+
+  pre {
+    background: #f3f3f3;
+    padding: 1em;
+    white-space: break-spaces;
+  }
 `
 
 export const StyledIframe = styled.iframe`
@@ -41,11 +53,18 @@ type ErrorMessageProps = {
 }
 
 export const ErrorMessage = forwardRef<HTMLDivElement, ErrorMessageProps>((props, ref) => {
-  const { onClose, children } = props
+  const { onClose, children, ...rest } = props
 
   return (
-    <Dialog id="fotowareAssetSource" header="Error loading Fotoware plugin" onClose={onClose} ref={ref}>
-      <Content>{children}</Content>
+    <Dialog
+      id="fotowareAssetSource"
+      header="Error loading Fotoware plugin"
+      {...rest}
+      onClose={onClose}
+      ref={ref}
+      footer={<Box padding={4}>If this keeps happening, please contact support.</Box>}
+    >
+      <StyledBox padding={4}>{children}</StyledBox>
     </Dialog>
   )
 })

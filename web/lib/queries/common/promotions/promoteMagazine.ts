@@ -21,9 +21,6 @@ const promotedMagazineFields = /* groq */ `
   ),
   openGraphImage,
   "heroType": coalesce(heroType, 'default'),
-  "heroVideo": heroVideo.asset->{
-    playbackId,
-  },
   "hero": ${heroFields},
 `
 

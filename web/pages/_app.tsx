@@ -21,6 +21,7 @@ import styled from 'styled-components'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
 import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
+import { defaultLanguage } from '../languages'
 
 /**
  * TODO:
@@ -56,7 +57,7 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
     strategy="beforeInteractive"
     data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
     data-blockingmode="auto"
-    data-culture={locale == 'no' ? 'nb' : locale || 'en'}
+    data-culture={locale == 'no' ? 'nb' : locale || defaultLanguage.locale}
   />
 )
 
