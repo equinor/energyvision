@@ -110,8 +110,14 @@ export const HLSPlayer: React.FC<HLSProps> = ({
       <Wrapper>
         <video playsInline ref={videoRef} controls={showControls} {...props} />
         {showPlayButton && (
-          <StyledButton onClick={handlePlayButton}>
-            <Icon size={48} color="white" style={{ opacity: 0.8 }} data={play_circle} />
+          <StyledButton onClick={handlePlayButton} aria-label={isPlaying ? 'Pause' : 'Play'}>
+            <Icon
+              size={48}
+              color="white"
+              style={{ opacity: 0.8 }}
+              data={play_circle}
+              aria-label={isPlaying ? 'Pause icon' : 'Play icon'}
+            />
           </StyledButton>
         )}
       </Wrapper>
@@ -122,8 +128,12 @@ export const HLSPlayer: React.FC<HLSProps> = ({
     return (
       <Wrapper>
         <video playsInline autoPlay ref={videoRef} controls={false} {...props} />
-        <SmallStyledButton onClick={handlePlayButton}>
-          <Icon size={24} data={isPlaying ? pause_circle : play_circle} />
+        <SmallStyledButton onClick={handlePlayButton} aria-label={isPlaying ? 'Pause' : 'Play'}>
+          <Icon
+            size={24}
+            data={isPlaying ? pause_circle : play_circle}
+            aria-label={isPlaying ? 'Pause icon' : 'Play icon'}
+          />
         </SmallStyledButton>
       </Wrapper>
     )
