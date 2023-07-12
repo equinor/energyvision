@@ -37,6 +37,9 @@ devDependencies:
   '@types/node':
     specifier: ^16.11.9
     version: 16.11.9
+  '@types/progress-stream':
+    specifier: ^2.0.2
+    version: 2.0.2
   jest:
     specifier: ^28.1.0
     version: 28.1.0(@types/node@16.11.9)
@@ -1135,6 +1138,12 @@ packages:
 
   /@types/prettier@2.7.3:
     resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
+    dev: true
+
+  /@types/progress-stream@2.0.2:
+    resolution: {integrity: sha512-u9N40mYX/Nx/Pmt847+G2N72s5QL2jwgXrVKCIcxgOdMBdIzY+e/m3m1gQBNPmgvQQBO79EisLAcVJ/p0qKuvA==}
+    dependencies:
+      '@types/node': 16.11.9
     dev: true
 
   /@types/stack-utils@2.0.1:
