@@ -695,7 +695,6 @@ export type VideoPlayerCarouselData = {
   title?: PortableTextBlock[]
 }
 
-
 export type LoopingVideoRatio = 'original' | 'narrow'
 
 export type LoopingVideoData = {
@@ -730,6 +729,7 @@ export type IFrameCarouselItemData = {
   cookiePolicy: CookiePolicy
   aspectRatio: string
   height?: number
+  action?: LinkData
 }
 
 export type IframeCarouselData = {

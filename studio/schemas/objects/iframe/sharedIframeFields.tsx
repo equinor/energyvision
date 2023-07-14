@@ -106,3 +106,12 @@ export const description = {
   inputComponent: CharCounterEditor,
   of: [descriptionContentType],
 }
+
+export const action = {
+  name: 'action',
+  title: 'Link/action',
+  description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
+  type: 'array',
+  of: [{ type: 'linkSelector', title: 'Link' }],
+  validation: (Rule: Rule) => Rule.max(1),
+}

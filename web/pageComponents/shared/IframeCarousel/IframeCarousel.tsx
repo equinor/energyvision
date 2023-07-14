@@ -10,6 +10,7 @@ import 'swiper/css/pagination'
 import CoreIFrame from '../iframe/IFrame'
 import RichText from '../portableText/RichText'
 import { Carousel } from '../../shared/Carousel'
+import { ButtonLink } from '../ButtonLink'
 
 const Container = styled.div`
   padding: var(--space-3xLarge) calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
@@ -25,8 +26,16 @@ const Figure = styled.figure`
   width: 100%;
 `
 const ItemContainer = styled.div`
+  min-width: 45%;
   width: 100%;
-  min-width: 90%;
+  /* exactly two items */
+  :first-child:nth-last-child(2),
+  :first-child:nth-last-child(2) ~ {
+    min-width: 50%;
+  }
+  @media (max-width: 750px) {
+    min-width: 100%;
+  }
 `
 
 const StyledHeading = styled(TitleText)`
@@ -42,6 +51,9 @@ const StyledItemHeading = styled(TitleText)`
   line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+`
+const StyledButtonLink = styled(ButtonLink)`
+  margin-top: var(--space-xLarge);
 `
 
 type IframeCarouselProps = {
@@ -85,6 +97,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
                   hasSectionTitle={!!item.title}
                 />
               )}
+              {item.action && item.action.label && <StyledButtonLink action={item.action} />}
             </ItemContainer>
           ))}
         </Carousel>
