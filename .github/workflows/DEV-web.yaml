@@ -82,7 +82,7 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityPreviewSecret: ${{ secrets.SANITY_PREVIEW_SECRET }}
+          sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
