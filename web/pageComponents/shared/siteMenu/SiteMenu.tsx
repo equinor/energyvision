@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import useWindowDimensions from '../../../lib/hooks/useWindowSize'
 import { RemoveScroll } from 'react-remove-scroll'
 import FocusLock from 'react-focus-lock'
-import NextLink from 'next/link'
 import { Menu, MenuButton, Link } from '@components'
 import { MenuGroup } from './MenuGroup'
 import { TopbarDropdown } from './TopbarDropdown'
@@ -120,11 +119,9 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                       return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                     })}
                   </Menu>
-                  <NextLink href={allSitesURL} passHref legacyBehavior>
-                    <AllSitesLink>
+                    <AllSitesLink href={allSitesURL}>
                       <FormattedMessage id="all_sites" defaultMessage="All sites" />
                     </AllSitesLink>
-                  </NextLink>
                 </MenuContainer>
               </nav>
             )}

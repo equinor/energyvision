@@ -55,7 +55,7 @@ Default.storyName = 'Default'
 
 export const NewsCard: StoryFn<CardProps> = () => (
   <Wrapper>
-    <CardLink href="#">
+    <CardLink>
       <Card>
         <Card.Media>
           <RatioBox>
@@ -78,7 +78,7 @@ export const NewsCard: StoryFn<CardProps> = () => (
         </Card.Action>
       </Card>
     </CardLink>
-    <CardLink href="#">
+    <CardLink >
       <Card>
         <Card.Media>
           <RatioBox>

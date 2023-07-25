@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import NextLink from 'next/link'
 
 import { Link, List, Menu } from '@components'
 import { SimplePanel } from './SimplePanel'
@@ -44,16 +43,16 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
       <SimplePanel>
         <PanelContentWrapper>
           {!!readMoreLink?.link?.slug && (
-            <NextLink href={readMoreLink.link?.slug} passHref legacyBehavior>
-              <ReadMore variant="readMore">{readMoreLink.label}</ReadMore>
-            </NextLink>
+            <ReadMore href={readMoreLink.link?.slug} variant="readMore">
+              {readMoreLink.label}
+            </ReadMore>
           )}
           <List aria-label={label} unstyled>
             {links?.map((link) => (
               <Item key={link.id}>
-                <NextLink href={link?.link?.slug || '/'} passHref legacyBehavior>
-                  <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
-                </NextLink>
+                <StyledSubMenuGroupLink href={link?.link?.slug || '/'} underline={false}>
+                  {link.label}
+                </StyledSubMenuGroupLink>
               </Item>
             ))}
           </List>

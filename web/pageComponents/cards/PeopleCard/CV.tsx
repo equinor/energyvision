@@ -1,4 +1,3 @@
-import { default as NextLink } from 'next/link'
 import { ButtonLink } from '@components'
 import type { LinkData } from '../../../types/types'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
@@ -16,9 +15,9 @@ const CV = ({ data }: CVProps) => {
   return (
     <>
       {type === 'internalUrl' ? (
-        <NextLink href={url || ''} locale={locale} passHref legacyBehavior>
-          <ButtonLink aria-label={ariaLabel}>{label}</ButtonLink>
-        </NextLink>
+        <ButtonLink href={url || ''} locale={locale} aria-label={ariaLabel}>
+          {label}
+        </ButtonLink>
       ) : (
         <ButtonLink href={url} aria-label={ariaLabel}>
           {label}

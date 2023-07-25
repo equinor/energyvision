@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { Button, ButtonProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
+import { default as NextLink } from 'next/link'
 
 const StyledButtonLink = styled(Button)`
   --eds_button__height: auto;
@@ -26,15 +27,17 @@ const StyledButtonLink = styled(Button)`
   }
 `
 
-export type ButtonLinkProps = ButtonProps
+export type ButtonLinkProps = { locale?: string } & ButtonProps
 
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
-  { children, ...rest },
+  { children, href, locale, ...rest },
   ref,
 ) {
   return (
-    <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
-      {children}
-    </StyledButtonLink>
+    <NextLink href={href || ''} locale={locale}>
+      <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
+        {children}
+      </StyledButtonLink>
+    </NextLink>
   )
 })

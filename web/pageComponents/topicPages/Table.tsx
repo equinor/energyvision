@@ -1,5 +1,4 @@
 import { BackgroundContainer, FormattedDate, Link, Table as EnvisTable, Text } from '@components'
-import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
@@ -74,17 +73,17 @@ const renderCellByType = (cellData: CellData) => {
       return (
         <>
           {cellData.href ? (
-            <NextLink href={cellData.href.replace('cdn.sanity.io', 'cdn.equinor.com')} passHref legacyBehavior>
-              <StyledTableLink download>{cellData.filename}</StyledTableLink>
-            </NextLink>
+            <StyledTableLink href={cellData.href.replace('cdn.sanity.io', 'cdn.equinor.com')} download>
+              {cellData.filename}
+            </StyledTableLink>
           ) : null}
         </>
       )
     case 'linkSelector':
       return (
-        <NextLink href={getLink(cellData)} locale={getLocale(cellData)} passHref legacyBehavior>
-          <StyledTableLink>{cellData.label}</StyledTableLink>
-        </NextLink>
+        <StyledTableLink href={getLink(cellData)} locale={getLocale(cellData)}>
+          {cellData.label}
+        </StyledTableLink>
       )
     default:
       return <>default</>

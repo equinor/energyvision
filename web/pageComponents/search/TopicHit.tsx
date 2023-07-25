@@ -1,5 +1,4 @@
 import { Highlight } from './Highlight'
-import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import getConfig from 'next/config'
@@ -38,29 +37,27 @@ const TopicHit = ({ hit }: HitProps) => {
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (
     <article>
-      <NextLink href={slug} passHref legacyBehavior>
-        <StyledHitLink>
-          <HitHeading level="h2" size="sm" inverted>
-            <Highlight hit={hit} attribute="pageTitle" />
-          </HitHeading>
-          {hit.title && (
-            <TextSnippet>
-              <Highlight hit={hit} attribute="title" />
-            </TextSnippet>
-          )}
-          {hit.ingress && (
-            <TextSnippet>
-              <Highlight hit={hit} attribute="ingress" />
-            </TextSnippet>
-          )}
-          {hit.text && (
-            <TextSnippet>
-              <Highlight hit={hit} attribute="text" />
-            </TextSnippet>
-          )}
-          <DisplayLink>{fullUrl}</DisplayLink>
-        </StyledHitLink>
-      </NextLink>
+      <StyledHitLink href={slug}>
+        <HitHeading level="h2" size="sm" inverted>
+          <Highlight hit={hit} attribute="pageTitle" />
+        </HitHeading>
+        {hit.title && (
+          <TextSnippet>
+            <Highlight hit={hit} attribute="title" />
+          </TextSnippet>
+        )}
+        {hit.ingress && (
+          <TextSnippet>
+            <Highlight hit={hit} attribute="ingress" />
+          </TextSnippet>
+        )}
+        {hit.text && (
+          <TextSnippet>
+            <Highlight hit={hit} attribute="text" />
+          </TextSnippet>
+        )}
+        <DisplayLink>{fullUrl}</DisplayLink>
+      </StyledHitLink>
     </article>
   )
 }
