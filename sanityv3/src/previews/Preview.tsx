@@ -1,7 +1,7 @@
 import resolveProductionUrl from '../../resolveProductionUrl'
 import styled from 'styled-components'
 import { dataset } from '../lib/datasetHelpers'
-import PreviewWrapper from './PreviewWrapper'
+import { PreviewWrapper } from './PreviewWrapper'
 
 const Frame = styled.iframe`
   border: 0;

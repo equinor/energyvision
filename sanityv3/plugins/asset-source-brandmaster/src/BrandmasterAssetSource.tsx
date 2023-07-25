@@ -19,7 +19,6 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const handleBrandmasterEvent = useCallback(
     (event) => {
-      console.log('brandmaster', event)
       if (!event || !event.data || event.origin !== BM_URL) return false
 
       const data = JSON.parse(event.data)

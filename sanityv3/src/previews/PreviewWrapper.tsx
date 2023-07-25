@@ -23,7 +23,7 @@ type Props = {
   shareable?: boolean
 }
 
-const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
+export const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
   const toast = useToast()
   const handleClick = () => {
     navigator.clipboard.writeText(src)
@@ -54,4 +54,3 @@ const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
     </StyledWrapper>
   )
 }
-export default PreviewWrapper

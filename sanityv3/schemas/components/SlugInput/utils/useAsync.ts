@@ -1,4 +1,4 @@
-import {DependencyList, useState, useRef, useCallback} from 'react'
+import { DependencyList, useState, useRef, useCallback } from 'react'
 
 export type AsyncCompleteState<T> = {
   status: 'complete'
@@ -12,10 +12,7 @@ export type AsyncErrorState = {
   error: Error
 }
 
-export type AsyncState<T> =
-  | AsyncPendingState
-  | AsyncCompleteState<T>
-  | AsyncErrorState
+export type AsyncState<T> = AsyncPendingState | AsyncCompleteState<T> | AsyncErrorState
 
 /**
  * Takes an async function and returns a [AsyncState<value>, callback] pair.
