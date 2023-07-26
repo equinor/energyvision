@@ -1,7 +1,7 @@
 const home = /* groq */ `
   {
     "slug": '/',
-    "label": 'Home'
+    "label": coalesce(*[_id == 'text_snippet_breadcrumbs_home' && _type == "textSnippet"][0].[$lang],"Home")
   }
 `
 
