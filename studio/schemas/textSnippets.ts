@@ -36,6 +36,11 @@ const snippets: textSnippet = {
     hidden: !Flags.HAS_NEWS,
     group: groups.others,
   },
+  breadcrumbs_home: {
+    title: 'Breadcrumbs : Home',
+    defaultValue: 'Home',
+    group: groups.others,
+  },
   tba: {
     title: 'To be announced',
     defaultValue: 'To be announced',
