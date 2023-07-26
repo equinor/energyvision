@@ -321,6 +321,9 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
+  designOptions: {
+    aspectRatio: FullWidthImageRatio
+  }
 }
 
 export type FullWidthVideoData = {
@@ -339,6 +342,8 @@ export type FullWidthVideoData = {
     background: BackgroundColours
   }
 }
+
+export type FullWidthImageRatio = '10:3' | '2:1'
 
 export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
 
@@ -700,7 +705,6 @@ export type VideoPlayerCarouselData = {
   }
   title?: PortableTextBlock[]
 }
-
 
 export type LoopingVideoRatio = '1:2' | 'narrow'
 
