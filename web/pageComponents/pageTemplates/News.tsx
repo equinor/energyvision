@@ -85,7 +85,7 @@ const LeadParagraph = styled.div`
 
   padding: 0 var(--layout-paddingHorizontal-large);
   margin-top: var(--space-xLarge);
-  margin-bottom: var(--space-3xLarge);
+  margin-bottom: var(--space-xLarge);
 
   max-width: var(--maxViewportWidth);
   margin-left: auto;
@@ -115,24 +115,20 @@ const Content = styled.div`
 
   /* "Remove" margin top from FactBox if the following element is also a FactBox */
   .fact-box + .fact-box {
-    margin-top: calc(-1 * var(--space-4xLarge));
+    margin-top: calc(-1 * var(--space-large));
   }
 `
 
 const Related = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: 1700px;
-  margin: var(--space-4xLarge) auto;
+  margin: var(--space-large) auto;
 `
 
 const Latest = styled.div`
   padding: 0 var(--space-medium);
   margin: var(--space-4xLarge) auto 0;
   max-width: 1700px;
-`
-
-const StyledBasicIFrame = styled(BasicIFrame)`
-  margin-top: var(--space-3xLarge);
 `
 
 const isDateAfter = (a: string, b: string) => {
@@ -254,7 +250,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               </Content>
             )}
 
-            {iframe && <StyledBasicIFrame data={iframe} />}
+            {iframe && <BasicIFrame data={iframe} />}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
               <Related>

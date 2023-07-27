@@ -19,9 +19,8 @@ type FactboxProps = {
 }
 
 const FactBoxWithPadding = styled(FactBox)`
-  margin-top: var(--space-4xLarge);
-  margin-bottom: var(--space-4xLarge);
-
+  margin-top: var(--space-large);
+  margin-bottom: var(--space-large);
   @media (min-width: 1920px) {
     /* Maybe some day */
     /* margin-left: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
