@@ -89,6 +89,7 @@ const pageContentFields = /* groq */ `
     },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
     },
   },
   _type == "textWithIconArray"=>{
