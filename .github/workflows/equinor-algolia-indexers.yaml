@@ -69,7 +69,8 @@ jobs:
   build-function-application:
     needs: check-code
     runs-on: ubuntu-latest
-    environment: name:${{ github.event.inputs.environment || (github.ref == ‘refs/heads/main’ && ‘production’) || ‘development’}}
+    environment:
+      name: ${{ github.event.inputs.environment || (github.ref == ‘refs/heads/main’ && ‘production’) || ‘development’}}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
