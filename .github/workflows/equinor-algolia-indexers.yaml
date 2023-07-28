@@ -1,5 +1,15 @@
 name: Equinor Algolia indexers workflow
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment for algolia indexers'
+        required: true
+        type: choice
+        options:
+          - development
+          - production
+        default: development
   push:
     branches:
       - main
