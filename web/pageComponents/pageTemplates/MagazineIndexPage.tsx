@@ -2,7 +2,7 @@ import { BackgroundContainer } from '@components'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { searchClient, searchClientServer } from '../../lib/algolia'
+import { searchClient } from '../../lib/algolia'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { MagazineIndexPageType } from '../../types'
 import { Hits } from '../searchIndexPages/magazineIndex/Hits'
@@ -55,14 +55,13 @@ const StyledPagination = styled(Pagination)`
 `
 
 type MagazineIndexTemplateProps = {
-  isServerRendered?: boolean
   locale: string
   pageData: MagazineIndexPageType
   slug?: string
   url: string
 }
 
-const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
+const MagazineIndexPage = ({ locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const { ingress, title, hero, seoAndSome, magazineTags, footerComponent } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -92,7 +91,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
         </BackgroundContainer>
 
         <InstantSearch
-          searchClient={isServerRendered ? searchClientServer : searchClient}
+          searchClient={searchClient}
           indexName={indexName}
           routing={{
             router: createInstantSearchRouterNext({
