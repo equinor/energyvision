@@ -2,9 +2,18 @@ import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
-import { title, frameTitle, description, cookiePolicy, aspectRatio, url, height } from './iframe/sharedIframeFields'
+import {
+  title,
+  frameTitle,
+  description,
+  cookiePolicy,
+  aspectRatio,
+  url,
+  height,
+  action,
+} from './iframe/sharedIframeFields'
 
-const carouselItemFields = [title, frameTitle, description, cookiePolicy, aspectRatio, url, height]
+const carouselItemFields = [title, frameTitle, description, cookiePolicy, aspectRatio, url, height, action]
 export default {
   name: 'iframeCarousel',
   title: 'Horizontal scroll iframe',
