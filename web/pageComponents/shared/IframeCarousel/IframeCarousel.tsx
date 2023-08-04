@@ -34,7 +34,7 @@ const ItemContainer = styled.div`
     /* exactly two items */
     :first-child:nth-last-child(2),
     :last-child:nth-child(2) {
-      min-width: 48%;
+      min-width: calc(50% - var(--space-medium));
     }
   }
 `
