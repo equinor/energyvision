@@ -26,15 +26,16 @@ const Figure = styled.figure`
   width: 100%;
 `
 const ItemContainer = styled.div`
-  min-width: 45%;
+  min-width: 100%;
   width: 100%;
-  /* exactly two items */
-  :first-child:nth-last-child(2),
-  :first-child:nth-last-child(2) ~ {
-    min-width: 50%;
-  }
-  @media (max-width: 750px) {
-    min-width: 100%;
+
+  @media (min-width: 750px) {
+    min-width: 45%;
+    /* exactly two items */
+    :first-child:nth-last-child(2),
+    :last-child:nth-child(2) {
+      min-width: 48%;
+    }
   }
 `
 
