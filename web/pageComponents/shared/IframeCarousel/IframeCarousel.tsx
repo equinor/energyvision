@@ -29,7 +29,7 @@ const ItemContainer = styled.div`
   min-width: 100%;
   width: 100%;
 
-  @media (min-width: 750px) {
+  @media (min-width: 1300px) {
     min-width: 45%;
     /* exactly two items */
     :first-child:nth-last-child(2),
