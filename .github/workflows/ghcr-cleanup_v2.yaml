@@ -1,0 +1,38 @@
+name: Delete old ghrc images
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 0 * * *' # every day at midnight
+
+jobs:
+  clean-ghcr:
+    name: Delete old unused container images
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get token 🔑
+      id: get-token
+      uses: ./.github/workflows/get-auth-token/
+
+    - name: Fetch images
+      run: |
+        # Fetch latest image data from the API
+        IMAGES=$(curl -X 'GET' \
+          'https://server-radix-api-prod.c2.radix.equinor.com/api/v1/applications/equinor-web-sites/deployments' \
+          -H 'accept: application/json' \
+          -H 'Authorization: bearer ${{ env.APP_SERVICE_ACCOUNT_TOKEN }}')
+
+        # Extract image URLs and sort by timestamp
+        IMAGE_URLS=$(echo $IMAGES | jq -r '.[] | .ghrcioUrl' | sort)
+
+    - name: log-errors-to-slack 📄
+      uses: act10ns/slack@v2
+      with:
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+      if: failure()
