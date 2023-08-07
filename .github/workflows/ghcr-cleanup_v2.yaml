@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/ghrc_cleanup/**'
+      - '.github/workflows/ghrc_cleanup_v2.yaml'
   # schedule:
   #   - cron: '0 0 * * *' # every day at midnight
 permissions:
@@ -33,10 +34,10 @@ jobs:
         npm install node-fetch @types/node
 
     - name: Compile TypeScript
-      run: tsc cleanup.ts
+      run: tsc '.github/workflows/ghrc_cleanup/cleanup.ts'
 
     - name: Make API request and process data
-      run: node cleanup.ts
+      run: node '.github/workflows/ghrc_cleanup/cleanup.ts'
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
