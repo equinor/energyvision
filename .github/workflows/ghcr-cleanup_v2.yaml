@@ -19,14 +19,26 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Get token 🔑
+      id: get-token
+      uses: ./.github/workflows/get-auth-token/
+
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
 
-    - name: Get token 🔑
-      id: get-token
-      uses: ./.github/workflows/get-auth-token/
+    - name: Get npm cache directory path
+      id: npm-cache
+      run: echo "::set-output name=dir::$(npm config get cache)"
+
+    - name: Cache npm dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: Install dependencies
       run: |
@@ -34,10 +46,10 @@ jobs:
         npm install node-fetch @types/node
 
     - name: Compile TypeScript
-      run: tsc '.github/workflows/ghrc_cleanup/cleanup.ts'
+      run: npx tsc '.github/workflows/ghrc_cleanup/cleanup.ts'
 
     - name: Make API request and process data
-      run: node '.github/workflows/ghrc_cleanup/cleanup.js'
+      run: node '.github/workflows/ghrc_cleanup/dist/cleanup.js'
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
