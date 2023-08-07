@@ -49,7 +49,7 @@ jobs:
       run: npx tsc '.github/workflows/ghrc_cleanup/cleanup.ts'
 
     - name: Make API request and process data
-      run: node '.github/workflows/ghrc_cleanup/dist/cleanup.js'
+      run: node '.github/workflows/ghrc_cleanup/cleanup.js'
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
