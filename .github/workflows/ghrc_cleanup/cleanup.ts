@@ -25,7 +25,12 @@ async function cleanup() {
 
   console.log(response)
 
-  const data: Data = await response.json()
+  const data: Data[] | undefined = await response.json()
+
+  if (!data) {
+    console.log('No data received')
+    return
+  }
 
   // Sort by activeFrom
   data.sort((a, b) => new Date(b.activeFrom).getTime() - new Date(a.activeFrom).getTime())
