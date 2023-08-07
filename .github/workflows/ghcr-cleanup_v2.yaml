@@ -46,7 +46,7 @@ jobs:
         npm install node-fetch @types/node
 
     - name: Compile TypeScript
-      run: npx tsc '.github/workflows/ghcr_cleanup/cleanup.ts'
+      run: npx tsc '.github/workflows/ghcr_cleanup/cleanup.ts' -p tsconfig.base.json
 
     - name: Make API request and process data
       run: node '.github/workflows/ghcr_cleanup/cleanup.js'
