@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/ghrc_cleanup/**'
-      - '.github/workflows/ghrc_cleanup_v2.yaml'
+      - '.github/workflows/ghrc-cleanup_v2.yaml'
   # schedule:
   #   - cron: '0 0 * * *' # every day at midnight
 permissions:
