@@ -17,7 +17,7 @@ jobs:
 
     - name: Get token 🔑
       id: get-token
-      uses: ./.github/workflows/get-auth-token/
+      uses: ./get-auth-token/
 
     - name: Fetch images
       run: |
