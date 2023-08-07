@@ -13,7 +13,7 @@ interface Data {
 // @ts-ignore
 const bearerToken = process.env.APP_SERVICE_ACCOUNT_TOKEN
 
-export async function cleanup() {
+async function cleanup() {
   const url =
     'https://server-radix-api-prod.c2.radix.equinor.com/api/v1/applications/equinor-web-sites/deployments?environment=prod'
   const response = await fetch(url, {
