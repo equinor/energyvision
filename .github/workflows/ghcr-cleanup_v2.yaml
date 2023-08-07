@@ -1,6 +1,9 @@
 name: Delete old ghrc images
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ghcr-cleanup_v2.yaml'
   # schedule:
   #   - cron: '0 0 * * *' # every day at midnight
 permissions:
@@ -23,16 +26,11 @@ jobs:
       run: |
         # Fetch latest image data from the API
         IMAGES=$(curl -X 'GET' \
-          'https://server-radix-api-prod.c2.radix.equinor.com/api/v1/applications/equinor-web-sites/deployments' \
+          'https://server-radix-api-prod.c2.radix.equinor.com/api/v1/applications/equinor-web-sites/deployments?environment=prod' \
           -H 'accept: application/json' \
           -H 'Authorization: bearer ${{ env.APP_SERVICE_ACCOUNT_TOKEN }}')
 
         echo "$IMAGES"
-
-        # Extract image URLs and sort by timestamp
-        IMAGE_URLS=$(echo $IMAGES | jq -r '.[] | .ghrcioUrl' | sort)
-
-        echo "$IMAGE_URLS"
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
