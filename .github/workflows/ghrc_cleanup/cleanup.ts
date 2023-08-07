@@ -23,8 +23,6 @@ async function cleanup() {
     },
   })
 
-  console.log(response)
-
   const data: Data[] | undefined = await response.json()
 
   if (!data) {
