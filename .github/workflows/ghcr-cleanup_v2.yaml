@@ -28,25 +28,13 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Get npm cache directory path
-      id: npm-cache
-      run: echo "::set-output name=dir::$(npm config get cache)"
-
-    - name: Cache npm dependencies
-      uses: actions/cache@v2
-      with:
-        path: ${{ steps.npm-cache.outputs.dir }}
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-
     - name: Install dependencies
       run: |
         npm install -g typescript
         npm install node-fetch @types/node
 
     - name: Compile TypeScript
-      run: npx tsc '.github/workflows/ghcr_cleanup/cleanup.ts' -p tsconfig.base.json
+      run: npx tsc
 
     - name: Make API request and process data
       run: node '.github/workflows/ghcr_cleanup/cleanup.js'
