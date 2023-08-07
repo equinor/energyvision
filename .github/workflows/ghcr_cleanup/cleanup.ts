@@ -1,5 +1,5 @@
 // @ts-ignore
-import fetch from 'node-fetch'
+const fetch = require('node-fetch')
 
 interface Data {
   activeFrom: string
