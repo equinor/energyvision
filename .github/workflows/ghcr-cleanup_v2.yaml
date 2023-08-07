@@ -29,12 +29,7 @@ jobs:
         node-version: '14'
 
     - name: Install dependencies
-      run: |
-        npm install -g typescript
-        npm install node-fetch @types/node
-
-    - name: Compile TypeScript
-      run: npx tsc '.github/workflows/ghcr_cleanup/cleanup.ts'
+      run: npm install node-fetch
 
     - name: Make API request and process data
       run: node '.github/workflows/ghcr_cleanup/cleanup.js'

@@ -1,14 +1,4 @@
-// @ts-ignore
-const fetch = require('node-fetch')
-
-interface Data {
-  activeFrom: string
-  components: {
-    name: string
-    type: string
-    image: string
-  }[]
-}
+import fetch from 'node-fetch'
 
 // @ts-ignore
 const bearerToken = process.env.APP_SERVICE_ACCOUNT_TOKEN
@@ -24,7 +14,7 @@ async function cleanup() {
   })
 
   const rawData = await response.json()
-  const data: Data[] = Array.isArray(rawData) ? rawData : []
+  const data = Array.isArray(rawData) ? rawData : []
 
   // Sort by activeFrom
   data.sort((a, b) => new Date(b.activeFrom).getTime() - new Date(a.activeFrom).getTime())
