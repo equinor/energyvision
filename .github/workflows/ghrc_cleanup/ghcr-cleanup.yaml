@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/ghcr-cleanup_v2.yaml'
+      - '.github/workflows/ghrc_cleanup/**'
   # schedule:
   #   - cron: '0 0 * * *' # every day at midnight
 permissions:
@@ -18,19 +18,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
 
-    - name: Fetch images
+    - name: Install dependencies
       run: |
-        # Fetch latest image data from the API
-        IMAGES=$(curl -X 'GET' \
-          'https://server-radix-api-prod.c2.radix.equinor.com/api/v1/applications/equinor-web-sites/deployments?environment=prod' \
-          -H 'accept: application/json' \
-          -H 'Authorization: bearer ${{ env.APP_SERVICE_ACCOUNT_TOKEN }}')
+        npm install -g typescript
+        npm install node-fetch @types/node
 
-        echo "$IMAGES"
+    - name: Compile TypeScript
+      run: tsc cleanup.ts
+
+    - name: Make API request and process data
+      run: node cleanup.ts
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
