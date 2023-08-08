@@ -89,7 +89,7 @@ export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
           Error Details
         </Heading>
         <StyledCode>
-          <pre>{error.message}</pre>
+          <StyledPre>{error.message}</StyledPre>
         </StyledCode>
         <StyledDetails>
           <StyledSummary>Expand to Show Error Stack Traces</StyledSummary>
