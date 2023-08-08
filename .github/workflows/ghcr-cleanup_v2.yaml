@@ -2,9 +2,9 @@ name: Delete old ghrc images
 on:
   workflow_dispatch:
   push:
-    paths:
-      - '.github/workflows/ghcr_cleanup/**'
-      - '.github/workflows/ghcr-cleanup_v2.yaml'
+    # paths:
+    #   - '.github/workflows/ghcr_cleanup/**'
+    #   - '.github/workflows/ghcr-cleanup_v2.yaml'
   # schedule:
   #   - cron: '0 0 * * *' # every day at midnight
 permissions:
