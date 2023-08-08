@@ -1,7 +1,7 @@
 name: Delete old ghrc images
 on:
   workflow_dispatch:
-  push:
+  # push:
     # paths:
     #   - '.github/workflows/ghcr_cleanup/**'
     #   - '.github/workflows/ghcr-cleanup_v2.yaml'
