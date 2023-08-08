@@ -1,6 +1,5 @@
 import fetch from 'node-fetch'
 
-// @ts-ignore
 const bearerToken = process.env.APP_SERVICE_ACCOUNT_TOKEN
 
 async function cleanup() {
@@ -14,18 +13,21 @@ async function cleanup() {
   })
 
   const rawData = await response.json()
-  const data = Array.isArray(rawData) ? rawData : []
+  const data = Array.isArray(rawData) ? rawData : undefined
+
+  if (!data || data.length === 0) return
 
   // Sort by activeFrom
   data.sort((a, b) => new Date(b.activeFrom).getTime() - new Date(a.activeFrom).getTime())
 
-  // Keep only the latest 5 results
-  data.slice(0, 5)
+  // Filter the results, keeping only latest 5 images, and only image urls
+  const filteredData = data
+    .slice(0, 5)
+    .map((item) => item.components.map((c) => c.image))
+    .flat()
+    .sort()
 
-  // Filter the results, keeping only image objects
-  const filteredData = data.filter((item) => item.components.filter((c) => c.image))
-
-  console.log(JSON.stringify(filteredData, null, 2))
+  return filteredData
 }
 
-cleanup()
+cleanup().then((tags) => console.log(`::set-output name=tags::${tags}`))
