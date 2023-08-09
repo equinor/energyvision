@@ -29,7 +29,7 @@ jobs:
   check-code:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || ‘development’}}
+      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     env:
       DOCKER_BUILDKIT: 1
     steps:
@@ -70,7 +70,7 @@ jobs:
     needs: check-code
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || ‘development’}}
+      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -113,7 +113,7 @@ jobs:
 
   deploy-function-application:
     environment:
-      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || ‘development’}}
+      name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     needs: [build-function-application]
     runs-on: ubuntu-latest
     steps:
