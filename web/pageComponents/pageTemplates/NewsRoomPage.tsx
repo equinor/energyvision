@@ -66,13 +66,14 @@ const StyledPagination = styled(Pagination)`
 `
 
 type NewsRoomTemplateProps = {
+  isServerRendered: boolean
   locale: string
   pageData: NewsRoomPageType | undefined
   slug?: string
   url: string
 }
 
-const NewsRoomPage = ({ locale, pageData, slug, url }: NewsRoomTemplateProps) => {
+const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoomTemplateProps) => {
   const { ingress, title, seoAndSome } = pageData || {}
   const padding = usePaginationPadding()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
@@ -202,11 +203,15 @@ const NewsRoomPage = ({ locale, pageData, slug, url }: NewsRoomTemplateProps) =>
           </Intro>
           <News>
             <InstantSearch
-              searchClient={searchClient({
-                headers: {
-                  Referer: url,
-                },
-              })}
+              searchClient={
+                isServerRendered
+                  ? searchClient({
+                      headers: {
+                        Referer: url,
+                      },
+                    })
+                  : searchClient(undefined)
+              }
               indexName={indexName}
               routing={routing}
             >

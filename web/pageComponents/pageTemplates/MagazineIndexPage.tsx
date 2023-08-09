@@ -55,13 +55,14 @@ const StyledPagination = styled(Pagination)`
 `
 
 type MagazineIndexTemplateProps = {
+  isServerRendered?: boolean
   locale: string
   pageData: MagazineIndexPageType
   slug?: string
   url: string
 }
 
-const MagazineIndexPage = ({ locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
+const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const { ingress, title, hero, seoAndSome, magazineTags, footerComponent } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -91,11 +92,15 @@ const MagazineIndexPage = ({ locale, pageData, slug, url }: MagazineIndexTemplat
         </BackgroundContainer>
 
         <InstantSearch
-          searchClient={searchClient({
-            headers: {
-              Referer: url,
-            },
-          })}
+          searchClient={
+            isServerRendered
+              ? searchClient({
+                  headers: {
+                    Referer: url,
+                  },
+                })
+              : searchClient(undefined)
+          }
           indexName={indexName}
           routing={{
             router: createInstantSearchRouterNext({
