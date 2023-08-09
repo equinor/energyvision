@@ -2,6 +2,6 @@ packages:
   - 'web'
   - 'e2e'
   - 'sanityv3'
-  - '!search'
+  - 'search'
   - '!studio'
   - '!legacy'
