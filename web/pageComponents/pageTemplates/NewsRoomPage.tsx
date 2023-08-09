@@ -201,7 +201,15 @@ const NewsRoomPage = ({ locale, pageData, slug, url }: NewsRoomTemplateProps) =>
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
           <News>
-            <InstantSearch searchClient={searchClient} indexName={indexName} routing={routing}>
+            <InstantSearch
+              searchClient={searchClient({
+                headers: {
+                  Referer: url,
+                },
+              })}
+              indexName={indexName}
+              routing={routing}
+            >
               <Configure
                 facetingAfterDistinct
                 maxFacetHits={50}

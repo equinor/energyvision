@@ -91,7 +91,11 @@ const MagazineIndexPage = ({ locale, pageData, slug, url }: MagazineIndexTemplat
         </BackgroundContainer>
 
         <InstantSearch
-          searchClient={searchClient}
+          searchClient={searchClient({
+            headers: {
+              Referer: url,
+            },
+          })}
           indexName={indexName}
           routing={{
             router: createInstantSearchRouterNext({
