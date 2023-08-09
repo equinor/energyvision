@@ -85,7 +85,6 @@ jobs:
           sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
-          algoliaApiKeyServer: ${{ secrets.ALGOLIA_SEARCH_API_SERVER_KEY }}
           dynatraceEnvironment: ${{ secrets.DYNATRACE_ENVIRONMENT }}
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}

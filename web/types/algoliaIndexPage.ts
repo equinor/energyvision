@@ -14,7 +14,6 @@ import { PortableTextBlock } from '@portabletext/types'
 export type AlgoliaIndexPageType = {
   serverState?: InstantSearchServerState
   url: string
-  isServerRendered?: boolean
   data: {
     menuData?: MenuData
     footerData?: { footerColumns: FooterColumns[] }
