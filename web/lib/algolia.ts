@@ -1,4 +1,5 @@
-import algoliasearch from 'algoliasearch/lite'
+import algoliasearch, { AlgoliaSearchOptions } from 'algoliasearch/lite'
 import { algolia } from './config'
 
-export const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
+export const searchClient = (options: AlgoliaSearchOptions | undefined) =>
+  algoliasearch(algolia.applicationId, algolia.searchApiKey, options)
