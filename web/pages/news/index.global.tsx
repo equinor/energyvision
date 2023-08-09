@@ -14,7 +14,7 @@ import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { renderToString } from 'react-dom/server'
 
-export default function NewsRoom({ serverState, data, url }: AlgoliaIndexPageType) {
+export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
@@ -26,7 +26,13 @@ export default function NewsRoom({ serverState, data, url }: AlgoliaIndexPageTyp
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={intl?.messages}
       >
-        <NewsRoomPage locale={locale} pageData={pageData as NewsRoomPageType} slug={slug} url={url} />
+        <NewsRoomPage
+          isServerRendered={isServerRendered}
+          locale={locale}
+          pageData={pageData as NewsRoomPageType}
+          slug={slug}
+          url={url}
+        />
       </IntlProvider>
     </InstantSearchSSRProvider>
   )
@@ -93,6 +99,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <NewsRoom
+      isServerRendered
       data={{
         intl,
         pageData,

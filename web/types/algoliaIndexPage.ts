@@ -12,6 +12,7 @@ import type {
 import { PortableTextBlock } from '@portabletext/types'
 
 export type AlgoliaIndexPageType = {
+  isServerRendered?: boolean
   serverState?: InstantSearchServerState
   url: string
   data: {
