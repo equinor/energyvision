@@ -79,6 +79,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       storeAccessToken(event.data)
       setAccessToken(event.data.access_token)
       newWindow.current.close()
+      window.removeEventListener('message', handleAuthEvent)
     },
     [validateAuthEvent],
   )
