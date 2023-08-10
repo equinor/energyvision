@@ -19,21 +19,18 @@ type FactboxProps = {
 }
 
 const FactBoxWithPadding = styled(FactBox)`
-  margin-top: var(--space-4xLarge);
-  margin-bottom: var(--space-4xLarge);
-
-  @media (min-width: 1920px) {
-    /* Maybe some day */
-    /* margin-left: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
-    margin-right: calc(((100vw - var(--maxViewportWidth)) / 2) * -1); */
-  }
+  margin: var(--space-3xLarge) 0;
 `
 
-const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean; hasImage: boolean }>`
-  ${({ hasColumns, hasImage }) =>
+const FactBoxContentWithPadding = styled(FactBox.Content)<{
+  hasColumns: boolean
+  hasImage: boolean
+  hasBgColor: boolean
+}>`
+  ${({ hasColumns, hasImage, hasBgColor }) =>
     !hasColumns &&
     !hasImage && {
-      padding: 'var(--space-large) var(--layout-paddingHorizontal-large)',
+      padding: `${hasBgColor ? 'var(--space-3xLarge)' : '0'} var(--layout-paddingHorizontal-large)`,
     }}
 `
 
@@ -65,16 +62,26 @@ export const Fact = (block: BlockProps) => {
 
   const hasColumns = !imageSrc && plainText.length > 800
   const hasImage = imageSrc ? true : false
+  const hasBgColor = backgroundColor !== 'none'
 
   return (
-    <FactBoxWithPadding className="fact-box" imagePosition={imagePosition} background={backgroundColor}>
+    <FactBoxWithPadding
+      className={`fact-box fact-box--${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''}`}
+      imagePosition={imagePosition}
+      background={backgroundColor}
+    >
       {imageSrc && (
         <FactBox.Image>
           <Img src={imageSrc} alt={image.alt ? image.alt : 'FactBox'} style={{ objectFit: 'cover' }} fill />
         </FactBox.Image>
       )}
 
-      <FactBoxContentWithPadding dynamicHeight={dynamicHeight} hasImage={hasImage} hasColumns={hasColumns}>
+      <FactBoxContentWithPadding
+        dynamicHeight={dynamicHeight}
+        hasImage={hasImage}
+        hasColumns={hasColumns}
+        hasBgColor={hasBgColor}
+      >
         {title && (
           <Heading size="xl" level="h3">
             {title}
