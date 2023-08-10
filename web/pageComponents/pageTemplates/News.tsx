@@ -113,16 +113,61 @@ const Content = styled.div`
     clear: both;
   }
 
-  /* "Remove" margin top from FactBox if the following element is also a FactBox */
-  .fact-box + .fact-box {
-    margin-top: calc(-1 * var(--space-large));
+  /* For simple factboxes:
+   "Remove" margin top and reduce padding top from FactBox if the following element is also a FactBox.
+   "Remove" margin bottom and reduce padding bottom from Factbox if the previous element is also Factbox.
+   Avoid negative margin on same background factboxes.
+   */
+  .fact-box-none:has(+ .fact-box-none),
+  .fact-box-cold:has(+ .fact-box-cold),
+  .fact-box-warm:has(+ .fact-box-warm) {
+    > * {
+      padding-bottom: var(--space-medium);
+    }
+  }
+  .fact-box-none + .fact-box-none,
+  .fact-box-cold + .fact-box-cold,
+  .fact-box-warm + .fact-box-warm {
+    > * {
+      padding-top: var(--space-medium);
+    }
+  }
+
+  .fact-box-cold + .fact-box-cold,
+  .fact-box-warm + .fact-box-warm {
+    margin-top: calc(-1 * var(--space-3xLarge));
+  }
+
+  .fact-box-none-with-image:has(+ .fact-box-none-with-image),
+  .fact-box-none-with-image:has(+ .fact-box-cold-with-image),
+  .fact-box-none-with-image:has(+ .fact-box-warm-with-image),
+  .fact-box-cold-with-image:has(+ .fact-box-cold-with-image),
+  .fact-box-cold-with-image:has(+ .fact-box-none-with-image),
+  .fact-box-cold-with-image:has(+ .fact-box-warm-with-image),
+  .fact-box-warm-with-image:has(+ .fact-box-warm-with-image),
+  .fact-box-warm-with-image:has(+ .fact-box-none-with-image),
+  .fact-box-warm-with-image:has(+ .fact-box-cold-with-image) {
+    margin-bottom: calc(-1 * var(--space-3xLarge));
+  }
+
+  figure + .fact-box-none,
+  figure + .fact-box-cold,
+  figure + .fact-box-warm {
+    > * {
+      padding-top: 0;
+    }
+  }
+  fact-box-none {
+    > * {
+      padding-top: 0;
+    }
   }
 `
 
 const Related = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
+  padding: 0 var(--layout-paddingHorizontal-large) var(--space-3xLarge);
   max-width: 1700px;
-  margin: var(--space-large) auto;
+  margin: 0 auto;
 `
 
 const Latest = styled.div`

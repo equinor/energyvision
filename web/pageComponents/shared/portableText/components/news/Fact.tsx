@@ -18,21 +18,26 @@ type FactboxProps = {
   dynamicHeight: boolean
 }
 
-const FactBoxWithPadding = styled(FactBox)`
-  margin-top: var(--space-large);
-  margin-bottom: var(--space-large);
-  @media (min-width: 1920px) {
-    /* Maybe some day */
-    /* margin-left: calc(((100vw - var(--maxViewportWidth)) / 2) * -1);
-    margin-right: calc(((100vw - var(--maxViewportWidth)) / 2) * -1); */
-  }
+const FactBoxWithPadding = styled(FactBox)<{ hasImage: boolean; background: FactBackground }>`
+  ${({ background, hasImage }) =>
+    (!hasImage &&
+      background === 'none' && {
+        marginTop: 0,
+        marginBottom: 0,
+      }) || {
+      marginTop: 'var(--space-3xLarge)',
+      marginBottom: 'var(--space-3xLarge)',
+    }}
 `
 
-const FactBoxContentWithPadding = styled(FactBox.Content)<{ hasColumns: boolean; hasImage: boolean }>`
+const FactBoxContentWithPadding = styled(FactBox.Content)<{
+  hasColumns: boolean
+  hasImage: boolean
+}>`
   ${({ hasColumns, hasImage }) =>
     !hasColumns &&
     !hasImage && {
-      padding: 'var(--space-large) var(--layout-paddingHorizontal-large)',
+      padding: 'var(--space-3xLarge) var(--layout-paddingHorizontal-large)',
     }}
 `
 
@@ -66,7 +71,12 @@ export const Fact = (block: BlockProps) => {
   const hasImage = imageSrc ? true : false
 
   return (
-    <FactBoxWithPadding className="fact-box" imagePosition={imagePosition} background={backgroundColor}>
+    <FactBoxWithPadding
+      className={'fact-box-' + backgroundColor + '' + (hasImage ? '-with-image' : '')}
+      imagePosition={imagePosition}
+      hasImage={hasImage}
+      background={backgroundColor}
+    >
       {imageSrc && (
         <FactBox.Image>
           <Img src={imageSrc} alt={image.alt ? image.alt : 'FactBox'} style={{ objectFit: 'cover' }} fill />
