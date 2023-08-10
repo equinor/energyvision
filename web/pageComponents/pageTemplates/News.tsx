@@ -114,8 +114,14 @@ const Content = styled.div`
   }
 
   /* "Remove" margin top from FactBox if the following element is also a FactBox */
-  .fact-box + .fact-box {
-    margin-top: calc(-1 * var(--space-4xLarge));
+
+  .fact-box:not(.fact-box--none) + .fact-box--colored {
+    margin-top: calc(-1 * var(--space-3xLarge));
+  }
+
+  .fact-box.fact-box--cold + .fact-box.fact-box--cold,
+  .fact-box.fact-box--warm + .fact-box.fact-box--warm {
+    margin-top: calc(-2 * var(--space-3xLarge));
   }
 `
 
