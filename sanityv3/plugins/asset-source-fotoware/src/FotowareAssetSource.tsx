@@ -36,53 +36,50 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
 
-  const validateAuthEvent = useCallback(
-    (event: any) => {
-      if (event.origin !== REDIRECT_ORIGIN) {
-        return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-      }
-
-      if (event.data?.error) {
-        const { error, error_description } = event.data
-        return handleRequestError(`Error: ${error} - description: ${error_description}`, setError, 'auth', newWindow)
-      }
-
-      if (!event?.data?.access_token) {
-        return handleRequestError(
-          'Missing access token. Make sure you have permission to access Fotoware and try again.',
-          setError,
-          'auth',
-          newWindow,
-        )
-      }
-
-      if (!checkAuthData(event.data)) {
-        return handleRequestError('Invalid event data', setError, 'auth', newWindow)
-      }
-
-      if (event.data.state !== requestState) {
-        return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
-      }
-
-      window.removeEventListener('message', handleAuthEvent)
-
-      return true
-    },
-    [requestState, setError],
-  )
-
   // Login & store access token
   const handleAuthEvent = useCallback(
     (event: any) => {
+      const validateAuthEvent = () => {
+        if (event.origin !== REDIRECT_ORIGIN) {
+          return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
+        }
+
+        if (event.data?.error) {
+          const { error, error_description } = event.data
+          return handleRequestError(`Error: ${error} - description: ${error_description}`, setError, 'auth', newWindow)
+        }
+
+        if (!event?.data?.access_token) {
+          return handleRequestError(
+            'Missing access token. Make sure you have permission to access Fotoware and try again.',
+            setError,
+            'auth',
+            newWindow,
+          )
+        }
+
+        if (!checkAuthData(event.data)) {
+          return handleRequestError('Invalid event data', setError, 'auth', newWindow)
+        }
+
+        if (event.data.state !== requestState) {
+          return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
+        }
+
+        window.removeEventListener('message', handleAuthEvent)
+
+        return true
+      }
+
       if (!newWindow.current || !event || !event.data) return false
 
-      if (!validateAuthEvent(event)) return false
+      if (!validateAuthEvent()) return false
 
       storeAccessToken(event.data)
       setAccessToken(event.data.access_token)
       newWindow.current.close()
     },
-    [validateAuthEvent],
+    [requestState],
   )
 
   const handleWidgetEvent = useCallback(
