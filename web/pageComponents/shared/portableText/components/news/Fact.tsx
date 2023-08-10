@@ -66,7 +66,9 @@ export const Fact = (block: BlockProps) => {
 
   return (
     <FactBoxWithPadding
-      className={`fact-box fact-box--${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''}`}
+      className={`fact-box fact-box--${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''} ${
+        hasImage ? 'fact-box--image' : ''
+      }`}
       imagePosition={imagePosition}
       background={backgroundColor}
     >
