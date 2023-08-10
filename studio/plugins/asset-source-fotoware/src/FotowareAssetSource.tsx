@@ -66,8 +66,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
         }
 
-        window.removeEventListener('message', handleAuthEvent)
-
         return true
       }
 
@@ -124,6 +122,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
             })
 
           if (!response || response.status !== 200) return
+
           const data = await response.json()
 
           const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
@@ -165,16 +164,28 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, asset])
 
   useEffect(() => {
-    window.addEventListener('message', handleWidgetEvent)
-    window.addEventListener('message', handleAuthEvent)
+    if (accessToken) {
+      window.removeEventListener('message', handleAuthEvent)
+    }
+  }, [accessToken, handleAuthEvent])
 
+  useEffect(() => {
+    window.addEventListener('message', handleWidgetEvent)
     setContainer(document.createElement('div'))
 
     return () => {
       window.removeEventListener('message', handleWidgetEvent)
+    }
+  }, [handleWidgetEvent])
+
+  useEffect(() => {
+    window.addEventListener('message', handleAuthEvent)
+    setContainer(document.createElement('div'))
+
+    return () => {
       window.removeEventListener('message', handleAuthEvent)
     }
-  }, [handleWidgetEvent, handleAuthEvent])
+  }, [handleAuthEvent])
 
   useEffect(() => {
     const authURL = getAuthURL(requestState)
@@ -196,7 +207,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     if (accessToken && newWindow.current) {
       newWindow.current.close()
     }
-  }, [container, requestState, accessToken])
+  }, [container, requestState, handleAuthEvent, accessToken])
 
   if (!HAS_ENV_VARS) {
     return (
@@ -220,7 +231,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   if (accessToken && iframeURL && !loading) {
     return <FotowareWidget onClose={onClose} url={iframeURL} iframeRef={iframeRef} />
   }
-
   return (
     <Dialog width={0} id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
       {container && !accessToken && createPortal(props.children, container)}
