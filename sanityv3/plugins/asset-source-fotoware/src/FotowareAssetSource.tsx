@@ -38,7 +38,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const validateAuthEvent = useCallback(
     (event: any) => {
-      if (event.origin !== REDIRECT_ORIGIN) {
+      console.log(event)
+      if (event.data?.access_token && event.origin !== REDIRECT_ORIGIN) {
         return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
       }
 
@@ -63,6 +64,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (event.data.state !== requestState) {
         return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
       }
+
+      window.removeEventListener('message', handleAuthEvent)
 
       return true
     },
@@ -111,35 +114,43 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           const url = getExportURL(uri)
           setLoading(true)
 
-          const response = await fetch(url).catch((error) => {
-            console.error('An error occured while retrieving base64 image', error)
-            handleRequestError('Could not retrieve base64 image', setError, 'export', newWindow)
-          })
+          const response = await fetch(url)
+            .catch((error) => {
+              console.error('An error occured while retrieving base64 image', error)
+              handleRequestError('Could not retrieve base64 image', setError, 'export', newWindow)
+            })
+            .then((res) => {
+              if (res && res.status !== 200) {
+                console.error('An error occured while retrieving image', res.statusText)
+                handleRequestError(res.statusText, setError, 'export', newWindow)
+              }
+              return res
+            })
 
-          if (response) {
-            const data = await response.json()
+          if (!response || response.status !== 200) return
 
-            const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
-            const assetDescription =
-              asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+          const data = await response.json()
 
-            onSelect([
-              {
-                kind: 'base64',
-                value: data.image,
-                assetDocumentProps: {
-                  originalFileName: asset?.filename || '',
-                  source: {
-                    id: asset?.uniqueid || uri,
-                    name: 'fotoware',
-                    url: source,
-                  },
-                  ...(assetTitle?.value && { title: assetTitle.value }),
-                  ...(assetDescription?.value && { description: assetDescription.value }),
+          const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
+          const assetDescription =
+            asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+
+          onSelect([
+            {
+              kind: 'base64',
+              value: data.image,
+              assetDocumentProps: {
+                originalFileName: asset?.filename || '',
+                source: {
+                  id: asset?.uniqueid || uri,
+                  name: 'fotoware',
+                  url: source,
                 },
+                ...(assetTitle?.value && { title: assetTitle.value }),
+                ...(assetDescription?.value && { description: assetDescription.value }),
               },
-            ])
-          }
+            },
+          ])
         }
 
         getBase64(exportedImage.image.highCompression, exportedImage.source)
@@ -190,7 +201,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     if (accessToken && newWindow.current) {
       newWindow.current.close()
     }
-  }, [container, requestState, handleAuthEvent, accessToken])
+  }, [container, requestState, accessToken])
 
   if (!HAS_ENV_VARS) {
     return (
