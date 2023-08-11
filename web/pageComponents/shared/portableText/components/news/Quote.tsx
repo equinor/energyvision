@@ -6,7 +6,7 @@ import type { QuoteData } from '../../../../../types/types'
 
 const Container = styled.div`
   padding: 0 var(--layout-paddingHorizontal-medium);
-  margin: var(--space-xxLarge) auto;
+  margin: var(--space-3xLarge) auto;
   clear: both;
 `
 
