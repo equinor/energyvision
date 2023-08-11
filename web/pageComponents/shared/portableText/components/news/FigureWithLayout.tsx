@@ -16,7 +16,7 @@ const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
 }))<FigureStyles>`
   padding: 0 var(--layout-paddingHorizontal-medium);
   max-width: var(--maxViewportWidth);
-  margin: var(--space-xxLarge) auto;
+  margin: var(--space-3xLarge) auto;
   /*  img {
     object-fit: contain;
   } */
