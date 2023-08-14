@@ -16,7 +16,7 @@ const FullWidthImage = ({ data, anchor }: TeaserProps) => {
   const ratio =
     width && width < 750
       ? Ratios.ONE_TO_TWO
-      : aspectRatio === String(Ratios.ONE_TO_TWO)
+      : aspectRatio === Ratios.ONE_TO_TWO
       ? Ratios.ONE_TO_TWO
       : Ratios.THREE_TO_TEN
 

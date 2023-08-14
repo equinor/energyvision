@@ -322,7 +322,7 @@ export type FullWidthImageData = {
   id: string
   image: ImageWithCaptionData
   designOptions: {
-    aspectRatio: FullWidthImageRatio
+    aspectRatio: number
   }
 }
 
@@ -342,8 +342,6 @@ export type FullWidthVideoData = {
     background: BackgroundColours
   }
 }
-
-export type FullWidthImageRatio = '10:3' | '2:1'
 
 export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
 
