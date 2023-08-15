@@ -77,6 +77,7 @@ jobs:
         id: deploy
         working-directory: ./sanityv3
         run: |
+          pnpm build
           pnpm deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
@@ -159,6 +160,7 @@ jobs:
         id: deploy
         working-directory: ./sanityv3
         run: |
+          pnpm build
           pnpm deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
