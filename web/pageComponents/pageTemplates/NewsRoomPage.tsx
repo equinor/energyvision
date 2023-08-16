@@ -4,7 +4,7 @@ import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { searchClient, searchClientServer } from '../../lib/algolia'
+import { searchClient } from '../../lib/algolia'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { NewsRoomPageType } from '../../types'
@@ -21,7 +21,6 @@ import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
-import { RouterProps } from 'instantsearch.js/es/middlewares'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -67,14 +66,14 @@ const StyledPagination = styled(Pagination)`
 `
 
 type NewsRoomTemplateProps = {
-  isServerRendered?: boolean
+  isServerRendered: boolean
   locale: string
   pageData: NewsRoomPageType | undefined
   slug?: string
   url: string
 }
 
-const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }: NewsRoomTemplateProps) => {
+const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoomTemplateProps) => {
   const { ingress, title, seoAndSome } = pageData || {}
   const padding = usePaginationPadding()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
@@ -204,7 +203,15 @@ const NewsRoomPage = ({ isServerRendered = false, locale, pageData, slug, url }:
           </Intro>
           <News>
             <InstantSearch
-              searchClient={isServerRendered ? searchClientServer : searchClient}
+              searchClient={
+                isServerRendered
+                  ? searchClient({
+                      headers: {
+                        Referer: url,
+                      },
+                    })
+                  : searchClient(undefined)
+              }
               indexName={indexName}
               routing={routing}
             >

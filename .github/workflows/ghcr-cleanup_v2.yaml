@@ -1,10 +1,14 @@
 name: Delete old ghrc images
-
 on:
   workflow_dispatch:
+  # push:
+    # paths:
+    #   - '.github/workflows/ghcr_cleanup/**'
+    #   - '.github/workflows/ghcr-cleanup_v2.yaml'
   # schedule:
   #   - cron: '0 0 * * *' # every day at midnight
-
+permissions:
+  id-token: write
 jobs:
   clean-ghcr:
     name: Delete old unused container images
@@ -13,22 +17,32 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
 
-    - name: Fetch images
-      run: |
-        # Fetch latest image data from the API
-        IMAGES=$(curl -X 'GET' \
-          'https://server-radix-api-prod.c2.radix.equinor.com/api/v1/applications/equinor-web-sites/deployments' \
-          -H 'accept: application/json' \
-          -H 'Authorization: bearer ${{ env.APP_SERVICE_ACCOUNT_TOKEN }}')
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-        # Extract image URLs and sort by timestamp
-        IMAGE_URLS=$(echo $IMAGES | jq -r '.[] | .ghrcioUrl' | sort)
+    - name: Install dependencies
+      run: npm install node-fetch
+
+    - name: Make API request and get used tags
+      id: fetch_and_process
+      run: node '.github/workflows/ghcr_cleanup/cleanup.js'
+
+    # - name: Clean up Docker images
+    #   uses: snok/container-retention-policy@v1
+    #   with:
+    #     token: ${{ secrets.NLUN_GITHUB_PAT }}
+    #     account-type: org
+    #     org-name: Equinor
+    #     image-names: energyvision/*
+    #     skip-tags: ${{ steps.fetch_and_process.outputs.tags }}
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
