@@ -13,17 +13,9 @@ const CV = ({ data }: CVProps) => {
 
   const url = getUrlFromAction(data) || ''
   return (
-    <>
-      {type === 'internalUrl' ? (
-        <ButtonLink href={url || ''} locale={locale} aria-label={ariaLabel}>
-          {label}
-        </ButtonLink>
-      ) : (
-        <ButtonLink href={url} aria-label={ariaLabel}>
-          {label}
-        </ButtonLink>
-      )}
-    </>
+    <ButtonLink href={url} aria-label={ariaLabel} locale={type === 'internalUrl' ? locale : undefined}>
+      {label}
+    </ButtonLink>
   )
 }
 

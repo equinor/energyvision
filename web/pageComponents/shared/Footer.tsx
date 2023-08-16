@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { forwardRef } from 'react'
 import { Typography } from '@equinor/eds-core-react'
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../icons/Index'
+import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
 import { default as NextLink } from 'next/link'
 

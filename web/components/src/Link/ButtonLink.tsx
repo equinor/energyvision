@@ -30,11 +30,11 @@ const StyledButtonLink = styled(Button)`
 export type ButtonLinkProps = { locale?: string } & ButtonProps
 
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
-  { children, href, locale, ...rest },
+  { children, href = '', locale, ...rest },
   ref,
 ) {
   return (
-    <NextLink href={href || ''} locale={locale}>
+    <NextLink href={href} locale={locale}>
       <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
         {children}
       </StyledButtonLink>

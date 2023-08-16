@@ -69,13 +69,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const linkLocale = getLocaleFromName(action.link?.lang)
     return (
-      <Link
-        href={url}
-        locale={Flags.IS_DEV ? linkLocale : undefined}
-        variant="readMore"
-        aria-label={ariaLabel}
-        {...rest}
-      >
+      <Link href={url} locale={linkLocale} variant="readMore" aria-label={ariaLabel} {...rest}>
         {action.label}
       </Link>
     )
