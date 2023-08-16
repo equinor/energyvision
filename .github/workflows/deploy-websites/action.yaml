@@ -31,9 +31,6 @@ inputs:
   algoliaApiKey:
     description: 'Api key for Algolia'
     required: false
-  algoliaApiKeyServer:
-    description: 'Api key for Algolia to be used server side'
-    required: false
   dynatraceEnvironment:
     description: 'Dynatrace environment'
     required: false
@@ -101,7 +98,6 @@ runs:
           --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }} \
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
-          --build-arg ARG_ALGOLIA_SEARCH_API_SERVER_KEY=${{ inputs.algoliaApiKeyServer }} \
           --build-arg ARG_DYNATRACE_IMAGE=${{ inputs.dynatraceImage || 'node:18-alpine' }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --build-arg ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }} \

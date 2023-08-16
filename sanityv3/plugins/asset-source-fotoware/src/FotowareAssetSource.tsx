@@ -36,51 +36,48 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const newWindow = useRef<Window | null>(null)
   const iframeRef = useRef(null)
 
-  const validateAuthEvent = useCallback(
-    (event: any) => {
-      if (event.origin !== REDIRECT_ORIGIN) {
-        return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-      }
-
-      if (event.data?.error) {
-        const { error, error_description } = event.data
-        return handleRequestError(`Error: ${error} - description: ${error_description}`, setError, 'auth', newWindow)
-      }
-
-      if (!event?.data?.access_token) {
-        return handleRequestError(
-          'Missing access token. Make sure you have permission to access Fotoware and try again.',
-          setError,
-          'auth',
-          newWindow,
-        )
-      }
-
-      if (!checkAuthData(event.data)) {
-        return handleRequestError('Invalid event data', setError, 'auth', newWindow)
-      }
-
-      if (event.data.state !== requestState) {
-        return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
-      }
-
-      return true
-    },
-    [requestState, setError],
-  )
-
   // Login & store access token
   const handleAuthEvent = useCallback(
     (event: any) => {
+      const validateAuthEvent = () => {
+        if (event.origin !== REDIRECT_ORIGIN) {
+          return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
+        }
+
+        if (event.data?.error) {
+          const { error, error_description } = event.data
+          return handleRequestError(`Error: ${error} - description: ${error_description}`, setError, 'auth', newWindow)
+        }
+
+        if (!event?.data?.access_token) {
+          return handleRequestError(
+            'Missing access token. Make sure you have permission to access Fotoware and try again.',
+            setError,
+            'auth',
+            newWindow,
+          )
+        }
+
+        if (!checkAuthData(event.data)) {
+          return handleRequestError('Invalid event data', setError, 'auth', newWindow)
+        }
+
+        if (event.data.state !== requestState) {
+          return handleRequestError('Redirect state did not match request state', setError, 'auth', newWindow)
+        }
+
+        return true
+      }
+
       if (!newWindow.current || !event || !event.data) return false
 
-      if (!validateAuthEvent(event)) return false
+      if (!validateAuthEvent()) return false
 
       storeAccessToken(event.data)
       setAccessToken(event.data.access_token)
       newWindow.current.close()
     },
-    [validateAuthEvent],
+    [requestState],
   )
 
   const handleWidgetEvent = useCallback(
@@ -111,35 +108,43 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           const url = getExportURL(uri)
           setLoading(true)
 
-          const response = await fetch(url).catch((error) => {
-            console.error('An error occured while retrieving base64 image', error)
-            handleRequestError('Could not retrieve base64 image', setError, 'export', newWindow)
-          })
+          const response = await fetch(url)
+            .catch((error) => {
+              console.error('An error occured while retrieving base64 image', error)
+              handleRequestError('Could not retrieve base64 image', setError, 'export', newWindow)
+            })
+            .then((res) => {
+              if (res && res.status !== 200) {
+                console.error('An error occured while retrieving image', res.statusText)
+                handleRequestError(res.statusText, setError, 'export', newWindow)
+              }
+              return res
+            })
 
-          if (response) {
-            const data = await response.json()
+          if (!response || response.status !== 200) return
 
-            const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
-            const assetDescription =
-              asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+          const data = await response.json()
 
-            onSelect([
-              {
-                kind: 'base64',
-                value: data.image,
-                assetDocumentProps: {
-                  originalFileName: asset?.filename || '',
-                  source: {
-                    id: asset?.uniqueid || uri,
-                    name: 'fotoware',
-                    url: source,
-                  },
-                  ...(assetTitle?.value && { title: assetTitle.value }),
-                  ...(assetDescription?.value && { description: assetDescription.value }),
+          const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
+          const assetDescription =
+            asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+
+          onSelect([
+            {
+              kind: 'base64',
+              value: data.image,
+              assetDocumentProps: {
+                originalFileName: asset?.filename || '',
+                source: {
+                  id: asset?.uniqueid || uri,
+                  name: 'fotoware',
+                  url: source,
                 },
+                ...(assetTitle?.value && { title: assetTitle.value }),
+                ...(assetDescription?.value && { description: assetDescription.value }),
               },
-            ])
-          }
+            },
+          ])
         }
 
         getBase64(exportedImage.image.highCompression, exportedImage.source)
@@ -159,16 +164,28 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, asset])
 
   useEffect(() => {
-    window.addEventListener('message', handleWidgetEvent)
-    window.addEventListener('message', handleAuthEvent)
+    if (accessToken) {
+      window.removeEventListener('message', handleAuthEvent)
+    }
+  }, [accessToken, handleAuthEvent])
 
+  useEffect(() => {
+    window.addEventListener('message', handleWidgetEvent)
     setContainer(document.createElement('div'))
 
     return () => {
       window.removeEventListener('message', handleWidgetEvent)
+    }
+  }, [handleWidgetEvent])
+
+  useEffect(() => {
+    window.addEventListener('message', handleAuthEvent)
+    setContainer(document.createElement('div'))
+
+    return () => {
       window.removeEventListener('message', handleAuthEvent)
     }
-  }, [handleWidgetEvent, handleAuthEvent])
+  }, [handleAuthEvent])
 
   useEffect(() => {
     const authURL = getAuthURL(requestState)

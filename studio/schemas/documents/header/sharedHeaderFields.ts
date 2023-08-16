@@ -168,9 +168,10 @@ const heroLoopingVideoRatio = {
   type: 'string',
   options: {
     list: [
-      { title: 'Original', value: 'original' },
+      { title: '1:2', value: '1:2' },
       { title: 'Narrow', value: 'narrow' },
     ],
+    initialValue: '1:2',
   },
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.LOOPING_VIDEO

@@ -41,8 +41,10 @@ const VideoSelector = forwardRef(function VideoSelector(
   useEffect(() => {
     setContainer(document.createElement('div'))
   }, [])
+
   const closeModal = () => {
     newWindow?.current?.close()
+    window.removeEventListener('message', handleMediaBankEvent)
   }
 
   const handleMediaBankEvent = useCallback(
@@ -112,14 +114,19 @@ const VideoSelector = forwardRef(function VideoSelector(
   }
 
   const newWindow = useRef<Window | null>(null)
-  {
-    container && createPortal(children, container)
-  }
 
   const title = getObjectMemberField(members, 'title')
 
+  useEffect(() => {
+    // Clean up event listener when unmounting component
+    return () => {
+      window.removeEventListener('message', handleMediaBankEvent)
+    }
+  }, [handleMediaBankEvent])
+
   return (
     <>
+      {container && createPortal(children, container)}
       {error && (
         <Dialog id="error-dialog" header={'Error'} onClose={() => setError('')}>
           <Box padding={4}>

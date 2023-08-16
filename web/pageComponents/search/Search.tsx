@@ -1,5 +1,5 @@
 import { InstantSearch, Configure, Index } from 'react-instantsearch-hooks-web'
-import { searchClient } from '../../lib/algolia'
+import { searchClient as client } from '../../lib/algolia'
 import dynamic from 'next/dynamic'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { SearchBox } from './SearchBox'
@@ -23,6 +23,7 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
   justify-content: center;
 `
+const searchClient = client(undefined)
 const queriedSearchClient: SearchClient = {
   ...searchClient,
   search(requests: any) {
