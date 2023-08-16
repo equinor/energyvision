@@ -14,7 +14,7 @@ import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { renderToString } from 'react-dom/server'
 
-export default function NewsRoom({ serverState, isServerRendered = false, data, url }: AlgoliaIndexPageType) {
+export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale

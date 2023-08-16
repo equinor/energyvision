@@ -34,10 +34,6 @@ _site
 # storybook
 web/storybook-static
 
-# lock-files from other package managers than pnpm
-# yarn.lock // We use yarn for studio
-package-lock.json
-
 # IDE specific files
 .idea
 
