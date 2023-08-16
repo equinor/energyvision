@@ -27,6 +27,8 @@ async function cleanup() {
     .flat()
     .sort()
 
+  console.log(filteredData)
+
   return filteredData
 }
 
