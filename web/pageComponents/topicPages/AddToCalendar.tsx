@@ -96,7 +96,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   )
   return (
     <Button
-      aria-label={`${atcAriaLabel}`}
+      aria-label={atcAriaLabel}
       id="atc"
       {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}
     >
