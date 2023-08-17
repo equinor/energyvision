@@ -89,7 +89,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   const atc = intl.formatMessage({ id: 'add_to_calendar_event', defaultMessage: 'Add to Calendar' })
   return (
     <Button
-      aria-label={atc + title}
+      aria-label={`${atc} ${title}`}
       id="atc"
       {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}
     >
