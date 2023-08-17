@@ -129,7 +129,7 @@ const Content = styled.div`
 const Related = styled.div<{ reduceMargin: boolean }>`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: 1700px;
-  margin: ${(reduceMargin) => (reduceMargin ? '0 var(--space-3xLarge) auto' : 'var(--space-3xLarge) auto')};
+  margin: ${(reduceMargin) => (reduceMargin ? '0 auto var(--space-3xLarge) auto' : 'var(--space-3xLarge) auto')};
 `
 
 const Latest = styled.div`
