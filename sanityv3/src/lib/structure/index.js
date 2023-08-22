@@ -78,7 +78,7 @@ const getItems = (S, context) => {
   } else if (isSubEditor) {
     return SUB_EDITOR_ITEMS(S, context)
   } else if (isLocalNewsEditor) {
-    return LOCAL_NEWS_EDITOR_ITEMS(S)
+    return LOCAL_NEWS_EDITOR_ITEMS(S, context)
   } else {
     return []
   }
