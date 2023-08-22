@@ -37,15 +37,15 @@ export const filterByPagesInOtherLanguages = ({ document }: { document: SanityDo
   }
 }
 
-export const filterByRouteNewsAndTitle = ({ document }: { document: SanityDocument }) => {
+export const filterByRouteNewsMagazineAndTitle = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document._lang)
   const title = document.title || ''
   return {
-    filter: `title != $title && (_type match $routeLang || (_type == 'news' && _lang == $newsLang ))`,
+    filter: `title != $title && (_type match $routeLang || (_type in ['news', 'magazine'] && _lang == $lang ))`,
     params: {
       title: title,
       routeLang: `route_${lang}*`,
-      newsLang: lang,
+      lang: lang,
     },
   }
 }

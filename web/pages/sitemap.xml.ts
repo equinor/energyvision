@@ -59,13 +59,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   let locale = ''
   let paths: PathType[]
   let domain = String(req.headers.host)
-  domain = domain.startsWith('www') ? `https://${domain}` : domain
 
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
     return {
       notFound: true,
     }
   }
+
+  domain = domain.startsWith('www') ? `https://${domain}` : domain
 
   const locales = languages.map((lang) => lang.locale)
 

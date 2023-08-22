@@ -3,7 +3,6 @@ import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/do
 import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import { GTM_ID } from '../lib/gtm'
-import { Flags } from 'common/helpers/datasetHelpers'
 
 const GoogleConsentMode = () => (
   <script

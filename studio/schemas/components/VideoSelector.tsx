@@ -55,6 +55,7 @@ const VideoSelector = forwardRef(function VideoSelector(
 
   const closeModal = () => {
     newWindow?.current?.close()
+    window.removeEventListener('message', handleMediaBankEvent)
   }
 
   const handleMediaBankEvent = useCallback(
@@ -133,6 +134,13 @@ const VideoSelector = forwardRef(function VideoSelector(
       }
     }
   }
+
+  useEffect(() => {
+    // Clean up event listener when unmounting component
+    return () => {
+      window.removeEventListener('message', handleMediaBankEvent)
+    }
+  }, [handleMediaBankEvent])
 
   return (
     <ChangeIndicatorCompareValueProvider value={value} compareValue={compareValue}>

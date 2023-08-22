@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
-import { urlFor } from '../../common/helpers'
-import { StyledHLSPlayer, getThumbnailRatio } from './VideoPlayer'
+import { HLSVideoComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
 
 const StyledHeading = styled(TitleText)`
@@ -40,7 +39,6 @@ const VideoItem = styled.div<{ $aspectRatio: string }>`
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?: string }) => {
   const { title, items, designOptions } = data
   const { background, aspectRatio } = designOptions
-  const { width: w, height: h } = getThumbnailRatio(aspectRatio)
 
   return (
     <BackgroundContainer background={background} id={anchor}>
@@ -49,13 +47,12 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
         <Carousel>
           {items.map((item) => (
             <VideoItem key={item.id} $aspectRatio={aspectRatio}>
-              <StyledHLSPlayer
-                $aspectRatio={aspectRatio}
-                src={item.video.url}
-                title={item.video.title}
-                poster={urlFor(item.video.thumbnail).width(w).height(h).url()}
-                playButton
-                playsInline
+              <HLSVideoComponent
+                video={item.video}
+                designOptions={designOptions}
+                videoControls={{
+                  playButton: true,
+                }}
               />
               <StyledHeading size="lg" level="h3" value={item.title} />
             </VideoItem>

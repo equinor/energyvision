@@ -12,6 +12,9 @@ export default {
   name: 'imageWithAltAndCaption',
   title: 'Image',
   type: 'object',
+  options: {
+    collapsed: false,
+  },
   fields: [
     {
       name: 'image',

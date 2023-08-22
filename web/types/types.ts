@@ -650,27 +650,33 @@ export enum VideoPlayerRatios {
   '1:1' = '1:1',
 }
 
+export type VideoType = {
+  title: string
+  url: string
+  thumbnail: ImageWithAlt
+}
+
+export type VideoControlsType = {
+  playButton?: boolean
+  controls?: boolean
+  loop?: boolean
+  allowFullScreen?: boolean
+  autoPlay?: boolean
+  muted?: boolean
+}
+
+export type VideoDesignOptionsType = {
+  aspectRatio: VideoPlayerRatios
+  background: BackgroundColours
+  height?: number
+}
+
 export type VideoPlayerData = {
   id: string
   type: string
-  video: {
-    title: string
-    url: string
-    thumbnail: ImageWithAlt
-  }
-  videoControls: {
-    playButton: boolean
-    controls: boolean
-    loop: boolean
-    allowFullScreen: boolean
-    autoPlay: boolean
-    muted: boolean
-  }
-  designOptions: {
-    aspectRatio: VideoPlayerRatios
-    background: BackgroundColours
-    height?: number
-  }
+  video: VideoType
+  videoControls: VideoControlsType
+  designOptions: VideoDesignOptionsType
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
@@ -696,7 +702,7 @@ export type VideoPlayerCarouselData = {
 }
 
 
-export type LoopingVideoRatio = 'original' | 'narrow'
+export type LoopingVideoRatio = '1:2' | 'narrow'
 
 export type LoopingVideoData = {
   title: string
