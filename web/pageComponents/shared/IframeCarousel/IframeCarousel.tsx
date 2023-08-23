@@ -30,12 +30,12 @@ const ItemContainer = styled.div`
 `
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, center);
+  padding: 0 0 var(--space-large) 0;
+  text-align: center;
 `
 const StyledItemHeading = styled(TitleText)`
-  margin: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, left);
+  margin: 0 0 var(--space-large) 0;
+  text-align: left;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;

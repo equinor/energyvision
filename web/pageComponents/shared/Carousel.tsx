@@ -72,8 +72,8 @@ const StyledRightButton = styled(StyledButton)`
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: 0 var(--layout-paddingHorizontal-small);
+  max-width: var(--maxViewportWidth);
   margin: auto;
 `
 
