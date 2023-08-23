@@ -6,7 +6,7 @@ import { HLSVideoComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--space-xxLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
   margin-bottom: calc(-1 * var(--space-small));
   text-align: left;
 `
