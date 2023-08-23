@@ -28,9 +28,8 @@ const Container = styled.div`
 
 const HorizontalWrapper = styled.div`
   --card-maxWidth: 280px;
-
-  margin-top: var(--space-3xLarge);
-  margin-bottom: var(--space-3xLarge);
+  padding-top: var(--space-3xLarge);
+  padding-bottom: var(--space-3xLarge);
 
   @media (min-width: 800px) {
     --card-maxWidth: 400px;
