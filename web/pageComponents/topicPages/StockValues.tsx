@@ -39,8 +39,8 @@ const fetchData = async (url: string) => {
 }
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
   margin: auto;
   display: grid;
   grid-template-columns: 1fr;
