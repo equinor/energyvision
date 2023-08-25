@@ -53,7 +53,7 @@ const SUB_EDITOR_ITEMS = (S, context) =>
     AssetLibrary(S, context),
   ].filter((e) => e)
 
-const LOCAL_NEWS_EDITOR_ITEMS = (S) => [LocalNews(S)].filter((e) => e)
+const LOCAL_NEWS_EDITOR_ITEMS = (S, context) => [LocalNews(S, context)].filter((e) => e)
 
 /**
  * Datasets are not taken into consideration in order to simplify logic.
