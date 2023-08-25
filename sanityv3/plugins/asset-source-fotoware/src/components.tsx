@@ -1,5 +1,5 @@
 import { ReactNode, forwardRef } from 'react'
-import { Dialog } from '@sanity/ui'
+import { Dialog, Box } from '@sanity/ui'
 import styled from 'styled-components'
 
 export const Content = styled.div`
