@@ -28,7 +28,7 @@ export default {
         ],
         layout: 'dropdown',
       },
-      initialValue: '0.3',
+      initialValue: 0.3,
       validation: (Rule: Rule) => Rule.required(),
     },
   ],
