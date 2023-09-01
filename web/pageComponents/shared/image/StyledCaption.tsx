@@ -5,12 +5,15 @@ import { getBackgroundByColorName } from '@components'
 
 type CaptionProps = CaptionData & { background?: BackgroundColours }
 
-const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
-  display: flex;
-  margin: 0 auto;
-  padding: 0 var(--layout-paddingHorizontal-small);
+const CaptionWithPadding = styled(Caption)`
   max-width: var(--maxViewportWidth);
-
+  padding: 0 var(--layout-paddingHorizontal-small);
+  margin-left: auto;
+  margin-right: auto;
+`
+const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
+  display: inline-block;
+  width: 100%;
   ${({ background }) => {
     // Captions's background color is defined by its following component
     const bgColor = background && {
@@ -23,7 +26,7 @@ const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
 export const StyledCaption = ({ attribution, caption, background }: CaptionProps) => {
   return (
     <CaptionWrapper background={background}>
-      <Caption attribution={attribution} caption={caption} />
+      <CaptionWithPadding attribution={attribution} caption={caption} />
     </CaptionWrapper>
   )
 }

@@ -2,7 +2,7 @@ import { BackgroundContainer } from '@components'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { searchClient, searchClientServer } from '../../lib/algolia'
+import { searchClient } from '../../lib/algolia'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { MagazineIndexPageType } from '../../types'
 import { Hits } from '../searchIndexPages/magazineIndex/Hits'
@@ -92,7 +92,15 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
         </BackgroundContainer>
 
         <InstantSearch
-          searchClient={isServerRendered ? searchClientServer : searchClient}
+          searchClient={
+            isServerRendered
+              ? searchClient({
+                  headers: {
+                    Referer: url,
+                  },
+                })
+              : searchClient(undefined)
+          }
           indexName={indexName}
           routing={{
             router: createInstantSearchRouterNext({
