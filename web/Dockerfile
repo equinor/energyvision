@@ -14,7 +14,7 @@ COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
 RUN \
-  if [ -f pnpm-lock.yaml ]; then yarn global add pnpm@^8.5.1 && pnpm m i --frozen-lockfile;\
+  if [ -f pnpm-lock.yaml ]; then yarn global add pnpm@8.5.1 && pnpm m i --frozen-lockfile;\
   else echo "Lockfile not found." && exit 1; \
   fi
 
