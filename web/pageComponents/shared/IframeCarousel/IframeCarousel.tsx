@@ -24,10 +24,13 @@ const Container = styled.div`
 const Figure = styled.figure`
   margin: 0;
   width: 100%;
+  flex-grow: 1;
 `
 const ItemContainer = styled.div`
   min-width: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
   @media (min-width: 1300px) {
     min-width: 45%;
@@ -55,6 +58,9 @@ const StyledItemHeading = styled(TitleText)`
 `
 const StyledButtonLink = styled(ButtonLink)`
   margin-top: var(--space-xLarge);
+`
+const StyledCoreIframe = styled(CoreIFrame)`
+  flex-grow: 1;
 `
 
 type IframeCarouselProps = {
@@ -89,7 +95,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
                   </FigureCaption>
                 </Figure>
               ) : (
-                <CoreIFrame
+                <StyledCoreIframe
                   frameTitle={item.frameTitle}
                   url={item.url}
                   cookiePolicy={item.cookiePolicy}
