@@ -1,4 +1,5 @@
 import { visionTool } from '@sanity/vision'
+import { media } from 'sanity-plugin-media'
 
 import {
   ConfigContext,
@@ -26,6 +27,7 @@ import { DatabaseIcon } from '@sanity/icons'
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
 import { i18n } from './schemas/documentTranslation'
 import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
+import { getMetaTitleSuffix } from '../satellitesConfig'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -44,9 +46,22 @@ const handleInputComponents = (inputProps: InputProps) => {
   return inputProps.renderDefault(inputProps)
 }
 
+const getStudioTitle = (dataset: string) => {
+  switch (dataset) {
+    case 'global-development':
+      return 'Development'
+    case 'secret':
+      return 'Secret'
+    case 'global-test':
+      return 'Test'
+    default:
+      return getMetaTitleSuffix(dataset)
+  }
+}
+
 const getConfig = (datasetParam: string, projectIdParam: string, isSecret = false) => ({
   name: 'equinor-' + datasetParam,
-  title: 'Equinor [' + datasetParam + ']',
+  title: 'Studio [' + getStudioTitle(datasetParam) + ']',
   icon: DatabaseIcon,
   basePath: '/' + datasetParam,
   projectId: projectIdParam,
@@ -66,8 +81,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         name: 'desk',
         title: 'Desk',
       }),
-      visionTool(),
+      media(),
       scheduledPublishing(),
+      datasetParam === 'global-development' && visionTool(),
       FotowareAssetSource(),
       BrandmasterAssetSource(),
       isSecret &&

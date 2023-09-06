@@ -31,7 +31,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: '^8.5.1'
+          version: '8.5.1'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v3
         with:

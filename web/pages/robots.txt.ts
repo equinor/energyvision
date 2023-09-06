@@ -22,7 +22,7 @@ const robots = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
 ${domain === 'www.equinor.com' ? 'Disallow: /search \nDisallow: /search.html' : ''}
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
-${domain === 'www.equinor.com' ? 'Crawl-delay: 10' : ''}`
+`
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const domain = String(req.headers.host)

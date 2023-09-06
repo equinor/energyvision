@@ -52,16 +52,7 @@ const Image = ({
     }
   }
 
-  return (
-    <Img
-      {...rest}
-      {...props}
-      src={src}
-      alt={image.isDecorative ? '' : image.alt ?? ''}
-      role={image.isDecorative ? 'presentation' : undefined}
-      sizes={sizes}
-    />
-  )
+  return <Img {...rest} {...props} src={src} alt={image.isDecorative ? '' : image.alt ?? ''} sizes={sizes} />
 }
 
 export default Image
