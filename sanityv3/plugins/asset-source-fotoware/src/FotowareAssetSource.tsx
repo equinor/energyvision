@@ -128,20 +128,25 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
           const assetDescription =
             asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+          const assetId = asset?.metadata?.[187]?.value
+          const personShownInTheImage = asset?.metadata?.[368]?.value?.join(', ')
+          const description = assetDescription?.value
+            ? [assetDescription?.value, personShownInTheImage].join('\n')
+            : personShownInTheImage
 
           onSelect([
             {
               kind: 'base64',
               value: data.image,
               assetDocumentProps: {
-                originalFileName: asset?.filename || '',
+                originalFilename: asset?.filename || '',
                 source: {
-                  id: asset?.uniqueid || uri,
                   name: 'fotoware',
+                  id: assetId || asset?.uniqueid || uri,
                   url: source,
                 },
-                ...(assetTitle?.value && { title: assetTitle.value }),
-                ...(assetDescription?.value && { description: assetDescription.value }),
+                title: assetTitle?.value,
+                description: description,
               },
             },
           ])
