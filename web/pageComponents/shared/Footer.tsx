@@ -83,11 +83,13 @@ const FooterLink = styled(Link)`
   }
 `
 const FooterBottom = styled.div`
+  display: flex;
+  justify-content: center;
   min-height: var(--space-large);
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-small) var(--space-small);
 `
 
-const CompanyName = styled(Typography)`
+const CompanyName = styled.span`
   text-align: center;
   font-size: var(--typeScale-small);
   color: white;
