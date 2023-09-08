@@ -15,8 +15,8 @@ import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
 import SlugInput from '../components/SlugInput'
-import { i18n } from '../documentTranslation'
 import { withSlugValidation } from '../validations/validateSlug'
+import { lang } from './langField'
 import {
   content,
   heroImage,
@@ -42,7 +42,6 @@ export default {
   name: 'localNews',
   type: 'document',
   icon: () => EdsIcon(file_description),
-  i18n,
   // @todo: restrict to correct role(s)
   // readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>
   //   !currentUser.roles.find((role) => ['administrator'].includes(role.name)),
@@ -67,6 +66,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     isLive,
     {
       ...seo,

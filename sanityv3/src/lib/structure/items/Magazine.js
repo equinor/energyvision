@@ -1,5 +1,5 @@
 import { TopicDocuments } from '../../../../icons'
-import { i18n } from '../../../../schemas/documentTranslation'
+import { defaultLanguage } from '../../../../languages'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -13,8 +13,8 @@ export const Magazine = (S) =>
           S.documentTypeList('magazine')
             .id('magazines')
             .title('Magazines')
-            .filter('_type == "magazine" && (!defined(_lang) || _lang == $baseLang)')
-            .params({ baseLang: i18n.base })
+            .filter('_type == "magazine" && (!defined(lang) || lang == $baseLang)')
+            .params({ baseLang: defaultLanguage.iso })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
               return params.type === 'magazine'

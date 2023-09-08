@@ -1,7 +1,7 @@
 import { NewsDocuments } from '../../../../icons'
-import { i18n } from '../../../../schemas/documentTranslation'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
+import { defaultLanguage } from '../../../../languages'
 
 export const News = (S) =>
   Flags.HAS_NEWS
@@ -13,8 +13,8 @@ export const News = (S) =>
           S.documentTypeList('news')
             .id('news')
             .title('News articles')
-            .filter(' _type == "news" && (!defined(_lang) || _lang == $baseLang)')
-            .params({ baseLang: i18n.base })
+            .filter(' _type == "news" && (!defined(lang) || lang == $baseLang)')
+            .params({ baseLang: defaultLanguage.iso })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
               return params.type === 'news'

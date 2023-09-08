@@ -3,10 +3,10 @@ import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { i18n } from '../documentTranslation'
 import SlugInput from '../components/SlugInput'
 import { withSlugValidation } from '../validations/validateSlug'
 import { file_add } from '@equinor/eds-icons'
+import { lang } from './langField'
 import {
   content,
   countryTags,
@@ -30,7 +30,6 @@ export default {
   title: 'News',
   name: 'news',
   type: 'document',
-  i18n,
   icon: () => EdsIcon(file_add),
   fieldsets: [
     {
@@ -61,6 +60,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     isLive,
     {
       ...seo,
@@ -117,9 +117,10 @@ export default {
       publishedDate: 'publishDateTime',
       firstPublishedAt: 'firstPublishedAt',
       isCustomDate: 'customPublicationDate',
+      lang: 'lang',
     },
     prepare(selection) {
-      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate, lang } = selection
       const date =
         publishedDate && isCustomDate
           ? formatDate(publishedDate)
@@ -129,7 +130,7 @@ export default {
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${date}`,
+        subtitle: `${lang} Published date: ${date}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')

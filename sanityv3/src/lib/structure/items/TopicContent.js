@@ -1,5 +1,5 @@
 import { TopicDocuments } from '../../../../icons'
-import { i18n } from '../../../../schemas/documentTranslation'
+import { defaultLanguage } from '../../../../languages'
 
 export const TopicContent = (S) =>
   S.listItem()
@@ -10,8 +10,8 @@ export const TopicContent = (S) =>
       S.documentTypeList('page')
         .id('pages')
         .title('Topic content')
-        .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
-        .params({ baseLang: i18n.base })
+        .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
+        .params({ baseLang: defaultLanguage.iso })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
           return params.type === 'page'

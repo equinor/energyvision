@@ -3,11 +3,11 @@ import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { i18n } from '../documentTranslation'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import basicIframe, { IFrame } from '../objects/basicIframe'
 import type { EventDate } from '../objects/eventDate'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
+import { lang } from './langField'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -37,7 +37,6 @@ export default {
   title: 'Event',
   name: 'event',
   icon: () => EdsIcon(image),
-  i18n,
   fieldsets: [
     {
       title: 'SEO & metadata',
@@ -66,6 +65,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',

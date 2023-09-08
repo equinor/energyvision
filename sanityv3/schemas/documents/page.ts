@@ -1,11 +1,11 @@
 import blocksToText from '../../helpers/blocksToText'
 import { defaultColors } from '../components/ColorSelector'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
+import { lang } from './langField'
 // import { done } from '@equinor/eds-icons'
 
 // export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
@@ -14,7 +14,6 @@ export default {
   name: 'page',
   title: 'Topic page',
   icon: () => EdsIcon(paste),
-  i18n,
   fieldsets: [
     {
       title: 'Header',
@@ -31,6 +30,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',

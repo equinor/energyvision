@@ -1,12 +1,14 @@
-import { ReferenceBehavior } from '@sanity/document-internationalization'
-import { languages, defaultLanguage } from '../languages'
+import { languages } from '../languages'
+import { documentsWithI18n } from './documents'
 
 export const i18n = {
-  base: defaultLanguage.name,
-  languages,
-  fieldNames: {
-    lang: '_lang',
-    references: '_langRefs',
-  },
-  referenceBehavior: ReferenceBehavior.WEAK,
+  supportedLanguages: languages.map((it) => {
+    return {
+      id: it.iso,
+      title: it.title,
+    }
+  }),
+  referenceBehavior: 'weak',
+  languageField: 'lang',
+  schemaTypes: Object.keys(documentsWithI18n).map((it) => documentsWithI18n[it].name),
 }

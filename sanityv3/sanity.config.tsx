@@ -19,7 +19,7 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { withDocumentI18nPlugin, createPublishAction } from '@sanity/document-internationalization'
+import { documentInternationalization } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { createCustomPublishAction } from './actions/CustomPublishAction'
@@ -72,32 +72,28 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret: boole
       input: handleInputComponents,
     },
   },
-  plugins: withDocumentI18nPlugin(
-    [
-      deskTool({
-        structure: (S: StructureBuilder, context: ConfigContext) => {
-          return deskStructure(S, context)
-        },
-        defaultDocumentNode: defaultDocumentNodeResolver,
-        name: 'desk',
-        title: 'Desk',
+  plugins: [
+    documentInternationalization(i18n),
+    deskTool({
+      structure: (S: StructureBuilder, context: ConfigContext) => {
+        return deskStructure(S, context)
+      },
+      defaultDocumentNode: defaultDocumentNodeResolver,
+      name: 'desk',
+      title: 'Desk',
+    }),
+    media(),
+    scheduledPublishing(),
+    datasetParam === 'global-development' && visionTool(),
+    FotowareAssetSource(),
+    BrandmasterAssetSource(),
+    isSecret &&
+      crossDatasetDuplicator({
+        tool: true,
+        types: ['news', 'tag', 'countryTag'],
       }),
-      media(),
-      scheduledPublishing(),
-      datasetParam === 'global-development' && visionTool(),
-      FotowareAssetSource(),
-      BrandmasterAssetSource(),
-      isSecret &&
-        crossDatasetDuplicator({
-          tool: true,
-          types: ['news', 'tag', 'countryTag'],
-        }),
-    ].filter((e) => e) as PluginOptions[],
-    {
-      includeDeskTool: false,
-      ...i18n,
-    },
-  ),
+  ].filter((e) => e) as PluginOptions[],
+
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
     templates: (prev: Template<any, any>[]) => [...prev, ...initialValueTemplates],
@@ -110,7 +106,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret: boole
           return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
         })
         .map((originalAction) =>
-          originalAction.action === 'publish' ? createCustomPublishAction(createPublishAction(i18n)) : originalAction,
+          originalAction.action === 'publish' ? createCustomPublishAction(originalAction) : originalAction,
         )
     },
   },
