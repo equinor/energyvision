@@ -176,7 +176,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </HeaderInner>
           </Header>
           {(ingress || content) && (
-            <ContentWrapper>
+            <ContentWrapper style={{ padding: iframe ? '0' : '0 0 var(--space-large) 0' }}>
               {ingress && (
                 <LeadParagraph>
                   <IngressText value={ingress}></IngressText>
