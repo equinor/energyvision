@@ -4,7 +4,7 @@ import { documentsWithI18n } from './documents'
 export const i18n = {
   supportedLanguages: languages.map((it) => {
     return {
-      id: it.iso,
+      id: it.name,
       title: it.title,
     }
   }),

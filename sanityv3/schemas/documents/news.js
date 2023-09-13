@@ -95,7 +95,7 @@ export default {
         slugify: (input, _schemaType, context) => {
           const slug = slugify(input)
           const { parent: document } = context
-          const translatedNews = document._lang ? `/${newsSlug[document._lang]}` : `/${newsSlug[defaultLanguage.name]}`
+          const translatedNews = document.lang ? `/${newsSlug[document.lang]}` : `/${newsSlug[defaultLanguage.name]}`
           return `${translatedNews}/${slug}`
         },
       }),

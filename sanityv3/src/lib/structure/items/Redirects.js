@@ -13,7 +13,7 @@ const redirects = (S) =>
         S.documentList()
           .title(`${lang.title} Redirects`)
           .schemaType('redirect')
-          .filter(`_type == 'redirect' && _lang == '${lang.name}'`)
+          .filter(`_type == 'redirect' && lang == '${lang.name}'`)
           .canHandleIntent(S.documentTypeList('redirect').getCanHandleIntent())
           .child((id) =>
             S.documentWithInitialValueTemplate('redirect-with-locale', {

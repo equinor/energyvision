@@ -33,7 +33,7 @@ import {
 } from './news/sharedNewsFields'
 
 type SlugParent = {
-  _lang: string
+  lang: string
   localNewsTag: Reference
 } & DefaultSlugParent
 
@@ -120,11 +120,9 @@ export default {
           const query = /* groq */ `*[_id == $id && _type == "localNewsTag"][0]`
           const params = { id: document.localNewsTag._ref }
           return client.fetch(query, params).then((localNewsTag: SanityDocument) => {
-            const translatedNews = document._lang
-              ? `/${newsSlug[document._lang]}`
-              : `/${newsSlug[defaultLanguage.name]}`
-            const localNewsPath = document._lang
-              ? (localNewsTag[document._lang] as string)
+            const translatedNews = document.lang ? `/${newsSlug[document.lang]}` : `/${newsSlug[defaultLanguage.name]}`
+            const localNewsPath = document.lang
+              ? (localNewsTag[document.lang] as string)
               : (localNewsTag[defaultLanguage.name] as string)
             return `${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slug}`
           })

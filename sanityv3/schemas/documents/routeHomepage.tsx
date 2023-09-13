@@ -21,7 +21,7 @@ export default (isoCode: string, title: string) => ({
         },
       ],
       options: {
-        filter: '_lang == $lang',
+        filter: 'lang == $lang',
         filterParams: { lang: `${isoCode}` },
         disableNew: true,
       },
