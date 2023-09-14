@@ -87,6 +87,10 @@ const ButtonWrapper = styled.div`
 const StyledHLSPlayer = styled(HLSPlayer)`
   object-fit: cover;
   width: inherit;
+
+  :fullscreen {
+    object-fit: contain;
+  }
 `
 
 const getThumbnailRatio = (aspectRatio: string, height?: number) => {
