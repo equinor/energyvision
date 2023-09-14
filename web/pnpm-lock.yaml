@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@chakra-ui/react':
     specifier: ^2.4.2
@@ -74,6 +70,9 @@ dependencies:
   focus-visible:
     specifier: ^5.2.0
     version: 5.2.0
+  fp-ts:
+    specifier: ^2.16.1
+    version: 2.16.1
   framer-motion:
     specifier: ^6
     version: 6.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -81,8 +80,8 @@ dependencies:
     specifier: ^0.9.6
     version: 0.9.6
   hls.js:
-    specifier: ^1.4.0
-    version: 1.4.0
+    specifier: ^1.4.12
+    version: 1.4.12
   html-entities:
     specifier: ^2.3.2
     version: 2.3.2
@@ -108,8 +107,8 @@ dependencies:
     specifier: ^6.0.0
     version: 6.0.0(next@13.0.5)(react-dom@18.2.0)(react@18.2.0)
   next-transpile-modules:
-    specifier: 10.0.0
-    version: 10.0.0
+    specifier: 10.0.1
+    version: 10.0.1
   only-allow:
     specifier: ^1.1.1
     version: 1.1.1
@@ -135,8 +134,8 @@ dependencies:
     specifier: ^2.9.2
     version: 2.9.2(@types/react@18.0.9)(react@18.2.0)
   react-hook-form:
-    specifier: 7.45.2
-    version: 7.45.2(react@18.2.0)
+    specifier: 7.46.1
+    version: 7.46.1(react@18.2.0)
   react-instantsearch-dom:
     specifier: ^6.40.4
     version: 6.40.4(algoliasearch@4.16.0)(react-dom@18.2.0)(react@18.2.0)
@@ -210,7 +209,7 @@ devDependencies:
     version: 7.0.6
   '@storybook/builder-vite':
     specifier: ^7.0.6
-    version: 7.0.6(typescript@4.8.4)(vite@4.2.2)
+    version: 7.0.6(typescript@4.8.4)(vite@4.4.9)
   '@storybook/nextjs':
     specifier: ^7.0.6
     version: 7.0.6(@babel/core@7.21.4)(esbuild@0.18.17)(next@13.0.5)(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)(webpack@5.88.2)
@@ -219,7 +218,7 @@ devDependencies:
     version: 7.0.6(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)
   '@storybook/react-vite':
     specifier: ^7.0.6
-    version: 7.0.6(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)(vite@4.2.2)
+    version: 7.0.6(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)(vite@4.4.9)
   '@testing-library/jest-dom':
     specifier: ^5.16.5
     version: 5.16.5
@@ -284,8 +283,8 @@ devDependencies:
     specifier: 4.8.4
     version: 4.8.4
   vite:
-    specifier: ^4.2.2
-    version: 4.2.2(@types/node@17.0.35)
+    specifier: ^4.4.9
+    version: 4.4.9(@types/node@17.0.35)
   webpack:
     specifier: ^5.88.2
     version: 5.88.2(esbuild@0.18.17)
@@ -4469,7 +4468,7 @@ packages:
       '@types/yargs': 17.0.24
       chalk: 4.1.2
 
-  /@joshwooding/vite-plugin-react-docgen-typescript@0.2.1(typescript@4.8.4)(vite@4.2.2):
+  /@joshwooding/vite-plugin-react-docgen-typescript@0.2.1(typescript@4.8.4)(vite@4.4.9):
     resolution: {integrity: sha512-ou4ZJSXMMWHqGS4g8uNRbC5TiTWxAgQZiVucoUrOCWuPrTbkpJbmVyIi9jU72SBry7gQtuMEDp4YR8EEXAg7VQ==}
     peerDependencies:
       typescript: '>= 4.3.x'
@@ -4483,7 +4482,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@4.8.4)
       typescript: 4.8.4
-      vite: 4.2.2(@types/node@17.0.35)
+      vite: 4.4.9(@types/node@17.0.35)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -5570,7 +5569,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/builder-vite@7.0.6(typescript@4.8.4)(vite@4.2.2):
+  /@storybook/builder-vite@7.0.6(typescript@4.8.4)(vite@4.4.9):
     resolution: {integrity: sha512-sXthWQFMKxXS8nqihB5sSyRewLpBJDL3EjwzZxz5/4zQ9XCsuGHMW7DEepX9FMWUNPDIIw3KITs4vMrCNDkXhg==}
     peerDependencies:
       '@preact/preset-vite': '*'
@@ -5606,7 +5605,7 @@ packages:
       remark-slug: 6.1.0
       rollup: 3.25.1
       typescript: 4.8.4
-      vite: 4.2.2(@types/node@17.0.35)
+      vite: 4.4.9(@types/node@17.0.35)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6186,7 +6185,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /@storybook/react-vite@7.0.6(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)(vite@4.2.2):
+  /@storybook/react-vite@7.0.6(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)(vite@4.4.9):
     resolution: {integrity: sha512-kWX0JCi5mTRPrFyp80GEHqL2DdNACA5kzDSfLXEhrxnHaMqbpFFKA385ZTlgenC3quPGTFCSI+HxHHBwvNNCXA==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -6194,17 +6193,17 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
       vite: ^3.0.0 || ^4.0.0
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.2.1(typescript@4.8.4)(vite@4.2.2)
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.2.1(typescript@4.8.4)(vite@4.4.9)
       '@rollup/pluginutils': 4.2.1
-      '@storybook/builder-vite': 7.0.6(typescript@4.8.4)(vite@4.2.2)
+      '@storybook/builder-vite': 7.0.6(typescript@4.8.4)(vite@4.4.9)
       '@storybook/react': 7.0.6(react-dom@18.2.0)(react@18.2.0)(typescript@4.8.4)
-      '@vitejs/plugin-react': 3.1.0(vite@4.2.2)
+      '@vitejs/plugin-react': 3.1.0(vite@4.4.9)
       ast-types: 0.14.2
       magic-string: 0.27.0
       react: 18.2.0
       react-docgen: 6.0.0-alpha.3
       react-dom: 18.2.0(react@18.2.0)
-      vite: 4.2.2(@types/node@17.0.35)
+      vite: 4.4.9(@types/node@17.0.35)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - supports-color
@@ -6869,7 +6868,7 @@ packages:
       ajv: 6.12.6
     dev: false
 
-  /@vitejs/plugin-react@3.1.0(vite@4.2.2):
+  /@vitejs/plugin-react@3.1.0(vite@4.4.9):
     resolution: {integrity: sha512-AfgcRL8ZBhAlc3BFdigClmTUMISmmzHn7sB2h9U1odvc5U/MjWXsAaz18b/WoppUTDBzxOJwo2VdClfUcItu9g==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -6880,12 +6879,12 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.21.4)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.2.2(@types/node@17.0.35)
+      vite: 4.4.9(@types/node@17.0.35)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-react@4.0.4(vite@4.4.8):
+  /@vitejs/plugin-react@4.0.4(vite@4.4.9):
     resolution: {integrity: sha512-7wU921ABnNYkETiMaZy7XqpueMnpu5VxvVps13MjmCo+utBdD79sZzrApHawHtVX66cCJQQTXFcjH0y9dSUK8g==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -6895,7 +6894,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.9)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.9)
       react-refresh: 0.14.0
-      vite: 4.4.8(@types/node@17.0.35)
+      vite: 4.4.9(@types/node@17.0.35)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8449,7 +8448,7 @@ packages:
     dev: false
 
   /date-now@1.0.1:
-    resolution: {integrity: sha512-yiizelQCqYLUEVT4zqYihOW6Ird7Qyc6fD3Pv5xGxk4+Jz0rsB1dMN2KyNV6jgOHYh5K+sPGCSOknQN4Upa3pg==}
+    resolution: {integrity: sha1-u30IZDjevkGCpIX7PfP7+5nWFTw=}
     dev: false
 
   /debounce@1.0.0:
@@ -9488,6 +9487,10 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /fp-ts@2.16.1:
+    resolution: {integrity: sha512-by7U5W8dkIzcvDofUcO42yl9JbnHTEDBrzu3pt5fKT+Z4Oy85I21K80EYJYdjQGC2qum4Vo55Ag57iiIK4FYuA==}
+    dev: false
+
   /framer-motion@10.15.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HDjWrYWgbO5orKuhnXETLFzk7UUvwWur2HFs2elAZ8lVpI49ClHql31DNTVvVBcOrSHfAOS4eBDBedIvOx634w==}
     peerDependencies:
@@ -10013,8 +10016,8 @@ packages:
       '@babel/runtime': 7.22.6
     dev: false
 
-  /hls.js@1.4.0:
-    resolution: {integrity: sha512-VEjg7Rx5FlE9TB3MIn0HPgq3J+vR7EoQnjaqMCk/ISEaCOSZlAFh4g867f1QkSxZiq9kHeUZo+iH16X7VS3jKA==}
+  /hls.js@1.4.12:
+    resolution: {integrity: sha512-1RBpx2VihibzE3WE9kGoVCtrhhDWTzydzElk/kyRbEOLnb1WIE+3ZabM/L8BqKFTCL3pUy4QzhXgD1Q6Igr1JA==}
     dev: false
 
   /hogan.js@3.0.2:
@@ -12293,8 +12296,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /next-transpile-modules@10.0.0:
-    resolution: {integrity: sha512-FyeJ++Lm2Fq31gbThiRCrJlYpIY9QaI7A3TjuhQLzOix8ChQrvn5ny4MhfIthS5cy6+uK1AhDRvxVdW17y3Xdw==}
+  /next-transpile-modules@10.0.1:
+    resolution: {integrity: sha512-4VX/LCMofxIYAVV58UmD+kr8jQflpLWvas/BQ4Co0qWLWzVh06FoZkECkrX5eEZT6oJFqie6+kfbTA3EZCVtdQ==}
     dependencies:
       enhanced-resolve: 5.15.0
     dev: false
@@ -12912,7 +12915,6 @@ packages:
       nanoid: 3.3.6
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: false
 
   /preact@10.15.1:
     resolution: {integrity: sha512-qs2ansoQEwzNiV5eAcRT1p1EC/dmEzaATVDJNiB3g2sRDWdA7b7MurXdJjB2+/WQktGWZwxvDrnuRFbWuIr64g==}
@@ -13329,8 +13331,8 @@ packages:
       use-sidecar: 1.1.2(@types/react@18.0.9)(react@18.2.0)
     dev: false
 
-  /react-hook-form@7.45.2(react@18.2.0):
-    resolution: {integrity: sha512-9s45OdTaKN+4NSTbXVqeDITd/nwIg++nxJGL8+OD5uf1DxvhsXQ641kaYHk5K28cpIOTYm71O/fYk7rFaygb3A==}
+  /react-hook-form@7.46.1(react@18.2.0):
+    resolution: {integrity: sha512-0GfI31LRTBd5tqbXMGXT1Rdsv3rnvy0FjEk8Gn9/4tp6+s77T7DPZuGEpBRXOauL+NhyGT5iaXzdIM2R6F/E+w==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -13854,13 +13856,12 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rollup@3.27.0:
-    resolution: {integrity: sha512-aOltLCrYZ0FhJDm7fCqwTjIUEVjWjcydKBV/Zeid6Mn8BWgDCUBBWT5beM5ieForYNo/1ZHuGJdka26kvQ3Gzg==}
+  /rollup@3.29.1:
+    resolution: {integrity: sha512-c+ebvQz0VIH4KhhCpDsI+Bik0eT8ZFEVZEYw0cGMVqIP8zc+gnwl7iXCamTw7vzv2MeuZFZfdx5JJIq+ehzDlg==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -13961,7 +13962,7 @@ packages:
       '@types/shallow-equals': 1.0.0
       '@types/speakingurl': 13.0.3
       '@types/use-sync-external-store': 0.0.3
-      '@vitejs/plugin-react': 4.0.4(vite@4.4.8)
+      '@vitejs/plugin-react': 4.0.4(vite@4.4.9)
       chalk: 4.1.2
       chokidar: 3.5.3
       classnames: 2.3.2
@@ -14029,7 +14030,7 @@ packages:
       use-device-pixel-ratio: 1.1.2(react@18.2.0)
       use-hot-module-reload: 1.0.3(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
-      vite: 4.4.8(@types/node@17.0.35)
+      vite: 4.4.9(@types/node@17.0.35)
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@types/node'
@@ -15391,42 +15392,8 @@ packages:
       vfile-message: 3.1.4
     dev: true
 
-  /vite@4.2.2(@types/node@17.0.35):
-    resolution: {integrity: sha512-PcNtT5HeDxb3QaSqFYkEum8f5sCVe0R3WK20qxgIvNBZPXU/Obxs/+ubBMeE7nLWeCo2LDzv+8hRYSlcaSehig==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': '>= 14'
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-    dependencies:
-      '@types/node': 17.0.35
-      esbuild: 0.17.19
-      postcss: 8.4.24
-      resolve: 1.22.2
-      rollup: 3.25.1
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
-  /vite@4.4.8(@types/node@17.0.35):
-    resolution: {integrity: sha512-LONawOUUjxQridNWGQlNizfKH89qPigK36XhMI7COMGztz8KNY0JHim7/xDd71CZwGT4HtSRgI7Hy+RlhG0Gvg==}
+  /vite@4.4.9(@types/node@17.0.35):
+    resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -15456,10 +15423,9 @@ packages:
       '@types/node': 17.0.35
       esbuild: 0.18.17
       postcss: 8.4.27
-      rollup: 3.27.0
+      rollup: 3.29.1
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /w3c-hr-time@1.0.2:
     resolution: {integrity: sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ==}
@@ -15793,7 +15759,7 @@ packages:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
   /xregexp@2.0.0:
-    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
+    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
     dev: false
 
   /xtend@4.0.2:
@@ -15884,3 +15850,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

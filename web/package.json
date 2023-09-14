@@ -44,9 +44,10 @@
     "date-fns-tz": "^2.0.0",
     "easy-soap-request": "^4.6.0",
     "focus-visible": "^5.2.0",
+    "fp-ts": "^2.16.1",
     "framer-motion": "^6",
     "friendly-challenge": "^0.9.6",
-    "hls.js": "^1.4.0",
+    "hls.js": "^1.4.12",
     "html-entities": "^2.3.2",
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",
@@ -55,7 +56,7 @@
     "next-sanity": "^4.1.7",
     "next-sanity-image": "^6.0.0",
     "next-seo": "^6.0.0",
-    "next-transpile-modules": "10.0.0",
+    "next-transpile-modules": "10.0.1",
     "only-allow": "^1.1.1",
     "qs": "^6.11.1",
     "query-string": "^7.1.1",
@@ -64,7 +65,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-focus-lock": "^2.9.2",
-    "react-hook-form": "7.45.2",
+    "react-hook-form": "7.46.1",
     "react-instantsearch-dom": "^6.40.4",
     "react-instantsearch-hooks-router-nextjs": "6.47.3",
     "react-instantsearch-hooks-server": "^6.47.3",
@@ -115,7 +116,7 @@
     "storybook-css-modules-preset": "^1.1.1",
     "styled-jsx": "^5.1.2",
     "typescript": "4.8.4",
-    "vite": "^4.2.2",
+    "vite": "^4.4.9",
     "webpack": "^5.88.2"
   }
 }
