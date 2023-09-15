@@ -1,5 +1,5 @@
 import { sanityClients } from './getSanityClients.mjs'
-import { testNewsDocs, testLocalNewsDocs } from './testDocument.mjs'
+import { testDocs, SCHEMA_TYPE } from './testDocument.mjs'
 
 /**
  * This migration script rewrites the value of field `__i18n_lang` to `language`
@@ -25,13 +25,13 @@ import { testNewsDocs, testLocalNewsDocs } from './testDocument.mjs'
 
 const UNSET_FIELD_NAME = `_lang`
 const NEW_FIELD_NAME = `lang`
-const SCHEMA_TYPE = `localNews`
+//const SCHEMA_TYPE = [`magazine`, `localNews`]
 
 // This will use the client configured in ./sanity.cli.ts
 const client = sanityClients[0]
 
 //&& _id in $testDocs
-const query = `*[_type == $type && defined(${UNSET_FIELD_NAME}) 
+const query = `*[_type in $type && defined(${UNSET_FIELD_NAME}) 
   && _id in $testDocs
   ][0...100] {
     _id, 
@@ -41,7 +41,7 @@ const query = `*[_type == $type && defined(${UNSET_FIELD_NAME})
 const fetchDocuments = () =>
   client.fetch(query, {
     type: SCHEMA_TYPE,
-    testDocs: testLocalNewsDocs,
+    testDocs: testDocs,
   })
 
 const buildPatches = (docs) =>

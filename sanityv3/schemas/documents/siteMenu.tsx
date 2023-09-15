@@ -30,7 +30,7 @@ export default {
           // This doesn't work, it's just a dream
           /* initialValue: (document: any) => {
             return {
-              _lang: document._lang,
+              _lang: document.lang,
             }
           }, */
         },

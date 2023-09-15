@@ -1,5 +1,5 @@
 import { sanityClients } from './getSanityClients.mjs'
-import { testNewsDocs, testLocalNewsDocs } from './testDocument.mjs'
+import { testDocs, SCHEMA_TYPE } from './testDocument.mjs'
 
 /**
  * This migration script creates new `translation.metadata` documents for all
@@ -31,7 +31,7 @@ const UNSET_BASE_FIELD = `__i18n_base`
 // Run the `renameLanguageField.ts` script after if you want to change this
 const LANGUAGE_FIELD = `_lang`
 // Operation will be scoped to just this one document type
-const SCHEMA_TYPE = `localNews` //`news` `localNews` ``
+//const SCHEMA_TYPE = [`magazineIndex`, `magazine`, `localNews`, `news`, `localNews`, `newsroom`, 'page', 'event']
 
 // eslint-disable-next-line no-console
 console.log(
@@ -41,7 +41,7 @@ console.log(
 const fetchDocuments = () =>
   client.fetch(
     `*[
-      _type == $type 
+      _type in $type 
       && (defined(${UNSET_REFS_FIELD}) || defined(${UNSET_BASE_FIELD})) 
       && defined(${LANGUAGE_FIELD})
       && _id in $testDocs
@@ -51,7 +51,7 @@ const fetchDocuments = () =>
       ${LANGUAGE_FIELD},
       ${UNSET_REFS_FIELD}, 
     }`,
-    { type: SCHEMA_TYPE, testDocs: testLocalNewsDocs },
+    { type: SCHEMA_TYPE, testDocs: testDocs },
   )
 
 const buildPatches = (docs) =>
@@ -105,10 +105,11 @@ const migrateNextBatch = async () => {
 
   // Create new metadata documents before unsetting
   const metadatas = buildMetadata(documents)
+  console.log(JSON.stringify(metadatas))
   if (metadatas.length) {
     const tx = client.transaction()
     metadatas.forEach((metadata) => tx.create(metadata))
-    //await commitTransaction(tx)
+    await commitTransaction(tx)
   }
 
   // Patch-out fields to remove
