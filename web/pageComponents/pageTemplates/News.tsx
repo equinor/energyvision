@@ -114,25 +114,28 @@ const Content = styled.div`
   }
 
   /* "Remove" margin top from FactBox if the following element is also a FactBox */
-  .fact-box + .fact-box {
-    margin-top: calc(-1 * var(--space-4xLarge));
+
+  .fact-box:not(.fact-box--none) + .fact-box--colored,
+  .fact-box.fact-box--image + .fact-box.fact-box--colored {
+    margin-top: calc(-1 * var(--space-3xLarge));
+  }
+
+  .fact-box:not(.fact-box--image).fact-box--cold + .fact-box.fact-box--cold,
+  .fact-box:not(.fact-box--image).fact-box--warm + .fact-box.fact-box--warm {
+    margin-top: calc(-2 * var(--space-3xLarge));
   }
 `
 
-const Related = styled.div`
+const Related = styled.div<{ reduceMargin: boolean }>`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: 1700px;
-  margin: var(--space-4xLarge) auto;
+  margin: ${(reduceMargin) => (reduceMargin ? '0 auto var(--space-3xLarge) auto' : 'var(--space-3xLarge) auto')};
 `
 
 const Latest = styled.div`
   padding: 0 var(--space-medium);
   margin: var(--space-4xLarge) auto 0;
   max-width: 1700px;
-`
-
-const StyledBasicIFrame = styled(BasicIFrame)`
-  margin-top: var(--space-3xLarge);
 `
 
 const isDateAfter = (a: string, b: string) => {
@@ -254,10 +257,10 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               </Content>
             )}
 
-            {iframe && <StyledBasicIFrame data={iframe} />}
+            {iframe && <BasicIFrame data={iframe} />}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <Related>
+              <Related reduceMargin={iframe ? true : false}>
                 <RelatedContent data={relatedLinks} />
               </Related>
             )}

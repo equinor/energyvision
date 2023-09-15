@@ -83,17 +83,19 @@ const FooterLink = styled(Link)`
   }
 `
 const FooterBottom = styled.div`
+  display: flex;
+  justify-content: left;
   min-height: var(--space-large);
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-small) var(--space-small);
+
+  @media (min-width: 750px) {
+    justify-content: center;
+  }
 `
 
-const CompanyName = styled(Typography)`
-  text-align: center;
+const CompanyName = styled.span`
   font-size: var(--typeScale-small);
   color: white;
-  @media (max-width: 750px) {
-    text-align: left;
-  }
 `
 
 const SomeIcon = styled.span`
