@@ -13,6 +13,7 @@ export default {
   type: 'image',
   options: {
     hotspot: true,
+    collapsed: false,
   },
   fields: [
     {

@@ -14,6 +14,7 @@ async function cleanup() {
 
   const rawData = await response.json()
   const data = Array.isArray(rawData) ? rawData : undefined
+  console.log(data)
 
   if (!data || data.length === 0) return
 
@@ -26,6 +27,8 @@ async function cleanup() {
     .map((item) => item.components.map((c) => c.image))
     .flat()
     .sort()
+
+  console.log(filteredData)
 
   return filteredData
 }

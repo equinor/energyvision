@@ -20,14 +20,13 @@ const assetLibraryItems = (S, context) =>
       .title('Manage file tags')
       .icon(TagMoreIcon)
       .child(S.documentTypeList('assetTag').id('manageAssetTags').title('Manage asset tags')),
-    Flags.IS_DEV && S.divider(),
-    Flags.IS_DEV &&
-      S.listItem()
-        .title('Video Assets')
-        .icon(() => EdsIcon(play_circle_outlined))
-        .child(S.documentTypeList('videoFile').id('videoFiles').title('Video Files')),
-    Flags.IS_DEV && S.divider(),
-    Flags.IS_DEV && UnusedAssetFilters(S),
+    S.divider(),
+    S.listItem()
+      .title('Video Assets')
+      .icon(() => EdsIcon(play_circle_outlined))
+      .child(S.documentTypeList('videoFile').id('videoFiles').title('Video Files')),
+    S.divider(),
+    UnusedAssetFilters(S),
   ].filter((e) => e)
 
 export const AssetLibrary = (S, context) =>

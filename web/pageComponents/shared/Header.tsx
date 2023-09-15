@@ -115,6 +115,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 
       {slugs.length > 1 && (
         <link
+          key="x-default"
           rel="alternate"
           hrefLang="x-default"
           href={`${publicRuntimeConfig.domain}${defaultSlug === '/' ? '' : defaultSlug}`}

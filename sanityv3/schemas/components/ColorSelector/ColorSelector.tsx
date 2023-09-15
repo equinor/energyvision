@@ -1,4 +1,4 @@
-import { Card, Flex, Stack } from '@sanity/ui'
+import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
 import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
@@ -33,9 +33,22 @@ type ColorCircleProps = {
 
 const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
   <Card paddingY={1}>
-    <Circle active={active} onClick={() => onClickHandler(color)}>
-      <InnerCircle color={color.value} />
-    </Circle>
+    <Tooltip
+      content={
+        <Box padding={2}>
+          <Text muted size={1}>
+            {color.title}
+          </Text>
+        </Box>
+      }
+      fallbackPlacements={['right', 'left']}
+      placement="top"
+      portal
+    >
+      <Circle active={active} onClick={() => onClickHandler(color)}>
+        <InnerCircle color={color.value} />
+      </Circle>
+    </Tooltip>
   </Card>
 )
 
