@@ -39,7 +39,7 @@ const StyledBreadcrumbsList = styled(BreadcrumbsList)<{ $bgColor?: BackgroundCol
 const StyledBreadcrumbsListItem = styled(BreadcrumbsListItem)<{ $bgColor?: BackgroundColours }>`
   &:last-child {
     color: ${({ $bgColor }) =>
-      $bgColor && getFontColorForBg($bgColor) === 'var(--inverted-text)' ? 'var(--grey-30)' : $bgColor};
+      $bgColor && getFontColorForBg($bgColor) === 'var(--inverted-text)' ? 'var(--grey-30)' : 'var(--slate-blue-90)'};
   }
 `
 
