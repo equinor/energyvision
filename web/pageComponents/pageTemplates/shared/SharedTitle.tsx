@@ -3,7 +3,7 @@ import TitleText from '../../shared/portableText/TitleText'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { TitleStyles } from '../../../lib/hooks/useSharedTitleStyles'
 import type { BackgroundColours } from 'types'
-import { getBackgroundByColorName, getFontColorForBg, getHexFromColorName } from '@components'
+import { getBackgroundByColorName, getFontColorForBg } from '@components'
 
 type SharedTitleProps = {
   title: PortableTextBlock[]
