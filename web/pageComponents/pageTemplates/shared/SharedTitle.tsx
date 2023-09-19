@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import TitleText from '../../shared/portableText/TitleText'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { TitleStyles } from '../../../lib/hooks/useSharedTitleStyles'
-import { getBackgroundByColorName } from '@components'
+import type { BackgroundColours } from 'types'
+import { getBackgroundByColorName, getFontColorForBg, getHexFromColorName } from '@components'
 
 type SharedTitleProps = {
   title: PortableTextBlock[]
@@ -29,16 +30,17 @@ const TitleWrapper = styled.div<{ styles?: TitleStyles }>`
   }}
 `
 
-const StyledHeading = styled(TitleText)`
+const StyledHeading = styled(TitleText)<{ $bgColor?: BackgroundColours }>`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
+  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
 `
 
 const SharedTitle = ({ title, styles }: SharedTitleProps) => {
   return (
     <TitleWrapper styles={styles}>
-      <StyledHeading value={title} level="h1" size="2xl" />
+      <StyledHeading $bgColor={styles?.backgroundColor} value={title} level="h1" size="2xl" />
     </TitleWrapper>
   )
 }
