@@ -61,7 +61,7 @@ jobs:
     - name: Get tags to keep from output.json
       id: get-tags
       run: |
-        TAGS=$(jq -r '[.web[], .studio[]] | unique[] | join(", ")' latest-prod-tags.json)
+        TAGS=$(jq -r '[(.web + .studio)[]] | unique[] | join(", ")' latest-prod-tags.json)
         echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
         echo "TAGS TO KEEP: $TAGS"
 
