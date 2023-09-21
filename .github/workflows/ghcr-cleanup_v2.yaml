@@ -32,12 +32,12 @@ jobs:
       uses: snok/container-retention-policy@v2
       with:
         token: ${{ secrets.NLUN_GITHUB_PAT }}
-        cut-off: one day ago UTC+2
-        keep-at-least: 5
         account-type: org
         org-name: Equinor
-        image-names: energyvision/*
-        skip-tags: ${{ env.TAGS_TO_KEEP }}
+        image-names: energyvision/equinor/web-global
+        cut-off: one day ago UTC+2
+        keep-at-least: 5
+        # skip-tags: ${{ env.TAGS_TO_KEEP }}
         dry-run: true
 
     - name: log-errors-to-slack 📄
