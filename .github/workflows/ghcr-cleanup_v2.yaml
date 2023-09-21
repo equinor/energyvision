@@ -28,7 +28,8 @@ jobs:
         echo "TAGS TO KEEP: $TAGS"
 
     - name: Clean up Docker images
-      uses: snok/container-retention-policy@v1
+      id: delete-containers
+      uses: snok/container-retention-policy@v2
       with:
         token: ${{ secrets.NLUN_GITHUB_PAT }}
         keep-at-least: 5
@@ -36,6 +37,7 @@ jobs:
         org-name: Equinor
         image-names: energyvision/*
         skip-tags: ${{ env.TAGS_TO_KEEP }}
+        dry-run: true
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
