@@ -50,6 +50,20 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+    - name: Checkout internal 🛎️
+      id: checkout-internal
+      uses: actions/checkout@v3
+      with:
+        repository: 'equinor/energyvision-internal'
+        ref: main
+        token: ${{ secrets.PAT }}
+
+    - name: Get tags to keep from output.json
+      id: get-tags
+      run: |
+        TAGS=$(jq -r '[.web[], .studio[] | "*" + .] | join(", ")' latest-prod-tags.json)
+        echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
+
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -57,22 +71,12 @@ jobs:
       id: get-token
       uses: ./.github/workflows/get-auth-token/
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install node-fetch
-
-    - name: Make API request and get used tags
-      id: fetch_and_process
-      run: node '.github/workflows/ghcr_cleanup/cleanup.js'
 
     # - name: Clean up Docker images
     #   uses: snok/container-retention-policy@v1
     #   with:
     #     token: ${{ secrets.NLUN_GITHUB_PAT }}
+    #     keep-at-least: 5
     #     account-type: org
     #     org-name: Equinor
     #     image-names: energyvision/*
