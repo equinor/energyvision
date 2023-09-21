@@ -13,38 +13,7 @@ permissions:
   id-token: write
   packages: write
 jobs:
-  store-image-tags:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Or any version you prefer
-
-      - name: Install dependencies
-        run: |
-          npm install js-yaml
-
-      - name: Run script for 'studio'
-        run: node ci/storeImageTags.js studio
-      - name: Commit and push changes
-        run: |
-          git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git add latest-prod-tags.json
-          git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
-          git push
-
   check-code:
-    needs: store-image-tags
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
