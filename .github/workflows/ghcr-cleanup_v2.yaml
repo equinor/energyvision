@@ -32,7 +32,7 @@ jobs:
       uses: snok/container-retention-policy@v2
       with:
         token: ${{ secrets.NLUN_GITHUB_PAT }}
-        cut-off: six days ago UTC+2
+        cut-off: one day ago UTC+2
         keep-at-least: 5
         account-type: org
         org-name: Equinor
