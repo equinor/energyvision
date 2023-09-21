@@ -30,7 +30,11 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'studio'
+        run: node ci/storeImageTags.js studio
+
+      - name: Run script for 'web'
         run: node ci/storeImageTags.js web
+
       - name: Commit and push changes
         run: |
           git config --global user.name 'github'
