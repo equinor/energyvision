@@ -1,12 +1,8 @@
 name: Delete old ghrc images
 on:
   workflow_dispatch:
-  # push:
-    # paths:
-    #   - '.github/workflows/ghcr_cleanup/**'
-    #   - '.github/workflows/ghcr-cleanup_v2.yaml'
-  # schedule:
-  #   - cron: '0 0 * * *' # every day at midnight
+  schedule:
+    - cron: '0 0 * * *' # every day at midnight
 permissions:
   id-token: write
 jobs:
@@ -16,33 +12,33 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-    - name: Checkout code
+    - name: Checkout internal 🛎️
+      id: checkout-internal
       uses: actions/checkout@v3
-
-    - name: Get token 🔑
-      id: get-token
-      uses: ./.github/workflows/get-auth-token/
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        repository: 'equinor/energyvision-internal'
+        ref: main
+        token: ${{ secrets.PAT }}
 
-    - name: Install dependencies
-      run: npm install node-fetch
+    - name: Get tags to keep from output.json
+      id: get-tags
+      run: |
+        TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
+        echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
+        echo "TAGS TO KEEP: $TAGS"
 
-    - name: Make API request and get used tags
-      id: fetch_and_process
-      run: node '.github/workflows/ghcr_cleanup/cleanup.js'
-
-    # - name: Clean up Docker images
-    #   uses: snok/container-retention-policy@v1
-    #   with:
-    #     token: ${{ secrets.NLUN_GITHUB_PAT }}
-    #     account-type: org
-    #     org-name: Equinor
-    #     image-names: energyvision/*
-    #     skip-tags: ${{ steps.fetch_and_process.outputs.tags }}
+    - name: Clean up Docker images
+      id: delete-containers
+      uses: snok/container-retention-policy@v2
+      with:
+        token: ${{ secrets.NLUN_GITHUB_PAT }}
+        account-type: org
+        org-name: Equinor
+        image-names: energyvision/equinor/web-global
+        cut-off: one day ago UTC+2
+        keep-at-least: 5
+        # skip-tags: ${{ env.TAGS_TO_KEEP }}
+        dry-run: true
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
