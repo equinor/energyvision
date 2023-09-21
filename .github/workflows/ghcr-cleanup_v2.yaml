@@ -1,49 +1,11 @@
 name: Delete old ghrc images
 on:
   workflow_dispatch:
-  # push:
-    # paths:
-    #   - '.github/workflows/ghcr_cleanup/**'
-    #   - '.github/workflows/ghcr-cleanup_v2.yaml'
-  # schedule:
-  #   - cron: '0 0 * * *' # every day at midnight
+  schedule:
+    - cron: '0 0 * * *' # every day at midnight
 permissions:
   id-token: write
 jobs:
-  store-image-tags:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PAT }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Or any version you prefer
-
-      - name: Install dependencies
-        run: |
-          npm install js-yaml
-
-      - name: Run script for 'studio'
-        run: node ci/storeImageTags.js studio
-
-      - name: Run script for 'web'
-        run: node ci/storeImageTags.js web
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
-          git add latest-prod-tags.json
-          git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
-          git push
-
   clean-ghcr:
     name: Delete old unused container images
     runs-on: ubuntu-latest
@@ -65,23 +27,15 @@ jobs:
         echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
         echo "TAGS TO KEEP: $TAGS"
 
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Get token 🔑
-      id: get-token
-      uses: ./.github/workflows/get-auth-token/
-
-
-    # - name: Clean up Docker images
-    #   uses: snok/container-retention-policy@v1
-    #   with:
-    #     token: ${{ secrets.NLUN_GITHUB_PAT }}
-    #     keep-at-least: 5
-    #     account-type: org
-    #     org-name: Equinor
-    #     image-names: energyvision/*
-    #     skip-tags: ${{ steps.fetch_and_process.outputs.tags }}
+    - name: Clean up Docker images
+      uses: snok/container-retention-policy@v1
+      with:
+        token: ${{ secrets.NLUN_GITHUB_PAT }}
+        keep-at-least: 5
+        account-type: org
+        org-name: Equinor
+        image-names: energyvision/*
+        skip-tags: ${{ steps.fetch_and_process.outputs.tags }}
 
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
