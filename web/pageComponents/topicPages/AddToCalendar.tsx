@@ -92,7 +92,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
       id: 'add_to_calendar_aria_label',
       defaultMessage: `Add {eventTitle} to calendar`,
     },
-    { eventTitle: `'${title}'` },
+    { eventTitle: title },
   )
   return (
     <Button
