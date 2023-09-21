@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { AccordionItem } from '@chakra-ui/react'
 
 const StyledItem = styled(AccordionItem)`
-  border-bottom: 1px solid var(--grey-20);
+  border-bottom: 0.5px solid var(--grey-40);
   @media (min-width: 1300px) {
     border: 0;
   }

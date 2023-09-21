@@ -15,7 +15,7 @@ const StyledAccordion = styled(Accordion)`
 
 export const SimpleMenuWrapper = ({ children, ...rest }: MenuProps) => {
   return (
-    <StyledAccordion forwardedAs="ul" {...rest} id="menu-accordion">
+    <StyledAccordion allowToggle forwardedAs="ul" {...rest} id="menu-accordion">
       {children}
     </StyledAccordion>
   )

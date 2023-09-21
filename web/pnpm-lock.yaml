@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@chakra-ui/react':
     specifier: ^2.4.2
@@ -14,8 +18,8 @@ dependencies:
     specifier: ^11
     version: 11.0.0(@babel/core@7.21.4)(@emotion/react@11.0.0)(@types/react@18.0.9)(react@18.2.0)
   '@equinor/eds-core-react':
-    specifier: 0.32.3
-    version: 0.32.3(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9)
+    specifier: 0.32.4
+    version: 0.32.4(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9)
   '@equinor/eds-icons':
     specifier: ^0.19.1
     version: 0.19.1
@@ -3591,8 +3595,8 @@ packages:
     resolution: {integrity: sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==}
     dev: false
 
-  /@equinor/eds-core-react@0.32.3(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9):
-    resolution: {integrity: sha512-AO1UxfZ7QpU0YoQZ1OSJSdByYtGoSUiCYouudtrc/mYQ3I8CAvpcxCCF5OMwRM6z2NvOFaPJptinCfH93dGDPg==}
+  /@equinor/eds-core-react@0.32.4(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9):
+    resolution: {integrity: sha512-UTUE8TImQkVxl3srR0dOkPHTkLtmqsp+lcZz509sl3WRaGFlBseBiPgWrCTdgfT4EtAKRimmXhqsrAHllhGgJA==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
       react: '>=16.8'
@@ -3603,9 +3607,9 @@ packages:
       '@equinor/eds-icons': 0.19.3
       '@equinor/eds-tokens': 0.9.2
       '@equinor/eds-utils': 0.8.1(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9)
-      '@floating-ui/react': 0.24.8(react-dom@18.2.0)(react@18.2.0)
+      '@floating-ui/react': 0.25.1(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-virtual': 3.0.0-beta.54(react@18.2.0)
-      downshift: 7.6.2(react@18.2.0)
+      downshift: 8.1.0(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       styled-components: 5.3.9(react-dom@18.2.0)(react-is@18.1.0)(react@18.2.0)
@@ -4066,14 +4070,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@floating-ui/react@0.24.8(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-AuYeDoaR8jtUlUXtZ1IJ/6jtBkGnSpJXbGNzokBL87VDJ8opMq1Bgrc0szhK482ReQY6KZsMoZCVSb4xwalkBA==}
+  /@floating-ui/react@0.25.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lxuWxfSgDJwOeZK07PIDjTSlH0CY6LRDKo6eI0H7TnctP+5IAn0n8+npNveM0L2wNIVdAr0S8RvvoHfhzPbBAQ==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
       '@floating-ui/react-dom': 2.0.1(react-dom@18.2.0)(react@18.2.0)
-      aria-hidden: 1.2.3
+      '@floating-ui/utils': 0.1.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tabbable: 6.2.0
@@ -4411,7 +4415,7 @@ packages:
     resolution: {integrity: sha512-ZqCqEISr58Ce3U+buNFJYUktLJZOggfyvR+bZMaiV1e8B1SIvJbwZMrYz3gx/KAPn9EXmOmN+uB08yLCjWkQQg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@babel/core': 7.21.4
+      '@babel/core': 7.22.9
       '@jest/types': 29.6.1
       '@jridgewell/trace-mapping': 0.3.18
       babel-plugin-istanbul: 6.1.1
@@ -8445,7 +8449,7 @@ packages:
     dev: false
 
   /date-now@1.0.1:
-    resolution: {integrity: sha1-u30IZDjevkGCpIX7PfP7+5nWFTw=}
+    resolution: {integrity: sha512-yiizelQCqYLUEVT4zqYihOW6Ird7Qyc6fD3Pv5xGxk4+Jz0rsB1dMN2KyNV6jgOHYh5K+sPGCSOknQN4Upa3pg==}
     dev: false
 
   /debounce@1.0.0:
@@ -8759,8 +8763,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /downshift@7.6.2(react@18.2.0):
-    resolution: {integrity: sha512-iOv+E1Hyt3JDdL9yYcOgW7nZ7GQ2Uz6YbggwXvKUSleetYhU2nXD482Rz6CzvM4lvI1At34BYruKAL4swRGxaA==}
+  /downshift@8.1.0(react@18.2.0):
+    resolution: {integrity: sha512-e9EBBLZvB2G73qT272x3hExttGCH1q1usbjirm+1aMcFXuzSWhgBdbnAHPlFI2rEq61cU/kDrEIMrY+ozMhvmg==}
     peerDependencies:
       react: '>=16.12.0'
     dependencies:
@@ -11580,7 +11584,7 @@ packages:
   /lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: true
 
   /lru-cache@5.1.1:
@@ -12342,7 +12346,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: true
 
   /node-abi@3.45.0:
@@ -13231,7 +13235,7 @@ packages:
     dependencies:
       '@babel/core': 7.21.4
       '@babel/generator': 7.22.5
-      '@babel/runtime': 7.22.5
+      '@babel/runtime': 7.22.6
       ast-types: 0.14.2
       commander: 2.20.3
       doctrine: 3.0.0
@@ -13688,7 +13692,7 @@ packages:
   /regenerator-transform@0.15.1:
     resolution: {integrity: sha512-knzmNAcuyxV+gQCufkYcvOqX/qIIfHLv0u5x79kRxuGojfYVky1f15TzZEu2Avte8QGepvUNTnLskf8E6X6Vyg==}
     dependencies:
-      '@babel/runtime': 7.22.5
+      '@babel/runtime': 7.22.6
     dev: true
 
   /regex-parser@2.2.11:
@@ -15003,7 +15007,6 @@ packages:
 
   /tslib@2.6.1:
     resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}
-    dev: false
 
   /tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
@@ -15790,7 +15793,7 @@ packages:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
   /xregexp@2.0.0:
-    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
+    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
     dev: false
 
   /xtend@4.0.2:

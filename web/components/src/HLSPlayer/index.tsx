@@ -11,12 +11,20 @@ type HLSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   playButton?: boolean
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $showSpinner: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
+
+  video::-webkit-media-controls {
+    visibility: ${({ $showSpinner }) => ($showSpinner ? 'visible' : 'hidden')};
+  }
+
+  video::-webkit-media-controls-enclosure {
+    visibility: visible;
+  }
 `
 
 const StyledButton = styled.button`
@@ -66,11 +74,15 @@ export const HLSPlayer: React.FC<HLSProps> = ({
 
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
+  const [showSpinner, setShowSpinner] = useState(autoPlay)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
+  const hlsRef = useRef<Hls | null>(null)
 
   const handlePlayButton = useCallback(() => {
-    if (videoRef.current) {
+    if (videoRef.current && hlsRef.current) {
       if (videoRef.current.paused) {
+        hlsRef.current.startLoad()
+        setShowSpinner(true)
         videoRef.current.play()
         setShowPlayButton(false)
         setShowControls(true)
@@ -87,47 +99,58 @@ export const HLSPlayer: React.FC<HLSProps> = ({
     if (!video) return
 
     if (Hls.isSupported()) {
-      const hls = new Hls()
+      const hls = new Hls({
+        autoStartLoad: autoPlay, // This ensures video is not loaded automatically
+      })
+      hlsRef.current = hls
       hls.loadSource(src)
       hls.attachMedia(video)
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = src
     }
 
+    // Add play event listener
+    const handlePlayEvent = () => {
+      if (hlsRef.current) {
+        hlsRef.current.startLoad()
+        setShowSpinner(true)
+      }
+    }
+
+    video.addEventListener('play', handlePlayEvent)
+
     return () => {
       if (video) {
         video.removeAttribute('src')
       }
     }
-  }, [src])
+  }, [autoPlay, src])
 
   useEffect(() => {
     playButton && setShowControls(false)
   }, [playButton])
 
-  if (playButton) {
-    return (
-      <Wrapper>
-        <video playsInline ref={videoRef} controls={showControls} {...props} />
-        {showPlayButton && (
-          <StyledButton onClick={handlePlayButton} aria-label={isPlaying ? 'Pause' : 'Play'}>
-            <Icon
-              size={48}
-              color="white"
-              style={{ opacity: 0.8 }}
-              data={play_circle}
-              aria-label={isPlaying ? 'Pause icon' : 'Play icon'}
-            />
-          </StyledButton>
-        )}
-      </Wrapper>
-    )
-  }
-
-  if (autoPlay)
-    return (
-      <Wrapper>
-        <video playsInline autoPlay ref={videoRef} controls={false} {...props} />
+  return (
+    <Wrapper $showSpinner={showSpinner}>
+      <video
+        playsInline
+        ref={videoRef}
+        autoPlay={playButton ? false : autoPlay}
+        controls={autoPlay ? false : showControls || controls}
+        {...props}
+      />
+      {showPlayButton && (
+        <StyledButton onClick={handlePlayButton} aria-label={isPlaying ? 'Pause' : 'Play'}>
+          <Icon
+            size={48}
+            color="white"
+            style={{ opacity: 0.8 }}
+            data={play_circle}
+            aria-label={isPlaying ? 'Pause icon' : 'Play icon'}
+          />
+        </StyledButton>
+      )}
+      {!showPlayButton && autoPlay && (
         <SmallStyledButton onClick={handlePlayButton} aria-label={isPlaying ? 'Pause' : 'Play'}>
           <Icon
             size={24}
@@ -135,8 +158,7 @@ export const HLSPlayer: React.FC<HLSProps> = ({
             aria-label={isPlaying ? 'Pause icon' : 'Play icon'}
           />
         </SmallStyledButton>
-      </Wrapper>
-    )
-
-  return <video playsInline ref={videoRef} controls={controls} autoPlay={autoPlay} {...props} />
+      )}
+    </Wrapper>
+  )
 }
