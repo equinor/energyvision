@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Rule } from 'sanity'
 import { filterByLang } from '../../helpers/referenceFilters'
 import { EdsIcon, MenuIcon } from '../../icons'

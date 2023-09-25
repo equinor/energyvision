@@ -1,4 +1,3 @@
-import React from 'react'
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
 import { IconSuperScript, IconSubScript } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'

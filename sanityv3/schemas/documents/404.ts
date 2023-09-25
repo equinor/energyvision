@@ -1,4 +1,4 @@
-import { flight_land } from '@equinor/eds-icons'
+import { flight_land, collection_4 } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
@@ -6,7 +6,6 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
-import { collection_4 } from '@equinor/eds-icons'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({

@@ -1,4 +1,3 @@
-import React from 'react'
 import type { ImageWithAlt } from './imageWithAlt'
 import { HeroTypes } from '../HeroTypes'
 

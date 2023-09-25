@@ -1,3 +1,6 @@
-// {
-//   "extends": "@sanity/eslint-config-studio"
-// }
+{
+  "rules": {
+    "import/default": "off",
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}

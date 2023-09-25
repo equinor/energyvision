@@ -1,13 +1,12 @@
 import slugify from 'slugify'
 import { Reference, Rule, SlugParent, SlugSchemaType, SlugSourceContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
-import { calendar_event } from '@equinor/eds-icons'
+import { calendar_event, library_books } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { withSlugValidation } from '../validations/validateSlug'
 import SlugInput from '../components/SlugInput'
 import { SanityClient, SanityDocument } from '@sanity/client'
-import { library_books } from '@equinor/eds-icons'
 
 export default (isoCode: string, title: string) => {
   return {
