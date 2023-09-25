@@ -2,8 +2,8 @@ name: Delete old container images
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *' # every day at midnight
+  # schedule:
+  #   - cron: '0 0 * * *' # every day at midnight
 
 jobs:
   clean-ghcr:
