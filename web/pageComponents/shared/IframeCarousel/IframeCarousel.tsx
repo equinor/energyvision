@@ -10,6 +10,7 @@ import 'swiper/css/pagination'
 import CoreIFrame from '../iframe/IFrame'
 import RichText from '../portableText/RichText'
 import { Carousel } from '../../shared/Carousel'
+import { ButtonLink } from '../ButtonLink'
 
 const Container = styled.div`
   padding: var(--space-3xLarge) calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
@@ -23,10 +24,22 @@ const Container = styled.div`
 const Figure = styled.figure`
   margin: 0;
   width: 100%;
+  flex-grow: 1;
 `
 const ItemContainer = styled.div`
+  min-width: 100%;
   width: 100%;
-  min-width: 90%;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 1300px) {
+    min-width: 45%;
+    /* exactly two items */
+    :first-child:nth-last-child(2),
+    :last-child:nth-child(2) {
+      min-width: calc(50% - var(--space-medium));
+    }
+  }
 `
 
 const StyledHeading = styled(TitleText)`
@@ -42,6 +55,12 @@ const StyledItemHeading = styled(TitleText)`
   line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+`
+const StyledButtonLink = styled(ButtonLink)`
+  margin-top: var(--space-xLarge);
+`
+const StyledCoreIframe = styled(CoreIFrame)`
+  flex-grow: 1;
 `
 
 type IframeCarouselProps = {
@@ -76,7 +95,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
                   </FigureCaption>
                 </Figure>
               ) : (
-                <CoreIFrame
+                <StyledCoreIframe
                   frameTitle={item.frameTitle}
                   url={item.url}
                   cookiePolicy={item.cookiePolicy}
@@ -85,6 +104,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
                   hasSectionTitle={!!item.title}
                 />
               )}
+              {item.action && item.action.label && <StyledButtonLink action={item.action} />}
             </ItemContainer>
           ))}
         </Carousel>
