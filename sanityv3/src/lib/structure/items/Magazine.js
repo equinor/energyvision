@@ -6,7 +6,7 @@ import { EmptyItem } from './EmptyItem'
 const documentList = (S, lang) =>
   S.documentTypeList('magazine')
     .id('magazines')
-    .title('Magazines')
+    .title(`${lang.title} Magazines`)
     .filter('_type == "magazine" && (!defined(lang) || lang == $baseLang)')
     .params({ baseLang: lang.name })
     .canHandleIntent((_name, params) => {
