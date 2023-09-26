@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Argentina = ({ width = 30, height = 30 }: { width: number; height: number }) => {
   return (
     <svg width={width} xmlns="http://www.w3.org/2000/svg" version="1.0" height={height}>

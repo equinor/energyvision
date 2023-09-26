@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, forwardRef, useEffect } from 'react'
+import { ReactNode, useState, useCallback, useRef, forwardRef, useEffect } from 'react'
 import { MemberField, set, unset } from 'sanity'
 import { createPortal } from 'react-dom'
 import type { ObjectInputProps } from 'sanity'
@@ -17,7 +17,7 @@ type VideoSelector = {
 
 type VideoSelectorProps = {
   value?: VideoSelector
-  children?: React.ReactNode
+  children?: ReactNode
 } & ObjectInputProps
 
 const MEDIABANK_DOMAIN = 'https://communicationtoolbox.equinor.com'

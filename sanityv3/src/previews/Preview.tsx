@@ -1,4 +1,3 @@
-import React from 'react'
 import resolveProductionUrl from '../../resolveProductionUrl'
 import styled from 'styled-components'
 import { dataset } from '../lib/datasetHelpers'

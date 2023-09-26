@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Rule } from 'sanity'
 import { defaultLanguage } from '../../../languages'
 import { Flags } from '../../../src/lib/datasetHelpers'

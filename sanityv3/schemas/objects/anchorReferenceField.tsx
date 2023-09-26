@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React from 'react'
 import { validateAnchorReference } from '../validations/validateAnchorReference'
 import styled from 'styled-components'
 import { Rule } from 'sanity'

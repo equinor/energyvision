@@ -6,22 +6,19 @@ import { HLSVideoComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(
-    --iframe-innerPadding,
-    var(--space-xxLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large)
-  );
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
   margin-bottom: calc(-1 * var(--space-small));
-  text-align: var(--iframe-titleAlign, left);
+  text-align: left;
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-xLarge) 0);
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: var(--space-xLarge) 0 var(--space-3xLarge) 0;
+  max-width: var(--maxViewportWidth);
   margin: auto;
 `
 
 const HeadingWrapper = styled.div`
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  max-width: var(--maxViewportWidth);
   margin: auto;
 `
 
@@ -42,7 +39,11 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
 
   return (
     <BackgroundContainer background={background} id={anchor}>
-      <HeadingWrapper>{title && <StyledHeading value={title} />}</HeadingWrapper>
+      {title && (
+        <HeadingWrapper>
+          <StyledHeading value={title} />
+        </HeadingWrapper>
+      )}
       <Container>
         <Carousel>
           {items.map((item) => (

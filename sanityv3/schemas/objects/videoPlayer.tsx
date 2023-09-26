@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { play_circle } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 

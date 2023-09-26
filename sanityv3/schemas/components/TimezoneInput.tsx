@@ -1,4 +1,4 @@
-import React from 'react'
+import { FormEvent } from 'react'
 
 import { useId } from '@reach/auto-id'
 import { Select } from '@sanity/ui'
@@ -8,7 +8,7 @@ import { set, unset, StringInputProps } from 'sanity'
 const TimezoneInput = (props: StringInputProps) => {
   const { value = '', onChange, elementProps } = props
   const id = useId()
-  const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
+  const handleChange = (event: FormEvent<HTMLSelectElement>) => {
     onChange(event.currentTarget.value === '' ? unset() : set(event.currentTarget.value))
   }
 
