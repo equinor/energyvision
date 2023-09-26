@@ -15,7 +15,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -26,7 +26,7 @@ jobs:
           python ci/promoteAllToProduction.py web
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy all web sites to production"
@@ -85,11 +85,11 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PADMS_PAT }}
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Or any version you prefer
+          node-version: '14' # Or any version you prefer
 
       - name: Install dependencies
         run: |
@@ -102,7 +102,7 @@ jobs:
         run: |
           git config --global user.name 'github'
           git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push
