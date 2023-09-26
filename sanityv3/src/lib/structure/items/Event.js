@@ -6,9 +6,9 @@ import { EmptyItem } from './EmptyItem'
 const documentList = (S, lang) =>
   S.documentTypeList('event')
     .id('events')
-    .title('Events')
+    .title(`${lang.title} Events`)
     .filter('_type == "event" && (!defined(lang) || lang == $baseLang)')
-    .params({ baseLang: lang.iso })
+    .params({ baseLang: lang.name })
     .canHandleIntent((_name, params) => {
       // Assume we can handle all intents (actions) regarding post documents
       return params.type === 'event'
