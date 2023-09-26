@@ -1,8 +1,18 @@
 import { TopicDocuments } from '../../../../icons'
-import { defaultLanguage } from '../../../../languages'
-import { i18n } from '../../../../schemas/documentTranslation'
+import { languages } from '../../../../languages'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
+
+const documentList = (S, lang) =>
+  S.documentTypeList('event')
+    .id('events')
+    .title('Events')
+    .filter('_type == "event" && (!defined(lang) || lang == $baseLang)')
+    .params({ baseLang: lang.iso })
+    .canHandleIntent((_name, params) => {
+      // Assume we can handle all intents (actions) regarding post documents
+      return params.type === 'event'
+    })
 
 export const Event = (S) =>
   Flags.HAS_EVENT
@@ -11,14 +21,16 @@ export const Event = (S) =>
         .icon(TopicDocuments)
         .schemaType('event')
         .child(
-          S.documentTypeList('event')
-            .id('events')
+          S.list()
             .title('Events')
-            .filter('_type == "event" && (!defined(lang) || lang == $baseLang)')
-            .params({ baseLang: defaultLanguage.iso })
-            .canHandleIntent((_name, params) => {
-              // Assume we can handle all intents (actions) regarding post documents
-              return params.type === 'event'
-            }),
+            .items(
+              languages.map((it) =>
+                S.listItem(`${it.title} events`)
+                  .title(`${it.title} events`)
+                  .id(`${it.iso}_events`)
+                  .icon(TopicDocuments)
+                  .child(() => documentList(S, it)),
+              ),
+            ),
         )
     : EmptyItem
