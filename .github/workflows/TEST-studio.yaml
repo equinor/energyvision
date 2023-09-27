@@ -81,7 +81,7 @@ jobs:
           python -m pip install --user ruamel.yaml
           python ci/upgradeEnvironment.py studio ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
           git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
+          git config --global user.email 'padms@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then

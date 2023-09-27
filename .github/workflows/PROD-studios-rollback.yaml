@@ -40,7 +40,7 @@ jobs:
           set -u
           set -o pipefail
           set -x
-          TOKEN=$(curl -u nilsml:${{ secrets.PADMS_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
+          TOKEN=$(curl -u padms:${{ secrets.PADMS_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
           statusCode=$(curl --head --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/studio-global/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
           then
@@ -214,7 +214,7 @@ jobs:
           python -m pip install --user ruamel.yaml
           python ci/upgradeEnvironment.py studio ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
           git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
+          git config --global user.email 'padms@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
