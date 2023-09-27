@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { forwardRef } from 'react'
-import { Typography } from '@equinor/eds-core-react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
 import { default as NextLink } from 'next/link'
@@ -23,15 +22,6 @@ const FooterTop = styled.div`
   padding: 0 var(--layout-paddingHorizontal-small) var(--space-medium);
   @media (max-width: 750px) {
     flex-direction: column;
-  }
-`
-
-const CompanyName = styled(Typography)`
-  text-align: center;
-  font-size: var(--typeScale-small);
-  color: white;
-  @media (max-width: 750px) {
-    text-align: left;
   }
 `
 const LinkHeader = styled.h3`
