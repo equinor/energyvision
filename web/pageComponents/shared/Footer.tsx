@@ -24,6 +24,7 @@ const FooterTop = styled.div`
     flex-direction: column;
   }
 `
+
 const LinkHeader = styled.h3`
   font-size: var(--typeScale-2);
   color: var(--white-100);
