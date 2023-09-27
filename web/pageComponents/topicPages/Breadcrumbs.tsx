@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { default as NextLink } from 'next/link'
 import { BreadcrumbsList, getBackgroundByColorName, Link } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -92,11 +91,9 @@ export const Breadcrumbs = ({
 
           return (
             <BreadcrumbsListItem key={item.slug}>
-              <NextLink href={item.slug} passHref legacyBehavior>
-                <Link variant="regular" underline={false}>
-                  {item.label}
-                </Link>
-              </NextLink>
+              <Link href={item.slug} variant="regular" underline={false}>
+                {item.label}
+              </Link>
             </BreadcrumbsListItem>
           )
         })}

@@ -1,5 +1,4 @@
 import { Card, FormattedDate } from '@components'
-import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { CardData } from '../../types/types'
@@ -53,62 +52,59 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
   if (!heroImage) return null
 
   return (
-    <NextLink href={slug} passHref legacyBehavior>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <StyledLink {...rest}>
-        <StyledCard
-          style={
-            {
-              '--height': fitToContent ? 'auto' : '100%',
-            } as CSSProperties
-          }
-        >
-          <Media>
-            {heroImage && (
-              <Image
-                image={heroImage.image}
-                maxWidth={400}
-                aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-              />
-            )}
-          </Media>
-          <Header>
-            {publishDateTime && (
-              <Eyebrow>
-                <FormattedDate
-                  datetime={publishDateTime}
-                  style={{ textTransform: 'uppercase', marginBottom: 'var(--space-xSmall)' }}
-                />
-              </Eyebrow>
-            )}
-            <StyledTitle>
-              <>{title}</>
-            </StyledTitle>
-          </Header>
-          {ingress && (
-            <StyledWrapper>
-              <RichText
-                value={ingress}
-                components={{
-                  block: {
-                    normal: ({ children }) => {
-                      return <StyledIngress>{children}</StyledIngress>
-                    },
-                    smallText: ({ children }) => {
-                      return <StyledIngress>{children}</StyledIngress>
-                    },
-                  },
-                }}
-              ></RichText>
-            </StyledWrapper>
+    <StyledLink href={slug} {...rest}>
+      <StyledCard
+        style={
+          {
+            '--height': fitToContent ? 'auto' : '100%',
+          } as CSSProperties
+        }
+      >
+        <Media>
+          {heroImage && (
+            <Image
+              image={heroImage.image}
+              maxWidth={400}
+              aspectRatio={Ratios.NINE_TO_SIXTEEN}
+              sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+            />
           )}
-          <Action>
-            <Arrow />
-          </Action>
-        </StyledCard>
-      </StyledLink>
-    </NextLink>
+        </Media>
+        <Header>
+          {publishDateTime && (
+            <Eyebrow>
+              <FormattedDate
+                datetime={publishDateTime}
+                style={{ textTransform: 'uppercase', marginBottom: 'var(--space-xSmall)' }}
+              />
+            </Eyebrow>
+          )}
+          <StyledTitle>
+            <>{title}</>
+          </StyledTitle>
+        </Header>
+        {ingress && (
+          <StyledWrapper>
+            <RichText
+              value={ingress}
+              components={{
+                block: {
+                  normal: ({ children }) => {
+                    return <StyledIngress>{children}</StyledIngress>
+                  },
+                  smallText: ({ children }) => {
+                    return <StyledIngress>{children}</StyledIngress>
+                  },
+                },
+              }}
+            ></RichText>
+          </StyledWrapper>
+        )}
+        <Action>
+          <Arrow />
+        </Action>
+      </StyledCard>
+    </StyledLink>
   )
 }
 

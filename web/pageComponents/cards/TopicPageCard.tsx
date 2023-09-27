@@ -1,6 +1,5 @@
 import { Card } from '@components'
 import { toPlainText } from '@portabletext/react'
-import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import Image, { Ratios } from '../shared/SanityImage'
@@ -35,40 +34,37 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
   const pageTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
-    <NextLink href={slug} passHref legacyBehavior>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <StyledLink {...rest}>
-        <StyledCard
-          style={
-            {
-              '--height': fitToContent ? 'auto' : '100%',
-            } as CSSProperties
-          }
-        >
-          <Media>
-            {thumbnail && (
-              <Image
-                image={thumbnail}
-                maxWidth={400}
-                aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-              />
-            )}
-          </Media>
-          <Header>
-            <Title>{pageTitle}</Title>
-          </Header>
-          {ingress && (
-            <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
-              <RichText value={ingress}></RichText>
-            </Text>
+    <StyledLink href={slug} {...rest}>
+      <StyledCard
+        style={
+          {
+            '--height': fitToContent ? 'auto' : '100%',
+          } as CSSProperties
+        }
+      >
+        <Media>
+          {thumbnail && (
+            <Image
+              image={thumbnail}
+              maxWidth={400}
+              aspectRatio={Ratios.NINE_TO_SIXTEEN}
+              sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+            />
           )}
-          <Action>
-            <Arrow />
-          </Action>
-        </StyledCard>
-      </StyledLink>
-    </NextLink>
+        </Media>
+        <Header>
+          <Title>{pageTitle}</Title>
+        </Header>
+        {ingress && (
+          <Text style={{ marginTop: 'calc(var(--space-small) * -1)' }}>
+            <RichText value={ingress}></RichText>
+          </Text>
+        )}
+        <Action>
+          <Arrow />
+        </Action>
+      </StyledCard>
+    </StyledLink>
   )
 }
 
