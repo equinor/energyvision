@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { default as NextLink } from 'next/link'
 import Image from '../SanityImage'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
@@ -70,11 +69,9 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const linkLocale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink href={url} locale={Flags.IS_DEV ? linkLocale : undefined} passHref legacyBehavior>
-        <Link variant="readMore" aria-label={ariaLabel} {...rest}>
-          {action.label}
-        </Link>
-      </NextLink>
+      <Link href={url} locale={linkLocale} variant="readMore" aria-label={ariaLabel} {...rest}>
+        {action.label}
+      </Link>
     )
   }
   return (

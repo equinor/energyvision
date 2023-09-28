@@ -1,5 +1,4 @@
 /* eslint-disable import/no-unresolved */
-import React from 'react'
 import { InlineImageFullWidth, InlineImageLeftAlign, InlineImageRightAlign } from '../../icons'
 import { RadioIconSelector } from '../components'
 import type { ImageWithAlt } from './imageWithAlt'

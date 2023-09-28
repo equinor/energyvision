@@ -1,4 +1,3 @@
-import React from 'react'
 import type { IconData } from '@equinor/eds-icons'
 
 type IconProps = {

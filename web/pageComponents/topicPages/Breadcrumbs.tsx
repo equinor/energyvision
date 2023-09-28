@@ -115,6 +115,7 @@ export const Breadcrumbs = ({
               <StyledNextLink href={item.slug} $bgColor={containerStyles.backgroundColor}>
                 {item.label}
               </StyledNextLink>
+
             </BreadcrumbsListItem>
           )
         })}

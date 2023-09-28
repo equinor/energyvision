@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Rule, ValidationContext } from 'sanity'
 import TimeInput, { EMPTY, INVALID_TIME_FORMAT } from '../components/TimeInput'
 import TimezoneInput from '../components/TimezoneInput'

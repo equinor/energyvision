@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { HTMLAttributes, useContext } from 'react'
 import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 import styled from 'styled-components'
 import RequestConsentContainer from './RequestConsentContainer'
@@ -35,7 +35,7 @@ type IFrameProps = {
   height?: number
   aspectRatio: string
   hasSectionTitle: boolean
-}
+} & HTMLAttributes<HTMLElement>
 
 const IFrame = ({
   hasSectionTitle = true,
@@ -44,6 +44,7 @@ const IFrame = ({
   cookiePolicy = 'none',
   aspectRatio,
   height,
+  className,
 }: IFrameProps) => {
   const { isPreview } = useContext(PreviewContext)
 
@@ -61,7 +62,7 @@ const IFrame = ({
 
   return (
     <>
-      <div className={`cookieconsent-optin-${cookiePolicy}`}>
+      <div className={`cookieconsent-optin-${cookiePolicy}  ${className}`}>
         <IFrameContainer aspectRatioPadding={containerPadding}>
           <StyledIFrame
             allowFullScreen

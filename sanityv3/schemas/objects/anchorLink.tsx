@@ -5,7 +5,6 @@ import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'
 import styled from 'styled-components'
-import React from 'react'
 
 export type AnchorLink = {
   _type: 'anchorLink'

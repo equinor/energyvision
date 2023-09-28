@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 import styled from 'styled-components'
-import NextLink from 'next/link'
 import RichText from '../portableText/RichText'
 import { Link, List, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
@@ -94,10 +93,9 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                   <RichText value={intro} />
                 </TextContainer>
               )}
-
-              <NextLink href={topLevelHref} passHref legacyBehavior>
-                <ReadMore variant="readMore">{topLevelLink?.label}</ReadMore>
-              </NextLink>
+              <ReadMore href={topLevelHref} variant="readMore">
+                {topLevelLink?.label}
+              </ReadMore>
             </StyledSection>
             {groups && groups.length > 0 && (
               <SubMenuGroups>
@@ -112,9 +110,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                       <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                         {groupItem.links?.map((link: MenuLinkData) => (
                           <StyledItem key={link.id}>
-                            <NextLink href={getLink(link)} passHref legacyBehavior>
-                              <StyledSubMenuGroupLink underline={false}>{link.label}</StyledSubMenuGroupLink>
-                            </NextLink>
+                            <StyledSubMenuGroupLink href={getLink(link)}>{link.label}</StyledSubMenuGroupLink>
                           </StyledItem>
                         ))}
                       </SubMenuGroupList>

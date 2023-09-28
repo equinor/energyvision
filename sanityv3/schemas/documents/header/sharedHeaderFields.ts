@@ -125,6 +125,7 @@ const heroImage = {
   title: 'Hero image',
   name: 'heroFigure',
   type: 'imageWithAltAndCaption',
+  description: 'Caption and credit is not shown for 50-50 banner.',
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as DocumentType

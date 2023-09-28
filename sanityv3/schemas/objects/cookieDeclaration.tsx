@@ -1,4 +1,3 @@
-import React from 'react'
 import { table_chart } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'

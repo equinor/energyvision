@@ -6,7 +6,7 @@ import NextLink from 'next/link'
 
 const { outline } = Tokens
 
-const StyledLogoLink = styled.a<LogoLinkProps>`
+const StyledLogoLink = styled(NextLink)<LogoLinkProps>`
   justify-self: left;
   display: flex;
   align-items: center;
@@ -36,11 +36,8 @@ type LogoLinkProps = {
 
 export const LogoLink = ({ inverted = false, ...rest }: LogoLinkProps) => {
   return (
-    <NextLink href="/" passHref legacyBehavior>
-      {/*  Localize text */}
-      <StyledLogoLink inverted={inverted} aria-label="Equinor home page" {...rest}>
-        <AlignedLogoSecondary inverted={inverted} />
-      </StyledLogoLink>
-    </NextLink>
+    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest}>
+      <AlignedLogoSecondary inverted={inverted} />
+    </StyledLogoLink>
   )
 }

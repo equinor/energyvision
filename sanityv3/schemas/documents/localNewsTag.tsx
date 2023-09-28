@@ -1,4 +1,3 @@
-import React from 'react'
 import { languages } from '../../languages'
 import type { CurrentUser } from 'sanity'
 import styled from 'styled-components'

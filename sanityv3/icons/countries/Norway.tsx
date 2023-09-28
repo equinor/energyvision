@@ -1,6 +1,3 @@
-/* eslint max-len: off */
-import React from 'react'
-
 const Norway = ({ width = 30, height = 30 }: { width: number; height: number }) => {
   return (
     <svg

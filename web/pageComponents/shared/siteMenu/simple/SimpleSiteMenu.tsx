@@ -9,7 +9,6 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
 import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
-import NextLink from 'next/link'
 import { getAllSitesLink } from '../../../../common/helpers/getAllSitesLink'
 
 import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
@@ -91,18 +90,14 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       }
                       return (
                         <li key={item.id}>
-                          <NextLink href={(item.link && item.link.slug) || '/'} passHref legacyBehavior>
-                            <MenuLink variant="contentLink"> {item.label} </MenuLink>
-                          </NextLink>
+                          <MenuLink href={(item.link && item.link.slug) || '/'}> {item.label} </MenuLink>
                         </li>
                       )
                     }
                   })}
-                  <NextLink href={allSitesURL} passHref legacyBehavior>
-                    <AllSitesLink>
-                      <FormattedMessage id="all_sites" defaultMessage="All sites" />
-                    </AllSitesLink>
-                  </NextLink>
+                  <AllSitesLink href={allSitesURL}>
+                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                  </AllSitesLink>
                 </SimpleMenuWrapper>
               </MenuContainer>
             </nav>

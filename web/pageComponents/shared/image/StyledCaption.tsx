@@ -25,10 +25,12 @@ const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
 `
 
 export const StyledCaption = ({ attribution, caption, background }: CaptionProps) => {
-  return (
+  return caption || attribution ? (
     <CaptionWrapper background={background}>
       <CaptionWithPadding $bgColor={background} attribution={attribution} caption={caption} />
     </CaptionWrapper>
+  ) : (
+    <></>
   )
 }
 

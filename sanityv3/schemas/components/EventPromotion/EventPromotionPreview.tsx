@@ -14,7 +14,8 @@ type EventPromotionPreviewProps = {
 } & PreviewProps
 
 export const EventPromotionPreview = (props: EventPromotionPreviewProps) => {
-  const { manuallySelectEvents, promotedEvents, promotePastEvents, pastEventsCount, useTags, tags } = props
+  const { manuallySelectEvents, promotedEvents, promotePastEvents, pastEventsCount, useTags, tags, renderDefault } =
+    props
   const [title, setTitle] = useState('Event promotion')
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export const EventPromotionPreview = (props: EventPromotionPreviewProps) => {
   return (
     <Flex align="center">
       <Box flex={1}>
-        {props.renderDefault({ ...props, title: title, subtitle: 'Event promotion', media: EdsIcon(calendar_event) })}
+        {renderDefault({ ...props, title: title, subtitle: 'Event promotion', media: EdsIcon(calendar_event) })}
       </Box>
 
       {manuallySelectEvents ? (
