@@ -13,7 +13,6 @@ export const BaseLink = styled.a`
   display: inline-flex;
   align-items: center;
   color: var(--slate-blue-95);
-  text-decoration: var(--textDecoration);
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
@@ -141,7 +140,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       style={
         {
           ...style,
-          '--textDecoration': underline ? 'underline' : 'none',
+          textDecoration: underline ? 'underline' : 'none',
         } as CSSProperties
       }
       {...rest}
