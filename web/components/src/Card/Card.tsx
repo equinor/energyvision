@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 import { LandscapeCard } from './LandscapeCard'
 import { PortraitCard } from './PortraitCard'
+import { default as NextLink } from 'next/link'
 
 const { outline } = Tokens
 
@@ -13,7 +14,7 @@ export type CardProps = {
   orientation?: 'landscape' | 'portrait'
 } & HTMLAttributes<HTMLDivElement>
 
-export const CardLink = styled.a`
+export const CardLink = styled(NextLink)`
   text-decoration: none;
   color: inherit;
   &:hover {

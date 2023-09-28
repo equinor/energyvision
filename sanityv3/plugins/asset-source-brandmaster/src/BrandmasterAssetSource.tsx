@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
+import { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
 import styled from 'styled-components'

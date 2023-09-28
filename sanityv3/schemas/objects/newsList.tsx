@@ -1,4 +1,3 @@
-import React from 'react'
 import { defaultLanguage } from '../../languages'
 import { EdsIcon } from '../../icons'
 import { list } from '@equinor/eds-icons'

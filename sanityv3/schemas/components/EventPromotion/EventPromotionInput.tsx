@@ -27,7 +27,7 @@ const InlinePreview = ({ value }: { value: EventPromotion | undefined }) => {
 }
 
 export const EventPromotionInput = (props: EventPromotionInputProps) => {
-  const { value, members, renderField, renderInput, renderItem, renderPreview, onChange } = props
+  const { value, members, renderField, renderInput, renderItem, renderPreview, onChange, renderDefault } = props
 
   const useTags = getObjectMemberField(members, 'useTags')
   const promotePastEvents = getObjectMemberField(members, 'promotePastEvents')
@@ -36,7 +36,7 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
   const promotedEvents = getObjectMemberField(members, 'promotedEvents')
 
   if (!promotePastEvents || !pastEventsCount || !useTags || !selectedTags || !promotedEvents)
-    return props.renderDefault(props)
+    return renderDefault(props)
 
   return (
     <Stack space={4}>

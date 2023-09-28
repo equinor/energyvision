@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, Link, Button } from '@components'
+import { Topbar, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -65,7 +65,7 @@ const ControlsContainer = styled.div`
   }
 `
 
-const StyledAllSites = styled(Link)`
+const StyledAllSites = styled(NextLink)`
   cursor: pointer;
   font-size: var(--typeScale-1);
   text-decoration: none;
@@ -130,11 +130,9 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <NextLink href={allSitesURL} passHref legacyBehavior>
-      <StyledAllSites>
-        <FormattedMessage id="all_sites" defaultMessage="All Sites" />
-      </StyledAllSites>
-    </NextLink>
+    <StyledAllSites href={allSitesURL}>
+      <FormattedMessage id="all_sites" defaultMessage="All Sites" />
+    </StyledAllSites>
   )
 }
 
@@ -173,7 +171,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
           >
             {hasSearch && (
               <ControlChild>
-                <NextLink href="/search" passHref legacyBehavior>
+                <NextLink href="/search">
                   <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
                     <Icon size={24} data={search} />
                   </StyledSearchButton>

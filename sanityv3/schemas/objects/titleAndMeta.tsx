@@ -1,8 +1,7 @@
 import { useCallback } from 'react'
 import { Stack, TextArea, Label } from '@sanity/ui'
-import { set, unset } from 'sanity'
+import { set, unset, Rule } from 'sanity'
 import { SchemaType } from '../../types'
-import { Rule } from 'sanity'
 
 export const TextAreaWithChars = (props: any) => {
   const { elementProps, onChange, value = '' } = props

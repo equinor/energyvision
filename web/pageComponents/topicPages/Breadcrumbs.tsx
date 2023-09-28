@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { BreadcrumbsList, getBackgroundByColorName, Link } from '@components'
+import { BreadcrumbsList, getBackgroundByColorName, getFontColorForBg } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
@@ -30,6 +30,22 @@ const Container = styled.div<{ $containerStyles?: ContainerStyles }>`
     }
     return { ...hasTopMargin, ...bgColor }
   }}
+`
+
+const StyledBreadcrumbsList = styled(BreadcrumbsList)<{ $bgColor?: BackgroundColours }>`
+  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
+`
+
+const StyledBreadcrumbsListItem = styled(BreadcrumbsListItem)<{ $bgColor?: BackgroundColours }>`
+  &:last-child {
+    color: ${({ $bgColor }) =>
+      getFontColorForBg($bgColor) === 'var(--inverted-text)' ? 'var(--grey-30)' : 'var(--slate-blue-90)'};
+  }
+`
+
+const StyledNextLink = styled(NextLink)<{ $bgColor?: BackgroundColours }>`
+  text-decoration: none;
+  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
 `
 
 type BreadcrumbsProps = {
@@ -84,23 +100,26 @@ export const Breadcrumbs = ({
 
   return (
     <Container $containerStyles={containerStyles}>
-      <BreadcrumbsList>
+      <StyledBreadcrumbsList $bgColor={containerStyles.backgroundColor}>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
-            return <BreadcrumbsListItem key={item.slug}>{item.label}</BreadcrumbsListItem>
+            return (
+              <StyledBreadcrumbsListItem $bgColor={containerStyles.backgroundColor} key={item.slug}>
+                {item.label}
+              </StyledBreadcrumbsListItem>
+            )
           }
 
           return (
             <BreadcrumbsListItem key={item.slug}>
-              <NextLink href={item.slug} passHref legacyBehavior>
-                <Link variant="regular" underline={false}>
-                  {item.label}
-                </Link>
-              </NextLink>
+              <StyledNextLink href={item.slug} $bgColor={containerStyles.backgroundColor}>
+                {item.label}
+              </StyledNextLink>
+
             </BreadcrumbsListItem>
           )
         })}
-      </BreadcrumbsList>
+      </StyledBreadcrumbsList>
       <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
     </Container>
   )

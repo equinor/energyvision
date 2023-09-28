@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Rule, Reference } from 'sanity'
 
 export type DownloadableImage = {

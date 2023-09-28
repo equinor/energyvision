@@ -14,13 +14,13 @@ import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, left);
+  padding: 0 0 var(--space-large) 0;
+  text-align: left;
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
   margin: auto;
 `
 
@@ -87,6 +87,10 @@ const ButtonWrapper = styled.div`
 const StyledHLSPlayer = styled(HLSPlayer)`
   object-fit: cover;
   width: inherit;
+
+  :fullscreen {
+    object-fit: contain;
+  }
 `
 
 const getThumbnailRatio = (aspectRatio: string, height?: number) => {

@@ -22,8 +22,8 @@ const Container = styled.div`
 `
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, left);
+  padding: 0 0 var(--space-large) 0;
+  text-align: left;
 `
 
 type ImageCarouselProps = {

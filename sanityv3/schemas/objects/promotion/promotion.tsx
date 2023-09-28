@@ -14,8 +14,7 @@ import { Flags } from '../../../src/lib/datasetHelpers'
 const horizontalScrollValidation = (context: Promotion): true | ValidationError => {
   const { promotion, useHorizontalScroll } = context
   const promo = promotion[0]
-  const numberOfItems = promo._type === 'promoteTopics' ? promo.references.length : promo.promotedArticles.length
-
+  const numberOfItems = promo._type === 'promoteTopics' ? promo.references?.length : promo.promotedArticles?.length
   const MIN = 3
   const MAX = useHorizontalScroll ? 6 : 3
 

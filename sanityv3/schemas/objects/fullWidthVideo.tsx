@@ -1,13 +1,8 @@
 import { play_circle } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-
-import { configureTitleBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
 import { ImageWithAlt } from './imageWithAlt'
-
-const titleContentType = configureTitleBlockContent()
 
 export default {
   name: 'fullWidthVideo',

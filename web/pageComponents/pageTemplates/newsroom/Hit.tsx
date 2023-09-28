@@ -7,7 +7,7 @@ import { PortableTextBlock } from '@portabletext/types'
 
 const { outline } = Tokens
 
-const StyledHitLink = styled.a`
+const StyledHitLink = styled(NextLink)`
   padding: var(--space-small) 0;
   display: block;
   color: var(--default-text);
@@ -47,17 +47,15 @@ const Hit = ({ hit }: { hit: any }) => {
   const pageTitle = Array.isArray(hit.pageTitle) ? toPlainText(hit.pageTitle as PortableTextBlock[]) : hit.pageTitle
 
   return (
-    <NextLink href={hit.slug} passHref legacyBehavior>
-      <StyledHitLink>
-        <article>
-          <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>
-          <StyledHeading level="h3" size="md">
-            {pageTitle}
-          </StyledHeading>
-          {/*  <Text>{hit.text}</Text> */}
-        </article>
-      </StyledHitLink>
-    </NextLink>
+    <StyledHitLink href={hit.slug}>
+      <article>
+        <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>
+        <StyledHeading level="h3" size="md">
+          {pageTitle}
+        </StyledHeading>
+        {/*  <Text>{hit.text}</Text> */}
+      </article>
+    </StyledHitLink>
   )
 }
 

@@ -10,7 +10,16 @@ import CharCounterEditor from '../components/CharCounterEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule, Block } from '@sanity/types'
 import type { ColorListValue } from 'sanity-plugin-color-list'
-import { title, frameTitle, description, cookiePolicy, aspectRatio, url, height } from './iframe/sharedIframeFields'
+import {
+  title,
+  frameTitle,
+  description,
+  cookiePolicy,
+  aspectRatio,
+  url,
+  height,
+  action,
+} from './iframe/sharedIframeFields'
 
 const ingressContentType = configureBlockContent({
   h1: false,
@@ -69,14 +78,7 @@ export default {
     aspectRatio,
     height,
     description,
-    {
-      name: 'action',
-      title: 'Link/action',
-      description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
-      type: 'array',
-      of: [{ type: 'linkSelector', title: 'Link' }],
-      validation: (Rule: Rule) => Rule.max(1),
-    },
+    action,
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

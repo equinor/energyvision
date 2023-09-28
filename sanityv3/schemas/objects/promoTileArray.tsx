@@ -1,4 +1,3 @@
-import React from 'react'
 import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule } from 'sanity'

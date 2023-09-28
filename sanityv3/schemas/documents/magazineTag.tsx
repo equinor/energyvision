@@ -1,5 +1,5 @@
 import { defaultLanguage, languages } from '../../languages'
-import { TagIcon, EdsIcon } from '../../icons'
+import { EdsIcon } from '../../icons'
 import type { Rule } from 'sanity'
 import { tag_main_equipment } from '@equinor/eds-icons'
 

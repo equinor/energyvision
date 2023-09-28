@@ -1,4 +1,3 @@
-import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import Image, { Ratios } from '../shared/SanityImage'
@@ -51,40 +50,38 @@ function getLink(linkData: MenuLinkData, label: string) {
 const SimpleCard = ({ data }: SimpleCardData) => {
   const { id, label, image } = data
   return (
-    <NextLink key={id} href={getLink(data, label)} passHref legacyBehavior>
-      <CardLink>
-        <StyledCard
-          style={
-            {
-              '--card-height': '100%',
-            } as CSSProperties
-          }
-        >
-          <Media>
-            {/*  If this i static content, we don't have an image so we will just add an empty placeholder instead */}
-            {image ? (
-              <Image
-                image={image}
-                maxWidth={400}
-                aspectRatio={Ratios.NINETEEN_TO_FORTY}
-                /* @TODO Fine tune this when the design is finished */
-                sizes="(max-width: 360px) 330px,270px"
-              />
-            ) : (
-              <RatioBox>
-                <AspectImagePlaceholder />
-              </RatioBox>
-            )}
-          </Media>
-          <Header>
-            <Heading style={{ '--size': 'var(--typeScale-05)' } as CSSProperties}>{label}</Heading>
-          </Header>
-          <Action>
-            <Arrow />
-          </Action>
-        </StyledCard>
-      </CardLink>
-    </NextLink>
+    <CardLink key={id} href={getLink(data, label)}>
+      <StyledCard
+        style={
+          {
+            '--card-height': '100%',
+          } as CSSProperties
+        }
+      >
+        <Media>
+          {/*  If this i static content, we don't have an image so we will just add an empty placeholder instead */}
+          {image ? (
+            <Image
+              image={image}
+              maxWidth={400}
+              aspectRatio={Ratios.NINETEEN_TO_FORTY}
+              /* @TODO Fine tune this when the design is finished */
+              sizes="(max-width: 360px) 330px,270px"
+            />
+          ) : (
+            <RatioBox>
+              <AspectImagePlaceholder />
+            </RatioBox>
+          )}
+        </Media>
+        <Header>
+          <Heading style={{ '--size': 'var(--typeScale-05)' } as CSSProperties}>{label}</Heading>
+        </Header>
+        <Action>
+          <Arrow />
+        </Action>
+      </StyledCard>
+    </CardLink>
   )
 }
 

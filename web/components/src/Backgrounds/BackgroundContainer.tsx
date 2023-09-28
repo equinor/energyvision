@@ -42,6 +42,39 @@ export const getBackgroundByColorName = (name: BackgroundColours) => {
   return backgrounds[styleVariant]
 }
 
+export const getHexFromColorName = (color?: BackgroundColours) => {
+  switch (color) {
+    case 'Moss Green':
+      return '#a8cfd1'
+    case 'Moss Green Light':
+      return '#f2f7f8'
+    case 'Spruce Wood':
+      return '#ffede0'
+    case 'Mist Blue':
+      return '#d7ebf4'
+    case 'Slate Blue':
+      return '#182530'
+    case 'White':
+    default:
+      return '#ffffff'
+  }
+}
+
+export function getFontColorForBg(bgColor?: BackgroundColours): string {
+  const hex = getHexFromColorName(bgColor)
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const [r, g, b] = hex
+    .replace(/^#/, '')
+    .match(/.{2}/g)!
+    .map((h) => parseInt(h, 16) / 255)
+  const luminance = [0.2126, 0.7152, 0.0722].reduce(
+    (acc, v, i) =>
+      acc + v * ([r, g, b][i] <= 0.03928 ? [r, g, b][i] / 12.92 : Math.pow(([r, g, b][i] + 0.055) / 1.055, 2.4)),
+    0,
+  )
+  return luminance > 0.5 ? 'var(--default-text)' : 'var(--inverted-text)'
+}
+
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
   { background = 'White', disableContainerWrapper = false, style, children, ...rest },
   ref,

@@ -1,6 +1,3 @@
-/* eslint max-len: off */
-import React from 'react'
-
 const GreatBritain = ({ width = 30, height = 31 }: { width: number; height: number }) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 0 30 31" width={width} height={height}>

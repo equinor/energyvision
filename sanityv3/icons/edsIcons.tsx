@@ -1,4 +1,3 @@
-import React from 'react'
 import { list, IconData } from '@equinor/eds-icons'
 
 import { SvgIcon, BlockEditorSvgIcon } from './SvgIcon'

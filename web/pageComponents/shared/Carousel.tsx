@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right } from '@equinor/eds-icons'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { outlineTemplate, Tokens } from '@utils'
+
+const { outline } = Tokens
 
 const StyledButton = styled.button`
   display: flex;
@@ -31,6 +34,9 @@ const StyledButton = styled.button`
     fill: white;
     background-color: var(--energy-red-100);
     outline: transparent;
+  }
+  &[data-focus-visible-added]:focus {
+    ${outlineTemplate(outline)}
   }
 
   @media (min-width: 520px) {
@@ -66,8 +72,8 @@ const StyledRightButton = styled(StyledButton)`
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, 0 var(--layout-paddingHorizontal-small));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: 0 var(--layout-paddingHorizontal-small);
+  max-width: var(--maxViewportWidth);
   margin: auto;
 `
 

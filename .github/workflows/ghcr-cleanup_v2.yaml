@@ -12,37 +12,37 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-    - name: Checkout internal 🛎️
-      id: checkout-internal
-      uses: actions/checkout@v3
-      with:
-        repository: 'equinor/energyvision-internal'
-        ref: main
-        token: ${{ secrets.PAT }}
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }}
 
-    - name: Get tags to keep from output.json
-      id: get-tags
-      run: |
-        TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
-        echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
-        echo "TAGS TO KEEP: $TAGS"
+      - name: Get tags to keep from output.json
+        id: get-tags
+        run: |
+          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
+          echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
+          echo "TAGS TO KEEP: $TAGS"
 
-    - name: Clean up Docker images
-      id: delete-containers
-      uses: snok/container-retention-policy@v2
-      with:
-        token: ${{ secrets.NLUN_GITHUB_PAT }}
-        account-type: org
-        org-name: Equinor
-        image-names: energyvision/equinor/web-global
-        cut-off: one day ago UTC+2
-        keep-at-least: 5
-        # skip-tags: ${{ env.TAGS_TO_KEEP }}
-        dry-run: true
+      - name: Clean up Docker images
+        id: delete-containers
+        uses: snok/container-retention-policy@v2
+        with:
+          token: ${{ secrets.PADMS_PAT }}
+          account-type: org
+          org-name: Equinor
+          image-names: energyvision/equinor/web-global
+          cut-off: one day ago UTC+2
+          keep-at-least: 5
+          # skip-tags: ${{ env.TAGS_TO_KEEP }}
+          dry-run: true
 
-    - name: log-errors-to-slack 📄
-      uses: act10ns/slack@v2
-      with:
-        status: ${{ job.status }}
-        steps: ${{ toJson(steps) }}
-      if: failure()
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
