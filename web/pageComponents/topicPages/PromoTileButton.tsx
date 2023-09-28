@@ -1,6 +1,6 @@
 import { LinkData } from '../../types/types'
 import { ButtonLink } from '../shared/ButtonLink'
-import { Card, Link } from '@components'
+import { Card } from '@components'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 
@@ -10,13 +10,10 @@ type Props = {
   template?: 'default' | 'icon'
 }
 
-const StyledLink = styled(Link)`
-  gap: var(--space-medium);
-  border-bottom: none;
-`
-
 const StyledButtonLink = styled(ButtonLink)`
   text-decoration: none;
+  gap: var(--space-medium);
+  border-bottom: none;
 `
 const Wrapper = styled.div`
   padding: 0 var(--space-medium);
@@ -25,19 +22,17 @@ const Wrapper = styled.div`
 const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: boolean }) => {
   return (
     <Wrapper>
-      <StyledButtonLink legacyBehavior action={action}>
-        <StyledLink variant="contentLink" underline={false} aria-label={action.ariaLabel}>
-          <Card.Title
-            style={
-              {
-                '--card-title-fontSize': hasImage ? 'var(--typeScale-2)' : 'var(--typeScale-4)',
-                '--card-title-fontWeight': hasImage ? '450' : '400',
-              } as CSSProperties
-            }
-          >
-            {action.label}
-          </Card.Title>
-        </StyledLink>
+      <StyledButtonLink legacyBehavior action={action} aria-label={action.ariaLabel}>
+        <Card.Title
+          style={
+            {
+              '--card-title-fontSize': hasImage ? 'var(--typeScale-2)' : 'var(--typeScale-4)',
+              '--card-title-fontWeight': hasImage ? '450' : '400',
+            } as CSSProperties
+          }
+        >
+          {action.label}
+        </Card.Title>
       </StyledButtonLink>
     </Wrapper>
   )

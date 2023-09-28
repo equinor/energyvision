@@ -1,15 +1,16 @@
 import { BackgroundColours, CaptionData } from '../../../types'
 import styled from 'styled-components'
 import { Caption } from './Caption'
-import { getBackgroundByColorName } from '@components'
+import { getBackgroundByColorName, getFontColorForBg } from '@components'
 
 type CaptionProps = CaptionData & { background?: BackgroundColours }
 
-const CaptionWithPadding = styled(Caption)`
+const CaptionWithPadding = styled(Caption)<{ $bgColor?: BackgroundColours }>`
   max-width: var(--maxViewportWidth);
   padding: 0 var(--layout-paddingHorizontal-small);
   margin-left: auto;
   margin-right: auto;
+  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
 `
 const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
   display: inline-block;
@@ -26,7 +27,7 @@ const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
 export const StyledCaption = ({ attribution, caption, background }: CaptionProps) => {
   return caption || attribution ? (
     <CaptionWrapper background={background}>
-      <CaptionWithPadding attribution={attribution} caption={caption} />
+      <CaptionWithPadding $bgColor={background} attribution={attribution} caption={caption} />
     </CaptionWrapper>
   ) : (
     <></>

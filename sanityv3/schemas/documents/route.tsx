@@ -95,15 +95,17 @@ export default (isoCode: string, title: string) => {
             _schemaType: SlugSchemaType,
             context: SlugSourceContext & { client: SanityClient },
           ) => {
-            const slug = slugify(input)
             const { client, parent } = context
             const document = parent as SlugParent & { parent: Reference }
-            const refId = document.parent._ref
-            return client
-              .fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })
-              .then((parentSlug: string) => {
-                return `${parentSlug}/${slug}`
-              })
+            const refId = document.parent?._ref
+
+            if (refId) {
+              return client
+                .fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })
+                .then((parentSlug: string) => `${parentSlug}/${slugify(input)}`)
+            } else {
+              return `/${slugify(input)}`
+            }
           },
         }),
         validation: (Rule: Rule) => Rule.required(),

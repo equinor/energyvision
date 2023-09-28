@@ -1,5 +1,4 @@
 import { Card, FormattedDate, FormattedTime } from '@components'
-import { default as NextLink } from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { toPlainText } from '@portabletext/react'
@@ -59,54 +58,51 @@ const FeaturedEventCard = ({ data, fitToContent = false, ...rest }: FeaturedEven
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
-    <NextLink href={slug} passHref legacyBehavior>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <StyledLink {...rest}>
-        <StyledCard
-          style={
-            {
-              '--height': fitToContent ? 'auto' : '100%',
-            } as CSSProperties
-          }
-        >
-          <Media></Media>
-          <Header>
-            <Title>{plainTitle}</Title>
-          </Header>
-          <Text>
-            {start && (
-              <Detail>
-                <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-0)' }} />
-              </Detail>
-            )}
-            {location && (
-              <Detail>
-                <Center>
-                  <Icon data={world} color={'var(--moss-green-100)'} /> <SmallText>{location}</SmallText>
-                </Center>
-              </Detail>
-            )}
-            {start && end ? (
-              <Detail>
-                <FormattedTime icon datetime={start} small />
-                <span>-</span>
-                <FormattedTime datetime={end} timezone small />
-              </Detail>
-            ) : (
-              <Detail>
-                <TimeIcon />
-                <SmallText style={{ marginLeft: 'var(--space-small)' }}>
-                  <FormattedMessage id="tba" defaultMessage="To be announced" />
-                </SmallText>
-              </Detail>
-            )}
-          </Text>
-          <Action>
-            <Arrow />
-          </Action>
-        </StyledCard>
-      </StyledLink>
-    </NextLink>
+    <StyledLink href={slug} {...rest}>
+      <StyledCard
+        style={
+          {
+            '--height': fitToContent ? 'auto' : '100%',
+          } as CSSProperties
+        }
+      >
+        <Media></Media>
+        <Header>
+          <Title>{plainTitle}</Title>
+        </Header>
+        <Text>
+          {start && (
+            <Detail>
+              <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-0)' }} />
+            </Detail>
+          )}
+          {location && (
+            <Detail>
+              <Center>
+                <Icon data={world} color={'var(--moss-green-100)'} /> <SmallText>{location}</SmallText>
+              </Center>
+            </Detail>
+          )}
+          {start && end ? (
+            <Detail>
+              <FormattedTime icon datetime={start} small />
+              <span>-</span>
+              <FormattedTime datetime={end} timezone small />
+            </Detail>
+          ) : (
+            <Detail>
+              <TimeIcon />
+              <SmallText style={{ marginLeft: 'var(--space-small)' }}>
+                <FormattedMessage id="tba" defaultMessage="To be announced" />
+              </SmallText>
+            </Detail>
+          )}
+        </Text>
+        <Action>
+          <Arrow />
+        </Action>
+      </StyledCard>
+    </StyledLink>
   )
 }
 

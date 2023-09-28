@@ -1,5 +1,4 @@
 import { Highlight } from './Highlight'
-import { default as NextLink } from 'next/link'
 import styled from 'styled-components'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import getConfig from 'next/config'
@@ -60,25 +59,23 @@ const NewsHit = ({ hit }: HitProps) => {
 
   return (
     <article>
-      <NextLink href={slug} passHref legacyBehavior>
-        <StyledHitLink>
-          {hit.publishDateTime && <StyledFormattedDate datetime={hit.publishDateTime} uppercase />}
-          <HitHeading level="h2" size="sm" inverted>
-            <Highlight hit={hit} attribute="pageTitle" />
-          </HitHeading>
-          {hit.ingress && (
-            <TextSnippet>
-              <Highlight hit={hit} attribute="ingress" />
-            </TextSnippet>
-          )}
-          {hit.text && (
-            <TextSnippet>
-              <Highlight hit={hit} attribute="text" />
-            </TextSnippet>
-          )}
-          <DisplayLink>{fullUrl}</DisplayLink>
-        </StyledHitLink>
-      </NextLink>
+      <StyledHitLink href={slug}>
+        {hit.publishDateTime && <StyledFormattedDate datetime={hit.publishDateTime} uppercase />}
+        <HitHeading level="h2" size="sm" inverted>
+          <Highlight hit={hit} attribute="pageTitle" />
+        </HitHeading>
+        {hit.ingress && (
+          <TextSnippet>
+            <Highlight hit={hit} attribute="ingress" />
+          </TextSnippet>
+        )}
+        {hit.text && (
+          <TextSnippet>
+            <Highlight hit={hit} attribute="text" />
+          </TextSnippet>
+        )}
+        <DisplayLink>{fullUrl}</DisplayLink>
+      </StyledHitLink>
     </article>
   )
 }

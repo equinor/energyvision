@@ -22,23 +22,18 @@ export const ButtonLink = ({ action, children, ...rest }: Props) => {
   if (type === 'internalUrl') {
     const locale = getLocaleFromName(action.link?.lang)
     return (
-      <NextLink passHref locale={locale} href={url} legacyBehavior>
+      <>
         {children || (
-          <Link aria-label={ariaLabel} {...(rest as ButtonLinkProps)}>
+          <Link locale={locale} href={url} aria-label={ariaLabel} {...(rest as ButtonLinkProps)}>
             {label}
           </Link>
         )}
-      </NextLink>
+      </>
     )
   }
 
   return children ? (
-    <NextLink
-      href={url}
-      passHref
-      legacyBehavior={(rest as LinkProps).legacyBehavior}
-      {...(rest as Omit<LinkProps, 'href'>)}
-    >
+    <NextLink href={url} {...(rest as Omit<LinkProps, 'href'>)}>
       {children}
     </NextLink>
   ) : (

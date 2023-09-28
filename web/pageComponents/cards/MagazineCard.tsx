@@ -1,5 +1,4 @@
 import { Card } from '@components'
-import { default as NextLink } from 'next/link'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
@@ -72,35 +71,32 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
   if (!thumbnail) return null
 
   return (
-    <NextLink href={slug} passHref legacyBehavior>
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <StyledLink {...rest}>
-        <StyledCard
-          style={
-            {
-              '--height': fitToContent ? 'auto' : '100%',
-            } as CSSProperties
-          }
-        >
-          <Media>{thumbnail}</Media>
-          <Header>
-            <Title>
-              <>{title}</>
-            </Title>
-          </Header>
-          <Action>
-            <Arrow />
-          </Action>
-          {tags && tags.length > 0 && (
-            <TagsContainer>
-              {tags.map((tag: string) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </TagsContainer>
-          )}
-        </StyledCard>
-      </StyledLink>
-    </NextLink>
+    <StyledLink href={slug} {...rest}>
+      <StyledCard
+        style={
+          {
+            '--height': fitToContent ? 'auto' : '100%',
+          } as CSSProperties
+        }
+      >
+        <Media>{thumbnail}</Media>
+        <Header>
+          <Title>
+            <>{title}</>
+          </Title>
+        </Header>
+        <Action>
+          <Arrow />
+        </Action>
+        {tags && tags.length > 0 && (
+          <TagsContainer>
+            {tags.map((tag: string) => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
+          </TagsContainer>
+        )}
+      </StyledCard>
+    </StyledLink>
   )
 }
 

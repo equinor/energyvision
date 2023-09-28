@@ -80,7 +80,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Modify radixconfig tag for TEST on staging branch 🗒️
         if: github.ref == 'refs/heads/staging'
         shell: bash
@@ -90,8 +90,8 @@ jobs:
           python -m pip install --user ruamel.yaml
           python ci/upgradeEnvironment.py web ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
           git config --global user.name 'github'
-          git config --global user.email 'nilsml@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/equinor/energyvision-internal
+          git config --global user.email 'padms@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy web to test with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty

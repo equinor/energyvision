@@ -22,7 +22,17 @@ export type FWAsset = {
     photoAttributes: any
   }
   builtinFields: FWAttributeField[]
-  metadata: any
+  metadata: {
+    // https://learn.fotoware.com/On-Premises/Getting_started/Metadata_in_the_FotoWare_system/04_Operators_to_search_in_specific_fields/XMP_Field_code_reference
+    // Unique Document ID
+    187?: {
+      value: string
+    }
+    // Person shown in the Image
+    368?: {
+      value: string[]
+    }
+  }
   ancestors: any[]
   props: any
 }

@@ -6,10 +6,11 @@ import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import styled from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 import type { LinkType } from '../../../types/types'
+import { default as NextLink } from 'next/link'
 
 const { outline } = Tokens
 
-export const BaseLink = styled.a`
+export const BaseLink = styled(NextLink)`
   display: inline-flex;
   align-items: center;
   color: var(--slate-blue-95);
@@ -113,21 +114,23 @@ export type LinkProps = {
   type?: LinkType
   /** Some links don't have an underline, like the menu links */
   underline?: boolean
+  /** The locale for the link, required for internal URLs */
+  locale?: string
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, variant = 'regular', type = 'internalUrl', underline = true, style, ...rest },
+  { children, variant = 'regular', type = 'internalUrl', underline = true, style, href = '', ...rest },
   ref,
 ) {
   if (variant === 'contentLink') {
     return (
-      <ContentLink ref={ref} {...rest}>
+      <ContentLink href={href} ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ContentLink>
     )
   } else if (variant === 'readMore') {
     return (
-      <ReadMoreLink ref={ref} {...rest}>
+      <ReadMoreLink href={href} ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ReadMoreLink>
     )
@@ -137,6 +140,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <BaseLink
       ref={ref}
+      href={href}
       style={
         {
           ...style,
