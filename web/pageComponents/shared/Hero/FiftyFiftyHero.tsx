@@ -5,7 +5,6 @@ import TitleText from '../portableText/TitleText'
 import type { LinkData, HeroType } from '../../../types/types'
 import { BackgroundContainer, Link, Text } from '@components'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import { Flags } from '../../../common/helpers/datasetHelpers'
 import { getLocaleFromName } from '../../../lib/localization'
 
 const StyledHero = styled(BackgroundContainer)`
