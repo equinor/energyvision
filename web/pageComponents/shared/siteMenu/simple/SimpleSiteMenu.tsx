@@ -90,7 +90,10 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       }
                       return (
                         <li key={item.id}>
-                          <MenuLink href={(item.link && item.link.slug) || '/'}> {item.label} </MenuLink>
+                          <MenuLink variant="contentLink" href={(item.link && item.link.slug) || '/'}>
+                            {' '}
+                            {item.label}{' '}
+                          </MenuLink>
                         </li>
                       )
                     }

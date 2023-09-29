@@ -10,10 +10,11 @@ import { default as NextLink } from 'next/link'
 
 const { outline } = Tokens
 
-export const BaseLink = styled(NextLink)`
+export const BaseLink = styled(NextLink)<{ $textDecoration?: string }>`
   display: inline-flex;
   align-items: center;
   color: var(--slate-blue-95);
+  text-decoration: ${({ $textDecoration }) => $textDecoration || 'none'};
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
   }
@@ -144,9 +145,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       style={
         {
           ...style,
-          textDecoration: underline ? 'underline' : 'none',
         } as CSSProperties
       }
+      $textDecoration={underline ? 'underline' : 'none'}
       {...rest}
     >
       {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}
