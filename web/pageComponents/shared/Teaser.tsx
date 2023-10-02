@@ -1,4 +1,4 @@
-import { Teaser as EnvisTeaser, Link, Eyebrow, BackgroundContainer } from '@components'
+import { Teaser as EnvisTeaser, Link, Eyebrow, BackgroundContainer, Text } from '@components'
 import styled from 'styled-components'
 import IngressText from './portableText/IngressText'
 import TitleText from './portableText/TitleText'
@@ -9,6 +9,7 @@ import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 
 import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
 import { getLocaleFromName } from '../../lib/localization'
+import { BlockType } from './portableText/helpers/defaultSerializers'
 
 const { Content, Media } = EnvisTeaser
 
@@ -55,9 +56,9 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const locale = getLocaleFromName(action.link?.lang)
     return (
-        <Link href={url} locale={locale} variant="readMore" aria-label={action.ariaLabel}>
-          {action.label}
-        </Link>
+      <Link href={url} locale={locale} variant="readMore" aria-label={action.ariaLabel}>
+        {action.label}
+      </Link>
     )
   }
 
@@ -69,7 +70,7 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, action, designOptions } = data
+  const { title, overline, text, image, action, designOptions, bigTextTeaser } = data
   const { background, imageSize, imagePosition } = designOptions
 
   if ([title, overline, text, image?.asset, action].every((i) => !i)) {
@@ -92,7 +93,22 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
 
           {title && <TitleText value={title} />}
 
-          {text && <IngressText value={text} />}
+          {text && (
+            <IngressText
+              value={text}
+              components={
+                bigTextTeaser
+                  ? {
+                      block: {
+                        normal: ({ children }: { children: React.ReactNode }) => {
+                          return <Text size="big">{children}</Text>
+                        },
+                      } as BlockType,
+                    }
+                  : {}
+              }
+            />
+          )}
           {action && <TeaserAction action={action} />}
         </Content>
       </StyledEnvisTeaser>

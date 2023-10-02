@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { PortableText, PortableTextProps } from '@portabletext/react'
+import { PortableText, PortableTextProps, PortableTextReactComponents } from '@portabletext/react'
 import styled from 'styled-components'
 import { h3Heading, h2Heading, Sub, Sup, ExternalLink, InternalLink } from './components'
 import isEmpty from './helpers/isEmpty'
@@ -57,14 +56,14 @@ type IngressTextProps = {
   centered?: boolean
 } & PortableTextProps
 
-const IngressText = ({ value, centered = false, components = {}, ...props }: IngressTextProps) => (
-  <PortableText
-    value={value}
-    // eslint-disable-next-line
-    // @ts-ignore: Look into the correct way of doing this
-    components={{ ...defaultComponents(centered), ...components }}
-    {...props}
-  />
-)
+const IngressText = ({ value, centered = false, components = {}, ...props }: IngressTextProps) => {
+  return (
+    <PortableText
+      value={value}
+      components={{ ...defaultComponents(centered), ...components } as PortableTextReactComponents}
+      {...props}
+    />
+  )
+}
 
 export default IngressText
