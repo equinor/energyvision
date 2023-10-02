@@ -289,6 +289,7 @@ export type TeaserData = {
   title: PortableTextBlock[]
   text: PortableTextBlock[]
   overline?: string
+  bigTextTeaser?: boolean
   image: ImageWithAlt
   action?: LinkData
   designOptions: DesignOptions

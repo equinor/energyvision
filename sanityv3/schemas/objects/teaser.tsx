@@ -6,7 +6,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
+import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
@@ -25,7 +25,7 @@ const imageAlignmentOptions = [
   { value: 'right', icon: RightAlignedImage },
 ]
 
-const blockContentType = configureBlockContent({
+const blockConfig = {
   h1: false,
   h2: false,
   h3: false,
@@ -34,6 +34,18 @@ const blockContentType = configureBlockContent({
   externalLink: false,
   attachment: false,
   lists: false,
+}
+
+const blockContentType = configureBlockContent({ ...blockConfig })
+
+const blockContentTypeForBigText = configureBlockContent({
+  ...blockConfig,
+  smallText: false,
+  normalTextOverride: {
+    title: 'Normal',
+    value: 'normal',
+    component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '42px' }}>{children}</span>,
+  },
 })
 
 export type Teaser = {
@@ -41,11 +53,17 @@ export type Teaser = {
   overline?: string
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
+  bigTextTeaser?: boolean
+  bigText?: PortableTextBlock[]
   action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   image: ImageWithAlt
   imagePosition?: string
   imageSize?: string
   background?: ColorSelectorValue
+}
+
+type TeaserDocument = {
+  parent: Teaser
 }
 
 export default {
@@ -62,6 +80,7 @@ export default {
         collapsible: true,
         collapsed: true,
       },
+      hidden: ({ parent }: TeaserDocument) => parent.bigTextTeaser,
     },
     {
       name: 'link',
@@ -75,6 +94,11 @@ export default {
   ],
   fields: [
     {
+      title: 'Big text teaser',
+      name: 'bigTextTeaser',
+      type: 'boolean',
+    },
+    {
       name: 'overline',
       title: 'Eyebrow',
       type: 'string',
@@ -87,6 +111,7 @@ export default {
         input: CompactBlockEditor,
       },
       of: [titleContentType],
+      hidden: ({ parent }: TeaserDocument) => parent.bigTextTeaser,
     },
     {
       name: 'text',
@@ -94,7 +119,27 @@ export default {
       type: 'array',
       of: [blockContentType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
+        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+          if (!(ctx.parent as Teaser)?.bigTextTeaser) {
+            return validateCharCounterEditor(value, 600)
+          }
+          return true
+        }).warning(),
+      hidden: ({ parent }: TeaserDocument) => parent.bigTextTeaser,
+    },
+    {
+      name: 'bigText',
+      title: 'Text content',
+      type: 'array',
+      of: [blockContentTypeForBigText],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+          if ((ctx.parent as Teaser)?.bigTextTeaser) {
+            return validateCharCounterEditor(value, 600)
+          }
+          return true
+        }),
+      hidden: ({ parent }: TeaserDocument) => !parent.bigTextTeaser,
     },
     {
       name: 'action',
@@ -165,14 +210,35 @@ export default {
   preview: {
     select: {
       title: 'title',
+      text: 'text',
+      bigTextTeaser: 'bigTextTeaser',
+      bigText: 'bigText',
       image: 'image.asset',
     },
-    prepare({ title, image }: { title: PortableTextBlock[]; image: Reference }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+    prepare({
+      title,
+      text,
+      bigTextTeaser,
+      bigText,
+      image,
+    }: {
+      title: PortableTextBlock[]
+      text: PortableTextBlock[]
+      bigTextTeaser: boolean
+      bigText: PortableTextBlock[]
+      image: Reference
+    }) {
+      let plainTitle = undefined
+
+      if (bigTextTeaser) {
+        plainTitle = bigText ? blocksToText(bigText) : undefined
+      } else {
+        plainTitle = title || text ? blocksToText(title || text) : undefined
+      }
 
       return {
-        title: plainTitle || 'Missing title!',
-        subtitle: 'Teaser component',
+        title: plainTitle || 'Missing title/text',
+        subtitle: bigTextTeaser ? 'Big text teaser component' : 'Teaser component',
         media: image,
       }
     },
