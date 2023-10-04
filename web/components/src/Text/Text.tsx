@@ -41,7 +41,7 @@ const StyledText = styled(Typography)<StyledTextProps>`
 `
 
 export type TextProps = {
-  size?: 'regular' | 'md' | 'small' | 'big'
+  size?: 'regular' | 'md' | 'small' | 'lg'
   bold?: boolean
   italic?: boolean
   centered?: boolean
@@ -51,16 +51,18 @@ export type TextProps = {
 
 /* Should be easy enough to change later on */
 const sizes = {
+  lg: 'var(--typeScale-4_5)',
   regular: 'var(--typeScale-1)',
   md: 'var(--typeScale-2)',
   small: 'var(--typeScale-0)',
-  big: 'var(--typeScale-4_5)',
 }
 
 export const Text = forwardRef<HTMLDivElement, TextProps>(function Text(
   { size = 'regular', style, children, inverted = false, ...rest },
   ref,
 ) {
+  if (size === 'lg') console.log(ref)
+
   return (
     <StyledText
       ref={ref}
