@@ -89,25 +89,25 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
           {image?.asset && <TeaserImage image={image} />}
         </Media>
         <Content>
-          {overline && <Eyebrow>{overline}</Eyebrow>}
-
-          {title && <TitleText value={title} />}
-
-          {text && (
-            <IngressText
-              value={text}
-              components={
-                bigTextTeaser
-                  ? {
-                      block: {
-                        normal: ({ children }: { children: React.ReactNode }) => {
-                          return <Text size="big">{children}</Text>
-                        },
-                      } as BlockType,
-                    }
-                  : {}
-              }
-            />
+          {bigTextTeaser ? (
+            text && (
+              <IngressText
+                value={text}
+                components={{
+                  block: {
+                    normal: ({ children }: { children: React.ReactNode }) => {
+                      return <Text size="lg">{children}</Text>
+                    },
+                  } as BlockType,
+                }}
+              />
+            )
+          ) : (
+            <>
+              {overline && <Eyebrow>{overline}</Eyebrow>}
+              {title && <TitleText value={title} />}
+              {text && <IngressText value={text} />}
+            </>
           )}
           {action && <TeaserAction action={action} />}
         </Content>
