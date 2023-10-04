@@ -17,9 +17,9 @@ const pageContentFields = /* groq */ `
     "id": _key,
     overline,
     title,
-    bigTextTeaser,
+    isBigText,
     "text": select(
-      bigTextTeaser =>
+      isBigText =>
         bigText[]{..., ${markDefs}},
         text[]{..., ${markDefs}}
       ),
@@ -44,10 +44,12 @@ const pageContentFields = /* groq */ `
     image,
     overline,
     title,
-    ingress[]{
-      ...,
-      ${markDefs},
-    },
+    isBigText,
+    "ingress": select(
+      isBigText =>
+        bigIngress[]{..., ${markDefs}},
+        ingress[]{..., ${markDefs}}
+      ),
     text[]{
       ...,
       ${markDefs},
