@@ -70,7 +70,7 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, action, designOptions, bigTextTeaser } = data
+  const { title, overline, text, image, action, designOptions, isBigText } = data
   const { background, imageSize, imagePosition } = designOptions
 
   if ([title, overline, text, image?.asset, action].every((i) => !i)) {
@@ -89,15 +89,13 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
           {image?.asset && <TeaserImage image={image} />}
         </Media>
         <Content>
-          {bigTextTeaser ? (
+          {isBigText ? (
             text && (
               <IngressText
                 value={text}
                 components={{
                   block: {
-                    normal: ({ children }: { children: React.ReactNode }) => {
-                      return <Text size="lg">{children}</Text>
-                    },
+                    normal: ({ children }: { children: React.ReactNode }) => <Text size="lg">{children}</Text>,
                   } as BlockType,
                 }}
               />

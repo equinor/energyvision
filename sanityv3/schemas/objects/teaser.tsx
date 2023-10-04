@@ -53,7 +53,7 @@ export type Teaser = {
   overline?: string
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
-  bigTextTeaser?: boolean
+  isBigText?: boolean
   bigText?: PortableTextBlock[]
   action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   image: ImageWithAlt
@@ -80,7 +80,7 @@ export default {
         collapsible: true,
         collapsed: true,
       },
-      hidden: ({ parent }: TeaserDocument) => parent.bigTextTeaser,
+      hidden: ({ parent }: TeaserDocument) => parent.isBigText,
     },
     {
       name: 'link',
@@ -94,8 +94,8 @@ export default {
   ],
   fields: [
     {
-      title: 'Big text teaser',
-      name: 'bigTextTeaser',
+      title: 'Big text',
+      name: 'isBigText',
       type: 'boolean',
     },
     {
@@ -111,7 +111,7 @@ export default {
         input: CompactBlockEditor,
       },
       of: [titleContentType],
-      hidden: ({ parent }: TeaserDocument) => parent.bigTextTeaser,
+      hidden: ({ parent }: TeaserDocument) => parent.isBigText,
     },
     {
       name: 'text',
@@ -120,12 +120,12 @@ export default {
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
-          if (!(ctx.parent as Teaser)?.bigTextTeaser) {
+          if (!(ctx.parent as Teaser)?.isBigText) {
             return validateCharCounterEditor(value, 600)
           }
           return true
         }).warning(),
-      hidden: ({ parent }: TeaserDocument) => parent.bigTextTeaser,
+      hidden: ({ parent }: TeaserDocument) => parent.isBigText,
     },
     {
       name: 'bigText',
@@ -134,12 +134,12 @@ export default {
       of: [blockContentTypeForBigText],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
-          if ((ctx.parent as Teaser)?.bigTextTeaser) {
+          if ((ctx.parent as Teaser)?.isBigText) {
             return validateCharCounterEditor(value, 600)
           }
           return true
         }),
-      hidden: ({ parent }: TeaserDocument) => !parent.bigTextTeaser,
+      hidden: ({ parent }: TeaserDocument) => !parent.isBigText,
     },
     {
       name: 'action',
@@ -211,34 +211,28 @@ export default {
     select: {
       title: 'title',
       text: 'text',
-      bigTextTeaser: 'bigTextTeaser',
+      isBigText: 'isBigText',
       bigText: 'bigText',
       image: 'image.asset',
     },
     prepare({
       title,
       text,
-      bigTextTeaser,
+      isBigText,
       bigText,
       image,
     }: {
       title: PortableTextBlock[]
       text: PortableTextBlock[]
-      bigTextTeaser: boolean
+      isBigText: boolean
       bigText: PortableTextBlock[]
       image: Reference
     }) {
-      let plainTitle = undefined
-
-      if (bigTextTeaser) {
-        plainTitle = bigText ? blocksToText(bigText) : undefined
-      } else {
-        plainTitle = title || text ? blocksToText(title || text) : undefined
-      }
+      const plainTitle = isBigText ? blocksToText(bigText) : blocksToText(title || text)
 
       return {
-        title: plainTitle || 'Missing title/text',
-        subtitle: bigTextTeaser ? 'Big text teaser component' : 'Teaser component',
+        title: plainTitle || 'Missing title/content',
+        subtitle: isBigText ? 'Teaser component (BIG TEXT)' : 'Teaser component',
         media: image,
       }
     },
