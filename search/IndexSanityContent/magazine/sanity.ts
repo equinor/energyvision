@@ -3,6 +3,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
+import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -90,18 +91,9 @@ export type MagazineArticle = {
   slug: string
   title: string
   ingress: string
-  textBlocks: {
-    _key: string
-    title: string
-    ingress: string
-    text: string
-  }[]
-  accordions: {
-    _key: string
-    title: string
-    ingress: string
-    text: string
-  }[]
+  type: string
+  textBlocks: MappableTextBlockType[]
+  accordions: MappableAccordionType[]
   _id: string
   magazineTags?: string[]
   heroFigure?: { image: ImageWithAlt } | ImageWithAltAndCaption
