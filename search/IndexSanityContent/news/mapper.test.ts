@@ -26,13 +26,20 @@ describe('News', () => {
             ],
           },
         ],
+        factboxes: [
+          {
+            blockKey: 'factboxkey',
+            title: 'Facts',
+            text: 'Factbox text',
+          },
+        ],
       }
 
       const sut = mapData
       const result = sut(newsArticle)
 
       it('contains one entry', () => {
-        expect(result).toHaveLength(1)
+        expect(result).toHaveLength(2)
       })
 
       it('entry looks as expected', () => {
@@ -89,13 +96,20 @@ describe('News', () => {
             ],
           },
         ],
+        factboxes: [
+          {
+            blockKey: 'factboxkey',
+            title: 'Facts',
+            text: 'Factbox text',
+          },
+        ],
       }
 
       const sut = mapData
       const result = sut(newsArticle)
 
       it('contains one entry', () => {
-        expect(result).toHaveLength(4)
+        expect(result).toHaveLength(5)
       })
 
       it('entry looks as expected', () => {
@@ -162,6 +176,7 @@ describe('News', () => {
             children: [],
           },
         ],
+        factboxes: [],
       }
 
       const sut = mapData
@@ -179,6 +194,7 @@ describe('News', () => {
         slug: '/a/slug',
         _id: 'id',
         blocks: [],
+        factboxes: [],
       }
 
       const sut = mapData

@@ -3,6 +3,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
+import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
 
 export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
@@ -18,7 +19,12 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
   "accordions": content->content[_type == "accordion"] {
     "_key": _key,
     "title": pt::text(title),
-    "ingress": pt::text(ingress)
+    "ingress": pt::text(ingress),
+    "accordionItems":accordion[]{
+      "id": _key,
+      title,
+      "content": pt::text(content)
+    }
   },
   "docToClear": ($id match content._ref || _id match $id)
 }
@@ -35,19 +41,10 @@ export type Slug = {
 export type TopicPage = {
   slug: string
   title: string
-  textBlocks: {
-    _key: string
-    title: string
-    ingress: string
-    text: string
-  }[]
-  accordions: {
-    _key: string
-    title: string
-    ingress: string
-    text: string
-  }[]
+  textBlocks: MappableTextBlockType[]
+  accordions: MappableAccordionType[]
   _id: string
+  type: string
   docToClear?: boolean
 }
 
