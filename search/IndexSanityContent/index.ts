@@ -1,6 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
 // eslint-disable-next-line import/no-named-as-default
-import { dotenv } from 'dotenv-azure'
+import DotenvAzure from 'dotenv-azure'
 import { indexEvents } from './events'
 import { indexTopic } from './topic'
 import { indexNews } from './news'
@@ -25,11 +25,10 @@ const indexTasks: {
 }
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  /* await new DotenvAzure().config({
+  await new DotenvAzure().config({
     allowEmptyValues: true,
     debug: false,
-  })*/
-  await dotenv.config()
+  })
 
   const logger = context.log
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
