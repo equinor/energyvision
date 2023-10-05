@@ -3,10 +3,11 @@ import NextLink, { LinkProps } from 'next/link'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
 import type { LinkData } from '../../types/types'
+import { cloneElement } from 'react'
 
 type Props = {
   action: LinkData
-  children?: React.ReactNode
+  children?: React.ReactElement
 } & (ButtonLinkProps | LinkProps)
 
 export const ButtonLink = ({ action, children, ...rest }: Props) => {
@@ -21,9 +22,10 @@ export const ButtonLink = ({ action, children, ...rest }: Props) => {
   // If the URL is a static AEM page it should behave as an internal link in the web
   if (type === 'internalUrl') {
     const locale = getLocaleFromName(action.link?.lang)
+    const child = children ? cloneElement(children, { href: url, locale: locale, ariaLabel: ariaLabel }) : undefined
     return (
       <>
-        {children || (
+        {child || (
           <Link locale={locale} href={url} aria-label={ariaLabel} {...(rest as ButtonLinkProps)}>
             {label}
           </Link>
