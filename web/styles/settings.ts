@@ -109,6 +109,7 @@ export const typography = css`
     /* Should probably do something more clever here */
     --lineHeight-1: inherit;
     --lineHeight-2: 1.2;
+    --lineHeight-2_5: 1.35;
     --lineHeight-3: 1.5;
 
     /* Font weights */
