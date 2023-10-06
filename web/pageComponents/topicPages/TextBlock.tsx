@@ -1,4 +1,4 @@
-import { Eyebrow, BackgroundContainer, Text } from '@components'
+import { Eyebrow, BackgroundContainer, Text, Heading } from '@components'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
@@ -73,16 +73,13 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
     <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>
         {isBigText ? (
-          ingress && (
-            <IngressText
-              value={ingress}
+          title && (
+            <TitleText
+              level="h2"
+              value={title}
               components={{
                 block: {
-                  normal: ({ children }: { children: React.ReactNode }) => (
-                    <Text lineHeight="2_5" size="lg">
-                      {children}
-                    </Text>
-                  ),
+                  normal: ({ children }: { children: React.ReactNode }) => <Heading size="2xl">{children}</Heading>,
                 } as BlockType,
               }}
             />

@@ -24,7 +24,7 @@ const ingressContentType = configureBlockContent({
   attachment: false,
 })
 
-const ingressContentTypeForBigText = configureBlockContent({
+const blockContentTypeForBigText = configureBlockContent({
   h1: false,
   h2: false,
   h3: false,
@@ -159,14 +159,14 @@ export default {
       hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
-      name: 'bigIngress',
-      title: 'Ingress',
+      name: 'bigTitle',
+      title: 'Title',
       type: 'array',
-      of: [ingressContentTypeForBigText],
+      of: [blockContentTypeForBigText],
       hidden: ({ parent }: TextBlockDocument) => !parent.isBigText,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-          !value && (ctx.parent as TextBlock)?.isBigText ? 'Ingress is required' : true,
+          !value && (ctx.parent as TextBlock)?.isBigText ? 'Title is required' : true,
         ),
     },
     {
@@ -221,22 +221,22 @@ export default {
       ingress: 'ingress',
       text: 'text',
       isBigText: 'isBigText',
-      bigIngress: 'bigIngress',
+      bigTitle: 'bigTitle',
     },
     prepare({
       title,
       isBigText,
-      bigIngress,
+      bigTitle,
       ingress,
       text,
     }: {
       title: PortableTextBlock[]
       ingress: PortableTextBlock[]
       isBigText: boolean
-      bigIngress: PortableTextBlock[]
+      bigTitle: PortableTextBlock[]
       text: PortableTextBlock[]
     }) {
-      const plainTitle = isBigText ? blocksToText(bigIngress) : blocksToText(title || ingress || text)
+      const plainTitle = isBigText ? blocksToText(bigTitle) : blocksToText(title || ingress || text)
 
       return {
         title: plainTitle || 'Missing title/content',

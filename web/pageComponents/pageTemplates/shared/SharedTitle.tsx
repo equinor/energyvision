@@ -40,7 +40,7 @@ const StyledHeading = styled(TitleText)<{ $bgColor?: BackgroundColours }>`
 const SharedTitle = ({ title, styles }: SharedTitleProps) => {
   return (
     <TitleWrapper styles={styles}>
-      <StyledHeading $bgColor={styles?.backgroundColor} value={title} level="h1" size="2xl" />
+      <StyledHeading $bgColor={styles?.backgroundColor} value={title} level="h1" size="3xl" />
     </TitleWrapper>
   )
 }

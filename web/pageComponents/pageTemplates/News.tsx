@@ -219,7 +219,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
           <NewsLayout>
             <Header>
               <HeaderInner>
-                <StyledHeading level="h1" size="2xl" inverted>
+                <StyledHeading level="h1" size="3xl" inverted>
                   {title}
                 </StyledHeading>
                 {publishDateTime && (
