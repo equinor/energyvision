@@ -95,7 +95,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                 value={text}
                 components={{
                   block: {
-                    normal: ({ children }: { children: React.ReactNode }) => <Text size="lg">{children}</Text>,
+                    normal: ({ children }: { children: React.ReactNode }) => (
+                      <Text size="lg" lineHeight="2_5">
+                        {children}
+                      </Text>
+                    ),
                   } as BlockType,
                 }}
               />

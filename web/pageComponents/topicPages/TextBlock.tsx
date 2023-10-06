@@ -78,7 +78,11 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
               value={ingress}
               components={{
                 block: {
-                  normal: ({ children }: { children: React.ReactNode }) => <Text size="lg">{children}</Text>,
+                  normal: ({ children }: { children: React.ReactNode }) => (
+                    <Text lineHeight="2_5" size="lg">
+                      {children}
+                    </Text>
+                  ),
                 } as BlockType,
               }}
             />
