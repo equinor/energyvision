@@ -189,7 +189,7 @@ const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoo
                       // @ts-ignore: Still struggling with the types here :/
                       if (isEmpty(children)) return null
                       return (
-                        <Heading level="h1" size="2xl">
+                        <Heading level="h1" size="3xl">
                           {children}
                         </Heading>
                       )

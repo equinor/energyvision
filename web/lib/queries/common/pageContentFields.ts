@@ -43,17 +43,14 @@ const pageContentFields = /* groq */ `
     "id": _key,
     image,
     overline,
-    title,
     isBigText,
-    "ingress": select(
+    "title": select(
       isBigText =>
-        bigIngress[]{..., ${markDefs}},
-        ingress[]{..., ${markDefs}}
+        bigTitle[]{..., ${markDefs}},
+        title[]{..., ${markDefs}}
       ),
-    text[]{
-      ...,
-      ${markDefs},
-    },
+    ingress[]{..., ${markDefs}},
+    text[]{..., ${markDefs}},
     "callToActions": action[]{
       ${linkSelectorFields},
       ${downloadableFileFields},

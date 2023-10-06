@@ -150,7 +150,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
         <EventLayout>
           <Header>
             <HeaderInner>
-              {title && <TitleText value={title} level="h1" size="2xl" />}
+              {title && <TitleText value={title} level="h1" size="3xl" />}
               {start && (
                 <StyledDate>
                   <FormattedDate datetime={start} />

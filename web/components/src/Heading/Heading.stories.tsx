@@ -35,7 +35,7 @@ Default.storyName = 'Default'
 
 export const HeaderLevels: StoryFn<HeadingProps> = () => (
   <Wrapper>
-    <Heading level="h1" size="2xl">
+    <Heading level="h1" size="3xl">
       Renewables and low-carbon{' '}
     </Heading>
     <Heading level="h2" size="xl">
@@ -60,10 +60,10 @@ HeaderLevels.storyName = 'Header levels'
 
 export const FontWeight: StoryFn<HeadingProps> = () => (
   <Wrapper>
-    <Heading level="h1" size="2xl">
+    <Heading level="h1" size="3xl">
       I'm bold
     </Heading>
-    <Heading level="h1" size="2xl" regular>
+    <Heading level="h1" size="3xl" regular>
       I'm regular
     </Heading>
   </Wrapper>
@@ -72,7 +72,7 @@ FontWeight.storyName = 'Font weight'
 
 FontWeight.parameters = {
   docs: {
-    storyDescription: `The largest font size, 2xl, can be either bold or regular`,
+    storyDescription: `The largest font size, 3xl, can be either bold or regular`,
   },
 }
 
@@ -93,7 +93,7 @@ export const Sizes: StoryFn<HeadingProps> = () => (
     <Heading level="h1" size="xl">
       We are all h1 headers
     </Heading>
-    <Heading level="h1" size="2xl">
+    <Heading level="h1" size="3xl">
       We are all h1 headers
     </Heading>
   </Wrapper>
@@ -122,7 +122,7 @@ export const Long: StoryFn<HeadingProps> = () => (
     <Heading level="h2" size="xl">
       Equinor is in a unique position to make a difference in the global energy future. We will seize this opportunity.
     </Heading>
-    <Heading level="h1" size="2xl">
+    <Heading level="h1" size="3xl">
       Equinor is in a unique position to make a difference in the global energy future. We will seize this opportunity.
     </Heading>
   </Wrapper>
