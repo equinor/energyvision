@@ -4,7 +4,7 @@ import { languages } from '../../../../languages'
 const documentList = (S, lang) =>
   S.documentTypeList('page')
     .id('pages')
-    .title(`${lang.title} Topic content`)
+    .title('Topic content')
     .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
     .params({ baseLang: lang.name })
     .canHandleIntent((_name, params) => {
