@@ -1,6 +1,5 @@
 import { file_description } from '@equinor/eds-icons'
 import {
-  defineType,
   Rule,
   SanityDocument,
   SlugSchemaType,

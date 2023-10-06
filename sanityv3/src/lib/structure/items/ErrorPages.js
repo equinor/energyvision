@@ -1,6 +1,6 @@
 import { FileIcon } from '../../../../icons'
 
-export const ErrorPages = [
+export const ErrorPages = (S) => [
   S.listItem()
     .title('404 - Page not found')
     .icon(FileIcon)

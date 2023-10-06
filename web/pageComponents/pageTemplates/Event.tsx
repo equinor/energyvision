@@ -32,9 +32,9 @@ const HeaderInner = styled.div`
   margin-left: auto;
   margin-right: auto;
 `
-
-const ContentWrapper = styled.div`
+const ContentWrapper = styled.div<{ iframe?: boolean }>`
   margin: var(--space-3xLarge) 0 0 0;
+  padding: ${({ iframe }) => (iframe ? '0' : '0 0 var(--space-xLarge) 0')};
 `
 
 const LeadParagraph = styled.div`
@@ -176,7 +176,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </HeaderInner>
           </Header>
           {(ingress || content) && (
-            <ContentWrapper>
+            <ContentWrapper iframe={iframe && !!iframe.title}>
               {ingress && (
                 <LeadParagraph>
                   <IngressText value={ingress}></IngressText>

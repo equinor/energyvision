@@ -87,8 +87,19 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
 
   if (!fileData) return null
   const atc = intl.formatMessage({ id: 'add_to_calendar_event', defaultMessage: 'Add to Calendar' })
+  const atcAriaLabel = intl.formatMessage(
+    {
+      id: 'add_to_calendar_aria_label',
+      defaultMessage: `Add {eventTitle} to calendar`,
+    },
+    { eventTitle: title },
+  )
   return (
-    <Button {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}>
+    <Button
+      aria-label={atcAriaLabel}
+      id="atc"
+      {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}
+    >
       {/*  <Icon data={add} /> */}
       {atc}
     </Button>

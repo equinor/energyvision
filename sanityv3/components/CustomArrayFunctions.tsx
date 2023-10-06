@@ -2,7 +2,7 @@
 // custom implementation of @sanity/form-builder/src/inputs/arrays/common/ArrayFunctions.tsx
 import { ArraySchemaType, isReferenceSchemaType } from 'sanity'
 import { AddIcon } from '@sanity/icons'
-import React, { ReactNode, useMemo, useCallback } from 'react'
+import { ReactNode, useMemo, useCallback } from 'react'
 import { Button, Grid, Menu, MenuButton, MenuItem } from '@sanity/ui'
 import { useId } from '@reach/auto-id'
 

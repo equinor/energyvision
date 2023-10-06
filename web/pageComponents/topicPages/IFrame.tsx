@@ -8,13 +8,13 @@ import TitleText from '../shared/portableText/TitleText'
 import RichText from '../shared/portableText/RichText'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, left);
+  padding: 0 0 var(--space-large) 0;
+  text-align: left;
 `
 
 const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
+  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
   margin: auto;
 `
 

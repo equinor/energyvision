@@ -20,58 +20,8 @@ const LocalNews = (S, context) => Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S, 
 const LandingPage = (S) => Flags.HAS_LANDING_PAGE && LandingPageStructure(S)
 const Event = (S) => Flags.HAS_EVENT && EventStructure(S)
 
-const ADMIN_ITEMS = (S) =>
+const ADMIN_ITEMS = (S, context) =>
   [
-    News(S),
-    LocalNews(S),
-    TopicContent(S),
-    LandingPage(S),
-    Event(S),
-    Magazine(S),
-    Misc(S),
-    S.divider(),
-    Homepage(S),
-    Routes(S),
-    S.divider(),
-    Menu(S),
-    Footer(S),
-    S.divider(),
-    AssetLibrary(S, context),
-    S.divider(),
-    Settings(S),
-  ].filter((e) => e)
-
-const SUB_EDITOR_ITEMS = (S) =>
-  [
-    News(S),
-    LocalNews(S),
-    TopicContent(S),
-    LandingPage(S),
-    Magazine(S),
-    Event(S),
-    S.divider(),
-    AssetLibrary(S, context),
-  ].filter((e) => e)
-
-const LOCAL_NEWS_EDITOR_ITEMS = (S) => [LocalNews(S)].filter((e) => e)
-
-const getItems = (S, context) => {
-  /**
-   * Datasets are not taken into consideration in order to simplify logic.
-   * This is used only to hide/show items in the UI.
-   *
-   * Drawback scenario:
-   *  An user with "Editor" access to the "brazil" dataset, and "Sub Editor" to the "argentina" dataset
-   *  will get ADMIN_ITEMS menu structure for both studios. This is acceptable because it is just
-   *  the UI menu items, the content is properly hidden and handled at sanity.io -> Access tab.
-   */
-  const userRoles = getCurrentUserRoles(context)
-  const isAdmin = userRoles.some(
-    (role) => role.startsWith('editor') || role === 'administrator' || role === 'developer',
-  )
-  const isSubEditor = userRoles.some((role) => role.startsWith('sub-editor'))
-  const isLocalNewsEditor = userRoles.some((role) => role.startsWith('local-news-editor'))
-  return [
     News(S),
     LocalNews(S, context),
     TopicContent(S),
@@ -90,12 +40,45 @@ const getItems = (S, context) => {
     S.divider(),
     Settings(S),
   ].filter((e) => e)
+
+const SUB_EDITOR_ITEMS = (S, context) =>
+  [
+    News(S),
+    LocalNews(S, context),
+    TopicContent(S),
+    LandingPage(S),
+    Magazine(S),
+    Event(S),
+    S.divider(),
+    AssetLibrary(S, context),
+  ].filter((e) => e)
+
+const LOCAL_NEWS_EDITOR_ITEMS = (S, context) => [LocalNews(S, context)].filter((e) => e)
+
+/**
+ * Datasets are not taken into consideration in order to simplify logic.
+ * This is used only to hide/show items in the UI.
+ *
+ * Drawback scenario:
+ *  An user with "Editor" access to the "brazil" dataset, and "Sub Editor" to the "argentina" dataset
+ *  will get ADMIN_ITEMS menu structure for both studios. This is acceptable because it is just
+ *  the UI menu items, the content is properly hidden and handled at sanity.io -> Access tab.
+ */
+
+const getItems = (S, context) => {
+  const userRoles = getCurrentUserRoles(context)
+  const isAdmin = userRoles.some(
+    (role) => role.startsWith('editor') || role === 'administrator' || role === 'developer',
+  )
+  const isSubEditor = userRoles.some((role) => role.startsWith('sub-editor'))
+  const isLocalNewsEditor = userRoles.some((role) => role.startsWith('local-news-editor'))
+
   if (isAdmin) {
-    return ADMIN_ITEMS(S)
+    return ADMIN_ITEMS(S, context)
   } else if (isSubEditor) {
-    return SUB_EDITOR_ITEMS(S)
+    return SUB_EDITOR_ITEMS(S, context)
   } else if (isLocalNewsEditor) {
-    return LOCAL_NEWS_EDITOR_ITEMS(S)
+    return LOCAL_NEWS_EDITOR_ITEMS(S, context)
   } else {
     return []
   }

@@ -46,7 +46,7 @@ const ActiveLocale = styled.span`
   }
 `
 
-const StyledLink = styled.a`
+const StyledLink = styled(NextLink)`
   ${SharedStyle}
   text-decoration: none;
   color: var(--grey-60);
@@ -97,9 +97,9 @@ type LocaleLinkProps = {
 const LocaleLink: React.FC<React.PropsWithChildren<LocaleLinkProps>> = ({ href, title, locale, active, children }) => {
   if (!active) {
     return (
-      <NextLink href={href} locale={locale} passHref legacyBehavior>
-        <StyledLink aria-label={title}>{children}</StyledLink>
-      </NextLink>
+      <StyledLink href={href} locale={locale} aria-label={title}>
+        {children}
+      </StyledLink>
     )
   }
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import { FormEvent, useCallback, useState } from 'react'
 import { useId } from '@reach/auto-id'
 import { ResetIcon } from '@sanity/icons'
 import { Box, Button, Flex, Select, Text } from '@sanity/ui'
@@ -46,7 +46,7 @@ type TimeType = {
 }
 
 const TimeInput = (props: ObjectInputProps<string>) => {
-  const { value, onChange, elementProps, validation } = props
+  const { value, onChange, elementProps } = props
   const [time, setTime] = useState(formatTime(value))
 
   const updateValue = useCallback(
@@ -65,14 +65,14 @@ const TimeInput = (props: ObjectInputProps<string>) => {
   )
 
   const handleHoursChange = useCallback(
-    (event: React.FormEvent<HTMLSelectElement>) => {
+    (event: FormEvent<HTMLSelectElement>) => {
       updateValue({ ...time, hours: event.currentTarget.value })
     },
     [time, updateValue],
   )
 
   const handleMinutesChange = useCallback(
-    (event: React.FormEvent<HTMLSelectElement>) => {
+    (event: FormEvent<HTMLSelectElement>) => {
       updateValue({ ...time, minutes: event.currentTarget.value })
     },
     [time, updateValue],

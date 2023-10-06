@@ -1,5 +1,4 @@
 import { Link } from '@components'
-import { default as NextLink } from 'next/link'
 import { getLocaleFromName } from '../../../../lib/localization'
 
 type InternalLinkProps = {
@@ -31,9 +30,9 @@ export const InternalLink = ({ value, children }: { value?: InternalLinkProps; c
     }
 
     return (
-      <NextLink passHref locale={linkLocale} href={href} legacyBehavior>
-        <Link>{children}</Link>
-      </NextLink>
+      <Link locale={linkLocale} href={href}>
+        {children}
+      </Link>
     )
   } catch (e) {
     console.error('Could not render internal link', children, e)

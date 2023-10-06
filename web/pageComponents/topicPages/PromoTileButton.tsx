@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: boolean }) => {
   return (
     <Wrapper>
-      <StyledButtonLink legacyBehavior action={action}>
+      <StyledButtonLink action={action}>
         <StyledLink variant="contentLink" underline={false} aria-label={action.ariaLabel}>
           <Card.Title
             style={

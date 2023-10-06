@@ -56,6 +56,11 @@ const snippets: textSnippet = {
     defaultValue: 'Details',
     group: groups.eventPromotion,
   },
+  add_to_calendar_aria_label: {
+    title: 'Add event to calendar',
+    defaultValue: `Add {eventTitle} to calendar`,
+    group: groups.eventPromotion,
+  },
   search: {
     title: 'Search',
     defaultValue: 'Search',

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useColorSchemeValue } from 'sanity'
 
 export default function FotowareIcon() {

@@ -1,5 +1,4 @@
 import { CSSProperties } from 'react'
-import { default as NextLink } from 'next/link'
 import { toPlainText } from '@portabletext/react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Card, FormattedDate, FormattedTime, ButtonLink, Heading } from '@components'
@@ -207,10 +206,10 @@ const Actions = ({
   return (
     <ActionContainer>
       <AddToCalendar eventDate={eventDate} location={location} title={title} />
-      <NextLink href={slug} passHref legacyBehavior>
-        {/*  @TODO: Language string for Details */}
-        <ButtonLink aria-label={`${details} ${title}`}>{details}</ButtonLink>
-      </NextLink>
+      {/*  @TODO: Language string for Details */}
+      <ButtonLink href={slug} aria-label={`${details} ${title}`}>
+        {details}
+      </ButtonLink>
     </ActionContainer>
   )
 }

@@ -5,6 +5,8 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 
 import { PortableTextBlock, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { EdsIcon } from '../../icons'
+import { table_chart } from '@equinor/eds-icons'
 
 export type Table = {
   _type: 'promotion'
@@ -150,25 +152,12 @@ export default {
           ],
           preview: {
             select: {
-              cellOne: 'row.0',
-              cellTwo: 'row.1',
-              cellThree: 'row.2',
-              cellFour: 'row.3',
-              numberOfCells: 'row.length',
+              cells: 'row',
             },
-            prepare({
-              cellOne,
-              cellTwo,
-              cellThree,
-              cellFour,
-              numberOfCells,
-            }: {
-              cellOne: any
-              cellTwo: any
-              cellThree: any
-              cellFour: any
-              numberOfCells: number
-            }) {
+            prepare({ cells }: { cells: any[] }) {
+              const [cellOne, cellTwo, cellThree, cellFour] = cells
+              const numberOfCells = cells.length
+
               const getText = (cellContent: any) => {
                 if (cellContent._type === 'linkSelector') {
                   return cellContent.label
@@ -214,11 +203,12 @@ export default {
       title: 'title',
     },
     prepare({ title = [] }: { title: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title.length > 0 ? blocksToText(title) : 'Table without title'
 
       return {
         title: plainTitle,
         subtitle: 'Table component',
+        media: () => EdsIcon(table_chart),
       }
     },
   },

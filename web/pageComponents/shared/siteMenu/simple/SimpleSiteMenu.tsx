@@ -9,7 +9,6 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
 import { MenuButton, Link } from '@components'
 import { SimpleMenuItem } from './SimpleMenuItem'
-import NextLink from 'next/link'
 import { getAllSitesLink } from '../../../../common/helpers/getAllSitesLink'
 
 import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
@@ -50,7 +49,6 @@ export type MenuProps = {
 const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  const [indices, setIndices] = useState<number[]>([])
   const menuItems = (data && data.groups) || []
   const intl = useIntl()
   const handleRouteChange = useCallback(() => {
@@ -64,17 +62,6 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
 
   function onMenuButtonClick() {
     setIsOpen(!isOpen)
-  }
-
-  function toggleItem(toggledIndex: number) {
-    // Small devices version
-    if (indices.includes(toggledIndex)) {
-      // This menu item is already open, so let's close it by removing it from the list
-      const expandedItems = indices.filter((currentIndex) => currentIndex !== toggledIndex)
-      return setIndices(expandedItems)
-    }
-    // Otherwise add it to the list
-    setIndices([...indices, toggledIndex])
   }
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
@@ -92,7 +79,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                 <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
               </NavTopbar>
               <MenuContainer>
-                <SimpleMenuWrapper index={indices} onChange={toggleItem}>
+                <SimpleMenuWrapper>
                   {menuItems?.map((item: SimpleGroupData, idx: number) => {
                     if (item?.type === 'simpleMenuGroup') {
                       return <SimpleMenuItem item={item} key={item.id} index={idx} />
@@ -103,18 +90,17 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                       }
                       return (
                         <li key={item.id}>
-                          <NextLink href={(item.link && item.link.slug) || '/'} passHref legacyBehavior>
-                            <MenuLink variant="contentLink"> {item.label} </MenuLink>
-                          </NextLink>
+                          <MenuLink variant="contentLink" href={(item.link && item.link.slug) || '/'}>
+                            {' '}
+                            {item.label}{' '}
+                          </MenuLink>
                         </li>
                       )
                     }
                   })}
-                  <NextLink href={allSitesURL} passHref legacyBehavior>
-                    <AllSitesLink>
-                      <FormattedMessage id="all_sites" defaultMessage="All sites" />
-                    </AllSitesLink>
-                  </NextLink>
+                  <AllSitesLink href={allSitesURL}>
+                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                  </AllSitesLink>
                 </SimpleMenuWrapper>
               </MenuContainer>
             </nav>

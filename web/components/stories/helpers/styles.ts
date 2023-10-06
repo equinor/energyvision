@@ -51,7 +51,7 @@ export const Wrapper = styled.div`
 
 /* Where should this be located. Should Card link be an actual component, or 
 a more generic wrapper link component */
-export const CardLink = styled.a`
+export const CardLink = styled.div`
   text-decoration: none;
   color: inherit;
   &:hover {

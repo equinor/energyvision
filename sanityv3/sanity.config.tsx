@@ -2,7 +2,6 @@ import { visionTool } from '@sanity/vision'
 import { media } from 'sanity-plugin-media'
 
 import {
-  Config,
   ConfigContext,
   createAuthStore,
   defineConfig,
@@ -60,7 +59,7 @@ const getStudioTitle = (dataset: string) => {
   }
 }
 
-const getConfig = (datasetParam: string, projectIdParam: string, isSecret: boolean = false) => ({
+const getConfig = (datasetParam: string, projectIdParam: string, isSecret = false) => ({
   name: 'equinor-' + datasetParam,
   title: 'Studio [' + getStudioTitle(datasetParam) + ']',
   icon: DatabaseIcon,

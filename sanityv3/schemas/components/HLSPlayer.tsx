@@ -1,13 +1,13 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useRef, HTMLProps, useEffect } from 'react'
+import { FC, useRef, HTMLProps, useEffect } from 'react'
 import Hls from 'hls.js'
 
 type Props = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
 }
 
-const HLSPlayer: React.FC<Props> = ({ src, ...props }) => {
+const HLSPlayer: FC<Props> = ({ src, ...props }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const hlsRef = useRef<Hls | null>(null)
 
