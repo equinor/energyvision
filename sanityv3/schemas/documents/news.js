@@ -117,9 +117,10 @@ export default {
       publishedDate: 'publishDateTime',
       firstPublishedAt: 'firstPublishedAt',
       isCustomDate: 'customPublicationDate',
+      lang: 'lang',
     },
     prepare(selection) {
-      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate, lang } = selection
       const date =
         publishedDate && isCustomDate
           ? formatDate(publishedDate)
@@ -129,7 +130,7 @@ export default {
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${date}`,
+        subtitle: `${lang} Published date: ${date}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')
