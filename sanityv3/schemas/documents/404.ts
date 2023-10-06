@@ -6,6 +6,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { lang } from './langField'
+
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
   h1: false,
@@ -36,7 +37,6 @@ export default {
     },
   ],
   fields: [
-    lang,
     {
       title: 'Meta information',
       name: 'seo',

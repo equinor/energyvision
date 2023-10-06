@@ -8,7 +8,7 @@ const documentList = (S, lang) =>
     .id('magazines')
     .title('Magazines')
     .filter('_type == "magazine" && (!defined(lang) || lang == $baseLang)')
-    .params({ baseLang: lang.name })
+    .params({ baseLang: lang.iso })
     .canHandleIntent((_name, params) => {
       // Assume we can handle all intents (actions) regarding post documents
       return params.type === 'magazine'
