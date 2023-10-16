@@ -1,5 +1,6 @@
 import { pushToDataLayer } from '../../lib/gtm'
 import { useEffect, useMemo, useCallback } from 'react'
+import useConsentState from './useConsentState'
 
 type GTMTitleType = { videoTitle: string | undefined }
 type VideoRefType = React.RefObject<HTMLVideoElement>
