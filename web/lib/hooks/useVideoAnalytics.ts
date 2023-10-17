@@ -1,5 +1,5 @@
 import { pushToDataLayer } from '../../lib/gtm'
-import { useEffect, useMemo, useCallback } from 'react'
+import { useEffect, useMemo, useCallback, useState } from 'react'
 import useConsentState from './useConsentState'
 
 type GTMTitleType = { videoTitle: string | undefined }
@@ -9,6 +9,14 @@ const GTM_PLAY_EVENT = 'video_play'
 const GTM_PAUSE_EVENT = 'video_pause'
 
 const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string): void => {
+  const [allowAnalytics, setAllowAnalytics] = useState(false)
+
+  useConsentState(
+    'statistics',
+    () => setAllowAnalytics(true),
+    () => setAllowAnalytics(false),
+  )
+
   const GTM_TITLE: GTMTitleType = useMemo(() => ({ videoTitle: title || src }), [title, src])
 
   const handlePlayEvent = useCallback(() => {
@@ -22,7 +30,7 @@ const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string):
   useEffect(() => {
     const videoElement = videoRef.current
 
-    if (!videoElement) return
+    if (!videoElement || !allowAnalytics) return
 
     videoElement.addEventListener('play', handlePlayEvent)
     videoElement.addEventListener('pause', handlePauseEvent)
@@ -32,7 +40,7 @@ const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string):
       videoElement.removeEventListener('play', handlePlayEvent)
       videoElement.removeEventListener('pause', handlePauseEvent)
     }
-  }, [videoRef, handlePlayEvent, handlePauseEvent])
+  }, [allowAnalytics, videoRef, handlePlayEvent, handlePauseEvent])
 }
 
 export default useVideoAnalytics
