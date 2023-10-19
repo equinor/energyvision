@@ -12,10 +12,10 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
   "textBlocks": content->content[_type == "textBlock"]{
     "_key": _key,
     "title": select(
-      "isBigText" == true => {
+      isBigText == true =>
         pt::text(bigTitle),
         pt::text(title)
-      }),
+      ),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
   },
