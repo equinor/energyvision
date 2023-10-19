@@ -6,16 +6,13 @@ import { dataset } from './languages.js'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const envs = ['dev', 'preprod', 'prod', 'test']
+const envs = ['preprod', 'prod']
 const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
 const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
-const studioUrlsOldCluster = envs.map((env) => `https://studio-${dataset}-energyvision-${env}.radix.equinor.com/`)
-const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com/`)
+const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`)
 const studioV3Url = 'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
-const xFrameUrls = [localUrl, ...studioUrlsOldCluster, ...studioUrls, studioV3Url, globalUrl, secretUrl]
-  .filter((e) => e)
-  .join(' ')
+const xFrameUrls = [localUrl, ...studioUrls, studioV3Url, globalUrl, secretUrl].filter((e) => e).join(' ')
 const edsCdnUrl = 'https://cdn.eds.equinor.com '
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
@@ -30,7 +27,7 @@ const iframeSrcs = [
   'https://eac.plaii.no',
   'https://livestream.com',
   dataset === 'global-development' && 'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
-  dataset === 'global-development' && 'https://careers.peopleclick.eu.com/',
+  dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
   'https://h61q9gi9.api.sanity.io',
   'http://localhost:3333',
 ]

@@ -64,11 +64,15 @@ const VideoSelector = forwardRef(function VideoSelector(
             headers: {
               Authorization: `Basic ${SCREEN9_AUTH}`,
             },
-          }).then((res) =>
-            res.status !== 200
-              ? setError(`Could not retrieve url from Screen9. Please report the error to the dev team.`)
-              : res.json(),
-          )
+          })
+            .then((res) =>
+              res.status !== 200
+                ? setError('Could not retrieve url from Screen9. Please report the error to the dev team.')
+                : res.json(),
+            )
+            .catch((error) => {
+              setError(`Could not retrieve url from Screen9. Please report the error to the dev team. Error: ${error}`)
+            })
 
           if (!data.error) {
             const video = {
