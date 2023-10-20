@@ -9,7 +9,7 @@ import styled from 'styled-components'
 type Props = {
   action: LinkData
   hasImage: boolean
-  template?: 'default' | 'icon'
+  template?: 'default' | 'icon' | 'text'
 }
 
 const StyledLink = styled(Link)`
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   padding: 0 var(--space-medium);
 `
 
-const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: boolean }) => {
+const TextButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: boolean }) => {
   const url = getUrlFromAction(action)
   if (!url) {
     console.warn(`Missing URL on 'IconButtonLink' link with type: '${action.type}' and label: '${action.label}'`)
@@ -47,8 +47,21 @@ const IconButtonLink = ({ action, hasImage }: { action: LinkData; hasImage: bool
   )
 }
 
+const IconButtonLink = ({ action }: { action: LinkData; hasImage: boolean }) => {
+  const url = getUrlFromAction(action)
+  if (!url) {
+    console.warn(`Missing URL on 'IconButtonLink' link with type: '${action.type}' and label: '${action.label}'`)
+    return null
+  }
+  const locale = getLocaleFromName(action.link?.lang)
+
+  return <StyledLink underline={false} variant="contentLink" locale={locale} href={url} aria-label={action.ariaLabel} />
+}
+
 export const PromoTileButton = ({ action, template = 'default', hasImage }: Props) => {
   switch (template) {
+    case 'text':
+      return <TextButtonLink action={action} hasImage={hasImage} />
     case 'icon':
       return <IconButtonLink action={action} hasImage={hasImage} />
     default:

@@ -180,6 +180,36 @@ const pageContentFields = /* groq */ `
       },
     },
   },
+  _type == "promoTextTileArray"=>{
+    "type": _type,
+    "id": _key,
+    "useHorizontalScroll": useHorizontalScroll,
+    spacing,
+    "group": group[]{
+      "id": _key,
+      title,
+      linkLabelAsTitle,
+      text[]{..., ${markDefs}},
+      "action": {
+        "label": link.label,
+        "ariaLabel": link.ariaLabel,
+        "anchorReference": link.anchorReference,
+        "link": select(
+          link.linkToOtherLanguage == true =>
+            link.referenceToOtherLanguage->${linkReferenceFields},
+            link.reference->${linkReferenceFields},
+        ),
+        "href": link.url,
+        "type": select(
+          defined(link.url) => "externalUrl",
+          "internalUrl"
+        ),
+      },
+      "designOptions": {
+        "background": coalesce(background.title, 'none'),
+      },
+    },
+  },
   _type == "iframe" => {
     "type": _type,
     "id": _key,
