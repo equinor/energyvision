@@ -2,6 +2,7 @@ import type { Rule } from 'sanity'
 import { filterByLang } from '../../helpers/referenceFilters'
 import { EdsIcon, MenuIcon } from '../../icons'
 import { menu } from '@equinor/eds-icons'
+import { lang } from './langField'
 
 export default {
   type: 'document',
@@ -10,6 +11,7 @@ export default {
   icon: () => EdsIcon(menu),
   __experimental_actions: ['create', 'update', 'publish' /*,"delete"*/],
   fields: [
+    lang,
     {
       title: 'Menu items',
       name: 'menuGroups',

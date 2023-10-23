@@ -10,9 +10,9 @@ import {
   SchemaTypeDefinition,
   Template,
 } from 'sanity'
+
 import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType } from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
-
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
@@ -28,6 +28,7 @@ import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
 import { i18n } from './schemas/documentTranslation'
 import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 import { getMetaTitleSuffix } from '../satellitesConfig'
+import { defaultLanguage } from './languages'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -95,7 +96,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
 
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
-    templates: (prev: Template<any, any>[]) => [...prev, ...initialValueTemplates],
+    templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
   },
   document: {
     actions: (prev: DocumentActionComponent[]) => {
@@ -134,3 +135,10 @@ export default dataset === 'secret'
       ].map((e) => getConfig(e.dataset, e.projectId, true)),
     )
   : getConfig(dataset, projectId)
+
+const filterTemplates = (prev: Template<any, any>[]) => {
+  const excludedTemplates = i18n.supportedLanguages
+    .filter((lang) => lang.title != defaultLanguage.title)
+    .flatMap((lang) => i18n.schemaTypes.map((type) => `${type}-${lang.id}`))
+  return prev.filter((template) => !(i18n.schemaTypes.includes(template.id) || excludedTemplates.includes(template.id)))
+}

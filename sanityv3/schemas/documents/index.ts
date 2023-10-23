@@ -44,7 +44,6 @@ export default {
   eventTag,
   redirect,
   tag,
-  subMenu,
   siteMenu,
   simpleMenu,
   routeHomepage,
@@ -53,4 +52,5 @@ export default {
   localNewsTag,
   magazineTag,
   route,
+  subMenu,
 }

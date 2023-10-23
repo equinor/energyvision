@@ -9,6 +9,8 @@ export const SCHEMA_TYPE = [
   `pageNotFound`,
   `internalServerError`,
   `landingPage`,
+  `siteMenu`,
+  `footer`,
 ]
 
 export const testDocs = [
@@ -75,4 +77,28 @@ export const testDocs = [
   'drafts.d8aba411-222e-4cac-9629-e9ba3a455c6f__i18n_nb_NO',
   '6c8bcbf8-dcea-45df-8d06-734b7cf5814b',
   'drafts.6c8bcbf8-dcea-45df-8d06-734b7cf5814b__i18n_nb_NO',
+
+  // magazine index
+  'magazineIndex',
+  'magazineIndex__i18n_nb_NO',
+
+  // newsroom
+  'newsroom',
+  'newsroom__i18n_nb_NO',
+
+  //internalServerError
+  'internalServerError',
+  'internalServerError__i18n_nb_NO',
+
+  //pageNotFound
+  'pageNotFound',
+  'pageNotFound__i18n_nb_NO',
+
+  // siteMenu
+  'english-menu',
+  'norwegian-menu',
+
+  // footer
+  'english-footer',
+  'norwegian-footer',
 ]

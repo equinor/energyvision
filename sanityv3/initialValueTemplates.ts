@@ -61,7 +61,7 @@ const footerWithLocaleTemplate: Template<any, any> = {
   schemaType: 'footer',
   parameters: [{ name: 'isoCode', type: 'string' }],
   value: (params: Record<string, unknown>) => ({
-    _lang: params.isoCode,
+    lang: params.isoCode,
   }),
 }
 
