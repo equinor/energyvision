@@ -1,9 +1,9 @@
 import { Heading } from '@components'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import { Flags, dataset } from '../../common/helpers/datasetHelpers'
 import { searchClient } from '../../lib/algolia'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { getIsoFromLocale } from '../../lib/localization'
@@ -21,6 +21,7 @@ import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
+import { getDomain } from '../../../satellitesConfig'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -80,7 +81,6 @@ const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoo
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
-  let eventHandler: any
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {
@@ -207,7 +207,7 @@ const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoo
                 isServerRendered
                   ? searchClient({
                       headers: {
-                        Referer: url,
+                        Referer: getDomain(dataset),
                       },
                     })
                   : searchClient(undefined)

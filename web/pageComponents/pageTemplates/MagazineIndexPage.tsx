@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@components'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import { Flags, dataset } from '../../common/helpers/datasetHelpers'
 import { searchClient } from '../../lib/algolia'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { MagazineIndexPageType } from '../../types'
@@ -21,6 +21,7 @@ import SharedTitle from './shared/SharedTitle'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
+import { getDomain } from '../../../satellitesConfig'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -96,7 +97,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
             isServerRendered
               ? searchClient({
                   headers: {
-                    Referer: url,
+                    Referer: getDomain(dataset),
                   },
                 })
               : searchClient(undefined)
