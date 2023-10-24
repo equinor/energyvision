@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@components'
 import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
-import { Flags, dataset } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import { searchClient } from '../../lib/algolia'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { MagazineIndexPageType } from '../../types'
@@ -21,7 +21,6 @@ import SharedTitle from './shared/SharedTitle'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
-import { getDomain } from '../../../satellitesConfig'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -56,14 +55,13 @@ const StyledPagination = styled(Pagination)`
 `
 
 type MagazineIndexTemplateProps = {
-  isServerRendered?: boolean
   locale: string
   pageData: MagazineIndexPageType
   slug?: string
   url: string
 }
 
-const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
+const MagazineIndexPage = ({ locale, pageData, slug, url }: MagazineIndexTemplateProps) => {
   const { ingress, title, hero, seoAndSome, magazineTags, footerComponent } = pageData || {}
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -93,15 +91,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
         </BackgroundContainer>
 
         <InstantSearch
-          searchClient={
-            isServerRendered
-              ? searchClient({
-                  headers: {
-                    Referer: getDomain(dataset),
-                  },
-                })
-              : searchClient(undefined)
-          }
+          searchClient={searchClient}
           indexName={indexName}
           routing={{
             router: createInstantSearchRouterNext({

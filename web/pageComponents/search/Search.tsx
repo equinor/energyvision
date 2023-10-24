@@ -6,9 +6,8 @@ import { SearchBox } from './SearchBox'
 import { getIsoFromLocale } from '../../lib/localization'
 import { SearchContextProvider } from './SearchContext'
 import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
-import singletonRouter from 'next/router'
+import singletonRouter, { useRouter } from 'next/router'
 import type { UiState } from 'instantsearch.js'
-import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
@@ -23,7 +22,7 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
   justify-content: center;
 `
-const searchClient = client(undefined)
+const searchClient = client
 const queriedSearchClient: SearchClient = {
   ...searchClient,
   search(requests: any) {

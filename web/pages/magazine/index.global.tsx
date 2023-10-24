@@ -14,7 +14,7 @@ import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { renderToString } from 'react-dom/server'
 
-export default function MagazineIndex({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
+export default function MagazineIndex({ serverState, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = intl?.locale || defaultLocale
@@ -25,13 +25,7 @@ export default function MagazineIndex({ isServerRendered = false, serverState, d
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={intl?.messages}
       >
-        <MagazineIndexPage
-          isServerRendered={isServerRendered}
-          locale={locale}
-          pageData={pageData as MagazineIndexPageType}
-          slug={slug}
-          url={url}
-        />
+        <MagazineIndexPage locale={locale} pageData={pageData as MagazineIndexPageType} slug={slug} url={url} />
       </IntlProvider>
     </InstantSearchSSRProvider>
   )
@@ -98,7 +92,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <MagazineIndex
-      isServerRendered
       data={{
         intl,
         pageData,
