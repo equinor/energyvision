@@ -1,9 +1,13 @@
-import { Rule, ValidationContext } from 'sanity'
+import { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
 
-type DocumentType = { parent: { heroType?: string } }
+type DocumentType = { parent: Hero }
+type Hero = {
+  heroType?: string
+  isBigTitle?: boolean
+}
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -13,6 +17,29 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
+
+const isBigTitle = {
+  title: 'Big title',
+  name: 'isBigTitle',
+  type: 'boolean',
+  fieldset: 'header',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+  },
+}
+
+const heroBigTitle = {
+  name: 'heroBigTitle',
+  title: 'Big Title',
+  type: 'array',
+  fieldset: 'header',
+  of: [titleContentType],
+  hidden: ({ parent }: DocumentType) => !parent.isBigTitle,
+  validation: (Rule: Rule) =>
+    Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+      !value && (ctx.parent as Hero)?.isBigTitle ? 'Title is required' : true,
+    ),
+}
 
 const title = {
   name: 'title',
@@ -76,7 +103,9 @@ const heroTitle = {
   of: [titleContentType],
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
@@ -92,7 +121,9 @@ const heroIngress = {
   type: 'array',
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
   },
   fieldset: 'header',
 }
@@ -104,7 +135,9 @@ const heroLink = {
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
   },
   fieldset: 'header',
   validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
@@ -179,10 +212,12 @@ const heroLoopingVideoRatio = {
 }
 
 export default [
+  isBigTitle,
   title,
   heroType,
   heroRatio,
   heroTitle,
+  heroBigTitle,
   heroIngress,
   heroLink,
   background,
