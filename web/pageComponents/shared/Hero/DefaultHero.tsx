@@ -34,7 +34,7 @@ type Props = {
 export const DefaultHero = ({ title, image }: Props) => {
   return (
     <>
-      <HeroBanner>{title && <StyledHeading value={title} level="h1" size="2xl" />}</HeroBanner>
+      <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>
       <ImageWrapper>{image && <DefaulHeroImage data={image} />}</ImageWrapper>
     </>
   )

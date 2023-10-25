@@ -12,21 +12,23 @@ import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
-  _type == "teaser" =>{
+  _type == "teaser" => {
     "type": _type,
     "id": _key,
     overline,
     title,
-    text[]{
-      ...,
-      ${markDefs},
-    },
+    isBigText,
+    "text": select(
+      isBigText =>
+        bigText[]{..., ${markDefs}},
+        text[]{..., ${markDefs}}
+      ),
     "designOptions": {
       "background": coalesce(background.title, 'White'),
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
-    "image": image{
+    "image": image {
       ...,
       "extension": asset-> extension
     },
@@ -41,15 +43,14 @@ const pageContentFields = /* groq */ `
     "id": _key,
     image,
     overline,
-    title,
-    ingress[]{
-      ...,
-      ${markDefs},
-    },
-    text[]{
-      ...,
-      ${markDefs},
-    },
+    isBigText,
+    "title": select(
+      isBigText =>
+        bigTitle[]{..., ${markDefs}},
+        title[]{..., ${markDefs}}
+      ),
+    ingress[]{..., ${markDefs}},
+    text[]{..., ${markDefs}},
     "callToActions": action[]{
       ${linkSelectorFields},
       ${downloadableFileFields},

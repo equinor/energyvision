@@ -27,7 +27,11 @@ export const query = /* groq */ `*[_type == "magazine" && lang == $lang && !(_id
   "ingress": pt::text(ingress),
   "textBlocks": content[_type == "textBlock"]{
     "_key": _key,
-    "title": pt::text(title),
+    "title": select(
+      isBigText == true =>
+        pt::text(bigTitle),
+        pt::text(title)
+      ),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
   },

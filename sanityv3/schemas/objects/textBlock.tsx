@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
-import type { Reference, Rule } from 'sanity'
+import type { PortableTextBlock, Reference, Rule, SanityDocument, ValidationContext } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import { SchemaType } from '../../types'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
@@ -16,6 +15,7 @@ const blockContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
+
 const ingressContentType = configureBlockContent({
   h1: false,
   h2: false,
@@ -23,6 +23,21 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
+
+const blockContentTypeForBigText = configureBlockContent({
+  h1: false,
+  h2: false,
+  h3: false,
+  h4: false,
+  attachment: false,
+  smallText: false,
+  normalTextOverride: {
+    title: 'Normal',
+    value: 'normal',
+    component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '42px' }}>{children}</span>,
+  },
+})
+
 const titleContentType = configureTitleBlockContent()
 
 type TextBlock = {
@@ -31,10 +46,16 @@ type TextBlock = {
   anchor?: string
   ingress?: string
   text?: string
+  isBigText?: boolean
+  bigText?: PortableTextBlock[]
   action?: Reference[]
   splitList?: boolean
   overrideButtonStyle?: boolean
   background?: ColorSelectorValue
+}
+
+type TextBlockDocument = {
+  parent: TextBlock
 }
 
 export default {
@@ -50,6 +71,7 @@ export default {
         collapsible: true,
         collapsed: true,
       },
+      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
       title: 'Eyebrow headline',
@@ -59,6 +81,7 @@ export default {
         collapsible: true,
         collapsed: true,
       },
+      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
       title: 'Call to action(s)',
@@ -85,6 +108,11 @@ export default {
   ],
   fields: [
     {
+      title: 'Big text',
+      name: 'isBigText',
+      type: 'boolean',
+    },
+    {
       name: 'image',
       type: 'imageWithAlt',
       options: {
@@ -105,7 +133,11 @@ export default {
         input: CompactBlockEditor,
       },
       of: [titleContentType],
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required().warning('A title is recommended'),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+          !value && !(ctx.parent as TextBlock)?.isBigText ? 'A title is recommended' : true,
+        ).warning(),
+      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
       name: 'anchor',
@@ -124,6 +156,18 @@ export default {
       title: 'Ingress',
       type: 'array',
       of: [ingressContentType],
+      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
+    },
+    {
+      name: 'bigTitle',
+      title: 'Title',
+      type: 'array',
+      of: [blockContentTypeForBigText],
+      hidden: ({ parent }: TextBlockDocument) => !parent.isBigText,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+          !value && (ctx.parent as TextBlock)?.isBigText ? 'Title is required' : true,
+        ),
     },
     {
       name: 'text',
@@ -176,27 +220,27 @@ export default {
       title: 'title',
       ingress: 'ingress',
       text: 'text',
+      isBigText: 'isBigText',
+      bigTitle: 'bigTitle',
     },
-    prepare({ title = [], ingress, text }: { title: any[]; ingress: any; text: any }) {
-      const textBlock = (text || []).find((introBlock: any) => introBlock._type === 'block')
-      const ingressBlock = (ingress || []).find((introBlock: any) => introBlock._type === 'block')
-      const plainTitle = title ? blocksToText(title) : undefined
+    prepare({
+      title,
+      isBigText,
+      bigTitle,
+      ingress,
+      text,
+    }: {
+      title: PortableTextBlock[]
+      ingress: PortableTextBlock[]
+      isBigText: boolean
+      bigTitle: PortableTextBlock[]
+      text: PortableTextBlock[]
+    }) {
+      const plainTitle = isBigText ? blocksToText(bigTitle) : blocksToText(title || ingress || text)
 
       return {
-        title:
-          plainTitle ||
-          (textBlock &&
-            textBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          (ingressBlock &&
-            ingressBlock.children
-              .filter((child: any) => child._type === 'span')
-              .map((span: any) => span.text)
-              .join('')) ||
-          'Missing content!',
-        subtitle: `Text block component.`,
+        title: plainTitle || 'Missing title/content',
+        subtitle: isBigText ? 'Text block component (BIG TEXT)' : 'Text block component',
         media: EdsIcon(text_field),
       }
     },

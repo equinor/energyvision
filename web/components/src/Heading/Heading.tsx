@@ -30,7 +30,7 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
 `
 
 export type HeadingProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
   center?: boolean
@@ -45,7 +45,8 @@ const sizes = {
   md: 'var(--typeScale-2)',
   lg: 'var(--typeScale-3)',
   xl: 'var(--typeScale-4)',
-  '2xl': 'var(--typeScale-5)',
+  '2xl': 'var(--typeScale-4_5)',
+  '3xl': 'var(--typeScale-5)',
 }
 
 const lineHeights = {
@@ -54,7 +55,8 @@ const lineHeights = {
   md: 'var(--lineHeight-1)',
   lg: 'var(--lineHeight-1)',
   xl: 'var(--lineHeight-1)',
-  '2xl': 'var(--lineHeight-2)',
+  '2xl': 'var(--lineHeight-2_5)',
+  '3xl': 'var(--lineHeight-2)',
 }
 
 const fontWeights = {
@@ -63,7 +65,8 @@ const fontWeights = {
   md: 'var(--fontWeight-regular)',
   lg: 'var(--fontWeight-regular)',
   xl: 'var(--fontWeight-regular)',
-  '2xl': 'var(--fontWeight-regular)',
+  '2xl': 'var(--fontWeidht-regular)',
+  '3xl': 'var(--fontWeight-regular)',
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(

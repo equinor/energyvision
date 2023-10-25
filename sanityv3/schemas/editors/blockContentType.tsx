@@ -17,6 +17,11 @@ export type BlockContentProps = {
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
+  normalTextOverride?: {
+    title: string
+    value: 'normal'
+    component?: ({ children }: { children: React.ReactNode }) => JSX.Element
+  }
 }
 const SmallTextRender = (props: any) => {
   const { children } = props
@@ -34,11 +39,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     attachment = false,
     lists = true,
     smallText = true,
+    normalTextOverride = { title: 'Normal', value: 'normal' },
   } = options
 
   const config: BlockFieldType = {
     type: 'block',
-    styles: [{ title: 'Normal', value: 'normal' }],
+    styles: [normalTextOverride],
     lists: lists
       ? [
           { title: 'Numbered', value: 'number' },
