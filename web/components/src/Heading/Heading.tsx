@@ -65,7 +65,7 @@ const fontWeights = {
   md: 'var(--fontWeight-regular)',
   lg: 'var(--fontWeight-regular)',
   xl: 'var(--fontWeight-regular)',
-  '2xl': 'var(--fontWeidht-regular)',
+  '2xl': 'var(--fontWeight-regular)',
   '3xl': 'var(--fontWeight-regular)',
 }
 

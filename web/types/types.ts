@@ -179,6 +179,7 @@ export enum HeroTypes {
 
 export type HeroType = {
   figure?: ImageWithCaptionData
+  isBigTitle?: boolean
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   link?: LinkData

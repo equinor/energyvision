@@ -80,7 +80,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: HeroType) => {
+export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
   return (
     <>
       <StyledHero background={background}>
@@ -97,8 +97,9 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
           )}
         </StyledMedia>
         <StyledContent>
-          {title && <StyledHeroTitle value={title} level="h1" size="xl" />}
-          {ingress && (
+          {isBigTitle}
+          {title && <StyledHeroTitle value={title} level="h1" size={isBigTitle ? '2xl' : 'xl'} />}
+          {ingress && !isBigTitle && (
             <StyledIngress>
               <IngressText
                 value={ingress}
@@ -114,7 +115,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
               />
             </StyledIngress>
           )}
-          {link && <HeroActionLink action={link} />}
+          {link && !isBigTitle && <HeroActionLink action={link} />}
         </StyledContent>
       </StyledHero>
     </>
