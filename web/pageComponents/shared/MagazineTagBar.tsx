@@ -15,10 +15,10 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const StyledLink = styled(Link).attrs((props: { active: boolean }) => props)`
+const StyledLink = styled(Link).attrs((props: { $active: boolean }) => props)`
   display: inline-block;
   position: relative;
-  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  font-weight: ${(props) => (props.$active ? 'bold' : 'normal')};
   &:hover {
     font-weight: bold;
   }
@@ -62,7 +62,7 @@ const TagWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  
+
   @media (min-width: 1024px) {
     flex-wrap: wrap;
     padding: var(--space-large) var(--space-3xLarge);
@@ -86,8 +86,8 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
     <Wrapper ref={ref}>
       <TagWrapper>
         <StyledLink
+          $active={allTagLink.active}
           href={href}
-          active={allTagLink.active}
           underline={false}
           data-title={allTagLink.label}
           onClick={(event) => {
@@ -102,10 +102,10 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         </StyledLink>
         {tags.map((it: TagLink) => (
           <StyledLink
+            $active={it.active}
             underline={false}
             href={`${href}${`?tag=${it.label}`}`}
             key={`key_${it.label}`}
-            active={it.active}
             data-title={it.label}
             onClick={(event) => {
               if (onClick) {
