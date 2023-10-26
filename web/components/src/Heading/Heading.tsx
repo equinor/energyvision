@@ -27,10 +27,15 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
   .inverted-background & {
     color: var(--inverted-text);
   }
+
+  strong,
+  b {
+    font-weight: var(--fontWeight-medium);
+  }
 `
 
 export type HeadingProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
   center?: boolean
@@ -47,6 +52,8 @@ const sizes = {
   xl: 'var(--typeScale-4)',
   '2xl': 'var(--typeScale-4_5)',
   '3xl': 'var(--typeScale-5)',
+  '4xl': 'var(--typeScale-6)',
+  '5xl': 'var(--typeScale-7)',
 }
 
 const lineHeights = {
@@ -57,6 +64,8 @@ const lineHeights = {
   xl: 'var(--lineHeight-1)',
   '2xl': 'var(--lineHeight-2_5)',
   '3xl': 'var(--lineHeight-2)',
+  '4xl': 'var(--lineHeight-2)',
+  '5xl': 'var(--lineHeight-2)',
 }
 
 const fontWeights = {
@@ -67,6 +76,8 @@ const fontWeights = {
   xl: 'var(--fontWeight-regular)',
   '2xl': 'var(--fontWeight-regular)',
   '3xl': 'var(--fontWeight-regular)',
+  '4xl': 'var(--fontWeight-regular)',
+  '5xl': 'var(--fontWeight-regular)',
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(

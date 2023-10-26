@@ -10,6 +10,18 @@ const StyledHeading = styled(TitleText)`
   margin-right: auto;
 `
 
+const HeroBannerSmall = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1920px;
+  padding: var(--space-xLarge) var(--space-3xLarge) 0 var(--layout-paddingHorizontal-small);
+`
+const HeroBannerBigTitle = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1920px;
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-small);
+`
 const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium);
 `
@@ -29,12 +41,20 @@ const ImageWrapper = styled.div.attrs(() => ({
 type Props = {
   title?: PortableTextBlock[]
   image?: ImageWithCaptionData
+  isBigTitle?: boolean
+  bigTitle?: PortableTextBlock[]
 }
 
-export const DefaultHero = ({ title, image }: Props) => {
+export const DefaultHero = ({ title, image, isBigTitle, bigTitle }: Props) => {
   return (
     <>
-      <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>
+      {isBigTitle && (
+        <>
+          <HeroBannerSmall>{title && <TitleText value={title} level="h2" size="xl" />}</HeroBannerSmall>
+          <HeroBannerBigTitle>{bigTitle && <TitleText value={bigTitle} level="h1" size="3xl" />}</HeroBannerBigTitle>
+        </>
+      )}
+      {!isBigTitle && <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>}
       <ImageWrapper>{image && <DefaulHeroImage data={image} />}</ImageWrapper>
     </>
   )
