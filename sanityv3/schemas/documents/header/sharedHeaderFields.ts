@@ -1,7 +1,10 @@
 import { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
+
+const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
 type DocumentType = { parent: Hero }
 type Hero = {
@@ -10,6 +13,10 @@ type Hero = {
 }
 
 const titleContentType = configureTitleBlockContent()
+const bigTitleContentType = configureTitleBlockContent({
+  extraLarge: true,
+  highlight: true,
+})
 const ingressContentType = configureBlockContent({
   h1: false,
   h2: false,
@@ -24,21 +31,49 @@ const isBigTitle = {
   type: 'boolean',
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return !(parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.DEFAULT)
+  },
+  readOnly: ({ currentUser }: any) => {
+    return !currentUser.roles.find(({ name }: any) => bigTitleRoles.includes(name))
   },
 }
 
-const heroBigTitle = {
-  name: 'heroBigTitle',
-  title: 'Big Title',
+const heroBigTitleDefault = {
+  name: 'heroBigTitleDefault',
+  title: 'Hero Title',
   type: 'array',
   fieldset: 'header',
-  of: [titleContentType],
-  hidden: ({ parent }: DocumentType) => !parent.isBigTitle,
+  of: [bigTitleContentType],
+  hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.DEFAULT,
   validation: (Rule: Rule) =>
     Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-      !value && (ctx.parent as Hero)?.isBigTitle ? 'Title is required' : true,
+      blocksToText(value)?.length === 0 &&
+      (ctx.parent as Hero)?.isBigTitle &&
+      (ctx.parent as Hero)?.heroType === HeroTypes.DEFAULT
+        ? 'Title is required'
+        : true,
     ),
+  readOnly: ({ currentUser }: any) => {
+    return !currentUser.roles.find(({ name }: any) => bigTitleRoles.includes(name))
+  },
+}
+
+const heroBigTitleFiftyFifty = {
+  name: 'heroBigTitleFiftyFifty',
+  title: 'Hero Title',
+  type: 'array',
+  fieldset: 'header',
+  of: [configureTitleBlockContent({ isBigTitle: true })],
+  hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.FIFTY_FIFTY,
+  validation: (Rule: Rule) =>
+    Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+      !value && (ctx.parent as Hero)?.isBigTitle && (ctx.parent as Hero)?.heroType === HeroTypes.FIFTY_FIFTY
+        ? 'Title is required'
+        : true,
+    ),
+  readOnly: ({ currentUser }: any) => {
+    return !currentUser.roles.find(({ name }: any) => bigTitleRoles.includes(name))
+  },
 }
 
 const title = {
@@ -217,7 +252,8 @@ export default [
   heroType,
   heroRatio,
   heroTitle,
-  heroBigTitle,
+  heroBigTitleDefault,
+  heroBigTitleFiftyFifty,
   heroIngress,
   heroLink,
   background,

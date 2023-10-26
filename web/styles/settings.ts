@@ -100,6 +100,8 @@ export const typography = css`
     --typeScale-4: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
     --typeScale-4_5: clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem));
     --typeScale-5: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
+    --typeScale-6: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
+    --typeScale-7: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
 
      // search and replace, then remove
     --typeScale-small: var(--typeScale-00);

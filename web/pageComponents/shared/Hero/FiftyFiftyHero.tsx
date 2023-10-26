@@ -55,7 +55,6 @@ const StyledIngress = styled.div`
 `
 const StyledHeroTitle = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
-  font-weight: var(--fontWeight-medium);
 `
 
 const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
@@ -97,7 +96,6 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
           )}
         </StyledMedia>
         <StyledContent>
-          {isBigTitle}
           {title && <StyledHeroTitle value={title} level="h1" size={isBigTitle ? '2xl' : 'xl'} />}
           {ingress && !isBigTitle && (
             <StyledIngress>
