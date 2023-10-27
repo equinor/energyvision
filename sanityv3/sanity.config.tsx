@@ -18,7 +18,7 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { documentInternationalization } from '@sanity/document-internationalization'
+import { documentInternationalization, DeleteTranslationAction } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { createCustomPublishAction } from './actions/CustomPublishAction'
@@ -99,11 +99,15 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
   },
   document: {
-    actions: (prev: DocumentActionComponent[]) => {
+    actions: (prev: DocumentActionComponent[], { schemaType }: any) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
+      if (i18n.schemaTypes.includes(schemaType)) prev.push(DeleteTranslationAction)
       return prev
         .filter(({ action, name }: DocumentActionComponent) => {
           return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
+        })
+        .filter(({ action }: DocumentActionComponent) => {
+          return !(action === 'delete' && i18n.schemaTypes.includes(schemaType))
         })
         .map((originalAction) =>
           originalAction.action === 'publish' ? createCustomPublishAction(originalAction) : originalAction,
