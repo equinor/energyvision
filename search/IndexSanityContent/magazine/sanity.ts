@@ -35,7 +35,12 @@ export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_i
   "accordions": content[_type == "accordion"] {
     "_key": _key,
     "title": pt::text(title),
-    "ingress": pt::text(ingress)
+    "ingress": pt::text(ingress),
+    "accordionItems":accordion[]{
+      "id": _key,
+      title,
+      "content": pt::text(content)
+    }
   },
   "magazineTags": magazineTags[]->.title[$lang],
   "heroFigure": select(
