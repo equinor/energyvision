@@ -24,7 +24,7 @@ const localNewsStructure = (S, context) => {
                   .id('localNews')
                   .title('Local news articles')
                   .filter('_type == "localNews" && (!defined(lang) || lang == $baseLang)')
-                  .params({ baseLang: defaultLanguage.iso })
+                  .params({ baseLang: defaultLanguage.name })
                   .canHandleIntent((_name, params) => {
                     // Assume we can handle all intents (actions) regarding post documents
                     return params.type === 'localNews'
@@ -41,7 +41,7 @@ const localNewsStructure = (S, context) => {
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
                     .filter(`_type == "${documentName}" && references($tagId) && (!defined(lang) || lang == $baseLang)`)
-                    .params({ tagId: tag._id, baseLang: defaultLanguage.iso })
+                    .params({ tagId: tag._id, baseLang: defaultLanguage.name })
                     .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
                     .child((documentId) =>
                       S.documentWithInitialValueTemplate('localnews-with-tag', {

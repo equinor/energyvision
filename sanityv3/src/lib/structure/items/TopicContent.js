@@ -11,7 +11,7 @@ export const TopicContent = (S) =>
         .id('pages')
         .title('Topic content')
         .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
-        .params({ baseLang: defaultLanguage.iso })
+        .params({ baseLang: defaultLanguage.name })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
           return params.type === 'page'

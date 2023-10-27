@@ -15,7 +15,7 @@ export const LandingPage = (S) =>
             .id('landingPages')
             .title('Landing page')
             .filter('_type == "landingPage" && (!defined(lang) || lang == $baseLang)')
-            .params({ baseLang: defaultLanguage.iso })
+            .params({ baseLang: defaultLanguage.name })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
               return params.type === 'landingPage'
