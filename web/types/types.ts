@@ -261,6 +261,7 @@ export type DesignOptions = {
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
+
 export type TextBlockData = {
   type: string
   id: string
@@ -268,6 +269,7 @@ export type TextBlockData = {
   image?: ImageWithAlt
   overline?: string
   text: PortableTextBlock[]
+  isBigText?: boolean
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   splitList?: boolean
@@ -289,6 +291,7 @@ export type TeaserData = {
   title: PortableTextBlock[]
   text: PortableTextBlock[]
   overline?: string
+  isBigText?: boolean
   image: ImageWithAlt
   action?: LinkData
   designOptions: DesignOptions

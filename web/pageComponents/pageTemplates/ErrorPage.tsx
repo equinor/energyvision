@@ -41,7 +41,7 @@ const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
       <BodyContainer>
         {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}
         <TextWrapper>
-          <StyledHeading level="h1" size="2xl">
+          <StyledHeading level="h1" size="3xl">
             <MegaText>404</MegaText>
             {title && <span>{toPlainText(title)}</span>}
           </StyledHeading>

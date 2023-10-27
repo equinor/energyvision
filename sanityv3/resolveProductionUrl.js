@@ -9,7 +9,7 @@ const remoteUrl = () => {
   const env = window.location.hostname.includes('equinor-web-sites-preprod') ? 'preprod' : 'prod'
   switch (dataset) {
     case 'global':
-      return `https://web-equinor-web-sites-${env}.c2.radix.equinor.com/`
+      return `https://web-equinor-web-sites-${env}.c2.radix.equinor.com`
     case 'global-development':
       return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
     case 'global-test':

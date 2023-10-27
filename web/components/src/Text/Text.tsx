@@ -10,9 +10,9 @@ type StyledTextProps = {
 
 const StyledText = styled(Typography)<StyledTextProps>`
   font-size: var(--size);
-  line-height: var(--lineHeight-3);
+  line-height: var(--lineHeight);
   /* @TODO: Let's consider to move all the margin woo to the article layout
-  We should. Not move, but scope. For both news and topic pages. But this will 
+  We should. Not move, but scope. For both news and topic pages. But this will
   require a lot of retest, since in some of the uses cases we will need to reintroduce the margin */
   margin-bottom: var(--space-medium);
   & + & {
@@ -41,7 +41,8 @@ const StyledText = styled(Typography)<StyledTextProps>`
 `
 
 export type TextProps = {
-  size?: 'regular' | 'md' | 'small'
+  size?: 'regular' | 'md' | 'small' | 'lg'
+  lineHeight?: '1' | '2' | '2_5' | '3'
   bold?: boolean
   italic?: boolean
   centered?: boolean
@@ -51,13 +52,21 @@ export type TextProps = {
 
 /* Should be easy enough to change later on */
 const sizes = {
+  lg: 'var(--typeScale-4_5)',
   regular: 'var(--typeScale-1)',
   md: 'var(--typeScale-2)',
   small: 'var(--typeScale-0)',
 }
 
+const lineHeights = {
+  1: 'var(--lineHeight-1)',
+  2: 'var(--lineHeight-2)',
+  '2_5': 'var(--lineHeight-2_5)',
+  3: 'var(--lineHeight-3)',
+}
+
 export const Text = forwardRef<HTMLDivElement, TextProps>(function Text(
-  { size = 'regular', style, children, inverted = false, ...rest },
+  { size = 'regular', lineHeight = '3', style, children, inverted = false, ...rest },
   ref,
 ) {
   return (
@@ -68,6 +77,7 @@ export const Text = forwardRef<HTMLDivElement, TextProps>(function Text(
         {
           ...style,
           '--size': sizes[size],
+          '--lineHeight': lineHeights[lineHeight],
         } as CSSProperties
       }
       {...rest}

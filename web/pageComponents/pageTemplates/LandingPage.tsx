@@ -43,7 +43,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       <LandingPageLayout>
-        <HeroBanner>{title && <StyledHeading value={title} level="h1" size="2xl" />}</HeroBanner>
+        <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>
         {ingress && (
           <Intro>
             <IngressText value={ingress} />
