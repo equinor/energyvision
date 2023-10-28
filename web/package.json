@@ -42,7 +42,7 @@
     "algoliasearch": "^4.16.0",
     "date-fns": "^2.29.3",
     "date-fns-tz": "^2.0.0",
-    "easy-soap-request": "^4.6.0",
+    "easy-soap-request": "^5.1.0",
     "focus-visible": "^5.2.0",
     "framer-motion": "^6",
     "friendly-challenge": "^0.9.6",
