@@ -1,0 +1,33 @@
+name: Backup Routine
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs at 02:00 UTC every sunday
+    - cron: '0 2 * * 0'
+jobs:
+  backup-dataset:
+    runs-on: ubuntu-latest
+    name: Backup dataset
+    strategy:
+      matrix:
+        dataset: ['global-development'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Export dataset
+        uses: sanity-io/github-action-sanity@v0.2-alpha
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+        with:
+          args: dataset export ${{ matrix.dataset }} backups/${{ matrix.dataset }}.tar.gz
+      - name: Upload backup.tar.gz
+        uses: actions/upload-artifact@v2
+        with:
+          name: backup-tarball
+          path: backups/${{ matrix.dataset }}.tar.gz
+          # Fails the workflow if no files are found; defaults to 'warn'
+          if-no-files-found: error
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
