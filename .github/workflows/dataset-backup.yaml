@@ -13,7 +13,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
         with:
-          ref: staging
+          ref: main
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
@@ -46,6 +46,7 @@ jobs:
         uses: sanity-io/github-action-sanity@v0.6-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+          STUDIO_CONFIG_PATH: './sanityv3'
         with:
           args: dataset export ${{ matrix.dataset }} backups/${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
