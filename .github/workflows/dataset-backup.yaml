@@ -1,9 +1,9 @@
 name: Backup Routine
 on:
   workflow_dispatch:
-  schedule:
-    # Runs at 02:00 UTC every sunday
-    - cron: '0 2 * * 0'
+  #schedule:
+  # Runs at 02:00 UTC every sunday
+  #  - cron: '0 2 * * 0'
 jobs:
   backup-dataset:
     runs-on: ubuntu-latest
