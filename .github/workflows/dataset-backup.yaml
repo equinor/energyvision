@@ -5,6 +5,35 @@ on:
   # Runs at 02:00 UTC every sunday
   #  - cron: '0 2 * * 0'
 jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm sanityv3 install
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
   backup-dataset:
     runs-on: ubuntu-latest
     name: Backup dataset
@@ -12,7 +41,7 @@ jobs:
       matrix:
         dataset: ['global-development'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Export dataset
         uses: sanity-io/github-action-sanity@v0.6-alpha
         env:
