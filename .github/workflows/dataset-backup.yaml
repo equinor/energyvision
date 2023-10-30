@@ -35,6 +35,7 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
   backup-dataset:
+    needs: check-code
     runs-on: ubuntu-latest
     name: Backup dataset
     strategy:
