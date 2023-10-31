@@ -12,12 +12,23 @@ jobs:
       matrix:
         dataset: ['global-development'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
       - uses: actions/checkout@v3
       - name: Export Data
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
         run: |
-          npm install -g @sanity/cli
+          pnpm install -g @sanity/cli
           sanity install
           SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN sanity dataset export ${{ matrix.dataset }} backups/backup-${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
