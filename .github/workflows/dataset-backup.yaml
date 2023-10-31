@@ -12,6 +12,7 @@ jobs:
       matrix:
         dataset: ['global-development'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
+      - uses: actions/checkout@v3
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
@@ -25,9 +26,7 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm install
           pnpm sanityv3 install
-      - uses: actions/checkout@v3
       - name: Export Data
         working-directory: ./sanityv3
         env:
