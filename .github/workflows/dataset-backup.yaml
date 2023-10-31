@@ -30,7 +30,7 @@ jobs:
       - name: Export Data
         working-directory: ./sanityv3
         env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_STUDIO_MUTATION_TOKEN }}
         run: |
           pnpm sanity dataset export ${{ matrix.dataset }} backups/backup-${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
