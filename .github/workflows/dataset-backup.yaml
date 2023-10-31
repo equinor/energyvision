@@ -5,7 +5,7 @@ on:
   # Runs at 02:00 UTC every sunday
   #  - cron: '0 2 * * 0'
 env:
-  BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
+  BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
 jobs:
   read-satellites:
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: backup-tarball
-          path: backups/${{ matrix.dataset }}.tar.gz
+          path: ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
           # Fails the workflow if no files are found; defaults to 'warn'
           if-no-files-found: error
       - uses: act10ns/slack@v1
