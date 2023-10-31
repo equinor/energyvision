@@ -56,7 +56,7 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
         run: |
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/backup-${{ matrix.dataset }}.tar.gz
+          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
