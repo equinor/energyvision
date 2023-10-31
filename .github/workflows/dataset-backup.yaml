@@ -4,6 +4,8 @@ on:
   #schedule:
   # Runs at 02:00 UTC every sunday
   #  - cron: '0 2 * * 0'
+env:
+  BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
 jobs:
   read-satellites:
     runs-on: ubuntu-latest
@@ -53,7 +55,8 @@ jobs:
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
         run: |
-          pnpm sanity dataset export ${{ matrix.dataset }} backups/backup-${{ matrix.dataset }}.tar.gz
+          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
+          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/backup-${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
