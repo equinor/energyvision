@@ -33,7 +33,7 @@ jobs:
     name: Backup dataset
     strategy:
       matrix:
-        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: ['japan', 'poland'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
       - name: Install pnpm 📦
@@ -58,7 +58,7 @@ jobs:
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
           pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: backup-tarball
           path: ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
