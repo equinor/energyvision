@@ -5,37 +5,7 @@ on:
   # Runs at 02:00 UTC every sunday
   #  - cron: '0 2 * * 0'
 jobs:
-  check-code:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          ref: main
-      - name: Install pnpm 📦
-        id: install-pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: '8.5.1'
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
-      - name: Install dependencies 🔧
-        id: install-dependencies
-        run: |
-          pnpm install
-          pnpm sanityv3 install
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
   backup-dataset:
-    needs: check-code
     runs-on: ubuntu-latest
     name: Backup dataset
     strategy:
@@ -43,12 +13,13 @@ jobs:
         dataset: ['global-development'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
-      - name: Export dataset
-        uses: sanity-io/github-action-sanity@v0.6-alpha
+      - name: Export Data
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
-        with:
-          args: ./sanityv3 dataset export ${{ matrix.dataset }} backups/${{ matrix.dataset }}.tar.gz
+        run: |
+          npm install -g @sanity/cli
+          sanity install
+          SANITY_AUTH_TOKEN=$SANITY_AUTH_TOKEN sanity dataset export ${{ matrix.dataset }} backups/backup-${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
