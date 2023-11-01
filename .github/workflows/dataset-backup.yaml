@@ -11,9 +11,9 @@ on:
           - all
         required: true
         default: all
-  #schedule:
-  # Runs at 02:00 UTC every sunday
-  #  - cron: '0 2 * * 0'
+  schedule:
+    # Runs at 02:00 UTC every sunday
+    - cron: '0 2 * * 0'
 env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
 jobs:
@@ -62,6 +62,7 @@ jobs:
         run: |
           pnpm sanityv3 install
       - name: Export Data
+        id: export-data
         working-directory: ./sanityv3
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
@@ -69,6 +70,7 @@ jobs:
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
           pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
+        id: upload-backup
         uses: actions/upload-artifact@v3
         with:
           name: backup-tarball
