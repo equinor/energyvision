@@ -1,6 +1,16 @@
 name: Backup Routine
 on:
   workflow_dispatch:
+    inputs:
+      dataset:
+        description: 'Please select the dataset to backup.'
+        type: choice
+        options:
+          - global-development
+          - global-test
+          - all
+        required: true
+        default: all
   #schedule:
   # Runs at 02:00 UTC every sunday
   #  - cron: '0 2 * * 0'
@@ -33,7 +43,7 @@ jobs:
     name: Backup dataset
     strategy:
       matrix:
-        dataset: ['japan', 'poland'] #${{ fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: ${{ (github.event.inputs.dataset != all && fromJson(needs.read-satellites.outputs.matrix)) || github.event.inputs.dataset }}
     steps:
       - uses: actions/checkout@v3
       - name: Install pnpm 📦
