@@ -6,8 +6,8 @@ on:
         description: 'Please select the dataset to backup.'
         type: choice
         options:
-          - global-development
-          - global-test
+          - "['global-development']"
+          - "['global-test']"
           - all
         required: true
         default: all
@@ -28,12 +28,7 @@ jobs:
       - id: set-matrix
         name: Read satellites by choice
         run: |
-          if [[ "${{ github.event.inputs.dataset }}" == 'all' ]]; then
-            MATRIX=$(cat satellites.json)
-          else
-            MATRIX = ( [0] =${{ github.event.inputs.dataset }})
-          fi
-
+          MATRIX=$(cat satellites.json)
           echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
 
       - uses: act10ns/slack@v2
@@ -48,7 +43,8 @@ jobs:
     name: Backup dataset
     strategy:
       matrix:
-        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: ${{ (github.event.inputs.dataset != 'all'  && fromJson(github.event.inputs.dataset) || fromJson(needs.read-satellites.outputs.matrix) }}
+
     steps:
       - uses: actions/checkout@v3
       - name: Install pnpm 📦
