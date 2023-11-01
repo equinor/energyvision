@@ -28,7 +28,12 @@ jobs:
       - id: set-matrix
         name: Read from satellites.json
         run: |
-          MATRIX=$(cat satellites.json)
+          if [[ "${{ github.event.inputs.dataset }}" == 'all' ]]; then
+            MATRIX=$(cat satellites.json)
+          else
+            MATRIX="[${{ github.event.inputs.dataset }}]"
+          fi
+
           echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
 
       - uses: act10ns/slack@v2
@@ -43,7 +48,7 @@ jobs:
     name: Backup dataset
     strategy:
       matrix:
-        dataset: ${{ (github.event.inputs.dataset != 'all'  && [github.event.inputs.dataset]) || fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
       - name: Install pnpm 📦
