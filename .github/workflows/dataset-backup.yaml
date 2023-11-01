@@ -31,7 +31,7 @@ jobs:
           if [[ "${{ github.event.inputs.dataset }}" == 'all' ]]; then
             MATRIX=$(cat satellites.json)
           else
-            MATRIX="[${{ github.event.inputs.dataset }}]"
+            MATRIX=("${{ github.event.inputs.dataset }}")
           fi
 
           echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
