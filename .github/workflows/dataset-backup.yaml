@@ -39,6 +39,8 @@ jobs:
 
   backup-dataset:
     runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     needs: read-satellites
     name: Backup dataset
     strategy:
