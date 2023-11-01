@@ -26,12 +26,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: set-matrix
-        name: Read from satellites.json
+        name: Read satellites by choice
         run: |
           if [[ "${{ github.event.inputs.dataset }}" == 'all' ]]; then
             MATRIX=$(cat satellites.json)
           else
-            MATRIX=("${{ github.event.inputs.dataset }}")
+            value[0] = ${{ github.event.inputs.dataset }}
+            MATRIX=${{toJSON(value)}}
           fi
 
           echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
