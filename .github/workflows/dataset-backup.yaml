@@ -43,7 +43,7 @@ jobs:
     name: Backup dataset
     strategy:
       matrix:
-        dataset: ${{ (github.event.inputs.dataset != 'all' && fromJson(needs.read-satellites.outputs.matrix)) || github.event.inputs.dataset }}
+        dataset: ${{ (github.event.inputs.dataset != 'all'  && github.event.inputs.dataset) || fromJson(needs.read-satellites.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
       - name: Install pnpm 📦
