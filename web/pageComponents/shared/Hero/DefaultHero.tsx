@@ -50,8 +50,8 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle }: Props) => {
     <>
       {isBigTitle && (
         <>
-          <HeroBannerSmall>{title && <TitleText value={title} level="h2" size="xl" />}</HeroBannerSmall>
-          <HeroBannerBigTitle>{bigTitle && <TitleText value={bigTitle} level="h1" size="3xl" />}</HeroBannerBigTitle>
+          <HeroBannerSmall>{title && <TitleText value={title} level="h1" size="xl" />}</HeroBannerSmall>
+          <HeroBannerBigTitle>{bigTitle && <TitleText value={bigTitle} level="h2" size="3xl" />}</HeroBannerBigTitle>
         </>
       )}
       {!isBigTitle && <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>}
