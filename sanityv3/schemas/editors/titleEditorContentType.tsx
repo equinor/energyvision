@@ -1,35 +1,25 @@
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
 import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
-import type { BlockFieldStyle, BlockFieldType } from '../../types/schemaTypes'
+import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
 
 export type TitleContentProps = {
-  styles?: BlockFieldStyle[]
+  styles?: BlockStyleDefinition[]
   highlight?: boolean
 }
 
-/*export type TitleContentProps = {
-  highlight?: boolean
-  extraLarge?: boolean
-  isBigTitle?: boolean
-  large?: {
-    title: string
-    value: 'normal'
-    component?: ({ children }: { children: React.ReactNode }) => JSX.Element
-  }
-}*/
-
 // TODO: Add relevant styles for titles (i.e. highlighted text)
-export const configureTitleBlockContent = (options: TitleContentProps = {}): BlockFieldType => {
+export const configureTitleBlockContent = (options: TitleContentProps = {}): BlockDefinition => {
   const { highlight = false, styles } = options
   const defaultStyle = {
     title: 'Normal',
     value: 'normal',
   }
 
-  const config: BlockFieldType = {
+  const config: BlockDefinition = {
     type: 'block',
+    name: 'block',
     styles: styles ? styles : [defaultStyle],
     lists: [],
     marks: {
@@ -71,7 +61,7 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
     component: HighlightTextRender,
   }
   if (highlight) {
-    config.marks.decorators.push(textColorConfig)
+    config.marks?.decorators?.push(textColorConfig)
   }
   return config
 }

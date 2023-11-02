@@ -28,18 +28,3 @@ export interface ReferenceFilter {
   filter: string // GROQ filter string
   params: { [x: string]: any }
 }
-
-export type BlockFieldStyle = {
-  title: string
-  value: string
-  component?: ({ children }: { children: React.ReactNode }) => JSX.Element
-}
-export type BlockFieldType = {
-  type: string
-  styles: BlockFieldStyle[]
-  lists: { title: string; value: string }[] | []
-  marks: {
-    decorators: any[]
-    annotations: any[]
-  }
-}
