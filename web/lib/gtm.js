@@ -6,3 +6,11 @@ export const pageview = (url) => {
     page: url,
   })
 }
+
+export const pushToDataLayer = (event, data) => {
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push({
+    event: event,
+    ...data,
+  })
+}

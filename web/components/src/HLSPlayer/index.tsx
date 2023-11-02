@@ -1,10 +1,12 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable jsx-a11y/media-has-caption */
-import { useRef, HTMLProps, useEffect, useState, useCallback } from 'react'
+import { useRef, HTMLProps, useEffect, useState, useCallback, useMemo } from 'react'
+import styled from 'styled-components'
 import Hls from 'hls.js'
 import { Icon } from '@equinor/eds-core-react'
 import { play_circle, pause_circle } from '@equinor/eds-icons'
-import styled from 'styled-components'
+import { pushToDataLayer } from '../../../lib/gtm'
+import useVideoAnalytics from '../../../lib/hooks/useVideoAnalytics'
 
 type HLSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
@@ -71,12 +73,13 @@ export const HLSPlayer: React.FC<HLSProps> = ({
   ...props
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
-
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
   const [showSpinner, setShowSpinner] = useState(autoPlay)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
   const hlsRef = useRef<Hls | null>(null)
+
+  useVideoAnalytics(videoRef, src, props.title)
 
   const handlePlayButton = useCallback(() => {
     if (videoRef.current && hlsRef.current) {
