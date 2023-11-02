@@ -29,9 +29,14 @@ export interface ReferenceFilter {
   params: { [x: string]: any }
 }
 
+export type BlockFieldStyle = {
+  title: string
+  value: string
+  component?: ({ children }: { children: React.ReactNode }) => JSX.Element
+}
 export type BlockFieldType = {
   type: string
-  styles: { title: string; value: string }[]
+  styles: BlockFieldStyle[]
   lists: { title: string; value: string }[] | []
   marks: {
     decorators: any[]
