@@ -1,10 +1,15 @@
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
 import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
-import type { BlockFieldType } from '../../types/schemaTypes'
+import type { BlockFieldStyle, BlockFieldType } from '../../types/schemaTypes'
 import { format_color_text } from '@equinor/eds-icons'
 
 export type TitleContentProps = {
+  styles?: BlockFieldStyle[]
+  highlight?: boolean
+}
+
+/*export type TitleContentProps = {
   highlight?: boolean
   extraLarge?: boolean
   isBigTitle?: boolean
@@ -13,31 +18,19 @@ export type TitleContentProps = {
     value: 'normal'
     component?: ({ children }: { children: React.ReactNode }) => JSX.Element
   }
-}
+}*/
 
 // TODO: Add relevant styles for titles (i.e. highlighted text)
 export const configureTitleBlockContent = (options: TitleContentProps = {}): BlockFieldType => {
-  const {
-    large = {
-      title: 'Large',
-      value: 'normal',
-    },
-    extraLarge = false,
-    highlight = false,
-    isBigTitle = false,
-  } = options
-
-  const largeTitleText = {
-    title: 'Large',
+  const { highlight = false, styles } = options
+  const defaultStyle = {
+    title: 'Normal',
     value: 'normal',
-    component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '42px' }}>{children}</span>,
   }
-
-  const titleStyle = extraLarge || isBigTitle ? largeTitleText : large
 
   const config: BlockFieldType = {
     type: 'block',
-    styles: [titleStyle],
+    styles: styles ? styles : [defaultStyle],
     lists: [],
     marks: {
       decorators: [
@@ -65,11 +58,6 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
       annotations: [],
     },
   }
-  const extraLargeConfig = {
-    title: 'Extra Large',
-    value: 'extraLarge',
-    component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '56px' }}>{children}</span>,
-  }
 
   const HighlightTextRender = (props: any) => {
     const { children } = props
@@ -81,9 +69,6 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
     value: 'highlight',
     icon: EdsBlockEditorIcon(format_color_text),
     component: HighlightTextRender,
-  }
-  if (extraLarge) {
-    config.styles.push(extraLargeConfig)
   }
   if (highlight) {
     config.marks.decorators.push(textColorConfig)
