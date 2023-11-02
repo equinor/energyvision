@@ -55,7 +55,7 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
   }
 
   const textColorConfig = {
-    title: 'HighLight',
+    title: 'Highlight',
     value: 'highlight',
     icon: EdsBlockEditorIcon(format_color_text),
     component: HighlightTextRender,
