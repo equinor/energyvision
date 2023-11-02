@@ -1,4 +1,4 @@
-import { Eyebrow, BackgroundContainer, Text, Heading } from '@components'
+import { Eyebrow, BackgroundContainer, Text, Heading, List } from '@components'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
@@ -6,7 +6,8 @@ import Image, { Ratios } from '../shared/SanityImage'
 import styled from 'styled-components'
 import type { TextBlockData } from '../../types/types'
 import CallToActions from './CallToActions'
-import { BlockType } from '../shared/portableText/helpers/defaultSerializers'
+import { BlockType, ListType } from '../shared/portableText/helpers/defaultSerializers'
+import type { PortableTextBlock } from '@portabletext/types'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -38,6 +39,9 @@ const StyledTextBlock = styled.section`
   & p:last-child {
     margin-bottom: 0;
   }
+`
+const StyledList = styled(List)`
+  margin-bottom: var(--space-medium);
 `
 
 const TextContainer = styled.div`
@@ -93,12 +97,54 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
             )}
             {overline && <Eyebrow>{overline}</Eyebrow>}
             {title && <TitleText value={title} />}
-            {ingress && <IngressText value={ingress} />}
+            {ingress && (
+              <IngressText
+                value={ingress}
+                components={{
+                  list: {
+                    bullet: ({ children }) => {
+                      return (
+                        <StyledList>
+                          <>{children}</>
+                        </StyledList>
+                      )
+                    },
+                    number: ({ children }) => {
+                      return (
+                        <StyledList>
+                          <>{children}</>
+                        </StyledList>
+                      )
+                    },
+                  },
+                }}
+              />
+            )}
           </>
         )}
         {text && (
           <TextContainer>
-            <RichText value={text} />
+            <RichText
+              value={text}
+              components={{
+                list: {
+                  bullet: ({ children }) => {
+                    return (
+                      <StyledList>
+                        <>{children}</>
+                      </StyledList>
+                    )
+                  },
+                  number: ({ children }) => {
+                    return (
+                      <StyledList>
+                        <>{children}</>
+                      </StyledList>
+                    )
+                  },
+                },
+              }}
+            ></RichText>
           </TextContainer>
         )}
         {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}

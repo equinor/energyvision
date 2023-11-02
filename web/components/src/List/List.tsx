@@ -15,7 +15,6 @@ const StyledList = styled(EdsList)<ListProps>`
   margin-left: var(--space-medium);
   margin-right: var(--space-medium);
   padding-left: var(--space-medium);
-  padding-bottom: var(--space-small);
   list-style-position: outside;
   ${({ unstyled }) =>
     unstyled && {
