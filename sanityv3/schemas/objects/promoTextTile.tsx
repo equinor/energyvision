@@ -6,7 +6,6 @@ import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import type { LinkSelector } from './linkSelector'
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent, configureBlockContent } from '../editors'
 
 const titleContentType = configureTitleBlockContent()
@@ -52,15 +51,11 @@ export default {
   ],
   fields: [
     {
-      name: 'linkLabelAsTitle',
-      title: 'Use link label as link title',
-      type: 'boolean',
-      initialValue: false,
-    },
-    {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
       title: 'Title',
       validation: (Rule: Rule) =>
@@ -77,6 +72,13 @@ export default {
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
+    },
+    {
+      name: 'linkLabelAsTitle',
+      title: 'Toggle link button text',
+      description: 'This will add the link label as the button text',
+      type: 'boolean',
+      initialValue: false,
     },
     {
       name: 'link',
