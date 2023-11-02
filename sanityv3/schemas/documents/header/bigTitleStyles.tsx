@@ -1,4 +1,4 @@
-import { BlockFieldStyle } from '../../../types/schemaTypes'
+import { BlockStyleDefinition } from 'sanity'
 
 const bigTitle = {
   title: 'Large',
@@ -8,7 +8,7 @@ const bigTitle = {
   },
 }
 
-export const defaultBannerBigTitletStyle: BlockFieldStyle[] = [
+export const defaultBannerBigTitletStyle: BlockStyleDefinition[] = [
   bigTitle,
   {
     title: 'Extra Large',
@@ -19,4 +19,4 @@ export const defaultBannerBigTitletStyle: BlockFieldStyle[] = [
   },
 ]
 
-export const fiftyFiftyBigTitleStyle: BlockFieldStyle[] = [bigTitle]
+export const fiftyFiftyBigTitleStyle: BlockStyleDefinition[] = [bigTitle]
