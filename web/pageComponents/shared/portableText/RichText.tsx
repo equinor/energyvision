@@ -44,16 +44,8 @@ const defaultSerializers = {
   },
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
   list: {
-    bullet: ({ children }: PortableTextBlock) => (
-      <BulletList>
-        <>{children}</>
-      </BulletList>
-    ),
-    number: ({ children }: PortableTextBlock) => (
-      <NumberedList>
-        <>{children}</>
-      </NumberedList>
-    ),
+    bullet: BulletList,
+    number: NumberedList,
   },
   listItem: ({ children }: PortableTextBlock) => (
     <Item>
