@@ -12,10 +12,5 @@ export type SharedNewsFields = Page & {
       text: string
     }[]
   }[]
-  factboxes: {
-    blockKey: string
-    title: string
-    text: string
-  }[]
   _id: string
 }

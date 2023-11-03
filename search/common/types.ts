@@ -77,17 +77,3 @@ export type Page = {
   slug: string
   docToClear?: boolean
 }
-
-export type TextBlockIndex = {
-  objectID: string
-  title: string
-  ingress: string
-  text: string
-}
-
-export type AccordionIndex = {
-  objectID: string
-  title: string
-  ingress: string
-  text: string
-}
