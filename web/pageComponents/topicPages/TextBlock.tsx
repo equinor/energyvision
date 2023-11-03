@@ -101,7 +101,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
         )}
         {text && (
           <TextContainer>
-            <RichText value={text}></RichText>
+            <RichText value={text} />
           </TextContainer>
         )}
         {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}
