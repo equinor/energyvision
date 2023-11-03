@@ -1,30 +1,45 @@
-import { pipe } from 'fp-ts/lib/function'
-import { AccordionIndex, TextBlockIndex, TopicIndex } from '../../common'
-import { TopicPage } from './sanity'
 import * as A from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/function'
+import { ap } from 'fp-ts/lib/Identity'
 import * as O from 'fp-ts/lib/Option'
-import { mappedAccordions, mappedTextBlocks } from '../common/mappers'
+import { TopicIndex } from '../../common'
+import { TopicPage } from './sanity'
 
-type ContentsDataType = (page: TopicPage) => AccordionIndex[] | TextBlockIndex[]
+type MappableObjectType = {
+  _key: string
+  title: string
+  ingress: string
+  text: string
+}
+
+type MapperFunctionType = (page: TopicPage) => (obj: MappableObjectType) => TopicIndex
+const mapperFunction: MapperFunctionType =
+  (page) =>
+  ({ _key, title, ingress, text }) => ({
+    slug: page.slug,
+    objectID: `${page._id}-${_key}`,
+    type: 'page',
+    pageTitle: page.title,
+    title,
+    ingress,
+    text,
+  })
 
 type MapDataType = (page: TopicPage) => TopicIndex[]
-
-const contents: ContentsDataType = (page) => pipe(page, mappedAccordions, A.concat(mappedTextBlocks(page)))
-
-export const mapData: MapDataType = (page: TopicPage) =>
-  pipe(
-    page,
-    contents,
-    O.fromNullable,
-    O.map((items) => {
-      return items.map((it) => {
-        return {
-          slug: page.slug,
-          type: 'page',
-          pageTitle: page.title,
-          ...it,
-        } as unknown as TopicIndex
-      })
-    }),
-    O.getOrElse(() => [] as TopicIndex[]),
+export const mapData: MapDataType = (page) =>
+  pipe(mapperFunction, ap(page), (fn) =>
+    pipe(
+      pipe(
+        O.fromNullable(page.textBlocks),
+        O.map(A.map(fn)),
+        O.getOrElse(() => [] as TopicIndex[]),
+      ),
+      A.concat(
+        pipe(
+          O.fromNullable(page.accordions),
+          O.map(A.map(fn)),
+          O.getOrElse(() => [] as TopicIndex[]),
+        ),
+      ),
+    ),
   )

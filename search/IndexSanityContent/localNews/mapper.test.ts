@@ -25,35 +25,16 @@ describe('Local News', () => {
             ],
           },
         ],
-        factboxes: [
-          {
-            blockKey: 'factboxkey',
-            title: 'Facts',
-            text: 'Factbox text',
-          },
-        ],
       }
 
       const sut = mapData
       const result = sut(newsArticle)
 
       it('contains one entry', () => {
-        expect(result).toHaveLength(2)
+        expect(result).toHaveLength(1)
       })
 
       it('entry looks as expected', () => {
-        expect(result[1]).toEqual({
-          slug: '/a/slug',
-          objectID: 'id-factboxkey',
-          pageTitle: 'title',
-          ingress: 'ingress',
-          type: 'localNews',
-          text: 'Facts\nFactbox text',
-          publishDateTime: '2021-11-26T07:00:00.000Z',
-          year: 2021,
-          localNewsTag: 'Germany',
-        } as NewsIndex)
-
         expect(result[0]).toEqual({
           slug: '/a/slug',
           objectID: 'id-blockKey-childKey',
@@ -105,25 +86,13 @@ describe('Local News', () => {
             ],
           },
         ],
-        factboxes: [
-          {
-            blockKey: 'factboxkey',
-            title: 'Facts',
-            text: 'Factbox text',
-          },
-          {
-            blockKey: 'factboxkey1',
-            title: 'Facts1',
-            text: 'Factbox text1',
-          },
-        ],
       }
 
       const sut = mapData
       const result = sut(newsArticle)
 
       it('contains one entry', () => {
-        expect(result).toHaveLength(6)
+        expect(result).toHaveLength(4)
       })
 
       it('entry looks as expected', () => {
@@ -187,7 +156,6 @@ describe('Local News', () => {
             children: [],
           },
         ],
-        factboxes: [],
       }
 
       const sut = mapData
@@ -206,7 +174,6 @@ describe('Local News', () => {
         localNewsTag: 'USA',
         _id: 'id',
         blocks: [],
-        factboxes: [],
       }
 
       const sut = mapData

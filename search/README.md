@@ -20,16 +20,3 @@ From the root of EnergyVision:
   pnpm search-indexers build
   pnpm search-indexers start
 ```
-
-To run locally, do the following changes to the root index.ts file, as ManagedIdentity is not working. Make sure you have the right env variables for dev.
-
-```
-//import DotenvAzure from 'dotenv-azure'
-import { dotenv } from 'dotenv-azure'
-
- /* await new DotenvAzure().config({
-    allowEmptyValues: true,
-    debug: false,
-  })*/
-  await dotenv.config()
-```
