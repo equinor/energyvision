@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   --card-minWidth: 200px;
 `
 const Ingress = styled.div`
-  margin-bottom: var(--space-Large);
+  margin-bottom: var(--space-xLarge);
 `
 
 const Intro = styled.div`

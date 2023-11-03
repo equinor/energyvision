@@ -17,7 +17,9 @@ const TableContainer = styled.div`
   max-width: var(--maxViewportWidth);
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
 `
-
+const StyledIngress = styled.div`
+  padding: 0 0 var(--space-medium);
+`
 const StyledTitle = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
@@ -98,7 +100,11 @@ const Table = ({ data, anchor }: TableProps) => {
     <StyledTableWrapper background={background} id={anchor}>
       <TableContainer>
         {title && <StyledTitle value={title} />}
-        {ingress && <IngressText value={ingress} />}
+        {ingress && (
+          <StyledIngress>
+            <IngressText value={ingress} />
+          </StyledIngress>
+        )}
 
         <EnvisTable>
           <Head>

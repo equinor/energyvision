@@ -15,7 +15,9 @@ const Container = styled.div`
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
-
+const StyledIngress = styled.div`
+  padding: 0 0 var(--space-medium);
+`
 const StyledTitle = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
@@ -46,7 +48,11 @@ const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
       <BackgroundContainer background={designOptions.background} id={anchor}>
         <Container>
           {title && <StyledTitle value={title} />}
-          {ingress && <IngressText value={ingress} />}
+          {ingress && (
+            <StyledIngress>
+              <IngressText value={ingress} />
+            </StyledIngress>
+          )}
 
           <div className="cookieconsent-optin-marketing">
             <Embed />
