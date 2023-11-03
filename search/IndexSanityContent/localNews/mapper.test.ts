@@ -48,7 +48,7 @@ describe('Local News', () => {
           pageTitle: 'title',
           ingress: 'ingress',
           type: 'localNews',
-          text: 'Facts\nFactbox text',
+          text: 'Facts: Factbox text',
           publishDateTime: '2021-11-26T07:00:00.000Z',
           year: 2021,
           localNewsTag: 'Germany',
