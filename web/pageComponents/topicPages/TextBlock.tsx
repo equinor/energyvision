@@ -6,8 +6,7 @@ import Image, { Ratios } from '../shared/SanityImage'
 import styled from 'styled-components'
 import type { TextBlockData } from '../../types/types'
 import CallToActions from './CallToActions'
-import { BlockType, ListType } from '../shared/portableText/helpers/defaultSerializers'
-import type { PortableTextBlock } from '@portabletext/types'
+import { BlockType } from '../shared/portableText/helpers/defaultSerializers'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -97,54 +96,12 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
             )}
             {overline && <Eyebrow>{overline}</Eyebrow>}
             {title && <TitleText value={title} />}
-            {ingress && (
-              <IngressText
-                value={ingress}
-                components={{
-                  list: {
-                    bullet: ({ children }) => {
-                      return (
-                        <StyledList>
-                          <>{children}</>
-                        </StyledList>
-                      )
-                    },
-                    number: ({ children }) => {
-                      return (
-                        <StyledList>
-                          <>{children}</>
-                        </StyledList>
-                      )
-                    },
-                  },
-                }}
-              />
-            )}
+            {ingress && <IngressText value={ingress} />}
           </>
         )}
         {text && (
           <TextContainer>
-            <RichText
-              value={text}
-              components={{
-                list: {
-                  bullet: ({ children }) => {
-                    return (
-                      <StyledList>
-                        <>{children}</>
-                      </StyledList>
-                    )
-                  },
-                  number: ({ children }) => {
-                    return (
-                      <StyledList>
-                        <>{children}</>
-                      </StyledList>
-                    )
-                  },
-                },
-              }}
-            ></RichText>
+            <RichText value={text}></RichText>
           </TextContainer>
         )}
         {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}
