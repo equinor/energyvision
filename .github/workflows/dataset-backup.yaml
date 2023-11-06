@@ -13,7 +13,7 @@ on:
         default: 'all'
   schedule:
     # Runs at 02:00 UTC every sunday
-    - cron: '7 3 * * 1' #'0 2 * * 0'
+    - cron: '6 15 * * 1' #'0 2 * * 0'
 env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
 jobs:
