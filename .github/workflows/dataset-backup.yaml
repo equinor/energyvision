@@ -8,12 +8,12 @@ on:
         options:
           - "['global-development']"
           - "['global-test']"
-          - all
+          - 'all'
         required: true
-        default: all
+        default: 'all'
   schedule:
     # Runs at 02:00 UTC every sunday
-    - cron: '0 2 * * 0'
+    - cron: '7 3 * * 1' #'0 2 * * 0'
 env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
 jobs:
