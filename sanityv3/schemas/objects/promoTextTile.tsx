@@ -23,7 +23,7 @@ const blockContentType = configureBlockContent({
 
 export type PromoTextTile = {
   _type: 'promoTextTile'
-  title: string
+  title: any[]
   linkLabelAsTitle?: boolean
   link?: LinkSelector
   background?: ColorSelectorValue
