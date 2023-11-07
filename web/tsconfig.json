@@ -9,12 +9,15 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components": ["components/src", "components/src/*"],
-      "@utils": ["components/utils", "components/utils/*"],
-      "@mockdata": ["components/stories/mockdata", "components/stories/mockdata/*"]
+      "@components/*": ["components/src/*"],
+      "@utils/*": ["components/utils/*"],
+      "@mockdata/*": ["components/stories/mockdata/*"],
+      "@components": ["components/src"],
+      "@utils": ["components/utils"],
+      "@mockdata": ["components/stories/mockdata"]
     },
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts"],
   "exclude": ["node_modules", "**/*.stories.*", "pages-disabled/*.tsx"]
 }

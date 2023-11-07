@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticPaths } from 'next'
+import { GetServerSideProps } from 'next'
 import { InstantSearchSSRProvider } from 'react-instantsearch-hooks-web'
 import { getServerState } from 'react-instantsearch-hooks-server'
 import type { AppProps } from 'next/app'
