@@ -9,7 +9,6 @@ const Twitter = ({ width = 42, height = 42 }: { width?: number; height?: number 
           cy="481.3"
           r="481.3"
           transform="translate(353 129.3)"
-          fill="#fff"
           stroke="#fff"
           strokeMiterlimit="10"
           strokeWidth="1"
