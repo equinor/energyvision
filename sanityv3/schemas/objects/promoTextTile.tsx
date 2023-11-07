@@ -23,7 +23,7 @@ const blockContentType = configureBlockContent({
 
 export type PromoTextTile = {
   _type: 'promoTextTile'
-  title: any[]
+  title: PortableTextBlock[]
   linkLabelAsTitle?: boolean
   link?: LinkSelector
   background?: ColorSelectorValue
@@ -98,9 +98,17 @@ export default {
       linkLabelAsTitle: 'linkLabelAsTitle',
       link: 'link.label',
     },
-    prepare({ title, linkLabelAsTitle, link }: { title: any[]; linkLabelAsTitle: boolean; link: string }) {
+    prepare({
+      title,
+      linkLabelAsTitle,
+      link,
+    }: {
+      title: PortableTextBlock[]
+      linkLabelAsTitle: boolean
+      link: string
+    }) {
       return {
-        title: linkLabelAsTitle ? link : blocksToText(title as any[]),
+        title: linkLabelAsTitle ? link : blocksToText(title),
         subtitle: `Promo text tile component`,
         media: EdsIcon(label),
       }
