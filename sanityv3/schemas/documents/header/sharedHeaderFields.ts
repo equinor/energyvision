@@ -9,7 +9,7 @@ const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor u
 
 type DocumentType = { parent: Hero; currentUser: CurrentUser }
 type Hero = {
-  heroType?: string
+  heroType?: HeroTypes
   isBigTitle?: boolean
 }
 
@@ -31,7 +31,7 @@ const isBigTitle = {
     return !(parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.DEFAULT)
   },
   readOnly: ({ currentUser }: DocumentType) => {
-    return !currentUser.roles.find(({ name }: any) => bigTitleRoles.includes(name))
+    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
   },
 }
 
@@ -56,7 +56,7 @@ const heroBigTitleDefault = {
         : true,
     ),
   readOnly: ({ currentUser }: DocumentType) => {
-    return !currentUser.roles.find(({ name }: any) => bigTitleRoles.includes(name))
+    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
   },
 }
 
@@ -73,8 +73,8 @@ const heroBigTitleFiftyFifty = {
         ? 'Title is required'
         : true,
     ),
-  readOnly: ({ currentUser }: any) => {
-    return !currentUser.roles.find(({ name }: any) => bigTitleRoles.includes(name))
+  readOnly: ({ currentUser }: DocumentType) => {
+    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
   },
 }
 

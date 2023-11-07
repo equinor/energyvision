@@ -3,6 +3,7 @@ import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
+import React from 'react'
 
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]
@@ -10,17 +11,22 @@ export type TitleContentProps = {
 }
 
 // TODO: Add relevant styles for titles (i.e. highlighted text)
-export const configureTitleBlockContent = (options: TitleContentProps = {}): BlockDefinition => {
+export const configureTitleBlockContent = (
+  options: TitleContentProps = {
+    styles: [
+      {
+        title: 'Normal',
+        value: 'normal',
+      },
+    ],
+  },
+): BlockDefinition => {
   const { highlight = false, styles } = options
-  const defaultStyle = {
-    title: 'Normal',
-    value: 'normal',
-  }
 
   const config: BlockDefinition = {
     type: 'block',
     name: 'block',
-    styles: styles ? styles : [defaultStyle],
+    styles: styles,
     lists: [],
     marks: {
       decorators: [
@@ -49,17 +55,15 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
     },
   }
 
-  const HighlightTextRender = (props: any) => {
-    const { children } = props
-    return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
-  }
-
   const textColorConfig = {
     title: 'Highlight',
     value: 'highlight',
     icon: EdsBlockEditorIcon(format_color_text),
-    component: HighlightTextRender,
+    component: ({ children }: { children: React.ReactNode }) => {
+      return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
+    },
   }
+
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig)
   }

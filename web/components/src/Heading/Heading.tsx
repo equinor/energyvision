@@ -27,11 +27,6 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
   .inverted-background & {
     color: var(--inverted-text);
   }
-
-  strong,
-  b {
-    font-weight: var(--fontWeight-medium);
-  }
 `
 
 export type HeadingProps = {
