@@ -1,8 +1,7 @@
 import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import type { PortableTextBlock, Rule } from 'sanity'
+import type { Rule } from 'sanity'
 import type { PromoTextTile } from './promoTextTile'
-import blocksToText from '../../helpers/blocksToText'
 
 export type PromoTextTileArray = {
   _type: 'promoTextTileArray'
@@ -33,18 +32,10 @@ export default {
     select: {
       group: 'group',
     },
-    prepare({ group }: { group: PromoTextTile[] }) {
-      const getTitle = (promoTextTile: PromoTextTile) => {
-        return promoTextTile.linkLabelAsTitle
-          ? promoTextTile.link?.label
-          : blocksToText(promoTextTile.title as PortableTextBlock[])
-      }
-      const firstTitle = group[0] ? getTitle(group[0]) : ''
-      const secondTitle = group[1] ? getTitle(group[1]) : ''
-
+    prepare() {
       return {
-        title: firstTitle + (group[1] ? ' | ' + secondTitle : ''),
-        subtitle: 'Promo tiles component',
+        title: 'Promo tiles array',
+        subtitle: `Promo text tile array component`,
         media: <div>{EdsIcon(collection_2)}</div>,
       }
     },

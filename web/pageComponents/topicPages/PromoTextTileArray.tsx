@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import type { PromoTextTileArrayData, PromoTextTileData } from '../../types/types'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
+import { PortableTextBlock } from '@portabletext/types'
 
 const { Action, Text } = Card
 
@@ -19,9 +20,14 @@ const Container = styled.div<{ isMultipleCards: boolean }>`
     isMultipleCards ? 'repeat(auto-fill, minmax(280px, 1fr))' : '1fr'};
 `
 
-const StyledBackgroundContainer = styled(BackgroundContainer)`
+const StyledBackgroundContainer = styled(BackgroundContainer)<{ isSpacing?: boolean }>`
   border-radius: ${tokens.shape.corners.borderRadius};
   box-shadow: var(--card-box-shadow);
+  ${({ isSpacing }) =>
+    isSpacing && {
+      marginTop: '50px',
+      marginBottom: '50px',
+    }}
 `
 
 const StyledAction = styled(Action)`
@@ -62,13 +68,12 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
     <div className="background-none" id={anchor}>
       <Container isMultipleCards={isMultipleCards}>
         {data.group.map((tile: PromoTextTileData) => {
-          const { id, designOptions, action, linkLabelAsTitle, text } = tile
+          const { id, designOptions, action, linkLabelAsTitle, ingress } = tile
           const { background } = designOptions
-          console.log('text', text)
 
           return (
             <StyledBackgroundContainer
-              style={data?.spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}
+              isSpacing={data?.spacing}
               disableContainerWrapper={true}
               background={background}
               key={id}
@@ -94,7 +99,7 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                           '--card-title-fontWeight': '400',
                         } as CSSProperties
                       }
-                      value={text}
+                      value={ingress as PortableTextBlock[]}
                     />
                   </Text>
                   {action.label && (
@@ -102,7 +107,7 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                       {linkLabelAsTitle ? (
                         <PromoTileButton action={action} template="text" hasImage={true} />
                       ) : (
-                        <PromoTileButton action={action} hasImage={false} template="icon" />
+                        <PromoTileButton action={action} template="icon" hasImage={false} />
                       )}
                     </StyledAction>
                   )}

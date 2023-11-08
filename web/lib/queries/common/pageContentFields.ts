@@ -187,7 +187,7 @@ const pageContentFields = /* groq */ `
     spacing,
     "group": group[]{
       "id": _key,
-      text,
+      ingress[]{..., ${markDefs}},
       linkLabelAsTitle,
       "action": ${promoLinkReferenceFields},
       "designOptions": {

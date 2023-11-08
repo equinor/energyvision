@@ -1,20 +1,21 @@
 import { label } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import type { LinkSelector } from './linkSelector'
 import { configureBlockContent } from '../editors'
 import { getLinkSelectorFields } from './linkSelector'
 
-const ingressContentType = configureBlockContent({
+const ingressBlockContentType = configureBlockContent({
   h1: false,
   h2: false,
   h3: false,
   h4: false,
+  internalLink: false,
+  externalLink: false,
   attachment: false,
+  lists: false,
 })
 
 export type PromoTextTile = {
@@ -47,12 +48,12 @@ export default {
   ],
   fields: [
     {
-      name: 'text',
-      title: 'Ingress',
+      name: 'ingress',
+      title: 'Promo Text',
+      description: 'Max 200 characters',
       type: 'array',
-      of: [ingressContentType],
-      validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
+      of: [ingressBlockContentType],
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 200)),
     },
     {
       name: 'isLink',
@@ -87,7 +88,7 @@ export default {
     },
     prepare({ linkLabelAsTitle, link }: { title: PortableTextBlock[]; linkLabelAsTitle: boolean; link: string }) {
       return {
-        title: linkLabelAsTitle && link,
+        title: linkLabelAsTitle || link || 'Promo Text Tile',
         subtitle: `Promo text tile component`,
         media: EdsIcon(label),
       }

@@ -405,7 +405,7 @@ export type PromoTileData = {
 
 export type PromoTextTileData = {
   id: string
-  text: PortableTextBlock[]
+  ingress: PortableTextBlock[]
   action: LinkData
   designOptions: DesignOptions
   linkLabelAsTitle?: boolean
