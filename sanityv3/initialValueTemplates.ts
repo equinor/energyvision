@@ -30,7 +30,7 @@ const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
         schemaType: 'siteMenu',
         parameters: [{ name: 'isoCode', type: 'string' }],
         value: (params: Record<string, unknown>) => ({
-          _lang: params.isoCode,
+          lang: params.isoCode,
         }),
       },
       {
@@ -39,7 +39,7 @@ const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
         schemaType: 'siteMenu',
         parameters: [{ name: 'isoCode', type: 'string' }],
         value: (params: Record<string, unknown>) => ({
-          _lang: params.isoCode,
+          lang: params.isoCode,
         }),
       },
     ]
@@ -50,7 +50,7 @@ const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
         schemaType: 'simpleMenu',
         parameters: [{ name: 'isoCode', type: 'string' }],
         value: (params: Record<string, unknown>) => ({
-          _lang: params.isoCode,
+          lang: params.isoCode,
         }),
       },
     ]
@@ -71,7 +71,7 @@ const redirectWithLocaleTemplate: Template<any, any> = {
   schemaType: 'redirect',
   parameters: [{ name: 'isoCode', type: 'string' }],
   value: (params: Record<string, unknown>) => ({
-    _lang: params.isoCode,
+    lang: params.isoCode,
   }),
 }
 
