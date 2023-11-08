@@ -405,7 +405,6 @@ export type PromoTileData = {
 
 export type PromoTextTileData = {
   id: string
-  title: PortableTextBlock[]
   text: PortableTextBlock[]
   action: LinkData
   designOptions: DesignOptions

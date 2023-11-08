@@ -1,6 +1,5 @@
 import { BackgroundContainer, Card } from '@components'
 import { tokens } from '@equinor/eds-tokens'
-import { PortableTextBlock } from '@portabletext/types'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { PromoTextTileArrayData, PromoTextTileData } from '../../types/types'
@@ -48,24 +47,18 @@ const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
   height: 100%;
 `
 
-const TitleWrapper = styled.div`
-  margin-bottom: var(--space-medium);
-`
-
 const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; anchor?: string }) => {
   if (!data.group) return null
   const isMultipleCards = data.group.length > 1
-
-  const isSingleCard = data.group.length === 1
 
   return (
     <div className="background-none" id={anchor}>
       <Container isMultipleCards={isMultipleCards}>
         {data.group.map((tile: PromoTextTileData) => {
-          const { id, designOptions, action, linkLabelAsTitle, text, title } = tile
+          const { id, designOptions, action, linkLabelAsTitle, text } = tile
           const { background } = designOptions
+          console.log('text', text)
 
-          const hasLink = !!tile.action // Check if link is present
           return (
             <StyledBackgroundContainer
               style={data?.spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}
@@ -80,16 +73,11 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                 style={
                   {
                     padding: 'var(--space-medium) 0 0 0',
-                    '--card-maxWidth': isSingleCard ? '100%' : '280px',
+                    '--card-maxWidth': !isMultipleCards ? '100%' : '280px',
                   } as CSSProperties
                 }
               >
-                <ContentWrapper alignLeft={isMultipleCards} hasLink={hasLink}>
-                  <TitleWrapper>
-                    <Header>
-                      <PromotileTitleText value={title} />
-                    </Header>
-                  </TitleWrapper>
+                <ContentWrapper alignLeft={isMultipleCards} hasLink={!!tile.action}>
                   <Text>
                     <PromotileTitleText value={text} />
                   </Text>

@@ -184,11 +184,10 @@ const pageContentFields = /* groq */ `
   _type == "promoTextTileArray"=>{
     "type": _type,
     "id": _key,
-    "useHorizontalScroll": useHorizontalScroll,
     spacing,
     "group": group[]{
       "id": _key,
-      title,
+      text,
       linkLabelAsTitle,
       "action": ${promoLinkReferenceFields},
       "designOptions": {

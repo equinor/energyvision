@@ -6,26 +6,22 @@ import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import type { LinkSelector } from './linkSelector'
-import { configureTitleBlockContent, configureBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
+import { getLinkSelectorFields } from './linkSelector'
 
-const titleContentType = configureTitleBlockContent()
-
-const blockContentType = configureBlockContent({
+const ingressContentType = configureBlockContent({
   h1: false,
   h2: false,
   h3: false,
   h4: false,
-  internalLink: false,
-  externalLink: false,
   attachment: false,
-  lists: false,
 })
 
 export type PromoTextTile = {
   _type: 'promoTextTile'
-  title: PortableTextBlock[]
   linkLabelAsTitle?: boolean
   link?: LinkSelector
+  isLink?: boolean
   background?: ColorSelectorValue
 }
 
@@ -51,39 +47,30 @@ export default {
   ],
   fields: [
     {
-      name: 'title',
-      type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
-      of: [titleContentType],
-      title: 'Title',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], context: ValidationContext) => {
-          const { parent } = context as { parent: PromoTextTile }
-          if (parent?.linkLabelAsTitle || value) return true
-          return 'Required'
-        }),
-    },
-    {
       name: 'text',
-      title: 'Text content',
+      title: 'Ingress',
       type: 'array',
-      of: [blockContentType],
+      of: [ingressContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
     },
     {
-      name: 'linkLabelAsTitle',
-      title: 'Toggle link button text',
-      description: 'This will add the link label as the button text',
+      name: 'isLink',
       type: 'boolean',
+      title: 'Use a link',
+      description: 'Link to another piece of content',
       initialValue: false,
     },
     {
-      name: 'link',
-      type: 'linkSelector',
+      name: 'linkLabelAsTitle',
+      title: 'Toggle button text',
+      description: 'This will add the text to link',
+      type: 'boolean',
+      initialValue: false,
+      hidden: ({ parent }: { parent: PromoTextTile }) => !parent.isLink,
     },
+    ...getLinkSelectorFields(undefined, 'isLink'),
+
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
@@ -98,17 +85,9 @@ export default {
       linkLabelAsTitle: 'linkLabelAsTitle',
       link: 'link.label',
     },
-    prepare({
-      title,
-      linkLabelAsTitle,
-      link,
-    }: {
-      title: PortableTextBlock[]
-      linkLabelAsTitle: boolean
-      link: string
-    }) {
+    prepare({ linkLabelAsTitle, link }: { title: PortableTextBlock[]; linkLabelAsTitle: boolean; link: string }) {
       return {
-        title: linkLabelAsTitle ? link : blocksToText(title),
+        title: linkLabelAsTitle && link,
         subtitle: `Promo text tile component`,
         media: EdsIcon(label),
       }
