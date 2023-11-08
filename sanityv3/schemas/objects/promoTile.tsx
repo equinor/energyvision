@@ -89,6 +89,7 @@ export default {
     },
     prepare({
       title,
+      imageUrl,
       linkLabelAsTitle,
       link,
     }: {
@@ -100,7 +101,7 @@ export default {
       return {
         title: linkLabelAsTitle ? link : blocksToText(title),
         subtitle: `Promo tile component`,
-        media: EdsIcon(label),
+        media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
       }
     },
   },
