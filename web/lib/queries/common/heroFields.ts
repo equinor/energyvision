@@ -6,7 +6,7 @@ export const heroFields = /* groq */ `{
     "isBigTitle":isBigTitle,
     "title": select( 
       heroType == 'fiftyFifty' => select(isBigTitle => heroBigTitleFiftyFifty,heroTitle),
-      heroType == coalesce(heroType, 'default') => select(isBigTitle => heroBigTitleDefault)
+      heroType == 'default' => select(isBigTitle => heroBigTitleDefault)
     ) ,
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
