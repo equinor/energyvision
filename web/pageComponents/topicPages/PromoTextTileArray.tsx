@@ -6,17 +6,17 @@ import type { PromoTextTileArrayData, PromoTextTileData } from '../../types/type
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
 
-const { Header, Action, Text } = Card
+const { Action, Text } = Card
 
 const Container = styled.div<{ isMultipleCards: boolean }>`
   display: grid;
-  grid-template-columns: ${({ isMultipleCards }) =>
-    isMultipleCards ? 'repeat(auto-fill, minmax(280px, 1fr))' : '1fr'};
   grid-gap: var(--space-medium);
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin: auto;
   height: 100%;
+  grid-template-columns: ${({ isMultipleCards }) =>
+    isMultipleCards ? 'repeat(auto-fill, minmax(280px, 1fr))' : '1fr'};
 `
 
 const StyledBackgroundContainer = styled(BackgroundContainer)`
@@ -35,6 +35,9 @@ const StyledCard = styled(Card)<{ alignLeft: boolean }>`
   height: 300px;
   overflow: hidden;
   justify-content: ${({ alignLeft }) => (alignLeft ? 'flex-start' : 'center')};
+  @media (max-width: 750px) {
+    justify-content: center;
+  }
 `
 
 const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
@@ -45,6 +48,10 @@ const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
   text-align: center;
   margin-bottom: var(--space-medium);
   height: 100%;
+  @media (max-width: 750px) {
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; anchor?: string }) => {
@@ -72,14 +79,23 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                 alignLeft={isMultipleCards}
                 style={
                   {
-                    padding: 'var(--space-medium) 0 0 0',
+                    padding: 'var(--space-medium)',
                     '--card-maxWidth': !isMultipleCards ? '100%' : '280px',
+                    fontSize: 'var(--typeScale-5)',
                   } as CSSProperties
                 }
               >
                 <ContentWrapper alignLeft={isMultipleCards} hasLink={!!tile.action}>
                   <Text>
-                    <PromotileTitleText value={text} />
+                    <PromotileTitleText
+                      style={
+                        {
+                          '--card-title-fontSize': 'var(--typeScale-3)',
+                          '--card-title-fontWeight': '400',
+                        } as CSSProperties
+                      }
+                      value={text}
+                    />
                   </Text>
                   {action.label && (
                     <StyledAction>
