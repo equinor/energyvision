@@ -8,9 +8,9 @@ on:
         options:
           - "['global-development']"
           - "['global-test']"
-          - all
+          - 'all'
         required: true
-        default: all
+        default: 'all'
   schedule:
     # Runs at 02:00 UTC every sunday
     - cron: '0 2 * * 0'
