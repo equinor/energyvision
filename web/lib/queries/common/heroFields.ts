@@ -4,10 +4,12 @@ export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
     "ratio": heroRatio,
     "isBigTitle":isBigTitle,
-    "title": select( 
-      heroType == 'fiftyFifty' => select(isBigTitle => heroBigTitleFiftyFifty,heroTitle),
-      heroType == 'default' => select(isBigTitle => heroBigTitleDefault)
-    ) ,
+    heroType == 'fiftyFifty' => {
+      "title" : select(isBigTitle => heroBigTitleFiftyFifty,heroTitle),
+    },
+    heroType == "default" => {
+      "title" : select(isBigTitle => heroBigTitleDefault),
+    },
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure":  select(
