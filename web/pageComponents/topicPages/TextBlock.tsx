@@ -1,4 +1,4 @@
-import { Eyebrow, BackgroundContainer, Text, Heading, List } from '@components'
+import { Eyebrow, BackgroundContainer, Heading } from '@components'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
@@ -38,9 +38,6 @@ const StyledTextBlock = styled.section`
   & p:last-child {
     margin-bottom: 0;
   }
-`
-const StyledList = styled(List)`
-  margin-bottom: var(--space-medium);
 `
 
 const TextContainer = styled.div`
