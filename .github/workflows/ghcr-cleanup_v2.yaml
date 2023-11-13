@@ -34,7 +34,7 @@ jobs:
           token: ${{ secrets.PADMS_PAT }}
           account-type: org
           org-name: Equinor
-          image-names: energyvision/equinor/web-global-development, energyvision/equinor/studiov3-global-development
+          image-names: energyvision/web-global-development, energyvision/studiov3-global-development
           cut-off: one day ago UTC+2
           keep-at-least: 5
           # skip-tags: ${{ env.TAGS_TO_KEEP }}
