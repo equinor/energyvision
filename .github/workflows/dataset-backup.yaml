@@ -10,7 +10,7 @@ on:
           - "['global-test']"
           - 'all'
         required: true
-        default: 'all'
+        default: "['global-development']"
   schedule:
     # Runs at 02:00 UTC every sunday
     - cron: '0 2 * * 0'
@@ -45,7 +45,7 @@ jobs:
     name: Backup dataset
     strategy:
       matrix:
-        dataset: ${{ (github.event.inputs.dataset != 'all'  && fromJson(github.event.inputs.dataset)) || fromJson(needs.read-satellites.outputs.matrix) }}
+        dataset: ${{ (github.event.inputs.dataset != 'all' && github.event_name == 'workflow_dispatch' && fromJson(github.event.inputs.dataset)) || fromJson(needs.read-satellites.outputs.matrix) }}
 
     steps:
       - uses: actions/checkout@v3
