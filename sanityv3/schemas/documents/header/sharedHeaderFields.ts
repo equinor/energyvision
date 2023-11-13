@@ -49,7 +49,7 @@ const heroBigTitleDefault = {
   hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.DEFAULT,
   validation: (Rule: Rule) =>
     Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-      blocksToText(value)?.length === 0 &&
+      (!value || blocksToText(value)?.length === 0) &&
       (ctx.parent as Hero)?.isBigTitle &&
       (ctx.parent as Hero)?.heroType === HeroTypes.DEFAULT
         ? 'Title is required'
