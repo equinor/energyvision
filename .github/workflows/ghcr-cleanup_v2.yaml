@@ -23,7 +23,7 @@ jobs:
       - name: Get tags to keep from output.json
         id: get-tags
         run: |
-          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
+          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-dev-tags.json)
           echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
           echo "TAGS TO KEEP: $TAGS"
 
@@ -34,7 +34,7 @@ jobs:
           token: ${{ secrets.PADMS_PAT }}
           account-type: org
           org-name: Equinor
-          image-names: energyvision/equinor/web-global
+          image-names: energyvision/equinor/web-global-development, energyvision/equinor/studiov3-global-development
           cut-off: one day ago UTC+2
           keep-at-least: 5
           # skip-tags: ${{ env.TAGS_TO_KEEP }}
