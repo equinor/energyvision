@@ -36,9 +36,9 @@ jobs:
           org-name: Equinor
           image-names: energyvision/web-global-development, energyvision/studiov3-global-development
           cut-off: one day ago UTC+2
-          keep-at-least: 5
-          # skip-tags: ${{ env.TAGS_TO_KEEP }}
-          dry-run: true
+          keep-at-least: 4
+          skip-tags: ${{ env.TAGS_TO_KEEP }}
+          # dry-run: true
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
