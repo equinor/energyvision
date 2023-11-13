@@ -9,7 +9,7 @@ import { PortableTextBlock } from '@portabletext/types'
 
 const { Action, Text } = Card
 
-const Container = styled.div<{ isMultipleCards: boolean }>`
+const Container = styled.div<{ isMultipleCards: boolean; isSpacing?: boolean }>`
   display: grid;
   grid-gap: var(--space-medium);
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
@@ -18,16 +18,16 @@ const Container = styled.div<{ isMultipleCards: boolean }>`
   height: 100%;
   grid-template-columns: ${({ isMultipleCards }) =>
     isMultipleCards ? 'repeat(auto-fill, minmax(280px, 1fr))' : '1fr'};
-`
-
-const StyledBackgroundContainer = styled(BackgroundContainer)<{ isSpacing?: boolean }>`
-  border-radius: ${tokens.shape.corners.borderRadius};
-  box-shadow: var(--card-box-shadow);
   ${({ isSpacing }) =>
     isSpacing && {
       marginTop: '50px',
       marginBottom: '50px',
     }}
+`
+
+const StyledBackgroundContainer = styled(BackgroundContainer)`
+  border-radius: ${tokens.shape.corners.borderRadius};
+  box-shadow: var(--card-box-shadow);
 `
 
 const StyledAction = styled(Action)`
@@ -41,7 +41,7 @@ const StyledCard = styled(Card)<{ alignLeft: boolean }>`
   height: 300px;
   overflow: hidden;
   justify-content: ${({ alignLeft }) => (alignLeft ? 'flex-start' : 'center')};
-  @media (max-width: 750px) {
+  @media (max-width: 1004px) {
     justify-content: center;
   }
 `
@@ -54,7 +54,7 @@ const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
   text-align: center;
   margin-bottom: var(--space-medium);
   height: 100%;
-  @media (max-width: 750px) {
+  @media (max-width: 1004px) {
     justify-content: center;
     align-items: center;
   }
@@ -66,18 +66,13 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
 
   return (
     <div className="background-none" id={anchor}>
-      <Container isMultipleCards={isMultipleCards}>
+      <Container isMultipleCards={isMultipleCards} isSpacing={data?.spacing}>
         {data.group.map((tile: PromoTextTileData) => {
           const { id, designOptions, action, linkLabelAsTitle, ingress } = tile
           const { background } = designOptions
 
           return (
-            <StyledBackgroundContainer
-              isSpacing={data?.spacing}
-              disableContainerWrapper={true}
-              background={background}
-              key={id}
-            >
+            <StyledBackgroundContainer disableContainerWrapper={true} background={background} key={id}>
               <StyledCard
                 type="promo"
                 textOnly={true}
