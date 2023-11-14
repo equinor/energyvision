@@ -2,7 +2,7 @@ name: Delete old ghrc images
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # every day at midnight
+    - cron: '0 0 * * 0' # every sunday at midnight
 permissions:
   id-token: write
 jobs:
@@ -23,7 +23,7 @@ jobs:
       - name: Get tags to keep from output.json
         id: get-tags
         run: |
-          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-dev-tags.json)
+          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
           echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
           echo "TAGS TO KEEP: $TAGS"
 
@@ -34,9 +34,9 @@ jobs:
           token: ${{ secrets.PADMS_PAT }}
           account-type: org
           org-name: Equinor
-          image-names: energyvision/web-global-development, energyvision/studiov3-global-development
-          cut-off: one day ago UTC+2
-          keep-at-least: 1
+          image-names: energyvision/*
+          cut-off: a week ago UTC
+          keep-at-least: 5
           skip-tags: ${{ env.TAGS_TO_KEEP }}
           # dry-run: true
 
