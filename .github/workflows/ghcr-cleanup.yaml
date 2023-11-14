@@ -1,10 +1,10 @@
-name: Delete old container images
-
+name: Delete old ghrc images
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 0 * * *' # every day at midnight
-
+  schedule:
+    - cron: '0 0 * * 0' # every sunday at midnight
+permissions:
+  id-token: write
 jobs:
   clean-ghcr:
     name: Delete old unused container images
@@ -12,18 +12,34 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Delete containers older than a week 🗑
-        id: delete-containers
-        uses: snok/container-retention-policy@v1
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
         with:
-          image-names: energyvision/web-global,energyvision/web-global-test,energyvision/web-germany,energyvision/web-brazil,energyvision/web-argentina,energyvision/web-poland,energyvision/web-equinorfunds,energyvision/web-japan,energyvision/web-production,energyvision/web,energyvision/web-global-development,energyvision/web-southkorea,energyvision/web-storage,energyvision/studio-germany,energyvision/studio-brazil,energyvision/studio-argentina,energyvision/studio-poland,energyvision/studio-equinorfunds,energyvision/studio-japan,energyvision/studio-storage,energyvision/studio-global-development,energyvision/studio-southkorea,energyvision/studio-global-test
-          #image-names: energyvision/web-global-development,energyvision/studio-global-development
-          cut-off: A week ago UTC
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }}
+
+      - name: Get tags to keep from output.json
+        id: get-tags
+        run: |
+          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
+          echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
+          echo "TAGS TO KEEP: $TAGS"
+
+      - name: Clean up Docker images
+        id: delete-containers
+        uses: snok/container-retention-policy@v2
+        with:
+          token: ${{ secrets.PADMS_PAT }}
           account-type: org
           org-name: Equinor
+          image-names: energyvision/*
+          cut-off: a week ago UTC
           keep-at-least: 5
-          untagged-only: false
-          token: ${{ secrets.PADMS_PAT }}
+          skip-tags: ${{ env.TAGS_TO_KEEP }}, *-latest
+          # dry-run: true
+
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
         with:
