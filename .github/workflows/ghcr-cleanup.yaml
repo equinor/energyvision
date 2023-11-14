@@ -20,7 +20,7 @@ jobs:
           ref: main
           token: ${{ secrets.PADMS_PAT }}
 
-      - name: Get tags to keep from output.json
+      - name: Get tags to keep from latest-prod-tags.json
         id: get-tags
         run: |
           TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
