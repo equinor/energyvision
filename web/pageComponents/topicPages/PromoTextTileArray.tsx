@@ -100,9 +100,9 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                   {action.label && (
                     <StyledAction>
                       {linkLabelAsTitle ? (
-                        <PromoTileButton action={action} template="text" hasImage={true} />
+                        <PromoTileButton action={action} template="unstyledText" hasImage={true} />
                       ) : (
-                        <PromoTileButton action={action} template="icon" hasImage={false} />
+                        <PromoTileButton action={action} template="icon" hasImage={true} />
                       )}
                     </StyledAction>
                   )}
