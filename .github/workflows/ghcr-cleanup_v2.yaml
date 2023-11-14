@@ -36,7 +36,7 @@ jobs:
           org-name: Equinor
           image-names: energyvision/web-global-development, energyvision/studiov3-global-development
           cut-off: one day ago UTC+2
-          keep-at-least: 4
+          keep-at-least: 1
           skip-tags: ${{ env.TAGS_TO_KEEP }}
           # dry-run: true
 
