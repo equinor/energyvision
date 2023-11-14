@@ -34,8 +34,8 @@ export default {
     },
     prepare() {
       return {
-        title: 'Promo tiles array',
-        subtitle: `Promo text tile array component`,
+        title: 'Promo text tiles',
+        subtitle: `Promo text tile component`,
         media: <div>{EdsIcon(collection_2)}</div>,
       }
     },
