@@ -2,17 +2,17 @@ import { linkReferenceFields } from '../actions/linkSelectorFields'
 
 export const promoLinkReferenceFields = /* groq */ `
  {
-    "label": link.label,
-    "ariaLabel": link.ariaLabel,
-    "anchorReference": link.anchorReference,
+    "label": label,
+    "ariaLabel": ariaLabel,
+    "anchorReference": anchorReference,
     "link": select(
-      link.linkToOtherLanguage == true =>
-        link.referenceToOtherLanguage->${linkReferenceFields},
-        link.reference->${linkReferenceFields},
+      linkToOtherLanguage == true =>
+        referenceToOtherLanguage->${linkReferenceFields},
+        reference->${linkReferenceFields},
     ),
-    "href": link.url,
+    "href": url,
     "type": select(
-      defined(link.url) => "externalUrl",
+      defined(url) => "externalUrl",
       "internalUrl"
     )
   }

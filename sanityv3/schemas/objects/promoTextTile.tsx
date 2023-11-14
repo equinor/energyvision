@@ -45,15 +45,20 @@ export default {
       title: 'Link',
       description: 'Select either an internal link or external URL.',
     },
+    {
+      name: 'label',
+      title: 'Label',
+      description: 'The label that the link/button should have.',
+    },
   ],
   fields: [
     {
       name: 'ingress',
       title: 'Promo Text',
-      description: 'Max 200 characters',
+      description: 'Max 100 characters',
       type: 'array',
       of: [ingressBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 200)),
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 100)),
     },
     {
       name: 'isLink',
@@ -70,8 +75,7 @@ export default {
       initialValue: false,
       hidden: ({ parent }: { parent: PromoTextTile }) => !parent.isLink,
     },
-    ...getLinkSelectorFields(undefined, 'isLink'),
-
+    ...getLinkSelectorFields('label', 'isLink'),
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
@@ -84,7 +88,7 @@ export default {
     select: {
       title: 'title',
       linkLabelAsTitle: 'linkLabelAsTitle',
-      link: 'link.label',
+      link: 'label',
     },
     prepare({ linkLabelAsTitle, link }: { title: PortableTextBlock[]; linkLabelAsTitle: boolean; link: string }) {
       return {
