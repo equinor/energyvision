@@ -4,7 +4,6 @@ import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
-import { promoLinkReferenceFields } from './actions/promoLinkReferenceFields'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
@@ -189,7 +188,7 @@ const pageContentFields = /* groq */ `
       "id": _key,
       ingress[]{..., ${markDefs}},
       linkLabelAsTitle,
-      "action": ${promoLinkReferenceFields},
+      "action": ${linkSelectorFields},
       "designOptions": {
         "background": coalesce(background.title, 'none'),
       },
