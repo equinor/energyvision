@@ -1,5 +1,5 @@
 import { Hit as AlgoliaHit } from '@algolia/client-search'
-import { useHits, UseHitsProps } from 'react-instantsearch-hooks-web'
+import { useHits, UseHitsProps } from 'react-instantsearch'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { List } from '@components'

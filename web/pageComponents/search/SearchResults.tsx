@@ -8,7 +8,7 @@ import NewsHit from './NewsHit'
 import { SearchContext } from './SearchContext'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
-import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch-hooks-web'
+import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);

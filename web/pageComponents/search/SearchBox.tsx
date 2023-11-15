@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, ChangeEvent, ComponentProps, useContext } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
+import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import ControlledSearchBox from './ControlledSearchBox'
 import { SearchContext } from './SearchContext'
 
