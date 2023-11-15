@@ -16,21 +16,25 @@ export const linkReferenceFields = /* groq */ `
 `
 
 const linkSelectorFields = /* groq */ `
-_type == "linkSelector" => {
-  "id": _key,
-  "type": select(
-    defined(url) => "externalUrl", "internalUrl"
-  ),
-  label,
-  ariaLabel,
-  "link": select(
-    linkToOtherLanguage == true =>
-      referenceToOtherLanguage->${linkReferenceFields},
-      reference->${linkReferenceFields},
-  ),
-  "href": url,
-  anchorReference,
-}
+  {
+    "id": _key,
+    "type": select(
+      defined(url) => "externalUrl", "internalUrl"
+    ),
+    label,
+    ariaLabel,
+    "link": select(
+      linkToOtherLanguage == true =>
+        referenceToOtherLanguage->${linkReferenceFields},
+        reference->${linkReferenceFields},
+    ),
+    "href": url,
+    anchorReference,
+  }
 `
 
-export default linkSelectorFields
+const linkSelector = /* groq */ `
+  _type == "linkSelector" => ${linkSelectorFields}
+`
+
+export default linkSelector

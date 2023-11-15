@@ -26,6 +26,8 @@ export type PromoTextTile = {
   background?: ColorSelectorValue
 }
 
+const linkFields = getLinkSelectorFields('label', 'isLink')
+
 export default {
   title: 'Promo text tile',
   name: 'promoTextTile',
@@ -67,15 +69,16 @@ export default {
       description: 'Link to another piece of content',
       initialValue: false,
     },
+    ...getLinkSelectorFields('label', 'isLink'),
     {
-      name: 'linkLabelAsTitle',
-      title: 'Toggle button text',
-      description: 'This will add the text to link',
+      name: 'showLinkLabel',
+      title: 'Show link label',
+      description: 'This will add the text to the button',
       type: 'boolean',
       initialValue: false,
       hidden: ({ parent }: { parent: PromoTextTile }) => !parent.isLink,
+      fieldset: 'label',
     },
-    ...getLinkSelectorFields('label', 'isLink'),
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

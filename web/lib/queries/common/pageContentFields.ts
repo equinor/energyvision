@@ -3,7 +3,7 @@ import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import linkSelector, { linkReferenceFields } from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
@@ -33,7 +33,7 @@ const pageContentFields = /* groq */ `
       "extension": asset-> extension
     },
     "action": action[0]{
-      ${linkSelectorFields},
+      ${linkSelector},
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
@@ -52,7 +52,7 @@ const pageContentFields = /* groq */ `
     ingress[]{..., ${markDefs}},
     text[]{..., ${markDefs}},
     "callToActions": action[]{
-      ${linkSelectorFields},
+      ${linkSelector},
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
@@ -188,7 +188,7 @@ const pageContentFields = /* groq */ `
       "id": _key,
       ingress[]{..., ${markDefs}},
       linkLabelAsTitle,
-      "action": ${linkSelectorFields},
+      "action": ${linkSelector},
       "designOptions": {
         "background": coalesce(background.title, 'none'),
       },
@@ -208,7 +208,7 @@ const pageContentFields = /* groq */ `
     },
     frameTitle,
     "action": action[0]{
-      ${linkSelectorFields},
+      ${linkSelector},
     },
     url,
     "cookiePolicy": coalesce(cookiePolicy, 'none'),

@@ -1,6 +1,6 @@
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields from './actions/linkSelectorFields'
+import linkSelector from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 
 export const iframeForNewsQuery = /* groq */ `iframe {
@@ -43,7 +43,7 @@ export const relatedLinksForNewsQuery = /* groq */ `relatedLinks {
     title,
     heroImage,
     "links": links[]{
-      ${linkSelectorFields},
+      ${linkSelector},
       ${downloadableFileFields},
       ${downloadableImageFields},
     }

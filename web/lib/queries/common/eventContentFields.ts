@@ -1,5 +1,5 @@
 import markDefs from './blockEditorMarks'
-import linkSelectorFields from './actions/linkSelectorFields'
+import linkSelector from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 
@@ -76,7 +76,7 @@ export const eventContentFields = /* groq */ `
     title,
     heroImage,
     "links": links[]{
-      ${linkSelectorFields},
+      ${linkSelector},
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
