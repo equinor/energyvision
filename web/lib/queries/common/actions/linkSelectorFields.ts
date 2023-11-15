@@ -15,7 +15,7 @@ export const linkReferenceFields = /* groq */ `
   }
 `
 
-const linkSelectorFields = /* groq */ `
+export const linkSelectorFields = /* groq */ `
   {
     "id": _key,
     "type": select(

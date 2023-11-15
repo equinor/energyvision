@@ -1,6 +1,7 @@
 import { iframeCarouselFields } from '../iframeCarouselFields'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
+import { promoTextTileArrayFields } from '../promoTextTileArrayFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelector, { linkReferenceFields } from './actions/linkSelectorFields'
@@ -175,20 +176,6 @@ const pageContentFields = /* groq */ `
         ...,
         "extension": asset-> extension
       },
-      "designOptions": {
-        "background": coalesce(background.title, 'none'),
-      },
-    },
-  },
-  _type == "promoTextTileArray"=>{
-    "type": _type,
-    "id": _key,
-    spacing,
-    "group": group[]{
-      "id": _key,
-      ingress[]{..., ${markDefs}},
-      linkLabelAsTitle,
-      "action": ${linkSelector},
       "designOptions": {
         "background": coalesce(background.title, 'none'),
       },
@@ -528,6 +515,9 @@ const pageContentFields = /* groq */ `
   },
   _type == "videoPlayerCarousel" => {
     ${videoPlayerCarouselFields}
+  },
+  _type == "promoTextTileArray" => {
+    ${promoTextTileArrayFields}
   },
 `
 
