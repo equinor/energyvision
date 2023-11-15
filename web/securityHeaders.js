@@ -26,6 +26,7 @@ const iframeSrcs = [
   'https://vds.issgovernance.com',
   'https://eac.plaii.no',
   'https://livestream.com',
+  'https://pixel.as/equinor',
   dataset === 'global-development' && 'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
   dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
   'https://h61q9gi9.api.sanity.io',
