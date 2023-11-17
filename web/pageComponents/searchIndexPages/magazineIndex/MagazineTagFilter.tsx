@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { useMenu, UseMenuProps, useClearRefinements, useCurrentRefinements } from 'react-instantsearch-hooks-web'
+import { useMenu, UseMenuProps, useClearRefinements, useCurrentRefinements } from 'react-instantsearch'
 import MagazineTagBar from '../../shared/MagazineTagBar'
 
 export type RefinementListProps = { tags: string[] } & React.ComponentProps<'div'> & UseMenuProps

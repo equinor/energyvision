@@ -1,4 +1,4 @@
-import { useHits } from 'react-instantsearch-hooks-web'
+import { useHits } from 'react-instantsearch'
 import { List, Heading } from '@components'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'

@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next'
-import { InstantSearchSSRProvider } from 'react-instantsearch-hooks-web'
-import { getServerState } from 'react-instantsearch-hooks-server'
+import { InstantSearchSSRProvider } from 'react-instantsearch'
+import { getServerState } from 'react-instantsearch'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'

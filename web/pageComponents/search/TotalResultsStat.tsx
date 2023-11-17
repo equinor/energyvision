@@ -1,4 +1,4 @@
-import { usePagination, UsePaginationProps } from 'react-instantsearch-hooks-web'
+import { usePagination, UsePaginationProps } from 'react-instantsearch'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
