@@ -8,7 +8,7 @@ export const promoTextTileArrayFields = /* groq */ `
     "group": group[]{
         "id": _key,
         ingress[]{..., ${markDefs}},
-        linkLabelAsTitle,
+        showLinkLabel,
         "action": ${linkSelectorFields},
         "designOptions": {
             "background": coalesce(background.title, 'none'),

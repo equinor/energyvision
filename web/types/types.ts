@@ -408,7 +408,7 @@ export type PromoTextTileData = {
   ingress: PortableTextBlock[]
   action: LinkData
   designOptions: DesignOptions
-  linkLabelAsTitle?: boolean
+  showLinkLabel?: boolean
 }
 
 export type PromoTileArrayData = {

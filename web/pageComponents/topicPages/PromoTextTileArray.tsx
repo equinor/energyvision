@@ -68,7 +68,7 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
     <div className="background-none" id={anchor}>
       <Container isMultipleCards={isMultipleCards} isSpacing={data?.spacing}>
         {data.group.map((tile: PromoTextTileData) => {
-          const { id, designOptions, action, linkLabelAsTitle, ingress } = tile
+          const { id, designOptions, action, showLinkLabel, ingress } = tile
           const { background } = designOptions
 
           return (
@@ -99,7 +99,7 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                   </Text>
                   {action.label && (
                     <StyledAction>
-                      {linkLabelAsTitle ? (
+                      {showLinkLabel ? (
                         <PromoTileButton action={action} template="unstyledText" hasImage={true} />
                       ) : (
                         <PromoTileButton action={action} template="icon" hasImage={true} />

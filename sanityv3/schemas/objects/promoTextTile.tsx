@@ -6,6 +6,7 @@ import { validateCharCounterEditor } from '../validations/validateCharCounterEdi
 import type { LinkSelector } from './linkSelector'
 import { configureBlockContent } from '../editors'
 import { getLinkSelectorFields } from './linkSelector'
+import blocksToText from '../../helpers/blocksToText'
 
 const ingressBlockContentType = configureBlockContent({
   h1: false,
@@ -60,7 +61,7 @@ export default {
       description: 'Max 100 characters',
       type: 'array',
       of: [ingressBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 100)),
+      validation: (Rule: Rule) => Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 100)),
     },
     {
       name: 'isLink',
@@ -69,7 +70,7 @@ export default {
       description: 'Link to another piece of content',
       initialValue: false,
     },
-    ...getLinkSelectorFields('label', 'isLink'),
+    ...linkFields,
     {
       name: 'showLinkLabel',
       title: 'Show link label',
@@ -89,13 +90,12 @@ export default {
   ],
   preview: {
     select: {
-      title: 'title',
-      linkLabelAsTitle: 'linkLabelAsTitle',
       link: 'label',
+      ingress: 'ingress',
     },
-    prepare({ linkLabelAsTitle, link }: { title: PortableTextBlock[]; linkLabelAsTitle: boolean; link: string }) {
+    prepare({ link, ingress }: { link: string; ingress: PortableTextBlock[] }) {
       return {
-        title: linkLabelAsTitle || link || 'Promo Text Tile',
+        title: link || blocksToText(ingress) || 'Promo Text Tile',
         subtitle: `Promo text tile component`,
         media: EdsIcon(label),
       }

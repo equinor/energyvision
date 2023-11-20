@@ -27,7 +27,7 @@ export default {
       of: [{ type: 'promoTextTile' }],
       validation: (Rule: Rule) => Rule.required().min(1).max(2),
     },
-  ].filter((e) => e),
+  ],
   preview: {
     select: {
       group: 'group',
@@ -36,7 +36,7 @@ export default {
       return {
         title: 'Promo text tiles',
         subtitle: `Promo text tile component`,
-        media: <div>{EdsIcon(collection_2)}</div>,
+        media: EdsIcon(collection_2),
       }
     },
   },
