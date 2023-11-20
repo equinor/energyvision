@@ -15,7 +15,6 @@ const Container = styled.div<{ isMultipleCards: boolean; isSpacing?: boolean }>`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin: auto;
-  height: 100%;
   grid-template-columns: ${({ isMultipleCards }) =>
     isMultipleCards ? 'repeat(auto-fill, minmax(280px, 1fr))' : '1fr'};
   ${({ isSpacing }) =>
@@ -37,7 +36,6 @@ const StyledAction = styled(Action)`
 const StyledCard = styled(Card)<{ alignLeft: boolean }>`
   width: 100%;
   --card-maxWidth: 280px;
-  flex-direction: row;
   height: 300px;
   overflow: hidden;
   justify-content: ${({ alignLeft }) => (alignLeft ? 'flex-start' : 'center')};
@@ -50,9 +48,6 @@ const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: ${({ hasLink, alignLeft }) => (hasLink ? (alignLeft ? 'flex-start' : 'center') : 'center')};
-  justify-content: ${({ hasLink, alignLeft }) => (hasLink ? (alignLeft ? 'flex-start' : 'center') : 'center')};
-  text-align: center;
-  margin-bottom: var(--space-medium);
   height: 100%;
   @media (max-width: 1004px) {
     justify-content: center;
