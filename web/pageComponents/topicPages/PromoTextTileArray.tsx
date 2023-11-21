@@ -29,29 +29,24 @@ const StyledBackgroundContainer = styled(BackgroundContainer)`
   box-shadow: var(--card-box-shadow);
 `
 
-const StyledAction = styled(Action)`
-  flex-grow: 1;
-`
-
 const StyledCard = styled(Card)<{ alignLeft: boolean }>`
+  justify-content: ${({ alignLeft }) => (alignLeft ? 'flex-start' : 'center')};
   width: 100%;
   --card-maxWidth: 280px;
   height: 300px;
+  text-align: center;
   overflow: hidden;
-  justify-content: ${({ alignLeft }) => (alignLeft ? 'flex-start' : 'center')};
-  @media (max-width: 1004px) {
-    justify-content: center;
-  }
 `
 
 const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
-  display: flex;
-  flex-direction: column;
+  display: ${({ hasLink, alignLeft }) => (hasLink ? (alignLeft ? 'flex' : 'inline-grid') : 'inline-grid')};
   align-items: ${({ hasLink, alignLeft }) => (hasLink ? (alignLeft ? 'flex-start' : 'center') : 'center')};
+  flex-direction: column;
   height: 100%;
+  justify-items: center;
   @media (max-width: 1004px) {
-    justify-content: center;
     align-items: center;
+    display: inline-grid;
   }
 `
 
@@ -93,13 +88,13 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                     />
                   </Text>
                   {action.label && (
-                    <StyledAction>
+                    <Action>
                       {showLinkLabel ? (
                         <PromoTileButton action={action} template="unstyledText" hasImage={true} />
                       ) : (
                         <PromoTileButton action={action} template="icon" hasImage={true} />
                       )}
-                    </StyledAction>
+                    </Action>
                   )}
                 </ContentWrapper>
               </StyledCard>
