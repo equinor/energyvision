@@ -36,7 +36,7 @@ type LogoLinkProps = {
 
 export const LogoLink = ({ inverted = false, ...rest }: LogoLinkProps) => {
   return (
-    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest}>
+    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest} className="logo">
       <AlignedLogoSecondary inverted={inverted} />
     </StyledLogoLink>
   )
