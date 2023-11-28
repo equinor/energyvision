@@ -71,6 +71,7 @@ const StyledTopicPageCard = styled(TopicPageCard)`
 const CardWrapper = styled.div`
   display: flex;
   min-width: 280px;
+  max-width: var(--card-maxWidth);
   width: 100%;
 `
 
