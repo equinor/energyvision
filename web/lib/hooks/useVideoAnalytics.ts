@@ -15,11 +15,12 @@ type EventData = {
   videoTitle: string
   currentTime: number
   src: string
+  videoType?: string
 }
 
 // Video Analytics Hook
 const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(false)
+  const [allowAnalytics, setAllowAnalytics] = useState(true)
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
@@ -28,9 +29,11 @@ const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string):
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, videoElement: HTMLVideoElement) => {
+      console.log(videoElement)
       const eventData: EventData = {
         eventType,
         videoTitle: title || src,
+        videoType: videoElement.loop ? 'loop' : undefined,
         currentTime: videoElement.currentTime,
         src,
       }
@@ -42,6 +45,7 @@ const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string):
   usePlayEvent(videoRef, pushEventToDataLayer, allowAnalytics)
   usePauseEvent(videoRef, pushEventToDataLayer, allowAnalytics)
   useCompletionEvent(videoRef, pushEventToDataLayer, allowAnalytics)
+  useCompletionEventForLoopingVideos(videoRef, pushEventToDataLayer, allowAnalytics)
   useVideoProgressEvent(videoRef, pushEventToDataLayer, allowAnalytics)
 }
 
@@ -75,7 +79,8 @@ const usePauseEvent = (
     if (!videoElement) return
 
     const handlePause = () => {
-      if (allowAnalytics) {
+      const isVideoEnded = videoElement.currentTime >= videoElement.duration
+      if (!isVideoEnded && allowAnalytics) {
         pushEvent(GTM_PAUSE_EVENT, videoElement)
       }
     }
@@ -105,33 +110,67 @@ const useCompletionEvent = (
   }, [videoRef, pushEvent, allowAnalytics])
 }
 
+// Looping videos do not trigger 'ended' event listener
+// This hook triggers completion when the video is about to loop
+const useCompletionEventForLoopingVideos = (
+  videoRef: VideoRefType,
+  pushEvent: (eventType: EventType, videoElement: HTMLVideoElement) => void,
+  allowAnalytics: boolean,
+) => {
+  const [hasTriggered, setHasTriggered] = useState(false)
+
+  useEffect(() => {
+    const videoElement = videoRef.current
+    if (!videoElement || !videoElement.loop || !allowAnalytics || hasTriggered) return
+
+    const threshold = 1 // Threshold in seconds to determine "near end"
+    const handleTimeUpdate = () => {
+      const timeLeft = videoElement.duration - videoElement.currentTime
+      const nearEnd = timeLeft < threshold
+
+      if (nearEnd && !hasTriggered) {
+        pushEvent(GTM_COMPLETION_EVENT, videoElement)
+        setHasTriggered(true) // Prevent further triggers
+      }
+    }
+
+    videoElement.addEventListener('timeupdate', handleTimeUpdate)
+
+    return () => videoElement.removeEventListener('timeupdate', handleTimeUpdate)
+  }, [videoRef, pushEvent, allowAnalytics, hasTriggered])
+}
+
 const useVideoProgressEvent = (
   videoRef: VideoRefType,
   pushEvent: (eventType: EventType, videoElement: HTMLVideoElement) => void,
   allowAnalytics: boolean,
 ) => {
   const [trackedMilestones, setTrackedMilestones] = useState<number[]>([])
+  const intervalDuration = 1000 // Check every second
 
   useEffect(() => {
     const videoElement = videoRef.current
-    if (!videoElement || !allowAnalytics) return
+    if (!videoElement) return
 
-    const interval = setInterval(() => {
-      const currentTime = videoElement.currentTime
-      const duration = videoElement.duration
-      if (!duration) return
+    const intervalId = setInterval(() => {
+      if (!allowAnalytics || !videoElement.duration) return
 
-      const progress = (currentTime / duration) * 100
+      const progress = (videoElement.currentTime / videoElement.duration) * 100
       GTM_PROGRESS_MILESTONES.forEach((milestone) => {
         if (progress >= milestone && !trackedMilestones.includes(milestone)) {
           pushEvent(`video_progress_${milestone}`, videoElement)
           setTrackedMilestones((prev) => [...prev, milestone])
         }
       })
-    }, 1000) // Check every second
+    }, intervalDuration)
+
+    const handleVideoEnd = () => setTrackedMilestones([]) // Reset milestones on video end
+
+    videoElement.addEventListener('ended', handleVideoEnd)
 
     return () => {
-      clearInterval(interval)
+      clearInterval(intervalId)
+      videoElement.removeEventListener('ended', handleVideoEnd)
     }
   }, [videoRef, pushEvent, allowAnalytics, trackedMilestones])
 }
