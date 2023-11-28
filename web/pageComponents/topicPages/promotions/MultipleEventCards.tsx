@@ -69,6 +69,7 @@ const StyledEventsCard = styled(EventsCard)`
   }
 
   min-width: var(--card-maxWidth, 100%);
+  max-width: var(--card-maxWidth, 100%);
 `
 
 const MultipleEventCards = ({
