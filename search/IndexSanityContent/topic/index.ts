@@ -16,8 +16,9 @@ export const indexTopic = (language: Language) => (docId: string) => {
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
-  type RemoveAndMapType = (pages: TopicPage[]) => TopicIndex[]
-  const removeAndMap: RemoveAndMapType = (pages) => {
+  type RemoveAndMapType = (pages: TopicPage[]) => Promise<TopicIndex[]>
+
+  const removeAndMap: RemoveAndMapType = async (pages) => {
     pages
       .filter((page) => page.docToClear)
       .map((page) =>
@@ -36,7 +37,7 @@ export const indexTopic = (language: Language) => (docId: string) => {
     getSanityClient(),
     TE.fromEither,
     TE.chainW(fetchData(language, docId)),
-    TE.map(removeAndMap),
+    TE.chainW((pages) => TE.fromTask(() => removeAndMap(pages))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
     T.map(E.fold(console.error, console.log)),
