@@ -19,17 +19,20 @@ export const indexTopic = (language: Language) => (docId: string) => {
   type RemoveAndMapType = (pages: TopicPage[]) => Promise<TopicIndex[]>
 
   const removeAndMap: RemoveAndMapType = async (pages) => {
-    pages
-      .filter((page) => page.docToClear)
-      .map((page) =>
-        pipe(
-          removeIndexFromAlgolia(),
-          E.ap(E.of(page.slug)),
-          TE.fromEither,
-          TE.flatten,
-          T.map(E.fold(console.error, console.log)),
-        )(),
-      )
+    await Promise.all(
+      pages
+        .filter((page) => page.docToClear)
+        .map((page) =>
+          pipe(
+            removeIndexFromAlgolia(),
+            E.ap(E.of(page.slug)),
+            TE.fromEither,
+            TE.flatten,
+            T.map(E.fold(console.error, console.log)),
+          )(),
+        ),
+    )
+
     return pipe(pages.map(mapData), flatten)
   }
 
