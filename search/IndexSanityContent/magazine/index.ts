@@ -24,26 +24,28 @@ export const indexMagazine = (language: Language) => (docId: string) => {
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
-  type RemoveAndMapType = (pages: MagazineArticle[]) => MagazineIndex[]
-  const removeAndMap: RemoveAndMapType = (pages) => {
-    pages
-      .filter((page) => page.docToClear)
-      .map((page) =>
-        pipe(
-          removeIndexFromAlgolia(),
-          E.ap(E.of(page.slug)),
-          TE.fromEither,
-          TE.flatten,
-          T.map(E.fold(console.error, console.log)),
-        )(),
-      )
+  type RemoveAndMapType = (pages: MagazineArticle[]) => Promise<MagazineIndex[]>
+  const removeAndMap: RemoveAndMapType = async (pages) => {
+    await Promise.all(
+      pages
+        .filter((page) => page.docToClear)
+        .map((page) =>
+          pipe(
+            removeIndexFromAlgolia(),
+            E.ap(E.of(page.slug)),
+            TE.fromEither,
+            TE.flatten,
+            T.map(E.fold(console.error, console.log)),
+          )(),
+        ),
+    )
     return pipe(pages.map(mapData), flatten)
   }
   return pipe(
     getSanityClient(),
     TE.fromEither,
     TE.chainW(fetchData(language, docId)),
-    TE.map(removeAndMap),
+    TE.chainW((pages) => TE.fromTask(() => removeAndMap(pages))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
     T.map(E.fold(console.error, console.log)),
