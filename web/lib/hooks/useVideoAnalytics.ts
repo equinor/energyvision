@@ -20,7 +20,7 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(true)
+  const [allowAnalytics, setAllowAnalytics] = useState(false)
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
