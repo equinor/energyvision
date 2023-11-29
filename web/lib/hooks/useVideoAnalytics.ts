@@ -20,7 +20,7 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(false)
+  const [allowAnalytics, setAllowAnalytics] = useState(true)
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
@@ -163,13 +163,17 @@ const useVideoProgressEvent = (
       })
     }, intervalDuration)
 
-    const handleVideoEnd = () => setTrackedMilestones([]) // Reset milestones on video end
+    const handlePlay = () => {
+      if (videoElement.currentTime === 0 && !videoElement.loop) {
+        setTrackedMilestones([]) // Reset milestones at the start of a new play session
+      }
+    }
 
-    videoElement.addEventListener('ended', handleVideoEnd)
+    videoElement.addEventListener('play', handlePlay)
 
     return () => {
       clearInterval(intervalId)
-      videoElement.removeEventListener('ended', handleVideoEnd)
+      videoElement.removeEventListener('play', handlePlay)
     }
   }, [videoRef, pushEvent, allowAnalytics, trackedMilestones])
 }
