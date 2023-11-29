@@ -67,6 +67,8 @@ const datasets = {
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
+  sheringham: ['english'],
+  dudgeon: ['english'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],

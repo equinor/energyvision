@@ -15,6 +15,8 @@ const SATELLITES = [
   'poland',
   'southkorea',
   'storage',
+  'sheringham',
+  'dudgeon',
 ]
 const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea', 'celticsea']
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
