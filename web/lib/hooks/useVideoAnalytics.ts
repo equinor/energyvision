@@ -20,7 +20,7 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(true)
+  const [allowAnalytics, setAllowAnalytics] = useState(false)
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
@@ -29,7 +29,6 @@ const useVideoAnalytics = (videoRef: VideoRefType, src: string, title?: string):
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, videoElement: HTMLVideoElement) => {
-      console.log(videoElement)
       const eventData: EventData = {
         eventType,
         videoTitle: title || src,
