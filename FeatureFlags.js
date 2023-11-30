@@ -18,7 +18,18 @@ const SATELLITES = [
   'sheringham',
   'dudgeon',
 ]
-const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea', 'celticsea']
+const NEWS = [
+  ...GLOBAL_DEV,
+  ...GLOBAL_PROD,
+  'japan',
+  'poland',
+  'brazil',
+  'germany',
+  'southkorea',
+  'celticsea',
+  'dudgeon',
+  'sheringham',
+]
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD]
