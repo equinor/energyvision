@@ -132,6 +132,14 @@ const websiteDomains = {
     url: 'https://www.equinorcelticsea.co.uk',
     meta: 'equinorcelticsea.co.uk',
   },
+  dudgeon: {
+    url: 'https://web-dudgeon-equinor-web-sites-preprod.c2.radix.equinor.com/',
+    meta: 'Dudgeon',
+  },
+  sheringham: {
+    url: 'https://web-sheringham-equinor-web-sites-preprod.c2.radix.equinor.com/',
+    meta: 'Sheringham Shoal',
+  },
   'global-development': {
     url: 'localhost:3000',
     meta: 'Equinor',
