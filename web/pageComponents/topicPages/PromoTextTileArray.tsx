@@ -16,7 +16,7 @@ const Container = styled.div<{ isMultipleCards: boolean; isSpacing?: boolean }>`
   max-width: var(--maxViewportWidth);
   margin: auto;
   grid-template-columns: ${({ isMultipleCards }) =>
-    isMultipleCards ? 'repeat(auto-fill, minmax(280px, 1fr))' : '1fr'};
+    isMultipleCards ? 'repeat(auto-fit, minmax(min(100%, 280px), 1fr));' : '1fr'};
   ${({ isSpacing }) =>
     isSpacing && {
       marginTop: '50px',
