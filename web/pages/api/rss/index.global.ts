@@ -51,8 +51,8 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
       rss += `
         <item>
           <title>${article.title}</title>
-          <link>https://equinor.com${article.slug}</link>
-          <guid>https://equinor.com${article.slug}</guid>
+          <link>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</link>
+          <guid>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
         </item>`
