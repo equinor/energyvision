@@ -10,6 +10,7 @@ export const TopicContent = (S) =>
       S.documentTypeList('page')
         .id('pages')
         .title('Topic content')
+        .apiVersion('v2023-12-05')
         .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
         .params({ baseLang: i18n.base })
         .canHandleIntent((_name, params) => {

@@ -57,6 +57,7 @@ function routeStructure(S, context, isoCode) {
                 S.documentList()
                   .title('Topic Categories')
                   .schemaType(documentName)
+                  .apiVersion('v2023-12-05')
                   .filter(categoryParentsWithDrafts)
                   .canHandleIntent((intent, { type }) => type === documentName && ['create', 'edit'].includes(intent))
                   .child((id) => S.document().documentId(id).views(views(S)).schemaType(documentName)),
@@ -70,6 +71,7 @@ function routeStructure(S, context, isoCode) {
                 .icon(RouteDocuments)
                 .child(
                   S.documentList()
+                    .apiVersion('v2023-12-05')
                     .title('Child Routes')
                     .schemaType(documentName)
                     .filter(`_type == "${documentName}" && parent._ref == $parentId`)

@@ -21,6 +21,7 @@ const localNewsStructure = (S, context) => {
               .icon(() => EdsIcon(list))
               .child(() =>
                 S.documentTypeList('localNews')
+                  .apiVersion('v2023-12-05')
                   .id('localNews')
                   .title('Local news articles')
                   .filter('_type == "localNews" && (!defined(_lang) || _lang == $baseLang)')
@@ -38,6 +39,7 @@ const localNewsStructure = (S, context) => {
                 .icon(() => EdsIcon(tagIcon))
                 .child(() =>
                   S.documentList()
+                    .apiVersion('v2023-12-05')
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
                     .filter(

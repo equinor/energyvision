@@ -11,6 +11,7 @@ export const Event = (S) =>
         .schemaType('event')
         .child(
           S.documentTypeList('event')
+            .apiVersion('v2023-12-05')
             .id('events')
             .title('Events')
             .filter('_type == "event" && (!defined(_lang) || _lang == $baseLang)')

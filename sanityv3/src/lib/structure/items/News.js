@@ -11,6 +11,7 @@ export const News = (S) =>
         .schemaType('news')
         .child(
           S.documentTypeList('news')
+            .apiVersion('v2023-12-05')
             .id('news')
             .title('News articles')
             .filter(' _type == "news" && (!defined(_lang) || _lang == $baseLang)')

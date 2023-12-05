@@ -10,6 +10,7 @@ export const ErrorPages = (S) => [
         .title('404')
         .schemaType('pageNotFound')
         .filter('(_id match "*" + $id) && _type == $type')
+        .apiVersion('v2023-12-05')
         .params({
           id: 'pageNotFound',
           type: 'pageNotFound',
@@ -33,6 +34,7 @@ export const ErrorPages = (S) => [
     .icon(FileIcon)
     .child(
       S.documentList()
+        .apiVersion('v2023-12-05')
         .id('internalServerError')
         .title('500')
         .schemaType('internalServerError')

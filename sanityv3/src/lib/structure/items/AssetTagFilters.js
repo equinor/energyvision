@@ -22,6 +22,7 @@ const tagFilterList = (S, context) => {
                 .icon(TagIcon)
                 .child(() =>
                   S.documentList()
+                    .apiVersion('v2023-12-05')
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
                     .filter(`_type == "${documentName}" && references($tagId)`)

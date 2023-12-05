@@ -13,6 +13,7 @@ export const Magazine = (S) =>
           S.documentTypeList('magazine')
             .id('magazines')
             .title('Magazines')
+            .apiVersion('v2023-12-05')
             .filter('_type == "magazine" && (!defined(_lang) || _lang == $baseLang)')
             .params({ baseLang: i18n.base })
             .canHandleIntent((_name, params) => {

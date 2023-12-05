@@ -11,6 +11,7 @@ const redirects = (S) =>
       .icon(flags[lang.id])
       .child(() =>
         S.documentList()
+          .apiVersion('v2023-12-05')
           .title(`${lang.title} Redirects`)
           .schemaType('redirect')
           .filter(`_type == 'redirect' && _lang == '${lang.name}'`)
