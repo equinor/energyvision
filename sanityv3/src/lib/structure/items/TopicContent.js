@@ -1,4 +1,5 @@
 import { TopicDocuments } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 import { i18n } from '../../../../schemas/documentTranslation'
 
 export const TopicContent = (S) =>
@@ -10,7 +11,7 @@ export const TopicContent = (S) =>
       S.documentTypeList('page')
         .id('pages')
         .title('Topic content')
-        .apiVersion('v2023-12-05')
+        .apiVersion(apiVersion)
         .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
         .params({ baseLang: i18n.base })
         .canHandleIntent((_name, params) => {

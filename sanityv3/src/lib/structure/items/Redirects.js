@@ -2,6 +2,7 @@ import { directions } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../../icons'
 import flags from '../../../../icons/countries'
 import { languages } from '../../../../languages'
+import { apiVersion } from '../../../../sanity.client'
 
 const redirects = (S) =>
   languages.map((lang) =>
@@ -11,7 +12,7 @@ const redirects = (S) =>
       .icon(flags[lang.id])
       .child(() =>
         S.documentList()
-          .apiVersion('v2023-12-05')
+          .apiVersion(apiVersion)
           .title(`${lang.title} Redirects`)
           .schemaType('redirect')
           .filter(`_type == 'redirect' && _lang == '${lang.name}'`)

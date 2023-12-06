@@ -5,7 +5,7 @@ import { createClient } from '@sanity/client'
 
 const dataset = 'global-development'
 const client = createClient({
-  apiVersion: '2023-08-29',
+  apiVersion: apiVersion,
   projectId: process.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9',
   token: process.env.SANITY_STUDIO_MUTATION_TOKEN,
   dataset: dataset,

@@ -1,4 +1,5 @@
 import { FileIcon, NewsDocuments, TopicDocuments } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
 
 const miscPages = (S) =>
@@ -8,7 +9,7 @@ const miscPages = (S) =>
       .icon(FileIcon)
       .child(
         S.documentList()
-          .apiVersion('v2023-12-05')
+          .apiVersion(apiVersion)
           .id('pageNotFound')
           .title('404')
           .schemaType('pageNotFound')
@@ -36,7 +37,7 @@ const miscPages = (S) =>
       .icon(FileIcon)
       .child(
         S.documentList()
-          .apiVersion('v2023-12-05')
+          .apiVersion(apiVersion)
           .id('internalServerError')
           .title('500')
           .schemaType('internalServerError')
@@ -65,7 +66,7 @@ const miscPages = (S) =>
         .icon(NewsDocuments)
         .child(
           S.documentList()
-            .apiVersion('v2023-12-05')
+            .apiVersion(apiVersion)
             .id('newsroom')
             .title('Newsroom')
             .schemaType('newsroom')
@@ -95,7 +96,7 @@ const miscPages = (S) =>
         .child(
           S.documentList()
             .id('magazineIndex')
-            .apiVersion('v2023-12-05')
+            .apiVersion(apiVersion)
             .title('Magazine Index Page')
             .schemaType('magazineIndex')
             .filter('(_id match "*" + $id) && _type == $type')

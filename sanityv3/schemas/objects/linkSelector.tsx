@@ -8,6 +8,7 @@ import { validateInternalOrExternalUrl } from '../validations/validateInternalOr
 import { AnchorLinkDescription } from './anchorReferenceField'
 // eslint-disable-next-line import/no-unresolved
 import { defaultLanguage } from '../../languages'
+import { apiVersion } from '../../sanity.client'
 
 export type ReferenceTarget = {
   type: string
@@ -73,7 +74,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
           if (parent?.linkToOtherLanguage) return true
           if (value?._ref) {
             const referenceLang = await context
-              .getClient({ apiVersion: '2023-01-01' })
+              .getClient({ apiVersion: apiVersion })
               .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`, {
                 id: value._ref,
               })

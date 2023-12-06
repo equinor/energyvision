@@ -1,4 +1,5 @@
 import { NewsDocuments } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 import { i18n } from '../../../../schemas/documentTranslation'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
@@ -11,7 +12,7 @@ export const News = (S) =>
         .schemaType('news')
         .child(
           S.documentTypeList('news')
-            .apiVersion('v2023-12-05')
+            .apiVersion(apiVersion)
             .id('news')
             .title('News articles')
             .filter(' _type == "news" && (!defined(_lang) || _lang == $baseLang)')

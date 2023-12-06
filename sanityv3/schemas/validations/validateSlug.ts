@@ -1,4 +1,5 @@
 import { ValidationContext } from 'sanity'
+import { apiVersion } from '../../sanity.client'
 import { Flags } from '../../src/lib/datasetHelpers'
 
 const validateIsUniqueWithinLocale = async (slug: string, context: ValidationContext) => {
@@ -17,7 +18,7 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
   }
 
   const params = { type: document._type, baseId, slug }
-  const matchingSlugs = await getClient({ apiVersion: '2023-01-01' }).fetch(query, params)
+  const matchingSlugs = await getClient({ apiVersion: apiVersion }).fetch(query, params)
 
   return matchingSlugs.length === 0
 }
