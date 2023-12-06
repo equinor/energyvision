@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@chakra-ui/react':
     specifier: ^2.4.2
@@ -32,6 +28,9 @@ dependencies:
   '@portabletext/react':
     specifier: ^3.0.0
     version: 3.0.0(react@18.2.0)
+  '@portabletext/to-html':
+    specifier: ^2.0.5
+    version: 2.0.5
   '@portabletext/types':
     specifier: ^2.0.2
     version: 2.0.2
@@ -4717,6 +4716,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@portabletext/to-html@2.0.5:
+    resolution: {integrity: sha512-KkUI6iBuKSzclyKYnwGLiE0asxvW1ZcFmZ7wBslW+nulw78qwpTl3wuK47zf+y0XX7g52d5gw5WlYBAhuSEjSg==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@portabletext/toolkit': 2.0.10
+      '@portabletext/types': 2.0.8
+    dev: false
+
   /@portabletext/toolkit@2.0.1:
     resolution: {integrity: sha512-vr2SeDFUFV+VmRIyYsHBMimZLiiN0S7qIridt/YLJs3Wm1dI4jsfUam82AQwheSMjvWdBiBZ+Wsjq5HZBG4htw==}
     engines: {node: ^14.13.1 || >=16.0.0}
@@ -4724,8 +4731,20 @@ packages:
       '@portabletext/types': 2.0.2
     dev: false
 
+  /@portabletext/toolkit@2.0.10:
+    resolution: {integrity: sha512-d+F9JvpnMEx7kd6saZ9OWA4U1Iwuokh6TOht7iqkfWU+0ivh9yM4v+b0Kpu+iiPcElicoabhtXol+yTvWJ1jDw==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dependencies:
+      '@portabletext/types': 2.0.8
+    dev: false
+
   /@portabletext/types@2.0.2:
     resolution: {integrity: sha512-3xTbSa80G1nODyACY0ilrmPo1PmU1xuoPvfcpzpqSEL0kX01fSW+21PKgS9BcG+GqdG9HK/VxciKWa+nFA7mqg==}
+    engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
+    dev: false
+
+  /@portabletext/types@2.0.8:
+    resolution: {integrity: sha512-eiq9/kMX2bYezS4/kLFk3xNnruCFjCDdw6aYEv5ECHVKkYROiuLd3/AsP5d7tWF3+kPPy6tB0Wq8aqDG/URHGA==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
     dev: false
 
@@ -8448,7 +8467,7 @@ packages:
     dev: false
 
   /date-now@1.0.1:
-    resolution: {integrity: sha512-yiizelQCqYLUEVT4zqYihOW6Ird7Qyc6fD3Pv5xGxk4+Jz0rsB1dMN2KyNV6jgOHYh5K+sPGCSOknQN4Upa3pg==}
+    resolution: {integrity: sha1-u30IZDjevkGCpIX7PfP7+5nWFTw=}
     dev: false
 
   /debounce@1.0.0:
@@ -15750,7 +15769,7 @@ packages:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
   /xregexp@2.0.0:
-    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
+    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
     dev: false
 
   /xtend@4.0.2:
@@ -15841,3 +15860,7 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
