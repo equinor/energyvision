@@ -67,6 +67,8 @@ const datasets = {
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
+  sheringham: ['english'],
+  dudgeon: ['english'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],
@@ -129,6 +131,14 @@ const websiteDomains = {
   celticsea: {
     url: 'https://www.equinorcelticsea.co.uk',
     meta: 'equinorcelticsea.co.uk',
+  },
+  dudgeon: {
+    url: 'https://web-dudgeon-equinor-web-sites-preprod.c2.radix.equinor.com/',
+    meta: 'Dudgeon',
+  },
+  sheringham: {
+    url: 'https://web-sheringham-equinor-web-sites-preprod.c2.radix.equinor.com/',
+    meta: 'Sheringham Shoal',
   },
   'global-development': {
     url: 'localhost:3000',
