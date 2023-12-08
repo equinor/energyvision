@@ -1,8 +1,7 @@
 import { label } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { EdsIcon } from '../../icons'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import type { LinkSelector } from './linkSelector'
 import { configureBlockContent } from '../editors'
 import { getLinkSelectorFields } from './linkSelector'
@@ -58,10 +57,8 @@ export default {
     {
       name: 'ingress',
       title: 'Promo Text',
-      description: 'Max 100 characters',
       type: 'array',
       of: [ingressBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 100)),
     },
     {
       name: 'isLink',

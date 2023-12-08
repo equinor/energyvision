@@ -3,16 +3,17 @@ import { tokens } from '@equinor/eds-tokens'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { PromoTextTileArrayData, PromoTextTileData } from '../../types/types'
-import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
 import { PortableTextBlock } from '@portabletext/types'
+import PromoTextTileIngress from '../shared/portableText/PromoTextTileIngress'
+import useWindowSize from '../../lib/hooks/useWindowSize'
 
 const { Action, Text } = Card
 
 const Container = styled.div<{ isMultipleCards: boolean; isSpacing?: boolean }>`
   display: grid;
   grid-gap: var(--space-medium);
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  padding: var(--space-large) var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
   margin: auto;
   grid-template-columns: ${({ isMultipleCards }) =>
@@ -34,7 +35,6 @@ const StyledCard = styled(Card)<{ alignLeft: boolean }>`
   width: 100%;
   --card-maxWidth: 280px;
   height: 300px;
-  text-align: center;
   overflow: hidden;
 `
 
@@ -44,6 +44,7 @@ const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
   flex-direction: column;
   height: 100%;
   justify-items: center;
+
   @media (max-width: 1004px) {
     align-items: center;
     display: inline-grid;
@@ -51,6 +52,7 @@ const ContentWrapper = styled.div<{ alignLeft: boolean; hasLink: boolean }>`
 `
 
 const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; anchor?: string }) => {
+  const { width } = useWindowSize()
   if (!data.group) return null
   const isMultipleCards = data.group.length > 1
 
@@ -69,21 +71,15 @@ const PromoTextTileArray = ({ data, anchor }: { data: PromoTextTileArrayData; an
                 alignLeft={isMultipleCards}
                 style={
                   {
-                    padding: 'var(--space-medium)',
-                    '--card-maxWidth': !isMultipleCards ? '100%' : '280px',
+                    padding: 'var(--space-large) 0 var(--space-xLarge) 0',
                     fontSize: 'var(--typeScale-5)',
                   } as CSSProperties
                 }
               >
                 <ContentWrapper alignLeft={isMultipleCards} hasLink={!!tile.action}>
                   <Text>
-                    <PromotileTitleText
-                      style={
-                        {
-                          '--card-title-fontSize': 'var(--typeScale-3)',
-                          '--card-title-fontWeight': '400',
-                        } as CSSProperties
-                      }
+                    <PromoTextTileIngress
+                      centered={!isMultipleCards || Boolean(width && width < 1004)}
                       value={ingress as PortableTextBlock[]}
                     />
                   </Text>
