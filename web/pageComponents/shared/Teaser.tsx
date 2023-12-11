@@ -39,7 +39,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
           style={{ objectFit: 'cover' }}
           fill
           role={image?.isDecorative ? 'presentation' : undefined}
-          sizes="(max-width: 720px)"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
         />
       )}
     </>
