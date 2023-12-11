@@ -166,7 +166,7 @@ const PeopleCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
       >
         <StyledMedia>
           <ImageContainer>
-            {image && <RoundedImage image={image} maxWidth={400} aspectRatio={Ratios.ONE_TO_ONE} quality={100} />}
+            {image && <RoundedImage image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />}
           </ImageContainer>
         </StyledMedia>
         <TextContent style={{ '--text-height': orientation === 'portrait' ? '100%' : 'auto' } as CSSProperties}>
