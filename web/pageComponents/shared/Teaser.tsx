@@ -22,6 +22,14 @@ const StyledEnvisTeaser = styled(EnvisTeaser)`
   font-size: var(--typeScale-1);
 `
 
+const StyledTeaserTitle = styled(TitleText)`
+  padding-bottom: var(--space-large);
+`
+
+const ContentWrapper = styled.div`
+  padding-bottom: var(--space-large);
+`
+
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   const imageSrc =
     image.extension === 'svg' ? urlFor(image).toString() : urlFor(image).size(1200, 800).auto('format').toString()
@@ -105,11 +113,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               />
             )
           ) : (
-            <>
+            <ContentWrapper>
               {overline && <Eyebrow>{overline}</Eyebrow>}
-              {title && <TitleText value={title} />}
+              {title && <StyledTeaserTitle value={title} />}
               {text && <IngressText value={text} />}
-            </>
+            </ContentWrapper>
           )}
           {action && <TeaserAction action={action} />}
         </Content>
