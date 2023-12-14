@@ -9,7 +9,7 @@ import {
 } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
 
-const excludeCrudeOilAssays =
+export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
 
 const latestNewsFields = /* groq */ `
