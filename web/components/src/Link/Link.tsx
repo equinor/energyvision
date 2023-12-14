@@ -92,6 +92,12 @@ const ReadMoreLink = styled(BaseLink)`
       border-bottom-color: var(--white-100);
     }
   }
+
+  .background--bg-mid-blue & {
+    & > svg {
+      fill: var(--white-100);
+    }
+  }
 `
 
 const getIconData = (type: LinkType) => {

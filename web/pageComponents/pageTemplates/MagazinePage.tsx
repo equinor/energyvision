@@ -12,13 +12,16 @@ import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 const MagazinePageLayout = styled.main`
   /* The neverending spacing story... If two sections with the same background colour
   follows each other we want less spacing */
-  .background-one + .background-one,
-  .background-two + .background-two,
-  .background-three + .background-three,
-  .background-four + .background-four,
-  .background-five + .background-five,
-  .background-none + .background-none,
-  .background-image + .background-none {
+  .background--bg-mid-blue + .background--bg-mid-blue,
+  .background--bg-default + .background--bg-default,
+  .background--bg-moss-green + .background--bg-moss-green,
+  .background--bg-moss-green-light + .background--bg-moss-green-light,
+  .background--bg-spruce-wood + .background--bg-spruce-wood,
+  .background--bg-mist-blue + .background--bg-mist-blue,
+  .background--bg-slate-blue + .background--bg-slate-blue,
+  .background--bg-mid-yellow + .background--bg-mid-yellow,
+  .background--bg-mid-orange + .background--bg-mid-orange,
+  .background--bg-mid-green + .background--bg-mid-green {
     /* The teaser component uses an article element, so lets avoid that.
     Would be more robust if we add a container for the padding :/ */
     > section,

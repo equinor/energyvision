@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { BreadcrumbsList, getBackgroundByColorName, getFontColorForBg } from '@components'
+import { BreadcrumbsList, getColorOnContainer, getContainerColor, isInvertedColor } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
@@ -26,26 +26,25 @@ const Container = styled.div<{ $containerStyles?: ContainerStyles }>`
     }
     // BreadCrumbs's background color is defined by its following component
     const bgColor = $containerStyles?.backgroundColor && {
-      background: getBackgroundByColorName($containerStyles.backgroundColor),
+      background: `var(${getContainerColor($containerStyles.backgroundColor)})`,
     }
     return { ...hasTopMargin, ...bgColor }
   }}
 `
 
 const StyledBreadcrumbsList = styled(BreadcrumbsList)<{ $bgColor?: BackgroundColours }>`
-  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
+  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
 `
 
 const StyledBreadcrumbsListItem = styled(BreadcrumbsListItem)<{ $bgColor?: BackgroundColours }>`
   &:last-child {
-    color: ${({ $bgColor }) =>
-      getFontColorForBg($bgColor) === 'var(--inverted-text)' ? 'var(--grey-30)' : 'var(--slate-blue-90)'};
+    color: ${({ $bgColor }) => (isInvertedColor($bgColor) ? 'var(--grey-30)' : 'var(--slate-blue-90)')};
   }
 `
 
 const StyledNextLink = styled(NextLink)<{ $bgColor?: BackgroundColours }>`
   text-decoration: none;
-  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
+  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
 `
 
 type BreadcrumbsProps = {
@@ -115,7 +114,6 @@ export const Breadcrumbs = ({
               <StyledNextLink href={item.slug} $bgColor={containerStyles.backgroundColor}>
                 {item.label}
               </StyledNextLink>
-
             </BreadcrumbsListItem>
           )
         })}

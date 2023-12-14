@@ -73,10 +73,10 @@ export const colors = css`
     --transparent-black: hsla(0, 0%, 0%, 20);
     --transparent-white: hsla(0, 0%, 100%, 20);
 
-    /* UI colors This is just for testing!!!! */
-    --ui-background-default: var(--white-100);
-    --ui-background-warm: var(--spruce-wood-100);
-    --ui-background-cold: var(--moss-green-50);
+    --mid-yellow: #fff5b8;
+    --mid-green: #c3e4ce;
+    --mid-orange: #f8d1af;
+    --mid-blue: #49709c;
 
     --inverted-text: var(--white-100);
     --default-text: rgba(61, 61, 61, 1);
@@ -84,6 +84,18 @@ export const colors = css`
     --theme-background-primary: var(--white-100);
 
     --topbar-height: 100px;
+
+    /* new colors */
+    --bg-default: var(--white-100);
+    --bg-moss-green: var(--moss-green-70); // retaining old color for backward compatability
+    --bg-moss-green-light: var(--moss-green-50);
+    --bg-spruce-wood: var(--spruce-wood-90);
+    --bg-mist-blue: var(--mist-blue-100);
+    --bg-slate-blue: var(--slate-blue-100); // retaining old color for backward compatability
+    --bg-mid-yellow: var(--mid-yellow);
+    --bg-mid-orange: var(--mid-orange);
+    --bg-mid-green: var(--mid-green);
+    --bg-mid-blue: var(--mid-blue);
   }
 `
 export const typography = css`

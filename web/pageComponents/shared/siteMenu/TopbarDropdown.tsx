@@ -4,7 +4,7 @@ import styled from 'styled-components'
 /* If we need this for e.g. the search, let's move it to components folder */
 const StyledTopbarDropdown = styled.div`
   position: fixed;
-  background: var(--ui-background-default);
+  background: var(--bg-default);
   overflow: auto;
   display: var(--display);
   z-index: 50;

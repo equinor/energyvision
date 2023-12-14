@@ -34,7 +34,6 @@ const AuthorWrapper = styled(Typography)`
 const TextWrapper = styled.span`
   .inverted-background & {
     color: var(--inverted-text);
-    font-weight: var(--fontWeight-bold);
   }
 `
 

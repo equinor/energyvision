@@ -120,8 +120,15 @@ const Content = styled.div`
     margin-top: calc(-1 * var(--space-3xLarge));
   }
 
-  .fact-box:not(.fact-box--image).fact-box--cold + .fact-box.fact-box--cold,
-  .fact-box:not(.fact-box--image).fact-box--warm + .fact-box.fact-box--warm {
+  .fact-box:not(.fact-box--image).fact-box--bg-moss-green + .fact-box.fact-box--bg-moss-green,
+  .fact-box:not(.fact-box--image).fact-box--bg-slate-blue + .fact-box.fact-box--bg-slate-blue,
+  .fact-box:not(.fact-box--image).fact-box--bg-mist-blue + .fact-box.fact-box--bg-mist-blue,
+  .fact-box:not(.fact-box--image).fact-box--bg-moss-green-light + .fact-box.fact-box--bg-moss-green-light,
+  .fact-box:not(.fact-box--image).fact-box--bg-spruce-wood + .fact-box.fact-box--bg-spruce-wood,
+  .fact-box:not(.fact-box--image).fact-box--bg-mid-blue + .fact-box.fact-box--bg-mid-blue,
+  .fact-box:not(.fact-box--image).fact-box--bg-mid-green + .fact-box.fact-box--bg-mid-green,
+  .fact-box:not(.fact-box--image).fact-box--bg-mid-orange + .fact-box.fact-box--bg-mid-orange,
+  .fact-box:not(.fact-box--image).fact-box--bg-mid-yellow + .fact-box.fact-box--bg-mid-yellow {
     margin-top: calc(-2 * var(--space-3xLarge));
   }
 `

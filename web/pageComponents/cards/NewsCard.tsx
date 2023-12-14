@@ -9,7 +9,7 @@ const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const StyledCard = styled(Card)`
   --card-gap: var(--space-large);
-  height: 100%;
+  height: var(--height);
   @media (max-width: 800px) {
     --card-maxWidth: 300px;
   }

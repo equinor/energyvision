@@ -1,20 +1,28 @@
 import { forwardRef, Children, isValidElement, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { Image } from './Image'
-import type { FactImagePosition, FactBackground } from './'
+import type { FactImagePosition } from './'
+import { getContainerColor, isInvertedColor } from '@utils'
+import { BackgroundColours } from '../../../types/types'
 
-const backgroundVariants: { [name: string]: string } = {
-  none: 'var(--ui-background-default)',
-  cold: 'var(--ui-background-cold)',
-  warm: 'var(--ui-background-warm)',
+type FactBoxWrapperStyleProps = {
+  isInverted?: boolean
+  background?: BackgroundColours
 }
-
-const FactBoxWrapperStyle = styled.aside<{ background?: FactBackground }>`
+const FactBoxWrapperStyle = styled.aside.attrs<FactBoxWrapperStyleProps>(({ isInverted }) =>
+  isInverted
+    ? {
+        className: `inverted-background `,
+      }
+    : {
+        className: ``,
+      },
+)<FactBoxWrapperStyleProps>`
   clear: both;
 
   ${({ background }) =>
     background && {
-      '--background': backgroundVariants[background],
+      '--background': `var(${getContainerColor(background)})`,
     }}
 `
 
@@ -42,26 +50,26 @@ const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePos
 `
 
 export type FactProps = {
-  background?: FactBackground
+  background?: BackgroundColours
   imagePosition?: FactImagePosition
 } & HTMLAttributes<HTMLDivElement>
 
 export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox(
-  { background = 'none', imagePosition = 'left', children, ...rest },
+  { background = 'White', imagePosition = 'left', children, ...rest },
   ref,
 ) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Image)
-
+  const isInverted = isInvertedColor(background)
   if (hasImage) {
     return (
-      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref} {...rest}>
+      <WrapperWithImg isInverted={isInverted} imagePosition={imagePosition} background={background} ref={ref} {...rest}>
         {children}
       </WrapperWithImg>
     )
   }
 
   return (
-    <FactBoxWrapperStyle background={background} ref={ref} {...rest}>
+    <FactBoxWrapperStyle background={background} isInverted={isInverted} ref={ref} {...rest}>
       {children}
     </FactBoxWrapperStyle>
   )

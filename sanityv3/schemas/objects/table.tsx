@@ -45,7 +45,7 @@ const headerCellContentType = configureBlockContent({
   attachment: true,
 })
  */
-const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
+const chosenColors = ['White', 'Mid Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
 const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {
   title: 'Table',

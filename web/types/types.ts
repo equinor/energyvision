@@ -255,7 +255,17 @@ export type LandingPageSchema = {
   seoAndSome: SeoData
 }
 
-export type BackgroundColours = 'White' | 'Moss Green' | 'Moss Green Light' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
+export type BackgroundColours =
+  | 'White'
+  | 'Moss Green'
+  | 'Moss Green Light'
+  | 'Spruce Wood'
+  | 'Mist Blue'
+  | 'Slate Blue'
+  | 'Mid Green'
+  | 'Mid Yellow'
+  | 'Mid Blue'
+  | 'Mid Orange'
 
 export type DesignOptions = {
   background?: BackgroundColours

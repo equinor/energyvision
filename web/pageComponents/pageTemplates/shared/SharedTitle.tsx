@@ -3,7 +3,7 @@ import TitleText from '../../shared/portableText/TitleText'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { TitleStyles } from '../../../lib/hooks/useSharedTitleStyles'
 import type { BackgroundColours } from 'types'
-import { getBackgroundByColorName, getFontColorForBg } from '@components'
+import { getColorOnContainer, getContainerColor } from '@components'
 
 type SharedTitleProps = {
   title: PortableTextBlock[]
@@ -24,7 +24,7 @@ const TitleWrapper = styled.div<{ styles?: TitleStyles }>`
 
     // Title's background color is defined by its following component
     const bgColor = styles?.backgroundColor && {
-      background: getBackgroundByColorName(styles.backgroundColor),
+      background: `var(${getContainerColor(styles.backgroundColor)})`,
     }
     return { ...bottomSpace, ...bgColor }
   }}
@@ -34,7 +34,7 @@ const StyledHeading = styled(TitleText)<{ $bgColor?: BackgroundColours }>`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
-  color: ${({ $bgColor }) => getFontColorForBg($bgColor)};
+  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
 `
 
 const SharedTitle = ({ title, styles }: SharedTitleProps) => {
