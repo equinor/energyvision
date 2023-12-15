@@ -1,33 +1,21 @@
+import React, { type FormEvent, useCallback, useMemo } from 'react'
+import type { Path, SanityDocument, SlugInputProps, SlugParent, SlugSourceContext, SlugSourceFn } from 'sanity'
 import { Box, Button, Card, Flex, Stack, TextInput } from '@sanity/ui'
-import { useCallback, useMemo } from 'react'
-import {
-  getValueAtPath,
-  ObjectInputProps,
-  PatchEvent,
-  Path,
-  SanityDocument,
-  set,
-  setIfMissing,
-  SlugParent,
-  SlugSchemaType,
-  SlugSourceContext,
-  SlugSourceFn,
-  SlugValue,
-  unset,
-  useFormBuilder,
-} from 'sanity'
+import { PatchEvent, set, setIfMissing, unset, useFormValue } from 'sanity'
+import { slugify } from './utils/slugify'
 import { useAsync } from './utils/useAsync'
 import { SlugContext, useSlugContext } from './utils/useSlugContext'
-import { slugify as sanitySlugify } from './utils/slugify'
+import * as PathUtils from './utils/paths'
 
 /**
+ *
+ * @hidden
  * @beta
  */
-export type SlugInputProps = ObjectInputProps<SlugValue, SlugSchemaType>
 
 function getSlugSourceContext(valuePath: Path, document: SanityDocument, context: SlugContext): SlugSourceContext {
   const parentPath = valuePath.slice(0, -1)
-  const parent = getValueAtPath(document, parentPath) as SlugParent
+  const parent = PathUtils.get(document, parentPath) as SlugParent
   return { parentPath, parent, ...context }
 }
 
@@ -39,25 +27,29 @@ async function getNewFromSource(
 ): Promise<string | undefined> {
   return typeof source === 'function'
     ? source(document, context)
-    : (getValueAtPath(document, source as Path) as string | undefined)
+    : (PathUtils.get(document, source) as string | undefined)
 }
 
 /**
+ *
+ * @hidden
  * @beta
  */
 export function SlugInput(props: SlugInputProps) {
-  const { getDocument } = useFormBuilder().__internal
+  const getFormValue = useFormValue([])
   const { path, value, schemaType, validation, onChange, readOnly, elementProps } = props
   const sourceField = schemaType.options?.source
   const errors = useMemo(() => validation.filter((item) => item.level === 'error'), [validation])
+
   const slugContext = useSlugContext()
 
   const updateSlug = useCallback(
-    async (nextSlug: any) => {
+    (nextSlug: string) => {
       if (!nextSlug) {
         onChange(PatchEvent.from(unset([])))
         return
       }
+
       onChange(PatchEvent.from([setIfMissing({ _type: schemaType.name }), set(nextSlug, ['current'])]))
     },
     [onChange, schemaType.name],
@@ -68,16 +60,19 @@ export function SlugInput(props: SlugInputProps) {
       return Promise.reject(new Error(`Source is missing. Check source on type "${schemaType.name}" in schema`))
     }
 
-    const doc = getDocument() || ({ _type: schemaType.name } as SanityDocument)
+    const doc = (getFormValue as SanityDocument) || ({ _type: schemaType.name } as SanityDocument)
     const sourceContext = getSlugSourceContext(path, doc, slugContext)
     return getNewFromSource(sourceField, doc, sourceContext)
-      .then((newFromSource) => sanitySlugify(newFromSource || '', schemaType, sourceContext))
+      .then((newFromSource) => slugify(newFromSource || '', schemaType, sourceContext))
       .then((newSlug) => updateSlug(newSlug))
-  }, [path, updateSlug, getDocument, schemaType, slugContext])
+  }, [sourceField, getFormValue, schemaType, path, slugContext, updateSlug])
 
   const isUpdating = generateState?.status === 'pending'
 
-  const handleChange = useCallback((event: any) => updateSlug(event.currentTarget.value), [updateSlug])
+  const handleChange = React.useCallback(
+    (event: FormEvent<HTMLInputElement>) => updateSlug(event.currentTarget.value),
+    [updateSlug],
+  )
 
   return (
     <Stack space={3}>
