@@ -97,7 +97,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
 
           const Content = () =>
             linkLabelAsTitle ? (
-              <PromoTileButton action={action} template="icon" hasImage={hasImage} />
+              <PromoTileButton action={action} template="text" hasImage={hasImage} />
             ) : (
               <>
                 {<>{richTitle(title, hasImage)}</>}

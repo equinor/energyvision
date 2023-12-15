@@ -157,6 +157,7 @@ export default {
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
+        { type: 'promoTextTileArray' },
         { type: 'promotion' },
         { type: 'iframe' },
         { type: 'imageCarousel' },

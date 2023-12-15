@@ -404,11 +404,27 @@ export type PromoTileData = {
   linkLabelAsTitle?: boolean
 }
 
+export type PromoTextTileData = {
+  id: string
+  ingress: PortableTextBlock[]
+  action: LinkData
+  designOptions: DesignOptions
+  showLinkLabel?: boolean
+}
+
 export type PromoTileArrayData = {
   type: string
   id: string
   group: PromoTileData[]
   useHorizontalScroll: boolean
+}
+
+export type PromoTextTileArrayData = {
+  type: string
+  id: string
+  group: PromoTextTileData[]
+  useHorizontalScroll: boolean
+  spacing?: boolean
 }
 
 export type MenuLinkData = {

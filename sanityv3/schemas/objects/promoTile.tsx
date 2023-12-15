@@ -6,14 +6,13 @@ import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector'
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
 
 const titleContentType = configureTitleBlockContent()
 
 export type PromoTile = {
   _type: 'promoTile'
-  title: any[]
+  title: PortableTextBlock[]
   linkLabelAsTitle?: boolean
   image?: ImageWithAlt
   link?: LinkSelector
@@ -50,7 +49,9 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
+      components: {
+        input: CompactBlockEditor,
+      },
       of: [titleContentType],
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
@@ -92,13 +93,13 @@ export default {
       linkLabelAsTitle,
       link,
     }: {
-      title: any[]
+      title: PortableTextBlock[]
       imageUrl: string
       linkLabelAsTitle: boolean
       link: string
     }) {
       return {
-        title: linkLabelAsTitle ? link : blocksToText(title as any[]),
+        title: linkLabelAsTitle ? link : blocksToText(title),
         subtitle: `Promo tile component`,
         media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
       }

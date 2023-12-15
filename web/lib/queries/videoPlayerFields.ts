@@ -1,4 +1,4 @@
-import linkSelectorFields from './common/actions/linkSelectorFields'
+import linkSelector from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 
 export const videoPlayerFields = /* groq */ `
@@ -10,7 +10,7 @@ export const videoPlayerFields = /* groq */ `
     ${markDefs},
   },
   "action": action[0] {
-    ${linkSelectorFields},
+    ${linkSelector},
   },
   "video": {
     "title": videoFile->video.title,
