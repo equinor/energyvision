@@ -1,3 +1,5 @@
+import { apiVersion } from '../../../../sanity.client'
+
 const extensions = [
   {
     title: 'Show all PDF files',
@@ -43,6 +45,7 @@ const filterItems = (S) =>
       .title(item.title)
       .child(
         S.documentTypeList('assetFile')
+          .apiVersion(apiVersion)
           .id(item.id)
           .title(item.title)
           .filter(`_type == "assetFile" && asset.asset->extension in $extensions`)

@@ -1,6 +1,7 @@
 import { list, tag as tagIcon } from '@equinor/eds-icons'
 import { map } from 'rxjs/operators'
 import { EdsIcon, NewsDocuments } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 import { i18n } from '../../../../schemas/documentTranslation'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
@@ -21,6 +22,7 @@ const localNewsStructure = (S, context) => {
               .icon(() => EdsIcon(list))
               .child(() =>
                 S.documentTypeList('localNews')
+                  .apiVersion(apiVersion)
                   .id('localNews')
                   .title('Local news articles')
                   .filter('_type == "localNews" && (!defined(_lang) || _lang == $baseLang)')
@@ -38,6 +40,7 @@ const localNewsStructure = (S, context) => {
                 .icon(() => EdsIcon(tagIcon))
                 .child(() =>
                   S.documentList()
+                    .apiVersion(apiVersion)
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
                     .filter(

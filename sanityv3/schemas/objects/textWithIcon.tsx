@@ -8,9 +8,9 @@ import { configureBlockContent } from '../editors/blockContentType'
 import type { ImageWithAlt } from './imageWithAlt'
 
 const client = sanityClient.withConfig({
-  apiVersion: '2021-05-19',
   projectId: import.meta.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9',
   token: import.meta.env.SANITY_STUDIO_MUTATION_TOKEN,
+  ignoreBrowserTokenWarning: true,
 })
 
 const blockContentType = configureBlockContent({

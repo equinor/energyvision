@@ -5,6 +5,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
 import { EdsIcon } from '../../icons'
 import { directions } from '@equinor/eds-icons'
+import { apiVersion } from '../../sanity.client'
 
 export default {
   title: 'Redirect',
@@ -24,7 +25,7 @@ export default {
           const query = /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
 
           const params = { value, documentId }
-          const redirects = await context.getClient({ apiVersion: '2023-01-01' }).fetch(query, params)
+          const redirects = await context.getClient({ apiVersion: apiVersion }).fetch(query, params)
 
           if (!value) {
             return 'Slug is required'
