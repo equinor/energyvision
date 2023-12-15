@@ -1,5 +1,6 @@
 import { map } from 'rxjs/operators'
 import { TagIcon } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 
 export const AssetTagFilters = (S, context) =>
   S.listItem().title('Filter files by tag').icon(TagIcon).child(tagFilterList(S, context))
@@ -22,6 +23,7 @@ const tagFilterList = (S, context) => {
                 .icon(TagIcon)
                 .child(() =>
                   S.documentList()
+                    .apiVersion(apiVersion)
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
                     .filter(`_type == "${documentName}" && references($tagId)`)

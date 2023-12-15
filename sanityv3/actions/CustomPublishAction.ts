@@ -5,13 +5,12 @@ import {
   DocumentActionDescription,
   DocumentActionProps,
 } from 'sanity'
-import { dataset, sanityClient } from '../sanity.client'
+import { dataset, sanityClient, apiVersion } from '../sanity.client'
 import { useToast } from '@sanity/ui'
 
-const apiVersion = '2023-01-01'
 const projectId = import.meta.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9'
 const token = import.meta.env.SANITY_STUDIO_MUTATION_TOKEN
-const client = sanityClient.withConfig({ apiVersion: apiVersion, token: token })
+const client = sanityClient.withConfig({ token: token, ignoreBrowserTokenWarning: true })
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
 
@@ -24,7 +23,7 @@ const shouldAddFirstPublishedAt = async (props: DocumentActionProps) => {
 
   // https://github.com/sanity-io/sanity/issues/2179
   const revisions = await fetch(
-    `https://${projectId}.api.sanity.io/v${apiVersion}/data/history/${dataset}/transactions/${props.id}?excludeContent=true`,
+    `https://${projectId}.api.sanity.io/${apiVersion}/data/history/${dataset}/transactions/${props.id}?excludeContent=true`,
     {
       method: 'GET',
       headers: new Headers({
