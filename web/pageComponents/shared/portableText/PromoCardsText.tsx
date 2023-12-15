@@ -10,7 +10,7 @@ const defaultComponents = (centered: boolean) => {
   return {
     block: {
       normal: ({ children }: PortableTextBlock) => {
-        if (isEmpty(children)) return null
+        if (isEmpty(children)) return <br />
         return (
           <Text size="ml" centered={centered} style={{ margin: 0 }}>
             <>{children}</>
@@ -26,7 +26,7 @@ type IngressTextProps = {
   centered?: boolean
 } & PortableTextProps
 
-const PromotileTitleText = ({ value, components = {}, centered = false, ...props }: IngressTextProps) => {
+const PromoCardsText = ({ value, components = {}, centered = false, ...props }: IngressTextProps) => {
   return (
     <PortableText
       value={value}
@@ -36,4 +36,4 @@ const PromotileTitleText = ({ value, components = {}, centered = false, ...props
   )
 }
 
-export default PromotileTitleText
+export default PromoCardsText

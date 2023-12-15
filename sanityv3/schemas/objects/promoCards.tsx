@@ -18,19 +18,19 @@ const ingressBlockContentType = configureBlockContent({
   lists: false,
 })
 
-export type PromoTextTile = {
-  _type: 'promoTextTile'
+export type PromoCardsType = {
+  _type: 'promoCards'
   linkLabelAsTitle?: boolean
   link?: LinkSelector
   isLink?: boolean
   background?: ColorSelectorValue
 }
 
-const linkFields = getLinkSelectorFields('label', 'isLink')
+const linkFields = getLinkSelectorFields('label', 'isLink', false)
 
 export default {
-  title: 'Promo text tile',
-  name: 'promoTextTile',
+  title: 'Promo cards',
+  name: 'promoCards',
   type: 'object',
   fieldsets: [
     {
@@ -68,15 +68,6 @@ export default {
       initialValue: false,
     },
     ...linkFields,
-    {
-      name: 'showLinkLabel',
-      title: 'Show link label',
-      description: 'This will add the text to the button',
-      type: 'boolean',
-      initialValue: false,
-      hidden: ({ parent }: { parent: PromoTextTile }) => !parent.isLink,
-      fieldset: 'label',
-    },
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

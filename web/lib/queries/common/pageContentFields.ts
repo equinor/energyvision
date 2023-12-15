@@ -1,7 +1,7 @@
 import { iframeCarouselFields } from '../iframeCarouselFields'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
-import { promoTextTileArrayFields } from '../promoTextTileArrayFields'
+import { promoCardsArrayFields } from '../promoCardsArrayFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelector, { linkReferenceFields } from './actions/linkSelectorFields'
@@ -516,8 +516,8 @@ const pageContentFields = /* groq */ `
   _type == "videoPlayerCarousel" => {
     ${videoPlayerCarouselFields}
   },
-  _type == "promoTextTileArray" => {
-    ${promoTextTileArrayFields}
+  _type == "promoCardsArray" => {
+    ${promoCardsArrayFields}
   },
 `
 

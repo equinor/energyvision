@@ -50,7 +50,7 @@ const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget
  * @param flag the name of the boolean field from the parent that works as a switch to toggle link fields
  *
  */
-export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => {
+export const getLinkSelectorFields = (labelFieldset?: string, flag?: string, labelIsRequired = true) => {
   const isHidden = (parent: LinkSelector) => flag && !parent?.[flag]
 
   return [
@@ -139,7 +139,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
           if (isHidden(parent)) return true
-          return value ? true : 'You must add a label'
+          return value || !labelIsRequired ? true : 'You must add a label'
         }),
       hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
@@ -148,6 +148,12 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       title: '♿ Screenreader label',
       description: 'A text used for providing screen readers with additional information',
       type: 'string',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as { parent: LinkSelector }
+          if (isHidden(parent)) return true
+          return !labelIsRequired && !value ? 'You must add either a screen reader label or a visible label' : true
+        }),
       fieldset: labelFieldset,
       hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },

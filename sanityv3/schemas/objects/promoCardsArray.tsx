@@ -1,17 +1,17 @@
 import { collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule } from 'sanity'
-import type { PromoTextTile } from './promoTextTile'
+import type { PromoCardsType } from './promoCards'
 
-export type PromoTextTileArray = {
-  _type: 'promoTextTileArray'
-  group: PromoTextTile[]
+export type PromoCardsArray = {
+  _type: 'promoCardsArrayType'
+  group: PromoCardsType[]
 }
 
 export default {
   type: 'object',
-  name: 'promoTextTileArray',
-  title: 'Promo text tiles',
+  name: 'promoCardsArray',
+  title: 'Promo cards',
   fields: [
     {
       name: 'spacing',
@@ -22,9 +22,9 @@ export default {
     {
       type: 'array',
       name: 'group',
-      description: 'Add promo tiles as one or a pair',
-      title: 'Promo text tiles',
-      of: [{ type: 'promoTextTile' }],
+      description: 'Add promo cards as one or a pair',
+      title: 'Promo cards',
+      of: [{ type: 'promoCards' }],
       validation: (Rule: Rule) => Rule.required().min(1).max(2),
     },
   ],
@@ -34,8 +34,8 @@ export default {
     },
     prepare() {
       return {
-        title: 'Promo text tiles',
-        subtitle: `Promo text tile component`,
+        title: 'Promo cards title',
+        subtitle: `Promo cards component`,
         media: EdsIcon(collection_2),
       }
     },

@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 type Props = {
   action: LinkData
-  hasImage: boolean
+  hasImage?: boolean
   template?: 'default' | 'icon' | 'unstyledText' | 'text'
 }
 
@@ -59,7 +59,7 @@ const generateLink = (action: LinkData, hasImage?: boolean, wrapper?: boolean, t
   return wrapper ? <Wrapper>{linkElement}</Wrapper> : linkElement
 }
 
-export const PromoTileButton = ({ action, template = 'default', hasImage }: Props) => {
+export const PromoTileButton = ({ action, template = 'default', hasImage = false }: Props) => {
   switch (template) {
     case 'unstyledText':
       return generateLink(action, hasImage)
