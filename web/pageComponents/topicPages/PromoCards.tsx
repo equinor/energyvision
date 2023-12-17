@@ -26,6 +26,7 @@ const Wrapper = styled.div<{ $extraSpacing: boolean }>`
 const Card = styled(BackgroundContainer)<{ $isSingleCard: boolean }>`
   display: flex;
   flex-direction: column;
+  min-width: calc(50% - var(--space-large));
   min-height: 330px;
   padding: var(--space-medium);
   gap: var(--space-large);
