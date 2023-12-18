@@ -13,7 +13,7 @@ const TextSnippet = styled.p`
   margin: 0;
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
-  color: var(--inverted-text);
+  color: var(--color-on-background);
 `
 
 const buildDisplayURL = (slug: string, locale: string | undefined): string => {
@@ -53,7 +53,7 @@ const MagazineHit = ({ hit }: HitProps) => {
   return (
     <article>
       <StyledHitLink href={slug}>
-        <HitHeading level="h2" size="sm" inverted>
+        <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="pageTitle" />
         </HitHeading>
         {hit.title && (

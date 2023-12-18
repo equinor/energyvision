@@ -10,10 +10,15 @@ import { default as NextLink } from 'next/link'
 
 const { outline } = Tokens
 
+/*link - color
+link - color - hover
+arrow - color
+arrow - background - color
+*/
 export const BaseLink = styled(NextLink)<{ $textDecoration?: string }>`
   display: inline-flex;
   align-items: center;
-  color: var(--slate-blue-95);
+  color: var(--link-color);
   text-decoration: ${({ $textDecoration }) => $textDecoration || 'none'};
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
@@ -23,10 +28,6 @@ export const BaseLink = styled(NextLink)<{ $textDecoration?: string }>`
     box-sizing: content-box;
     padding: 0 var(--space-1);
   }
-  /* If the link is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--mist-blue-100);
-  }
 `
 
 // TODO: should part of this styling be moved to a list item instead?
@@ -34,10 +35,10 @@ const ContentLink = styled(BaseLink)`
   border-bottom: 0.5px solid var(--grey-40);
   text-decoration: none;
   padding: var(--space-small) 0;
-  color: var(--slate-blue-100) !important;
+  color: var(--content-link-color) !important;
   width: 100%;
   & > svg {
-    fill: var(--energy-red-100);
+    fill: var(--link-arrow-color);
     margin-left: auto;
     border: 1px solid transparent;
     border-radius: 50%;
@@ -45,16 +46,14 @@ const ContentLink = styled(BaseLink)`
   }
   &:hover svg {
     background: var(--energy-red-50);
-  }
-  .inverted-background & {
-    color: var(--inverted-text) !important;
+    fill: var(--link-arrow-color-hover);
   }
 `
 
 const ReadMoreLink = styled(BaseLink)`
   display: inline-flex;
   max-width: max-content;
-  color: var(--slate-blue-100);
+  color: var(--content-link-color);
   justify-content: center;
   text-decoration: none;
   position: relative;
@@ -63,11 +62,12 @@ const ReadMoreLink = styled(BaseLink)`
     margin-left: var(--space-small);
     padding-right: 0;
     transition: 0.3s;
-    fill: var(--energy-red-100);
+    fill: var(--link-arrow-color);
   }
 
   &:hover svg {
     padding-left: var(--space-medium);
+    fill: var(--link-arrow-color-hover);
   }
 
   &:after {
@@ -77,26 +77,12 @@ const ReadMoreLink = styled(BaseLink)`
     left: 0;
     display: block;
     width: 0%;
-    border-bottom: solid 0.5px var(--slate-blue-100);
+    border-bottom: solid 0.5px var(--content-link-color);
     transition: 0.3s;
   }
 
   &:hover:after {
     width: 100%;
-  }
-
-  /* If the link is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-    &:after {
-      border-bottom-color: var(--white-100);
-    }
-  }
-
-  .background--bg-mid-blue & {
-    & > svg {
-      fill: var(--white-100);
-    }
   }
 `
 

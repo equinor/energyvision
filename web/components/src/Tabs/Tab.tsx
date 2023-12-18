@@ -19,10 +19,8 @@ const StyledTab = styled(CTab)`
   &:hover {
     cursor: pointer;
   }
-  /* If the text is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+
+  color: var(--color-on-background);
 
   &:active {
     background: transparent;
@@ -40,27 +38,23 @@ const StyledTab = styled(CTab)`
 `
 
 export type TabProps = CTabProps & {
-  inverted?: boolean
   variant?: string
 }
 
-export const Tab = forwardRef<HTMLButtonElement, TabProps>(function CTab(
-  { inverted = false, children, variant = 'line', ...rest },
-  ref,
-) {
+export const Tab = forwardRef<HTMLButtonElement, TabProps>(function CTab({ children, variant = 'line', ...rest }, ref) {
   return (
     <StyledTab
       ref={ref}
       _selected={{
-        '--font-color': inverted ? 'var(--inverted-text)' : 'var(--default-text)',
-        borderColor: inverted ? 'var(--inverted-text)' : 'var(--default-text)',
+        '--font-color': 'var(--color-on-background)',
+        borderColor: 'var(--color-on-background)',
         borderBottom: '2px solid',
       }}
       variant={variant}
       {...rest}
       style={
         {
-          '--font-color': inverted ? 'var(--inverted-text)' : 'var(--default-text)',
+          '--font-color': 'var(--color-on-background)',
         } as CSSProperties
       }
     >

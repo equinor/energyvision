@@ -34,7 +34,7 @@ const StyledHeading = styled(TitleText)<{ $bgColor?: BackgroundColours }>`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
-  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
+  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)}) !important;
 `
 
 const SharedTitle = ({ title, styles }: SharedTitleProps) => {

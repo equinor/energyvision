@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Text, Button, Heading } from '@components'
+import { Text, Button, Heading, BackgroundContainer } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
@@ -35,7 +35,7 @@ const StyledDiv = styled.section`
   }
 `
 
-const CookieHeader = styled.div`
+const CookieHeader = styled(BackgroundContainer)`
   grid-area: heading;
   padding: var(--space-medium) var(--space-large);
   padding-left: var(--icon-column-width);
@@ -58,7 +58,7 @@ const SVG = styled.svg`
   }
 `
 
-const Content = styled.div`
+const Content = styled(BackgroundContainer)`
   grid-area: text;
   padding-right: var(--space-medium);
   word-break: break-word;
@@ -67,15 +67,6 @@ const Content = styled.div`
 
 const LeftAlignedButton = styled(Button)`
   text-align: left;
-`
-
-const StyledText = styled(Text)`
-  /*  We don't want this text to be white even when the background container is
-  dark because the text is still on white background. It's an override, so a good use
-  case for important */
-  .inverted-background & {
-    color: var(--default-text) !important;
-  }
 `
 
 type RequestConsentContainerProps = {
@@ -105,8 +96,8 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
       : intl.formatMessage({ id: 'cookie_type_marketing', defaultMessage: 'marketing' })
   return (
     <StyledDiv>
-      <CookieHeader>
-        <Heading inverted size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
+      <CookieHeader background={'Slate Blue 95'}>
+        <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Heading>
       </CookieHeader>
@@ -152,8 +143,8 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </SVG>
       </Icon>
-      <Content>
-        <StyledText>
+      <Content background={'White'}>
+        <Text>
           <FormattedMessage
             id="cookie_consent"
             defaultMessage="Cookie settings"
@@ -161,7 +152,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
               typeOfCookies: typeOfCookie,
             }}
           />
-        </StyledText>
+        </Text>
         <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
         </LeftAlignedButton>

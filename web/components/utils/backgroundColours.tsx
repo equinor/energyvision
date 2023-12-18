@@ -11,10 +11,13 @@ export type StyleVariants =
   | '--bg-mid-yellow'
   | '--bg-mid-orange'
   | '--bg-mid-blue'
+  | '--bg-slate-blue-95'
 
 function getContainerColor(backgroundTitle?: BackgroundColours) {
   let styleVariant: StyleVariants = '--bg-default'
-  if (backgroundTitle === 'White') {
+  if (backgroundTitle === 'Slate Blue') {
+    styleVariant = '--bg-mid-blue'
+  } else if (backgroundTitle === 'White') {
     styleVariant = '--bg-default'
   } else {
     styleVariant = `--bg-${backgroundTitle?.replace(/\s/g, '-').toLowerCase()}` as StyleVariants
@@ -32,7 +35,7 @@ function isInvertedColor(background?: BackgroundColours): boolean {
 }
 
 function isInvertedStyle(styleVariant: StyleVariants): boolean {
-  return ['--bg-slate-blue', '--bg-mid-blue'].includes(styleVariant)
+  return ['--bg-slate-blue', '--bg-mid-blue', '--bg-slate-blue-95'].includes(styleVariant)
 }
 
 export { getContainerColor, isInvertedStyle, getColorOnContainer, isInvertedColor }

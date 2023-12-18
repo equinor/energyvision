@@ -2,28 +2,21 @@ import { forwardRef, Children, isValidElement, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { Image } from './Image'
 import type { FactImagePosition } from './'
-import { getContainerColor, isInvertedColor } from '@utils'
+import { getColorOnContainer, getContainerColor } from '@utils'
 import { BackgroundColours } from '../../../types/types'
 
 type FactBoxWrapperStyleProps = {
-  isInverted?: boolean
   background?: BackgroundColours
 }
-const FactBoxWrapperStyle = styled.aside.attrs<FactBoxWrapperStyleProps>(({ isInverted }) =>
-  isInverted
-    ? {
-        className: `inverted-background `,
-      }
-    : {
-        className: ``,
-      },
-)<FactBoxWrapperStyleProps>`
+const FactBoxWrapperStyle = styled.aside<FactBoxWrapperStyleProps>`
   clear: both;
-
-  ${({ background }) =>
-    background && {
-      '--background': `var(${getContainerColor(background)})`,
-    }}
+  ${({ background }) => {
+    if (background)
+      return {
+        '--background': `var(${getContainerColor(background)})`,
+        color: `var(${getColorOnContainer(background)})`,
+      }
+  }}
 `
 
 const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePosition }>`
@@ -59,17 +52,16 @@ export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox(
   ref,
 ) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Image)
-  const isInverted = isInvertedColor(background)
   if (hasImage) {
     return (
-      <WrapperWithImg isInverted={isInverted} imagePosition={imagePosition} background={background} ref={ref} {...rest}>
+      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref} {...rest}>
         {children}
       </WrapperWithImg>
     )
   }
 
   return (
-    <FactBoxWrapperStyle background={background} isInverted={isInverted} ref={ref} {...rest}>
+    <FactBoxWrapperStyle background={background} ref={ref} {...rest}>
       {children}
     </FactBoxWrapperStyle>
   )

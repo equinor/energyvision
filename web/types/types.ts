@@ -266,6 +266,7 @@ export type BackgroundColours =
   | 'Mid Yellow'
   | 'Mid Blue'
   | 'Mid Orange'
+  | 'Slate Blue 95'
 
 export type DesignOptions = {
   background?: BackgroundColours

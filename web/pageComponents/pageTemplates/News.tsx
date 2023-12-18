@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { NewsArticleJsonLd, NextSeo } from 'next-seo'
-import { Heading, FormattedDateTime } from '@components'
+import { Heading, FormattedDateTime, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
@@ -23,8 +23,7 @@ const NewsLayout = styled.div`
   margin-bottom: var(--space-4xLarge);
 `
 
-const Header = styled.div`
-  background: var(--slate-blue-95);
+const Header = styled(BackgroundContainer)`
   padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium);
 `
 
@@ -224,9 +223,9 @@ const NewsPage = ({ data: news }: ArticleProps) => {
       <main>
         <article>
           <NewsLayout>
-            <Header>
+            <Header background={'Slate Blue 95'}>
               <HeaderInner>
-                <StyledHeading level="h1" size="3xl" inverted>
+                <StyledHeading level="h1" size="3xl">
                   {title}
                 </StyledHeading>
                 {publishDateTime && (

@@ -6,11 +6,7 @@ const StyledTypography = styled(Typography)`
   font-size: var(--typeScale-2);
   line-height: var(--lineHeight-3);
   margin-bottom: calc(var(--space-medium) * -1);
-
-  /* If the text is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 export type TeaserEyebrowProps = HTMLAttributes<HTMLDivElement>
 

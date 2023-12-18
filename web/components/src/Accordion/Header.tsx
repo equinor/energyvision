@@ -62,9 +62,8 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   @media (prefers-reduced-motion: no-preference) {
     transition: font-weight 0.1s ease-in-out;
   }
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+
+  color: var(--color-on-background);
 
   ${({ isExpanded }) =>
     isExpanded && {

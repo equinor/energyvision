@@ -22,9 +22,8 @@ const AuthorWrapper = styled(Typography)`
   display: inline-flex;
   flex-direction: column;
   margin-right: auto;
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+
+  color: var(--color-on-background);
 
   @media (min-width: 800px) {
     margin-left: auto;
@@ -32,9 +31,7 @@ const AuthorWrapper = styled(Typography)`
 `
 
 const TextWrapper = styled.span`
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 
 export const Author = forwardRef<HTMLDivElement, AuthorProps>(function Author(

@@ -29,7 +29,7 @@ export default {
   },
 } as Meta
 
-export const Default: StoryFn<TextProps> = (args) => (
+export const Default: StoryFn<TextProps> = (args: any) => (
   <Text {...args}>
     Dogger Bank Wind Farm and GE Renewable Energy have today, 22 September, announced contracts confirming the 13MW
     Haliade-X turbine for the Dogger Bank A and Dogger Bank B phases of the world’s largest offshore wind farm.
@@ -77,11 +77,11 @@ MultipleParagraphs.parameters = {
 
 export const InvertedText: StoryFn<TextProps> = () => (
   <DarkBackground>
-    <Text inverted>
+    <Text>
       This text has its color inverted by manually setting the inverted prop to true. Perfect for use on darker
       backgrounds.
     </Text>
-    <Text inverted>Note that this is handled automatically when using a BackgroundContainer.</Text>
+    <Text>Note that this is handled automatically when using a BackgroundContainer.</Text>
   </DarkBackground>
 )
 

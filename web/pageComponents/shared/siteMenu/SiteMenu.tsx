@@ -69,7 +69,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
       <MenuButton title={title} aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
       <FocusLock disabled={!isOpen} returnFocus>
         <RemoveScroll enabled={isOpen}>
-          <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
+          <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight} background={'White'}>
             {isOpen && (
               <nav>
                 <NavTopbar>
@@ -82,9 +82,9 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                       return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                     })}
                   </Menu>
-                    <AllSitesLink href={allSitesURL}>
-                      <FormattedMessage id="all_sites" defaultMessage="All sites" />
-                    </AllSitesLink>
+                  <AllSitesLink href={allSitesURL}>
+                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                  </AllSitesLink>
                 </MenuContainer>
               </nav>
             )}

@@ -96,6 +96,8 @@ export const colors = css`
     --bg-mid-orange: var(--mid-orange);
     --bg-mid-green: var(--mid-green);
     --bg-mid-blue: var(--mid-blue);
+
+    --bg-slate-blue-95: var(--slate-blue-95); // required for search
   }
 `
 export const typography = css`
