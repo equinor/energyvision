@@ -261,6 +261,7 @@ export type DesignOptions = {
   background?: BackgroundColours
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
+  aspectRatio?: FigureRatio
 }
 
 export type TextBlockData = {
@@ -345,6 +346,8 @@ export type FullWidthVideoData = {
 }
 
 export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
+
+export type FigureRatio = 'original' | '9:16'
 
 export type FigureData = {
   type: string

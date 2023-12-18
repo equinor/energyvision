@@ -41,14 +41,14 @@ const Image = ({
     // Layout fill
     props = {
       fill,
-      style: { ...style, objectFit: 'cover' },
+      style: { objectFit: 'cover' },
     }
   } else {
     // Layout responsive
     props = {
       width,
       height,
-      style: { ...style, display: 'flex', width: '100%', height: 'auto' },
+      style: { display: 'flex', width: '100%', height: 'auto' },
     }
   }
 
