@@ -94,24 +94,24 @@ jobs:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           ref: '${{ steps.get-long-sha.outputs.sha }}'
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: yarn
-          cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
           version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          pnpm studio yarn
+          pnpm sanityv3 install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./studio
+        working-directory: ./sanityv3
         run: |
           pnpm run deploy
         env:
@@ -163,24 +163,24 @@ jobs:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           ref: '${{ steps.get-long-sha.outputs.sha }}'
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: yarn
-          cache-dependency-path: 'studio/yarn.lock'
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
           version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          pnpm studio yarn
+          pnpm sanityv3 install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./studio
+        working-directory: ./sanityv3
         run: |
           pnpm run deploy
         env:
