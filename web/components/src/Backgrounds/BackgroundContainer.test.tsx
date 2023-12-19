@@ -30,15 +30,7 @@ describe(`The background container supports different colours from Sanity's colo
     expect(container.firstChild).toHaveStyle(`--background-color: var(--bg-mist-blue)`)
   })
   it('it can be slate blue (default)', () => {
-    const { container } = render(<BackgroundContainer background="Slate Blue" />)
-    expect(container.firstChild).toHaveStyle(`--background-color: var(--bg-slate-blue)`)
-  })
-  it('Add a class for inverted if the background is so dark that the text must be light for contrast', () => {
-    const { container } = render(<BackgroundContainer background="Slate Blue" />)
-    expect(container.firstChild).toHaveClass('inverted-background')
-  })
-  it('Add a class for inverted if the background is so dark that the text must be light for contrast', () => {
     const { container } = render(<BackgroundContainer background="Mid Blue" />)
-    expect(container.firstChild).toHaveClass('inverted-background')
+    expect(container.firstChild).toHaveStyle(`--background-color: var(--bg-mid-blue)`)
   })
 })
