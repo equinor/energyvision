@@ -42,13 +42,7 @@ const FullWidthImage = ({ data, anchor }: TeaserProps) => {
         <Image
           image={image}
           maxWidth={920}
-          sizes="(max-width: 360px) 313px,
-            (max-width: 600px) 415px,
-            (max-width: 950px) 550px,
-            (max-width: 1250px) 655px,
-            (max-width: 1450px) 730px,
-            (max-width: 1700px) 825px,
-            920px"
+          sizes="(min-width: 2060px) 920px, (min-width: 440px) calc(34.56vw + 215px), calc(76.67vw + 38px)"
         />
         {(caption || attribution) && (
           <FigureCaption>

@@ -66,7 +66,7 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
               image={heroImage.image}
               maxWidth={400}
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
-              sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+              sizes="(min-width: 1780px) calc(-1.72vw + 401px), (min-width: 1340px) calc(17.86vw + 58px), 276px"
             />
           )}
         </Media>

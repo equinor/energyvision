@@ -51,7 +51,7 @@ const getThumbnail = (data: MagazineCardData) => {
       image={heroImage}
       maxWidth={700}
       aspectRatio={Ratios.NINE_TO_SIXTEEN}
-      sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+      sizes="(min-width: 1000px) 400px, (min-width: 440px) 335px, 82.5vw"
     />
   )
 }
