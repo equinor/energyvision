@@ -46,7 +46,7 @@ const ContentLink = styled(BaseLink)`
   }
   &:hover svg {
     background: var(--energy-red-50);
-    fill: var(--link-arrow-color-hover);
+    fill: var(--content-link-arrow-color-hover);
   }
 `
 

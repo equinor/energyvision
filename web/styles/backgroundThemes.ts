@@ -11,6 +11,7 @@ export const normalStyle = css`
   --content-link-color: var(--slate-blue-95);
   --link-arrow-color: var(--energy-red-100);
   --link-arrow-color-hover: var(--energy-red-100);
+  --content-link-arrow-color-hover: var(--energy-red-100);
   --quote-icon-color: var(--grey-90);
   --pagination-btn-text-color: var(--slate-blue-95);
   --pagination-btn-background-active: var(--moss-green-80);
@@ -28,6 +29,7 @@ export const invertedStyle = css`
   --content-link-color: var(--inverted-text);
   --link-arrow-color: var(--white-100);
   --link-arrow-color-hover: var(--white-100);
+  --content-link-arrow-color-hover: var(--energy-red-100);
   --quote-icon-color: var(--inverted-text);
   --pagination-btn-text-color: var(--moss-green-80);
   --pagination-btn-background-active: var(--moss-green-70);
