@@ -22,6 +22,10 @@ const StyledEnvisTeaser = styled(EnvisTeaser)`
   font-size: var(--typeScale-1);
 `
 
+const StyledEyeBrow = styled(Eyebrow)`
+  padding-bottom: var(--space-large);
+`
+
 const StyledTeaserTitle = styled(TitleText)`
   padding-bottom: var(--space-large);
 `
@@ -99,22 +103,24 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         <Content>
           {isBigText ? (
             text && (
-              <IngressText
-                value={text}
-                components={{
-                  block: {
-                    normal: ({ children }: { children: React.ReactNode }) => (
-                      <Text size="lg" lineHeight="2_5">
-                        {children}
-                      </Text>
-                    ),
-                  } as BlockType,
-                }}
-              />
+              <ContentWrapper>
+                <IngressText
+                  value={text}
+                  components={{
+                    block: {
+                      normal: ({ children }: { children: React.ReactNode }) => (
+                        <Text size="lg" lineHeight="2_5">
+                          {children}
+                        </Text>
+                      ),
+                    } as BlockType,
+                  }}
+                />
+              </ContentWrapper>
             )
           ) : (
             <ContentWrapper>
-              {overline && <Eyebrow>{overline}</Eyebrow>}
+              {overline && <StyledEyeBrow>{overline}</StyledEyeBrow>}
               {title && <StyledTeaserTitle value={title} />}
               {text && <IngressText value={text} />}
             </ContentWrapper>
