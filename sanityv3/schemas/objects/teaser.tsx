@@ -33,7 +33,7 @@ const blockConfig = {
   internalLink: false,
   externalLink: false,
   attachment: false,
-  lists: false,
+  lists: true,
 }
 
 const blockContentType = configureBlockContent({ ...blockConfig })
