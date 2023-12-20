@@ -1,4 +1,4 @@
-name: PROD - Rollback studio to a previous version
+name: Rollback studio to a previous version
 on:
   workflow_dispatch:
     inputs:
@@ -6,6 +6,14 @@ on:
         description: 'The commit sha of the image to rollback to'
         required: true
         type: string
+      environment:
+        description: 'Choose the environment to rollback'
+        type: choice
+        options:
+          - 'development'
+          - 'preprod'
+          - 'production'
+        required: true
 permissions:
   id-token: write
 jobs:
@@ -57,7 +65,7 @@ jobs:
   rollback-global:
     runs-on: ubuntu-latest
     needs: find-image
-    if: ${{ needs.find-image.outputs.imageExists }} == true
+    if: ${{ needs.find-image.outputs.imageExists }} == true && ${{ github.event.inputs.environment }} == "production"
     environment:
       name: production
       url: https://equinor.sanity.studio
@@ -125,7 +133,7 @@ jobs:
   rollback-secret:
     runs-on: ubuntu-latest
     needs: find-image
-    if: ${{ needs.find-image.outputs.imageExists }} == true
+    if: ${{ needs.find-image.outputs.imageExists }} == true && ${{ github.event.inputs.environment }} == "production"
     environment:
       name: production
     env:
@@ -195,7 +203,7 @@ jobs:
     needs: find-image
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: ${{ github.event.inputs.environment }}
     if: ${{ needs.find-image.outputs.imageExists }} == true
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -218,7 +226,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
           if [[ `git status --porcelain` ]]
           then
-            git commit -am "🔙 Rolling back satellite studios in production to version ${{ github.event.inputs.image-sha }}"
+            git commit -am "🔙 Rolling back satellite studios in ${{ github.event.inputs.environment }} to version ${{ github.event.inputs.image-sha }}"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -232,7 +240,7 @@ jobs:
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
-      name: production
+      name: ${{ github.event.inputs.environment }}
       url: https://equinor.com
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
