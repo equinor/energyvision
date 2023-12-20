@@ -17,6 +17,7 @@ export const normalStyle = css`
   --pagination-btn-background-active: var(--moss-green-80);
   --pagination-btn-text-color-active: var(--black-100);
   --pagination-btn-disabled: var(--grey-30);
+  --accordion-icon-color: var(--energy-red-100);
 `
 export const invertedStyle = css`
   --button-border-color: var(--white-100);
@@ -35,4 +36,5 @@ export const invertedStyle = css`
   --pagination-btn-background-active: var(--moss-green-70);
   --pagination-btn-text-color-active: var(--default-text);
   --pagination-btn-disabled: var(--slate-blue-90);
+  --accordion-icon-color: var(--white-100);
 `

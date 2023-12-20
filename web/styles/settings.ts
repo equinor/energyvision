@@ -87,11 +87,11 @@ export const colors = css`
 
     /* new colors */
     --bg-default: var(--white-100);
-    --bg-moss-green: var(--moss-green-70); // retaining old color for backward compatability
+    --bg-moss-green: var(--mid-green); // replace old color
     --bg-moss-green-light: var(--moss-green-50);
     --bg-spruce-wood: var(--spruce-wood-90);
     --bg-mist-blue: var(--mist-blue-100);
-    --bg-slate-blue: var(--slate-blue-100); // retaining old color for backward compatability
+    --bg-slate-blue: var(--slate-blue-100); // replace old color
     --bg-mid-yellow: var(--mid-yellow);
     --bg-mid-orange: var(--mid-orange);
     --bg-mid-green: var(--mid-green);

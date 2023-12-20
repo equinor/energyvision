@@ -37,7 +37,7 @@ const StyledIcon = styled.span`
   flex: 0 0 var(--space-xLarge);
   line-height: 16px;
   & ${FilledIcon}, & ${OutlineIcon} {
-    fill: var(--energy-red-100);
+    fill: var(--accordion-icon-color);
   }
 `
 const StyledHeader = styled(Typography)`

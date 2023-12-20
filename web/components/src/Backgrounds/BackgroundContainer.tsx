@@ -6,27 +6,20 @@ import { normalStyle, invertedStyle } from '../../../styles/backgroundThemes'
 
 export type BackgroundContainerProps = {
   background?: BackgroundColours
-  disableContainerWrapper?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 type ColourContainerProps = {
   isInverted: boolean
-  colourWrapper: string
-}
+} & HTMLAttributes<HTMLDivElement>
 
-const ColourContainer = styled.div.attrs<ColourContainerProps>(
-  ({ colourWrapper }) =>
-    colourWrapper && {
-      className: colourWrapper,
-    },
-)<ColourContainerProps>`
+const ColourContainer = styled.div<ColourContainerProps>`
   background-color: var(--background-color);
   color: var(--color-on-background) !important;
   ${({ isInverted }) => (isInverted ? invertedStyle : normalStyle)}
 `
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background = 'White', disableContainerWrapper = false, style, children, ...rest },
+  { background = 'White', style, children, className, ...rest },
   ref,
 ) {
   // @TODO: Find a better way with task #334
@@ -36,9 +29,8 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
 
   return (
     <ColourContainer
-      className={`background${styleVariant}`}
+      className={className + ` background${styleVariant}`}
       isInverted={isInverted}
-      colourWrapper={disableContainerWrapper ? '' : `background${styleVariant}`}
       style={
         {
           ...style,
