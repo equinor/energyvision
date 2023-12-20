@@ -6,7 +6,7 @@
   },
   "type": "module",
   "scripts": {
-    "setup-project": "pnpm m i && pnpm sanityv3 install",
+    "setup-project": "pnpm m i",
     "lint:notworking": "eslint ./ --ext .js,.jsx,.ts,.tsx",
     "lint:components": "eslint ./web/components/ --ext .js,.jsx,.ts,.tsx",
     "lint:web": "eslint ./web/ --ext .js,.jsx,.ts,.tsx",
