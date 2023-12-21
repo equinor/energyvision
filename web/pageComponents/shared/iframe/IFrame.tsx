@@ -73,13 +73,11 @@ const IFrame = ({
           ></StyledIFrame>
         </IFrameContainer>
       </div>
-      {
-        //cookiePolicy !== 'none' && (
+      {cookiePolicy !== 'none' && (
         <div className={`cookieconsent-optout-${cookiePolicy}`}>
           <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
         </div>
-        //)
-      }
+      )}
     </>
   )
 }
