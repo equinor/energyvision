@@ -1,33 +1,25 @@
-import { BackgroundColours, CaptionData } from '../../../types'
+import { CaptionData } from '../../../types'
 import styled from 'styled-components'
 import { Caption } from './Caption'
-import { getColorOnContainer, getContainerColor } from '@components'
+import { BackgroundContainer, BackgroundContainerProps } from '@components'
 
-type CaptionProps = CaptionData & { background?: BackgroundColours }
+type CaptionProps = CaptionData & BackgroundContainerProps
 
-const CaptionWithPadding = styled(Caption)<{ $bgColor?: BackgroundColours }>`
+const CaptionWithPadding = styled(Caption)`
   max-width: var(--maxViewportWidth);
-  padding: 0 var(--layout-paddingHorizontal-small);
+  padding: 0 var(--layout-paddingHorizontal-small) var(--space-xLarge) var(--layout-paddingHorizontal-small);
   margin-left: auto;
   margin-right: auto;
-  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
 `
-const CaptionWrapper = styled.div<{ background?: BackgroundColours }>`
+const CaptionWrapper = styled(BackgroundContainer)`
   display: inline-block;
   width: 100%;
-  ${({ background }) => {
-    // Captions's background color is defined by its following component
-    const bgColor = background && {
-      background: `var(${getContainerColor(background)})`,
-    }
-    return { ...bgColor }
-  }}
 `
 
 export const StyledCaption = ({ attribution, caption, background }: CaptionProps) => {
   return caption || attribution ? (
     <CaptionWrapper background={background}>
-      <CaptionWithPadding $bgColor={background} attribution={attribution} caption={caption} />
+      <CaptionWithPadding attribution={attribution} caption={caption} />
     </CaptionWrapper>
   ) : (
     <></>

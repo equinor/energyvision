@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
-import { BreadcrumbsList, getColorOnContainer, getContainerColor, isInvertedColor } from '@components'
+import { BackgroundContainer, BackgroundContainerProps, BreadcrumbsList } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import type { NextRouter } from 'next/router'
@@ -11,40 +11,27 @@ const { BreadcrumbsListItem } = BreadcrumbsList
 
 type ContainerStyles = {
   hasTopMargin?: boolean
-  backgroundColor: BackgroundColours
 }
 
-const Container = styled.div<{ $containerStyles?: ContainerStyles }>`
-  padding: 0 var(--layout-paddingHorizontal-large);
+const Container = styled(BackgroundContainer)<{ $containerStyles?: ContainerStyles }>`
   max-width: var(--maxViewportWidth);
   margin-left: auto;
   margin-right: auto;
-
-  ${({ $containerStyles }) => {
-    const hasTopMargin = $containerStyles?.hasTopMargin && {
-      paddingTop: 'var(--space-xLarge)',
-    }
-    // BreadCrumbs's background color is defined by its following component
-    const bgColor = $containerStyles?.backgroundColor && {
-      background: `var(${getContainerColor($containerStyles.backgroundColor)})`,
-    }
-    return { ...hasTopMargin, ...bgColor }
-  }}
+  color: var(--color-on-background);
 `
-
-const StyledBreadcrumbsList = styled(BreadcrumbsList)<{ $bgColor?: BackgroundColours }>`
-  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
+const StyledBreadcrumbList = styled(BreadcrumbsList)`
+  padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
 `
 
 const StyledBreadcrumbsListItem = styled(BreadcrumbsListItem)<{ $bgColor?: BackgroundColours }>`
   &:last-child {
-    color: ${({ $bgColor }) => (isInvertedColor($bgColor) ? 'var(--grey-30)' : 'var(--slate-blue-90)')};
+    color: var(--breadcrumbs-inactive-color);
   }
 `
 
 const StyledNextLink = styled(NextLink)<{ $bgColor?: BackgroundColours }>`
   text-decoration: none;
-  color: var(${({ $bgColor }) => getColorOnContainer($bgColor)});
+  color: var(--color-on-background);
 `
 
 type BreadcrumbsProps = {
@@ -53,7 +40,7 @@ type BreadcrumbsProps = {
   defaultBreadcrumbs: Breadcrumb[]
   customBreadcrumbs: Breadcrumb[]
   containerStyles: ContainerStyles
-}
+} & BackgroundContainerProps
 
 const buildJsonLdElements = (crumbs: Breadcrumb[], router: NextRouter) => {
   const { pathname, locale } = router
@@ -87,6 +74,7 @@ export const Breadcrumbs = ({
   defaultBreadcrumbs,
   customBreadcrumbs,
   containerStyles,
+  background,
 }: BreadcrumbsProps) => {
   const router = useRouter()
 
@@ -98,26 +86,19 @@ export const Breadcrumbs = ({
   if (crumbs.length < 2) return null
 
   return (
-    <Container $containerStyles={containerStyles}>
-      <StyledBreadcrumbsList $bgColor={containerStyles.backgroundColor}>
+    <Container $containerStyles={containerStyles} background={background}>
+      <StyledBreadcrumbList>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
-            return (
-              <StyledBreadcrumbsListItem $bgColor={containerStyles.backgroundColor} key={item.slug}>
-                {item.label}
-              </StyledBreadcrumbsListItem>
-            )
+            return <StyledBreadcrumbsListItem key={item.slug}>{item.label}</StyledBreadcrumbsListItem>
           }
-
           return (
             <BreadcrumbsListItem key={item.slug}>
-              <StyledNextLink href={item.slug} $bgColor={containerStyles.backgroundColor}>
-                {item.label}
-              </StyledNextLink>
+              <StyledNextLink href={item.slug}>{item.label}</StyledNextLink>
             </BreadcrumbsListItem>
           )
         })}
-      </StyledBreadcrumbsList>
+      </StyledBreadcrumbList>
       <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
     </Container>
   )

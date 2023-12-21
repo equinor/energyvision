@@ -2,7 +2,7 @@ import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
 import { getColorOnContainer, getContainerColor, isInvertedStyle } from '../../utils/backgroundColours'
 import type { BackgroundColours } from '../../../types/types'
-import { normalStyle, invertedStyle } from '../../../styles/backgroundThemes'
+import { normal, inverted } from '../../../styles/themes'
 
 export type BackgroundContainerProps = {
   background?: BackgroundColours
@@ -14,8 +14,8 @@ type ColourContainerProps = {
 
 const ColourContainer = styled.div<ColourContainerProps>`
   background-color: var(--background-color);
-  color: var(--color-on-background) !important;
-  ${({ isInverted }) => (isInverted ? invertedStyle : normalStyle)}
+  color: var(--color-on-background);
+  ${({ isInverted }) => (isInverted ? inverted : normal)}
 `
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(

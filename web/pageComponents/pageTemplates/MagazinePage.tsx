@@ -71,7 +71,9 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
       <MagazinePageLayout>
         <SharedBanner title={data?.title} hero={data?.hero} hideImageCaption={true} />
         {tags && <MagazineTagBar tags={tags} defaultActive={false} href={parentSlug} onClick={handleClickTag} />}
-        {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} styles={titleStyles} />}
+        {data.hero.type !== HeroTypes.DEFAULT && (
+          <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
+        )}
         <PageContent data={data} />
         {!hideFooterComponent && footerComponent?.data && <Teaser data={footerComponent.data} />}
       </MagazinePageLayout>

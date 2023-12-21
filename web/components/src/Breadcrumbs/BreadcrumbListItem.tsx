@@ -10,6 +10,7 @@ const StyledListItem = styled(EdsItem)`
   display: inline-block;
   padding-right: var(--space-small);
   font-weight: var(--fontWeight-bold);
+  color: var(--color-on-background);
 
   &:after {
     content: '>';
@@ -17,7 +18,6 @@ const StyledListItem = styled(EdsItem)`
   }
 
   &:last-child {
-    color: var(--slate-blue-90);
     font-weight: var(--fontWeight-medium);
 
     &:after {

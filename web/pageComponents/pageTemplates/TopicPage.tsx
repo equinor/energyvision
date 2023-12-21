@@ -24,6 +24,8 @@ const TopicPageLayout = styled.main`
     Would be more robust if we add a container for the padding :/ */
     > section,
     > figure,
+    > ol,
+    > h1,
     > div:first-child {
       /*  padding-top: calc(var(--space-3xLarge) / 2); */
       padding-top: 0;
@@ -46,21 +48,23 @@ const TopicPage = ({ data }: TopicPageProps) => {
         pageTitle={data?.title}
       />
       <TopicPageLayout>
-        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.backgroundColor} />
+        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background} />
         {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
+            background={titleStyles.background}
             slug={data?.slug}
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
             containerStyles={{
               hasTopMargin: data.hero.type !== 'default',
-              backgroundColor: titleStyles.backgroundColor,
             }}
           />
         )}
 
-        {data.hero.type !== HeroTypes.DEFAULT && <SharedTitle title={data.title} styles={titleStyles} />}
+        {data.hero.type !== HeroTypes.DEFAULT && (
+          <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
+        )}
         <PageContent data={data} />
       </TopicPageLayout>
     </>
