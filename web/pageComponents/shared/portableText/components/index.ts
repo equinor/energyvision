@@ -9,6 +9,7 @@ export * from './BulletList'
 export * from './NumberedList'
 export * from './BasicIframe'
 export * from './Highlight'
+export * from './HighlightWithColor'
 
 export * from './news/Fact'
 export * from './news/FigureWithLayout'

@@ -309,6 +309,18 @@ export type TeaserData = {
   designOptions: DesignOptions
 }
 
+export type TextTeaserData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  text: PortableTextBlock[]
+  action?: LinkData
+  designOptions: {
+    background: BackgroundColours | undefined
+    titlePosition?: 'left' | 'right' | undefined
+  }
+}
+
 export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]

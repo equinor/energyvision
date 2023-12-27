@@ -70,6 +70,7 @@ import simpleMenuLink from './objects/simpleMenuLink'
 import stockValuesApi from './objects/stockValuesApi'
 import table from './objects/table'
 import teaser from './objects/teaser'
+import textTeaser from './objects/textTeaser'
 import textBlock from './objects/textBlock'
 import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
@@ -121,6 +122,7 @@ const RemainingSchemas = [
   downloadableFile,
   downloadableImage,
   teaser,
+  textTeaser,
   textBlock,
   accordion,
   accordionItem,
