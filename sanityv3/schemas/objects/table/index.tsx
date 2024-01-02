@@ -1,11 +1,11 @@
-import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import blocksToText from '../../../helpers/blocksToText'
+import { defaultColors } from '../../components/ColorSelector'
+import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 
 import { PortableTextBlock, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { EdsIcon } from '../../icons'
+import type { ColorSelectorValue } from '../../components/ColorSelector'
+import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'
 
 export type Table = {
@@ -36,7 +36,8 @@ const headerCellContentType = configureBlockContent({
   lists: false,
   smallText: false,
 })
-/* const tableCellContentType = configureBlockContent({
+
+const tableCellContentType = configureBlockContent({
   h1: false,
   h2: false,
   h3: false,
@@ -44,8 +45,8 @@ const headerCellContentType = configureBlockContent({
   lists: false,
   attachment: true,
 })
- */
-const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
+
+const chosenColors = ['White', 'Mid Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
 const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {
   title: 'Table',
@@ -119,6 +120,11 @@ export default {
                   fields: [{ type: 'string', name: 'text', title: 'Text' }],
                 },
                 {
+                  title: 'RichText',
+                  name: 'richText',
+                  type: 'richText',
+                },
+                {
                   type: 'object',
                   title: 'Date Field',
                   name: 'dateField',
@@ -134,7 +140,6 @@ export default {
                     },
                   ],
                 },
-
                 {
                   type: 'object',
                   title: 'Number Field',
