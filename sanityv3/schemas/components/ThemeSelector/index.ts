@@ -1,2 +1,2 @@
-export * from './ColorSelector'
+export * from './ThemeSelector'
 export * from './defaultColors'

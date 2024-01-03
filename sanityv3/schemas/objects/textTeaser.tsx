@@ -10,10 +10,10 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { LinkSelector } from './linkSelector'
-import type { ColorSelectorValue } from '../components/ColorSelector'
+import { ThemeSelectorValue } from '../components/ThemeSelector'
 
 const titleContentType = configureTitleBlockContent({
-  highlightWithColor: true,
+  highlight: true,
   styles: [
     {
       title: 'Normal',
@@ -46,7 +46,7 @@ export type TextTeaser = {
   text?: PortableTextBlock[]
   action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   titlePosition?: string
-  background?: ColorSelectorValue
+  theme?: ThemeSelectorValue
 }
 
 export default {
@@ -119,10 +119,10 @@ export default {
       },
     },
     {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
+      title: 'Theme',
+      description: 'Pick a colour combination for the background and title highlight. Default is white.',
+      name: 'theme',
+      type: 'themeList',
       fieldset: 'design',
     },
   ],

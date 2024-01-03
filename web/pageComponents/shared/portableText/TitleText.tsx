@@ -1,7 +1,7 @@
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import { Heading, HeadingProps } from '@components'
 import isEmpty from './helpers/isEmpty'
-import { Sub, Sup, Strikethrough, Highlight, HighlightWithColor } from './components'
+import { Sub, Sup, Strikethrough, Highlight } from './components'
 
 import type { PortableTextBlock } from '@portabletext/types'
 
@@ -28,7 +28,7 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
         </Heading>
       ),
     },
-    marks: { sub: Sub, sup: Sup, s: Strikethrough, highlight: Highlight, highlightWithColor: HighlightWithColor },
+    marks: { sub: Sub, sup: Sup, s: Strikethrough, highlight: Highlight },
   }
 }
 

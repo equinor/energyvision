@@ -5,19 +5,13 @@ import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
 import type { Reference, Rule, ValidationContext } from 'sanity'
 import React, { Children } from 'react'
-import { ColorSelectorValue, isValidTextColor } from '../components/ColorSelector'
+import { ColorSelectorValue } from '../components/ColorSelector'
 
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]
   highlight?: boolean
-  highlightWithColor?: boolean
 }
 
-type HighLighWithColor = {
-  _key: string
-  _type: ''
-  color: ColorSelectorValue
-}
 // TODO: Add relevant styles for titles (i.e. highlighted text)
 export const configureTitleBlockContent = (
   options: TitleContentProps = {
@@ -29,7 +23,7 @@ export const configureTitleBlockContent = (
     ],
   },
 ): BlockDefinition => {
-  const { highlight = false, highlightWithColor = false, styles } = options
+  const { highlight = false, styles } = options
 
   const config: BlockDefinition = {
     type: 'block',
@@ -72,43 +66,8 @@ export const configureTitleBlockContent = (
     },
   }
 
-  const textColorConfigWithColorOptions = {
-    title: 'Highlight Color',
-    type: 'object',
-    name: 'highlightWithColor',
-    icon: EdsBlockEditorIcon(format_color_text),
-    components: {
-      annotation: TextHighLightRenderer,
-    },
-    fields: [
-      {
-        name: 'color',
-        title: 'Text Highlight Color',
-        type: 'colorlist',
-        options: {
-          textColor: true,
-        },
-        validation: (Rule: Rule) =>
-          Rule.custom((value: ColorSelectorValue, context: ValidationContext) => {
-            const { parent, document } = context as { parent: any; document: any }
-            const component = document.content.find((it: any) =>
-              it.title.find((child: any) => child.markDefs.find((i: any) => i._key == parent._key)),
-            )
-            console.log(parent)
-            return (
-              isValidTextColor(value.title, component.background.title) ||
-              `${value.title} text on ${component.background.title} background does not go well.`
-            )
-          }).error(),
-      },
-    ],
-  }
-
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig)
-  }
-  if (highlightWithColor) {
-    config.marks?.annotations?.push(textColorConfigWithColorOptions)
   }
 
   return config

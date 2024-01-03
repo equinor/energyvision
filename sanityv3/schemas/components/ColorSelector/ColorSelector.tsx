@@ -4,7 +4,6 @@ import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
 import { defaultColors } from './defaultColors'
-import { textColors } from './textColors'
 
 const Circle = styled.div<{ active: boolean }>`
   display: inline-block;
@@ -57,7 +56,7 @@ type ColorSelectorProps = ObjectInputProps
 
 export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProps) => {
   const { options } = schemaType
-  const colors = options?.textColor ? textColors : (options?.colors as ColorSelectorValue[]) || defaultColors
+  const colors = (options?.colors as ColorSelectorValue[]) || defaultColors
 
   const handleSelect = useCallback(
     (selected: ColorSelectorValue) => {

@@ -45,7 +45,7 @@ const pageContentFields = /* groq */ `
     title,
     "text": text[]{..., ${markDefs}},
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      "theme": coalesce(theme.value, 0),
       "titlePosition": coalesce(titlePosition, 'left'),
     },
     "action": action[0]{

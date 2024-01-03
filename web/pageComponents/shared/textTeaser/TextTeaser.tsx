@@ -1,11 +1,13 @@
 import { Teaser as EnvisTeaser, Link, BackgroundContainer } from '@components'
 import styled from 'styled-components'
-import IngressText from './portableText/IngressText'
-import TitleText from './portableText/TitleText'
-import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
+import IngressText from '../portableText/IngressText'
+import TitleText from '../portableText/TitleText'
+import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 
-import type { TextTeaserData, LinkData } from '../../types/types'
-import { getLocaleFromName } from '../../lib/localization'
+import type { TextTeaserData, LinkData } from '../../../types/types'
+import { getLocaleFromName } from '../../../lib/localization'
+import { getColorForTheme } from './theme'
+import { CSSProperties } from 'react'
 
 const { Content } = EnvisTeaser
 
@@ -16,6 +18,9 @@ type TextTeaserProps = {
   anchor?: string
 }
 
+const IngressWrapper = styled.div`
+  padding-bottom: var(--space-large);
+`
 const StyledTeaserTitle = styled(TitleText)`
   padding-bottom: var(--space-large);
 `
@@ -37,7 +42,7 @@ export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
 const StyledLink = styled(Link)`
-  font-size: var(--typeScale-2);
+  font-size: var(--typeScale-1);
 `
 const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
   --max-content-width: 1440px;
@@ -87,20 +92,27 @@ const TeaserAction = ({ action }: { action: LinkData }) => {
 
 const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
-  const { background, titlePosition } = designOptions
+  const { theme, titlePosition } = designOptions
+  const { background, highlight } = getColorForTheme(theme)
 
   if ([title, text, action].every((i) => !i)) {
     return null
   }
 
+  const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
+
   return (
-    <BackgroundContainer background={background} id={anchor}>
+    <BackgroundContainer style={style} background={background} id={anchor}>
       <TeaserWrapper titlePosition={titlePosition}>
         <TitleWrapper>
           <StyledTeaserTitle value={title} size={'2xl'} />
         </TitleWrapper>
         <StyledContent>
-          {text && <IngressText value={text} />}
+          {text && (
+            <IngressWrapper>
+              <IngressText value={text} />
+            </IngressWrapper>
+          )}
           {action && <TeaserAction action={action} />}
         </StyledContent>
       </TeaserWrapper>

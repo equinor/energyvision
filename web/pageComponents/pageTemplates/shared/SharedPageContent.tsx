@@ -19,7 +19,7 @@ import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
 import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
-import TextTeaser from '../../shared/TextTeaser'
+import TextTeaser from '../../shared/textTeaser/TextTeaser'
 import {
   AnchorLinkData,
   TopicPageSchema,

@@ -316,7 +316,7 @@ export type TextTeaserData = {
   text: PortableTextBlock[]
   action?: LinkData
   designOptions: {
-    background: BackgroundColours | undefined
+    theme: number
     titlePosition?: 'left' | 'right' | undefined
   }
 }
