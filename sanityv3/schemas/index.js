@@ -56,7 +56,9 @@ import menuLink from './objects/menuLink'
 import newsList from './objects/newsList'
 import positionedInlineImage from './objects/positionedInlineImage'
 import promoTile from './objects/promoTile'
+import promoCards from './objects/promoCards'
 import promoTileArray from './objects/promoTileArray'
+import promoCardsArray from './objects/promoCardsArray'
 import promoteEvents from './objects/promotion/promoteEvents'
 import promoteMagazine from './objects/promotion/promoteMagazine'
 import promoteNews from './objects/promotion/promoteNews'
@@ -131,7 +133,9 @@ const RemainingSchemas = [
   textWithIconArray,
   linkSelector,
   promoTile,
+  promoCards,
   promoTileArray,
+  promoCardsArray,
   stockValuesApi,
   iframe,
   basicIframe,

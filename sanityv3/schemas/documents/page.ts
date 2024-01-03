@@ -59,6 +59,7 @@ export default {
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
+        { type: 'promoCardsArray' },
         { type: 'promotion' },
         { type: 'table' },
         { type: 'stockValuesApi' },

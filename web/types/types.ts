@@ -32,7 +32,7 @@ export type LinkType =
 export type LinkData = {
   type?: LinkType
   id?: string
-  label: string
+  label?: string
   ariaLabel?: string
   link?: { slug: string; type: string; lang: string }
   href?: string
@@ -404,11 +404,27 @@ export type PromoTileData = {
   linkLabelAsTitle?: boolean
 }
 
+export type PromoCardsData = {
+  id: string
+  ingress: PortableTextBlock[]
+  action: LinkData
+  designOptions: DesignOptions
+  isLink: boolean
+}
+
 export type PromoTileArrayData = {
   type: string
   id: string
   group: PromoTileData[]
   useHorizontalScroll: boolean
+}
+
+export type PromoCardsArrayData = {
+  type: string
+  id: string
+  group: PromoCardsData[]
+  useHorizontalScroll: boolean
+  spacing?: boolean
 }
 
 export type MenuLinkData = {

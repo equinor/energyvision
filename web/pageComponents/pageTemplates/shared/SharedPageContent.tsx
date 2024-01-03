@@ -7,6 +7,7 @@ import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
 import AccordionBlock from '../../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../../topicPages/PromoTileArray'
+import PromoCards from '../../topicPages/PromoCards'
 import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
 import Form from '../../topicPages/Form/Form'
@@ -33,6 +34,7 @@ import {
   QuoteData,
   AccordionData,
   PromoTileArrayData,
+  PromoCardsArrayData,
   IFrameData,
   PromotionData,
   FormData,
@@ -58,6 +60,7 @@ type ComponentProps =
   | QuoteData
   | AccordionData
   | PromoTileArrayData
+  | PromoCardsArrayData
   | IFrameData
   | PromotionData
   | FormData
@@ -97,6 +100,8 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <AccordionBlock key={c.id} data={c as AccordionData} anchor={anchorReference} />
       case 'promoTileArray':
         return <PromoTileArray key={c.id} data={c as PromoTileArrayData} anchor={anchorReference} />
+      case 'promoCardsArray':
+        return <PromoCards key={c.id} data={c as PromoCardsArrayData} anchor={anchorReference} />
       case 'iframe':
         return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} />
       case 'promotion':
