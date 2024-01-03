@@ -50,10 +50,6 @@ export const Hits = forwardRef<HTMLDivElement>(({ ...rest }, ref) => {
           tags: hit.magazineTags,
           heroImage: hit.heroImage,
           heroType: hit.heroType,
-          hero: {
-            figure: hit.heroImage,
-            type: hit.heroType,
-          },
         }
         return <StyledMagazineCard key={hit.objectID} data={data as MagazineCardData} />
       })}

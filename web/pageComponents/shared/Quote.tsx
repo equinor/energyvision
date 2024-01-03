@@ -11,15 +11,10 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
     {image?.asset && (
       <PullQuote.Media>
         <Image
-          maxWidth={220}
+          maxWidth={242}
           aspectRatio={Ratios.ONE_TO_ONE}
           image={image}
-          sizes="
-              (max-width: 340px) 80px,
-              (max-width: 600px) 86px,
-              (max-width: 1440px) 164px,
-              220px
-              "
+          sizes="(min-width: 2280px) 242px, (min-width: 800px) calc(3.29vw + 168px), calc(1.67vw + 75px)"
         />
       </PullQuote.Media>
     )}
