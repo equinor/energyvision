@@ -53,7 +53,7 @@ export type TextProps = {
 /* Should be easy enough to change later on */
 const sizes = {
   lg: 'var(--typeScale-4_5)',
-  ml: 'var(--typeScale-3)',
+  ml: 'var(--typeScale-4)',
   regular: 'var(--typeScale-1)',
   md: 'var(--typeScale-2)',
   small: 'var(--typeScale-0)',

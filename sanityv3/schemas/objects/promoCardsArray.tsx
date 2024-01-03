@@ -1,7 +1,8 @@
-import { collection_2 } from '@equinor/eds-icons'
+import { collection_1, collection_2 } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { Rule } from 'sanity'
 import type { PromoCardsType } from './promoCards'
+import blocksToText from '../../helpers/blocksToText'
 
 export type PromoCardsArray = {
   _type: 'promoCardsArrayType'
@@ -31,12 +32,16 @@ export default {
   preview: {
     select: {
       group: 'group',
+      spacing: 'spacing',
     },
-    prepare() {
+    prepare({ group, spacing }: { group: PromoCardsType[]; spacing: boolean }) {
+      const length = group.length
+      const ingresses = group.map((e) => blocksToText(e.ingress)?.slice(0, length === 1 ? 40 : 20) + '...')
+      console.log(ingresses)
       return {
-        title: 'Promo cards title',
-        subtitle: `Promo cards component`,
-        media: EdsIcon(collection_2),
+        title: `Promo cards | ${ingresses.map((e) => e).join(' ')}`,
+        subtitle: `${length == 1 ? 'Single Card' : 'Double Cards'} | ${spacing ? 'Extra spacing' : 'No Extra spacing'}`,
+        media: EdsIcon(length === 1 ? collection_1 : collection_2),
       }
     },
   },

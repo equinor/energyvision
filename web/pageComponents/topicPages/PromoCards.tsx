@@ -10,16 +10,17 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward } from '@equinor/eds-icons'
 
 const Wrapper = styled.div<{ $extraSpacing: boolean }>`
-  padding: ${(props) => (props.$extraSpacing ? 'var(--space-3xLarge)' : 'var(--space-medium)')}
-    var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
+  padding: ${(props) => (props.$extraSpacing ? 'var(--space-3xLarge)' : 'var(--promo-cards-gap)')}
+    var(--layout-paddingHorizontal-small);
+  max-width: 1600;
   margin: auto;
-  gap: var(--space-medium);
+  gap: var(--promo-cards-gap);
   display: flex;
   flex-direction: column;
 
   @media (min-width: 1000px) {
     flex-direction: row;
+    justify-content: center;
   }
 `
 
@@ -27,13 +28,15 @@ const Card = styled(BackgroundContainer)<{ $isSingleCard: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 330px;
-  padding: var(--space-medium);
+  min-height: 450px;
+  max-width: calc(1000px + var(--promo-cards-gap));
+  padding: var(--space-xxLarge);
   gap: var(--space-large);
-  justify-content: center;
+  justify-content: space-between;
+  box-shadow: var(--card-box-shadow);
 
   @media (min-width: 1000px) {
-    ${(props) => props.$isSingleCard && `a { justify-content: center; }`}
+    ${({ $isSingleCard }) => ($isSingleCard ? `a { justify-content: center; }` : 'max-width: 500px')};
   }
 `
 

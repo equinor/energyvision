@@ -1,5 +1,5 @@
 import { label } from '@equinor/eds-icons'
-import type { PortableTextBlock } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { EdsIcon } from '../../icons'
 import type { LinkSelector } from './linkSelector'
@@ -20,6 +20,7 @@ const ingressBlockContentType = configureBlockContent({
 
 export type PromoCardsType = {
   _type: 'promoCards'
+  ingress: PortableTextBlock[]
   linkLabelAsTitle?: boolean
   link?: LinkSelector
   isLink?: boolean
@@ -59,6 +60,7 @@ export default {
       title: 'Promo Text',
       type: 'array',
       of: [ingressBlockContentType],
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'isLink',

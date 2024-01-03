@@ -217,4 +217,9 @@ export const componentSettings = css`
   :root {
     --card-box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
   }
+
+  /* Promo Card */
+  :root {
+    --promo-cards-gap: var(--space-medium);
+  }
 `
