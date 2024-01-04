@@ -29,11 +29,6 @@ const InvertedButton = styled(Button)`
   }
 `
 
-const DarkTopbarDropdown = styled(TopbarDropdown)`
-  background-color: var(--slate-blue-95);
-  color: var(--inverted-text);
-`
-
 const SearchContainer = styled.div`
   padding: var(--space-large);
   max-width: 700px;
@@ -50,9 +45,9 @@ export default function SearchPage() {
     <>
       <NextSeo title={searchTitle}></NextSeo>
       <RemoveScroll enabled={true}>
-        <DarkTopbarDropdown isOpen={true}>
+        <TopbarDropdown isOpen={true} background={'Slate Blue 95'}>
           <NavTopbar>
-            <LogoLink inverted />
+            <LogoLink />
             <InvertedButton
               variant="ghost_icon"
               aria-expanded={true}
@@ -67,7 +62,7 @@ export default function SearchPage() {
           <SearchContainer>
             <Search />
           </SearchContainer>
-        </DarkTopbarDropdown>
+        </TopbarDropdown>
       </RemoveScroll>
     </>
   )

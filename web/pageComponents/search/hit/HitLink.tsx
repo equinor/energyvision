@@ -9,7 +9,6 @@ import { default as NextLink } from 'next/link'
 export const StyledHitLink = styled(NextLink)`
   padding: var(--space-medium) 0;
   display: block;
-  color: var(--inverted-text);
   cursor: pointer;
   outline: none;
   text-decoration: none;

@@ -29,9 +29,7 @@ const StyledTypography = styled(Typography)`
   padding-top: var(--space-2);
   text-align: left;
 
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 
 const FilterHeader = ({ label }: { label: string }) => {

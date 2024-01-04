@@ -1,21 +1,22 @@
 import { forwardRef, Children, isValidElement, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { Image } from './Image'
-import type { FactImagePosition, FactBackground } from './'
+import type { FactImagePosition } from './'
+import { getColorOnContainer, getContainerColor } from '@utils'
+import { BackgroundColours } from '../../../types/types'
 
-const backgroundVariants: { [name: string]: string } = {
-  none: 'var(--ui-background-default)',
-  cold: 'var(--ui-background-cold)',
-  warm: 'var(--ui-background-warm)',
+type FactBoxWrapperStyleProps = {
+  background?: BackgroundColours
 }
-
-const FactBoxWrapperStyle = styled.aside<{ background?: FactBackground }>`
+const FactBoxWrapperStyle = styled.aside<FactBoxWrapperStyleProps>`
   clear: both;
-
-  ${({ background }) =>
-    background && {
-      '--background': backgroundVariants[background],
-    }}
+  ${({ background }) => {
+    if (background)
+      return {
+        '--background': `var(${getContainerColor(background)})`,
+        color: `var(${getColorOnContainer(background)})`,
+      }
+  }}
 `
 
 const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePosition }>`
@@ -42,16 +43,15 @@ const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePos
 `
 
 export type FactProps = {
-  background?: FactBackground
+  background?: BackgroundColours
   imagePosition?: FactImagePosition
 } & HTMLAttributes<HTMLDivElement>
 
 export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox(
-  { background = 'none', imagePosition = 'left', children, ...rest },
+  { background = 'White', imagePosition = 'left', children, ...rest },
   ref,
 ) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Image)
-
   if (hasImage) {
     return (
       <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref} {...rest}>

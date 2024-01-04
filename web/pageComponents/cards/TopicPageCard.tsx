@@ -11,7 +11,7 @@ import type { CardData } from '../../types/types'
 const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 
 const StyledCard = styled(Card)`
-  height: var(--height);
+  --card-height: var(--height);
   --card-gap: var(--space-large);
 `
 

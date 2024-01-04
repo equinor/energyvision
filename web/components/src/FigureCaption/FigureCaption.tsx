@@ -6,11 +6,7 @@ import { style } from '@equinor/eds-icons'
 export const StyledFigCaption = styled(Typography)`
   font-size: var(--size);
   margin-top: var(--space-small);
-
-  /* If the text is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 
   @media (min-width: 800px) {
     max-width: 560px;

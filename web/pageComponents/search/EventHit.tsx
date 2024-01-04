@@ -12,13 +12,14 @@ const TextSnippet = styled.p`
   margin: 0;
   font-size: var(--typeScale-00);
   line-height: var(--lineHeight-3);
-  color: var(--inverted-text);
+  color: var(--color-on-background);
 `
 
 const StyledFormattedDate = styled(FormattedDate)`
   font-size: var(--typeScale-0);
   letter-spacing: 1px;
   display: block;
+  color: var(--color-on-background);
 `
 
 type EventResultHit = {
@@ -48,7 +49,7 @@ const EventHit = ({ hit }: HitProps) => {
     <article>
       <StyledHitLink href={slug}>
         {eventDate && <StyledFormattedDate datetime={eventDate} uppercase></StyledFormattedDate>}
-        <HitHeading level="h2" size="sm" inverted>
+        <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="title" />
         </HitHeading>
         <TextSnippet>

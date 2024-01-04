@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 type StyledHeadingProps = {
   center: boolean
-  inverted: boolean
 }
 
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
@@ -17,16 +16,7 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
     center && {
       textAlign: 'center',
     }}
-
-  ${({ inverted }) =>
-    inverted && {
-      color: 'var(--inverted-text)',
-    }}
-
-  /* If the heading is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 
 export type HeadingProps = {
@@ -34,7 +24,6 @@ export type HeadingProps = {
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
   center?: boolean
-  inverted?: boolean
   uppercase?: boolean
 } & HTMLAttributes<HTMLHeadingElement>
 
@@ -76,17 +65,7 @@ const fontWeights = {
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
-  {
-    size = 'lg',
-    level = 'h3',
-    regular = false,
-    center = false,
-    inverted = false,
-    uppercase = false,
-    style,
-    children,
-    ...rest
-  },
+  { size = 'lg', level = 'h3', regular = false, center = false, uppercase = false, style, children, ...rest },
   ref,
 ) {
   return (
@@ -94,7 +73,6 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
       variant={level}
       ref={ref}
       center={center}
-      inverted={inverted}
       style={
         {
           '--size': sizes[size],

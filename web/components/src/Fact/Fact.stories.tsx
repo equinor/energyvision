@@ -69,7 +69,7 @@ export const WithBulletPoints: StoryFn<FactProps> = (args) => (
 
 export const WithDifferentBackgrounds: StoryFn<FactProps> = () => (
   <>
-    <FactBox background="none">
+    <FactBox background="White">
       <FactBox.Content>
         <Heading size="xl" level="h3">
           Dolor sit amet
@@ -83,7 +83,7 @@ export const WithDifferentBackgrounds: StoryFn<FactProps> = () => (
         </FactBox.Text>
       </FactBox.Content>
     </FactBox>
-    <FactBox background="warm" style={{ marginTop: 'var(--space-medium)' }}>
+    <FactBox background="Spruce Wood" style={{ marginTop: 'var(--space-medium)' }}>
       <FactBox.Content>
         <Heading size="xl" level="h3">
           Dolor sit amet
@@ -97,7 +97,7 @@ export const WithDifferentBackgrounds: StoryFn<FactProps> = () => (
         </FactBox.Text>
       </FactBox.Content>
     </FactBox>
-    <FactBox background="cold" style={{ marginTop: 'var(--space-medium)' }}>
+    <FactBox background="Mist Blue" style={{ marginTop: 'var(--space-medium)' }}>
       <FactBox.Content>
         <Heading size="xl" level="h3">
           Dolor sit amet
@@ -119,7 +119,7 @@ type WithImageProps = {
 } & FactProps
 
 export const WithImage: StoryFn<WithImageProps> = ({
-  background = 'warm',
+  background = 'Mid Yellow',
   imagePosition = 'left',
   dynamicHeight = false,
 }) => (
@@ -173,7 +173,7 @@ WithImage.argTypes = {
   },
 }
 
-export const WithLongText: StoryFn<WithImageProps> = ({ background = 'warm', dynamicHeight = false }) => (
+export const WithLongText: StoryFn<WithImageProps> = ({ background = 'Mid Orange', dynamicHeight = false }) => (
   <>
     <FactBox background={background}>
       <FactBox.Content dynamicHeight={dynamicHeight}>
