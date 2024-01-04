@@ -90,14 +90,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
       <StyledHero background={background}>
         <StyledMedia>
           {figure && (
-            <Image
-              maxWidth={4096}
-              sizes="(max-width: 800px) 100vw, 800px"
-              image={figure.image}
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
+            <Image maxWidth={4096} sizes="(max-width: 800px) 100vw, 800px" image={figure.image} fill priority />
           )}
         </StyledMedia>
         <StyledContent>
