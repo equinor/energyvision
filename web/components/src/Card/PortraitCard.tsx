@@ -15,6 +15,8 @@ export const StyledPortraitCard = styled.div`
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));
   padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
+  overflow: hidden;
+  overflow-wrap: break-word;
 
   &:hover {
     cursor: inherit;
