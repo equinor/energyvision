@@ -32,6 +32,10 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{
     !hasImage && {
       padding: `${hasBgColor ? 'var(--space-3xLarge)' : '0'} var(--layout-paddingHorizontal-large)`,
     }}
+  ${({ hasColumns, hasBgColor }) =>
+    hasColumns && {
+      padding: `${hasBgColor ? 'var(--space-large)' : '0 var(--space-large)'}`,
+    }}
 `
 
 type BlockProps = {
