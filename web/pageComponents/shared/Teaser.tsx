@@ -1,14 +1,12 @@
-import { Teaser as EnvisTeaser, Link, Eyebrow, BackgroundContainer, Text } from '@components'
+import { Teaser as EnvisTeaser, Eyebrow, BackgroundContainer, Text } from '@components'
 import styled from 'styled-components'
 import IngressText from './portableText/IngressText'
 import TitleText from './portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import Image from './SanityImage'
-import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
-
-import type { TeaserData, ImageWithAlt, LinkData } from '../../types/types'
-import { getLocaleFromName } from '../../lib/localization'
+import type { TeaserData, ImageWithAlt } from '../../types/types'
+import ReadMoreLink from './ReadMoreLink'
 import { BlockType } from './portableText/helpers/defaultSerializers'
 
 const { Content, Media } = EnvisTeaser
@@ -57,30 +55,6 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   )
 }
 
-const TeaserAction = ({ action }: { action: LinkData }) => {
-  const { type, label, extension } = action
-  const url = getUrlFromAction(action)
-  if (!url) {
-    console.warn(`Missing URL on 'TeaserAction' link with type: '${type}' and label: '${label}'`)
-    return null
-  }
-
-  if (action.type === 'internalUrl') {
-    const locale = getLocaleFromName(action.link?.lang)
-    return (
-      <Link href={url} locale={locale} variant="readMore" aria-label={action.ariaLabel}>
-        {action.label}
-      </Link>
-    )
-  }
-
-  return (
-    <Link variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
-      {action.label} {extension && `(${extension.toUpperCase()})`}
-    </Link>
-  )
-}
-
 const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions, isBigText } = data
   const { background, imageSize, imagePosition } = designOptions
@@ -125,7 +99,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </ContentWrapper>
           )}
-          {action && <TeaserAction action={action} />}
+          {action && <ReadMoreLink action={action} />}
         </Content>
       </StyledEnvisTeaser>
     </BackgroundContainer>

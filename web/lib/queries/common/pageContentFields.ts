@@ -12,6 +12,27 @@ import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
+ _type == "keyNumbers" =>{
+  "type": _type,
+  "id" : _key,
+  title,
+  ingress[]{..., ${markDefs}},
+  disclaimer[]{..., ${markDefs}},
+  "designOptions": {
+      "background": coalesce(background.title, 'White'),
+    },
+  "action": action[0]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
+    "items" : keyNumberItems[]{
+      "id": _key,
+      keyNumber,
+      unit,
+      description,
+    },
+ },
   _type == "teaser" => {
     "type": _type,
     "id": _key,

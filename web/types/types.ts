@@ -761,3 +761,23 @@ export type IframeCarouselData = {
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
+
+export type KeyNumberItemData = {
+  type: 'keyNumberItem'
+  id: string
+  keyNumber: number
+  description?: string
+  unit?: string
+}
+export type KeyNumbersData = {
+  type: 'keyNumbers'
+  id: string
+  ingress?: PortableTextBlock[]
+  title?: PortableTextBlock[]
+  disclaimer?: PortableTextBlock[]
+  items: KeyNumberItemData[]
+  designOptions: {
+    background: BackgroundColours
+  }
+  action?: LinkData
+}
