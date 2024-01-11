@@ -43,14 +43,7 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
         }
       >
         <Media>
-          {thumbnail && (
-            <Image
-              image={thumbnail}
-              maxWidth={400}
-              aspectRatio={Ratios.NINE_TO_SIXTEEN}
-              sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
-            />
-          )}
+          {thumbnail && <Image image={thumbnail} maxWidth={400} aspectRatio={Ratios.NINE_TO_SIXTEEN} sizes="220px" />}
         </Media>
         <Header>
           <Title>{pageTitle}</Title>

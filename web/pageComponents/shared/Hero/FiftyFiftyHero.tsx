@@ -88,7 +88,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
           {figure && (
             <Image
               maxWidth={4096}
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(min-width: 760px) 50vw, 100vw"
               image={figure.image}
               fill
               style={{ objectFit: 'cover' }}

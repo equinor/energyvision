@@ -1,17 +1,7 @@
 import { puzzle_filled } from '@equinor/eds-icons'
-import { Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import { sanityClient } from '../../sanity.client'
-import { Flags } from '../../src/lib/datasetHelpers'
 import { configureBlockContent } from '../editors/blockContentType'
-import type { ImageWithAlt } from './imageWithAlt'
-
-const client = sanityClient.withConfig({
-  projectId: import.meta.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9',
-  token: import.meta.env.SANITY_STUDIO_MUTATION_TOKEN,
-  ignoreBrowserTokenWarning: true,
-})
 
 const blockContentType = configureBlockContent({
   h1: false,
@@ -40,29 +30,8 @@ export default {
       type: 'array',
       of: [blockContentType],
     },
-    Flags.IS_DEV && {
-      title: 'Icon',
-      name: 'icon',
-      type: 'imageWithAlt',
-      options: {
-        accept: 'image/svg+xml',
-        hotspot: false,
-      },
-      validation: (Rule: Rule) =>
-        Rule.custom((imageWithAlt: ImageWithAlt) => {
-          const referencedId = imageWithAlt?.asset?._ref
-          if (referencedId) {
-            return client
-              .fetch(`*[_id == $id][0]{extension}`, {
-                id: referencedId,
-              })
-              .then((res: any) => {
-                return res.extension === 'svg' ? true : 'Only svg files are allowed'
-              })
-          } else return true
-        }),
-    },
-    !Flags.IS_DEV && {
+
+    {
       title: 'Icon',
       name: 'icon',
       type: 'imageWithAlt',
@@ -71,7 +40,7 @@ export default {
         hotspot: false,
       },
     },
-  ].filter((e) => e),
+  ],
   preview: {
     select: {
       title: `title`,

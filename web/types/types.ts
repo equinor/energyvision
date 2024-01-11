@@ -102,10 +102,7 @@ export type MagazineCardData = {
   slug: string
   title: string | PortableTextBlock[]
   tags?: string[]
-  openGraphImage?: ImageWithAlt
   heroImage?: ImageWithAlt
-  heroType?: HeroTypes
-  hero?: HeroType
 }
 
 export type FeaturedContentData = {
