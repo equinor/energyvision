@@ -122,7 +122,7 @@ export default {
                 {
                   title: 'RichText',
                   name: 'richText',
-                  type: 'richText',
+                  type: 'tableRichText',
                 },
                 {
                   type: 'object',

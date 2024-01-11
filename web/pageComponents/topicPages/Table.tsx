@@ -7,6 +7,9 @@ import TitleText from '../shared/portableText/TitleText'
 
 import { getLocaleFromName } from '../../lib/localization'
 import type { CellData, LinkData, TableData } from '../../types/types'
+import { PortableTextBlock } from '@portabletext/types'
+import { PortableText } from '@portabletext/react'
+import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
@@ -65,6 +68,21 @@ const renderCellByType = (cellData: CellData) => {
   switch (cellData.type) {
     case 'textField':
       return <>{cellData.text}</>
+    case 'richText':
+      return (
+        <PortableText
+          value={cellData.text as PortableTextBlock[]}
+          components={{
+            ...defaultSerializers,
+            block: {
+              normal: ({ children }: { children?: React.ReactNode }) => {
+                if (isEmpty(children as PortableTextBlock[])) return <br />
+                return <p style={{ margin: 0 }}>{children}</p>
+              },
+            },
+          }}
+        />
+      )
     case 'dateField':
       return <>{cellData.date ? <FormattedDate datetime={cellData.date.toString()} /> : null}</>
     case 'numberField':
@@ -81,7 +99,7 @@ const renderCellByType = (cellData: CellData) => {
       )
     case 'linkSelector':
       return (
-        <StyledTableLink href={getLink(cellData)} locale={getLocale(cellData)}>
+        <StyledTableLink href={getLink(cellData as LinkData)} locale={getLocale(cellData as LinkData)}>
           {cellData.label}
         </StyledTableLink>
       )
