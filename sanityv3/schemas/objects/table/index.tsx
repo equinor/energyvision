@@ -45,7 +45,7 @@ const tableCellContentType = configureBlockContent({
   lists: false,
   attachment: true,
 })
-
+ */
 const chosenColors = ['White', 'Mid Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
 const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {

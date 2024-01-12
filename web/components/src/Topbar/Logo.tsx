@@ -9,11 +9,9 @@ const StyledLogo = styled.svg`
   fill: var(--fill);
 `
 
-type LogoProps = {
-  inverted?: boolean
-} & SVGAttributes<SVGElement>
+type LogoProps = SVGAttributes<SVGElement>
 
-export const LogoSecondary = ({ inverted = false, style, ...rest }: LogoProps) => {
+export const LogoSecondary = ({ style, ...rest }: LogoProps) => {
   return (
     <StyledLogo
       viewBox="0 0 402 160"
@@ -22,7 +20,7 @@ export const LogoSecondary = ({ inverted = false, style, ...rest }: LogoProps) =
       aria-hidden
       style={
         {
-          '--fill': inverted ? 'var(--white-100)' : 'var(--energy-red-100)',
+          '--fill': 'var(--link-arrow-color)',
           ...style,
         } as CSSProperties
       }
@@ -41,13 +39,13 @@ export const LogoSecondary = ({ inverted = false, style, ...rest }: LogoProps) =
   )
 }
 
-export const LogoPrimary = ({ inverted = false, style, ...rest }: LogoProps) => (
+export const LogoPrimary = ({ style, ...rest }: LogoProps) => (
   <StyledLogo
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 283.46 233.13"
     style={
       {
-        '--fill': inverted ? 'var(--white)' : 'var(--energy-red-100)',
+        '--fill': 'var(--link-arrow-color)',
         ...style,
       } as CSSProperties
     }

@@ -20,7 +20,7 @@ const RatioBox = styled.div`
 `
 
 const AspectImagePlaceholder = styled.div`
-  background-color: var(--ui-background-default);
+  background-color: var(--bg-default);
   position: absolute;
   top: 0;
   left: 0;

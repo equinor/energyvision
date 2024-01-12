@@ -52,10 +52,6 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
-outputs:
-  copied-files:
-    description: 'Number of files copied'
-    value: ${{ steps.random-number-generator.outputs.filesNo }}
 runs:
   using: 'composite'
   steps:

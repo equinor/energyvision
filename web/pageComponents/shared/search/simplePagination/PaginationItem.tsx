@@ -5,27 +5,26 @@ const StyledListItem = styled.li`
   display: inline-block;
 `
 
-const PaginationLink = styled(Button)<{ isCurrent?: boolean; inverted?: boolean }>`
+const PaginationLink = styled(Button)<{ isCurrent?: boolean }>`
   width: 44px;
   height: 44px;
-  color: ${(props) => (props.inverted ? 'var(--moss-green-80)' : 'var(--slate-blue-95)')};
-  ${({ isCurrent, inverted }) =>
+  color: var(--pagination-btn-text-color);
+  ${({ isCurrent }) =>
     isCurrent && {
-      background: inverted ? 'var(--moss-green-80)' : 'var(--moss-green-70)',
-      color: inverted ? 'var(--black-100)' : 'var(--default-text)',
+      background: 'var(--pagination-btn-background-active)',
+      color: 'var(--pagination-btn-text-color-active)',
     }}
 
   :hover {
-    color: ${(props) => (props.inverted ? 'var(--black-100)' : '')};
-
+    color: var(--pagination-btn-text-color-active);
     :disabled {
-      color: ${(props) => (props.inverted ? 'var(--slate-blue-90)' : 'var(--grey-30)')};
+      color: var(--pagination-btn-disabled);
     }
   }
 
   :disabled {
     cursor: auto;
-    color: ${(props) => (props.inverted ? 'var(--slate-blue-90)' : 'var(--grey-30)')};
+    color: var(--pagination-btn-disabled);
   }
 `
 
@@ -39,29 +38,14 @@ type PaginationItemProps = React.ComponentProps<'a'> & {
   value: number
   isCurrent: boolean
   ariaLabel?: string
-  inverted?: boolean
   onClick: (value: number) => void
 }
 
-export const PaginationItem = ({
-  isDisabled,
-  value,
-  isCurrent,
-  ariaLabel,
-  inverted,
-  onClick,
-  children,
-}: PaginationItemProps) => {
+export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, onClick, children }: PaginationItemProps) => {
   if (isDisabled || isCurrent) {
     return (
       <StyledListItem>
-        <PaginationLink
-          disabled={isDisabled}
-          isCurrent={isCurrent}
-          inverted={inverted}
-          variant="ghost_icon"
-          aria-label={ariaLabel}
-        >
+        <PaginationLink disabled={isDisabled} isCurrent={isCurrent} variant="ghost_icon" aria-label={ariaLabel}>
           {children}
         </PaginationLink>
       </StyledListItem>
@@ -74,7 +58,6 @@ export const PaginationItem = ({
         disabled={isDisabled}
         variant="ghost_icon"
         aria-label={ariaLabel}
-        inverted={inverted}
         onClick={(event) => {
           if (isModifierClick(event)) {
             return

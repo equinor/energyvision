@@ -2,19 +2,16 @@
  * This hook returns a style object for the shared title
  * accordingly to its next component
  */
-import { HeroTypes, TextBlockData, BackgroundColours, ContentType } from '../../types'
+import { BackgroundContainerProps } from '@components/Backgrounds'
+import { HeroTypes, TextBlockData, ContentType } from '../../types'
 
-export type TitleStyles = {
-  negativeBottomSpace: boolean
-  backgroundColor: BackgroundColours
-}
+export type TitleStyles = BackgroundContainerProps
 
 const BG_DEFAULT = 'White'
 
 function useSharedTitleStyles(heroType?: HeroTypes, nextContent?: ContentType): TitleStyles {
   const defaultValue: TitleStyles = {
-    negativeBottomSpace: false,
-    backgroundColor: BG_DEFAULT,
+    background: BG_DEFAULT,
   }
 
   if (heroType === HeroTypes.DEFAULT) {
@@ -24,8 +21,7 @@ function useSharedTitleStyles(heroType?: HeroTypes, nextContent?: ContentType): 
   switch (nextContent?.type) {
     case 'textBlock':
       return {
-        negativeBottomSpace: true,
-        backgroundColor: (nextContent as TextBlockData)?.designOptions?.background || BG_DEFAULT,
+        background: (nextContent as TextBlockData)?.designOptions?.background || BG_DEFAULT,
       }
     default:
       return defaultValue

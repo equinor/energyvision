@@ -9,6 +9,7 @@ const Container = styled.div`
 const Quote = styled.blockquote`
   background: none;
   margin: 0;
+  color: var(--color-on-background);
 `
 
 const Author = styled.figcaption`

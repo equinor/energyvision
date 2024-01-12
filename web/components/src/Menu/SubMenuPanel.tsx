@@ -8,7 +8,7 @@ const StyledPanel = styled(AccordionPanel)`
     position: absolute;
     left: 0;
     right: 0;
-    background-color: var(--ui-background-default);
+    background-color: var(--bg-default);
     padding: var(--space-medium) 0;
     /* @TODO: Find a nice value */
     max-width: 1700px;

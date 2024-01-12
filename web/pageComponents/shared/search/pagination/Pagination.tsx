@@ -21,11 +21,10 @@ const PaginationList = styled.ul`
 
 export type PaginationProps = {
   hitsPerPage?: number
-  inverted?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } & UsePaginationProps
 
-export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = false, ...rest }: PaginationProps) => {
+export const Pagination = ({ totalPages, padding, hitsPerPage = 5, ...rest }: PaginationProps) => {
   const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
     totalPages,
     padding,
@@ -58,7 +57,6 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
         isDisabled={isFirstPage}
         createURL={createURL}
         refine={refine}
-        inverted={inverted}
       >
         <Icon data={first_page} />
       </PaginationItem>
@@ -69,7 +67,6 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
         isDisabled={isFirstPage}
         createURL={createURL}
         refine={refine}
-        inverted={inverted}
       >
         <Icon data={chevron_left} />
       </PaginationItem>
@@ -83,7 +80,6 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
           isDisabled={false}
           createURL={createURL}
           refine={refine}
-          inverted={inverted}
         >
           {page + 1}
         </PaginationItem>
@@ -96,7 +92,6 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
         isDisabled={isLastPage}
         createURL={createURL}
         refine={refine}
-        inverted={inverted}
       >
         <Icon data={chevron_right} />
       </PaginationItem>
@@ -108,7 +103,6 @@ export const Pagination = ({ totalPages, padding, hitsPerPage = 5, inverted = fa
         isDisabled={isLastPage}
         createURL={createURL}
         refine={refine}
-        inverted={inverted}
       >
         <Icon data={last_page} />
       </PaginationItem>

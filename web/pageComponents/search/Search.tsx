@@ -172,7 +172,7 @@ const Search = () => {
         <SearchBox />
         <SearchResults resultsRef={resultsRef} items={indices} />
         <PaginationContextProvider defaultRef={resultsRef}>
-          <StyledPagination padding={padding} hitsPerPage={5} inverted />
+          <StyledPagination padding={padding} hitsPerPage={5} />
         </PaginationContextProvider>
       </SearchContextProvider>
     </InstantSearch>

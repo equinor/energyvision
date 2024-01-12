@@ -85,7 +85,7 @@ const SearchResults = (props: SearchResultsProps) => {
           <Tabs index={activeTab || 0} onChange={handleTabChange}>
             <TabList>
               {options.map((item) => (
-                <Tab inverted key={item.label}>
+                <Tab key={item.label}>
                   <TabText>
                     {item.label}
                     <HitsContainer>

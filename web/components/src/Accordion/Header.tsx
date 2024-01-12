@@ -37,7 +37,7 @@ const StyledIcon = styled.span`
   flex: 0 0 var(--space-xLarge);
   line-height: 16px;
   & ${FilledIcon}, & ${OutlineIcon} {
-    fill: var(--energy-red-100);
+    fill: var(--accordion-icon-color);
   }
 `
 const StyledHeader = styled(Typography)`
@@ -62,9 +62,8 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
   @media (prefers-reduced-motion: no-preference) {
     transition: font-weight 0.1s ease-in-out;
   }
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+
+  color: var(--color-on-background);
 
   ${({ isExpanded }) =>
     isExpanded && {

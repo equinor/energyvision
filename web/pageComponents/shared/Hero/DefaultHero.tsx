@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import DefaulHeroImage from './DefaultHeroImage'
 import { PortableTextBlock } from '@portabletext/types'
 import TitleText from '../portableText/TitleText'
+import { BackgroundContainer } from '@components/Backgrounds'
 
 const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -26,9 +27,7 @@ const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium);
 `
 
-const ImageWrapper = styled.div.attrs(() => ({
-  className: 'background-image',
-}))`
+const ImageWrapper = styled(BackgroundContainer)`
   padding: 0 var(--layout-paddingHorizontal-small) var(--space-3xLarge) var(--layout-paddingHorizontal-small);
   max-width: 1920px;
   margin-left: auto;

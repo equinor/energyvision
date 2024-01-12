@@ -104,10 +104,7 @@ export type MagazineCardData = {
   slug: string
   title: string | PortableTextBlock[]
   tags?: string[]
-  openGraphImage?: ImageWithAlt
   heroImage?: ImageWithAlt
-  heroType?: HeroTypes
-  hero?: HeroType
 }
 
 export type FeaturedContentData = {
@@ -257,7 +254,18 @@ export type LandingPageSchema = {
   seoAndSome: SeoData
 }
 
-export type BackgroundColours = 'White' | 'Moss Green' | 'Moss Green Light' | 'Spruce Wood' | 'Mist Blue' | 'Slate Blue'
+export type BackgroundColours =
+  | 'White'
+  | 'Moss Green'
+  | 'Moss Green Light'
+  | 'Spruce Wood'
+  | 'Mist Blue'
+  | 'Slate Blue'
+  | 'Mid Green'
+  | 'Mid Yellow'
+  | 'Mid Blue'
+  | 'Mid Orange'
+  | 'Slate Blue 95'
 
 export type DesignOptions = {
   background?: BackgroundColours
