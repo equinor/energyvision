@@ -36,21 +36,62 @@ const iframeSrcs = [
   .filter((e) => e)
   .join(' ')
 
-const ContentSecurityPolicy = `
-   default-src 'self' cdn.sanity.io cdn.equinor.com;
-   style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} https://platform.twitter.com https://*.twimg.com;
-   script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: https://*.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/ https://www.youtube.com;
-   img-src 'self' data: ${edsCdnUrl} https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com https://i.ytimg.com;
-   connect-src 'self' https://bcdn.screen9.com https://h61q9gi9.api.sanity.io https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu ${
-     isProduction ? '' : 'ws:'
-   };
-   child-src  blob:;
-   frame-src 'self' ${iframeSrcs};
-   frame-ancestors ${xFrameUrls};
-   font-src 'self' ${edsCdnUrl} data:;
-   media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
+const blobSrcUrls = [
+  'https://*.googletagmanager.com',
+  'https://siteimproveanalytics.com',
+  'https://*.cookiebot.com',
+  'https://consentcdn.cookiebot.com',
+  'https://platform.twitter.com',
+  'https://cdn.syndication.twimg.com/',
+  'https://www.youtube.com',
+]
+  .filter((e) => e)
+  .join(' ')
 
- `
+const dataSrcUrls = [
+  edsCdnUrl,
+  'https://cdn.sanity.io',
+  'https://cdn.equinor.com',
+  'https://*.siteimproveanalytics.io',
+  'https://*.googletagmanager.com',
+  'https://platform.twitter.com',
+  'https://syndication.twitter.com',
+  'https://*.twimg.com',
+  'https://i.ytimg.com',
+]
+  .filter((e) => e)
+  .join(' ')
+
+const selfSrcUrls = [
+  'cdn.sanity.io',
+  'cdn.equinor.com',
+  'https://bcdn.screen9.com',
+  'https://h61q9gi9.api.sanity.io',
+  'https://tools.eurolandir.com',
+  'https://inferred.litix.io/',
+  'https://*.algolia.net',
+  'https://*.algolianet.com',
+  'https://consentcdn.cookiebot.com',
+  'https://eu-api.friendlycaptcha.eu',
+  isProduction ? '' : 'ws:',
+]
+  .filter((e) => e)
+  .join(' ')
+
+const ContentSecurityPolicy = `
+     default-src 'self' cdn.sanity.io cdn.equinor.com;
+     style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} 
+        https://platform.twitter.com https://*.twimg.com;
+     script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: ${blobSrcUrls} ;
+     img-src 'self' data: ${dataSrcUrls} ;
+     connect-src 'self' ${selfSrcUrls} ;
+     child-src  blob:;
+     frame-src 'self' ${iframeSrcs};
+     frame-ancestors ${xFrameUrls};
+     font-src 'self' ${edsCdnUrl} data:;
+     media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
+   
+     `
 
 export default [
   {
