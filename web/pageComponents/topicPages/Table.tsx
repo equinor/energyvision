@@ -66,8 +66,6 @@ const getLocale = (linkData: LinkData) => {
 
 const renderCellByType = (cellData: CellData) => {
   switch (cellData.type) {
-    case 'textField':
-      return <>{cellData.text}</>
     case 'richText':
       return (
         <PortableText
@@ -111,7 +109,7 @@ const renderCellByType = (cellData: CellData) => {
 const Table = ({ data, anchor }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
-  const { background } = designOptions
+  const { background, theme } = designOptions
 
   // Should the headers just be a plain text field?
   return (
@@ -124,7 +122,7 @@ const Table = ({ data, anchor }: TableProps) => {
           </StyledIngress>
         )}
 
-        <EnvisTable>
+        <EnvisTable theme={theme}>
           <Head>
             <Row>
               {tableHeaders?.map((header) => {

@@ -43,6 +43,7 @@ export const tableFields = /* groq */ `
     },
   },
   "designOptions": {
+    "theme": coalesce(lower(theme.title), 'grey'),
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     "background": coalesce(background.title, 'none'),
     height,

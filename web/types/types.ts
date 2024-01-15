@@ -1,7 +1,5 @@
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import { PortableTextBlock } from '@portabletext/types'
-import { DownloadableImage } from '../../sanityv3/schemas/objects/downloadableImage'
-import { DownloadableFile } from '../../sanityv3/schemas/objects/files'
 import {
   SanityImageCrop,
   SanityImageHotspot,
@@ -318,13 +316,15 @@ export type CellData = {
   type: LinkType | 'richText'
   date?: Date
   number?: string
-  text?: string | PortableTextBlock[]
+  text?: PortableTextBlock[]
 } & Omit<LinkData, 'type'>
 
 type Row = {
   id: string
   row: CellData[]
 }
+
+export type TableThemes = 'blue' | 'green' | 'grey'
 
 export type TableData = {
   type: string
@@ -333,7 +333,7 @@ export type TableData = {
   ingress: PortableTextBlock[]
   tableHeaders: TableHeaderData[]
   tableRows: Row[]
-  designOptions: DesignOptions
+  designOptions: DesignOptions & { theme: TableThemes }
 }
 
 export type FullWidthImageData = {
