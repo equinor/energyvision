@@ -46,17 +46,15 @@ const StyledLink = styled(Link)`
   font-size: var(--typeScale-2);
 
   & > svg {
-    fill: var(--energy-red-100);
+    color: var(--link-arrow-color);
     border: 1px solid transparent;
     border-radius: 50%;
     padding: var(--space-small);
+    background-color: var(--button-background);
   }
   &:hover svg {
-    background: var(--energy-red-50);
-  }
-
-  .inverted-background & {
-    color: var(--inverted-text) !important;
+    fill: var(--button-text-hover);
+    background-color: var(--link-arrow-color-hover);
   }
 `
 
