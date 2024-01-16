@@ -45,8 +45,6 @@ const blobSrcUrls = [
   'https://cdn.syndication.twimg.com/',
   'https://www.youtube.com',
 ]
-  .filter((e) => e)
-  .join(' ')
 
 const dataSrcUrls = [
   edsCdnUrl,
