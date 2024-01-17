@@ -3,6 +3,7 @@ import IFrame from '../../iframe/IFrame'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { IFrameData } from 'types/types'
 import styled from 'styled-components'
+import RichText from '../RichText'
 
 type IframeRenderer = {
   _key: string
@@ -28,6 +29,7 @@ export const BasicIframe = (iframe: BlockProps) => {
 
   return (
     <Container>
+      {value.title && <RichText value={value.title} />}
       <IFrame
         frameTitle={data.frameTitle}
         url={data.url}
