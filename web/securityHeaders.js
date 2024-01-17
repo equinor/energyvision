@@ -56,6 +56,7 @@ const dataSrcUrls = [
   'https://syndication.twitter.com',
   'https://*.twimg.com',
   'https://i.ytimg.com',
+  'https://*.cookiebot.com',
 ].join(' ')
 
 const selfSrcUrls = [
@@ -67,7 +68,7 @@ const selfSrcUrls = [
   'https://inferred.litix.io/',
   'https://*.algolia.net',
   'https://*.algolianet.com',
-  'https://consentcdn.cookiebot.com',
+  'https://*.cookiebot.com',
   'https://eu-api.friendlycaptcha.eu',
   isProduction ? '' : 'ws:',
 ]
@@ -76,8 +77,7 @@ const selfSrcUrls = [
 
 const ContentSecurityPolicy = `
      default-src 'self' cdn.sanity.io cdn.equinor.com;
-     style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} 
-        https://platform.twitter.com https://*.twimg.com;
+     style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} https://platform.twitter.com https://*.twimg.com;
      script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: ${blobSrcUrls} ;
      img-src 'self' data: ${dataSrcUrls} ;
      connect-src 'self' ${selfSrcUrls} ;
