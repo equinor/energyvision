@@ -32,7 +32,7 @@ export default {
       unit: 'unit',
       description: 'description',
     },
-    prepare(selection: Record<string, any>) {
+    prepare(selection: Record<string, string | number>) {
       const { keyNumber, unit, description } = selection
       return {
         title: `${keyNumber} ${unit ?? ''}`,
