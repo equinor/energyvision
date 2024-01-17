@@ -72,6 +72,7 @@ export default {
         { type: 'iframeCarousel' },
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
+        { type: 'keyNumbers' },
       ].filter((e) => e),
     },
   ].filter((e) => e),
