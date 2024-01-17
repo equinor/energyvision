@@ -6,6 +6,8 @@ import IngressText from '../../shared/portableText/IngressText'
 import KeyNumberItem from './KeyNumberItem'
 import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
 import RichText from '../../shared/portableText/RichText'
+import { Carousel } from '../../shared/Carousel'
+import useWindowSize from '../../../lib/hooks/useWindowSize'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -26,7 +28,16 @@ const Ingress = styled.div`
 const StyledBackgroundContainer = styled(BackgroundContainer)`
   padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small); ;
 `
-const Wrapper = styled.div`
+const HorizontalWrapper = styled.div`
+  --card-maxWidth: 280px;
+  padding-bottom: var(--space-large);
+
+  @media (min-width: 800px) {
+    --card-maxWidth: 400px;
+  }
+`
+
+const Container = styled.div`
   display: flex;
   gap: var(--space-large);
   flex-wrap: wrap;
@@ -37,7 +48,17 @@ type KeyNumbersProps = {
   anchor?: string
 }
 export default function ({ data, anchor }: KeyNumbersProps) {
-  const { title, items, designOptions, ingress, action, disclaimer } = data
+  const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
+  const { width } = useWindowSize()
+
+  const renderScroll = useHorizontalScroll && Boolean(width && width <= 800)
+  const Wrapper = renderScroll
+    ? ({ children }: { children: React.ReactNode }) => (
+        <HorizontalWrapper>
+          <Carousel horizontalPadding>{children}</Carousel>
+        </HorizontalWrapper>
+      )
+    : Container
   return (
     <StyledBackgroundContainer background={designOptions.background} id={anchor}>
       {title && <StyledHeading value={title} />}
@@ -46,11 +67,13 @@ export default function ({ data, anchor }: KeyNumbersProps) {
           <IngressText value={ingress}></IngressText>
         </Ingress>
       )}
+
       <Wrapper>
         {items.map((item) => (
           <KeyNumberItem key={item.id} {...item} />
         ))}
       </Wrapper>
+
       {disclaimer && (
         <Disclaimer>
           <RichText value={disclaimer} />

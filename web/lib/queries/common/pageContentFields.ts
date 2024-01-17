@@ -18,6 +18,7 @@ const pageContentFields = /* groq */ `
   title,
   ingress[]{..., ${markDefs}},
   disclaimer[]{..., ${markDefs}},
+  useHorizontalScroll,
   "designOptions": {
       "background": coalesce(background.title, 'White'),
     },

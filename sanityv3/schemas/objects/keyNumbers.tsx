@@ -63,6 +63,14 @@ export default {
       validation: (Rule: Rule) => Rule.min(2).error('Need minimum 2 key numbers'),
     },
     {
+      name: 'useHorizontalScroll',
+      title: 'Use horizontal scroll',
+      description:
+        'When this is enabled, the key numbers will use horizontal scroll if the amount of content is greater than the screen size allows. Only for mobiles.',
+      type: 'boolean',
+      initialValue: false,
+    },
+    {
       name: 'disclaimer',
       title: 'Disclaimer',
       type: 'array',

@@ -776,6 +776,7 @@ export type KeyNumbersData = {
   title?: PortableTextBlock[]
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
+  useHorizontalScroll: boolean
   designOptions: {
     background: BackgroundColours
   }
