@@ -314,7 +314,7 @@ export type TextTeaserData = {
   action?: LinkData
   designOptions: {
     theme: number
-    titlePosition?: 'left' | 'right' | undefined
+    titlePosition: 'left' | 'right'
   }
 }
 

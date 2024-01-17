@@ -80,7 +80,6 @@ export const colors = css`
 
     --inverted-text: var(--white-100);
     --default-text: rgba(61, 61, 61, 1);
-    --red-text: #d6434d;
 
     --theme-background-primary: var(--white-100);
 

@@ -1,11 +1,9 @@
-import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer, TextHighLightRenderer } from '../components'
+import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
 import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
-import type { Reference, Rule, ValidationContext } from 'sanity'
-import React, { Children } from 'react'
-import { ColorSelectorValue } from '../components/ColorSelector'
+import React from 'react'
 
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-
 import type { TextTeaserData, LinkData } from '../../../types/types'
 import { getLocaleFromName } from '../../../lib/localization'
 import { getColorForTheme } from './theme'
@@ -11,7 +10,7 @@ import { CSSProperties } from 'react'
 
 const { Content } = EnvisTeaser
 
-type TitlePostion = 'left' | 'right' | undefined
+type TitlePostion = 'left' | 'right'
 
 type TextTeaserProps = {
   data: TextTeaserData
@@ -19,10 +18,9 @@ type TextTeaserProps = {
 }
 
 const IngressWrapper = styled.div`
-  padding-bottom: var(--space-large);
-`
-const StyledTeaserTitle = styled(TitleText)`
-  padding-bottom: var(--space-large);
+  :not(:last-child) {
+    padding-bottom: var(--space-large);
+  }
 `
 const TitleWrapper = styled.div`
   @media (min-width: 750px) {
@@ -54,7 +52,6 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
     'content';
   max-width: var(--max-content-width);
   margin: 0 auto;
-  /* Hardcoded value while waiting for the w3c proposal for environment() */
   @media (min-width: 750px) {
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
@@ -95,17 +92,13 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { theme, titlePosition } = designOptions
   const { background, highlight } = getColorForTheme(theme)
 
-  if ([title, text, action].every((i) => !i)) {
-    return null
-  }
-
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
 
   return (
     <BackgroundContainer style={style} background={background} id={anchor}>
       <TeaserWrapper titlePosition={titlePosition}>
         <TitleWrapper>
-          <StyledTeaserTitle value={title} size={'2xl'} />
+          <TitleText value={title} size={'2xl'} />
         </TitleWrapper>
         <StyledContent>
           {text && (
