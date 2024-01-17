@@ -77,8 +77,7 @@ const selfSrcUrls = [
 
 const ContentSecurityPolicy = `
      default-src 'self' cdn.sanity.io cdn.equinor.com;
-     style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} 
-        https://platform.twitter.com https://*.twimg.com;
+     style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} https://platform.twitter.com https://*.twimg.com;
      script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: ${blobSrcUrls} ;
      img-src 'self' data: ${dataSrcUrls} ;
      connect-src 'self' ${selfSrcUrls} ;
