@@ -13,7 +13,7 @@ const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.stud
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`)
 const studioV3Url = 'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
 const xFrameUrls = [localUrl, ...studioUrls, studioV3Url, globalUrl, secretUrl].filter((e) => e).join(' ')
-const edsCdnUrl = 'https://cdn.eds.equinor.com '
+const edsCdnUrl = 'https://cdn.eds.equinor.com'
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
   'https://lt.morningstar.com',
@@ -44,7 +44,7 @@ const blobSrcUrls = [
   'https://platform.twitter.com',
   'https://cdn.syndication.twimg.com/',
   'https://www.youtube.com',
-]
+].join(' ')
 
 const dataSrcUrls = [
   edsCdnUrl,
@@ -56,9 +56,7 @@ const dataSrcUrls = [
   'https://syndication.twitter.com',
   'https://*.twimg.com',
   'https://i.ytimg.com',
-]
-  .filter((e) => e)
-  .join(' ')
+].join(' ')
 
 const selfSrcUrls = [
   'cdn.sanity.io',
@@ -88,7 +86,6 @@ const ContentSecurityPolicy = `
      frame-ancestors ${xFrameUrls};
      font-src 'self' ${edsCdnUrl} data:;
      media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
-   
      `
 
 export default [
