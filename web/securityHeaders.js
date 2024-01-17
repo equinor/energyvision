@@ -67,7 +67,7 @@ const selfSrcUrls = [
   'https://inferred.litix.io/',
   'https://*.algolia.net',
   'https://*.algolianet.com',
-  'https://consentcdn.cookiebot.com',
+  'https://*.cookiebot.com',
   'https://eu-api.friendlycaptcha.eu',
   isProduction ? '' : 'ws:',
 ]
