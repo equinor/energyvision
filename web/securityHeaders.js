@@ -56,6 +56,7 @@ const dataSrcUrls = [
   'https://syndication.twitter.com',
   'https://*.twimg.com',
   'https://i.ytimg.com',
+  'https://*.cookiebot.com',
 ].join(' ')
 
 const selfSrcUrls = [
