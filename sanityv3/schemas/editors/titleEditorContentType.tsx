@@ -57,6 +57,7 @@ export const configureTitleBlockContent = (
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig)
   }
+
   return config
 }
 

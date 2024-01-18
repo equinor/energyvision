@@ -20,6 +20,7 @@ import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
 import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
 import KeyNumbers from '../../topicPages/KeyNumbers/KeyNumbers'
+import TextTeaser from '../../shared/textTeaser/TextTeaser'
 import {
   AnchorLinkData,
   TopicPageSchema,
@@ -47,6 +48,7 @@ import {
   VideoPlayerData,
   VideoPlayerCarouselData,
   KeyNumbersData,
+  TextTeaserData,
 } from '../../../types/types'
 
 // How could we do this for several different component types?
@@ -71,6 +73,7 @@ type ComponentProps =
   | VideoPlayerCarouselData
   | CookieDeclarationData
   | KeyNumbersData
+  | TextTeaserData
 
 type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
 
@@ -84,6 +87,8 @@ export const PageContent = ({ data }: PageContentProps) => {
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
+      case 'textTeaser':
+        return <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} />
       case 'textBlock':
         return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
