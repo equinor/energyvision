@@ -1,9 +1,7 @@
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
-import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
+import { IconSuperScript, IconSubScript } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
-import { format_color_text } from '@equinor/eds-icons'
-import React from 'react'
 import { textColorConfig } from './blockContentType'
 
 export type TitleContentProps = {
