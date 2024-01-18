@@ -1,4 +1,4 @@
-import { attach_file, external_link, link } from '@equinor/eds-icons'
+import { attach_file, external_link, format_color_text, link } from '@equinor/eds-icons'
 import type { BlockDefinition, Rule, ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
@@ -16,12 +16,23 @@ export type BlockContentProps = {
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
+  highlight?: boolean
   normalTextOverride?: {
     title: string
     value: 'normal'
     component?: ({ children }: { children: React.ReactNode }) => JSX.Element
   }
 }
+
+export const textColorConfig = {
+  title: 'Highlight',
+  value: 'highlight',
+  icon: EdsBlockEditorIcon(format_color_text),
+  component: ({ children }: { children: React.ReactNode }) => {
+    return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
+  },
+}
+
 const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
@@ -38,6 +49,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     attachment = false,
     lists = true,
     smallText = true,
+    highlight = false,
     normalTextOverride = { title: 'Normal', value: 'normal' },
   } = options
 
@@ -236,6 +248,10 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
 
   if (attachment) {
     config?.marks?.annotations?.push(attachmentConfig)
+  }
+
+  if (highlight) {
+    config.marks?.decorators?.push(textColorConfig)
   }
 
   return config

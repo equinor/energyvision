@@ -1,21 +1,42 @@
-import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import blocksToText from '../../../helpers/blocksToText'
+import { defaultColors } from '../../components/ColorSelector'
+import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 
 import { PortableTextBlock, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { EdsIcon } from '../../icons'
+import type { ColorSelectorValue } from '../../components/ColorSelector'
+import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'
 
 export type Table = {
-  _type: 'promotion'
+  _type: 'table'
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   background?: ColorSelectorValue
+  theme?: ColorType
 }
 
 const titleContentType = configureTitleBlockContent()
+
+type ColorType = {
+  title: string
+  value: string
+}
+
+const themes: ColorType[] = [
+  {
+    title: 'Grey',
+    value: '#e7e7e7',
+  },
+  {
+    title: 'Blue',
+    value: '#A8C3DB',
+  },
+  {
+    title: 'Green',
+    value: '#C2D4D6',
+  },
+]
 
 const ingressContentType = configureBlockContent({
   h1: false,
@@ -36,15 +57,7 @@ const headerCellContentType = configureBlockContent({
   lists: false,
   smallText: false,
 })
-/* const tableCellContentType = configureBlockContent({
-  h1: false,
-  h2: false,
-  h3: false,
-  h4: false,
-  lists: false,
-  attachment: true,
-})
- */
+
 const chosenColors = ['White', 'Mid Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
 const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {
@@ -113,10 +126,9 @@ export default {
                 { type: 'linkSelector', title: 'Link' },
                 { type: 'downloadableFile', title: 'Downloadable file' },
                 {
-                  type: 'object',
-                  title: 'Text Field',
-                  name: 'textField',
-                  fields: [{ type: 'string', name: 'text', title: 'Text' }],
+                  title: 'RichText',
+                  name: 'richText',
+                  type: 'tableRichText',
                 },
                 {
                   type: 'object',
@@ -134,7 +146,6 @@ export default {
                     },
                   ],
                 },
-
                 {
                   type: 'object',
                   title: 'Number Field',
@@ -157,14 +168,14 @@ export default {
             prepare({ cells }: { cells: any[] }) {
               const [cellOne, cellTwo, cellThree, cellFour] = cells
               const numberOfCells = cells.length
-
               const getText = (cellContent: any) => {
                 if (cellContent._type === 'linkSelector') {
                   return cellContent.label
                 } else if (cellContent._type === 'downloadableFile') {
                   return cellContent.filename
-                } else if (cellContent._type === 'textField') {
-                  return cellContent.text
+                } else if (cellContent._type === 'richText') {
+                  const cellString = blocksToText(cellContent.text) || ''
+                  return cellString.length > 15 ? cellString.slice(0, 15) + '...' : cellString
                 } else if (cellContent._type === 'dateField') {
                   return cellContent.date
                 }
@@ -186,6 +197,17 @@ export default {
           },
         },
       ],
+    },
+    {
+      title: 'Table theme',
+      description: 'Pick a theme for the table. Default is grey.',
+      name: 'theme',
+      type: 'colorlist',
+      options: {
+        colors: themes,
+      },
+      initialValue: themes[0],
+      fieldset: 'design',
     },
     {
       title: 'Background',

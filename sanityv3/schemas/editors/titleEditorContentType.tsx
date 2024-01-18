@@ -1,9 +1,8 @@
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
-import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
+import { IconSuperScript, IconSubScript } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
-import { format_color_text } from '@equinor/eds-icons'
-import React from 'react'
+import { textColorConfig } from './blockContentType'
 
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]
@@ -52,15 +51,6 @@ export const configureTitleBlockContent = (
         },
       ],
       annotations: [],
-    },
-  }
-
-  const textColorConfig = {
-    title: 'Highlight',
-    value: 'highlight',
-    icon: EdsBlockEditorIcon(format_color_text),
-    component: ({ children }: { children: React.ReactNode }) => {
-      return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
     },
   }
 
