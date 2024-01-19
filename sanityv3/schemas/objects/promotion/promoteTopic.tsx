@@ -62,7 +62,7 @@ export default {
               description: 'A short and catchy introduction text for this topic content card (max. 215 chars)',
               type: 'array',
               of: [introBlockContentType],
-              validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215)),
+              validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215, true)),
             },
           ],
           preview: {
