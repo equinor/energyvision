@@ -23,15 +23,19 @@ const IngressWrapper = styled.div`
   }
 `
 const TitleWrapper = styled.div`
+  padding: var(--space-xxLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
   @media (min-width: 750px) {
     padding: var(--space-xxLarge) var(--space-large);
   }
   @media (min-width: 1000px) {
     padding: var(--space-3xLarge);
   }
-  padding: var(--space-xxLarge) var(--space-large) 0 var(--space-large);
 `
 const StyledContent = styled(Content)`
+  padding: 0 var(--layout-paddingHorizontal-large) var(--space-3xLarge) var(--layout-paddingHorizontal-large);
+  @media (min-width: 750px) {
+    padding: var(--space-xxLarge);
+  }
   @media (min-width: 1000px) {
     padding: var(--space-3xLarge);
   }
@@ -41,6 +45,12 @@ export const StyledTeaser = styled.article`
 `
 const StyledLink = styled(Link)`
   font-size: var(--typeScale-1);
+`
+const StyledTitleText = styled(TitleText)`
+  padding: 0 0 var(--space-large) 0;
+  @media (min-width: 750px) {
+    padding: 0;
+  }
 `
 const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
   --max-content-width: 1440px;
@@ -98,7 +108,7 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
     <BackgroundContainer style={style} background={background} id={anchor}>
       <TeaserWrapper titlePosition={titlePosition}>
         <TitleWrapper>
-          <TitleText value={title} size={'2xl'} />
+          <StyledTitleText value={title} size={'2xl'} />
         </TitleWrapper>
         <StyledContent>
           {text && (

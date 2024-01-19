@@ -14,6 +14,7 @@ import { ThemeSelectorValue } from '../components/ThemeSelector'
 
 const titleContentType = configureTitleBlockContent({
   highlight: true,
+  highlightTitle: 'Highlight text selected from theme below',
   styles: [
     {
       title: 'Normal',
@@ -119,8 +120,9 @@ export default {
       },
     },
     {
-      title: 'Theme',
-      description: 'Pick a colour combination for the background and title highlight. Default is white.',
+      title: 'Theme (for title)',
+      description:
+        'When you have selected highlight in the title, choose colour combination for the title text/background. If no highlighted is selected colour will be black or white (on blue background) If no theme is selected the default is white background with black text.',
       name: 'theme',
       type: 'themeList',
       fieldset: 'design',
