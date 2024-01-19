@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   min-width: var(--card-maxWidth);
   flex-basis: 100%;
   @media (min-width: 750px) {
-    flex-basis: 45%;
+    flex-basis: 48%;
   }
   @media (min-width: 1200px) {
     flex-basis: 30%;
