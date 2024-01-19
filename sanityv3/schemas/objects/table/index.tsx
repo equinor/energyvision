@@ -3,10 +3,11 @@ import { defaultColors } from '../../components/ColorSelector'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 
-import { PortableTextBlock, Rule } from 'sanity'
+import { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'
+import { ColorType } from '../colorList'
 
 export type Table = {
   _type: 'table'
@@ -17,11 +18,6 @@ export type Table = {
 }
 
 const titleContentType = configureTitleBlockContent()
-
-type ColorType = {
-  title: string
-  value: string
-}
 
 const themes: ColorType[] = [
   {
@@ -218,6 +214,19 @@ export default {
         colors: backgroundColors,
       },
       fieldset: 'design',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: ColorType, ctx: ValidationContext) => {
+          const tableTheme = (ctx.parent as Table).theme?.title
+          const invalidCombinations: Record<string, string> = {
+            'Mist Blue': 'Blue',
+            'Mid Green': 'Green',
+            'Moss Green Light': 'Green',
+          }
+          if (invalidCombinations[value.title] === tableTheme) {
+            return `${value.title} background cannot be used with ${tableTheme} table theme`
+          }
+          return true
+        }),
     },
   ],
   preview: {
