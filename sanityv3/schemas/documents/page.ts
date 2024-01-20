@@ -60,6 +60,7 @@ export default {
         { type: 'iframe' },
         { type: 'fullWidthVideo' },
         { type: 'textWithIconArray' },
+        { type: 'keyNumbers' },
         { type: 'promotion' },
         { type: 'anchorLink' },
         { type: 'imageCarousel' },
