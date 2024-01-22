@@ -67,7 +67,10 @@ const pageContentFields = /* groq */ `
   _type == "fullWidthImage"=>{
     "type": _type,
     "id": _key,
-    image
+    image,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '10:3'),
+    },
   },
   _type == "fullWidthVideo"=>{
     "type": _type,

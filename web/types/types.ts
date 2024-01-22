@@ -340,6 +340,9 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
+  designOptions: {
+    aspectRatio: number
+  }
 }
 
 export type FullWidthVideoData = {
