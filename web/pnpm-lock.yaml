@@ -19,7 +19,7 @@ dependencies:
     version: 11.0.0(@babel/core@7.21.4)(@emotion/react@11.0.0)(@types/react@18.0.9)(react@18.2.0)
   '@equinor/eds-core-react':
     specifier: 0.33.0
-    version: 0.33.0(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+    version: 0.33.0(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9)
   '@equinor/eds-icons':
     specifier: ^0.19.1
     version: 0.19.1
@@ -3616,7 +3616,7 @@ packages:
     resolution: {integrity: sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==}
     dev: false
 
-  /@equinor/eds-core-react@0.33.0(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11):
+  /@equinor/eds-core-react@0.33.0(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9):
     resolution: {integrity: sha512-ms3OPNfButYknXjfemCXT6plOHyFLUg8QXJu1u18mzAVcKuuHToqSV0cOL+BCMih+JVGjOV/qATRx8VJCDN2+w==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
@@ -3627,13 +3627,13 @@ packages:
       '@babel/runtime': 7.22.6
       '@equinor/eds-icons': 0.19.3
       '@equinor/eds-tokens': 0.9.2
-      '@equinor/eds-utils': 0.8.2(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+      '@equinor/eds-utils': 0.8.2(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9)
       '@floating-ui/react': 0.25.1(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-virtual': 3.0.0-beta.54(react@18.2.0)
       downshift: 8.3.1(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-components: 5.3.11(react-dom@18.2.0)(react-is@18.1.0)(react@18.2.0)
+      styled-components: 5.3.9(react-dom@18.2.0)(react-is@18.1.0)(react@18.2.0)
     dev: false
 
   /@equinor/eds-icons@0.19.1:
@@ -3656,7 +3656,7 @@ packages:
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     dev: false
 
-  /@equinor/eds-utils@0.8.2(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11):
+  /@equinor/eds-utils@0.8.2(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.9):
     resolution: {integrity: sha512-nVWQQMxogk+94PVY3ZAUOYKzzhYwpqxuhSYxMuRaFUo/mH0Wl8vnb9omJ1Xx+aOWlmiZZGZ+JiLC2K51V++GGw==}
     engines: {node: '>=10.0.0', pnpm: '>=4'}
     peerDependencies:
@@ -3668,7 +3668,7 @@ packages:
       '@equinor/eds-tokens': 0.9.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-components: 5.3.11(react-dom@18.2.0)(react-is@18.1.0)(react@18.2.0)
+      styled-components: 5.3.9(react-dom@18.2.0)(react-is@18.1.0)(react@18.2.0)
     dev: false
 
   /@esbuild/android-arm64@0.17.19:
