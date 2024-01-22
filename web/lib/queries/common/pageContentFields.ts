@@ -13,6 +13,27 @@ import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
+ _type == "keyNumbers" =>{
+  "type": _type,
+  "id" : _key,
+  title,
+  ingress[]{..., ${markDefs}},
+  disclaimer[]{..., ${markDefs}},
+  "designOptions": {
+      "background": coalesce(background.title, 'White'),
+    },
+  "action": action[0]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
+    "items" : keyNumberItems[]{
+      "id": _key,
+      keyNumber,
+      unit,
+      description,
+    },
+ },
   _type == "teaser" => {
     "type": _type,
     "id": _key,
@@ -32,6 +53,22 @@ const pageContentFields = /* groq */ `
     "image": image {
       ...,
       "extension": asset-> extension
+    },
+    "action": action[0]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
+  },
+
+  _type == "textTeaser" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "text": text[]{..., ${markDefs}},
+    "designOptions": {
+      "theme": coalesce(theme.value, 0),
+      "titlePosition": coalesce(titlePosition, 'left'),
     },
     "action": action[0]{
       ${linkSelectorFields},
@@ -67,7 +104,10 @@ const pageContentFields = /* groq */ `
   _type == "fullWidthImage"=>{
     "type": _type,
     "id": _key,
-    image
+    image,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '10:3'),
+    },
   },
   _type == "fullWidthVideo"=>{
     "type": _type,

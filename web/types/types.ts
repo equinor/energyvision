@@ -306,6 +306,18 @@ export type TeaserData = {
   designOptions: DesignOptions
 }
 
+export type TextTeaserData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  text: PortableTextBlock[]
+  action?: LinkData
+  designOptions: {
+    theme: number
+    titlePosition: 'left' | 'right'
+  }
+}
+
 export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]
@@ -340,6 +352,9 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
+  designOptions: {
+    aspectRatio: number
+  }
 }
 
 export type FullWidthVideoData = {
@@ -768,3 +783,23 @@ export type IframeCarouselData = {
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
+
+export type KeyNumberItemData = {
+  type: 'keyNumberItem'
+  id: string
+  keyNumber: number
+  description?: string
+  unit?: string
+}
+export type KeyNumbersData = {
+  type: 'keyNumbers'
+  id: string
+  ingress?: PortableTextBlock[]
+  title?: PortableTextBlock[]
+  disclaimer?: PortableTextBlock[]
+  items: KeyNumberItemData[]
+  designOptions: {
+    background: BackgroundColours
+  }
+  action?: LinkData
+}
