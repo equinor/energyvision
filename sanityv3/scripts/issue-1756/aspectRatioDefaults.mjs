@@ -4,7 +4,7 @@ import { sanityClients } from './getSanityClients.mjs'
 // Replace figure with fullWidthImage  and set aspectRatio to 0.3
 const fetchDocuments = (client) =>
   client.fetch(
-    /* groq */ `*[_type in ['page','magazine'] && length(content[_type == 'figure' && aspectRatio == null])>0][0..100]{ _id,"images":content[_type == 'figure'&& aspectRatio == null]} `,
+    /* groq */ `*[_type in ['page','magazine'] && length(content[_type == 'fullWidthImage' && aspectRatio == null])>0][0..100]{ _id,"images":content[_type == 'fullWidthImage' && aspectRatio == 0.3]} `,
   )
 
 const buildPatches = (docs) =>
@@ -14,7 +14,7 @@ const buildPatches = (docs) =>
         id: doc._id,
         patch: {
           set: {
-            [`content[_key =="${image._key}"].aspectRatio`]: 'original',
+            [`content[_key =="${image._key}"].aspectRatio`]: '0.3',
           },
           // this will cause the migration to fail if any of the documents has been
           // modified since it was fetched.
