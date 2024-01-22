@@ -20,8 +20,7 @@ export default {
       name: 'thumbnail',
       type: 'imageWithAlt',
       title: 'Thumbnail',
-      description:
-        'Enter alt text for purely visual video content here. This description assists screen reader users when the video is consistently muted.',
+      description: 'Use the alt text below to describe the video content (for screenreaders).',
       initialValue: {
         isDecorative: true,
       },
