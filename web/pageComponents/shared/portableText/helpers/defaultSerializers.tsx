@@ -1,5 +1,15 @@
 import { Text, List } from '@components'
-import { h3Heading, h2Heading, Sub, Sup, ExternalLink, InternalLink, BulletList, NumberedList } from '../components'
+import {
+  h3Heading,
+  h2Heading,
+  Sub,
+  Sup,
+  ExternalLink,
+  InternalLink,
+  BulletList,
+  NumberedList,
+  Highlight,
+} from '../components'
 import {
   defaultComponents,
   PortableTextBlockComponent,
@@ -32,6 +42,7 @@ const marks: MarkType = {
   sup: Sup,
   link: ExternalLink,
   internalLink: InternalLink,
+  highlight: Highlight,
 }
 
 const list: ListType = {

@@ -313,11 +313,18 @@ export type TableHeaderData = {
 
 export type CellData = {
   id: string
-  type: string
+  type: LinkType | 'richText'
   date?: Date
   number?: string
-  text?: string
-} & LinkData
+  text?: PortableTextBlock[]
+} & Omit<LinkData, 'type'>
+
+type Row = {
+  id: string
+  row: CellData[]
+}
+
+export type TableThemes = 'blue' | 'green' | 'grey'
 
 export type TableData = {
   type: string
@@ -325,8 +332,8 @@ export type TableData = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   tableHeaders: TableHeaderData[]
-  tableRows: any[]
-  designOptions: DesignOptions
+  tableRows: Row[]
+  designOptions: DesignOptions & { theme: TableThemes }
 }
 
 export type FullWidthImageData = {
