@@ -1,6 +1,7 @@
 import { getCliClient } from 'sanity/cli'
 
 const DATASET_TARGET = ['global-development']
+
 const RUN_SCRIPTS = ['issue-1832/index.mjs']
 
 export const getSanityClients = DATASET_TARGET.map((dataset) => {
