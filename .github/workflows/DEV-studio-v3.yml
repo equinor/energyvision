@@ -9,6 +9,7 @@ on:
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
+      - '!./sanityv3/scripts/**/*'
 permissions:
   id-token: write
   packages: write
