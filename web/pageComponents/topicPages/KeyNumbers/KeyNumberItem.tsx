@@ -6,19 +6,15 @@ const NumberText = styled(Text)`
   display: inline;
   font-weight: var(--fontWeight-medium);
 `
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ $isScrollable: boolean }>`
   min-width: var(--card-maxWidth);
-  flex-basis: 100%;
-  @media (min-width: 750px) {
-    flex-basis: 48%;
-  }
-  @media (min-width: 1200px) {
-    flex-basis: 30%;
-  }
+  ${({ $isScrollable }) => $isScrollable && { padding: '0 0 0 var(--space-medium)' }};
 `
-export default function ({ keyNumber, description, unit }: KeyNumberItemData) {
+
+type KeyNumberItemProps = KeyNumberItemData & { isScrollable?: boolean }
+export default function ({ keyNumber, description, unit, isScrollable = false }: KeyNumberItemProps) {
   return (
-    <Wrapper>
+    <Wrapper $isScrollable={isScrollable}>
       <>
         <NumberText style={{ fontWeight: 'var(--fontWeight-medium)', fontSize: 'var(--typeScale-6)' }}>
           {keyNumber?.toLocaleString()}{' '}

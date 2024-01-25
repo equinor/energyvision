@@ -36,13 +36,19 @@ const HorizontalWrapper = styled.div`
     --card-maxWidth: 400px;
   }
 `
-
 const Container = styled.div`
-  display: flex;
+  display: grid;
   gap: var(--space-large);
-  flex-wrap: wrap;
   margin-bottom: var(--space-large);
+  grid-template-columns: repeat(1, 1fr);
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 `
+
 type KeyNumbersProps = {
   data: KeyNumbersData
   anchor?: string
@@ -70,7 +76,7 @@ export default function ({ data, anchor }: KeyNumbersProps) {
 
       <Wrapper>
         {items.map((item) => (
-          <KeyNumberItem key={item.id} {...item} />
+          <KeyNumberItem isScrollable={renderScroll} key={item.id} {...item} />
         ))}
       </Wrapper>
 
