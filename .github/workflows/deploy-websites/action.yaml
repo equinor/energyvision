@@ -117,6 +117,7 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
+      # BACKUP CLUSTER
     - name: Deploy to Radix c1 🚀
       id: deploy-c1
       if: "${{ inputs.deployToBothClusters }}"
@@ -130,6 +131,7 @@ runs:
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
+      # MAIN CLUSTER
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
       uses: equinor/radix-github-actions@master

@@ -52,6 +52,9 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
+  deployToBothClusters:
+    description: 'Deploy app to both Radix clusters'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -119,8 +122,23 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
-    - name: Deploy API on Radix 🚀
-      id: deploy
+      # BACKUP CLUSTER
+    - name: Deploy to Radix c1 🚀
+      id: deploy-c1
+      if: "${{ inputs.deployToBothClusters }}"
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          create job
+          deploy
+          --token-environment
+          --context production
+          -a equinor-web-sites
+          -e ${{ inputs.environment }}
+          -f
+      # MAIN CLUSTER
+    - name: Deploy to Radix c2 🚀
+      id: deploy-c2
       uses: equinor/radix-github-actions@master
       with:
         args: >
