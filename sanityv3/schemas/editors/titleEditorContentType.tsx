@@ -3,7 +3,6 @@ import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
-import React from 'react'
 
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]

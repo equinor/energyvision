@@ -6,9 +6,7 @@ import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
-// import { done } from '@equinor/eds-icons'
 
-// export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
 export default {
   type: 'document',
   name: 'page',
@@ -52,27 +50,28 @@ export default {
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
-        { type: 'textTeaser' },
-        { type: 'fullWidthImage' },
-        { type: 'fullWidthVideo' },
         { type: 'figure' },
-        { type: 'textWithIconArray' },
+        { type: 'fullWidthImage' },
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
-        { type: 'promotion' },
-        { type: 'table' },
-        { type: 'stockValuesApi' },
         { type: 'iframe' },
-        { type: 'cookieDeclaration' },
-        Flags.HAS_FORMS && { type: 'form' },
-        Flags.HAS_NEWS && { type: 'newsList' },
-        Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
+        { type: 'fullWidthVideo' },
+        { type: 'textWithIconArray' },
+        { type: 'keyNumbers' },
+        { type: 'textTeaser' },
+        { type: 'promotion' },
         { type: 'anchorLink' },
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
+        { type: 'table' },
+        Flags.HAS_FORMS && { type: 'form' },
+        Flags.HAS_NEWS && { type: 'newsList' },
+        { type: 'stockValuesApi' },
+        Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
+        { type: 'cookieDeclaration' },
       ].filter((e) => e),
     },
   ].filter((e) => e),
