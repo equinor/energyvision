@@ -21,6 +21,9 @@
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
+    "@algolia/cache-browser-local-storage": "^4.22.1",
+    "@algolia/cache-common": "^4.22.1",
+    "@algolia/cache-in-memory": "^4.22.1",
     "@chakra-ui/react": "^2.4.2",
     "@chakra-ui/skip-nav": "^2.0.12",
     "@emotion/react": "^11",

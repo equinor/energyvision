@@ -22,7 +22,7 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
   justify-content: center;
 `
-const searchClient = client(undefined)
+const searchClient = client()
 const queriedSearchClient: SearchClient = {
   ...searchClient,
   search(requests: any) {

@@ -5,6 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@algolia/cache-browser-local-storage':
+    specifier: ^4.22.1
+    version: 4.22.1
+  '@algolia/cache-common':
+    specifier: ^4.22.1
+    version: 4.22.1
+  '@algolia/cache-in-memory':
+    specifier: ^4.22.1
+    version: 4.22.1
   '@chakra-ui/react':
     specifier: ^2.4.2
     version: 2.4.2(@emotion/react@11.0.0)(@emotion/styled@11.0.0)(@types/react@18.0.9)(framer-motion@6.0.0)(react-dom@18.2.0)(react@18.2.0)
@@ -295,13 +304,29 @@ packages:
     dependencies:
       '@algolia/cache-common': 4.16.0
 
+  /@algolia/cache-browser-local-storage@4.22.1:
+    resolution: {integrity: sha512-Sw6IAmOCvvP6QNgY9j+Hv09mvkvEIDKjYW8ow0UDDAxSXy664RBNQk3i/0nt7gvceOJ6jGmOTimaZoY1THmU7g==}
+    dependencies:
+      '@algolia/cache-common': 4.22.1
+    dev: false
+
   /@algolia/cache-common@4.16.0:
     resolution: {integrity: sha512-4iHjkSYQYw46pITrNQgXXhvUmcekI8INz1m+SzmqLX8jexSSy4Ky4zfGhZzhhhLHXUP3+x/PK/c0qPjxEvRwKQ==}
+
+  /@algolia/cache-common@4.22.1:
+    resolution: {integrity: sha512-TJMBKqZNKYB9TptRRjSUtevJeQVXRmg6rk9qgFKWvOy8jhCPdyNZV1nB3SKGufzvTVbomAukFR8guu/8NRKBTA==}
+    dev: false
 
   /@algolia/cache-in-memory@4.16.0:
     resolution: {integrity: sha512-p7RYykvA6Ip6QENxrh99nOD77otVh1sJRivcgcVpnjoZb5sIN3t33eUY1DpB9QSBizcrW+qk19rNkdnZ43a+PQ==}
     dependencies:
       '@algolia/cache-common': 4.16.0
+
+  /@algolia/cache-in-memory@4.22.1:
+    resolution: {integrity: sha512-ve+6Ac2LhwpufuWavM/aHjLoNz/Z/sYSgNIXsinGofWOysPilQZPUetqLj8vbvi+DHZZaYSEP9H5SRVXnpsNNw==}
+    dependencies:
+      '@algolia/cache-common': 4.22.1
+    dev: false
 
   /@algolia/client-account@4.16.0:
     resolution: {integrity: sha512-eydcfpdIyuWoKgUSz5iZ/L0wE/Wl7958kACkvTHLDNXvK/b8Z1zypoJavh6/km1ZNQmFpeYS2jrmq0kUSFn02w==}
