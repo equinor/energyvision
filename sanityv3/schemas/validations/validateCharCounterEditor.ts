@@ -1,14 +1,18 @@
-export const validateCharCounterEditor = (value: PortableTextBlock[], charLimit: number) => {
-  if (!value || value.length === 0) {
-    return 'Required'
+import type { PortableTextBlock } from 'sanity'
+
+export const validateCharCounterEditor = (value: PortableTextBlock[], charLimit: number, allowZeroLength = false) => {
+  if (!value || (value.length === 0 && !allowZeroLength)) {
+    return allowZeroLength ? true : 'Required'
   }
 
-  const count = value[0].children.reduce(
-    (total: any, current: { text: string | any[] }) => total + current.text.length,
-    0,
-  )
+  const count = value[0]?.children
+    ? (value[0].children as { text: string }[]).reduce(
+        (total: number, current: { text: string }) => total + current.text.length,
+        0,
+      )
+    : null
 
-  if (count > charLimit) {
+  if (count !== null && count > charLimit) {
     return `The introduction should be no longer than ${charLimit} characters. Currently ${count} characters long.`
   }
 

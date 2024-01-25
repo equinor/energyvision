@@ -9,6 +9,7 @@ on:
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
+      - '!./sanityv3/scripts/**/*'
 permissions:
   id-token: write
   packages: write
@@ -37,11 +38,10 @@ jobs:
         run: |
           pnpm install
           pnpm sanityv3 install
-      # @TODO: Enable ESlint for v3
-      # - name: Run ESLint 🔎
-      #   id: lint
-      #   run: |
-      #     pnpm lint:studio
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:sanityv3
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}

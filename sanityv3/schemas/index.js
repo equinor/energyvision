@@ -69,6 +69,7 @@ import simpleMenuGroup from './objects/simpleMenuGroup'
 import simpleMenuLink from './objects/simpleMenuLink'
 import stockValuesApi from './objects/stockValuesApi'
 import table from './objects/table'
+import tableRichText from './objects/table/tableRichText'
 import teaser from './objects/teaser'
 import textBlock from './objects/textBlock'
 import textWithIcon from './objects/textWithIcon'
@@ -144,6 +145,7 @@ const RemainingSchemas = [
   promotePeople,
   contactList,
   table,
+  tableRichText,
   assetFile,
   assetTag,
   cookieDeclaration,

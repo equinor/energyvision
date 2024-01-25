@@ -1,4 +1,5 @@
 import { iframeCarouselFields } from '../iframeCarouselFields'
+import { tableFields } from '../table'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
@@ -70,7 +71,10 @@ _type == "keyNumbers" =>{
   _type == "fullWidthImage"=>{
     "type": _type,
     "id": _key,
-    image
+    image,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '10:3'),
+    },
   },
   _type == "fullWidthVideo"=>{
     "type": _type,
@@ -375,47 +379,6 @@ _type == "keyNumbers" =>{
       "background": coalesce(background.title, 'none'),
     },
   },
-  _type == "table" => {
-    "type": _type,
-    "id": _key,
-    title[]{
-      ...,
-      ${markDefs},
-    },
-    ingress[]{
-      ...,
-      ${markDefs},
-    },
-    tableHeaders[]{
-      "id": _key,
-      headerCell[]{
-        ...,
-        ${markDefs},
-      }
-    },
-    tableRows[]{
-      "id": _key,
-      row[] {
-        "type": _type,
-        "id": _key,
-        label,
-        "link": select(
-          linkToOtherLanguage == true =>
-            referenceToOtherLanguage->${linkReferenceFields},
-            reference->${linkReferenceFields},
-        ),
-        "href": url,
-        ${downloadableFileFields},
-        ${downloadableImageFields},
-        ...
-      },
-    },
-    "designOptions": {
-      "aspectRatio": coalesce(aspectRatio, '16:9'),
-      "background": coalesce(background.title, 'none'),
-      height,
-    },
-  },
   _type == "cookieDeclaration" => {
     "type": _type,
     "id": _key,
@@ -519,6 +482,9 @@ _type == "keyNumbers" =>{
   _type == "videoPlayerCarousel" => {
     ${videoPlayerCarouselFields}
   },
+  _type == "table" => {
+    ${tableFields}
+  }
 `
 
 export default pageContentFields
