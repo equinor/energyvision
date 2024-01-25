@@ -67,7 +67,6 @@ export default {
         { type: 'iframeCarousel' },
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
-        { type: 'keyNumbers' },
         { type: 'table' },
         Flags.HAS_FORMS && { type: 'form' },
         Flags.HAS_NEWS && { type: 'newsList' },
