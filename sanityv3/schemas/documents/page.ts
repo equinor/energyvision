@@ -6,9 +6,7 @@ import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
-// import { done } from '@equinor/eds-icons'
 
-// export default ({ topicPrefix, title }: { topicPrefix: Topics; title: string }) => {
 export default {
   type: 'document',
   name: 'page',
@@ -61,6 +59,7 @@ export default {
         { type: 'fullWidthVideo' },
         { type: 'textWithIconArray' },
         { type: 'keyNumbers' },
+        { type: 'textTeaser' },
         { type: 'promotion' },
         { type: 'anchorLink' },
         { type: 'imageCarousel' },

@@ -71,6 +71,7 @@ import stockValuesApi from './objects/stockValuesApi'
 import table from './objects/table'
 import tableRichText from './objects/table/tableRichText'
 import teaser from './objects/teaser'
+import textTeaser from './objects/textTeaser'
 import textBlock from './objects/textBlock'
 import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
@@ -85,6 +86,7 @@ import videoPlayer from './objects/videoPlayer'
 import videoPlayerCarousel from './objects/videoPlayerCarousel'
 import videoControls from './objects/videoControls'
 import hlsVideo from './objects/hlsVideo'
+import themeList from './objects/themeList'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -122,6 +124,7 @@ const RemainingSchemas = [
   downloadableFile,
   downloadableImage,
   teaser,
+  textTeaser,
   textBlock,
   accordion,
   accordionItem,
@@ -164,6 +167,7 @@ const RemainingSchemas = [
   videoPlayerCarousel,
   videoControls,
   hlsVideo,
+  themeList,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
