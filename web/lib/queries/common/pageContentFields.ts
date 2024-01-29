@@ -8,11 +8,15 @@ import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorF
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
+import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
+_type == "keyNumbers" =>{
+    ${keyNumbersFields}
+  },
   _type == "teaser" => {
     "type": _type,
     "id": _key,
