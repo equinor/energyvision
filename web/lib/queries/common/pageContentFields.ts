@@ -43,6 +43,22 @@ _type == "keyNumbers" =>{
       ${downloadableImageFields},
     },
   },
+
+  _type == "textTeaser" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "text": text[]{..., ${markDefs}},
+    "designOptions": {
+      "theme": coalesce(theme.value, 0),
+      "titlePosition": coalesce(titlePosition, 'left'),
+    },
+    "action": action[0]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
+  },
   _type == "textBlock"=>{
     "type": _type,
     "id": _key,

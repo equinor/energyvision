@@ -19,6 +19,7 @@ import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
 import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
+import TextTeaser from '../../shared/textTeaser/TextTeaser'
 import KeyNumbers from '../../topicPages/KeyNumbers/KeyNumbers'
 import {
   AnchorLinkData,
@@ -46,6 +47,7 @@ import {
   IframeCarouselData,
   VideoPlayerData,
   VideoPlayerCarouselData,
+  TextTeaserData,
   KeyNumbersData,
 } from '../../../types/types'
 
@@ -70,6 +72,7 @@ type ComponentProps =
   | VideoPlayerData
   | VideoPlayerCarouselData
   | CookieDeclarationData
+  | TextTeaserData
   | KeyNumbersData
 
 type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
@@ -84,6 +87,8 @@ export const PageContent = ({ data }: PageContentProps) => {
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
+      case 'textTeaser':
+        return <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} />
       case 'textBlock':
         return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
       case 'fullWidthImage':
