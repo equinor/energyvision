@@ -3,7 +3,7 @@ import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import ControlledSearchBox from './ControlledSearchBox'
 import { SearchContext } from './SearchContext'
 
-const DEBOUNCE_TIME = 300
+const DEBOUNCE_TIME = 800
 
 export type SearchBoxProps = ComponentProps<'div'> & UseSearchBoxProps
 
