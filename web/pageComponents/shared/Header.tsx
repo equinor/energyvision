@@ -172,7 +172,8 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <NextLink href="/search">
+                  {/* legacy needed here to avoid 2 anchor tags */}
+                  <NextLink href="/search" passHref legacyBehavior>
                     <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
                       <Icon size={24} data={search} />
                     </StyledSearchButton>

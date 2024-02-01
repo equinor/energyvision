@@ -29,7 +29,8 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
   ref,
 ) {
   return (
-    <NextLink href={href} locale={locale}>
+    /* legacy needed here to avoid 2 anchor tags */
+    <NextLink href={href} locale={locale} passHref legacyBehavior>
       <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
         {children}
       </StyledButtonLink>
