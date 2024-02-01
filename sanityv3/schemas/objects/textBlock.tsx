@@ -209,9 +209,17 @@ export default {
     },
     {
       title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
+      description:
+        'Pick a colour for the background. Default is white. If background image is not provided this color is used',
       name: 'background',
       type: 'colorlist',
+      fieldset: 'design',
+    },
+    {
+      title: 'Background Image',
+      description: 'Pick a background image instead of color.',
+      name: 'imageBackground',
+      type: 'imageBackground',
       fieldset: 'design',
     },
   ].filter((e) => e),

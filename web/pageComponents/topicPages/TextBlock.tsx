@@ -68,7 +68,6 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
   const { background } = designOptions
-
   return (
     <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
       <StyledTextBlock>

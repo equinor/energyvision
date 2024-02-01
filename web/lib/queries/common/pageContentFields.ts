@@ -5,6 +5,7 @@ import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import background from './background'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
@@ -29,7 +30,7 @@ _type == "keyNumbers" =>{
         text[]{..., ${markDefs}}
       ),
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background}
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
@@ -81,7 +82,7 @@ _type == "keyNumbers" =>{
     overrideButtonStyle,
     anchor,
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background}
     },
   },
   _type == "fullWidthImage"=>{
@@ -113,7 +114,7 @@ _type == "keyNumbers" =>{
       caption
     },
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background}
     },
   },
   _type == "textWithIconArray"=>{
@@ -130,7 +131,7 @@ _type == "keyNumbers" =>{
     },
 
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+      ${background}
     },
   },
   _type == "pullQuote" => {
@@ -141,7 +142,7 @@ _type == "keyNumbers" =>{
     image,
     quote,
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background}
       "imagePosition": coalesce(imagePosition, 'right'),
     }
   },
@@ -165,7 +166,7 @@ _type == "keyNumbers" =>{
     },
     anchor,
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+      ${background}
     }
   },
   _type == "promoTileArray"=>{
@@ -200,7 +201,7 @@ _type == "keyNumbers" =>{
         "extension": asset-> extension
       },
       "designOptions": {
-        "background": coalesce(background.title, 'none'),
+        ${background}
       },
     },
   },
@@ -224,7 +225,7 @@ _type == "keyNumbers" =>{
     "cookiePolicy": coalesce(cookiePolicy, 'none'),
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
-      "background": coalesce(background.title, 'none'),
+      ${background}
       height,
     },
   },
@@ -392,7 +393,7 @@ _type == "keyNumbers" =>{
       }
     },
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+      ${background}
     },
   },
   _type == "cookieDeclaration" => {
@@ -461,7 +462,7 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background}
     },
   },
 
@@ -476,7 +477,7 @@ _type == "keyNumbers" =>{
         ${markDefs},
       },
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background}
     },
   },
 

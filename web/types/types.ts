@@ -252,6 +252,12 @@ export type LandingPageSchema = {
   seoAndSome: SeoData
 }
 
+export type ImageBackground = {
+  image?: ImageWithAlt
+  useAnimation?: boolean
+  useDarkTheme?: boolean
+}
+
 export type BackgroundColours =
   | 'White'
   | 'Moss Green'
@@ -266,9 +272,12 @@ export type BackgroundColours =
   | 'Slate Blue 95'
 
 export type DesignOptions = {
-  background?: BackgroundColours
-  imagePosition?: TeaserImagePosition
+  background?: {
+    backgroundColor?: BackgroundColours
+    imagePosition?: TeaserImagePosition
+  }
   imageSize?: TeaserImageSize
+  imageBackground?: ImageBackground
 }
 
 export type TextBlockData = {
