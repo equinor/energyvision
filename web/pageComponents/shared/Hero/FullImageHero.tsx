@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import type { HeroType, ImageWithCaptionData } from 'types'
-//import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import Image, { Ratios } from '../SanityImage'
 import { StyledCaption } from '../image/StyledCaption'
