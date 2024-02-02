@@ -26,7 +26,13 @@ const DEFAULT_MAX_WIDTH = 1920
 
 const AnimationWrapper = styled.div`
   /* Create View Timeline */
-  //height: 100vh;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 1) 70%);
+  section {
+    width: 40vw;
+    margin-right: 0;
+    padding: var(--space-3xLarge) var(--space-3xLarge);
+  }
+  display: flex;
   view-timeline-name: --revealing-image;
   view-timeline-axis: block;
 
@@ -35,13 +41,20 @@ const AnimationWrapper = styled.div`
   animation-timeline: --revealing-image;
 
   /* Tweak range when effect should run*/
-  animation-range: entry 25% cover 50%;
+  animation-range: cover 0% cover 100%;
+
   @keyframes fadeIn {
     0% {
       opacity: 0;
     }
-    100% {
+    20% {
       opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
     }
   }
 `
