@@ -7,7 +7,7 @@ import KeyNumberItem from './KeyNumberItem'
 import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
 import RichText from '../../shared/portableText/RichText'
 import { Carousel } from '../../shared/Carousel'
-import useWindowSize from '../../../lib/hooks/useWindowSize'
+import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -55,9 +55,9 @@ type KeyNumbersProps = {
 }
 export default function ({ data, anchor }: KeyNumbersProps) {
   const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
-  const { width } = useWindowSize()
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
 
-  const renderScroll = useHorizontalScroll && Boolean(width && width <= 800)
+  const renderScroll = useHorizontalScroll && isMobile
   const Wrapper = renderScroll
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>

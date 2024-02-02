@@ -7,8 +7,8 @@ import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
-import useWindowSize from '../../lib/hooks/useWindowSize'
 import { Carousel } from '../shared/Carousel'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 const { Header, Action, Media } = Card
 
@@ -57,11 +57,11 @@ const StyledCard = styled(Card)`
 `
 
 const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
-  const { width } = useWindowSize()
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   if (!data.group) return null
 
-  const renderScroll = data.useHorizontalScroll || Boolean(width && width <= 800)
+  const renderScroll = data.useHorizontalScroll || isMobile
 
   const richTitle = (title: PortableTextBlock[], hasImage: boolean) => {
     return (

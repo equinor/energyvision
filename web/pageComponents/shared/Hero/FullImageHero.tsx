@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import type { HeroType, ImageWithCaptionData } from 'types'
-import useWindowSize from '../../../lib/hooks/useWindowSize'
+//import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import Image, { Ratios } from '../SanityImage'
 import { StyledCaption } from '../image/StyledCaption'
 
@@ -25,11 +26,16 @@ const FullScreenHero = ({ figure }: FullImageHeroType) => {
 }
 
 const NarrowHero = ({ figure }: FullImageHeroType) => {
-  const { width } = useWindowSize()
   // 4:3 for small screens and 10:3 for large screens
-  const aspectRatio = width && width < 750 ? Ratios.THREE_TO_FOUR : Ratios.THREE_TO_TEN
+  const desktopUrl = useSanityLoader(figure.image, 4096, Ratios.THREE_TO_TEN)
 
-  return <Image maxWidth={4096} aspectRatio={aspectRatio} image={figure.image} sizes={imageSizes} priority />
+  // Using picture with mobile and dekstop source to avoid initial load layout shift between aspect ratio
+  return (
+    <picture>
+      <source srcSet={desktopUrl.src} media="(min-width: 750px)" />
+      <Image maxWidth={1024} aspectRatio={Ratios.THREE_TO_FOUR} image={figure.image} sizes={imageSizes} priority />
+    </picture>
+  )
 }
 
 const RatioHero = ({ ratio, figure }: FullImageHeroType) => {
