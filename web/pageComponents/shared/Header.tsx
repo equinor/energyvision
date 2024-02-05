@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, Button, BackgroundContainer } from '@components'
+import { Topbar, BackgroundContainer, Button } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -12,17 +12,12 @@ import { Flags } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage } from 'react-intl'
-import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
-
-const StyledSearchButton = styled(Button)`
-  color: var(--default-text);
-  fill: var(--default-text);
-`
+import { Icon } from '@equinor/eds-core-react'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -172,11 +167,25 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <NextLink href="/search" prefetch={false}>
-                    <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
-                      <Icon size={24} data={search} />
-                    </StyledSearchButton>
-                  </NextLink>
+                  <Button
+                    variant="ghost_icon"
+                    aria-expanded="true"
+                    aria-label="Search"
+                    forwardedAs={NextLink}
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
+                    href={{
+                      pathname: '/search',
+                    }}
+                    style={
+                      {
+                        color: 'var(--default-text)',
+                        fill: 'var(--default-text)',
+                      } as CSSProperties
+                    }
+                  >
+                    <Icon size={24} data={search} />
+                  </Button>
                 </ControlChild>
               )}
               {hasMoreThanOneLanguage && (
