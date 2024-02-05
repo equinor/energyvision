@@ -29,11 +29,18 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
   ref,
 ) {
   return (
-    /* legacy needed here to avoid 2 anchor tags */
-    <NextLink href={href} locale={locale} passHref legacyBehavior>
-      <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
-        {children}
-      </StyledButtonLink>
-    </NextLink>
+    <StyledButtonLink
+      locale={locale}
+      forwardedAs={NextLink}
+      href={{
+        pathname: href,
+      }}
+      color="secondary"
+      variant="outlined"
+      ref={ref}
+      {...rest}
+    >
+      {children}
+    </StyledButtonLink>
   )
 })
