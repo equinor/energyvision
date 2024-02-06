@@ -1,9 +1,8 @@
 import { Fragment } from 'react'
-import { List, Link } from '@components'
+import { List } from '@components'
 import type { LinkData } from '../../types/types'
 import { ButtonLink } from '../shared/ButtonLink'
-import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../lib/localization'
+import ReadMoreLink from '../shared/ReadMoreLink'
 
 const { Item } = List
 
@@ -23,31 +22,12 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
   ) : (
     <List unstyled splitList={splitList}>
       {callToActions.map((callToAction: LinkData) => {
-        const { id, type, label, ariaLabel, extension } = callToAction
-
-        const url = getUrlFromAction(callToAction)
-        const linkLocale = getLocaleFromName(callToAction.link?.lang)
-        if (!url) {
-          console.warn(`Missing URL on 'CallToActions' link with type: '${type}' and label: '${label}'`)
-          return null
-        }
-
         return (
-          <Fragment key={id}>
+          <Fragment key={callToAction.id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
-            {type === 'internalUrl' ? (
-              <Item>
-                <Link href={url} locale={linkLocale} variant="contentLink" type={type} aria-label={ariaLabel}>
-                  {label}
-                </Link>
-              </Item>
-            ) : (
-              <Item>
-                <Link variant="contentLink" type={type} href={url} aria-label={ariaLabel}>
-                  {label} {extension && `(${extension.toUpperCase()})`}
-                </Link>
-              </Item>
-            )}
+            <Item>
+              <ReadMoreLink action={callToAction} variant="contentLink" />
+            </Item>
           </Fragment>
         )
       })}

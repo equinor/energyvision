@@ -99,7 +99,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </ContentWrapper>
           )}
-          {action && <ReadMoreLink action={action} />}
+          {action && <ReadMoreLink action={action} variant="readMore" />}
         </Content>
       </StyledEnvisTeaser>
     </BackgroundContainer>

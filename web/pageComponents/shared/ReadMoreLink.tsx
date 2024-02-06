@@ -7,7 +7,14 @@ import styled from 'styled-components'
 const StyledLink = styled(Link)`
   font-size: var(--typeScale-1);
 `
-const ReadMoreLink = ({ action }: { action: LinkData }) => {
+
+const ReadMoreLink = ({
+  action,
+  variant = 'regular',
+}: {
+  action: LinkData
+  variant?: 'regular' | 'contentLink' | 'readMore'
+}) => {
   const { type, label, extension } = action
   const url = getUrlFromAction(action)
   if (!url) {
@@ -18,14 +25,14 @@ const ReadMoreLink = ({ action }: { action: LinkData }) => {
   if (action.type === 'internalUrl') {
     const locale = getLocaleFromName(action.link?.lang)
     return (
-      <StyledLink href={url} locale={locale} variant="readMore" aria-label={action.ariaLabel}>
+      <StyledLink href={url} locale={locale} variant={variant} aria-label={action.ariaLabel}>
         {action.label}
       </StyledLink>
     )
   }
 
   return (
-    <StyledLink variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
+    <StyledLink variant={variant} href={url} type={action.type} aria-label={action.ariaLabel}>
       {action.label} {extension && `(${extension.toUpperCase()})`}
     </StyledLink>
   )

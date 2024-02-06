@@ -91,7 +91,9 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
               />
             </StyledIngress>
           )}
-          {link && !isBigTitle && <ReadMoreLink action={link} />}
+          {link && !isBigTitle && (
+            <ReadMoreLink action={link} variant={link.type === 'internalUrl' ? 'readMore' : 'regular'} />
+          )}
         </StyledContent>
       </StyledHero>
     </>

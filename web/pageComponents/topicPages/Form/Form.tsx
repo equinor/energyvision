@@ -5,8 +5,9 @@ import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
-import { Link, BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@components'
 import CareersContactForm from './CareersContactForm'
+import ReadMoreLink from '../../shared/ReadMoreLink'
 
 import type { LinkData, FormData } from '../../../types/types'
 
@@ -44,18 +45,7 @@ const Form = ({ data, anchor }: { data: FormData; anchor?: string }) => {
                 <ListStyled>
                   {downloads.length > 0 &&
                     downloads.map((item: LinkData) => {
-                      const { id, label, type, extension, ariaLabel } = item
-                      const url = item.href + '?' + item.fileName?.replace(/ /g, '-')
-                      if (!url) {
-                        console.warn(`Missing URL on 'Download' link with type: '${type}' and label: '${label}'`)
-                        return null
-                      }
-
-                      return (
-                        <Link key={id} variant="contentLink" type={type} href={url} aria-label={ariaLabel}>
-                          {label} {extension && `(${extension.toUpperCase()})`}
-                        </Link>
-                      )
+                      return <ReadMoreLink key={item.id} action={item} variant="contentLink" />
                     })}
                 </ListStyled>
               )}
