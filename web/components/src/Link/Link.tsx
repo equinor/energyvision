@@ -140,6 +140,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
         } as CSSProperties
       }
       $textDecoration={underline ? 'underline' : 'none'}
+      prefetch={false}
       {...rest}
     >
       {children} {type === 'externalUrl' ? <Icon data={external_link} size={16} /> : null}

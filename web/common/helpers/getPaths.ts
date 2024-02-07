@@ -26,6 +26,23 @@ const getTopicRoutesForLocale = async (locale: string) => {
   )
   return data
 }
+const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
+  const lang = getNameFromLocale(locale)
+  // Empty array as fallback for satelittes
+  const blacklist = topicSlugBlackList[lang as keyof typeof topicSlugBlackList] || []
+  const data: { slug: string; _updatedAt: string }[] = await sanityClient.fetch(
+    groq`*[_type match "route_" + $lang + "*" && (!(slug.current in $blacklist)) && includeInBuild && defined(slug.current) && !(_id in path("drafts.**"))][] {
+      _updatedAt,
+      "slug": slug.current,
+    }`,
+    {
+      lang,
+      blacklist,
+    },
+  )
+  console.log('data', data)
+  return data
+}
 
 const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', locale: string) => {
   const lang = getNameFromLocale(locale)
@@ -62,6 +79,19 @@ export type PathType = {
   slug: string[] | string
   updatedAt: string
   locale: string
+}
+
+export const getStaticBuildRoutePaths = async (locales: string[]): Promise<PathType[]> => {
+  const fetchPaths = locales.map(async (locale) => {
+    const pages = await getTopicRoutesForLocaleToStaticallyBuild(locale)
+    return pages.map((page) => ({
+      slug: page.slug.split('/').filter((p) => p),
+      updatedAt: page._updatedAt,
+      locale,
+    }))
+  })
+
+  return (await Promise.all(fetchPaths)).flat()
 }
 
 export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
