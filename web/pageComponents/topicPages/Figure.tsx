@@ -2,7 +2,7 @@ import type { FigureData } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer, FigureCaption } from '@components'
 import { StyledTextBlockWrapper } from './TextBlock'
-import Image from '../shared/SanityImage'
+import Image, { Ratios } from '../shared/SanityImage'
 
 type TeaserProps = {
   data: FigureData
@@ -35,15 +35,19 @@ const FullWidthImage = ({ data, anchor }: TeaserProps) => {
   if (!figure?.image) return null
 
   const { image, caption, attribution } = figure
+  const { aspectRatio } = designOptions
+  // If we add more ratios, create a switch statement for the sanity ratios, for now we only have 9:16
+  const sizes = '(min-width: 2060px) 920px, (min-width: 440px) calc(34.56vw + 215px), calc(76.67vw + 38px)'
 
   return (
     <StyledFigureWrapper background={designOptions?.background} id={anchor}>
       <StyledFigure>
-        <Image
-          image={image}
-          maxWidth={920}
-          sizes="(min-width: 2060px) 920px, (min-width: 440px) calc(34.56vw + 215px), calc(76.67vw + 38px)"
-        />
+        {aspectRatio !== 'original' ? (
+          <Image image={image} aspectRatio={Ratios.NINE_TO_SIXTEEN} maxWidth={920} sizes={sizes} />
+        ) : (
+          <Image image={image} maxWidth={920} sizes={sizes} />
+        )}
+
         {(caption || attribution) && (
           <FigureCaption>
             {caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>}
