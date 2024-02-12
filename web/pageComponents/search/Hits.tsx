@@ -1,4 +1,4 @@
-import { useHits } from 'react-instantsearch-hooks-web'
+import { useHits } from 'react-instantsearch'
 import { List, Heading } from '@components'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
@@ -43,7 +43,7 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
   if (!hits || hits.length === 0) {
     return (
       <WarningContainer>
-        <UppercaseHeading level="h2" size="sm" inverted>
+        <UppercaseHeading level="h2" size="sm">
           <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
         </UppercaseHeading>
         <WarningText>

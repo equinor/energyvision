@@ -1,6 +1,5 @@
 import { info_circle } from '@equinor/eds-icons'
 import { PortableTextBlock } from 'sanity'
-import { defaultColors } from '../components/ColorSelector'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import { configureBlockContent } from '../editors/blockContentType'
@@ -12,8 +11,6 @@ const imageAlignmentOptions = [
   { value: 'right', icon: RightAlignedImage },
 ]
 
-const chosenColors = ['White', 'Moss Green', 'Spruce Wood']
-const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 const blockContentType = configureBlockContent({
   h1: false,
   h2: false,
@@ -69,9 +66,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      options: {
-        colors: backgroundColors,
-      },
     },
     {
       name: 'imagePosition',

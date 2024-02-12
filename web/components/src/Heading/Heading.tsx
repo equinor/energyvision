@@ -4,7 +4,6 @@ import styled from 'styled-components'
 
 type StyledHeadingProps = {
   center: boolean
-  inverted: boolean
 }
 
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
@@ -17,24 +16,14 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
     center && {
       textAlign: 'center',
     }}
-
-  ${({ inverted }) =>
-    inverted && {
-      color: 'var(--inverted-text)',
-    }}
-
-  /* If the heading is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 
 export type HeadingProps = {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   regular?: boolean
   center?: boolean
-  inverted?: boolean
   uppercase?: boolean
 } & HTMLAttributes<HTMLHeadingElement>
 
@@ -47,6 +36,8 @@ const sizes = {
   xl: 'var(--typeScale-4)',
   '2xl': 'var(--typeScale-4_5)',
   '3xl': 'var(--typeScale-5)',
+  '4xl': 'var(--typeScale-6)',
+  '5xl': 'var(--typeScale-7)',
 }
 
 const lineHeights = {
@@ -57,6 +48,8 @@ const lineHeights = {
   xl: 'var(--lineHeight-1)',
   '2xl': 'var(--lineHeight-2_5)',
   '3xl': 'var(--lineHeight-2)',
+  '4xl': 'var(--lineHeight-2)',
+  '5xl': 'var(--lineHeight-2)',
 }
 
 const fontWeights = {
@@ -65,22 +58,14 @@ const fontWeights = {
   md: 'var(--fontWeight-regular)',
   lg: 'var(--fontWeight-regular)',
   xl: 'var(--fontWeight-regular)',
-  '2xl': 'var(--fontWeidht-regular)',
+  '2xl': 'var(--fontWeight-regular)',
   '3xl': 'var(--fontWeight-regular)',
+  '4xl': 'var(--fontWeight-regular)',
+  '5xl': 'var(--fontWeight-regular)',
 }
 
 export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
-  {
-    size = 'lg',
-    level = 'h3',
-    regular = false,
-    center = false,
-    inverted = false,
-    uppercase = false,
-    style,
-    children,
-    ...rest
-  },
+  { size = 'lg', level = 'h3', regular = false, center = false, uppercase = false, style, children, ...rest },
   ref,
 ) {
   return (
@@ -88,7 +73,6 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
       variant={level}
       ref={ref}
       center={center}
-      inverted={inverted}
       style={
         {
           '--size': sizes[size],

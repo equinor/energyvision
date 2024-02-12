@@ -13,7 +13,7 @@ const StyledPanel = styled.div`
   }
 `
 const ContentWithBorder = styled.div`
-  border-left: 1px dashed var(--energy-red-100);
+  border-left: 1px dashed var(--accordion-icon-color);
   padding-left: calc(var(--space-xLarge) / 2);
 `
 

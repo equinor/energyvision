@@ -2,10 +2,10 @@ import { toPlainText } from '@portabletext/react'
 import Img from 'next/image'
 import styled from 'styled-components'
 import RichText from '../../RichText'
-import { FactBox, Heading } from '@components'
-import type { FactBackground, FactImagePosition } from '@components'
+import { FactBox, getContainerColor, Heading, StyleVariants } from '@components'
+import type { FactImagePosition } from '@components'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { ImageWithAlt } from '../../../../../types/types'
+import type { BackgroundColours, ImageWithAlt } from '../../../../../types/types'
 
 import { urlFor } from '../../../../../common/helpers'
 
@@ -32,6 +32,10 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{
     !hasImage && {
       padding: `${hasBgColor ? 'var(--space-3xLarge)' : '0'} var(--layout-paddingHorizontal-large)`,
     }}
+  ${({ hasColumns, hasBgColor }) =>
+    hasColumns && {
+      padding: `${hasBgColor ? 'var(--space-large)' : '0 var(--space-large)'}`,
+    }}
 `
 
 type BlockProps = {
@@ -42,19 +46,12 @@ type BlockProps = {
 export const Fact = (block: BlockProps) => {
   const { value } = block
   const { title, content, background, image, imagePosition, dynamicHeight } = value
-  const bgTitle = background ? background?.title : 'none'
+  const bgTitle = (background ? background?.title : 'White') as BackgroundColours
   if (!content || content.length === 0) {
     return null
   }
 
-  let backgroundColor: FactBackground = 'none'
-  if (bgTitle === 'White') {
-    backgroundColor = 'none'
-  } else if (bgTitle === 'Moss Green') {
-    backgroundColor = 'cold'
-  } else if (bgTitle === 'Spruce Wood') {
-    backgroundColor = 'warm'
-  }
+  const backgroundColor: StyleVariants = getContainerColor(bgTitle)
 
   const imageSrc = image && image.asset ? urlFor(image).size(1200, 800).auto('format').toString() : false
 
@@ -62,15 +59,15 @@ export const Fact = (block: BlockProps) => {
 
   const hasColumns = !imageSrc && plainText.length > 800
   const hasImage = imageSrc ? true : false
-  const hasBgColor = backgroundColor !== 'none'
+  const hasBgColor = bgTitle !== 'White'
 
   return (
     <FactBoxWithPadding
-      className={`fact-box fact-box--${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''} ${
+      className={`fact-box fact-box${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''} ${
         hasImage ? 'fact-box--image' : ''
       }`}
       imagePosition={imagePosition}
-      background={backgroundColor}
+      background={bgTitle}
     >
       {imageSrc && (
         <FactBox.Image>

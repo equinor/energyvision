@@ -4,9 +4,9 @@ import { sanityClient } from '../sanity.client'
 import { useToast } from '@sanity/ui'
 
 const client = sanityClient.withConfig({
-  apiVersion: '2023-01-01',
   projectId: process.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9',
   token: process.env.SANITY_STUDIO_MUTATION_TOKEN,
+  ignoreBrowserTokenWarning: true,
 })
 
 const token = {

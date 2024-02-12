@@ -18,7 +18,7 @@ env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
 jobs:
   read-satellites:
-    runs-on: ubuntu-latest
+    runs-on: energyvision_runner
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     outputs:
@@ -38,7 +38,7 @@ jobs:
         if: failure()
 
   backup-dataset:
-    runs-on: ubuntu-latest
+    runs-on: energyvision_runner
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     needs: read-satellites

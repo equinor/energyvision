@@ -1,5 +1,6 @@
 import { play_circle_outlined } from '@equinor/eds-icons'
 import { EdsIcon, FileIcon } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 
 export const UnusedAssetFilters = (S) =>
   S.listItem()
@@ -10,7 +11,7 @@ export const UnusedAssetFilters = (S) =>
 
 const getUnusedPublishedAssets = (S, docType) =>
   S.documentTypeList(docType)
-    .apiVersion('2023-01-13')
+    .apiVersion(apiVersion)
     .filter(
       /* groq */ ` _type in [$docType] && (
         (!(_id in path("drafts.**"))&& count(*[references(^._id)]) == 0)
@@ -21,7 +22,7 @@ const getUnusedPublishedAssets = (S, docType) =>
 
 const getUnpublishedDraftAssets = (S, docType) =>
   S.documentTypeList(docType)
-    .apiVersion('2023-01-13')
+    .apiVersion(apiVersion)
     .filter(
       /* groq */ ` _type in [$docType] && (
         (_id in path("drafts.**") && count(*[^._id == "drafts." + _id]) == 0)

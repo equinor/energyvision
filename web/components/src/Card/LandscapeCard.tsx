@@ -27,7 +27,7 @@ export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card
       style={
         {
           '--card-shadow': 'var(--card-box-shadow)',
-          '--card-background': 'var(--ui-background-default)',
+          '--card-background': 'var(--bg-default)',
           '--card-padding': '0 0 var(--space-small) 0',
           ...style,
         } as CSSProperties

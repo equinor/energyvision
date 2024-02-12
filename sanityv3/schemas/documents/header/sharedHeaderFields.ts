@@ -1,9 +1,17 @@
-import { Rule, ValidationContext } from 'sanity'
+import { PortableTextBlock, Rule, ValidationContext, CurrentUser } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
+import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
 
-type DocumentType = { parent: { heroType?: string } }
+const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
+
+type DocumentType = { parent: Hero; currentUser: CurrentUser }
+type Hero = {
+  heroType?: HeroTypes
+  isBigTitle?: boolean
+}
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -13,6 +21,62 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
+
+const isBigTitle = {
+  title: 'Big title',
+  name: 'isBigTitle',
+  type: 'boolean',
+  fieldset: 'header',
+  hidden: ({ parent }: DocumentType) => {
+    return !(parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.DEFAULT)
+  },
+  readOnly: ({ currentUser }: DocumentType) => {
+    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
+  },
+}
+
+const heroBigTitleDefault = {
+  name: 'heroBigTitleDefault',
+  title: 'Hero Title',
+  type: 'array',
+  fieldset: 'header',
+  of: [
+    configureTitleBlockContent({
+      highlight: true,
+      styles: defaultBannerBigTitletStyle,
+    }),
+  ],
+  hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.DEFAULT,
+  validation: (Rule: Rule) =>
+    Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+      (!value || blocksToText(value)?.length === 0) &&
+      (ctx.parent as Hero)?.isBigTitle &&
+      (ctx.parent as Hero)?.heroType === HeroTypes.DEFAULT
+        ? 'Title is required'
+        : true,
+    ),
+  readOnly: ({ currentUser }: DocumentType) => {
+    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
+  },
+}
+
+const heroBigTitleFiftyFifty = {
+  name: 'heroBigTitleFiftyFifty',
+  title: 'Hero Title',
+  type: 'array',
+  fieldset: 'header',
+  of: [configureTitleBlockContent({ styles: fiftyFiftyBigTitleStyle })],
+  hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.FIFTY_FIFTY,
+  validation: (Rule: Rule) =>
+    Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+      !value && (ctx.parent as Hero)?.isBigTitle && (ctx.parent as Hero)?.heroType === HeroTypes.FIFTY_FIFTY
+        ? 'Title is required'
+        : true,
+    ),
+  readOnly: ({ currentUser }: DocumentType) => {
+    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
+  },
+}
 
 const title = {
   name: 'title',
@@ -58,7 +122,7 @@ const heroRatio = {
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
+      const { parent } = context as unknown as DocumentType
       if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
       return true
     }),
@@ -76,12 +140,14 @@ const heroTitle = {
   of: [titleContentType],
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
-      if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value) return 'Field is required'
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value && !parent.isBigTitle) return 'Field is required'
       return true
     }),
 }
@@ -92,7 +158,9 @@ const heroIngress = {
   type: 'array',
   of: [ingressContentType],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
   },
   fieldset: 'header',
 }
@@ -104,7 +172,9 @@ const heroLink = {
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
   },
   fieldset: 'header',
   validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
@@ -128,7 +198,7 @@ const heroImage = {
   description: 'Caption and credit is not shown for 50-50 banner.',
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
+      const { parent } = context as unknown as DocumentType
       if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
       return true
     }),
@@ -146,7 +216,7 @@ const heroLoopingVideo = {
   fieldset: 'header',
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
+      const { parent } = context as unknown as DocumentType
       if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
       return true
     }),
@@ -171,7 +241,7 @@ const heroLoopingVideoRatio = {
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as DocumentType
+      const { parent } = context as unknown as DocumentType
       if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
       return true
     }),
@@ -179,10 +249,13 @@ const heroLoopingVideoRatio = {
 }
 
 export default [
+  isBigTitle,
   title,
   heroType,
   heroRatio,
   heroTitle,
+  heroBigTitleDefault,
+  heroBigTitleFiftyFifty,
   heroIngress,
   heroLink,
   background,

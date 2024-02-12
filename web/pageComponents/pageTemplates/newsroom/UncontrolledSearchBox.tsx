@@ -3,7 +3,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
+import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import styled from 'styled-components'
 import VisuallyHidden from '../../shared/VisuallyHidden'
 import { useIntl } from 'react-intl'
@@ -42,7 +42,7 @@ const Input = styled.input`
 
 export type SearchBoxProps = UseSearchBoxProps
 
-const DEBOUNCE_TIME = 300
+const DEBOUNCE_TIME = 800
 let timerId: any = undefined
 
 const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {

@@ -8,7 +8,7 @@ import NewsHit from './NewsHit'
 import { SearchContext } from './SearchContext'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
-import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch-hooks-web'
+import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
 
 const Results = styled.div`
   margin-top: var(--space-xLarge);
@@ -85,7 +85,7 @@ const SearchResults = (props: SearchResultsProps) => {
           <Tabs index={activeTab || 0} onChange={handleTabChange}>
             <TabList>
               {options.map((item) => (
-                <Tab inverted key={item.label}>
+                <Tab key={item.label}>
                   <TabText>
                     {item.label}
                     <HitsContainer>

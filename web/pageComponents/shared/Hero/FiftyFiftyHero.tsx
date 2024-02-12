@@ -53,9 +53,9 @@ const StyledIngress = styled.div`
     display: none;
   }
 `
-const StyledHeroTitle = styled(TitleText)`
+const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }) => props)`
   max-width: 1186px; /* 1920 - (2 * 367) */
-  font-weight: var(--fontWeight-medium);
+  font-weight: ${(props) => (props.$isBigTitle ? 'var(--fontWeight-regular)' : 'var(--fontWeight-medium)')};
 `
 
 const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
@@ -80,7 +80,7 @@ const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
   )
 }
 
-export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: HeroType) => {
+export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
   return (
     <>
       <StyledHero background={background}>
@@ -88,7 +88,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
           {figure && (
             <Image
               maxWidth={4096}
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(min-width: 760px) 50vw, 100vw"
               image={figure.image}
               fill
               style={{ objectFit: 'cover' }}
@@ -97,8 +97,10 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
           )}
         </StyledMedia>
         <StyledContent>
-          {title && <StyledHeroTitle value={title} level="h1" size="xl" />}
-          {ingress && (
+          {title && (
+            <StyledHeroTitle $isBigTitle={isBigTitle} value={title} level="h1" size={isBigTitle ? '2xl' : 'xl'} />
+          )}
+          {ingress && !isBigTitle && (
             <StyledIngress>
               <IngressText
                 value={ingress}
@@ -114,7 +116,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure }: Her
               />
             </StyledIngress>
           )}
-          {link && <HeroActionLink action={link} />}
+          {link && !isBigTitle && <HeroActionLink action={link} />}
         </StyledContent>
       </StyledHero>
     </>

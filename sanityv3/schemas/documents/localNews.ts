@@ -29,6 +29,7 @@ import {
   relatedLinks,
   seo,
   title,
+  excludeFromSearch,
 } from './news/sharedNewsFields'
 
 type SlugParent = {
@@ -137,6 +138,7 @@ export default {
     content,
     iframe,
     relatedLinks,
+    excludeFromSearch,
   ].filter((e) => e),
   preview: {
     select: {

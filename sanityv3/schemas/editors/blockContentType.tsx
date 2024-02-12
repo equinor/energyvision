@@ -1,9 +1,8 @@
-import { attach_file, external_link, link } from '@equinor/eds-icons'
-import type { Rule, ValidationContext } from 'sanity'
+import { attach_file, external_link, format_color_text, link } from '@equinor/eds-icons'
+import type { BlockDefinition, Rule, ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
-import type { BlockFieldType } from '../../types/schemaTypes'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 
@@ -17,18 +16,29 @@ export type BlockContentProps = {
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
+  highlight?: boolean
   normalTextOverride?: {
     title: string
     value: 'normal'
     component?: ({ children }: { children: React.ReactNode }) => JSX.Element
   }
 }
+
+export const textColorConfig = {
+  title: 'Highlight',
+  value: 'highlight',
+  icon: EdsBlockEditorIcon(format_color_text),
+  component: ({ children }: { children: React.ReactNode }) => {
+    return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
+  },
+}
+
 const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
 
-export const configureBlockContent = (options: BlockContentProps = {}): BlockFieldType => {
+export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
     h1 = false,
     h2 = true,
@@ -39,11 +49,13 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
     attachment = false,
     lists = true,
     smallText = true,
+    highlight = false,
     normalTextOverride = { title: 'Normal', value: 'normal' },
   } = options
 
-  const config: BlockFieldType = {
+  const config: BlockDefinition = {
     type: 'block',
+    name: 'block',
     styles: [normalTextOverride],
     lists: lists
       ? [
@@ -208,34 +220,38 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockFie
   }
 
   if (h1) {
-    config.styles.push(h1Config)
+    config?.styles?.push(h1Config)
   }
 
   if (h2) {
-    config.styles.push(h2Config)
+    config?.styles?.push(h2Config)
   }
 
   if (h3) {
-    config.styles.push(h3Config)
+    config?.styles?.push(h3Config)
   }
 
   if (h4) {
-    config.styles.push(h4Config)
+    config?.styles?.push(h4Config)
   }
   if (smallText) {
-    config.styles.push(smallTextConfig)
+    config?.styles?.push(smallTextConfig)
   }
 
   if (externalLink) {
-    config.marks.annotations.push(externalLinkConfig)
+    config?.marks?.annotations?.push(externalLinkConfig)
   }
 
   if (internalLink) {
-    config.marks.annotations.push(internalLinkConfig)
+    config?.marks?.annotations?.push(internalLinkConfig)
   }
 
   if (attachment) {
-    config.marks.annotations.push(attachmentConfig)
+    config?.marks?.annotations?.push(attachmentConfig)
+  }
+
+  if (highlight) {
+    config.marks?.decorators?.push(textColorConfig)
   }
 
   return config

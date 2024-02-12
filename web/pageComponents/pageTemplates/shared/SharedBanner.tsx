@@ -32,11 +32,12 @@ export const SharedBanner = ({ title, hero, hideImageCaption, captionBg }: Banne
           link={hero.link}
           ingress={hero.ingress}
           background={hero.background}
+          isBigTitle={hero.isBigTitle}
         />
       )
     case HeroTypes.LOOPING_VIDEO:
       return <LoopingVideo video={hero.loopingVideo as LoopingVideoData} />
     default:
-      return <DefaultHero title={title} image={hero.figure} />
+      return <DefaultHero title={title} image={hero.figure} isBigTitle={hero.isBigTitle} bigTitle={hero.title} />
   }
 }

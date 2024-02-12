@@ -10,7 +10,7 @@ import {
   SchemaTypeDefinition,
   Template,
 } from 'sanity'
-import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType } from 'sanity'
+import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentActionsContext } from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 import { deskTool, StructureBuilder } from 'sanity/desk'
@@ -102,14 +102,16 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     templates: (prev: Template<any, any>[]) => [...prev, ...initialValueTemplates],
   },
   document: {
-    actions: (prev: DocumentActionComponent[]) => {
+    actions: (prev: DocumentActionComponent[], context: DocumentActionsContext) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
       return prev
         .filter(({ action, name }: DocumentActionComponent) => {
           return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
         })
         .map((originalAction) =>
-          originalAction.action === 'publish' ? createCustomPublishAction(createPublishAction(i18n)) : originalAction,
+          originalAction.action === 'publish'
+            ? createCustomPublishAction(createPublishAction(i18n), context)
+            : originalAction,
         )
     },
   },

@@ -9,6 +9,7 @@ on:
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
+      - '!./sanityv3/scripts/**/*'
 permissions:
   id-token: write
   packages: write
@@ -37,19 +38,65 @@ jobs:
         run: |
           pnpm install
           pnpm sanityv3 install
-      # @TODO: Enable ESlint for v3
-      # - name: Run ESLint 🔎
-      #   id: lint
-      #   run: |
-      #     pnpm lint:studio
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:sanityv3
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  deploy-studio:
+  update-radix-config:
     needs: check-code
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Modify radixconfig tag for DEV on staging branch 🗒️
+        if: github.ref == 'refs/heads/staging'
+        shell: bash
+        id: modify-radix
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/upgradeEnvironment.py studio ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
+          git config --global user.name 'github'
+          git config --global user.email 'padms@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          if [[ `git status --porcelain` ]]
+          then
+            git commit -am "🚀 Deploy studio to dev for tag ${{ env.IMAGE_TAG_SHA }}"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-studio:
+    needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -70,7 +117,7 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityMutationToken: ${{ secrets.SANITY_STUDIO_MUTATION_TOKEN }}
+          sanityHistoryApiToken: ${{ secrets.SANITY_STUDIO_HISTORY_API_TOKEN }}
           sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}

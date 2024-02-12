@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
 import EventsCard from '../../cards/EventsCard'
 import { Carousel } from '../../shared/Carousel'
+import { BackgroundContainer } from '@components/Backgrounds'
 
 const PairWrapper = styled.div`
   --card-minWidth: 250px;
@@ -61,7 +62,7 @@ type MultipleEventCardsProp = {
   renderScroll?: boolean
 }
 
-const StyledEventsCard = styled(EventsCard)`
+const StyledBackground = styled(BackgroundContainer)`
   --card-maxWidth: 280px;
 
   @media (min-width: 1000px) {
@@ -69,8 +70,12 @@ const StyledEventsCard = styled(EventsCard)`
   }
 
   min-width: var(--card-maxWidth, 100%);
+  max-width: var(--card-maxWidth, 100%);
 `
-
+const StyledEventsCard = styled(EventsCard)`
+  width: 100%;
+  height: 100%;
+`
 const MultipleEventCards = ({
   data,
   hasSectionTitle,
@@ -95,7 +100,11 @@ const MultipleEventCards = ({
       <>
         <Carousel horizontalPadding={true}>
           {data.map((item) => {
-            return <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+            return (
+              <StyledBackground key={item.id}>
+                <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+              </StyledBackground>
+            )
           })}
         </Carousel>
       </>

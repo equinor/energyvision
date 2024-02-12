@@ -12,6 +12,6 @@ export const useSanityLoader = (image: ImageWithAlt, maxWidth: number, aspectRat
         ? Math.round(width * aspectRatio)
         : Math.round(width * (cropped.height / cropped.width))
 
-      return imageUrlBuilder.width(width).height(height).auto('format').quality(70)
+      return imageUrlBuilder.width(width).height(height).auto('format').quality(100)
     },
   })

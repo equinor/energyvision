@@ -4,6 +4,7 @@ import { languages } from '../../../../languages'
 import Iframe from 'sanity-plugin-iframe-pane'
 import { resolvePreviewUrl } from '../../preview'
 import flags from '../../../../icons/countries'
+import { apiVersion } from '../../../../sanity.client'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -57,6 +58,7 @@ function routeStructure(S, context, isoCode) {
                 S.documentList()
                   .title('Topic Categories')
                   .schemaType(documentName)
+                  .apiVersion(apiVersion)
                   .filter(categoryParentsWithDrafts)
                   .canHandleIntent((intent, { type }) => type === documentName && ['create', 'edit'].includes(intent))
                   .child((id) => S.document().documentId(id).views(views(S)).schemaType(documentName)),
@@ -70,6 +72,7 @@ function routeStructure(S, context, isoCode) {
                 .icon(RouteDocuments)
                 .child(
                   S.documentList()
+                    .apiVersion(apiVersion)
                     .title('Child Routes')
                     .schemaType(documentName)
                     .filter(`_type == "${documentName}" && parent._ref == $parentId`)

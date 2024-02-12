@@ -1,5 +1,4 @@
 import { BackgroundContainer } from '@components'
-import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { searchClient } from '../../lib/algolia'
@@ -18,9 +17,10 @@ import { PaginationContextProvider } from '../shared/search/pagination/Paginatio
 import Teaser from '../shared/Teaser'
 import { SharedBanner } from './shared/SharedBanner'
 import SharedTitle from './shared/SharedTitle'
-import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
+import { Configure, InstantSearch } from 'react-instantsearch'
+import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
@@ -79,7 +79,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
       <main>
         <SharedBanner title={title} hero={hero} hideImageCaption={true} />
         {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
-          <SharedTitle title={title} styles={{ backgroundColor: ingress.background, negativeBottomSpace: true }} />
+          <SharedTitle sharedTitle={title} background={ingress.background} />
         )}
         <BackgroundContainer background={ingress.background}>
           <Intro>
@@ -101,6 +101,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
                 })
               : searchClient(undefined)
           }
+          future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
           routing={{
             router: createInstantSearchRouterNext({

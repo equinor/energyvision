@@ -4,10 +4,14 @@ import { colors, typography, spacings, componentSettings, strictLineBreak } from
 import { generic } from './generic'
 import { elements } from './elements'
 import { cookieBot, algolia } from './components'
+import { normal } from './themes'
 
 /* We use ITCSS to structure the (few) global styles we need */
 export const GlobalStyle = createGlobalStyle`
   /* Settings */
+  :root{
+  ${normal}
+  }
   ${colors}
   ${typography}
   ${strictLineBreak}

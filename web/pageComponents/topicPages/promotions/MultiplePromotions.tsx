@@ -12,6 +12,7 @@ import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
 import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Carousel } from '../../shared/Carousel'
+import { BackgroundContainer } from '@components/Backgrounds'
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -55,22 +56,30 @@ const PeopleCardsWrapper = styled.div`
 `
 
 const CardStyle = css`
+  width: 100%;
+  height: 100%;
+`
+
+const StyledBackground = styled(BackgroundContainer)`
   min-width: var(--card-minWidth);
   max-width: var(--card-maxWidth);
   flex-basis: 0;
   flex-grow: 1;
 `
-
 const StyledNewsCard = styled(NewsCard)`
   ${CardStyle}
 `
 const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
+const StyledPeopleCard = styled(PeopleCard)`
+  ${CardStyle}
+`
 
 const CardWrapper = styled.div`
   display: flex;
   min-width: 280px;
+  max-width: var(--card-maxWidth);
   width: 100%;
 `
 
@@ -93,12 +102,24 @@ const MultiplePromotions = ({
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return <StyledNewsCard data={data as CardData} key={data.id} />
+        return (
+          <StyledBackground key={data.id}>
+            <StyledNewsCard data={data as CardData} key={data.id} />
+          </StyledBackground>
+        )
       case 'topics':
       case 'magazine':
-        return <StyledTopicPageCard data={data as CardData} key={data.id} />
+        return (
+          <StyledBackground key={data.id}>
+            <StyledTopicPageCard data={data as CardData} key={data.id} />
+          </StyledBackground>
+        )
       case 'people':
-        return <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
+        return (
+          <StyledBackground key={data.id}>
+            <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
+          </StyledBackground>
+        )
       default:
         return console.warn('Missing card type for ', data)
     }

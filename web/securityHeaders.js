@@ -13,7 +13,7 @@ const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.stud
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`)
 const studioV3Url = 'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
 const xFrameUrls = [localUrl, ...studioUrls, studioV3Url, globalUrl, secretUrl].filter((e) => e).join(' ')
-const edsCdnUrl = 'https://cdn.eds.equinor.com '
+const edsCdnUrl = 'https://cdn.eds.equinor.com'
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
   'https://lt.morningstar.com',
@@ -26,6 +26,8 @@ const iframeSrcs = [
   'https://vds.issgovernance.com',
   'https://eac.plaii.no',
   'https://livestream.com',
+  'https://*.castr.com',
+  'https://pixel.as',
   dataset === 'global-development' && 'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
   dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
   'https://h61q9gi9.api.sanity.io',
@@ -34,21 +36,57 @@ const iframeSrcs = [
   .filter((e) => e)
   .join(' ')
 
-const ContentSecurityPolicy = `
-   default-src 'self' cdn.sanity.io cdn.equinor.com;
-   style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} https://platform.twitter.com https://*.twimg.com;
-   script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: https://*.googletagmanager.com  https://siteimproveanalytics.com https://consent.cookiebot.com https://consentcdn.cookiebot.com https://platform.twitter.com https://cdn.syndication.twimg.com/ https://www.youtube.com;
-   img-src 'self' data: ${edsCdnUrl} https://cdn.sanity.io https://cdn.equinor.com https://*.siteimproveanalytics.io https://*.googletagmanager.com https://platform.twitter.com https://syndication.twitter.com https://*.twimg.com https://i.ytimg.com;
-   connect-src 'self' https://bcdn.screen9.com https://h61q9gi9.api.sanity.io https://tools.eurolandir.com https://inferred.litix.io/ https://*.algolia.net https://*.algolianet.com https://consentcdn.cookiebot.com https://eu-api.friendlycaptcha.eu ${
-     isProduction ? '' : 'ws:'
-   };
-   child-src  blob:;
-   frame-src 'self' ${iframeSrcs};
-   frame-ancestors ${xFrameUrls};
-   font-src 'self' ${edsCdnUrl} data:;
-   media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
+const blobSrcUrls = [
+  'https://*.googletagmanager.com',
+  'https://siteimproveanalytics.com',
+  'https://*.cookiebot.com',
+  'https://consentcdn.cookiebot.com',
+  'https://platform.twitter.com',
+  'https://cdn.syndication.twimg.com/',
+  'https://www.youtube.com',
+].join(' ')
 
- `
+const dataSrcUrls = [
+  edsCdnUrl,
+  'https://cdn.sanity.io',
+  'https://cdn.equinor.com',
+  'https://*.siteimproveanalytics.io',
+  'https://*.googletagmanager.com',
+  'https://platform.twitter.com',
+  'https://syndication.twitter.com',
+  'https://*.twimg.com',
+  'https://i.ytimg.com',
+  'https://*.cookiebot.com',
+].join(' ')
+
+const selfSrcUrls = [
+  'cdn.sanity.io',
+  'cdn.equinor.com',
+  'https://bcdn.screen9.com',
+  'https://h61q9gi9.api.sanity.io',
+  'https://tools.eurolandir.com',
+  'https://inferred.litix.io/',
+  'https://*.algolia.net',
+  'https://*.algolianet.com',
+  'https://*.cookiebot.com',
+  'https://eu-api.friendlycaptcha.eu',
+  isProduction ? '' : 'ws:',
+]
+  .filter((e) => e)
+  .join(' ')
+
+const ContentSecurityPolicy = `
+     default-src 'self' cdn.sanity.io cdn.equinor.com;
+     style-src 'report-sample' 'self' 'unsafe-inline' ${edsCdnUrl} https://platform.twitter.com https://*.twimg.com;
+     script-src 'report-sample' 'unsafe-eval' 'self' 'unsafe-inline' blob: ${blobSrcUrls} ;
+     img-src 'self' data: ${dataSrcUrls} ;
+     connect-src 'self' ${selfSrcUrls} ;
+     child-src  blob:;
+     frame-src 'self' ${iframeSrcs};
+     frame-ancestors ${xFrameUrls};
+     font-src 'self' ${edsCdnUrl} data:;
+     media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
+     `
 
 export default [
   {

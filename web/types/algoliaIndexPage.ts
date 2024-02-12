@@ -1,4 +1,4 @@
-import { InstantSearchServerState } from 'react-instantsearch-hooks-web'
+import { InstantSearchServerState } from 'react-instantsearch'
 import type {
   MenuData,
   FooterColumns,

@@ -14,10 +14,7 @@ const StyledCaption = styled(EdsCaption)<{ center: boolean }>`
       textAlign: 'center',
     }}
 
-  /* If the text is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 
 export type TableCaptionProps = {

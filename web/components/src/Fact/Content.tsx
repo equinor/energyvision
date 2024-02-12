@@ -8,7 +8,6 @@ type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
   background-color: var(--background);
-  padding: var(--space-large) var(--space-large);
   h2,
   h3 {
     margin: var(--space-small) 0;
@@ -20,10 +19,6 @@ export const Container = styled.div<ContainerProps>`
 
   li {
     margin-bottom: var(--space-small);
-
-    &::marker {
-      color: var(--moss-green-100);
-    }
   }
 
   margin: 0 calc(var(--spacer-vertical-xxxLarge) * -1);
@@ -33,6 +28,7 @@ export const Container = styled.div<ContainerProps>`
     hasImage && {
       overflowY: 'auto',
       maxHeight: '800px',
+      padding: 'var(--space-large) var(--space-large)',
     }}
 
   @media (min-width: 800px) {

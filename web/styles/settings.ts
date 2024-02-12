@@ -73,10 +73,10 @@ export const colors = css`
     --transparent-black: hsla(0, 0%, 0%, 20);
     --transparent-white: hsla(0, 0%, 100%, 20);
 
-    /* UI colors This is just for testing!!!! */
-    --ui-background-default: var(--white-100);
-    --ui-background-warm: var(--spruce-wood-100);
-    --ui-background-cold: var(--moss-green-50);
+    --mid-yellow: #fff5b8;
+    --mid-green: #c3e4ce;
+    --mid-orange: #f8d1af;
+    --mid-blue: #49709c;
 
     --inverted-text: var(--white-100);
     --default-text: rgba(61, 61, 61, 1);
@@ -84,6 +84,20 @@ export const colors = css`
     --theme-background-primary: var(--white-100);
 
     --topbar-height: 100px;
+
+    /* new colors */
+    --bg-default: var(--white-100);
+    --bg-moss-green: var(--mid-green); // replace old color
+    --bg-moss-green-light: var(--moss-green-50);
+    --bg-spruce-wood: var(--spruce-wood-90);
+    --bg-mist-blue: var(--mist-blue-100);
+    --bg-slate-blue: var(--slate-blue-100); // replace old color
+    --bg-mid-yellow: var(--mid-yellow);
+    --bg-mid-orange: var(--mid-orange);
+    --bg-mid-green: var(--mid-green);
+    --bg-mid-blue: var(--mid-blue);
+
+    --bg-slate-blue-95: var(--slate-blue-95); // required for search
   }
 `
 export const typography = css`
@@ -100,6 +114,8 @@ export const typography = css`
     --typeScale-4: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
     --typeScale-4_5: clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem));
     --typeScale-5: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
+    --typeScale-6: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
+    --typeScale-7: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
 
      // search and replace, then remove
     --typeScale-small: var(--typeScale-00);

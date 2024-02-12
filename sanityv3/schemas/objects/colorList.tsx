@@ -1,6 +1,11 @@
 import { ColorSelector, defaultColors } from '../components/ColorSelector'
 import { defineType, defineField } from 'sanity'
 
+export type ColorType = {
+  title: string
+  value: string
+}
+
 export default defineType({
   name: 'colorlist',
   title: 'Color',

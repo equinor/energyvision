@@ -7,6 +7,7 @@ import getRawBody from 'raw-body'
 import getConfig from 'next/config'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
+const SLACK_NEWSLETTER_WEBHOOK_URL = process.env.SLACK_NEWSLETTER_WEBHOOK_URL
 
 // Next.js will by default parse the body, which can lead to invalid signatures
 // https://nextjs.org/docs/api-routes/api-middlewares#custom-config
@@ -50,12 +51,96 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
 
-  await distribute(newsDistributionParameters).then((isSuccessful) => {
-    if (!isSuccessful) {
-      console.log('Newsletter distribution failed!')
-      return res.status(400).json({ msg: `Distribution failed ${newsDistributionParameters.link}` })
+  await distributeWithRetry(newsDistributionParameters)
+    .then((result) => {
+      if (result.success) {
+        res.status(200).json({ msg: result.message })
+      } else {
+        res.status(400).json({ msg: result.message })
+      }
+      console.log(result.message)
+    })
+    .catch((error) => {
+      console.error('An unexpected error occurred:', error)
+      res.status(500).json({ msg: 'Internal server error' })
+    })
+}
+
+interface DistributionResult {
+  success: boolean
+  message: string
+}
+
+async function distributeWithRetry(
+  newsDistributionParameters: NewsDistributionParameters,
+  attempt = 1,
+): Promise<DistributionResult> {
+  let res: DistributionResult = {
+    success: false,
+    message: `Initial state: Distribution not started for *${newsDistributionParameters.title}* (${newsDistributionParameters.link})`,
+  }
+
+  const date = getDateWithMs()
+
+  try {
+    const isSuccessful = await distribute(newsDistributionParameters)
+    if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
+    res = {
+      success: true,
+      message: 'Newsletter sent successfully!',
     }
-    console.log('Newsletter sent successfully!')
-    res.status(200).json({ msg: `Successfully distributed ${newsDistributionParameters.link}` })
+
+    const message = `${date} :white_check_mark: *${newsDistributionParameters.title}*: Successfully distributed (${newsDistributionParameters.link})`
+    await sendSlackNotification(message)
+  } catch (error: Error | unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
+    const message = `${date} :x: *${newsDistributionParameters.title}*: Distribution of (${newsDistributionParameters.link}) failed after attempt #${attempt}: ${errorMessage}`
+    await sendSlackNotification(message)
+
+    if (attempt < 3) {
+      console.log(`Retrying... Attempt ${attempt + 1}`)
+      return distributeWithRetry(newsDistributionParameters, attempt + 1)
+    } else {
+      res = {
+        success: false,
+        message: `Distribution failed for: ${newsDistributionParameters.title} (${newsDistributionParameters.link})`,
+      }
+    }
+  }
+
+  return res
+}
+
+async function sendSlackNotification(message: string): Promise<void> {
+  if (!SLACK_NEWSLETTER_WEBHOOK_URL) return
+
+  try {
+    await fetch(SLACK_NEWSLETTER_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: message }),
+    })
+    console.log('Slack notification sent sucessfully!')
+  } catch (error) {
+    console.error('Failed to send Slack notification:', error)
+  }
+}
+
+function getDateWithMs(): string {
+  const date = new Date()
+  const milliseconds = date.getMilliseconds().toString().padStart(3, '0')
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
   })
+  const dateTime = formatter.format(date)
+
+  return `${dateTime}:${milliseconds}`
 }

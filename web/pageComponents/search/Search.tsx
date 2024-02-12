@@ -1,14 +1,13 @@
-import { InstantSearch, Configure, Index } from 'react-instantsearch-hooks-web'
+import { InstantSearch, Configure, Index } from 'react-instantsearch'
 import { searchClient as client } from '../../lib/algolia'
 import dynamic from 'next/dynamic'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { SearchBox } from './SearchBox'
 import { getIsoFromLocale } from '../../lib/localization'
 import { SearchContextProvider } from './SearchContext'
-import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
-import singletonRouter from 'next/router'
+import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
+import singletonRouter, { useRouter } from 'next/router'
 import type { UiState } from 'instantsearch.js'
-import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
@@ -23,7 +22,7 @@ const StyledPagination = styled(Pagination)`
   margin-top: var(--space-xLarge);
   justify-content: center;
 `
-const searchClient = client(undefined)
+const searchClient = client()
 const queriedSearchClient: SearchClient = {
   ...searchClient,
   search(requests: any) {
@@ -158,7 +157,12 @@ const Search = () => {
   }
 
   return (
-    <InstantSearch searchClient={queriedSearchClient} indexName={mainIndex} routing={routing}>
+    <InstantSearch
+      future={{ preserveSharedStateOnUnmount: false }}
+      searchClient={queriedSearchClient}
+      indexName={mainIndex}
+      routing={routing}
+    >
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
@@ -168,7 +172,7 @@ const Search = () => {
         <SearchBox />
         <SearchResults resultsRef={resultsRef} items={indices} />
         <PaginationContextProvider defaultRef={resultsRef}>
-          <StyledPagination padding={padding} hitsPerPage={5} inverted />
+          <StyledPagination padding={padding} hitsPerPage={5} />
         </PaginationContextProvider>
       </SearchContextProvider>
     </InstantSearch>

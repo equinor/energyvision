@@ -3,5 +3,4 @@ packages:
   - 'e2e'
   - 'sanityv3'
   - 'search'
-  - '!studio'
   - '!legacy'
