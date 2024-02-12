@@ -170,6 +170,7 @@ export const HLSPlayer: React.FC<HLSProps> = ({
         ref={videoRef}
         autoPlay={playButton ? false : autoPlay}
         controls={autoPlay ? false : showControls || controls}
+        muted={muted}
         {...props}
       />
       {showPlayButton && (
