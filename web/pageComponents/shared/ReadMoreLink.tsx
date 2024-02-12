@@ -1,7 +1,7 @@
 import { LinkData } from '../../types'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
-import { Link } from '@components/Link'
+import { Link, LinkProps } from '@components/Link'
 import styled from 'styled-components'
 
 const StyledLink = styled(Link)`
@@ -13,8 +13,7 @@ const ReadMoreLink = ({
   variant = 'regular',
 }: {
   action: LinkData
-  variant?: 'regular' | 'contentLink' | 'readMore'
-}) => {
+} & Pick<LinkProps, 'variant'>) => {
   const { type, label, extension } = action
   const url = getUrlFromAction(action)
   if (!url) {
