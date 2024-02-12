@@ -34,7 +34,7 @@ const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardPro
   const pageTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
-    <StyledLink href={slug} {...rest}>
+    <StyledLink href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
           {

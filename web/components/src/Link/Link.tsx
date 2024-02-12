@@ -117,13 +117,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 ) {
   if (variant === 'contentLink') {
     return (
-      <ContentLink href={href} ref={ref} {...rest}>
+      <ContentLink href={href} prefetch={false} ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ContentLink>
     )
   } else if (variant === 'readMore') {
     return (
-      <ReadMoreLink href={href} ref={ref} {...rest}>
+      <ReadMoreLink href={href} prefetch={false} ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ReadMoreLink>
     )
