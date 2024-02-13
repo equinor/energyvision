@@ -52,7 +52,7 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
   if (!heroImage) return null
 
   return (
-    <StyledLink href={slug} {...rest}>
+    <StyledLink href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
           {

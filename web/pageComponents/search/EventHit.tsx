@@ -47,7 +47,7 @@ const EventHit = ({ hit }: HitProps) => {
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (
     <article>
-      <StyledHitLink href={slug}>
+      <StyledHitLink href={slug} prefetch={false}>
         {eventDate && <StyledFormattedDate datetime={eventDate} uppercase></StyledFormattedDate>}
         <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="title" />

@@ -94,7 +94,9 @@ export const Breadcrumbs = ({
           }
           return (
             <BreadcrumbsListItem key={item.slug}>
-              <StyledNextLink href={item.slug}>{item.label}</StyledNextLink>
+              <StyledNextLink href={item.slug} prefetch={false}>
+                {item.label}
+              </StyledNextLink>
             </BreadcrumbsListItem>
           )
         })}
