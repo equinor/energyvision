@@ -14,6 +14,7 @@ type ImageContainerProps = {
 
 const ImageContainer = styled.div<ImageContainerProps>`
   position: relative;
+  min-height: 100vh;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -26,11 +27,15 @@ const DEFAULT_MAX_WIDTH = 1920
 
 const AnimationWrapper = styled.div`
   /* Create View Timeline */
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 1) 70%);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--color-inverse) 70%);
+  padding-top: 50vh;
+  padding-bottom: 50vh;
   section {
-    width: 40vw;
-    margin-right: 0;
-    padding: var(--space-3xLarge) var(--space-3xLarge);
+    @media (min-width: 1200px) {
+      width: 40vw;
+      margin-right: 0;
+      padding: var(--space-3xLarge) var(--space-3xLarge);
+    }
   }
   display: flex;
   view-timeline-name: --revealing-image;
@@ -64,7 +69,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     const src = props?.src
     const ChildrenWrapper = imageBackground?.useAnimation
       ? ({ children }: { children: React.ReactNode }) => <AnimationWrapper>{children}</AnimationWrapper>
-      : ({ children }: { children: React.ReactNode }) => <>{children}</>
+      : ({ children }: { children: React.ReactNode }) => <AnimationWrapper>{children}</AnimationWrapper>
 
     return (
       <ImageContainer
