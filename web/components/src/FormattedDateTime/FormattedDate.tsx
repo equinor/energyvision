@@ -21,7 +21,7 @@ export const FormattedDate = ({
   return (
     <StyledDate uppercase={uppercase} {...rest}>
       {icon && <DateIcon />}
-      <StyledTime dateTime={datetime}>
+      <StyledTime suppressHydrationWarning dateTime={datetime}>
         <ReactIntlDate value={new Date(datetime)} day={day} year={year} month={month} />
       </StyledTime>
     </StyledDate>

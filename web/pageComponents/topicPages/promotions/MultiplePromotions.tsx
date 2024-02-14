@@ -10,9 +10,9 @@ import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
-import useWindowSize from '../../../lib/hooks/useWindowSize'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
+import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 
 const CardsWrapper = styled.div`
   width: 100%;
@@ -103,20 +103,20 @@ const MultiplePromotions = ({
       case 'news':
       case 'localNews':
         return (
-          <StyledBackground>
+          <StyledBackground key={data.id}>
             <StyledNewsCard data={data as CardData} key={data.id} />
           </StyledBackground>
         )
       case 'topics':
       case 'magazine':
         return (
-          <StyledBackground>
+          <StyledBackground key={data.id}>
             <StyledTopicPageCard data={data as CardData} key={data.id} />
           </StyledBackground>
         )
       case 'people':
         return (
-          <StyledBackground>
+          <StyledBackground key={data.id}>
             <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
           </StyledBackground>
         )
@@ -125,8 +125,8 @@ const MultiplePromotions = ({
     }
   }
 
-  const { width } = useWindowSize()
-  const renderScroll = useHorizontalScroll || Boolean(width && width <= 800)
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const renderScroll = useHorizontalScroll || isMobile
 
   if (variant === 'promoteEvents') {
     return (

@@ -70,6 +70,7 @@ const StyledBackground = styled(BackgroundContainer)`
   }
 
   min-width: var(--card-maxWidth, 100%);
+  max-width: var(--card-maxWidth, 100%);
 `
 const StyledEventsCard = styled(EventsCard)`
   width: 100%;
@@ -90,7 +91,7 @@ const MultipleEventCards = ({
       )
     })
   }
-  if (eventPromotionSettings?.pastEventsCount) {
+  if (eventPromotionSettings?.promotePastEvents && eventPromotionSettings?.pastEventsCount) {
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
 

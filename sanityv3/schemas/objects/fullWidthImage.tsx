@@ -17,6 +17,20 @@ export default {
       type: 'imageWithAltAndCaption',
       validation: (Rule: Rule) => Rule.required(),
     },
+    {
+      name: 'aspectRatio',
+      type: 'number',
+      title: 'Aspect ratio',
+      options: {
+        list: [
+          { title: '10:3', value: 0.3 },
+          { title: '2:1', value: 0.5 },
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 0.3,
+      validation: (Rule: Rule) => Rule.required(),
+    },
   ],
   preview: {
     select: {

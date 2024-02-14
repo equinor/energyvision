@@ -306,6 +306,18 @@ export type TeaserData = {
   designOptions: DesignOptions
 }
 
+export type TextTeaserData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  text: PortableTextBlock[]
+  action?: LinkData
+  designOptions: {
+    theme: number
+    titlePosition: 'left' | 'right'
+  }
+}
+
 export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]
@@ -313,11 +325,18 @@ export type TableHeaderData = {
 
 export type CellData = {
   id: string
-  type: string
+  type: LinkType | 'richText'
   date?: Date
   number?: string
-  text?: string
-} & LinkData
+  text?: PortableTextBlock[]
+} & Omit<LinkData, 'type'>
+
+type Row = {
+  id: string
+  row: CellData[]
+}
+
+export type TableThemes = 'blue' | 'green' | 'grey'
 
 export type TableData = {
   type: string
@@ -325,14 +344,17 @@ export type TableData = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   tableHeaders: TableHeaderData[]
-  tableRows: any[]
-  designOptions: DesignOptions
+  tableRows: Row[]
+  designOptions: DesignOptions & { theme: TableThemes }
 }
 
 export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
+  designOptions: {
+    aspectRatio: number
+  }
 }
 
 export type FullWidthVideoData = {
@@ -761,3 +783,24 @@ export type IframeCarouselData = {
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
+
+export type KeyNumberItemData = {
+  type: 'keyNumberItem'
+  id: string
+  keyNumber: number
+  description?: string
+  unit?: string
+}
+export type KeyNumbersData = {
+  type: 'keyNumbers'
+  id: string
+  ingress?: PortableTextBlock[]
+  title?: PortableTextBlock[]
+  disclaimer?: PortableTextBlock[]
+  items: KeyNumberItemData[]
+  useHorizontalScroll: boolean
+  designOptions: {
+    background: BackgroundColours
+  }
+  action?: LinkData
+}

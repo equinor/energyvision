@@ -150,6 +150,7 @@ export default {
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
+        { type: 'textTeaser' },
         { type: 'fullWidthImage' },
         { type: 'fullWidthVideo' },
         { type: 'figure' },

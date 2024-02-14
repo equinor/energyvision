@@ -3,11 +3,11 @@ import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
-import React from 'react'
 
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]
   highlight?: boolean
+  highlightTitle?: string
 }
 
 // TODO: Add relevant styles for titles (i.e. highlighted text)
@@ -21,7 +21,7 @@ export const configureTitleBlockContent = (
     ],
   },
 ): BlockDefinition => {
-  const { highlight = false, styles } = options
+  const { highlight = false, styles, highlightTitle = 'Highlight' } = options
 
   const config: BlockDefinition = {
     type: 'block',
@@ -56,7 +56,7 @@ export const configureTitleBlockContent = (
   }
 
   const textColorConfig = {
-    title: 'Highlight',
+    title: highlightTitle,
     value: 'highlight',
     icon: EdsBlockEditorIcon(format_color_text),
     component: ({ children }: { children: React.ReactNode }) => {
@@ -67,6 +67,7 @@ export const configureTitleBlockContent = (
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig)
   }
+
   return config
 }
 

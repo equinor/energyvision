@@ -89,7 +89,7 @@ export const defaultWebLanguage = {
 /**
  * Link between domain and datasets
  * This is necessary for static generation
- * @type {Record<string, string>}
+ * @type {Record<string, { url: string, meta: string }>}
  */
 const websiteDomains = {
   global: {

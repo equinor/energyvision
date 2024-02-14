@@ -62,7 +62,7 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
   if (!thumbnail) return null
 
   return (
-    <StyledLink href={slug} {...rest}>
+    <StyledLink href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
           {

@@ -34,7 +34,13 @@ export default (isoCode: string, title: string) => ({
       readOnly: true,
       initialValue: { current: '/', _type: 'slug' },
     },
+    {
+      name: 'includeInBuild',
+      type: 'boolean',
+      initialValue: true,
+    },
   ],
+
   preview: {
     select: {
       title: 'content.title',
