@@ -64,6 +64,8 @@ export async function middleware(request: NextRequest) {
   //   return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`, PERMANENT_REDIRECT)
   // }
 
+  // TODO: lowercase - news, nyheter and magazine/magasin in next config rewrites
+
   // Check if pathname ends with .html
   if (isDotHtml) {
     return NextResponse.redirect(`${origin}${pathname.replace(DOT_HTML, '')}`, PERMANENT_REDIRECT)
