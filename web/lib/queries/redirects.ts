@@ -21,3 +21,10 @@ export const externalRedirects = /* groq */ `
     to
   }
 `
+
+export const allExternalRedirects = /* groq */ `
+  *[_type == "externalRedirect" && ${noDrafts}]{
+    from,
+    to
+  }
+`

@@ -6,7 +6,10 @@
 import { createClient } from '@sanity/client'
 import { sanityConfig } from './config'
 
-export const sanityClient = createClient(sanityConfig)
+// add perspective: 'published'
+export const sanityClient = createClient({
+  ...sanityConfig,
+})
 
 export const sanityClientWithEquinorCDN = createClient({
   ...sanityConfig,

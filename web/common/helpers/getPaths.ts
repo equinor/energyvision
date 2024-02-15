@@ -58,6 +58,12 @@ const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', lo
   return data
 }
 
+// Check if a given path exists in Sanity or not
+export const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
+  const article = await getDocumentBySlug(pathname, isPreview)
+  return Boolean(article)
+}
+
 // Get a Sanity document by given slug
 // Only include drafts if preview mode is enabled
 export const getDocumentBySlug = async (slug: string, isPreview = false) => {

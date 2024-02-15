@@ -54,7 +54,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
       scriptTag.id = 'legacyScript'
       document.body.appendChild(scriptTag)
     }
-  })
+  }, [isArchivePage])
 
   if (!router.isFallback && !data?.news) {
     setIsArchivePage(false)

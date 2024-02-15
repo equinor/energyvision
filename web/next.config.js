@@ -4,6 +4,8 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
 import securityHeaders from './securityHeaders.js'
+import { createClient } from '@sanity/client'
+import { sanityConfig } from './sanityServerClient.js'
 
 const withTM = nextTranspileModules(['friendly-challenge'])
 
@@ -30,6 +32,81 @@ const getPageExtensions = (dataset) => {
 }
 
 const pageExtensions = getPageExtensions(dataset)
+
+const externalRedirectGroq = /* groq */ `
+*[_type == "externalRedirect" && !(_id in path('drafts.**'))]{
+  from,
+  to
+}
+`
+
+const redirectsGroq = /* groq*/ `
+*[_type == "redirect" && !(_id in path('drafts.**'))]{
+  "lang": _lang,
+  from,
+  "to": to->slug.current
+}
+`
+
+const getExternalRedirects = async () => {
+  const result = await createClient(sanityConfig).fetch(externalRedirectGroq)
+  const externalRedirects = result
+    .filter((e) => e)
+    .map((externalRedirect) => {
+      return {
+        source: externalRedirect.from,
+        permanent: true,
+        destination: externalRedirect.to,
+      }
+    })
+  return [
+    ...externalRedirects,
+    // Redirect IE users to not-supported page
+    {
+      source: '/',
+      has: [
+        {
+          type: 'header',
+          key: 'user-agent',
+          value: '.*(MSIE|Trident).*',
+        },
+      ],
+      permanent: true,
+      destination: '/not-supported.html',
+    },
+    // redirects for /50 site
+    ['global', 'global-development', 'global-test'].includes(dataset) && {
+      source: '/50/en/:slug*',
+      destination: '/magazine',
+      permanent: true,
+    },
+    ['global', 'global-development', 'global-test'].includes(dataset) && {
+      source: '/50/:slug*',
+      destination: '/no/magasin',
+      permanent: true,
+    },
+  ]
+}
+
+const getInternalRedirects = async () => {
+  const result = await createClient(sanityConfig).fetch(redirectsGroq)
+  const redirects = result
+    .filter((e) => e)
+    .map((redirect) => {
+      return {
+        source: redirect.from,
+        permanent: true,
+        destination: `${redirect.to !== '/' ? redirect.to : ''}`,
+      }
+    })
+
+  return [...redirects]
+}
+
+const getAllRedirects = async () => {
+  const result = await Promise.all([getExternalRedirects(), getInternalRedirects()])
+  return result.flat()
+}
 
 export default withBundle(
   withTM({
@@ -89,7 +166,7 @@ export default withBundle(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
-      ].filter((e) => e)
+      ]
     },
     async headers() {
       return [
@@ -97,35 +174,10 @@ export default withBundle(
           source: '/:path*',
           headers: securityHeaders,
         },
-      ].filter((e) => e)
+      ]
     },
     async redirects() {
-      return [
-        // Redirect IE users to not-supported page
-        {
-          source: '/',
-          has: [
-            {
-              type: 'header',
-              key: 'user-agent',
-              value: '.*(MSIE|Trident).*',
-            },
-          ],
-          permanent: true,
-          destination: '/not-supported.html',
-        },
-        // redirects for /50 site
-        ['global', 'global-development', 'global-test'].includes(dataset) && {
-          source: '/50/en/:slug*',
-          destination: '/magazine',
-          permanent: true,
-        },
-        ['global', 'global-development', 'global-test'].includes(dataset) && {
-          source: '/50/:slug*',
-          destination: '/no/magasin',
-          permanent: true,
-        },
-      ].filter((e) => e)
+      return await getAllRedirects()
     },
   }),
 )
