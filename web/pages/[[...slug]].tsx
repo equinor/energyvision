@@ -104,13 +104,12 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     const existsInSanity = await pathExistsInSanity(queryParams.slug, preview)
     if (!existsInSanity) {
       const archivedPath = queryParams.slug.replace('news', 'news/archive')
-      const existsInArchive = archivedNews.some((e: { slug: string }) => e.slug === archivedPath)
-      console.log(existsInArchive)
-      return existsInArchive
+      const slug = archivedNews.find((e: { slug: string }) => e.slug.toLowerCase() === archivedPath)?.slug
+      return slug
         ? {
             redirect: {
               permanent: true,
-              destination: archivedPath,
+              destination: slug,
             },
             props: {},
           }

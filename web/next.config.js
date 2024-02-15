@@ -15,6 +15,14 @@ const withBundle = withBundleAnalyzer({
 
 const locales = languages.map((lang) => lang.locale)
 
+/**
+ * @param {string} name
+ * @returns string
+ */
+export const getLocaleFromName = (name) => {
+  return languages.find((lang) => lang.name === name)?.locale || defaultLanguage.locale
+}
+
 const getPageExtensions = (dataset) => {
   const extensions = ['tsx', 'ts', 'js', 'jsx']
   const globalOnlyExtensions = ['global.tsx', 'global.ts']
@@ -40,7 +48,7 @@ const externalRedirectGroq = /* groq */ `
 }
 `
 
-const redirectsGroq = /* groq*/ `
+const redirectsGroq = /* groq */ `
 *[_type == "redirect" && !(_id in path('drafts.**'))]{
   "lang": _lang,
   from,
@@ -93,11 +101,14 @@ const getInternalRedirects = async () => {
   const redirects = result
     .filter((e) => e)
     .map((redirect) => {
-      return {
+      const to = redirect.to === '/' ? '' : redirect.to
+      const locale = '/' + getLocaleFromName(redirect.lang)
+      const nextRedirect = {
         source: redirect.from,
+        destination: `${locale}${to}`,
         permanent: true,
-        destination: `${redirect.to !== '/' ? redirect.to : ''}`,
       }
+      return redirect.from.startsWith(locale) ? { ...nextRedirect, locale: false } : nextRedirect
     })
 
   return [...redirects]

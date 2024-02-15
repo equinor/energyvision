@@ -69,13 +69,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   // We will also return 404 if the locale is not Norwegian.
   // This is a hack, and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-
   if (locale !== 'no') {
     return {
       notFound: true,
     }
   }
-
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 
