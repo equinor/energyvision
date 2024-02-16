@@ -211,8 +211,7 @@ export default {
 
     {
       title: 'Background',
-      description:
-        'Pick a colour for the background. Default is white. If background image is not provided this color is used',
+      description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
@@ -220,7 +219,7 @@ export default {
     {
       title: 'More background options',
       description:
-        'Pick a colour for the background. Default is white. If background image is not provided this color is used',
+        'Use this option to add image background. Image background will be applied only when "Use special background" is enabled',
       name: 'backgroundOption',
       type: 'backgroundOption',
       fieldset: 'design',
