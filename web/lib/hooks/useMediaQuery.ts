@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useIsomorphicLayoutEffect } from '@equinor/eds-utils'
 
 const getMatches = (query: string): boolean => {
