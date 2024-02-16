@@ -101,15 +101,19 @@ _type == "keyNumbers" =>{
   _type == "figure"=>{
     "type": _type,
     "id": _key,
+      // For these images, we don't want crop and hotspot
+  // because we don't know the aspect ratio
     "figure": figure{
       _type,
-      image,
+        "image": {
+          "asset": image.asset,
+          "alt": image.alt,
+        },
       attribution,
       caption
     },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
-      "aspectRatio": coalesce(aspectRatio, '16:9'),
     },
   },
   _type == "textWithIconArray"=>{

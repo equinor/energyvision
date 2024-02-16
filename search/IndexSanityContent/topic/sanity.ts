@@ -4,26 +4,25 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
-import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
 
 export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
-  "title": ${plainTextExcludingStrikeThrough('content->title')},
+  "title": pt::text(content->title),
   "type": content->_type,
   "textBlocks": content->content[_type == "textBlock"]{
     "_key": _key,
     "title": select(
       isBigText == true =>
-        ${plainTextExcludingStrikeThrough('bigTitle')},
-        ${plainTextExcludingStrikeThrough('title')}
+        pt::text(bigTitle),
+        pt::text(title)
       ),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
   },
   "accordions": content->content[_type == "accordion"] {
     "_key": _key,
-    "title": ${plainTextExcludingStrikeThrough('title')},
+    "title": pt::text(title),
     "ingress": pt::text(ingress),
     "accordionItems":accordion[]{
       "id": _key,

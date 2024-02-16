@@ -49,15 +49,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   return (
     <Container $aspectRatio={ratio}>
       <StyledFigure>
-        <StyledHLSPlayer
-          loop
-          muted
-          autoPlay
-          title={title}
-          poster={thumbnailURL.src}
-          src={url}
-          videoDescription={thumbnail.alt}
-        />
+        <StyledHLSPlayer loop muted autoPlay title={title} poster={thumbnailURL.src} src={url} />
       </StyledFigure>
     </Container>
   )

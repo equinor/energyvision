@@ -20,7 +20,6 @@ export default {
       name: 'thumbnail',
       type: 'imageWithAlt',
       title: 'Thumbnail',
-      description: 'Use the alt text below to describe the video content (for screenreaders).',
       initialValue: {
         isDecorative: true,
       },

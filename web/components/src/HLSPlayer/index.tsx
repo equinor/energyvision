@@ -10,7 +10,6 @@ import useVideoAnalytics from '../../../lib/hooks/useVideoAnalytics'
 type HLSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
   playButton?: boolean
-  videoDescription?: string
 }
 
 const Wrapper = styled.div<{ $showSpinner: boolean }>`
@@ -70,8 +69,6 @@ export const HLSPlayer: React.FC<HLSProps> = ({
   controls = false,
   playButton = false,
   autoPlay = false,
-  muted = false,
-  videoDescription,
   ...props
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -160,11 +157,7 @@ export const HLSPlayer: React.FC<HLSProps> = ({
   }, [playButton])
 
   return (
-    <Wrapper
-      $showSpinner={showSpinner}
-      role={muted ? 'img' : undefined}
-      aria-label={muted ? videoDescription : undefined}
-    >
+    <Wrapper $showSpinner={showSpinner}>
       <video
         playsInline
         ref={videoRef}
