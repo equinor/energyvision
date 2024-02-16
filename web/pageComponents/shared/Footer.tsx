@@ -144,7 +144,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
 
                 return (
-                  <FooterLink key={id} href={url || getLink(link)}>
+                  <FooterLink key={id} href={url || getLink(link)} prefetch={false}>
                     {icon && <SomeIcon aria-hidden={true}>{icon}</SomeIcon>}
                     {label}
                   </FooterLink>

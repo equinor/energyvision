@@ -91,7 +91,7 @@ const MultipleEventCards = ({
       )
     })
   }
-  if (eventPromotionSettings?.pastEventsCount) {
+  if (eventPromotionSettings?.promotePastEvents && eventPromotionSettings?.pastEventsCount) {
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
 

@@ -50,7 +50,7 @@ function getLink(linkData: MenuLinkData, label: string) {
 const SimpleCard = ({ data }: SimpleCardData) => {
   const { id, label, image } = data
   return (
-    <CardLink key={id} href={getLink(data, label)}>
+    <CardLink key={id} href={getLink(data, label)} prefetch={false}>
       <StyledCard
         style={
           {

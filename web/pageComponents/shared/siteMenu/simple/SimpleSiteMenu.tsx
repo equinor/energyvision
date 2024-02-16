@@ -3,8 +3,6 @@
 import { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import { RemoveScroll } from 'react-remove-scroll'
-import FocusLock from 'react-focus-lock'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
 import { MenuButton, Link } from '@components'
@@ -16,6 +14,7 @@ import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
 import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
+import { FloatingFocusManager, FloatingOverlay, useDismiss, useFloating, useInteractions } from '@floating-ui/react'
 
 const MenuContainer = styled.div`
   font-size: var(--typeScale-1);
@@ -55,6 +54,13 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
     setIsOpen(false)
   }, [])
 
+  const { refs, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+  })
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([useDismiss(context)])
+
   useEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
@@ -69,44 +75,54 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
 
   return (
     <>
-      <MenuButton title={title} aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
-      <FocusLock disabled={!isOpen} returnFocus>
-        <RemoveScroll enabled={isOpen}>
-          <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight}>
-            <nav>
-              <NavTopbar>
-                <LogoLink />
-                <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
-              </NavTopbar>
-              <MenuContainer>
-                <SimpleMenuWrapper>
-                  {menuItems?.map((item: SimpleGroupData, idx: number) => {
-                    if (item?.type === 'simpleMenuGroup') {
-                      return <SimpleMenuItem item={item} key={item.id} index={idx} />
-                    } else if (item?.type === 'simpleMenuLink') {
-                      // Is this really necessary?
-                      if (item.link && !item.link.slug) {
-                        console.warn('Missing slug for simple menu link')
+      <MenuButton
+        ref={refs.setReference}
+        {...getReferenceProps()}
+        title={title}
+        aria-expanded={isOpen}
+        onClick={onMenuButtonClick}
+        aria-haspopup={true}
+        {...rest}
+      />
+      {isOpen && (
+        <FloatingFocusManager context={context}>
+          <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
+            <TopbarDropdown>
+              <nav>
+                <NavTopbar>
+                  <LogoLink />
+                  <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
+                </NavTopbar>
+                <MenuContainer>
+                  <SimpleMenuWrapper>
+                    {menuItems?.map((item: SimpleGroupData, idx: number) => {
+                      if (item?.type === 'simpleMenuGroup') {
+                        return <SimpleMenuItem item={item} key={item.id} index={idx} />
+                      } else if (item?.type === 'simpleMenuLink') {
+                        // Is this really necessary?
+                        if (item.link && !item.link.slug) {
+                          console.warn('Missing slug for simple menu link')
+                        }
+                        return (
+                          <li key={item.id}>
+                            <MenuLink variant="contentLink" href={(item.link && item.link.slug) || '/'}>
+                              {' '}
+                              {item.label}{' '}
+                            </MenuLink>
+                          </li>
+                        )
                       }
-                      return (
-                        <li key={item.id}>
-                          <MenuLink variant="contentLink" href={(item.link && item.link.slug) || '/'}>
-                            {' '}
-                            {item.label}{' '}
-                          </MenuLink>
-                        </li>
-                      )
-                    }
-                  })}
-                  <AllSitesLink href={allSitesURL}>
-                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
-                  </AllSitesLink>
-                </SimpleMenuWrapper>
-              </MenuContainer>
-            </nav>
-          </TopbarDropdown>
-        </RemoveScroll>
-      </FocusLock>
+                    })}
+                    <AllSitesLink href={allSitesURL}>
+                      <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                    </AllSitesLink>
+                  </SimpleMenuWrapper>
+                </MenuContainer>
+              </nav>
+            </TopbarDropdown>
+          </FloatingOverlay>
+        </FloatingFocusManager>
+      )}
     </>
   )
 }

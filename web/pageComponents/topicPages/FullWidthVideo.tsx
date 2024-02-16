@@ -1,6 +1,16 @@
 import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/types'
 import styled from 'styled-components'
-import { BackgroundContainer, HLSPlayer } from '@components'
+import { BackgroundContainer } from '@components'
+import { HLSPlayer } from '../../components/src/HLSPlayer'
+import dynamic from 'next/dynamic'
+
+const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
+  () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  },
+)
 
 const Container = styled.div<{ $aspectRatio: FullWidthVideoRatio }>`
   position: relative;
@@ -35,7 +45,7 @@ const StyledFigure = styled.figure`
   position: absolute;
 `
 
-const StyledHLSPlayer = styled(HLSPlayer)`
+const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
   position: absolute;
   top: 0;
   left: 0;
