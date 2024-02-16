@@ -52,7 +52,7 @@ const MagazineHit = ({ hit }: HitProps) => {
 
   return (
     <article>
-      <StyledHitLink href={slug}>
+      <StyledHitLink href={slug} prefetch={false}>
         <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="pageTitle" />
         </HitHeading>

@@ -11,7 +11,7 @@ import { defaultLanguage } from '../languages'
 import Header from '../pageComponents/shared/Header'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-import { getRoutePaths } from '../common/helpers/getPaths'
+import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
@@ -123,7 +123,8 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
-  const routePaths = await getRoutePaths(locales)
+  // Not changing getRoutePaths(locales) because its used in sitemap.xml
+  const routePaths = await getStaticBuildRoutePaths(locales)
 
   const paths = routePaths.map((path) => ({
     params: { slug: path.slug },

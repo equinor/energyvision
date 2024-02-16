@@ -39,6 +39,16 @@ export default withBundle(
     experimental: {
       largePageDataBytes: 300 * 1000,
       scrollRestoration: true,
+      optimizePackageImports: [
+        '@components',
+        '@chakra-ui',
+        '@chakra-ui/skip-nav',
+        '@emotion/react',
+        '@emotion/styled',
+        '@equinor/eds-core-react',
+        '@equinor/eds-icons',
+        'hls.js',
+      ],
     },
     eslint: {
       // Warning: Dangerously allow production builds to successfully complete even if

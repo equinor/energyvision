@@ -1,8 +1,7 @@
-import useWindowSize from './useWindowSize'
+import { useMediaQuery } from './useMediaQuery'
 
 function usePaginationPadding() {
-  const { width } = useWindowSize()
-  const isMobile = width && width < 375
+  const isMobile = useMediaQuery(`(max-width: 375px)`)
   return isMobile ? 0 : 1
 }
 

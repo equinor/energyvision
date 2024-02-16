@@ -1,9 +1,18 @@
-import { HLSPlayer } from '@components'
+import { HLSPlayer } from '../../../components/src/HLSPlayer'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
+import dynamic from 'next/dynamic'
 
 const DEFAULT_MAX_WIDTH = 1920
+
+const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
+  () => import('../../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  },
+)
 
 const Container = styled.div<{ $aspectRatio: LoopingVideoRatio }>`
   position: relative;
@@ -27,7 +36,7 @@ const StyledFigure = styled.figure`
   position: absolute;
 `
 
-const StyledHLSPlayer = styled(HLSPlayer)`
+const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
   position: absolute;
   width: 100%;
   height: 100%;

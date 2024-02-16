@@ -60,7 +60,7 @@ const NewsHit = ({ hit }: HitProps) => {
 
   return (
     <article>
-      <StyledHitLink href={slug}>
+      <StyledHitLink href={slug} prefetch={false}>
         {hit.publishDateTime && <StyledFormattedDate datetime={hit.publishDateTime} uppercase />}
         <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="pageTitle" />

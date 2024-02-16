@@ -1,7 +1,7 @@
 import type { FullWidthImageData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import { StyledCaption } from '../shared/image/StyledCaption'
-import useWindowSize from '../../lib/hooks/useWindowSize'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 type TeaserProps = {
   data: FullWidthImageData
@@ -11,9 +11,9 @@ type TeaserProps = {
 const FullWidthImage = ({ data, anchor }: TeaserProps) => {
   const { image, attribution, caption } = data.image
   const { aspectRatio } = data.designOptions
-  const { width } = useWindowSize()
+  const isMobile = useMediaQuery(`(max-width: 750px)`)
 
-  const ratio = (width && width < 750) || aspectRatio === Ratios.ONE_TO_TWO ? Ratios.ONE_TO_TWO : Ratios.THREE_TO_TEN
+  const ratio = isMobile || aspectRatio === Ratios.ONE_TO_TWO ? Ratios.ONE_TO_TWO : Ratios.THREE_TO_TEN
 
   if (!image) return null
   return (

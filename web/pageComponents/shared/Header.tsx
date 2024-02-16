@@ -125,7 +125,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <StyledAllSites href={allSitesURL}>
+    <StyledAllSites href={allSitesURL} prefetch={false}>
       <FormattedMessage id="all_sites" defaultMessage="All Sites" />
     </StyledAllSites>
   )
@@ -169,9 +169,9 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                 <ControlChild>
                   <Button
                     variant="ghost_icon"
-                    aria-expanded="true"
                     aria-label="Search"
                     forwardedAs={NextLink}
+                    prefetch={false}
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     //@ts-ignore
                     href={{

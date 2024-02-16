@@ -38,6 +38,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
       color="secondary"
       variant="outlined"
       ref={ref}
+      prefetch={false}
       {...rest}
     >
       {children}
