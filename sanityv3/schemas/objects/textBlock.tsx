@@ -62,6 +62,7 @@ export default {
   name: 'textBlock',
   title: 'Text block',
   type: 'object',
+
   fieldsets: [
     {
       title: 'Thumbnail Image',
@@ -207,6 +208,7 @@ export default {
         return !(parent.action && parent?.action.length === 1)
       },
     },
+
     {
       title: 'Background',
       description:
@@ -216,10 +218,11 @@ export default {
       fieldset: 'design',
     },
     {
-      title: 'Background Image',
-      description: 'Pick a background image instead of color.',
-      name: 'imageBackground',
-      type: 'imageBackground',
+      title: 'More background options',
+      description:
+        'Pick a colour for the background. Default is white. If background image is not provided this color is used',
+      name: 'backgroundOption',
+      type: 'backgroundOption',
       fieldset: 'design',
     },
   ].filter((e) => e),

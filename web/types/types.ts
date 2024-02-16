@@ -255,7 +255,12 @@ export type LandingPageSchema = {
 export type ImageBackground = {
   image?: ImageWithAlt
   useAnimation?: boolean
-  useDarkTheme?: boolean
+  contentAlignment: 'left' | 'right' | 'center'
+}
+
+export type BackgroundOption = {
+  background: ImageBackground
+  useSpecialBackground: boolean
 }
 
 export type BackgroundColours =
@@ -277,7 +282,7 @@ export type DesignOptions = {
     imagePosition?: TeaserImagePosition
   }
   imageSize?: TeaserImageSize
-  imageBackground?: ImageBackground
+  backgroundOption?: BackgroundOption
 }
 
 export type TextBlockData = {

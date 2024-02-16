@@ -1,12 +1,12 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, ImageBackground } from '../../../types/types'
+import type { BackgroundColours, ImageBackground, BackgroundOption } from '../../../types/types'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
 export type BackgroundContainerProps = {
   background?: {
     backgroundColor?: BackgroundColours
-    imageBackground?: ImageBackground
+    backgroundOption?: BackgroundOption
   }
 } & HTMLAttributes<HTMLDivElement>
 
@@ -15,11 +15,11 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   ref,
 ) {
   const Container = ({ children }: { children: React.ReactNode }) => {
-    return background?.imageBackground ? (
+    return background?.backgroundOption?.useSpecialBackground ? (
       <ImageBackgroundContainer
         ref={ref}
         {...rest}
-        imageBackground={background?.imageBackground}
+        imageBackground={background?.backgroundOption?.background}
         style={style}
         className={className}
       >

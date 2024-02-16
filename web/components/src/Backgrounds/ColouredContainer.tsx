@@ -12,6 +12,7 @@ type ColourContainerProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 const ColourContainer = styled.div<ColourContainerProps>`
+  container: size;
   background-color: var(--background-color);
   color: var(--color-on-background);
   ${({ isInverted }) => (isInverted ? inverted : normal)}
