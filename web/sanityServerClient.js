@@ -1,3 +1,4 @@
+// Needed as vanillajs when use in next.config.js to collect redirects
 export const sanityConfig = {
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'global',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'h61q9gi9',
