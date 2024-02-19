@@ -43,10 +43,8 @@ export default {
           { title: 'original', value: 'original' },
           { title: '16:9', value: '16:9' },
         ],
-        layout: 'dropdown',
       },
       initialValue: '16:9',
-      validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {
