@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import styled from 'styled-components'
+import dynamic from 'next/dynamic'
 import {
   VideoControlsType,
   VideoPlayerData,
@@ -7,11 +8,20 @@ import {
   VideoType,
   VideoDesignOptionsType,
 } from '../../types/types'
-import { BackgroundContainer, HLSPlayer } from '@components'
+import { BackgroundContainer } from '@components'
 import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
+import { HLSPlayer } from '../../components/src/HLSPlayer'
+
+const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
+  () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  },
+)
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
@@ -84,7 +94,7 @@ const ButtonWrapper = styled.div`
   margin-bottom: var(--space-xLarge);
 `
 
-const StyledHLSPlayer = styled(HLSPlayer)`
+const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
   object-fit: cover;
   width: inherit;
 

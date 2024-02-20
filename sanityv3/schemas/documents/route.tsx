@@ -118,6 +118,13 @@ export default (isoCode: string, title: string) => {
         type: 'excludeFromSearch',
         name: 'excludeFromSearch',
       },
+      {
+        type: 'boolean',
+        name: 'includeInBuild',
+        title: 'Include in static build',
+        description: 'Enable this if this route should be generated at build time',
+        initialValue: false,
+      },
     ],
     preview: {
       select: {

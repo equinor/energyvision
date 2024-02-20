@@ -29,7 +29,7 @@ type LogoLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
 export const LogoLink = ({ ...rest }: LogoLinkProps) => {
   return (
-    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest} className="logo">
+    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest} className="logo" prefetch={false}>
       <AlignedLogoSecondary />
     </StyledLogoLink>
   )

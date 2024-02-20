@@ -130,7 +130,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <StyledAllSites href={allSitesURL}>
+    <StyledAllSites href={allSitesURL} prefetch={false}>
       <FormattedMessage id="all_sites" defaultMessage="All Sites" />
     </StyledAllSites>
   )
@@ -172,7 +172,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <NextLink href="/search">
+                  <NextLink href="/search" prefetch={false}>
                     <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
                       <Icon size={24} data={search} />
                     </StyledSearchButton>
