@@ -128,7 +128,7 @@ runs:
           deploy
           --token-environment
           --context playground
-          --component ${{ inputs.datasetName == "global" && 'global' || format('web-{0}', inputs.datasetName)}}
+          --component ${{ inputs.datasetName == "global" && "global" || format("web-{0}"", inputs.datasetName)}}
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
