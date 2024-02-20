@@ -42,7 +42,7 @@ const Input = styled.input`
 
 export type SearchBoxProps = UseSearchBoxProps
 
-const DEBOUNCE_TIME = 300
+const DEBOUNCE_TIME = 800
 let timerId: any = undefined
 
 const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {

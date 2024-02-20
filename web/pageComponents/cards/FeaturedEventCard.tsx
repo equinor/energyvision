@@ -58,7 +58,7 @@ const FeaturedEventCard = ({ data, fitToContent = false, ...rest }: FeaturedEven
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
-    <StyledLink href={slug} {...rest}>
+    <StyledLink href={slug} {...rest} prefetch={false}>
       <StyledCard
         style={
           {

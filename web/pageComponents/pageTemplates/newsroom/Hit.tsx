@@ -47,7 +47,7 @@ const Hit = ({ hit }: { hit: any }) => {
   const pageTitle = Array.isArray(hit.pageTitle) ? toPlainText(hit.pageTitle as PortableTextBlock[]) : hit.pageTitle
 
   return (
-    <StyledHitLink href={hit.slug}>
+    <StyledHitLink href={hit.slug} prefetch={false}>
       <article>
         <Date>{hit.publishDateTime && <FormattedDate datetime={hit.publishDateTime} uppercase />}</Date>
         <StyledHeading level="h3" size="md">

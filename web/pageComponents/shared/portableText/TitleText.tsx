@@ -22,7 +22,6 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
           </Heading>
         )
       },
-
       extraLarge: ({ children }: PortableTextBlock) => (
         <Heading size={'5xl'} level={level} className={className}>
           <>{children}</>

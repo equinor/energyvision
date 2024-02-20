@@ -9,6 +9,9 @@ type SharedTitleProps = {
 
 const StyledHeading = styled(TitleText)`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-large);
+  max-width: var(--maxViewportWidth);
+  margin-left: auto;
+  margin-right: auto;
 `
 
 const SharedTitle = ({ sharedTitle, background }: SharedTitleProps) => {
