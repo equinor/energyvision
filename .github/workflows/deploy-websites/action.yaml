@@ -120,7 +120,7 @@ runs:
       # PLAYGROUND CLUSTER
     - name: Deploy to Radix Playground 🚀
       id: deploy-playground
-      if: "${{ inputs.deployToBothClusters }}"
+      if: '${{ inputs.deployToBothClusters }}'
       uses: equinor/radix-github-actions@master
       with:
         args: >
@@ -128,7 +128,7 @@ runs:
           deploy
           --token-environment
           --context playground
-          --component ${{ inputs.datasetName == "global" && "global" || format('{0}{1}', 'web-', inputs.datasetName) }}
+          --component ${{ inputs.datasetName == "global" && 'global' || format('web-{0}', inputs.datasetName)}}
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
