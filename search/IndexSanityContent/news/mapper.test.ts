@@ -26,13 +26,20 @@ describe('News', () => {
             ],
           },
         ],
+        factboxes: [
+          {
+            blockKey: 'factboxkey',
+            title: 'Facts',
+            text: 'Factbox text',
+          },
+        ],
       }
 
       const sut = mapData
       const result = sut(newsArticle)
 
       it('contains one entry', () => {
-        expect(result).toHaveLength(1)
+        expect(result).toHaveLength(2)
       })
 
       it('entry looks as expected', () => {
@@ -89,28 +96,23 @@ describe('News', () => {
             ],
           },
         ],
+        factboxes: [
+          {
+            blockKey: 'factboxkey',
+            title: 'Facts',
+            text: 'Factbox text',
+          },
+        ],
       }
 
       const sut = mapData
       const result = sut(newsArticle)
 
       it('contains one entry', () => {
-        expect(result).toHaveLength(4)
+        expect(result).toHaveLength(5)
       })
 
       it('entry looks as expected', () => {
-        expect(result[0]).toEqual({
-          slug: '/a/slug',
-          objectID: 'id-blockKey-childKey',
-          pageTitle: 'title',
-          ingress: 'ingress',
-          type: 'news',
-          text: 'Some text',
-          publishDateTime: '2021-11-26T07:00:00.000Z',
-          year: 2021,
-          countryTags: ['Germany'],
-          topicTags: ['Oil'],
-        } as NewsIndex)
         expect(result[1]).toEqual({
           slug: '/a/slug',
           objectID: 'id-blockKey-childKey2',
@@ -147,6 +149,19 @@ describe('News', () => {
           countryTags: ['Germany'],
           topicTags: ['Oil'],
         })
+
+        expect(result[4]).toEqual({
+          slug: '/a/slug',
+          objectID: 'id-factboxkey',
+          pageTitle: 'title',
+          ingress: 'ingress',
+          type: 'news',
+          text: 'Facts: Factbox text',
+          publishDateTime: '2021-11-26T07:00:00.000Z',
+          year: 2021,
+          countryTags: ['Germany'],
+          topicTags: ['Oil'],
+        } as NewsIndex)
       })
     })
 
@@ -162,6 +177,7 @@ describe('News', () => {
             children: [],
           },
         ],
+        factboxes: [],
       }
 
       const sut = mapData
@@ -179,6 +195,7 @@ describe('News', () => {
         slug: '/a/slug',
         _id: 'id',
         blocks: [],
+        factboxes: [],
       }
 
       const sut = mapData

@@ -1,6 +1,6 @@
 import { TopicDocuments } from '../../../../icons'
 import { defaultLanguage } from '../../../../languages'
-import { i18n } from '../../../../schemas/documentTranslation'
+import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -12,6 +12,7 @@ export const LandingPage = (S) =>
         .schemaType('landingPage')
         .child(
           S.documentTypeList('landingPage')
+            .apiVersion(apiVersion)
             .id('landingPages')
             .title('Landing page')
             .filter('_type == "landingPage" && (!defined(lang) || lang == $baseLang)')

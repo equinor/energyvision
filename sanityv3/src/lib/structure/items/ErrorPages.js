@@ -1,4 +1,5 @@
 import { FileIcon } from '../../../../icons'
+import { apiVersion } from '../../../../sanity.client'
 
 export const ErrorPages = (S) => [
   S.listItem()
@@ -10,6 +11,7 @@ export const ErrorPages = (S) => [
         .title('404')
         .schemaType('pageNotFound')
         .filter('(_id match "*" + $id) && _type == $type')
+        .apiVersion(apiVersion)
         .params({
           id: 'pageNotFound',
           type: 'pageNotFound',
@@ -33,6 +35,7 @@ export const ErrorPages = (S) => [
     .icon(FileIcon)
     .child(
       S.documentList()
+        .apiVersion(apiVersion)
         .id('internalServerError')
         .title('500')
         .schemaType('internalServerError')

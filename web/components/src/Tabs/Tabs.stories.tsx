@@ -38,9 +38,9 @@ export const WithDarkBackground: StoryFn<TabsProps> = () => (
   <BackgroundContainer background="Slate Blue">
     <Tabs>
       <Tabs.TabList>
-        <Tabs.Tab inverted>One</Tabs.Tab>
-        <Tabs.Tab inverted>Two</Tabs.Tab>
-        <Tabs.Tab inverted>Three</Tabs.Tab>
+        <Tabs.Tab>One</Tabs.Tab>
+        <Tabs.Tab>Two</Tabs.Tab>
+        <Tabs.Tab>Three</Tabs.Tab>
       </Tabs.TabList>
       <Tabs.TabPanels>
         <Tabs.TabPanel>

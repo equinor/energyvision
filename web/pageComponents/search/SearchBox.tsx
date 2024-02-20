@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, ChangeEvent, ComponentProps, useContext } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch-hooks-web'
+import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import ControlledSearchBox from './ControlledSearchBox'
 import { SearchContext } from './SearchContext'
 
-const DEBOUNCE_TIME = 300
+const DEBOUNCE_TIME = 800
 
 export type SearchBoxProps = ComponentProps<'div'> & UseSearchBoxProps
 

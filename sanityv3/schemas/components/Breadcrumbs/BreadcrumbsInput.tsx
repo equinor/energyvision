@@ -5,6 +5,7 @@ import { Text, Card, Grid, Stack } from '@sanity/ui'
 import { BreadcrumbsPreview } from './BreadcrumbsPreview'
 import { getObjectMemberField } from '../utils/getObjectMemberField'
 import { constructBreadcrumbs } from './utils/constructBreadcrumbs'
+import { apiVersion } from '../../../sanity.client'
 
 type BreadCrumbsInputProps = {
   value?: Reference[]
@@ -13,7 +14,7 @@ type BreadCrumbsInputProps = {
 export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
   const { value, members, renderField, renderInput, renderItem, renderPreview } = props
 
-  const client = useClient({ apiVersion: '2021-10-21' })
+  const client = useClient({ apiVersion: apiVersion })
   const slug = useFormValue([`slug`]) as SlugValue
   const parent = useFormValue([`parent`]) as Reference
 

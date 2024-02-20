@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import blocksToText from '../../../helpers/blocksToText'
-import { defaultColors } from '../../components/ColorSelector'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import type { MagazinePromotion } from './promoteMagazine'
@@ -54,8 +53,7 @@ const ingressContentType = configureBlockContent({
   h4: false,
   attachment: false,
 })
-const chosenColors = ['White', 'Moss Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
-const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
+
 export default {
   title: 'Promotion',
   name: 'promotion',
@@ -126,9 +124,6 @@ export default {
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
       type: 'colorlist',
-      options: {
-        colors: backgroundColors,
-      },
       fieldset: 'design',
     },
   ].filter((e) => e),

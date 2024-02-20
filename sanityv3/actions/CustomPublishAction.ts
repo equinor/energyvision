@@ -4,14 +4,15 @@ import {
   DocumentActionConfirmDialogProps,
   DocumentActionDescription,
   DocumentActionProps,
+  DocumentActionsContext,
+  SanityClient,
 } from 'sanity'
-import { dataset, sanityClient } from '../sanity.client'
+import { dataset, apiVersion } from '../sanity.client'
 import { useToast } from '@sanity/ui'
 
-const apiVersion = '2023-01-01'
 const projectId = import.meta.env.SANITY_STUDIO_API_PROJECT_ID || 'h61q9gi9'
-const token = import.meta.env.SANITY_STUDIO_MUTATION_TOKEN
-const client = sanityClient.withConfig({ apiVersion: apiVersion, token: token })
+/** Secret site already exposes the mutation token. So we can reuse it instead. */
+const token = import.meta.env.SANITY_STUDIO_HISTORY_API_TOKEN || import.meta.env.SANITY_STUDIO_MUTATION_TOKEN
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
 
@@ -21,10 +22,9 @@ const requiresFirstPublished = ['news', 'localNews', 'magazine']
 const shouldAddFirstPublishedAt = async (props: DocumentActionProps) => {
   if (!requiresFirstPublished.includes(props.type)) return false
   let error = false
-
   // https://github.com/sanity-io/sanity/issues/2179
   const revisions = await fetch(
-    `https://${projectId}.api.sanity.io/v${apiVersion}/data/history/${dataset}/transactions/${props.id}?excludeContent=true`,
+    `https://${projectId}.api.sanity.io/${apiVersion}/data/history/${dataset}/transactions/${props.id}?excludeContent=true`,
     {
       method: 'GET',
       headers: new Headers({
@@ -45,7 +45,7 @@ const shouldAddFirstPublishedAt = async (props: DocumentActionProps) => {
   return !hasBeenPublished || !props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME]
 }
 
-const addFirstPublishedAtField = async (id: string) => {
+const addFirstPublishedAtField = async (id: string, client: SanityClient) => {
   await client
     .patch(id)
     .set({ [FIRST_PUBLISHED_AT_FIELD_NAME]: new Date().toISOString() })
@@ -55,7 +55,8 @@ const addFirstPublishedAtField = async (id: string) => {
     })
 }
 
-export function createCustomPublishAction(originalAction: DocumentActionComponent) {
+export function createCustomPublishAction(originalAction: DocumentActionComponent, context: DocumentActionsContext) {
+  const client = context.getClient({ apiVersion: apiVersion })
   return (props: DocumentActionProps) => {
     const [dialogOpen, setDialogOpen] = useState(false)
     const originalResult = originalAction(props as DocumentActionProps) as DocumentActionDescription
@@ -64,7 +65,7 @@ export function createCustomPublishAction(originalAction: DocumentActionComponen
     const handlePublish = async () => {
       try {
         if (await shouldAddFirstPublishedAt(props)) {
-          await addFirstPublishedAtField(props.draft?._id || props.id)
+          await addFirstPublishedAtField(props.draft?._id || props.id, client)
         }
         originalResult.onHandle && originalResult.onHandle()
       } catch (e) {

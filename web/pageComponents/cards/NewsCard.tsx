@@ -9,7 +9,7 @@ const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
 
 const StyledCard = styled(Card)`
   --card-gap: var(--space-large);
-  height: 100%;
+  height: var(--height);
   @media (max-width: 800px) {
     --card-maxWidth: 300px;
   }
@@ -52,7 +52,7 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
   if (!heroImage) return null
 
   return (
-    <StyledLink href={slug} {...rest}>
+    <StyledLink href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
           {
@@ -66,7 +66,7 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
               image={heroImage.image}
               maxWidth={400}
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
-              sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+              sizes="(min-width: 1780px) calc(-1.72vw + 401px), (min-width: 1340px) calc(17.86vw + 58px), 276px"
             />
           )}
         </Media>

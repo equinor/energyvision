@@ -22,7 +22,7 @@ const StyledHitHeading = styled(Heading)`
 `
 const HitHeading = ({ children, ...rest }: HeadingProps) => {
   return (
-    <StyledHitHeading level="h2" size="sm" inverted {...rest}>
+    <StyledHitHeading level="h2" size="sm" {...rest}>
       {children}
     </StyledHitHeading>
   )

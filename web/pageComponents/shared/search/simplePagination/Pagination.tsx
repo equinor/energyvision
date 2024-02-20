@@ -18,11 +18,10 @@ const PaginationList = styled.ul`
 
 type PaginationProps = {
   totalPages: number
-  inverted?: boolean
   onPageChange: (val: number) => void
 }
 
-export const Pagination = ({ totalPages, onPageChange, inverted = false }: PaginationProps) => {
+export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
   const [currentPage, setCurrentPage] = useState(0)
   const { resultsRef } = useContext(PaginationContext)
   const prevPage = useRef(currentPage)
@@ -73,7 +72,6 @@ export const Pagination = ({ totalPages, onPageChange, inverted = false }: Pagin
         isCurrent={false}
         isDisabled={currentPage === 0}
         onClick={() => goToPage(0)}
-        inverted={inverted}
       >
         <Icon data={first_page} />
       </PaginationItem>
@@ -84,7 +82,6 @@ export const Pagination = ({ totalPages, onPageChange, inverted = false }: Pagin
         isCurrent={false}
         isDisabled={currentPage === 0}
         onClick={goToPreviousPage}
-        inverted={inverted}
       >
         <Icon data={chevron_left} />
       </PaginationItem>
@@ -105,7 +102,6 @@ export const Pagination = ({ totalPages, onPageChange, inverted = false }: Pagin
             isCurrent={isCurrentPage(page)}
             isDisabled={false}
             onClick={() => goToPage(page)}
-            inverted={inverted}
           >
             {page + 1}
           </PaginationItem>
@@ -117,7 +113,6 @@ export const Pagination = ({ totalPages, onPageChange, inverted = false }: Pagin
         isCurrent={false}
         isDisabled={currentPage === totalPages - 1}
         onClick={goToNextPage}
-        inverted={inverted}
       >
         <Icon data={chevron_right} />
       </PaginationItem>
@@ -128,7 +123,6 @@ export const Pagination = ({ totalPages, onPageChange, inverted = false }: Pagin
         isCurrent={false}
         isDisabled={currentPage === totalPages - 1}
         onClick={() => goToPage(totalPages - 1)}
-        inverted={inverted}
       >
         <Icon data={last_page} />
       </PaginationItem>

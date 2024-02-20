@@ -1,29 +1,28 @@
-import { ReactNode, CSSProperties, HTMLAttributes } from 'react'
+import { BackgroundContainer, BackgroundContainerProps } from '@components/Backgrounds'
+import { ReactNode, CSSProperties } from 'react'
 import styled from 'styled-components'
 
 /* If we need this for e.g. the search, let's move it to components folder */
-const StyledTopbarDropdown = styled.div`
+const StyledTopbarDropdown = styled(BackgroundContainer)`
   position: fixed;
-  background: var(--ui-background-default);
   overflow: auto;
-  display: var(--display);
-  z-index: 50;
   left: 0;
   top: 0;
-  right: 0;
+  right: var(--right);
   bottom: 0;
 `
 type Props = {
-  isOpen: boolean
+  right?: string
   children: ReactNode
-} & HTMLAttributes<HTMLDivElement>
+} & BackgroundContainerProps
 
-export const TopbarDropdown = ({ isOpen, children, ...rest }: Props) => {
+export const TopbarDropdown = ({ children, right = '15px', style, ...rest }: Props) => {
   return (
     <StyledTopbarDropdown
       style={
         {
-          '--display': isOpen ? 'block' : 'none',
+          ...style,
+          '--right': right,
         } as CSSProperties
       }
       {...rest}

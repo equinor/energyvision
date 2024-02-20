@@ -28,6 +28,11 @@ export const query = /* groq */ `*[_type == "localNews" && lang == $lang && !(_i
       "text": text
     }
   },
+  "factboxes": content[_type == "factbox"] {
+    "blockKey": _key,
+    title,
+    "text": pt::text(content)
+  },
   "docToClear": _id match $id
 }
 `

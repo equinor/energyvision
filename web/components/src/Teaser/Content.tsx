@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const StyledContent = styled.div`
   display: grid;
-  grid-gap: var(--space-large);
   grid-auto-columns: auto;
   align-items: center;
   align-content: start;
@@ -12,6 +11,9 @@ const StyledContent = styled.div`
   /* @TODO: Revisit when we move the margins to the article layout */
   p {
     margin-bottom: 0;
+  }
+  ul {
+    margin-bottom: var(--space-medium);
   }
 
   @media (min-width: 750px) {

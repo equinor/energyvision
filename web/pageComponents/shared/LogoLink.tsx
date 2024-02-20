@@ -15,11 +15,6 @@ const StyledLogoLink = styled(NextLink)<LogoLinkProps>`
   outline: none;
   &[data-focus-visible-added]:focus {
     ${outlineTemplate(outline)}
-
-    ${({ inverted }) =>
-      inverted && {
-        outlineColor: 'var(--mist-blue-100)',
-      }}
   }
 `
 
@@ -30,14 +25,12 @@ const AlignedLogoSecondary = styled(LogoSecondary)`
   margin-top: -12%;
 `
 
-type LogoLinkProps = {
-  inverted?: boolean
-} & AnchorHTMLAttributes<HTMLAnchorElement>
+type LogoLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
-export const LogoLink = ({ inverted = false, ...rest }: LogoLinkProps) => {
+export const LogoLink = ({ ...rest }: LogoLinkProps) => {
   return (
-    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest}>
-      <AlignedLogoSecondary inverted={inverted} />
+    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest} className="logo" prefetch={false}>
+      <AlignedLogoSecondary />
     </StyledLogoLink>
   )
 }

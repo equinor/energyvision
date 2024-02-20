@@ -1,5 +1,6 @@
 import { TopicDocuments } from '../../../../icons'
 import { defaultLanguage } from '../../../../languages'
+import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -13,6 +14,7 @@ export const Magazine = (S) =>
           S.documentTypeList('magazine')
             .id('magazines')
             .title('Magazines')
+            .apiVersion(apiVersion)
             .filter('_type == "magazine" && (!defined(lang) || lang == $baseLang)')
             .params({ baseLang: defaultLanguage.name })
             .canHandleIntent((_name, params) => {

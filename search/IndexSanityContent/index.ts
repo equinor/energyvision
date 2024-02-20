@@ -1,4 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+//import { dotenv } from 'dotenv-azure'
 // eslint-disable-next-line import/no-named-as-default
 import DotenvAzure from 'dotenv-azure'
 import { indexEvents } from './events'
@@ -29,8 +30,10 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     allowEmptyValues: true,
     debug: false,
   })
+  //await dotenv.config()
 
   const logger = context.log
+  logger.info(JSON.stringify(req.body))
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
   const getIndex = pipe(

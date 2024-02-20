@@ -1,9 +1,8 @@
 import { Card } from '@components'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import Image, { Ratios } from '../shared/SanityImage'
-import { ImageWithAlt, MagazineCardData } from '../../types/types'
+import { MagazineCardData } from '../../types/types'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 
@@ -43,24 +42,16 @@ type MagazineCardProp = {
 }
 
 const getThumbnail = (data: MagazineCardData) => {
-  const { openGraphImage, heroImage, hero } = data
+  const { heroImage } = data
 
-  if (!heroImage?.asset && !openGraphImage?.asset) return false
+  if (!heroImage?.asset) return false
 
   return (
     <Image
-      image={
-        (Flags.IS_DEV
-          ? hero?.figure?.asset
-            ? hero.figure
-            : openGraphImage
-          : heroImage?.asset
-          ? heroImage
-          : openGraphImage) as ImageWithAlt
-      }
-      maxWidth={400}
+      image={heroImage}
+      maxWidth={700}
       aspectRatio={Ratios.NINE_TO_SIXTEEN}
-      sizes="(max-width: 360px) 315px,(max-width: 600px) 550px,(max-width: 700px) 310px,450px"
+      sizes="(min-width: 1000px) 400px, (min-width: 440px) 335px, 82.5vw"
     />
   )
 }
@@ -71,7 +62,7 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
   if (!thumbnail) return null
 
   return (
-    <StyledLink href={slug} {...rest}>
+    <StyledLink href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
           {

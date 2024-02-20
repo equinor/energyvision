@@ -1,14 +1,16 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable jsx-a11y/media-has-caption */
 import { useRef, HTMLProps, useEffect, useState, useCallback } from 'react'
+import styled from 'styled-components'
 import Hls from 'hls.js'
 import { Icon } from '@equinor/eds-core-react'
 import { play_circle, pause_circle } from '@equinor/eds-icons'
-import styled from 'styled-components'
+import useVideoAnalytics from '../../../lib/hooks/useVideoAnalytics'
 
 type HLSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
   playButton?: boolean
+  videoDescription?: string
 }
 
 const Wrapper = styled.div<{ $showSpinner: boolean }>`
@@ -68,15 +70,18 @@ export const HLSPlayer: React.FC<HLSProps> = ({
   controls = false,
   playButton = false,
   autoPlay = false,
+  muted = false,
+  videoDescription,
   ...props
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
-
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
   const [showSpinner, setShowSpinner] = useState(autoPlay)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
   const hlsRef = useRef<Hls | null>(null)
+
+  useVideoAnalytics(videoRef, src, props.title)
 
   const handlePlayButton = useCallback(() => {
     if (videoRef.current && hlsRef.current) {
@@ -103,6 +108,26 @@ export const HLSPlayer: React.FC<HLSProps> = ({
         autoStartLoad: autoPlay, // This ensures video is not loaded automatically
       })
       hlsRef.current = hls
+
+      hls.on(Hls.Events.ERROR, (_, data) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              // try to recover network error
+              console.error('Network error encountered', data)
+              break
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              console.error('Media error encountered', data)
+              break
+            default:
+              // cannot recover
+              console.error('Unrecoverable error encountered', data)
+              hls.destroy()
+              break
+          }
+        }
+      })
+
       hls.loadSource(src)
       hls.attachMedia(video)
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
@@ -121,7 +146,11 @@ export const HLSPlayer: React.FC<HLSProps> = ({
 
     return () => {
       if (video) {
+        video.removeEventListener('play', handlePlayEvent)
         video.removeAttribute('src')
+      }
+      if (hlsRef.current) {
+        hlsRef.current.destroy()
       }
     }
   }, [autoPlay, src])
@@ -131,12 +160,17 @@ export const HLSPlayer: React.FC<HLSProps> = ({
   }, [playButton])
 
   return (
-    <Wrapper $showSpinner={showSpinner}>
+    <Wrapper
+      $showSpinner={showSpinner}
+      role={muted ? 'img' : undefined}
+      aria-label={muted ? videoDescription : undefined}
+    >
       <video
         playsInline
         ref={videoRef}
         autoPlay={playButton ? false : autoPlay}
         controls={autoPlay ? false : showControls || controls}
+        muted={muted}
         {...props}
       />
       {showPlayButton && (

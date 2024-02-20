@@ -10,6 +10,7 @@ const { Item } = List
 
 const StyledList = styled(List)`
   font-size: var(--typeScale-2);
+  margin-bottom: var(--space-medium);
 `
 
 const defaultComponents = (centered: boolean) => {

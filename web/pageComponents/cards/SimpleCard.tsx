@@ -20,7 +20,7 @@ const RatioBox = styled.div`
 `
 
 const AspectImagePlaceholder = styled.div`
-  background-color: var(--ui-background-default);
+  background-color: var(--bg-default);
   position: absolute;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@ function getLink(linkData: MenuLinkData, label: string) {
 const SimpleCard = ({ data }: SimpleCardData) => {
   const { id, label, image } = data
   return (
-    <CardLink key={id} href={getLink(data, label)}>
+    <CardLink key={id} href={getLink(data, label)} prefetch={false}>
       <StyledCard
         style={
           {

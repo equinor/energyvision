@@ -1,0 +1,86 @@
+name: Backup Routine
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: 'Please select the dataset to backup.'
+        type: choice
+        options:
+          - "['global-development']"
+          - "['global-test']"
+          - 'all'
+        required: true
+        default: "['global-development']"
+  schedule:
+    # Runs at 02:00 UTC every sunday
+    - cron: '0 2 * * 0'
+env:
+  BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
+jobs:
+  read-satellites:
+    runs-on: energyvision_runner
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        name: Read satellites by choice
+        run: |
+          MATRIX=$(cat satellites.json)
+          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
+
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  backup-dataset:
+    runs-on: energyvision_runner
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    needs: read-satellites
+    name: Backup dataset
+    strategy:
+      matrix:
+        dataset: ${{ (github.event.inputs.dataset != 'all' && github.event_name == 'workflow_dispatch' && fromJson(github.event.inputs.dataset)) || fromJson(needs.read-satellites.outputs.matrix) }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm sanityv3 install
+      - name: Export Data
+        id: export-data
+        working-directory: ./sanityv3
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
+        run: |
+          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
+          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
+      - name: Upload backup.tar.gz
+        id: upload-backup
+        uses: actions/upload-artifact@v3
+        with:
+          name: backup-tarball
+          path: ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
+          # Fails the workflow if no files are found; defaults to 'warn'
+          if-no-files-found: error
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

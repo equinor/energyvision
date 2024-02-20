@@ -15,6 +15,8 @@ export const StyledPortraitCard = styled.div`
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));
   padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
+  overflow: hidden;
+  overflow-wrap: break-word;
 
   &:hover {
     cursor: inherit;
@@ -33,7 +35,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
           style={
             {
               '--card-shadow': 'var(--card-box-shadow)',
-              '--card-background': 'var(--ui-background-default)',
+              '--card-background': 'var(--bg-default)',
               '--card-padding': '0 0 var(--space-small) 0',
               ...style,
             } as CSSProperties

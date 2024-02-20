@@ -1,4 +1,5 @@
 import { iframeCarouselFields } from '../iframeCarouselFields'
+import { tableFields } from '../table'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
@@ -7,11 +8,15 @@ import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorF
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
+import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
+_type == "keyNumbers" =>{
+    ${keyNumbersFields}
+  },
   _type == "teaser" => {
     "type": _type,
     "id": _key,
@@ -31,6 +36,22 @@ const pageContentFields = /* groq */ `
     "image": image {
       ...,
       "extension": asset-> extension
+    },
+    "action": action[0]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    },
+  },
+
+  _type == "textTeaser" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "text": text[]{..., ${markDefs}},
+    "designOptions": {
+      "theme": coalesce(theme.value, 0),
+      "titlePosition": coalesce(titlePosition, 'left'),
     },
     "action": action[0]{
       ${linkSelectorFields},
@@ -66,7 +87,10 @@ const pageContentFields = /* groq */ `
   _type == "fullWidthImage"=>{
     "type": _type,
     "id": _key,
-    image
+    image,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '10:3'),
+    },
   },
   _type == "fullWidthVideo"=>{
     "type": _type,
@@ -371,47 +395,6 @@ const pageContentFields = /* groq */ `
       "background": coalesce(background.title, 'none'),
     },
   },
-  _type == "table" => {
-    "type": _type,
-    "id": _key,
-    title[]{
-      ...,
-      ${markDefs},
-    },
-    ingress[]{
-      ...,
-      ${markDefs},
-    },
-    tableHeaders[]{
-      "id": _key,
-      headerCell[]{
-        ...,
-        ${markDefs},
-      }
-    },
-    tableRows[]{
-      "id": _key,
-      row[] {
-        "type": _type,
-        "id": _key,
-        label,
-        "link": select(
-          linkToOtherLanguage == true =>
-            referenceToOtherLanguage->${linkReferenceFields},
-            reference->${linkReferenceFields},
-        ),
-        "href": url,
-        ${downloadableFileFields},
-        ${downloadableImageFields},
-        ...
-      },
-    },
-    "designOptions": {
-      "aspectRatio": coalesce(aspectRatio, '16:9'),
-      "background": coalesce(background.title, 'none'),
-      height,
-    },
-  },
   _type == "cookieDeclaration" => {
     "type": _type,
     "id": _key,
@@ -515,6 +498,9 @@ const pageContentFields = /* groq */ `
   _type == "videoPlayerCarousel" => {
     ${videoPlayerCarouselFields}
   },
+  _type == "table" => {
+    ${tableFields}
+  }
 `
 
 export default pageContentFields

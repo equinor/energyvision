@@ -138,9 +138,9 @@ export const Uppercase: StoryFn<HeadingProps> = () => (
 
 export const InvertedHeading: StoryFn<HeadingProps> = () => (
   <DarkBackground>
-    <Heading inverted>This Heading has its color inverted by manually setting the inverted prop to true.</Heading>
-    <Heading inverted>Perfect for use on darker backgrounds.</Heading>
-    <Heading inverted>Note that this is handled automatically when using a BackgroundContainer.</Heading>
+    <Heading>This Heading has its color inverted by manually setting the inverted prop to true.</Heading>
+    <Heading>Perfect for use on darker backgrounds.</Heading>
+    <Heading>Note that this is handled automatically when using a BackgroundContainer.</Heading>
   </DarkBackground>
 )
 

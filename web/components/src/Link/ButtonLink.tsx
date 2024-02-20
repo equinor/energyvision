@@ -8,22 +8,17 @@ const StyledButtonLink = styled(Button)`
   --eds_button__font_size: var(--typeScale-05);
   --eds_button__radius: var(--space-4);
 
-  color: var(--slate-blue-95);
   text-decoration: none;
   display: inline-block;
 
-  /* If the button link is used inside a inverted component, the text colour must also be inverted */
+  color: var(--button-text);
+  border-color: var(--button-border-color);
+  background-color: var(--button-background);
+
   &:hover {
-    color: var(--inverted-text);
-    background-color: var(--slate-blue-100);
-  }
-  .inverted-background & {
-    color: var(--inverted-text);
-    border-color: var(--white-100);
-    &:hover {
-      background-color: var(--white-100);
-      color: var(--slate-blue-100);
-    }
+    color: var(--button-text-hover);
+    background-color: var(--button-background-hover);
+    border-color: var(--button-border-color-hover);
   }
 `
 
@@ -34,7 +29,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
   ref,
 ) {
   return (
-    <NextLink href={href} locale={locale}>
+    <NextLink href={href} locale={locale} prefetch={false}>
       <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
         {children}
       </StyledButtonLink>

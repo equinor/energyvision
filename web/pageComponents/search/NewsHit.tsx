@@ -13,6 +13,7 @@ const StyledFormattedDate = styled(FormattedDate)`
   font-size: var(--typeScale-00);
   letter-spacing: 1px;
   display: block;
+  color: var(--color-on-background);
 `
 
 /* @TODO: Let's use the Text component if the margin is removed */
@@ -20,7 +21,7 @@ const TextSnippet = styled.p`
   margin: 0;
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
-  color: var(--inverted-text);
+  color: var(--color-on-background);
 `
 
 const buildDisplayURL = (slug: string, locale: string | undefined): string => {
@@ -59,9 +60,9 @@ const NewsHit = ({ hit }: HitProps) => {
 
   return (
     <article>
-      <StyledHitLink href={slug}>
+      <StyledHitLink href={slug} prefetch={false}>
         {hit.publishDateTime && <StyledFormattedDate datetime={hit.publishDateTime} uppercase />}
-        <HitHeading level="h2" size="sm" inverted>
+        <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="pageTitle" />
         </HitHeading>
         {hit.ingress && (

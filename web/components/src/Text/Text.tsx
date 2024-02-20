@@ -5,7 +5,6 @@ import { StyledFigCaption } from '../FigureCaption'
 
 type StyledTextProps = {
   centered?: boolean
-  inverted?: boolean
 }
 
 const StyledText = styled(Typography)<StyledTextProps>`
@@ -28,16 +27,7 @@ const StyledText = styled(Typography)<StyledTextProps>`
     centered && {
       textAlign: 'center',
     }}
-
-  ${({ inverted }) =>
-    inverted && {
-      color: 'var(--inverted-text)',
-    }}
-
-  /* If the text is used inside a inverted component, the text colour must also be inverted */
-  .inverted-background & {
-    color: var(--inverted-text);
-  }
+  color: var(--color-on-background);
 `
 
 export type TextProps = {
@@ -46,7 +36,6 @@ export type TextProps = {
   bold?: boolean
   italic?: boolean
   centered?: boolean
-  inverted?: boolean
 } & HTMLAttributes<HTMLHeadingElement> &
   TypographyProps
 
@@ -66,13 +55,12 @@ const lineHeights = {
 }
 
 export const Text = forwardRef<HTMLDivElement, TextProps>(function Text(
-  { size = 'regular', lineHeight = '3', style, children, inverted = false, ...rest },
+  { size = 'regular', lineHeight = '3', style, children, ...rest },
   ref,
 ) {
   return (
     <StyledText
       ref={ref}
-      inverted={inverted}
       style={
         {
           ...style,

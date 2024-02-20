@@ -1,7 +1,7 @@
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import { Heading, HeadingProps } from '@components'
 import isEmpty from './helpers/isEmpty'
-import { Sub, Sup, Strikethrough } from './components'
+import { Sub, Sup, Strikethrough, Highlight } from './components'
 
 import type { PortableTextBlock } from '@portabletext/types'
 
@@ -22,8 +22,13 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
           </Heading>
         )
       },
+      extraLarge: ({ children }: PortableTextBlock) => (
+        <Heading size={'5xl'} level={level} className={className}>
+          <>{children}</>
+        </Heading>
+      ),
     },
-    marks: { sub: Sub, sup: Sup, s: Strikethrough },
+    marks: { sub: Sub, sup: Sup, s: Strikethrough, highlight: Highlight },
   }
 }
 

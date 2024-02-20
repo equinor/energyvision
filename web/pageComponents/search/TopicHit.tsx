@@ -11,7 +11,7 @@ const TextSnippet = styled.p`
   margin: 0;
   font-size: var(--typeScale-0);
   line-height: var(--lineHeight-3);
-  color: var(--inverted-text);
+  color: var(--color-on-background);
 `
 
 type TopicResultHit = {
@@ -37,8 +37,8 @@ const TopicHit = ({ hit }: HitProps) => {
   // @TODO: A more generic Hit component for more than events. Or multiple components???
   return (
     <article>
-      <StyledHitLink href={slug}>
-        <HitHeading level="h2" size="sm" inverted>
+      <StyledHitLink href={slug} prefetch={false}>
+        <HitHeading level="h2" size="sm">
           <Highlight hit={hit} attribute="pageTitle" />
         </HitHeading>
         {hit.title && (

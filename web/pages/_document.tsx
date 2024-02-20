@@ -4,6 +4,17 @@ import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
 import { GTM_ID } from '../lib/gtm'
 
+if (process.env.NEXT_MANUAL_SIG_HANDLE) {
+  process.on('SIGTERM', () => {
+    console.log('Received SIGTERM: cleaning up')
+    process.exit(0)
+  })
+  process.on('SIGINT', () => {
+    console.log('Received SIGINT: cleaning up')
+    process.exit(0)
+  })
+}
+
 const GoogleConsentMode = () => (
   <script
     data-cookieconsent="ignore"
@@ -74,6 +85,7 @@ export default class MyDocument extends Document {
       sheet.seal()
     }
   }
+
   render() {
     return (
       <Html data-dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}>
@@ -81,12 +93,7 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" href="https://cdn.eds.equinor.com/font/equinor-uprights-vf.css" />
           <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
-          {GTM_ID && (
-            <>
-              <GoogleConsentMode />
-              <GoogleTagManagerHead />
-            </>
-          )}
+          {GTM_ID && <GoogleConsentMode />}
         </Head>
         <body>
           {GTM_ID && <GoogleTagManagerBody />}

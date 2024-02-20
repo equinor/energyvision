@@ -1,6 +1,5 @@
 import { Heading } from '@components'
-import { useEffect, useRef } from 'react'
-import { Configure, InstantSearch } from 'react-instantsearch-hooks-web'
+import { useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
@@ -18,9 +17,10 @@ import Filters from './newsroom/Filters'
 import Hit from './newsroom/Hit'
 import { Hits } from './newsroom/Hits'
 import { Intro, News, UnpaddedText, Wrapper } from './newsroom/StyledComponents'
-import { createInstantSearchRouterNext } from 'react-instantsearch-hooks-router-nextjs'
+import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
+import { Configure, InstantSearch } from 'react-instantsearch'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -212,6 +212,7 @@ const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoo
                     })
                   : searchClient(undefined)
               }
+              future={{ preserveSharedStateOnUnmount: false }}
               indexName={indexName}
               routing={routing}
             >

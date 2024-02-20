@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { InstantSearchSSRProvider } from 'react-instantsearch-hooks-web'
-import { getServerState } from 'react-instantsearch-hooks-server'
+import { InstantSearchSSRProvider, getServerState } from 'react-instantsearch'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'
@@ -65,13 +64,11 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res, req, preview = false, locale = 'no' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'no' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not Norwegian.
   // This is a hack, and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-
-  res.setHeader('Cache-Control', 'private, no-cache, no-store, max-age=0, must-revalidate')
 
   if (locale !== 'no') {
     return {

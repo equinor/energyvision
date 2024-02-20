@@ -43,8 +43,8 @@ inputs:
   sanityApiToken:
     description: 'Sanity API token'
     required: true
-  sanityMutationToken:
-    description: 'Sanity API mutation token'
+  sanityHistoryApiToken:
+    description: 'Sanity History API token'
     required: true
   screen9accountId:
     description: 'Screen 9 Account Id'
@@ -52,10 +52,6 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
-outputs:
-  copied-files:
-    description: 'Number of files copied'
-    value: ${{ steps.random-number-generator.outputs.filesNo }}
 runs:
   using: 'composite'
   steps:
@@ -100,7 +96,7 @@ runs:
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
           --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
-          --build-arg ARG_SANITY_MUTATION_TOKEN=${{ inputs.sanityMutationToken }} \
+          --build-arg ARG_SANITY_HISTORY_API_TOKEN=${{ inputs.sanityHistoryApiToken }} \
           --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
           --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
           --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \

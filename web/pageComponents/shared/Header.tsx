@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, Button } from '@components'
+import { Topbar, Button, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -130,7 +130,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <StyledAllSites href={allSitesURL}>
+    <StyledAllSites href={allSitesURL} prefetch={false}>
       <FormattedMessage id="all_sites" defaultMessage="All Sites" />
     </StyledAllSites>
   )
@@ -159,42 +159,44 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
     <HeaderRelative>
       <HeadTags slugs={slugs} />
       <TopbarOffset />
-      <Topbar>
-        <TopbarContainer>
-          <LogoLinkInGrid />
-          <ControlsContainer
-            style={
-              {
-                '--columns': columns,
-              } as CSSProperties
-            }
-          >
-            {hasSearch && (
-              <ControlChild>
-                <NextLink href="/search">
-                  <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
-                    <Icon size={24} data={search} />
-                  </StyledSearchButton>
-                </NextLink>
-              </ControlChild>
-            )}
-            {hasMoreThanOneLanguage && (
-              <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
-            )}
-            {shouldDisplayAllSites ? (
-              <AllSites />
-            ) : menuData && Flags.HAS_FANCY_MENU ? (
-              <ControlChild>
-                <SiteMenu data={menuData as MenuData} />
-              </ControlChild>
-            ) : (
-              <ControlChild>
-                <SimpleSiteMenu data={menuData as SimpleMenuData} />
-              </ControlChild>
-            )}
-          </ControlsContainer>
-        </TopbarContainer>
-      </Topbar>
+      <BackgroundContainer>
+        <Topbar>
+          <TopbarContainer>
+            <LogoLinkInGrid />
+            <ControlsContainer
+              style={
+                {
+                  '--columns': columns,
+                } as CSSProperties
+              }
+            >
+              {hasSearch && (
+                <ControlChild>
+                  <NextLink href="/search" prefetch={false}>
+                    <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
+                      <Icon size={24} data={search} />
+                    </StyledSearchButton>
+                  </NextLink>
+                </ControlChild>
+              )}
+              {hasMoreThanOneLanguage && (
+                <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
+              )}
+              {shouldDisplayAllSites ? (
+                <AllSites />
+              ) : menuData && Flags.HAS_FANCY_MENU ? (
+                <ControlChild>
+                  <SiteMenu data={menuData as MenuData} />
+                </ControlChild>
+              ) : (
+                <ControlChild>
+                  <SimpleSiteMenu data={menuData as SimpleMenuData} />
+                </ControlChild>
+              )}
+            </ControlsContainer>
+          </TopbarContainer>
+        </Topbar>
+      </BackgroundContainer>
     </HeaderRelative>
   )
 }

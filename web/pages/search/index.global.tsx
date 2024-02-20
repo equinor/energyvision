@@ -5,8 +5,6 @@ import type { GetStaticProps } from 'next/types'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 import getIntl from '../../common/helpers/getIntl'
-
-import { RemoveScroll } from 'react-remove-scroll'
 import styled from 'styled-components'
 import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
@@ -16,6 +14,7 @@ import { NavTopbar } from '../../pageComponents/shared/siteMenu/NavTopbar'
 import { LogoLink } from '../../pageComponents/shared/LogoLink'
 import Search from '../../pageComponents/search/Search'
 import { useRouter } from 'next/router'
+import { FloatingOverlay } from '@floating-ui/react'
 
 const InvertedButton = styled(Button)`
   color: var(--white-100);
@@ -27,11 +26,6 @@ const InvertedButton = styled(Button)`
   &[data-focus-visible-added]:focus {
     outline-color: var(--mist-blue-100);
   }
-`
-
-const DarkTopbarDropdown = styled(TopbarDropdown)`
-  background-color: var(--slate-blue-95);
-  color: var(--inverted-text);
 `
 
 const SearchContainer = styled.div`
@@ -49,10 +43,10 @@ export default function SearchPage() {
   return (
     <>
       <NextSeo title={searchTitle}></NextSeo>
-      <RemoveScroll enabled={true}>
-        <DarkTopbarDropdown isOpen={true}>
+      <FloatingOverlay lockScroll>
+        <TopbarDropdown background={'Slate Blue 95'}>
           <NavTopbar>
-            <LogoLink inverted />
+            <LogoLink />
             <InvertedButton
               variant="ghost_icon"
               aria-expanded={true}
@@ -67,8 +61,8 @@ export default function SearchPage() {
           <SearchContainer>
             <Search />
           </SearchContainer>
-        </DarkTopbarDropdown>
-      </RemoveScroll>
+        </TopbarDropdown>
+      </FloatingOverlay>
     </>
   )
 }

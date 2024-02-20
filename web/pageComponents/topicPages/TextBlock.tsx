@@ -1,4 +1,4 @@
-import { Eyebrow, BackgroundContainer, Text, Heading } from '@components'
+import { Eyebrow, BackgroundContainer, Heading } from '@components'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'

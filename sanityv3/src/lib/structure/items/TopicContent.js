@@ -1,5 +1,6 @@
 import { TopicDocuments } from '../../../../icons'
 import { defaultLanguage } from '../../../../languages'
+import { apiVersion } from '../../../../sanity.client'
 
 export const TopicContent = (S) =>
   S.listItem()
@@ -10,6 +11,7 @@ export const TopicContent = (S) =>
       S.documentTypeList('page')
         .id('pages')
         .title('Topic content')
+        .apiVersion(apiVersion)
         .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
         .params({ baseLang: defaultLanguage.name })
         .canHandleIntent((_name, params) => {

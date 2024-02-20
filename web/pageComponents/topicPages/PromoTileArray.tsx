@@ -7,8 +7,8 @@ import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
-import useWindowSize from '../../lib/hooks/useWindowSize'
 import { Carousel } from '../shared/Carousel'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 const { Header, Action, Media } = Card
 
@@ -57,11 +57,11 @@ const StyledCard = styled(Card)`
 `
 
 const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
-  const { width } = useWindowSize()
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   if (!data.group) return null
 
-  const renderScroll = data.useHorizontalScroll || Boolean(width && width <= 800)
+  const renderScroll = data.useHorizontalScroll || isMobile
 
   const richTitle = (title: PortableTextBlock[], hasImage: boolean) => {
     return (
@@ -88,48 +88,45 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
     : Container
 
   return (
-    <div className="background-none" id={anchor}>
-      <Wrapper>
-        {data.group.map((tile: PromoTileData) => {
-          const { id, designOptions, image, title, action, linkLabelAsTitle } = tile
-          const { background } = designOptions
-          const hasImage = !!image?.asset
+    <Wrapper id={anchor}>
+      {data.group.map((tile: PromoTileData) => {
+        const { id, designOptions, image, title, action, linkLabelAsTitle } = tile
+        const { background } = designOptions
+        const hasImage = !!image?.asset
 
-          const Content = () =>
-            linkLabelAsTitle ? (
-              <PromoTileButton action={action} template="icon" hasImage={hasImage} />
-            ) : (
-              <>
-                {<>{richTitle(title, hasImage)}</>}
-                {action.label && (
-                  <StyledAction>
-                    <PromoTileButton action={action} hasImage={hasImage} />
-                  </StyledAction>
-                )}
-              </>
-            )
-
-          return (
-            /* Sneaky little hack to make it work with the bg colour See #667 */
-            <StyledBackgroundContainer disableContainerWrapper={true} background={background} key={id}>
-              <StyledCard type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
-                {image && (
-                  <Media>
-                    <ImageWithRoundedUpperCorners
-                      image={image}
-                      alt={image.alt}
-                      maxWidth={400}
-                      aspectRatio={Ratios.FOUR_TO_FIVE}
-                    />
-                  </Media>
-                )}
-                <Content />
-              </StyledCard>
-            </StyledBackgroundContainer>
+        const Content = () =>
+          linkLabelAsTitle ? (
+            <PromoTileButton action={action} template="icon" hasImage={hasImage} />
+          ) : (
+            <>
+              {<>{richTitle(title, hasImage)}</>}
+              {action.label && (
+                <StyledAction>
+                  <PromoTileButton action={action} hasImage={hasImage} />
+                </StyledAction>
+              )}
+            </>
           )
-        })}
-      </Wrapper>
-    </div>
+
+        return (
+          <StyledBackgroundContainer background={background} key={id}>
+            <StyledCard type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
+              {image && (
+                <Media>
+                  <ImageWithRoundedUpperCorners
+                    image={image}
+                    alt={image.alt}
+                    maxWidth={400}
+                    aspectRatio={Ratios.FOUR_TO_FIVE}
+                  />
+                </Media>
+              )}
+              <Content />
+            </StyledCard>
+          </StyledBackgroundContainer>
+        )
+      })}
+    </Wrapper>
   )
 }
 

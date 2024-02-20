@@ -1,6 +1,6 @@
 import { TopicDocuments } from '../../../../icons'
 import { defaultLanguage } from '../../../../languages'
-import { i18n } from '../../../../schemas/documentTranslation'
+import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -12,6 +12,7 @@ export const Event = (S) =>
         .schemaType('event')
         .child(
           S.documentTypeList('event')
+            .apiVersion(apiVersion)
             .id('events')
             .title('Events')
             .filter('_type == "event" && (!defined(lang) || lang == $baseLang)')

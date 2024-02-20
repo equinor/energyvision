@@ -120,7 +120,12 @@ export const Carousel = ({ children, scrollOffset, horizontalPadding = false, ..
   const handleScroll = (scrollType: string) => {
     const container = scrollRef.current
     if (container) {
-      const offset = scrollOffset || Math.max(0.5 * container.offsetWidth, 320)
+      const noOfItems = container?.childElementCount - 2 // exclude right & left arrow from children count.
+      const itemWidth = container?.lastElementChild?.clientWidth || 0
+      const padding = (container?.scrollWidth - itemWidth * noOfItems) / (noOfItems - 1)
+      const calculatedOffset = itemWidth + padding / 2
+      const offset = scrollOffset || calculatedOffset
+
       container.scrollBy({
         left: scrollType === 'forward' ? offset : -offset,
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
@@ -153,10 +158,14 @@ export const Carousel = ({ children, scrollOffset, horizontalPadding = false, ..
         <CarouselDiv ref={scrollRef} $isScrollable={isScrollable} $horizontalPadding={horizontalPadding} {...props}>
           {isScrollable && (
             <>
-              <StyledLeftButton aria-label="Left Arrow" onClick={() => handleScroll('back')}>
+              <StyledLeftButton className="carousel-arrow" aria-label="Left Arrow" onClick={() => handleScroll('back')}>
                 <StyledIcon color="inherit" data={chevron_left} />
               </StyledLeftButton>
-              <StyledRightButton aria-label="Right Arrow" onClick={() => handleScroll('forward')}>
+              <StyledRightButton
+                className="carousel-arrow"
+                aria-label="Right Arrow"
+                onClick={() => handleScroll('forward')}
+              >
                 <StyledIcon color="inherit" data={chevron_right} />
               </StyledRightButton>
             </>
