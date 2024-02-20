@@ -22,6 +22,18 @@ export default {
   ],
   fields: [
     {
+      name: 'aspectRatio',
+      type: 'string',
+      title: 'Aspect ratio',
+      options: {
+        list: [
+          { title: 'original', value: 'original' },
+          { title: '16:9', value: '16:9' },
+        ],
+      },
+      initialValue: '16:9',
+    },
+    {
       name: 'figure',
       title: 'Image',
       type: 'imageWithAltAndCaption',
@@ -33,18 +45,6 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-    },
-    {
-      name: 'aspectRatio',
-      type: 'string',
-      title: 'Aspect ratio',
-      options: {
-        list: [
-          { title: 'original', value: 'original' },
-          { title: '16:9', value: '16:9' },
-        ],
-      },
-      initialValue: '16:9',
     },
   ],
   preview: {
