@@ -145,6 +145,7 @@ jobs:
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           environment: ${{ secrets.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          deployToBothClusters: true
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

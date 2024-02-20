@@ -117,9 +117,9 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
-      # BACKUP CLUSTER
-    - name: Deploy to Radix c1 🚀
-      id: deploy-c1
+      # PLAYGROUND CLUSTER
+    - name: Deploy to Radix Playground 🚀
+      id: deploy-playground
       if: "${{ inputs.deployToBothClusters }}"
       uses: equinor/radix-github-actions@master
       with:
@@ -127,7 +127,8 @@ runs:
           create job
           deploy
           --token-environment
-          --context production
+          --context playground
+          --component ${{ inputs.datasetName == "global" ? "global" : "web-" + inputs.datasetName }}
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
