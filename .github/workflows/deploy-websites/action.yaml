@@ -117,7 +117,17 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
+
       # PLAYGROUND CLUSTER
+    - name: Get component name
+      id: get-component-name
+      if: '${{ inputs.deployToBothClusters }}'
+      shell: bash
+      run: |
+          component=${{ inputs.datasetName == 'global' && 'global' || format('{0}{1}', 'web-', inputs.datasetName) }}
+          echo "Component name is $component"
+          echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
+
     - name: Deploy to Radix Playground 🚀
       id: deploy-playground
       if: '${{ inputs.deployToBothClusters }}'
@@ -128,7 +138,7 @@ runs:
           deploy
           --token-environment
           --context playground
-          --component ${{ replace(replace(inputs.datasetName == "global", 'True', 'global'), 'False', format("web-{0}"", inputs.datasetName)) }}
+          --component $COMPONENT_NAME
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
