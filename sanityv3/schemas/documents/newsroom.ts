@@ -1,11 +1,11 @@
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { file } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule } from 'sanity'
+import { lang } from './langField'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
@@ -24,7 +24,6 @@ export default {
   title: 'Newsroom',
   name: 'newsroom',
   icon: () => EdsIcon(file),
-  i18n,
   fieldsets: [
     {
       title: 'SEO & metadata',
@@ -37,6 +36,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',

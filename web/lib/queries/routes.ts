@@ -7,11 +7,11 @@ import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 
 const allSlugsQuery = /* groq */ `
-  "slugs": *[_type in ['page', 'landingPage', 'event'] && ^.content._ref match _id + "*"] | order(_id asc)[0] {
-    "allSlugs": *[_type in ['page', 'landingPage', 'event'] && _id match ^._id + "*" && ${noDrafts}] {
-       "slug": *[_type match "route*" && content._ref == ^._id][0].slug.current,
-       "lang": _lang
-    }
+  "slugs":{
+    "allSlugs": *[_type == "translation.metadata" && references(^.content._ref)].translations[].value->{
+    "slug":*[_type match "route*" && content._ref == ^._id][0].slug.current,
+    lang
+  }
   }`
 
 export const routeQuery = /* groq */ `

@@ -2,8 +2,8 @@ import slugReference from '../slugReference'
 
 const lang = /* groq */ `
   select(_type match 'route_*' =>
-    content->_lang,
-    _lang
+    content->lang,
+    lang
   )
 `
 

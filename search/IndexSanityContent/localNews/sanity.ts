@@ -13,7 +13,7 @@ const publishDateTimeQuery = /* groq */ `
   )
 `
 
-export const query = /* groq */ `*[_type == "localNews" && _lang == $lang && !(_id in path("drafts.**")) && excludeFromSearch != true] {
+export const query = /* groq */ `*[_type == "localNews" && lang == $lang && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "title": title,
