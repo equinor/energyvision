@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useIsomorphicLayoutEffect } from '@equinor/eds-utils'
 
 const getMatches = (query: string): boolean => {
   // Prevents SSR issues
@@ -18,7 +19,7 @@ export function useMediaQuery(query: string): boolean | undefined {
   const [hasMatch, setHasMatches] = useState<boolean>(getMatches(query))
   const [initialLoad, setInitialLoad] = useState(true)
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (initialLoad) {
       setInitialLoad(false)
     }
