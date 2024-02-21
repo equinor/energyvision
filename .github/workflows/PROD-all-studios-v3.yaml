@@ -14,6 +14,7 @@ permissions:
 jobs:
   deploy-global:
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'production' }}
     environment:
       name: production
       url: https://equinor.sanity.studio
@@ -96,6 +97,7 @@ jobs:
 
   deploy-secret:
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'production' }}
     environment:
       name: production
     env:
