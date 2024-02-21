@@ -172,6 +172,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                     aria-expanded="true"
                     aria-label="Search"
                     forwardedAs={NextLink}
+                    prefetch={false}
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     //@ts-ignore
                     href={{
