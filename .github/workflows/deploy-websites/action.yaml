@@ -118,7 +118,6 @@ runs:
       id: get-token
       uses: ./.github/workflows/get-auth-token/
 
-      # PLAYGROUND CLUSTER
     - name: Get component name
       id: get-component-name
       if: '${{ inputs.deployToBothClusters }}'
@@ -128,6 +127,7 @@ runs:
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
 
+    # PLAYGROUND CLUSTER
     - name: Deploy to Radix Playground 🚀
       id: deploy-playground
       if: '${{ inputs.deployToBothClusters }}'
@@ -142,7 +142,8 @@ runs:
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
-      # MAIN CLUSTER
+
+    # MAIN CLUSTER
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
       uses: equinor/radix-github-actions@master
@@ -155,6 +156,7 @@ runs:
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
+
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
       with:

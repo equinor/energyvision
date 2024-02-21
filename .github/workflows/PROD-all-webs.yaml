@@ -1,6 +1,14 @@
 name: PROD - Deploy all webs
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        type: choice
+        options:
+          - production
+          - playground
 permissions:
   id-token: write
 jobs:
@@ -56,29 +64,32 @@ jobs:
         id: get-token
         uses: ./.github/workflows/get-auth-token/
 
-        # BACKUP CLUSTER
-      - name: Deploy to Radix c1 🚀
-        id: deploy-c1
+      # PRODUCTION CLUSTERS
+      - name: Deploy to Radix 🚀
+        id: deploy
+        if: ${{ github.event.inputs.environment == 'production' }}
         uses: equinor/radix-github-actions@master
         with:
           args: >
             create job
             deploy
             --token-environment
-            --context production
+            --context production platform2
             -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
-        # MAIN CLUSTER
-      - name: Deploy to Radix c2 🚀
-        id: deploy-c2
+
+      # PLAYGROUND CLUSTER
+      - name: Deploy to Radix Playground 🚀
+        id: deploy-playground
+        if: ${{ github.event.inputs.environment == 'playground' }}
         uses: equinor/radix-github-actions@master
         with:
           args: >
             create job
             deploy
             --token-environment
-            --context platform2
+            --context playground
             -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
