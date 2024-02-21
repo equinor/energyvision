@@ -124,9 +124,9 @@ runs:
       if: '${{ inputs.deployToBothClusters }}'
       shell: bash
       run: |
-          component=${{ inputs.datasetName == 'global' && 'global' || format('{0}{1}', 'web-', inputs.datasetName) }}
-          echo "Component name is $component"
-          echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
+        component=${{ inputs.datasetName == 'global' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
+        echo "Component name is $component"
+        echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
 
     - name: Deploy to Radix Playground 🚀
       id: deploy-playground
