@@ -117,10 +117,8 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
-
     - name: Get component name
       id: get-component-name
-      if: '${{ inputs.deployToBothClusters }}'
       shell: bash
       run: |
         component=${{ inputs.datasetName == 'global' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
@@ -152,6 +150,7 @@ runs:
           create job
           deploy
           --token-environment
+          --component $COMPONENT_NAME
           --context platform2
           -a equinor-web-sites
           -e ${{ inputs.environment }}
