@@ -1,20 +1,11 @@
 name: PROD - Deploy all studios v3
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy'
-        required: true
-        type: choice
-        options:
-          - production
-          - playground
 permissions:
   id-token: write
 jobs:
   deploy-global:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.environment == 'production' }}
     environment:
       name: production
       url: https://equinor.sanity.studio
@@ -97,7 +88,6 @@ jobs:
 
   deploy-secret:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.environment == 'production' }}
     environment:
       name: production
     env:
@@ -232,29 +222,13 @@ jobs:
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
         id: deploy
-        if: ${{ github.event.inputs.environment == 'production' }}
         uses: equinor/radix-github-actions@master
         with:
           args: >
             create job
             deploy
             --token-environment
-            --context production platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
-
-      # PLAYGROUND CLUSTER
-      - name: Deploy to Radix Playground 🚀
-        id: deploy-playground
-        if: ${{ github.event.inputs.environment == 'playground' }}
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context playground
+            --context platform2
             -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
@@ -267,7 +241,6 @@ jobs:
 
   store-image-tags:
     needs: deploy-satellite-studios
-    if: ${{ github.event.inputs.environment == 'production' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️

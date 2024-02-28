@@ -251,6 +251,7 @@ jobs:
       - name: Get token 🔑
         id: get-token
         uses: ./.github/workflows/get-auth-token/
+      # MAIN PRODUCTION CLUSTER
       - name: Deploy to Radix  🚀
         id: deploy
         uses: equinor/radix-github-actions@master
@@ -259,10 +260,24 @@ jobs:
             create job
             deploy
             --token-environment
-            --context production platform2
+            --context platform2
             -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
+      # BACKUP CLUSTER ROLLBACK
+      - name: Deploy to Radix  🚀
+        id: deploy
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --context production
+            -a equinor-web-sites
+            -e ${{ secrets.ENV }}
+            -f
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
