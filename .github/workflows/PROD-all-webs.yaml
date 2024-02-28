@@ -58,7 +58,7 @@ jobs:
 
       # BACKUP CLUSTER PRODUCTION
       - name: Deploy to Radix 🚀
-        id: deploy
+        id: deploy-backup
         uses: equinor/radix-github-actions@master
         with:
           args: >
@@ -72,7 +72,7 @@ jobs:
 
       # MAIN CLUSTER PLATFORM2
       - name: Deploy to Radix 🚀
-        id: deploy
+        id: deploy-main
         uses: equinor/radix-github-actions@master
         with:
           args: >
