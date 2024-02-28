@@ -103,6 +103,7 @@ jobs:
   store-image-tags:
     needs: deploy
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'production' }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -116,6 +117,7 @@ jobs:
         with:
           node-version: '14' # Or any version you prefer
 
+      # Check if this can be removed
       - name: Install dependencies
         run: |
           npm install js-yaml

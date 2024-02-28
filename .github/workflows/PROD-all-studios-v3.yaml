@@ -267,6 +267,7 @@ jobs:
 
   store-image-tags:
     needs: deploy-satellite-studios
+    if: ${{ github.event.inputs.environment == 'production' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️
