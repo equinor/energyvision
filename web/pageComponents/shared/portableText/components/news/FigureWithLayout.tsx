@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
-
+import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@components'
 import styled from 'styled-components'
 import Image from '../../../SanityImage'
@@ -60,7 +60,20 @@ export const FigureWithLayout = (block: BlockProps) => {
   if (!image) return null
 
   return (
-    <FigureTest layout={layout}>
+    <figure
+      className={twMerge(`
+        py-0
+        px-layout-md
+        mx-auto
+        w-full
+        ${layout !== 'full' ? 'md:w-1/2' : ''}
+        ${layout === 'right' ? 'md:float-right md:pl-xl' : ''}
+        ${layout === 'left' ? 'md:float-left md:pr-xl' : ''}
+        my-3xl
+        md:mb-sm
+        md:mt-0
+      `)}
+    >
       {layout === 'full' ? (
         <Image
           image={image}
@@ -97,6 +110,6 @@ export const FigureWithLayout = (block: BlockProps) => {
           {attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>}
         </FigureCaption>
       )}
-    </FigureTest>
+    </figure>
   )
 }

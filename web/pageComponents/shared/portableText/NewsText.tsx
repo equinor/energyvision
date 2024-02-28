@@ -29,9 +29,10 @@ const defaultSerializers = {
     h3: (props: { children: React.ReactNode }) => <Container>{h3Heading(props)}</Container>,
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
+      console.log('children', children)
       return (
         <Container>
-          <Text>
+          <Text className="">
             <>{children}</>
           </Text>
         </Container>

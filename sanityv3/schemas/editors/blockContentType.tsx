@@ -5,9 +5,9 @@ import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../
 import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
+import { component } from 'sanity/desk'
 
 export type BlockContentProps = {
-  h1?: boolean
   h2?: boolean
   h3?: boolean
   h4?: boolean
@@ -37,10 +37,18 @@ const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
+const Heading1Style = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: '21.112px', fontWeight: '600', padding: '0 0' }}>{children} </span>
+}
+const Heading2Style = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: '21.112px' }}>{children} </span>
+}
 
+// H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
-    h1 = false,
     h2 = true,
     h3 = true,
     h4 = false,
@@ -85,10 +93,9 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     },
   }
 
-  const h1Config = { title: 'Title (h1)', value: 'h1' }
-  const h2Config = { title: 'Title (h2)', value: 'h2' }
-  const h3Config = { title: 'Subtitle (h3)', value: 'h3' }
-  const h4Config = { title: 'Subtitle (h4)', value: 'h4' }
+  const h2Config = { title: 'Heading 1', value: 'h2', component: Heading1Style }
+  const h3Config = { title: 'Heading 2', value: 'h3' }
+  const h4Config = { title: 'Heading 3', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
@@ -217,10 +224,6 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
         to: [{ type: 'downloadableFile' }],
       },
     ],
-  }
-
-  if (h1) {
-    config?.styles?.push(h1Config)
   }
 
   if (h2) {

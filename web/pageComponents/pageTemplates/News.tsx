@@ -15,6 +15,7 @@ import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/types'
 import { toPlainText } from '@portabletext/react'
+import Blocks from '../shared/portableText/Blocks'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -259,7 +260,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
             {content && content.length > 0 && (
               <Content>
-                <NewsText value={content}></NewsText>
+                <Blocks value={content}></Blocks>
               </Content>
             )}
 

@@ -1,0 +1,31 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+}
+
+@layer utilities {
+  .block-wrapper {
+    display: grid;
+    grid-template-columns:
+      1fr
+      min(65ch, 100%)
+      1fr;
+  }
+  .block-wrapper > * {
+    grid-column: 2;
+  }
+  .pre-indent {
+    width: 100%;
+    grid-column: 1 / 3;
+  }
+  .post-indent {
+    width: 100%;
+    grid-column: 2 / -1;
+  }
+  .full-bleed {
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+}

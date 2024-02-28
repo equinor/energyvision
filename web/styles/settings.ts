@@ -1,6 +1,7 @@
 import { Flags } from '../common/helpers/datasetHelpers'
 import { css } from 'styled-components'
 
+// If migrate to tailwind put these variables in base layer
 export const colors = css`
   :root {
     /* Primary colours */
