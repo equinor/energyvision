@@ -125,7 +125,7 @@ jobs:
             -f
 
       # BACKUP CLUSTER
-      - name: Deploy to Radix 🚀
+      - name: Deploy to Radix backup🚀
         id: deploy-backup
         uses: equinor/radix-github-actions@master
         with:
