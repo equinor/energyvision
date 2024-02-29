@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, ImageBackground, BackgroundOption } from '../../../types/types'
+import type { BackgroundColours, BackgroundOption } from '../../../types/types'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
