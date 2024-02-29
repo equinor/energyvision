@@ -4,12 +4,13 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language, Page } from '../../common'
+import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
 
 const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "content": content->{
-    "title": pt::text(title),
+    "title": ${plainTextExcludingStrikeThrough('title')},
     "ingress": pt::text(ingress),
     "eventDate": eventDate.date,
     "eventDescription": pt::text(content),

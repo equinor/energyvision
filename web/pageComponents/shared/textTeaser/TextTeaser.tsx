@@ -2,11 +2,10 @@ import { Teaser as EnvisTeaser, Link, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import type { TextTeaserData, LinkData } from '../../../types/types'
-import { getLocaleFromName } from '../../../lib/localization'
+import type { TextTeaserData } from '../../../types/types'
 import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
+import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
 
 const { Content } = EnvisTeaser
 
@@ -73,30 +72,6 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
   }
 `
 
-const TeaserAction = ({ action }: { action: LinkData }) => {
-  const { type, label, extension } = action
-  const url = getUrlFromAction(action)
-  if (!url) {
-    console.warn(`Missing URL on 'TeaserAction' link with type: '${type}' and label: '${label}'`)
-    return null
-  }
-
-  if (action.type === 'internalUrl') {
-    const locale = getLocaleFromName(action.link?.lang)
-    return (
-      <StyledLink href={url} locale={locale} variant="readMore" aria-label={action.ariaLabel}>
-        {action.label}
-      </StyledLink>
-    )
-  }
-
-  return (
-    <StyledLink variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
-      {action.label} {extension && `(${extension.toUpperCase()})`}
-    </StyledLink>
-  )
-}
-
 const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
@@ -116,7 +91,7 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
               <IngressText value={text} />
             </IngressWrapper>
           )}
-          {action && <TeaserAction action={action} />}
+          {action && <ReadMoreLink action={action} variant="readMore" />}
         </StyledContent>
       </TeaserWrapper>
     </BackgroundContainer>

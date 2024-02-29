@@ -43,6 +43,9 @@ inputs:
   archiveContentLink:
     description: 'Archive storage link'
     required: true
+  deployToBothClusters:
+    description: 'Deploy app to both Radix clusters'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -114,18 +117,45 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
-    - name: Deploy API on Radix 🚀
-      id: deploy
+    - name: Get component name
+      id: get-component-name
+      shell: bash
+      run: |
+        component=${{ inputs.datasetName == 'global' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
+        echo "Component name is $component"
+        echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
+
+    # PLAYGROUND CLUSTER
+    - name: Deploy to Radix Playground 🚀
+      id: deploy-playground
+      if: '${{ inputs.deployToBothClusters }}'
       uses: equinor/radix-github-actions@master
       with:
         args: >
           create job
           deploy
           --token-environment
+          --context playground
+          --component $COMPONENT_NAME
+          -a equinor-web-sites
+          -e ${{ inputs.environment }}
+          -f
+
+    # MAIN CLUSTER
+    - name: Deploy to Radix c2 🚀
+      id: deploy-c2
+      uses: equinor/radix-github-actions@master
+      with:
+        args: >
+          create job
+          deploy
+          --token-environment
+          --component $COMPONENT_NAME
           --context platform2
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f
+
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2
       with:

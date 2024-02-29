@@ -16,7 +16,7 @@ type Props = {
   children: ReactNode
 } & BackgroundContainerProps
 
-export const TopbarDropdown = ({ children, right = '15px', style, ...rest }: Props) => {
+export const TopbarDropdown = ({ children, right = '0px', style, ...rest }: Props) => {
   return (
     <StyledTopbarDropdown
       style={
