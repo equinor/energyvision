@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
-import { defaultColors } from './defaultColors'
+import { themeColors, getColorForTheme } from './themeColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
 
@@ -27,8 +27,14 @@ const InnerCircle = styled.div<{ color: string; fillColor: string }>`
 export type ThemeSelectorValue = {
   title: string
   value: number
-  key: string
-  dark: string
+  background: {
+    key: string
+    value: string
+  }
+  highlight: {
+    key: string
+    value: string
+  }
 }
 
 type ColorCircleProps = {
@@ -38,7 +44,7 @@ type ColorCircleProps = {
 }
 
 const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
-  const { background, highlight } = getColorForTheme(color)
+  const { background, highlight } = getColorForTheme(color.value)
   return (
     <Card paddingY={1}>
       <Tooltip
@@ -54,7 +60,7 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
         portal
       >
         <Circle active={active} onClick={() => onClickHandler(color)}>
-          <InnerCircle color={background} fillColor={highlight}>
+          <InnerCircle color={background.value} fillColor={highlight.value}>
             <EdsIcon {...text_field} />
           </InnerCircle>
         </Circle>
@@ -67,7 +73,7 @@ type ThemeSelectorProps = ObjectInputProps
 
 export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProps) => {
   const { options } = schemaType
-  const colors = (options?.colors as ThemeSelectorValue[]) || defaultColors
+  const colors = (options?.colors as ThemeSelectorValue[]) || themeColors
 
   const handleSelect = useCallback(
     (selected: ThemeSelectorValue) => {
@@ -75,8 +81,8 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
 
       onChange(set(selected.title, ['title']))
       onChange(set(selected.value, ['value']))
-      onChange(set(selected.key, ['key']))
-      onChange(set(selected.dark, ['dark']))
+      onChange(set(selected.background, ['background']))
+      onChange(set(selected.highlight, ['highlight']))
     },
     [onChange, value],
   )
@@ -87,10 +93,12 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
             {colors.map((colorItem: ThemeSelectorValue) => {
+              console.log('colorItem', colorItem)
               const { background } = getColorForTheme(colorItem.value)
+              console.log('background', background)
               return (
                 <ColorCircle
-                  key={background}
+                  key={`colorcircle_${colorItem.value}`}
                   color={colorItem}
                   active={colorItem.value === value?.value}
                   onClickHandler={handleSelect}
