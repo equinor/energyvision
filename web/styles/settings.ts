@@ -137,6 +137,7 @@ export const typography = css`
   }
 `
 
+// tw -> Use break-keep to prevent line breaks from being applied to Chinese/Japanese/Korean (CJK) text.
 export const strictLineBreak = Flags.HAS_LINE_BREAK_TYPO
   ? css`
       :root {

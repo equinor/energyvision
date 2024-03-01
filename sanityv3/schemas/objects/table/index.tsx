@@ -1,5 +1,5 @@
 import blocksToText from '../../../helpers/blocksToText'
-import { defaultColors } from '../../components/ColorSelector'
+import { defaultColors } from '../../defaultColors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 
@@ -35,7 +35,6 @@ const themes: ColorType[] = [
 ]
 
 const ingressContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,
@@ -43,7 +42,6 @@ const ingressContentType = configureBlockContent({
 })
 
 const headerCellContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

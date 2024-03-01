@@ -22,11 +22,14 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
           </Heading>
         )
       },
-      extraLarge: ({ children }: PortableTextBlock) => (
-        <Heading size={'5xl'} level={level} className={className}>
-          <>{children}</>
-        </Heading>
-      ),
+      extraLarge: ({ children }: PortableTextBlock) => {
+        console.log('children', children)
+        return (
+          <Heading size={'5xl'} level={level} className={className}>
+            <>{children}</>
+          </Heading>
+        )
+      },
     },
     marks: { sub: Sub, sup: Sup, s: Strikethrough, highlight: Highlight },
   }

@@ -13,24 +13,24 @@ export const defaultColors = [
 export const getColorForTheme = (pattern: number) => {
   switch (pattern) {
     case 1:
-      return { background: 'hsl(184, 30%, 96%)', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[1].value, highlight: defaultColors[8].value }
     case 2:
-      return { background: 'hsl(25, 100%, 94%)', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[2].value, highlight: defaultColors[8].value }
     case 3:
-      return { background: 'hsl(199, 58%, 90%)', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[3].value, highlight: defaultColors[8].value }
     case 4:
-      return { background: '#FFF5B8', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[4].value, highlight: defaultColors[8].value }
     case 5:
-      return { background: '#F8D1AF', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[5].value, highlight: defaultColors[8].value }
     case 6:
-      return { background: '#49709C', highlight: '#F8D1AF' }
+      return { background: defaultColors[6].value, highlight: defaultColors[5].value }
     case 7:
-      return { background: '#49709C', highlight: '#FFF5B8' }
+      return { background: defaultColors[6].value, highlight: defaultColors[4].value }
     case 8:
-      return { background: '#C3E4CE', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[7].value, highlight: defaultColors[8].value }
 
     case 0:
     default:
-      return { background: 'hsl(0, 0%, 100%)', highlight: 'hsl(348, 100%, 54%)' }
+      return { background: defaultColors[0].value, highlight: defaultColors[8].value }
   }
 }

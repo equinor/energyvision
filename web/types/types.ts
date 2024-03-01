@@ -267,6 +267,8 @@ export type BackgroundColours =
 
 export type DesignOptions = {
   background?: BackgroundColours
+  utility: string
+  dark: boolean
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
@@ -315,6 +317,8 @@ export type TextTeaserData = {
   designOptions: {
     theme: number
     titlePosition: 'left' | 'right'
+    utility: string
+    dark: boolean
   }
 }
 

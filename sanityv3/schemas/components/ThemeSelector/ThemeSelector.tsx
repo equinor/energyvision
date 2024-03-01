@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
-import { defaultColors, getColorForTheme } from './defaultColors'
+import { defaultColors } from './defaultColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
 
@@ -27,6 +27,8 @@ const InnerCircle = styled.div<{ color: string; fillColor: string }>`
 export type ThemeSelectorValue = {
   title: string
   value: number
+  key: string
+  dark: string
 }
 
 type ColorCircleProps = {
@@ -36,7 +38,7 @@ type ColorCircleProps = {
 }
 
 const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
-  const { background, highlight } = getColorForTheme(color.value)
+  const { background, highlight } = getColorForTheme(color)
   return (
     <Card paddingY={1}>
       <Tooltip
@@ -73,6 +75,8 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
 
       onChange(set(selected.title, ['title']))
       onChange(set(selected.value, ['value']))
+      onChange(set(selected.key, ['key']))
+      onChange(set(selected.dark, ['dark']))
     },
     [onChange, value],
   )

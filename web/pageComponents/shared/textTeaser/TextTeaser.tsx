@@ -74,27 +74,30 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
 
 const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
-  const { theme, titlePosition } = designOptions
+  const { theme, titlePosition, dark, utility } = designOptions
   const { background, highlight } = getColorForTheme(theme)
+  console.log('background', background)
+  console.log('highlight', highlight)
+  console.log('utility', utility)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
-
+  const bgClassName = `bg-${utility}`
   return (
-    <BackgroundContainer style={style} background={background} id={anchor}>
-      <TeaserWrapper titlePosition={titlePosition}>
-        <TitleWrapper>
-          <StyledTitleText value={title} size={'2xl'} />
-        </TitleWrapper>
-        <StyledContent>
-          {text && (
-            <IngressWrapper>
-              <IngressText value={text} />
-            </IngressWrapper>
-          )}
-          {action && <ReadMoreLink action={action} variant="readMore" />}
-        </StyledContent>
-      </TeaserWrapper>
-    </BackgroundContainer>
+    /*     <BackgroundContainer style={style} background={background} id={anchor}> */
+    <TeaserWrapper titlePosition={titlePosition} id={anchor} className={`${dark ? 'dark' : ''} ${bgClassName}`}>
+      <TitleWrapper>
+        <StyledTitleText value={title} size={'2xl'} />
+      </TitleWrapper>
+      <StyledContent>
+        {text && (
+          <IngressWrapper>
+            <IngressText value={text} />
+          </IngressWrapper>
+        )}
+        {action && <ReadMoreLink action={action} variant="readMore" />}
+      </StyledContent>
+    </TeaserWrapper>
+    /*     </BackgroundContainer> */
   )
 }
 
