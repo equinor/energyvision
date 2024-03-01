@@ -29,7 +29,7 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
 
   return (
     <ColourContainer
-      className={className + ` background${styleVariant}`}
+      className={`${className ?? ''} background${styleVariant}`}
       isInverted={isInverted}
       style={
         {

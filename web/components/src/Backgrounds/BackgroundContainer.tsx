@@ -14,29 +14,27 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   { background, style, children, className, ...rest },
   ref,
 ) {
-  const Container = ({ children }: { children: React.ReactNode }) => {
-    return background?.backgroundOption?.useSpecialBackground ? (
-      <ImageBackgroundContainer
-        ref={ref}
-        {...rest}
-        imageBackground={background?.backgroundOption?.background}
-        style={style}
-        className={className}
-      >
-        {children}
-      </ImageBackgroundContainer>
-    ) : (
-      <ColouredContainer
-        ref={ref}
-        {...rest}
-        background={background?.backgroundColor}
-        style={style}
-        className={className}
-      >
-        {children}
-      </ColouredContainer>
-    )
-  }
+  const useSpecialBackground = background?.backgroundOption?.useSpecialBackground || false
+  const backgroundImage = background?.backgroundOption?.background
+  const bgColor = background?.backgroundColor || 'White'
 
-  return <Container>{children}</Container>
+  return (
+    <>
+      {useSpecialBackground && backgroundImage ? (
+        <div ref={ref} style={style} className={className} {...rest}>
+          <ImageBackgroundContainer
+            image={backgroundImage.image}
+            useAnimation={backgroundImage.useAnimation}
+            contentAlignment={backgroundImage.contentAlignment}
+          >
+            {children}
+          </ImageBackgroundContainer>
+        </div>
+      ) : (
+        <ColouredContainer background={bgColor} style={style} className={className} {...rest}>
+          {children}{' '}
+        </ColouredContainer>
+      )}
+    </>
+  )
 })

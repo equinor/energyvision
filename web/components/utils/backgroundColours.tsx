@@ -13,14 +13,35 @@ export type StyleVariants =
   | '--bg-mid-blue'
   | '--bg-slate-blue-95'
 
+function isBackgroundColour(title: any): title is BackgroundColours {
+  return [
+    'White',
+    'Moss Green',
+    'Moss Green Light',
+    'Spruce Wood',
+    'Mist Blue',
+    'Slate Blue',
+    'Mid Green',
+    'Mid Yellow',
+    'Mid Blue',
+    'Mid Orange',
+    'Slate Blue 95',
+  ].includes(title)
+}
+
 function getContainerColor(backgroundTitle?: BackgroundColours) {
   let styleVariant: StyleVariants = '--bg-default'
-  if (backgroundTitle === 'Slate Blue') {
-    styleVariant = '--bg-mid-blue'
-  } else if (backgroundTitle === 'White') {
-    styleVariant = '--bg-default'
-  } else {
-    styleVariant = `--bg-${backgroundTitle?.replace(/\s/g, '-').toLowerCase()}` as StyleVariants
+  if (backgroundTitle && isBackgroundColour(backgroundTitle))
+    if (backgroundTitle === 'Slate Blue') {
+      styleVariant = '--bg-mid-blue'
+    } else if (backgroundTitle === 'White') {
+      styleVariant = '--bg-default'
+    } else {
+      styleVariant = `--bg-${backgroundTitle?.replace(/\s/g, '-').toLowerCase()}` as StyleVariants
+    }
+  else {
+    console.log(backgroundTitle + ' is not the correct background color')
+    console.log(backgroundTitle)
   }
   return styleVariant
 }

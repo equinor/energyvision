@@ -41,8 +41,6 @@ export const normal = css`
 
   /**@ Title Highlight  */
   --title-highlight-color: var(--energy-red-100);
-
-  --color-inverse: var(--inverted-text);
 `
 
 export const inverted = css`
@@ -65,5 +63,4 @@ export const inverted = css`
   --accordion-icon-color: var(--white-100);
   --breadcrumbs-inactive-color: var(--grey-30);
   --title-highlight-color: var(--spruce-wood-100);
-  --color-inverse: var(--default-text);
 `

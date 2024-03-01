@@ -813,8 +813,6 @@ export type KeyNumbersData = {
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
   useHorizontalScroll: boolean
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
   action?: LinkData
 }

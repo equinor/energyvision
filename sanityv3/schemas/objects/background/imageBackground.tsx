@@ -1,6 +1,7 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, Reference } from 'sanity'
 import { RadioIconSelector } from '../../components'
 import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
+import { ImageWithAlt } from '../imageWithAlt'
 
 export type ColorType = {
   title: string
@@ -35,13 +36,14 @@ export default defineType({
       title: 'Content Alignment',
       description: 'Select the content alignment on larger screens.',
       type: 'string',
+      initialValue: 'left',
       components: {
         input: function ({ onChange, value }: { onChange: any; value: string }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"
               options={contentAlignmentOptions}
-              defaultValue="left"
+              defaultValue={'left'}
               currentValue={value}
               onChange={onChange}
             />
@@ -62,14 +64,14 @@ export default defineType({
       useAnimation,
       contentAlignment,
     }: {
-      image: Reference
+      image: ImageWithAlt
       useAnimation: boolean
       contentAlignment: string
     }) {
       return {
         title: `Image background`,
-        subtitle: `${contentAlignment.toUpperCase() + ' aligned'} ${useAnimation ? ' | Animated ' : ''} content`,
-        media: image,
+        subtitle: `${contentAlignment.toUpperCase() + ' aligned '} ${useAnimation ? ' | Animated ' : ''} content`,
+        media: image.asset,
       }
     },
   },
