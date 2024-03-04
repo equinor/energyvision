@@ -70,6 +70,7 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
 ) {
   return (
     <StyledHeading
+      id="maincontent"
       variant={level}
       ref={ref}
       center={center}
