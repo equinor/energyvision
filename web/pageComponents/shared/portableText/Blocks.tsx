@@ -2,7 +2,7 @@
 import { PortableText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import { FigureWithLayout, Quote, Fact, Sub, Sup, ExternalLink, InternalLink } from './components'
-import { Heading } from '@components/Heading'
+/* import { Heading } from '@components/Heading' */
 import isEmpty from './helpers/isEmpty'
 
 const blockSerializer = {
@@ -45,13 +45,25 @@ const blockSerializer = {
   list: {
     bullet: ({ children }: PortableTextBlock) => (
       <div className="px-layout-lg">
-        <ul>{children}</ul>
+        <ul>
+          {' '}
+          <>{children}</>
+        </ul>
       </div>
     ),
-    number: ({ children }: PortableTextBlock) => <ol className="px-layout-lg">{children}</ol>,
+    number: ({ children }: PortableTextBlock) => (
+      <ol className="px-layout-lg">
+        {' '}
+        <>{children}</>
+      </ol>
+    ),
   },
   listItem: {
-    bullet: ({ children }) => <li>{children}</li>,
+    bullet: ({ children }: PortableTextBlock) => (
+      <li>
+        <>{children}</>
+      </li>
+    ),
   },
 }
 

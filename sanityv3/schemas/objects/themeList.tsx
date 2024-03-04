@@ -14,20 +14,10 @@ export default defineType({
       name: 'value',
       type: 'number',
     }),
-    defineField({
-      name: 'background',
-      type: 'keyValue',
-    }),
-    defineField({
-      name: 'highlight',
-      type: 'keyValue',
-    }),
   ],
   initialValue: {
     title: themeColors[0].title,
     value: themeColors[0].value,
-    background: themeColors[0].background,
-    highlight: themeColors[0].highlight,
   },
   components: {
     input: (props) => {

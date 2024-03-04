@@ -139,6 +139,8 @@ module.exports = {
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
       }),
       fontSize: {
+        //--typeScale-00
+        xs: ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
         //--typeScale-05
         sm: ['clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))'],
         //--typeScale-1
@@ -147,6 +149,16 @@ module.exports = {
         md: ['clamp(calc(19.20 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.50 / 16 * 1rem))'],
         //--typeScale-3
         lg: ['clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem))'],
+        //--typeScale-4
+        xl: ['clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem))'],
+        //--typeScale-4_5
+        '2xl': ['clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem))'],
+        //--typeScale-5
+        '3xl': ['clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem))'],
+        //--typeScale-6
+        '4xl': ['clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem))'],
+        //--typeScale-7
+        '5xl': ['clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem))'],
       },
       fontWeight: {
         semibolder: 650,
@@ -155,9 +167,13 @@ module.exports = {
         //--fontWeight-regular: tw -> normal
       },
       lineHeight: {
+        //--lineHeight-1
         inherit: 'inherit',
+        //--lineHeight-2
         earthy: 1.2,
+        //--lineHeight-2_5
         cloudy: 1.35,
+        //-lineHeight-3
         planetary: 1.5,
       },
       maxWidth: {
@@ -175,6 +191,7 @@ module.exports = {
         DEFAULT: {
           css: {
             fontSize: theme('fontSize.base'),
+            lineHeight: theme('lineHeight.planetary'),
             h2: {
               fontSize: theme('fontSize.md'),
               lineHeight: round(32 / 24),
@@ -183,16 +200,14 @@ module.exports = {
             'ul > li': {
               paddingLeft: em(8, 14),
             },
-            p: {
-              textAlign: 'justify',
-            },
+            p: {},
           },
         },
         envis: {
           css: {
-            '--tw-prose-body': theme('colors.black.100'),
-            '--tw-prose-bullets': theme('colors.black.80'),
-            '--tw-prose-counters': theme('colors.black.80'),
+            '--tw-prose-body': theme('colors.slate.80'),
+            '--tw-prose-bullets': theme('colors.slate.80'),
+            '--tw-prose-counters': theme('colors.slate.80'),
             //inverted
             '--tw-prose-invert-headings': theme('colors.white.100'),
           },

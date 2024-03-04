@@ -6,6 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 import { component } from 'sanity/desk'
+import { defaultColors } from '../defaultColors'
 
 export type BlockContentProps = {
   h2?: boolean
@@ -29,7 +30,7 @@ export const textColorConfig = {
   value: 'highlight',
   icon: EdsBlockEditorIcon(format_color_text),
   component: ({ children }: { children: React.ReactNode }) => {
-    return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
+    return <span style={{ color: defaultColors[8].value }}>{children}</span>
   },
 }
 
@@ -37,9 +38,13 @@ const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
-const Heading1Style = (props: any) => {
+const Level1LgStyle = (props: any) => {
   const { children } = props
-  return <span style={{ fontSize: '21.112px', fontWeight: '600', padding: '0 0' }}>{children} </span>
+  return <span style={{ fontSize: '32.4526px', fontWeight: '400' }}>{children} </span>
+}
+const Level1BaseStyle = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: '21.112px', fontWeight: '600' }}>{children} </span>
 }
 const Heading2Style = (props: any) => {
   const { children } = props
@@ -93,9 +98,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     },
   }
 
-  const h2Config = { title: 'Heading 1', value: 'h2', component: Heading1Style }
-  const h3Config = { title: 'Heading 2', value: 'h3' }
-  const h4Config = { title: 'Heading 3', value: 'h4' }
+  const h2Config = [
+    { title: 'Level 1 Large', value: 'h2-lg', component: Level1LgStyle },
+    { title: 'Level 1 Base', value: 'h2-base', component: Level1BaseStyle },
+  ]
+  const h3Config = { title: 'Level 2', value: 'h3' }
+  const h4Config = { title: 'Level 3', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
@@ -227,7 +235,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   if (h2) {
-    config?.styles?.push(h2Config)
+    config?.styles?.push(...h2Config)
   }
 
   if (h3) {

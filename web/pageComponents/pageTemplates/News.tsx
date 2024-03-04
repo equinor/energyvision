@@ -97,10 +97,12 @@ const LeadParagraph = styled.div`
 `
 
 const Content = styled.div`
+  /* 
   & h2,
   & h3 {
     margin: var(--space-small) 0;
   }
+  */
 
   /* The max-width makes things easier with 50% floating images */
   max-width: var(--maxViewportWidth);
@@ -260,7 +262,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
             {content && content.length > 0 && (
               <Content>
-                <Blocks value={content}></Blocks>
+                <Blocks value={content} />
               </Content>
             )}
 

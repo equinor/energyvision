@@ -42,9 +42,7 @@ const StyledContent = styled(Content)`
 export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
-const StyledLink = styled(Link)`
-  font-size: var(--typeScale-1);
-`
+
 const StyledTitleText = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
   @media (min-width: 750px) {
@@ -74,30 +72,26 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
 
 const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
-  const { theme, titlePosition, dark, utility } = designOptions
+  const { theme, titlePosition } = designOptions
   const { background, highlight } = getColorForTheme(theme)
-  console.log('background', background)
-  console.log('highlight', highlight)
-  console.log('utility', utility)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
-  const bgClassName = `bg-${utility}`
   return (
-    /*     <BackgroundContainer style={style} background={background} id={anchor}> */
-    <TeaserWrapper titlePosition={titlePosition} id={anchor} className={`${dark ? 'dark' : ''} ${bgClassName}`}>
-      <TitleWrapper>
-        <StyledTitleText value={title} size={'2xl'} />
-      </TitleWrapper>
-      <StyledContent>
-        {text && (
-          <IngressWrapper>
-            <IngressText value={text} />
-          </IngressWrapper>
-        )}
-        {action && <ReadMoreLink action={action} variant="readMore" />}
-      </StyledContent>
-    </TeaserWrapper>
-    /*     </BackgroundContainer> */
+    <BackgroundContainer style={style} background={background} id={anchor}>
+      <TeaserWrapper titlePosition={titlePosition}>
+        <TitleWrapper>
+          <StyledTitleText value={title} size={'2xl'} />
+        </TitleWrapper>
+        <StyledContent>
+          {text && (
+            <IngressWrapper>
+              <IngressText value={text} />
+            </IngressWrapper>
+          )}
+          {action && <ReadMoreLink action={action} variant="readMore" />}
+        </StyledContent>
+      </TeaserWrapper>
+    </BackgroundContainer>
   )
 }
 

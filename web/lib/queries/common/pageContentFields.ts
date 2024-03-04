@@ -53,8 +53,6 @@ _type == "keyNumbers" =>{
     "text": text[]{..., ${markDefs}},
     "designOptions": {
       "theme": coalesce(theme.value, 0),
-      "background": coalesce(theme.background.key, "white-100"),
-      "highlight": coalesce(theme.highlight.key, "black-100"),
       "titlePosition": coalesce(titlePosition, 'left'),
     },
     "action": action[0]{

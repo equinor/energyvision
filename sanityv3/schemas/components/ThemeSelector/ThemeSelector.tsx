@@ -27,14 +27,6 @@ const InnerCircle = styled.div<{ color: string; fillColor: string }>`
 export type ThemeSelectorValue = {
   title: string
   value: number
-  background: {
-    key: string
-    value: string
-  }
-  highlight: {
-    key: string
-    value: string
-  }
 }
 
 type ColorCircleProps = {
@@ -81,8 +73,6 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
 
       onChange(set(selected.title, ['title']))
       onChange(set(selected.value, ['value']))
-      onChange(set(selected.background, ['background']))
-      onChange(set(selected.highlight, ['highlight']))
     },
     [onChange, value],
   )
@@ -93,12 +83,10 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
             {colors.map((colorItem: ThemeSelectorValue) => {
-              console.log('colorItem', colorItem)
               const { background } = getColorForTheme(colorItem.value)
-              console.log('background', background)
               return (
                 <ColorCircle
-                  key={`colorcircle_${colorItem.value}`}
+                  key={background.value}
                   color={colorItem}
                   active={colorItem.value === value?.value}
                   onClickHandler={handleSelect}

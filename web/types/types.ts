@@ -317,8 +317,6 @@ export type TextTeaserData = {
   designOptions: {
     theme: number
     titlePosition: 'left' | 'right'
-    utility: string
-    dark: boolean
   }
 }
 
