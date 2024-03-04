@@ -7,7 +7,18 @@ import isEmpty from './helpers/isEmpty'
 
 const blockSerializer = {
   block: {
-    h2: ({ children }: { children?: React.ReactNode }) => <h2 className={`px-layout-lg`}>{children}</h2>,
+    h2: ({ children }: { children?: React.ReactNode }) => {
+      return <h2 className={`px-layout-lg text-base font-semibold`}>{children}</h2>
+    },
+    h2Base: ({ children }: { children?: React.ReactNode }) => {
+      return <h2 className={`px-layout-lg text-base font-semibold`}>{children}</h2>
+    },
+    h2Large: ({ children }: { children?: React.ReactNode }) => {
+      return <h2 className={`px-layout-lg text-lg font-normal`}>{children}</h2>
+    },
+    h3: ({ children }: { children?: React.ReactNode }) => (
+      <h3 className={`px-layout-lg text-base font-semibold`}>{children}</h3>
+    ),
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
       return (
@@ -73,12 +84,14 @@ type Props = {
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 
+//@ts-ignore
 export default function Blocks({ value }: Props) {
   let div: PortableTextBlock[] = []
   return value.map((block, i, blocks) => {
     // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
     if (inlineBlockTypes.includes(block._type)) {
       div.push(block)
+      console.log('block', block)
 
       // If the next block is also text, group it with this one
       if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null

@@ -99,8 +99,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   const h2Config = [
-    { title: 'Level 1 Large', value: 'h2-lg', component: Level1LgStyle },
-    { title: 'Level 1 Base', value: 'h2-base', component: Level1BaseStyle },
+    { title: 'Level 1 Large', value: 'h2Large', component: Level1LgStyle },
+    { title: 'Level 1 Base', value: 'h2Base', component: Level1BaseStyle },
   ]
   const h3Config = { title: 'Level 2', value: 'h3' }
   const h4Config = { title: 'Level 3', value: 'h4' }

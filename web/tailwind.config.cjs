@@ -193,9 +193,11 @@ module.exports = {
             fontSize: theme('fontSize.base'),
             lineHeight: theme('lineHeight.planetary'),
             h2: {
-              fontSize: theme('fontSize.md'),
-              lineHeight: round(32 / 24),
+              fontSize: theme('fontSize.base'),
+              lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.semibold'),
+              marginTop: theme('spacing.sm'),
+              marginBottom: theme('spacing.sm'),
             },
             'ul > li': {
               paddingLeft: em(8, 14),
