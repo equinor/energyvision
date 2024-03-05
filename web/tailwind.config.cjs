@@ -193,9 +193,16 @@ module.exports = {
             fontSize: theme('fontSize.base'),
             lineHeight: theme('lineHeight.planetary'),
             h2: {
-              fontSize: theme('fontSize.base'),
+              fontSize: em(18, 16), //theme('fontSize.base'),
               lineHeight: theme('lineHeight.inherit'),
-              fontWeight: theme('fontWeight.semibold'),
+              fontWeight: theme('fontWeight.medium'),
+              marginTop: theme('spacing.sm'),
+              marginBottom: theme('spacing.sm'),
+            },
+            h3: {
+              fontSize: em(16, 16), //theme('fontSize.base'),
+              lineHeight: theme('lineHeight.inherit'),
+              fontWeight: theme('fontWeight.medium'),
               marginTop: theme('spacing.sm'),
               marginBottom: theme('spacing.sm'),
             },

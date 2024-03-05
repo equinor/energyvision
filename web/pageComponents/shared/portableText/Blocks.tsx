@@ -8,17 +8,15 @@ import isEmpty from './helpers/isEmpty'
 const blockSerializer = {
   block: {
     h2: ({ children }: { children?: React.ReactNode }) => {
-      return <h2 className={`px-layout-lg text-base font-semibold`}>{children}</h2>
+      return <h2 className={`px-layout-lg not-prose`}>{children}</h2>
     },
     h2Base: ({ children }: { children?: React.ReactNode }) => {
-      return <h2 className={`px-layout-lg text-base font-semibold`}>{children}</h2>
+      return <h2 className={`px-layout-lg`}>{children}</h2>
     },
-    h2Large: ({ children }: { children?: React.ReactNode }) => {
-      return <h2 className={`px-layout-lg text-lg font-normal`}>{children}</h2>
+    h3Base: ({ children }: { children?: React.ReactNode }) => {
+      return <h3 className={`px-layout-lg`}>{children}</h3>
     },
-    h3: ({ children }: { children?: React.ReactNode }) => (
-      <h3 className={`px-layout-lg text-base font-semibold`}>{children}</h3>
-    ),
+    h3: ({ children }: { children?: React.ReactNode }) => <h3 className={`px-layout-lg not-prose`}>{children}</h3>,
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
       return (
@@ -87,56 +85,59 @@ const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 //@ts-ignore
 export default function Blocks({ value }: Props) {
   let div: PortableTextBlock[] = []
-  return value.map((block, i, blocks) => {
-    // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
-    if (inlineBlockTypes.includes(block._type)) {
-      div.push(block)
-      console.log('block', block)
+  return (
+    <>
+      {value.map((block, i, blocks) => {
+        // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
+        if (inlineBlockTypes.includes(block._type)) {
+          div.push(block)
 
-      // If the next block is also text, group it with this one
-      if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
+          // If the next block is also text, group it with this one
+          if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
 
-      // Otherwise, render the group of text blocks we have
-      const value = div
-      div = []
+          // Otherwise, render the group of text blocks we have
+          const value = div
+          div = []
 
-      return (
-        <div
-          key={block._key}
-          className={`
+          return (
+            <div
+              key={block._key}
+              className={`
           prose   
           prose-envis 
           p-0
           max-w-viewport
           mx-auto
         `}
-        >
-          <PortableText
-            value={value}
-            //@ts-ignore
-            components={{
-              ...blockSerializer,
-            }}
-          />
-        </div>
-      )
-    } else {
-      // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
-      // blocks again
-      return (
-        <PortableText
-          key={block._key}
-          value={block}
-          components={{
-            types: {
-              //@ts-ignore
-              factbox: Fact,
-              //@ts-ignore
-              positionedInlineImage: FigureWithLayout,
-            },
-          }}
-        />
-      )
-    }
-  })
+            >
+              <PortableText
+                value={value}
+                //@ts-ignore
+                components={{
+                  ...blockSerializer,
+                }}
+              />
+            </div>
+          )
+        } else {
+          // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
+          // blocks again
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  //@ts-ignore
+                  factbox: Fact,
+                  //@ts-ignore
+                  positionedInlineImage: FigureWithLayout,
+                },
+              }}
+            />
+          )
+        }
+      })}
+    </>
+  )
 }

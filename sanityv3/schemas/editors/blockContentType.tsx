@@ -10,7 +10,9 @@ import { defaultColors } from '../defaultColors'
 
 export type BlockContentProps = {
   h2?: boolean
+  useH2BaseStyle?: boolean
   h3?: boolean
+  useH3BaseStyle?: boolean
   h4?: boolean
   internalLink?: boolean
   externalLink?: boolean
@@ -34,28 +36,34 @@ export const textColorConfig = {
   },
 }
 
+const round = (num: number) =>
+  num
+    .toFixed(7)
+    .replace(/(\.[0-9]+?)0+$/, '$1')
+    .replace(/\.0$/, '')
+const em = (px: number, base: number) => `${round(px / base)}em`
+
 const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
-const Level1LgStyle = (props: any) => {
+const Level2BaseStyle = (props: any) => {
   const { children } = props
-  return <span style={{ fontSize: '32.4526px', fontWeight: '400' }}>{children} </span>
+  return <span style={{ fontSize: em(18, 16), fontWeight: '600' }}>{children} </span>
 }
-const Level1BaseStyle = (props: any) => {
+
+const Level3BaseStyle = (props: any) => {
   const { children } = props
-  return <span style={{ fontSize: '21.112px', fontWeight: '600' }}>{children} </span>
-}
-const Heading2Style = (props: any) => {
-  const { children } = props
-  return <span style={{ fontSize: '21.112px' }}>{children} </span>
+  return <span style={{ fontSize: em(16, 16), fontWeight: '600' }}>{children} </span>
 }
 
 // H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
     h2 = true,
+    useH2BaseStyle = true,
     h3 = true,
+    useH3BaseStyle = true,
     h4 = false,
     internalLink = true,
     externalLink = true,
@@ -98,11 +106,10 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     },
   }
 
-  const h2Config = [
-    { title: 'Level 1 Large', value: 'h2Large', component: Level1LgStyle },
-    { title: 'Level 1 Base', value: 'h2Base', component: Level1BaseStyle },
-  ]
-  const h3Config = { title: 'Level 2', value: 'h3' }
+  const h2DefaultConfig = { title: 'Heading 2', value: 'h2' }
+  const h2BaseConfig = { title: 'Base heading 2', value: 'h2Base', component: Level2BaseStyle }
+  const h3DefaultConfig = { title: 'Heading 3', value: 'h3' }
+  const h3BaseConfig = { title: 'Base heading 3', value: 'h3Base', component: Level3BaseStyle }
   const h4Config = { title: 'Level 3', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',
@@ -235,11 +242,19 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   if (h2) {
-    config?.styles?.push(...h2Config)
+    if (useH2BaseStyle) {
+      config?.styles?.push(h2BaseConfig)
+    } else {
+      config?.styles?.push(h2DefaultConfig)
+    }
   }
 
   if (h3) {
-    config?.styles?.push(h3Config)
+    if (useH3BaseStyle) {
+      config?.styles?.push(h3BaseConfig)
+    } else {
+      config?.styles?.push(h3DefaultConfig)
+    }
   }
 
   if (h4) {
