@@ -38,7 +38,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
   const { background, aspectRatio } = designOptions
 
   return (
-    <BackgroundContainer background={{ backgroundColor: background }} id={anchor}>
+    <BackgroundContainer background={background} id={anchor}>
       {title && (
         <HeadingWrapper>
           <StyledHeading value={title} />

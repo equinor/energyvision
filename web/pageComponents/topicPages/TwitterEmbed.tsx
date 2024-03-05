@@ -45,7 +45,7 @@ const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
   }
   return (
     <>
-      <BackgroundContainer background={{ backgroundColor: designOptions.background }} id={anchor}>
+      <BackgroundContainer background={designOptions.background} id={anchor}>
         <Container>
           {title && <StyledTitle value={title} />}
           {ingress && (

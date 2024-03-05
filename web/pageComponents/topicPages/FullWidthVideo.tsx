@@ -58,7 +58,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
   const { video, designOptions, spacing } = data
   const { background, aspectRatio } = designOptions
   return (
-    <BackgroundContainer background={{ backgroundColor: background }} id={anchor}>
+    <BackgroundContainer background={background} id={anchor}>
       <Container $aspectRatio={aspectRatio} style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
         <StyledFigure>
           <StyledHLSPlayer src={video.url} title={video.title} playsInline autoPlay muted loop />

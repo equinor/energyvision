@@ -26,7 +26,7 @@ const BasicIFrame = ({
   const { height, aspectRatio, background } = designOptions
 
   return (
-    <BackgroundContainer background={{ backgroundColor: background }} {...rest}>
+    <BackgroundContainer background={background} {...rest}>
       <Container>
         {title && <StyledHeading value={title} />}
         <IFrame
