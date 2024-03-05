@@ -43,7 +43,7 @@ const IFrame = ({
   const { height, aspectRatio, background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
+    <BackgroundContainer background={{ backgroundColor: background }} {...rest} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && (

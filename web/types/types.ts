@@ -253,13 +253,13 @@ export type LandingPageSchema = {
 }
 
 export type ImageBackground = {
-  image?: ImageWithAlt
+  image: ImageWithAlt
   useAnimation?: boolean
   contentAlignment: 'left' | 'right' | 'center'
 }
 
 export type BackgroundOption = {
-  background: ImageBackground
+  background?: ImageBackground
   useSpecialBackground: boolean
 }
 
@@ -279,8 +279,8 @@ export type BackgroundColours =
 export type DesignOptions = {
   background?: {
     backgroundColor?: BackgroundColours
-    imagePosition?: TeaserImagePosition
   }
+  imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
   backgroundOption?: BackgroundOption
 }

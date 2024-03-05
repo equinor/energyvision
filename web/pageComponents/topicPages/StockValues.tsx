@@ -93,7 +93,7 @@ const StockValues = ({ data: { designOptions }, anchor, ...rest }: { data: Stock
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
+    <BackgroundContainer background={{ backgroundColor: background }} {...rest} id={anchor}>
       <Container>
         <Item>
           <p>

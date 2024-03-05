@@ -60,7 +60,7 @@ const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }
 export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
   return (
     <>
-      <StyledHero background={background}>
+      <StyledHero background={{ backgroundColor: background }}>
         <StyledMedia>
           {figure && (
             <Image

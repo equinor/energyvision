@@ -159,7 +159,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background} id={anchor}>
+    <BackgroundContainer background={{ backgroundColor: background }} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && (

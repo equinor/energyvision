@@ -73,7 +73,7 @@ const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
+    <BackgroundContainer background={{ backgroundColor: background }} {...rest} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         <Carousel>

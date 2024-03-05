@@ -37,7 +37,7 @@ const ImageCarousel = ({ data, anchor, ...rest }: ImageCarouselProps) => {
   const { autoplay, delay } = options
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
+    <BackgroundContainer background={{ backgroundColor: background }} {...rest} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         <Swiper
