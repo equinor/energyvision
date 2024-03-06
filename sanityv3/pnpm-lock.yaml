@@ -75,9 +75,6 @@ dependencies:
     version: 5.3.6(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
 
 devDependencies:
-  '@portabletext/types':
-    specifier: ^2.0.8
-    version: 2.0.8
   '@sanity/eslint-config-studio':
     specifier: ^2.0.4
     version: 2.0.4(eslint@8.6.0)(typescript@4.0.2)
@@ -2643,6 +2640,7 @@ packages:
   /@portabletext/types@2.0.8:
     resolution: {integrity: sha512-eiq9/kMX2bYezS4/kLFk3xNnruCFjCDdw6aYEv5ECHVKkYROiuLd3/AsP5d7tWF3+kPPy6tB0Wq8aqDG/URHGA==}
     engines: {node: ^14.13.1 || >=16.0.0 || >=18.0.0}
+    dev: false
 
   /@reach/auto-id@0.18.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-XwY1IwhM7mkHZFghhjiqjQ6dstbOdpbFLdggeke75u8/8icT8uEHLbovFUgzKjy9qPvYwZIB87rLiR8WdtOXCg==}
