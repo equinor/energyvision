@@ -168,7 +168,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
               {hasSearch && (
                 <ControlChild>
                   <Button
-                    variant="ghost_icon"
+                    variant="ghost"
                     aria-expanded="true"
                     aria-label="Search"
                     forwardedAs={NextLink}
@@ -180,12 +180,14 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                     }}
                     style={
                       {
+                        '--eds_button__padding_x': 'var(--space-small)',
                         color: 'var(--default-text)',
                         fill: 'var(--default-text)',
                       } as CSSProperties
                     }
                   >
                     <Icon size={24} data={search} />
+                    <FormattedMessage id="search"></FormattedMessage>
                   </Button>
                 </ControlChild>
               )}
