@@ -206,10 +206,25 @@ module.exports = {
               marginTop: theme('spacing.sm'),
               marginBottom: theme('spacing.sm'),
             },
-            'ul > li': {
-              paddingLeft: em(8, 14),
+            ol: {
+              marginLeft: theme('padding.layout-lg'),
+              marginRight: theme('padding.layout-lg'),
             },
-            p: {},
+            ul: {
+              marginLeft: theme('padding.layout-lg'),
+              marginRight: theme('padding.layout-lg'),
+            },
+            'ul ul, ul ol, ol ul, ol ol': {
+              paddingLeft: em(38, 24),
+              marginLeft: '0px',
+              marginRight: '0px',
+            },
+            'ol > li': {
+              marginLeft: em(8, 14),
+            },
+            'ul > li': {
+              marginLeft: em(8, 14),
+            },
           },
         },
         envis: {

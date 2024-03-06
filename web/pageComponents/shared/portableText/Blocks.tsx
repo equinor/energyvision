@@ -21,20 +21,15 @@ const blockSerializer = {
       if (isEmpty(children)) return null
       return (
         <p className={`px-layout-lg`}>
-          {/*@ts-ignore */}
-          {children}
+          <>{children}</>
         </p>
       )
     },
     smallText: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
       return (
-        <p
-          className={`px-layout-lg 
-          text-sm`}
-        >
-          {/*@ts-ignore */}
-          {children}
+        <p className={`px-layout-lg text-sm`}>
+          <>{children}</>
         </p>
       )
     },
@@ -47,22 +42,18 @@ const blockSerializer = {
   },
   types: {
     //@ts-ignore
-    positionedInlineImage: FigureWithLayout,
+    positionedInlineImage: (props) => <FigureWithLayout {...props} />,
     //@ts-ignore
     pullQuote: Quote,
   },
   list: {
     bullet: ({ children }: PortableTextBlock) => (
-      <div className="px-layout-lg">
-        <ul>
-          {' '}
-          <>{children}</>
-        </ul>
-      </div>
+      <ul>
+        <>{children}</>
+      </ul>
     ),
     number: ({ children }: PortableTextBlock) => (
-      <ol className="px-layout-lg">
-        {' '}
+      <ol>
         <>{children}</>
       </ol>
     ),
@@ -92,7 +83,7 @@ export default function Blocks({ value }: Props) {
         if (inlineBlockTypes.includes(block._type)) {
           div.push(block)
 
-          // If the next block is also text, group it with this one
+          // If the next block is also text/pullQuote, group it with this one
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
 
           // Otherwise, render the group of text blocks we have
@@ -119,6 +110,29 @@ export default function Blocks({ value }: Props) {
               />
             </div>
           )
+        } else if (block._type === 'factbox') {
+          let marginOverride = ''
+          // If the next block is a factbox, remove margin bottom
+          if (blocks[i + 1]?._type === 'factbox') {
+            marginOverride = 'mb-0'
+          }
+          // If the previous block was a factbox, remove margin top
+          if (blocks[i - 1]?._type === 'factbox') {
+            marginOverride = 'mt-0'
+          }
+
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  //@ts-ignore
+                  factbox: (props) => <Fact className={`${marginOverride}`} {...props} />,
+                },
+              }}
+            />
+          )
         } else {
           // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
           // blocks again
@@ -127,12 +141,7 @@ export default function Blocks({ value }: Props) {
               key={block._key}
               value={block}
               components={{
-                types: {
-                  //@ts-ignore
-                  factbox: Fact,
-                  //@ts-ignore
-                  positionedInlineImage: FigureWithLayout,
-                },
+                types: {},
               }}
             />
           )

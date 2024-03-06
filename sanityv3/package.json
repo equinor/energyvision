@@ -46,6 +46,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@types/styled-components": "^5.1.26",
+    "@portabletext/types": "^2.0.8",
     "eslint": "^8.6.0",
     "nanoid": "^5.0.4",
     "prettier": "^2.8.3",
