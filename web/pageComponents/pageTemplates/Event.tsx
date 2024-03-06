@@ -103,7 +103,8 @@ const StyledLocation = styled.div`
 const StyledPromotion = styled(Promotion)`
   --promotion-padding: var(--space-xxLarge) 0;
   --promotion-titleAlign: center;
-
+  margin: 0 auto var(--space-3xLarge) auto;
+  padding: 0;
   @media (min-width: 450px) {
     --promotion-titleAlign: left;
   }
@@ -124,6 +125,7 @@ const StyledBasicIFrame = styled(BasicIFrame)`
 
 const StyledContactList = styled(ContactList)`
   --contactList-titleAlign: center;
+  margin: 0 auto var(--space-3xLarge) auto;
 
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
