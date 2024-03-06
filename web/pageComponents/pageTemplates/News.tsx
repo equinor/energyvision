@@ -95,7 +95,7 @@ const LeadParagraph = styled.div`
   }
 `
 
-const Content = styled.div`
+const Content = styled.div<{ reduceMargin: boolean }>`
   & h2,
   & h3 {
     margin: var(--space-small) 0;
@@ -103,8 +103,7 @@ const Content = styled.div`
 
   /* The max-width makes things easier with 50% floating images */
   max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
+  margin: ${(reduceMargin) => (reduceMargin ? '0 auto var(--space-3xLarge) auto' : '0 auto 0 auto')};
 
   /*   Clear floats if two left or right aligned images are adjacent siblings*/
   .float-left + .float-left,
@@ -140,7 +139,7 @@ const Related = styled.div<{ reduceMargin: boolean }>`
 
 const Latest = styled.div`
   padding: 0 var(--space-medium);
-  margin: var(--space-4xLarge) auto 0;
+  margin: var(--space-3xLarge) auto;
   max-width: 1700px;
 `
 
@@ -258,7 +257,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             )}
 
             {content && content.length > 0 && (
-              <Content>
+              <Content reduceMargin={!!iframe.title}>
                 <NewsText value={content}></NewsText>
               </Content>
             )}
@@ -266,7 +265,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             {iframe && <BasicIFrame data={iframe} />}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <Related reduceMargin={iframe ? true : false}>
+              <Related reduceMargin={!!iframe.title}>
                 <RelatedContent data={relatedLinks} />
               </Related>
             )}
