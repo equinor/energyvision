@@ -226,6 +226,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                 className={twMerge(`
                   px-layout-lg
                   max-w-viewport
+                  mx-auto
                   my-3xl
                   ${iframe ? 'mt-0' : ''}
                   `)}

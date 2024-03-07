@@ -107,10 +107,10 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   const h2DefaultConfig = { title: 'Heading 2', value: 'h2' }
-  const h2BaseConfig = { title: 'Base heading 2', value: 'h2Base', component: Level2BaseStyle }
+  const h2BaseConfig = { title: 'Heading 2', value: 'h2', component: Level2BaseStyle }
   const h3DefaultConfig = { title: 'Heading 3', value: 'h3' }
-  const h3BaseConfig = { title: 'Base heading 3', value: 'h3Base', component: Level3BaseStyle }
-  const h4Config = { title: 'Level 3', value: 'h4' }
+  const h3BaseConfig = { title: 'Heading 3', value: 'h3', component: Level3BaseStyle }
+  const h4Config = { title: 'Heading 3', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
