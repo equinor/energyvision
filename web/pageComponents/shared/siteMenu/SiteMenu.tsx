@@ -66,6 +66,12 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
   const allSitesURL = getAllSitesLink('internal', router?.locale || 'en')
 
+  const getCurrentMenuItemIndex = (menuItems: SubMenuData[]) => {
+    return menuItems.findIndex((menuItem) =>
+      menuItem.groups.some((group) => group.links.some((link) => link.link?.slug === router.asPath)),
+    )
+  }
+
   return (
     <>
       <MenuButton
@@ -93,11 +99,12 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                   ></MenuButton>
                 </NavTopbar>
                 <MenuContainer>
-                  <Menu>
+                  <Menu defaultIndex={getCurrentMenuItemIndex(menuItems)}>
                     {menuItems.map((topLevelItem: SubMenuData, idx) => {
                       return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                     })}
                   </Menu>
+
                   <AllSitesLink href={allSitesURL}>
                     <FormattedMessage id="all_sites" defaultMessage="All sites" />
                   </AllSitesLink>
