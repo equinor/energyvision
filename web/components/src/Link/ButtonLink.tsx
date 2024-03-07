@@ -33,9 +33,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
       locale={locale}
       forwardedAs={NextLink}
       prefetch={false}
-      href={{
-        pathname: href,
-      }}
+      href={href}
       color="secondary"
       variant="outlined"
       ref={ref}
