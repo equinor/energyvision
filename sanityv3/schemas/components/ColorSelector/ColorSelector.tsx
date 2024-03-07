@@ -23,8 +23,9 @@ const InnerCircle = styled.div<{ color: string }>`
 export type ColorSelectorValue = {
   title: string
   value: string
-  dark: boolean
-  key: string
+  dark?: boolean
+  key?: string
+  onlyTextColor?: boolean
 }
 
 type ColorCircleProps = {
@@ -77,16 +78,18 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
       {colors && (
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
-            {colors.map((colorItem: ColorSelectorValue) => {
-              return (
-                <ColorCircle
-                  key={colorItem.value}
-                  color={colorItem}
-                  active={colorItem.value === value?.value}
-                  onClickHandler={handleSelect}
-                />
-              )
-            })}
+            {colors
+              .filter((colorItem: ColorSelectorValue) => !colorItem?.onlyTextColor)
+              .map((colorItem: ColorSelectorValue) => {
+                return (
+                  <ColorCircle
+                    key={colorItem.value}
+                    color={colorItem}
+                    active={colorItem.value === value?.value}
+                    onClickHandler={handleSelect}
+                  />
+                )
+              })}
           </Flex>
         </Card>
       )}
