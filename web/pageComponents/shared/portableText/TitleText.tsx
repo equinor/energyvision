@@ -23,7 +23,6 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
         )
       },
       extraLarge: ({ children }: PortableTextBlock) => {
-        console.log('children', children)
         return (
           <Heading size={'5xl'} level={level} className={className}>
             <>{children}</>

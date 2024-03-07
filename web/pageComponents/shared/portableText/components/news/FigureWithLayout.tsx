@@ -1,44 +1,10 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@components'
-import styled from 'styled-components'
 import Image from '../../../SanityImage'
 import type { ImageWithAlt } from '../../../../../types/types'
 
 type Layout = 'full' | 'left' | 'right'
-
-type FigureStyles = {
-  layout: Layout
-}
-
-const FigureTest = styled.figure.attrs<FigureStyles>(({ layout }) => ({
-  className: `float-${layout}`,
-}))<FigureStyles>`
-  padding: 0 var(--layout-paddingHorizontal-medium);
-  max-width: var(--maxViewportWidth);
-  margin: var(--space-3xLarge) auto;
-  /*  img {
-    object-fit: contain;
-  } */
-  @media (min-width: 800px) {
-    ${({ layout }) =>
-      layout === 'right' && {
-        width: '50%',
-        paddingLeft: 'var(--space-small)',
-        marginTop: '0',
-        marginBottom: 'var(--space-small)',
-        float: 'right',
-      }}
-    ${({ layout }) =>
-      layout === 'left' && {
-        width: '50%',
-        paddingRight: 'var(--space-small)',
-        marginBottom: 'var(--space-small)',
-        marginTop: '0',
-        float: 'left',
-      }}
-  }
-`
 
 type FigureNode = {
   _key: string

@@ -7,16 +7,6 @@ import isEmpty from './helpers/isEmpty'
 
 const blockSerializer = {
   block: {
-    h2: ({ children }: { children?: React.ReactNode }) => {
-      return <h2 className={`px-layout-lg not-prose`}>{children}</h2>
-    },
-    h2Base: ({ children }: { children?: React.ReactNode }) => {
-      return <h2 className={`px-layout-lg`}>{children}</h2>
-    },
-    h3Base: ({ children }: { children?: React.ReactNode }) => {
-      return <h3 className={`px-layout-lg`}>{children}</h3>
-    },
-    h3: ({ children }: { children?: React.ReactNode }) => <h3 className={`px-layout-lg not-prose`}>{children}</h3>,
     normal: ({ children }: PortableTextBlock) => {
       if (isEmpty(children)) return null
       return (
@@ -45,25 +35,6 @@ const blockSerializer = {
     positionedInlineImage: (props) => <FigureWithLayout {...props} />,
     //@ts-ignore
     pullQuote: Quote,
-  },
-  list: {
-    bullet: ({ children }: PortableTextBlock) => (
-      <ul>
-        <>{children}</>
-      </ul>
-    ),
-    number: ({ children }: PortableTextBlock) => (
-      <ol>
-        <>{children}</>
-      </ol>
-    ),
-  },
-  listItem: {
-    bullet: ({ children }: PortableTextBlock) => (
-      <li>
-        <>{children}</>
-      </li>
-    ),
   },
 }
 

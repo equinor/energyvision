@@ -198,6 +198,8 @@ module.exports = {
               fontWeight: theme('fontWeight.medium'),
               marginTop: theme('spacing.sm'),
               marginBottom: theme('spacing.sm'),
+              paddingLeft: theme('padding.layout-lg'),
+              paddingRight: theme('padding.layout-lg'),
             },
             h3: {
               fontSize: em(16, 16), //theme('fontSize.base'),
@@ -205,6 +207,8 @@ module.exports = {
               fontWeight: theme('fontWeight.medium'),
               marginTop: theme('spacing.sm'),
               marginBottom: theme('spacing.sm'),
+              paddingLeft: theme('padding.layout-lg'),
+              paddingRight: theme('padding.layout-lg'),
             },
             ol: {
               marginLeft: theme('padding.layout-lg'),
