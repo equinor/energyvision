@@ -77,7 +77,7 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
   return (
-    <BackgroundContainer style={style} background={background} id={anchor}>
+    <BackgroundContainer style={style} background={{ backgroundColor: background }} id={anchor}>
       <TeaserWrapper titlePosition={titlePosition}>
         <TitleWrapper>
           <StyledTitleText value={title} size={'2xl'} />

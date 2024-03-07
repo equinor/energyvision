@@ -252,6 +252,17 @@ export type LandingPageSchema = {
   seoAndSome: SeoData
 }
 
+export type ImageBackground = {
+  image: ImageWithAlt
+  useAnimation?: boolean
+  contentAlignment: 'left' | 'right' | 'center'
+}
+
+export type BackgroundOption = {
+  background?: ImageBackground
+  useSpecialBackground: boolean
+}
+
 export type BackgroundColours =
   | 'White'
   | 'Moss Green'
@@ -266,11 +277,12 @@ export type BackgroundColours =
   | 'Slate Blue 95'
 
 export type DesignOptions = {
-  background?: BackgroundColours
+  background?: {
+    backgroundColor?: BackgroundColours
+  }
+  backgroundOption?: BackgroundOption
   utility: string
   dark: boolean
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
 }
 
 export type TextBlockData = {
@@ -305,7 +317,10 @@ export type TeaserData = {
   isBigText?: boolean
   image: ImageWithAlt
   action?: LinkData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    imagePosition?: TeaserImagePosition
+    imageSize?: TeaserImageSize
+  }
 }
 
 export type TextTeaserData = {
@@ -354,7 +369,7 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: number
   }
 }
@@ -370,9 +385,8 @@ export type FullWidthVideoData = {
   spacing?: boolean
   title?: PortableTextBlock[]
   action?: LinkData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
-    background: BackgroundColours
   }
 }
 
@@ -406,7 +420,7 @@ export type QuoteData = {
   authorTitle?: string
   quote: string
   image?: ImageWithAlt
-  designOptions: DesignOptions
+  designOptions: DesignOptions & { imagePosition?: TeaserImagePosition }
 }
 
 export type AccordionListData = {
@@ -513,10 +527,9 @@ export type IFrameData = {
   frameTitle: string
   url: string
   cookiePolicy: CookiePolicy
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
-    background: BackgroundColours
   }
 }
 
@@ -657,9 +670,7 @@ export type NewsListData = {
 export type StockValuesData = {
   id: string
   type: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type TwitterEmbedData = {
@@ -669,9 +680,7 @@ export type TwitterEmbedData = {
   ingress?: PortableTextBlock[]
   embedType: string
   embedValue: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type AnchorLinkData = {
@@ -703,7 +712,6 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  background: BackgroundColours
   height?: number
 }
 
@@ -712,7 +720,7 @@ export type VideoPlayerData = {
   type: string
   video: VideoType
   videoControls: VideoControlsType
-  designOptions: VideoDesignOptionsType
+  designOptions: DesignOptions & VideoDesignOptionsType
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
@@ -730,9 +738,8 @@ export type VideoPlayerCarouselData = {
       thumbnail: ImageWithAlt
     }
   }[]
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
-    background: BackgroundColours
   }
   title?: PortableTextBlock[]
 }
@@ -755,9 +762,7 @@ export type ImageCarouselData = {
     autoplay: boolean
     delay: number
   }
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type IFrameCarouselItemData = {
@@ -779,9 +784,7 @@ export type IframeCarouselData = {
   id: string
   title?: PortableTextBlock[]
   items: IFrameCarouselItemData[]
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
@@ -801,8 +804,6 @@ export type KeyNumbersData = {
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
   useHorizontalScroll: boolean
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
   action?: LinkData
 }

@@ -1,47 +1,40 @@
-import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import styled from 'styled-components'
-import { getColorOnContainer, getContainerColor, isInvertedStyle } from '../../utils/backgroundColours'
-import type { BackgroundColours } from '../../../types/types'
-import { normal, inverted } from '../../../styles/themes'
+import { forwardRef, HTMLAttributes } from 'react'
+import type { BackgroundColours, BackgroundOption } from '../../../types/types'
+import { ColouredContainer } from './ColouredContainer'
+import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
 export type BackgroundContainerProps = {
-  background?: BackgroundColours
+  background?: {
+    backgroundColor?: BackgroundColours
+    backgroundOption?: BackgroundOption
+  }
 } & HTMLAttributes<HTMLDivElement>
-
-type ColourContainerProps = {
-  isInverted: boolean
-} & HTMLAttributes<HTMLDivElement>
-
-const ColourContainer = styled.div<ColourContainerProps>`
-  background-color: var(--background-color);
-  color: var(--color-on-background);
-  ${({ isInverted }) => (isInverted ? inverted : normal)}
-`
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background = 'White', style, children, className, ...rest },
+  { background, style, children, className, ...rest },
   ref,
 ) {
-  // @TODO: Find a better way with task #334
-  const styleVariant = getContainerColor(background)
-  const textColor = getColorOnContainer(background)
-  const isInverted = isInvertedStyle(styleVariant)
+  const useSpecialBackground = background?.backgroundOption?.useSpecialBackground || false
+  const backgroundImage = background?.backgroundOption?.background
+  const bgColor = background?.backgroundColor || 'White'
 
   return (
-    <ColourContainer
-      className={className + ` background${styleVariant}`}
-      isInverted={isInverted}
-      style={
-        {
-          ...style,
-          '--background-color': `var(${styleVariant})`,
-          '--color-on-background': `var(${textColor})`,
-        } as CSSProperties
-      }
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </ColourContainer>
+    <>
+      {useSpecialBackground && backgroundImage ? (
+        <div ref={ref} style={style} className={className} {...rest}>
+          <ImageBackgroundContainer
+            image={backgroundImage.image}
+            useAnimation={backgroundImage.useAnimation}
+            contentAlignment={backgroundImage.contentAlignment}
+          >
+            {children}
+          </ImageBackgroundContainer>
+        </div>
+      ) : (
+        <ColouredContainer background={bgColor} style={style} className={className} {...rest}>
+          {children}{' '}
+        </ColouredContainer>
+      )}
+    </>
   )
 })
