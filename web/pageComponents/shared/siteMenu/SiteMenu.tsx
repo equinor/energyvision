@@ -68,7 +68,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
 
   const getCurrentMenuItemIndex = (menuItems: SubMenuData[]) => {
     return menuItems.findIndex((menuItem) =>
-      menuItem.groups.some((group) => group.links.some((link) => link.link?.slug === router.asPath)),
+      menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath)),
     )
   }
 
