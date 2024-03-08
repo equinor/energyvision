@@ -42,9 +42,7 @@ const StyledContent = styled(Content)`
 export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
-const StyledLink = styled(Link)`
-  font-size: var(--typeScale-1);
-`
+
 const StyledTitleText = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
   @media (min-width: 750px) {
@@ -78,7 +76,6 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { background, highlight } = getColorForTheme(theme)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
-
   return (
     <BackgroundContainer style={style} background={background} id={anchor}>
       <TeaserWrapper titlePosition={titlePosition}>

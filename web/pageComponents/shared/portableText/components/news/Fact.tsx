@@ -8,6 +8,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { BackgroundColours, ImageWithAlt } from '../../../../../types/types'
 
 import { urlFor } from '../../../../../common/helpers'
+import { twMerge } from 'tailwind-merge'
 
 type FactboxProps = {
   title: string
@@ -18,9 +19,7 @@ type FactboxProps = {
   dynamicHeight: boolean
 }
 
-const FactBoxWithPadding = styled(FactBox)`
-  margin: var(--space-3xLarge) 0;
-`
+const FactBoxWithPadding = styled(FactBox)``
 
 const FactBoxContentWithPadding = styled(FactBox.Content)<{
   hasColumns: boolean
@@ -41,10 +40,11 @@ const FactBoxContentWithPadding = styled(FactBox.Content)<{
 type BlockProps = {
   isInline: boolean
   value: FactboxProps
+  className?: string
 } & PortableTextBlock
 
 export const Fact = (block: BlockProps) => {
-  const { value } = block
+  const { value, className } = block
   const { title, content, background, image, imagePosition, dynamicHeight } = value
   const bgTitle = (background ? background?.title : 'White') as BackgroundColours
   if (!content || content.length === 0) {
@@ -61,11 +61,14 @@ export const Fact = (block: BlockProps) => {
   const hasImage = imageSrc ? true : false
   const hasBgColor = bgTitle !== 'White'
 
+  const classNames = twMerge('my-3xl', className)
+
   return (
     <FactBoxWithPadding
       className={`fact-box fact-box${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''} ${
         hasImage ? 'fact-box--image' : ''
-      }`}
+      } ${classNames}
+      `}
       imagePosition={imagePosition}
       background={bgTitle}
     >

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
-import { defaultColors } from './defaultColors'
+import { defaultColors } from '../../defaultColors'
 
 const Circle = styled.div<{ active: boolean }>`
   display: inline-block;
@@ -23,6 +23,9 @@ const InnerCircle = styled.div<{ color: string }>`
 export type ColorSelectorValue = {
   title: string
   value: string
+  dark?: boolean
+  key?: string
+  onlyTextColor?: boolean
 }
 
 type ColorCircleProps = {
@@ -64,6 +67,8 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
 
       onChange(set(selected.title, ['title']))
       onChange(set(selected.value, ['value']))
+      onChange(set(selected.dark, ['dark']))
+      onChange(set(selected.key, ['key']))
     },
     [onChange, value],
   )
@@ -73,16 +78,18 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
       {colors && (
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
-            {colors.map((colorItem: ColorSelectorValue) => {
-              return (
-                <ColorCircle
-                  key={colorItem.value}
-                  color={colorItem}
-                  active={colorItem.value === value?.value}
-                  onClickHandler={handleSelect}
-                />
-              )
-            })}
+            {colors
+              .filter((colorItem: ColorSelectorValue) => !colorItem?.onlyTextColor)
+              .map((colorItem: ColorSelectorValue) => {
+                return (
+                  <ColorCircle
+                    key={colorItem.value}
+                    color={colorItem}
+                    active={colorItem.value === value?.value}
+                    onClickHandler={handleSelect}
+                  />
+                )
+              })}
           </Flex>
         </Card>
       )}
