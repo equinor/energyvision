@@ -89,6 +89,7 @@ import hlsVideo from './objects/hlsVideo'
 import themeList from './objects/themeList'
 import keyNumbers from './objects/keyNumbers'
 import keyNumberItem from './objects/keyNumberItem'
+import keyValue from './objects/keyValue'
 import card from './objects/card'
 import cardsList from './objects/cardsList'
 
@@ -174,6 +175,7 @@ const RemainingSchemas = [
   themeList,
   keyNumbers,
   keyNumberItem,
+  keyValue,
   card,
   cardsList,
 ]

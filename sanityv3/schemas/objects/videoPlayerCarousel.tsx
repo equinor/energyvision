@@ -5,7 +5,7 @@ import type { Reference, Rule, PortableTextBlock } from 'sanity'
 import { title } from './iframe/sharedIframeFields'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { defaultColors } from '../components/ColorSelector'
+import { defaultColors } from '../defaultColors'
 
 const titleContentType = configureTitleBlockContent()
 

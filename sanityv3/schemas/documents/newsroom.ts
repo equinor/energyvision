@@ -9,7 +9,6 @@ import type { PortableTextBlock, Rule } from 'sanity'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
-  h1: false,
   h2: true,
   h3: false,
   h4: false,

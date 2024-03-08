@@ -5,11 +5,14 @@ import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../
 import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
+import { component } from 'sanity/desk'
+import { defaultColors } from '../defaultColors'
 
 export type BlockContentProps = {
-  h1?: boolean
   h2?: boolean
+  useH2BaseStyle?: boolean
   h3?: boolean
+  useH3BaseStyle?: boolean
   h4?: boolean
   internalLink?: boolean
   externalLink?: boolean
@@ -25,20 +28,38 @@ export const textColorConfig = {
   value: 'highlight',
   icon: EdsBlockEditorIcon(format_color_text),
   component: ({ children }: { children: React.ReactNode }) => {
-    return <span style={{ color: 'hsl(348, 100%, 54%)' }}>{children}</span>
+    return <span style={{ color: defaultColors[8].value }}>{children}</span>
   },
 }
+
+const round = (num: number) =>
+  num
+    .toFixed(7)
+    .replace(/(\.[0-9]+?)0+$/, '$1')
+    .replace(/\.0$/, '')
+const em = (px: number, base: number) => `${round(px / base)}em`
 
 const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
+const Level2BaseStyle = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: em(18, 16), fontWeight: '600' }}>{children} </span>
+}
 
+const Level3BaseStyle = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: em(16, 16), fontWeight: '600' }}>{children} </span>
+}
+
+// H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
-    h1 = false,
     h2 = true,
+    useH2BaseStyle = true,
     h3 = true,
+    useH3BaseStyle = true,
     h4 = false,
     internalLink = true,
     externalLink = true,
@@ -83,10 +104,11 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     },
   }
 
-  const h1Config = { title: 'Title (h1)', value: 'h1' }
-  const h2Config = { title: 'Title (h2)', value: 'h2' }
-  const h3Config = { title: 'Subtitle (h3)', value: 'h3' }
-  const h4Config = { title: 'Subtitle (h4)', value: 'h4' }
+  const h2DefaultConfig = { title: 'Heading 2', value: 'h2' }
+  const h2BaseConfig = { title: 'Heading 2', value: 'h2', component: Level2BaseStyle }
+  const h3DefaultConfig = { title: 'Heading 3', value: 'h3' }
+  const h3BaseConfig = { title: 'Heading 3', value: 'h3', component: Level3BaseStyle }
+  const h4Config = { title: 'Heading 3', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
@@ -216,16 +238,20 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     ],
   }
 
-  if (h1) {
-    config?.styles?.push(h1Config)
-  }
-
   if (h2) {
-    config?.styles?.push(h2Config)
+    if (useH2BaseStyle) {
+      config?.styles?.push(h2BaseConfig)
+    } else {
+      config?.styles?.push(h2DefaultConfig)
+    }
   }
 
   if (h3) {
-    config?.styles?.push(h3Config)
+    if (useH3BaseStyle) {
+      config?.styles?.push(h3BaseConfig)
+    } else {
+      config?.styles?.push(h3DefaultConfig)
+    }
   }
 
   if (h4) {

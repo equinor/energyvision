@@ -1,5 +1,5 @@
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
+import { defaultColors } from '../defaultColors'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
