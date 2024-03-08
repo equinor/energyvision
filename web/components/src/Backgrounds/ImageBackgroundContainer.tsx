@@ -11,6 +11,7 @@ type ImageContainerProps = {
   imageUrl?: string
   isInverted: boolean
   contentAlignment: 'left' | 'right' | 'center'
+  useAnimation: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 const ImageContainer = styled.div<ImageContainerProps>`
@@ -21,17 +22,11 @@ const ImageContainer = styled.div<ImageContainerProps>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    ${({ imageUrl }) => (imageUrl ? `url(${imageUrl})` : '')};
+  background-image: ${({ imageUrl, useAnimation }) =>
+    imageUrl
+      ? `${useAnimation == true ? '' : ' linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),'} url(${imageUrl})`
+      : ''};
   ${({ isInverted }) => (isInverted ? inverted : normal)}
-  ${(props) =>
-    props.contentAlignment !== 'center' &&
-    css`
-      display: flex;
-      @media (min-width: 1200px) {
-        ${props.contentAlignment === 'right' ? 'justify-content:end;' : 'justify-content:start;'};
-      }
-    `}
 `
 
 const DEFAULT_MAX_WIDTH = 1920
@@ -57,6 +52,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         {...rest}
         className={className}
         contentAlignment={contentAlignment}
+        useAnimation={useAnimation === true}
       >
         <AnimationWrapper useAnimation={useAnimation === true} contentAlignment={contentAlignment}>
           {children}

@@ -9,11 +9,14 @@ const fadeIn = keyframes`
   0% {
     opacity: 0;
   }
-  20% {
+  30% {
     opacity: 1;
   }
+  50%{
+    opacity:1;
+  }
   80% {
-    opacity: 1;
+    opacity: 0.5;
   }
   100% {
     opacity: 0;
@@ -21,18 +24,25 @@ const fadeIn = keyframes`
 `
 
 const AnimationWrapper = styled.div<ContentProps>`
+  background-image: ${({ useAnimation }) =>
+    useAnimation ? 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))' : ''};
   ${(props) =>
     props.contentAlignment !== 'center' &&
     css`
       display: flex;
+
       @media (min-width: 1200px) {
-        width: 40vw;
+        display: flex;
+        width: 100%;
+        justify-content: ${props.contentAlignment === 'right' ? 'end' : 'start'};
       }
       > section,
       > div {
         @media (min-width: 1200px) {
-          width: 100% !important;
-          padding: var(--space-3xLarge) var(--space-3xLarge);
+          width: 45vw;
+          //width: 100% !important;
+          margin: 0 var(--layout-paddingHorizontal-small);
+          padding: var(--space-3xLarge) 0;
         }
       }
     `}
@@ -40,9 +50,11 @@ const AnimationWrapper = styled.div<ContentProps>`
   ${(props) =>
     props.useAnimation &&
     css`
-      padding-top: 50vh;
-      padding-bottom: 50vh;
-
+      > section,
+      > div {
+        padding-top: 50vh;
+        padding-bottom: 50vh;
+      }
       view-timeline-name: --revealing-image;
       view-timeline-axis: block;
 
@@ -51,10 +63,10 @@ const AnimationWrapper = styled.div<ContentProps>`
       animation-timeline: --revealing-image;
 
       /* Tweak range when effect should run */
-      animation-range: cover 30% cover 100%;
-    `}
+      animation-range: cover 30% cover 80%;
 
-  display: flex;
+      display: flex;
+    `}
 `
 
 export default AnimationWrapper
