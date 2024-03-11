@@ -187,7 +187,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                     }
                   >
                     <Icon size={24} data={search} />
-                    <FormattedMessage id="search"></FormattedMessage>
+                    <FormattedMessage id="search" />
                   </Button>
                 </ControlChild>
               )}
