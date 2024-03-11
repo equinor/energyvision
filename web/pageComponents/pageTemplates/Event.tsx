@@ -65,7 +65,7 @@ const Content = styled.div`
 const Related = styled.div`
   padding: 0 var(--layout-paddingHorizontal-large);
   max-width: var(--maxViewportWidth);
-  margin: var(--space-4xLarge) auto;
+  margin: 0 auto var(--space-4xLarge) auto;
 `
 
 const StyledRelatedContent = styled(RelatedContent)`
