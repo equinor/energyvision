@@ -19,7 +19,7 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
 import { Configure, InstantSearch } from 'react-instantsearch'
-import TitleText from 'pageComponents/shared/portableText/TitleText'
+import TitleText from '../shared/portableText/TitleText'
 
 const NewsRoomContent = styled.div`
   display: grid;
