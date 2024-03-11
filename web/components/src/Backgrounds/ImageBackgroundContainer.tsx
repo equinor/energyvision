@@ -4,6 +4,8 @@ import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { ImageBackground } from '../../../types/types'
 import { normal, inverted } from '../../../styles/themes'
 import AnimationWrapper from './AnimationWrapper'
+import { useMediaQuery } from '@chakra-ui/react'
+import Image from '../../../pageComponents/shared/SanityImage'
 
 type ImageBackgroundContainerProps = ImageBackground & HTMLAttributes<HTMLDivElement>
 
@@ -38,7 +40,8 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
   ) {
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
     const src = props.src
-    return (
+    const [isLargerThan1000] = useMediaQuery('(min-width: 1000px)')
+    return isLargerThan1000 ? (
       <ImageContainer
         style={
           {
@@ -58,6 +61,12 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
           {children}
         </AnimationWrapper>
       </ImageContainer>
+    ) : (
+      /* Image is not set as a background.*/
+      <>
+        <Image image={image}></Image>
+        {children}
+      </>
     )
   },
 )
