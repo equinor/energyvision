@@ -1,28 +1,37 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from 'react'
+import { grid_on } from '@equinor/eds-icons'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { PortableTextBlock } from 'sanity'
-import type { DownloadableImage } from './downloadableImage'
-import type { DownloadableFile } from './files'
-import type { LinkSelector } from './linkSelector'
-import { ThemeSelectorValue } from '../components/ThemeSelector'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { Card } from './card'
+import { ColorSelectorValue } from '../components/ColorSelector'
+import { defaultColors } from '../defaultColors'
 
 const titleContentType = configureTitleBlockContent({
-  highlight: true,
+  highlight: false,
+  styles: [
+    {
+      title: 'Normal',
+      value: 'normal',
+    },
+  ],
+  decorators: [
+    { title: 'Strong', value: 'strong' },
+    { title: 'Emphasis', value: 'em' },
+  ],
 })
 
 export type CardsList = {
   _type: 'cardsList'
   title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
-  titlePosition?: string
-  theme?: ThemeSelectorValue
+  cards?: Card[]
+  background?: ColorSelectorValue
 }
 
 export default {
-  name: 'cardslist',
+  name: 'cardsList',
   title: 'List of cards',
   type: 'object',
   localize: true,
@@ -57,29 +66,32 @@ export default {
     {
       title: 'Cards',
       fieldset: 'listOfCards',
+      description: `On mobile cards will be rendered in 1 column. For larger screens; 
+      if 2 or 4 cards - 2 columns else if 3 or more than 4 cards - 3 columns. `,
       name: 'cards',
       type: 'array',
       of: [{ type: 'card' }],
     },
     {
-      title: 'The background color',
-      description: 'Default is white',
+      title: 'The background color on the cards',
+      description: 'List title will be on default background. Default is White',
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
+      initialValue: defaultColors[6],
     },
   ],
-  /*   preview: {
+  preview: {
     select: {
       title: 'title',
-      text: 'text',
     },
-    prepare({ title, text }: { title: PortableTextBlock[]; text: PortableTextBlock[] }) {
+    prepare({ title }: { title: PortableTextBlock[] }) {
       const plainTitle = blocksToText(title)
       return {
-        title: plainTitle || 'Missing teaser title',
-        subtitle: blocksToText(text) || 'Mising teaser text',
+        title: plainTitle || 'Missing title',
+        subtitle: 'Cardslist component',
+        media: EdsIcon(grid_on),
       }
     },
-  }, */
+  },
 }

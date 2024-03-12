@@ -20,6 +20,11 @@ export type BlockContentProps = {
   lists?: boolean
   smallText?: boolean
   highlight?: boolean
+  normalTextOverride?: {
+    title: string
+    value: 'normal'
+    component?: ({ children }: { children: React.ReactNode }) => JSX.Element
+  }
   extendedStyles?: BlockStyleDefinition[]
 }
 
@@ -68,9 +73,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     smallText = true,
     highlight = false,
     extendedStyles = [],
+    normalTextOverride = { title: 'Normal', value: 'normal' },
   } = options
-
-  const normalTextOverride = { title: 'Normal', value: 'normal' }
 
   const config: BlockDefinition = {
     type: 'block',

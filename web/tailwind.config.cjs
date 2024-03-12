@@ -14,11 +14,18 @@ const rem = (px) => `${round(px / 16)}rem`
 const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
-  content: ['./components/**/*.{js,ts,tsx}', './pageComponents/**/*.{js,ts,tsx}'],
+  content: [
+    './components/**/*.{js,ts,tsx}',
+    './pageComponents/**/*.{js,ts,tsx}',
+    './core/**/*.{js,ts,tsx}',
+    './sections/**/*.{js,ts,tsx}',
+  ],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.
   inverted -> dark
+  NB: TwMerge configuration must be extended to properly merge custom theme utilities. 
+  Less pain to use Tailwind eqvivalent. 
   */
   darkMode: 'selector',
   theme: {
@@ -129,6 +136,14 @@ module.exports = {
         'transparent-white': 'theme(colors.white.100)/20',
       }),
       spacing: ({ theme }) => ({
+        //--space-xSmall -> spacing.1
+        //--space-small -> spacing.2
+        //--space-medium -> spacing.4
+        //--space-large -> spacing.6
+        //--space-xLarge -> spacing.8
+        //--space-xxLarge -> spacing.10
+        //--space-3xLarge -> spacing.14
+        //--space-4xLarge -> spacing.24
         xs: 'calc((4 / 16) * theme(fontSize.base))',
         sm: 'calc((8 / 16) * theme(fontSize.base))',
         md: 'calc((16 / 16) * theme(fontSize.base))',
@@ -189,15 +204,47 @@ module.exports = {
       },
       typography: (theme) => ({
         DEFAULT: {
+          css: [
+            {
+              fontSize: theme('fontSize.base'),
+              lineHeight: theme('lineHeight.planetary'),
+              h2: {
+                fontSize: theme('fontSize.2xl'),
+                lineHeight: theme('lineHeight.inherit'),
+                fontWeight: theme('fontWeight.normal'),
+                marginBottom: theme('spacing.8'),
+                paddingLeft: theme('padding.layout-lg'),
+                paddingRight: theme('padding.layout-lg'),
+              },
+              h3: {
+                fontSize: theme('fontSize.xl'),
+                lineHeight: theme('lineHeight.inherit'),
+                fontWeight: theme('fontWeight.normal'),
+                marginBottom: theme('spacing.8'),
+                paddingLeft: theme('padding.layout-lg'),
+                paddingRight: theme('padding.layout-lg'),
+              },
+            },
+            {
+              '--tw-prose-body': theme('colors.slate.80'),
+              '--tw-prose-bullets': theme('colors.slate.80'),
+              '--tw-prose-counters': theme('colors.slate.80'),
+              //inverted
+              '--tw-prose-invert-headings': theme('colors.white.100'),
+              '--tw-prose-invert-body': theme('colors.white.100'),
+              '--tw-prose-invert-bullets': theme('colors.white.100'),
+              '--tw-prose-invert-counters': theme('colors.white.100'),
+            },
+          ],
+        },
+        article: {
           css: {
-            fontSize: theme('fontSize.base'),
-            lineHeight: theme('lineHeight.planetary'),
             h2: {
               fontSize: em(18, 16), //theme('fontSize.base'),
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.medium'),
-              marginTop: theme('spacing.sm'),
-              marginBottom: theme('spacing.sm'),
+              marginTop: theme('spacing.2'),
+              marginBottom: theme('spacing.2'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },
@@ -205,8 +252,8 @@ module.exports = {
               fontSize: em(16, 16), //theme('fontSize.base'),
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.medium'),
-              marginTop: theme('spacing.sm'),
-              marginBottom: theme('spacing.sm'),
+              marginTop: theme('spacing.2'),
+              marginBottom: theme('spacing.2'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },
@@ -229,15 +276,6 @@ module.exports = {
             'ul > li': {
               marginLeft: em(8, 14),
             },
-          },
-        },
-        envis: {
-          css: {
-            '--tw-prose-body': theme('colors.slate.80'),
-            '--tw-prose-bullets': theme('colors.slate.80'),
-            '--tw-prose-counters': theme('colors.slate.80'),
-            //inverted
-            '--tw-prose-invert-headings': theme('colors.white.100'),
           },
         },
       }),

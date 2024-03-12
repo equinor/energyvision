@@ -2,11 +2,8 @@
 import { forwardRef } from 'react'
 import { configureBlockContent } from '../editors'
 import type { PortableTextBlock } from 'sanity'
-import type { DownloadableImage } from './downloadableImage'
-import type { DownloadableFile } from './files'
-import type { LinkSelector } from './linkSelector'
-import { ThemeSelectorValue } from '../components/ThemeSelector'
 import { Stack, Text, Card } from '@sanity/ui'
+import blocksToText from '../../helpers/blocksToText'
 
 const CardField = forwardRef((props: any, ref) => {
   return (
@@ -37,17 +34,14 @@ const blockContentType = configureBlockContent({ ...blockConfig })
 export type Card = {
   _type: 'card'
   title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
-  titlePosition?: string
-  theme?: ThemeSelectorValue
+  content?: PortableTextBlock[]
 }
 
 export default {
   name: 'card',
   title: 'Card',
-  description: `If only title are used it will render only title as statement. 
-  If content below are used, both title and content will be rendered.`,
+  description: `If only title are used it will render as big title statement. 
+  If content below are used, they will have regular heading and paragraph styling`,
   type: 'object',
   localize: true,
   components: {
@@ -66,17 +60,17 @@ export default {
       of: [blockContentType],
     },
   ],
-  /*   preview: {
+  preview: {
     select: {
       title: 'title',
-      text: 'text',
+      text: 'content',
     },
     prepare({ title, text }: { title: PortableTextBlock[]; text: PortableTextBlock[] }) {
       const plainTitle = blocksToText(title)
       return {
-        title: plainTitle || 'Missing teaser title',
-        subtitle: blocksToText(text) || 'Mising teaser text',
+        title: plainTitle || 'Missing title',
+        subtitle: blocksToText(text) || '',
       }
     },
-  }, */
+  },
 }

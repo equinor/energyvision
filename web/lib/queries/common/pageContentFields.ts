@@ -522,7 +522,24 @@ _type == "keyNumbers" =>{
   },
   _type == "table" => {
     ${tableFields}
-  }
+  },
+  _type == "cardsList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "cards": cards[]{
+        "type": _type,
+        "id": _key,
+        title,
+        "content": defined(content[]){..., ${markDefs}},
+        ...,
+      },
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+      "utility": coalesce(background.key, ""),
+      "dark": coalesce(background.dark, false),
+    },
+  },
 `
 
 export default pageContentFields

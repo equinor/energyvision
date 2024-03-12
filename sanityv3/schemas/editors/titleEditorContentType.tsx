@@ -1,12 +1,36 @@
 import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
 import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
-import { BlockDefinition, BlockStyleDefinition } from 'sanity'
+import { BlockDecoratorDefinition, BlockDefinition, BlockMarksDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
 import { defaultColors } from '../defaultColors'
 
+const defaultDecorators: BlockDecoratorDefinition[] = [
+  { title: 'Strong', value: 'strong' },
+  { title: 'Emphasis', value: 'em' },
+  {
+    title: 'Strikethrough',
+    value: 's',
+    icon: StrikethroughIcon,
+    component: StrikeThroughRenderer,
+  },
+  {
+    title: 'Sub',
+    value: 'sub',
+    icon: IconSubScript,
+    component: SubScriptRenderer,
+  },
+  {
+    title: 'Super',
+    value: 'sup',
+    icon: IconSuperScript,
+    component: SuperScriptRenderer,
+  },
+]
+
 export type TitleContentProps = {
   styles?: BlockStyleDefinition[]
+  decorators?: BlockDecoratorDefinition[]
   highlight?: boolean
   highlightTitle?: string
 }
@@ -22,7 +46,7 @@ export const configureTitleBlockContent = (
     ],
   },
 ): BlockDefinition => {
-  const { highlight = false, styles, highlightTitle = 'Highlight' } = options
+  const { highlight = false, styles, highlightTitle = 'Highlight', decorators } = options
 
   const config: BlockDefinition = {
     type: 'block',
@@ -30,28 +54,7 @@ export const configureTitleBlockContent = (
     styles: styles,
     lists: [],
     marks: {
-      decorators: [
-        { title: 'Strong', value: 'strong' },
-        { title: 'Emphasis', value: 'em' },
-        {
-          title: 'Strikethrough',
-          value: 's',
-          icon: StrikethroughIcon,
-          component: StrikeThroughRenderer,
-        },
-        {
-          title: 'Sub',
-          value: 'sub',
-          icon: IconSubScript,
-          component: SubScriptRenderer,
-        },
-        {
-          title: 'Super',
-          value: 'sup',
-          icon: IconSuperScript,
-          component: SuperScriptRenderer,
-        },
-      ],
+      decorators: decorators ?? defaultDecorators,
       annotations: [],
     },
   }

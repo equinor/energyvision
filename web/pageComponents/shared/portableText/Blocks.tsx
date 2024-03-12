@@ -45,7 +45,7 @@ type Props = {
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 
 //@ts-ignore
-export default function Blocks({ value }: Props) {
+export default function Blocks({ value, components = {} }: Props) {
   let div: PortableTextBlock[] = []
   return (
     <>
@@ -65,18 +65,20 @@ export default function Blocks({ value }: Props) {
             <div
               key={block._key}
               className={`
-          prose   
-          prose-envis 
-          p-0
-          max-w-viewport
-          mx-auto
-        `}
+              prose   
+              prose-article
+              dark:prose-invert
+              p-0
+              max-w-viewport
+              mx-auto
+            `}
             >
               <PortableText
                 value={value}
                 //@ts-ignore
                 components={{
                   ...blockSerializer,
+                  ...components,
                 }}
               />
             </div>
@@ -112,7 +114,7 @@ export default function Blocks({ value }: Props) {
               key={block._key}
               value={block}
               components={{
-                types: {},
+                ...components,
               }}
             />
           )
