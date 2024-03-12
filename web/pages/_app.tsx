@@ -126,7 +126,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           </Head>
           <GlobalStyle />
           {IS_LIVE && <CookieBot locale={router.locale} />}
-          <StyledSkipLink href="#maincontent">Skip to content</StyledSkipLink>
+          <StyledSkipLink href="#mainTitle">Skip to content</StyledSkipLink>
           <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
         </>
       </ErrorBoundary>
