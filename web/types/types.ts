@@ -267,6 +267,8 @@ export type BackgroundColours =
 
 export type DesignOptions = {
   background?: BackgroundColours
+  utility: string
+  dark: boolean
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }

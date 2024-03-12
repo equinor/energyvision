@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-type TextProps = HTMLAttributes<HTMLDivElement>
+type TextProps = HTMLAttributes<HTMLParagraphElement>
 
 const StyledText = styled.div`
   p {
@@ -10,5 +10,6 @@ const StyledText = styled.div`
 `
 
 export const Text = ({ children, ...rest }: TextProps) => {
+  console.log('children', children)
   return <StyledText {...rest}>{children}</StyledText>
 }

@@ -8,7 +8,6 @@ import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
 
 const introBlockContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

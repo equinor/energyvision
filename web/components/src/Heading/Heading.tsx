@@ -3,8 +3,8 @@ import { Typography } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 
 type StyledHeadingProps = {
-  center: boolean
-}
+  $center: boolean
+} & HTMLAttributes<HTMLHeadingElement>
 
 const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-size: var(--size);
@@ -12,8 +12,8 @@ const StyledHeading = styled(Typography)<StyledHeadingProps>`
   font-weight: var(--font-weight);
 
   text-transform: var(--text-transform);
-  ${({ center }) =>
-    center && {
+  ${({ $center }) =>
+    $center && {
       textAlign: 'center',
     }}
   color: var(--color-on-background);
@@ -64,7 +64,7 @@ const fontWeights = {
   '5xl': 'var(--fontWeight-regular)',
 }
 
-export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading(
+export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
   { size = 'lg', level = 'h3', regular = false, center = false, uppercase = false, style, children, ...rest },
   ref,
 ) {
@@ -72,7 +72,7 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(function Heading
     <StyledHeading
       variant={level}
       ref={ref}
-      center={center}
+      $center={center}
       style={
         {
           '--size': sizes[size],

@@ -5,6 +5,7 @@ import { Link, List, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 import FeaturedContent from './FeaturedContent'
+import { useRouter } from 'next/router'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
@@ -29,6 +30,10 @@ const StyledSubMenuGroupLink = styled(Link)`
     margin-left: calc(var(--space-medium) * -1);
   }
   :hover {
+    background-color: var(--grey-10);
+  }
+  &[aria-current]:not([aria-current='false']) {
+    border-left: var(--moss-green-95) solid 3px;
     background-color: var(--grey-10);
   }
 `
@@ -80,6 +85,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
   const { topLevelLink, groups, intro, featuredContent } = topLevelItem
 
   const topLevelHref = getLink(topLevelLink)
+  const router = useRouter()
 
   return (
     <SubMenu id={index}>
@@ -110,7 +116,11 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                       <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                         {groupItem.links?.map((link: MenuLinkData) => (
                           <StyledItem key={link.id}>
-                            <StyledSubMenuGroupLink underline={false} href={getLink(link)}>
+                            <StyledSubMenuGroupLink
+                              underline={false}
+                              href={getLink(link)}
+                              aria-current={router.asPath == link?.link?.slug ? 'page' : 'false'}
+                            >
                               {link.label}
                             </StyledSubMenuGroupLink>
                           </StyledItem>

@@ -1,4 +1,4 @@
-import { ThemeSelector, defaultColors } from '../components/ThemeSelector'
+import { ThemeSelector, themeColors } from '../components/ThemeSelector'
 import { defineType, defineField } from 'sanity'
 
 export default defineType({
@@ -16,8 +16,8 @@ export default defineType({
     }),
   ],
   initialValue: {
-    title: defaultColors[0].title,
-    value: defaultColors[0].value,
+    title: themeColors[0].title,
+    value: themeColors[0].value,
   },
   components: {
     input: (props) => {

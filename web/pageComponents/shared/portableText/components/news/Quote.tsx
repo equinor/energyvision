@@ -5,7 +5,6 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { QuoteData } from '../../../../../types/types'
 
 const Container = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-medium);
   margin: var(--space-3xLarge) auto;
   clear: both;
 `
@@ -29,7 +28,7 @@ export const Quote = (quote: BlockProps) => {
   }
 
   return (
-    <Container>
+    <Container className="px-layout-md">
       <QuoteComponent data={data} />
     </Container>
   )

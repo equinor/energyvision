@@ -30,6 +30,8 @@ _type == "keyNumbers" =>{
       ),
     "designOptions": {
       "background": coalesce(background.title, 'White'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
@@ -82,6 +84,8 @@ _type == "keyNumbers" =>{
     anchor,
     "designOptions": {
       "background": coalesce(background.title, 'White'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "fullWidthImage"=>{
@@ -114,6 +118,8 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "textWithIconArray"=>{
@@ -131,6 +137,8 @@ _type == "keyNumbers" =>{
 
     "designOptions": {
       "background": coalesce(background.title, 'none'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "pullQuote" => {
@@ -143,6 +151,8 @@ _type == "keyNumbers" =>{
     "designOptions": {
       "background": coalesce(background.title, 'White'),
       "imagePosition": coalesce(imagePosition, 'right'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     }
   },
   _type == "accordion" => {
@@ -166,6 +176,8 @@ _type == "keyNumbers" =>{
     anchor,
     "designOptions": {
       "background": coalesce(background.title, 'none'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     }
   },
   _type == "promoTileArray"=>{
@@ -201,6 +213,8 @@ _type == "keyNumbers" =>{
       },
       "designOptions": {
         "background": coalesce(background.title, 'none'),
+        "utility": coalesce(background.key, ""),
+        "dark": coalesce(background.dark, false),
       },
     },
   },
@@ -225,6 +239,8 @@ _type == "keyNumbers" =>{
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       "background": coalesce(background.title, 'none'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
       height,
     },
   },
@@ -393,6 +409,8 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       "background": coalesce(background.title, 'none'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "cookieDeclaration" => {
@@ -462,6 +480,8 @@ _type == "keyNumbers" =>{
     "id": _key,
     "designOptions": {
       "background": coalesce(background.title, 'White'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
 
@@ -477,6 +497,8 @@ _type == "keyNumbers" =>{
       },
     "designOptions": {
       "background": coalesce(background.title, 'White'),
+      "utility": coalesce(background.key, ""),
+      "dark": coalesce(background.dark, false),
     },
   },
 
