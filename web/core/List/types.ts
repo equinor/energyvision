@@ -22,4 +22,8 @@ export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
    * Override heading styling
    */
   headingClassName?: string
+  /**
+   * Split the list into 2 columns only from media md and up
+   */
+  split?: boolean
 }

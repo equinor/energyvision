@@ -14,27 +14,44 @@ export interface ListComponent
 }
 
 export const List = forwardRef<HTMLDivElement, ListProps>(
-  ({ children, className = '', headingClassName = '', as: ListTag = 'ul', title, headingTag = 'h3', ...rest }, ref) => {
-    const ariaId = useId('eds-list')
+  (
+    {
+      children,
+      className = '',
+      headingClassName = '',
+      as: ListTag = 'ul',
+      title,
+      headingTag = 'h3',
+      split = false,
+      ...rest
+    },
+    ref,
+  ) => {
+    const ariaId = useId('envis-list-heading')
     return (
       <div
         {...rest}
         ref={ref}
         className={twMerge(
-          `
-        ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}
+          `text-slate-80
+          dark:text-white-100
         `,
           className,
         )}
       >
         {title && (
-          <Typography id={`heading-${ariaId}`} variant={headingTag as TypographyVariants} className={headingClassName}>
+          <Typography id={ariaId} variant={headingTag as TypographyVariants} className={headingClassName}>
             {title}
           </Typography>
         )}
         <ListTag
-          aria-labelledby={title && `heading-${ariaId}`}
-          className={twMerge(`${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}`, className)}
+          aria-labelledby={title && `${ariaId}`}
+          className={twMerge(
+            `list-inside
+          ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}
+          ${split ? 'md:grid md:grid-cols-2 md:gap-8' : ''}`,
+            className,
+          )}
         >
           {children}
         </ListTag>
