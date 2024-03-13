@@ -6,6 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
+import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -267,7 +268,7 @@ export type BackgroundColours =
 
 export type DesignOptions = {
   background?: BackgroundColours
-  utility: string
+  utility: keyof typeof colorKeyToUtilityMap
   dark: boolean
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
@@ -805,4 +806,18 @@ export type KeyNumbersData = {
     background: BackgroundColours
   }
   action?: LinkData
+}
+
+export type CardsListData = {
+  type: 'cardsList'
+  id: string
+  title?: PortableTextBlock[]
+  cards?: CardListItemData[]
+  designOptions: DesignOptions
+}
+export type CardListItemData = {
+  id: string
+  type: 'card'
+  title?: string
+  content?: PortableTextBlock[]
 }

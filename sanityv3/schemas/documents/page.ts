@@ -50,6 +50,7 @@ export default {
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
+        { type: 'cardsList' },
         { type: 'figure' },
         { type: 'fullWidthImage' },
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
