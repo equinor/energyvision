@@ -9,19 +9,7 @@ import { Card } from './card'
 import { ColorSelectorValue } from '../components/ColorSelector'
 import { defaultColors } from '../defaultColors'
 
-const titleContentType = configureTitleBlockContent({
-  highlight: false,
-  styles: [
-    {
-      title: 'Normal',
-      value: 'normal',
-    },
-  ],
-  decorators: [
-    { title: 'Strong', value: 'strong' },
-    { title: 'Emphasis', value: 'em' },
-  ],
-})
+const titleContentType = configureTitleBlockContent()
 
 export type CardsList = {
   _type: 'cardsList'

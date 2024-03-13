@@ -26,7 +26,7 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ da
       )}
       {...rest}
     >
-      <Typography variant={`${content ? 'h4' : 'h4'}`} as={content ? 'h3' : 'p'} className={`pb-0`}>
+      <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0`}>
         {title}
       </Typography>
       {content && (
