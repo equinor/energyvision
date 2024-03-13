@@ -3,6 +3,7 @@ import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
 import type { LinkType } from '../../types/types'
 import { default as NextLink } from 'next/link'
+import { twMerge } from 'tailwind-merge'
 
 export type LinkProps = {
   /** What kind of content is it  */
@@ -30,10 +31,21 @@ export const BaseLink = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { children, type = 'internalUrl', className = '', href = '', ...rest },
   ref,
 ) {
-  const variant = {}
+  const classNames = twMerge(
+    `text-base 
+  `,
+    className,
+  )
 
   return type === 'externalUrl' ? (
-    <a ref={ref} href={href} target="_blank" rel="noreferrer" {...rest}>
+    <a
+      className="text-mist-blue-100 dark:text-white-100"
+      ref={ref}
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      {...rest}
+    >
       {children}
       <Icon data={getIconData(type)} size={16} />
     </a>
