@@ -253,7 +253,7 @@ module.exports = {
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.medium'),
               marginTop: theme('spacing.2'),
-              marginBottom: theme('spacing.2'),
+              marginBottom: theme('spacing.0'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },
