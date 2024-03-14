@@ -140,7 +140,9 @@ module.exports = {
       }),
       fontSize: {
         //--typeScale-00
-        xs: ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        '2xs': ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        //--typeScale-0
+        xs: ['clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))'],
         //--typeScale-05
         sm: ['clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))'],
         //--typeScale-1
