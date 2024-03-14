@@ -213,16 +213,12 @@ module.exports = {
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
-                paddingLeft: theme('padding.layout-lg'),
-                paddingRight: theme('padding.layout-lg'),
               },
               h3: {
                 fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
-                paddingLeft: theme('padding.layout-lg'),
-                paddingRight: theme('padding.layout-lg'),
               },
             },
             {
@@ -240,7 +236,7 @@ module.exports = {
         article: {
           css: {
             h2: {
-              fontSize: em(18, 16), //theme('fontSize.base'),
+              fontSize: theme('fontSize.md'),
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.medium'),
               marginTop: theme('spacing.2'),
@@ -249,7 +245,7 @@ module.exports = {
               paddingRight: theme('padding.layout-lg'),
             },
             h3: {
-              fontSize: em(16, 16), //theme('fontSize.base'),
+              fontSize: theme('fontSize.base'),
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.medium'),
               marginTop: theme('spacing.2'),
@@ -275,6 +271,27 @@ module.exports = {
             },
             'ul > li': {
               marginLeft: em(8, 14),
+            },
+            p: {
+              paddingLeft: theme('padding.layout-lg'),
+              paddingRight: theme('padding.layout-lg'),
+            },
+          },
+        },
+        md: {
+          css: {
+            fontSize: theme('fontSize.md'),
+            h2: {
+              fontSize: theme('fontSize.xl'),
+              lineHeight: theme('lineHeight.inherit'),
+              fontWeight: theme('fontWeight.normal'),
+              marginBottom: theme('spacing.6'),
+            },
+            h3: {
+              fontSize: theme('fontSize.lg'),
+              lineHeight: theme('lineHeight.inherit'),
+              fontWeight: theme('fontWeight.normal'),
+              marginBottom: theme('spacing.6'),
             },
           },
         },
