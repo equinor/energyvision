@@ -125,9 +125,30 @@ module.exports = {
           20: 'hsl(0, 0%, 92%)',
           10: 'hsl(0, 0%, 97%)',
         },
-        'transparent-black': 'theme(colors.black.100)/20',
-        'transparent-white': 'theme(colors.white.100)/20',
+        'transparent-black': {
+          20: 'theme(colors.black.100)/20',
+        },
+        'transparent-white': {
+          20: 'theme(colors.white.100)/20',
+          10: 'theme(colors.white.100)/10',
+        },
       }),
+      //https://www.joshwcomeau.com/shadow-palette/
+      // medium elevation fig
+      //oomph: default -> 0.3 hover: -> 0.5
+      //crispy:0.7,resolution:0.75, default light position
+      boxShadowColor: {
+        'moss-green-50': '190deg 9% 67%',
+        'moss-green-50-interact': '190deg 9% 60%',
+        'white-100': '0deg 0% 70%',
+        'white-100-interact': '0deg 0% 63%',
+        'blue-50': '212deg 40% 29%',
+        'blue-50-interact': '212deg 40% 25%',
+        'orange-50': '28deg 42% 57%',
+        'orange-50-interact': '28deg 42% 51%',
+        'mist-blue-100': '199deg 23% 62%',
+        'mist-blue-100-interact': '199deg 23% 56%',
+      },
       spacing: ({ theme }) => ({
         xs: 'calc((4 / 16) * theme(fontSize.base))',
         sm: 'calc((8 / 16) * theme(fontSize.base))',
@@ -187,6 +208,21 @@ module.exports = {
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       },
+      //https://www.joshwcomeau.com/css/designing-shadows/
+      boxShadow: {
+        default: `
+        0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.4),
+        0.6px 1.2px 1.3px -1.2px hsl(var(--shadow-color) / 0.34),
+        1.7px 3.4px 3.7px -2.3px hsl(var(--shadow-color) / 0.29),
+        4.5px 9px 9.8px -3.5px hsl(var(--shadow-color) / 0.23)
+        `,
+        'default-interact': `
+        0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.51),
+        0.7px 1.3px 1.4px -1.2px hsl(var(--shadow-color) / 0.43),
+        1.9px 3.8px 4.1px -2.3px hsl(var(--shadow-color) / 0.36),
+        5px 10px 10.9px -3.5px hsl(var(--shadow-color) / 0.29)
+        `,
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
@@ -245,7 +281,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ matchVariant }) {
+    plugin(function ({ matchVariant, addUtilities, theme }) {
       matchVariant(
         'nth',
         (value) => {
@@ -258,7 +294,18 @@ module.exports = {
             3: '3',
           },
         },
-      )
+      ),
+        addUtilities({
+          '.envis-outline': {
+            'outline-style': 'dashed',
+            'outline-width': '1px',
+            'outline-offset': '4px',
+            'outline-color': theme('colors.moss-green.100'),
+          },
+          '.envis-outline-invert': {
+            'outline-color': theme('colors.white.100'),
+          },
+        })
     }),
   ],
 }
