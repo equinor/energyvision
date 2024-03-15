@@ -6,6 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
+import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -281,8 +282,10 @@ export type DesignOptions = {
     backgroundColor?: BackgroundColours
   }
   backgroundOption?: BackgroundOption
-  utility: string
   dark: boolean
+  utility: keyof typeof colorKeyToUtilityMap
+  imagePosition?: TeaserImagePosition
+  imageSize?: TeaserImageSize
 }
 
 export type TextBlockData = {
@@ -806,4 +809,18 @@ export type KeyNumbersData = {
   useHorizontalScroll: boolean
   designOptions: DesignOptions
   action?: LinkData
+}
+
+export type CardsListData = {
+  type: 'cardsList'
+  id: string
+  title?: PortableTextBlock[]
+  cards?: CardListItemData[]
+  designOptions: DesignOptions
+}
+export type CardListItemData = {
+  id: string
+  type: 'card'
+  title?: string
+  content?: PortableTextBlock[]
 }

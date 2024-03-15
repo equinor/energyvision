@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import Image from '../SanityImage'
-import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/types'
 import { BackgroundContainer, Text } from '@components'
 import ReadMoreLink from '../ReadMoreLink'
+import RichText from '../portableText/RichText'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -79,16 +79,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
           )}
           {ingress && !isBigTitle && (
             <StyledIngress>
-              <IngressText
-                value={ingress}
-                components={{
-                  block: {
-                    normal: ({ children }) => {
-                      return <Text size="regular">{children}</Text>
-                    },
-                  },
-                }}
-              />
+              <RichText value={ingress} />
             </StyledIngress>
           )}
           {link && !isBigTitle && (

@@ -13,7 +13,7 @@ const textContentType = configureBlockContent({
   h3: false,
   h4: false,
   externalLink: false,
-  internalLink: false,
+  internalLink: true,
   lists: false,
   attachment: false,
 })

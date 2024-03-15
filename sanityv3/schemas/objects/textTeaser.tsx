@@ -83,7 +83,7 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
-        }).warning(),
+        }).error(),
     },
 
     {
