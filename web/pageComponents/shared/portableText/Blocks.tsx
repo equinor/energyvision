@@ -28,6 +28,7 @@ const defaultBlocks: BlockType = {
 const defaultMarks: MarkType = {
   sub: ({ children }: TypeProps) => <sub>{children}</sub>,
   sup: ({ children }: TypeProps) => <sup>{children}</sup>,
+  s: ({ children }: TypeProps) => <s>{children}</s>,
   link: ExternalLink,
   internalLink: InternalLink,
 }
