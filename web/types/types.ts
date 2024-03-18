@@ -374,6 +374,8 @@ export type FullWidthVideoData = {
   designOptions: {
     aspectRatio: FullWidthVideoRatio
     background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
 }
 
@@ -518,6 +520,8 @@ export type IFrameData = {
     aspectRatio: string
     height?: number
     background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
 }
 
@@ -658,9 +662,7 @@ export type NewsListData = {
 export type StockValuesData = {
   id: string
   type: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type TwitterEmbedData = {
@@ -670,9 +672,7 @@ export type TwitterEmbedData = {
   ingress?: PortableTextBlock[]
   embedType: string
   embedValue: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type AnchorLinkData = {
@@ -706,6 +706,8 @@ export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   background: BackgroundColours
   height?: number
+  utility: keyof typeof colorKeyToUtilityMap
+  dark: boolean
 }
 
 export type VideoPlayerData = {
@@ -734,6 +736,8 @@ export type VideoPlayerCarouselData = {
   designOptions: {
     aspectRatio: VideoPlayerRatios
     background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
   title?: PortableTextBlock[]
 }
@@ -756,9 +760,7 @@ export type ImageCarouselData = {
     autoplay: boolean
     delay: number
   }
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type IFrameCarouselItemData = {
@@ -780,9 +782,7 @@ export type IframeCarouselData = {
   id: string
   title?: PortableTextBlock[]
   items: IFrameCarouselItemData[]
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
@@ -802,9 +802,7 @@ export type KeyNumbersData = {
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
   useHorizontalScroll: boolean
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
   action?: LinkData
 }
 

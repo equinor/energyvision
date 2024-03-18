@@ -17,7 +17,11 @@ const defaultComponents = ({ className }: TypographyProps) => {
         )
       },
     },
-    marks: { highlight: Highlight },
+    marks: {
+      highlight: Highlight,
+      sub: ({ children }: PortableTextBlock) => <sub>{<>{children}</>}</sub>,
+      sup: ({ children }: PortableTextBlock) => <sup>{<>{children}</>}</sup>,
+    },
   }
 }
 
