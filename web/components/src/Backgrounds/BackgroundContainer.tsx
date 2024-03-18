@@ -6,6 +6,8 @@ import { normal, inverted } from '../../../styles/themes'
 
 export type BackgroundContainerProps = {
   background?: BackgroundColours
+  /** Extended tailwind styling */
+  twClassName?: string
 } & HTMLAttributes<HTMLDivElement>
 
 type ColourContainerProps = {
@@ -19,7 +21,7 @@ const ColourContainer = styled.div<ColourContainerProps>`
 `
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background = 'White', style, children, className, ...rest },
+  { background = 'White', style, children, className, twClassName = '', ...rest },
   ref,
 ) {
   // @TODO: Find a better way with task #334
@@ -29,7 +31,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
 
   return (
     <ColourContainer
-      className={className + ` background${styleVariant}`}
+      className={`${className} background${styleVariant} ${twClassName}`}
       isInverted={isInverted}
       style={
         {
