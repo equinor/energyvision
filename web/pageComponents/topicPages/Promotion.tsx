@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
@@ -6,27 +7,16 @@ import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 
-const Wrapper = styled.div`
-  padding: var(--promotion-padding, var(--space-3xLarge) 0);
-  --card-maxWidth: 400px;
-  --card-minWidth: 200px;
-`
-const Ingress = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
-
-const Intro = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: 0 auto;
-`
-
 const StyledHeading = styled(TitleText)`
   text-align: var(--promotion-titleAlign, center);
   margin-bottom: var(--space-xLarge);
 `
 
-const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: string }) => {
+const Promotion = ({
+  data,
+  anchor,
+  ...rest
+}: HTMLAttributes<HTMLDivElement> & { data: PromotionData; anchor?: string }) => {
   const { title, ingress, content, useHorizontalScroll, designOptions } = data
   // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
   const isDark =
@@ -37,15 +27,15 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
 
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <Wrapper {...rest}>
-        <Intro>
+      <div className="py-16 lg:py-0 lg:px-8" {...rest}>
+        <header className="px-4 lg:px-0 max-w-screen-xl mx-auto">
           {title && <StyledHeading value={title} level="h2" size="xl" />}
           {ingress && (
-            <Ingress>
+            <p className="mb-8">
               <IngressText value={ingress} centered={true} />
-            </Ingress>
+            </p>
           )}
-        </Intro>
+        </header>
         {promotions?.length === 1 ? (
           /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
@@ -58,7 +48,7 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
             useHorizontalScroll={useHorizontalScroll}
           />
         )}
-      </Wrapper>
+      </div>
     </BackgroundContainer>
   )
 }

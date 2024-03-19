@@ -1,4 +1,4 @@
-import { FormattedDate, FormattedTime } from '@components'
+import { FormattedDate, FormattedTime, BackgroundContainer } from '@components'
 import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -16,6 +16,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
+import { twMerge } from 'tailwind-merge'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -31,10 +32,6 @@ const HeaderInner = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */
   margin-left: auto;
   margin-right: auto;
-`
-const ContentWrapper = styled.div<{ iframe?: boolean }>`
-  margin: var(--space-3xLarge) 0 0 0;
-  padding: ${({ iframe }) => (iframe ? '0' : '0 0 var(--space-xLarge) 0')};
 `
 
 const LeadParagraph = styled.div`
@@ -62,20 +59,6 @@ const Content = styled.div`
   }
 `
 
-const Related = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: var(--space-4xLarge) auto;
-`
-
-const StyledRelatedContent = styled(RelatedContent)`
-  --related-titleAlign: center;
-
-  @media (min-width: 450px) {
-    --related-titleAlign: left;
-  }
-`
-
 const StyledDate = styled.div`
   font-size: var(--typeScale-4);
   color: var(--moss-green-100);
@@ -100,15 +83,6 @@ const StyledLocation = styled.div`
   font-weight: var(--fontWeight-light);
 `
 
-const StyledPromotion = styled(Promotion)`
-  --promotion-padding: var(--space-xxLarge) 0;
-  --promotion-titleAlign: center;
-
-  @media (min-width: 450px) {
-    --promotion-titleAlign: left;
-  }
-`
-
 const StyledBasicIFrame = styled(BasicIFrame)`
   --iframe-maxWidth: var(--topbar-innerMaxWidth);
   --iframe-innerPadding: var(--space-3xLarge) 0;
@@ -126,6 +100,7 @@ const StyledContactList = styled(ContactList)`
   --contactList-titleAlign: center;
 
   padding: 0 var(--layout-paddingHorizontal-large);
+  margin: 0;
   max-width: var(--maxViewportWidth);
 
   @media (min-width: 450px) {
@@ -176,7 +151,15 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </HeaderInner>
           </Header>
           {(ingress || content) && (
-            <ContentWrapper iframe={iframe && !!iframe.title}>
+            <div
+              className={twMerge(`
+             mt-16
+             ${iframe ? '' : 'pb-12'}
+             px-0 
+             md:px-8
+             lg:px-0
+             `)}
+            >
               {ingress && (
                 <LeadParagraph>
                   <IngressText value={ingress}></IngressText>
@@ -187,11 +170,12 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   <EventText value={content} />
                 </Content>
               )}
-            </ContentWrapper>
+            </div>
           )}
           {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
-            <StyledPromotion
+            <Promotion
+              className={`pb-16 text-center lg:text-left `}
               data={{
                 id: 'promotedPeople',
                 type: 'people',
@@ -203,9 +187,16 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {contactList && <StyledContactList data={contactList} />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <Related>
-              <StyledRelatedContent data={relatedLinks} />
-            </Related>
+            <RelatedContent
+              data={relatedLinks}
+              className={twMerge(`
+                  px-layout-lg
+                  max-w-viewport
+                  mx-auto
+                  my-3xl
+                  ${iframe ? 'mt-0' : ''}
+                  `)}
+            />
           )}
         </EventLayout>
       </main>
