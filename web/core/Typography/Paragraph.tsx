@@ -21,6 +21,7 @@ const defaultComponents = ({ className }: TypographyProps) => {
       highlight: Highlight,
       sub: ({ children }: PortableTextBlock) => <sub>{<>{children}</>}</sub>,
       sup: ({ children }: PortableTextBlock) => <sup>{<>{children}</>}</sup>,
+      s: ({ children }: PortableTextBlock) => <s>{<>{children}</>}</s>,
     },
   }
 }
