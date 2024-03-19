@@ -355,7 +355,7 @@ module.exports = {
             'outline-style': 'dashed',
             'outline-width': '1px',
             'outline-offset': '4px',
-            'outline-color': theme('colors.moss-green.100'),
+            'outline-color': theme('colors.slate-blue.95'),
           },
           '.envis-outline-invert': {
             'outline-color': theme('colors.white.100'),

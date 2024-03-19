@@ -12,9 +12,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   ref,
 ) {
   const classNames = twMerge(
-    `text-mist-blue-100 
-    flex 
-    gap-2
+    `text-slate-blue-95
+    w-max 
+    inline-flex
+    items-center
+    gap-0.5
     underline
     hover:no-underline
   `,
@@ -24,7 +26,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return type === 'externalUrl' ? (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
       {children}
-      <Icon data={arrow_forward} size={16} className="-rotate-45" />
+      <Icon data={arrow_forward} className="inline-block" style={{ transform: 'rotate(-45deg)' }} />
     </BaseLink>
   ) : (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
