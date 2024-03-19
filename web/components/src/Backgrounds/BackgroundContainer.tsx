@@ -21,15 +21,13 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   return (
     <>
       {useSpecialBackground && backgroundImage ? (
-        <div ref={ref} style={style} className={className} {...rest}>
-          <ImageBackgroundContainer
-            image={backgroundImage.image}
-            useAnimation={backgroundImage.useAnimation}
-            contentAlignment={backgroundImage.contentAlignment}
-          >
-            {children}
-          </ImageBackgroundContainer>
-        </div>
+        <ImageBackgroundContainer
+          image={backgroundImage.image}
+          useAnimation={backgroundImage.useAnimation}
+          contentAlignment={backgroundImage.contentAlignment}
+        >
+          {children}
+        </ImageBackgroundContainer>
       ) : (
         <ColouredContainer background={bgColor} style={style} className={className} {...rest}>
           {children}{' '}

@@ -90,6 +90,9 @@ import themeList from './objects/themeList'
 import keyNumbers from './objects/keyNumbers'
 import keyNumberItem from './objects/keyNumberItem'
 import keyValue from './objects/keyValue'
+import card from './objects/card'
+import cardsList from './objects/cardsList'
+import keyValue from './objects/keyValue'
 import background from './objects/background/background'
 import imageBackground from './objects/background/imageBackground'
 import card from './objects/card'
@@ -177,6 +180,9 @@ const RemainingSchemas = [
   themeList,
   keyNumbers,
   keyNumberItem,
+  keyValue,
+  card,
+  cardsList,
   keyValue,
   background,
   imageBackground,

@@ -44,6 +44,7 @@ const blobSrcUrls = [
   'https://platform.twitter.com',
   'https://cdn.syndication.twimg.com/',
   'https://www.youtube.com',
+  'https://flackr.github.io',
 ].join(' ')
 
 const dataSrcUrls = [

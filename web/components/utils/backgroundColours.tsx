@@ -41,7 +41,6 @@ function getContainerColor(backgroundTitle?: BackgroundColours) {
     }
   else {
     console.log(backgroundTitle + ' is not the correct background color')
-    console.log(backgroundTitle)
   }
   return styleVariant
 }

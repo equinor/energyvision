@@ -30,7 +30,7 @@ _type == "keyNumbers" =>{
         text[]{..., ${markDefs}}
       ),
     "designOptions": {
-      ${background}
+      ${background},
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
@@ -82,7 +82,7 @@ _type == "keyNumbers" =>{
     overrideButtonStyle,
     anchor,
     "designOptions": {
-      ${background}
+      ${background},
     },
   },
   _type == "fullWidthImage"=>{
@@ -114,7 +114,7 @@ _type == "keyNumbers" =>{
       caption
     },
     "designOptions": {
-      ${background}
+      ${background},
     },
   },
   _type == "textWithIconArray"=>{
@@ -131,7 +131,7 @@ _type == "keyNumbers" =>{
     },
 
     "designOptions": {
-      ${background}
+      ${background},
     },
   },
   _type == "pullQuote" => {
@@ -142,10 +142,9 @@ _type == "keyNumbers" =>{
     image,
     quote,
     "designOptions": {
-      ${background}
+      ${background},
       "imagePosition": coalesce(imagePosition, 'right'),
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
+
     }
   },
   _type == "accordion" => {
@@ -168,7 +167,7 @@ _type == "keyNumbers" =>{
     },
     anchor,
     "designOptions": {
-      ${background}
+      ${background},
     }
   },
   _type == "promoTileArray"=>{
@@ -203,7 +202,7 @@ _type == "keyNumbers" =>{
         "extension": asset-> extension
       },
       "designOptions": {
-        ${background}
+        ${background},
       },
     },
   },
@@ -227,7 +226,7 @@ _type == "keyNumbers" =>{
     "cookiePolicy": coalesce(cookiePolicy, 'none'),
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
-      ${background}
+      ${background},
       height,
     },
   },
@@ -395,7 +394,7 @@ _type == "keyNumbers" =>{
       }
     },
     "designOptions": {
-      ${background}
+      ${background},
     },
   },
   _type == "cookieDeclaration" => {
@@ -464,7 +463,7 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     "designOptions": {
-      ${background}
+      ${background},
     },
   },
 
@@ -479,7 +478,7 @@ _type == "keyNumbers" =>{
         ${markDefs},
       },
     "designOptions": {
-      ${background}
+      ${background},
     },
   },
 
@@ -516,9 +515,7 @@ _type == "keyNumbers" =>{
         ...,
       },
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
-      "utility": coalesce(background.key, ""),
-      "dark": coalesce(background.dark, false),
+      ${background},
     },
   },
 `

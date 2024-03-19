@@ -138,6 +138,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
         <>
           <Head>
             <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
+            <script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js" />
             {GTM_ID && <GoogleTagManagerHead />}
           </Head>
           <GlobalStyle />
