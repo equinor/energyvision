@@ -223,6 +223,12 @@ module.exports = {
               'ul ul, ul ol, ol ul, ol ol': {
                 paddingLeft: em(38, 24),
               },
+              'ol ol': {
+                listStyleType: 'lower-alpha',
+              },
+              'ol ol ol': {
+                listStyleType: 'lower-roman',
+              },
               'ol > li': {
                 marginLeft: em(8, 14),
               },
