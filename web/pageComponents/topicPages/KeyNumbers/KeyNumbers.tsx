@@ -55,6 +55,9 @@ type KeyNumbersProps = {
 }
 export default function ({ data, anchor }: KeyNumbersProps) {
   const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
+  const { background, dark } = designOptions
+  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark below
+  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   const renderScroll = useHorizontalScroll && isMobile
@@ -66,11 +69,11 @@ export default function ({ data, anchor }: KeyNumbersProps) {
       )
     : Container
   return (
-    <StyledBackgroundContainer background={designOptions.background} id={anchor}>
+    <StyledBackgroundContainer background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
       {title && <StyledHeading value={title} />}
       {ingress && (
         <Ingress>
-          <IngressText value={ingress}></IngressText>
+          <IngressText value={ingress} />
         </Ingress>
       )}
 

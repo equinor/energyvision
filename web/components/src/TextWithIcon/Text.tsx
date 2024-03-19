@@ -10,6 +10,5 @@ const StyledText = styled.div`
 `
 
 export const Text = ({ children, ...rest }: TextProps) => {
-  console.log('children', children)
   return <StyledText {...rest}>{children}</StyledText>
 }

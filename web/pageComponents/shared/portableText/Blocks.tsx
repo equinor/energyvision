@@ -1,125 +1,170 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { PortableText } from '@portabletext/react'
-import { PortableTextBlock } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, Sub, Sup, ExternalLink, InternalLink } from './components'
-/* import { Heading } from '@components/Heading' */
-import isEmpty from './helpers/isEmpty'
+import {
+  defaultComponents,
+  PortableText,
+  PortableTextProps,
+  PortableTextReactComponents,
+  PortableTextMarkComponent,
+  PortableTextBlockComponent,
+  PortableTextTypeComponent,
+} from '@portabletext/react'
+import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
+import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink } from './components'
+import { twMerge } from 'tailwind-merge'
 
-const blockSerializer = {
-  block: {
-    normal: ({ children }: PortableTextBlock) => {
-      if (isEmpty(children)) return null
-      return (
-        <p className={`px-layout-lg`}>
-          <>{children}</>
-        </p>
-      )
-    },
-    smallText: ({ children }: PortableTextBlock) => {
-      if (isEmpty(children)) return null
-      return (
-        <p className={`px-layout-lg text-sm`}>
-          <>{children}</>
-        </p>
-      )
-    },
-  },
-  marks: {
-    sub: Sub,
-    sup: Sup,
-    link: ExternalLink,
-    internalLink: InternalLink,
-  },
-  types: {
-    //@ts-ignore
-    positionedInlineImage: (props) => <FigureWithLayout {...props} />,
-    //@ts-ignore
-    pullQuote: Quote,
-  },
+export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type MarkType = Record<string, PortableTextMarkComponent<any> | undefined>
+export type TypesType = Record<string, PortableTextTypeComponent<any> | undefined>
+
+type TypeProps = {
+  children?: React.ReactNode
 }
 
-type Props = {
-  value: PortableTextBlock[]
+const defaultBlocks: BlockType = {
+  smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
 }
+
+const defaultMarks: MarkType = {
+  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
+  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
+  link: ExternalLink,
+  internalLink: InternalLink,
+}
+
+const defaultTypes: TypesType = {
+  //@ts-ignore
+  positionedInlineImage: (props) => <FigureWithLayout {...props} />,
+  //@ts-ignore
+  pullQuote: (props) => <Quote {...props} className="not-prose" />,
+}
+
+type BlockProps = {
+  /**
+   * Override default block serializers
+   */
+  blocks?: BlockType
+  /**
+   * Override default marks serializers
+   */
+  marks?: MarkType
+  /**
+   * Override default types serializers
+   */
+  types?: TypesType
+  /**
+   * Extend components sent for non blocks
+   */
+  components?: PortableTextReactComponents | Partial<PortableTextReactComponents>
+  /**
+   * Override the styling for prose wrapping block
+   * @default
+   */
+  proseClassName?: string
+  /**
+   * Override other styling to the wrapping block
+   */
+  className?: string
+} & PortableTextProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 
 //@ts-ignore
-export default function Blocks({ value, components = {} }: Props) {
+export default function Blocks({
+  value,
+  blocks,
+  marks,
+  types,
+  components,
+  proseClassName = '',
+  className = '',
+}: BlockProps) {
   let div: PortableTextBlock[] = []
+
+  const serializers: PortableTextReactComponents = {
+    ...defaultComponents,
+    block: {
+      ...defaultComponents.block,
+      ...defaultBlocks,
+      ...blocks,
+    } as BlockType,
+    marks: {
+      ...defaultComponents.marks,
+      ...defaultMarks,
+      ...marks,
+    } as MarkType,
+    types: {
+      ...defaultComponents.types,
+      ...(types ?? defaultTypes),
+    } as TypesType,
+  }
+
   return (
     <>
-      {value.map((block, i, blocks) => {
-        // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
-        if (inlineBlockTypes.includes(block._type)) {
-          div.push(block)
+      {
+        //@ts-ignore
+        value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
+          // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
+          if (inlineBlockTypes.includes(block._type)) {
+            div.push(block)
 
-          // If the next block is also text/pullQuote, group it with this one
-          if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
+            // If the next block is also text/pullQuote, group it with this one
+            if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
 
-          // Otherwise, render the group of text blocks we have
-          const value = div
-          div = []
+            // Otherwise, render the group of text blocks we have
+            const value = div
+            div = []
 
-          return (
-            <div
-              key={block._key}
-              className={`
-              prose   
-              prose-article
-              dark:prose-invert
-              p-0
-              max-w-viewport
-              mx-auto
-            `}
-            >
+            return (
+              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)}>
+                <PortableText
+                  value={value}
+                  //@ts-ignore
+                  components={{
+                    ...serializers,
+                  }}
+                />
+              </div>
+            )
+          } else if (block._type === 'factbox') {
+            let marginOverride = ''
+            // If the next block is a factbox, remove margin bottom
+            if (blocks[i + 1]?._type === 'factbox') {
+              marginOverride = 'mb-0'
+            }
+            // If the previous block was a factbox, remove margin top
+            if (blocks[i - 1]?._type === 'factbox') {
+              marginOverride = 'mt-0'
+            }
+
+            return (
               <PortableText
-                value={value}
-                //@ts-ignore
+                key={block._key}
+                value={block}
                 components={{
-                  ...blockSerializer,
+                  types: {
+                    //@ts-ignore
+                    factbox: (props) => <Fact className={`${marginOverride}`} {...props} />,
+                  },
+                }}
+              />
+            )
+          } else {
+            // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
+            // blocks again
+            return (
+              <PortableText
+                key={block._key}
+                value={block}
+                components={{
+                  ...defaultComponents,
                   ...components,
                 }}
               />
-            </div>
-          )
-        } else if (block._type === 'factbox') {
-          let marginOverride = ''
-          // If the next block is a factbox, remove margin bottom
-          if (blocks[i + 1]?._type === 'factbox') {
-            marginOverride = 'mb-0'
+            )
           }
-          // If the previous block was a factbox, remove margin top
-          if (blocks[i - 1]?._type === 'factbox') {
-            marginOverride = 'mt-0'
-          }
-
-          return (
-            <PortableText
-              key={block._key}
-              value={block}
-              components={{
-                types: {
-                  //@ts-ignore
-                  factbox: (props) => <Fact className={`${marginOverride}`} {...props} />,
-                },
-              }}
-            />
-          )
-        } else {
-          // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
-          // blocks again
-          return (
-            <PortableText
-              key={block._key}
-              value={block}
-              components={{
-                ...components,
-              }}
-            />
-          )
-        }
-      })}
+        })
+      }
     </>
   )
 }

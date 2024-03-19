@@ -8,10 +8,12 @@ export type BackgroundContainerProps = {
     backgroundColor?: BackgroundColours
     backgroundOption?: BackgroundOption
   }
+  /** Extended tailwind styling */
+  twClassName?: string
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background, style, children, className, ...rest },
+  { background, style, children, className, twClassName = '', ...rest },
   ref,
 ) {
   const useSpecialBackground = background?.backgroundOption?.useSpecialBackground || false
@@ -29,7 +31,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           {children}
         </ImageBackgroundContainer>
       ) : (
-        <ColouredContainer background={bgColor} style={style} className={className} {...rest}>
+        <ColouredContainer background={bgColor} style={style} className={`${className} ${twClassName}`} {...rest}>
           {children}{' '}
         </ColouredContainer>
       )}

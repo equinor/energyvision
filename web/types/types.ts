@@ -716,6 +716,8 @@ export type VideoControlsType = {
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   height?: number
+  utility: keyof typeof colorKeyToUtilityMap
+  dark: boolean
 }
 
 export type VideoPlayerData = {
