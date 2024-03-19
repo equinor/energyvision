@@ -6,6 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
+import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -267,7 +268,7 @@ export type BackgroundColours =
 
 export type DesignOptions = {
   background?: BackgroundColours
-  utility: string
+  utility: keyof typeof colorKeyToUtilityMap
   dark: boolean
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
@@ -373,6 +374,8 @@ export type FullWidthVideoData = {
   designOptions: {
     aspectRatio: FullWidthVideoRatio
     background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
 }
 
@@ -517,6 +520,8 @@ export type IFrameData = {
     aspectRatio: string
     height?: number
     background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
 }
 
@@ -657,9 +662,7 @@ export type NewsListData = {
 export type StockValuesData = {
   id: string
   type: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type TwitterEmbedData = {
@@ -669,9 +672,7 @@ export type TwitterEmbedData = {
   ingress?: PortableTextBlock[]
   embedType: string
   embedValue: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type AnchorLinkData = {
@@ -705,6 +706,8 @@ export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   background: BackgroundColours
   height?: number
+  utility: keyof typeof colorKeyToUtilityMap
+  dark: boolean
 }
 
 export type VideoPlayerData = {
@@ -733,6 +736,8 @@ export type VideoPlayerCarouselData = {
   designOptions: {
     aspectRatio: VideoPlayerRatios
     background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
   title?: PortableTextBlock[]
 }
@@ -755,9 +760,7 @@ export type ImageCarouselData = {
     autoplay: boolean
     delay: number
   }
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type IFrameCarouselItemData = {
@@ -779,9 +782,7 @@ export type IframeCarouselData = {
   id: string
   title?: PortableTextBlock[]
   items: IFrameCarouselItemData[]
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
@@ -801,8 +802,20 @@ export type KeyNumbersData = {
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
   useHorizontalScroll: boolean
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
   action?: LinkData
+}
+
+export type CardsListData = {
+  type: 'cardsList'
+  id: string
+  title?: PortableTextBlock[]
+  cards?: CardListItemData[]
+  designOptions: DesignOptions
+}
+export type CardListItemData = {
+  id: string
+  type: 'card'
+  title?: string
+  content?: PortableTextBlock[]
 }

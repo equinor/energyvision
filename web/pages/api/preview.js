@@ -34,6 +34,10 @@ export default function preview(req, res) {
     url = locale === 'no' ? `${baseUrl}/no/nyheter?preview` : `${baseUrl}/news?preview`
   } else if (Flags.HAS_MAGAZINE_INDEX && ['/magazineIndex', '/drafts.magazineIndex'].includes(pathname)) {
     url = locale === 'no' ? `${baseUrl}/no/magasin?preview` : `${baseUrl}/magazine?preview`
+  } else if (['/pageNotFound', '/drafts.pageNotFound'].includes(pathname)) {
+    url = `${baseUrl}${locale}/404?preview`
+  } else if (['/internalServerError', '/drafts.internalServerError'].includes(pathname)) {
+    url = `${baseUrl}${locale}/500?preview`
   } else {
     url = `${baseUrl}${locale}${pathname}`
   }

@@ -73,12 +73,12 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
 const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
-  const { background, highlight } = getColorForTheme(theme)
+  const { background, highlight, dark } = getColorForTheme(theme)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
   return (
     <BackgroundContainer style={style} background={background} id={anchor}>
-      <TeaserWrapper titlePosition={titlePosition}>
+      <TeaserWrapper titlePosition={titlePosition} className={`${dark ? 'dark' : ''}`}>
         <TitleWrapper>
           <StyledTitleText value={title} size={'2xl'} />
         </TitleWrapper>

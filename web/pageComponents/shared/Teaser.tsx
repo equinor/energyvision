@@ -1,13 +1,12 @@
-import { Teaser as EnvisTeaser, Eyebrow, BackgroundContainer, Text } from '@components'
+import { Teaser as EnvisTeaser, Eyebrow, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from './portableText/IngressText'
-import TitleText from './portableText/TitleText'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import Image from './SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
 import { ReadMoreLink } from '../../core/Link'
-import { BlockType } from './portableText/helpers/defaultSerializers'
+import { Heading } from '../../core/Typography'
 import { getLocaleFromName } from '../../lib/localization'
 
 const { Content, Media } = EnvisTeaser
@@ -19,18 +18,6 @@ type TeaserProps = {
 
 const StyledEnvisTeaser = styled(EnvisTeaser)`
   font-size: var(--typeScale-1);
-`
-
-const StyledEyeBrow = styled(Eyebrow)`
-  padding-bottom: var(--space-large);
-`
-
-const StyledTeaserTitle = styled(TitleText)`
-  padding-bottom: var(--space-large);
-`
-
-const ContentWrapper = styled.div`
-  padding-bottom: var(--space-large);
 `
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
@@ -58,7 +45,9 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions, isBigText } = data
-  const { background, imageSize, imagePosition } = designOptions
+  const { background, imageSize, imagePosition, dark } = designOptions
+  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
+  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
 
   if ([title, overline, text, image?.asset, action].every((i) => !i)) {
     return null
@@ -75,40 +64,31 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         >
           {image?.asset && <TeaserImage image={image} />}
         </Media>
-        <Content>
+        <Content className={`${isDark ? 'dark' : ''} gap-y-lg`}>
           {isBigText ? (
-            text && (
-              <ContentWrapper>
-                <IngressText
-                  value={text}
-                  components={{
-                    block: {
-                      normal: ({ children }: { children: React.ReactNode }) => (
-                        <Text size="lg" lineHeight="2_5">
-                          {children}
-                        </Text>
-                      ),
-                    } as BlockType,
-                  }}
-                />
-              </ContentWrapper>
-            )
+            text && <Heading value={text} as="h2" variant="2xl" className="leading-cloudy mb-2" />
           ) : (
-            <ContentWrapper>
-              {overline && <StyledEyeBrow>{overline}</StyledEyeBrow>}
-              {title && <StyledTeaserTitle value={title} />}
+            <>
+              {overline ? (
+                <hgroup className="flex flex-col gap-2 mb-1">
+                  <Eyebrow>{overline}</Eyebrow>
+                  {title && <Heading value={title} as="h2" variant="xl" />}
+                </hgroup>
+              ) : (
+                <>{title && <Heading value={title} as="h2" variant="xl" className="mb-2" />}</>
+              )}
               {text && <IngressText value={text} />}
-            </ContentWrapper>
+            </>
           )}
-          {action && (action?.type === 'internalUrl') || action?.type === 'externalUrl') && (
-              <ReadMoreLink
-                href={getUrlFromAction(action)}
-                {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-                type={action.type === 'externalUrl' ? 'externalUrl' : 'internalUrl'}
-              >
-                {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-              </ReadMoreLink>
-            )}
+          {action && (action?.type === 'internalUrl' || action?.type === 'externalUrl') && (
+            <ReadMoreLink
+              href={getUrlFromAction(action)}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type === 'externalUrl' ? 'externalUrl' : 'internalUrl'}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
+          )}
         </Content>
       </StyledEnvisTeaser>
     </BackgroundContainer>

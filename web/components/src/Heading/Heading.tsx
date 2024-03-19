@@ -65,7 +65,17 @@ const fontWeights = {
 }
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Heading(
-  { size = 'lg', level = 'h3', regular = false, center = false, uppercase = false, style, children, ...rest },
+  {
+    size = 'lg',
+    level = 'h3',
+    regular = false,
+    center = false,
+    uppercase = false,
+    style,
+    children,
+    className = '',
+    ...rest
+  },
   ref,
 ) {
   return (
@@ -82,6 +92,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
           ...style,
         } as CSSProperties
       }
+      className={className}
       {...rest}
     >
       {children}

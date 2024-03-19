@@ -215,7 +215,9 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               </LeadParagraph>
             )}
 
-            {content && content.length > 0 && <Blocks value={content} />}
+            {content && content.length > 0 && (
+              <Blocks value={content} proseClassName="prose-article" className="p-0 max-w-viewport mx-auto" />
+            )}
 
             {iframe && <BasicIFrame data={iframe} />}
 

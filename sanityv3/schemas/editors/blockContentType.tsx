@@ -1,5 +1,5 @@
 import { attach_file, external_link, format_color_text, link } from '@equinor/eds-icons'
-import type { BlockDefinition, Rule, ValidationContext } from 'sanity'
+import type { BlockDefinition, BlockStyleDefinition, Rule, ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
@@ -25,6 +25,7 @@ export type BlockContentProps = {
     value: 'normal'
     component?: ({ children }: { children: React.ReactNode }) => JSX.Element
   }
+  extendedStyles?: BlockStyleDefinition[]
 }
 
 export const textColorConfig = {
@@ -71,13 +72,14 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     lists = true,
     smallText = true,
     highlight = false,
+    extendedStyles = [],
     normalTextOverride = { title: 'Normal', value: 'normal' },
   } = options
 
   const config: BlockDefinition = {
     type: 'block',
     name: 'block',
-    styles: [normalTextOverride],
+    styles: [normalTextOverride, ...extendedStyles],
     lists: lists
       ? [
           { title: 'Numbered', value: 'number' },
@@ -116,7 +118,6 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     value: 'smallText',
     component: SmallTextRender,
   }
-
   const externalLinkConfig = {
     name: 'link',
     type: 'object',
