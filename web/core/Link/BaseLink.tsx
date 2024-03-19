@@ -31,6 +31,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
   `,
     className,
   )
+
   return type === 'externalUrl' ? (
     // https://web.dev/articles/referrer-best-practices
     // strict-origin-when-cross-origin only share the origin

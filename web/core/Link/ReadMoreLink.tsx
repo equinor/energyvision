@@ -15,11 +15,13 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   ref,
 ) {
   const classNames = twMerge(
-    `
-    relative
-    inline-flex
+    `relative
+    group
+    inline-block
+    align-baseline
     w-max
     text-slate-80
+    leading-0
     no-underline
     hover:underline
     underline-offset-8
@@ -37,23 +39,21 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
     className,
   )
   const iconClassNames = twMerge(
-    `text-energy-red-100
+    `inline-block
+    text-energy-red-100
     ${type === 'externalUrl' ? '-rotate-45' : ''}
     dark:text-white-100
-    ml-sm
-    hover:pl-md
+    ml-2
+    group-hover:translate-x-2
+    transition-all
   `,
     iconClassName,
   )
 
-  return type === 'externalUrl' ? (
+  return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
       {children}
       <Icon data={arrow_forward} size={16} className={iconClassNames} />
-    </BaseLink>
-  ) : (
-    <BaseLink className={classNames} ref={ref} href={href} {...rest}>
-      {children}
     </BaseLink>
   )
 })

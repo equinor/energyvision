@@ -53,6 +53,8 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
+  console.log('action', action)
+
   const isSvg = image?.extension === 'svg'
   return (
     <BackgroundContainer background={background} id={anchor}>
