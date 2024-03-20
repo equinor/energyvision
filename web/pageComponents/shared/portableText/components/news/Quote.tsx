@@ -3,9 +3,9 @@ import QuoteComponent from '../../../Quote'
 
 import type { PortableTextBlock } from '@portabletext/types'
 import type { QuoteData } from '../../../../../types/types'
+import { twMerge } from 'tailwind-merge'
 
 const Container = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-medium);
   margin: var(--space-3xLarge) auto;
   clear: both;
 `
@@ -18,10 +18,11 @@ type QuoteRenderer = {
 type BlockProps = {
   isInline: boolean
   value: QuoteRenderer
+  className?: string
 } & PortableTextBlock
 
 export const Quote = (quote: BlockProps) => {
-  const { value } = quote
+  const { value, className } = quote
   const data = {
     ...value,
     type: value._type,
@@ -29,7 +30,7 @@ export const Quote = (quote: BlockProps) => {
   }
 
   return (
-    <Container>
+    <Container className={twMerge(`px-layout-md`, className)}>
       <QuoteComponent data={data} />
     </Container>
   )

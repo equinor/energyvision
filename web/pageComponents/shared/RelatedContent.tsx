@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, HTMLAttributes } from 'react'
 import { Heading, List } from '@components'
 import type { RelatedLinksData, LinkData } from '../../types/types'
 import styled from 'styled-components'
@@ -13,7 +13,7 @@ const { Item } = List
 
 type RelatedContentProps = {
   data: RelatedLinksData
-}
+} & HTMLAttributes<HTMLDivElement>
 
 const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
   return (

@@ -91,6 +91,9 @@ import keyNumbers from './objects/keyNumbers'
 import keyNumberItem from './objects/keyNumberItem'
 import background from './objects/background/background'
 import imageBackground from './objects/background/imageBackground'
+import keyValue from './objects/keyValue'
+import card from './objects/card'
+import cardsList from './objects/cardsList'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -174,6 +177,9 @@ const RemainingSchemas = [
   themeList,
   keyNumbers,
   keyNumberItem,
+  keyValue,
+  card,
+  cardsList,
   background,
   imageBackground,
 ]

@@ -3,15 +3,18 @@ import type { BackgroundColours, BackgroundOption } from '../../../types/types'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
-export type BackgroundContainerProps = {
+type ColourContainerProps = {
+  isInverted?: boolean
   background?: {
     backgroundColor?: BackgroundColours
     backgroundOption?: BackgroundOption
   }
+  /** Extended tailwind styling */
+  twClassName?: string
 } & HTMLAttributes<HTMLDivElement>
 
-export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background, style, children, className, ...rest },
+export const BackgroundContainer = forwardRef<HTMLDivElement, ColourContainerProps>(function BackgroundContainer(
+  { background, style, children, className, twClassName = '', ...rest },
   ref,
 ) {
   const useSpecialBackground = background?.backgroundOption?.useSpecialBackground || false
@@ -31,7 +34,12 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           </ImageBackgroundContainer>
         </div>
       ) : (
-        <ColouredContainer background={bgColor} style={style} className={className} {...rest}>
+        <ColouredContainer
+          background={bgColor}
+          style={style}
+          className={`${className} background${styleVariant} ${twClassName}`}
+          {...rest}
+        >
           {children}{' '}
         </ColouredContainer>
       )}

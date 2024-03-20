@@ -3,7 +3,8 @@ import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { GlobalStyle } from '../styles/globalStyles'
+import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
+import '../styles/tailwind.css'
 import 'focus-visible'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
@@ -140,6 +141,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
             {GTM_ID && <GoogleTagManagerHead />}
           </Head>
           <GlobalStyle />
+          <GlobalFontStyle />
           {IS_LIVE && <CookieBot locale={router.locale} />}
           <PreviewContextProvider>
             <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>

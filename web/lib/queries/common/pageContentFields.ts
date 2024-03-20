@@ -31,6 +31,8 @@ _type == "keyNumbers" =>{
       ),
     "designOptions": {
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
@@ -82,6 +84,8 @@ _type == "keyNumbers" =>{
     overrideButtonStyle,
     anchor,
     "designOptions": {
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
       ${background}
     },
   },
@@ -115,6 +119,8 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "textWithIconArray"=>{
@@ -132,6 +138,8 @@ _type == "keyNumbers" =>{
 
     "designOptions": {
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "pullQuote" => {
@@ -144,6 +152,8 @@ _type == "keyNumbers" =>{
     "designOptions": {
       ${background}
       "imagePosition": coalesce(imagePosition, 'right'),
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     }
   },
   _type == "accordion" => {
@@ -167,6 +177,8 @@ _type == "keyNumbers" =>{
     anchor,
     "designOptions": {
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     }
   },
   _type == "promoTileArray"=>{
@@ -202,6 +214,8 @@ _type == "keyNumbers" =>{
       },
       "designOptions": {
         ${background}
+        "utility": coalesce(background.key, ""),
+        "dark": coalesce(background.dark, false),
       },
     },
   },
@@ -226,6 +240,8 @@ _type == "keyNumbers" =>{
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
       height,
     },
   },
@@ -394,6 +410,8 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
   _type == "cookieDeclaration" => {
@@ -463,6 +481,8 @@ _type == "keyNumbers" =>{
     "id": _key,
     "designOptions": {
       ${background}
+      "dark": coalesce(background.dark, false),
+      "utility": coalesce(background.key, ""),
     },
   },
 
@@ -478,6 +498,8 @@ _type == "keyNumbers" =>{
       },
     "designOptions": {
       ${background}
+      "utility": coalesce(background.key, ""),
+      "dark": coalesce(background.dark, false),
     },
   },
 
@@ -501,7 +523,24 @@ _type == "keyNumbers" =>{
   },
   _type == "table" => {
     ${tableFields}
-  }
+  },
+  _type == "cardsList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "cards": cards[]{
+        "type": _type,
+        "id": _key,
+        title,
+        "content": defined(content[]){..., ${markDefs}},
+        ...,
+      },
+    "designOptions": {
+      "background": coalesce(background.title, 'White'),
+      "utility": coalesce(background.key, ""),
+      "dark": coalesce(background.dark, false),
+    },
+  },
 `
 
 export default pageContentFields

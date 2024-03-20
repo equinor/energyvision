@@ -18,7 +18,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
   // If we have only one link and the publisher has not made an active choice of overriding the style
   // in Sanity the default style is a button style
   return callToActions.length === 1 && !overrideButtonStyle ? (
-    <ButtonLink action={callToActions[0]} />
+    <ButtonLink action={callToActions[0]} className="w-max" />
   ) : (
     <List unstyled splitList={splitList}>
       {callToActions.map((callToAction: LinkData) => {

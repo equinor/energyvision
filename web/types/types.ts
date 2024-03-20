@@ -6,6 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
+import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -281,6 +282,10 @@ export type DesignOptions = {
     backgroundColor?: BackgroundColours
   }
   backgroundOption?: BackgroundOption
+  utility: keyof typeof colorKeyToUtilityMap
+  dark: boolean
+  imagePosition?: TeaserImagePosition
+  imageSize?: TeaserImageSize
 }
 
 export type TextBlockData = {
@@ -385,6 +390,9 @@ export type FullWidthVideoData = {
   action?: LinkData
   designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
+    background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
 }
 
@@ -528,6 +536,9 @@ export type IFrameData = {
   designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
+    background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
 }
 
@@ -711,6 +722,8 @@ export type VideoControlsType = {
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   height?: number
+  utility: keyof typeof colorKeyToUtilityMap
+  dark: boolean
 }
 
 export type VideoPlayerData = {
@@ -738,6 +751,9 @@ export type VideoPlayerCarouselData = {
   }[]
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
+    background: BackgroundColours
+    utility: keyof typeof colorKeyToUtilityMap
+    dark: boolean
   }
   title?: PortableTextBlock[]
 }
@@ -804,4 +820,18 @@ export type KeyNumbersData = {
   useHorizontalScroll: boolean
   designOptions: DesignOptions
   action?: LinkData
+}
+
+export type CardsListData = {
+  type: 'cardsList'
+  id: string
+  title?: PortableTextBlock[]
+  cards?: CardListItemData[]
+  designOptions: DesignOptions
+}
+export type CardListItemData = {
+  id: string
+  type: 'card'
+  title?: string
+  content?: PortableTextBlock[]
 }

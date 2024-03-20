@@ -459,6 +459,16 @@ const snippets: textSnippet = {
     defaultValue: 'Please select atleast one of the reports',
     group: groups.orderAnnualReportsForm,
   },
+  order_reports_checkbox_option_annualReport_label: {
+    title: 'Annual report (english version) option',
+    defaultValue: 'Annual report (english version)',
+    group: groups.orderAnnualReportsForm,
+  },
+  order_reports_checkbox_option_statutoryReport_label: {
+    title: 'Annual report (norwegian version) option',
+    defaultValue: 'Annual report (norwegian version)',
+    group: groups.orderAnnualReportsForm,
+  },
   careers_contact_form_name: {
     title: 'Name',
     defaultValue: 'Your Name',

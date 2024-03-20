@@ -1,3 +1,4 @@
+import markDefs from './common/blockEditorMarks'
 import { sameLang } from './common/langAndDrafts'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 
@@ -6,6 +7,9 @@ export const newsroomQuery = /* groq */ `
     _id,
     "seoAndSome": ${seoAndSomeFields},
     title,
-    ingress,
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
     backgroundImage
   }`

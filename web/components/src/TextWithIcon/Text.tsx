@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 
-type TextProps = HTMLAttributes<HTMLDivElement>
+type TextProps = HTMLAttributes<HTMLParagraphElement>
 
 const StyledText = styled.div`
   p {

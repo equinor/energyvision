@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { List, Heading, HeadingProps, ListProps } from '@components'
 
 const StyledSubMenuGroupHeading = styled(Heading)`
+  color: var(--moss-green-95);
   font-weight: 650;
   letter-spacing: 0.15em;
   font-size: var(--typeScale-05) !important; // TODO: Eliminate the need for !important

@@ -69,7 +69,7 @@ Custom404.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.locale, preview = false }) => {
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 
@@ -77,10 +77,13 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
     lang,
   }
 
-  const { menuData, pageData, footerData } = await getComponentsData({
-    query: pageNotFoundQuery,
-    queryParams,
-  })
+  const { menuData, pageData, footerData } = await getComponentsData(
+    {
+      query: pageNotFoundQuery,
+      queryParams,
+    },
+    preview,
+  )
 
   return {
     props: {
