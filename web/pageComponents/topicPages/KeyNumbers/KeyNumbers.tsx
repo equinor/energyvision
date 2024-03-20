@@ -5,9 +5,9 @@ import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import KeyNumberItem from './KeyNumberItem'
 import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
-import RichText from '../../shared/portableText/RichText'
 import { Carousel } from '../../shared/Carousel'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -85,7 +85,7 @@ export default function ({ data, anchor }: KeyNumbersProps) {
 
       {disclaimer && (
         <Disclaimer>
-          <RichText value={disclaimer} />
+          <Blocks value={disclaimer} />
         </Disclaimer>
       )}
       {action && <ReadMoreLink action={action} />}

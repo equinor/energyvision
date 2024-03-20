@@ -42,7 +42,7 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
           {title && <StyledHeading value={title} level="h2" size="xl" />}
           {ingress && (
             <Ingress>
-              <IngressText value={ingress} centered={true} />
+              <IngressText value={ingress} />
             </Ingress>
           )}
         </Intro>

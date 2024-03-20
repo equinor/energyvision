@@ -220,6 +220,33 @@ module.exports = {
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
+              'ul ul, ul ol, ol ul, ol ol': {
+                paddingLeft: em(38, 24),
+              },
+              'ol ol': {
+                listStyleType: 'lower-alpha',
+              },
+              'ol ol ol': {
+                listStyleType: 'lower-roman',
+              },
+              'ol > li': {
+                marginLeft: em(8, 14),
+              },
+              'ul > li': {
+                marginLeft: em(8, 14),
+              },
+              '> ul > li > *:first-child': {
+                marginTop: '0px',
+              },
+              '> ul > li > *:last-child': {
+                marginBottom: '0px',
+              },
+              '> ol > li > *:first-child': {
+                marginTop: '0px',
+              },
+              '> ol > li > *:last-child': {
+                marginBottom: '0px',
+              },
             },
             {
               '--tw-prose-body': theme('colors.slate.80'),
@@ -262,15 +289,8 @@ module.exports = {
               marginRight: theme('padding.layout-lg'),
             },
             'ul ul, ul ol, ol ul, ol ol': {
-              paddingLeft: em(38, 24),
               marginLeft: '0px',
               marginRight: '0px',
-            },
-            'ol > li': {
-              marginLeft: em(8, 14),
-            },
-            'ul > li': {
-              marginLeft: em(8, 14),
             },
             p: {
               paddingLeft: theme('padding.layout-lg'),

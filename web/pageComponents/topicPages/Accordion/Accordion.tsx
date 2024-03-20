@@ -3,9 +3,8 @@ import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import useRouterReplace from '../../hooks/useRouterReplace'
 import { Accordion as EnvisAccordion } from '@components'
-import RichText from '../../shared/portableText/RichText'
-
 import type { AccordionListData } from '../../../types/types'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 const { Item, Header, Panel } = EnvisAccordion
 
@@ -63,7 +62,7 @@ const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps
         return (
           <Item key={id} id={idx}>
             <Header headingLevel={hasTitle ? 'h3' : 'h2'}>{itemTitle}</Header>
-            <Panel>{content && <RichText value={content} />}</Panel>
+            <Panel>{content && <Blocks value={content} />}</Panel>
           </Item>
         )
       })}
