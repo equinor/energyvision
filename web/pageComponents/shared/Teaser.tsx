@@ -46,7 +46,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions, isBigText } = data
   const { background, imageSize, imagePosition, dark } = designOptions
   // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+  const isDark = dark || background?.backgroundColor === 'Mid Blue' || background?.backgroundColor === 'Slate Blue'
 
   if ([title, overline, text, image?.asset, action].every((i) => !i)) {
     return null

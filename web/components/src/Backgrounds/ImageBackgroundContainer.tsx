@@ -58,9 +58,19 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         className={className}
         contentAlignment={contentAlignment}
       >
-        <AnimationWrapper useAnimation={useAnimation === true} contentAlignment={contentAlignment}>
+        {/*         <AnimationWrapper useAnimation={useAnimation === true} contentAlignment={contentAlignment}> */}
+        <div
+          className={`
+          dark
+          pt-[50dvh]
+          pb-[50dvh]
+          animate-fade-in-out 
+        [animation-timeline:view()] 
+        [animation-range:_cover_30%_cover_100%]`}
+        >
           {children}
-        </AnimationWrapper>
+        </div>
+        {/*         </AnimationWrapper> */}
       </ImageContainer>
     )
   },

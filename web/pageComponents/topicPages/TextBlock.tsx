@@ -41,12 +41,8 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
-  const { background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
-
   return (
-    <StyledTextBlockWrapper background={background} id={anchor || data.anchor} twClassName={`${isDark ? 'dark' : ''}`}>
+    <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor}>
       <StyledTextBlock className={`flex flex-col gap-6`}>
         {isBigText ? (
           title && <Heading value={title} as="h2" variant="2xl" />

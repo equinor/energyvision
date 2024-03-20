@@ -30,7 +30,9 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
   const { title, ingress, content, useHorizontalScroll, designOptions } = data
   // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
   const isDark =
-    designOptions?.dark || designOptions?.background === 'Mid Blue' || designOptions?.background === 'Slate Blue'
+    designOptions?.dark ||
+    designOptions?.background?.backgroundColor === 'Mid Blue' ||
+    designOptions?.background?.backgroundColor === 'Slate Blue'
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type

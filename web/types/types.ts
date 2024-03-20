@@ -259,11 +259,6 @@ export type ImageBackground = {
   contentAlignment: 'left' | 'right' | 'center'
 }
 
-export type BackgroundOption = {
-  background?: ImageBackground
-  useSpecialBackground: boolean
-}
-
 export type BackgroundColours =
   | 'White'
   | 'Moss Green'
@@ -278,10 +273,9 @@ export type BackgroundColours =
   | 'Slate Blue 95'
 
 export type DesignOptions = {
-  background?: {
-    backgroundColor?: BackgroundColours
-  }
-  backgroundOption?: BackgroundOption
+  backgroundColor?: BackgroundColours
+  imageBackground?: ImageBackground
+  useScrollAnimation?: boolean
   utility: keyof typeof colorKeyToUtilityMap
   dark: boolean
   imagePosition?: TeaserImagePosition
@@ -390,9 +384,6 @@ export type FullWidthVideoData = {
   action?: LinkData
   designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
-    background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
 }
 

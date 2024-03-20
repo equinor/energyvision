@@ -202,6 +202,15 @@ module.exports = {
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       },
+      keyframes: {
+        reveal: {
+          '0%, 100%': { opacity: '0' },
+          '20%, 80%': { opacity: '1' },
+        },
+      },
+      animation: {
+        'fade-in-out': 'auto linear reveal both',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
