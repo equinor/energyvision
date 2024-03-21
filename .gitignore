@@ -31,9 +31,6 @@ yarn-error.log*
 # docs site
 _site
 
-# storybook
-web/storybook-static
-
 # IDE specific files
 .idea
 

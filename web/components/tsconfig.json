@@ -7,10 +7,6 @@
         "src",
         "src/*"
       ],
-      "@stories": [
-        "stories",
-        "stories/*"
-      ],
       "@utils": [
         "utils",
         "utils/*"

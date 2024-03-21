@@ -1,5 +1,4 @@
 node_modules
-storybook-static
 .next
 legacy/js/src
 legacy/js/dist

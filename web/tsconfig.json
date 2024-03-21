@@ -11,13 +11,11 @@
     "paths": {
       "@components/*": ["components/src/*"],
       "@utils/*": ["components/utils/*"],
-      "@mockdata/*": ["components/stories/mockdata/*"],
       "@components": ["components/src"],
       "@utils": ["components/utils"],
-      "@mockdata": ["components/stories/mockdata"]
     },
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts"],
-  "exclude": ["node_modules", "**/*.stories.*", "pages-disabled/*.tsx"]
+  "exclude": ["node_modules", "pages-disabled/*.tsx"]
 }

@@ -25,7 +25,6 @@
     "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
     "prepare": "is-ci || husky install",
     "preinstall": "npx only-allow pnpm",
-    "start:storybook": "pnpm web storybook",
     "start:web": "pnpm web dev",
     "v3:dev": "pnpm sanityv3 dev",
     "v3:docker": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/v3 -f sanityv3/Dockerfile .",

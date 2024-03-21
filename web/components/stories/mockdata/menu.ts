@@ -5,7 +5,6 @@ export const MockMenuData = [
       { label: 'Home', url: '/' },
       { label: 'equinor.com', url: 'https://equinor.com' },
       { label: 'GitHub', url: 'https://github.com/equinor/energyvision' },
-      { label: 'Storybook', url: 'https://github.com/equinor/energyvision' },
     ],
   },
   {

@@ -31,7 +31,7 @@ This project requires several environment variables to run. These environment va
 This monorepo is organized into several folder. Please refer to README files inside each folder for more information.
 
 - `studio` - [Sanity](https://www.sanity.io/) powered content platform.
-- `web` - Web application using [Next.js](https://nextjs.org/) and React components developed in isolation with [Storybook](https://storybook.js.org/).
+- `web` - Web application using [Next.js](https://nextjs.org/) and React components.
 - `search` - Azure functions for maintaining search indexes at [Algolia](https://www.algolia.com/apps/24ZMKUY18Z/dashboard).
 - `legacy` - Archived code/content from previous versions of the equinor.com website.
 
@@ -78,12 +78,6 @@ Due to compatibility issues, npm is used for the Search Indexers. The reason bei
 The `legacy` folder contains packages related to static content from the AEM based equinor.com website and the legacy CSS/JavaScript needed to run this static content. These packages are rarely updated and rely on outdated and/or deprecated dependencies. This causes issues when using a node version higher than node v14 on certain platforms (for example node-sass does not compile). When working on these packages, be sure to switch to node v14 to build the packages.
 
 The legacy packages are currently excluded from the pnpm workspace (see `pnpm-workspace.yaml`) so will not have their dependencies installed when running `pnpm setup-project` / `pnpm m i` / `pnpm recursive install` from the project root.
-
-## Storybook
-
-We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://s166-cdne-envis-storybook-dev.azureedge.net/.
-
-To start Storybook locally during development, run `pnpm web storyboook` from the project root.
 
 ## Feature flags
 
