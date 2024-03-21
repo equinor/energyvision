@@ -103,6 +103,7 @@ export const HLSPlayer: React.FC<HLSProps> = ({
     const video = videoRef.current
     if (!video) return
 
+    video.setAttribute('muted', muted ? 'true' : 'false')
     if (Hls.isSupported()) {
       const hls = new Hls({
         autoStartLoad: autoPlay, // This ensures video is not loaded automatically
@@ -160,19 +161,21 @@ export const HLSPlayer: React.FC<HLSProps> = ({
   }, [playButton])
 
   return (
-    <Wrapper
-      $showSpinner={showSpinner}
-      role={muted ? 'img' : undefined}
-      aria-label={muted ? videoDescription : undefined}
-    >
-      <video
-        playsInline
-        ref={videoRef}
-        autoPlay={playButton ? false : autoPlay}
-        controls={autoPlay ? false : showControls || controls}
-        muted={muted}
-        {...props}
-      />
+    <>
+      <Wrapper
+        $showSpinner={showSpinner}
+        role={muted ? 'img' : undefined}
+        aria-label={muted ? videoDescription : undefined}
+      >
+        <video
+          playsInline
+          ref={videoRef}
+          autoPlay={playButton ? false : autoPlay}
+          controls={autoPlay ? false : showControls || controls}
+          muted={muted}
+          {...props}
+        />
+      </Wrapper>
       {showPlayButton && (
         <StyledButton onClick={handlePlayButton} aria-label={isPlaying ? 'Pause' : 'Play'}>
           <Icon
@@ -193,6 +196,6 @@ export const HLSPlayer: React.FC<HLSProps> = ({
           />
         </SmallStyledButton>
       )}
-    </Wrapper>
+    </>
   )
 }
