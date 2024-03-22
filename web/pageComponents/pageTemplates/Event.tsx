@@ -154,7 +154,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             <div
               className={twMerge(`
              mt-16
-             ${iframe ? '' : 'pb-12'}
+             ${iframe ? '' : 'pb-16'}
              px-0 
              md:px-8
              lg:px-0
@@ -175,7 +175,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
-              className={`pb-16 text-center lg:text-left `}
+              className={twMerge(`pb-16`)}
               data={{
                 id: 'promotedPeople',
                 type: 'people',

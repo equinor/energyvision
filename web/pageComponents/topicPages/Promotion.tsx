@@ -6,11 +6,7 @@ import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
-
-const StyledHeading = styled(TitleText)`
-  text-align: var(--promotion-titleAlign, center);
-  margin-bottom: var(--space-xLarge);
-`
+import { twMerge } from 'tailwind-merge'
 
 const Promotion = ({
   data,
@@ -24,12 +20,11 @@ const Promotion = ({
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
-
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <div className="py-16 lg:py-0 lg:px-8" {...rest}>
-        <header className="px-4 lg:px-0 max-w-screen-xl mx-auto">
-          {title && <StyledHeading value={title} level="h2" size="xl" />}
+      <div className={twMerge(`pb-12 max-w-viewport`)} {...rest}>
+        <header className="px-layout-lg">
+          {title && <TitleText className="text-left mb-8" value={title} level="h2" size="xl" />}
           {ingress && (
             <p className="mb-8">
               <IngressText value={ingress} centered={true} />
