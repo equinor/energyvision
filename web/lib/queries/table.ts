@@ -1,6 +1,7 @@
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import { linkReferenceFields } from './common/actions/linkSelectorFields'
+import background from './common/background'
 import markDefs from './common/blockEditorMarks'
 
 export const tableFields = /* groq */ `
@@ -45,7 +46,7 @@ export const tableFields = /* groq */ `
   "designOptions": {
     "theme": coalesce(lower(theme.title), 'grey'),
     "aspectRatio": coalesce(aspectRatio, '16:9'),
-    "background": coalesce(background.title, 'none'),
     height,
+    ${background}
   }
 `

@@ -1,7 +1,5 @@
 import { play_circle_outlined } from '@equinor/eds-icons'
-
 import { EdsIcon, FileIcon, LibraryIcon, TagMoreIcon } from '../../../../icons'
-import { Flags } from '../../datasetHelpers'
 import { AssetExtensionFilters } from './AssetExtensionFilters'
 import { AssetTagFilters } from './AssetTagFilters'
 import { UnusedAssetFilters } from './UnusedAssetFilters'

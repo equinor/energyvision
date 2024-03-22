@@ -2,6 +2,7 @@ import markDefs from './blockEditorMarks'
 import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
+import background from './background'
 
 export const eventContentFields = /* groq */ `
   location,
@@ -22,8 +23,8 @@ export const eventContentFields = /* groq */ `
       "cookiePolicy": coalesce(cookiePolicy, 'none'),
       "designOptions": {
         "aspectRatio": coalesce(aspectRatio, '16:9'),
-        "background": coalesce(background.title, 'none'),
         height,
+        ${background}
       },
     },
   },
@@ -34,8 +35,8 @@ export const eventContentFields = /* groq */ `
       "cookiePolicy": coalesce(cookiePolicy, 'none'),
       "designOptions": {
         "aspectRatio": coalesce(aspectRatio, '16:9'),
-        "background": coalesce(background.title, 'none'),
         height,
+        ${background}
       },
     },
   "promotedPeople": {

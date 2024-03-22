@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import { Button, ButtonProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { default as NextLink } from 'next/link'
+import { twMerge } from 'tailwind-merge'
 
 const StyledButtonLink = styled(Button)`
   --eds_button__height: auto;
@@ -25,7 +26,7 @@ const StyledButtonLink = styled(Button)`
 export type ButtonLinkProps = { locale?: string } & ButtonProps
 
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
-  { children, href = '', locale, ...rest },
+  { children, href = '', locale, className = '', ...rest },
   ref,
 ) {
   return (
@@ -37,6 +38,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
       color="secondary"
       variant="outlined"
       ref={ref}
+      className={twMerge('dark:text-white-100', className)}
       {...rest}
     >
       {children}

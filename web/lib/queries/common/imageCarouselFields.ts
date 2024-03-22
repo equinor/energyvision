@@ -1,3 +1,5 @@
+import background from './background'
+
 export const imageCarouselFields = /* groq */ `
     "id": _key,
     "type": _type,
@@ -8,6 +10,6 @@ export const imageCarouselFields = /* groq */ `
       delay
     },
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+     ${background}
     },
 `

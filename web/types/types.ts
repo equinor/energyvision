@@ -6,7 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
-import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -253,6 +253,11 @@ export type LandingPageSchema = {
   seoAndSome: SeoData
 }
 
+export type ImageBackground = {
+  image: SanityImageObject
+  contentAlignment: 'left' | 'right' | 'center'
+}
+
 export type BackgroundColours =
   | 'White'
   | 'Moss Green'
@@ -266,12 +271,14 @@ export type BackgroundColours =
   | 'Mid Orange'
   | 'Slate Blue 95'
 
+export type BackgroundTypes = 'color-regular' | 'image-regular' | 'image-scroll-animation'
+
 export type DesignOptions = {
   background?: BackgroundColours
-  utility: keyof typeof colorKeyToUtilityMap
+  imageBackground?: ImageBackground
+  backgroundType?: BackgroundTypes
+  utility: keyof ColorKeyTokens
   dark: boolean
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
 }
 
 export type TextBlockData = {
@@ -306,7 +313,10 @@ export type TeaserData = {
   isBigText?: boolean
   image: ImageWithAlt
   action?: LinkData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    imagePosition?: TeaserImagePosition
+    imageSize?: TeaserImageSize
+  }
 }
 
 export type TextTeaserData = {
@@ -355,7 +365,7 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: number
   }
 }
@@ -371,11 +381,9 @@ export type FullWidthVideoData = {
   spacing?: boolean
   title?: PortableTextBlock[]
   action?: LinkData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
     background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
 }
 
@@ -409,7 +417,7 @@ export type QuoteData = {
   authorTitle?: string
   quote: string
   image?: ImageWithAlt
-  designOptions: DesignOptions
+  designOptions: DesignOptions & { imagePosition?: TeaserImagePosition }
 }
 
 export type AccordionListData = {
@@ -516,12 +524,9 @@ export type IFrameData = {
   frameTitle: string
   url: string
   cookiePolicy: CookiePolicy
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
-    background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
 }
 
@@ -704,7 +709,6 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  background: BackgroundColours
   height?: number
   utility: keyof typeof colorKeyToUtilityMap
   dark: boolean
@@ -715,7 +719,7 @@ export type VideoPlayerData = {
   type: string
   video: VideoType
   videoControls: VideoControlsType
-  designOptions: VideoDesignOptionsType
+  designOptions: DesignOptions & VideoDesignOptionsType
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
@@ -733,11 +737,9 @@ export type VideoPlayerCarouselData = {
       thumbnail: ImageWithAlt
     }
   }[]
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
     background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
   title?: PortableTextBlock[]
 }

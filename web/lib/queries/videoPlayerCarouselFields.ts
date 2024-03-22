@@ -1,3 +1,5 @@
+import background from './common/background'
+
 export const videoPlayerCarouselFields = /* groq */ `
   "id": _key,
   "type": _type,
@@ -13,6 +15,6 @@ export const videoPlayerCarouselFields = /* groq */ `
   },
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
-    "background": coalesce(background.title, 'none'),
+    ${background}
   },
 `

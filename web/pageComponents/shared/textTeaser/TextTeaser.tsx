@@ -1,4 +1,4 @@
-import { Teaser as EnvisTeaser, Link, BackgroundContainer } from '@components'
+import { Teaser as EnvisTeaser, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'

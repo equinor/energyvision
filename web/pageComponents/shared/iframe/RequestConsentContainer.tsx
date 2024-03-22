@@ -36,6 +36,7 @@ const StyledDiv = styled.section`
 `
 
 const CookieHeader = styled(BackgroundContainer)`
+  border-radius: var(--border-radius);
   grid-area: heading;
   padding: var(--space-medium) var(--space-large);
   padding-left: var(--icon-column-width);

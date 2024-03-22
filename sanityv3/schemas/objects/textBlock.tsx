@@ -59,6 +59,7 @@ export default {
   name: 'textBlock',
   title: 'Text block',
   type: 'object',
+
   fieldsets: [
     {
       title: 'Thumbnail Image',
@@ -87,10 +88,6 @@ export default {
         collapsible: true,
         collapsed: false,
       },
-    },
-    {
-      name: 'design',
-      title: 'Design options',
     },
     {
       name: 'anchor',
@@ -205,11 +202,16 @@ export default {
       },
     },
     {
+      title: 'Design options',
+      name: 'designOptions',
+      type: 'designOptions',
+    },
+    // Migrate to use designOptions color in staging/preprod/prod then remove
+    {
       title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
+      description: 'Deprecated, use design options above ',
       name: 'background',
       type: 'colorlist',
-      fieldset: 'design',
     },
   ].filter((e) => e),
   preview: {
