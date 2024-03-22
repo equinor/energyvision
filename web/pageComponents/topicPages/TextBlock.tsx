@@ -39,6 +39,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
     overrideButtonStyle = false,
     isBigText,
   } = data
+
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
   return (

@@ -204,12 +204,26 @@ module.exports = {
       },
       keyframes: {
         reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-out': {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '2' },
+        },
+        'zoom-in': {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(0.2)' },
+        },
+        'fade-in-out': {
           '0%, 100%': { opacity: '0' },
           '20%, 80%': { opacity: '1' },
         },
       },
       animation: {
-        'fade-in-out': 'auto linear reveal both',
+        'fade-in-out': 'auto linear fade-in-out both',
+        'fade-out': 'auto linear fade-out both',
+        'zoom-in': 'auto linear zoom-in both',
       },
       typography: (theme) => ({
         DEFAULT: {

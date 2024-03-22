@@ -1,64 +1,41 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, ImageBackground } from '../../../types/types'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/types'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 import { twMerge } from 'tailwind-merge'
-import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
 
-type BackgroundContainerProps = {
+export type BackgroundContainerProps = {
   isInverted?: boolean
-  backgroundColor?: BackgroundColours
+  backgroundType?: BackgroundTypes
   imageBackground?: ImageBackground
-  useScrollAnimation?: boolean
-  utility: keyof typeof colorKeyToUtilityMap
-  dark: boolean
+  //phase in, comes with ColorSelector
+  utility?: keyof ColorKeyTokens
+  dark?: boolean
   /** Extended tailwind styling */
   twClassName?: string
+  //phase out
+  background?: BackgroundColours
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  {
-    backgroundColor,
-    useScrollAnimation = false,
-    imageBackground,
-    style,
-    dark,
-    utility,
-    children,
-    className,
-    twClassName = '',
-    ...rest
-  },
+  { backgroundType = 'color-regular', imageBackground, children, className, ...rest },
   ref,
 ) {
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || backgroundColor === 'Mid Blue' || backgroundColor === 'Slate Blue' || useScrollAnimation
-  const bgColor = backgroundColor || 'White'
-
   return (
     <>
-      {useScrollAnimation && imageBackground ? (
-        <div
+      {(backgroundType === 'image-scroll-animation' || backgroundType === 'image-regular') && imageBackground && (
+        <ImageBackgroundContainer
           ref={ref}
-          style={style}
-          className={twMerge(`${className} ${twClassName} ${isDark ? 'dark' : ''}`)}
-          {...rest}
+          {...imageBackground}
+          className={twMerge('dark', className)}
+          useScrollAnimation={backgroundType === 'image-scroll-animation' ? true : false}
         >
-          <ImageBackgroundContainer
-            image={imageBackground.image}
-            useAnimation={imageBackground.useAnimation}
-            contentAlignment={imageBackground.contentAlignment}
-          >
-            {children}
-          </ImageBackgroundContainer>
-        </div>
-      ) : (
-        <ColouredContainer
-          background={bgColor}
-          style={style}
-          className={twMerge(`${className} ${twClassName} ${isDark ? 'dark' : ''}`)}
-          {...rest}
-        >
+          {children}
+        </ImageBackgroundContainer>
+      )}
+      {(backgroundType === 'color-regular' || !backgroundType) && (
+        <ColouredContainer className={className} {...rest}>
           {children}
         </ColouredContainer>
       )}

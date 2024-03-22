@@ -181,7 +181,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
       <main>
         <article>
           <NewsLayout>
-            <Header background={{ backgroundColor: 'Slate Blue 95' }}>
+            <Header background={'Slate Blue 95'}>
               <HeaderInner>
                 <StyledHeading level="h1" size="3xl">
                   {title}

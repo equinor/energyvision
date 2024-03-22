@@ -97,7 +97,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
       : intl.formatMessage({ id: 'cookie_type_marketing', defaultMessage: 'marketing' })
   return (
     <StyledDiv>
-      <CookieHeader background={{ backgroundColor: 'Slate Blue 95' }}>
+      <CookieHeader background={'Slate Blue 95'}>
         <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Heading>
@@ -144,7 +144,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </SVG>
       </Icon>
-      <Content background={{ backgroundColor: 'White' }}>
+      <Content background={'White'}>
         <Text>
           <FormattedMessage
             id="cookie_consent"

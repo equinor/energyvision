@@ -6,7 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
-import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -254,8 +254,7 @@ export type LandingPageSchema = {
 }
 
 export type ImageBackground = {
-  image: ImageWithAlt
-  useAnimation?: boolean
+  image: SanityImageObject
   contentAlignment: 'left' | 'right' | 'center'
 }
 
@@ -272,14 +271,14 @@ export type BackgroundColours =
   | 'Mid Orange'
   | 'Slate Blue 95'
 
+export type BackgroundTypes = 'color-regular' | 'image-regular' | 'image-scroll-animation'
+
 export type DesignOptions = {
-  backgroundColor?: BackgroundColours
+  background?: BackgroundColours
   imageBackground?: ImageBackground
-  useScrollAnimation?: boolean
-  utility: keyof typeof colorKeyToUtilityMap
+  backgroundType?: BackgroundTypes
+  utility: keyof ColorKeyTokens
   dark: boolean
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
 }
 
 export type TextBlockData = {
@@ -384,6 +383,7 @@ export type FullWidthVideoData = {
   action?: LinkData
   designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
+    background: BackgroundColours
   }
 }
 
@@ -527,9 +527,6 @@ export type IFrameData = {
   designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
-    background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
 }
 
@@ -743,8 +740,6 @@ export type VideoPlayerCarouselData = {
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
     background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
   title?: PortableTextBlock[]
 }

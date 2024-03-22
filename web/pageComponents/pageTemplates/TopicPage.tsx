@@ -48,7 +48,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         pageTitle={data?.title}
       />
       <TopicPageLayout>
-        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
+        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background} />
         {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             background={titleStyles.background}

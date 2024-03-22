@@ -31,8 +31,6 @@ _type == "keyNumbers" =>{
       ),
     "designOptions": {
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
@@ -84,9 +82,12 @@ _type == "keyNumbers" =>{
     overrideButtonStyle,
     anchor,
     "designOptions": {
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
-      ${background}
+      "backgroundType": designOptions.backgroundType,
+      "imageBackground": designOptions.imageBackground,
+      "dark": coalesce(designOptions.backgroundColor.dark , false),
+      "utility": coalesce(designOptions.backgroundColor.key, ""),
+      //Phase-out, must migrate all textblocks in sanity to designOptions object first
+      "background": coalesce(designOptions.backgroundColor.title, background.title, "White"),
     },
   },
   _type == "fullWidthImage"=>{
@@ -119,8 +120,6 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
     },
   },
   _type == "textWithIconArray"=>{
@@ -138,8 +137,6 @@ _type == "keyNumbers" =>{
 
     "designOptions": {
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
     },
   },
   _type == "pullQuote" => {
@@ -152,8 +149,6 @@ _type == "keyNumbers" =>{
     "designOptions": {
       ${background}
       "imagePosition": coalesce(imagePosition, 'right'),
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
     }
   },
   _type == "accordion" => {
@@ -177,8 +172,6 @@ _type == "keyNumbers" =>{
     anchor,
     "designOptions": {
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
     }
   },
   _type == "promoTileArray"=>{
@@ -214,8 +207,6 @@ _type == "keyNumbers" =>{
       },
       "designOptions": {
         ${background}
-        "utility": coalesce(background.key, ""),
-        "dark": coalesce(background.dark, false),
       },
     },
   },
@@ -240,8 +231,6 @@ _type == "keyNumbers" =>{
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
       height,
     },
   },
@@ -410,8 +399,6 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
     },
   },
   _type == "cookieDeclaration" => {
@@ -481,8 +468,6 @@ _type == "keyNumbers" =>{
     "id": _key,
     "designOptions": {
       ${background}
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
     },
   },
 
@@ -498,8 +483,6 @@ _type == "keyNumbers" =>{
       },
     "designOptions": {
       ${background}
-      "utility": coalesce(background.key, ""),
-      "dark": coalesce(background.dark, false),
     },
   },
 
@@ -536,9 +519,7 @@ _type == "keyNumbers" =>{
         ...,
       },
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
-      "utility": coalesce(background.key, ""),
-      "dark": coalesce(background.dark, false),
+      ${background}
     },
   },
 `

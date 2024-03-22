@@ -90,10 +90,6 @@ export default {
       },
     },
     {
-      name: 'design',
-      title: 'Design options',
-    },
-    {
       name: 'anchor',
       title: 'Additional anchor point reference (Deprecated)',
       description:
@@ -205,21 +201,17 @@ export default {
         return !(parent.action && parent?.action.length === 1)
       },
     },
-
+    {
+      title: 'Design options',
+      name: 'designOptions',
+      type: 'designOptions',
+    },
+    // Migrate to use designOptions color in staging/preprod/prod then remove
     {
       title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
+      description: 'Deprecated, use design options above ',
       name: 'background',
       type: 'colorlist',
-      fieldset: 'design',
-    },
-    {
-      title: 'More background options',
-      description:
-        'Use this option to add image background. Image background will be applied only when "Use special background" is enabled',
-      name: 'backgroundOption',
-      type: 'backgroundOption',
-      fieldset: 'design',
     },
   ].filter((e) => e),
   preview: {

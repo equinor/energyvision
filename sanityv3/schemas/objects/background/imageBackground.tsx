@@ -1,12 +1,16 @@
-import { defineType, defineField, Reference } from 'sanity'
+import { defineType, defineField, Image, ObjectDefinition } from 'sanity'
 import { RadioIconSelector } from '../../components'
 import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
-import { ImageWithAlt } from '../imageWithAlt'
 
 export type ColorType = {
   title: string
   value: string
 }
+
+export type ImageBackground = {
+  image: Image
+  contentAlignment?: string
+} & ObjectDefinition
 
 const contentAlignmentOptions = [
   { value: 'left', icon: ContentLeftImage },
@@ -22,14 +26,11 @@ export default defineType({
     defineField({
       title: 'Background Image',
       name: 'image',
-      type: 'imageWithAlt',
-      description: 'Alt text is always ignored even if provided, considering background image as decorative.',
-    }),
-    defineField({
-      title: 'Animation',
-      name: 'useAnimation',
-      type: 'boolean',
-      description: 'Animates content over the background image.',
+      type: 'image',
+      options: {
+        hotspot: true,
+        collapsed: false,
+      },
     }),
     defineField({
       name: 'contentAlignment',
@@ -56,21 +57,12 @@ export default defineType({
   preview: {
     select: {
       image: 'image',
-      useAnimation: 'useAnimation',
       contentAlignment: 'contentAlignment',
     },
-    prepare({
-      image,
-      useAnimation,
-      contentAlignment,
-    }: {
-      image: ImageWithAlt
-      useAnimation: boolean
-      contentAlignment: string
-    }) {
+    prepare({ image, contentAlignment }: { image: Image; contentAlignment: string }) {
       return {
         title: `Image background`,
-        subtitle: `${contentAlignment.toUpperCase() + ' aligned '} ${useAnimation ? ' | Animated ' : ''} content`,
+        subtitle: `${contentAlignment.toUpperCase() + ' aligned '} content`,
         media: image.asset,
       }
     },

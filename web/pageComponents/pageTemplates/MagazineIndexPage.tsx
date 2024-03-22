@@ -79,9 +79,9 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
       <main>
         <SharedBanner title={title} hero={hero} hideImageCaption={true} />
         {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
-          <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress.background }} />
+          <SharedTitle sharedTitle={title} background={ingress.background} />
         )}
-        <BackgroundContainer background={{ backgroundColor: ingress.background }}>
+        <BackgroundContainer background={ingress.background}>
           <Intro>
             {ingress && (
               <IngressWrapper>

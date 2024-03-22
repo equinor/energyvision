@@ -66,11 +66,7 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
     <>
       {getHero()}
       {figure?.image?.asset && !hideImageCaption && (
-        <StyledCaption
-          background={{ backgroundColor: captionBg }}
-          attribution={figure.attribution}
-          caption={figure.caption}
-        />
+        <StyledCaption background={captionBg} attribution={figure.attribution} caption={figure.caption} />
       )}
     </>
   )
