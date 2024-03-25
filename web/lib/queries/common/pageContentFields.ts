@@ -144,7 +144,6 @@ _type == "keyNumbers" =>{
     "designOptions": {
       ${background},
       "imagePosition": coalesce(imagePosition, 'right'),
-
     }
   },
   _type == "accordion" => {

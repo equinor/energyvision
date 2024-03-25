@@ -6,7 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
-import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -252,16 +252,12 @@ export type LandingPageSchema = {
   template: Templates
   seoAndSome: SeoData
 }
+export type ContentAlignmentTypes = 'left' | 'right' | 'center'
 
 export type ImageBackground = {
-  image: ImageWithAlt
+  image: ImageWithAlt | SanityImageObject | undefined
   useAnimation?: boolean
-  contentAlignment: 'left' | 'right' | 'center'
-}
-
-export type BackgroundOption = {
-  background?: ImageBackground
-  useSpecialBackground: boolean
+  contentAlignment: ContentAlignmentTypes
 }
 
 export type BackgroundColours =
@@ -277,13 +273,16 @@ export type BackgroundColours =
   | 'Mid Orange'
   | 'Slate Blue 95'
 
+export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
+
 export type DesignOptions = {
   background?: {
+    type?: BackgroundTypes
     backgroundColor?: BackgroundColours
+    backgroundImage?: ImageBackground
+    backgroundUtility?: keyof ColorKeyTokens
+    dark: boolean
   }
-  backgroundOption?: BackgroundOption
-  dark: boolean
-  utility: keyof typeof colorKeyToUtilityMap
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
 }
@@ -716,8 +715,6 @@ export type VideoControlsType = {
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   height?: number
-  utility: keyof typeof colorKeyToUtilityMap
-  dark: boolean
 }
 
 export type VideoPlayerData = {

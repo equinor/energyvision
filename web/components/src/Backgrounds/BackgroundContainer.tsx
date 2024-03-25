@@ -1,12 +1,16 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, BackgroundOption } from '../../../types/types'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/types'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
+import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
 
 export type BackgroundContainerProps = {
   background?: {
+    type?: BackgroundTypes
     backgroundColor?: BackgroundColours
-    backgroundOption?: BackgroundOption
+    backgroundImage?: ImageBackground
+    backgroundUtility?: keyof ColorKeyTokens
+    dark: boolean
   }
   /** Extended tailwind styling */
   twClassName?: string
@@ -16,23 +20,22 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   { background, style, children, className, twClassName = '', ...rest },
   ref,
 ) {
-  const useSpecialBackground = background?.backgroundOption?.useSpecialBackground || false
-  const backgroundImage = background?.backgroundOption?.background
-  const bgColor = background?.backgroundColor || 'White'
-
+  const { backgroundImage, type, ...restBackground } = background || {}
   return (
     <>
-      {useSpecialBackground && backgroundImage ? (
-        <ImageBackgroundContainer
-          image={backgroundImage.image}
-          useAnimation={backgroundImage.useAnimation}
-          contentAlignment={backgroundImage.contentAlignment}
-        >
+      {type === 'backgroundImage' && backgroundImage ? (
+        <ImageBackgroundContainer ref={ref} {...backgroundImage}>
           {children}
         </ImageBackgroundContainer>
       ) : (
-        <ColouredContainer background={bgColor} style={style} className={`${className} ${twClassName}`} {...rest}>
-          {children}{' '}
+        <ColouredContainer
+          ref={ref}
+          {...restBackground}
+          style={style}
+          className={`${className} ${twClassName}`}
+          {...rest}
+        >
+          {children}
         </ColouredContainer>
       )}
     </>

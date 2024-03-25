@@ -1,36 +1,49 @@
 import styled from 'styled-components'
 import { normal, inverted } from '../../../styles/themes'
-import { getColorOnContainer, getContainerColor, isInvertedStyle } from '../../utils/backgroundColours'
+import { getContainerColor, isInvertedStyle } from '../../utils/backgroundColours'
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { BackgroundColours } from '../../../types/types'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 type ColouredContainerProps = {
-  background?: BackgroundColours
+  backgroundColor?: BackgroundColours
+  backgroundUtility?: keyof ColorKeyTokens
+  dark?: boolean
 } & HTMLAttributes<HTMLDivElement>
+
 type ColourContainerProps = {
-  isInverted: boolean
+  $isInverted: boolean
+  $hasUtility: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 const ColourContainer = styled.div<ColourContainerProps>`
   container: size;
-  background-color: var(--background-color);
   color: var(--color-on-background);
-  ${({ isInverted }) => (isInverted ? inverted : normal)}
+  ${({ $isInverted }) => ($isInverted ? inverted : normal)}
+  ${({ $hasUtility }) => ($hasUtility ? '' : 'background-color: var(--background-color);')}
 `
 
 export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerProps>(function BackgroundContainer(
-  { background = 'White', style, children, className, ...rest },
+  { backgroundColor = 'White', backgroundUtility, dark, style, children, className, ...rest },
   ref,
 ) {
-  const styleVariant = getContainerColor(background)
-
-  const textColor = getColorOnContainer(background)
+  const styleVariant = getContainerColor(backgroundColor)
   const isInverted = isInvertedStyle(styleVariant)
+  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
+  const isDark =
+    dark || backgroundColor === 'Mid Blue' || backgroundColor === 'Slate Blue' || backgroundColor === 'Slate Blue 95'
+  const textColor = isDark ? '--inverted-text' : '--default-text'
 
   return (
     <ColourContainer
-      className={`${className ?? ''} background${styleVariant}`}
-      isInverted={isInverted}
+      className={twMerge(
+        `${className ?? ''} background${styleVariant} ${isDark ? 'dark' : ''} ${
+          backgroundUtility ? colorKeyToUtilityMap[backgroundUtility]?.background : ''
+        }`,
+      )}
+      $isInverted={isInverted}
+      $hasUtility={!!backgroundUtility}
       style={
         {
           ...style,

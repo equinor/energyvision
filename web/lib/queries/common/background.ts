@@ -1,12 +1,10 @@
 const background = /* groq */ `
 "background": {
-    "backgroundColor": coalesce(background.title, 'White'),
-     "backgroundOption": {
-      "useSpecialBackground": backgroundOption.useSpecialBackground,
-      "background": backgroundOption.background[0]
-     },
-      "dark": coalesce(background.dark, false),
-      "utility": coalesce(background.key, ""),
-  }
+    "type": coalesce(designOptions.background[0]._type, "backgroundColor"),
+    "backgroundColor": coalesce(designOptions.background[0].title, background.title, 'White'),
+    "backgroundUtility":coalesce(designOptions.background[0].key, background.key, ""),
+    "backgroundImage": coalesce(designOptions.background[0],""),
+    "dark": coalesce(designOptions.background[0].dark, background.dark, false),
+}
 `
 export default background

@@ -90,10 +90,6 @@ export default {
       },
     },
     {
-      name: 'design',
-      title: 'Design options',
-    },
-    {
       name: 'anchor',
       title: 'Additional anchor point reference (Deprecated)',
       description:
@@ -205,21 +201,9 @@ export default {
         return !(parent.action && parent?.action.length === 1)
       },
     },
-
     {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
-      fieldset: 'design',
-    },
-    {
-      title: 'More background options',
-      description:
-        'Use this option to add image background. Image background will be applied only when "Use special background" is enabled',
-      name: 'backgroundOption',
-      type: 'backgroundOption',
-      fieldset: 'design',
+      name: 'designOptions',
+      type: 'backgroundOptions',
     },
   ].filter((e) => e),
   preview: {

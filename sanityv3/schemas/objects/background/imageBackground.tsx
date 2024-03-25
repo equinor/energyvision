@@ -1,7 +1,7 @@
-import { defineType, defineField, Reference } from 'sanity'
+import { defineType, defineField, Image } from 'sanity'
 import { RadioIconSelector } from '../../components'
 import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
-import { ImageWithAlt } from '../imageWithAlt'
+import { capitalizeFirstLetter } from '../../../helpers/formatters'
 
 export type ColorType = {
   title: string
@@ -20,13 +20,16 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
-      title: 'Background Image',
+      title: 'Image',
       name: 'image',
-      type: 'imageWithAlt',
-      description: 'Alt text is always ignored even if provided, considering background image as decorative.',
+      type: 'image',
+      options: {
+        hotspot: true,
+        collapsed: false,
+      },
     }),
     defineField({
-      title: 'Animation',
+      title: 'Apply scroll animation',
       name: 'useAnimation',
       type: 'boolean',
       description: 'Animates content over the background image.',
@@ -59,18 +62,12 @@ export default defineType({
       useAnimation: 'useAnimation',
       contentAlignment: 'contentAlignment',
     },
-    prepare({
-      image,
-      useAnimation,
-      contentAlignment,
-    }: {
-      image: ImageWithAlt
-      useAnimation: boolean
-      contentAlignment: string
-    }) {
+    prepare({ image, useAnimation, contentAlignment }) {
       return {
         title: `Image background`,
-        subtitle: `${contentAlignment.toUpperCase() + ' aligned '} ${useAnimation ? ' | Animated ' : ''} content`,
+        subtitle: `${capitalizeFirstLetter(contentAlignment) + ' aligned '} ${
+          useAnimation ? ' | Animated ' : ''
+        } content`,
         media: image.asset,
       }
     },

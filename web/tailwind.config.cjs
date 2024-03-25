@@ -202,6 +202,29 @@ module.exports = {
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       },
+      keyframes: {
+        reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-out': {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        'zoom-in': {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(0.2)' },
+        },
+        fade: {
+          '0%, 100%': { opacity: '0' },
+          '20%, 80%': { opacity: '1' },
+        },
+      },
+      animation: {
+        'fade-in-out': 'linear fade both',
+        'fade-out': 'auto linear fade-out both',
+        'zoom-in': 'auto linear zoom-in both',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
