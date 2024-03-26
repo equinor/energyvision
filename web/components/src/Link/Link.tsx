@@ -3,7 +3,7 @@
 import { forwardRef, AnchorHTMLAttributes, CSSProperties } from 'react'
 import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
 import type { LinkType } from '../../../types/types'
 import { default as NextLink } from 'next/link'
@@ -15,7 +15,7 @@ link - color - hover
 arrow - color
 arrow - background - color
 */
-export const BaseLink = styled(NextLink)<{ $textDecoration?: string }>`
+export const sharedBaseLinkStyle = css<{ $textDecoration?: string }>`
   display: inline-flex;
   align-items: center;
   color: var(--link-color);
@@ -30,8 +30,15 @@ export const BaseLink = styled(NextLink)<{ $textDecoration?: string }>`
   }
 `
 
+export const BaseLink = styled(NextLink)<{ $textDecoration?: string }>`
+  ${sharedBaseLinkStyle}
+`
+const BaseExternalLink = styled.a<{ $textDecoration?: string }>`
+  ${sharedBaseLinkStyle}
+`
+
 // TODO: should part of this styling be moved to a list item instead?
-const ContentLink = styled(BaseLink)`
+const sharedContentLinkStyle = css`
   border-bottom: 0.5px solid var(--grey-40);
   text-decoration: none;
   padding: var(--space-small) 0;
@@ -49,8 +56,14 @@ const ContentLink = styled(BaseLink)`
     fill: var(--content-link-arrow-color-hover);
   }
 `
+const ContentLink = styled(BaseLink)`
+  ${sharedContentLinkStyle}
+`
+const ContentExternalLink = styled(BaseExternalLink)`
+  ${sharedContentLinkStyle}
+`
 
-const ReadMoreLink = styled(BaseLink)`
+const sharedReadMoreLinkStyle = css`
   display: inline-flex;
   max-width: max-content;
   color: var(--content-link-color);
@@ -85,6 +98,12 @@ const ReadMoreLink = styled(BaseLink)`
     width: 100%;
   }
 `
+const ReadMoreLink = styled(BaseLink)`
+  ${sharedReadMoreLinkStyle}
+`
+const ReadMoreExternalLink = styled(BaseExternalLink)`
+  ${sharedReadMoreLinkStyle}
+`
 
 const getIconData = (type: LinkType) => {
   switch (type) {
@@ -116,13 +135,21 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   ref,
 ) {
   if (variant === 'contentLink') {
-    return (
+    return type === 'externalUrl' ? (
+      <ContentExternalLink href={href} target="_blank" ref={ref} {...rest}>
+        {children} <Icon data={getIconData(type)} />
+      </ContentExternalLink>
+    ) : (
       <ContentLink href={href} prefetch={false} ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ContentLink>
     )
   } else if (variant === 'readMore') {
-    return (
+    return type === 'externalUrl' ? (
+      <ReadMoreExternalLink href={href} target="_blank" ref={ref} {...rest}>
+        {children} <Icon data={getIconData(type)} />
+      </ReadMoreExternalLink>
+    ) : (
       <ReadMoreLink href={href} prefetch={false} ref={ref} {...rest}>
         {children} <Icon data={getIconData(type)} />
       </ReadMoreLink>

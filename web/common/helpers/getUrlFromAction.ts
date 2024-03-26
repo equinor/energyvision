@@ -1,11 +1,20 @@
 import type { LinkData } from '../../types/types'
 
-export const getUrlFromAction = ({ link, href = '', type, fileName, anchorReference }: LinkData): string | false => {
-  if (!type && !href) return false
+export const getUrlFromAction = ({
+  link,
+  href = '',
+  type,
+  fileName,
+  anchorReference,
+}: LinkData): string | undefined => {
+  if (!type && !href) return undefined
 
   const anchor = anchorReference ? `#${anchorReference}` : ''
 
   if (type === 'internalUrl') {
+    if (!link?.slug) {
+      console.warn('Missing slug in action:', fileName)
+    }
     return link?.slug + anchor || ''
   }
 

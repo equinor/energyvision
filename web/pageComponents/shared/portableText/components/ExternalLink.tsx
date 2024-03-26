@@ -1,4 +1,4 @@
-import { Link } from '@components'
+import { Link } from '../../../../core/Link'
 
 interface DefaultLink {
   _type: 'link'
