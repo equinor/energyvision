@@ -207,11 +207,11 @@ module.exports = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        'fade-out': {
+        fadeOut: {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
         },
-        'zoom-in': {
+        zoomIn: {
           '0%': { transform: 'scale(0)' },
           '100%': { transform: 'scale(0.2)' },
         },
@@ -221,9 +221,9 @@ module.exports = {
         },
       },
       animation: {
-        'fade-in-out': 'linear fade both',
-        'fade-out': 'auto linear fade-out both',
-        'zoom-in': 'auto linear zoom-in both',
+        fadeInOut: 'fade linear both',
+        fadeOut: 'auto linear fadeOut both',
+        zoomIn: 'auto linear zoom-in both',
       },
       typography: (theme) => ({
         DEFAULT: {

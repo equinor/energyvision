@@ -6,42 +6,12 @@
 }
 
 @layer utilities {
-  .block-wrapper {
-    @apply grid;
-    grid-template-areas: 'col-1 col-2 col-3';
-    grid-template-columns: 4.2vw min(65ch, 100%) 4.2vw;
-  }
-  .block-wrapper > * {
-    grid-area: col-2;
-  }
-
-  @media (min-width: 750px) {
-    .block-wrapper {
-      @apply grid w-screen;
-      grid-template-areas: 'col-1 col-2 col-3 col-4 col-5';
-      grid-template-columns:
-        1fr
-        6.87vw
-        minmax(65ch, 920px)
-        6.87vw
-        1fr;
+  /* Scroll-Timeline Supported, Yay! */
+  @supports (animation-timeline: view()) {
+    .animate-timeline {
+      @apply animate-fadeInOut;
+      animation-timeline: view();
+      animation-range: entry 25% cover 85%;
     }
-    .pre-indent {
-      @apply w-full;
-      grid-column: 2 / 3;
-    }
-    .post-indent {
-      @apply w-full;
-      grid-column: 3 / 4;
-    }
-    .block-wrapper > * {
-      @apply w-full;
-      grid-area: col-3;
-    }
-  }
-
-  .full-bleed {
-    @apply w-full;
-    grid-column: 1 / -1;
   }
 }

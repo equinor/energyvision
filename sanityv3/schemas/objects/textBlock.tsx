@@ -205,6 +205,12 @@ export default {
       name: 'designOptions',
       type: 'backgroundOptions',
     },
+    {
+      title: 'Background (Deprecated)',
+      description: 'This field will be phased out over time. Please use Design options above. Default is white',
+      name: 'background',
+      type: 'colorlist',
+    },
   ].filter((e) => e),
   preview: {
     select: {

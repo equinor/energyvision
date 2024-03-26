@@ -255,7 +255,7 @@ export type LandingPageSchema = {
 export type ContentAlignmentTypes = 'left' | 'right' | 'center'
 
 export type ImageBackground = {
-  image: ImageWithAlt | SanityImageObject | undefined
+  image: ImageWithAlt | SanityImageObject
   useAnimation?: boolean
   contentAlignment: ContentAlignmentTypes
 }

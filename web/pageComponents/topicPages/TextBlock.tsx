@@ -43,7 +43,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
 
   return (
-    <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor}>
+    <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
       <StyledTextBlock className={`flex flex-col gap-6`}>
         {isBigText ? (
           title && <Heading value={title} as="h2" variant="2xl" />
