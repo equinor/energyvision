@@ -10,7 +10,7 @@ export type ReadMoreLinkProps = {
 } & BaseLinkProps
 
 /** Read more link style */
-export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(function Link(
+export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(function ReadMoreLink(
   { children, type = 'internalUrl', className = '', iconClassName = '', href = '', ...rest },
   ref,
 ) {

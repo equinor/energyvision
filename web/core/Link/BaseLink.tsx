@@ -1,10 +1,11 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
 import { default as NextLink } from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import { LinkType } from '../../types/types'
 
 export type BaseLinkProps = {
   /** What kind of content is it  */
-  type?: 'internalUrl' | 'externalUrl'
+  type?: LinkType
   /** The locale for the link, required for internal URLs */
   locale?: string
 } & AnchorHTMLAttributes<HTMLAnchorElement>

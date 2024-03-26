@@ -23,14 +23,12 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     className,
   )
 
-  return type === 'externalUrl' ? (
+  return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
       {children}
-      <Icon data={arrow_forward} className="inline-block" style={{ transform: 'rotate(-45deg)' }} />
-    </BaseLink>
-  ) : (
-    <BaseLink className={classNames} ref={ref} href={href} {...rest}>
-      {children}
+      {type === 'externalUrl' && (
+        <Icon data={arrow_forward} className="inline-block -rotate-45" style={{ all: 'revert-layer' }} />
+      )}
     </BaseLink>
   )
 })

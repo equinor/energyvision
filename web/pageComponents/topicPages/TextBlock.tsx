@@ -4,7 +4,8 @@ import IngressText from '../shared/portableText/IngressText'
 import Image, { Ratios } from '../shared/SanityImage'
 import styled from 'styled-components'
 import type { TextBlockData } from '../../types/types'
-import CallToActions from './CallToActions'
+//import CallToActions from './CallToActions'
+import CallToActions from '../../sections/CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
