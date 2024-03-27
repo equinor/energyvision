@@ -2,10 +2,11 @@ import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/types'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import { HLSPlayer } from '../../components/src/HLSPlayer'
+import { VideoJS } from '../../components/src/VideoJsPlayer'
 import dynamic from 'next/dynamic'
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
-  () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -51,7 +52,10 @@ const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+
+  video {
+    object-fit: cover;
+  }
 `
 
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
@@ -61,7 +65,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
     <BackgroundContainer background={background} id={anchor}>
       <Container $aspectRatio={aspectRatio} style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
         <StyledFigure>
-          <StyledHLSPlayer src={video.url} title={video.title} playsInline autoPlay muted loop />
+          <StyledHLSPlayer title={video.title} autoPlay muted loop src={video.url} />
         </StyledFigure>
       </Container>
     </BackgroundContainer>

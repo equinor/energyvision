@@ -3,11 +3,12 @@ import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
 import dynamic from 'next/dynamic'
+import { VideoJS } from '@components/VideoJsPlayer'
 
 const DEFAULT_MAX_WIDTH = 1920
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
-  () => import('../../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+  () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,

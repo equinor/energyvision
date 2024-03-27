@@ -14,9 +14,10 @@ import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
 import { HLSPlayer } from '../../components/src/HLSPlayer'
+import { VideoJS } from '@components/VideoJsPlayer'
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
-  () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -136,7 +137,6 @@ type HLSVideoComponentType = {
 
 export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVideoComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
-
   return (
     <StyledFigure
       $allowFullScreen={videoControls?.allowFullScreen || true}
@@ -148,6 +148,7 @@ export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVi
         title={video.title}
         poster={urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
+        aspectRatio={designOptions.aspectRatio}
         {...videoControls}
       />
     </StyledFigure>

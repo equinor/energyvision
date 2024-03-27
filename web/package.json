@@ -53,6 +53,8 @@
     "framer-motion": "^6",
     "friendly-challenge": "^0.9.6",
     "hls.js": "^1.4.0",
+    "video.js": "^8.10.0",
+    "@types/video,js": "^7.3.57",
     "html-entities": "^2.3.2",
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",
