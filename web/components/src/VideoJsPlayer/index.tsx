@@ -29,86 +29,73 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   loadingSpinner,
   ...rest
 }) => {
-  const videoRef = useRef<HTMLDivElement>(null)
-  const playerRef = useRef<Player | null>(null)
+  const [player, setPlayer] = useState<Player | null>(null)
   const [showPlayButton, setShowPlayButton] = useState(playButton)
   const [showControls, setShowControls] = useState(controls)
-
   const [isPlaying, setIsPlaying] = useState(autoPlay)
 
-  useVideojsAnalytics(playerRef, src, title)
-  console.log('New Video ')
+  const measuredRef = useCallback((node: any) => {
+    if (node !== null) {
+      if (player && !player.isDisposed()) {
+        console.log('Dispose ' + player.id())
+      } else setPlayer(getPlayer(node))
+    }
+  }, [])
 
   const handlePlayButton = useCallback(() => {
-    if (videoRef.current && playerRef.current) {
-      if (playerRef.current.paused()) {
-        //hlsRef.current.startLoad()
-        playerRef.current.play()
+    if (player) {
+      if (player.paused()) {
+        player.play()
         setShowPlayButton(false)
         setShowControls(true)
         setIsPlaying(true)
       } else {
-        playerRef.current.pause()
+        player.pause()
         setIsPlaying(false)
       }
     }
-  }, [])
+  }, [player])
+
+  const getPlayer = (node: Element) => {
+    const player = videojs(
+      node,
+      {
+        sources: [
+          {
+            src: src,
+            type: 'application/x-mpegURL',
+          },
+        ],
+        muted: muted ? 'muted' : false,
+        playsinline: playsInline,
+        autoplay: autoPlay,
+        preload: autoPlay ? 'auto' : 'none',
+        controls: showControls,
+        aspectRatio,
+        bigPlayButton: !controls,
+        controlbar: true,
+        loadingSpinner: !autoPlay,
+        ...rest,
+      },
+      () => {
+        onReady && onReady(player)
+      },
+    )
+
+    player.on(Hls.Events.ERROR, (error: MediaError) => {
+      console.log(error.message)
+    })
+    return player
+  }
 
   useEffect(() => {
-    if (!playerRef.current) {
-      const videoElement = document.createElement('video')
-      videoElement.classList.add('video-js')
-      videoElement.classList.add('vjs-fill')
-      videoRef?.current?.appendChild(videoElement)
-
-      const player = videojs(
-        videoElement,
-        {
-          sources: [
-            {
-              src: src,
-              type: 'application/x-mpegURL',
-            },
-          ],
-          muted: muted ? 'muted' : false,
-          playsinline: playsInline,
-          autoplay: autoPlay,
-          preload: autoPlay ? 'auto' : 'none',
-          controls,
-          aspectRatio,
-          bigPlayButton: !controls,
-          controlbar: true,
-          loadingSpinner: autoPlay,
-          ...rest,
-        },
-        () => {
-          onReady && onReady(player)
-        },
-      )
-      console.log('New player instance ')
-      playerRef.current = player
-    } else {
-      const player = playerRef.current
-      player.on(Hls.Events.ERROR, (error: MediaError) => {
-        console.log(error.message)
-      })
-    }
-  }, [videoRef])
-
-  useEffect(() => {
-    return () => {
-      const player = playerRef.current
-      if (player && !player.isDisposed()) {
-        console.log('Disposing player')
-        player.dispose()
-        playerRef.current = null
-      }
-    }
-  }, [playerRef])
+    player?.controls(showControls)
+  }, [player, showControls])
+  useVideojsAnalytics(player, src, title)
 
   return (
     <>
-      <div ref={videoRef} className="w-full h-full"></div>
+      <video ref={measuredRef} className="video-js vjs-fill"></video>
       {showPlayButton && (
         <button
           className="absolute inset-0 m-auto z-10 bg-transparent border-transparent cursor-pointer"

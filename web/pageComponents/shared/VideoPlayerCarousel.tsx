@@ -25,6 +25,7 @@ const HeadingWrapper = styled.div`
 const VideoItem = styled.div<{ $aspectRatio: string }>`
   height: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
   ${({ $aspectRatio }) => ($aspectRatio === VideoPlayerRatios['16:9'] ? { minWidth: '90%' } : { minWidth: 'auto' })};
 
@@ -53,6 +54,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
                 designOptions={designOptions}
                 videoControls={{
                   playButton: true,
+                  controls: true,
                 }}
               />
               <StyledHeading size="lg" level="h3" value={item.title} />

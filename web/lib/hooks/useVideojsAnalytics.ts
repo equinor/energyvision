@@ -20,7 +20,7 @@ type EventData = {
 }
 
 // Video Analytics Hook
-const useVideojsAnalytics = (playerRef: VideoPlayerRefType, src: string, title?: string): void => {
+const useVideojsAnalytics = (player: Player | null, src: string, title?: string): void => {
   const [allowAnalytics, setAllowAnalytics] = useState(false)
   useConsentState(
     'statistics',
@@ -43,12 +43,12 @@ const useVideojsAnalytics = (playerRef: VideoPlayerRefType, src: string, title?:
     [title, src],
   )
 
-  const player = playerRef.current
+  // const player = playerRef.current
   usePlayEvent(player, pushEventToDataLayer, allowAnalytics || true)
   usePauseEvent(player, pushEventToDataLayer, allowAnalytics || true)
   useCompletionEvent(player, pushEventToDataLayer, allowAnalytics || true)
   useCompletionEventForLoopingVideos(player, pushEventToDataLayer, allowAnalytics || true)
-  useVideoProgressEvent(playerRef.current, pushEventToDataLayer, allowAnalytics || true)
+  useVideoProgressEvent(player, pushEventToDataLayer, allowAnalytics || true)
 }
 
 const usePlayEvent = (
@@ -145,8 +145,8 @@ const useVideoProgressEvent = (
     if (!player) return
     const intervalId = setInterval(() => {
       var duration = player.duration()
+      if ((!allowAnalytics || duration) && !player) return
       var currentTime = player.currentTime()
-      if (!allowAnalytics || duration) return
       if (currentTime && duration) {
         const progress = (currentTime / duration) * 100
         GTM_PROGRESS_MILESTONES.forEach((milestone) => {

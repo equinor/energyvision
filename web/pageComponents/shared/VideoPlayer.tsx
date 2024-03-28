@@ -37,6 +37,7 @@ const Container = styled.div`
 
 const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
   margin: 0 auto;
+  position: relative;
   video::-webkit-media-controls-fullscreen-button {
     ${({ $allowFullScreen }) =>
       !$allowFullScreen && {
