@@ -14,7 +14,7 @@ type VideoJSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   videoDescription?: string
   aspectRatio?: string
   loadingSpinner?: boolean
-  onReady: (player: Player) => void
+  onReady?: (player: Player) => void
 }
 export const VideoJS: React.FC<VideoJSProps> = ({
   playButton,
@@ -27,6 +27,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   aspectRatio,
   onReady,
   loadingSpinner,
+  poster,
   ...rest
 }) => {
   const [player, setPlayer] = useState<Player | null>(null)
@@ -36,9 +37,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const measuredRef = useCallback((node: any) => {
     if (node !== null) {
-      if (player && !player.isDisposed()) {
-        console.log('Dispose ' + player.id())
-      } else setPlayer(getPlayer(node))
+      setPlayer(getPlayer(node))
     }
   }, [])
 
@@ -47,7 +46,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       if (player.paused()) {
         player.play()
         setShowPlayButton(false)
-        setShowControls(true)
+        setShowControls(true && controls)
         setIsPlaying(true)
       } else {
         player.pause()
@@ -75,6 +74,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
         bigPlayButton: !controls,
         controlbar: true,
         loadingSpinner: !autoPlay,
+
         ...rest,
       },
       () => {
@@ -89,13 +89,23 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   }
 
   useEffect(() => {
-    player?.controls(showControls)
-  }, [player, showControls])
+    playButton && setShowControls(false)
+  }, [playButton])
+
+  useEffect(() => {
+    return () => {
+      if (player && !player.isDisposed()) {
+        player.dispose()
+        setPlayer(null)
+      }
+    }
+  }, [player])
+
   useVideojsAnalytics(player, src, title)
 
   return (
     <>
-      <video ref={measuredRef} className="video-js vjs-fill"></video>
+      <video ref={measuredRef} className="video-js vjs-fill" poster={poster}></video>
       {showPlayButton && (
         <button
           className="absolute inset-0 m-auto z-10 bg-transparent border-transparent cursor-pointer"

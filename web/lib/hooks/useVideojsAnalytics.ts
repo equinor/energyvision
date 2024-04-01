@@ -1,6 +1,6 @@
 import useConsentState from './useConsentState'
 import { pushToDataLayer } from '../../lib/gtm'
-import { useEffect, useCallback, useState, RefObject } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import Player from 'video.js/dist/types/player'
 
 const GTM_PLAY_EVENT = 'video_play'
@@ -8,7 +8,6 @@ const GTM_PAUSE_EVENT = 'video_pause'
 const GTM_COMPLETION_EVENT = 'video_completion'
 const GTM_PROGRESS_MILESTONES = [25, 50, 75, 90] // Percentages
 
-type VideoPlayerRefType = RefObject<Player>
 type EventType = typeof GTM_PLAY_EVENT | typeof GTM_PAUSE_EVENT | typeof GTM_COMPLETION_EVENT | string
 
 type EventData = {
@@ -38,17 +37,15 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string)
         src,
       }
       pushToDataLayer('video_event', eventData)
-      console.log(eventData)
     },
     [title, src],
   )
 
-  // const player = playerRef.current
-  usePlayEvent(player, pushEventToDataLayer, allowAnalytics || true)
-  usePauseEvent(player, pushEventToDataLayer, allowAnalytics || true)
-  useCompletionEvent(player, pushEventToDataLayer, allowAnalytics || true)
-  useCompletionEventForLoopingVideos(player, pushEventToDataLayer, allowAnalytics || true)
-  useVideoProgressEvent(player, pushEventToDataLayer, allowAnalytics || true)
+  usePlayEvent(player, pushEventToDataLayer, allowAnalytics)
+  usePauseEvent(player, pushEventToDataLayer, allowAnalytics)
+  useCompletionEvent(player, pushEventToDataLayer, allowAnalytics)
+  useCompletionEventForLoopingVideos(player, pushEventToDataLayer, allowAnalytics)
+  useVideoProgressEvent(player, pushEventToDataLayer, allowAnalytics)
 }
 
 const usePlayEvent = (
