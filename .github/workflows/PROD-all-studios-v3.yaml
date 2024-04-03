@@ -219,7 +219,8 @@ jobs:
         id: get-token
         uses: ./.github/workflows/get-auth-token/
 
-      - name: Deploy website on Radix 🚀
+      # PRODUCTION CLUSTERS
+      - name: Deploy to Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@master
         with:

@@ -9,7 +9,6 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 
 const blockContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: true,
   h4: false,
@@ -17,7 +16,6 @@ const blockContentType = configureBlockContent({
 })
 
 const ingressContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,
@@ -25,7 +23,6 @@ const ingressContentType = configureBlockContent({
 })
 
 const blockContentTypeForBigText = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

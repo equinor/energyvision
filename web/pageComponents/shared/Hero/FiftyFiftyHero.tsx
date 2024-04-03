@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import Image from '../SanityImage'
-import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import type { LinkData, HeroType } from '../../../types/types'
-import { BackgroundContainer, Link, Text } from '@components'
-import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../../lib/localization'
+import type { HeroType } from '../../../types/types'
+import { BackgroundContainer, Text } from '@components'
+import ReadMoreLink from '../ReadMoreLink'
+import RichText from '../portableText/RichText'
+import Blocks from '../portableText/Blocks'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -58,28 +58,6 @@ const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }
   font-weight: ${(props) => (props.$isBigTitle ? 'var(--fontWeight-regular)' : 'var(--fontWeight-medium)')};
 `
 
-const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
-  const { label, ariaLabel, extension, type } = action
-  const url = getUrlFromAction(action)
-  if (!url) {
-    console.warn(`Missing URL on Action link with type: '${type}' and label: '${label}'`)
-    return null
-  }
-  if (action.type === 'internalUrl') {
-    const linkLocale = getLocaleFromName(action.link?.lang)
-    return (
-      <Link href={url} locale={linkLocale} variant="readMore" aria-label={ariaLabel} {...rest}>
-        {action.label}
-      </Link>
-    )
-  }
-  return (
-    <Link variant="regular" href={url} type={action.type} aria-label={ariaLabel}>
-      {action.label} {extension && `(${extension.toUpperCase()})`}
-    </Link>
-  )
-}
-
 export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
   return (
     <>
@@ -102,21 +80,12 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
           )}
           {ingress && !isBigTitle && (
             <StyledIngress>
-              <IngressText
-                value={ingress}
-                components={{
-                  block: {
-                    normal: ({ children }) => {
-                      // eslint-disable-next-line
-                      // @ts-ignore: Still struggling with the types here :/
-                      return <Text size="regular">{children}</Text>
-                    },
-                  },
-                }}
-              />
+              <Blocks value={ingress} />
             </StyledIngress>
           )}
-          {link && !isBigTitle && <HeroActionLink action={link} />}
+          {link && !isBigTitle && (
+            <ReadMoreLink action={link} variant={link.type === 'internalUrl' ? 'readMore' : 'regular'} />
+          )}
         </StyledContent>
       </StyledHero>
     </>

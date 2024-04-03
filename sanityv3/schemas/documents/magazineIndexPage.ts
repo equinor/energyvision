@@ -9,7 +9,6 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import { lang } from './langField'
 
 const textContentType = configureBlockContent({
-  h1: false,
   h2: true,
   h3: true,
   h4: false,

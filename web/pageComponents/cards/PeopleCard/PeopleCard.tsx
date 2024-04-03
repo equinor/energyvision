@@ -132,7 +132,6 @@ const StyledMedia = styled(Media)`
 const CardContent = styled.div`
   height: 100%;
   display: flex;
-  max-width: 250px;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;

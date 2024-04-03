@@ -2,12 +2,12 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import Image, { Ratios } from '../../shared/SanityImage'
 import IngressText from '../../shared/portableText/IngressText'
-import TitleText from '../../shared/portableText/TitleText'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 
 import type { AccordionData, AccordionListData } from '../../../types/types'
 import { toPlainText } from '@portabletext/react'
+import { Heading } from '../../../core/Typography'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -23,16 +23,8 @@ const StyledTextBlock = styled.section`
   margin-right: auto;
 `
 
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-`
 const Img = styled(Image)`
   border-radius: 50%;
-`
-
-const ImgContainer = styled.div`
-  padding: 0 0 var(--space-large) 0;
-  width: 200px;
 `
 
 type AccordionBlockProps = {
@@ -51,17 +43,17 @@ const buildJsonLdElements = (data: AccordionListData[]) => {
 
 const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
   const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
-  const { background } = designOptions
+  const { background, dark } = designOptions
   return (
     <>
       <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
-        <StyledTextBlock>
+        <StyledTextBlock className={`${dark ? 'dark' : ''} flex flex-col gap-6`}>
           {image?.asset && (
-            <ImgContainer>
+            <div className="w-[200px]">
               <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
-            </ImgContainer>
+            </div>
           )}
-          {title && <StyledHeading value={title} />}
+          {title && <Heading value={title} as="h2" variant="xl" className="mb-2" />}
           {ingress && <IngressText value={ingress} />}
           {accordion && accordion.length > 0 && (
             <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />

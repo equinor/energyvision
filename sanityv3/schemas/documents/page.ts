@@ -1,5 +1,5 @@
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
+import { defaultColors } from '../defaultColors'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
@@ -50,6 +50,7 @@ export default {
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
+        { type: 'cardsList' },
         { type: 'figure' },
         { type: 'fullWidthImage' },
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },

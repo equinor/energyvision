@@ -18,7 +18,6 @@ export type Accordion = {
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

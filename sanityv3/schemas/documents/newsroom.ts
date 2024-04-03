@@ -9,12 +9,11 @@ import { lang } from './langField'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
-  h1: false,
   h2: true,
   h3: false,
   h4: false,
   externalLink: false,
-  internalLink: false,
+  internalLink: true,
   lists: false,
   attachment: false,
 })

@@ -69,16 +69,19 @@ Custom500.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.locale, preview = false }) => {
   const lang = getNameFromLocale(locale)
   const queryParams = {
     lang,
   }
 
-  const { menuData, pageData, footerData } = await getComponentsData({
-    query: internalServerErrorQuery,
-    queryParams,
-  })
+  const { menuData, pageData, footerData } = await getComponentsData(
+    {
+      query: internalServerErrorQuery,
+      queryParams,
+    },
+    preview,
+  )
 
   const intl = await getIntl(locale, false)
 
