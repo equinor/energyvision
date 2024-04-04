@@ -24,7 +24,7 @@ const iframeSrcs = [
   'https://platform.twitter.com',
   'https://syndication.twitter.com',
   'https://vds.issgovernance.com',
-  'https://eac.plaii.no',
+  'https://*.plaii.no',
   'https://livestream.com',
   'https://*.castr.com',
   'https://pixel.as',
