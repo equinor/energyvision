@@ -6,7 +6,6 @@ import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
-import { twMerge } from 'tailwind-merge'
 
 const Promotion = ({
   data,
@@ -22,7 +21,7 @@ const Promotion = ({
   const variant = data.content?.type
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <div className={twMerge(`pb-12 max-w-viewport`)} {...rest}>
+      <div className={`pb-12 max-w-viewport`} {...rest}>
         <header className="px-layout-lg">
           {title && <TitleText className="text-left mb-8" value={title} level="h2" size="xl" />}
           {ingress && (

@@ -16,7 +16,6 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
-import { twMerge } from 'tailwind-merge'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -152,13 +151,13 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           </Header>
           {(ingress || content) && (
             <div
-              className={twMerge(`
+              className={`
              mt-16
              ${iframe ? '' : 'pb-16'}
              px-0 
              md:px-8
              lg:px-0
-             `)}
+             `}
             >
               {ingress && (
                 <LeadParagraph>
@@ -175,7 +174,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
-              className={twMerge(`pb-16`)}
+              className={`pb-16`}
               data={{
                 id: 'promotedPeople',
                 type: 'people',
@@ -189,13 +188,13 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent
               data={relatedLinks}
-              className={twMerge(`
+              className={`
                   px-layout-lg
                   max-w-viewport
                   mx-auto
                   my-3xl
                   ${iframe ? 'mt-0' : ''}
-                  `)}
+                  `}
             />
           )}
         </EventLayout>
