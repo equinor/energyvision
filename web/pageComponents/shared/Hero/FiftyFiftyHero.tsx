@@ -5,6 +5,7 @@ import type { HeroType } from '../../../types/types'
 import { BackgroundContainer, Text } from '@components'
 import ReadMoreLink from '../ReadMoreLink'
 import RichText from '../portableText/RichText'
+import Blocks from '../portableText/Blocks'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -79,7 +80,7 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
           )}
           {ingress && !isBigTitle && (
             <StyledIngress>
-              <RichText value={ingress} />
+              <Blocks value={ingress} />
             </StyledIngress>
           )}
           {link && !isBigTitle && (

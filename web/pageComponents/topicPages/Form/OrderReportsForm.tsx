@@ -82,7 +82,10 @@ const OrderReportsForm = () => {
       <>
         <li>
           <Checkbox
-            label="Annual Report and Form 20-F (English version)"
+            label={intl.formatMessage({
+              id: 'order_reports_checkbox_option_annualReport_label',
+              defaultMessage: 'Annual report (english version)',
+            })}
             value="annualReport"
             aria-invalid={errors.reports ? 'true' : 'false'}
             aria-describedby="atleast-one-report-required"
@@ -94,7 +97,10 @@ const OrderReportsForm = () => {
         </li>
         <li>
           <Checkbox
-            label="Årsrapport for norske myndigheter (Norwegian version)"
+            label={intl.formatMessage({
+              id: 'order_reports_checkbox_option_statutoryReport_label',
+              defaultMessage: 'Annual report (norwegian version)',
+            })}
             value="statutoryReport"
             aria-invalid={errors.reports ? 'true' : 'false'}
             aria-describedby="atleast-one-report-required"
@@ -212,7 +218,7 @@ const OrderReportsForm = () => {
                 {...props}
                 id={props.name}
                 label={intl.formatMessage({
-                  id: ' order_reports_form_email',
+                  id: 'order_reports_form_email',
                   defaultMessage: 'Email',
                 })}
                 inputRef={ref}
@@ -262,7 +268,7 @@ const OrderReportsForm = () => {
                 {...props}
                 id={props.name}
                 label={intl.formatMessage({
-                  id: ' order_reports_form_address',
+                  id: 'order_reports_form_address',
                   defaultMessage: 'Address',
                 })}
                 inputRef={ref}
@@ -288,7 +294,7 @@ const OrderReportsForm = () => {
                 {...props}
                 id={props.name}
                 label={intl.formatMessage({
-                  id: ' order_reports_form_zipcode',
+                  id: 'order_reports_form_zipcode',
                   defaultMessage: 'Post number/Zip code',
                 })}
                 inputRef={ref}

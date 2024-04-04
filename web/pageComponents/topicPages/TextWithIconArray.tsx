@@ -40,11 +40,14 @@ const getImgSrc = (img: ImageWithAlt): string => urlFor(img).size(150, 150).auto
 
 const TextWithIconArray = ({ data, anchor }: TextWithIconArrayProps) => {
   const { designOptions, group } = data
+  const { background, dark } = designOptions
+  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
+  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
 
   if (!group) return null
 
   return (
-    <BackgroundContainer background={designOptions?.background} id={anchor}>
+    <BackgroundContainer background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
       <Container items={group.length}>
         {group.map((item: TextWithIconItem) => {
           const { icon, title, text, id } = item
