@@ -21,7 +21,7 @@ const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
   border: 1px solid var(--card-hairline-soft-color);
   padding: 15px;
   border-radius: 50%;
-  color: ${({ fillColor }) => (fillColor ? fillColor : 'black')};
+  color: ${({ fillColor }) => fillColor || 'black'};
 `
 
 export type ThemeSelectorValue = {
