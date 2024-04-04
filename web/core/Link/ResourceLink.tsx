@@ -1,9 +1,8 @@
 import { forwardRef } from 'react'
-import { Icon } from '@equinor/eds-core-react'
-import { arrow_forward } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { LinkType } from '../../types/types'
+import { ArrowRight } from '../../icons'
 
 export type ResourceLinkProps = {
   /** Overriding styles for the icon  */
@@ -17,20 +16,36 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   { children, type = 'internalUrl', className = '', iconClassName = '', href = '', ...rest },
   ref,
 ) {
+  const afterHoverBorderBottom = `
+  after:content-['']
+  after:absolute
+  after:-bottom-[-0.5px]
+  after:left-0
+  after:sp
+  after:w-[0%]
+  after:transition-all
+  after:h-[0.5px]
+  after:bg-grey-40
+  dark:after:bg-white-100
+  after:duration-300
+  hover:after:w-full
+  `
   const classNames = twMerge(
     `
     group
-    grid
-    grid-cols-[auto_1fr]
-    align-baseline
+    relative
+    flex
+    flex-col
     w-full
     text-slate-blue-95
+    dark:text-white-100
     py-5
     pr-2
-    border-b-[0.5px]
+    border-b
     border-grey-40
+    dark:border-white-100
     no-underline
-    hover:border-b
+    ${afterHoverBorderBottom}
   `,
     className,
   )
@@ -45,9 +60,9 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const iconClassNames = twMerge(
     `
     text-energy-red-100
-    ${iconRotation[type] ?? ''}
     dark:text-white-100
     justify-self-end
+    ${iconRotation[type]}
     ${
       type === 'downloadableFile' || type === 'downloadableImage'
         ? 'group-hover:translate-y-2'
@@ -61,9 +76,10 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
-      {children}
-
-      <Icon data={arrow_forward} className={iconClassNames} style={{ all: 'revert-layer' }} />
+      <span className="grid grid-cols-[auto_1fr] align-baseline">
+        {children}
+        <ArrowRight className={iconClassNames} />
+      </span>
     </BaseLink>
   )
 })

@@ -1,3 +1,18 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer utilities {
+  .box-shadow-crisp {
+    box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.32),
+      0.8px 1.6px 2px -0.8px hsl(var(--tw-shadow-color) / 0.32),
+      1.9px 3.9px 4.9px -1.7px hsl(var(--tw-shadow-color) / 0.32),
+      4.7px 9.5px 11.9px -2.5px hsl(var(--tw-shadow-color) / 0.32);
+  }
+  .box-shadow-crisp-interact {
+    box-shadow: 0.3px 0.5px 0.6px hsl(var(--tw-shadow-color) / 0.51),
+      0.7px 1.3px 1.4px -1.2px hsl(var(--tw-shadow-color) / 0.43),
+      1.9px 3.8px 4.1px -2.3px hsl(var(--tw-shadow-color) / 0.36),
+      5px 10px 10.9px -3.5px hsl(var(--tw-shadow-color) / 0.29);
+  }
+}

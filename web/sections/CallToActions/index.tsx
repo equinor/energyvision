@@ -1,5 +1,5 @@
-import List from '../../core/List'
-import { ResourceLink, ButtonLink } from '../../core/Link'
+import { List } from '@core/List'
+import { ResourceLink, ButtonLink } from '@core/Link'
 import type { LinkData } from '../../types/types'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
@@ -19,11 +19,11 @@ const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList }: C
     if (!url) {
       console.warn(`CallToActions: Missing URL on 'ButtonLink' link with type: '${type}' and label: '${label}'`)
     }
-    return (
+    return url ? (
       <ButtonLink {...(type === 'internalUrl' && { locale: getLocaleFromName(link?.lang) })} href={url} type={type}>
         {`${label} ${extension ? `(${extension.toUpperCase()})` : ''}`}
       </ButtonLink>
-    )
+    ) : null
   }
   // If we have only one link and the publisher has not made an active choice of overriding the style
   // in Sanity the default style is a button style
@@ -32,18 +32,19 @@ const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList }: C
   ) : (
     <List split={splitList} className="list-none">
       {callToActions.map((callToAction: LinkData) => {
-        return (
+        const url = getUrlFromAction(callToAction)
+        return url ? (
           <List.Item key={callToAction.id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             <ResourceLink
-              href={getUrlFromAction(callToAction)}
+              href={url}
               {...(callToAction.link?.lang && { locale: getLocaleFromName(callToAction.link?.lang) })}
               type={callToAction.type}
             >
               {`${callToAction?.label} ${callToAction?.extension ? `(${callToAction?.extension.toUpperCase()})` : ''}`}
             </ResourceLink>
           </List.Item>
-        )
+        ) : null
       })}
     </List>
   )

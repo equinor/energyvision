@@ -13,8 +13,13 @@ import MultipleEventCards from './MultipleEventCards'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import Card from '@sections/cards/Card'
+import { Ratios } from '../../../pageComponents/shared/SanityImage'
+import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
+import { FormattedDate } from '@components/FormattedDateTime'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
-const CardsWrapper = styled.div`
+const CardsWrapper = styled.ul`
   width: 100%;
   max-width: calc(var(--card-maxWidth) * 3 + var(--space-large) * 2);
   padding: 0 var(--space-xxLarge);
@@ -85,6 +90,30 @@ const CardWrapper = styled.div`
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
+const TWNewsCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) => {
+  const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
+
+  return (
+    <Card
+      href={slug}
+      {...(heroImage && {
+        imageUrl: image.src,
+      })}
+      className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
+    >
+      <Card.Content>
+        <Card.Header
+          title={title as string}
+          {...(publishDateTime && {
+            eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
+          })}
+        />
+        {ingress && <Blocks value={ingress} className="line-clamp-5 grow" />}
+      </Card.Content>
+    </Card>
+  )
+}
+
 const MultiplePromotions = ({
   data,
   variant,
@@ -102,11 +131,10 @@ const MultiplePromotions = ({
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return (
-          <StyledBackground key={data.id}>
+        return <TWNewsCard key={data.id} {...data} />
+      /*           <StyledBackground key={data.id}>
             <StyledNewsCard data={data as CardData} key={data.id} />
-          </StyledBackground>
-        )
+          </StyledBackground> */
       case 'topics':
       case 'magazine':
         return (

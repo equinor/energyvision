@@ -19,6 +19,7 @@ module.exports = {
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
+    './icons/**/*.{js,ts,tsx}',
   ],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
@@ -66,6 +67,15 @@ module.exports = {
           60: 'hsl(206, 9%, 84%)',
           50: 'hsl(210, 8%, 90%)',
         },
+        navy: {
+          40: '#C2DAEB',
+          50: '#A8C3DB',
+          60: '#7294BB',
+          70: '#49709C',
+          80: '#2A4D74',
+          90: '#234057',
+          100: '#243746',
+        },
         'mist-blue': {
           100: colors['mist-blue'][100],
           60: 'hsl(200, 56%, 94%)',
@@ -90,6 +100,15 @@ module.exports = {
           80: 'hsl(0, 85%, 78%)',
           70: 'hsl(0, 86%, 86%)',
           60: 'hsl(0, 88%, 94%)',
+        },
+        teal: {
+          40: '#C3E4CE',
+          50: '#AAD5BB',
+          60: '#85B7A5',
+          70: '#63A893',
+          80: '#458C83',
+          90: '#0E7C78',
+          100: '#007079',
         },
         slate: {
           //--default-text
@@ -147,7 +166,7 @@ module.exports = {
       boxShadowColor: {
         'moss-green-50': '190deg 9% 67%',
         'moss-green-50-interact': '190deg 9% 60%',
-        'white-100': '0deg 0% 70%',
+        'white-100': '0deg 0% 66%',
         'white-100-interact': '0deg 0% 63%',
         'blue-50': '212deg 40% 29%',
         'blue-50-interact': '212deg 40% 25%',
@@ -224,19 +243,9 @@ module.exports = {
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       },
       //https://www.joshwcomeau.com/css/designing-shadows/
-      boxShadow: {
-        default: `
-        0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.4),
-        0.6px 1.2px 1.3px -1.2px hsl(var(--shadow-color) / 0.34),
-        1.7px 3.4px 3.7px -2.3px hsl(var(--shadow-color) / 0.29),
-        4.5px 9px 9.8px -3.5px hsl(var(--shadow-color) / 0.23)
-        `,
-        'default-interact': `
-        0.3px 0.5px 0.6px hsl(var(--shadow-color) / 0.51),
-        0.7px 1.3px 1.4px -1.2px hsl(var(--shadow-color) / 0.43),
-        1.9px 3.8px 4.1px -2.3px hsl(var(--shadow-color) / 0.36),
-        5px 10px 10.9px -3.5px hsl(var(--shadow-color) / 0.29)
-        `,
+      boxShadow: {},
+      aspectRatio: {
+        '4/5': '0.8',
       },
       typography: (theme) => ({
         DEFAULT: {

@@ -27,15 +27,16 @@ export const getVariant = (variant: Variants): string => {
       border
       border-slate-blue-95
       text-slate-80
-      hover:bg-slate-blue-100
+      hover:bg-navy-90
       hover:text-white-100
+      focus-visible:outline-slate-blue-95
       `
     case 'contained':
     default:
-      return `bg-moss-green-100 
+      return `bg-teal-100 
       text-white-100 
-      hover:moss-green-50 
-      hover:text-slate-80
+      hover:bg-teal-90
+      focus-visible:outline-teal-100
       dark:bg-white-100
       dark:hover:bg-white-100/80
       dark:text-slate-80

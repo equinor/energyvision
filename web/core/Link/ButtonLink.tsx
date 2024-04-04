@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { LinkType } from '../../types/types'
-import { ButtonProps, commonButtonStyling, getVariant } from '../Button/Button'
+import { ButtonProps, commonButtonStyling, getVariant } from '../Button'
 
 export type ButtonLinkProps = {
   /** What kind of content is it  */
@@ -12,7 +12,7 @@ export type ButtonLinkProps = {
 
 /** Read more link style */
 export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
-  { children, type = 'internalUrl', variant = 'outlined', className = '', href = '', ...rest },
+  { children, type = 'internalUrl', variant = 'contained', className = '', href = '', ...rest },
   ref,
 ) {
   const classNames = twMerge(commonButtonStyling, getVariant(variant), className)

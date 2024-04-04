@@ -1,8 +1,7 @@
 import { forwardRef } from 'react'
-import { Icon } from '@equinor/eds-core-react'
-import { arrow_forward } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
+import { ArrowRight } from '../../icons'
 
 export type ReadMoreLinkProps = {
   /** Overriding styles for the icon  */
@@ -34,6 +33,7 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   after:left-0
   after:border-b
   after:border-slate-80
+  dark:after:border-white-100
   after:w-[0%]
   after:transition-all
   after:duration-300
@@ -55,7 +55,7 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
       <span className={contentClassNames}>{children}</span>
-      <Icon data={arrow_forward} className={iconClassNames} />
+      <ArrowRight className={iconClassNames} />
     </BaseLink>
   )
 })
