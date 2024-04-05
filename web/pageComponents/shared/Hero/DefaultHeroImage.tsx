@@ -14,7 +14,7 @@ const StyledFigure = styled.figure`
 const DefaulHeroImage = ({ data }: HeroImageProps) => {
   const { image, caption, attribution } = data
   return (
-    <StyledFigure>
+    <figure>
       <Image
         maxWidth={1420}
         aspectRatio={Ratios.ONE_TO_TWO}
@@ -32,7 +32,7 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
         priority
       />
       <Caption caption={caption} attribution={attribution} />
-    </StyledFigure>
+    </figure>
   )
 }
 

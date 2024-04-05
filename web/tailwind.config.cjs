@@ -189,6 +189,7 @@ module.exports = {
         //--lineHeight-2
         earthy: 1.2,
         //--lineHeight-2_5
+        misty: 1.25,
         cloudy: 1.35,
         //-lineHeight-3
         planetary: 1.5,
