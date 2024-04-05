@@ -60,7 +60,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
     <BackgroundContainer background={background} id={anchor}>
       <Container $aspectRatio={aspectRatio} style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
         <StyledFigure>
-          <StyledPlayer title={video.title} autoPlay muted loop src={video.url} />
+          <StyledPlayer title={video.title} autoPlay muted loop src={video.url} playsInline />
         </StyledFigure>
       </Container>
     </BackgroundContainer>
