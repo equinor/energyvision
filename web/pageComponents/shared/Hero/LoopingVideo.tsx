@@ -1,4 +1,3 @@
-import { HLSPlayer } from '../../../components/src/HLSPlayer'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
@@ -7,7 +6,7 @@ import { VideoJS } from '@components/VideoJsPlayer'
 
 const DEFAULT_MAX_WIDTH = 1920
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
@@ -37,7 +36,7 @@ const StyledFigure = styled.figure`
   position: absolute;
 `
 
-const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
+const StyledPlayer = styled(DynamicVideoJsComponent)`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -50,7 +49,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   return (
     <Container $aspectRatio={ratio}>
       <StyledFigure>
-        <StyledHLSPlayer
+        <StyledPlayer
           loop
           muted
           autoPlay

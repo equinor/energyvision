@@ -13,10 +13,9 @@ import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
-import { HLSPlayer } from '../../components/src/HLSPlayer'
 import { VideoJS } from '@components/VideoJsPlayer'
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
@@ -96,7 +95,7 @@ const ButtonWrapper = styled.div`
   margin-bottom: var(--space-xLarge);
 `
 
-const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
+const StyledPlayer = styled(DynamicVideoJsComponent)`
   object-fit: cover;
   width: inherit;
 
@@ -130,13 +129,13 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   }
 }
 
-type HLSVideoComponentType = {
+type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
 }
 
-export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVideoComponentType) => {
+export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
   return (
     <StyledFigure
@@ -144,7 +143,7 @@ export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVi
       $aspectRatio={designOptions.aspectRatio}
       $height={designOptions.height}
     >
-      <StyledHLSPlayer
+      <StyledPlayer
         src={video.url}
         title={video.title}
         poster={urlFor(video.thumbnail).width(w).height(h).url()}
@@ -176,7 +175,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
             <ButtonLink action={action} />
           </ButtonWrapper>
         )}
-        <HLSVideoComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
       </Container>
     </BackgroundContainer>
   )

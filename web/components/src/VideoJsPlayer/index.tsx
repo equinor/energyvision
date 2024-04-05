@@ -4,7 +4,6 @@ import Player from 'video.js/dist/types/player'
 import 'video.js/dist/video-js.css'
 import { play_circle, pause_circle, play } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
-import Hls from 'hls.js'
 import MediaError from 'video.js/dist/types/media-error'
 import useVideojsAnalytics from '../../../lib/hooks/useVideojsAnalytics'
 
@@ -82,7 +81,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       },
     )
 
-    player.on(Hls.Events.ERROR, (error: MediaError) => {
+    player.on('error', (error: MediaError) => {
       console.log(error.message)
     })
     return player

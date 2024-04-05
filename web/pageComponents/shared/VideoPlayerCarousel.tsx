@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
-import { HLSVideoComponent } from './VideoPlayer'
+import { VideoJsComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
 
 const StyledHeading = styled(TitleText)`
@@ -49,7 +49,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
         <Carousel>
           {items.map((item) => (
             <VideoItem key={item.id} $aspectRatio={aspectRatio}>
-              <HLSVideoComponent
+              <VideoJsComponent
                 video={item.video}
                 designOptions={designOptions}
                 videoControls={{

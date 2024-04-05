@@ -101,9 +101,6 @@ dependencies:
   friendly-challenge:
     specifier: ^0.9.6
     version: 0.9.6
-  hls.js:
-    specifier: ^1.4.0
-    version: 1.4.0
   html-entities:
     specifier: ^2.3.2
     version: 2.3.2
@@ -11901,10 +11898,6 @@ packages:
     resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
     dependencies:
       '@babel/runtime': 7.23.9
-    dev: false
-
-  /hls.js@1.4.0:
-    resolution: {integrity: sha512-VEjg7Rx5FlE9TB3MIn0HPgq3J+vR7EoQnjaqMCk/ISEaCOSZlAFh4g867f1QkSxZiq9kHeUZo+iH16X7VS3jKA==}
     dev: false
 
   /hogan.js@3.0.2:
