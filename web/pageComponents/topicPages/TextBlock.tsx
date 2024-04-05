@@ -6,19 +6,13 @@ import styled from 'styled-components'
 import type { TextBlockData } from '../../types/types'
 import CallToActions from './CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
     id && {
       scrollMarginTop: 'var(--topbar-height)',
     }}
-`
-
-const StyledTextBlock = styled.section`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
 `
 
 type TextBlockProps = {
@@ -42,9 +36,32 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
 
+  const contentClassNames = `max-w-viewport py-14 px-layout-lg mx-auto`
+
+  const contentAlignment = {
+    center: 'items-start text-start px-layout-lg',
+    right: 'xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto pr-layout-sm ',
+    left: 'xl:items-start xl:text-start xl:max-w-[45dvw] xl:mr-auto pl-layout-sm',
+  }
+  let backgroundImageContentClassNames = `
+  justify-center
+  py-14
+  `
+  if (designOptions?.background?.backgroundImage?.contentAlignment) {
+    backgroundImageContentClassNames = twMerge(
+      backgroundImageContentClassNames,
+      `
+    ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
+    )
+  }
+
   return (
     <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
-      <StyledTextBlock className={`flex flex-col gap-6`}>
+      <div
+        className={`flex flex-col gap-6 ${
+          designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
+        }`}
+      >
         {isBigText ? (
           title && <Heading value={title} as="h2" variant="2xl" />
         ) : (
@@ -74,7 +91,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
             splitList={splitList}
           />
         )}
-      </StyledTextBlock>
+      </div>
     </StyledTextBlockWrapper>
   )
 }

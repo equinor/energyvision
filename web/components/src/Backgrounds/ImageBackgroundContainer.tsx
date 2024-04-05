@@ -8,24 +8,11 @@ const DEFAULT_MAX_WIDTH = 1920
 
 export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgroundContainerProps>(
   function ImageBackgroundContainer(
-    { image, useAnimation = false, contentAlignment = 'center', children, className, ...rest },
+    { image, useAnimation = false, contentAlignment = 'center', children, className },
     ref,
   ) {
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
     const src = props?.src
-
-    const contentAlignments = {
-      center: 'justify-center',
-      right: 'justify-start',
-      left: 'justify-end',
-    }
-
-    const contentClassNames = `
-    flex
-    justify-center
-    items-center
-    lg:${contentAlignments[contentAlignment]}
-    `
 
     const backgroundClassNames = twMerge(
       `[container:inline-size]
@@ -35,7 +22,6 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       bg-center
       bg-no-repeat
       bg-cover
-      ${contentClassNames}
     `,
       className,
     )
@@ -43,7 +29,6 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     return useAnimation ? (
       <section
         ref={ref}
-        {...rest}
         className={backgroundClassNames}
         style={
           {
@@ -57,7 +42,15 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
           className={`
           py-40 
           lg:py-[33dvh]
-          bg-[linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))]
+          ${
+            contentAlignment !== 'center'
+              ? `${
+                  contentAlignment === 'right'
+                    ? 'bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
+                    : 'bg-[linear-gradient(to_left,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
+                }`
+              : `bg-[linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))]`
+          }
           animate-timeline
       `}
         >
@@ -67,12 +60,18 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     ) : (
       <section
         ref={ref}
-        {...rest}
         className={backgroundClassNames}
         style={{
           backgroundImage: `
-        linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
-        url(${src})`,
+          ${
+            contentAlignment !== 'center'
+              ? `${
+                  contentAlignment === 'right'
+                    ? 'linear-gradient(to right,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)'
+                    : 'linear-gradient(to left,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)'
+                }`
+              : `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))`
+          },url(${src})`,
         }}
       >
         {children}
