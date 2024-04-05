@@ -141,9 +141,9 @@ const useVideoProgressEvent = (
   useEffect(() => {
     if (!player) return
     const intervalId = setInterval(() => {
-      var duration = player.duration()
+      const duration = player.duration()
       if ((!allowAnalytics || duration) && !player) return
-      var currentTime = player.currentTime()
+      const currentTime = player.currentTime()
       if (currentTime && duration) {
         const progress = (currentTime / duration) * 100
         GTM_PROGRESS_MILESTONES.forEach((milestone) => {

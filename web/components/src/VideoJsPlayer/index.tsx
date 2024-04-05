@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, HTMLAttributes, HTMLProps, useState, useCallback } from 'react'
+import * as React from 'react'
+import { useEffect, HTMLProps, useState, useCallback } from 'react'
 import videojs from 'video.js'
 import Player from 'video.js/dist/types/player'
 import 'video.js/dist/video-js.css'
@@ -104,6 +105,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   return (
     <>
+      {/* eslint-disable-next-line */}
       <video ref={measuredRef} className="video-js vjs-fill" poster={poster}></video>
       {showPlayButton && (
         <button
