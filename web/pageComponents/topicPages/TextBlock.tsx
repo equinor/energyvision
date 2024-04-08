@@ -40,8 +40,9 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
 
   const contentAlignment = {
     center: 'items-start text-start px-layout-lg',
-    right: 'xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto pr-layout-sm ',
-    left: 'xl:items-start xl:text-start xl:max-w-[45dvw] xl:mr-auto pl-layout-sm',
+    right:
+      'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
+    left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
   }
   let backgroundImageContentClassNames = `
   justify-center

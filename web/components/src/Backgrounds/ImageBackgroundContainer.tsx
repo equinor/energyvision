@@ -2,6 +2,7 @@ import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { ImageBackground } from '../../../types/types'
 import { twMerge } from 'tailwind-merge'
+import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 
 type ImageBackgroundContainerProps = ImageBackground & HTMLAttributes<HTMLDivElement>
 const DEFAULT_MAX_WIDTH = 1920
@@ -12,6 +13,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     ref,
   ) {
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
+    const isMobile = useMediaQuery(`(max-width: 750px)`)
     const src = props?.src
 
     const backgroundClassNames = twMerge(
@@ -42,14 +44,15 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
           className={`
           py-40 
           lg:py-[33dvh]
+          bg-[linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))]
           ${
             contentAlignment !== 'center'
               ? `${
                   contentAlignment === 'right'
-                    ? 'bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
-                    : 'bg-[linear-gradient(to_left,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
+                    ? 'xl:bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
+                    : 'xl:bg-[linear-gradient(to_left,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
                 }`
-              : `bg-[linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))]`
+              : ``
           }
           animate-timeline
       `}
@@ -64,11 +67,11 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         style={{
           backgroundImage: `
           ${
-            contentAlignment !== 'center'
+            contentAlignment !== 'center' && !isMobile
               ? `${
                   contentAlignment === 'right'
-                    ? 'linear-gradient(to right,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)'
-                    : 'linear-gradient(to left,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)'
+                    ? `linear-gradient(to right,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)`
+                    : `linear-gradient(to left,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)`
                 }`
               : `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))`
           },url(${src})`,
