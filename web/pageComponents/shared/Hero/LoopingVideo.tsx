@@ -41,6 +41,9 @@ const StyledPlayer = styled(DynamicVideoJsComponent)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  .vjs-poster img {
+    object-fit: cover;
+  }
 `
 
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
