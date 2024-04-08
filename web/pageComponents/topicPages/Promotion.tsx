@@ -1,5 +1,4 @@
 import { HTMLAttributes } from 'react'
-import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
@@ -22,12 +21,12 @@ const Promotion = ({
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
       <div className={`pb-12 max-w-viewport`} {...rest}>
-        <header className="px-layout-lg">
-          {title && <TitleText className="text-left mb-8" value={title} level="h2" size="xl" />}
+        <header className="px-layout-lg mb-8">
+          {title && <TitleText className="text-left pt-8" value={title} level="h2" size="xl" />}
           {ingress && (
-            <p className="mb-8">
+            <div className="mb-8">
               <IngressText value={ingress} centered={true} />
-            </p>
+            </div>
           )}
         </header>
         {promotions?.length === 1 ? (

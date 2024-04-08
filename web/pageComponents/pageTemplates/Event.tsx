@@ -1,4 +1,4 @@
-import { FormattedDate, FormattedTime, BackgroundContainer } from '@components'
+import { FormattedDate, FormattedTime } from '@components'
 import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -153,7 +153,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             <div
               className={`
              mt-16
-             ${iframe ? '' : 'pb-16'}
+             pb-16
              px-0 
              md:px-8
              lg:px-0
@@ -193,7 +193,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   max-w-viewport
                   mx-auto
                   my-3xl
-                  ${iframe ? 'mt-0' : ''}
                   `}
             />
           )}
