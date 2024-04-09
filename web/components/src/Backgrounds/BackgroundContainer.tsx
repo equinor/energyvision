@@ -1,8 +1,14 @@
 import { forwardRef, HTMLAttributes } from 'react'
+import styled from 'styled-components'
+import { normal, inverted } from '../../../styles/themes'
 import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/types'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
+
+const StyledImageBackground = styled(ImageBackgroundContainer)<{ $isInverted: boolean }>`
+  ${({ $isInverted }) => ($isInverted ? inverted : normal)}
+`
 
 export type BackgroundContainerProps = {
   background?: {
@@ -30,9 +36,15 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   return (
     <>
       {type === 'backgroundImage' && backgroundImage && (
-        <ImageBackgroundContainer ref={ref} id={id} {...backgroundImage} {...rest}>
+        <StyledImageBackground
+          $isInverted={backgroundImage?.useLight ? false : true}
+          ref={ref}
+          id={id}
+          {...backgroundImage}
+          {...rest}
+        >
           {children}
-        </ImageBackgroundContainer>
+        </StyledImageBackground>
       )}
       {(type === 'backgroundColor' || !type) && (
         <>

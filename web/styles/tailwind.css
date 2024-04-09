@@ -11,7 +11,7 @@
     .animate-timeline {
       @apply animate-fadeInOut;
       animation-timeline: view();
-      animation-range: entry 25% cover 85%;
+      animation-range: cover 18% cover 85%;
     }
   }
 
