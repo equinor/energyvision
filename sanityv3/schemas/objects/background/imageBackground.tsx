@@ -35,6 +35,12 @@ export default defineType({
       description: 'Animates content over the background image.',
     }),
     defineField({
+      title: 'Apply light gradient',
+      name: 'useLight',
+      type: 'boolean',
+      description: 'Applies a white gradient over semi transparent background image.',
+    }),
+    defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',
       description: 'Select the content alignment on larger screens.',

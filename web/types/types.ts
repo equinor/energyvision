@@ -257,6 +257,7 @@ export type ContentAlignmentTypes = 'left' | 'right' | 'center'
 export type ImageBackground = {
   image: ImageWithAlt | SanityImageObject
   useAnimation?: boolean
+  useLight?: boolean
   contentAlignment: ContentAlignmentTypes
 }
 

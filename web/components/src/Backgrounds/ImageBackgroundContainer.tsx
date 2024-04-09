@@ -9,18 +9,26 @@ const DEFAULT_MAX_WIDTH = 1920
 
 export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgroundContainerProps>(
   function ImageBackgroundContainer(
-    { image, useAnimation = false, contentAlignment = 'center', children, className },
+    { image, useAnimation = false, useLight = false, contentAlignment = 'center', children, className },
     ref,
   ) {
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
-    const isMobile = useMediaQuery(`(max-width: 750px)`)
     const src = props?.src
+    const isMobile = useMediaQuery(`(max-width: 800px)`)
+
+    const fadedFilter = `
+    before:content-['']
+    before:absolute
+    before:inset-0
+    ${useLight ? `before:bg-white-100 before:opacity-[35%]` : `before:bg-black-100 before:opacity-[25%]`}
+    `
 
     const backgroundClassNames = twMerge(
       `[container:inline-size]
-      dark
+      relative
+      ${useLight ? '' : 'dark'}
       w-full
-      ${useAnimation ? 'bg-fixed' : 'bg-local py-40 lg:py-52'}
+      ${useAnimation && !isMobile ? `bg-fixed ${fadedFilter}` : 'bg-local'}
       bg-center
       bg-no-repeat
       bg-cover
@@ -28,7 +36,19 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       className,
     )
 
-    return useAnimation ? (
+    const animatedScrimGradient = useLight
+      ? `white-center-gradient ${
+          contentAlignment !== 'center'
+            ? `${contentAlignment === 'right' ? 'xl:white-right-gradient' : 'xl:white-left-gradient'}`
+            : ``
+        }`
+      : `black-center-gradient ${
+          contentAlignment !== 'center'
+            ? `${contentAlignment === 'right' ? 'xl:black-right-gradient' : 'xl:black-left-gradient'}`
+            : ``
+        }`
+
+    return useAnimation && !isMobile ? (
       <section
         ref={ref}
         className={backgroundClassNames}
@@ -43,41 +63,41 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         <div
           className={`
           py-40 
-          lg:py-[33dvh]
-          bg-[linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))]
-          ${
-            contentAlignment !== 'center'
-              ? `${
-                  contentAlignment === 'right'
-                    ? 'xl:bg-[linear-gradient(to_right,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
-                    : 'xl:bg-[linear-gradient(to_left,rgba(0,0,0,0.1),rgba(0,0,0,0.3)_30%,rgba(0,0,0,0.4)_50%)]'
-                }`
-              : ``
-          }
+          lg:py-[25dvh]
+          ${animatedScrimGradient}
           animate-timeline
       `}
         >
           {children}
         </div>
       </section>
+    ) : isMobile ? (
+      <section ref={ref}>
+        <div
+          className={`${backgroundClassNames} aspect-video`}
+          style={{
+            backgroundImage: `url(${src})`,
+          }}
+        />
+        {children}
+      </section>
     ) : (
       <section
         ref={ref}
         className={backgroundClassNames}
         style={{
-          backgroundImage: `
-          ${
-            contentAlignment !== 'center' && !isMobile
-              ? `${
-                  contentAlignment === 'right'
-                    ? `linear-gradient(to right,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)`
-                    : `linear-gradient(to left,rgba(0,0,0,0.1),rgba(0,0,0,0.3) 30%,rgba(0,0,0,0.4) 50%)`
-                }`
-              : `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4))`
-          },url(${src})`,
+          backgroundImage: `url(${src})`,
         }}
       >
-        {children}
+        {/** Scrim */}
+        <div
+          className={`
+          py-40 
+          lg:py-52
+          ${animatedScrimGradient}`}
+        >
+          {children}
+        </div>
       </section>
     )
   },
