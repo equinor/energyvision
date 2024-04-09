@@ -66,6 +66,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
           lg:py-[25dvh]
           ${animatedScrimGradient}
           animate-timeline
+          relative
       `}
         >
           {children}
@@ -84,7 +85,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     ) : (
       <section
         ref={ref}
-        className={backgroundClassNames}
+        className={`${backgroundClassNames}`}
         style={{
           backgroundImage: `url(${src})`,
         }}
@@ -94,6 +95,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
           className={`
           py-40 
           lg:py-52
+          relative
           ${animatedScrimGradient}`}
         >
           {children}
