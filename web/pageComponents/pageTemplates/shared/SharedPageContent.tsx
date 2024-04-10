@@ -95,10 +95,10 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
   const previousComponentsDO = prevComponent?.designOptions?.background
 
   const currentIsWhiteColorBackground =
-    currentComponentsDO?.backgroundColor === 'White' || currentComponentsDO?.backgroundUtility === 'white-100'
+    currentComponentsDO?.backgroundUtility === 'white-100' ?? currentComponentsDO?.backgroundColor === 'White'
 
   const previousIsWhiteColorBackground =
-    previousComponentsDO?.backgroundColor === 'White' || previousComponentsDO?.backgroundUtility === 'white-100'
+    previousComponentsDO?.backgroundUtility === 'white-100' ?? previousComponentsDO?.backgroundColor === 'White'
 
   const isCurrentColoredBackgroundAndNotWhite =
     (currentComponentsDO?.type === 'backgroundColor' || currentComponentsDO?.backgroundColor) &&
@@ -109,8 +109,10 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
     !previousIsWhiteColorBackground
 
   const previousIsSameColorAsCurrent =
-    currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor ||
-    currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility
+    (currentComponentsDO?.backgroundUtility &&
+      previousComponentsDO?.backgroundUtility &&
+      currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility) ??
+    currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
 
   if (
     (isCurrentColoredBackgroundAndNotWhite && !previousIsSameColorAsCurrent) ||
