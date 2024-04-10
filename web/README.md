@@ -40,20 +40,6 @@ To structure the global CSS we follow the
 
 Most of the general styles (such as colours and fonts) are based on the [Equinor Design System (EDS)](https://eds.equinor.com), additionally several EDS React components are used where possible. Adjustments had to be made to certain styles and components due to the EDS being created primarily for data heavy applications instead of presentation style websites/applications.
 
-## Storybook
-
-We use [Storybook](https://storybook.js.org/) for the development of components. Pushing files to `./web/components` will trigger a build and deploy the Storybook - which can then be viewed here: https://s166-cdne-envis-storybook-dev.azureedge.net.
-
-To start Storybook locally during development, run the following command from the project root:
-
-```bash
-pnpm web storybook
-
-# or
-
-pnpm start:storybook
-```
-
 ## Algolia Search
 
 The [Algolia platform](https://www.algolia.com) is used for search on equinor.com as well as for content on certain pages that requires filtering and pagination, such as the main news page.
