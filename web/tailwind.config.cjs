@@ -209,13 +209,13 @@ module.exports = {
               fontSize: theme('fontSize.base'),
               lineHeight: theme('lineHeight.planetary'),
               h2: {
-                fontSize: theme('fontSize.2xl'),
+                fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
