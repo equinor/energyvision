@@ -205,6 +205,34 @@ module.exports = {
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       },
+      margin: {
+        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
+        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
+        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+      },
+      keyframes: {
+        reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        zoomIn: {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(0.2)' },
+        },
+        fade: {
+          '0%, 100%': { opacity: '0' },
+          '20%, 80%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeInOut: 'fade linear both',
+        fadeOut: 'auto linear fadeOut both',
+        zoomIn: 'auto linear zoom-in both',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
