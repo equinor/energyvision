@@ -79,6 +79,48 @@ type ComponentProps =
 
 type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
 
+/**
+ * All pagecontent should only have padding/margin bottom and x axis
+ * If needed to apply top spacing do it here
+ * E.g. Colored background content need padding top
+ * Remember to think about the prev section of condition with top spacing
+ * E.g. 2 colored background of same color content, only first need but not second
+ */
+const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const currentComponentsDO = currentComponent?.designOptions?.background
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const previousComponentsDO = prevComponent?.designOptions?.background
+
+  const currentIsWhiteColorBackground =
+    currentComponentsDO?.backgroundColor === 'White' || currentComponentsDO?.backgroundUtility === 'white-100'
+
+  const previousIsWhiteColorBackground =
+    previousComponentsDO?.backgroundColor === 'White' || previousComponentsDO?.backgroundUtility === 'white-100'
+
+  const isCurrentColoredBackgroundAndNotWhite =
+    (currentComponentsDO?.type === 'backgroundColor' || currentComponentsDO?.backgroundColor) &&
+    !currentIsWhiteColorBackground
+
+  const previousIsColorContainerAndNotWhite =
+    (previousComponentsDO?.type === 'backgroundColor' || previousComponentsDO?.backgroundColor) &&
+    !previousIsWhiteColorBackground
+
+  const previousIsSameColorAsCurrent =
+    currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor ||
+    currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility
+
+  if (
+    (isCurrentColoredBackgroundAndNotWhite && !previousIsSameColorAsCurrent) ||
+    (currentIsWhiteColorBackground && previousIsColorContainerAndNotWhite)
+  ) {
+    return 'pt-12'
+  }
+  return ''
+}
+
 export const PageContent = ({ data }: PageContentProps) => {
   const content = (data?.content || []).map((c: ComponentProps, index) => {
     const prevComponent = data?.content?.[index - 1]
@@ -86,19 +128,25 @@ export const PageContent = ({ data }: PageContentProps) => {
       (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
         : undefined
+
+    //Returns pt-12 when applicable or empty string
+    const topSpacingClassName = applyPaddingTopIfApplicable(c, data?.content?.[index - 1] as unknown as ComponentProps)
+
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
       case 'textTeaser':
         return <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} />
       case 'textBlock':
-        return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} />
+        return (
+          <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} className={topSpacingClassName} />
+        )
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'fullWidthVideo':
         return <FullWidthVideo key={c.id} data={c as FullWidthVideoData} anchor={anchorReference} />
       case 'figure':
-        return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} />
+        return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} className={topSpacingClassName} />
       case 'textWithIconArray':
         return <TextWithIconArray key={c.id} data={c as TextWithIconArrayData} anchor={anchorReference} />
       case 'pullQuote':
