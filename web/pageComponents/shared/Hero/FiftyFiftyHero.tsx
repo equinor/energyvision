@@ -4,7 +4,6 @@ import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/types'
 import { BackgroundContainer } from '@components'
 import ReadMoreLink from '../ReadMoreLink'
-import RichText from '../portableText/RichText'
 import Blocks from '../portableText/Blocks'
 
 const StyledHero = styled(BackgroundContainer)`
