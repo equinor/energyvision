@@ -29,7 +29,6 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   { variant = 'primary', href, className = '', imageClassName = '', children, imageUrl, ...rest },
   ref,
 ) {
-  console.log('imageurl', imageUrl)
   const variantClassNames = {
     primary: ``,
     secondary: `rounded-sm`,

@@ -9,6 +9,8 @@ export type CardContentProps = {
   variant?: 'primary' | 'secondary'
   /** Overriding styles for the icon  */
   iconClassName?: string
+  /** Take care of the arrow yourself */
+  noArrow?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -21,7 +23,7 @@ export type CardContentProps = {
  * @example
  * */
 export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function CardContent(
-  { variant = 'primary', className = '', iconClassName = '', children, ...rest },
+  { variant = 'primary', className = '', iconClassName = '', noArrow = false, children, ...rest },
   ref,
 ) {
   const variantClassNames = {
@@ -66,12 +68,12 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
       {variant === 'secondary' ? (
         <>
           <div>{children}</div>
-          <ArrowRight className={iconClassNames} />
+          {!noArrow && <ArrowRight className={iconClassNames} />}
         </>
       ) : (
         <>
           {children}
-          <ArrowRight className={iconClassNames} />
+          {!noArrow && <ArrowRight className={iconClassNames} />}
         </>
       )}
     </div>
