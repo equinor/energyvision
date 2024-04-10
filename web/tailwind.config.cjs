@@ -215,7 +215,7 @@ module.exports = {
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
