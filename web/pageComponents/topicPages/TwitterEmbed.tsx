@@ -24,9 +24,7 @@ const StyledTitle = styled(TitleText)`
 
 const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
   const { embedType, embedValue, designOptions, title, ingress } = data
-  const { background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+
   const Embed = () => {
     switch (embedType) {
       case 'timeline':
@@ -48,7 +46,7 @@ const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
   }
   return (
     <>
-      <BackgroundContainer background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
+      <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
         <Container>
           {title && <StyledTitle value={title} />}
           {ingress && (

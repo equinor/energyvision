@@ -8,10 +8,6 @@ tasks:
       pnpm recursive install --filter ./web --filter ./legacy/css --filter ./legacy/js
       gp sync-done install
     command: pnpm web dev
-  - name: Storybook
-    init: gp sync-await install
-    command: pnpm web storybook
-    openMode: split-right
   - name: Lint
     init: gp sync-await install
     command: pnpm lint:web

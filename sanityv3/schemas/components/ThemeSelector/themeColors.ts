@@ -66,10 +66,7 @@ export const getColorForTheme = (pattern: number) => {
           value: defaultColors[5].value,
           key: defaultColors[5].key,
         },
-        highlight: {
-          value: defaultColors[8].value,
-          key: defaultColors[8].key,
-        },
+        highlight: {},
       }
     case 6:
       return {
@@ -99,10 +96,7 @@ export const getColorForTheme = (pattern: number) => {
           value: defaultColors[7].value,
           key: defaultColors[7].key,
         },
-        highlight: {
-          value: defaultColors[8].value,
-          key: defaultColors[8].key,
-        },
+        highlight: {},
       }
 
     case 0:
