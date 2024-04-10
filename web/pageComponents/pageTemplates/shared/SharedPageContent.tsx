@@ -114,9 +114,15 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
       currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility) ??
     currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
 
+  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo']
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const previousComponentIsASpecialCaseAndNeedPT = specialCases.includes(prevComponent?.type)
+
   if (
     (isCurrentColoredBackgroundAndNotWhite && !previousIsSameColorAsCurrent) ||
-    (currentIsWhiteColorBackground && previousIsColorContainerAndNotWhite)
+    (currentIsWhiteColorBackground && previousIsColorContainerAndNotWhite) ||
+    previousComponentIsASpecialCaseAndNeedPT
   ) {
     return 'pt-14'
   }
