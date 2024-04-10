@@ -40,12 +40,9 @@ const IFrame = ({
 }) => {
   if (!url) return null
 
-  const { height, aspectRatio, background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
-
+  const { height, aspectRatio, ...restOptions } = designOptions
   return (
-    <BackgroundContainer background={background} {...rest} twClassName={`${isDark ? 'dark' : ''}`} id={anchor}>
+    <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && (

@@ -56,7 +56,7 @@ const Form = ({ data, anchor }: { data: FormData; anchor?: string }) => {
     }
   }
   return (
-    <BackgroundContainer background="White" id={anchor}>
+    <BackgroundContainer background={{ backgroundColor: 'White' }} id={anchor}>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && <IngressText value={ingress}></IngressText>}

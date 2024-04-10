@@ -156,12 +156,9 @@ export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVi
 
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
-  const { background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
 
   return (
-    <BackgroundContainer background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
+    <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && (

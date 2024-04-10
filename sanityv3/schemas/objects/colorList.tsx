@@ -34,4 +34,24 @@ export default defineType({
       return <ColorSelector {...props} />
     },
   },
+  preview: {
+    select: {
+      value: 'value',
+      title: 'title',
+    },
+    prepare({ value, title }: { value: string; title: string }) {
+      return {
+        title: `Color '${title}'`,
+        media: (
+          <span
+            style={{
+              backgroundColor: value,
+              padding: '15px',
+              borderRadius: '50%',
+            }}
+          />
+        ),
+      }
+    },
+  },
 })

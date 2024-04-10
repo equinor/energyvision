@@ -59,6 +59,7 @@ export default {
   name: 'textBlock',
   title: 'Text block',
   type: 'object',
+
   fieldsets: [
     {
       title: 'Thumbnail Image',
@@ -87,10 +88,6 @@ export default {
         collapsible: true,
         collapsed: false,
       },
-    },
-    {
-      name: 'design',
-      title: 'Design options',
     },
     {
       name: 'anchor',
@@ -205,11 +202,15 @@ export default {
       },
     },
     {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
+      name: 'designOptions',
+      type: 'backgroundOptions',
+    },
+    {
+      title: 'Background (Deprecated)',
+      description: 'This field will be phased out over time. Please use Design options above. Default is white',
       name: 'background',
+      readOnly: true,
       type: 'colorlist',
-      fieldset: 'design',
     },
   ].filter((e) => e),
   preview: {
