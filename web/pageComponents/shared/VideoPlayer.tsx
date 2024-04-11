@@ -14,6 +14,7 @@ import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
 import { HLSPlayer } from '../../components/src/HLSPlayer'
+import { twMerge } from 'tailwind-merge'
 
 const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
   () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
@@ -26,12 +27,6 @@ const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
   text-align: left;
-`
-
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
 `
 
 const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
@@ -154,12 +149,12 @@ export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVi
   )
 }
 
-const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
+const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Container>
+      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         {ingress && (
           <Ingress>
@@ -172,7 +167,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
           </ButtonWrapper>
         )}
         <HLSVideoComponent video={video} designOptions={designOptions} videoControls={videoControls} />
-      </Container>
+      </div>
     </BackgroundContainer>
   )
 }

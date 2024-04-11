@@ -37,7 +37,7 @@ const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
 
-  const contentClassNames = twMerge(`max-w-viewport pb-14 px-layout-lg mx-auto`, className)
+  const contentClassNames = twMerge(`max-w-viewport pb-page-content px-layout-lg mx-auto`, className)
 
   const contentAlignment = {
     center: 'items-start text-start px-layout-lg',

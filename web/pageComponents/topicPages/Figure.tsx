@@ -23,7 +23,7 @@ const FullWidthImage = ({ data, anchor, className }: TeaserProps) => {
       className={className}
       renderFragmentWhenPossible
     >
-      <figure className="pb-14 px-layout-lg max-w-viewport mx-auto">
+      <figure className="pb-page-content px-layout-lg max-w-viewport mx-auto">
         <Image
           image={image}
           maxWidth={920}
