@@ -5,8 +5,6 @@ import styled from 'styled-components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
-import EventText from '../shared/portableText/EventText'
-import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import RelatedContent from '../shared/RelatedContent'
 import AddToCalendar from '../topicPages/AddToCalendar'
@@ -16,6 +14,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 const EventLayout = styled.article`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -95,18 +94,6 @@ const StyledBasicIFrame = styled(BasicIFrame)`
   padding: 0 var(--layout-paddingHorizontal-small);
 `
 
-const StyledContactList = styled(ContactList)`
-  --contactList-titleAlign: center;
-
-  padding: 0 var(--layout-paddingHorizontal-large);
-  margin: 0;
-  max-width: var(--maxViewportWidth);
-
-  @media (min-width: 450px) {
-    --contactList-titleAlign: left;
-  }
-`
-
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
   const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
@@ -161,12 +148,12 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             >
               {ingress && (
                 <LeadParagraph>
-                  <IngressText value={ingress}></IngressText>
+                  <Blocks value={ingress}></Blocks>
                 </LeadParagraph>
               )}
               {content && (
                 <Content>
-                  <EventText value={content} />
+                  <Blocks value={content} />
                 </Content>
               )}
             </div>
@@ -183,7 +170,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-          {contactList && <StyledContactList data={contactList} />}
+          {contactList && <ContactList data={contactList} />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent

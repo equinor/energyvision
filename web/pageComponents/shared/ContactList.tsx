@@ -1,15 +1,9 @@
+import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import type { ContactListData } from '../../types/types'
 import { Text, Heading } from '@components'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
 
-const Wrapper = styled.div`
-  margin: var(--space-4xLarge) auto;
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--space-large);
-  max-width: var(--layout-maxContent-narrow);
-`
 const Contacts = styled.div`
   padding-top: var(--space-small);
   display: flex;
@@ -44,11 +38,11 @@ const Header = styled(Heading)`
 
 type ContactListProps = {
   data: ContactListData
-}
+} & HTMLAttributes<HTMLDivElement>
 
-const ContactList = ({ data, ...rest }: ContactListProps) => {
+const ContactList = ({ data }: ContactListProps) => {
   return (
-    <Wrapper {...rest}>
+    <div className="flex flex-col py-0 px-layout-lg max-w-viewport">
       {data?.title && (
         <Header size="xl" level="h2">
           {data.title}
@@ -67,7 +61,7 @@ const ContactList = ({ data, ...rest }: ContactListProps) => {
           })}
         </Contacts>
       )}
-    </Wrapper>
+    </div>
   )
 }
 
