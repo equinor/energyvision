@@ -6,42 +6,42 @@
 }
 
 @layer utilities {
-  .block-wrapper {
-    @apply grid;
-    grid-template-areas: 'col-1 col-2 col-3';
-    grid-template-columns: 4.2vw min(65ch, 100%) 4.2vw;
-  }
-  .block-wrapper > * {
-    grid-area: col-2;
-  }
-
-  @media (min-width: 750px) {
-    .block-wrapper {
-      @apply grid w-screen;
-      grid-template-areas: 'col-1 col-2 col-3 col-4 col-5';
-      grid-template-columns:
-        1fr
-        6.87vw
-        minmax(65ch, 920px)
-        6.87vw
-        1fr;
-    }
-    .pre-indent {
-      @apply w-full;
-      grid-column: 2 / 3;
-    }
-    .post-indent {
-      @apply w-full;
-      grid-column: 3 / 4;
-    }
-    .block-wrapper > * {
-      @apply w-full;
-      grid-area: col-3;
+  /* Scroll-Timeline Supported, Yay! */
+  @supports (animation-timeline: view()) {
+    .animate-timeline {
+      @apply animate-fadeInOut;
+      animation-timeline: view();
+      animation-range: cover 18% cover 85%;
     }
   }
 
-  .full-bleed {
-    @apply w-full;
-    grid-column: 1 / -1;
+  .white-right-gradient {
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-left-gradient {
+    background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-center-gradient {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+  }
+
+  .black-right-gradient {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-left-gradient {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-center-gradient {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
   }
 }

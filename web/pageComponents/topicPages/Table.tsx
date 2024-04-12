@@ -109,13 +109,10 @@ const renderCellByType = (cellData: CellData) => {
 const Table = ({ data, anchor }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
-  const { background, dark, theme } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
-
+  const { theme, ...restOptions } = designOptions
   // Should the headers just be a plain text field?
   return (
-    <StyledTableWrapper background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
+    <StyledTableWrapper {...restOptions} id={anchor} renderFragmentWhenPossible>
       <TableContainer>
         {title && <StyledTitle value={title} />}
         {ingress && (

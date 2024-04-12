@@ -29,7 +29,6 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 // Due to performance, we load the Equinor font from the /public folder in the Next.js application
-// Since the Storybook uses the global styles as well, this is a separate global style constant
 export const GlobalFontStyle = createGlobalStyle`
  @font-face {
   font-family: Equinor;

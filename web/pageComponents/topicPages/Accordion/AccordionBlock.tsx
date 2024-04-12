@@ -43,11 +43,10 @@ const buildJsonLdElements = (data: AccordionListData[]) => {
 
 const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
   const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
-  const { background, dark } = designOptions
   return (
     <>
-      <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
-        <StyledTextBlock className={`${dark ? 'dark' : ''} flex flex-col gap-6`}>
+      <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+        <StyledTextBlock className={`flex flex-col gap-6`}>
           {image?.asset && (
             <div className="w-[200px]">
               <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
