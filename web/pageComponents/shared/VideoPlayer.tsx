@@ -157,9 +157,8 @@ export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJ
 
 const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
-
   return (
-    <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
+    <BackgroundContainer background={designOptions.background} id={anchor} renderFragmentWhenPossible>
       <Container>
         {title && <StyledHeading value={title} />}
         {ingress && (
