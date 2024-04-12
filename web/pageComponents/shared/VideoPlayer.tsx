@@ -153,7 +153,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
   const { title, ingress, action, video, videoControls, designOptions } = data
 
   return (
-    <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
+    <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
       <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         {ingress && (
