@@ -44,9 +44,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions, isBigText } = data
-  const { background, imageSize, imagePosition, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+  const { imageSize, imagePosition, ...restOptions } = designOptions
 
   if ([title, overline, text, image?.asset, action].every((i) => !i)) {
     return null
@@ -54,7 +52,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
 
   const isSvg = image?.extension === 'svg'
   return (
-    <BackgroundContainer background={background} id={anchor}>
+    <BackgroundContainer {...restOptions} id={anchor} renderFragmentWhenPossible>
       <StyledEnvisTeaser imagePosition={imagePosition}>
         <Media
           size={isSvg && imageSize === 'small' ? 'small' : 'full'}
@@ -63,7 +61,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         >
           {image?.asset && <TeaserImage image={image} />}
         </Media>
-        <Content className={`${isDark ? 'dark' : ''} gap-y-lg`}>
+        <Content className={`gap-y-lg`}>
           {isBigText ? (
             text && <Heading value={text} as="h2" variant="2xl" className="leading-cloudy mb-2" />
           ) : (

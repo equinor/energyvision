@@ -155,7 +155,9 @@ module.exports = {
       }),
       fontSize: {
         //--typeScale-00
-        xs: ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        '2xs': ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        //--typeScale-0
+        xs: ['clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))'],
         //--typeScale-05
         sm: ['clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))'],
         //--typeScale-1
@@ -187,6 +189,7 @@ module.exports = {
         //--lineHeight-2
         earthy: 1.2,
         //--lineHeight-2_5
+        misty: 1.25,
         cloudy: 1.35,
         //-lineHeight-3
         planetary: 1.5,
@@ -202,6 +205,34 @@ module.exports = {
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       },
+      margin: {
+        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
+        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
+        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+      },
+      keyframes: {
+        reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        zoomIn: {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(0.2)' },
+        },
+        fade: {
+          '0%, 100%': { opacity: '0' },
+          '20%, 80%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeInOut: 'fade linear both',
+        fadeOut: 'auto linear fadeOut both',
+        zoomIn: 'auto linear zoom-in both',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
@@ -209,13 +240,13 @@ module.exports = {
               fontSize: theme('fontSize.base'),
               lineHeight: theme('lineHeight.planetary'),
               h2: {
-                fontSize: theme('fontSize.2xl'),
+                fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),

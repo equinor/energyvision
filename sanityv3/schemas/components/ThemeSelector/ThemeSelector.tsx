@@ -15,13 +15,13 @@ const Circle = styled.div<{ active: boolean }>`
   cursor: pointer;
 `
 
-const InnerCircle = styled.div<{ color: string; fillColor: string }>`
+const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
   display: flex;
   background-color: ${({ color }) => color};
   border: 1px solid var(--card-hairline-soft-color);
   padding: 15px;
   border-radius: 50%;
-  color: ${({ fillColor }) => fillColor};
+  color: ${({ fillColor }) => fillColor || 'black'};
 `
 
 export type ThemeSelectorValue = {

@@ -44,7 +44,7 @@ export default function SearchPage() {
     <>
       <NextSeo title={searchTitle}></NextSeo>
       <FloatingOverlay lockScroll>
-        <TopbarDropdown background={'Slate Blue 95'}>
+        <TopbarDropdown background={{ backgroundColor: 'Slate Blue 95' }}>
           <NavTopbar>
             <LogoLink />
             <InvertedButton

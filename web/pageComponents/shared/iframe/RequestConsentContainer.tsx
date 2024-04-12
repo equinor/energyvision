@@ -36,6 +36,7 @@ const StyledDiv = styled.section`
 `
 
 const CookieHeader = styled(BackgroundContainer)`
+  border-radius: var(--border-radius);
   grid-area: heading;
   padding: var(--space-medium) var(--space-large);
   padding-left: var(--icon-column-width);
@@ -96,7 +97,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
       : intl.formatMessage({ id: 'cookie_type_marketing', defaultMessage: 'marketing' })
   return (
     <StyledDiv>
-      <CookieHeader background={'Slate Blue 95'}>
+      <CookieHeader background={{ backgroundColor: 'Slate Blue 95' }}>
         <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Heading>
@@ -143,7 +144,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </SVG>
       </Icon>
-      <Content background={'White'}>
+      <Content background={{ backgroundColor: 'White' }}>
         <Text>
           <FormattedMessage
             id="cookie_consent"

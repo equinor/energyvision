@@ -2,9 +2,8 @@ import styled from 'styled-components'
 import Image from '../SanityImage'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/types'
-import { BackgroundContainer, Text } from '@components'
+import { BackgroundContainer } from '@components'
 import ReadMoreLink from '../ReadMoreLink'
-import RichText from '../portableText/RichText'
 import Blocks from '../portableText/Blocks'
 
 const StyledHero = styled(BackgroundContainer)`
@@ -61,7 +60,7 @@ const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }
 export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
   return (
     <>
-      <StyledHero background={background}>
+      <StyledHero background={{ backgroundColor: background }}>
         <StyledMedia>
           {figure && (
             <Image
