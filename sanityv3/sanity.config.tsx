@@ -99,18 +99,18 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
   },
   document: {
-    actions: (prev: DocumentActionComponent[], { schemaType }: any) => {
+    actions: (prev: DocumentActionComponent[], context: any) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
-      if (i18n.schemaTypes.includes(schemaType)) prev.push(DeleteTranslationAction)
+      if (i18n.schemaTypes.includes(context.schemaType)) prev.push(DeleteTranslationAction)
       return prev
         .filter(({ action, name }: DocumentActionComponent) => {
           return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
         })
         .filter(({ action }: DocumentActionComponent) => {
-          return !(action === 'delete' && i18n.schemaTypes.includes(schemaType))
+          return !(action === 'delete' && i18n.schemaTypes.includes(context.schemaType))
         })
         .map((originalAction) =>
-          originalAction.action === 'publish' ? createCustomPublishAction(originalAction) : originalAction,
+          originalAction.action === 'publish' ? createCustomPublishAction(originalAction, context) : originalAction,
         )
     },
   },
