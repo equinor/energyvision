@@ -286,6 +286,7 @@ export type DesignOptions = {
   }
   imagePosition?: TeaserImagePosition
   imageSize?: TeaserImageSize
+  aspectRatio?: FigureRatio
 }
 
 export type TextBlockData = {
@@ -342,6 +343,8 @@ export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]
 }
+
+export type FigureRatio = 'original' | '9:16'
 
 export type CellData = {
   id: string
