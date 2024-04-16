@@ -9,7 +9,7 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink } from './components'
+import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -146,6 +146,19 @@ export default function Blocks({
                   types: {
                     //@ts-ignore
                     factbox: (props) => <Fact className={`${marginOverride}`} {...props} />,
+                  },
+                }}
+              />
+            )
+          } else if (block._type === 'basicIframe') {
+            return (
+              <PortableText
+                key={block._key}
+                value={block}
+                components={{
+                  types: {
+                    //@ts-ignore
+                    basicIframe: (props) => <BasicIframe {...props} />,
                   },
                 }}
               />

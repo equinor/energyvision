@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import { HTMLAttributes } from 'react'
 import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
@@ -6,43 +6,33 @@ import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 
-const Wrapper = styled.div`
-  padding: var(--promotion-padding, var(--space-3xLarge) 0);
-  --card-maxWidth: 400px;
-  --card-minWidth: 200px;
-`
-const Ingress = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
-
-const Intro = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: 0 auto;
-`
-
-const StyledHeading = styled(TitleText)`
-  text-align: var(--promotion-titleAlign, center);
-  margin-bottom: var(--space-xLarge);
-`
-
-const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: string }) => {
+const Promotion = ({
+  data,
+  anchor,
+  ...rest
+}: HTMLAttributes<HTMLDivElement> & { data: PromotionData; anchor?: string }) => {
   const { title, ingress, content, useHorizontalScroll, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
-
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Wrapper {...rest}>
-        <Intro>
-          {title && <StyledHeading value={title} level="h2" size="xl" />}
-          {ingress && (
-            <Ingress>
-              <IngressText value={ingress} />
-            </Ingress>
+      <div className={`pb-12 pt-8`} {...rest}>
+        <header className="max-w-viewport text-center mx-auto pt-0 px-layout-sm">
+          {title && (
+            <TitleText
+              className="max-w-viewport text-center mx-auto pt-0 px-layout-sm pb-8"
+              value={title}
+              level="h2"
+              size="xl"
+            />
           )}
-        </Intro>
+          {ingress && (
+            <div className="mb-8 max-w-viewport">
+              <IngressText value={ingress} centered={true} />
+            </div>
+          )}
+        </header>
         {promotions?.length === 1 ? (
           /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
@@ -55,7 +45,7 @@ const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: st
             useHorizontalScroll={useHorizontalScroll}
           />
         )}
-      </Wrapper>
+      </div>
     </BackgroundContainer>
   )
 }
