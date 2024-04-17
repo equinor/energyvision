@@ -162,7 +162,7 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
   return (
     <Wrapper id={anchor}>
       {data.group.map((tile: PromoTileData) => {
-        return <TWPromoTile key={data.id} {...tile} />
+        return <TWPromoTile key={tile.id} {...tile} />
       })}
     </Wrapper>
   )
