@@ -284,9 +284,6 @@ export type DesignOptions = {
     backgroundUtility?: keyof ColorKeyTokens
     dark: boolean
   }
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
-  aspectRatio?: FigureRatio
 }
 
 export type TextBlockData = {
@@ -402,7 +399,9 @@ export type FigureData = {
   type: string
   id: string
   figure: ImageWithCaptionData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    aspectRatio?: FigureRatio
+  }
 }
 
 export type TextWithIconItem = {
