@@ -10,7 +10,7 @@ type NewsCardProp = {
   fitToContent?: boolean
 }
 
-const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
+const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
 
   const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)

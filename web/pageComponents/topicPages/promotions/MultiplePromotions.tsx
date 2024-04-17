@@ -6,7 +6,6 @@ import type {
   PromotionType,
   EventPromotionSettings,
 } from '../../../types/types'
-import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
@@ -71,9 +70,7 @@ const StyledBackground = styled(BackgroundContainer)`
   flex-basis: 0;
   flex-grow: 1;
 `
-const StyledNewsCard = styled(NewsCard)`
-  ${CardStyle}
-`
+
 const StyledTopicPageCard = styled(TopicPageCard)`
   ${CardStyle}
 `
@@ -132,9 +129,6 @@ const MultiplePromotions = ({
       case 'news':
       case 'localNews':
         return <TWNewsCard key={data.id} {...data} />
-      /*           <StyledBackground key={data.id}>
-            <StyledNewsCard data={data as CardData} key={data.id} />
-          </StyledBackground> */
       case 'topics':
       case 'magazine':
         return (

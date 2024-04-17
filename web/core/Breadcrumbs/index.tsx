@@ -6,6 +6,7 @@ import { Breadcrumb } from '../../types'
 import { HTMLAttributes } from 'react'
 import { Link } from '@core/Link'
 import { twMerge } from 'tailwind-merge'
+import { BackgroundContainer, BackgroundContainerProps } from '@components/Backgrounds'
 
 const buildJsonLdElements = (crumbs: Breadcrumb[], router: NextRouter) => {
   const { pathname, locale } = router
@@ -39,7 +40,8 @@ type BreadcrumbsProps = {
   className?: string
   /** Override styling on the breadcrumb list items */
   breadcrumbClassName?: string
-} & HTMLAttributes<HTMLOListElement>
+} & HTMLAttributes<HTMLOListElement> &
+  BackgroundContainerProps
 
 export const Breadcrumbs = ({
   slug,
@@ -47,6 +49,7 @@ export const Breadcrumbs = ({
   customBreadcrumbs,
   className = '',
   breadcrumbClassName = '',
+  background,
 }: BreadcrumbsProps) => {
   const router = useRouter()
 
@@ -56,21 +59,25 @@ export const Breadcrumbs = ({
       : parseBreadcrumbs(breadcrumbs)
 
   if (crumbs.length < 2) return null
+
   const breadcrumbClassNames = twMerge(
-    `
-  font-semibold 
-  text-sm
-  after:content-['>']
-  last:after:content-['']
-  last:font-medium
-  last:text-slate-blue-90
+    `font-semibold
+    text-sm
+    flex
+    gap-3
+    items-center
+    [&:not(:last-child)]:after:content-['>']
+    [&:not(:last-child)]:after:h-max
+    last:font-medium
+    last:text-slate-blue-90
+    dark:last:text-white-100/90
   `,
     breadcrumbClassName,
   )
 
   return (
-    <>
-      <ol className={twMerge(`inline-flex space-x-1 py-8 px-layout-lg`, className)}>
+    <BackgroundContainer background={background} className="max-w-viewport mx-auto px-layout-lg">
+      <ol className={twMerge(`inline-flex items-end space-x-3 py-8`, className)}>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
             return (
@@ -81,12 +88,14 @@ export const Breadcrumbs = ({
           }
           return (
             <li key={item.slug} className={breadcrumbClassNames}>
-              <Link href={item.slug}>{item.label}</Link>
+              <Link href={item.slug} className="no-underline hover:underline">
+                {item.label}
+              </Link>
             </li>
           )
         })}
       </ol>
       <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
-    </>
+    </BackgroundContainer>
   )
 }

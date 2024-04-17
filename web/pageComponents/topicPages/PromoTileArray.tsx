@@ -113,7 +113,6 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
   const url = getUrlFromAction(action)
   const { background } = designOptions
   const twBg = background?.backgroundUtility && colorKeyToUtilityMap[background.backgroundUtility]?.background
-  console.log('background', background)
 
   return (
     <Card

@@ -31,11 +31,15 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
 ) {
   const variantClassNames = {
     primary: ``,
-    secondary: `rounded-md`,
+    secondary: `rounded-md overflow-hidden`,
   }
   const imageRatio = {
     primary: 'aspect-video',
     secondary: 'aspect-5/4',
+  }
+  const imageVariantClassNames = {
+    primary: ``,
+    secondary: `rounded-t-md`,
   }
 
   return (
@@ -71,7 +75,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
             bg-no-repeat
             bg-center
             bg-cover
-            ${variantClassNames[variant]}
+            ${imageVariantClassNames[variant]}
             ${imageRatio[variant]}
             `,
             imageClassName,

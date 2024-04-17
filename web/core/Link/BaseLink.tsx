@@ -25,11 +25,9 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
     focus:outline-none
     focus-visible:envis-outline
     active:envis-outline
-    active:bg-moss-green-50
     dark:text-white-100
     dark:focus-visible:envis-outline-invert
     dark:active:envis-outline-invert
-    dark:active:bg-transparent-white-10
   `,
     className,
   )
