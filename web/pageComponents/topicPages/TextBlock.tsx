@@ -47,7 +47,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
 
   return (
     <StyledTextBlockWrapper background={background} id={anchor || data.anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <StyledTextBlock className={`flex flex-col gap-6`}>
+      <StyledTextBlock className={`flex flex-col gap-6 mb-8`}>
         {isBigText ? (
           title && <Heading value={title} as="h2" variant="2xl" />
         ) : (

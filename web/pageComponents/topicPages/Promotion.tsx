@@ -20,18 +20,11 @@ const Promotion = ({
   const variant = data.content?.type
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <div className={`pb-12 pt-8`} {...rest}>
-        <header className="max-w-viewport text-center mx-auto pt-0 px-layout-sm">
-          {title && (
-            <TitleText
-              className="max-w-viewport text-center mx-auto pt-0 px-layout-sm pb-8"
-              value={title}
-              level="h2"
-              size="xl"
-            />
-          )}
+      <div className={`pb-page-content px-layout-lg max-w-viewport mx-auto pb-8`} {...rest}>
+        <header className="flex-col flex items-center gap-8 pb-8">
+          {title && <TitleText value={title} level="h2" size="xl" />}
           {ingress && (
-            <div className="mb-8 max-w-viewport">
+            <div className="mb-8 max-w-prose">
               <IngressText value={ingress} centered={true} />
             </div>
           )}
