@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import Typography, { TypographyVariants } from '../Typography'
+import { Typography, TypographyVariants } from '../Typography'
 import { ListItem } from './ListItem'
 import { ListProps } from './types'
 import { useId } from '@equinor/eds-utils'

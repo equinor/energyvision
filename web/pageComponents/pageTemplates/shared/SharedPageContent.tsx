@@ -21,7 +21,7 @@ import VideoPlayer from '../../shared/VideoPlayer'
 import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
 import TextTeaser from '../../shared/textTeaser/TextTeaser'
 import KeyNumbers from '../../topicPages/KeyNumbers/KeyNumbers'
-import CardsList from '../../../sections/cards/CardsList'
+import CardsList from '../../../sections/cards/CardsList/CardsList'
 import {
   AnchorLinkData,
   TopicPageSchema,

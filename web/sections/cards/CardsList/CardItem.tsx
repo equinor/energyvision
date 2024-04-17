@@ -1,9 +1,9 @@
-import type { CardListItemData } from '../../types/types'
-import Typography, { Paragraph } from '../../core/Typography'
+import type { CardListItemData } from '../../../types/types'
+import { Typography, Paragraph } from '@core/Typography'
 import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'
 
-type CardItemProps = {
+export type CardItemProps = {
   className?: string
   data: CardListItemData
 } & HTMLAttributes<HTMLLIElement>

@@ -15,6 +15,9 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/src/*"],
+      "@core/*": ["core/*"],
+      "@sections/*": ["sections/*"],
+      "@envisTypes": ["types/*"],
       "@utils/*": ["components/utils/*"],
       "@components": ["components/src"],
       "@utils": ["components/utils"],

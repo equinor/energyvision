@@ -1,4 +1,5 @@
-import { BackgroundContainer, Card } from '@components'
+import { BackgroundContainer } from '@components'
+import Card from '@sections/cards/Card'
 import { tokens } from '@equinor/eds-tokens'
 import { PortableTextBlock } from '@portabletext/types'
 import { CSSProperties } from 'react'
@@ -10,8 +11,13 @@ import { PromoTileButton } from './PromoTileButton'
 import { Carousel } from '../shared/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { BaseLinkProps } from '@core/Link'
+import { ArrowRight } from '../../icons'
+import { getUrlFromAction } from '../../common/helpers'
+import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 
-const { Header, Action, Media } = Card
+/* const { Header, Action, Media } = Card */
 
 const Container = styled.div`
   display: grid;
@@ -49,13 +55,95 @@ const ImageWithRoundedUpperCorners = styled(Image)`
   border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
 `
 
-const StyledAction = styled(Action)`
+/* const StyledAction = styled(Action)`
   flex-grow: 0;
-`
+` */
 
-const StyledCard = styled(Card)`
+/* const StyledCard = styled(Card)`
   width: var(--card-maxWidth, 100%);
-`
+` */
+
+export type FakeReadMoreProps = {
+  children?: React.ReactNode
+} & Pick<BaseLinkProps, 'type'>
+
+/** Fake link based on Read more link style */
+export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMoreProps) => {
+  const classNames = `
+    group
+    inline-flex
+    align-baseline
+    w-max
+    text-slate-80
+    leading-0
+  `
+  const contentClassNames = `
+  relative
+  after:content-['']
+  after:block
+  after:absolute
+  after:bottom-0
+  after:left-0
+  after:border-b
+  after:border-slate-80
+  dark:after:border-white-100
+  after:w-[0%]
+  after:transition-all
+  after:duration-300
+  group-hover/card:after:w-full
+  `
+  const iconClassNames = `text-energy-red-100
+    ${type === 'externalUrl' ? '-rotate-45' : ''}
+    dark:text-white-100
+    ml-2
+    group-hover/card:translate-x-2
+    transition-all
+    duration-300
+  `
+
+  return (
+    <div className={classNames}>
+      <span className={contentClassNames}>{children}</span>
+      <ArrowRight className={iconClassNames} />
+    </div>
+  )
+}
+
+const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
+  const bgImage = useSanityLoader(image, 400, Ratios.FIVE_TO_FOUR)
+  const url = getUrlFromAction(action)
+  const { background } = designOptions
+  const twBg = background?.backgroundUtility && colorKeyToUtilityMap[background.backgroundUtility]?.background
+
+  return (
+    <Card
+      {...(id && { id: id })}
+      //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      href={url}
+      {...(bgImage && {
+        imageUrl: bgImage.src,
+      })}
+      variant="secondary"
+      className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
+    >
+      <Card.Content
+        {...(!linkLabelAsTitle && { noArrow: true })}
+        {...(linkLabelAsTitle && { variant: 'secondary' })}
+        className={`${twBg}`}
+      >
+        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+        {/** @ts-ignore */}
+        <Card.Header
+          {...(!linkLabelAsTitle && { titleBlock: title })}
+          {...(linkLabelAsTitle && { title: action.label })}
+          titleClassName={linkLabelAsTitle ? '' : 'group-hover/card:no-underline'}
+        />
+        {!linkLabelAsTitle && <FakeReadMoreLink type={action.type}>{action.label}</FakeReadMoreLink>}
+      </Card.Content>
+    </Card>
+  )
+}
 
 const PromoTileArray = ({
   data,
@@ -72,22 +160,6 @@ const PromoTileArray = ({
 
   const renderScroll = data.useHorizontalScroll || isMobile
 
-  const richTitle = (title: PortableTextBlock[], hasImage: boolean) => {
-    return (
-      <Header>
-        <PromotileTitleText
-          style={
-            {
-              '--card-title-fontSize': hasImage ? undefined : 'var(--typeScale-4)',
-              '--card-title-fontWeight': hasImage ? '450' : '400',
-            } as CSSProperties
-          }
-          value={title}
-        />
-      </Header>
-    )
-  }
-
   const Wrapper = renderScroll
     ? ({ children }: { children: React.ReactNode }) => (
         <HorizontalWrapper>
@@ -97,48 +169,9 @@ const PromoTileArray = ({
     : Container
 
   return (
-    <Wrapper id={anchor}>
+    <Wrapper id={anchor} className={className}>
       {data.group.map((tile: PromoTileData) => {
-        const { id, designOptions, image, title, action, linkLabelAsTitle } = tile
-        const { background } = designOptions
-        const hasImage = !!image?.asset
-
-        const Content = () =>
-          linkLabelAsTitle ? (
-            <PromoTileButton action={action} template="icon" hasImage={hasImage} />
-          ) : (
-            <>
-              {<>{richTitle(title, hasImage)}</>}
-              {action.label && (
-                <StyledAction>
-                  <PromoTileButton action={action} hasImage={hasImage} />
-                </StyledAction>
-              )}
-            </>
-          )
-
-        return (
-          <StyledBackgroundContainer background={background} key={id}>
-            <StyledCard
-              type="promo"
-              textOnly={!image}
-              className={twMerge(``, className)}
-              style={{ '--card-height': '100%' } as CSSProperties}
-            >
-              {image && (
-                <Media>
-                  <ImageWithRoundedUpperCorners
-                    image={image}
-                    alt={image.alt}
-                    maxWidth={400}
-                    aspectRatio={Ratios.FOUR_TO_FIVE}
-                  />
-                </Media>
-              )}
-              <Content />
-            </StyledCard>
-          </StyledBackgroundContainer>
-        )
+        return <TWPromoTile key={tile.id} {...tile} />
       })}
     </Wrapper>
   )
