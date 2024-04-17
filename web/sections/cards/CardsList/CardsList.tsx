@@ -15,7 +15,8 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
   ref,
 ) {
   const { title, cards = [], designOptions } = data
-  const { utility, dark } = designOptions
+  const { background } = designOptions || {}
+  const { backgroundUtility, dark } = background || {}
 
   // For 2 or 4 cards
   let gridColumns = 'grid-cols-1 lg:grid-cols-2'
@@ -24,7 +25,7 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
     // 2 in width for mobile, but 3 for wider screens
     gridColumns = 'grid-cols-1 lg:grid-cols-3'
   }
-  const cardBackground = colorKeyToUtilityMap[utility] ?? 'bg-blue-50'
+  const cardBackground = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility] : { background: 'bg-blue-50' }
 
   return (
     <section
@@ -40,7 +41,7 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
             <CardItem
               key={`card_item_${card?.id}`}
               data={card}
-              className={`${dark ? 'dark' : ''} ${cardBackground.background}`}
+              className={`${dark ? 'dark' : ''} ${cardBackground?.background}`}
             />
           )
         })}

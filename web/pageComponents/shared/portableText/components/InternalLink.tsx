@@ -1,4 +1,4 @@
-import { Link } from '../../../../core/Link'
+import { Link } from '@core/Link'
 import { getLocaleFromName } from '../../../../lib/localization'
 
 type InternalLinkProps = {

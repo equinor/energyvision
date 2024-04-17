@@ -3,8 +3,48 @@
 @import 'tailwindcss/utilities';
 
 @layer utilities {
+  /* Scroll-Timeline Supported, Yay! */
+  @supports (animation-timeline: view()) {
+    .animate-timeline {
+      @apply animate-fadeInOut;
+      animation-timeline: view();
+      animation-range: cover 18% cover 85%;
+    }
+  }
+
+  .white-right-gradient {
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-left-gradient {
+    background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-center-gradient {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+  }
+
+  .black-right-gradient {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-left-gradient {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-center-gradient {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  }
   .box-shadow-crisp {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 2px 3px 0px;
+    /*box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.04) 0px 1px 2px 0px;*/
+    box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
+      0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34), 1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
   }
   .box-shadow-crisp-interact {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;

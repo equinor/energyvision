@@ -31,11 +31,11 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
 ) {
   const variantClassNames = {
     primary: ``,
-    secondary: `rounded-sm`,
+    secondary: `rounded-md`,
   }
   const imageRatio = {
     primary: 'aspect-video',
-    secondary: 'aspect-4/5',
+    secondary: 'aspect-5/4',
   }
 
   return (
@@ -44,10 +44,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       href={href}
       prefetch={false}
       className={twMerge(
-        `
-        group/card
-        flex
-        flex-col
+        `group/card 
+      flex
+      flex-col
       bg-white-100
       text-slate-80
       box-shadow-crisp

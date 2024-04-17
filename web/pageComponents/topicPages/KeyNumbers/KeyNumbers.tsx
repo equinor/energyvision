@@ -5,9 +5,9 @@ import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import KeyNumberItem from './KeyNumberItem'
 import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
-import RichText from '../../shared/portableText/RichText'
 import { Carousel } from '../../shared/Carousel'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -55,9 +55,7 @@ type KeyNumbersProps = {
 }
 export default function ({ data, anchor }: KeyNumbersProps) {
   const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
-  const { background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark below
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   const renderScroll = useHorizontalScroll && isMobile
@@ -69,7 +67,7 @@ export default function ({ data, anchor }: KeyNumbersProps) {
       )
     : Container
   return (
-    <StyledBackgroundContainer background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
+    <StyledBackgroundContainer {...designOptions} id={anchor}>
       {title && <StyledHeading value={title} />}
       {ingress && (
         <Ingress>
@@ -85,7 +83,7 @@ export default function ({ data, anchor }: KeyNumbersProps) {
 
       {disclaimer && (
         <Disclaimer>
-          <RichText value={disclaimer} />
+          <Blocks value={disclaimer} />
         </Disclaimer>
       )}
       {action && <ReadMoreLink action={action} />}

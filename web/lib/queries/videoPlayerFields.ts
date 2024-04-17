@@ -1,4 +1,5 @@
 import linkSelectorFields from './common/actions/linkSelectorFields'
+import background from './common/background'
 import markDefs from './common/blockEditorMarks'
 
 export const videoPlayerFields = /* groq */ `
@@ -27,7 +28,7 @@ export const videoPlayerFields = /* groq */ `
   },
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
-    "background": coalesce(background.title, 'none'),
     height,
+    ${background}
   },
 `

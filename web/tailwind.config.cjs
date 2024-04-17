@@ -166,7 +166,7 @@ module.exports = {
       boxShadowColor: {
         'moss-green-50': '190deg 9% 67%',
         'moss-green-50-interact': '190deg 9% 60%',
-        'white-100': '0deg 0% 66%',
+        'white-100': '0deg 0% 63%',
         'white-100-interact': '0deg 0% 63%',
         'blue-50': '212deg 40% 29%',
         'blue-50-interact': '212deg 40% 25%',
@@ -195,7 +195,9 @@ module.exports = {
       }),
       fontSize: {
         //--typeScale-00
-        xs: ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        '2xs': ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        //--typeScale-0
+        xs: ['clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))'],
         //--typeScale-05
         sm: ['clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))'],
         //--typeScale-1
@@ -227,6 +229,7 @@ module.exports = {
         //--lineHeight-2
         earthy: 1.2,
         //--lineHeight-2_5
+        misty: 1.25,
         cloudy: 1.35,
         //-lineHeight-3
         planetary: 1.5,
@@ -246,6 +249,35 @@ module.exports = {
       boxShadow: {},
       aspectRatio: {
         '4/5': '0.8',
+        '5/4': '1.25',
+      },
+      margin: {
+        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
+        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
+        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+      },
+      keyframes: {
+        reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        zoomIn: {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(0.2)' },
+        },
+        fade: {
+          '0%, 100%': { opacity: '0' },
+          '20%, 80%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeInOut: 'fade linear both',
+        fadeOut: 'auto linear fadeOut both',
+        zoomIn: 'auto linear zoom-in both',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -254,16 +286,43 @@ module.exports = {
               fontSize: theme('fontSize.base'),
               lineHeight: theme('lineHeight.planetary'),
               h2: {
-                fontSize: theme('fontSize.2xl'),
+                fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
+              },
+              'ul ul, ul ol, ol ul, ol ol': {
+                paddingLeft: em(38, 24),
+              },
+              'ol ol': {
+                listStyleType: 'lower-alpha',
+              },
+              'ol ol ol': {
+                listStyleType: 'lower-roman',
+              },
+              'ol > li': {
+                marginLeft: em(8, 14),
+              },
+              'ul > li': {
+                marginLeft: em(8, 14),
+              },
+              '> ul > li > *:first-child': {
+                marginTop: '0px',
+              },
+              '> ul > li > *:last-child': {
+                marginBottom: '0px',
+              },
+              '> ol > li > *:first-child': {
+                marginTop: '0px',
+              },
+              '> ol > li > *:last-child': {
+                marginBottom: '0px',
               },
             },
             {
@@ -307,15 +366,8 @@ module.exports = {
               marginRight: theme('padding.layout-lg'),
             },
             'ul ul, ul ol, ol ul, ol ol': {
-              paddingLeft: em(38, 24),
               marginLeft: '0px',
               marginRight: '0px',
-            },
-            'ol > li': {
-              marginLeft: em(8, 14),
-            },
-            'ul > li': {
-              marginLeft: em(8, 14),
             },
             p: {
               paddingLeft: theme('padding.layout-lg'),

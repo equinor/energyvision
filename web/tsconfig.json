@@ -2,7 +2,12 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2019",
-    "lib": ["dom", "dom.iterable", "ES2019", "es2021"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2019",
+      "es2021"
+    ],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -14,13 +19,16 @@
       "@sections/*": ["sections/*"],
       "@envisTypes": ["types/*"],
       "@utils/*": ["components/utils/*"],
-      "@mockdata/*": ["components/stories/mockdata/*"],
       "@components": ["components/src"],
       "@utils": ["components/utils"],
-      "@mockdata": ["components/stories/mockdata"]
     },
-    "incremental": true
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts"],
-  "exclude": ["node_modules", "**/*.stories.*", "pages-disabled/*.tsx"]
+  "exclude": ["node_modules", "pages-disabled/*.tsx"]
 }

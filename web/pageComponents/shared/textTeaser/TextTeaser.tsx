@@ -1,4 +1,4 @@
-import { Teaser as EnvisTeaser, Link, BackgroundContainer } from '@components'
+import { Teaser as EnvisTeaser, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
@@ -77,7 +77,7 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
   return (
-    <BackgroundContainer style={style} background={background} id={anchor}>
+    <BackgroundContainer style={style} background={{ backgroundColor: background }} id={anchor}>
       <TeaserWrapper titlePosition={titlePosition} className={`${dark ? 'dark' : ''}`}>
         <TitleWrapper>
           <StyledTitleText value={title} size={'2xl'} />

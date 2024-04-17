@@ -109,10 +109,10 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
 }
 
 const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
-  const bgImage = useSanityLoader(image, 400, Ratios.FOUR_TO_FIVE)
+  const bgImage = useSanityLoader(image, 400, Ratios.FIVE_TO_FOUR)
   const url = getUrlFromAction(action)
-  const { background, utility } = designOptions
-  const twBg = colorKeyToUtilityMap[utility].background
+  const { background } = designOptions
+  const twBg = background?.backgroundUtility && colorKeyToUtilityMap[background.backgroundUtility]?.background
   console.log('background', background)
 
   return (
@@ -127,7 +127,11 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
       variant="secondary"
       className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
     >
-      <Card.Content {...(!linkLabelAsTitle && { noArrow: true })} className={`${twBg}`}>
+      <Card.Content
+        {...(!linkLabelAsTitle && { noArrow: true })}
+        {...(linkLabelAsTitle && { variant: 'secondary' })}
+        className={`${twBg}`}
+      >
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/** @ts-ignore */}
         <Card.Header

@@ -1,4 +1,4 @@
-import { Link } from '../../../../core/Link'
+import { Link } from '@core/Link'
 
 interface DefaultLink {
   _type: 'link'

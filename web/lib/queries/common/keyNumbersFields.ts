@@ -2,6 +2,7 @@ import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
+import background from './background'
 
 export const keyNumbersFields = /*groq*/ ` 
     "type": _type,
@@ -11,7 +12,7 @@ export const keyNumbersFields = /*groq*/ `
     disclaimer[]{..., ${markDefs}},
     useHorizontalScroll,
     "designOptions": {
-        "background": coalesce(background.title, 'White'),
+      ${background}
       },
     "action": action[0]{
         ${linkSelectorFields},
