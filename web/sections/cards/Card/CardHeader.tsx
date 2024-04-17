@@ -7,7 +7,7 @@ export type CardHeaderProps = {
   /** Title string content */
   title?: string
   /** Title block content */
-  titleBlock?: PortableTextBlock
+  titleBlock?: PortableTextBlock[]
   /** Title level, will be used 'as' if titleVariant is set
    * @default h3
    */
@@ -45,7 +45,8 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
   const titleClassNames = twMerge(
     `
   group-hover/card:underline 
-  group-focus-visible/card:underline`,
+  group-focus-visible/card:underline
+  line-clamp-2`,
     titleClassName,
   )
   return eyebrow ? (

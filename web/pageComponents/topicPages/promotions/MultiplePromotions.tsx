@@ -6,7 +6,6 @@ import type {
   PromotionType,
   EventPromotionSettings,
 } from '../../../types/types'
-import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
 import { Carousel } from '../../shared/Carousel'
@@ -17,6 +16,7 @@ import { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { FormattedDate } from '@components/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import { PortableTextBlock } from '@portabletext/types'
 
 const CardsWrapper = styled.ul`
   width: 100%;
@@ -71,9 +71,6 @@ const StyledBackground = styled(BackgroundContainer)`
   flex-grow: 1;
 `
 
-const StyledTopicPageCard = styled(TopicPageCard)`
-  ${CardStyle}
-`
 const StyledPeopleCard = styled(PeopleCard)`
   ${CardStyle}
 `
@@ -87,7 +84,7 @@ const CardWrapper = styled.div`
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
-const TWNewsCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) => {
+const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) => {
   const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
@@ -100,7 +97,13 @@ const TWNewsCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardDa
     >
       <Card.Content>
         <Card.Header
-          title={title as string}
+          {...(typeof title === 'string'
+            ? {
+                title: title,
+              }
+            : {
+                titleBlock: title,
+              })}
           {...(publishDateTime && {
             eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
           })}
@@ -128,14 +131,10 @@ const MultiplePromotions = ({
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return <TWNewsCard key={data.id} {...data} />
+        return <TWCard key={data.id} {...data} />
       case 'topics':
       case 'magazine':
-        return (
-          <StyledBackground key={data.id}>
-            <StyledTopicPageCard data={data as CardData} key={data.id} />
-          </StyledBackground>
-        )
+        return <TWCard key={data.id} {...data} />
       case 'people':
         return (
           <StyledBackground key={data.id}>
