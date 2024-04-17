@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
-import BasicIFrame from '../shared/iframe/BasicIFrame'
 import TitleText from '../shared/portableText/TitleText'
 import RelatedContent from '../shared/RelatedContent'
 import AddToCalendar from '../topicPages/AddToCalendar'
@@ -81,22 +80,9 @@ const StyledLocation = styled.div`
   font-weight: var(--fontWeight-light);
 `
 
-const StyledBasicIFrame = styled(BasicIFrame)`
-  --iframe-maxWidth: var(--topbar-innerMaxWidth);
-  --iframe-innerPadding: var(--space-3xLarge) 0;
-
-  --iframe-titleAlign: center;
-
-  @media (min-width: 450px) {
-    --iframe-titleAlign: left;
-  }
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-`
-
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
-  const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
+  const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
@@ -158,7 +144,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               )}
             </div>
           )}
-          {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
               className={`pb-16`}
