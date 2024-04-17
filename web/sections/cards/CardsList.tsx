@@ -8,6 +8,7 @@ import { HTMLAttributes, forwardRef } from 'react'
 export type CardsListProps = {
   data: CardsListData
   anchor?: string
+  className?: string
 } & HTMLAttributes<HTMLElement>
 
 const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
@@ -30,7 +31,7 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
   return (
     <section
       ref={ref}
-      className={twMerge(`px-layout-md my-3xl max-w-viewport mx-auto`, className)}
+      className={twMerge(`px-layout-md pb-page-content max-w-viewport mx-auto`, className)}
       id={anchor}
       {...rest}
     >

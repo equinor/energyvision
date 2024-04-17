@@ -12,7 +12,7 @@ export const colorKeyToUtilityMap = {
     text: 'text-moss-green-50',
   },
   'spruce-wood-90': {
-    background: 'bg-spruce-wood-900',
+    background: 'bg-spruce-wood-90',
     text: 'text-spruce-wood-90',
   },
   'mist-blue-100': {

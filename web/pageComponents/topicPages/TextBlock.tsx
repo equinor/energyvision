@@ -18,9 +18,10 @@ export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string |
 type TextBlockProps = {
   data: TextBlockData
   anchor?: string
+  className?: string
 }
 
-const TextBlock = ({ data, anchor }: TextBlockProps) => {
+const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
   const {
     image,
     overline,
@@ -36,7 +37,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
 
-  const contentClassNames = `max-w-viewport py-14 px-layout-lg mx-auto`
+  const contentClassNames = twMerge(`max-w-viewport pb-page-content px-layout-lg mx-auto`, className)
 
   const contentAlignment = {
     center: 'items-start text-start px-layout-lg',

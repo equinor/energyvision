@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { BackgroundContainer, FormattedDate } from '@components'
 import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/types'
+import { twMerge } from 'tailwind-merge'
 
 const fetchData = async (url: string) => {
   const response = await fetch(url)
@@ -39,9 +40,6 @@ const fetchData = async (url: string) => {
 }
 
 const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: var(--space-large);
@@ -80,7 +78,16 @@ const TimeDelay = styled.span`
 const ENDPOINT = `https://tools.eurolandir.com/tools/pricefeed/xmlirmultiiso5.aspx?companyid=9053`
 
 // @TODO: use correct datetime & formatting
-const StockValues = ({ data: { designOptions }, anchor, ...rest }: { data: StockValuesData; anchor?: string }) => {
+const StockValues = ({
+  data: { designOptions },
+  anchor,
+  className,
+  ...rest
+}: {
+  data: StockValuesData
+  anchor?: string
+  className?: string
+}) => {
   const { data, error } = useSWR(ENDPOINT, fetchData, { refreshInterval: 60000 })
 
   if (error) {
@@ -94,7 +101,7 @@ const StockValues = ({ data: { designOptions }, anchor, ...rest }: { data: Stock
 
   return (
     <BackgroundContainer background={background} {...rest} id={anchor}>
-      <Container>
+      <Container className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
         <Item>
           <p>
             EQNR

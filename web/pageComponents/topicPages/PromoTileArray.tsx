@@ -9,6 +9,7 @@ import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
 import { PromoTileButton } from './PromoTileButton'
 import { Carousel } from '../shared/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { twMerge } from 'tailwind-merge'
 
 const { Header, Action, Media } = Card
 
@@ -56,7 +57,15 @@ const StyledCard = styled(Card)`
   width: var(--card-maxWidth, 100%);
 `
 
-const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
+const PromoTileArray = ({
+  data,
+  anchor,
+  className,
+}: {
+  data: PromoTileArrayData
+  anchor?: string
+  className?: string
+}) => {
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   if (!data.group) return null
@@ -110,7 +119,12 @@ const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: s
 
         return (
           <StyledBackgroundContainer background={background} key={id}>
-            <StyledCard type="promo" textOnly={!image} style={{ '--card-height': '100%' } as CSSProperties}>
+            <StyledCard
+              type="promo"
+              textOnly={!image}
+              className={twMerge(``, className)}
+              style={{ '--card-height': '100%' } as CSSProperties}
+            >
               {image && (
                 <Media>
                   <ImageWithRoundedUpperCorners
