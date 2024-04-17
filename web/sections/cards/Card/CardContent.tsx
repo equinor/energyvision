@@ -36,6 +36,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
   }
   const iconClassNames = twMerge(
     `
+    mt-4
     max-h-8
     text-energy-red-100
     dark:text-white-100
@@ -54,8 +55,9 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
         `
         basis-0
         grow
-        py-6
-        px-5
+        pt-8
+        pb-6
+        px-6
         flex
         gap-6
       ${variantClassNames[variant]}
