@@ -80,6 +80,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
 ) {
   return (
     <StyledHeading
+      id={level === 'h1' ? 'mainTitle' : undefined}
       variant={level}
       ref={ref}
       $center={center}
