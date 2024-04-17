@@ -13,11 +13,11 @@ import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
-import { HLSPlayer } from '../../components/src/HLSPlayer'
 import { twMerge } from 'tailwind-merge'
+import { VideoJS } from '@components/VideoJsPlayer'
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
-  () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -31,6 +31,7 @@ const StyledHeading = styled(TitleText)`
 
 const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
   margin: 0 auto;
+  position: relative;
   video::-webkit-media-controls-fullscreen-button {
     ${({ $allowFullScreen }) =>
       !$allowFullScreen && {
@@ -89,7 +90,7 @@ const ButtonWrapper = styled.div`
   margin-bottom: var(--space-xLarge);
 `
 
-const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
+const StyledPlayer = styled(DynamicVideoJsComponent)`
   object-fit: cover;
   width: inherit;
 
@@ -123,26 +124,26 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   }
 }
 
-type HLSVideoComponentType = {
+type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
 }
 
-export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVideoComponentType) => {
+export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
-
   return (
     <StyledFigure
       $allowFullScreen={videoControls?.allowFullScreen || true}
       $aspectRatio={designOptions.aspectRatio}
       $height={designOptions.height}
     >
-      <StyledHLSPlayer
+      <StyledPlayer
         src={video.url}
         title={video.title}
         poster={urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
+        aspectRatio={designOptions.aspectRatio}
         {...videoControls}
       />
     </StyledFigure>
@@ -151,7 +152,6 @@ export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVi
 
 const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
-
   return (
     <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
       <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
@@ -166,7 +166,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
             <ButtonLink action={action} />
           </ButtonWrapper>
         )}
-        <HLSVideoComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
       </div>
     </BackgroundContainer>
   )

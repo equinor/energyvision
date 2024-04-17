@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
-import { HLSVideoComponent } from './VideoPlayer'
+import { VideoJsComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
 import { twMerge } from 'tailwind-merge'
 
@@ -25,6 +25,7 @@ const HeadingWrapper = styled.div`
 const VideoItem = styled.div<{ $aspectRatio: string }>`
   height: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
   ${({ $aspectRatio }) => ($aspectRatio === VideoPlayerRatios['16:9'] ? { minWidth: '90%' } : { minWidth: 'auto' })};
 
@@ -56,11 +57,12 @@ const VideoPlayer = ({
         <Carousel>
           {items.map((item) => (
             <VideoItem key={item.id} $aspectRatio={aspectRatio}>
-              <HLSVideoComponent
+              <VideoJsComponent
                 video={item.video}
                 designOptions={designOptions}
                 videoControls={{
                   playButton: true,
+                  controls: true,
                 }}
               />
               <StyledHeading size="lg" level="h3" value={item.title} className="px-layout-lg" />
