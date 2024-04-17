@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { ArrowRight } from '../../icons'
+import { LinkType } from '../../types/types'
 
 export type ReadMoreLinkProps = {
   /** Overriding styles for the icon  */
@@ -39,15 +40,25 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   after:duration-300
   group-hover:after:w-full
   `
+  const iconVariants: Partial<Record<LinkType, string>> = {
+    internalUrl: '',
+    externalUrl: '-rotate-45',
+    downloadableFile: 'rotate-90',
+    downloadableImage: 'rotate-90',
+  }
   const iconClassNames = twMerge(
     `
     text-energy-red-100
-    ${type === 'externalUrl' ? '-rotate-45' : ''}
     dark:text-white-100
     ml-2
-    group-hover:translate-x-2
+    ${
+      type === 'downloadableFile' || type === 'downloadableImage'
+        ? 'group-hover:translate-y-0.5'
+        : 'group-hover:translate-x-2'
+    }
     transition-all
     duration-300
+    ${iconVariants[type]}
   `,
     iconClassName,
   )

@@ -51,7 +51,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
-  console.log('action', action)
+  const url = action && getUrlFromAction(action)
 
   const isSvg = image?.extension === 'svg'
   return (
@@ -80,11 +80,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </>
           )}
-          {action && (action?.type === 'internalUrl' || action?.type === 'externalUrl') && (
+          {action && url && (
             <ReadMoreLink
-              href={getUrlFromAction(action)}
+              href={url as string}
               {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-              type={action.type === 'externalUrl' ? 'externalUrl' : 'internalUrl'}
+              type={action.type}
             >
               {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
             </ReadMoreLink>

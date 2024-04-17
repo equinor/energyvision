@@ -6,9 +6,11 @@ interface DefaultLink {
 }
 
 export const ExternalLink = ({ value, children }: { value?: DefaultLink; children?: React.ReactNode }) => {
-  return (
-    <Link href={value?.href} type="externalUrl">
+  return value?.href ? (
+    <Link href={value.href} type="externalUrl">
       {children}
     </Link>
+  ) : (
+    <span>{children}</span>
   )
 }
