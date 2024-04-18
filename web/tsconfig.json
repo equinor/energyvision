@@ -14,10 +14,18 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/src/*"],
-      "@utils/*": ["components/utils/*"],
-      "@components": ["components/src"],
-      "@utils": ["components/utils"],
+      "@components/*": [
+        "components/src/*"
+      ],
+      "@utils/*": [
+        "components/utils/*"
+      ],
+      "@components": [
+        "components/src"
+      ],
+      "@utils": [
+        "components/utils"
+      ]
     },
     "incremental": true,
     "plugins": [
@@ -26,6 +34,15 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts"],
-  "exclude": ["node_modules", "pages-disabled/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "jest-setup.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "pages-disabled/*.tsx"
+  ]
 }
