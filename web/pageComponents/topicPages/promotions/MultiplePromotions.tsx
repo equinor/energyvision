@@ -28,6 +28,7 @@ const CardsWrapper = styled.ul`
   align-content: center;
   flex-wrap: wrap;
   flex-direction: column;
+  list-style: none;
 
   @media (min-width: 750px) {
     flex-direction: row;
@@ -113,6 +114,7 @@ const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) 
   )
 }
 
+/** TODO: Update carousel and make it ul list  */
 const MultiplePromotions = ({
   data,
   variant,
