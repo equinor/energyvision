@@ -16,7 +16,6 @@ import { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { FormattedDate } from '@components/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
-import { PortableTextBlock } from '@portabletext/types'
 
 const CardsWrapper = styled.ul`
   width: 100%;

@@ -27,19 +27,30 @@ export const getVariant = (variant: Variants): string => {
       border
       border-slate-blue-95
       text-slate-80
-      hover:bg-navy-90
+      hover:bg-teal-50
       hover:text-white-100
+      focus:outline-none
       focus-visible:outline-slate-blue-95
+      active:outline-slate-blue-95
+      dark:text-white-100
+      dark:border-white-100
+      dark:hover:bg-white-transparent
+      dark:focus-visible:outline-white-100
+      dark:active:outline-white-100
       `
     case 'contained':
     default:
       return `bg-teal-100 
       text-white-100 
-      hover:bg-teal-90
+      hover:bg-moss-green-100
+      focus:outline-none
       focus-visible:outline-teal-100
+      active:outline-teal-100
       dark:bg-white-100
-      dark:hover:bg-white-100/80
+      dark:hover:bg-teal-50
       dark:text-slate-80
+      dark:focus-visible:outline-white-100
+      dark:active::outline-white-100
       `
   }
 }
