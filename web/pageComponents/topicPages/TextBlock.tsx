@@ -61,7 +61,7 @@ const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
   return (
     <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
       <div
-        className={`flex flex-col gap-6 mb-8 ${
+        className={`flex flex-col gap-6 ${
           designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
         }`}
       >
