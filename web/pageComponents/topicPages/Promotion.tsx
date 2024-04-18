@@ -19,7 +19,7 @@ const Promotion = ({
   const variant = data.content?.type
   return (
     <BackgroundContainer background={designOptions?.background} id={anchor} renderFragmentWhenPossible>
-      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} {...rest}>
+      <div className={twMerge(`pb-page-content px-layout-md max-w-viewport mx-auto`, className)} {...rest}>
         <header className="flex-col flex items-center gap-8 pb-8">
           {title && <TitleText value={title} level="h2" size="xl" />}
           {ingress && (
