@@ -1,13 +1,9 @@
 import { BackgroundContainer } from '@components'
 import Card from '@sections/cards/Card'
 import { tokens } from '@equinor/eds-tokens'
-import { PortableTextBlock } from '@portabletext/types'
-import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
-import PromotileTitleText from '../shared/portableText/PromoTileTitleText'
-import { PromoTileButton } from './PromoTileButton'
 import { Carousel } from '../shared/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
@@ -35,33 +31,15 @@ const Container = styled.div`
 
 const HorizontalWrapper = styled.div`
   --card-maxWidth: 280px;
+  --card-minWidth: 280px;
   padding-top: var(--space-3xLarge);
   padding-bottom: var(--space-3xLarge);
 
   @media (min-width: 800px) {
     --card-maxWidth: 400px;
+    --card-minWidth: 400px;
   }
 `
-
-/**
- * tokens.shape.corners.borderRadius is the value used by the EDS Card component
- * Use same value from @equinor/eds-tokens to ensure consistency
- */
-const StyledBackgroundContainer = styled(BackgroundContainer)`
-  border-radius: ${tokens.shape.corners.borderRadius};
-  box-shadow: var(--card-box-shadow);
-`
-const ImageWithRoundedUpperCorners = styled(Image)`
-  border-radius: ${tokens.shape.corners.borderRadius} ${tokens.shape.corners.borderRadius} 0 0;
-`
-
-/* const StyledAction = styled(Action)`
-  flex-grow: 0;
-` */
-
-/* const StyledCard = styled(Card)`
-  width: var(--card-maxWidth, 100%);
-` */
 
 export type FakeReadMoreProps = {
   children?: React.ReactNode
