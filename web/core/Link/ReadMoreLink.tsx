@@ -22,6 +22,7 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
     w-max
     text-slate-80
     leading-0
+    box-content
   `,
     className,
   )

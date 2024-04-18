@@ -19,9 +19,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const afterHoverBorderBottom = `
   after:content-['']
   after:absolute
-  after:-bottom-[-0.5px]
+  after:bottom-0
   after:left-0
-  after:sp
   after:w-[0%]
   after:transition-all
   after:h-[0.5px]
@@ -45,6 +44,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     border-grey-40
     dark:border-white-100
     no-underline
+    box-content
     ${afterHoverBorderBottom}
   `,
     className,
