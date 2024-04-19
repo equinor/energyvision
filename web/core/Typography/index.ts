@@ -1,8 +1,4 @@
-import { Typography, TypographyProps } from './Typography'
-import { Heading, HeadingProps } from './Heading'
-import { Paragraph, ParagraphProps } from './Paragraph'
-import { TypographyVariants } from './variants'
-
-export default Typography
-export { Heading, Paragraph }
-export type { TypographyProps, HeadingProps, ParagraphProps, TypographyVariants }
+export { Typography, type TypographyProps } from './Typography'
+export { Heading, type HeadingProps } from './Heading'
+export { Paragraph, type ParagraphProps } from './Paragraph'
+export type { TypographyVariants } from './variants'
