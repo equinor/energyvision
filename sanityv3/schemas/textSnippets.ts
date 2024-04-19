@@ -525,6 +525,11 @@ const snippets: textSnippet = {
     defaultValue: 'Technical issue when applying for a specific position',
     group: groups.careerContactForm,
   },
+  careers_contact_form_suspected_recruitment_scam: {
+    title: 'Suspected recruitment scam',
+    defaultValue: 'Suspected recruitment scam',
+    group: groups.careerContactForm,
+  },
   careers_contact_form_phone: {
     title: 'Phone number',
     defaultValue: 'Phone number',
@@ -565,6 +570,43 @@ const snippets: textSnippet = {
     defaultValue: 'Please enter a question',
     group: groups.careerContactForm,
   },
+  careers_contact_form_candidate_type: {
+    title: 'Candidate type',
+    defaultValue: 'Candidate type',
+    group: groups.careerContactForm,
+  },
+
+  careers_contact_form_experienced_professionals: {
+    title: 'Experienced professionals',
+    defaultValue: 'Experienced professionals',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_graduates: {
+    title: 'Graduates',
+    defaultValue: 'Graduates',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_interns: {
+    title: 'Interns (e.g. summer, academic)',
+    defaultValue: 'Interns (e.g. summer, academic)',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_apprentices: {
+    title: 'Apprentices/lærlinger',
+    defaultValue: 'Apprentices/lærlinger',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_other: {
+    title: 'Other',
+    defaultValue: 'Other',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_supporting_documents: {
+    title: 'Supporting Documents checkbox',
+    defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
+    group: groups.careerFairForm,
+  },
+
   form_sending: {
     title: 'Sending...',
     defaultValue: 'Sending...',
