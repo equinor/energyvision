@@ -50,21 +50,21 @@ const SmallTextRender = (props: any) => {
 }
 const Level2BaseStyle = (props: any) => {
   const { children } = props
-  return <span style={{ fontSize: em(18, 16), fontWeight: '600' }}>{children} </span>
+  return <h2 style={{ fontSize: em(18, 16), fontWeight: '600' }}>{children} </h2>
 }
 
 const Level3BaseStyle = (props: any) => {
   const { children } = props
-  return <span style={{ fontSize: em(16, 16), fontWeight: '600' }}>{children} </span>
+  return <h3 style={{ fontSize: em(16, 16), fontWeight: '600' }}>{children} </h3>
 }
 
 // H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
     h2 = true,
-    useH2BaseStyle = true,
+    useH2BaseStyle = false,
     h3 = true,
-    useH3BaseStyle = true,
+    useH3BaseStyle = false,
     h4 = false,
     internalLink = true,
     externalLink = true,
@@ -113,7 +113,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   const h2BaseConfig = { title: 'Heading 2', value: 'h2', component: Level2BaseStyle }
   const h3DefaultConfig = { title: 'Heading 3', value: 'h3' }
   const h3BaseConfig = { title: 'Heading 3', value: 'h3', component: Level3BaseStyle }
-  const h4Config = { title: 'Heading 3', value: 'h4' }
+  const h4Config = { title: 'Heading 4', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
@@ -244,19 +244,21 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   if (h2) {
-    if (useH2BaseStyle) {
+    config?.styles?.push(h2DefaultConfig)
+    /*     if (useH2BaseStyle) {
       config?.styles?.push(h2BaseConfig)
     } else {
       config?.styles?.push(h2DefaultConfig)
-    }
+    } */
   }
 
   if (h3) {
-    if (useH3BaseStyle) {
+    config?.styles?.push(h3DefaultConfig)
+    /*     if (useH3BaseStyle) {
       config?.styles?.push(h3BaseConfig)
     } else {
       config?.styles?.push(h3DefaultConfig)
-    }
+    } */
   }
 
   if (h4) {
