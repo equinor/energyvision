@@ -16,36 +16,20 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   { children, type = 'internalUrl', className = '', iconClassName = '', href = '', ...rest },
   ref,
 ) {
-  const afterHoverBorderBottom = `
-  after:content-['']
-  after:absolute
-  after:bottom-0
-  after:left-0
-  after:w-[0%]
-  after:transition-all
-  after:h-[0.5px]
-  after:bg-grey-40
-  dark:after:bg-white-100
-  after:duration-300
-  hover:after:w-full
-  `
   const classNames = twMerge(
-    `
-    group
+    `group
     relative
     flex
     flex-col
+    gap-0
     w-full
     text-slate-blue-95
     dark:text-white-100
-    py-5
-    pr-2
+    pt-5
     border-b
     border-grey-40
     dark:border-white-100
     no-underline
-    box-content
-    ${afterHoverBorderBottom}
   `,
     className,
   )
@@ -76,10 +60,11 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
-      <span className="grid grid-cols-[auto_1fr] align-baseline">
+      <span className="grid grid-cols-[auto_1fr] align-baseline pb-5 pr-2">
         {children}
         <ArrowRight className={iconClassNames} />
       </span>
+      <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
     </BaseLink>
   )
 })
