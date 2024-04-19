@@ -33,6 +33,7 @@ module.exports = {
     extend: {
       colors: ({ theme }) => ({
         'moss-green': {
+          110: '#023f44', // colorpicked from moss-green-100 with dark overlay from Figma
           100: 'hsl(184, 100%, 17%)',
           95: 'hsl(184, 100%, 24%)',
           90: 'hsl(184, 31%, 58%)',
@@ -398,7 +399,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ matchVariant, addUtilities, theme }) {
+    plugin(function ({ addVariant, matchVariant, addUtilities, theme, config, e }) {
       matchVariant(
         'nth',
         (value) => {

@@ -19,7 +19,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
 
   // What is files link external? Should not be nextlink?
   return (
-    <BaseLink className={classNames} ref={ref} type={type} href={href} {...rest}>
+    <BaseLink className={classNames} skipInternalStyle ref={ref} type={type} href={href} {...rest}>
       {children}
     </BaseLink>
   )
