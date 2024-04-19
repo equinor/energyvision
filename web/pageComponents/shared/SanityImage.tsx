@@ -22,15 +22,7 @@ export enum Ratios {
 const DEFAULT_SIZES = '(max-width: 800px) 100vw, 800px'
 const DEFAULT_MAX_WIDTH = 1440
 
-const Image = ({
-  image,
-  aspectRatio,
-  sizes = DEFAULT_SIZES,
-  maxWidth = DEFAULT_MAX_WIDTH,
-  fill,
-  style,
-  ...rest
-}: Props) => {
+const Image = ({ image, aspectRatio, sizes = DEFAULT_SIZES, maxWidth = DEFAULT_MAX_WIDTH, fill, ...rest }: Props) => {
   const imageProps = useSanityLoader(image, maxWidth, aspectRatio)
   if (!image?.asset) return <></>
   const { width, height, src } = imageProps
@@ -41,14 +33,14 @@ const Image = ({
     // Layout fill
     props = {
       fill,
-      style: { ...style, objectFit: 'cover' },
+      style: { objectFit: 'cover' },
     }
   } else {
     // Layout responsive
     props = {
       width,
       height,
-      style: { ...style, display: 'flex', width: '100%', height: 'auto' },
+      style: { display: 'flex', width: '100%', height: 'auto' },
     }
   }
 
