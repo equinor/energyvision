@@ -8,6 +8,8 @@ export type BaseLinkProps = {
   type?: LinkType
   /** The locale for the link, required for internal URLs */
   locale?: string
+  /** Skip internal link styling, because incoming button styling */
+  skipInternalStyle?: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement> &
   LinkProps
 
@@ -16,11 +18,13 @@ export type BaseLinkProps = {
  * And the strict origin policy when external for using blank
  */
 export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, type = 'internalUrl', className = '', href = '', ...rest },
+  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, ...rest },
   ref,
 ) {
-  const classNames = twMerge(
-    `text-base
+  const classNames = skipInternalStyle
+    ? className
+    : twMerge(
+        `text-base
     text-slate-80
     focus:outline-none
     focus-visible:envis-outline
@@ -29,8 +33,8 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
     dark:focus-visible:envis-outline-invert
     dark:active:envis-outline-invert
   `,
-    className,
-  )
+        className,
+      )
 
   return type === 'externalUrl' ? (
     // https://web.dev/articles/referrer-best-practices

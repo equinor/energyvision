@@ -10,13 +10,12 @@ py-3
 rounded-md
 focus:outline-none
 focus-visible:envis-outline
-active:scale-105
-active:rounded-lg
 dark:focus:outline-none
 dark:focus-visible:envis-outline-invert
 `
 
 export type Variants = 'contained' | 'outlined' | 'ghost'
+
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
   switch (variant) {
@@ -27,16 +26,15 @@ export const getVariant = (variant: Variants): string => {
       border
       border-slate-blue-95
       text-slate-80
-      hover:bg-teal-50
+      hover:bg-moss-green-60
       hover:text-white-100
       focus:outline-none
       focus-visible:outline-slate-blue-95
-      active:outline-slate-blue-95
+      active:bg-moss-green-80
       dark:text-white-100
       dark:border-white-100
       dark:hover:bg-white-transparent
       dark:focus-visible:outline-white-100
-      dark:active:outline-white-100
       `
     case 'contained':
     default:
@@ -45,12 +43,12 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-moss-green-100
       focus:outline-none
       focus-visible:outline-teal-100
-      active:outline-teal-100
+      active:bg-moss-green-110
       dark:bg-white-100
-      dark:hover:bg-teal-50
+      dark:hover:bg-moss-green-60
       dark:text-slate-80
       dark:focus-visible:outline-white-100
-      dark:active::outline-white-100
+      dark:active:bg-moss-green-80
       `
   }
 }
