@@ -57,7 +57,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             className="px-layout-md py-layout-md"
             background={{ backgroundColor: 'Moss Green Light' }}
           >
-            <div className="mx-auto m-w-1186px">
+            <div className="mx-auto">
               {title && <TitleText value={title} level="h1" size="3xl" />}
               {start && (
                 <div className="text-xl text-moss-green-100 mt-7 mb-5">
