@@ -76,6 +76,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     normalTextOverride = { title: 'Normal', value: 'normal' },
   } = options
 
+  /** comment */
   const config: BlockDefinition = {
     type: 'block',
     name: 'block',
