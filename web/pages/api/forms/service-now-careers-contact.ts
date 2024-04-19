@@ -13,11 +13,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const phone = encodeURI(data.phone)
   const email = encodeURI(data.email)
   const category = encodeURI(data.category)
+  const candidateType = encodeURI(data.candidateType)
   const questions = encodeURI(data.questions)
   const location = encodeURI(data.location)
   const name = encodeURI(data.name)
   const positionDetails = encodeURI(data.positionId)
   const preferredLang = encodeURI(data.preferredLang)
+  const sendSupportingDocuments = data.supportingDocuments !== '' ? 'Yes' : 'No'
 
   const urlString =
     process.env.SERVICE_NOW_FORM_URL +
@@ -40,7 +42,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     '&Questions=' +
     questions +
     '&PreferredLang=' +
-    preferredLang
+    preferredLang +
+    '&SupportingDocuments=' +
+    sendSupportingDocuments +
+    '&candidateType' +
+    candidateType
 
   await sendRequestToServiceNow(urlString)
     .then((response) => {
