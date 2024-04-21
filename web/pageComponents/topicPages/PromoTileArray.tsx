@@ -6,12 +6,12 @@ import type { PromoTileArrayData, PromoTileData } from '../../types/types'
 import Image, { Ratios } from '../shared/SanityImage'
 import { Carousel } from '../shared/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { twMerge } from 'tailwind-merge'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { BaseLinkProps } from '@core/Link'
 import { ArrowRight } from '../../icons'
 import { getUrlFromAction } from '../../common/helpers'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 /* const { Header, Action, Media } = Card */
 
@@ -126,6 +126,8 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
 const PromoTileArray = ({
   data,
   anchor,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //TODO when quarterly is over
   className,
 }: {
   data: PromoTileArrayData
