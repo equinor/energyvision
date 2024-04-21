@@ -17,20 +17,23 @@
       "@components/*": [
         "components/src/*"
       ],
+      "@core/*": [
+        "core/*"
+      ],
+      "@sections/*": [
+        "sections/*"
+      ],
+      "@envisTypes": [
+        "types/*"
+      ],
       "@utils/*": [
         "components/utils/*"
-      ],
-      "@mockdata/*": [
-        "components/stories/mockdata/*"
       ],
       "@components": [
         "components/src"
       ],
       "@utils": [
         "components/utils"
-      ],
-      "@mockdata": [
-        "components/stories/mockdata"
       ]
     },
     "incremental": true,
@@ -49,7 +52,6 @@
   ],
   "exclude": [
     "node_modules",
-    "**/*.stories.*",
     "pages-disabled/*.tsx"
   ]
 }

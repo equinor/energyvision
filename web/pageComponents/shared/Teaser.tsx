@@ -1,12 +1,13 @@
 import { Teaser as EnvisTeaser, Eyebrow, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from './portableText/IngressText'
-import { urlFor } from '../../common/helpers'
+import { getUrlFromAction, urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import Image from './SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
-import ReadMoreLink from './ReadMoreLink'
+import { ReadMoreLink } from '../../core/Link'
 import { Heading } from '../../core/Typography'
+import { getLocaleFromName } from '../../lib/localization'
 
 const { Content, Media } = EnvisTeaser
 
@@ -50,6 +51,8 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
+  const url = action && getUrlFromAction(action)
+
   const isSvg = image?.extension === 'svg'
   return (
     <BackgroundContainer {...restOptions} id={anchor} renderFragmentWhenPossible>
@@ -77,7 +80,15 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </>
           )}
-          {action && <ReadMoreLink action={action} variant="readMore" />}
+          {action && url && (
+            <ReadMoreLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
+          )}
         </Content>
       </StyledEnvisTeaser>
     </BackgroundContainer>

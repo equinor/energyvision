@@ -284,8 +284,6 @@ export type DesignOptions = {
     backgroundUtility?: keyof ColorKeyTokens
     dark: boolean
   }
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
 }
 
 export type TextBlockData = {
@@ -343,6 +341,8 @@ export type TableHeaderData = {
   headerCell: PortableTextBlock[]
 }
 
+export type FigureRatio = 'original' | '9:16'
+
 export type CellData = {
   id: string
   type: LinkType | 'richText'
@@ -399,7 +399,9 @@ export type FigureData = {
   type: string
   id: string
   figure: ImageWithCaptionData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    aspectRatio?: FigureRatio
+  }
 }
 
 export type TextWithIconItem = {

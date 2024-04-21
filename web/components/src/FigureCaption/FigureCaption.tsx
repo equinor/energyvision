@@ -1,16 +1,11 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export type FigureCaptionProps = {
   size?: 'small' | 'medium'
 } & HTMLAttributes<HTMLElement>
 
-export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(function FigureCaption({
-  size = 'small',
-  children,
-  className,
-  ...rest
-}) {
+export const FigureCaption = ({ size = 'small', children, className, ...rest }: FigureCaptionProps) => {
   return (
     <figcaption
       className={twMerge(
@@ -22,4 +17,4 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(functio
       {children}
     </figcaption>
   )
-})
+}
