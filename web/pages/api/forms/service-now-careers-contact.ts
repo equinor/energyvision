@@ -1,6 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { sendRequestToServiceNow } from './service-now-base'
 import { validateFormRequest } from './validateFormRequest'
+import { CareersContactFormCatalogType } from 'types'
+
+const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null) => {
+  switch (catalogType) {
+    case 'suspectedRecruitmentScamRequest':
+      return 'b04a9748832d8610347af830feaad382'
+    default:
+      return '59e02ac8375a3640615af01643990e7c'
+  }
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'careers contact form')
@@ -8,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(result.status).json({ msg: result.message })
   }
 
-  const catalogIdentifier = '59e02ac8375a3640615af01643990e7c'
+  const catalogIdentifier = getCatalogIdentifier(req.body.catalogType)
   const data = req.body.data
   const phone = encodeURI(data.phone)
   const email = encodeURI(data.email)
