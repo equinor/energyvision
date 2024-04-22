@@ -14,7 +14,7 @@ import {
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import styled from 'styled-components'
-import { CareersContactFormCatalogType } from 'types'
+import { CareersContactFormCatalogType } from '../../../types'
 
 type FormValues = {
   name: string
