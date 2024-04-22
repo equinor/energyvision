@@ -85,6 +85,9 @@ dependencies:
   easy-soap-request:
     specifier: ^5.4.0
     version: 5.6.1
+  focus-visible:
+    specifier: ^5.2.0
+    version: 5.2.0
   framer-motion:
     specifier: ^6
     version: 6.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -4708,6 +4711,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /focus-visible@5.2.0:
+    resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
     dev: false
 
   /follow-redirects@1.15.2:
