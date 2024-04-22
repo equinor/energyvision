@@ -43,7 +43,7 @@ const Promotion = ({
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Wrapper className={twMerge(`pb-page-content px-14`, className)} {...rest}>
+      <Wrapper className={twMerge(`pb-page-content px-layout-sm lg:px-14`, className)} {...rest}>
         <Intro>
           {title && <StyledHeading value={title} level="h2" size="xl" />}
           {ingress && (

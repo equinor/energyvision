@@ -15,11 +15,10 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   ref,
 ) {
   const classNames = twMerge(
-    `
-    group
+    `group
     inline-flex
-    align-baseline
-    w-max
+    items-center
+    w-full
     text-slate-80
     leading-0
   `,
