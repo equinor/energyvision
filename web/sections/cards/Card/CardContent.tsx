@@ -28,7 +28,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
 ) {
   const variantClassNames = {
     primary: `flex-col items-start border border-grey-10 border-t-0`,
-    secondary: `flex-row items-center`,
+    secondary: `pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
   }
   const variantLinkClassNames = {
     primary: `self-end mt-auto`,
@@ -36,7 +36,6 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
   }
   const iconClassNames = twMerge(
     `
-    mt-4
     max-h-8
     text-energy-red-100
     dark:text-white-100
