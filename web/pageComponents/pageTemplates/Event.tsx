@@ -67,13 +67,9 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
              `}
             >
               {ingress && (
-                <Blocks proseClassName="prose-article" className="p-0 max-w-viewport mx-auto" value={ingress} />
+                <Blocks proseClassName="prose-article" className="max-w-viewport mx-auto pb-16" value={ingress} />
               )}
-              {content && (
-                <div className="mx-auto max-w-viewport px-layout-lg">
-                  <Blocks value={content} />
-                </div>
-              )}
+              {content && <Blocks proseClassName="prose-article" value={content} className="mx-auto max-w-viewport" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
@@ -86,7 +82,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-          {contactList && <ContactList data={contactList} />}
+          {contactList && <ContactList data={contactList} className="my-12" />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent

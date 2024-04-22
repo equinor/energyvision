@@ -9,7 +9,7 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink } from './components'
+import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -38,6 +38,7 @@ const defaultTypes: TypesType = {
   positionedInlineImage: (props) => <FigureWithLayout {...props} />,
   //@ts-ignore
   pullQuote: (props) => <Quote {...props} className="not-prose" />,
+  basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
 }
 
 type BlockProps = {
@@ -68,7 +69,7 @@ type BlockProps = {
   className?: string
 } & PortableTextProps
 
-const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
+const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 //@ts-ignore
 export default function Blocks({

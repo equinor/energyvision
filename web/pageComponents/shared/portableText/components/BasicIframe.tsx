@@ -4,6 +4,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { IFrameData } from 'types/types'
 import styled from 'styled-components'
 import RichText from '../RichText'
+import { twMerge } from 'tailwind-merge'
 
 type IframeRenderer = {
   _key: string
@@ -11,16 +12,16 @@ type IframeRenderer = {
 } & IFrameData
 
 const Container = styled.div`
-  margin: var(--space-xxLarge) auto;
   clear: both;
 `
 type BlockProps = {
   isInline: boolean
   value: IframeRenderer
+  className?: string
 } & PortableTextBlock
 
 export const BasicIframe = (iframe: BlockProps) => {
-  const { value } = iframe
+  const { value, className = '' } = iframe
   const data = {
     ...value,
     type: value._type,
@@ -28,7 +29,7 @@ export const BasicIframe = (iframe: BlockProps) => {
   }
 
   return (
-    <Container>
+    <Container className={twMerge(`my-14 mx-auto`, className)}>
       {value.title && <RichText value={value.title} />}
       <IFrame
         frameTitle={data.frameTitle}
