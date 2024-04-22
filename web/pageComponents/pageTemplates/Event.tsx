@@ -1,7 +1,6 @@
 import { BackgroundContainer, FormattedDate, FormattedTime } from '@components'
 import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import TitleText from '../shared/portableText/TitleText'
@@ -14,29 +13,6 @@ import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-
-const Related = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: var(--space-4xLarge) auto;
-`
-
-const StyledRelatedContent = styled(RelatedContent)`
-  --related-titleAlign: center;
-
-  @media (min-width: 450px) {
-    --related-titleAlign: left;
-  }
-`
-
-const StyledPromotion = styled(Promotion)`
-  --promotion-padding: var(--space-xxLarge) 0;
-  --promotion-titleAlign: center;
-
-  @media (min-width: 450px) {
-    --promotion-titleAlign: left;
-  }
-`
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -53,11 +29,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
       )}
       <main>
         <article>
-          <BackgroundContainer
-            className="px-layout-md py-layout-md"
-            background={{ backgroundColor: 'Moss Green Light' }}
-          >
-            <div className="mx-auto">
+          <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
+            <div className="mx-auto max-w-[1186px]">
               {title && <TitleText value={title} level="h1" size="3xl" />}
               {start && (
                 <div className="text-xl text-moss-green-100 mt-7 mb-5">
@@ -87,7 +60,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             <div
               className={`
              mt-16
-             pb-16
+             pb-page-content
              px-0 
              md:px-8
              lg:px-0
@@ -104,7 +77,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
-            <StyledPromotion
+            <Promotion
               data={{
                 id: 'promotedPeople',
                 type: 'people',
@@ -116,9 +89,15 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {contactList && <ContactList data={contactList} />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <Related>
-              <StyledRelatedContent data={relatedLinks} />
-            </Related>
+            <RelatedContent
+              data={relatedLinks}
+              className={`
+                  px-layout-lg
+                  max-w-viewport
+                  mx-auto
+                  pb-page-content
+                  `}
+            />
           )}
         </article>
       </main>
