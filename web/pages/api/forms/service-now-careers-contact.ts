@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     preferredLang +
     '&SupportingDocuments=' +
     sendSupportingDocuments +
-    '&candidateType' +
+    '&CandidateType' +
     candidateType
 
   await sendRequestToServiceNow(urlString)
