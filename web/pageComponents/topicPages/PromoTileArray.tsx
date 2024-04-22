@@ -11,6 +11,7 @@ import { BaseLinkProps } from '@core/Link'
 import { ArrowRight } from '../../icons'
 import { getUrlFromAction } from '../../common/helpers'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 /* const { Header, Action, Media } = Card */
 
@@ -122,7 +123,17 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
   )
 }
 
-const PromoTileArray = ({ data, anchor }: { data: PromoTileArrayData; anchor?: string }) => {
+const PromoTileArray = ({
+  data,
+  anchor,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //TODO when quarterly is over
+  className,
+}: {
+  data: PromoTileArrayData
+  anchor?: string
+  className?: string
+}) => {
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   if (!data.group) return null

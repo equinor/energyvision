@@ -10,21 +10,18 @@ import CareersContactForm from './CareersContactForm'
 import ReadMoreLink from '../../shared/ReadMoreLink'
 
 import type { LinkData, FormData } from '../../../types/types'
+import { twMerge } from 'tailwind-merge'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
 `
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
-`
+
 const ListStyled = styled.div`
   padding-bottom: var(--space-3xLarge);
   font-size: var(--typeScale-1);
 `
 
-const Form = ({ data, anchor }: { data: FormData; anchor?: string }) => {
+const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
   const variant = data.form
   const renderForm = (variant: string | undefined) => {
@@ -55,15 +52,14 @@ const Form = ({ data, anchor }: { data: FormData; anchor?: string }) => {
         )
     }
   }
-  return (
-    <BackgroundContainer background={{ backgroundColor: 'White' }} id={anchor}>
-      <Container>
-        {title && <StyledHeading value={title} />}
-        {ingress && <IngressText value={ingress}></IngressText>}
 
-        {renderForm(variant)}
-      </Container>
-    </BackgroundContainer>
+  return (
+    <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
+      {title && <StyledHeading value={title} />}
+      {ingress && <IngressText value={ingress}></IngressText>}
+
+      {renderForm(variant)}
+    </div>
   )
 }
 export default Form

@@ -4,12 +4,7 @@ import TitleText from '../shared/portableText/TitleText'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/types'
 import { useState } from 'react'
-
-const Wrapper = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-medium);
-  margin: var(--space-xLarge) auto var(--space-xLarge) auto;
-  max-width: var(--maxViewportWidth);
-`
+import { twMerge } from 'tailwind-merge'
 
 const StyledHeading = styled(TitleText)`
   text-align: var(--promotion-titleAlign, center);
@@ -30,7 +25,16 @@ const Articles = styled.div`
   grid-column-gap: var(--column-gap);
 `
 
-const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: string }) => {
+const NewsList = ({
+  data,
+  anchor,
+  className,
+  ...rest
+}: {
+  data: NewsListData
+  anchor?: string
+  className?: string
+}) => {
   const { title, articles } = data
 
   const hitsPerPage = 16
@@ -46,7 +50,7 @@ const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: stri
   }
 
   return (
-    <Wrapper id={anchor}>
+    <div id={anchor} className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
       {title && <StyledHeading value={title} level="h2" size="xl" />}
       <Articles {...rest}>
         {pagedArticles.map((article) => (
@@ -54,7 +58,7 @@ const NewsList = ({ data, anchor, ...rest }: { data: NewsListData; anchor?: stri
         ))}
       </Articles>
       <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />
-    </Wrapper>
+    </div>
   )
 }
 
