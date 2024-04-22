@@ -126,10 +126,8 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
 const PromoTileArray = ({
   data,
   anchor,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //TODO when quarterly is over
-  className,
-}: {
+}: //className,
+{
   data: PromoTileArrayData
   anchor?: string
   className?: string
@@ -149,7 +147,7 @@ const PromoTileArray = ({
     : Container
 
   return (
-    <Wrapper id={anchor} className={className}>
+    <Wrapper id={anchor}>
       {data.group.map((tile: PromoTileData) => {
         return <TWPromoTile key={tile.id} {...tile} />
       })}
