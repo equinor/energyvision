@@ -42,16 +42,16 @@ const Promotion = ({
   const variant = data.content?.type
 
   return (
-    <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Wrapper className={twMerge(`pb-page-content px-layout-sm lg:px-14`, className)} {...rest}>
-        <Intro>
-          {title && <StyledHeading value={title} level="h2" size="xl" />}
+    <BackgroundContainer background={designOptions?.background} id={anchor} renderFragmentWhenPossible>
+      <div className={twMerge(`pb-page-content px-layout-md max-w-viewport mx-auto`, className)} {...rest}>
+        <header className="flex-col flex items-center gap-8 pb-8">
+          {title && <TitleText value={title} level="h2" size="xl" />}
           {ingress && (
             <Ingress>
               <IngressText value={ingress} />
             </Ingress>
           )}
-        </Intro>
+        </header>
         {promotions?.length === 1 ? (
           /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
@@ -64,7 +64,7 @@ const Promotion = ({
             useHorizontalScroll={useHorizontalScroll}
           />
         )}
-      </Wrapper>
+      </div>
     </BackgroundContainer>
   )
 }
