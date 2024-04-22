@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { sendRequestToServiceNow } from './service-now-base'
 import { validateFormRequest } from './validateFormRequest'
-import { CareersContactFormCatalogType } from 'types'
+import { CareersContactFormCatalogType } from '../../../types'
 
 const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null) => {
   switch (catalogType) {
