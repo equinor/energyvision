@@ -77,7 +77,7 @@ export const Breadcrumbs = ({
 
   return (
     <BackgroundContainer background={background} className="max-w-viewport mx-auto px-layout-lg">
-      <ol className={twMerge(`inline-flex items-end space-x-3 py-8`, className)}>
+      <ol className={twMerge(`inline-flex items-baseline space-x-3 py-8`, className)}>
         {crumbs.map((item: Breadcrumb) => {
           if (item.slug === slug) {
             return (
