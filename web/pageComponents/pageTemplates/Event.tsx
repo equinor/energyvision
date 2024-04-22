@@ -4,16 +4,15 @@ import { FormattedMessage } from 'react-intl'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import TitleText from '../shared/portableText/TitleText'
-import RelatedContent from '../shared/RelatedContent'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import Promotion from '../topicPages/Promotion'
+import RelatedContent from '../shared/RelatedContent'
 
 import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -30,11 +29,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
       )}
       <main>
         <article>
-          <BackgroundContainer
-            className="px-layout-md py-layout-md"
-            background={{ backgroundColor: 'Moss Green Light' }}
-          >
-            <div className="mx-auto">
+          <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
+            <div className="mx-auto max-w-[1186px]">
               {title && <TitleText value={title} level="h1" size="3xl" />}
               {start && (
                 <div className="text-xl text-moss-green-100 mt-7 mb-5">
@@ -64,7 +60,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             <div
               className={`
              mt-16
-             pb-16
+             pb-page-content
              px-0 
              md:px-8
              lg:px-0
@@ -82,7 +78,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
-              className={`pb-16`}
               data={{
                 id: 'promotedPeople',
                 type: 'people',
@@ -100,7 +95,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   px-layout-lg
                   max-w-viewport
                   mx-auto
-                  my-3xl
+                  pb-page-content
                   `}
             />
           )}
