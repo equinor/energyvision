@@ -1,16 +1,14 @@
-import { BackgroundContainer } from '@components'
 import Card from '@sections/cards/Card'
-import { tokens } from '@equinor/eds-tokens'
 import styled from 'styled-components'
 import type { PromoTileArrayData, PromoTileData } from '../../types/types'
-import Image, { Ratios } from '../shared/SanityImage'
+import { Ratios } from '../shared/SanityImage'
 import { Carousel } from '../shared/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { BaseLinkProps } from '@core/Link'
 import { ArrowRight } from '../../icons'
 import { getUrlFromAction } from '../../common/helpers'
-import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 
 /* const { Header, Action, Media } = Card */
@@ -91,7 +89,14 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
   const bgImage = useSanityLoader(image, 400, Ratios.FIVE_TO_FOUR)
   const url = getUrlFromAction(action)
   const { background } = designOptions
-  const twBg = background?.backgroundUtility && colorKeyToUtilityMap[background.backgroundUtility]?.background
+  const colorName =
+    Object.keys(colorKeyToUtilityMap).find(
+      (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
+    ) ?? 'white-100'
+
+  const twBg = background?.backgroundUtility
+    ? colorKeyToUtilityMap[background.backgroundUtility]?.background
+    : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]?.background
 
   return (
     <Card
