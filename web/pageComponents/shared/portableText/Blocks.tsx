@@ -38,6 +38,7 @@ const defaultTypes: TypesType = {
   positionedInlineImage: (props) => <FigureWithLayout {...props} />,
   //@ts-ignore
   pullQuote: (props) => <Quote {...props} className="not-prose" />,
+  //@ts-ignore
   basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
 }
 
@@ -67,6 +68,10 @@ type BlockProps = {
    * Override other styling to the wrapping block
    */
   className?: string
+  /**
+   * If needed to connect with aria-describedby and such
+   */
+  id?: string
 } & PortableTextProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
@@ -80,6 +85,7 @@ export default function Blocks({
   components,
   proseClassName = '',
   className = '',
+  id,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
 
@@ -118,7 +124,7 @@ export default function Blocks({
             div = []
 
             return (
-              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)}>
+              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)} id={id}>
                 <PortableText
                   value={value}
                   //@ts-ignore
