@@ -43,7 +43,7 @@ export const magazineQuery = /* groq */ `
     "content": content[] {
           ${pageContentFields}
       },
-      ${slugsForNewsAndMagazine('magazine')},
+      ${slugsForNewsAndMagazine},
     "footerComponent": *[_type == 'magazineIndex' && ${sameLang} && ${noDrafts}][0]{
       "data": footerComponent{
         ${footerComponentFields}

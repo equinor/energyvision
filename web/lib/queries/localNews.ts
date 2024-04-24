@@ -13,7 +13,7 @@ const localNewsFields = /* groq */ `
   "updatedAt": _updatedAt,
   title,
   heroImage,
-  ${slugsForNewsAndMagazine('localNews')},
+  ${slugsForNewsAndMagazine},
   ${ingressForNewsQuery},
   "publishDateTime": ${publishDateTimeQuery},
   "iframe": ${iframeForNewsQuery},
