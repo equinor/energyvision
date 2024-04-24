@@ -7,12 +7,12 @@ import TitleText from '../shared/portableText/TitleText'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import Promotion from '../topicPages/Promotion'
 import RelatedContent from '../shared/RelatedContent'
-
 import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -38,7 +38,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 </div>
               )}
 
-              <div className="flex flex-center mb-2 text-moss-green-100 ">
+              <div className="flex flex-center gap-1 mb-2 text-moss-green-100 ">
                 {start && end ? (
                   <>
                     <FormattedTime datetime={start} />
@@ -66,14 +66,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
              lg:px-0
              `}
             >
-              {ingress && (
-                <Blocks proseClassName="prose-article" className="p-0 max-w-viewport mx-auto" value={ingress} />
-              )}
-              {content && (
-                <div className="mx-auto max-w-viewport px-layout-lg">
-                  <Blocks value={content} />
-                </div>
-              )}
+              {ingress && <IngressText value={ingress} className="max-w-viewport mx-auto px-layout-lg pb-16" />}
+              {content && <Blocks proseClassName="prose-article" value={content} className="mx-auto max-w-viewport" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
@@ -86,7 +80,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-          {contactList && <ContactList data={contactList} />}
+          {contactList && <ContactList data={contactList} className="my-12" />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent

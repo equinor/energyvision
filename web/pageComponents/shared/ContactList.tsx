@@ -2,14 +2,16 @@ import { HTMLAttributes } from 'react'
 import type { ContactListData } from '../../types/types'
 import { Text, Heading } from '@components'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
+import { twMerge } from 'tailwind-merge'
 
 type ContactListProps = {
   data: ContactListData
+  className?: string
 } & HTMLAttributes<HTMLDivElement>
 
-const ContactList = ({ data }: ContactListProps) => {
+const ContactList = ({ data, className = '' }: ContactListProps) => {
   return (
-    <div className="flex flex-col pb-page-content px-layout-lg max-w-viewport">
+    <div className={twMerge(`mflex flex-col pb-page-content px-layout-lg max-w-viewport`, className)}>
       {data?.title && (
         <Heading className="pb-6 text-left" size="xl" level="h2">
           {data.title}
