@@ -37,6 +37,7 @@
     "sanity-plugin-documents-pane": "^2.1.0",
     "sanity-plugin-iframe-pane": "^2.3.0",
     "sanity-plugin-media": "^2.2.5",
+    "sanity-plugin-utils": "^1.6.4",
     "slugify": "^1.6.5",
     "speakingurl": "^14.0.1",
     "styled-components": "^6.1"
