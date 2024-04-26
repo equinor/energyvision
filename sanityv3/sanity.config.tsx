@@ -30,6 +30,7 @@ import { i18n } from './schemas/documentTranslation'
 import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 import { getMetaTitleSuffix } from '../satellitesConfig'
 import { defaultLanguage } from './languages'
+import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -107,9 +108,16 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         .filter(({ action }: DocumentActionComponent) => {
           return !(action === 'delete' && i18n.schemaTypes.includes(context.schemaType))
         })
-        .map((originalAction) =>
-          originalAction.action === 'publish' ? createCustomPublishAction(originalAction, context) : originalAction,
-        )
+        .map((originalAction) => {
+          switch (originalAction.action) {
+            case 'publish':
+              return createCustomPublishAction(originalAction, context)
+            case 'duplicate':
+              return createCustomDuplicateAction(originalAction, context)
+            default:
+              return originalAction
+          }
+        })
     },
   },
   auth: createAuthStore({
