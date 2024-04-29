@@ -55,7 +55,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
           <link>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</link>
           <guid>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
-          <category><![CDATA[${article.subscriptionType}]]</category>
+          <category>${article.subscriptionType}</category>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
         </item>`
     })
