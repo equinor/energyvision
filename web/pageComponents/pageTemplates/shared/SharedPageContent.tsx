@@ -51,10 +51,14 @@ import {
   TextTeaserData,
   KeyNumbersData,
   CardsListData,
+  GridData,
+  CampaignBannerData,
 } from '../../../types/types'
+import Grid from '@sections/Grid/Grid'
+import { CampaignBanner } from '@sections/CampaignBanner'
 
 // How could we do this for several different component types?
-type ComponentProps =
+export type ComponentProps =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
@@ -286,6 +290,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         return (
           <CardsList key={c.id} data={c as CardsListData} anchor={anchorReference} className={topSpacingClassName} />
         )
+      case 'grid':
+        return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
+      case 'campaignBanner':
+        return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
       default:
         return null
     }

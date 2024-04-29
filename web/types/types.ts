@@ -7,6 +7,7 @@ import {
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
 import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
+import { RowType } from '@sections/Grid/mapGridContent'
 
 export type CaptionData = {
   attribution?: string
@@ -225,6 +226,7 @@ export type PageSchema = {
   content?: ContentType[]
   id: string
   type: string
+  isCampaign?: boolean
   breadcrumbs: {
     enableBreadcrumbs: boolean
     useCustomBreadcrumbs: boolean
@@ -827,4 +829,34 @@ export type CardListItemData = {
   type: 'card'
   title?: string
   content?: PortableTextBlock[]
+}
+
+export type GridData = {
+  type: 'grid'
+  id: string
+  gridRows?: any[]
+}
+
+export type CampaignBannerData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  text: PortableTextBlock[]
+  useLightOverlay?: boolean
+  attribution?: string
+  backgroundImage: SanityImageObject
+  backgroundColor: BackgroundColours
+  backgroundUtility: keyof ColorKeyTokens
+}
+export type GridTeaserData = {
+  image: ImageWithAlt
+  rowType?: RowType
+  content?: PortableTextBlock
+  quote?: string
+  author?: string
+  authorTitle?: string
+  background?: BackgroundColours
+  imagePosition?: TeaserImagePosition
+  action?: LinkData
+  theme?: string
 }

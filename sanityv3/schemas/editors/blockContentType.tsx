@@ -19,6 +19,8 @@ export type BlockContentProps = {
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
+  largeText?: boolean
+  extraLargeText?: boolean
   highlight?: boolean
   normalTextOverride?: {
     title: string
@@ -48,14 +50,22 @@ const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
+const LargeTextRender = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: `${em(36, 16)}`, fontWeight: '600' }}>{children}</span>
+}
+const ExtraLargeTextRender = (props: any) => {
+  const { children } = props
+  return <span style={{ fontSize: `${em(56, 16)}`, fontWeight: '600' }}>{children}</span>
+}
 const Level2BaseStyle = (props: any) => {
   const { children } = props
-  return <h2 style={{ fontSize: em(18, 16), fontWeight: '600' }}>{children} </h2>
+  return <h2 style={{ fontSize: `${em(18, 16)}`, fontWeight: '600' }}>{children} </h2>
 }
 
 const Level3BaseStyle = (props: any) => {
   const { children } = props
-  return <h3 style={{ fontSize: em(16, 16), fontWeight: '600' }}>{children} </h3>
+  return <h3 style={{ fontSize: `${em(16, 16)}`, fontWeight: '600' }}>{children} </h3>
 }
 
 // H1 not allowed in block content since it should be a document title.
@@ -70,6 +80,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     externalLink = true,
     attachment = false,
     lists = true,
+    largeText = false,
+    extraLargeText = false,
     smallText = true,
     highlight = false,
     extendedStyles = [],
@@ -118,6 +130,16 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     title: 'Small text',
     value: 'smallText',
     component: SmallTextRender,
+  }
+  const largeTextConfig = {
+    title: 'Large text',
+    value: 'largeText',
+    component: LargeTextRender,
+  }
+  const extraLargeTextConfig = {
+    title: 'Extra large text',
+    value: 'extraLargeText',
+    component: ExtraLargeTextRender,
   }
   const externalLinkConfig = {
     name: 'link',
@@ -266,6 +288,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
   if (smallText) {
     config?.styles?.push(smallTextConfig)
+  }
+  if (largeText) {
+    config?.styles?.push(largeTextConfig)
+  }
+  if (extraLargeText) {
+    config?.styles?.push(extraLargeTextConfig)
   }
 
   if (externalLink) {

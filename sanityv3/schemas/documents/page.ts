@@ -44,6 +44,12 @@ export default {
     },
     ...sharedHeroFields,
     {
+      title: 'Is Campain',
+      name: 'isCampaign',
+      description: 'Set this to true if the page should be treated as campaign. the header title h1 will be hidden.',
+      type: 'boolean',
+    },
+    {
       name: 'content',
       type: 'array',
       title: 'Page sections',
@@ -68,6 +74,8 @@ export default {
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
         { type: 'table' },
+        { type: 'grid' },
+        { type: 'campaignBanner' },
         Flags.HAS_FORMS && { type: 'form' },
         Flags.HAS_NEWS && { type: 'newsList' },
         { type: 'stockValuesApi' },

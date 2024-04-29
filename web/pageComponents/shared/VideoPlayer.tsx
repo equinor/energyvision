@@ -13,7 +13,7 @@ import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
-import { twMerge } from 'tailwind-merge'
+import envisTwMerge from '../../twMerge'
 import { VideoJS } from '@components/VideoJsPlayer'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
@@ -29,7 +29,12 @@ const StyledHeading = styled(TitleText)`
   text-align: left;
 `
 
-const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
+const StyledFigure = styled.figure<{
+  $allowFullScreen?: boolean
+  $aspectRatio?: string
+  $height?: number
+  $overrideHeight?: string
+}>`
   margin: 0 auto;
   position: relative;
   video::-webkit-media-controls-fullscreen-button {
@@ -39,7 +44,7 @@ const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: 
       }}
   }
 
-  ${({ $aspectRatio, $height }) => {
+  ${({ $aspectRatio, $height, $overrideHeight }) => {
     if (!$height) {
       switch ($aspectRatio) {
         case VideoPlayerRatios['1:1']:
@@ -61,7 +66,7 @@ const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: 
           }
         case VideoPlayerRatios['16:9']:
           return {
-            height: '56.25%',
+            height: $overrideHeight ?? '56.25%',
             width: '100%',
           }
         case VideoPlayerRatios['9:16']:
@@ -128,15 +133,17 @@ type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
+  height?: string
 }
 
-export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJsComponentType) => {
+export const VideoJsComponent = ({ video, videoControls, designOptions, height }: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
   return (
     <StyledFigure
       $allowFullScreen={videoControls?.allowFullScreen || true}
       $aspectRatio={designOptions.aspectRatio}
       $height={designOptions.height}
+      $overrideHeight={height}
     >
       <StyledPlayer
         src={video.url}
@@ -150,11 +157,23 @@ export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJ
   )
 }
 
-const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
+const VideoPlayer = ({
+  anchor,
+  data,
+  className,
+  bgClassName,
+  height,
+}: {
+  data: VideoPlayerData
+  anchor?: string
+  className?: string
+  bgClassName?: string
+  height?: string
+}) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
   return (
-    <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
-      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
+    <BackgroundContainer {...designOptions?.background} id={anchor} className={bgClassName} renderFragmentWhenPossible>
+      <div className={envisTwMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         {ingress && (
           <Ingress>
@@ -166,7 +185,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
             <ButtonLink action={action} />
           </ButtonWrapper>
         )}
-        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} height={height} />
       </div>
     </BackgroundContainer>
   )

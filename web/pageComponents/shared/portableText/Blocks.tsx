@@ -21,8 +21,21 @@ type TypeProps = {
   children?: React.ReactNode
 }
 
-const defaultBlocks: BlockType = {
+/* const defaultBlocks: BlockType = {
   smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
+  largeText: ({ children,className }: TypeProps) => <p className="text-2xl">{children}</p>,
+  extraLargeText: ({ children, className }: TypeProps) => {
+    return <p className=" whitespace-pre text-9xl font-semibold mt-4">{children}</p>
+  },
+} */
+const defaultBlocks = (className?: string): BlockType => {
+  return {
+    smallText: ({ children }: TypeProps) => <span className="text-sm">{children}</span>,
+    largeText: ({ children }: TypeProps) => <span className="text-2xl">{children}</span>,
+    extraLargeText: ({ children }: TypeProps) => {
+      return <span className={twMerge(`text-9xl font-semibold`, className)}>{children}</span>
+    },
+  }
 }
 
 const defaultMarks: MarkType = {
@@ -68,6 +81,7 @@ type BlockProps = {
    * Override other styling to the wrapping block
    */
   className?: string
+  blocksClassName?: string
   /**
    * If needed to connect with aria-describedby and such
    */
@@ -84,6 +98,7 @@ export default function Blocks({
   types,
   components,
   proseClassName = '',
+  blocksClassName = '',
   className = '',
   id,
 }: BlockProps) {
@@ -93,7 +108,7 @@ export default function Blocks({
     ...defaultComponents,
     block: {
       ...defaultComponents.block,
-      ...defaultBlocks,
+      ...defaultBlocks(blocksClassName),
       ...blocks,
     } as BlockType,
     marks: {
