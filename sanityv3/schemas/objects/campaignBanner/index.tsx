@@ -71,16 +71,6 @@ export default {
         }).warning(),
     },
     {
-      name: 'text',
-      title: 'Text content',
-      type: 'array',
-      of: [blockContentType],
-      validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
-          return validateCharCounterEditor(value, 600)
-        }).warning(),
-    },
-    {
       title: 'Image',
       name: 'backgroundImage',
       type: 'image',
@@ -88,19 +78,6 @@ export default {
         hotspot: true,
         collapsed: false,
       },
-      fieldset: 'backgroundImage',
-    },
-    {
-      name: 'attribution',
-      title: 'Credit',
-      description: '',
-      type: 'string',
-    },
-    {
-      title: 'Apply light gradient',
-      name: 'useLightOverlay',
-      type: 'boolean',
-      description: 'Applies a white gradient over semi transparent background image.',
       fieldset: 'backgroundImage',
     },
     {

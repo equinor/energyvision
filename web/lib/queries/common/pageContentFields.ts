@@ -554,16 +554,19 @@ _type == "keyNumbers" =>{
   _type == "campaignBanner" => {
     "type": _type,
     "id": _key,
-    title,
-    "text": text[]{..., ${markDefs}},
-    "backgroundImage": backgroundImage {
+    "title": title[]{..., ${markDefs}},
+    "designOptions":{
+      "background": {
+        "backgroundImage": backgroundImage {
       ...,
       "extension": asset-> extension
+      },
+      "backgroundColor": coalesce(backgroundColor.title, 'White'),
+      "dark": coalesce(backgroundColor.dark, false),
+      "backgroundUtility":coalesce(backgroundColor.key, ""),
+      }
     },
-    attribution,
-    useLightOverlay,
-    "backgroundColor": coalesce(backgroundColor.title, 'White'),
-    "backgroundUtility":coalesce(backgroundColor.key, ""),
+
   },
 `
 

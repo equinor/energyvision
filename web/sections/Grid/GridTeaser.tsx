@@ -18,20 +18,15 @@ export type GridTeaserProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function GridTeaser({ data, rowType }, ref) {
-  const { image, action, content, quote, author, authorTitle, theme, background, imagePosition } = data
+  const { image, action, content, quote, author, authorTitle, theme, imagePosition } = data
   const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
   const altTag = image?.isDecorative ? '' : image?.alt || ''
-  //@ts-ignore
-  const { backgroundUtility, textUtility } = getColorForTheme(theme)
 
-  let bgClassName = ''
-  let textClassName = ''
-  if (theme !== null) {
-    //@ts-ignore
-    bgClassName = colorKeyToUtilityMap[backgroundUtility]?.background
-    //@ts-ignore
-    textClassName = colorKeyToUtilityMap[textUtility]?.text
-  }
+  const { backgroundUtility, textUtility } = getColorForTheme(theme ?? 0)
+  console.log('theme', theme)
+  console.log('backgroundUtility', backgroundUtility)
+  console.log('textUtility', textUtility)
+
   const aligment = `${imagePosition === 'left' ? '' : '-order-1 text-left'}`
 
   return (
@@ -43,7 +38,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       grid
       grid-rows-[45%_55%]
       ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] grid-rows-1' : ''}
-      ${bgClassName}
+      ${theme !== null ? backgroundUtility : ''}
       `)}
     >
       {image && (
@@ -61,7 +56,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       <div
         className={`pt-6 pb-6 ${rowType !== 'span3' ? 'lg:pt-8 lg:pb-0' : 'lg:pt-16'} flex flex-col ${
           action ? 'justify-between' : ''
-        } ${textClassName} `}
+        } ${theme !== null ? textUtility : ''} `}
       >
         <div className="px-10 flex flex-col gap-6">
           {content && (

@@ -6,6 +6,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
 import { BlockType } from '../../pageComponents/shared/portableText/helpers/defaultSerializers'
+import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 
 const DEFAULT_MAX_WIDTH = 1920
 
@@ -43,66 +44,45 @@ export type CampaignBannerProps = {
 } & HTMLAttributes<HTMLElement>
 
 const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function CampaignBanner({ data, className }, ref) {
-  const {
-    title,
-    text,
-    backgroundImage,
-    backgroundColor,
-    backgroundUtility,
-    useLightOverlay = false,
-    attribution,
-  } = data
-  console.log('CampaignBanner', data)
+  const { title, designOptions } = data
+  const { background } = designOptions
+  const { backgroundImage, backgroundUtility, dark } = background
+
   const props = useSanityLoader(backgroundImage, DEFAULT_MAX_WIDTH, undefined)
   const src = props?.src
 
+  const bgImageClassNames = `[container:inline-size]
+  relative
+  w-full
+  2xl:aspect-[10/3]
+  bg-local
+  bg-center
+  bg-no-repeat
+  bg-cover
+  mb-20
+`
+
+  const bgColor = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility].background : ''
   const backgroundClassNames = twMerge(
-    `[container:inline-size]
-      relative
-      ${useLightOverlay ? '' : 'dark'}
-      w-full
-      2xl:aspect-[10/3]
-      bg-local
-      bg-center
-      bg-no-repeat
-      bg-cover
-      mb-20
-    `,
+    `${dark} ${!backgroundImage ? ` pt-12 pb-24 ${bgColor}` : ''} 
+    ${backgroundImage ? bgImageClassNames : ``}
+  `,
     className,
   )
-
-  const scrimGradient = useLightOverlay ? `white-center-gradient ` : `black-center-gradient`
 
   return (
     <section
       ref={ref}
       className={`${backgroundClassNames}`}
-      style={{
-        backgroundImage: `url(${src})`,
-      }}
+      {...(backgroundImage && {
+        style: { backgroundImage: `url(${src})` },
+      })}
     >
-      {/** Scrim */}
-      <div
-        className={`
-          pt-24
-          pb-12
-          h-full
-          relative
-          `}
-      >
-        <div
-          className={`px-layout-sm ${
-            text ? `grid grid-cols-[60%_40%] grid-rows-[1fr_1fr_1fr] justify-between gap-40` : 'w-full h-full'
-          }`}
-        >
-          <div className="flex justify-start row-start-1 row-span-2">
-            <h2 className="">
-              <Blocks value={title} blocks={campaignTitleBlocks} className="w-fit max-w-prose text-energy-red-100" />
-            </h2>
-          </div>
-          <div className=" flex justify-end items-center row-start-2 row-span-2">
-            <Blocks value={text} className="bg-white-100 text-slate-80 px-2 py-4 h-fit" />
-          </div>
+      <div className={`px-layout-sm w-full h-full`}>
+        <div className="flex justify-start row-start-1 row-span-2">
+          <h2 className="">
+            <Blocks value={title} blocks={campaignTitleBlocks} className="w-fit max-w-prose text-energy-red-100" />
+          </h2>
         </div>
       </div>
     </section>
