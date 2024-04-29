@@ -148,7 +148,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         : undefined
 
     //Returns pt-12 when applicable or empty string
-    const topSpacingClassName = applyPaddingTopIfApplicable(c, data?.content?.[index - 1] as unknown as ComponentProps)
+    const topSpacingClassName = applyPaddingTopIfApplicable(
+      c,
+      data?.content?.filter((comp) => comp?.type !== 'anchorLink')?.[index - 1] as unknown as ComponentProps,
+    )
 
     switch (c.type) {
       case 'teaser':
