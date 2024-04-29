@@ -12,7 +12,7 @@ const ThreeColumns = forwardRef<HTMLDivElement, ThreeColumnsProps>(function Thre
   ref,
 ) {
   const { columns = [] } = data
-  const borderStyling = `shadow-md` //`border border-moss-green-60`
+  const borderStyling = `border border-moss-green-60`
   return (
     <Fragment ref={ref}>
       {columns.map((column: any) => {

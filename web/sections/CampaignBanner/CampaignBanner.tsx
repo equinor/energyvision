@@ -66,7 +66,7 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
       bg-center
       bg-no-repeat
       bg-cover
-      mb-40
+      mb-20
     `,
     className,
   )
@@ -100,8 +100,8 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
               <Blocks value={title} blocks={campaignTitleBlocks} className="w-fit max-w-prose text-energy-red-100" />
             </h2>
           </div>
-          <div className="flex justify-end items-center row-start-2 row-span-2">
-            <Blocks value={text} className="bg-white-100 px-2 py-4 h-fit" />
+          <div className=" flex justify-end items-center row-start-2 row-span-2">
+            <Blocks value={text} className="bg-white-100 text-slate-80 px-2 py-4 h-fit" />
           </div>
         </div>
       </div>

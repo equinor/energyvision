@@ -9,7 +9,7 @@ export type Span2And1Props = {
 
 const Span2And1 = forwardRef<HTMLDivElement, Span2And1Props>(function Span2And1({ data, className = '' }, ref) {
   const { singleColumn, span2, alignSpan2Right = false } = data
-  const borderStyling = `shadow-md` //`border border-moss-green-60`
+  const borderStyling = `border border-moss-green-60`
   return (
     <Fragment ref={ref}>
       {alignSpan2Right ? (
