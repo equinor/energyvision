@@ -72,7 +72,7 @@
     "react-intl": "^6.0.2",
     "react-is": "^18.1.0",
     "react-twitter-embed": "^4.0.4",
-    "sharp": "^0.32.6",
+    "sharp": "^0.33.3",
     "styled-components": "^5.3.9",
     "styled-normalize": "^8.0.7",
     "swiper": "^9.2.3",
@@ -110,7 +110,7 @@
     "postcss": "^8.4.35",
     "postcss-import": "^16.0.1",
     "autoprefixer": "^10.4.17",
-    "vite": "^4.2.2",
+    "vite": "^5.2.10",
     "webpack": "^5.88.2"
   }
 }
