@@ -1,3 +1,4 @@
+import gridContentFields from '../gridContentFields'
 import { iframeCarouselFields } from '../iframeCarouselFields'
 import { tableFields } from '../table'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
@@ -511,6 +512,58 @@ _type == "keyNumbers" =>{
     "designOptions": {
       ${background},
     },
+  },
+  _type == "grid" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "gridRows": gridRows[]{
+        "type": _type,
+        "id": _key,
+        _type == "span3" => {
+          "type": _type,
+        "id": _key,
+        "content": content[0] {
+          ${gridContentFields}
+        },
+        },
+        _type == "span2and1" => {
+          "type": _type,
+        "id": _key,
+          alignSpan2Right,
+          "span2": {
+          "content": span2[0] {
+            ${gridContentFields}
+          }
+          },
+          "singleColumn": {
+          "content": singleColumn[0] {
+            ${gridContentFields}
+          },
+        }
+      },
+      _type == "threeColumns" => {
+        "type": _type,
+        "id": _key,
+          "columns": columns[]{
+            ${gridContentFields}
+          }
+      }
+      },
+  },
+  _type == "campaignBanner" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "text": text[]{..., ${markDefs}},
+    "backgroundImage": backgroundImage {
+      ...,
+      "extension": asset-> extension
+    },
+    attribution,
+    useLightOverlay,
+    "backgroundColor": coalesce(backgroundColor.title, 'White'),
+    "backgroundUtility":coalesce(backgroundColor.key, ""),
   },
 `
 
