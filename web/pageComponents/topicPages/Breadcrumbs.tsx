@@ -30,7 +30,6 @@ const StyledBreadcrumbsListItem = styled(BreadcrumbsListItem)<{ $bgColor?: Backg
 `
 
 const StyledNextLink = styled(NextLink)<{ $bgColor?: BackgroundColours }>`
-  text-decoration: none;
   color: var(--color-on-background);
 `
 
@@ -94,7 +93,7 @@ export const Breadcrumbs = ({
           }
           return (
             <BreadcrumbsListItem key={item.slug}>
-              <StyledNextLink href={item.slug} prefetch={false}>
+              <StyledNextLink href={item.slug} prefetch={false} className="hover:underline no-underline">
                 {item.label}
               </StyledNextLink>
             </BreadcrumbsListItem>
