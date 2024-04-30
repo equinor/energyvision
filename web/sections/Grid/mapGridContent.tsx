@@ -21,13 +21,7 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.R
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
       return (
-        <VideoPlayer
-          key={data.id}
-          data={data as VideoPlayerData}
-          className={`p-0 px-0 w-full h-full`}
-          bgClassName="w-full h-full"
-          height="100%"
-        />
+        <VideoPlayer key={data.id} data={data as VideoPlayerData} className={`p-0 px-0`} bgClassName="" height="100%" />
       )
     }
     default:
