@@ -152,9 +152,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         : undefined
 
     //Returns pt-12 when applicable or empty string
+    const previousComponentIndex = prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
     const topSpacingClassName = applyPaddingTopIfApplicable(
       c,
-      data?.content?.filter((comp) => comp?.type !== 'anchorLink')?.[index - 1] as unknown as ComponentProps,
+      data?.content?.[previousComponentIndex] as unknown as ComponentProps,
     )
 
     switch (c.type) {
