@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import Typography, { TypographyVariants } from '../Typography'
+import { Typography, TypographyVariants } from '../Typography'
 import { ListItem } from './ListItem'
 import { ListProps } from './types'
 import { useId } from '@equinor/eds-utils'
@@ -49,7 +49,7 @@ export const List = forwardRef<HTMLDivElement, ListProps>(
           className={twMerge(
             `list-inside
           ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}
-          ${split ? 'md:grid md:grid-cols-2 md:gap-8' : ''}`,
+          ${split ? 'md:grid md:grid-cols-2 gap-x-8 gap-y-6 items-end' : ''}`,
             className,
           )}
         >

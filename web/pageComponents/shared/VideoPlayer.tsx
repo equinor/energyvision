@@ -14,6 +14,7 @@ import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { ButtonLink } from './ButtonLink'
 import { VideoJS } from '@components/VideoJsPlayer'
+import { twMerge } from 'tailwind-merge'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -26,12 +27,6 @@ const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
   text-align: left;
-`
-
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
 `
 
 const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
@@ -155,11 +150,11 @@ export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJ
   )
 }
 
-const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
+const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
   return (
-    <BackgroundContainer background={designOptions.background} id={anchor} renderFragmentWhenPossible>
-      <Container>
+    <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
+      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         {ingress && (
           <Ingress>
@@ -172,7 +167,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string 
           </ButtonWrapper>
         )}
         <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
-      </Container>
+      </div>
     </BackgroundContainer>
   )
 }

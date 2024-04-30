@@ -8,6 +8,7 @@ import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
 import { Carousel } from '../../shared/Carousel'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -25,9 +26,7 @@ const Ingress = styled.div`
   }
   margin-bottom: var(--space-xLarge);
 `
-const StyledBackgroundContainer = styled(BackgroundContainer)`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small); ;
-`
+
 const HorizontalWrapper = styled.div`
   --card-maxWidth: 280px;
   padding-bottom: var(--space-large);
@@ -52,8 +51,9 @@ const Container = styled.div`
 type KeyNumbersProps = {
   data: KeyNumbersData
   anchor?: string
+  className?: string
 }
-export default function ({ data, anchor }: KeyNumbersProps) {
+export default function ({ data, anchor, className }: KeyNumbersProps) {
   const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
 
   const isMobile = useMediaQuery(`(max-width: 800px)`)
@@ -67,7 +67,7 @@ export default function ({ data, anchor }: KeyNumbersProps) {
       )
     : Container
   return (
-    <StyledBackgroundContainer {...designOptions} id={anchor}>
+    <BackgroundContainer {...designOptions} className={twMerge(`pb-page-content px-layout-sm`, className)} id={anchor}>
       {title && <StyledHeading value={title} />}
       {ingress && (
         <Ingress>
@@ -87,6 +87,6 @@ export default function ({ data, anchor }: KeyNumbersProps) {
         </Disclaimer>
       )}
       {action && <ReadMoreLink action={action} />}
-    </StyledBackgroundContainer>
+    </BackgroundContainer>
   )
 }

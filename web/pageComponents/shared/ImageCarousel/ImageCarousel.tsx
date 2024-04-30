@@ -10,12 +10,9 @@ import type { ImageCarouselData } from '../../../types/types'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
+import { twMerge } from 'tailwind-merge'
 
 const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small);
-  max-width: 1920px;
-  margin-left: auto;
-  margin-right: auto;
   & > figure {
     margin: 0;
   }
@@ -29,16 +26,17 @@ const StyledHeading = styled(TitleText)`
 type ImageCarouselProps = {
   data: ImageCarouselData
   anchor?: string
+  className?: string
 }
 
-const ImageCarousel = ({ data, anchor, ...rest }: ImageCarouselProps) => {
+const ImageCarousel = ({ data, anchor, className, ...rest }: ImageCarouselProps) => {
   const { title, items, options, designOptions } = data
   const { background } = designOptions
   const { autoplay, delay } = options
 
   return (
     <BackgroundContainer background={background} {...rest} id={anchor}>
-      <Container>
+      <Container className={twMerge(`pb-page-content px-layout-sm max-w-viewport mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         <Swiper
           spaceBetween={30}

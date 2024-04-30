@@ -2,12 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@layer base {
-  button svg {
-    @apply inline align-baseline; /* base css is overriding svg styles*/
-  }
-}
-
 @layer utilities {
   /* Scroll-Timeline Supported, Yay! */
   @supports (animation-timeline: view()) {
@@ -46,5 +40,12 @@
   }
   .black-center-gradient {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  }
+  .box-shadow-crisp {
+    box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
+      0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34), 1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
+  }
+  .box-shadow-crisp-interact {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
   }
 }
