@@ -2,6 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@layer base {
+  button svg {
+    @apply inline align-baseline; /* base css is overriding svg styles*/
+  }
+}
+
 @layer utilities {
   /* Scroll-Timeline Supported, Yay! */
   @supports (animation-timeline: view()) {

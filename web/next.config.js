@@ -47,7 +47,7 @@ export default withBundle(
         '@emotion/styled',
         '@equinor/eds-core-react',
         '@equinor/eds-icons',
-        'hls.js',
+        'video.js',
       ],
     },
     eslint: {

@@ -20,4 +20,18 @@ export const elements = css`
   b {
     font-weight: var(--fontWeight-bold);
   }
+
+  .video-js video {
+    object-fit: cover;
+  }
+
+  // To make video control bar always visible when autoplay is disabled.
+  .vjs-paused .vjs-control-bar {
+    display: flex;
+  }
+
+  // Fix poster image for looping video banners/ full width videos
+  .vjs-poster img {
+    object-fit: cover;
+  }
 `
