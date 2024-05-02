@@ -33,11 +33,11 @@ export const FigureWithLayout = (block: BlockProps) => {
         mx-auto
         w-full
         ${layout !== 'full' ? 'md:w-1/2' : ''}
-        ${layout === 'right' ? 'md:float-right md:pl-xl' : ''}
-        ${layout === 'left' ? 'md:float-left md:pr-xl' : ''}
-        my-3xl
-        md:mb-sm
-        md:mt-0
+        ${layout === 'right' ? 'md:float-right md:pl-8' : ''}
+        ${layout === 'left' ? 'md:float-left md:pr-8' : ''}
+        mt-8
+        mb-12
+        lg:mb-14
       `)}
     >
       {layout === 'full' ? (
