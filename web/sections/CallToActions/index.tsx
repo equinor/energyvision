@@ -20,7 +20,12 @@ const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList }: C
       console.warn(`CallToActions: Missing URL on 'ButtonLink' link with type: '${type}' and label: '${label}'`)
     }
     return url ? (
-      <ButtonLink {...(type === 'internalUrl' && { locale: getLocaleFromName(link?.lang) })} href={url} type={type}>
+      <ButtonLink
+        {...(type === 'internalUrl' && { locale: getLocaleFromName(link?.lang) })}
+        href={url}
+        type={type}
+        className="mb-8 block"
+      >
         {`${label} ${extension ? `(${extension.toUpperCase()})` : ''}`}
       </ButtonLink>
     ) : null

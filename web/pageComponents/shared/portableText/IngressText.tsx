@@ -3,14 +3,15 @@ import Blocks from './Blocks'
 
 type IngressTextProps = {
   centered?: boolean
-} & PortableTextProps
+} & PortableTextProps &
+  Pick<React.HTMLAttributes<HTMLElement>, 'className'>
 
-const IngressText = ({ value, centered = false, components = {}, ...rest }: IngressTextProps) => {
+const IngressText = ({ value, centered = false, components = {}, className, ...rest }: IngressTextProps) => {
   return (
     <Blocks
       value={value}
       proseClassName="prose-md"
-      className={`${centered ? 'text-center' : ''}`}
+      className={`${className} ${centered ? 'text-center' : ''}`}
       components={components}
       {...rest}
     />
