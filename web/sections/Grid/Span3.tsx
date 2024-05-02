@@ -16,7 +16,7 @@ const Span3 = forwardRef<HTMLDivElement, Span3Props>(function Span3({ data, clas
         `lg:col-span-3 
         w-full
         h-full
-        shadow-md
+        border border-moss-green-60
         `,
         //        border border-moss-green-60
         className,

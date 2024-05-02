@@ -4,13 +4,11 @@ import { PortableTextBlock } from '@portabletext/types'
 import { PortableText } from '@portabletext/react'
 import { getUrlFromAction } from '../../common/helpers'
 import GridLinkArrow from './GridLinkArrow'
-import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
-
-type Theme = 'redOnWhite' | 'whiteOnDarkBlue' | 'darkBlueOnLightBlue'
+import { GridTextBlockData } from '../../types/types'
 
 type GridTextBlockProps = {
-  data: any
+  data: GridTextBlockData
   className?: string
 }
 
@@ -36,9 +34,7 @@ export const gridContentBlocks: BlockType = {
 /* eslint-enable @typescript-eslint/ban-ts-comment */
 
 const GridTextBlock = ({ data, className }: GridTextBlockProps) => {
-  const { action, content, textAlignment = 'left', theme, backgroundImage } = data
-  const { backgroundUtility, textUtility } = getColorForTheme(theme)
-
+  const { action, content, textAlignment = 'left', theme } = data
   const url = action && getUrlFromAction(action)
 
   const contentAlignment = {
@@ -47,25 +43,22 @@ const GridTextBlock = ({ data, className }: GridTextBlockProps) => {
     left: 'justify-center text-start xl:items-start xl:mr-auto',
   }
 
-  /* eslint-disable @typescript-eslint/ban-ts-comment */
-  //@ts-ignore
   const contentClassNames = twMerge(`${contentAlignment[textAlignment]}`, className)
-  let bgClassName = ''
-  let textClassName = ''
-  if (theme !== null) {
-    //@ts-ignore
-    bgClassName = colorKeyToUtilityMap[backgroundUtility]?.background
-    //@ts-ignore
-    textClassName = colorKeyToUtilityMap[textUtility]?.text
-  }
-
+  const { backgroundUtility, textUtility } = getColorForTheme(theme ?? 0)
+  console.log('theme', theme)
+  console.log('backgroundUtility', backgroundUtility)
+  console.log('textUtility', textUtility)
   return (
     <div
-      className={`w-full h-full flex flex-col ${
-        action ? 'pt-16 justify-between' : 'py-12 justify-center'
-      } ${bgClassName} `}
+      className={`w-full h-full flex flex-col ${action ? 'pt-16 justify-between' : 'py-12 justify-center'} ${
+        theme !== null ? backgroundUtility : ''
+      } `}
     >
-      <div className={`px-10 lg:px-20 flex flex-col gap-6 ${action ? '' : ''} ${contentClassNames} ${textClassName}`}>
+      <div
+        className={`px-10 lg:px-20 flex flex-col gap-6 ${action ? '' : ''} ${contentClassNames} ${
+          theme !== null ? textUtility : ''
+        }`}
+      >
         {content && (
           <PortableText
             value={content}

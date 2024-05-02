@@ -8,6 +8,7 @@ import {
 } from '@sanity/image-url/lib/types/types'
 import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 import { RowType } from '@sections/Grid/mapGridContent'
+import GridTextBlock from '@sections/Grid/GridTextBlock'
 
 export type CaptionData = {
   attribution?: string
@@ -210,6 +211,8 @@ export type ContentType =
   | TwitterEmbedData
   | VideoPlayerData
   | VideoPlayerCarouselData
+  | GridData
+  | CampaignBannerData
 
 export type Breadcrumb = {
   label: string
@@ -279,7 +282,7 @@ export type BackgroundColours =
 export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
 
 export type DesignOptions = {
-  background?: {
+  background: {
     type?: BackgroundTypes
     backgroundColor?: BackgroundColours
     backgroundImage?: ImageBackground
@@ -831,22 +834,47 @@ export type CardListItemData = {
   content?: PortableTextBlock[]
 }
 
+export type GridRowType = Span3 | Span2And1 | ThreeColumns
+
 export type GridData = {
   type: 'grid'
   id: string
-  gridRows?: any[]
+  gridRows?: GridRowType[]
+}
+
+export type GridContentType = FigureData | IFrameData | VideoPlayerData | GridTextBlockData | GridTeaserData
+
+export type Span3 = {
+  type: 'span3'
+  id: string
+  content?: GridContentType[]
+}
+export type Span2And1 = {
+  type: 'span2and1'
+  id: string
+  singleColumn?: GridContentType[]
+  span2?: GridContentType[]
+}
+export type ThreeColumns = {
+  type: 'threeColumns'
+  id: string
+  columns?: GridContentType[]
+}
+
+export type GridTextBlockData = {
+  id: string
+  type: 'gridTextBlock'
+  action?: LinkData
+  content?: PortableTextBlock[]
+  textAlignment?: ContentAlignmentTypes
+  theme?: number
 }
 
 export type CampaignBannerData = {
   type: string
   id: string
   title: PortableTextBlock[]
-  text: PortableTextBlock[]
-  useLightOverlay?: boolean
-  attribution?: string
-  backgroundImage: SanityImageObject
-  backgroundColor: BackgroundColours
-  backgroundUtility: keyof ColorKeyTokens
+  designOptions: DesignOptions
 }
 export type GridTeaserData = {
   image: ImageWithAlt
@@ -858,5 +886,5 @@ export type GridTeaserData = {
   background?: BackgroundColours
   imagePosition?: TeaserImagePosition
   action?: LinkData
-  theme?: string
+  theme?: number
 }

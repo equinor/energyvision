@@ -3,9 +3,9 @@ import { BackgroundColours } from '../../../types'
 
 export type ThemeColors = {
   background: BackgroundColours
-  backgroundUtility?: keyof ColorKeyTokens
   highlight?: string
-  textUtility?: keyof ColorKeyTokens
+  backgroundUtility?: string
+  textUtility?: string
   dark?: boolean
 }
 //Keep in sync with sanityv3/schemas/components/ThemeSelector/themeColors
@@ -109,25 +109,25 @@ export const getColorForTheme = (pattern: number): ThemeColors => {
     case 8:
       return {
         background: 'Mid Blue',
-        backgroundUtility: 'blue-50',
+        backgroundUtility: 'bg-blue-50',
         highlight: 'var(--bg-white)',
-        textUtility: 'white-100',
+        textUtility: 'text-white-100',
       }
     case 9:
       return { background: 'Mid Green', highlight: 'black' }
     case 10:
       return {
         background: 'Mist Blue',
-        backgroundUtility: 'mist-blue-100',
-        textUtility: 'blue-50',
+        backgroundUtility: 'bg-mist-blue-100',
+        textUtility: 'text-blue-50',
       }
 
     case 0:
     default:
       return {
         background: 'White',
-        backgroundUtility: 'white-100',
-        textUtility: 'energy-red-100',
+        backgroundUtility: 'bg-white-100',
+        textUtility: 'text-energy-red-100',
       }
   }
 }

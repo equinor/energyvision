@@ -30,10 +30,10 @@ type TypeProps = {
 } */
 const defaultBlocks = (className?: string): BlockType => {
   return {
-    smallText: ({ children }: TypeProps) => <span className="text-sm">{children}</span>,
-    largeText: ({ children }: TypeProps) => <span className="text-2xl">{children}</span>,
+    smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
+    largeText: ({ children }: TypeProps) => <p className="text-2xl">{children}</p>,
     extraLargeText: ({ children }: TypeProps) => {
-      return <span className={twMerge(`text-9xl font-semibold`, className)}>{children}</span>
+      return <p className={twMerge(`text-9xl font-semibold`, className)}>{children}</p>
     },
   }
 }

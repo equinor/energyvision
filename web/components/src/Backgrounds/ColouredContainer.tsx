@@ -25,7 +25,7 @@ const ColourContainer = styled.div<ColourContainerProps>`
 `
 
 export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerProps>(function BackgroundContainer(
-  { backgroundColor = 'White', backgroundUtility, dark, style, children, className, ...rest },
+  { backgroundColor = 'White', backgroundUtility, dark, style, children, className = '', ...rest },
   ref,
 ) {
   const styleVariant = getContainerColor(backgroundColor)
@@ -38,7 +38,7 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
   return (
     <ColourContainer
       className={twMerge(
-        `${className ?? ''} background${styleVariant} ${isDark ? 'dark' : ''} ${
+        `${className} background${styleVariant} ${isDark ? 'dark' : ''} ${
           backgroundUtility ? colorKeyToUtilityMap[backgroundUtility]?.background : ''
         }`,
       )}

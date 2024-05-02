@@ -8,7 +8,6 @@ type GridFigureProps = {
 }
 
 const GridFigure = ({ data }: GridFigureProps) => {
-  console.log('data', data)
   const { figure, designOptions } = data
   const { image, caption, attribution } = figure
   return (

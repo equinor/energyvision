@@ -186,6 +186,7 @@ const VideoPlayer = ({
           </ButtonWrapper>
         )}
         <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} height={height} />
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} height={height} />
       </div>
     </BackgroundContainer>
   )
