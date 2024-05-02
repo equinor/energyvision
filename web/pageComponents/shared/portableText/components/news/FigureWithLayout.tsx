@@ -35,9 +35,8 @@ export const FigureWithLayout = (block: BlockProps) => {
         ${layout !== 'full' ? 'md:w-1/2' : ''}
         ${layout === 'right' ? 'md:float-right md:pl-8' : ''}
         ${layout === 'left' ? 'md:float-left md:pr-8' : ''}
-        mt-8
-        mb-12
-        lg:mb-14
+        mt-14
+        mb-16
       `)}
     >
       {layout === 'full' ? (
