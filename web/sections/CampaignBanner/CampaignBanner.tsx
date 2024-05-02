@@ -1,5 +1,4 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { twMerge } from 'tailwind-merge'
 import { CampaignBannerData } from '../../types/types'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
@@ -7,32 +6,31 @@ import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
 import { BlockType } from '../../pageComponents/shared/portableText/helpers/defaultSerializers'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-
-const DEFAULT_MAX_WIDTH = 1920
+import { urlFor } from '../../common/helpers'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const campaignTitleBlocks: BlockType = {
   //@ts-ignore
-  smallText: ({ children }: PortableTextBlock) => <span className="text-sm">{<>{children}</>}</span>,
+  smallText: ({ children }: PortableTextBlock) => <p className="text-sm">{<>{children}</>}</p>,
   //@ts-ignore
   largeText: ({ children }: PortableTextBlock) => (
-    <span className="block w-fit text-pretty text-2xl leading-none bg-white-100 rounded-sm p-2">{<>{children}</>}</span>
+    <p className="block w-fit text-pretty text-2xl leading-none bg-white-100 rounded-sm p-2">{<>{children}</>}</p>
   ),
   //@ts-ignore
   extraLargeText: ({ children }: PortableTextBlock) => {
     return (
-      <span className="block w-fit text-pretty text-4xl lg:text-8xl leading-none font-semibold mt-4 bg-white-100 rounded-sm p-2">
+      <p className="block w-fit text-pretty text-4xl lg:text-8xl leading-none font-semibold mt-4 bg-white-100 rounded-sm p-2">
         {<>{children}</>}
-      </span>
+      </p>
     )
   },
   //@ts-ignore
   normal: ({ children }: PortableTextBlock) => {
     if (isEmpty(children)) return null
     return (
-      <span>
+      <p>
         <>{children}</>
-      </span>
+      </p>
     )
   },
 }
@@ -48,9 +46,6 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
   const { background } = designOptions
   const { backgroundImage, backgroundUtility, dark } = background
 
-  const props = useSanityLoader(backgroundImage, DEFAULT_MAX_WIDTH, undefined)
-  const src = props?.src
-
   const bgImageClassNames = `[container:inline-size]
   relative
   w-full
@@ -59,25 +54,27 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
   bg-center
   bg-no-repeat
   bg-cover
-  mb-20
+  mb-24
 `
 
   const bgColor = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility].background : ''
   const backgroundClassNames = twMerge(
-    `${dark} ${!backgroundImage ? ` pt-12 pb-24 ${bgColor}` : ''} 
-    ${backgroundImage ? bgImageClassNames : ``}
+    `${dark ? 'dark' : ''} pt-12 ${!backgroundImage?.image ? `pb-24 ${bgColor}` : ''} 
+    ${backgroundImage?.image ? bgImageClassNames : ``}
   `,
     className,
   )
+  const imgUrl = backgroundImage?.image ? urlFor(backgroundImage.image) : ''
+  const props = {
+    ...(backgroundImage?.image && {
+      style: {
+        backgroundImage: `url(${imgUrl})`,
+      },
+    }),
+  }
 
   return (
-    <section
-      ref={ref}
-      className={`${backgroundClassNames}`}
-      {...(backgroundImage && {
-        style: { backgroundImage: `url(${src})` },
-      })}
-    >
+    <section ref={ref} className={`${backgroundClassNames}`} {...props}>
       <div className={`px-layout-sm w-full h-full`}>
         <div className="flex justify-start row-start-1 row-span-2">
           <h2 className="">

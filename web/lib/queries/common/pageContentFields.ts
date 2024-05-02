@@ -557,10 +557,9 @@ _type == "keyNumbers" =>{
     "title": title[]{..., ${markDefs}},
     "designOptions":{
       "background": {
-        "backgroundImage": backgroundImage {
-      ...,
-      "extension": asset-> extension
-      },
+        "backgroundImage":{ 
+          "image": backgroundImage 
+        },
       "backgroundColor": coalesce(backgroundColor.title, 'White'),
       "dark": coalesce(backgroundColor.dark, false),
       "backgroundUtility":coalesce(backgroundColor.key, ""),
