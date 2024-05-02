@@ -38,6 +38,7 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string,
           src,
         }
         pushToDataLayer('video_event', eventData)
+        console.log('Pushing event ' + JSON.stringify(eventData))
       }
     },
     [title, src, autoPlay],
