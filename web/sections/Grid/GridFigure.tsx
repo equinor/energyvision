@@ -12,7 +12,7 @@ const GridFigure = ({ data }: GridFigureProps) => {
   const { image, caption, attribution } = figure
   return (
     <div className="relative w-full h-full">
-      <Image image={image} fill className="object-cover h-full w-auto" />
+      <Image image={image} fill sizes="(max-width: 800px) 100vw, 800px" className="object-cover h-full w-auto" />
     </div>
   )
 }

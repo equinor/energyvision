@@ -1,8 +1,7 @@
 import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
 import { FigureData, IFrameData, VideoPlayerData } from '../../types/types'
-import Figure from '../../pageComponents/topicPages/Figure'
 import IFrame from '../../pageComponents/topicPages/IFrame'
-import VideoPlayer from '../../pageComponents/shared/VideoPlayer'
+import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'
 import GridFigure from './GridFigure'
@@ -20,9 +19,7 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.R
     case 'iframe':
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
-      return (
-        <VideoPlayer key={data.id} data={data as VideoPlayerData} className={`p-0 px-0`} bgClassName="" height="100%" />
-      )
+      return <VideoJsComponent key={data.id} {...(data as VideoPlayerData)} />
     }
     default:
       return null

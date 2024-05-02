@@ -8,7 +8,7 @@ import { LinkData } from '../../types/types'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
 
 type GridLinkArrowProps = {
-  theme: number
+  theme?: number
   action?: LinkData
   className?: string
 }
