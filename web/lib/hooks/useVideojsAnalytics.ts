@@ -57,6 +57,8 @@ const usePlayEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
+    console.log('Play')
+    console.log(player)
     if (!player) return
     const handlePlay = () => {
       if (allowAnalytics) {
@@ -64,7 +66,10 @@ const usePlayEvent = (
       }
     }
     player.on('play', handlePlay)
-    return () => player.off('play', handlePlay)
+    return () => {
+      console.log('Clean up play')
+      player.off('play', handlePlay)
+    }
   }, [player, pushEvent, allowAnalytics])
 }
 
@@ -74,6 +79,8 @@ const usePauseEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
+    console.log('Pause')
+    console.log(player)
     if (!player) return
     const handlePause = () => {
       const isVideoEnded = player.remainingTime() <= 0
@@ -82,7 +89,10 @@ const usePauseEvent = (
       }
     }
     player.on('pause', handlePause)
-    return () => player.off('pause', handlePause)
+    return () => {
+      console.log('Clean up pause')
+      player.off('pause', handlePause)
+    }
   }, [player, pushEvent, allowAnalytics])
 }
 
@@ -92,6 +102,8 @@ const useCompletionEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
+    console.log('Ended')
+    console.log(player)
     if (!player) return
     const handleCompletion = () => {
       if (allowAnalytics) {
@@ -100,7 +112,10 @@ const useCompletionEvent = (
     }
     player.on('ended', handleCompletion)
 
-    return () => player.off('ended', handleCompletion)
+    return () => {
+      console.log('Clean up ended')
+      player.off('ended', handleCompletion)
+    }
   }, [player, pushEvent, allowAnalytics])
 }
 
