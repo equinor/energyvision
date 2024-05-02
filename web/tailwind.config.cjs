@@ -32,6 +32,7 @@ module.exports = {
   theme: {
     extend: {
       colors: ({ theme }) => ({
+        current: 'currentColor',
         'moss-green': {
           110: '#023f44', // colorpicked from moss-green-100 with dark overlay from Figma
           100: 'hsl(184, 100%, 17%)',
@@ -392,6 +393,15 @@ module.exports = {
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.normal'),
               marginBottom: theme('spacing.6'),
+            },
+          },
+        },
+        campaign: {
+          css: {
+            color: theme('colors.current'),
+            p: {
+              marginTop: '0',
+              marginBottom: '0',
             },
           },
         },

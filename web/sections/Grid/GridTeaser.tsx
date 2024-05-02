@@ -4,12 +4,10 @@ import { twMerge } from 'tailwind-merge'
 import Img from 'next/image'
 import { GridTeaserData } from '../../types/types'
 import { urlFor } from '../../common/helpers'
-import { gridContentBlocks } from './GridTextBlock'
 import { RowType } from './mapGridContent'
-import { PortableText } from '@portabletext/react'
 import GridLinkArrow from './GridLinkArrow'
-import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 export type GridTeaserProps = {
   data: GridTeaserData
@@ -23,9 +21,6 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
   const altTag = image?.isDecorative ? '' : image?.alt || ''
 
   const { backgroundUtility, textUtility } = getColorForTheme(theme ?? 0)
-  console.log('theme', theme)
-  console.log('backgroundUtility', backgroundUtility)
-  console.log('textUtility', textUtility)
 
   const aligment = `${imagePosition === 'left' ? '' : '-order-1 text-left'}`
 
@@ -60,13 +55,10 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       >
         <div className="px-10 flex flex-col gap-6">
           {content && (
-            <PortableText
+            <Blocks
               value={content}
-              components={{
-                block: {
-                  ...gridContentBlocks,
-                },
-              }}
+              proseClassName="prose-campaign"
+              className={`flex flex-col gap-sm ${theme !== null ? textUtility : ''}`}
             />
           )}
           {quote && (
