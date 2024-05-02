@@ -28,6 +28,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   onReady,
   loadingSpinner,
   poster,
+  allowFullScreen,
   ...rest
 }) => {
   const [player, setPlayer] = useState<Player | null>(null)
@@ -74,7 +75,9 @@ export const VideoJS: React.FC<VideoJSProps> = ({
         bigPlayButton: !controls,
         controlbar: true,
         loadingSpinner: !autoPlay,
-
+        controlBar: {
+          fullscreenToggle: allowFullScreen,
+        },
         ...rest,
       },
       () => {
@@ -101,7 +104,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
     }
   }, [player])
 
-  useVideojsAnalytics(player, src, title)
+  useVideojsAnalytics(player, src, title, autoPlay)
 
   return (
     <>
@@ -109,7 +112,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       <video ref={measuredRef} className="video-js vjs-fill" poster={poster}></video>
       {showPlayButton && (
         <button
-          className="absolute inset-0 m-auto z-10 bg-transparent border-transparent cursor-pointer"
+          className="absolute inset-0 m-auto z-10 bg-transparent border-transparent cursor-pointer [&_svg]:inline [&_svg]:align-baseline"
           onClick={handlePlayButton}
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >

@@ -41,7 +41,12 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   return (
     <>
       <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
-        <div className={twMerge(`flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg`, className)}>
+        <div
+          className={twMerge(
+            `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
+            className,
+          )}
+        >
           {image?.asset && (
             <div className="w-[200px]">
               <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />

@@ -19,7 +19,7 @@ type EventData = {
 }
 
 // Video Analytics Hook
-const useVideojsAnalytics = (player: Player | null, src: string, title?: string): void => {
+const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
   const [allowAnalytics, setAllowAnalytics] = useState(false)
   useConsentState(
     'statistics',
@@ -29,16 +29,18 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string)
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, player: Player) => {
-      const eventData: EventData = {
-        eventType,
-        videoTitle: title || src,
-        videoType: player.loop() ? 'loop' : undefined,
-        currentTime: player.currentTime() || 0,
-        src,
+      if (!autoPlay) {
+        const eventData: EventData = {
+          eventType,
+          videoTitle: title || src,
+          videoType: player.loop() ? 'loop' : undefined,
+          currentTime: player.currentTime() || 0,
+          src,
+        }
+        pushToDataLayer('video_event', eventData)
       }
-      pushToDataLayer('video_event', eventData)
     },
-    [title, src],
+    [title, src, autoPlay],
   )
 
   usePlayEvent(player, pushEventToDataLayer, allowAnalytics)
