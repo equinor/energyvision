@@ -26,14 +26,6 @@ export const breadcrumbsQuery = /* groq */ `
     "customBreadcrumbs": [
       ${home},
       ...breadcrumbs.customBreadcrumbs[]{
-          // @TODO: These conditionals can be removed in favor of the 'segment' type once all existing breadcrumbs are updated to use the segment type
-          // Similarly, the 'type' field can be removed at that point
-          _type == 'segment' => @{
-            "slug": reference->.slug.current,
-            "label": coalesce(title, topicSlug),
-            "type": 'segment'
-          },
-
           _type == 'reference' => @->{
             "slug": slug.current,
             "label": topicSlug,
