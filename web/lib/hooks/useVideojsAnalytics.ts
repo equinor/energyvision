@@ -21,6 +21,7 @@ type EventData = {
 // Video Analytics Hook
 const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
   const [allowAnalytics, setAllowAnalytics] = useState(false)
+
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
@@ -62,6 +63,7 @@ const usePlayEvent = (
     if (!player) return
     const handlePlay = () => {
       if (allowAnalytics) {
+        console.log('Start playing')
         pushEvent(GTM_PLAY_EVENT, player)
       }
     }
@@ -85,6 +87,7 @@ const usePauseEvent = (
     const handlePause = () => {
       const isVideoEnded = player.remainingTime() <= 0
       if (!isVideoEnded && allowAnalytics) {
+        console.log('Paused')
         pushEvent(GTM_PAUSE_EVENT, player)
       }
     }
@@ -107,6 +110,7 @@ const useCompletionEvent = (
     if (!player) return
     const handleCompletion = () => {
       if (allowAnalytics) {
+        console.log('Video ended')
         pushEvent(GTM_COMPLETION_EVENT, player)
       }
     }
