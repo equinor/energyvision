@@ -6,16 +6,6 @@ import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersRedu
 import { PaginationContext } from './PaginationContext'
 import { PaginationItem } from './PaginationItem'
 
-const PaginationList = styled.ul`
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-gap: 8px;
-  grid-auto-columns: min-content;
-  grid-auto-flow: column;
-  justify-content: center;
-`
-
 type PaginationProps = {
   totalPages: number
   onPageChange: (val: number) => void
@@ -65,7 +55,7 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
   const isCurrentPage = (page: number) => page === currentPage
 
   return (
-    <PaginationList>
+    <ul className="pt-4 grid gap-2 auto-cols-min grid-flow-col justify-center">
       <PaginationItem
         ariaLabel="First page"
         value={0}
@@ -126,6 +116,6 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
       >
         <Icon data={last_page} />
       </PaginationItem>
-    </PaginationList>
+    </ul>
   )
 }
