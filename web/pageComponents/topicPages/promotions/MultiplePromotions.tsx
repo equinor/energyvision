@@ -108,7 +108,7 @@ const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) 
             eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
           })}
         />
-        {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.14em]" />}
+        {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.5em]" />}
       </Card.Content>
     </Card>
   )
