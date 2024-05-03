@@ -8,19 +8,13 @@ import { FAQPageJsonLd } from 'next-seo'
 import type { AccordionData, AccordionListData } from '../../../types/types'
 import { toPlainText } from '@portabletext/react'
 import { Heading } from '../../../core/Typography'
+import { twMerge } from 'tailwind-merge'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
     id && {
       scrollMarginTop: 'var(--topbar-height)',
     }}
-`
-
-const StyledTextBlock = styled.section`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
 `
 
 const Img = styled(Image)`
@@ -30,6 +24,7 @@ const Img = styled(Image)`
 type AccordionBlockProps = {
   data: AccordionData
   anchor?: string
+  className?: string
 }
 
 const buildJsonLdElements = (data: AccordionListData[]) => {
@@ -41,13 +36,12 @@ const buildJsonLdElements = (data: AccordionListData[]) => {
   })
 }
 
-const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
+const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
-  const { background, dark } = designOptions
   return (
     <>
-      <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
-        <StyledTextBlock className={`${dark ? 'dark' : ''} flex flex-col gap-6`}>
+      <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+        <div className={twMerge(`flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg`, className)}>
           {image?.asset && (
             <div className="w-[200px]">
               <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
@@ -58,7 +52,7 @@ const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
           {accordion && accordion.length > 0 && (
             <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
           )}
-        </StyledTextBlock>
+        </div>
       </StyledTextBlockWrapper>
       {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
     </>

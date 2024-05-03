@@ -10,16 +10,12 @@ import type { CellData, LinkData, TableData } from '../../types/types'
 import { PortableTextBlock } from '@portabletext/types'
 import { PortableText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
+import { twMerge } from 'tailwind-merge'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
 export const StyledTableWrapper = styled(BackgroundContainer)``
 
-const TableContainer = styled.div`
-  margin: 0 auto;
-  max-width: var(--maxViewportWidth);
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-`
 const StyledIngress = styled.div`
   padding: 0 0 var(--space-medium);
 `
@@ -50,6 +46,7 @@ const StyledTableLink = styled(Link)`
 type TableProps = {
   data: TableData
   anchor?: string
+  className?: string
 }
 
 const getLink = (linkData: LinkData) => {
@@ -106,17 +103,15 @@ const renderCellByType = (cellData: CellData) => {
   }
 }
 
-const Table = ({ data, anchor }: TableProps) => {
+const Table = ({ data, anchor, className }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
 
-  const { background, dark, theme } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+  const { theme, ...restOptions } = designOptions
 
   // Should the headers just be a plain text field?
   return (
-    <StyledTableWrapper background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <TableContainer>
+    <StyledTableWrapper {...restOptions} id={anchor} renderFragmentWhenPossible>
+      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
         {title && <StyledTitle value={title} />}
         {ingress && (
           <StyledIngress>
@@ -163,7 +158,7 @@ const Table = ({ data, anchor }: TableProps) => {
             })}
           </Body>
         </EnvisTable>
-      </TableContainer>
+      </div>
     </StyledTableWrapper>
   )
 }

@@ -86,7 +86,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
       {isOpen && (
         <FloatingFocusManager context={context}>
           <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
-            <TopbarDropdown background={'White'}>
+            <TopbarDropdown background={{ backgroundColor: 'White' }}>
               <nav>
                 <NavTopbar>
                   <LogoLink />

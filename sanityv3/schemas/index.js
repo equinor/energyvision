@@ -92,6 +92,8 @@ import keyNumberItem from './objects/keyNumberItem'
 import keyValue from './objects/keyValue'
 import card from './objects/card'
 import cardsList from './objects/cardsList'
+import backgroundOptions from './objects/background/backgroundOptions'
+import imageBackground from './objects/background/imageBackground'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -178,6 +180,8 @@ const RemainingSchemas = [
   keyValue,
   card,
   cardsList,
+  backgroundOptions,
+  imageBackground,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

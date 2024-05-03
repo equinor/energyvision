@@ -19,6 +19,7 @@ module.exports = {
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
+    './icons/**/*.{js,ts,tsx}',
   ],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
@@ -32,6 +33,7 @@ module.exports = {
     extend: {
       colors: ({ theme }) => ({
         'moss-green': {
+          110: '#023f44', // colorpicked from moss-green-100 with dark overlay from Figma
           100: 'hsl(184, 100%, 17%)',
           95: 'hsl(184, 100%, 24%)',
           90: 'hsl(184, 31%, 58%)',
@@ -66,6 +68,15 @@ module.exports = {
           60: 'hsl(206, 9%, 84%)',
           50: 'hsl(210, 8%, 90%)',
         },
+        navy: {
+          40: '#C2DAEB',
+          50: '#A8C3DB',
+          60: '#7294BB',
+          70: '#49709C',
+          80: '#2A4D74',
+          90: '#234057',
+          100: '#243746',
+        },
         'mist-blue': {
           100: colors['mist-blue'][100],
           60: 'hsl(200, 56%, 94%)',
@@ -90,6 +101,15 @@ module.exports = {
           80: 'hsl(0, 85%, 78%)',
           70: 'hsl(0, 86%, 86%)',
           60: 'hsl(0, 88%, 94%)',
+        },
+        teal: {
+          40: '#C3E4CE',
+          50: '#AAD5BB',
+          60: '#85B7A5',
+          70: '#63A893',
+          80: '#458C83',
+          90: '#0E7C78',
+          100: '#007079',
         },
         slate: {
           //--default-text
@@ -132,9 +152,30 @@ module.exports = {
           20: 'hsl(0, 0%, 92%)',
           10: 'hsl(0, 0%, 97%)',
         },
-        'transparent-black': 'theme(colors.black.100)/20',
-        'transparent-white': 'theme(colors.white.100)/20',
+        'transparent-black': {
+          20: 'theme(colors.black.100)/20',
+        },
+        'transparent-white': {
+          20: 'theme(colors.white.100)/20',
+          10: 'theme(colors.white.100)/10',
+        },
       }),
+      //https://www.joshwcomeau.com/shadow-palette/
+      // medium elevation fig
+      //oomph: default -> 0.3 hover: -> 0.5
+      //crispy:0.7,resolution:0.75, default light position
+      boxShadowColor: {
+        'moss-green-50': '190deg 9% 67%',
+        'moss-green-50-interact': '190deg 9% 60%',
+        'white-100': '0deg 0% 63%',
+        'white-100-interact': '0deg 0% 63%',
+        'blue-50': '212deg 40% 29%',
+        'blue-50-interact': '212deg 40% 25%',
+        'orange-50': '28deg 42% 57%',
+        'orange-50-interact': '28deg 42% 51%',
+        'mist-blue-100': '199deg 23% 62%',
+        'mist-blue-100-interact': '199deg 23% 56%',
+      },
       spacing: ({ theme }) => ({
         //--space-xSmall -> spacing.1
         //--space-small -> spacing.2
@@ -155,7 +196,9 @@ module.exports = {
       }),
       fontSize: {
         //--typeScale-00
-        xs: ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        '2xs': ['clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))'],
+        //--typeScale-0
+        xs: ['clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))'],
         //--typeScale-05
         sm: ['clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))'],
         //--typeScale-1
@@ -187,6 +230,7 @@ module.exports = {
         //--lineHeight-2
         earthy: 1.2,
         //--lineHeight-2_5
+        misty: 1.25,
         cloudy: 1.35,
         //-lineHeight-3
         planetary: 1.5,
@@ -201,6 +245,41 @@ module.exports = {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+        'page-content': 'theme(spacing.16)',
+      },
+      //https://www.joshwcomeau.com/css/designing-shadows/
+      boxShadow: {},
+      aspectRatio: {
+        '4/5': '0.8',
+        '5/4': '1.25',
+      },
+      margin: {
+        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
+        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
+        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+      },
+      keyframes: {
+        reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+        zoomIn: {
+          '0%': { transform: 'scale(0)' },
+          '100%': { transform: 'scale(0.2)' },
+        },
+        fade: {
+          '0%, 100%': { opacity: '0' },
+          '20%, 80%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeInOut: 'fade linear both',
+        fadeOut: 'auto linear fadeOut both',
+        zoomIn: 'auto linear zoom-in both',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -209,13 +288,13 @@ module.exports = {
               fontSize: theme('fontSize.base'),
               lineHeight: theme('lineHeight.planetary'),
               h2: {
-                fontSize: theme('fontSize.2xl'),
+                fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
@@ -320,7 +399,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ matchVariant }) {
+    plugin(function ({ addVariant, matchVariant, addUtilities, theme, config, e }) {
       matchVariant(
         'nth',
         (value) => {
@@ -333,7 +412,18 @@ module.exports = {
             3: '3',
           },
         },
-      )
+      ),
+        addUtilities({
+          '.envis-outline': {
+            'outline-style': 'dashed',
+            'outline-width': '1px',
+            'outline-offset': '4px',
+            'outline-color': theme('colors.slate-blue.95'),
+          },
+          '.envis-outline-invert': {
+            'outline-color': theme('colors.white.100'),
+          },
+        })
     }),
   ],
 }

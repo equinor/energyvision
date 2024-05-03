@@ -1,8 +1,13 @@
-import { useNextSanityImage } from 'next-sanity-image'
+import { useNextSanityImage, UseNextSanityImageProps } from 'next-sanity-image'
 import type { ImageWithAlt } from 'types'
 import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
-export const useSanityLoader = (image: ImageWithAlt, maxWidth: number, aspectRatio: number | undefined) =>
+export const useSanityLoader = (
+  image: ImageWithAlt | SanityImageObject,
+  maxWidth: number,
+  aspectRatio: number | undefined,
+): UseNextSanityImageProps =>
   useNextSanityImage(sanityClientWithEquinorCDN, image, {
     imageBuilder: (imageUrlBuilder, options) => {
       const { width: imageWidth, croppedImageDimensions: cropped } = options

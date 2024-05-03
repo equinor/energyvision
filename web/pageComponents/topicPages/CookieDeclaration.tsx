@@ -4,22 +4,18 @@ import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
 import { CookieDeclarationData } from '../../types/types'
+import { twMerge } from 'tailwind-merge'
 
 type CookieDeclarationProps = {
   data: CookieDeclarationData
   anchor?: string
+  className?: string
 }
 
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
-  overflow-x: auto;
-`
 const StyledTitle = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
-const CookieDeclaration = ({ data, anchor }: CookieDeclarationProps) => {
+const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) => {
   const title = data.title
   const router = useRouter()
   const placeholderRef = useRef<HTMLDivElement>(null)
@@ -35,11 +31,14 @@ const CookieDeclaration = ({ data, anchor }: CookieDeclarationProps) => {
     }
   }, [language])
   return (
-    <BackgroundContainer background="White" id={anchor}>
-      <Container id="cookie-declaration-wrapper">
+    <BackgroundContainer background={{ backgroundColor: 'White' }} id={anchor}>
+      <div
+        id="cookie-declaration-wrapper"
+        className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}
+      >
         {title && <StyledTitle value={title} />}
         <div ref={placeholderRef}></div>
-      </Container>
+      </div>
     </BackgroundContainer>
   )
 }

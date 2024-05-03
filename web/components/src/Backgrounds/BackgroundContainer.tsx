@@ -1,49 +1,72 @@
-import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { getColorOnContainer, getContainerColor, isInvertedStyle } from '../../utils/backgroundColours'
-import type { BackgroundColours } from '../../../types/types'
 import { normal, inverted } from '../../../styles/themes'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/types'
+import { ColouredContainer } from './ColouredContainer'
+import { ImageBackgroundContainer } from './ImageBackgroundContainer'
+import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
+
+const StyledImageBackground = styled(ImageBackgroundContainer)<{ $isInverted: boolean }>`
+  ${({ $isInverted }) => ($isInverted ? inverted : normal)}
+`
 
 export type BackgroundContainerProps = {
-  background?: BackgroundColours
+  background?: {
+    type?: BackgroundTypes
+    backgroundColor?: BackgroundColours
+    backgroundImage?: ImageBackground
+    backgroundUtility?: keyof ColorKeyTokens
+    dark?: boolean
+  }
+  /** Render fragment if true and background color
+   * is white and no id/anchor is set on it
+   * @default false
+   */
+  renderFragmentWhenPossible?: boolean
   /** Extended tailwind styling */
   twClassName?: string
 } & HTMLAttributes<HTMLDivElement>
 
-type ColourContainerProps = {
-  isInverted: boolean
-} & HTMLAttributes<HTMLDivElement>
-
-const ColourContainer = styled.div<ColourContainerProps>`
-  background-color: var(--background-color);
-  color: var(--color-on-background);
-  ${({ isInverted }) => (isInverted ? inverted : normal)}
-`
-
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background = 'White', style, children, className, twClassName = '', ...rest },
+  { background, style, children, className, twClassName = '', id, renderFragmentWhenPossible = false, ...rest },
   ref,
 ) {
-  // @TODO: Find a better way with task #334
-  const styleVariant = getContainerColor(background)
-  const textColor = getColorOnContainer(background)
-  const isInverted = isInvertedStyle(styleVariant)
+  const { backgroundImage, type, ...restBackground } = background || {}
 
   return (
-    <ColourContainer
-      className={`${className} background${styleVariant} ${twClassName}`}
-      isInverted={isInverted}
-      style={
-        {
-          ...style,
-          '--background-color': `var(${styleVariant})`,
-          '--color-on-background': `var(${textColor})`,
-        } as CSSProperties
-      }
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </ColourContainer>
+    <>
+      {type === 'backgroundImage' && backgroundImage && (
+        <StyledImageBackground
+          $isInverted={backgroundImage?.useLight ? false : true}
+          ref={ref}
+          id={id}
+          {...backgroundImage}
+          {...rest}
+        >
+          {children}
+        </StyledImageBackground>
+      )}
+      {(type === 'backgroundColor' || !type) && (
+        <>
+          {renderFragmentWhenPossible &&
+          (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
+          className === '' &&
+          !id ? (
+            <>{children}</>
+          ) : (
+            <ColouredContainer
+              ref={ref}
+              id={id}
+              {...restBackground}
+              style={style}
+              className={`${className} ${twClassName}`}
+              {...rest}
+            >
+              {children}
+            </ColouredContainer>
+          )}
+        </>
+      )}
+    </>
   )
 })

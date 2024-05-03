@@ -4,8 +4,10 @@ import IngressText from '../shared/portableText/IngressText'
 import Image, { Ratios } from '../shared/SanityImage'
 import styled from 'styled-components'
 import type { TextBlockData } from '../../types/types'
-import CallToActions from './CallToActions'
+//import CallToActions from './CallToActions'
+import CallToActions from '../../sections/CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -14,19 +16,13 @@ export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string |
     }}
 `
 
-const StyledTextBlock = styled.section`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
-`
-
 type TextBlockProps = {
   data: TextBlockData
   anchor?: string
+  className?: string
 }
 
-const TextBlock = ({ data, anchor }: TextBlockProps) => {
+const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
   const {
     image,
     overline,
@@ -41,13 +37,34 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
   } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
-  const { background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+
+  const contentClassNames = twMerge(`max-w-viewport pb-page-content px-layout-lg mx-auto`, className)
+
+  const contentAlignment = {
+    center: 'items-start text-start px-layout-lg',
+    right:
+      'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
+    left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
+  }
+  let backgroundImageContentClassNames = `
+  justify-center
+  py-14
+  `
+  if (designOptions?.background?.backgroundImage?.contentAlignment) {
+    backgroundImageContentClassNames = twMerge(
+      backgroundImageContentClassNames,
+      `
+    ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
+    )
+  }
 
   return (
-    <StyledTextBlockWrapper background={background} id={anchor || data.anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-      <StyledTextBlock className={`flex flex-col gap-6`}>
+    <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+      <div
+        className={`flex flex-col gap-6 ${
+          designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
+        }`}
+      >
         {isBigText ? (
           title && <Heading value={title} as="h2" variant="2xl" />
         ) : (
@@ -77,7 +94,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
             splitList={splitList}
           />
         )}
-      </StyledTextBlock>
+      </div>
     </StyledTextBlockWrapper>
   )
 }

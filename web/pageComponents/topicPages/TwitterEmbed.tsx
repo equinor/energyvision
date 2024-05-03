@@ -5,16 +5,14 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
+import { twMerge } from 'tailwind-merge'
 
 type TwitterEmbedProps = {
   data: TwitterEmbedData
   anchor?: string
+  className?: string
 }
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
-`
+
 const StyledIngress = styled.div`
   padding: 0 0 var(--space-medium);
 `
@@ -22,11 +20,9 @@ const StyledTitle = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
 
-const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
+const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
   const { embedType, embedValue, designOptions, title, ingress } = data
-  const { background, dark } = designOptions
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark = dark || background === 'Mid Blue' || background === 'Slate Blue'
+
   const Embed = () => {
     switch (embedType) {
       case 'timeline':
@@ -48,8 +44,8 @@ const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
   }
   return (
     <>
-      <BackgroundContainer background={background} id={anchor} twClassName={`${isDark ? 'dark' : ''}`}>
-        <Container>
+      <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
+        <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
           {title && <StyledTitle value={title} />}
           {ingress && (
             <StyledIngress>
@@ -63,7 +59,7 @@ const TwitterEmbed = ({ data, anchor }: TwitterEmbedProps) => {
           <div className="cookieconsent-optout-marketing">
             <RequestConsentContainer cookiePolicy="marketing" />
           </div>
-        </Container>
+        </div>
       </BackgroundContainer>
     </>
   )

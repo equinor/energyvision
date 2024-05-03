@@ -1,4 +1,4 @@
-import { Teaser as EnvisTeaser, Link, BackgroundContainer } from '@components'
+import { Teaser as EnvisTeaser, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
@@ -6,6 +6,7 @@ import type { TextTeaserData } from '../../../types/types'
 import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
 import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
+import { twMerge } from 'tailwind-merge'
 
 const { Content } = EnvisTeaser
 
@@ -14,6 +15,7 @@ type TitlePostion = 'left' | 'right'
 type TextTeaserProps = {
   data: TextTeaserData
   anchor?: string
+  className?: string
 }
 
 const IngressWrapper = styled.div`
@@ -70,15 +72,15 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
   }
 `
 
-const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
+const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
   const { background, highlight, dark } = getColorForTheme(theme)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
   return (
-    <BackgroundContainer style={style} background={background} id={anchor}>
-      <TeaserWrapper titlePosition={titlePosition} className={`${dark ? 'dark' : ''}`}>
+    <BackgroundContainer style={style} background={{ backgroundColor: background }} id={anchor}>
+      <TeaserWrapper titlePosition={titlePosition} className={twMerge(`${dark ? 'dark' : ''}`, className)}>
         <TitleWrapper>
           <StyledTitleText value={title} size={'2xl'} />
         </TitleWrapper>

@@ -6,7 +6,7 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
-import { colorKeyToUtilityMap } from '../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type CaptionData = {
   attribution?: string
@@ -252,6 +252,14 @@ export type LandingPageSchema = {
   template: Templates
   seoAndSome: SeoData
 }
+export type ContentAlignmentTypes = 'left' | 'right' | 'center'
+
+export type ImageBackground = {
+  image: ImageWithAlt | SanityImageObject
+  useAnimation?: boolean
+  useLight?: boolean
+  contentAlignment: ContentAlignmentTypes
+}
 
 export type BackgroundColours =
   | 'White'
@@ -266,12 +274,16 @@ export type BackgroundColours =
   | 'Mid Orange'
   | 'Slate Blue 95'
 
+export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
+
 export type DesignOptions = {
-  background?: BackgroundColours
-  utility: keyof typeof colorKeyToUtilityMap
-  dark: boolean
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
+  background?: {
+    type?: BackgroundTypes
+    backgroundColor?: BackgroundColours
+    backgroundImage?: ImageBackground
+    backgroundUtility?: keyof ColorKeyTokens
+    dark: boolean
+  }
 }
 
 export type TextBlockData = {
@@ -306,7 +318,10 @@ export type TeaserData = {
   isBigText?: boolean
   image: ImageWithAlt
   action?: LinkData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    imagePosition?: TeaserImagePosition
+    imageSize?: TeaserImageSize
+  }
 }
 
 export type TextTeaserData = {
@@ -325,6 +340,8 @@ export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]
 }
+
+export type FigureRatio = 'original' | '9:16'
 
 export type CellData = {
   id: string
@@ -355,7 +372,7 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: number
   }
 }
@@ -371,11 +388,8 @@ export type FullWidthVideoData = {
   spacing?: boolean
   title?: PortableTextBlock[]
   action?: LinkData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
-    background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
 }
 
@@ -385,7 +399,9 @@ export type FigureData = {
   type: string
   id: string
   figure: ImageWithCaptionData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    aspectRatio?: FigureRatio
+  }
 }
 
 export type TextWithIconItem = {
@@ -409,7 +425,7 @@ export type QuoteData = {
   authorTitle?: string
   quote: string
   image?: ImageWithAlt
-  designOptions: DesignOptions
+  designOptions: DesignOptions & { imagePosition?: TeaserImagePosition }
 }
 
 export type AccordionListData = {
@@ -516,12 +532,9 @@ export type IFrameData = {
   frameTitle: string
   url: string
   cookiePolicy: CookiePolicy
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
-    background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
 }
 
@@ -704,10 +717,7 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  background: BackgroundColours
   height?: number
-  utility: keyof typeof colorKeyToUtilityMap
-  dark: boolean
 }
 
 export type VideoPlayerData = {
@@ -715,7 +725,7 @@ export type VideoPlayerData = {
   type: string
   video: VideoType
   videoControls: VideoControlsType
-  designOptions: VideoDesignOptionsType
+  designOptions: DesignOptions & VideoDesignOptionsType
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
@@ -733,11 +743,8 @@ export type VideoPlayerCarouselData = {
       thumbnail: ImageWithAlt
     }
   }[]
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
-    background: BackgroundColours
-    utility: keyof typeof colorKeyToUtilityMap
-    dark: boolean
   }
   title?: PortableTextBlock[]
 }
@@ -786,6 +793,8 @@ export type IframeCarouselData = {
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
+
+export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'others'
 
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
