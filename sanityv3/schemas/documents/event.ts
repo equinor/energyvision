@@ -5,9 +5,9 @@ import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { i18n } from '../documentTranslation'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
-import basicIframe, { IFrame } from '../objects/basicIframe'
 import type { EventDate } from '../objects/eventDate'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
+import basicIframe from '../objects/basicIframe'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -124,19 +124,6 @@ export default {
       title: 'Content',
       type: 'array',
       of: [blockContentType, basicIframe],
-    },
-    {
-      title: 'IFrame (Deprecated)',
-      name: 'iframe',
-      type: 'basicIframe',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: IFrame) => {
-          if (!value) {
-            return true
-          } else return 'IFrame is deprecated. Please insert iframe inside the content field.'
-        }).warning(),
-
-      description: 'Iframe is deprecated on event page. You can insert iframe directly in to the content field above.',
     },
     {
       title: 'Title',
