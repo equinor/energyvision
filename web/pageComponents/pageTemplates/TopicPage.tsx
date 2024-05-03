@@ -30,7 +30,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-            className={data?.hero?.type === 'default' ? 'pt-0' : ''}
+            className={data?.hero?.type === HeroTypes.DEFAULT ? 'pt-0' : ''}
           />
         )}
 
