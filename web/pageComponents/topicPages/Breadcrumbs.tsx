@@ -57,18 +57,18 @@ export const Breadcrumbs = ({
         {crumbs
           .filter((item) => item.slug && item.label)
           .map((item: Breadcrumb) => {
-            if (item.slug === slug) {
-              return (
-                <BreadcrumbsListItem key={item.slug}>
-                  {item.label ?? parseSlug(item.slug)?.replaceAll('-', ' ')}
-                </BreadcrumbsListItem>
-              )
-            }
+            const label = item.label ?? parseSlug(item.slug)?.replaceAll('-', ' ')
+            const shouldLink = item.slug !== slug
+
             return (
               <BreadcrumbsListItem key={item.slug}>
-                <NextLink href={item.slug} prefetch={false} className="hover:underline no-underline">
-                  {item.label ?? parseSlug(item.slug)?.replaceAll('-', ' ')}
-                </NextLink>
+                {shouldLink ? (
+                  <NextLink href={item.slug} prefetch={false} className="hover:underline no-underline">
+                    {label}
+                  </NextLink>
+                ) : (
+                  <>{label}</>
+                )}
               </BreadcrumbsListItem>
             )
           })}
