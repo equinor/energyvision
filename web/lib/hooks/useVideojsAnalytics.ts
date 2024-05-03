@@ -161,6 +161,7 @@ const useVideoProgressEvent = (
   const intervalDuration = 1000 // Check every second
 
   useEffect(() => {
+    console.log('timeupdate')
     if (!player) return
     const intervalId = setInterval(() => {
       const duration = player.duration()
@@ -170,6 +171,7 @@ const useVideoProgressEvent = (
         const progress = (currentTime / duration) * 100
         GTM_PROGRESS_MILESTONES.forEach((milestone) => {
           if (progress >= milestone && !trackedMilestones.includes(milestone)) {
+            console.log('Video is progressing')
             pushEvent(`video_progress_${milestone}`, player)
             setTrackedMilestones((prev) => [...prev, milestone])
           }
@@ -186,6 +188,7 @@ const useVideoProgressEvent = (
     player.on('timeupdate', handlePlay)
 
     return () => {
+      console.log('Clean up timeupdate')
       clearInterval(intervalId)
       player.off('timeupdate', handlePlay)
     }
