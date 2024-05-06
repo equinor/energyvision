@@ -45,6 +45,9 @@ type Props = {
 }
 
 export const DefaultHero = ({ title, image, isBigTitle, bigTitle }: Props) => {
+  console.log('isBigTitle', isBigTitle)
+  console.log('bigTitle', bigTitle)
+  console.log('title', title)
   return (
     <>
       {isBigTitle && (

@@ -44,17 +44,17 @@ const round = (num: number) =>
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, '$1')
     .replace(/\.0$/, '')
-const em = (px: number, base: number) => `${round(px / base)}em`
+export const em = (px: number, base: number) => `${round(px / base)}em`
 
 const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
-const LargeTextRender = (props: any) => {
+export const LargeTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: `${em(36, 16)}`, fontWeight: '600' }}>{children}</span>
 }
-const ExtraLargeTextRender = (props: any) => {
+export const ExtraLargeTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: `${em(56, 16)}`, fontWeight: '600' }}>{children}</span>
 }

@@ -15,7 +15,7 @@ import { ThemeSelectorValue } from '../components/ThemeSelector'
 const titleContentType = configureTitleBlockContent({
   highlight: true,
   highlightTitle: 'Highlight text selected from theme below',
-  styles: [
+  extendedStyles: [
     {
       title: 'Normal',
       value: 'normal',

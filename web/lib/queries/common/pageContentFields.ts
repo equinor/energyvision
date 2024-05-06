@@ -66,12 +66,14 @@ _type == "keyNumbers" =>{
     "id": _key,
     image,
     overline,
+    //Deprecate big text after a while
     isBigText,
     "title": select(
       isBigText =>
         bigTitle[]{..., ${markDefs}},
         title[]{..., ${markDefs}}
       ),
+    useBrandTheme,
     ingress[]{..., ${markDefs}},
     text[]{..., ${markDefs}},
     "callToActions": action[]{
@@ -81,7 +83,6 @@ _type == "keyNumbers" =>{
     },
     splitList,
     overrideButtonStyle,
-    anchor,
     "designOptions": {
       ${background},
     },
