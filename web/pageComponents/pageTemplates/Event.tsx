@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
-import BasicIFrame from '../shared/iframe/BasicIFrame'
 import EventText from '../shared/portableText/EventText'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
@@ -32,9 +31,9 @@ const HeaderInner = styled.div`
   margin-left: auto;
   margin-right: auto;
 `
-const ContentWrapper = styled.div<{ iframe?: boolean }>`
+const ContentWrapper = styled.div`
   margin: var(--space-3xLarge) 0 0 0;
-  padding: ${({ iframe }) => (iframe ? '0' : '0 0 var(--space-xLarge) 0')};
+  padding: 0 0 var(--space-xLarge) 0;
 `
 
 const LeadParagraph = styled.div`
@@ -109,19 +108,6 @@ const StyledPromotion = styled(Promotion)`
   }
 `
 
-const StyledBasicIFrame = styled(BasicIFrame)`
-  --iframe-maxWidth: var(--topbar-innerMaxWidth);
-  --iframe-innerPadding: var(--space-3xLarge) 0;
-
-  --iframe-titleAlign: center;
-
-  @media (min-width: 450px) {
-    --iframe-titleAlign: left;
-  }
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-`
-
 const StyledContactList = styled(ContactList)`
   --contactList-titleAlign: center;
 
@@ -135,7 +121,7 @@ const StyledContactList = styled(ContactList)`
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
-  const { location, ingress, content, iframe, promotedPeople, relatedLinks, contactList, eventDate } = data.content
+  const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
@@ -176,7 +162,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </HeaderInner>
           </Header>
           {(ingress || content) && (
-            <ContentWrapper iframe={iframe && !!iframe.title}>
+            <ContentWrapper>
               {ingress && (
                 <LeadParagraph>
                   <IngressText value={ingress}></IngressText>
@@ -189,7 +175,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               )}
             </ContentWrapper>
           )}
-          {iframe && <StyledBasicIFrame data={iframe} />}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <StyledPromotion
               data={{

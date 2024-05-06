@@ -46,7 +46,6 @@ const StyledLink = styled(Link).attrs((props: { $active: boolean }) => props)`
 const Wrapper = styled.div`
   display: flex;
   align-content: center;
-  margin: 0 auto 0 auto;
   border-top: 1px solid var(--grey-30);
   border-bottom: 1px solid var(--grey-30);
 `
@@ -83,7 +82,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
   allTagLink.active = defaultActive
   return (
-    <Wrapper ref={ref}>
+    <Wrapper ref={ref} className="mb-8 mx-auto">
       <TagWrapper>
         <StyledLink
           $active={allTagLink.active}

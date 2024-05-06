@@ -80,4 +80,12 @@ const dnsRedirects = [
     from: 'digitalfieldworker.equinor.com',
     to: '/energy/digitalfieldworker',
   },
+  {
+    from: 'eu2nsea.com',
+    to: '/energy/eu2nsea',
+  },
+  {
+    from: 'eu2nsea.eu',
+    to: '/energy/eu2nsea',
+  },
 ]

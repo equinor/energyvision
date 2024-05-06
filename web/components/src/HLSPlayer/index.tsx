@@ -109,6 +109,8 @@ export const HLSPlayer: React.FC<HLSProps> = ({
       })
       hlsRef.current = hls
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
       hls.on(Hls.Events.ERROR, (_, data) => {
         if (data.fatal) {
           switch (data.type) {

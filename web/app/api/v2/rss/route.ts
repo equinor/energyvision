@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic' // defaults to auto
 import { sanityClient } from '../../../../lib/sanity.server'
 import { defaultComponents, toHTML } from '@portabletext/to-html'
-import type { NextApiRequest } from 'next'
+import type { NextRequest } from 'next/server'
 import { urlFor } from '../../../../common/helpers/urlFor'
 import { latestNews, LatestNewsType } from './groq.news'
 
@@ -75,7 +75,7 @@ type Params = {
   lang: string
 }
 
-export async function GET(request: NextApiRequest) {
+export async function GET(request: NextRequest) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const { searchParams } = new URL(request.url)

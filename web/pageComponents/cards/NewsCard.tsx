@@ -1,57 +1,41 @@
-import { Card, FormattedDate } from '@components'
-import { CSSProperties } from 'react'
-import styled from 'styled-components'
+import { FormattedDate } from '@components'
+import Card from '@sections/cards/Card'
 import type { CardData } from '../../types/types'
-import Image, { Ratios } from '../shared/SanityImage'
-import RichText from '../shared/portableText/RichText'
-
-const { Title, Header, Action, Arrow, Media, CardLink, Text, Eyebrow } = Card
-
-const StyledCard = styled(Card)`
-  --card-gap: var(--space-large);
-  height: var(--height);
-  @media (max-width: 800px) {
-    --card-maxWidth: 300px;
-  }
-`
-const StyledLink = styled(CardLink)`
-  display: inline-block;
-`
-const StyledTitle = styled(Title)`
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  line-clamp: 2;
-  display: -webkit-box;
-`
-
-const StyledIngress = styled(Text)`
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  overflow: hidden;
-  line-clamp: 5;
-  display: -webkit-box;
-  margin-bottom: 0;
-  font-size: var(--typeScale-1);
-  line-height: var(--lineHeight-3);
-`
-
-const StyledWrapper = styled(Text)`
-  margin-top: calc(var(--space-small) * -1);
-  padding-left: 0;
-  padding-right: 0;
-`
+import { Ratios } from '../shared/SanityImage'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 type NewsCardProp = {
   data: CardData
   fitToContent?: boolean
 }
 
-const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
+const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
-  if (!heroImage) return null
+
+  const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
+    <Card
+      href={slug}
+      {...(heroImage && {
+        imageUrl: image.src,
+      })}
+      className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
+    >
+      <Card.Content>
+        <Card.Header
+          title={title as string}
+          {...(publishDateTime && {
+            eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
+          })}
+        />
+        {ingress && <Blocks value={ingress} className="line-clamp-5" />}
+      </Card.Content>
+    </Card>
+  )
+
+  /*   return (
     <StyledLink href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
@@ -105,7 +89,7 @@ const NewsCard = ({ data, fitToContent = false, ...rest }: NewsCardProp) => {
         </Action>
       </StyledCard>
     </StyledLink>
-  )
+  ) */
 }
 
 export default NewsCard
