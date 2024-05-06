@@ -4,15 +4,15 @@ import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
 import { HLSVideoComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
+import { twMerge } from 'tailwind-merge'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
   margin-bottom: calc(-1 * var(--space-small));
   text-align: left;
 `
 
 const Container = styled.div`
-  padding: var(--space-xLarge) 0 var(--space-3xLarge) 0;
+  padding: var(--space-xLarge) 0 0 0;
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
@@ -33,15 +33,23 @@ const VideoItem = styled.div<{ $aspectRatio: string }>`
   }
 `
 
-const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?: string }) => {
+const VideoPlayer = ({
+  anchor,
+  data,
+  className,
+}: {
+  data: VideoPlayerCarouselData
+  anchor?: string
+  className?: string
+}) => {
   const { title, items, designOptions } = data
   const { background, aspectRatio } = designOptions
 
   return (
-    <BackgroundContainer background={background} id={anchor}>
+    <BackgroundContainer background={background} id={anchor} className={twMerge(`pb-page-content`, className)}>
       {title && (
         <HeadingWrapper>
-          <StyledHeading value={title} />
+          <StyledHeading value={title} className="px-layout-lg pb-2" />
         </HeadingWrapper>
       )}
       <Container>
@@ -55,7 +63,7 @@ const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?:
                   playButton: true,
                 }}
               />
-              <StyledHeading size="lg" level="h3" value={item.title} />
+              <StyledHeading size="lg" level="h3" value={item.title} className="px-layout-lg" />
             </VideoItem>
           ))}
         </Carousel>

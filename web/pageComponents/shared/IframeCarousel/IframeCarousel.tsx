@@ -11,12 +11,11 @@ import CoreIFrame from '../iframe/IFrame'
 import RichText from '../portableText/RichText'
 import { Carousel } from '../../shared/Carousel'
 import { ButtonLink } from '../ButtonLink'
+import { twMerge } from 'tailwind-merge'
 
 const Container = styled.div`
-  padding: var(--space-3xLarge) calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
-  max-width: 1920px;
-  margin-left: auto;
-  margin-right: auto;
+  padding-right: calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
+  padding-left: calc(var(--layout-paddingHorizontal-small) - var(--space-xxLarge));
   & > figure {
     margin: 0;
   }
@@ -66,15 +65,16 @@ const StyledCoreIframe = styled(CoreIFrame)`
 type IframeCarouselProps = {
   data: IframeCarouselData
   anchor?: string
+  className?: string
 }
 
-const IframeCarousel = ({ data, anchor, ...rest }: IframeCarouselProps) => {
+const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProps) => {
   const { title, items, designOptions } = data
   const { background } = designOptions
 
   return (
     <BackgroundContainer background={background} {...rest} id={anchor}>
-      <Container>
+      <Container className={twMerge(`pb-page-content max-w-viewport mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         <Carousel>
           {items.map((item) => (

@@ -3,6 +3,7 @@ import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
+import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import RelatedContent from '../shared/RelatedContent'
 import AddToCalendar from '../topicPages/AddToCalendar'
@@ -11,8 +12,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
