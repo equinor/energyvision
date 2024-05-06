@@ -121,7 +121,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
         <button
           className={`${
             useBrandTheme ? 'text-energy-red-100' : 'text-white-100'
-          } absolute inset-0 m-auto z-10 bg-transparent border-transparent cursor-pointer [&_svg]:inline [&_svg]:align-baseline`}
+          } absolute inset-0 m-auto bg-transparent border-transparent cursor-pointer [&_svg]:inline [&_svg]:align-baseline`}
           onClick={handlePlayButton}
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >
