@@ -75,12 +75,12 @@ type Params = {
   lang: string
 }
 
-export async function GET(request: NextApiRequest, context: { params: Params }) {
+export async function GET(request: NextApiRequest) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const { searchParams } = new URL(request.url)
   const lang = searchParams.get('lang') === 'no' ? 'no' : 'en'
-  console.log('lang', lang)
+
   const rss = await generateRssFeed(lang)
 
   return new Response(rss, {
