@@ -1,6 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { sendRequestToServiceNow } from './service-now-base'
 import { validateFormRequest } from './validateFormRequest'
+import { CareersContactFormCatalogType } from '../../../types'
+
+const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null) => {
+  switch (catalogType) {
+    case 'suspectedRecruitmentScamRequest':
+      return 'b04a9748832d8610347af830feaad382'
+    default:
+      return '59e02ac8375a3640615af01643990e7c'
+  }
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'careers contact form')
@@ -8,16 +18,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(result.status).json({ msg: result.message })
   }
 
-  const catalogIdentifier = '59e02ac8375a3640615af01643990e7c'
+  const catalogIdentifier = getCatalogIdentifier(req.body.catalogType)
   const data = req.body.data
   const phone = encodeURI(data.phone)
   const email = encodeURI(data.email)
   const category = encodeURI(data.category)
+  const candidateType = encodeURI(data.candidateType)
   const questions = encodeURI(data.questions)
   const location = encodeURI(data.location)
   const name = encodeURI(data.name)
   const positionDetails = encodeURI(data.positionId)
   const preferredLang = encodeURI(data.preferredLang)
+  const sendSupportingDocuments = data.supportingDocuments !== '' ? 'Yes' : 'No'
 
   const urlString =
     process.env.SERVICE_NOW_FORM_URL +
@@ -40,7 +52,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     '&Questions=' +
     questions +
     '&PreferredLang=' +
-    preferredLang
+    preferredLang +
+    '&SupportingDocuments=' +
+    sendSupportingDocuments +
+    '&CandidateType=' +
+    candidateType
 
   await sendRequestToServiceNow(urlString)
     .then((response) => {

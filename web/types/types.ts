@@ -799,6 +799,8 @@ export type IframeCarouselData = {
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
 
+export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'others'
+
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
   id: string

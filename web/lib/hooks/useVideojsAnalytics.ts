@@ -19,8 +19,9 @@ type EventData = {
 }
 
 // Video Analytics Hook
-const useVideojsAnalytics = (player: Player | null, src: string, title?: string): void => {
+const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
   const [allowAnalytics, setAllowAnalytics] = useState(false)
+
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
@@ -29,16 +30,19 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string)
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, player: Player) => {
-      const eventData: EventData = {
-        eventType,
-        videoTitle: title || src,
-        videoType: player.loop() ? 'loop' : undefined,
-        currentTime: player.currentTime() || 0,
-        src,
+      if (!autoPlay) {
+        const eventData: EventData = {
+          eventType,
+          videoTitle: title || src,
+          videoType: player.loop() ? 'loop' : undefined,
+          currentTime: player.currentTime() || 0,
+          src,
+        }
+        pushToDataLayer('video_event', eventData)
+        console.log('Pushing event ' + JSON.stringify(eventData))
       }
-      pushToDataLayer('video_event', eventData)
     },
-    [title, src],
+    [title, src, autoPlay],
   )
 
   usePlayEvent(player, pushEventToDataLayer, allowAnalytics)
@@ -54,14 +58,20 @@ const usePlayEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
+    console.log('Play')
+    console.log(player)
     if (!player) return
     const handlePlay = () => {
       if (allowAnalytics) {
+        console.log('Start playing')
         pushEvent(GTM_PLAY_EVENT, player)
       }
     }
     player.on('play', handlePlay)
-    return () => player.off('play', handlePlay)
+    return () => {
+      console.log('Clean up play')
+      player.off('play', handlePlay)
+    }
   }, [player, pushEvent, allowAnalytics])
 }
 
@@ -71,15 +81,21 @@ const usePauseEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
+    console.log('Pause')
+    console.log(player)
     if (!player) return
     const handlePause = () => {
       const isVideoEnded = player.remainingTime() <= 0
       if (!isVideoEnded && allowAnalytics) {
+        console.log('Paused')
         pushEvent(GTM_PAUSE_EVENT, player)
       }
     }
     player.on('pause', handlePause)
-    return () => player.off('pause', handlePause)
+    return () => {
+      console.log('Clean up pause')
+      player.off('pause', handlePause)
+    }
   }, [player, pushEvent, allowAnalytics])
 }
 
@@ -89,15 +105,21 @@ const useCompletionEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
+    console.log('Ended')
+    console.log(player)
     if (!player) return
     const handleCompletion = () => {
       if (allowAnalytics) {
+        console.log('Video ended')
         pushEvent(GTM_COMPLETION_EVENT, player)
       }
     }
     player.on('ended', handleCompletion)
 
-    return () => player.off('ended', handleCompletion)
+    return () => {
+      console.log('Clean up ended')
+      player.off('ended', handleCompletion)
+    }
   }, [player, pushEvent, allowAnalytics])
 }
 
@@ -139,6 +161,7 @@ const useVideoProgressEvent = (
   const intervalDuration = 1000 // Check every second
 
   useEffect(() => {
+    console.log('timeupdate')
     if (!player) return
     const intervalId = setInterval(() => {
       const duration = player.duration()
@@ -148,6 +171,7 @@ const useVideoProgressEvent = (
         const progress = (currentTime / duration) * 100
         GTM_PROGRESS_MILESTONES.forEach((milestone) => {
           if (progress >= milestone && !trackedMilestones.includes(milestone)) {
+            console.log('Video is progressing')
             pushEvent(`video_progress_${milestone}`, player)
             setTrackedMilestones((prev) => [...prev, milestone])
           }
@@ -164,6 +188,7 @@ const useVideoProgressEvent = (
     player.on('timeupdate', handlePlay)
 
     return () => {
+      console.log('Clean up timeupdate')
       clearInterval(intervalId)
       player.off('timeupdate', handlePlay)
     }
