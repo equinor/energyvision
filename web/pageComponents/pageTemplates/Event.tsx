@@ -12,7 +12,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
-
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
