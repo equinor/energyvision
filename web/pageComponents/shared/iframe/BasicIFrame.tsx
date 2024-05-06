@@ -15,12 +15,8 @@ const Container = styled.div`
   margin: auto;
 `
 
-const BasicIFrame = ({
-  data: { title, frameTitle, url, cookiePolicy = 'none', designOptions },
-  ...rest
-}: {
-  data: IFrameData
-}) => {
+const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
+  const { title, frameTitle, url, cookiePolicy = 'none', designOptions } = data || {}
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions
