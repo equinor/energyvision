@@ -8,7 +8,6 @@ import {
 } from '@sanity/image-url/lib/types/types'
 import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 import { RowType } from '@sections/Grid/mapGridContent'
-import GridTextBlock from '@sections/Grid/GridTextBlock'
 
 export type CaptionData = {
   attribution?: string
@@ -299,11 +298,11 @@ export type TextBlockData = {
   overline?: string
   text: PortableTextBlock[]
   isBigText?: boolean
+  useBrandTheme?: boolean
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   splitList?: boolean
   overrideButtonStyle?: boolean
-  anchor?: string
   designOptions: DesignOptions
 }
 
@@ -723,6 +722,8 @@ export type VideoControlsType = {
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   height?: number
+  width?: 'normal' | 'extraWide'
+  useBrandTheme?: boolean
 }
 
 export type VideoPlayerData = {

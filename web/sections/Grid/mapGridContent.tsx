@@ -19,7 +19,7 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.R
     case 'iframe':
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
-      return <VideoJsComponent key={data.id} {...(data as VideoPlayerData)} />
+      return <VideoJsComponent key={data.id} useFillMode {...(data as VideoPlayerData)} />
     }
     default:
       return null

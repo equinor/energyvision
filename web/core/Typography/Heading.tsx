@@ -30,6 +30,28 @@ const defaultComponents = ({ variant, as: providedAs, className }: TypographyPro
           </Typography>
         )
       },
+      largeText: ({ children }: PortableTextBlock) => {
+        return (
+          <Typography variant="2xl" as={providedAs} className={className}>
+            <>{children}</>
+          </Typography>
+        )
+      },
+      extraLargeText: ({ children }: PortableTextBlock) => {
+        return (
+          <Typography variant="5xl" as={providedAs} className={className}>
+            <>{children}</>
+          </Typography>
+        )
+      },
+      twoXLText: ({ children }: PortableTextBlock) => {
+        return (
+          <Typography variant="8xl" as={providedAs} className={className}>
+            <>{children}</>
+          </Typography>
+        )
+      },
+      //TODO Deprecate together with bigTitle option in text teaser
       extraLarge: ({ children }: PortableTextBlock) => {
         return (
           <Typography variant="5xl" as={providedAs} className={className}>
