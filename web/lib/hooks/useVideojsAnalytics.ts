@@ -20,15 +20,13 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
-  const allowAnalytics = true
-  /** Temporarily disable consent on videos  */
-  /*const [allowAnalytics, setAllowAnalytics] = useState(false)
+  const [allowAnalytics, setAllowAnalytics] = useState(false)
 
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
     () => setAllowAnalytics(false),
-  )*/
+  )
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, player: Player) => {
@@ -40,7 +38,6 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string,
           currentTime: player.currentTime() || 0,
           src,
         }
-        console.log(eventData)
         pushToDataLayer('video_event', eventData)
       }
     },
