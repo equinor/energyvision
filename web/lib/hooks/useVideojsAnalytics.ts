@@ -20,13 +20,15 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(false)
+  const allowAnalytics = true
+  /** Temporarily disable consent on videos  */
+  /*const [allowAnalytics, setAllowAnalytics] = useState(false)
 
   useConsentState(
     'statistics',
     () => setAllowAnalytics(true),
     () => setAllowAnalytics(false),
-  )
+  )*/
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, player: Player) => {
@@ -39,7 +41,6 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string,
           src,
         }
         pushToDataLayer('video_event', eventData)
-        console.log('Pushing event ' + JSON.stringify(eventData))
       }
     },
     [title, src, autoPlay],
@@ -48,7 +49,6 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string,
   usePlayEvent(player, pushEventToDataLayer, allowAnalytics)
   usePauseEvent(player, pushEventToDataLayer, allowAnalytics)
   useCompletionEvent(player, pushEventToDataLayer, allowAnalytics)
-  useCompletionEventForLoopingVideos(player, pushEventToDataLayer, allowAnalytics)
   useVideoProgressEvent(player, pushEventToDataLayer, allowAnalytics)
 }
 
@@ -60,7 +60,6 @@ const usePlayEvent = (
   useEffect(() => {
     if (!player) return
     const handlePlay = () => {
-      console.log('Playing ' + allowAnalytics)
       if (allowAnalytics) {
         pushEvent(GTM_PLAY_EVENT, player)
       }
@@ -80,7 +79,6 @@ const usePauseEvent = (
   useEffect(() => {
     if (!player) return
     const handlePause = () => {
-      console.log('Pause ' + allowAnalytics)
       const isVideoEnded = player.remainingTime() <= 0
       if (!isVideoEnded && allowAnalytics) {
         pushEvent(GTM_PAUSE_EVENT, player)
@@ -101,7 +99,6 @@ const useCompletionEvent = (
   useEffect(() => {
     if (!player) return
     const handleCompletion = () => {
-      console.log('Ended ' + allowAnalytics)
       if (allowAnalytics) {
         pushEvent(GTM_COMPLETION_EVENT, player)
       }
@@ -112,35 +109,6 @@ const useCompletionEvent = (
       player.off('ended', handleCompletion)
     }
   }, [player, pushEvent, allowAnalytics])
-}
-
-// Looping videos do not trigger 'ended' event listener
-// This hook triggers completion when the video is about to loop
-const useCompletionEventForLoopingVideos = (
-  player: Player | null,
-  pushEvent: (eventType: EventType, player: Player) => void,
-  allowAnalytics: boolean,
-) => {
-  const [hasTriggered, setHasTriggered] = useState(false)
-
-  useEffect(() => {
-    if (!player || !player.loop || !allowAnalytics || hasTriggered) return
-
-    const threshold = 1 // Threshold in seconds to determine "near end"
-    const handleTimeUpdate = () => {
-      const timeLeft = player.remainingTime() //player.duration - player.currentTime
-      const nearEnd = timeLeft < threshold
-
-      if (nearEnd && !hasTriggered) {
-        pushEvent(GTM_COMPLETION_EVENT, player)
-        setHasTriggered(true) // Prevent further triggers
-      }
-    }
-
-    player.on('timeupdate', handleTimeUpdate)
-
-    return () => player.off('timeupdate', handleTimeUpdate)
-  }, [player, pushEvent, allowAnalytics, hasTriggered])
 }
 
 const useVideoProgressEvent = (
@@ -155,7 +123,7 @@ const useVideoProgressEvent = (
     if (!player) return
     const intervalId = setInterval(() => {
       const duration = player.duration()
-      if ((!allowAnalytics || duration) && !player) return
+      if ((!allowAnalytics || !duration) && !player) return
       const currentTime = player.currentTime()
       if (currentTime && duration) {
         const progress = (currentTime / duration) * 100
