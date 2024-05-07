@@ -50,6 +50,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
         <>
           {renderFragmentWhenPossible &&
           (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
+          className === '' &&
           !id ? (
             <>{children}</>
           ) : (

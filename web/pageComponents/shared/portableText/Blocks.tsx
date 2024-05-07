@@ -9,7 +9,7 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink } from './components'
+import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -38,6 +38,8 @@ const defaultTypes: TypesType = {
   positionedInlineImage: (props) => <FigureWithLayout {...props} />,
   //@ts-ignore
   pullQuote: (props) => <Quote {...props} className="not-prose" />,
+  //@ts-ignore
+  basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
 }
 
 type BlockProps = {
@@ -66,9 +68,13 @@ type BlockProps = {
    * Override other styling to the wrapping block
    */
   className?: string
+  /**
+   * If needed to connect with aria-describedby and such
+   */
+  id?: string
 } & PortableTextProps
 
-const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
+const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 //@ts-ignore
 export default function Blocks({
@@ -79,6 +85,7 @@ export default function Blocks({
   components,
   proseClassName = '',
   className = '',
+  id,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
 
@@ -117,7 +124,7 @@ export default function Blocks({
             div = []
 
             return (
-              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)}>
+              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)} id={id}>
                 <PortableText
                   value={value}
                   //@ts-ignore

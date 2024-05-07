@@ -24,7 +24,7 @@ const FullWidthImage = ({ data, anchor, className }: TeaserProps) => {
       renderFragmentWhenPossible
     >
       <figure className="pb-page-content px-layout-lg max-w-viewport mx-auto">
-        {designOptions.aspectRatio !== 'original' ? (
+        {designOptions.aspectRatio === '9:16' ? (
           <Image
             image={image}
             aspectRatio={Ratios.NINE_TO_SIXTEEN}
