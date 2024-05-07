@@ -36,9 +36,9 @@ const Grid = forwardRef<HTMLElement, GridProps>(function Grid({ data, anchor, cl
       {gridRows.map((row) => {
         return (
           <>
-            {row?.type === 'span3' && <Span3 data={row} />}
-            {row?.type === 'span2and1' && <Span2And1 data={row} />}
-            {row?.type === 'threeColumns' && <ThreeColumns data={row} />}
+            {row?.type === 'span3' && <Span3 key={row?.id} data={row} />}
+            {row?.type === 'span2and1' && <Span2And1 key={row?.id} data={row} />}
+            {row?.type === 'threeColumns' && <ThreeColumns key={row?.id} data={row} />}
           </>
         )
       })}

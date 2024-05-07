@@ -5,7 +5,7 @@ import { getUrlFromAction, urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import Image from './SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
-import { ReadMoreLink } from '../../core/Link'
+import { ReadMoreLink, ResourceLink } from '../../core/Link'
 import { Heading } from '../../core/Typography'
 import { getLocaleFromName } from '../../lib/localization'
 
@@ -44,14 +44,12 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, action, designOptions, isBigText } = data
+  const { title, overline, text, image, actions, designOptions, isBigText, useResourceLinks } = data
   const { imageSize, imagePosition, ...restOptions } = designOptions
 
-  if ([title, overline, text, image?.asset, action].every((i) => !i)) {
+  if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
     return null
   }
-
-  const url = action && getUrlFromAction(action)
 
   const isSvg = image?.extension === 'svg'
   return (
@@ -80,14 +78,30 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </>
           )}
-          {action && url && (
-            <ReadMoreLink
-              href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-              type={action.type}
-            >
-              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-            </ReadMoreLink>
+          {actions && (
+            <div className="flex flex-col gap-8">
+              {actions?.map((action) => {
+                const url = action && getUrlFromAction(action)
+
+                return useResourceLinks ? (
+                  <ResourceLink
+                    href={url as string}
+                    {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+                    type={action.type}
+                  >
+                    {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+                  </ResourceLink>
+                ) : (
+                  <ReadMoreLink
+                    href={url as string}
+                    {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+                    type={action.type}
+                  >
+                    {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+                  </ReadMoreLink>
+                )
+              })}
+            </div>
           )}
         </Content>
       </StyledEnvisTeaser>

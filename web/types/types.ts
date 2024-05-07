@@ -320,8 +320,9 @@ export type TeaserData = {
   text: PortableTextBlock[]
   overline?: string
   isBigText?: boolean
+  useResourceLinks?: boolean
   image: ImageWithAlt
-  action?: LinkData
+  actions?: LinkData[]
   designOptions: DesignOptions & {
     imagePosition?: TeaserImagePosition
     imageSize?: TeaserImageSize
@@ -872,12 +873,14 @@ export type GridTextBlockData = {
 }
 
 export type CampaignBannerData = {
-  type: string
+  type: 'campaignBanner'
   id: string
   title: PortableTextBlock[]
   designOptions: DesignOptions
 }
 export type GridTeaserData = {
+  type: 'gridTeaser'
+  id: string
   image: ImageWithAlt
   rowType?: RowType
   content?: PortableTextBlock
@@ -888,4 +891,15 @@ export type GridTeaserData = {
   imagePosition?: TeaserImagePosition
   action?: LinkData
   theme?: number
+}
+export type PodcastTeaserData = {
+  id: string
+  type: 'podcastTeaser'
+  spotifyLink?: string
+  appleLink?: string
+  linkTitle?: string
+  podcastName?: PortableTextBlock[]
+  podcastEpisode?: PortableTextBlock[]
+  image: ImageWithAlt
+  designOptions: DesignOptions
 }
