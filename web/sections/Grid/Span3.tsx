@@ -8,7 +8,6 @@ export type Span3Props = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Span3 = forwardRef<HTMLDivElement, Span3Props>(function Span3({ data, className = '', ...rest }, ref) {
-  console.log('data?.content', data?.content)
   return (
     <div
       ref={ref}

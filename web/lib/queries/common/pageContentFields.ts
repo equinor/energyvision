@@ -39,11 +39,12 @@ _type == "keyNumbers" =>{
       ...,
       "extension": asset-> extension
     },
-    "action": action[0]{
+    "actions": action[]{
       ${linkSelectorFields},
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
+    useResourceLinks
   },
 
   _type == "textTeaser" => {
@@ -566,7 +567,6 @@ _type == "keyNumbers" =>{
       "backgroundUtility":coalesce(backgroundColor.key, ""),
       }
     },
-
   },
 `
 
