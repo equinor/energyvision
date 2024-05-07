@@ -40,6 +40,7 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string,
           currentTime: player.currentTime() || 0,
           src,
         }
+        console.log(eventData)
         pushToDataLayer('video_event', eventData)
       }
     },
