@@ -17,15 +17,16 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
   const client = useClient({ apiVersion: apiVersion })
   const slug = useFormValue([`slug`]) as SlugValue
   const parent = useFormValue([`parent`]) as Reference
+  const topicSlug = useFormValue([`topicSlug`])?.toString()
 
   const [breadcrumbs, setBreadcrumbs] = useState<string[]>([])
   const [defaultBreadcrumbs, setDefaultBreadcrumbs] = useState<string[]>(
-    constructBreadcrumbs('home', slug?.current || ''),
+    constructBreadcrumbs('home', topicSlug ?? slug?.current ?? ''),
   )
 
   useEffect(() => {
     if (slug?.current) {
-      setDefaultBreadcrumbs(constructBreadcrumbs('home', slug.current))
+      setDefaultBreadcrumbs(constructBreadcrumbs('home', topicSlug ?? slug?.current))
     }
   }, [slug, parent, setDefaultBreadcrumbs])
 
@@ -46,7 +47,7 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
         return setBreadcrumbs(
           constructBreadcrumbs(
             'home',
-            slug.current,
+            topicSlug ?? slug?.current,
             orderedResults.map((item: { slug: string }) => item.slug),
           ),
         )

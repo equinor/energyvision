@@ -177,14 +177,14 @@ module.exports = {
         'mist-blue-100-interact': '199deg 23% 56%',
       },
       spacing: ({ theme }) => ({
-        //--space-xSmall -> spacing.1
-        //--space-small -> spacing.2
-        //--space-medium -> spacing.4
-        //--space-large -> spacing.6
-        //--space-xLarge -> spacing.8
-        //--space-xxLarge -> spacing.10
-        //--space-3xLarge -> spacing.14
-        //--space-4xLarge -> spacing.24
+        //--space-xSmall -> spacing.2
+        //--space-small -> spacing.4
+        //--space-medium -> spacing.6
+        //--space-large -> spacing.8
+        //--space-xLarge -> spacing.10
+        //--space-xxLarge -> spacing.12
+        //--space-3xLarge -> spacing.16
+        //--space-4xLarge -> spacing.28
         xs: 'calc((4 / 16) * theme(fontSize.base))',
         sm: 'calc((8 / 16) * theme(fontSize.base))',
         md: 'calc((16 / 16) * theme(fontSize.base))',

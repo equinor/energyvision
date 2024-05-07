@@ -28,17 +28,6 @@ export const eventContentFields = /* groq */ `
       },
     },
   },
-  "iframe": iframe{
-    title,
-      frameTitle,
-      url,
-      "cookiePolicy": coalesce(cookiePolicy, 'none'),
-      "designOptions": {
-        "aspectRatio": coalesce(aspectRatio, '16:9'),
-        height,
-        ${background}
-      },
-    },
   "promotedPeople": {
     "title": promotedPeopleTitle[]{
       ...,
