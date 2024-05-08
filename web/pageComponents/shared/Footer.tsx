@@ -144,7 +144,7 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
                     key={id}
                     href={url || getLink(link)}
                     prefetch={false}
-                    className="focus:outline-none focus-visible:envis-outline-invert "
+                    className="focus:outline-none focus-visible:envis-outline-invert"
                   >
                     {icon && <SomeIcon aria-hidden={true}>{icon}</SomeIcon>}
                     {label}

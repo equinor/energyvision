@@ -170,29 +170,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  {/*                   <Button
-                    variant="ghost"
-                    aria-expanded="true"
-                    aria-label={searchLabel}
-                    forwardedAs={NextLink}
-                    prefetch={false}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
-                    href={{
-                      pathname: '/search',
-                    }}
-                    style={
-                      {
-                        '--eds_button__padding_x': 'var(--space-small)',
-                        color: 'var(--default-text)',
-                        fill: 'var(--default-text)',
-                      } as CSSProperties
-                    }
-                  >
-                    <Icon size={24} data={search} />
-                    <FormattedMessage id="search" />
-                  </Button> */}
-                  <ButtonLink variant="ghost" aria-expanded="true" aria-label="Search" href="/search">
+                  <ButtonLink variant="ghost" aria-expanded="true" aria-label="Search" href="/search" className="p-2">
                     <Icon size={24} data={search} />
                     <FormattedMessage id="search" />
                   </ButtonLink>
