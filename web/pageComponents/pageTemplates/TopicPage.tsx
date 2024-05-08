@@ -5,7 +5,7 @@ import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
-import { Breadcrumbs } from '@core/Breadcrumbs'
+import { Breadcrumbs } from '../topicPages/Breadcrumbs'
 
 type TopicPageProps = {
   data: TopicPageSchema
@@ -32,8 +32,10 @@ const TopicPage = ({ data }: TopicPageProps) => {
           <Breadcrumbs
             background={titleStyles.background}
             slug={data?.slug}
-            breadcrumbs={breadcrumbs?.defaultBreadcrumbs}
+            useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
+            defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
+            className={data?.hero?.type === HeroTypes.DEFAULT ? 'pt-0' : ''}
           />
         )}
 

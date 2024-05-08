@@ -19,6 +19,7 @@ const StyledListItem = styled(EdsItem)`
 
   &:last-child {
     font-weight: var(--fontWeight-medium);
+    color: var(--breadcrumbs-inactive-color);
 
     &:after {
       content: '';
@@ -31,7 +32,7 @@ export const BreadcrumbsListItem = forwardRef<HTMLLIElement, BreadcrumbsListItem
   forwardedRef,
 ) {
   return (
-    <StyledListItem ref={forwardedRef} {...rest}>
+    <StyledListItem ref={forwardedRef} {...rest} className="first-letter:capitalize">
       {children}
     </StyledListItem>
   )

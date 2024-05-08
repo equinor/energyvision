@@ -35,6 +35,8 @@ type IFrameProps = {
   height?: number
   aspectRatio: string
   hasSectionTitle: boolean
+  /** id to element that describes iframe */
+  describedBy?: string
 } & HTMLAttributes<HTMLElement>
 
 const IFrame = ({
@@ -44,7 +46,8 @@ const IFrame = ({
   cookiePolicy = 'none',
   aspectRatio,
   height,
-  className,
+  className = '',
+  describedBy,
 }: IFrameProps) => {
   const { isPreview } = useContext(PreviewContext)
 
@@ -62,8 +65,8 @@ const IFrame = ({
 
   return (
     <>
-      <div className={`cookieconsent-optin-${cookiePolicy}  ${className}`}>
-        <IFrameContainer aspectRatioPadding={containerPadding}>
+      <div className={`cookieconsent-optin-${cookiePolicy} ${className}`}>
+        <IFrameContainer aria-describedby={describedBy} aspectRatioPadding={containerPadding}>
           <StyledIFrame
             allowFullScreen
             src={url}

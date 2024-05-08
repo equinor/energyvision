@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  defaultComponents,
   PortableText,
   PortableTextProps,
   PortableTextReactComponents,
@@ -9,7 +8,7 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink } from './components'
+import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -21,42 +20,37 @@ type TypeProps = {
   children?: React.ReactNode
 }
 
-/* const defaultBlocks: BlockType = {
-  smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
-  largeText: ({ children,className }: TypeProps) => <p className="text-2xl">{children}</p>,
-  extraLargeText: ({ children, className }: TypeProps) => {
-    return <p className=" whitespace-pre text-9xl font-semibold mt-4">{children}</p>
-  },
-} */
-const defaultBlocks = (className?: string): BlockType => {
-  return {
+const defaultSerializers = {
+  block: {
     smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
     largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
     extraLargeText: ({ children }: TypeProps) => {
       return (
-        <p
-          className={twMerge(`my-4 lg:my-6 text-5xl lg:text-6xl 2xl:text-8xl font-medium leading-planetary`, className)}
-        >
-          {children}
-        </p>
+        <p className={`my-4 lg:my-6 text-5xl lg:text-6xl 2xl:text-8xl font-medium leading-planetary`}>{children}</p>
       )
     },
-  }
-}
-
-const defaultMarks: MarkType = {
-  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
-  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
-  s: ({ children }: TypeProps) => <s>{children}</s>,
-  link: ExternalLink,
-  internalLink: InternalLink,
-}
-
-const defaultTypes: TypesType = {
-  //@ts-ignore
-  positionedInlineImage: (props) => <FigureWithLayout {...props} />,
-  //@ts-ignore
-  pullQuote: (props) => <Quote {...props} className="not-prose" />,
+  },
+  types: {
+    //@ts-ignore
+    positionedInlineImage: (props) => <FigureWithLayout {...props} />,
+    //@ts-ignore
+    pullQuote: (props) => <Quote {...props} className="not-prose" />,
+    //@ts-ignore
+    basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
+  },
+  marks: {
+    sub: ({ children }: TypeProps) => <sub>{children}</sub>,
+    sup: ({ children }: TypeProps) => <sup>{children}</sup>,
+    s: ({ children }: TypeProps) => <s>{children}</s>,
+    //TODO find proper type
+    link: ({ children, value }: any) => {
+      return <ExternalLink value={value}>{children}</ExternalLink>
+    },
+    //TODO find proper type
+    internalLink: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+  },
 }
 
 type BlockProps = {
@@ -85,41 +79,17 @@ type BlockProps = {
    * Override other styling to the wrapping block
    */
   className?: string
-  blocksClassName?: string
+  /**
+   * If needed to connect with aria-describedby and such
+   */
+  id?: string
 } & PortableTextProps
 
-const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
+const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 //@ts-ignore
-export default function Blocks({
-  value,
-  blocks,
-  marks,
-  types,
-  components,
-  proseClassName = '',
-  blocksClassName = '',
-  className = '',
-}: BlockProps) {
+export default function Blocks({ value, components, proseClassName = '', className = '', id }: BlockProps) {
   let div: PortableTextBlock[] = []
-
-  const serializers: PortableTextReactComponents = {
-    ...defaultComponents,
-    block: {
-      ...defaultComponents.block,
-      ...defaultBlocks(blocksClassName),
-      ...blocks,
-    } as BlockType,
-    marks: {
-      ...defaultComponents.marks,
-      ...defaultMarks,
-      ...marks,
-    } as MarkType,
-    types: {
-      ...defaultComponents.types,
-      ...(types ?? defaultTypes),
-    } as TypesType,
-  }
 
   return (
     <>
@@ -138,12 +108,12 @@ export default function Blocks({
             div = []
 
             return (
-              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)}>
+              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)} id={id}>
                 <PortableText
                   value={value}
                   //@ts-ignore
                   components={{
-                    ...serializers,
+                    ...defaultSerializers,
                   }}
                 />
               </div>
@@ -179,7 +149,6 @@ export default function Blocks({
                 key={block._key}
                 value={block}
                 components={{
-                  ...defaultComponents,
                   ...components,
                 }}
               />

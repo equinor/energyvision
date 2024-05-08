@@ -1,17 +1,18 @@
 import { PortableTextProps } from '@portabletext/react'
 import Blocks from './Blocks'
+import { twMerge } from 'tailwind-merge'
 
 type IngressTextProps = {
   centered?: boolean
-} & PortableTextProps &
-  Pick<React.HTMLAttributes<HTMLElement>, 'className'>
+  className?: string
+} & PortableTextProps
 
-const IngressText = ({ value, centered = false, components = {}, className, ...rest }: IngressTextProps) => {
+const IngressText = ({ value, centered = false, components = {}, className = '', ...rest }: IngressTextProps) => {
   return (
     <Blocks
       value={value}
       proseClassName="prose-md"
-      className={`${className} ${centered ? 'text-center' : ''}`}
+      className={twMerge(`${centered ? 'text-center' : ''}`, className)}
       components={components}
       {...rest}
     />
