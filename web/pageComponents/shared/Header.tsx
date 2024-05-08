@@ -170,7 +170,13 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <ButtonLink variant="ghost" aria-expanded="true" aria-label="Search" href="/search" className="p-2">
+                  <ButtonLink
+                    variant="ghost"
+                    aria-expanded="true"
+                    aria-label="Search"
+                    href="/search"
+                    className="p-2 md:px-5 md:py-3"
+                  >
                     <Icon size={24} data={search} />
                     <FormattedMessage id="search" />
                   </ButtonLink>
