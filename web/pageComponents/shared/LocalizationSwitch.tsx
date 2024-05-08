@@ -12,14 +12,12 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
   if (slugs.length < 1) return null
 
   return (
-    <div className="flex items-center" {...rest}>
+    <div className="flex items-center md:divide-x md:divide-dashed " {...rest}>
       {slugs.map((obj) => {
         const language = languages.find((lang) => lang.name === obj.lang)
         return (
           <div
-            className={`flex items-center md:divide-x md:divide-dashed ${
-              activeLocale === String(language?.locale) ? 'hidden md:block' : ''
-            } `}
+            className={`flex items-center ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} `}
             key={obj.lang}
           >
             <ButtonLink
@@ -36,7 +34,6 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
                 {language?.locale}
               </span>
             </ButtonLink>
-            {/*             {key + 1 < slugs.length && <span className="hidden md:block">|</span>} */}
           </div>
         )
       })}
