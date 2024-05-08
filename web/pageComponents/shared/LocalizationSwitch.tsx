@@ -105,7 +105,10 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
       {slugs.map((obj, key) => {
         const language = languages.find((lang) => lang.name === obj.lang)
         return (
-          <div className="flex items-center" key={obj.lang}>
+          <div
+            className={`flex items-center ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} `}
+            key={obj.lang}
+          >
             <ButtonLink
               variant="ghost"
               href={obj.slug}
@@ -119,11 +122,6 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
               >
                 {language?.locale}
               </span>
-              {/*               <span
-                className={`h-[2px] ${
-                  activeLocale === String(language?.locale) ? 'bg-moss-green-100' : 'bg-transparent'
-                } w-full`}
-              /> */}
             </ButtonLink>
             {key + 1 < slugs.length && <span className="hidden md:block">|</span>}
           </div>
