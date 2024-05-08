@@ -10,7 +10,7 @@ type ContactListProps = {
 
 const ContactList = ({ data, className = '' }: ContactListProps) => {
   return (
-    <div className={twMerge(`mflex flex-col pb-page-content px-layout-lg max-w-viewport`, className)}>
+    <div className={twMerge(`flex flex-col pb-page-content px-layout-lg max-w-viewport`, className)}>
       {data?.title && (
         <Heading className="pb-6 text-left" size="xl" level="h2">
           {data.title}
