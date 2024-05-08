@@ -13,6 +13,7 @@ focus-visible:envis-outline
 dark:focus:outline-none
 dark:focus-visible:envis-outline-invert
 flex
+item-center
 gap-3
 `
 
