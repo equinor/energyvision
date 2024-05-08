@@ -88,12 +88,14 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                     href={url as string}
                     {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                     type={action.type}
+                    key={action.id}
                   >
                     {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
                   </ResourceLink>
                 ) : (
                   <ReadMoreLink
                     href={url as string}
+                    key={action.id}
                     {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                     type={action.type}
                   >
