@@ -11,7 +11,7 @@ import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
@@ -150,6 +150,8 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
 
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
+  const intl = useIntl()
+  const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
   return (
     <HeaderRelative>

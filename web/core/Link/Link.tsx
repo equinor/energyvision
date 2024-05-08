@@ -24,7 +24,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   )
 
   return (
-    <BaseLink className={classNames} ref={ref} href={href} {...rest}>
+    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
       {children}
       {type === 'externalUrl' && <ArrowRight className="inline-block pt-1 -rotate-45 origin-bottom-left" />}
     </BaseLink>
