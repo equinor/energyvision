@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, BackgroundContainer, Button } from '@components'
+import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -18,6 +18,7 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
+import { ButtonLink } from '@core/Link'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -169,7 +170,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <Button
+                  {/*                   <Button
                     variant="ghost"
                     aria-expanded="true"
                     aria-label={searchLabel}
@@ -190,7 +191,11 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                   >
                     <Icon size={24} data={search} />
                     <FormattedMessage id="search" />
-                  </Button>
+                  </Button> */}
+                  <ButtonLink variant="ghost" aria-expanded="true" aria-label="Search" href="/search">
+                    <Icon size={24} data={search} />
+                    <FormattedMessage id="search" />
+                  </ButtonLink>
                 </ControlChild>
               )}
               {hasMoreThanOneLanguage && (

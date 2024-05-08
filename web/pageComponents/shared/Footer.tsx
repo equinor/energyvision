@@ -70,10 +70,6 @@ const FooterLink = styled(NextLink)`
       text-decoration: underline;
     }
   }
-  &[data-focus-visible-added]:focus {
-    outline-color: var(--energy-red-90);
-    outline-style: dashed;
-  }
   @media (max-width: 750px) {
     flex: 0 0 40%;
     max-width: var(--space-4xLarge);
@@ -144,7 +140,12 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
 
                 return (
-                  <FooterLink key={id} href={url || getLink(link)} prefetch={false}>
+                  <FooterLink
+                    key={id}
+                    href={url || getLink(link)}
+                    prefetch={false}
+                    className="focus:outline-none focus-visible:envis-outline-invert "
+                  >
                     {icon && <SomeIcon aria-hidden={true}>{icon}</SomeIcon>}
                     {label}
                   </FooterLink>

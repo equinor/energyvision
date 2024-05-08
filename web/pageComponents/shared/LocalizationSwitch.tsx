@@ -2,18 +2,9 @@ import styled, { css } from 'styled-components'
 import NextLink from 'next/link'
 import { outlineTemplate, Tokens } from '@utils'
 import { languages } from '../../languages'
+import { ButtonLink } from '@core/Link'
 
 const { outline } = Tokens
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const StyledDiv = styled.div`
-  display: flex;
-  align-items: center;
-`
 
 const SharedStyle = css`
   display: flex;
@@ -110,23 +101,34 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
   if (slugs.length < 1) return null
 
   return (
-    <Wrapper {...rest}>
+    <div className="flex items-center" {...rest}>
       {slugs.map((obj, key) => {
         const language = languages.find((lang) => lang.name === obj.lang)
         return (
-          <StyledDiv key={obj.lang}>
-            <LocaleLink
+          <div className="flex items-center" key={obj.lang}>
+            <ButtonLink
+              variant="ghost"
               href={obj.slug}
-              title={`Switch to ${language?.title}`}
               locale={`${language?.locale}`}
-              active={activeLocale === `${language?.locale}`}
+              className={`flex flex-col gap-0 items-stretch px-2 text-xs`}
             >
-              <span style={{ textTransform: 'uppercase' }}>{language?.locale}</span>
-            </LocaleLink>
-            {key + 1 < slugs.length && <Divider>|</Divider>}
-          </StyledDiv>
+              <span className="sr-only">{`Switch to ${language?.title}`}</span>
+              <span
+                aria-hidden
+                className={`uppercase ${activeLocale === String(language?.locale) ? 'font-bold' : 'font-normal'}`}
+              >
+                {language?.locale}
+              </span>
+              {/*               <span
+                className={`h-[2px] ${
+                  activeLocale === String(language?.locale) ? 'bg-moss-green-100' : 'bg-transparent'
+                } w-full`}
+              /> */}
+            </ButtonLink>
+            {key + 1 < slugs.length && <span className="hidden md:block">|</span>}
+          </div>
         )
       })}
-    </Wrapper>
+    </div>
   )
 }

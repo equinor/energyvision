@@ -1,9 +1,6 @@
 import { forwardRef, ButtonHTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { MenuIcon } from './MenuIcon'
-import { outlineTemplate, Tokens } from '@utils'
-
-const { outline } = Tokens
 
 export type MenuButtonProps = {
   expanded?: boolean
@@ -31,7 +28,6 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
   grid-gap: 13px;
   gap: 13px;
   margin: 0;
-  padding: var(--space-xSmall);
   cursor: pointer;
   background: transparent;
   border: none;
@@ -43,10 +39,6 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
 
   @media (min-width: 600px) {
     grid-template-columns: min-content 1fr;
-  }
-
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
   }
 
   ${({ expanded }) =>
@@ -68,7 +60,13 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
   ref,
 ) {
   return (
-    <StyledMenuButton expanded={expanded} ref={ref} aria-label={title} {...rest}>
+    <StyledMenuButton
+      expanded={expanded}
+      ref={ref}
+      aria-label={title}
+      className="focus:outline-none focus-visible:envis-outline hover:bg-moss-green-60 rounded-md py-2 px-3"
+      {...rest}
+    >
       <StyledButtonText>{title}</StyledButtonText>
       <MenuIcon expanded={expanded} />
     </StyledMenuButton>
