@@ -1,4 +1,3 @@
-import { HTMLAttributes } from 'react'
 import type { ContactListData } from '../../types/types'
 import { Text, Heading } from '@components'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
@@ -7,7 +6,7 @@ import { twMerge } from 'tailwind-merge'
 type ContactListProps = {
   data: ContactListData
   className?: string
-} & HTMLAttributes<HTMLDivElement>
+}
 
 const ContactList = ({ data, className = '' }: ContactListProps) => {
   return (
