@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  defaultComponents,
   PortableText,
   PortableTextProps,
   PortableTextReactComponents,
@@ -21,25 +20,31 @@ type TypeProps = {
   children?: React.ReactNode
 }
 
-const defaultBlocks: BlockType = {
-  smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
-}
-
-const defaultMarks: MarkType = {
-  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
-  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
-  s: ({ children }: TypeProps) => <s>{children}</s>,
-  link: ExternalLink,
-  internalLink: InternalLink,
-}
-
-const defaultTypes: TypesType = {
-  //@ts-ignore
-  positionedInlineImage: (props) => <FigureWithLayout {...props} />,
-  //@ts-ignore
-  pullQuote: (props) => <Quote {...props} className="not-prose" />,
-  //@ts-ignore
-  basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
+const defaultSerializers = {
+  block: {
+    smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
+  },
+  types: {
+    //@ts-ignore
+    positionedInlineImage: (props) => <FigureWithLayout {...props} />,
+    //@ts-ignore
+    pullQuote: (props) => <Quote {...props} className="not-prose" />,
+    //@ts-ignore
+    basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
+  },
+  marks: {
+    sub: ({ children }: TypeProps) => <sub>{children}</sub>,
+    sup: ({ children }: TypeProps) => <sup>{children}</sup>,
+    s: ({ children }: TypeProps) => <s>{children}</s>,
+    //TODO find proper type
+    link: ({ children, value }: any) => {
+      return <ExternalLink value={value}>{children}</ExternalLink>
+    },
+    //TODO find proper type
+    internalLink: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+  },
 }
 
 type BlockProps = {
@@ -77,35 +82,8 @@ type BlockProps = {
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 //@ts-ignore
-export default function Blocks({
-  value,
-  blocks,
-  marks,
-  types,
-  components,
-  proseClassName = '',
-  className = '',
-  id,
-}: BlockProps) {
+export default function Blocks({ value, components, proseClassName = '', className = '', id }: BlockProps) {
   let div: PortableTextBlock[] = []
-
-  const serializers: PortableTextReactComponents = {
-    ...defaultComponents,
-    block: {
-      ...defaultComponents.block,
-      ...defaultBlocks,
-      ...blocks,
-    } as BlockType,
-    marks: {
-      ...defaultComponents.marks,
-      ...defaultMarks,
-      ...marks,
-    } as MarkType,
-    types: {
-      ...defaultComponents.types,
-      ...(types ?? defaultTypes),
-    } as TypesType,
-  }
 
   return (
     <>
@@ -129,7 +107,7 @@ export default function Blocks({
                   value={value}
                   //@ts-ignore
                   components={{
-                    ...serializers,
+                    ...defaultSerializers,
                   }}
                 />
               </div>
@@ -165,7 +143,6 @@ export default function Blocks({
                 key={block._key}
                 value={block}
                 components={{
-                  ...defaultComponents,
                   ...components,
                 }}
               />
