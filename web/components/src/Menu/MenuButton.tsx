@@ -45,10 +45,6 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
     grid-template-columns: min-content 1fr;
   }
 
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-
   ${({ expanded }) =>
     !expanded &&
     `
@@ -68,7 +64,13 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
   ref,
 ) {
   return (
-    <StyledMenuButton expanded={expanded} ref={ref} aria-label={title} {...rest}>
+    <StyledMenuButton
+      expanded={expanded}
+      ref={ref}
+      aria-label={title}
+      className="focus:outline-none focus-visible:envis-outline hover:bg-moss-green-60 rounded-md"
+      {...rest}
+    >
       <StyledButtonText>{title}</StyledButtonText>
       <MenuIcon expanded={expanded} />
     </StyledMenuButton>
