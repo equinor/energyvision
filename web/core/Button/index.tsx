@@ -26,7 +26,6 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-moss-green-60
       focus:outline-none
       focus-visible:envis-outline
-      focus-visible:bg-moss-green-60
       active:envis-outline
       dark:text-white-100
       dark:hover:bg-white-transparent

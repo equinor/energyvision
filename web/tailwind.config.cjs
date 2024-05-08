@@ -421,6 +421,9 @@ module.exports = {
             'outline-color': theme('colors.moss-green.100'),
           },
           '.envis-outline-invert': {
+            'outline-style': 'dashed',
+            'outline-width': '2px',
+            'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
           },
         })

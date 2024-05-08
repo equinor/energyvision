@@ -18,7 +18,6 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
-import { Button } from '@core/Button'
 import { ButtonLink } from '@core/Link'
 
 const TopbarOffset = createGlobalStyle`

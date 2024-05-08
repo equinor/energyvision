@@ -1,10 +1,7 @@
 import { AnchorHTMLAttributes } from 'react'
 import { LogoSecondary } from '@components'
 import styled from 'styled-components'
-import { outlineTemplate, Tokens } from '@utils'
 import NextLink from 'next/link'
-
-const { outline } = Tokens
 
 const StyledLogoLink = styled(NextLink)<LogoLinkProps>`
   justify-self: left;
@@ -13,9 +10,6 @@ const StyledLogoLink = styled(NextLink)<LogoLinkProps>`
   height: 100%;
   /* We add the focus ring manually for keyboard users */
   outline: none;
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
 `
 
 const AlignedLogoSecondary = styled(LogoSecondary)`
@@ -29,7 +23,13 @@ type LogoLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
 export const LogoLink = ({ ...rest }: LogoLinkProps) => {
   return (
-    <StyledLogoLink href="/" aria-label="Equinor home page" {...rest} className="logo" prefetch={false}>
+    <StyledLogoLink
+      href="/"
+      aria-label="Equinor home page"
+      {...rest}
+      className="logo focus:outline-none focus-visible:envis-outline"
+      prefetch={false}
+    >
       <AlignedLogoSecondary />
     </StyledLogoLink>
   )

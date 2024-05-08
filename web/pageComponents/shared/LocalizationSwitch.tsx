@@ -110,17 +110,20 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
               variant="ghost"
               href={obj.slug}
               locale={`${language?.locale}`}
-              className={`flex flex-col gap-0 items-stretch px-2`}
+              className={`flex flex-col gap-0 items-stretch px-2 text-xs`}
             >
               <span className="sr-only">{`Switch to ${language?.title}`}</span>
-              <span aria-hidden className="uppercase">
+              <span
+                aria-hidden
+                className={`uppercase ${activeLocale === String(language?.locale) ? 'font-bold' : 'font-normal'}`}
+              >
                 {language?.locale}
               </span>
-              <span
+              {/*               <span
                 className={`h-[2px] ${
                   activeLocale === String(language?.locale) ? 'bg-moss-green-100' : 'bg-transparent'
                 } w-full`}
-              />
+              /> */}
             </ButtonLink>
             {key + 1 < slugs.length && <span className="hidden md:block">|</span>}
           </div>
