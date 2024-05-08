@@ -5,18 +5,6 @@ import EventsCard from '../../cards/EventsCard'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
 
-const SingleEventCard = styled.div`
-  /* max-width: 350px; */
-  margin-top: var(--space-xLarge);
-  padding: 0 var(--space-xLarge);
-  margin-left: auto;
-  margin-right: auto;
-  @media (min-width: 700px) {
-    padding: 0 var(--layout-paddingHorizontal-large);
-    max-width: var(--maxViewportWidth);
-  }
-`
-
 const FlexibleWrapper = styled.div`
   --card-minWidth: 250px;
   --row-gap: var(--space-xLarge);
@@ -93,11 +81,11 @@ const MultipleEventCards = ({
   return (
     <>
       {data.length === 1 ? (
-        <SingleEventCard>
+        <div className="mt-6 px-6 m-auto">
           {data.map((item: EventCardData) => {
             return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
           })}
-        </SingleEventCard>
+        </div>
       ) : data.length === 2 ? (
         <div className=" w-full py-0 px-layout-xs mx-auto my-0 max-w-viewport grid grid-cols-2 gap-x-6 gap-y-2">
           {data.map((item: EventCardData) => {
