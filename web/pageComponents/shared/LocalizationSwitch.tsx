@@ -12,7 +12,7 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
   if (slugs.length < 1) return null
 
   return (
-    <div className="flex items-center md:divide-x md:divide-dashed " {...rest}>
+    <div className="flex items-center md:divide-x md:divide-dashed md:divide-gray-400 " {...rest}>
       {slugs.map((obj) => {
         const language = languages.find((lang) => lang.name === obj.lang)
         return (
