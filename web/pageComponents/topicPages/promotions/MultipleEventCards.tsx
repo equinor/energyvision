@@ -5,39 +5,6 @@ import EventsCard from '../../cards/EventsCard'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
 
-const PairWrapper = styled.div`
-  --card-minWidth: 250px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-  margin: 0 auto;
-  max-width: var(--maxViewportWidth);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-
-  @media (min-width: 990px) {
-    --card-minWidth: 340px;
-    padding: 0 var(--layout-paddingHorizontal-medium);
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr));
-  }
-`
-
-const SingleEventCard = styled.div`
-  /* max-width: 350px; */
-  margin-top: var(--space-xLarge);
-  padding: 0 var(--space-xLarge);
-  margin-left: auto;
-  margin-right: auto;
-  @media (min-width: 700px) {
-    padding: 0 var(--layout-paddingHorizontal-large);
-    max-width: var(--maxViewportWidth);
-  }
-`
-
 const FlexibleWrapper = styled.div`
   --card-minWidth: 250px;
   --row-gap: var(--space-xLarge);
@@ -114,17 +81,17 @@ const MultipleEventCards = ({
   return (
     <>
       {data.length === 1 ? (
-        <SingleEventCard>
+        <div className="mt-6 px-6 m-auto">
           {data.map((item: EventCardData) => {
             return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
           })}
-        </SingleEventCard>
+        </div>
       ) : data.length === 2 ? (
-        <PairWrapper>
+        <div className=" w-full py-0 px-layout-xs mx-auto my-0 max-w-viewport grid grid-cols-2 gap-x-6 gap-y-2">
           {data.map((item: EventCardData) => {
-            return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+            return <EventsCard className="w-full" data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
           })}
-        </PairWrapper>
+        </div>
       ) : (
         <FlexibleWrapper>
           {data.map((item) => {

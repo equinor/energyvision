@@ -13,6 +13,7 @@ import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 
 import type { EventCardData, EventDateType } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
+import { twMerge } from 'tailwind-merge'
 
 const { Text, Media, StyledLandscapeCard } = Card
 
@@ -98,16 +99,17 @@ type EventCardProps = {
   data: EventCardData
   hasSectionTitle: boolean
   orientation?: 'portrait' | 'landscape'
+  className?: string
 }
 
-const EventsCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
+const EventsCard = ({ data, hasSectionTitle, className = '', orientation = 'portrait', ...rest }: EventCardProps) => {
   const { title, location, eventDate, slug } = data
 
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-
   return (
     <StyledCard
+      className={twMerge('', className)}
       orientation={orientation}
       style={
         {
