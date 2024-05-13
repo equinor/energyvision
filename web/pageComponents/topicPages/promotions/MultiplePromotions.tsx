@@ -17,25 +17,7 @@ import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { FormattedDate } from '@components/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
-const CardsWrapper = styled.ul`
-  width: 100%;
-  max-width: calc(var(--card-maxWidth) * 3 + var(--space-large) * 2);
-  padding: 0 var(--space-xxLarge);
-  margin: auto;
-  display: flex;
-  gap: var(--space-large);
-  justify-content: center;
-  align-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-  list-style: none;
-
-  @media (min-width: 750px) {
-    flex-direction: row;
-  }
-`
-
-const PeopleCardsWrapper = styled.div`
+const PeopleCardsWrapper = styled.ul`
   --min: 210px;
   --row-gap: var(--space-xLarge);
   --column-gap: var(--space-medium);
@@ -75,42 +57,37 @@ const StyledPeopleCard = styled(PeopleCard)`
   ${CardStyle}
 `
 
-const CardWrapper = styled.div`
-  display: flex;
-  min-width: 280px;
-  max-width: var(--card-maxWidth);
-  width: 100%;
-`
-
 type CardProps = CardData | PeopleCardData | EventCardData
 
 const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) => {
   const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
-    <Card
-      href={slug}
-      {...(heroImage && {
-        imageUrl: image.src,
-      })}
-      className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
-    >
-      <Card.Content>
-        <Card.Header
-          {...(typeof title === 'string'
-            ? {
-                title: title,
-              }
-            : {
-                titleBlock: title,
-              })}
-          {...(publishDateTime && {
-            eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
-          })}
-        />
-        {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.5em]" />}
-      </Card.Content>
-    </Card>
+    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow">
+      <Card
+        href={slug}
+        {...(heroImage && {
+          imageUrl: image.src,
+        })}
+        className="w-full h-full"
+      >
+        <Card.Content>
+          <Card.Header
+            {...(typeof title === 'string'
+              ? {
+                  title: title,
+                }
+              : {
+                  titleBlock: title,
+                })}
+            {...(publishDateTime && {
+              eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
+            })}
+          />
+          {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.5em]" />}
+        </Card.Content>
+      </Card>
+    </li>
   )
 }
 
@@ -138,9 +115,11 @@ const MultiplePromotions = ({
         return <TWCard key={data.id} {...data} />
       case 'people':
         return (
-          <StyledBackground key={data.id}>
-            <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
-          </StyledBackground>
+          <li className="list-none">
+            <StyledBackground key={data.id}>
+              <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
+            </StyledBackground>
+          </li>
         )
       default:
         return console.warn('Missing card type for ', data)
@@ -168,7 +147,11 @@ const MultiplePromotions = ({
           {data.map((item) => {
             const card = getCard(item)
             if (card) {
-              return <CardWrapper key={item.id}>{card}</CardWrapper>
+              return (
+                <ul className="flex min-w-[280px] max-w-[var(--card-maxWidth)] w-full" key={item.id}>
+                  {card}
+                </ul>
+              )
             }
           })}
         </Carousel>
@@ -189,13 +172,13 @@ const MultiplePromotions = ({
   }
 
   return (
-    <CardsWrapper>
+    <ul className="w-full max-w-[calc(var(--card-maxWidth)*3+var(--space-large)*2)] px-6 py-0 m-auto flex gap-6 justify-center content-center flex-wrap flex-col list-none md:flex-row">
       <>
         {data.map((item) => {
           return getCard(item)
         })}
       </>
-    </CardsWrapper>
+    </ul>
   )
 }
 
