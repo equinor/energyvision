@@ -7,6 +7,7 @@ import type { BackgroundColours, ImageWithAlt } from '../../../../../types/types
 import { urlFor } from '../../../../../common/helpers'
 import Blocks from '../../Blocks'
 import { Typography } from '@core/Typography'
+import Image from '../../../SanityImage'
 
 type FactboxProps = {
   title: string
@@ -51,7 +52,7 @@ export const Fact = (block: BlockProps) => {
     >
       {imageSrc && (
         <FactBox.Image imagePosition={imagePosition}>
-          <Img src={imageSrc} alt={image.alt ? image.alt : 'FactBox'} style={{ objectFit: 'cover' }} fill />
+          <Image image={image} fill />
         </FactBox.Image>
       )}
 
@@ -67,7 +68,7 @@ export const Fact = (block: BlockProps) => {
             {title}
           </Typography>
         )}
-        <FactBox.Text hasColumns={hasColumns}>
+        <FactBox.Text>
           <Blocks
             value={content}
             className={`prose ${hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}

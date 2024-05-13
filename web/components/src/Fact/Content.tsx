@@ -21,7 +21,7 @@ export const Content = ({
   ...rest
 }: ContentProps) => {
   const contentClassNames = `
-  ${!hasColumns && !hasImage ? 'px-layout-lg' : ''}
+  ${!hasColumns && !hasImage ? 'px-layout-lg max-w-viewport mx-auto' : ''}
   ${hasColumns && !hasImage ? 'px-layout-sm' : ''}
   ${
     hasImage
