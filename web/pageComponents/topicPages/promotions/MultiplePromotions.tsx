@@ -172,7 +172,7 @@ const MultiplePromotions = ({
   }
 
   return (
-    <ul className="w-full max-w-[calc(var(--card-maxWidth) * 3 + var(--space-large) * 2)] px-6 py-0 m-auto flex gap-6 justify-center content-center flex-wrap flex-col list-none md:flex-row">
+    <ul className="w-full max-w-[calc(var(--card-maxWidth)*3+var(--space-large)*2)] px-6 py-0 m-auto flex gap-6 justify-center content-center flex-wrap flex-col list-none md:flex-row">
       <>
         {data.map((item) => {
           return getCard(item)
