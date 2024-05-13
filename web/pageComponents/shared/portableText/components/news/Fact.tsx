@@ -70,7 +70,7 @@ export const Fact = (block: BlockProps) => {
         <FactBox.Text hasColumns={hasColumns}>
           <Blocks
             value={content}
-            className={`prose max-w-none ${hasColumns ? 'lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}
+            className={`prose ${hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}
           />
         </FactBox.Text>
       </FactBox.Content>

@@ -21,7 +21,8 @@ export const Content = ({
   ...rest
 }: ContentProps) => {
   const contentClassNames = `
-  ${!hasImage || hasColumns ? 'px-layout-sm' : ''}
+  ${!hasColumns && !hasImage ? 'px-layout-lg' : ''}
+  ${hasColumns && !hasImage ? 'px-layout-sm' : ''}
   ${
     hasImage
       ? `${imagePosition === 'right' ? `lg:col-start-1 lg:row-start-1 pl-layout-sm pr-24` : 'pr-layout-sm pl-24'}`
