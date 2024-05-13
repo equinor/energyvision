@@ -63,7 +63,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   }, [player])
 
   const getPlayer = (node: Element) => {
-    console.log('useFillMode', useFillMode)
     const player = videojs(
       node,
       {
