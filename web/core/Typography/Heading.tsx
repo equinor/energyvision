@@ -1,12 +1,19 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import { Typography, TypographyProps } from './Typography'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
 import { Highlight } from '../../pageComponents/shared/portableText/components'
+import { BlockProps } from '../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
-export type HeadingProps = PortableTextProps & TypographyProps
+export type HeadingProps = {
+  value?: PortableTextBlock[]
+} & PortableTextProps &
+  TypographyProps &
+  BlockProps
 
-const defaultComponents = ({ variant, as: providedAs, className }: TypographyProps) => {
+const defaultComponents = ({ variant, group, as: providedAs, className }: TypographyProps) => {
   return {
     block: {
       h1: ({ children }: PortableTextBlock) => {
@@ -80,14 +87,62 @@ const defaultComponents = ({ variant, as: providedAs, className }: TypographyPro
 /**
  * Component to use with portabletext headings
  */
-export const Heading = ({ value, components = {}, variant, group, as, className, ...props }: HeadingProps) => {
+export const Heading = ({
+  value,
+  components = {},
+  variant,
+  group,
+  as,
+  className,
+  proseClassName = '',
+  ...props
+}: HeadingProps) => {
+  let div: PortableTextBlock[] = []
+
   return (
-    <PortableText
-      value={value}
-      // eslint-disable-next-line
-      // @ts-ignore
-      components={{ ...defaultComponents({ variant, group, as, className }), ...components }}
-      {...props}
-    />
+    <>
+      {value?.length > 1 ? (
+        value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
+          // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
+          if (block._type === 'block') {
+            div.push(block)
+            // If the next block is also text/pullQuote, group it with this one
+            if (blocks[i + 1]?._type === 'block') return null
+
+            // Otherwise, render the group of text blocks we have
+            const value = div
+            div = []
+            const WrapperTextTag = as ?? (`h2` as React.ElementType)
+            const PortableTextTag = `span` as React.ElementType
+
+            return (
+              <WrapperTextTag
+                key={block._key}
+                className={twMerge(`prose ${proseClassName} dark:prose-invert flex flex-col`, className)}
+              >
+                <PortableText
+                  value={value}
+                  // eslint-disable-next-line
+                  // @ts-ignore
+                  components={{
+                    ...defaultComponents({ variant, group, as: PortableTextTag, className }),
+                    ...components,
+                  }}
+                  {...props}
+                />
+              </WrapperTextTag>
+            )
+          }
+        })
+      ) : (
+        <PortableText
+          value={value}
+          // eslint-disable-next-line
+          // @ts-ignore
+          components={{ ...defaultComponents({ variant, group, as, className }), ...components }}
+          {...props}
+        />
+      )}
+    </>
   )
 }

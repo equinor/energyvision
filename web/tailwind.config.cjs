@@ -401,6 +401,7 @@ module.exports = {
           css: {
             color: theme('colors.current'),
             p: {
+              fontSize: theme('fontSize.md'),
               marginTop: '0',
               marginBottom: '0',
             },
