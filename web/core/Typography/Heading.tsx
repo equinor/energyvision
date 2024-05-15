@@ -98,7 +98,6 @@ export const Heading = ({
   ...props
 }: HeadingProps) => {
   let div: PortableTextBlock[] = []
-
   return (
     <>
       {value?.length > 1 ? (
