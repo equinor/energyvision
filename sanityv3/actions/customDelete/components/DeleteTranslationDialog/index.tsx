@@ -41,7 +41,7 @@ export default function DeleteTranslationDialog(props: DeleteTranslationDialogPr
     setLoading(false)
     setData(data)
   }
-  const [loading, setLoading] = useState<Boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true)
   // Get all references and check if any of them are translations metadata
 
   if (loading) getData()
