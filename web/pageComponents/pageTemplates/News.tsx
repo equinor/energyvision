@@ -15,6 +15,7 @@ import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/types'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
+import CallToActions from '@sections/CallToActions'
 import { twMerge } from 'tailwind-merge'
 
 const NewsLayout = styled.div`
@@ -221,7 +222,8 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
             {iframe && <BasicIFrame data={iframe} />}
 
-            {relatedLinks?.links && relatedLinks.links.length > 0 && (
+            {relatedLinks?.links &&
+              relatedLinks.links.length > 0 /*(
               <RelatedContent
                 data={relatedLinks}
                 className={twMerge(`
@@ -232,7 +234,18 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                   ${iframe ? 'mt-0' : ''}
                   `)}
               />
-            )}
+            )*/ && (
+                <CallToActions
+                  className={twMerge(`
+                  px-layout-lg
+                  max-w-viewport
+                  my-3xl
+                  `)}
+                  callToActions={relatedLinks.links}
+                  overrideButtonStyle={false}
+                  splitList={false}
+                />
+              )}
 
             {latestNews && latestNews.length > 0 && (
               <Latest>

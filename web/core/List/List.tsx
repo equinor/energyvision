@@ -23,6 +23,7 @@ export const List = forwardRef<HTMLDivElement, ListProps>(
       title,
       headingTag = 'h3',
       split = false,
+      listClassName = '',
       ...rest
     },
     ref,
@@ -50,7 +51,7 @@ export const List = forwardRef<HTMLDivElement, ListProps>(
             `list-inside
           ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}
           ${split ? 'md:grid md:grid-cols-2 gap-x-8 gap-y-6 items-end' : ''}`,
-            className,
+            listClassName,
           )}
         >
           {children}
