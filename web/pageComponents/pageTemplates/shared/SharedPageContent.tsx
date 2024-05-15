@@ -108,8 +108,8 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
     !currentComponent?.designOptions
 
   const previousIsWhiteColorBackground =
-    previousComponentsDO?.backgroundUtility === 'white-100' ||
-    previousComponentsDO?.backgroundColor === 'White' ||
+    ((previousComponentsDO?.type !== 'backgroundImage' || !previousComponentsDO?.type) &&
+      (previousComponentsDO?.backgroundUtility === 'white-100' || previousComponentsDO?.backgroundColor === 'White')) ||
     //@ts-ignore
     !prevComponent?.designOptions
 
@@ -118,7 +118,9 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
     !currentIsWhiteColorBackground
 
   const previousIsColorContainerAndNotWhite =
-    (previousComponentsDO?.type === 'backgroundColor' || previousComponentsDO?.backgroundColor) &&
+    (previousComponentsDO?.type === 'backgroundColor' ||
+      previousComponentsDO?.backgroundColor ||
+      previousComponentsDO?.type === 'backgroundImage') &&
     !previousIsWhiteColorBackground
 
   const previousIsSameColorAsCurrent =

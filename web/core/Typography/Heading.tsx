@@ -13,7 +13,7 @@ export type HeadingProps = {
   TypographyProps &
   BlockProps
 
-const defaultComponents = ({ variant, group, as: providedAs, className }: TypographyProps) => {
+const defaultComponents = ({ variant, as: providedAs, className }: TypographyProps) => {
   return {
     block: {
       h1: ({ children }: PortableTextBlock) => {
