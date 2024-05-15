@@ -10,10 +10,11 @@ type DocumentPreviewProps = {
 export default function DocumentPreview(props: DocumentPreviewProps) {
   const schema = useSchema()
 
-  const schemaType = schema.get(props.type)
+  const { type, value } = props
+  const schemaType = schema.get(type)
   if (!schemaType) {
     return <Feedback tone="critical" title="Schema type not found" />
   }
 
-  return <Preview value={props.value} schemaType={schemaType} />
+  return <Preview value={value} schemaType={schemaType} />
 }
