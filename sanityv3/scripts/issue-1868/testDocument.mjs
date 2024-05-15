@@ -14,6 +14,14 @@ export const SCHEMA_TYPE = [
 ]
 
 export const testDocs = [
+  '9cc573dc-ee9e-4980-8a5a-788952e1ccac',
+  '0f45e2eb-4a01-40ed-ae98-e57997b14f1b__i18n_nb_NO',
+  'drafts.0f45e2eb-4a01-40ed-ae98-e57997b14f1b',
+
+  'drafts.77815ae5-8886-4ba8-80a4-2e47adc83859',
+  'drafts.77815ae5-8886-4ba8-80a4-2e47adc83859__i18n_nb_NO',
+]
+/*export const testDocs = [
   'c98a0ff0-75a4-45c4-ba81-4b0d83967be5',
   '3deb2937-c3b6-47dc-8ead-88291a21103b',
   'c2110403-ddcb-4507-a3c4-8051eb7c1ddf',
@@ -101,4 +109,4 @@ export const testDocs = [
   // footer
   'english-footer',
   'norwegian-footer',
-]
+]*/
