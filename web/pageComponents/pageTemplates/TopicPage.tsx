@@ -24,10 +24,11 @@ const TopicPage = ({ data }: TopicPageProps) => {
         pageTitle={data?.title}
       />
       <main>
-        {!data?.isCampaign && (
+        {data.isCampaign ? (
+          <h1 className="sr-only">{toPlainText(data.title)}</h1>
+        ) : (
           <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
         )}
-        {data.isCampaign && <h1 className="sr-only">{toPlainText(data.title)}</h1>}
         {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             background={titleStyles.background}
