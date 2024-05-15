@@ -52,6 +52,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   }
 
   const isSvg = image?.extension === 'svg'
+
   return (
     <BackgroundContainer {...restOptions} id={anchor} renderFragmentWhenPossible>
       <StyledEnvisTeaser imagePosition={imagePosition}>
