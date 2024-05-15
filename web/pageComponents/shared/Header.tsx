@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, BackgroundContainer, Button } from '@components'
+import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -11,13 +11,14 @@ import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
+import { ButtonLink } from '@core/Link'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -149,6 +150,8 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
 
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
+  const intl = useIntl()
+  const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
   return (
     <HeaderRelative>
@@ -167,28 +170,16 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <Button
+                  <ButtonLink
                     variant="ghost"
                     aria-expanded="true"
                     aria-label="Search"
-                    forwardedAs={NextLink}
-                    prefetch={false}
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
-                    href={{
-                      pathname: '/search',
-                    }}
-                    style={
-                      {
-                        '--eds_button__padding_x': 'var(--space-small)',
-                        color: 'var(--default-text)',
-                        fill: 'var(--default-text)',
-                      } as CSSProperties
-                    }
+                    href="/search"
+                    className="p-2 md:px-5 md:py-3"
                   >
                     <Icon size={24} data={search} />
                     <FormattedMessage id="search" />
-                  </Button>
+                  </ButtonLink>
                 </ControlChild>
               )}
               {hasMoreThanOneLanguage && (

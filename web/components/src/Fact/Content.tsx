@@ -1,74 +1,39 @@
-import styled from 'styled-components'
-
-type ContainerProps = {
-  hasImage?: boolean
-  dynamicHeight?: boolean
-  hasColumns?: boolean
-}
-
-export const Container = styled.div<ContainerProps>`
-  background-color: var(--background);
-  h2,
-  h3 {
-    margin: var(--space-small) 0;
-  }
-  ul,
-  ol {
-    padding-left: var(--space-medium);
-  }
-
-  li {
-    margin-bottom: var(--space-small);
-  }
-
-  margin: 0 calc(var(--spacer-vertical-xxxLarge) * -1);
-  grid-area: content;
-
-  ${({ hasImage }) =>
-    hasImage && {
-      overflowY: 'auto',
-      maxHeight: '800px',
-      padding: 'var(--space-large) var(--space-large)',
-    }}
-
-  @media (min-width: 800px) {
-    ${({ hasImage, dynamicHeight }) =>
-      hasImage &&
-      !dynamicHeight && {
-        height: '800px',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-  }
-`
-
-// Needed for vertical centering, flex aligmnets don't work well with overflow
-const InnerWrapper = styled.div<{ dynamicHeight: boolean }>`
-  @media (min-width: 800px) {
-    ${({ dynamicHeight }) =>
-      !dynamicHeight && {
-        margin: 'auto 0',
-      }}
-  }
-`
+import { FactImagePosition } from '@components'
+import { twMerge } from 'tailwind-merge'
 
 type ContentProps = {
   hasImage?: boolean
   dynamicHeight?: boolean
+  className?: string
+  hasColumns?: boolean
+  hasBgColor?: boolean
+  imagePosition?: FactImagePosition
 } & React.HTMLAttributes<HTMLDivElement>
 
-export const Content = ({ hasImage = false, dynamicHeight = false, children, ...rest }: ContentProps) => {
-  if (hasImage) {
-    return (
-      <Container hasImage dynamicHeight={dynamicHeight} {...rest}>
-        <InnerWrapper dynamicHeight={dynamicHeight}>{children}</InnerWrapper>
-      </Container>
-    )
+export const Content = ({
+  hasImage = false,
+  hasColumns = false,
+  hasBgColor = false,
+  imagePosition = 'left',
+  dynamicHeight = false,
+  children,
+  className = '',
+  ...rest
+}: ContentProps) => {
+  const contentClassNames = `
+  ${!hasColumns && !hasImage ? 'px-layout-lg max-w-viewport mx-auto' : ''}
+  ${hasColumns && !hasImage ? 'px-layout-sm' : ''}
+  ${
+    hasImage
+      ? `${imagePosition === 'right' ? `lg:col-start-1 lg:row-start-1 pl-layout-sm pr-24` : 'pr-layout-sm pl-24'}`
+      : ''
   }
+  ${hasBgColor ? `${hasImage ? 'pt-12 pb-24 lg:py-24' : 'py-24'}` : 'pt-0 pb-24'}
+  `
 
   return (
-    <Container hasImage={hasImage} dynamicHeight={dynamicHeight} {...rest}>
+    <div className={twMerge(contentClassNames, className)} {...rest}>
       {children}
-    </Container>
+    </div>
   )
 }

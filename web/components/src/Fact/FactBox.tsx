@@ -1,68 +1,54 @@
-import { forwardRef, Children, isValidElement, HTMLAttributes } from 'react'
-import styled from 'styled-components'
-import { Image } from './Image'
+import { forwardRef, HTMLAttributes } from 'react'
 import type { FactImagePosition } from './'
-import { getColorOnContainer, getContainerColor } from '@utils'
 import { BackgroundColours } from '../../../types/types'
-
-type FactBoxWrapperStyleProps = {
-  background?: BackgroundColours
-}
-const FactBoxWrapperStyle = styled.aside<FactBoxWrapperStyleProps>`
-  clear: both;
-  ${({ background }) => {
-    if (background)
-      return {
-        '--background': `var(${getContainerColor(background)})`,
-        color: `var(${getColorOnContainer(background)})`,
-      }
-  }}
-`
-
-const WrapperWithImg = styled(FactBoxWrapperStyle)<{ imagePosition: FactImagePosition }>`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: min-content min-content;
-  grid-template-areas:
-    'image'
-    'content';
-
-  @media (min-width: 800px) {
-    grid-template-columns: 50% 50%;
-    grid-template-rows: min-content;
-
-    ${({ imagePosition }) =>
-      imagePosition === 'left'
-        ? {
-            gridTemplateAreas: '"image content"',
-          }
-        : {
-            gridTemplateAreas: '"content image"',
-          }}
-  }
-`
+import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
+import { BackgroundContainer, BackgroundContainerProps } from '@components'
+import { twMerge } from 'tailwind-merge'
 
 export type FactProps = {
-  background?: BackgroundColours
+  background?: string
+  backgroundUtility?: string
+  dark?: boolean
   imagePosition?: FactImagePosition
+  useTwoColumns?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 export const FactBox = forwardRef<HTMLDivElement, FactProps>(function FactBox(
-  { background = 'White', imagePosition = 'left', children, ...rest },
+  {
+    background = 'White',
+    backgroundUtility = 'white-100',
+    dark,
+    useTwoColumns = false,
+    imagePosition = 'left',
+    children,
+    className = '',
+    ...rest
+  },
   ref,
 ) {
-  const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Image)
-  if (hasImage) {
-    return (
-      <WrapperWithImg imagePosition={imagePosition} background={background} ref={ref} {...rest}>
-        {children}
-      </WrapperWithImg>
-    )
+  const bgProps: BackgroundContainerProps = {
+    background: {
+      dark: dark,
+      backgroundUtility: backgroundUtility as keyof ColorKeyTokens,
+      backgroundColor: background as BackgroundColours,
+      type: 'backgroundColor',
+    },
   }
 
   return (
-    <FactBoxWrapperStyle background={background} ref={ref} {...rest}>
-      {children}
-    </FactBoxWrapperStyle>
+    <BackgroundContainer {...rest} className={twMerge(`w-full flex mt-24 mb-24`, className)} {...bgProps} ref={ref}>
+      <div
+        className={twMerge(
+          `w-full flex flex-col justify-center ${
+            useTwoColumns
+              ? `lg:grid grid-rows-1 ${imagePosition === 'right' ? 'lg:grid-cols-[60%_40%]' : 'lg:grid-cols-[40%_60%]'}`
+              : ''
+          }`,
+          className,
+        )}
+      >
+        {children}
+      </div>
+    </BackgroundContainer>
   )
 })

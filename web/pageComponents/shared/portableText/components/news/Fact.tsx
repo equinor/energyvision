@@ -1,41 +1,21 @@
 import { toPlainText } from '@portabletext/react'
-import Img from 'next/image'
-import styled from 'styled-components'
-import RichText from '../../RichText'
-import { FactBox, getContainerColor, Heading, StyleVariants } from '@components'
+import { FactBox } from '@components'
 import type { FactImagePosition } from '@components'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { BackgroundColours, ImageWithAlt } from '../../../../../types/types'
-
 import { urlFor } from '../../../../../common/helpers'
-import { twMerge } from 'tailwind-merge'
+import Blocks from '../../Blocks'
+import { Typography } from '@core/Typography'
+import Image from '../../../SanityImage'
 
 type FactboxProps = {
   title: string
   content: []
-  background: { title: string; value: string }
+  background: { title: string; value: string; key?: string; dark?: boolean }
   image: ImageWithAlt
   imagePosition: FactImagePosition
   dynamicHeight: boolean
 }
-
-const FactBoxWithPadding = styled(FactBox)``
-
-const FactBoxContentWithPadding = styled(FactBox.Content)<{
-  hasColumns: boolean
-  hasImage: boolean
-  hasBgColor: boolean
-}>`
-  ${({ hasColumns, hasImage, hasBgColor }) =>
-    !hasColumns &&
-    !hasImage && {
-      padding: `${hasBgColor ? 'var(--space-3xLarge)' : '0'} var(--layout-paddingHorizontal-large)`,
-    }}
-  ${({ hasColumns, hasBgColor }) =>
-    hasColumns && {
-      padding: `${hasBgColor ? 'var(--space-large)' : '0 var(--space-large)'}`,
-    }}
-`
 
 type BlockProps = {
   isInline: boolean
@@ -46,12 +26,11 @@ type BlockProps = {
 export const Fact = (block: BlockProps) => {
   const { value, className } = block
   const { title, content, background, image, imagePosition, dynamicHeight } = value
+
   const bgTitle = (background ? background?.title : 'White') as BackgroundColours
   if (!content || content.length === 0) {
     return null
   }
-
-  const backgroundColor: StyleVariants = getContainerColor(bgTitle)
 
   const imageSrc = image && image.asset ? urlFor(image).size(1200, 800).auto('format').toString() : false
 
@@ -61,38 +40,40 @@ export const Fact = (block: BlockProps) => {
   const hasImage = imageSrc ? true : false
   const hasBgColor = bgTitle !== 'White'
 
-  const classNames = twMerge('my-3xl', className)
-
   return (
-    <FactBoxWithPadding
-      className={`fact-box fact-box${backgroundColor} ${hasBgColor ? 'fact-box--colored' : ''} ${
-        hasImage ? 'fact-box--image' : ''
-      } ${classNames}
-      `}
+    <FactBox
+      className={className}
+      useTwoColumns={hasImage ?? hasColumns}
       imagePosition={imagePosition}
-      background={bgTitle}
+      background={background?.title}
+      backgroundUtility={background?.key}
+      dark={background?.dark}
     >
       {imageSrc && (
-        <FactBox.Image>
-          <Img src={imageSrc} alt={image.alt ? image.alt : 'FactBox'} style={{ objectFit: 'cover' }} fill />
+        <FactBox.Image imagePosition={imagePosition}>
+          <Image image={image} fill />
         </FactBox.Image>
       )}
 
-      <FactBoxContentWithPadding
+      <FactBox.Content
         dynamicHeight={dynamicHeight}
+        hasBgColor={hasBgColor}
         hasImage={hasImage}
         hasColumns={hasColumns}
-        hasBgColor={hasBgColor}
+        imagePosition={imagePosition}
       >
         {title && (
-          <Heading size="xl" level="h3">
+          <Typography as="h2" variant="h3">
             {title}
-          </Heading>
+          </Typography>
         )}
-        <FactBox.Text hasColumns={hasColumns}>
-          <RichText value={content} />
+        <FactBox.Text>
+          <Blocks
+            value={content}
+            className={`prose ${hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}
+          />
         </FactBox.Text>
-      </FactBoxContentWithPadding>
-    </FactBoxWithPadding>
+      </FactBox.Content>
+    </FactBox>
   )
 }

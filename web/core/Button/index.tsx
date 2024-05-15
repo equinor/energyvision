@@ -12,6 +12,9 @@ focus:outline-none
 focus-visible:envis-outline
 dark:focus:outline-none
 dark:focus-visible:envis-outline-invert
+flex
+items-center
+gap-3
 `
 
 export type Variants = 'contained' | 'outlined' | 'ghost'
@@ -20,7 +23,16 @@ export type Variants = 'contained' | 'outlined' | 'ghost'
 export const getVariant = (variant: Variants): string => {
   switch (variant) {
     case 'ghost':
-      return ``
+      return `
+      hover:bg-moss-green-60
+      focus:outline-none
+      focus-visible:envis-outline
+      active:envis-outline
+      dark:text-white-100
+      dark:hover:bg-white-transparent
+      dark:focus-visible:envis-outline-invert
+      dark:active:envis-outline-invert
+      `
     case 'outlined':
       return `
       border
