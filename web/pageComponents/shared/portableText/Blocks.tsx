@@ -53,7 +53,7 @@ const defaultSerializers = {
   },
 }
 
-type BlockProps = {
+export type BlockProps = {
   /**
    * Override default block serializers
    */
