@@ -88,51 +88,57 @@ type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
  * Remember to think about the prev section of condition with top spacing
  * E.g. 2 colored background of same color content, only first need but not second
  */
-const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
+const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore
-  const currentComponentsDO =
-    //@ts-ignore
-    currentComponent?.designOptions?.background || getColorForTheme(currentComponent?.designOptions?.theme)
-  //@ts-ignore
-  const previousComponentsDO =
-    //@ts-ignore
-    prevComponent?.designOptions?.background || getColorForTheme(prevComponent?.designOptions?.theme)
+  return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
+}
 
-  //Cardslist uses the background for the cards not the block background
+const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) => {
   const casesWhichHaveBackgroundButIsWhite = ['cardsList']
-  const currentIsWhiteColorBackground =
-    currentComponentsDO?.backgroundUtility === 'white-100' ||
-    currentComponentsDO?.backgroundColor === 'White' ||
-    currentComponentsDO?.background === 'White' ||
+  return (
+    componentsDO?.backgroundUtility === 'white-100' ||
+    componentsDO?.backgroundColor === 'White' ||
+    componentsDO?.background === 'White' ||
     //@ts-ignore
-    casesWhichHaveBackgroundButIsWhite.includes(currentComponent?.type) ||
+    casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
     //@ts-ignore
-    !currentComponent?.designOptions
+    !component?.designOptions
+  )
+}
 
-  const previousIsWhiteColorBackground =
-    previousComponentsDO?.backgroundUtility === 'white-100' ||
-    previousComponentsDO?.backgroundColor === 'White' ||
-    previousComponentsDO?.background === 'White' ||
-    //@ts-ignore
-    !prevComponent?.designOptions
+const isColoredBackgroundAndNotWhite = (componentsDO: any, isWhiteColor: boolean) => {
+  return (
+    (componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
+    !isWhiteColor
+  )
+}
 
-  const isCurrentColoredBackgroundAndNotWhite =
-    (currentComponentsDO?.type === 'backgroundColor' ||
-      currentComponentsDO?.backgroundColor ||
-      currentComponentsDO?.background) &&
-    !currentIsWhiteColorBackground
-
-  const previousIsColorContainerAndNotWhite =
-    (previousComponentsDO?.type === 'backgroundColor' ||
-      previousComponentsDO?.backgroundColor ||
-      previousComponentsDO?.background) &&
-    !previousIsWhiteColorBackground
-
-  const previousIsSameColorAsCurrent =
+const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: any) => {
+  return (
     (currentComponentsDO?.backgroundUtility &&
       previousComponentsDO?.backgroundUtility &&
       currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility) ??
     currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
+  )
+}
+
+const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
+  const currentComponentsDO = getBackgroundOptions(currentComponent)
+  const previousComponentsDO = getBackgroundOptions(prevComponent)
+
+  const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
+  const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
+
+  const isCurrentColoredBackgroundAndNotWhite = isColoredBackgroundAndNotWhite(
+    currentComponentsDO,
+    currentIsWhiteColorBackground,
+  )
+  const previousIsColorContainerAndNotWhite = isColoredBackgroundAndNotWhite(
+    previousComponentsDO,
+    previousIsWhiteColorBackground,
+  )
+
+  const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
 
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo']
   //@ts-ignore
