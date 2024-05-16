@@ -13,6 +13,7 @@ export const SCHEMA_TYPE = [
   `footer`,
   //  Missing ones..
   `subMenu`,
+  `redirect`,
 ]
 
 export const testDocs = [
