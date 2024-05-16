@@ -11,6 +11,8 @@ export const SCHEMA_TYPE = [
   `landingPage`,
   `siteMenu`,
   `footer`,
+  //  Missing ones..
+  `subMenu`,
 ]
 
 export const testDocs = [

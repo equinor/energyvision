@@ -10,14 +10,23 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
   const params = {
     draft: `drafts.${id}`,
     published: id,
-    language: document.lang,
     slug,
+    type: document._type,
   }
-  const query = /* groq */ `!defined(*[
-    !(_id in [$draft, $published]) &&
-    slug.current == $slug &&
-    lang == $language
-  ][0]._id)`
+
+  let query: string
+  if (document._type.includes('route')) {
+    query = /* groq */ `!defined(*[
+      !(_id in [$draft, $published]) &&
+      slug.current == $slug && 
+      _type == $type
+    ][0]._id)`
+  } else {
+    query = /* groq */ `!defined(*[
+      !(_id in [$draft, $published]) &&
+      slug.current == $slug
+    ][0]._id)`
+  }
 
   const result = await getClient({ apiVersion: apiVersion }).fetch(query, params)
 
