@@ -1,6 +1,12 @@
 {
   "rules": {
     "import/default": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["^sanity/.+"]
+      }
+    ]
   }
 }
