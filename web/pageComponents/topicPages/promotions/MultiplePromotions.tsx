@@ -63,7 +63,7 @@ const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardDa
   const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
-    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow">
+    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow" key={id}>
       <Card
         href={slug}
         {...(heroImage && {
@@ -116,7 +116,7 @@ const MultiplePromotions = ({
         return <TWCard key={data.id} {...data} />
       case 'people':
         return (
-          <li className="list-none">
+          <li className="list-none" key={data.id}>
             <StyledBackground key={data.id}>
               <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
             </StyledBackground>
