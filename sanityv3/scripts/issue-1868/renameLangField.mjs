@@ -32,7 +32,7 @@ const client = sanityClients[0]
 
 //&& _id in $testDocs
 const query = `*[_type in $type && defined(${UNSET_FIELD_NAME}) 
-  && _id in $testDocs
+  
   ][0...100] {
     _id, 
     _rev, 

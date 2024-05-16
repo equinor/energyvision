@@ -44,7 +44,7 @@ const fetchDocuments = () =>
       _type in $type 
       && (defined(${UNSET_REFS_FIELD}) || defined(${UNSET_BASE_FIELD})) 
       && defined(${LANGUAGE_FIELD})
-      && _id in $testDocs
+     
     ][0...100] {
       _id, 
       _rev,
