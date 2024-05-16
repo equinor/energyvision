@@ -52,6 +52,7 @@ import {
   KeyNumbersData,
   CardsListData,
 } from '../../../types/types'
+import { getColorForTheme } from '../../shared/textTeaser/theme'
 
 // How could we do this for several different component types?
 type ComponentProps =
@@ -89,15 +90,20 @@ type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
  */
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
   //@ts-ignore
-  const currentComponentsDO = currentComponent?.designOptions?.background
+  const currentComponentsDO =
+    //@ts-ignore
+    currentComponent?.designOptions?.background || getColorForTheme(currentComponent?.designOptions?.theme)
   //@ts-ignore
-  const previousComponentsDO = prevComponent?.designOptions?.background
+  const previousComponentsDO =
+    //@ts-ignore
+    prevComponent?.designOptions?.background || getColorForTheme(prevComponent?.designOptions?.theme)
 
   //Cardslist uses the background for the cards not the block background
   const casesWhichHaveBackgroundButIsWhite = ['cardsList']
   const currentIsWhiteColorBackground =
     currentComponentsDO?.backgroundUtility === 'white-100' ||
     currentComponentsDO?.backgroundColor === 'White' ||
+    currentComponentsDO?.background === 'White' ||
     //@ts-ignore
     casesWhichHaveBackgroundButIsWhite.includes(currentComponent?.type) ||
     //@ts-ignore
@@ -106,15 +112,20 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
   const previousIsWhiteColorBackground =
     previousComponentsDO?.backgroundUtility === 'white-100' ||
     previousComponentsDO?.backgroundColor === 'White' ||
+    previousComponentsDO?.background === 'White' ||
     //@ts-ignore
     !prevComponent?.designOptions
 
   const isCurrentColoredBackgroundAndNotWhite =
-    (currentComponentsDO?.type === 'backgroundColor' || currentComponentsDO?.backgroundColor) &&
+    (currentComponentsDO?.type === 'backgroundColor' ||
+      currentComponentsDO?.backgroundColor ||
+      currentComponentsDO?.background) &&
     !currentIsWhiteColorBackground
 
   const previousIsColorContainerAndNotWhite =
-    (previousComponentsDO?.type === 'backgroundColor' || previousComponentsDO?.backgroundColor) &&
+    (previousComponentsDO?.type === 'backgroundColor' ||
+      previousComponentsDO?.backgroundColor ||
+      previousComponentsDO?.background) &&
     !previousIsWhiteColorBackground
 
   const previousIsSameColorAsCurrent =

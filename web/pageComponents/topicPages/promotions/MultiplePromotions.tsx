@@ -59,7 +59,7 @@ const StyledPeopleCard = styled(PeopleCard)`
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
-const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) => {
+const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardData) => {
   const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
@@ -70,6 +70,7 @@ const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) 
           imageUrl: image.src,
         })}
         className="w-full h-full"
+        key={id}
       >
         <Card.Content>
           <Card.Header
