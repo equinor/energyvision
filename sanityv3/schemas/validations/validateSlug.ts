@@ -12,6 +12,7 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
     published: id,
     slug,
     type: document._type,
+    language: document.lang,
   }
 
   let query: string
@@ -24,7 +25,8 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
   } else {
     query = /* groq */ `!defined(*[
       !(_id in [$draft, $published]) &&
-      slug.current == $slug
+      slug.current == $slug && 
+      lang == $language
     ][0]._id)`
   }
 
