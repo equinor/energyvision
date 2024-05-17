@@ -1,4 +1,4 @@
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
@@ -33,5 +33,5 @@ export const localNewsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${localNewsFields}
-  }
+  }${querySuffixForNewsAndMagazine}
 `
