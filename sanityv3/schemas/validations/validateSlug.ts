@@ -12,7 +12,7 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
     published: id,
     slug,
     type: document._type,
-    language: document.lang,
+    language: document.lang || '',
   }
 
   let query: string
@@ -29,9 +29,7 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
       lang == $language
     ][0]._id)`
   }
-
   const result = await getClient({ apiVersion: apiVersion }).fetch(query, params)
-
   return result
 }
 
