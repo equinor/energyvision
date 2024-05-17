@@ -12,11 +12,12 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
     published: id,
     slug,
     type: document._type,
-    language: document.lang,
+    language: document.lang || '',
   }
 
   let query: string
   if (document._type.includes('route')) {
+    console.log('Route query ')
     query = /* groq */ `!defined(*[
       !(_id in [$draft, $published]) &&
       slug.current == $slug && 
@@ -30,8 +31,9 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
     ][0]._id)`
   }
 
+  console.log(query)
   const result = await getClient({ apiVersion: apiVersion }).fetch(query, params)
-
+  console.log(result)
   return result
 }
 
