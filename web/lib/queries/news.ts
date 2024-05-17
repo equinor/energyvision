@@ -1,4 +1,4 @@
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { noDrafts, sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
@@ -54,7 +54,7 @@ export const newsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${newsFields}
-  }
+  }${querySuffixForNewsAndMagazine}
 `
 
 export const newsPromotionQuery = /* groq */ `
