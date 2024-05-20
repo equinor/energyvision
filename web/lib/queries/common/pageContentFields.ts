@@ -302,7 +302,7 @@ _type == "keyNumbers" =>{
           "title": reference->title,
           "heroImage": select(
               reference->heroType == 'loopingVideo' =>
-                { "image": reference->content->heroLoopingVideo->thumbnail },
+                { "image": reference->heroLoopingVideo->thumbnail },
                 reference->heroFigure),
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
