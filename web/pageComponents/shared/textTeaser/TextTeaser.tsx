@@ -5,8 +5,9 @@ import TitleText from '../portableText/TitleText'
 import type { TextTeaserData } from '../../../types/types'
 import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
-import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
+
 import { twMerge } from 'tailwind-merge'
+import ReadMoreLink from '../ReadMoreLink'
 
 const { Content } = EnvisTeaser
 
@@ -90,7 +91,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
               <IngressText value={text} />
             </IngressWrapper>
           )}
-          {action && <ReadMoreLink action={action} variant="readMore" />}
+          {action && <ReadMoreLink action={action} />}
         </StyledContent>
       </TeaserWrapper>
     </BackgroundContainer>

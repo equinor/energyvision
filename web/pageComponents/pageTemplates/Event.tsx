@@ -5,7 +5,6 @@ import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
-import RelatedContent from '../shared/RelatedContent'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import Promotion from '../topicPages/Promotion'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -13,6 +12,8 @@ import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
+import CallToActions from '@sections/CallToActions'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -83,14 +84,17 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {contactList && <ContactList data={contactList} className="my-12" />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent
-              data={relatedLinks}
-              className={`
-                  px-layout-lg
-                  max-w-viewport
-                  mx-auto
-                  pb-page-content
-                  `}
+            <CallToActions
+              className={twMerge(`
+              px-layout-lg
+              max-w-viewport
+              my-3xl
+              mx-auto
+              pb-page-content
+              `)}
+              callToActions={relatedLinks.links}
+              overrideButtonStyle={false}
+              splitList={false}
             />
           )}
         </article>
