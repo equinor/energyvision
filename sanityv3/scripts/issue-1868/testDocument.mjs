@@ -14,6 +14,7 @@ export const SCHEMA_TYPE = [
   //  Missing ones..
   `subMenu`,
   `redirect`,
+  `simpleMenu`, // for satellite sites
 ]
 
 export const testDocs = [

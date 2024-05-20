@@ -15,7 +15,7 @@ export function createCustomDuplicateAction(originalAction: DocumentActionCompon
           .fetch(/* groq */ `*[_id match '*'+$id][0]{lang}`, { id: context.documentId })
           .then((result) => {
             if (result?.lang == defaultLanguage.name) {
-              // allow duplicate action only on bas language
+              // allow duplicate action only on base language
               originalResult.onHandle && originalResult.onHandle()
             } else {
               toast.push({
