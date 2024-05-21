@@ -25,12 +25,12 @@ const GridTextBlock = ({ data, className }: GridTextBlockProps) => {
 
   return (
     <div
-      className={`w-full h-full flex flex-col justify-center items-center ${action ? 'pt-16 ' : 'py-12'} ${
-        theme !== null ? backgroundUtility : ''
-      } `}
+      className={`relative w-full h-full flex flex-col items-center ${
+        action ? 'pt-16 justify-between' : 'py-12 justify-center'
+      } ${theme !== null ? backgroundUtility : ''} `}
     >
       {content && (
-        <div className="px-10 lg:px-20 flex-1 flex flex-col justify-center">
+        <div className="px-12 flex flex-col justify-center">
           <Blocks
             value={content}
             proseClassName="prose-campaign"
