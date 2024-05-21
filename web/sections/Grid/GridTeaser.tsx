@@ -16,21 +16,19 @@ export type GridTeaserProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function GridTeaser({ data, rowType }, ref) {
-  const { image, action, content, quote, author, authorTitle, theme, imagePosition } = data
+  const { image, action, content, quote, author, authorTitle, theme } = data
   const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
   const altTag = image?.isDecorative ? '' : image?.alt || ''
 
   const { backgroundUtility, textUtility } = getColorForTheme(theme ?? 0)
-  const aligment = `${imagePosition === 'left' ? '' : '-order-1 text-left'}`
 
   return (
     <div
       ref={ref}
       className={twMerge(`
-      w-full
       h-full
       grid
-      grid-rows-[45%_55%]
+      grid-rows-[1.5fr_2fr]
       ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] grid-rows-1' : ''}
       ${theme !== null ? backgroundUtility : ''}
       `)}
@@ -48,8 +46,8 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       )}
 
       <div
-        className={`pt-6 pb-6 ${rowType !== 'span3' ? 'lg:pt-8 lg:pb-0' : 'lg:pt-16'} flex flex-col ${
-          action ? 'justify-between' : ''
+        className={`h-full pt-6 ${rowType !== 'span3' ? 'lg:pt-8 lg:pb-0' : 'lg:pt-16'} flex flex-col ${
+          action ? 'justify-between' : 'pb-6'
         } ${theme !== null ? textUtility : ''} `}
       >
         <div className="px-10 flex flex-col gap-6">
@@ -85,7 +83,6 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
             </figure>
           )}
         </div>
-        {/*@ts-ignore*/}
         {action && <GridLinkArrow theme={theme} action={action} />}
       </div>
     </div>

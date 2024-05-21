@@ -88,9 +88,15 @@ export type BlockProps = {
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 //@ts-ignore
-export default function Blocks({ value, components, proseClassName = '', className = '', id }: BlockProps) {
+export default function Blocks({
+  value,
+  blocks: blocksComponents,
+  components,
+  proseClassName = '',
+  className = '',
+  id,
+}: BlockProps) {
   let div: PortableTextBlock[] = []
-
   return (
     <>
       {
@@ -113,7 +119,12 @@ export default function Blocks({ value, components, proseClassName = '', classNa
                   value={value}
                   //@ts-ignore
                   components={{
-                    ...defaultSerializers,
+                    block: {
+                      ...defaultSerializers.block,
+                      ...blocksComponents,
+                    },
+                    types: { ...defaultSerializers.types },
+                    marks: { ...defaultSerializers.marks },
                   }}
                 />
               </div>

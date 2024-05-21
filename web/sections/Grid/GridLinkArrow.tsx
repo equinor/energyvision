@@ -36,7 +36,7 @@ const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
   return (
     <>
       {action && url && (
-        <div className={twMerge(`3xl:pt-12 w-full flex justify-end`, className)}>
+        <div className={twMerge(`pt-4 3xl:pt-12 w-full flex justify-end`, className)}>
           <BaseLink
             href={url as string}
             {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
@@ -53,7 +53,7 @@ const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
             <span className="sr-only">{`${action.label} ${
               action.extension ? `(${action.extension.toUpperCase()})` : ''
             }`}</span>
-            <ArrowRight className={`w-12 h-12`} />
+            <ArrowRight className={`w-10 h-10`} />
           </BaseLink>
         </div>
       )}
