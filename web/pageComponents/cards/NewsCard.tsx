@@ -18,7 +18,7 @@ const NewsCard = ({ data }: NewsCardProp) => {
   return (
     <Card
       href={slug}
-      {...(heroImage && {
+      {...(image && {
         imageUrl: image.src,
       })}
       className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"

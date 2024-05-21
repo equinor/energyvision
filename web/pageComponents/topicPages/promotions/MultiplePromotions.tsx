@@ -66,7 +66,7 @@ const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) 
     <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow">
       <Card
         href={slug}
-        {...(heroImage && {
+        {...(image && {
           imageUrl: image.src,
         })}
         className="w-full h-full"
