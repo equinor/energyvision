@@ -13,7 +13,7 @@ type NewsCardProp = {
 const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
 
-  const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
+  const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
     <Card
