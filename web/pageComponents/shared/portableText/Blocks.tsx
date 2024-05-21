@@ -25,9 +25,7 @@ const defaultSerializers = {
     smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
     largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
     extraLargeText: ({ children }: TypeProps) => {
-      return (
-        <p className={`my-4 lg:my-6 text-5xl lg:text-6xl 2xl:text-8xl font-medium leading-planetary`}>{children}</p>
-      )
+      return <p className={`text-4xl lg:text-5xl 2xl:text-8xl font-medium leading-planetary`}>{children}</p>
     },
   },
   types: {

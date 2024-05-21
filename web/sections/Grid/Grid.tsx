@@ -35,7 +35,7 @@ const Grid = forwardRef<HTMLElement, GridProps>(function Grid({ data, anchor, cl
         mx-auto
         w-full
         grid
-        auto-rows-fr
+        auto-rows-[minmax(auto,_600px)]
         grid-cols-1
         lg:grid-cols-3
         `,
