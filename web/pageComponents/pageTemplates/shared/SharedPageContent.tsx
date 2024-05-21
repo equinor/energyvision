@@ -112,8 +112,10 @@ const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) =>
 
 const isColoredBackgroundAndNotWhite = (componentsDO: any, isWhiteColor: boolean) => {
   return (
-    (componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
-    !isWhiteColor
+    ((componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
+      !isWhiteColor) ||
+    componentsDO?.type === 'backgroundImage' ||
+    componentsDO?.backgroundImage?.image
   )
 }
 
