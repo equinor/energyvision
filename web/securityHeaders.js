@@ -28,6 +28,7 @@ const iframeSrcs = [
   'https://livestream.com',
   'https://*.castr.com',
   'https://pixel.as',
+  'https://www.youtube-nocookie.com',
   dataset === 'global-development' && 'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
   dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
   'https://h61q9gi9.api.sanity.io',
