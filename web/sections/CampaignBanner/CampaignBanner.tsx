@@ -49,20 +49,21 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
   const bgImageClassNames = `[container:inline-size]
   relative
   w-full
-  2xl:aspect-[10/3]
   bg-local
   bg-center
   bg-no-repeat
   bg-cover
   mb-18
-  pb-12
-  lg:pb-24
+  pt-24
+  pb-40
+  lg:pb-52
+  2xl:pb-64
 `
 
   const bgColor = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility].background : ''
   const backgroundClassNames = twMerge(
-    `${dark ? 'dark' : ''} pt-12
-    ${backgroundImage?.image ? bgImageClassNames : `${bgColor} pb-12 lg:pb-18`}
+    `${dark ? 'dark' : ''}
+    ${backgroundImage?.image ? bgImageClassNames : `${bgColor} pt-12 pb-12 lg:pb-18`}
   `,
     className,
   )
