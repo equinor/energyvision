@@ -90,6 +90,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                     {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                     type={action.type}
                     key={action.id}
+                    className="w-fit"
                   >
                     {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
                   </ResourceLink>
