@@ -8,10 +8,7 @@ export const pageview = (url) => {
 }
 
 export const pushToDataLayer = (event, data) => {
-  console.log('Pushing even to dataLayer ')
-  console.log(event)
   window.dataLayer = window.dataLayer || []
-  console.log(window.dataLayer)
   window.dataLayer.push({
     event: event,
     ...data,
