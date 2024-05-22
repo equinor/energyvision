@@ -59,7 +59,7 @@ const usePlayEvent = (
   useEffect(() => {
     if (!player) return
     const handlePlay = () => {
-      console.log('Play event')
+      console.log('Play event' + allowAnalytics)
       if (allowAnalytics) {
         pushEvent(GTM_PLAY_EVENT, player)
       }
