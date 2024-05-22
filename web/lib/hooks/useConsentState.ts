@@ -37,7 +37,7 @@ function useConsentState(consentType: ConsentType, callback: () => void, cleanup
     const host = window?.location.origin
     const isLocalHost = host.includes('localhost')
     const enableConsentLogic = !isLocalHost && (Flags.IS_DEV || !host.includes('radix.equinor.com'))
-    console.log('Enable consent logic ' + enableConsentLogic + ' consent ' + consent)
+
     if (enableConsentLogic && consent) {
       callback()
       return () => {

@@ -1,4 +1,4 @@
-import useConsentState from './useConsentState'
+import useConsent from './useConsent'
 import { pushToDataLayer } from '../../lib/gtm'
 import { useEffect, useCallback, useState } from 'react'
 import Player from 'video.js/dist/types/player'
@@ -20,16 +20,7 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(false)
-
-  useConsentState(
-    'statistics',
-    () => {
-      console.log('Analytics is allowed')
-      setAllowAnalytics(true)
-    },
-    () => setAllowAnalytics(false),
-  )
+  const allowAnalytics = useConsent('statistics') || false
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, player: Player) => {
