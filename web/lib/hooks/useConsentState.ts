@@ -12,17 +12,22 @@ declare global {
 
 export type ConsentType = 'marketing' | 'statistics'
 
+export const getConsentStatus = (consentType: ConsentType) => {
+  if (consentType === 'marketing') {
+    return window?.Cookiebot.consent.marketing
+  } else if (consentType === 'statistics') {
+    return window?.Cookiebot.consent.statistics
+  }
+  return false
+}
+
 function useConsentState(consentType: ConsentType, callback: () => void, cleanup?: () => void) {
-  const [consent, changeConsent] = useState<boolean>(false)
+  const [consent, changeConsent] = useState<boolean>(getConsentStatus(consentType))
   const router = useRouter()
 
   useEffect(() => {
     const manageCookies = () => {
-      if (consentType === 'marketing') {
-        changeConsent(window?.Cookiebot.consent.marketing)
-      } else if (consentType === 'statistics') {
-        changeConsent(window?.Cookiebot.consent.statistics)
-      }
+      changeConsent(getConsentStatus(consentType))
     }
     window?.addEventListener('CookiebotOnAccept', manageCookies)
     window?.addEventListener('CookiebotOnDecline', manageCookies)

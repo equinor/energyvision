@@ -1,4 +1,4 @@
-import useConsentState from './useConsentState'
+import { getConsentStatus } from './useConsentState'
 import { pushToDataLayer } from '../../lib/gtm'
 import { useEffect, useCallback, useState } from 'react'
 import Player from 'video.js/dist/types/player'
@@ -20,13 +20,7 @@ type EventData = {
 
 // Video Analytics Hook
 const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
-  const [allowAnalytics, setAllowAnalytics] = useState(false)
-
-  useConsentState(
-    'statistics',
-    () => setAllowAnalytics(true),
-    () => setAllowAnalytics(false),
-  )
+  const allowAnalytics = getConsentStatus('statistics')
 
   const pushEventToDataLayer = useCallback(
     (eventType: EventType, player: Player) => {
@@ -125,7 +119,7 @@ const useVideoProgressEvent = (
     if (!player) return
     const intervalId = setInterval(() => {
       const duration = player.duration()
-      if ((!allowAnalytics || !duration) && !player) return
+      if (!allowAnalytics && !duration && !player) return
       const currentTime = player.currentTime()
       if (currentTime && duration) {
         const progress = (currentTime / duration) * 100
