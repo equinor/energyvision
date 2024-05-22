@@ -303,7 +303,7 @@ module.exports = {
                 fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.8'),
+                marginBottom: theme('spacing.4'),
               },
               'ul ul, ul ol, ol ul, ol ol': {
                 paddingLeft: em(38, 24),
