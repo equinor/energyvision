@@ -173,7 +173,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                   <ButtonLink
                     variant="ghost"
                     aria-expanded="true"
-                    aria-label="Search"
+                    aria-label={searchLabel}
                     href="/search"
                     className="p-2 md:px-5 md:py-3"
                   >
