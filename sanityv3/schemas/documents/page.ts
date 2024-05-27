@@ -74,6 +74,7 @@ export default {
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
         { type: 'table' },
+        { type: 'anchorLinkList' },
         Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
         Flags.HAS_CAMPAIGN_BLOCKS && { type: 'campaignBanner' },
         Flags.HAS_FORMS && { type: 'form' },

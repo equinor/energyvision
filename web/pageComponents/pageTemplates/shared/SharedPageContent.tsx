@@ -53,10 +53,12 @@ import {
   CardsListData,
   GridData,
   CampaignBannerData,
+  AnchorLinkListData,
 } from '../../../types/types'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
+import { AnchorLinkList } from '../../../sections/AnchorLinkList'
 
 // How could we do this for several different component types?
 export type ComponentProps =
@@ -317,6 +319,15 @@ export const PageContent = ({ data }: PageContentProps) => {
         return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
       case 'campaignBanner':
         return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
+      case 'anchorLinkList':
+        return (
+          <AnchorLinkList
+            key={c.id}
+            data={c as AnchorLinkListData}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
       default:
         return null
     }

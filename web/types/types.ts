@@ -903,3 +903,15 @@ export type PodcastTeaserData = {
   image: ImageWithAlt
   designOptions: DesignOptions
 }
+export type AnchorLinkListData = {
+  id: string
+  type: 'anchorLinkList'
+  title?: string
+  columns?: string
+  anchorList?: {
+    id: string
+    type: 'anchorLinkReference'
+    title?: string
+    anchorReference?: string
+  }[]
+}
