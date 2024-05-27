@@ -60,13 +60,13 @@ const StyledPeopleCard = styled(PeopleCard)`
 type CardProps = CardData | PeopleCardData | EventCardData
 
 const TWCard = ({ slug, title, ingress, publishDateTime, heroImage }: CardData) => {
-  const image = useSanityLoader(heroImage.image, 400, Ratios.NINE_TO_SIXTEEN)
+  const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
     <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow">
       <Card
         href={slug}
-        {...(heroImage && {
+        {...(image && {
           imageUrl: image.src,
         })}
         className="w-full h-full"
