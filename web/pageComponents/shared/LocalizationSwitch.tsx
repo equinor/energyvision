@@ -9,14 +9,15 @@ export type LocalizationSwitchProps = {
 }
 
 export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
+  console.log('slugs', slugs)
   if (slugs.length < 1) return null
 
   return (
-    <div className="flex items-center md:divide-x md:divide-dashed md:divide-gray-400 " {...rest}>
+    <ul className="flex items-center md:divide-x md:divide-dashed md:divide-gray-400 " {...rest}>
       {slugs.map((obj) => {
         const language = languages.find((lang) => lang.name === obj.lang)
         return (
-          <div
+          <li
             className={`flex items-center ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} `}
             key={obj.lang}
           >
@@ -34,9 +35,9 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
                 {language?.locale}
               </span>
             </ButtonLink>
-          </div>
+          </li>
         )
       })}
-    </div>
+    </ul>
   )
 }

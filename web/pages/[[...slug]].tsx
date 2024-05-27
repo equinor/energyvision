@@ -81,6 +81,7 @@ Page.getLayout = (page: AppProps) => {
   const { props } = page
   const { data, preview } = props
 
+  console.log('data', data)
   const slugs = getPageSlugs(data)
 
   return (
