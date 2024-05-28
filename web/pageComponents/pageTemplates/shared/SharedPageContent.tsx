@@ -155,7 +155,7 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
     (currentIsWhiteColorBackground && previousIsColorContainerAndNotWhite) ||
     previousComponentIsASpecialCaseAndNeedPT
   ) {
-    return 'pt-16'
+    return 'pt-20'
   }
   return ''
 }

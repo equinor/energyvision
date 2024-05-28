@@ -7,9 +7,9 @@ const getConsentState = (consentType: ConsentType): boolean => {
   if (typeof window !== 'undefined') {
     switch (consentType) {
       case 'statistics':
-        return window.Cookiebot.consent.statistics
+        return window.Cookiebot?.consent.statistics
       case 'marketing':
-        return window.Cookiebot.consent.marketing
+        return window.Cookiebot?.consent.marketing
       default:
         return false
     }

@@ -74,7 +74,11 @@ export const Breadcrumbs = ({
           return (
             <BreadcrumbsListItem key={item.slug}>
               {shouldLink ? (
-                <NextLink href={item.slug} prefetch={false} className="hover:underline no-underline">
+                <NextLink
+                  href={item.slug}
+                  prefetch={false}
+                  className="hover:underline no-underline focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert underline-offset-4"
+                >
                   {label}
                 </NextLink>
               ) : (
