@@ -13,7 +13,7 @@ import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
-import CallToActions from '@sections/CallToActions'
+import RelatedContent from 'pageComponents/shared/RelatedContent'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -84,17 +84,15 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {contactList && <ContactList data={contactList} className="my-12" />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <CallToActions
+            <RelatedContent
+              data={relatedLinks}
               className={twMerge(`
               px-layout-lg
               max-w-viewport
-              my-3xl
+          
               mx-auto
               pb-page-content
               `)}
-              callToActions={relatedLinks.links}
-              overrideButtonStyle={true}
-              splitList={false}
             />
           )}
         </article>
