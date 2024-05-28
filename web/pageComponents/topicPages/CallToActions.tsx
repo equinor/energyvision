@@ -2,7 +2,9 @@ import { Fragment } from 'react'
 import { List } from '@components'
 import type { LinkData } from '../../types/types'
 import { ButtonLink } from '../shared/ButtonLink'
-import ReadMoreLink from '../shared/ReadMoreLink'
+import { ReadMoreLink } from '@core/Link'
+import { getUrlFromAction } from '../../common/helpers'
+import { getLocaleFromName } from '../../lib/localization'
 
 const { Item } = List
 
@@ -22,11 +24,19 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
   ) : (
     <List unstyled splitList={splitList}>
       {callToActions.map((callToAction: LinkData) => {
+        const url = getUrlFromAction(callToAction)
         return (
           <Fragment key={callToAction.id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
+
             <Item>
-              <ReadMoreLink action={callToAction} variant="contentLink" />
+              <ReadMoreLink
+                href={url as string}
+                {...(callToAction.link?.lang && { locale: getLocaleFromName(callToAction.link?.lang) })}
+                type={callToAction.type}
+              >
+                {`${callToAction.label} ${callToAction.extension ? `(${callToAction.extension.toUpperCase()})` : ''}`}
+              </ReadMoreLink>
             </Item>
           </Fragment>
         )
