@@ -229,7 +229,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                   my-3xl
                   `)}
                 callToActions={relatedLinks.links}
-                overrideButtonStyle={false}
+                overrideButtonStyle={true}
                 splitList={false}
               />
             )}

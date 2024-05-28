@@ -93,7 +93,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               pb-page-content
               `)}
               callToActions={relatedLinks.links}
-              overrideButtonStyle={false}
+              overrideButtonStyle={true}
               splitList={false}
             />
           )}

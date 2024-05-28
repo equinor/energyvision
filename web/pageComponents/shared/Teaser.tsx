@@ -5,9 +5,9 @@ import { getUrlFromAction, urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import Image from './SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../types/types'
-
 import { Heading } from '../../core/Typography'
-import ReadMoreLink from './ReadMoreLink'
+import { ReadMoreLink } from '@core/Link'
+import { getLocaleFromName } from '../../lib/localization'
 
 const { Content, Media } = EnvisTeaser
 
@@ -46,6 +46,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, action, designOptions, isBigText } = data
   const { imageSize, imagePosition, ...restOptions } = designOptions
+  const url = action && getUrlFromAction(action)
 
   if ([title, overline, text, image?.asset, action].every((i) => !i)) {
     return null
@@ -78,7 +79,15 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </>
           )}
-          {action && <ReadMoreLink action={action} />}
+          {action && (
+            <ReadMoreLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
+          )}
         </Content>
       </StyledEnvisTeaser>
     </BackgroundContainer>
