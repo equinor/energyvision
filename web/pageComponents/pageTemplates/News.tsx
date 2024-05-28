@@ -6,7 +6,6 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
 import IngressText from '../shared/portableText/IngressText'
-import RelatedContent from '../shared/RelatedContent'
 import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
@@ -15,6 +14,7 @@ import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/types'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
+import CallToActions from '@sections/CallToActions'
 import { twMerge } from 'tailwind-merge'
 
 const NewsLayout = styled.div`
@@ -222,15 +222,15 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             {iframe && <BasicIFrame data={iframe} />}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <RelatedContent
-                data={relatedLinks}
+              <CallToActions
                 className={twMerge(`
                   px-layout-lg
                   max-w-viewport
-                  mx-auto
                   my-3xl
-                  ${iframe ? 'mt-0' : ''}
                   `)}
+                callToActions={relatedLinks.links}
+                overrideButtonStyle={true}
+                splitList={false}
               />
             )}
 

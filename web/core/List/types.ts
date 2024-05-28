@@ -17,6 +17,10 @@ export interface ListProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Override list styling
    */
+  listClassName?: string
+  /**
+   * Override list wrapper
+   */
   className?: string
   /**
    * Override heading styling

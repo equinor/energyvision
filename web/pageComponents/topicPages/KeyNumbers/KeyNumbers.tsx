@@ -4,11 +4,13 @@ import styled from 'styled-components'
 import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import KeyNumberItem from './KeyNumberItem'
-import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
+import { ReadMoreLink } from '@core/Link'
 import { Carousel } from '../../shared/Carousel'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
+import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../../lib/localization'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -55,7 +57,7 @@ type KeyNumbersProps = {
 }
 export default function ({ data, anchor, className }: KeyNumbersProps) {
   const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
-
+  const url = action && getUrlFromAction(action)
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   const renderScroll = useHorizontalScroll && isMobile
@@ -86,7 +88,15 @@ export default function ({ data, anchor, className }: KeyNumbersProps) {
           <Blocks value={disclaimer} />
         </Disclaimer>
       )}
-      {action && <ReadMoreLink action={action} />}
+      {action && (
+        <ReadMoreLink
+          href={url as string}
+          {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+          type={action.type}
+        >
+          {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+        </ReadMoreLink>
+      )}
     </BackgroundContainer>
   )
 }

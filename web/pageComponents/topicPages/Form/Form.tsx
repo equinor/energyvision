@@ -5,12 +5,10 @@ import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
-import { BackgroundContainer } from '@components'
 import CareersContactForm from './CareersContactForm'
-import ReadMoreLink from '../../shared/ReadMoreLink'
-
 import type { LinkData, FormData } from '../../../types/types'
 import { twMerge } from 'tailwind-merge'
+import CallToActions from '@sections/CallToActions'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
@@ -40,10 +38,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
             <>
               {downloads && (
                 <ListStyled>
-                  {downloads.length > 0 &&
-                    downloads.map((item: LinkData) => {
-                      return <ReadMoreLink key={item.id} action={item} variant="contentLink" />
-                    })}
+                  {downloads.length > 0 && <CallToActions callToActions={downloads} overrideButtonStyle />}
                 </ListStyled>
               )}
             </>
