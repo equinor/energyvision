@@ -429,11 +429,14 @@ module.exports = {
         addUtilities({
           '.envis-outline': {
             'outline-style': 'dashed',
-            'outline-width': '1px',
-            'outline-offset': '4px',
-            'outline-color': theme('colors.slate-blue.95'),
+            'outline-width': '2px',
+            'outline-offset': '3px',
+            'outline-color': theme('colors.moss-green.100'),
           },
           '.envis-outline-invert': {
+            'outline-style': 'dashed',
+            'outline-width': '2px',
+            'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
           },
         })
