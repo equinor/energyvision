@@ -22,7 +22,7 @@ type TextBlockProps = {
   className?: string
 }
 
-const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
+const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   const {
     image,
     overline,
@@ -34,6 +34,7 @@ const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
     splitList,
     overrideButtonStyle = false,
     isBigText,
+    useBrandTheme = false,
   } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
@@ -58,16 +59,26 @@ const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
     )
   }
 
+  let bgContainerOptions = designOptions
+  if (useBrandTheme) {
+    bgContainerOptions = {
+      background: {
+        type: 'backgroundColor',
+        backgroundUtility: 'white-100',
+        dark: false,
+      },
+    }
+  }
+
   return (
-    <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+    <StyledTextBlockWrapper {...bgContainerOptions} id={anchor} renderFragmentWhenPossible>
       <div
         className={`flex flex-col gap-6 ${
           designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
         }`}
       >
-        {isBigText ? (
-          title && <Heading value={title} as="h2" variant="2xl" />
-        ) : (
+        {isBigText && title && <Heading value={title} as="h2" variant="3xl" />}
+        {!isBigText && (
           <>
             {image?.asset && (
               <div className="w-[300px]">
@@ -75,12 +86,21 @@ const TextBlock = ({ data, anchor, className }: TextBlockProps) => {
               </div>
             )}
             {overline ? (
-              <hgroup className="flex flex-col gap-2 mb-1">
+              <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
                 <Eyebrow>{overline}</Eyebrow>
                 {title && <Heading value={title} as="h2" variant="xl" />}
               </hgroup>
             ) : (
-              <>{title && <Heading value={title} as="h2" variant="xl" className="mb-2" />}</>
+              <>
+                {title && (
+                  <Heading
+                    value={title}
+                    as="h2"
+                    variant="xl"
+                    className={`mb-2 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
+                  />
+                )}
+              </>
             )}
             {ingress && <IngressText value={ingress} />}
           </>

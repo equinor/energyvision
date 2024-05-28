@@ -142,15 +142,21 @@ export default {
     },
     {
       name: 'action',
-      title: 'Link/action',
-      description: 'Select the link or downloadable file for the teaser',
+      title: 'Links/actions',
+      description: 'Select links or downloadable files for the teaser',
       type: 'array',
       of: [
         { type: 'linkSelector', title: 'Link' },
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
+      validation: (Rule: Rule) => Rule.max(2).error('Only two action is permitted'),
+    },
+    {
+      title: 'Use resource link style',
+      description: 'Default is read more link style',
+      name: 'useResourceLinks',
+      type: 'boolean',
     },
     {
       name: 'image',

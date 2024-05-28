@@ -51,11 +51,15 @@ import {
   TextTeaserData,
   KeyNumbersData,
   CardsListData,
+  GridData,
+  CampaignBannerData,
 } from '../../../types/types'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
+import Grid from '@sections/Grid/Grid'
+import { CampaignBanner } from '@sections/CampaignBanner'
 
 // How could we do this for several different component types?
-type ComponentProps =
+export type ComponentProps =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
@@ -108,8 +112,10 @@ const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) =>
 
 const isColoredBackgroundAndNotWhite = (componentsDO: any, isWhiteColor: boolean) => {
   return (
-    (componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
-    !isWhiteColor
+    ((componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
+      !isWhiteColor) ||
+    componentsDO?.type === 'backgroundImage' ||
+    componentsDO?.backgroundImage?.image
   )
 }
 
@@ -307,6 +313,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         return (
           <CardsList key={c.id} data={c as CardsListData} anchor={anchorReference} className={topSpacingClassName} />
         )
+      case 'grid':
+        return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
+      case 'campaignBanner':
+        return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
       default:
         return null
     }

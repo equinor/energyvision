@@ -6,7 +6,7 @@ import { getLocaleFromName } from '../../lib/localization'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
-  overrideButtonStyle: boolean
+  overrideButtonStyle?: boolean
   splitList?: boolean
 }
 

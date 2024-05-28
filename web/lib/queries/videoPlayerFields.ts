@@ -29,6 +29,8 @@ export const videoPlayerFields = /* groq */ `
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     height,
+    width,
+    useBrandTheme,
     ${background}
   },
 `

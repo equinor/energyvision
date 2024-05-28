@@ -32,6 +32,7 @@ module.exports = {
   theme: {
     extend: {
       colors: ({ theme }) => ({
+        current: 'currentColor',
         'moss-green': {
           110: '#023f44', // colorpicked from moss-green-100 with dark overlay from Figma
           100: 'hsl(184, 100%, 17%)',
@@ -217,6 +218,7 @@ module.exports = {
         '4xl': ['clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem))'],
         //--typeScale-7
         '5xl': ['clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem))'],
+        '6xl': ['clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem))'],
       },
       fontWeight: {
         semibolder: 650,
@@ -260,6 +262,7 @@ module.exports = {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+        'page-content': 'theme(spacing.16)',
       },
       keyframes: {
         reveal: {
@@ -394,6 +397,16 @@ module.exports = {
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.normal'),
               marginBottom: theme('spacing.6'),
+            },
+          },
+        },
+        campaign: {
+          css: {
+            color: theme('colors.current'),
+            p: {
+              fontSize: theme('fontSize.md'),
+              marginTop: '0',
+              marginBottom: '0',
             },
           },
         },

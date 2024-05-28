@@ -1,5 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
+@import 'video.js/dist/video-js.css';
+@import './components/videojs.css';
 @import 'tailwindcss/utilities';
 
 @layer utilities {

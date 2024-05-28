@@ -7,7 +7,7 @@ import { FAQPageJsonLd } from 'next-seo'
 
 import type { AccordionData, AccordionListData } from '../../../types/types'
 import { toPlainText } from '@portabletext/react'
-import { Heading } from '../../../core/Typography'
+import { Heading, Typography } from '../../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
@@ -38,6 +38,7 @@ const buildJsonLdElements = (data: AccordionListData[]) => {
 
 const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
+
   return (
     <>
       <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
@@ -52,7 +53,13 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
               <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
             </div>
           )}
-          {title && <Heading value={title} as="h2" variant="xl" className="mb-2" />}
+          {Array.isArray(title) ? (
+            <Heading value={title} as="h2" variant="xl" className="mb-2" />
+          ) : (
+            <Typography as="h2" variant="xl" className="mb-2">
+              {title}
+            </Typography>
+          )}
           {ingress && <IngressText value={ingress} />}
           {accordion && accordion.length > 0 && (
             <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
