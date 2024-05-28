@@ -235,6 +235,9 @@ module.exports = {
         //-lineHeight-3
         planetary: 1.5,
       },
+      scale: {
+        99: '0.99',
+      },
       maxWidth: {
         viewport: '1920px',
       },
