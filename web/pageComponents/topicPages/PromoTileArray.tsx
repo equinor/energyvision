@@ -49,8 +49,9 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
     group
     inline-flex
     align-baseline
-    w-max
+    w-fit
     text-slate-80
+    text-sm
     leading-0
   `
   const contentClassNames = `
