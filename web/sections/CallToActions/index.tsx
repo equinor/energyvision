@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
-  overrideButtonStyle: boolean
+  overrideButtonStyle?: boolean
   splitList?: boolean
   className?: string
 }

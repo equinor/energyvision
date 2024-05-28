@@ -14,8 +14,10 @@ const variants = {
     xl: 'text-slate-80 dark:text-white-100 text-xl leading-inherit font-normal',
     '2xl': 'text-slate-80 dark:text-white-100 text-2xl leading-cloudy font-normal',
     '3xl': 'text-slate-80 dark:text-white-100 text-3xl leading-earthy font-normal',
-    '4xl': 'text-slate-80 dark:text-white-100 text-4xl leading-earthy font-normal',
-    '5xl': 'text-slate-80 dark:text-white-100 text-5xl leading-earthy font-normal',
+    '4xl': 'text-slate-80 dark:text-white-100 text-4xl leading-cloudy font-normal',
+    '5xl': 'text-slate-80 dark:text-white-100 text-5xl leading-cloudy font-normal',
+    '8xl':
+      'text-slate-80 dark:text-white-100 text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy font-normal',
   },
   paragraph: {
     ingress: '',

@@ -23,6 +23,10 @@ type TypeProps = {
 const defaultSerializers = {
   block: {
     smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
+    largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
+    extraLargeText: ({ children }: TypeProps) => {
+      return <p className={`text-4xl lg:text-5xl 2xl:text-8xl font-medium leading-planetary`}>{children}</p>
+    },
   },
   types: {
     //@ts-ignore
@@ -47,7 +51,7 @@ const defaultSerializers = {
   },
 }
 
-type BlockProps = {
+export type BlockProps = {
   /**
    * Override default block serializers
    */
@@ -82,9 +86,15 @@ type BlockProps = {
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 //@ts-ignore
-export default function Blocks({ value, components, proseClassName = '', className = '', id }: BlockProps) {
+export default function Blocks({
+  value,
+  blocks: blocksComponents,
+  components,
+  proseClassName = '',
+  className = '',
+  id,
+}: BlockProps) {
   let div: PortableTextBlock[] = []
-
   return (
     <>
       {
@@ -107,7 +117,12 @@ export default function Blocks({ value, components, proseClassName = '', classNa
                   value={value}
                   //@ts-ignore
                   components={{
-                    ...defaultSerializers,
+                    block: {
+                      ...defaultSerializers.block,
+                      ...blocksComponents,
+                    },
+                    types: { ...defaultSerializers.types },
+                    marks: { ...defaultSerializers.marks },
                   }}
                 />
               </div>

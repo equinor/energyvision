@@ -51,10 +51,15 @@ import {
   TextTeaserData,
   KeyNumbersData,
   CardsListData,
+  GridData,
+  CampaignBannerData,
 } from '../../../types/types'
+import { getColorForTheme } from '../../shared/textTeaser/theme'
+import Grid from '@sections/Grid/Grid'
+import { CampaignBanner } from '@sections/CampaignBanner'
 
 // How could we do this for several different component types?
-type ComponentProps =
+export type ComponentProps =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
@@ -87,41 +92,59 @@ type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
  * Remember to think about the prev section of condition with top spacing
  * E.g. 2 colored background of same color content, only first need but not second
  */
-const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
+const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore
-  const currentComponentsDO = currentComponent?.designOptions?.background
-  //@ts-ignore
-  const previousComponentsDO = prevComponent?.designOptions?.background
+  return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
+}
 
-  //Cardslist uses the background for the cards not the block background
+const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) => {
   const casesWhichHaveBackgroundButIsWhite = ['cardsList']
-  const currentIsWhiteColorBackground =
-    currentComponentsDO?.backgroundUtility === 'white-100' ||
-    currentComponentsDO?.backgroundColor === 'White' ||
+  return (
+    componentsDO?.backgroundUtility === 'white-100' ||
+    componentsDO?.backgroundColor === 'White' ||
+    componentsDO?.background === 'White' ||
     //@ts-ignore
-    casesWhichHaveBackgroundButIsWhite.includes(currentComponent?.type) ||
+    casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
     //@ts-ignore
-    !currentComponent?.designOptions
+    !component?.designOptions
+  )
+}
 
-  const previousIsWhiteColorBackground =
-    previousComponentsDO?.backgroundUtility === 'white-100' ||
-    previousComponentsDO?.backgroundColor === 'White' ||
-    //@ts-ignore
-    !prevComponent?.designOptions
+const isColoredBackgroundAndNotWhite = (componentsDO: any, isWhiteColor: boolean) => {
+  return (
+    ((componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
+      !isWhiteColor) ||
+    componentsDO?.type === 'backgroundImage' ||
+    componentsDO?.backgroundImage?.image
+  )
+}
 
-  const isCurrentColoredBackgroundAndNotWhite =
-    (currentComponentsDO?.type === 'backgroundColor' || currentComponentsDO?.backgroundColor) &&
-    !currentIsWhiteColorBackground
-
-  const previousIsColorContainerAndNotWhite =
-    (previousComponentsDO?.type === 'backgroundColor' || previousComponentsDO?.backgroundColor) &&
-    !previousIsWhiteColorBackground
-
-  const previousIsSameColorAsCurrent =
+const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: any) => {
+  return (
     (currentComponentsDO?.backgroundUtility &&
       previousComponentsDO?.backgroundUtility &&
       currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility) ??
     currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
+  )
+}
+
+const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
+  const currentComponentsDO = getBackgroundOptions(currentComponent)
+  const previousComponentsDO = getBackgroundOptions(prevComponent)
+
+  const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
+  const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
+
+  const isCurrentColoredBackgroundAndNotWhite = isColoredBackgroundAndNotWhite(
+    currentComponentsDO,
+    currentIsWhiteColorBackground,
+  )
+  const previousIsColorContainerAndNotWhite = isColoredBackgroundAndNotWhite(
+    previousComponentsDO,
+    previousIsWhiteColorBackground,
+  )
+
+  const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
 
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo']
   //@ts-ignore
@@ -290,6 +313,10 @@ export const PageContent = ({ data }: PageContentProps) => {
         return (
           <CardsList key={c.id} data={c as CardsListData} anchor={anchorReference} className={topSpacingClassName} />
         )
+      case 'grid':
+        return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
+      case 'campaignBanner':
+        return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
       default:
         return null
     }

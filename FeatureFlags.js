@@ -47,6 +47,7 @@ const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* Allows same slug for different languages */
 const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
 const LINE_BREAK_TYPO = ['southkorea']
+const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 /**
  * @param {string} dataset
@@ -72,4 +73,5 @@ export default (dataset) => ({
   IS_GLOBAL_PROD: GLOBAL_PROD.includes(dataset),
   IS_DEV: GLOBAL_DEV.includes(dataset),
   IS_SATELLITE: SATELLITES.includes(dataset),
+  HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
 })

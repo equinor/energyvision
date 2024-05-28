@@ -7,6 +7,7 @@ import {
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
 import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
+import { RowType } from '@sections/Grid/mapGridContent'
 
 export type CaptionData = {
   attribution?: string
@@ -209,6 +210,8 @@ export type ContentType =
   | TwitterEmbedData
   | VideoPlayerData
   | VideoPlayerCarouselData
+  | GridData
+  | CampaignBannerData
 
 export type Breadcrumb = {
   label: string
@@ -225,6 +228,7 @@ export type PageSchema = {
   content?: ContentType[]
   id: string
   type: string
+  isCampaign?: boolean
   breadcrumbs: {
     enableBreadcrumbs: boolean
     useCustomBreadcrumbs: boolean
@@ -277,7 +281,7 @@ export type BackgroundColours =
 export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
 
 export type DesignOptions = {
-  background?: {
+  background: {
     type?: BackgroundTypes
     backgroundColor?: BackgroundColours
     backgroundImage?: ImageBackground
@@ -294,11 +298,11 @@ export type TextBlockData = {
   overline?: string
   text: PortableTextBlock[]
   isBigText?: boolean
+  useBrandTheme?: boolean
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   splitList?: boolean
   overrideButtonStyle?: boolean
-  anchor?: string
   designOptions: DesignOptions
 }
 
@@ -316,8 +320,9 @@ export type TeaserData = {
   text: PortableTextBlock[]
   overline?: string
   isBigText?: boolean
+  useResourceLinks?: boolean
   image: ImageWithAlt
-  action?: LinkData
+  actions?: LinkData[]
   designOptions: DesignOptions & {
     imagePosition?: TeaserImagePosition
     imageSize?: TeaserImageSize
@@ -718,6 +723,8 @@ export type VideoControlsType = {
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
   height?: number
+  width?: 'normal' | 'extraWide'
+  useBrandTheme?: boolean
 }
 
 export type VideoPlayerData = {
@@ -827,4 +834,72 @@ export type CardListItemData = {
   type: 'card'
   title?: string
   content?: PortableTextBlock[]
+}
+
+export type GridRowType = Span3 | Span2And1 | ThreeColumns
+
+export type GridData = {
+  type: 'grid'
+  id: string
+  gridRows?: GridRowType[]
+}
+
+export type GridContentType = FigureData | IFrameData | VideoPlayerData | GridTextBlockData | GridTeaserData
+
+export type Span3 = {
+  type: 'span3'
+  id: string
+  content?: GridContentType[]
+}
+export type Span2And1 = {
+  type: 'span2and1'
+  id: string
+  singleColumn?: GridContentType[]
+  span2?: GridContentType[]
+}
+export type ThreeColumns = {
+  type: 'threeColumns'
+  id: string
+  columns?: GridContentType[]
+}
+
+export type GridTextBlockData = {
+  id: string
+  type: 'gridTextBlock'
+  action?: LinkData
+  content?: PortableTextBlock[]
+  textAlignment?: ContentAlignmentTypes
+  theme?: number
+}
+
+export type CampaignBannerData = {
+  type: 'campaignBanner'
+  id: string
+  title: PortableTextBlock[]
+  designOptions: DesignOptions
+}
+export type GridTeaserData = {
+  type: 'gridTeaser'
+  id: string
+  image: ImageWithAlt
+  rowType?: RowType
+  content?: PortableTextBlock
+  quote?: string
+  author?: string
+  authorTitle?: string
+  background?: BackgroundColours
+  imagePosition?: TeaserImagePosition
+  action?: LinkData
+  theme?: number
+}
+export type PodcastTeaserData = {
+  id: string
+  type: 'podcastTeaser'
+  spotifyLink?: string
+  appleLink?: string
+  linkTitle?: string
+  podcastName?: PortableTextBlock[]
+  podcastEpisode?: PortableTextBlock[]
+  image: ImageWithAlt
+  designOptions: DesignOptions
 }

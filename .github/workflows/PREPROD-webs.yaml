@@ -120,6 +120,7 @@ jobs:
     environment:
       name: preprod
     strategy:
+      fail-fast: false
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:

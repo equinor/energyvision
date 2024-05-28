@@ -66,16 +66,23 @@ type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
+  height?: string
+  useFillMode?: boolean
 }
 
-export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJsComponentType) => {
+export const VideoJsComponent = ({
+  video,
+  videoControls,
+  designOptions,
+  useFillMode = false,
+}: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
   return (
     <figure
-      className={
-        getHeightWidth(designOptions.aspectRatio, designOptions.height) +
-        ' [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0'
-      }
+      className={`
+        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
+        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
+        `}
     >
       <DynamicVideoJsComponent
         className="object-cover"
@@ -84,6 +91,8 @@ export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJ
         poster={urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
         aspectRatio={designOptions.aspectRatio}
+        useBrandTheme={designOptions?.useBrandTheme}
+        useFillMode={useFillMode}
         {...videoControls}
       />
     </figure>
@@ -92,9 +101,15 @@ export const VideoJsComponent = ({ video, videoControls, designOptions }: VideoJ
 
 const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
+  const { width } = designOptions
   return (
     <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
-      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
+      <div
+        className={twMerge(
+          `pb-page-content ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'} max-w-viewport mx-auto`,
+          className,
+        )}
+      >
         {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
         {ingress && <IngressText value={ingress} className="mb-lg" />}
         {action && action.label && <CallToActions callToActions={[action]} overrideButtonStyle={false} />}
