@@ -13,7 +13,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   const classNames = twMerge(
     `text-slate-blue-95
     dark:text-white-100
-    w-max 
+    w-fit 
     inline-flex
     items-center
     gap-2.5
