@@ -8,8 +8,12 @@ import type { PromotionData } from '../../types/types'
 import { twMerge } from 'tailwind-merge'
 
 const Wrapper = styled.div`
-  --card-maxWidth: 400px;
   --card-minWidth: 200px;
+  --card-maxWidth: 100%;
+
+  @media (min-width: 1000px) {
+    --card-maxWidth: 400px;
+  }
 `
 const Ingress = styled.div`
   margin-bottom: var(--space-xLarge);
@@ -43,7 +47,7 @@ const Promotion = ({
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Wrapper className={twMerge(`pb-page-content px-14`, className)} {...rest}>
+      <Wrapper className={twMerge(`pb-page-content xl:px-14 max-w-viewport mx-auto`, className)} {...rest}>
         <Intro>
           {title && <StyledHeading value={title} level="h2" size="xl" />}
           {ingress && (

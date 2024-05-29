@@ -4,6 +4,7 @@ import type { EventCardData, EventPromotionSettings } from '../../../types/types
 import EventsCard from '../../cards/EventsCard'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
+import { EventCard } from '@sections/cards/EventCard'
 
 const FlexibleWrapper = styled.div`
   --card-minWidth: 250px;
@@ -30,7 +31,7 @@ type MultipleEventCardsProp = {
 }
 
 const StyledBackground = styled(BackgroundContainer)`
-  --card-maxWidth: 280px;
+  --card-maxWidth: 100%;
 
   @media (min-width: 1000px) {
     --card-maxWidth: 400px;
@@ -62,26 +63,10 @@ const MultipleEventCards = ({
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
 
-  if (renderScroll) {
-    return (
-      <>
-        <Carousel horizontalPadding={true}>
-          {data.map((item) => {
-            return (
-              <StyledBackground key={item.id}>
-                <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-              </StyledBackground>
-            )
-          })}
-        </Carousel>
-      </>
-    )
-  }
-
   return (
-    <>
+    /*     <>
       {data.length === 1 ? (
-        <div className="mt-6 px-6 m-auto">
+        <div className="mt-6 px-6 mx-auto">
           {data.map((item: EventCardData) => {
             return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
           })}
@@ -93,13 +78,26 @@ const MultipleEventCards = ({
           })}
         </div>
       ) : (
-        <FlexibleWrapper>
+        <ul className="flex flex-col gap-y-2 gap-x-4 xl:flex-row flex-wrap justify-center items-center">
           {data.map((item) => {
-            return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
+            return (
+              <li key={item.id} className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]">
+                <EventsCard data={item} hasSectionTitle={hasSectionTitle} />
+              </li>
+            )
           })}
-        </FlexibleWrapper>
+        </ul>
       )}
-    </>
+    </> */
+    <ul className="px-8 flex gap-x-6 gap-y-8 justify-center content-center flex-wrap flex-col list-none xl:flex-row">
+      {data.map((item) => {
+        return (
+          <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)] basis-0 grow" key={item.id}>
+            <EventCard data={item} hasSectionTitle={hasSectionTitle} />
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 

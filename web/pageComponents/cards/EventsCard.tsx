@@ -23,6 +23,7 @@ const StyledCard = styled(Card)`
   column to be too wide*/
   --column-sizes: 40% 1fr;
   justify-content: space-between;
+  width: 100%;
 `
 
 const StyledMedia = styled(Media)`
@@ -109,7 +110,7 @@ const EventsCard = ({ data, hasSectionTitle, className = '', orientation = 'port
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   return (
     <StyledCard
-      className={twMerge('', className)}
+      className={twMerge('m-2 lg:m-0 border border-moss-green-80 rounded-md', className)}
       orientation={orientation}
       style={
         {

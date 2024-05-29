@@ -51,8 +51,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     <div
       ref={ref}
       className={twMerge(
-        `
-        basis-0
+        `basis-0
         grow
         pt-8
         pb-6

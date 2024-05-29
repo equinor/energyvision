@@ -62,9 +62,8 @@ type CardProps = CardData | PeopleCardData | EventCardData
 const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardData) => {
   const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
 
-
   return (
-    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow" key={id}>
+    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)] basis-0 grow" key={id}>
       <Card
         href={slug}
         {...(image && {
@@ -128,8 +127,7 @@ const MultiplePromotions = ({
     }
   }
 
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
-  const renderScroll = useHorizontalScroll || isMobile
+  const renderScroll = useHorizontalScroll
 
   if (variant === 'promoteEvents') {
     return (
@@ -137,7 +135,7 @@ const MultiplePromotions = ({
         data={data as EventCardData[]}
         hasSectionTitle={hasSectionTitle}
         eventPromotionSettings={eventPromotionSettings}
-        renderScroll={renderScroll}
+        renderScroll={false}
       />
     )
   }
@@ -174,7 +172,7 @@ const MultiplePromotions = ({
   }
 
   return (
-    <ul className="w-full max-w-[calc(var(--card-maxWidth)*3+var(--space-large)*2)] px-6 py-0 m-auto flex gap-6 justify-center content-center flex-wrap flex-col list-none md:flex-row">
+    <ul className="px-8 flex gap-x-6 gap-y-8 justify-center content-center flex-wrap flex-col list-none xl:flex-row">
       <>
         {data.map((item) => {
           return getCard(item)

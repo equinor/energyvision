@@ -53,8 +53,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       flex-col
       bg-white-100
       text-slate-80
-      box-shadow-crisp
-      shadow-white-100
+      border
+      border-autumn-storm-50
+      rounded-sm
       active:box-shadow-crisp-interact
       active:shadow-white-100-interact
       focus:outline-none
@@ -77,6 +78,8 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
             bg-cover
             ${imageVariantClassNames[variant]}
             ${imageRatio[variant]}
+            max-h-[200px]
+            lg:max-h-[100%]
             `,
             imageClassName,
           )}
