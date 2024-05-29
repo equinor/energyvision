@@ -13,7 +13,7 @@ import type { EventSchema } from '../../types/types'
 import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
-import RelatedContent from 'pageComponents/shared/RelatedContent'
+import RelatedContent from '../../pageComponents/shared/RelatedContent'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
