@@ -72,7 +72,6 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
   ref,
 ) {
   const as: ElementType = providedAs ? providedAs : getElementType(variant, link)
-
   const typography = findTypography(variant, group)
 
   if (typeof typography === 'undefined') {

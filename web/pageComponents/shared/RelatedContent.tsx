@@ -1,7 +1,9 @@
 import { Fragment, HTMLAttributes } from 'react'
 import { Heading, List } from '@components'
 import type { RelatedLinksData, LinkData } from '../../types/types'
-import ReadMoreLink from '../shared/ReadMoreLink'
+import { ResourceLink } from '@core/Link'
+import { getUrlFromAction } from '../../common/helpers'
+import { getLocaleFromName } from '../../lib/localization'
 
 const { Item } = List
 
@@ -18,10 +20,17 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
       <List unstyled>
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
+            const url = getUrlFromAction(item)
             return (
               <Fragment key={item.id}>
                 <Item>
-                  <ReadMoreLink action={item} variant="contentLink" />
+                  <ResourceLink
+                    href={url as string}
+                    {...(item.link?.lang && { locale: getLocaleFromName(item.link?.lang) })}
+                    type={item.type}
+                  >
+                    {`${item.label} ${item.extension ? `(${item.extension.toUpperCase()})` : ''}`}
+                  </ResourceLink>
                 </Item>
               </Fragment>
             )

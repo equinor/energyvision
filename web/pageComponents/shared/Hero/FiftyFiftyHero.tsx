@@ -3,8 +3,10 @@ import Image from '../SanityImage'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/types'
 import { BackgroundContainer } from '@components'
-import ReadMoreLink from '../ReadMoreLink'
+import { ReadMoreLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
+import { getUrlFromAction } from '../../../common/helpers'
+import { getLocaleFromName } from '../../../lib/localization'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -57,7 +59,8 @@ const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }
   font-weight: ${(props) => (props.$isBigTitle ? 'var(--fontWeight-regular)' : 'var(--fontWeight-medium)')};
 `
 
-export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
+export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
+  const url = action && getUrlFromAction(action)
   return (
     <>
       <StyledHero background={{ backgroundColor: background }}>
@@ -75,8 +78,14 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
               <Blocks value={ingress} />
             </StyledIngress>
           )}
-          {link && !isBigTitle && (
-            <ReadMoreLink action={link} variant={link.type === 'internalUrl' ? 'readMore' : 'regular'} />
+          {action && !isBigTitle && (
+            <ReadMoreLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
           )}
         </StyledContent>
       </StyledHero>

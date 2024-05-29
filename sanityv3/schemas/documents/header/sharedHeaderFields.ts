@@ -42,7 +42,7 @@ const heroBigTitleDefault = {
   of: [
     configureTitleBlockContent({
       highlight: true,
-      styles: defaultBannerBigTitletStyle,
+      extendedStyles: defaultBannerBigTitletStyle,
     }),
   ],
   hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.DEFAULT,
@@ -64,7 +64,7 @@ const heroBigTitleFiftyFifty = {
   title: 'Hero Title',
   type: 'array',
   fieldset: 'header',
-  of: [configureTitleBlockContent({ styles: fiftyFiftyBigTitleStyle })],
+  of: [configureTitleBlockContent({ extendedStyles: fiftyFiftyBigTitleStyle })],
   hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.FIFTY_FIFTY,
   validation: (Rule: Rule) =>
     Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>

@@ -5,8 +5,11 @@ import TitleText from '../portableText/TitleText'
 import type { TextTeaserData } from '../../../types/types'
 import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
-import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
+
 import { twMerge } from 'tailwind-merge'
+import { ReadMoreLink } from '@core/Link'
+import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../../lib/localization'
 
 const { Content } = EnvisTeaser
 
@@ -76,6 +79,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
   const { background, highlight, dark } = getColorForTheme(theme)
+  const url = action && getUrlFromAction(action)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
   return (
@@ -90,7 +94,15 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
               <IngressText value={text} />
             </IngressWrapper>
           )}
-          {action && <ReadMoreLink action={action} variant="readMore" />}
+          {action && (
+            <ReadMoreLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
+          )}
         </StyledContent>
       </TeaserWrapper>
     </BackgroundContainer>

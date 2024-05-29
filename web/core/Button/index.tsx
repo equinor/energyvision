@@ -27,7 +27,7 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-moss-green-60
       focus:outline-none
       focus-visible:envis-outline
-      active:envis-outline
+      active:scale-99
       dark:text-white-100
       dark:hover:bg-white-transparent
       dark:focus-visible:envis-outline-invert
@@ -42,7 +42,7 @@ export const getVariant = (variant: Variants): string => {
       hover:text-white-100
       focus:outline-none
       focus-visible:outline-slate-blue-95
-      active:bg-moss-green-80
+      active:scale-99
       dark:text-white-100
       dark:border-white-100
       dark:hover:bg-white-transparent
@@ -55,7 +55,7 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-moss-green-100
       focus:outline-none
       focus-visible:outline-teal-100
-      active:bg-moss-green-110
+      active:scale-99
       dark:bg-white-100
       dark:hover:bg-moss-green-60
       dark:text-slate-80

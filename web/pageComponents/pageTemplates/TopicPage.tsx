@@ -1,3 +1,4 @@
+import { toPlainText } from '@portabletext/react'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import { HeroTypes, TopicPageSchema } from '../../types/types'
 import Seo from '../shared/Seo'
@@ -13,6 +14,7 @@ type TopicPageProps = {
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
+
   return (
     <>
       <Seo
@@ -22,7 +24,11 @@ const TopicPage = ({ data }: TopicPageProps) => {
         pageTitle={data?.title}
       />
       <main>
-        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
+        {data.isCampaign ? (
+          <h1 className="sr-only">{toPlainText(data.title)}</h1>
+        ) : (
+          <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
+        )}
         {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             background={titleStyles.background}
@@ -34,7 +40,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           />
         )}
 
-        {data.hero.type !== HeroTypes.DEFAULT && (
+        {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
         <PageContent data={data} />

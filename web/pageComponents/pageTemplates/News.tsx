@@ -6,7 +6,6 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
 import IngressText from '../shared/portableText/IngressText'
-import RelatedContent from '../shared/RelatedContent'
 import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
@@ -16,6 +15,7 @@ import type { NewsSchema } from '../../types/types'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
+import RelatedContent from 'pageComponents/shared/RelatedContent'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -225,12 +225,11 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               <RelatedContent
                 data={relatedLinks}
                 className={twMerge(`
-                  px-layout-lg
-                  max-w-viewport
-                  mx-auto
-                  my-3xl
-                  ${iframe ? 'mt-0' : ''}
-                  `)}
+             px-layout-lg
+             max-w-viewport
+             my-3xl
+             mx-auto
+             `)}
               />
             )}
 

@@ -36,6 +36,17 @@ const parseSlug = (item: string): string => {
   return parts?.[0] + parts?.slice(1)
 }
 
+const capitalize = (string: string): string => string[0].toUpperCase() + string.slice(1)
+
+const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
+  return crumbs
+    .filter((item) => item.slug && item.label)
+    .map((item) => ({
+      ...item,
+      label: capitalize(item.label),
+    }))
+}
+
 export const Breadcrumbs = ({
   slug,
   useCustomBreadcrumbs,
@@ -47,31 +58,35 @@ export const Breadcrumbs = ({
   const router = useRouter()
 
   const crumbs =
-    useCustomBreadcrumbs && customBreadcrumbs && customBreadcrumbs.length >= 3 ? customBreadcrumbs : defaultBreadcrumbs
+    useCustomBreadcrumbs && customBreadcrumbs && customBreadcrumbs.length >= 3
+      ? parseBreadcrumbs(customBreadcrumbs)
+      : parseBreadcrumbs(defaultBreadcrumbs)
 
   if (crumbs.length < 2) return null
 
   return (
     <BackgroundContainer background={background} renderFragmentWhenPossible className="mx-auto max-w-viewport">
       <BreadcrumbsList className={twMerge(`py-10 px-layout-lg`, className)}>
-        {crumbs
-          .filter((item) => item.slug && item.label)
-          .map((item: Breadcrumb) => {
-            const label = item.label ?? parseSlug(item.slug)?.replaceAll('-', ' ')
-            const shouldLink = item.slug !== slug
+        {crumbs.map((item: Breadcrumb) => {
+          const label = item.label ?? parseSlug(item.slug)?.replaceAll('-', ' ')
+          const shouldLink = item.slug !== slug
 
-            return (
-              <BreadcrumbsListItem key={item.slug}>
-                {shouldLink ? (
-                  <NextLink href={item.slug} prefetch={false} className="hover:underline no-underline">
-                    {label}
-                  </NextLink>
-                ) : (
-                  <>{label}</>
-                )}
-              </BreadcrumbsListItem>
-            )
-          })}
+          return (
+            <BreadcrumbsListItem key={item.slug}>
+              {shouldLink ? (
+                <NextLink
+                  href={item.slug}
+                  prefetch={false}
+                  className="hover:underline no-underline focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert underline-offset-4"
+                >
+                  {label}
+                </NextLink>
+              ) : (
+                <>{label}</>
+              )}
+            </BreadcrumbsListItem>
+          )
+        })}
       </BreadcrumbsList>
       <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
     </BackgroundContainer>

@@ -19,7 +19,7 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
     group
     inline-flex
     align-baseline
-    w-max
+    w-fit
     text-slate-80
     leading-0
   `,
@@ -27,6 +27,7 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   )
   const contentClassNames = `
   relative
+  w-fit
   after:content-['']
   after:block
   after:absolute

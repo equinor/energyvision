@@ -3,14 +3,16 @@ import { ResourceLink, ButtonLink } from '@core/Link'
 import type { LinkData } from '../../types/types'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
+import { twMerge } from 'tailwind-merge'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
-  overrideButtonStyle: boolean
+  overrideButtonStyle?: boolean
   splitList?: boolean
+  className?: string
 }
 
-const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList }: CallToActionsProps) => {
+const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList, className }: CallToActionsProps) => {
   if (!callToActions) return null
 
   const getSingleButtonLink = () => {
@@ -24,7 +26,7 @@ const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList }: C
         {...(type === 'internalUrl' && { locale: getLocaleFromName(link?.lang) })}
         href={url}
         type={type}
-        className="mb-8 block"
+        className={twMerge(className, 'mb-8 block')}
       >
         {`${label} ${extension ? `(${extension.toUpperCase()})` : ''}`}
       </ButtonLink>
@@ -35,7 +37,7 @@ const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList }: C
   return callToActions?.length === 1 && !overrideButtonStyle ? (
     getSingleButtonLink()
   ) : (
-    <List split={splitList} className="list-none">
+    <List split={splitList} className={className} listClassName={'list-none'}>
       {callToActions.map((callToAction: LinkData) => {
         const url = getUrlFromAction(callToAction)
         return url ? (
