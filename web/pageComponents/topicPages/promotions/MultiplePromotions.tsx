@@ -6,37 +6,21 @@ import type {
   PromotionType,
   EventPromotionSettings,
 } from '../../../types/types'
-import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Card from '@sections/cards/Card'
-import { Ratios } from '../../../pageComponents/shared/SanityImage'
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { FormattedDate } from '@components/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
 
 const PeopleCardsWrapper = styled.ul`
   --min: 210px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-  padding: 0 var(--space-xxLarge);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-  justify-content: center;
-  align-content: center;
-  /* We need some breakpoints here because we don't know if we have 2 or 20 people cards,
-  and if we have 2 or 3, 1fr is too wide */
+
   @media (min-width: 800px) {
     --min: 240px;
-    grid-template-columns: repeat(auto-fit, minmax(var(--min), 280px));
   }
   @media (min-width: 1400px) {
-    padding: 0 var(--layout-paddingHorizontal-small);
     max-width: var(--maxViewportWidth);
   }
 `
@@ -60,18 +44,11 @@ const StyledPeopleCard = styled(PeopleCard)`
 type CardProps = CardData | PeopleCardData | EventCardData
 
 const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardData) => {
-  const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
+  //const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
 
   return (
     <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)] basis-0 grow" key={id}>
-      <Card
-        href={slug}
-        {...(image && {
-          imageUrl: image.src,
-        })}
-        className="w-full h-full"
-        key={id}
-      >
+      <Card href={slug} image={heroImage?.image} className="w-full h-full" key={id}>
         <Card.Content>
           <Card.Header
             {...(typeof title === 'string'
@@ -85,7 +62,7 @@ const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardDa
               eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
             })}
           />
-          {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.5em]" />}
+          {ingress && <Blocks value={ingress} className="grow" clampLines={5} />}
         </Card.Content>
       </Card>
     </li>
@@ -116,10 +93,11 @@ const MultiplePromotions = ({
         return <TWCard key={data.id} {...data} />
       case 'people':
         return (
-          <li className="list-none" key={data.id}>
-            <StyledBackground key={data.id}>
+          <li key={data.id} className="">
+            <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
+            {/* <StyledBackground key={data.id}>
               <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
-            </StyledBackground>
+            </StyledBackground> */}
           </li>
         )
       default:
@@ -159,9 +137,9 @@ const MultiplePromotions = ({
     )
   }
 
-  if (variant === 'promotePeople') {
+  /*   if (variant === 'promotePeople') {
     return (
-      <PeopleCardsWrapper>
+      <PeopleCardsWrapper className="px-8 flex gap-x-6 gap-y-2 justify-center content-center flex-wrap flex-col md:flex-row">
         <>
           {data.map((item) => {
             return getCard(item)
@@ -169,10 +147,10 @@ const MultiplePromotions = ({
         </>
       </PeopleCardsWrapper>
     )
-  }
+  } */
 
   return (
-    <ul className="px-8 flex gap-x-6 gap-y-8 justify-center content-center flex-wrap flex-col list-none xl:flex-row">
+    <ul className="px-8 flex gap-x-6 gap-y-2 justify-center content-center flex-wrap flex-col md:flex-row">
       <>
         {data.map((item) => {
           return getCard(item)

@@ -1,8 +1,6 @@
 import { FormattedDate } from '@components'
 import Card from '@sections/cards/Card'
 import type { CardData } from '../../types/types'
-import { Ratios } from '../shared/SanityImage'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 type NewsCardProp = {
@@ -13,14 +11,10 @@ type NewsCardProp = {
 const NewsCard = ({ data }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
 
-  const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
-
   return (
     <Card
       href={slug}
-      {...(image && {
-        imageUrl: image.src,
-      })}
+      image={heroImage?.image}
       className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
     >
       <Card.Content>

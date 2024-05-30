@@ -35,7 +35,7 @@ export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card
           ...style,
         } as CSSProperties
       }
-      className={twMerge('box-shadow-crisp', className)}
+      className={twMerge('shadow-card', className)}
       {...rest}
     >
       {children}

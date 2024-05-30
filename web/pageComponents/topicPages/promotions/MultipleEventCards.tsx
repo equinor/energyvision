@@ -89,7 +89,7 @@ const MultipleEventCards = ({
         </ul>
       )}
     </> */
-    <ul className="px-8 flex gap-x-6 gap-y-8 justify-center content-center flex-wrap flex-col list-none xl:flex-row">
+    <ul className="px-8 flex gap-x-6 gap-y-2 justify-center content-center flex-wrap flex-col list-none md:flex-row">
       {data.map((item) => {
         return (
           <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)] basis-0 grow" key={item.id}>

@@ -9,6 +9,10 @@ import type { CustomValidatorResult, PortableTextBlock, Rule, ValidationError } 
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { EdsIcon } from '../../../icons'
 import { Flags } from '../../../src/lib/datasetHelpers'
+import { validateInternalOrExternalUrl } from '../../validations/validateInternalOrExternalUrl'
+import routes from '../../routes'
+import { filterByRoute } from '../../../helpers/referenceFilters'
+import type { ValidationContext } from 'sanity'
 
 const horizontalScrollValidation = (context: Promotion): true | ValidationError => {
   const { promotion, useHorizontalScroll } = context
@@ -109,6 +113,21 @@ export default {
       ].filter((e) => e),
       options: { sortable: false },
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
+    },
+    {
+      name: 'viewAllLink',
+      title: 'View all internal link',
+      description: 'Use this if you want a "View all ..." link to e.g. all news',
+      type: 'reference',
+      to: routes,
+      options: {
+        filter: filterByRoute,
+      },
+    },
+    {
+      name: 'viewAllLinkLabel',
+      title: 'Label for the View all link',
+      type: 'string',
     },
     {
       name: 'useHorizontalScroll',

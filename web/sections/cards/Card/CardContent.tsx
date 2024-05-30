@@ -35,7 +35,8 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     secondary: ``,
   }
   const iconClassNames = twMerge(
-    `
+    `hidden
+    lg:block
     max-h-8
     text-energy-red-100
     dark:text-white-100
@@ -53,11 +54,13 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
       className={twMerge(
         `basis-0
         grow
-        pt-8
+        pt-6
+        md:pt-8
         pb-6
         px-6
         flex
-        gap-6
+        gap-4
+        md:gap-6
       ${variantClassNames[variant]}
       `,
         className,

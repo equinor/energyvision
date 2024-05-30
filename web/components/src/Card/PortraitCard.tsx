@@ -40,8 +40,8 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
               ...style,
             } as CSSProperties
           }
-          className={twMerge('box-shadow-crisp', className)}
           {...rest}
+          className={twMerge('shadow-card', className)}
         >
           {children}
         </StyledPortraitCard>
@@ -56,6 +56,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
             } as CSSProperties
           }
           {...rest}
+          className={twMerge('shadow-card', className)}
         >
           {children}
         </StyledPortraitCard>

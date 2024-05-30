@@ -7,7 +7,12 @@ import {
   PortableTextBlockComponent,
   PortableTextTypeComponent,
 } from '@portabletext/react'
-import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
+import {
+  PortableTextBlock,
+  PortableTextBlockStyle,
+  PortableTextListItemBlock,
+  PortableTextMarkDefinition,
+} from '@portabletext/types'
 import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
 
@@ -51,6 +56,27 @@ const defaultSerializers = {
   },
 }
 
+type TWLineClamps = {
+  [key: number]: string
+}
+
+//TODO - Struggling with types
+const getLineClampNormalBlock = (linesToClamp: number): any => {
+  const twLineClampUtility: TWLineClamps = {
+    3: 'line-clamp-3',
+    4: 'line-clamp-4',
+    5: 'line-clamp-5',
+  }
+
+  return {
+    normal: ({ children }: PortableTextBlock) => (
+      <p className={twLineClampUtility[linesToClamp as keyof TWLineClamps]}>
+        <>{children}</>
+      </p>
+    ),
+  }
+}
+
 export type BlockProps = {
   /**
    * Override default block serializers
@@ -81,6 +107,8 @@ export type BlockProps = {
    * If needed to connect with aria-describedby and such
    */
   id?: string
+  /** Use to clamp lines on number */
+  clampLines?: number
 } & PortableTextProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
@@ -93,6 +121,7 @@ export default function Blocks({
   proseClassName = '',
   className = '',
   id,
+  clampLines,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
   return (
@@ -120,6 +149,7 @@ export default function Blocks({
                     block: {
                       ...defaultSerializers.block,
                       ...blocksComponents,
+                      ...(clampLines && getLineClampNormalBlock(clampLines)),
                     },
                     types: { ...defaultSerializers.types },
                     marks: { ...defaultSerializers.marks },

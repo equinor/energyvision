@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export const commonButtonStyling = `
-w-max
+w-fit
 text-sm
 px-5
 py-3

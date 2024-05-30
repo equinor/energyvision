@@ -181,7 +181,7 @@ module.exports = {
       boxShadowColor: {
         'moss-green-50': '190deg 9% 67%',
         'moss-green-50-interact': '190deg 9% 60%',
-        'white-100': '0deg 0% 63%',
+        'white-100': '0deg 0% 64%',
         'white-100-interact': '0deg 0% 63%',
         'blue-50': '212deg 40% 29%',
         'blue-50-interact': '212deg 40% 25%',
@@ -240,6 +240,7 @@ module.exports = {
         //--fontWeight-regular: tw -> normal
       },
       lineHeight: {
+        text: '2.3rem',
         //--lineHeight-1
         inherit: 'inherit',
         //--lineHeight-2
@@ -265,8 +266,10 @@ module.exports = {
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
-      //https://www.joshwcomeau.com/css/designing-shadows/
-      boxShadow: {},
+      boxShadow: {
+        card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px, rgba(0, 0, 0, 0.20) 0px 1px 2px',
+        'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
+      },
       aspectRatio: {
         '4/5': '0.8',
         '5/4': '1.25',

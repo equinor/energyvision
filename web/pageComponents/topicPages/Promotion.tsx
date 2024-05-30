@@ -6,6 +6,7 @@ import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 import { twMerge } from 'tailwind-merge'
+import { ButtonLink } from '@core/Link'
 
 const Wrapper = styled.div`
   --card-minWidth: 200px;
@@ -40,7 +41,7 @@ const Promotion = ({
   anchor?: string
   className?: string
 }) => {
-  const { title, ingress, content, useHorizontalScroll, designOptions } = data
+  const { title, ingress, content, useHorizontalScroll, viewAllLink, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
@@ -67,6 +68,17 @@ const Promotion = ({
             eventPromotionSettings={content?.eventPromotionSettings}
             useHorizontalScroll={useHorizontalScroll}
           />
+        )}
+        {viewAllLink?.link?.slug && (
+          <div className="px-8 flex justify-center mt-12">
+            <ButtonLink
+              variant="outlined"
+              href={viewAllLink?.link?.slug}
+              className="flex justify-center w-full md:w-fit md:px-layout-sm"
+            >
+              {viewAllLink?.label}
+            </ButtonLink>
+          </div>
         )}
       </Wrapper>
     </BackgroundContainer>

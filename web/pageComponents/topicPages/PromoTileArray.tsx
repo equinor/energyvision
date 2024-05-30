@@ -87,7 +87,6 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
 }
 
 const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
-  const bgImage = useSanityLoader(image, 400, Ratios.FIVE_TO_FOUR)
   const url = getUrlFromAction(action)
   const { background } = designOptions
   const colorName =
@@ -105,9 +104,7 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
       //eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       href={url}
-      {...(bgImage && {
-        imageUrl: bgImage.src,
-      })}
+      image={image}
       variant="secondary"
       className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
     >

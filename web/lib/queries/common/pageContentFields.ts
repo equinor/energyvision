@@ -239,6 +239,10 @@ _type == "keyNumbers" =>{
       ${markDefs},
     },
     "useHorizontalScroll": useHorizontalScroll,
+    "viewAllLink": {
+        "label": viewAllLinkLabel,
+        "link":viewAllLink->${linkReferenceFields},
+    },
     "content": promotion[0]{
       "id": _key,
       "type": _type,

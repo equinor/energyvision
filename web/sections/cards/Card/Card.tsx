@@ -1,14 +1,16 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { default as NextLink, LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import { ImageWithAlt } from '../../../types/types'
 
 export type CardProps = {
   /** Variant to use
    * @default primary
    */
   variant?: 'primary' | 'secondary'
-  /** The url for the background image */
-  imageUrl?: string
+  /** image */
+  image?: ImageWithAlt
   /** Override background image styling */
   imageClassName?: string
 } & HTMLAttributes<HTMLAnchorElement> &
@@ -26,12 +28,16 @@ export type CardProps = {
  * @example
  * */
 export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
-  { variant = 'primary', href, className = '', imageClassName = '', children, imageUrl, ...rest },
+  { variant = 'primary', href, className = '', imageClassName = '', children, image, ...rest },
   ref,
 ) {
   const variantClassNames = {
     primary: ``,
     secondary: `rounded-md overflow-hidden`,
+  }
+  const variantAspectRatio = {
+    primary: Ratios.NINE_TO_SIXTEEN,
+    secondary: Ratios.FIVE_TO_FOUR,
   }
   const imageRatio = {
     primary: 'aspect-video',
@@ -53,11 +59,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       flex-col
       bg-white-100
       text-slate-80
-      border
-      border-autumn-storm-50
+      shadow-card
       rounded-sm
-      active:box-shadow-crisp-interact
-      active:shadow-white-100-interact
+      active:shadow-card-interact
       focus:outline-none
       focus-visible:envis-outline
       dark:text-white-100
@@ -68,25 +72,25 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       )}
       {...rest}
     >
-      {imageUrl && (
+      {image && (
         <div
           className={twMerge(
-            `w-full
-            h-auto
-            bg-no-repeat
-            bg-center
-            bg-cover
-            ${imageVariantClassNames[variant]}
-            ${imageRatio[variant]}
-            max-h-[200px]
-            lg:max-h-[100%]
-            `,
+            `relative
+          ${imageVariantClassNames[variant]}
+          ${imageRatio[variant]}
+          max-md:max-h-[212px]
+          `,
             imageClassName,
           )}
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-          }}
-        />
+        >
+          <Image
+            image={image}
+            fill
+            maxWidth={600}
+            aspectRatio={variantAspectRatio[variant]}
+            sizes="(max-width: 800px) 100vw, 800px"
+          />
+        </div>
       )}
       {children}
     </NextLink>
