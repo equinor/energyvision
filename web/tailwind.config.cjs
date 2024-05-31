@@ -31,6 +31,9 @@ module.exports = {
   darkMode: 'selector',
   theme: {
     extend: {
+      screens: {
+        '3xl': '1600px',
+      },
       colors: ({ theme }) => ({
         current: 'currentColor',
         'moss-green': {
@@ -174,10 +177,6 @@ module.exports = {
           40: '#E3EDEA',
         },
       }),
-      //https://www.joshwcomeau.com/shadow-palette/
-      // medium elevation fig
-      //oomph: default -> 0.3 hover: -> 0.5
-      //crispy:0.7,resolution:0.75, default light position
       boxShadowColor: {
         'moss-green-50': '190deg 9% 67%',
         'moss-green-50-interact': '190deg 9% 60%',
@@ -313,13 +312,15 @@ module.exports = {
                 fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
+                marginTop: theme('spacing.2'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.lg'),
+                fontSize: theme('fontSize.md'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.4'),
+                marginTop: theme('spacing.2'),
+                marginBottom: theme('spacing.0'),
               },
               'ul ul, ul ol, ol ul, ol ol': {
                 paddingLeft: em(38, 24),
@@ -364,20 +365,13 @@ module.exports = {
         article: {
           css: {
             h2: {
-              fontSize: theme('fontSize.md'),
-              lineHeight: theme('lineHeight.inherit'),
-              fontWeight: theme('fontWeight.medium'),
+              fontSize: theme('fontSize.lg'),
               marginTop: theme('spacing.2'),
               marginBottom: theme('spacing.2'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },
             h3: {
-              fontSize: theme('fontSize.base'),
-              lineHeight: theme('lineHeight.inherit'),
-              fontWeight: theme('fontWeight.medium'),
-              marginTop: theme('spacing.2'),
-              marginBottom: theme('spacing.0'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },

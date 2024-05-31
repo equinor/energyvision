@@ -8,7 +8,7 @@ export type CardProps = {
   /** Variant to use
    * @default primary
    */
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'compact'
   /** image */
   image?: ImageWithAlt
   /** Override background image styling */
@@ -31,21 +31,34 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   { variant = 'primary', href, className = '', imageClassName = '', children, image, ...rest },
   ref,
 ) {
+  const commonStyling = `
+  flex 
+  flex-col 
+  shadow-card 
+  rounded-sm 
+  active:shadow-card-interact
+  min-w-[220px]
+  md:max-w-[400px]`
+
   const variantClassNames = {
-    primary: ``,
-    secondary: `rounded-md overflow-hidden`,
+    primary: `${commonStyling}`,
+    secondary: `${commonStyling} rounded-md overflow-hidden`,
+    compact: `h-full flex gap-4 min-w-[200px] xl:max-w-[300px] 3xl:max-w-[400px]`,
   }
   const variantAspectRatio = {
     primary: Ratios.NINE_TO_SIXTEEN,
     secondary: Ratios.FIVE_TO_FOUR,
+    compact: Ratios.NINE_TO_SIXTEEN,
   }
   const imageRatio = {
     primary: 'aspect-video',
     secondary: 'aspect-5/4',
+    compact: '',
   }
   const imageVariantClassNames = {
     primary: ``,
     secondary: `rounded-t-md`,
+    compact: 'w-[35%] h-auto',
   }
 
   return (
@@ -54,19 +67,14 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       href={href}
       prefetch={false}
       className={twMerge(
-        `group/card 
-      flex
-      flex-col
+        `group/card
+        ${variantClassNames[variant]}
       bg-white-100
       text-slate-80
-      shadow-card
-      rounded-sm
-      active:shadow-card-interact
       focus:outline-none
       focus-visible:envis-outline
       dark:text-white-100
       dark:focus-visible:envis-outline-invert
-      ${variantClassNames[variant]}
       `,
         className,
       )}

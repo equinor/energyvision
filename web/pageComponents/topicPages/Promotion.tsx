@@ -1,35 +1,11 @@
-import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
-import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
 import { twMerge } from 'tailwind-merge'
 import { ButtonLink } from '@core/Link'
-
-const Wrapper = styled.div`
-  --card-minWidth: 200px;
-  --card-maxWidth: 100%;
-
-  @media (min-width: 1000px) {
-    --card-maxWidth: 400px;
-  }
-`
-const Ingress = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
-
-const Intro = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: 0 auto;
-`
-
-const StyledHeading = styled(TitleText)`
-  text-align: var(--promotion-titleAlign, center);
-  margin-bottom: var(--space-xLarge);
-`
+import { Heading } from '@core/Typography'
 
 const Promotion = ({
   data,
@@ -48,15 +24,16 @@ const Promotion = ({
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Wrapper className={twMerge(`pb-page-content xl:px-14 max-w-viewport mx-auto`, className)} {...rest}>
-        <Intro>
-          {title && <StyledHeading value={title} level="h2" size="xl" />}
-          {ingress && (
-            <Ingress>
-              <IngressText value={ingress} />
-            </Ingress>
-          )}
-        </Intro>
+      <div
+        className={twMerge(`pb-page-content px-layout-sm max-w-viewport mx-auto flex flex-col items-center`, className)}
+        {...rest}
+      >
+        {title && <Heading value={title} as="h2" variant="xl" className="w-fit mb-10" />}
+        {ingress && (
+          <div className="mb-24">
+            <IngressText value={ingress} />
+          </div>
+        )}
         {promotions?.length === 1 ? (
           /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
@@ -71,16 +48,12 @@ const Promotion = ({
         )}
         {viewAllLink?.link?.slug && (
           <div className="px-8 flex justify-center mt-12">
-            <ButtonLink
-              variant="outlined"
-              href={viewAllLink?.link?.slug}
-              className="flex justify-center w-full md:w-fit md:px-layout-sm"
-            >
+            <ButtonLink variant="outlined" href={viewAllLink?.link?.slug} className="px-layout-lg md:px-layout-sm">
               {viewAllLink?.label}
             </ButtonLink>
           </div>
         )}
-      </Wrapper>
+      </div>
     </BackgroundContainer>
   )
 }

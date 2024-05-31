@@ -15,7 +15,7 @@ import type { NewsSchema } from '../../types/types'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
-import RelatedContent from 'pageComponents/shared/RelatedContent'
+import RelatedContent from '../../pageComponents/shared/RelatedContent'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -94,12 +94,6 @@ const LeadParagraph = styled.div`
   & > p {
     margin-bottom: 0;
   }
-`
-
-const Latest = styled.div`
-  padding: 0 var(--space-medium);
-  margin: var(--space-4xLarge) auto 0;
-  max-width: 1700px;
 `
 
 const isDateAfter = (a: string, b: string) => {
@@ -233,11 +227,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               />
             )}
 
-            {latestNews && latestNews.length > 0 && (
-              <Latest>
-                <LatestNews data={latestNews} />
-              </Latest>
-            )}
+            {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
           </NewsLayout>
         </article>
       </main>
