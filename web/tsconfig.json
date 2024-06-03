@@ -2,39 +2,20 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2019",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2019",
-      "es2021"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2019", "es2021"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components/*": [
-        "components/src/*"
-      ],
-      "@core/*": [
-        "core/*"
-      ],
-      "@sections/*": [
-        "sections/*"
-      ],
-      "@envisTypes": [
-        "types/*"
-      ],
-      "@utils/*": [
-        "components/utils/*"
-      ],
-      "@components": [
-        "components/src"
-      ],
-      "@utils": [
-        "components/utils"
-      ]
+      "@components/*": ["components/src/*"],
+      "@core/*": ["core/*"],
+      "@sections/*": ["sections/*"],
+      "@envisTypes": ["types/*"],
+      "@utils/*": ["components/utils/*"],
+      "@components": ["components/src"],
+      "@utils": ["components/utils"]
     },
     "incremental": true,
     "plugins": [
@@ -43,15 +24,6 @@
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "jest-setup.ts",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "pages-disabled/*.tsx"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "pages-disabled/*.tsx"]
 }
