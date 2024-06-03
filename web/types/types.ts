@@ -6,6 +6,8 @@ import {
   SanityImageObject,
   SanityImageSource,
 } from '@sanity/image-url/lib/types/types'
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
+import { RowType } from '@sections/Grid/mapGridContent'
 
 export type CaptionData = {
   attribution?: string
@@ -208,6 +210,8 @@ export type ContentType =
   | TwitterEmbedData
   | VideoPlayerData
   | VideoPlayerCarouselData
+  | GridData
+  | CampaignBannerData
 
 export type Breadcrumb = {
   label: string
@@ -224,6 +228,7 @@ export type PageSchema = {
   content?: ContentType[]
   id: string
   type: string
+  isCampaign?: boolean
   breadcrumbs: {
     enableBreadcrumbs: boolean
     useCustomBreadcrumbs: boolean
@@ -251,6 +256,14 @@ export type LandingPageSchema = {
   template: Templates
   seoAndSome: SeoData
 }
+export type ContentAlignmentTypes = 'left' | 'right' | 'center'
+
+export type ImageBackground = {
+  image: ImageWithAlt | SanityImageObject
+  useAnimation?: boolean
+  useLight?: boolean
+  contentAlignment: ContentAlignmentTypes
+}
 
 export type BackgroundColours =
   | 'White'
@@ -265,10 +278,16 @@ export type BackgroundColours =
   | 'Mid Orange'
   | 'Slate Blue 95'
 
+export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
+
 export type DesignOptions = {
-  background?: BackgroundColours
-  imagePosition?: TeaserImagePosition
-  imageSize?: TeaserImageSize
+  background: {
+    type?: BackgroundTypes
+    backgroundColor?: BackgroundColours
+    backgroundImage?: ImageBackground
+    backgroundUtility?: keyof ColorKeyTokens
+    dark: boolean
+  }
 }
 
 export type TextBlockData = {
@@ -279,11 +298,11 @@ export type TextBlockData = {
   overline?: string
   text: PortableTextBlock[]
   isBigText?: boolean
+  useBrandTheme?: boolean
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   splitList?: boolean
   overrideButtonStyle?: boolean
-  anchor?: string
   designOptions: DesignOptions
 }
 
@@ -301,9 +320,13 @@ export type TeaserData = {
   text: PortableTextBlock[]
   overline?: string
   isBigText?: boolean
+  useResourceLinks?: boolean
   image: ImageWithAlt
-  action?: LinkData
-  designOptions: DesignOptions
+  actions?: LinkData[]
+  designOptions: DesignOptions & {
+    imagePosition?: TeaserImagePosition
+    imageSize?: TeaserImageSize
+  }
 }
 
 export type TextTeaserData = {
@@ -322,6 +345,8 @@ export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]
 }
+
+export type FigureRatio = 'original' | '9:16'
 
 export type CellData = {
   id: string
@@ -352,7 +377,7 @@ export type FullWidthImageData = {
   type: string
   id: string
   image: ImageWithCaptionData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: number
   }
 }
@@ -368,9 +393,8 @@ export type FullWidthVideoData = {
   spacing?: boolean
   title?: PortableTextBlock[]
   action?: LinkData
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: FullWidthVideoRatio
-    background: BackgroundColours
   }
 }
 
@@ -380,7 +404,9 @@ export type FigureData = {
   type: string
   id: string
   figure: ImageWithCaptionData
-  designOptions: DesignOptions
+  designOptions: DesignOptions & {
+    aspectRatio?: FigureRatio
+  }
 }
 
 export type TextWithIconItem = {
@@ -404,7 +430,7 @@ export type QuoteData = {
   authorTitle?: string
   quote: string
   image?: ImageWithAlt
-  designOptions: DesignOptions
+  designOptions: DesignOptions & { imagePosition?: TeaserImagePosition }
 }
 
 export type AccordionListData = {
@@ -511,10 +537,9 @@ export type IFrameData = {
   frameTitle: string
   url: string
   cookiePolicy: CookiePolicy
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
-    background: BackgroundColours
   }
 }
 
@@ -655,9 +680,7 @@ export type NewsListData = {
 export type StockValuesData = {
   id: string
   type: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type TwitterEmbedData = {
@@ -667,9 +690,7 @@ export type TwitterEmbedData = {
   ingress?: PortableTextBlock[]
   embedType: string
   embedValue: string
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type AnchorLinkData = {
@@ -701,8 +722,9 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  background: BackgroundColours
   height?: number
+  width?: 'normal' | 'extraWide'
+  useBrandTheme?: boolean
 }
 
 export type VideoPlayerData = {
@@ -710,7 +732,7 @@ export type VideoPlayerData = {
   type: string
   video: VideoType
   videoControls: VideoControlsType
-  designOptions: VideoDesignOptionsType
+  designOptions: DesignOptions & VideoDesignOptionsType
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
@@ -728,9 +750,8 @@ export type VideoPlayerCarouselData = {
       thumbnail: ImageWithAlt
     }
   }[]
-  designOptions: {
+  designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
-    background: BackgroundColours
   }
   title?: PortableTextBlock[]
 }
@@ -753,9 +774,7 @@ export type ImageCarouselData = {
     autoplay: boolean
     delay: number
   }
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type IFrameCarouselItemData = {
@@ -777,12 +796,12 @@ export type IframeCarouselData = {
   id: string
   title?: PortableTextBlock[]
   items: IFrameCarouselItemData[]
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
 }
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
+
+export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'others'
 
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
@@ -799,8 +818,88 @@ export type KeyNumbersData = {
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
   useHorizontalScroll: boolean
-  designOptions: {
-    background: BackgroundColours
-  }
+  designOptions: DesignOptions
   action?: LinkData
+}
+
+export type CardsListData = {
+  type: 'cardsList'
+  id: string
+  title?: PortableTextBlock[]
+  cards?: CardListItemData[]
+  designOptions: DesignOptions
+}
+export type CardListItemData = {
+  id: string
+  type: 'card'
+  title?: string
+  content?: PortableTextBlock[]
+}
+
+export type GridRowType = Span3 | Span2And1 | ThreeColumns
+
+export type GridData = {
+  type: 'grid'
+  id: string
+  gridRows?: GridRowType[]
+}
+
+export type GridContentType = FigureData | IFrameData | VideoPlayerData | GridTextBlockData | GridTeaserData
+
+export type Span3 = {
+  type: 'span3'
+  id: string
+  content?: GridContentType[]
+}
+export type Span2And1 = {
+  type: 'span2and1'
+  id: string
+  singleColumn?: GridContentType[]
+  span2?: GridContentType[]
+}
+export type ThreeColumns = {
+  type: 'threeColumns'
+  id: string
+  columns?: GridContentType[]
+}
+
+export type GridTextBlockData = {
+  id: string
+  type: 'gridTextBlock'
+  action?: LinkData
+  content?: PortableTextBlock[]
+  textAlignment?: ContentAlignmentTypes
+  theme?: number
+}
+
+export type CampaignBannerData = {
+  type: 'campaignBanner'
+  id: string
+  title: PortableTextBlock[]
+  designOptions: DesignOptions
+}
+export type GridTeaserData = {
+  type: 'gridTeaser'
+  id: string
+  image: ImageWithAlt
+  rowType?: RowType
+  content?: PortableTextBlock
+  quote?: string
+  author?: string
+  authorTitle?: string
+  background?: BackgroundColours
+  imagePosition?: TeaserImagePosition
+  action?: LinkData
+  theme?: number
+}
+export type PodcastTeaserData = {
+  id: string
+  type: 'podcastTeaser'
+  spotifyLink?: string
+  appleLink?: string
+  linkTitle?: string
+  podcastName?: PortableTextBlock[]
+  podcastEpisode?: PortableTextBlock[]
+  image: ImageWithAlt
+  designOptions: DesignOptions
 }

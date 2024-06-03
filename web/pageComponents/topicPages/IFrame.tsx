@@ -6,16 +6,11 @@ import { ButtonLink } from '../shared/ButtonLink'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import RichText from '../shared/portableText/RichText'
+import { twMerge } from 'tailwind-merge'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
   text-align: left;
-`
-
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
 `
 
 const Figure = styled.figure`
@@ -33,18 +28,19 @@ const Ingress = styled.div`
 const IFrame = ({
   anchor,
   data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action },
+  className,
   ...rest
 }: {
   data: IFrameData
   anchor?: string
+  className?: string
 }) => {
   if (!url) return null
 
-  const { height, aspectRatio, background } = designOptions
-
+  const { height, aspectRatio, ...restOptions } = designOptions
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
-      <Container>
+    <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
+      <div className={twMerge(`pb-page-content max-w-viewport px-layout-lg mx-auto`, className)}>
         {title && <StyledHeading value={title} />}
         {ingress && (
           <Ingress>
@@ -76,7 +72,7 @@ const IFrame = ({
           />
         )}
         {action && action.label && <StyledButtonLink action={action} />}
-      </Container>
+      </div>
     </BackgroundContainer>
   )
 }

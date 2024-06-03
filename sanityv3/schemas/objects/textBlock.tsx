@@ -6,10 +6,8 @@ import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
-import { validateComponentAnchor } from '../validations/validateAnchorReference'
 
 const blockContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: true,
   h4: false,
@@ -17,7 +15,6 @@ const blockContentType = configureBlockContent({
 })
 
 const ingressContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,
@@ -25,28 +22,32 @@ const ingressContentType = configureBlockContent({
 })
 
 const blockContentTypeForBigText = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,
   attachment: false,
   smallText: false,
+  largeText: true,
+  extraLargeText: true,
   normalTextOverride: {
     title: 'Normal',
     value: 'normal',
     component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '42px' }}>{children}</span>,
   },
 })
-
-const titleContentType = configureTitleBlockContent()
+const titleContentType = configureTitleBlockContent({
+  largeText: true,
+  extraLargeText: true,
+  twoXLText: true,
+})
 
 type TextBlock = {
   overline?: string
   title?: string
-  anchor?: string
   ingress?: string
   text?: string
   isBigText?: boolean
+  useBrandTheme?: boolean
   bigText?: PortableTextBlock[]
   action?: Reference[]
   splitList?: boolean
@@ -62,6 +63,7 @@ export default {
   name: 'textBlock',
   title: 'Text block',
   type: 'object',
+
   fieldsets: [
     {
       title: 'Thumbnail Image',
@@ -88,30 +90,20 @@ export default {
       name: 'actions',
       options: {
         collapsible: true,
-        collapsed: false,
+        collapsed: true,
       },
     },
     {
-      name: 'design',
-      title: 'Design options',
-    },
-    {
-      name: 'anchor',
-      title: 'Additional anchor point reference (Deprecated)',
-      description:
-        'If the anchor reference to this component is set using anchor link component, the value here will be overridden',
+      name: 'titleOptions',
+      title: 'Title',
+      description: '',
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
   ],
   fields: [
-    {
-      title: 'Big text',
-      name: 'isBigText',
-      type: 'boolean',
-    },
     {
       name: 'image',
       type: 'imageWithAlt',
@@ -129,26 +121,45 @@ export default {
     {
       name: 'title',
       type: 'array',
+      fieldset: 'titleOptions',
       components: {
         input: CompactBlockEditor,
       },
       of: [titleContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-          !value && !(ctx.parent as TextBlock)?.isBigText ? 'A title is recommended' : true,
+          !value ? 'A title is recommended' : true,
         ).warning(),
-      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
-      name: 'anchor',
-      type: 'anchorReferenceField',
-      title: 'Anchor reference',
-      validation: (Rule: Rule) => [
-        Rule.max(0).warning('Clear this field and use anchor link component instead.'),
-        // @ts-ignore
-        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
-      ],
-      fieldset: 'anchor',
+      title: 'Use brand theme for title',
+      description: 'Sets background to white and text color to brand red. Will disable other background options',
+      name: 'useBrandTheme',
+      type: 'boolean',
+      fieldset: 'titleOptions',
+    },
+    {
+      title: 'Big text (Deprecated)',
+      description: 'Set big text to false. Will be removed after a transition period',
+      name: 'isBigText',
+      type: 'boolean',
+      fieldset: 'titleOptions',
+      readOnly: ({ value }: { value?: string }) => !value,
+    },
+    {
+      name: 'bigTitle',
+      title: 'Title (Deprecated)',
+      description: 'Use regular title and set big text to false. Will be removed after a transition period',
+      fieldset: 'titleOptions',
+      type: 'array',
+      of: [blockContentTypeForBigText],
+      hidden: ({ parent }: TextBlockDocument) => !parent.isBigText,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
+          value && (ctx.parent as TextBlock)?.isBigText
+            ? 'Clear this field and use regular title without big text boolean'
+            : true,
+        ).warning(),
       readOnly: ({ value }: { value?: string }) => !value,
     },
     {
@@ -157,17 +168,6 @@ export default {
       type: 'array',
       of: [ingressContentType],
       hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
-    },
-    {
-      name: 'bigTitle',
-      title: 'Title',
-      type: 'array',
-      of: [blockContentTypeForBigText],
-      hidden: ({ parent }: TextBlockDocument) => !parent.isBigText,
-      validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-          !value && (ctx.parent as TextBlock)?.isBigText ? 'Title is required' : true,
-        ),
     },
     {
       name: 'text',
@@ -208,11 +208,16 @@ export default {
       },
     },
     {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
+      name: 'designOptions',
+      type: 'backgroundOptions',
+      readOnly: ({ parent }: { parent: TextBlock }) => parent.useBrandTheme,
+    },
+    {
+      title: 'Background (Deprecated)',
+      description: 'This field will be phased out over time. Please use Design options above. Default is white',
       name: 'background',
+      readOnly: true,
       type: 'colorlist',
-      fieldset: 'design',
     },
   ].filter((e) => e),
   preview: {

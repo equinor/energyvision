@@ -4,7 +4,6 @@ import type { Rule, ValidationContext } from 'sanity'
 
 const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

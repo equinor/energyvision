@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import type { ImageWithCaptionData } from '../../../types/types'
 import Image, { Ratios } from '../SanityImage'
 import { Caption } from '../image/Caption'
@@ -7,14 +6,10 @@ type HeroImageProps = {
   data: ImageWithCaptionData
 }
 
-const StyledFigure = styled.figure`
-  margin: 0;
-`
-
 const DefaulHeroImage = ({ data }: HeroImageProps) => {
   const { image, caption, attribution } = data
   return (
-    <StyledFigure>
+    <figure>
       <Image
         maxWidth={1420}
         aspectRatio={Ratios.ONE_TO_TWO}
@@ -32,7 +27,7 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
         priority
       />
       <Caption caption={caption} attribution={attribution} />
-    </StyledFigure>
+    </figure>
   )
 }
 

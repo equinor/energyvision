@@ -52,6 +52,9 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
+  deployToBothClusters:
+    description: 'Deploy app to both Radix clusters'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -119,8 +122,17 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
-    - name: Deploy API on Radix 🚀
-      id: deploy
+    - name: Get component name
+      id: get-component-name
+      shell: bash
+      run: |
+        component=${{ inputs.datasetName == 'global-development' && 'studiov3-global-development' || format('{0}{1}', 'studio-', inputs.datasetName) }}
+        echo "Component name is $component"
+        echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
+
+      # MAIN CLUSTER
+    - name: Deploy to Radix c2 🚀
+      id: deploy-c2
       uses: equinor/radix-github-actions@master
       with:
         args: >
@@ -128,6 +140,7 @@ runs:
           deploy
           --token-environment
           --context platform2
+          --component $COMPONENT_NAME
           -a equinor-web-sites
           -e ${{ inputs.environment }}
           -f

@@ -4,10 +4,13 @@ import styled from 'styled-components'
 import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import KeyNumberItem from './KeyNumberItem'
-import ReadMoreLink from '../../../pageComponents/shared/ReadMoreLink'
-import RichText from '../../shared/portableText/RichText'
+import { ReadMoreLink } from '@core/Link'
 import { Carousel } from '../../shared/Carousel'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
+import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../../lib/localization'
 
 const Disclaimer = styled.div`
   @media (min-width: 1300px) {
@@ -25,9 +28,7 @@ const Ingress = styled.div`
   }
   margin-bottom: var(--space-xLarge);
 `
-const StyledBackgroundContainer = styled(BackgroundContainer)`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-small); ;
-`
+
 const HorizontalWrapper = styled.div`
   --card-maxWidth: 280px;
   padding-bottom: var(--space-large);
@@ -52,9 +53,11 @@ const Container = styled.div`
 type KeyNumbersProps = {
   data: KeyNumbersData
   anchor?: string
+  className?: string
 }
-export default function ({ data, anchor }: KeyNumbersProps) {
+export default function ({ data, anchor, className }: KeyNumbersProps) {
   const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
+  const url = action && getUrlFromAction(action)
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   const renderScroll = useHorizontalScroll && isMobile
@@ -66,11 +69,11 @@ export default function ({ data, anchor }: KeyNumbersProps) {
       )
     : Container
   return (
-    <StyledBackgroundContainer background={designOptions.background} id={anchor}>
+    <BackgroundContainer {...designOptions} className={twMerge(`pb-page-content px-layout-sm`, className)} id={anchor}>
       {title && <StyledHeading value={title} />}
       {ingress && (
         <Ingress>
-          <IngressText value={ingress}></IngressText>
+          <IngressText value={ingress} />
         </Ingress>
       )}
 
@@ -82,10 +85,18 @@ export default function ({ data, anchor }: KeyNumbersProps) {
 
       {disclaimer && (
         <Disclaimer>
-          <RichText value={disclaimer} />
+          <Blocks value={disclaimer} />
         </Disclaimer>
       )}
-      {action && <ReadMoreLink action={action} />}
-    </StyledBackgroundContainer>
+      {action && (
+        <ReadMoreLink
+          href={url as string}
+          {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+          type={action.type}
+        >
+          {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+        </ReadMoreLink>
+      )}
+    </BackgroundContainer>
   )
 }

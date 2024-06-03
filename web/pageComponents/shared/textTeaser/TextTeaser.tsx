@@ -1,12 +1,15 @@
-import { Teaser as EnvisTeaser, Link, BackgroundContainer } from '@components'
+import { Teaser as EnvisTeaser, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import type { TextTeaserData, LinkData } from '../../../types/types'
-import { getLocaleFromName } from '../../../lib/localization'
+import type { TextTeaserData } from '../../../types/types'
 import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
+
+import { twMerge } from 'tailwind-merge'
+import { ReadMoreLink } from '@core/Link'
+import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../../lib/localization'
 
 const { Content } = EnvisTeaser
 
@@ -15,6 +18,7 @@ type TitlePostion = 'left' | 'right'
 type TextTeaserProps = {
   data: TextTeaserData
   anchor?: string
+  className?: string
 }
 
 const IngressWrapper = styled.div`
@@ -43,9 +47,7 @@ const StyledContent = styled(Content)`
 export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
-const StyledLink = styled(Link)`
-  font-size: var(--typeScale-1);
-`
+
 const StyledTitleText = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
   @media (min-width: 750px) {
@@ -73,40 +75,16 @@ const TeaserWrapper = styled.div<{ titlePosition: TitlePostion }>`
   }
 `
 
-const TeaserAction = ({ action }: { action: LinkData }) => {
-  const { type, label, extension } = action
-  const url = getUrlFromAction(action)
-  if (!url) {
-    console.warn(`Missing URL on 'TeaserAction' link with type: '${type}' and label: '${label}'`)
-    return null
-  }
-
-  if (action.type === 'internalUrl') {
-    const locale = getLocaleFromName(action.link?.lang)
-    return (
-      <StyledLink href={url} locale={locale} variant="readMore" aria-label={action.ariaLabel}>
-        {action.label}
-      </StyledLink>
-    )
-  }
-
-  return (
-    <StyledLink variant="readMore" href={url} type={action.type} aria-label={action.ariaLabel}>
-      {action.label} {extension && `(${extension.toUpperCase()})`}
-    </StyledLink>
-  )
-}
-
-const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
+const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
-  const { background, highlight } = getColorForTheme(theme)
+  const { background, highlight, dark } = getColorForTheme(theme)
+  const url = action && getUrlFromAction(action)
 
   const style = highlight ? ({ '--title-highlight-color': `${highlight} ` } as CSSProperties) : undefined
-
   return (
-    <BackgroundContainer style={style} background={background} id={anchor}>
-      <TeaserWrapper titlePosition={titlePosition}>
+    <BackgroundContainer style={style} background={{ backgroundColor: background }} id={anchor}>
+      <TeaserWrapper titlePosition={titlePosition} className={twMerge(`${dark ? 'dark' : ''}`, className)}>
         <TitleWrapper>
           <StyledTitleText value={title} size={'2xl'} />
         </TitleWrapper>
@@ -116,7 +94,15 @@ const TextTeaser = ({ data, anchor }: TextTeaserProps) => {
               <IngressText value={text} />
             </IngressWrapper>
           )}
-          {action && <TeaserAction action={action} />}
+          {action && (
+            <ReadMoreLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
+          )}
         </StyledContent>
       </TeaserWrapper>
     </BackgroundContainer>

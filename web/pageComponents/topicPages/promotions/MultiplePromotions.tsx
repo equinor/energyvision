@@ -6,32 +6,18 @@ import type {
   PromotionType,
   EventPromotionSettings,
 } from '../../../types/types'
-import NewsCard from '../../cards/NewsCard'
-import TopicPageCard from '../../cards/TopicPageCard'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import Card from '@sections/cards/Card'
+import { Ratios } from '../../../pageComponents/shared/SanityImage'
+import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
+import { FormattedDate } from '@components/FormattedDateTime'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
-const CardsWrapper = styled.div`
-  width: 100%;
-  max-width: calc(var(--card-maxWidth) * 3 + var(--space-large) * 2);
-  padding: 0 var(--space-xxLarge);
-  margin: auto;
-  display: flex;
-  gap: var(--space-large);
-  justify-content: center;
-  align-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-
-  @media (min-width: 750px) {
-    flex-direction: row;
-  }
-`
-
-const PeopleCardsWrapper = styled.div`
+const PeopleCardsWrapper = styled.ul`
   --min: 210px;
   --row-gap: var(--space-xLarge);
   --column-gap: var(--space-medium);
@@ -66,25 +52,48 @@ const StyledBackground = styled(BackgroundContainer)`
   flex-basis: 0;
   flex-grow: 1;
 `
-const StyledNewsCard = styled(NewsCard)`
-  ${CardStyle}
-`
-const StyledTopicPageCard = styled(TopicPageCard)`
-  ${CardStyle}
-`
+
 const StyledPeopleCard = styled(PeopleCard)`
   ${CardStyle}
 `
 
-const CardWrapper = styled.div`
-  display: flex;
-  min-width: 280px;
-  max-width: var(--card-maxWidth);
-  width: 100%;
-`
-
 type CardProps = CardData | PeopleCardData | EventCardData
 
+const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardData) => {
+  const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
+
+
+  return (
+    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow" key={id}>
+      <Card
+        href={slug}
+        {...(image && {
+          imageUrl: image.src,
+        })}
+        className="w-full h-full"
+        key={id}
+      >
+        <Card.Content>
+          <Card.Header
+            {...(typeof title === 'string'
+              ? {
+                  title: title,
+                }
+              : {
+                  titleBlock: title,
+                })}
+            {...(publishDateTime && {
+              eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
+            })}
+          />
+          {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.5em]" />}
+        </Card.Content>
+      </Card>
+    </li>
+  )
+}
+
+/** TODO: Update carousel and make it ul list  */
 const MultiplePromotions = ({
   data,
   variant,
@@ -102,23 +111,17 @@ const MultiplePromotions = ({
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return (
-          <StyledBackground key={data.id}>
-            <StyledNewsCard data={data as CardData} key={data.id} />
-          </StyledBackground>
-        )
+        return <TWCard key={data.id} {...data} />
       case 'topics':
       case 'magazine':
-        return (
-          <StyledBackground key={data.id}>
-            <StyledTopicPageCard data={data as CardData} key={data.id} />
-          </StyledBackground>
-        )
+        return <TWCard key={data.id} {...data} />
       case 'people':
         return (
-          <StyledBackground key={data.id}>
-            <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
-          </StyledBackground>
+          <li className="list-none" key={data.id}>
+            <StyledBackground key={data.id}>
+              <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
+            </StyledBackground>
+          </li>
         )
       default:
         return console.warn('Missing card type for ', data)
@@ -146,7 +149,11 @@ const MultiplePromotions = ({
           {data.map((item) => {
             const card = getCard(item)
             if (card) {
-              return <CardWrapper key={item.id}>{card}</CardWrapper>
+              return (
+                <ul className="flex min-w-[280px] max-w-[var(--card-maxWidth)] w-full" key={item.id}>
+                  {card}
+                </ul>
+              )
             }
           })}
         </Carousel>
@@ -167,13 +174,13 @@ const MultiplePromotions = ({
   }
 
   return (
-    <CardsWrapper>
+    <ul className="w-full max-w-[calc(var(--card-maxWidth)*3+var(--space-large)*2)] px-6 py-0 m-auto flex gap-6 justify-center content-center flex-wrap flex-col list-none md:flex-row">
       <>
         {data.map((item) => {
           return getCard(item)
         })}
       </>
-    </CardsWrapper>
+    </ul>
   )
 }
 

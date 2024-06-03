@@ -4,10 +4,8 @@ import { Heading, FormattedDateTime, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
-import NewsText from '../shared/portableText/NewsText'
 import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
 import IngressText from '../shared/portableText/IngressText'
-import RelatedContent from '../shared/RelatedContent'
 import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
@@ -15,6 +13,9 @@ import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/types'
 import { toPlainText } from '@portabletext/react'
+import Blocks from '../shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
+import RelatedContent from '../../pageComponents/shared/RelatedContent'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -93,49 +94,6 @@ const LeadParagraph = styled.div`
   & > p {
     margin-bottom: 0;
   }
-`
-
-const Content = styled.div`
-  & h2,
-  & h3 {
-    margin: var(--space-small) 0;
-  }
-
-  /* The max-width makes things easier with 50% floating images */
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
-
-  /*   Clear floats if two left or right aligned images are adjacent siblings*/
-  .float-left + .float-left,
-  .float-right + .float-right {
-    clear: both;
-  }
-
-  /* "Remove" margin top from FactBox if the following element is also a FactBox */
-
-  .fact-box:not(.fact-box--none) + .fact-box--colored,
-  .fact-box.fact-box--image + .fact-box.fact-box--colored {
-    margin-top: calc(-1 * var(--space-3xLarge));
-  }
-
-  .fact-box:not(.fact-box--image).fact-box--bg-moss-green + .fact-box.fact-box--bg-moss-green,
-  .fact-box:not(.fact-box--image).fact-box--bg-slate-blue + .fact-box.fact-box--bg-slate-blue,
-  .fact-box:not(.fact-box--image).fact-box--bg-mist-blue + .fact-box.fact-box--bg-mist-blue,
-  .fact-box:not(.fact-box--image).fact-box--bg-moss-green-light + .fact-box.fact-box--bg-moss-green-light,
-  .fact-box:not(.fact-box--image).fact-box--bg-spruce-wood + .fact-box.fact-box--bg-spruce-wood,
-  .fact-box:not(.fact-box--image).fact-box--bg-mid-blue + .fact-box.fact-box--bg-mid-blue,
-  .fact-box:not(.fact-box--image).fact-box--bg-mid-green + .fact-box.fact-box--bg-mid-green,
-  .fact-box:not(.fact-box--image).fact-box--bg-mid-orange + .fact-box.fact-box--bg-mid-orange,
-  .fact-box:not(.fact-box--image).fact-box--bg-mid-yellow + .fact-box.fact-box--bg-mid-yellow {
-    margin-top: calc(-2 * var(--space-3xLarge));
-  }
-`
-
-const Related = styled.div<{ reduceMargin: boolean }>`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: 1700px;
-  margin: ${(reduceMargin) => (reduceMargin ? '0 auto var(--space-3xLarge) auto' : 'var(--space-3xLarge) auto')};
 `
 
 const Latest = styled.div`
@@ -223,7 +181,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
       <main>
         <article>
           <NewsLayout>
-            <Header background={'Slate Blue 95'}>
+            <Header background={{ backgroundColor: 'Slate Blue 95' }}>
               <HeaderInner>
                 <StyledHeading level="h1" size="3xl">
                   {title}
@@ -258,17 +216,21 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             )}
 
             {content && content.length > 0 && (
-              <Content>
-                <NewsText value={content}></NewsText>
-              </Content>
+              <Blocks value={content} proseClassName="prose-article" className="p-0 max-w-viewport mx-auto" />
             )}
 
             {iframe && <BasicIFrame data={iframe} />}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <Related reduceMargin={iframe ? true : false}>
-                <RelatedContent data={relatedLinks} />
-              </Related>
+              <RelatedContent
+                data={relatedLinks}
+                className={twMerge(`
+             px-layout-lg
+             max-w-viewport
+             my-3xl
+             mx-auto
+             `)}
+              />
             )}
 
             {latestNews && latestNews.length > 0 && (

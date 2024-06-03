@@ -87,6 +87,7 @@ jobs:
     environment:
       name: preprod
     strategy:
+      fail-fast: false
       matrix:
         dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:
@@ -114,6 +115,7 @@ jobs:
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}
+          deployToBothClusters: true
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

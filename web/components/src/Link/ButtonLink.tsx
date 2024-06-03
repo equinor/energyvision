@@ -29,10 +29,45 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
   ref,
 ) {
   return (
-    <NextLink href={href} locale={locale} prefetch={false}>
-      <StyledButtonLink color="secondary" variant="outlined" ref={ref} {...rest}>
-        {children}
-      </StyledButtonLink>
-    </NextLink>
+    <StyledButtonLink
+      locale={locale}
+      forwardedAs={NextLink}
+      prefetch={false}
+      href={href}
+      color="secondary"
+      variant="outlined"
+      ref={ref}
+      {...rest}
+    >
+      {children}
+    </StyledButtonLink>
   )
 })
+
+export const StyledSkipLink = styled(ButtonLink)`
+  user-select: none;
+  border: 0;
+  margin: -1px;
+  padding: 0;
+  outline: 0;
+  overflow: hidden;
+  position: absolute;
+  clip: rect(0 0 0 0);
+
+  &:focus {
+    clip: auto;
+    width: auto;
+    height: auto;
+    background: white;
+    border: 1px solid black;
+    margin: var(--space-medium);
+    border-radius: 7px;
+    padding: var(--space-medium);
+  }
+
+  &:hover {
+    color: var(--button-text-hover);
+    background-color: var(--button-background-hover);
+    border-color: var(--button-border-color-hover);
+  }
+`

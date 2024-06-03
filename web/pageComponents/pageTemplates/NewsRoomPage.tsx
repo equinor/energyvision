@@ -7,9 +7,7 @@ import { searchClient } from '../../lib/algolia'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { NewsRoomPageType } from '../../types'
-import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
-import RichText from '../shared/portableText/RichText'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 import Seo from '../shared/Seo'
@@ -21,6 +19,7 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
 import { Configure, InstantSearch } from 'react-instantsearch'
+import TitleText from '../shared/portableText/TitleText'
 
 const NewsRoomContent = styled.div`
   display: grid;
@@ -178,27 +177,7 @@ const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoo
       <main>
         <Wrapper>
           <Intro ref={resultsRef}>
-            {title && (
-              <RichText
-                value={title}
-                components={{
-                  block: {
-                    // Overriding the h2. This is the normal text because that's all this text editor allows
-                    normal: ({ children }) => {
-                      // eslint-disable-next-line
-                      // @ts-ignore: Still struggling with the types here :/
-                      if (isEmpty(children)) return null
-                      return (
-                        <Heading level="h1" size="3xl">
-                          {children}
-                        </Heading>
-                      )
-                    },
-                  },
-                }}
-              />
-            )}
-
+            {title && <TitleText value={title} level="h1" size="3xl" />}
             {ingress && <UnpaddedText>{ingress && <IngressText value={ingress} />}</UnpaddedText>}
           </Intro>
           <News>

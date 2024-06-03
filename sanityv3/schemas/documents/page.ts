@@ -1,5 +1,5 @@
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
+import { defaultColors } from '../defaultColors'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
@@ -44,12 +44,19 @@ export default {
     },
     ...sharedHeroFields,
     {
+      title: 'Is Campain',
+      name: 'isCampaign',
+      description: 'Set this to true if the page should be treated as campaign. the header title h1 will be hidden.',
+      type: 'boolean',
+    },
+    {
       name: 'content',
       type: 'array',
       title: 'Page sections',
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
+        { type: 'cardsList' },
         { type: 'figure' },
         { type: 'fullWidthImage' },
         { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
@@ -67,6 +74,8 @@ export default {
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
         { type: 'table' },
+        Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
+        Flags.HAS_CAMPAIGN_BLOCKS && { type: 'campaignBanner' },
         Flags.HAS_FORMS && { type: 'form' },
         Flags.HAS_NEWS && { type: 'newsList' },
         { type: 'stockValuesApi' },

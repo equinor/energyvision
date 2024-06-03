@@ -3,9 +3,18 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
+import {
+  FormButton,
+  FormTextField,
+  Checkbox,
+  FormSelect,
+  FormSubmitSuccessBox,
+  FormSubmitFailureBox,
+} from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
+import styled from 'styled-components'
+import { CareersContactFormCatalogType } from '../../../types'
 
 type FormValues = {
   name: string
@@ -15,7 +24,13 @@ type FormValues = {
   questions: string
   positionId: string
   preferredLang: string
+  candidateType: string
+  supportingDocuments: string
 }
+
+const StyledCheckBox = styled(Checkbox)`
+  padding-bottom: var(--space-medium);
+`
 
 const CareersContactForm = () => {
   const intl = useIntl()
@@ -28,6 +43,7 @@ const CareersContactForm = () => {
       body: JSON.stringify({
         data,
         frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+        catalogType: getCatalog(data.category),
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -37,11 +53,24 @@ const CareersContactForm = () => {
     setSuccessfullySubmitted(res.status == 200)
     setServerError(res.status != 200)
   }
+  const getCatalog = (category: string): CareersContactFormCatalogType | null => {
+    if (
+      category.includes(
+        intl.formatMessage({
+          id: 'careers_contact_form_suspected_recruitment_scam',
+          defaultMessage: 'Suspected recruitment scam',
+        }),
+      )
+    )
+      return 'suspectedRecruitmentScamRequest'
+    else return 'others'
+  }
 
   const {
     handleSubmit,
     control,
     reset,
+    register,
     formState: { isSubmitted, isSubmitting, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
@@ -56,6 +85,11 @@ const CareersContactForm = () => {
         defaultMessage: 'Thesis writing',
       }),
       preferredLang: '',
+      candidateType: intl.formatMessage({
+        id: 'careers_contact_form_experienced_professionals',
+        defaultMessage: 'Experienced professionals',
+      }),
+      supportingDocuments: '',
     },
   })
   return (
@@ -195,6 +229,12 @@ const CareersContactForm = () => {
                       defaultMessage: 'Technical issue when applying for a specific position',
                     })}
                   </option>
+                  <option>
+                    {intl.formatMessage({
+                      id: 'careers_contact_form_suspected_recruitment_scam',
+                      defaultMessage: 'Suspected recruitment scam',
+                    })}
+                  </option>
                 </FormSelect>
               )}
             />
@@ -230,7 +270,7 @@ const CareersContactForm = () => {
                   id={props.name}
                   label={intl.formatMessage({
                     id: 'careers_contact_form_location',
-                    defaultMessage: 'Locaton',
+                    defaultMessage: 'Location',
                   })}
                   placeholder={intl.formatMessage({
                     id: 'careers_contact_form_location_placeholder',
@@ -244,6 +284,54 @@ const CareersContactForm = () => {
                 />
               )}
             />
+
+            <Controller
+              name="candidateType"
+              control={control}
+              render={({ field: { ref, ...props } }) => (
+                <FormSelect
+                  {...props}
+                  selectRef={ref}
+                  id={props.name}
+                  label={intl.formatMessage({
+                    id: 'careers_contact_form_candidate_type',
+                    defaultMessage: 'Candidate type',
+                  })}
+                >
+                  <option>
+                    {intl.formatMessage({
+                      id: 'careers_contact_form_experienced_professionals',
+                      defaultMessage: 'Experienced professionals',
+                    })}
+                  </option>
+                  <option>
+                    {intl.formatMessage({
+                      id: ' careers_contact_form_graduates',
+                      defaultMessage: 'Graduates',
+                    })}
+                  </option>
+                  <option>
+                    {intl.formatMessage({
+                      id: 'careers_contact_form_interns',
+                      defaultMessage: 'Interns (e.g. summer, academic)',
+                    })}
+                  </option>
+                  <option>
+                    {intl.formatMessage({
+                      id: 'careers_contact_form_apprentices',
+                      defaultMessage: 'Apprentices/lærlinger',
+                    })}
+                  </option>
+                  <option>
+                    {intl.formatMessage({
+                      id: 'careers_contact_form_other',
+                      defaultMessage: 'Other',
+                    })}
+                  </option>
+                </FormSelect>
+              )}
+            />
+
             <Controller
               name="questions"
               control={control}
@@ -270,6 +358,15 @@ const CareersContactForm = () => {
                   {...(invalid && { variant: 'error' })}
                 />
               )}
+            />
+            <StyledCheckBox
+              label={intl.formatMessage({
+                id: 'career_fair_form_supporting_documents',
+                defaultMessage:
+                  'Tick the box if you would like to send supporting documents, and we will get in touch with you',
+              })}
+              value="Yes"
+              {...register('supportingDocuments')}
             />
 
             <FriendlyCaptcha

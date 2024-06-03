@@ -2,7 +2,7 @@ import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
 import { magazineSlug } from '../../../satellitesConfig'
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../components/ColorSelector'
+import { defaultColors } from '../defaultColors'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
@@ -15,7 +15,6 @@ import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
 
 const ingressBlockContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

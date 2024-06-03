@@ -1,13 +1,13 @@
-import { HLSPlayer } from '../../../components/src/HLSPlayer'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
 import dynamic from 'next/dynamic'
+import { VideoJS } from '@components/VideoJsPlayer'
 
 const DEFAULT_MAX_WIDTH = 1920
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
-  () => import('../../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+  () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -36,11 +36,14 @@ const StyledFigure = styled.figure`
   position: absolute;
 `
 
-const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
+const StyledPlayer = styled(DynamicVideoJsComponent)`
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  .vjs-poster img {
+    object-fit: cover;
+  }
 `
 
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
@@ -49,7 +52,15 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   return (
     <Container $aspectRatio={ratio}>
       <StyledFigure>
-        <StyledHLSPlayer loop muted autoPlay title={title} poster={thumbnailURL.src} src={url} />
+        <StyledPlayer
+          loop
+          muted
+          autoPlay
+          title={title}
+          poster={thumbnailURL.src}
+          src={url}
+          videoDescription={thumbnail.alt}
+        />
       </StyledFigure>
     </Container>
   )

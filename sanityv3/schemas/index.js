@@ -89,6 +89,19 @@ import hlsVideo from './objects/hlsVideo'
 import themeList from './objects/themeList'
 import keyNumbers from './objects/keyNumbers'
 import keyNumberItem from './objects/keyNumberItem'
+import keyValue from './objects/keyValue'
+import card from './objects/card'
+import cardsList from './objects/cardsList'
+import backgroundOptions from './objects/background/backgroundOptions'
+import imageBackground from './objects/background/imageBackground'
+import grid from './objects/grid/index'
+import span3 from './objects/grid/rowTypes/span3'
+import span2and1 from './objects/grid/rowTypes/span2and1'
+import gridTextBlock from './objects/grid/cellTypes/gridTextBlock'
+import campaignBanner from './objects/campaignBanner'
+import gridTeaser from './objects/grid/cellTypes/gridTeaser'
+import threeColumns from './objects/grid/rowTypes/3columns'
+import gridColorTheme from './objects/grid/theme'
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
@@ -172,6 +185,19 @@ const RemainingSchemas = [
   themeList,
   keyNumbers,
   keyNumberItem,
+  keyValue,
+  card,
+  cardsList,
+  backgroundOptions,
+  imageBackground,
+  grid,
+  span3,
+  span2and1,
+  gridTextBlock,
+  campaignBanner,
+  gridTeaser,
+  threeColumns,
+  gridColorTheme,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

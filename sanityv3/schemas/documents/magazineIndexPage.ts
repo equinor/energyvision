@@ -9,7 +9,6 @@ import { bookmarks } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule } from 'sanity'
 
 const textContentType = configureBlockContent({
-  h1: false,
   h2: true,
   h3: true,
   h4: false,

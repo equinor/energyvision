@@ -4,7 +4,6 @@ import { EdsIcon } from '../../icons'
 import { configureBlockContent } from '../editors/blockContentType'
 
 const blockContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,

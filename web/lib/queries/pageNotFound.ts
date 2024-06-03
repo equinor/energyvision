@@ -1,3 +1,4 @@
+import markDefs from './common/blockEditorMarks'
 import { sameLang } from './common/langAndDrafts'
 
 export const pageNotFoundQuery = /* groq */ `
@@ -6,7 +7,7 @@ export const pageNotFoundQuery = /* groq */ `
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     title,
-    text,
+    text[]{..., ${markDefs}},
     backgroundImage
   }
  `

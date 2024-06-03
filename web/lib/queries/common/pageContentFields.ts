@@ -1,3 +1,4 @@
+import gridContentFields from '../gridContentFields'
 import { iframeCarouselFields } from '../iframeCarouselFields'
 import { tableFields } from '../table'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
@@ -5,6 +6,7 @@ import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import background from './background'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
@@ -29,7 +31,7 @@ _type == "keyNumbers" =>{
         text[]{..., ${markDefs}}
       ),
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background},
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
     },
@@ -37,11 +39,12 @@ _type == "keyNumbers" =>{
       ...,
       "extension": asset-> extension
     },
-    "action": action[0]{
+    "actions": action[]{
       ${linkSelectorFields},
       ${downloadableFileFields},
       ${downloadableImageFields},
     },
+    useResourceLinks
   },
 
   _type == "textTeaser" => {
@@ -64,12 +67,14 @@ _type == "keyNumbers" =>{
     "id": _key,
     image,
     overline,
+    //Deprecate big text after a while
     isBigText,
     "title": select(
       isBigText =>
         bigTitle[]{..., ${markDefs}},
         title[]{..., ${markDefs}}
       ),
+    useBrandTheme,
     ingress[]{..., ${markDefs}},
     text[]{..., ${markDefs}},
     "callToActions": action[]{
@@ -79,9 +84,8 @@ _type == "keyNumbers" =>{
     },
     splitList,
     overrideButtonStyle,
-    anchor,
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background},
     },
   },
   _type == "fullWidthImage"=>{
@@ -101,19 +105,14 @@ _type == "keyNumbers" =>{
   _type == "figure"=>{
     "type": _type,
     "id": _key,
-      // For these images, we don't want crop and hotspot
-  // because we don't know the aspect ratio
     "figure": figure{
       _type,
-        "image": {
-          "asset": image.asset,
-          "alt": image.alt,
-        },
+      image,
       attribution,
       caption
     },
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background},
     },
   },
   _type == "textWithIconArray"=>{
@@ -130,7 +129,7 @@ _type == "keyNumbers" =>{
     },
 
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+      ${background},
     },
   },
   _type == "pullQuote" => {
@@ -141,7 +140,7 @@ _type == "keyNumbers" =>{
     image,
     quote,
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background},
       "imagePosition": coalesce(imagePosition, 'right'),
     }
   },
@@ -165,7 +164,7 @@ _type == "keyNumbers" =>{
     },
     anchor,
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+      ${background},
     }
   },
   _type == "promoTileArray"=>{
@@ -200,7 +199,7 @@ _type == "keyNumbers" =>{
         "extension": asset-> extension
       },
       "designOptions": {
-        "background": coalesce(background.title, 'none'),
+        ${background},
       },
     },
   },
@@ -224,7 +223,7 @@ _type == "keyNumbers" =>{
     "cookiePolicy": coalesce(cookiePolicy, 'none'),
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
-      "background": coalesce(background.title, 'none'),
+      ${background},
       height,
     },
   },
@@ -306,7 +305,7 @@ _type == "keyNumbers" =>{
           "title": reference->title,
           "heroImage": select(
               reference->heroType == 'loopingVideo' =>
-                { "image": reference->content->heroLoopingVideo->thumbnail },
+                { "image": reference->heroLoopingVideo->thumbnail },
                 reference->heroFigure),
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
@@ -392,7 +391,7 @@ _type == "keyNumbers" =>{
       }
     },
     "designOptions": {
-      "background": coalesce(background.title, 'none'),
+      ${background},
     },
   },
   _type == "cookieDeclaration" => {
@@ -461,7 +460,7 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background},
     },
   },
 
@@ -476,7 +475,7 @@ _type == "keyNumbers" =>{
         ${markDefs},
       },
     "designOptions": {
-      "background": coalesce(background.title, 'White'),
+      ${background},
     },
   },
 
@@ -500,7 +499,75 @@ _type == "keyNumbers" =>{
   },
   _type == "table" => {
     ${tableFields}
-  }
+  },
+  _type == "cardsList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "cards": cards[]{
+        "type": _type,
+        "id": _key,
+        title,
+        "content": defined(content[]){..., ${markDefs}},
+        ...,
+      },
+    "designOptions": {
+      ${background},
+    },
+  },
+  _type == "grid" => {
+    "type": _type,
+    "id": _key,
+    title,
+    "gridRows": gridRows[]{
+        "type": _type,
+        "id": _key,
+        _type == "span3" => {
+          "type": _type,
+        "id": _key,
+        "content": content[0] {
+          ${gridContentFields}
+        },
+        },
+        _type == "span2and1" => {
+          "type": _type,
+        "id": _key,
+          alignSpan2Right,
+          "span2": {
+          "content": span2[0] {
+            ${gridContentFields}
+          }
+          },
+          "singleColumn": {
+          "content": singleColumn[0] {
+            ${gridContentFields}
+          },
+        }
+      },
+      _type == "threeColumns" => {
+        "type": _type,
+        "id": _key,
+          "columns": columns[]{
+            ${gridContentFields}
+          }
+      }
+      },
+  },
+  _type == "campaignBanner" => {
+    "type": _type,
+    "id": _key,
+    "title": title[]{..., ${markDefs}},
+    "designOptions":{
+      "background": {
+        "backgroundImage":{ 
+          "image": backgroundImage 
+        },
+      "backgroundColor": coalesce(backgroundColor.title, 'White'),
+      "dark": coalesce(backgroundColor.dark, false),
+      "backgroundUtility":coalesce(backgroundColor.key, ""),
+      }
+    },
+  },
 `
 
 export default pageContentFields

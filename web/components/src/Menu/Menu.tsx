@@ -22,9 +22,9 @@ const StyledAccordion = styled(Accordion)`
   }
 `
 
-export const Menu = forwardRef<HTMLUListElement, MenuProps>(function Menu({ children }, ref) {
+export const Menu = forwardRef<HTMLUListElement, MenuProps>(function Menu({ children, defaultIndex }, ref) {
   return (
-    <StyledAccordion forwardedAs="ul" allowToggle ref={ref} id="menu-accordion">
+    <StyledAccordion forwardedAs="ul" allowToggle ref={ref} id="menu-accordion" defaultIndex={defaultIndex}>
       {children}
     </StyledAccordion>
   )

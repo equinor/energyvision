@@ -8,7 +8,6 @@ import type { PeopleCardData, EventCardData, CardData } from '../../../types/typ
 
 const LandscapeWrapper = styled.div`
   /* max-width: 350px; */
-  margin-top: var(--space-xLarge);
   padding: 0 var(--space-xLarge);
   margin-left: auto;
   margin-right: auto;

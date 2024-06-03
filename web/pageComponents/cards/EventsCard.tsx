@@ -13,14 +13,16 @@ import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 
 import type { EventCardData, EventDateType } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
+import { twMerge } from 'tailwind-merge'
 
-const { Text, Media, Action, StyledLandscapeCard } = Card
+const { Text, Media, StyledLandscapeCard } = Card
 
 const StyledCard = styled(Card)`
   height: var(--height);
   /* For the landscape variant, we don't want the title
   column to be too wide*/
   --column-sizes: 40% 1fr;
+  justify-content: space-between;
 `
 
 const StyledMedia = styled(Media)`
@@ -88,9 +90,7 @@ const SmallText = styled.span`
 const ActionContainer = styled.div`
   display: flex;
   gap: var(--space-small);
-  ${StyledLandscapeCard} & {
-    margin-top: var(--space-large);
-  }
+  margin-top: var(--space-large);
 `
 
 const TextInfoWrapper = styled.div``
@@ -99,20 +99,21 @@ type EventCardProps = {
   data: EventCardData
   hasSectionTitle: boolean
   orientation?: 'portrait' | 'landscape'
+  className?: string
 }
 
-const EventsCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }: EventCardProps) => {
+const EventsCard = ({ data, hasSectionTitle, className = '', orientation = 'portrait', ...rest }: EventCardProps) => {
   const { title, location, eventDate, slug } = data
 
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-
   return (
     <StyledCard
+      className={twMerge('', className)}
       orientation={orientation}
       style={
         {
-          '--height': 'auto',
+          '--height': '100%',
           '--card-padding': '0 0 var(--space-medium) 0',
         } as CSSProperties
       }
@@ -174,15 +175,8 @@ const EventsCard = ({ data, hasSectionTitle, orientation = 'portrait', ...rest }
             )}
           </Detail>
         </TextInfoWrapper>
-        {orientation === 'landscape' && (
-          <Actions slug={slug} title={plainTitle} location={location} eventDate={eventDate} />
-        )}
+        <Actions slug={slug} title={plainTitle} location={location} eventDate={eventDate} />
       </StyledText>
-      {orientation == 'portrait' && (
-        <Action>
-          <Actions slug={slug} title={plainTitle} location={location} eventDate={eventDate} />
-        </Action>
-      )}
     </StyledCard>
   )
 }

@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import styled from 'styled-components'
 import dynamic from 'next/dynamic'
 import {
   VideoControlsType,
@@ -9,99 +8,34 @@ import {
   VideoDesignOptionsType,
 } from '../../types/types'
 import { BackgroundContainer } from '@components'
-import TitleText from '../shared/portableText/TitleText'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
-import { ButtonLink } from './ButtonLink'
-import { HLSPlayer } from '../../components/src/HLSPlayer'
+import { VideoJS } from '@components/VideoJsPlayer'
+import { twMerge } from 'tailwind-merge'
+import { Heading } from '@core/Typography'
+import CallToActions from '@sections/CallToActions'
 
-const DynamicHLSVideoComponent = dynamic<React.ComponentProps<typeof HLSPlayer>>(
-  () => import('../../components/src/HLSPlayer').then((mod) => mod.HLSPlayer),
+const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
+  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
   },
 )
 
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-  text-align: left;
-`
-
-const Container = styled.div`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
-`
-
-const StyledFigure = styled.figure<{ $allowFullScreen?: boolean; $aspectRatio?: string; $height?: number }>`
-  margin: 0 auto;
-  video::-webkit-media-controls-fullscreen-button {
-    ${({ $allowFullScreen }) =>
-      !$allowFullScreen && {
-        display: 'none',
-      }}
-  }
-
-  ${({ $aspectRatio, $height }) => {
-    if (!$height) {
-      switch ($aspectRatio) {
-        case VideoPlayerRatios['1:1']:
-          return {
-            height: '320px',
-            width: '320px',
-            '@media (min-width: 375px)': {
-              height: '350px',
-              width: '350px',
-            },
-            '@media (min-width: 800px)': {
-              height: '487px',
-              width: '487px',
-            },
-            '@media (min-width: 1000px)': {
-              height: '600px',
-              width: '600px',
-            },
-          }
-        case VideoPlayerRatios['16:9']:
-          return {
-            height: '56.25%',
-            width: '100%',
-          }
-        case VideoPlayerRatios['9:16']:
-          return {
-            height: '569px',
-            width: '320px',
-            '@media (min-width: 375px)': {
-              height: '600px',
-              width: '337.5px',
-            },
-          }
-      }
+const getHeightWidth = (aspectRatio: string, height?: number) => {
+  if (!height) {
+    switch (aspectRatio) {
+      case VideoPlayerRatios['1:1']:
+        return 'h-[320px] sm:h-[320px] sm:w-[320px] md:h-[487px] md:w-[487px] lg:h-[600px] lg:w-[600px]'
+      case VideoPlayerRatios['16:9']:
+        return 'h-[56.25%] w-full'
+      case VideoPlayerRatios['9:16']:
+        return 'h-[569px] w-[320px] sm:h-[600px] sm:w-[337.5px]'
     }
-    return {
-      height: $height,
-      width: '100%',
-    }
-  }}
-`
-
-const Ingress = styled.div`
-  margin-bottom: var(--space-large);
-`
-
-const ButtonWrapper = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
-
-const StyledHLSPlayer = styled(DynamicHLSVideoComponent)`
-  object-fit: cover;
-  width: inherit;
-
-  :fullscreen {
-    object-fit: contain;
   }
-`
+  return `h-[${height}px] w-full`
+}
 
 const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   switch (aspectRatio) {
@@ -128,52 +62,59 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   }
 }
 
-type HLSVideoComponentType = {
+type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
+  height?: string
+  useFillMode?: boolean
 }
 
-export const HLSVideoComponent = ({ video, videoControls, designOptions }: HLSVideoComponentType) => {
+export const VideoJsComponent = ({
+  video,
+  videoControls,
+  designOptions,
+  useFillMode = false,
+}: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
-
   return (
-    <StyledFigure
-      $allowFullScreen={videoControls?.allowFullScreen || true}
-      $aspectRatio={designOptions.aspectRatio}
-      $height={designOptions.height}
+    <figure
+      className={`
+        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
+        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
+        `}
     >
-      <StyledHLSPlayer
+      <DynamicVideoJsComponent
+        className="object-cover"
         src={video.url}
         title={video.title}
         poster={urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
+        aspectRatio={designOptions.aspectRatio}
+        useBrandTheme={designOptions?.useBrandTheme}
+        useFillMode={useFillMode}
         {...videoControls}
       />
-    </StyledFigure>
+    </figure>
   )
 }
 
-const VideoPlayer = ({ anchor, data }: { data: VideoPlayerData; anchor?: string }) => {
+const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
-  const { background } = designOptions
-
+  const { width } = designOptions
   return (
-    <BackgroundContainer background={background} id={anchor}>
-      <Container>
-        {title && <StyledHeading value={title} />}
-        {ingress && (
-          <Ingress>
-            <IngressText value={ingress} />
-          </Ingress>
+    <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
+      <div
+        className={twMerge(
+          `pb-page-content ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'} max-w-viewport mx-auto`,
+          className,
         )}
-        {action && action.label && (
-          <ButtonWrapper>
-            <ButtonLink action={action} />
-          </ButtonWrapper>
-        )}
-        <HLSVideoComponent video={video} designOptions={designOptions} videoControls={videoControls} />
-      </Container>
+      >
+        {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
+        {ingress && <IngressText value={ingress} className="mb-lg" />}
+        {action && action.label && <CallToActions callToActions={[action]} overrideButtonStyle={false} />}
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+      </div>
     </BackgroundContainer>
   )
 }

@@ -2,12 +2,13 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import Image, { Ratios } from '../../shared/SanityImage'
 import IngressText from '../../shared/portableText/IngressText'
-import TitleText from '../../shared/portableText/TitleText'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 
 import type { AccordionData, AccordionListData } from '../../../types/types'
 import { toPlainText } from '@portabletext/react'
+import { Heading, Typography } from '../../../core/Typography'
+import { twMerge } from 'tailwind-merge'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -16,28 +17,14 @@ export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string |
     }}
 `
 
-const StyledTextBlock = styled.section`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-`
 const Img = styled(Image)`
   border-radius: 50%;
-`
-
-const ImgContainer = styled.div`
-  padding: 0 0 var(--space-large) 0;
-  width: 200px;
 `
 
 type AccordionBlockProps = {
   data: AccordionData
   anchor?: string
+  className?: string
 }
 
 const buildJsonLdElements = (data: AccordionListData[]) => {
@@ -49,24 +36,35 @@ const buildJsonLdElements = (data: AccordionListData[]) => {
   })
 }
 
-const AccordionBlock = ({ data, anchor }: AccordionBlockProps) => {
+const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
-  const { background } = designOptions
+
   return (
     <>
-      <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
-        <StyledTextBlock>
-          {image?.asset && (
-            <ImgContainer>
-              <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
-            </ImgContainer>
+      <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+        <div
+          className={twMerge(
+            `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
+            className,
           )}
-          {title && <StyledHeading value={title} />}
+        >
+          {image?.asset && (
+            <div className="w-[200px]">
+              <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
+            </div>
+          )}
+          {Array.isArray(title) ? (
+            <Heading value={title} as="h2" variant="xl" className="mb-2" />
+          ) : (
+            <Typography as="h2" variant="xl" className="mb-2">
+              {title}
+            </Typography>
+          )}
           {ingress && <IngressText value={ingress} />}
           {accordion && accordion.length > 0 && (
             <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
           )}
-        </StyledTextBlock>
+        </div>
       </StyledTextBlockWrapper>
       {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
     </>

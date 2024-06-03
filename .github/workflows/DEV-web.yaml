@@ -7,7 +7,6 @@ on:
     paths:
       - 'web/**'
       - '!web/README.md'
-      - '!web/.storybook/**'
       - '!web/.gitignore'
       - '!web/jest.config.cjs'
       - '!web/jest.setup.ts'
@@ -75,7 +74,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - id: deploy-global
+      - id: deploy-global-development
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
@@ -89,6 +88,7 @@ jobs:
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          deployToBothClusters: true
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
         with:

@@ -15,7 +15,7 @@ import { ThemeSelectorValue } from '../components/ThemeSelector'
 const titleContentType = configureTitleBlockContent({
   highlight: true,
   highlightTitle: 'Highlight text selected from theme below',
-  styles: [
+  extendedStyles: [
     {
       title: 'Normal',
       value: 'normal',
@@ -29,7 +29,6 @@ const titleAlignmentOptions = [
 ]
 
 const blockConfig = {
-  h1: false,
   h2: false,
   h3: false,
   h4: false,
@@ -84,7 +83,7 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
-        }).warning(),
+        }).error(),
     },
 
     {

@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 import Image from '../SanityImage'
-import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import type { LinkData, HeroType } from '../../../types/types'
-import { BackgroundContainer, Link, Text } from '@components'
-import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
+import type { HeroType } from '../../../types/types'
+import { BackgroundContainer } from '@components'
+import { ReadMoreLink } from '@core/Link'
+import Blocks from '../portableText/Blocks'
+import { getUrlFromAction } from '../../../common/helpers'
 import { getLocaleFromName } from '../../../lib/localization'
 
 const StyledHero = styled(BackgroundContainer)`
@@ -58,42 +59,14 @@ const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }
   font-weight: ${(props) => (props.$isBigTitle ? 'var(--fontWeight-regular)' : 'var(--fontWeight-medium)')};
 `
 
-const HeroActionLink = ({ action, ...rest }: { action: LinkData }) => {
-  const { label, ariaLabel, extension, type } = action
-  const url = getUrlFromAction(action)
-  if (!url) {
-    console.warn(`Missing URL on Action link with type: '${type}' and label: '${label}'`)
-    return null
-  }
-  if (action.type === 'internalUrl') {
-    const linkLocale = getLocaleFromName(action.link?.lang)
-    return (
-      <Link href={url} locale={linkLocale} variant="readMore" aria-label={ariaLabel} {...rest}>
-        {action.label}
-      </Link>
-    )
-  }
-  return (
-    <Link variant="regular" href={url} type={action.type} aria-label={ariaLabel}>
-      {action.label} {extension && `(${extension.toUpperCase()})`}
-    </Link>
-  )
-}
-
-export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBigTitle }: HeroType) => {
+export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
+  const url = action && getUrlFromAction(action)
   return (
     <>
-      <StyledHero background={background}>
+      <StyledHero background={{ backgroundColor: background }}>
         <StyledMedia>
           {figure && (
-            <Image
-              maxWidth={4096}
-              sizes="(min-width: 760px) 50vw, 100vw"
-              image={figure.image}
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
+            <Image maxWidth={4096} sizes="(max-width: 800px) 100vw, 800px" image={figure.image} fill priority />
           )}
         </StyledMedia>
         <StyledContent>
@@ -102,21 +75,18 @@ export const FiftyFiftyHero = ({ title, ingress, link, background, figure, isBig
           )}
           {ingress && !isBigTitle && (
             <StyledIngress>
-              <IngressText
-                value={ingress}
-                components={{
-                  block: {
-                    normal: ({ children }) => {
-                      // eslint-disable-next-line
-                      // @ts-ignore: Still struggling with the types here :/
-                      return <Text size="regular">{children}</Text>
-                    },
-                  },
-                }}
-              />
+              <Blocks value={ingress} />
             </StyledIngress>
           )}
-          {link && !isBigTitle && <HeroActionLink action={link} />}
+          {action && !isBigTitle && (
+            <ReadMoreLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+            >
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            </ReadMoreLink>
+          )}
         </StyledContent>
       </StyledHero>
     </>

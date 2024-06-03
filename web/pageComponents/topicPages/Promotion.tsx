@@ -5,9 +5,9 @@ import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/types'
+import { twMerge } from 'tailwind-merge'
 
 const Wrapper = styled.div`
-  padding: var(--promotion-padding, var(--space-3xLarge) 0);
   --card-maxWidth: 400px;
   --card-minWidth: 200px;
 `
@@ -26,20 +26,29 @@ const StyledHeading = styled(TitleText)`
   margin-bottom: var(--space-xLarge);
 `
 
-const Promotion = ({ data, anchor, ...rest }: { data: PromotionData; anchor?: string }) => {
+const Promotion = ({
+  data,
+  anchor,
+  className,
+  ...rest
+}: {
+  data: PromotionData
+  anchor?: string
+  className?: string
+}) => {
   const { title, ingress, content, useHorizontalScroll, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
 
   return (
-    <BackgroundContainer background={designOptions?.background} id={anchor}>
-      <Wrapper {...rest}>
+    <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
+      <Wrapper className={twMerge(`pb-page-content px-14`, className)} {...rest}>
         <Intro>
           {title && <StyledHeading value={title} level="h2" size="xl" />}
           {ingress && (
             <Ingress>
-              <IngressText value={ingress} centered={true} />
+              <IngressText value={ingress} />
             </Ingress>
           )}
         </Intro>

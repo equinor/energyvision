@@ -6,24 +6,23 @@ import styled from 'styled-components'
 const StyledTopbarDropdown = styled(BackgroundContainer)`
   position: fixed;
   overflow: auto;
-  display: var(--display);
-  z-index: 50;
   left: 0;
   top: 0;
-  right: 0;
+  right: var(--right);
   bottom: 0;
 `
 type Props = {
-  isOpen: boolean
+  right?: string
   children: ReactNode
 } & BackgroundContainerProps
 
-export const TopbarDropdown = ({ isOpen, children, ...rest }: Props) => {
+export const TopbarDropdown = ({ children, right = '0px', style, ...rest }: Props) => {
   return (
     <StyledTopbarDropdown
       style={
         {
-          '--display': isOpen ? 'block' : 'none',
+          ...style,
+          '--right': right,
         } as CSSProperties
       }
       {...rest}

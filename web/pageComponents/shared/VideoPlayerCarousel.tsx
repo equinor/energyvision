@@ -2,17 +2,17 @@ import styled from 'styled-components'
 import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
-import { HLSVideoComponent } from './VideoPlayer'
+import { VideoJsComponent } from './VideoPlayer'
 import { Carousel } from './Carousel'
+import { twMerge } from 'tailwind-merge'
 
 const StyledHeading = styled(TitleText)`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large) 0 var(--layout-paddingHorizontal-large);
   margin-bottom: calc(-1 * var(--space-small));
   text-align: left;
 `
 
 const Container = styled.div`
-  padding: var(--space-xLarge) 0 var(--space-3xLarge) 0;
+  padding: var(--space-xLarge) 0 0 0;
   max-width: var(--maxViewportWidth);
   margin: auto;
 `
@@ -25,6 +25,7 @@ const HeadingWrapper = styled.div`
 const VideoItem = styled.div<{ $aspectRatio: string }>`
   height: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
   ${({ $aspectRatio }) => ($aspectRatio === VideoPlayerRatios['16:9'] ? { minWidth: '90%' } : { minWidth: 'auto' })};
 
@@ -33,29 +34,38 @@ const VideoItem = styled.div<{ $aspectRatio: string }>`
   }
 `
 
-const VideoPlayer = ({ anchor, data }: { data: VideoPlayerCarouselData; anchor?: string }) => {
+const VideoPlayer = ({
+  anchor,
+  data,
+  className,
+}: {
+  data: VideoPlayerCarouselData
+  anchor?: string
+  className?: string
+}) => {
   const { title, items, designOptions } = data
   const { background, aspectRatio } = designOptions
 
   return (
-    <BackgroundContainer background={background} id={anchor}>
+    <BackgroundContainer background={background} id={anchor} className={twMerge(`pb-page-content`, className)}>
       {title && (
         <HeadingWrapper>
-          <StyledHeading value={title} />
+          <StyledHeading value={title} className="px-layout-lg pb-2" />
         </HeadingWrapper>
       )}
       <Container>
         <Carousel>
           {items.map((item) => (
             <VideoItem key={item.id} $aspectRatio={aspectRatio}>
-              <HLSVideoComponent
+              <VideoJsComponent
                 video={item.video}
                 designOptions={designOptions}
                 videoControls={{
                   playButton: true,
+                  controls: true,
                 }}
               />
-              <StyledHeading size="lg" level="h3" value={item.title} />
+              <StyledHeading size="lg" level="h3" value={item.title} className="px-layout-lg" />
             </VideoItem>
           ))}
         </Carousel>

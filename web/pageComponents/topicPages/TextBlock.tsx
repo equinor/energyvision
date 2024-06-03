@@ -1,12 +1,13 @@
-import { Eyebrow, BackgroundContainer, Heading } from '@components'
+import { Eyebrow, BackgroundContainer } from '@components'
+import { Heading } from '../../core/Typography'
 import IngressText from '../shared/portableText/IngressText'
-import RichText from '../shared/portableText/RichText'
-import TitleText from '../shared/portableText/TitleText'
 import Image, { Ratios } from '../shared/SanityImage'
 import styled from 'styled-components'
 import type { TextBlockData } from '../../types/types'
-import CallToActions from './CallToActions'
-import { BlockType } from '../shared/portableText/helpers/defaultSerializers'
+//import CallToActions from './CallToActions'
+import CallToActions from '../../sections/CallToActions'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
 export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
   ${({ id }) =>
@@ -15,44 +16,13 @@ export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string |
     }}
 `
 
-const Spacer = styled.span`
-  display: block;
-  height: var(--space-medium);
-`
-
-const StyledTextBlock = styled.section`
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
-
-  /* Where exactly should we put these styles */
-  /* If the title has an eyebrow we need some tweaks */
-  & h2 {
-    padding: var(--space-large) 0;
-  }
-  & h2:first-child {
-    padding-top: 0;
-  }
-
-  & p:last-child {
-    margin-bottom: 0;
-  }
-`
-
-const TextContainer = styled.div`
-  margin-bottom: var(--space-medium);
-`
-const ImgContainer = styled.div`
-  width: 300px;
-`
-
 type TextBlockProps = {
   data: TextBlockData
   anchor?: string
+  className?: string
 }
 
-const TextBlock = ({ data, anchor }: TextBlockProps) => {
+const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   const {
     image,
     overline,
@@ -64,44 +34,79 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
     splitList,
     overrideButtonStyle = false,
     isBigText,
+    useBrandTheme = false,
   } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
-  const { background } = designOptions
+
+  const contentClassNames = twMerge(`max-w-viewport pb-page-content px-layout-lg mx-auto`, className)
+
+  const contentAlignment = {
+    center: 'items-start text-start px-layout-lg',
+    right:
+      'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
+    left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
+  }
+  let backgroundImageContentClassNames = `
+  justify-center
+  py-14
+  `
+  if (designOptions?.background?.backgroundImage?.contentAlignment) {
+    backgroundImageContentClassNames = twMerge(
+      backgroundImageContentClassNames,
+      `
+    ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
+    )
+  }
+
+  let bgContainerOptions = designOptions
+  if (useBrandTheme) {
+    bgContainerOptions = {
+      background: {
+        type: 'backgroundColor',
+        backgroundUtility: 'white-100',
+        dark: false,
+      },
+    }
+  }
 
   return (
-    <StyledTextBlockWrapper background={background} id={anchor || data.anchor}>
-      <StyledTextBlock>
-        {isBigText ? (
-          title && (
-            <TitleText
-              level="h2"
-              value={title}
-              components={{
-                block: {
-                  normal: ({ children }: { children: React.ReactNode }) => <Heading size="2xl">{children}</Heading>,
-                } as BlockType,
-              }}
-            />
-          )
-        ) : (
+    <StyledTextBlockWrapper {...bgContainerOptions} id={anchor} renderFragmentWhenPossible>
+      <div
+        className={`flex flex-col gap-6 ${
+          designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
+        }`}
+      >
+        {isBigText && title && <Heading value={title} as="h2" variant="3xl" />}
+        {!isBigText && (
           <>
             {image?.asset && (
-              <ImgContainer>
-                <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} />
-              </ImgContainer>
+              <div className="w-[300px]">
+                <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} className="object-cover" />
+              </div>
             )}
-            {overline && <Eyebrow>{overline}</Eyebrow>}
-            {title && <TitleText value={title} />}
+            {overline ? (
+              <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
+                <Eyebrow>{overline}</Eyebrow>
+                {title && <Heading value={title} as="h2" variant="xl" />}
+              </hgroup>
+            ) : (
+              <>
+                {title && (
+                  <Heading
+                    value={title}
+                    as="h2"
+                    variant="xl"
+                    className={`mb-2 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
+                  />
+                )}
+              </>
+            )}
             {ingress && <IngressText value={ingress} />}
           </>
         )}
-        {text && (
-          <TextContainer>
-            <RichText value={text} />
-          </TextContainer>
-        )}
-        {callToActions && callToActions.length === 1 && !overrideButtonStyle && <Spacer />}
+        {text && <Blocks value={text} className={`${callToActions ? 'mb-4' : ''}`} />}
+
         {callToActions && (
           <CallToActions
             callToActions={callToActions}
@@ -109,7 +114,7 @@ const TextBlock = ({ data, anchor }: TextBlockProps) => {
             splitList={splitList}
           />
         )}
-      </StyledTextBlock>
+      </div>
     </StyledTextBlockWrapper>
   )
 }

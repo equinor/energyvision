@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, Button, BackgroundContainer } from '@components'
+import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
 import SiteMenu from './siteMenu/SiteMenu'
@@ -11,18 +11,14 @@ import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
-import { FormattedMessage } from 'react-intl'
-import { Icon } from '@equinor/eds-core-react'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
-
-const StyledSearchButton = styled(Button)`
-  color: var(--default-text);
-  fill: var(--default-text);
-`
+import { Icon } from '@equinor/eds-core-react'
+import { ButtonLink } from '@core/Link'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -154,6 +150,8 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
 
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
+  const intl = useIntl()
+  const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
   return (
     <HeaderRelative>
@@ -172,11 +170,16 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
             >
               {hasSearch && (
                 <ControlChild>
-                  <NextLink href="/search" prefetch={false}>
-                    <StyledSearchButton variant="ghost_icon" aria-expanded="true" aria-label="Search">
-                      <Icon size={24} data={search} />
-                    </StyledSearchButton>
-                  </NextLink>
+                  <ButtonLink
+                    variant="ghost"
+                    aria-expanded="true"
+                    aria-label={searchLabel}
+                    href="/search"
+                    className="p-2 md:px-5 md:py-3"
+                  >
+                    <Icon size={24} data={search} />
+                    <FormattedMessage id="search" />
+                  </ButtonLink>
                 </ControlChild>
               )}
               {hasMoreThanOneLanguage && (

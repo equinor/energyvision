@@ -1,8 +1,7 @@
 import { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
+import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
 import { useRouter } from 'next/router'
-import { RemoveScroll } from 'react-remove-scroll'
-import FocusLock from 'react-focus-lock'
 import { Menu, MenuButton, Link } from '@components'
 import { MenuGroup } from './MenuGroup'
 import { TopbarDropdown } from './TopbarDropdown'
@@ -47,6 +46,13 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const intl = useIntl()
 
+  const { refs, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+  })
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([useDismiss(context)])
+
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
   }, [])
@@ -57,40 +63,57 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events, handleRouteChange])
 
-  function onMenuButtonClick() {
-    setIsOpen(!isOpen)
-  }
-
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
   const allSitesURL = getAllSitesLink('internal', router?.locale || 'en')
 
+  const getCurrentMenuItemIndex = (menuItems: SubMenuData[]) => {
+    return menuItems.findIndex((menuItem) =>
+      menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath)),
+    )
+  }
+
   return (
     <>
-      <MenuButton title={title} aria-expanded={isOpen} onClick={onMenuButtonClick} {...rest} />
-      <FocusLock disabled={!isOpen} returnFocus>
-        <RemoveScroll enabled={isOpen}>
-          <TopbarDropdown isOpen={isOpen} className={RemoveScroll.classNames.zeroRight} background={'White'}>
-            {isOpen && (
+      <MenuButton
+        ref={refs.setReference}
+        title={title}
+        {...getReferenceProps()}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-haspopup={true}
+        {...rest}
+      />
+      {isOpen && (
+        <FloatingFocusManager context={context}>
+          <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
+            <TopbarDropdown background={{ backgroundColor: 'White' }}>
               <nav>
                 <NavTopbar>
                   <LogoLink />
-                  <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
+                  <MenuButton
+                    title={title}
+                    aria-haspopup={true}
+                    aria-expanded={true}
+                    expanded
+                    onClick={() => setIsOpen(false)}
+                  ></MenuButton>
                 </NavTopbar>
                 <MenuContainer>
-                  <Menu>
+                  <Menu defaultIndex={getCurrentMenuItemIndex(menuItems)}>
                     {menuItems.map((topLevelItem: SubMenuData, idx) => {
                       return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
                     })}
                   </Menu>
+
                   <AllSitesLink href={allSitesURL}>
                     <FormattedMessage id="all_sites" defaultMessage="All sites" />
                   </AllSitesLink>
                 </MenuContainer>
               </nav>
-            )}
-          </TopbarDropdown>
-        </RemoveScroll>
-      </FocusLock>
+            </TopbarDropdown>
+          </FloatingOverlay>
+        </FloatingFocusManager>
+      )}
     </>
   )
 }

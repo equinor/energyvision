@@ -4,6 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
+import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -23,22 +24,22 @@ const publishDateTimeQuery = /* groq */ `
 export const query = /* groq */ `*[_type == "magazine" && _lang == $lang && !(_id in path("drafts.**")) && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
-  "title": pt::text(title),
+  "title": ${plainTextExcludingStrikeThrough('title')},
   "type": _type,
   "ingress": pt::text(ingress),
   "textBlocks": content[_type == "textBlock"]{
     "_key": _key,
     "title": select(
       isBigText == true =>
-        pt::text(bigTitle),
-        pt::text(title)
+      ${plainTextExcludingStrikeThrough('bigTitle')},
+      ${plainTextExcludingStrikeThrough('title')}
       ),
     "ingress": pt::text(ingress),
     "text": pt::text(text)  // TODO: Do this manually to cover all cases
   },
   "accordions": content[_type == "accordion"] {
     "_key": _key,
-    "title": pt::text(title),
+    "title": ${plainTextExcludingStrikeThrough('title')},
     "ingress": pt::text(ingress),
     "accordionItems":accordion[]{
       "id": _key,

@@ -3,10 +3,11 @@ import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { GlobalStyle } from '../styles/globalStyles'
-import 'focus-visible'
+import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
+import '../styles/tailwind.css'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
+import 'focus-visible'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
@@ -14,14 +15,13 @@ import useConsentState from '../lib/hooks/useConsentState'
 import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
-import { SkipNavLink, SkipNavContent } from '@chakra-ui/skip-nav'
-import styled from 'styled-components'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
 // import { AppInsightsContext, AppInsightsErrorBoundary } from '@microsoft/applicationinsights-react-js'
 // import { reactPlugin } from '../common'
 import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 import { defaultLanguage } from '../languages'
+import { StyledSkipLink } from '@components'
 
 /**
  * TODO:
@@ -65,19 +65,6 @@ const CookieBot = ({ locale }: { locale: string | undefined }) => (
 const HandleBoundaryError = (error: Error, info: { componentStack: string }) => {
   console.error('ErrorBoundary caught error: ', error, info)
 }
-
-const StyledSkipLink = styled(SkipNavLink)`
-  &:focus {
-    background: white;
-    padding: var(--space-medium);
-    border: 1px solid black;
-    position: sticky;
-    border-radius: 7px;
-    margin: var(--space-medium);
-    top: 10%;
-    z-index: 10;
-  }
-`
 
 function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
@@ -133,17 +120,16 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   return (
     <SWRConfig>
       <ErrorBoundary FallbackComponent={ErrorFallback} onError={HandleBoundaryError}>
-        <StyledSkipLink>Skip to Content</StyledSkipLink>
         <>
           <Head>
             <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1" />
             {GTM_ID && <GoogleTagManagerHead />}
           </Head>
           <GlobalStyle />
+          <GlobalFontStyle />
           {IS_LIVE && <CookieBot locale={router.locale} />}
-          <PreviewContextProvider>
-            <SkipNavContent>{getLayout(<Component {...pageProps} />)}</SkipNavContent>
-          </PreviewContextProvider>
+          <StyledSkipLink href="#mainTitle">Skip to content</StyledSkipLink>
+          <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
         </>
       </ErrorBoundary>
     </SWRConfig>

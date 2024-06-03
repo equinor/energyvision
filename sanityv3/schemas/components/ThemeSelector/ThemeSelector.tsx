@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
-import { defaultColors, getColorForTheme } from './defaultColors'
+import { themeColors, getColorForTheme } from './themeColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
 
@@ -15,13 +15,13 @@ const Circle = styled.div<{ active: boolean }>`
   cursor: pointer;
 `
 
-const InnerCircle = styled.div<{ color: string; fillColor: string }>`
+const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
   display: flex;
   background-color: ${({ color }) => color};
   border: 1px solid var(--card-hairline-soft-color);
   padding: 15px;
   border-radius: 50%;
-  color: ${({ fillColor }) => fillColor};
+  color: ${({ fillColor }) => fillColor || 'black'};
 `
 
 export type ThemeSelectorValue = {
@@ -52,7 +52,7 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
         portal
       >
         <Circle active={active} onClick={() => onClickHandler(color)}>
-          <InnerCircle color={background} fillColor={highlight}>
+          <InnerCircle color={background.value} fillColor={highlight.value}>
             <EdsIcon {...text_field} />
           </InnerCircle>
         </Circle>
@@ -65,7 +65,7 @@ type ThemeSelectorProps = ObjectInputProps
 
 export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProps) => {
   const { options } = schemaType
-  const colors = (options?.colors as ThemeSelectorValue[]) || defaultColors
+  const colors = (options?.colors as ThemeSelectorValue[]) || themeColors
 
   const handleSelect = useCallback(
     (selected: ThemeSelectorValue) => {
@@ -86,7 +86,7 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
               const { background } = getColorForTheme(colorItem.value)
               return (
                 <ColorCircle
-                  key={background}
+                  key={background.value}
                   color={colorItem}
                   active={colorItem.value === value?.value}
                   onClickHandler={handleSelect}

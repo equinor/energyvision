@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { forwardRef } from 'react'
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../icons'
+import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
 import { default as NextLink } from 'next/link'
 
@@ -69,10 +69,6 @@ const FooterLink = styled(NextLink)`
       color: var(--moss-green-90);
       text-decoration: underline;
     }
-  }
-  &[data-focus-visible-added]:focus {
-    outline-color: var(--energy-red-90);
-    outline-style: dashed;
   }
   @media (max-width: 750px) {
     flex: 0 0 40%;
@@ -144,7 +140,12 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
 
                 return (
-                  <FooterLink key={id} href={url || getLink(link)} prefetch={false}>
+                  <FooterLink
+                    key={id}
+                    href={url || getLink(link)}
+                    prefetch={false}
+                    className="focus:outline-none focus-visible:envis-outline-invert"
+                  >
                     {icon && <SomeIcon aria-hidden={true}>{icon}</SomeIcon>}
                     {label}
                   </FooterLink>

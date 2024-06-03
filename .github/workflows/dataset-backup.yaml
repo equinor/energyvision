@@ -44,6 +44,7 @@ jobs:
     needs: read-satellites
     name: Backup dataset
     strategy:
+      fail-fast: false
       matrix:
         dataset: ${{ (github.event.inputs.dataset != 'all' && github.event_name == 'workflow_dispatch' && fromJson(github.event.inputs.dataset)) || fromJson(needs.read-satellites.outputs.matrix) }}
 

@@ -1,0 +1,7 @@
+/* Change all text and icon colors in the player. */
+.vjs-envis.video-js {
+}
+
+.vjs-envis .vjs-control-bar {
+  @apply bg-slate-80;
+}

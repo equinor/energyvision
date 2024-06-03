@@ -10,7 +10,6 @@ import { ImageWithAlt } from './imageWithAlt'
 const titleContentType = configureTitleBlockContent()
 
 const ingressContentType = configureBlockContent({
-  h1: false,
   h2: false,
   h3: false,
   h4: false,
@@ -21,6 +20,17 @@ export default {
   name: 'videoPlayer',
   title: 'Video Player',
   type: 'object',
+  fieldsets: [
+    {
+      name: 'designOptions',
+      title: 'Design options',
+      description: '',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
     {
       name: 'title',
@@ -73,20 +83,43 @@ export default {
         layout: 'dropdown',
       },
       initialValue: '16:9',
+      fieldset: 'designOptions',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'width',
+      type: 'string',
+      title: 'Width',
+      options: {
+        list: [
+          { title: 'Normal', value: 'normal' },
+          { title: 'Extra wide', value: 'extraWide' },
+        ],
+        layout: 'dropdown',
+      },
+      fieldset: 'designOptions',
+      initialValue: 'normal',
     },
     {
       name: 'height',
       type: 'number',
       title: 'Height',
+      fieldset: 'designOptions',
       description: 'Set a fixed height in pixels for the video. Note: this will override the aspect ratio setting.',
       validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
     },
-
+    {
+      title: 'Use brand theme for video',
+      description: 'Make play button bigger and brand red.',
+      name: 'useBrandTheme',
+      type: 'boolean',
+      fieldset: 'designOptions',
+    },
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
+      fieldset: 'designOptions',
       type: 'colorlist',
     },
   ],

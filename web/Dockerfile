@@ -67,6 +67,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup -S "$USER"
 RUN adduser -S --uid "$UID" "$USER"
+RUN apk add --no-cache tini
 
 COPY --from=builder /app/web/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -79,8 +80,11 @@ USER "$UID"
 COPY --from=dynatrace / /
 ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
 ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}\ DT_PROCESS_GROUP=${ARG_SANITY_DATASET}
+ENV NEXT_MANUAL_SIG_HANDLE=true
 
 EXPOSE "$PORT"
+
+ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["node", "server.js"]
 

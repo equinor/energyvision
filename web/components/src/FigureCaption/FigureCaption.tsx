@@ -1,43 +1,20 @@
-import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { Typography } from '@equinor/eds-core-react'
-import styled from 'styled-components'
-import { style } from '@equinor/eds-icons'
-
-export const StyledFigCaption = styled(Typography)`
-  font-size: var(--size);
-  margin-top: var(--space-small);
-  color: var(--color-on-background);
-
-  @media (min-width: 800px) {
-    max-width: 560px;
-  }
-
-  @media (min-width: 1300px) {
-    max-width: 635px;
-  }
-`
+import { HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export type FigureCaptionProps = {
   size?: 'small' | 'medium'
 } & HTMLAttributes<HTMLElement>
 
-export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(function FigureCaption(
-  { size = 'small', children, ...rest },
-  ref,
-) {
+export const FigureCaption = ({ size = 'small', children, className, ...rest }: FigureCaptionProps) => {
   return (
-    <StyledFigCaption
-      forwardedAs="figcaption"
-      style={
-        {
-          ...style,
-          '--size': size === 'small' ? 'var(--typeScale-0)' : 'var(--typeScale-1)',
-        } as CSSProperties
-      }
-      ref={ref}
+    <figcaption
+      className={twMerge(
+        `max-w-prose mt-2 leading-misty text-slate ${size === 'small' ? 'text-xs' : 'text-base'} figCaption`,
+        className,
+      )}
       {...rest}
     >
       {children}
-    </StyledFigCaption>
+    </figcaption>
   )
-})
+}

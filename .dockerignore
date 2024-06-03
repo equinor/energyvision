@@ -5,5 +5,4 @@
 **/azure-pipelines.yml
 **/.next
 **/.env*
-**/.storybook
 **/pages-disabled
