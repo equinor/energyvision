@@ -23,5 +23,4 @@ export const i18n = {
   schemaTypes: Object.keys(documentsWithI18n)
     .filter((it) => !datasetSpecificSchemas.includes(documentsWithI18n[it].name))
     .map((it) => documentsWithI18n[it].name),
-  withTranslationsMaintenance: true,
 }
