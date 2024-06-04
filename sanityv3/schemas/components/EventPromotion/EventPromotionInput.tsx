@@ -1,4 +1,4 @@
-import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex } from '@sanity/ui'
+import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex, Switch } from '@sanity/ui'
 import { set, MemberField } from 'sanity'
 import { getObjectMemberField } from '../utils/getObjectMemberField'
 import type { ObjectInputProps } from 'sanity'
@@ -14,14 +14,13 @@ const InlinePreview = ({ value }: { value: EventPromotion | undefined }) => {
   const time = value?.promotePastEvents ? 'past' : 'upcoming'
   const number = value?.promotePastEvents ? value?.pastEventsCount || '50 (max)' : ''
   const withTags = value?.useTags ? 'from selected tags' : ''
+  const automaticPromotion = value?.promoteSingleUpcomingEvent
+    ? 'Automatically promoting single upcoming event'
+    : `Automatically promoting ${number} ${time} events ${withTags}`
 
   return (
     <Card padding={[4]} radius={2} shadow={1} tone="primary" marginTop={3} marginBottom={3}>
-      <Text>
-        {value?.manuallySelectEvents
-          ? 'Manually promoting selected events'
-          : `Automatically promoting ${number} ${time} events ${withTags}`}
-      </Text>
+      <Text>{value?.manuallySelectEvents ? 'Manually promoting selected events' : automaticPromotion}</Text>
     </Card>
   )
 }
@@ -111,6 +110,19 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
               />
             )}
           </Grid>
+          <Card padding={2} radius={2} shadow={1}>
+            <Inline space={2}>
+              <Switch
+                id="selectSingleUpcomingPromotion"
+                checked={value?.promoteSingleUpcomingEvent}
+                onChange={() => onChange(set(!value?.promoteSingleUpcomingEvent, ['promoteSingleUpcomingEvent']))}
+              />
+              <Text as="label" htmlFor="selectSingleUpcomingPromotion">
+                Promote single upcoming event
+              </Text>
+            </Inline>
+          </Card>
+
           {value?.useTags && (
             <MemberField
               member={selectedTags}

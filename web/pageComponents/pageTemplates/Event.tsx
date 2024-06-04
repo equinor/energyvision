@@ -34,12 +34,12 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             <div className="mx-auto max-w-[1186px]">
               {title && <TitleText value={title} level="h1" size="3xl" />}
               {start && (
-                <div className="text-xl text-moss-green-100 mt-7 mb-5">
+                <div className="text-xl text-norwegian-woods-100 mt-7 mb-5">
                   <FormattedDate datetime={start} />
                 </div>
               )}
 
-              <div className="flex flex-center gap-1 mb-2 text-moss-green-100 ">
+              <div className="flex flex-center gap-1 mb-2 text-norwegian-woods-100 ">
                 {start && end ? (
                   <>
                     <FormattedTime datetime={start} />
@@ -53,7 +53,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 )}
               </div>
 
-              {location && <div className="text-moss-green-100 mb-4">{location}</div>}
+              {location && <div className="text-norwegian-woods-100 mb-4">{location}</div>}
               <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
             </div>
           </BackgroundContainer>

@@ -8,7 +8,7 @@ import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
 import background from './background'
 import markDefs from './blockEditorMarks'
-import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
+import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
@@ -239,6 +239,10 @@ _type == "keyNumbers" =>{
       ${markDefs},
     },
     "useHorizontalScroll": useHorizontalScroll,
+    "viewAllLink": {
+        "label": viewAllLinkLabel,
+        "link":viewAllLink->${linkReferenceFields},
+    },
     "content": promotion[0]{
       "id": _key,
       "type": _type,
@@ -282,7 +286,7 @@ _type == "keyNumbers" =>{
         },
       },
       _type == "promoteTopics" => {
-        "promotions": references[]{
+        "promotions": references[0...3]{
          "id": _key,
          "type": _type,
           ingress[]{
@@ -351,21 +355,22 @@ _type == "keyNumbers" =>{
           manuallySelectEvents,
           promotePastEvents,
           pastEventsCount,
+          promoteSingleUpcomingEvent
         },
         !manuallySelectEvents => {
           tags,
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
             !useTags => {
-              "promotions": ${futureEventsQuery(false)}{
+              "promotions": ${futureEventsQuery(false)}[0...3]{
                 ${eventPromotionFields}
               },
             },
             useTags => {
-              "promotions": ${futureEventsQuery(true)}{
+              "promotions": ${futureEventsQuery(true)}[0...3]{
                 ${eventPromotionFields}
               },
-            }
+            },
           },
           promotePastEvents=>{
             !useTags => {

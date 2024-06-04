@@ -43,10 +43,11 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
   ref,
 ) {
   const titleClassNames = twMerge(
-    `
-  group-hover/card:underline 
+    `group-hover/card:underline 
   group-focus-visible/card:underline
-  line-clamp-2`,
+  max-md:text-lg
+  text-pretty
+  `,
     titleClassName,
   )
   return eyebrow ? (

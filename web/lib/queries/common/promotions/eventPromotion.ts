@@ -1,4 +1,4 @@
-import { noDrafts } from './langAndDrafts'
+import { noDrafts } from '../langAndDrafts'
 
 export const eventPromotionFields = /* groq */ `
     "type": "events",
@@ -7,6 +7,7 @@ export const eventPromotionFields = /* groq */ `
     "title": content->title,
     "location": content->location,
     "eventDate": content->eventDate,
+    "ingress": content->ingress,
     `
 
 const tagFilter = /* groq */ `

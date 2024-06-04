@@ -1,12 +1,12 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
+import { twMerge } from 'tailwind-merge'
 
 export type CardProps = HTMLAttributes<HTMLDivElement>
 
 export const StyledLandscapeCard = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  box-shadow: var(--card-shadow, none);
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));
   justify-content: center;
@@ -20,7 +20,10 @@ export const StyledLandscapeCard = styled.div`
   }
 `
 
-export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card({ style, children, ...rest }, ref) {
+export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card(
+  { style, children, className = '', ...rest },
+  ref,
+) {
   return (
     <StyledLandscapeCard
       ref={ref}
@@ -32,6 +35,7 @@ export const LandscapeCard = forwardRef<HTMLDivElement, CardProps>(function Card
           ...style,
         } as CSSProperties
       }
+      className={twMerge('shadow-card', className)}
       {...rest}
     >
       {children}

@@ -35,7 +35,7 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
       id={anchor}
       {...rest}
     >
-      {title && <Heading value={title} variant="h3" as="h2" />}
+      {title && <Heading value={title} variant="h3" as="h2" className="pb-10" />}
       <ul className={`grid ${gridColumns} gap-4`}>
         {cards?.map((card) => {
           return (

@@ -11,6 +11,7 @@ export type EventPromotion = {
   manuallySelectEvents?: boolean
   promotedEvents?: Reference[]
   promotePastEvents?: boolean
+  promoteSingleUpcomingEvent?: boolean
   pastEventsCount?: number
   useTags?: boolean
 }
@@ -42,6 +43,13 @@ export default {
       type: 'number',
       description: 'Leave empty to show all the past events (max limit 50).',
       validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
+    },
+    {
+      name: 'promoteSingleUpcomingEvent',
+      type: 'boolean',
+      title: 'Promote singe upcoming event',
+      initialValue: false,
+      hidden: ({ parent }: { parent: EventPromotion }) => parent?.manuallySelectEvents,
     },
     {
       name: 'useTags',
@@ -102,6 +110,7 @@ export default {
       promotedEvents: 'promotedEvents',
       manuallySelectEvents: 'manuallySelectEvents',
       promotePastEvents: 'promotePastEvents',
+      promoteSingleUpcomingEvent: 'promoteSingleUpcomingEvent',
       pastEventsCount: 'pastEventsCount',
     },
   },

@@ -6,7 +6,7 @@ export type CardContentProps = {
   /** Variant to use
    * @default primary
    */
-  variant?: 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'compact'
   /** Overriding styles for the icon  */
   iconClassName?: string
   /** Take care of the arrow yourself */
@@ -26,13 +26,16 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
   { variant = 'primary', className = '', iconClassName = '', noArrow = false, children, ...rest },
   ref,
 ) {
+  const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
   const variantClassNames = {
-    primary: `flex-col items-start border border-grey-10 border-t-0`,
-    secondary: `pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
+    primary: `${commonStyling} flex-col items-start`,
+    secondary: `${commonStyling} pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
+    compact: `pb-4 pt-2`,
   }
   const variantLinkClassNames = {
-    primary: `self-end mt-auto`,
-    secondary: ``,
+    primary: `self-end mt-auto max-lg:hidden`,
+    secondary: `max-lg:hidden`,
+    compact: `max-xl:hidden`,
   }
   const iconClassNames = twMerge(
     `
@@ -51,14 +54,11 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     <div
       ref={ref}
       className={twMerge(
-        `
-        basis-0
+        `basis-0
         grow
-        pt-8
-        pb-6
-        px-6
         flex
-        gap-6
+        gap-4
+        md:gap-6
       ${variantClassNames[variant]}
       `,
         className,

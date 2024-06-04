@@ -96,12 +96,6 @@ const LeadParagraph = styled.div`
   }
 `
 
-const Latest = styled.div`
-  padding: 0 var(--space-medium);
-  margin: var(--space-4xLarge) auto 0;
-  max-width: 1700px;
-`
-
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()
   const dtB = new Date(b).getTime()
@@ -233,11 +227,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               />
             )}
 
-            {latestNews && latestNews.length > 0 && (
-              <Latest>
-                <LatestNews data={latestNews} />
-              </Latest>
-            )}
+            {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
           </NewsLayout>
         </article>
       </main>

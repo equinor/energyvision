@@ -17,8 +17,7 @@ export default {
     {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
-      description:
-        'When this is enabled, the promo tiles will use horizontal scroll if the amount of content is greater than the screen size allows. This feature is enabled by default for smaller screen sizes.',
+      description: '(Deprecated)',
       type: 'boolean',
       initialValue: false,
     },
