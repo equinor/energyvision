@@ -21,12 +21,15 @@ const Promotion = ({
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
+  const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
       <div
         className={twMerge(
-          `pb-page-content px-4 lg:px-layout-sm max-w-viewport mx-auto flex flex-col items-center`,
+          `pb-page-content px-4 ${
+            promoteSingleUpcomingEvent ? 'lg:px-layout-lg' : 'lg:px-layout-sm'
+          } max-w-viewport mx-auto flex flex-col items-center`,
           className,
         )}
         {...rest}

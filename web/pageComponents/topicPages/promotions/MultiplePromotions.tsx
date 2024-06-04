@@ -11,6 +11,8 @@ import { FormattedDate } from '@components/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import { EventCard } from '@sections/cards/EventCard'
+import { closestIndexTo } from 'date-fns'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
@@ -86,14 +88,33 @@ const MultiplePromotions = ({
     }
   }
 
+  let closestToTodayIndex = undefined
+  if (variant === 'promoteEvents' && eventPromotionSettings?.promoteSingleUpcomingEvent) {
+    const events = data as EventCardData[]
+    closestToTodayIndex = closestIndexTo(
+      new Date(),
+      events?.map((event) => new Date(event?.eventDate?.date)),
+    )
+  }
+
   if (variant === 'promoteEvents') {
     return (
-      <MultipleEventCards
-        data={data as EventCardData[]}
-        hasSectionTitle={hasSectionTitle}
-        eventPromotionSettings={eventPromotionSettings}
-        renderScroll={false}
-      />
+      <>
+        {eventPromotionSettings?.promoteSingleUpcomingEvent && closestToTodayIndex ? (
+          <EventCard
+            data={data[closestToTodayIndex] as EventCardData}
+            hasSectionTitle={hasSectionTitle}
+            variant="single"
+          />
+        ) : (
+          <MultipleEventCards
+            data={data as EventCardData[]}
+            hasSectionTitle={hasSectionTitle}
+            eventPromotionSettings={eventPromotionSettings}
+            renderScroll={false}
+          />
+        )}
+      </>
     )
   }
 

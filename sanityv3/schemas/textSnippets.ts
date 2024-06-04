@@ -709,11 +709,6 @@ const snippets: textSnippet = {
     group: groups.others,
     hidden: Flags.IS_SATELLITE,
   },
-  upcoming_event: {
-    title: 'Upcoming event',
-    defaultValue: 'Upcoming event',
-    group: groups.others,
-  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

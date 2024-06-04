@@ -355,6 +355,7 @@ _type == "keyNumbers" =>{
           manuallySelectEvents,
           promotePastEvents,
           pastEventsCount,
+          promoteSingleUpcomingEvent
         },
         !manuallySelectEvents => {
           tags,
@@ -369,7 +370,7 @@ _type == "keyNumbers" =>{
               "promotions": ${futureEventsQuery(true)}[0...3]{
                 ${eventPromotionFields}
               },
-            }
+            },
           },
           promotePastEvents=>{
             !useTags => {

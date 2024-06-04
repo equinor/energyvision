@@ -12,10 +12,12 @@ import { PortableTextBlock } from '@portabletext/types'
 import { FormattedMessage, useIntl } from 'react-intl'
 import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
 import { ButtonLink } from '@core/Link'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 export type EventCardProps = {
   data: EventCardData
   hasSectionTitle: boolean
+  variant?: 'default' | 'single'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -23,16 +25,17 @@ export type EventCardProps = {
  * Remember to wrap in ul and li if in a list.
  * */
 const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
-  { data, className = '', hasSectionTitle = true, ...rest },
+  { data, className = '', variant = 'default', hasSectionTitle = true, ...rest },
   ref,
 ) {
   const intl = useIntl()
   const details = intl.formatMessage({ id: 'details', defaultMessage: 'Details' })
 
-  const { title, location, eventDate, slug } = data
+  const { title, location, eventDate, slug, ingress } = data
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const metaClassNames = `h-full flex gap-sm items-center py-2`
+
   return (
     <div
       ref={ref}
@@ -60,7 +63,11 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       {...rest}
     >
       <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" />
-      <div className="flex flex-col justify-center divide-y divide-autumn-storm-60">
+      <div
+        className={`${
+          variant === 'single' ? 'w-fit' : ''
+        } flex flex-col justify-center divide-y divide-autumn-storm-60`}
+      >
         {start && (
           <div className="h-full py-2">
             <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-0)' }} />
@@ -85,6 +92,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           </div>
         )}
       </div>
+      {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
       <div className="mt-8 flex gap-6">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
         <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${title}`}>
