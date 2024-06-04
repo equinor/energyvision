@@ -23,7 +23,7 @@
     "@sanity/client": "^6.15.14",
     "@sanity/cross-dataset-duplicator": "^1.2.4",
     "@sanity/icons": "^2.11.8",
-    "@sanity/scheduled-publishing": "^1.2.1",
+    "@sanity/scheduled-publishing": "^1.2.2",
     "@sanity/ui": "^2.1.3",
     "@sanity/uuid": "^3.0.2",
     "@sanity/vision": "^3.37.2",
