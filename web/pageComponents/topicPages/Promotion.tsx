@@ -25,7 +25,10 @@ const Promotion = ({
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
       <div
-        className={twMerge(`pb-page-content px-layout-sm max-w-viewport mx-auto flex flex-col items-center`, className)}
+        className={twMerge(
+          `pb-page-content px-4 lg:px-layout-sm max-w-viewport mx-auto flex flex-col items-center`,
+          className,
+        )}
         {...rest}
       >
         {title && <Heading value={title} as="h2" variant="xl" className="w-fit mb-10" />}

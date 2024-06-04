@@ -76,6 +76,15 @@ const MultiplePromotions = ({
         return console.warn('Missing card type for ', data)
     }
   }
+  const getRowGap = (type: string) => {
+    switch (type) {
+      case 'promotePeople':
+        return 'gap-y-3 lg:gap-y-8 gap-x-4'
+
+      default:
+        return 'gap-y-3 gap-x-4'
+    }
+  }
 
   if (variant === 'promoteEvents') {
     return (
@@ -90,15 +99,14 @@ const MultiplePromotions = ({
 
   return (
     <ul
-      className="
+      className={`
       grid 
-    gap-y-2
-    gap-x-4
+      ${getRowGap(variant)}
     justify-center
     content-center
     auto-rows-fr
     md:grid-cols-3
-    md:grid-rows-1"
+    md:grid-rows-1`}
     >
       <>
         {data.map((item) => {

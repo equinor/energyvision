@@ -1,43 +1,9 @@
 import Card from '@sections/cards/Card'
-import styled from 'styled-components'
-import type { PromoTileArrayData, PromoTileData } from '../../types/types'
-import { Ratios } from '../shared/SanityImage'
-import { Carousel } from '../shared/Carousel'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
-import { BaseLinkProps } from '@core/Link'
-import { ArrowRight } from '../../icons'
 import { getUrlFromAction } from '../../common/helpers'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { twMerge } from 'tailwind-merge'
-
-/* const { Header, Action, Media } = Card */
-
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
-  grid-gap: var(--space-medium);
-  padding: var(--space-3xLarge) var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: auto;
-
-  @media (min-width: 750px) {
-    grid-template-columns: 1fr 1fr;
-  }
-`
-
-const HorizontalWrapper = styled.div`
-  --card-maxWidth: 280px;
-  --card-minWidth: 280px;
-  padding-top: var(--space-3xLarge);
-  padding-bottom: var(--space-3xLarge);
-
-  @media (min-width: 800px) {
-    --card-maxWidth: 400px;
-    --card-minWidth: 400px;
-  }
-`
+import { BaseLinkProps } from '@core/Link'
+import { ArrowRight } from '../../icons'
+import { PromoTileData } from '../../types/types'
 
 export type FakeReadMoreProps = {
   children?: React.ReactNode
@@ -86,7 +52,7 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
   )
 }
 
-const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
+export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
   const url = getUrlFromAction(action)
   const { background } = designOptions
   const colorName =
@@ -106,7 +72,7 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
       href={url}
       image={image}
       variant="secondary"
-      className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
+      className="w-full h-full md:max-w-[100%]"
     >
       <Card.Content
         {...(!linkLabelAsTitle && { noArrow: true })}
@@ -125,37 +91,3 @@ const TWPromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle
     </Card>
   )
 }
-
-const PromoTileArray = ({
-  data,
-  anchor,
-}: //className,
-{
-  data: PromoTileArrayData
-  anchor?: string
-  className?: string
-}) => {
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
-
-  if (!data.group) return null
-
-  const renderScroll = data.useHorizontalScroll || isMobile
-
-  const Wrapper = renderScroll
-    ? ({ children }: { children: React.ReactNode }) => (
-        <HorizontalWrapper>
-          <Carousel horizontalPadding>{children}</Carousel>
-        </HorizontalWrapper>
-      )
-    : Container
-
-  return (
-    <Wrapper id={anchor}>
-      {data.group.map((tile: PromoTileData) => {
-        return <TWPromoTile key={tile.id} {...tile} />
-      })}
-    </Wrapper>
-  )
-}
-
-export default PromoTileArray

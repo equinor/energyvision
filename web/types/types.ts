@@ -141,6 +141,7 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  ingress?: PortableTextBlock[]
 }
 
 export type NewsSchema = {
@@ -892,15 +893,4 @@ export type GridTeaserData = {
   imagePosition?: TeaserImagePosition
   action?: LinkData
   theme?: number
-}
-export type PodcastTeaserData = {
-  id: string
-  type: 'podcastTeaser'
-  spotifyLink?: string
-  appleLink?: string
-  linkTitle?: string
-  podcastName?: PortableTextBlock[]
-  podcastEpisode?: PortableTextBlock[]
-  image: ImageWithAlt
-  designOptions: DesignOptions
 }

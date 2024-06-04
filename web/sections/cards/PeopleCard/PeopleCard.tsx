@@ -35,8 +35,8 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
         grid-cols-1
         grid-rows-[max-content_1fr_auto]
         justify-items-center
-        items-center
-        gap-6
+        items-start
+        gap-0
         shadow-card
         rounded-sm
         max-w-[300px]
@@ -56,7 +56,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
         {...rest}
       >
         {image && (
-          <div className="relative size-[150px] box-content">
+          <div className="relative size-[150px] box-content mb-10">
             <Image
               image={image}
               maxWidth={400}
@@ -67,18 +67,20 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
           </div>
         )}
         <div className="flex flex-col items-center justify-start">
-          <Typography as={hasSectionTitle ? 'h3' : 'h2'} variant="sm" className="font-medium mb-2">
+          <Typography as={hasSectionTitle ? 'h3' : 'h2'} variant="sm" className="font-medium mb-4 text-center">
             {name}
           </Typography>
           {title && <div className="text-sm text-center">{title}</div>}
           {department && <div className="text-sm text-center">{department}</div>}
         </div>
 
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 pt-6">
           {isLink && cv && cvUrl ? (
             <ButtonLink
               href={cvUrl}
               aria-label={cv?.ariaLabel}
+              variant="outlined"
+              className="text-center"
               locale={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
             >
               {cv?.label}

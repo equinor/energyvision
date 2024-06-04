@@ -119,6 +119,7 @@ module.exports = {
         blue: {
           //--mid-blue
           //--bg-mid-blue
+          //north-sea-80
           50: colors.blue[50],
         },
         orange: {
@@ -161,7 +162,8 @@ module.exports = {
           80: '#85B7A5',
           70: '#AAD5BB',
           60: '#C3E4CE',
-          50: '#E6FAEC',
+          50: '#D6F0DE',
+          40: '#E6FAEC',
         },
         'sand-and-summer': {
           100: '#7D0023',
@@ -444,7 +446,7 @@ module.exports = {
             'outline-style': 'dashed',
             'outline-width': '2px',
             'outline-offset': '3px',
-            'outline-color': theme('colors.moss-green.100'),
+            'outline-color': theme('colors.norwegian-woods.100'),
           },
           '.envis-outline-invert': {
             'outline-style': 'dashed',

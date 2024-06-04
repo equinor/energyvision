@@ -41,6 +41,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         w-full
         grid
         grid-rows-[1fr_max-content_max-content]
+        gap-2
         shadow-card
         rounded-sm
         px-6
@@ -58,7 +59,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       )}
       {...rest}
     >
-      <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h4" />
+      <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" />
       <div className="flex flex-col justify-center divide-y divide-autumn-storm-60">
         {start && (
           <div className="h-full py-2">
