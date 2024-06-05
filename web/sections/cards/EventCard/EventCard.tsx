@@ -44,7 +44,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         w-full
         grid
         grid-rows-[1fr_max-content_max-content]
-        gap-2
+        gap-4
         shadow-card
         rounded-sm
         px-6
@@ -62,7 +62,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       )}
       {...rest}
     >
-      <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" />
+      <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" className="mb-1" />
       <div
         className={`${
           variant === 'single' ? 'w-fit' : ''
@@ -93,7 +93,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         )}
       </div>
       {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
-      <div className="mt-8 flex gap-6">
+      <div className="mt-4 lg:mt-8 flex gap-6">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
         <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${title}`}>
           {details}

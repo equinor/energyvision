@@ -127,7 +127,7 @@ const MultiplePromotions = ({
     justify-center
     content-center
     grid-cols-1
-    auto-rows-fr
+    auto-rows-auto
     md:grid-cols-3
     md:grid-rows-1`}
     >
