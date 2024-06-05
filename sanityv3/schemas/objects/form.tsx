@@ -4,6 +4,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
 import { DownloadableFile } from './files'
+import { Flags } from '../../src/lib/datasetHelpers'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -58,11 +59,14 @@ export default {
       title: 'Type of form',
       options: {
         list: [
-          { title: 'Subscribe Form', value: 'subscribeForm' },
-          { title: 'Contact Equinor form', value: 'contactEquinorForm' },
-          { title: 'Careers contact form', value: 'careersContactForm' },
-          { title: 'Order reports', value: 'orderReportsForm' },
-          { title: 'Career fairs and visits', value: 'careerFairAndVisitsForm' },
+          Flags.HAS_SUBSCRIBE_FORM && { title: 'Subscribe Form', value: 'subscribeForm' },
+          Flags.HAS_CONTACT_EQUINOR_FORM && { title: 'Contact Equinor form', value: 'contactEquinorForm' },
+          Flags.HAS_CAREERS_CONTACT_FORM && { title: 'Careers contact form', value: 'careersContactForm' },
+          Flags.HAS_ORDER_REPORT_FORM && { title: 'Order reports', value: 'orderReportsForm' },
+          Flags.HAS_CAREER_FAIR_AND_VISITS_FORM && {
+            title: 'Career fairs and visits',
+            value: 'careerFairAndVisitsForm',
+          },
         ],
         layout: 'dropdown',
       },
