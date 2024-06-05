@@ -22,6 +22,10 @@ export type CardHeaderProps = {
   eyebrow?: React.ReactNode
   /* Override styling on eyebrow element  */
   eyebrowClassName?: string
+  /** Variant to use
+   * @default primary
+   */
+  variant?: 'primary' | 'secondary' | 'compact'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -38,18 +42,26 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     titleClassName = '',
     eyebrow,
     eyebrowClassName = '',
+    variant = 'primary',
     ...rest
   },
   ref,
 ) {
+  const variantTitle = {
+    primary: `  max-md:text-lg`,
+    secondary: `  max-md:text-lg`,
+    compact: `max-md:text-md`,
+  }
+
   const titleClassNames = twMerge(
-    `group-hover/card:underline 
-  group-focus-visible/card:underline
-  max-md:text-lg
-  text-pretty
+    `group-hover/card:underline
+    group-focus-visible/card:underline
+    ${variantTitle[variant]}
+    text-pretty
   `,
     titleClassName,
   )
+
   return eyebrow ? (
     <hgroup ref={ref} className={twMerge('flex flex-col gap-2', className)} {...rest}>
       <p className={twMerge(`text-xs font-medium uppercase`, eyebrowClassName)}>{eyebrow}</p>

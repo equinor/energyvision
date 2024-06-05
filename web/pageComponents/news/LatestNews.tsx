@@ -15,7 +15,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
 
   return (
     <section
-      className="px-layout-sm
+      className="px-4 lg:px-layout-sm
     max-w-viewport
     my-3xl
     mx-auto
@@ -27,7 +27,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       <Typography variant="xl" as="h2" className="mb-10">
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
       </Typography>
-      <ul className="grid auto-rows-fr gap-x-6 gap-y-3 xl:grid-cols-3">
+      <ul className="max-lg:w-full grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-3 xl:grid-cols-3">
         {data.map((newsItem: CardData) => {
           return (
             <li key={newsItem.id} className="">
@@ -49,6 +49,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                     {...(newsItem?.publishDateTime && {
                       eyebrow: <FormattedDate datetime={newsItem?.publishDateTime} uppercase />,
                     })}
+                    variant={isMobile ? 'compact' : 'primary'}
                   />
                   {newsItem?.ingress && (
                     <Blocks value={newsItem?.ingress} className={`grow hidden xl:block`} clampLines={5} />
