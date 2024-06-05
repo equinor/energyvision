@@ -7,14 +7,10 @@ import {
   PortableTextBlockComponent,
   PortableTextTypeComponent,
 } from '@portabletext/react'
-import {
-  PortableTextBlock,
-  PortableTextBlockStyle,
-  PortableTextListItemBlock,
-  PortableTextMarkDefinition,
-} from '@portabletext/types'
+import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
+import { FormattedMessage } from 'react-intl'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,6 +49,24 @@ const defaultSerializers = {
     internalLink: ({ children, value }: any) => {
       return <InternalLink value={value}>{children}</InternalLink>
     },
+    footnote: () => null,
+  },
+}
+const footnoteSerializer = {
+  footnote: ({ children, markKey }: any) => {
+    return (
+      <span>
+        {children}
+        <span>
+          <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
+            {/* the number for footnote is added by css see tailwind.css components */}
+            <span className="sr-only">
+              <FormattedMessage id="footnote" defaultMessage="Footnotes" />
+            </span>
+          </a>
+        </span>
+      </span>
+    )
   },
 }
 
@@ -109,6 +123,7 @@ export type BlockProps = {
   id?: string
   /** Use to clamp lines on number */
   clampLines?: number
+  includeFootnotes?: boolean
 } & PortableTextProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
@@ -122,6 +137,7 @@ export default function Blocks({
   className = '',
   id,
   clampLines,
+  includeFootnotes = false,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
   return (
@@ -152,7 +168,10 @@ export default function Blocks({
                       ...(clampLines && getLineClampNormalBlock(clampLines)),
                     },
                     types: { ...defaultSerializers.types },
-                    marks: { ...defaultSerializers.marks },
+                    marks: {
+                      ...defaultSerializers.marks,
+                      ...(includeFootnotes && footnoteSerializer),
+                    },
                   }}
                 />
               </div>

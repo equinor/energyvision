@@ -4,6 +4,63 @@
 @import './components/videojs.css';
 @import 'tailwindcss/utilities';
 
+@layer components {
+  article {
+    counter-reset: footnotes;
+  }
+  /**
+ * Inline footnotes references
+ * 1. Increment the counter at each new reference
+ */
+  a[aria-describedby='footnote-label'] {
+    @apply relative cursor-default outline-none text-inherit;
+    counter-increment: footnotes;
+    text-decoration: none;
+    /* outline: none;*/
+  }
+  a[aria-describedby='footnote-label']::before {
+    @apply cursor-pointer;
+    content: '';
+    position: absolute;
+    width: 48px;
+    aspect-ratio: 1/1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+  }
+  /**
+ * Actual numbered references
+ * 1. Display the current state of the counter (e.g. `[1]`)
+ */
+  a[aria-describedby='footnote-label']::after {
+    @apply align-super 
+    text-xs 
+    pl-[2px] 
+    text-slate-blue-95 
+    underline
+    font-medium
+    pr-[2px]
+    cursor-pointer
+    hover:no-underline
+    hover:font-medium;
+    content: counter(footnotes); /* 1 */
+  }
+
+  /**
+ * Resetting the default focused styles on the number
+ */
+  a[aria-describedby='footnote-label']:focus::after {
+    @apply outline-dashed outline-2 outline-offset-2 outline-norwegian-woods-100;
+    /*outline: thin dotted;
+    outline-offset: 2px;*/
+  }
+  /* highlight the note in the footer */
+  footer :target {
+    @apply bg-autumn-storm-40 w-fit;
+  }
+}
+
 @layer utilities {
   /* Scroll-Timeline Supported, Yay! */
   @supports (animation-timeline: view()) {
