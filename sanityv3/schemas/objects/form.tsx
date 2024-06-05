@@ -67,7 +67,7 @@ export default {
             title: 'Career fairs and visits',
             value: 'careerFairAndVisitsForm',
           },
-        ],
+        ].filter((e) => e),
         layout: 'dropdown',
       },
       validation: (Rule: Rule) => Rule.required(),
