@@ -126,6 +126,7 @@ const MultiplePromotions = ({
       ${getRowGap(variant)}
     justify-center
     content-center
+    grid-cols-1
     auto-rows-fr
     md:grid-cols-3
     md:grid-rows-1`}
