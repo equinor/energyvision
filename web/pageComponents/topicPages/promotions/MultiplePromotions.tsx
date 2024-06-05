@@ -121,7 +121,7 @@ const MultiplePromotions = ({
   return (
     <ul
       className={`
-      w-full
+      max-lg:w-full
       grid 
       ${getRowGap(variant)}
     justify-center
