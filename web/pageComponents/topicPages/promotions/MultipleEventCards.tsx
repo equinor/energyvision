@@ -33,7 +33,7 @@ const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: M
     grid-cols-1
     justify-center
     content-center
-    auto-rows-fr
+    auto-rows-auto
     md:grid-cols-3
     md:grid-rows-1"
     >
