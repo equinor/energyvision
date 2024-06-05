@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge'
 type IngressTextProps = {
   centered?: boolean
   className?: string
+  includeFootnotes?: boolean
 } & PortableTextProps
 
 const IngressText = ({ value, centered = false, components = {}, className = '', ...rest }: IngressTextProps) => {

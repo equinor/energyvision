@@ -1,11 +1,10 @@
-import { attach_file, external_link, format_color_text, link } from '@equinor/eds-icons'
+import { attach_file, external_link, format_color_text, link, star_filled } from '@equinor/eds-icons'
 import type { BlockDefinition, BlockStyleDefinition, Rule, ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
-import { component } from 'sanity/desk'
 import { defaultColors } from '../defaultColors'
 
 export type BlockContentProps = {
@@ -117,7 +116,51 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
           component: SuperScriptRenderer,
         },
       ],
-      annotations: [],
+      annotations: [
+        {
+          name: 'footnote',
+          type: 'object',
+          title: 'Footnote',
+          icon: EdsIcon(star_filled),
+          fields: [
+            {
+              name: 'text',
+              type: 'array',
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    {
+                      title: 'Small text',
+                      value: 'smallText',
+                      component: SmallTextRender,
+                    },
+                  ],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      { title: 'Strong', value: 'strong' },
+                      { title: 'Emphasis', value: 'em' },
+                      {
+                        title: 'Sub',
+                        value: 'sub',
+                        icon: IconSubScript,
+                        component: SubScriptRenderer,
+                      },
+                      {
+                        title: 'Super',
+                        value: 'sup',
+                        icon: IconSuperScript,
+                        component: SuperScriptRenderer,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   }
 

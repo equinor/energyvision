@@ -29,7 +29,6 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       </Typography>
       <ul className="grid auto-rows-fr gap-x-6 gap-y-3 xl:grid-cols-3">
         {data.map((newsItem: CardData) => {
-          console.log('newsItem', newsItem)
           return (
             <li key={newsItem.id} className="">
               <Card
