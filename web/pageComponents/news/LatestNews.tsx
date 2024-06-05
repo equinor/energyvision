@@ -15,7 +15,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
 
   return (
     <section
-      className="px-layout-sm
+      className="px-4 lg:px-layout-sm
     max-w-viewport
     my-3xl
     mx-auto
@@ -49,6 +49,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                     {...(newsItem?.publishDateTime && {
                       eyebrow: <FormattedDate datetime={newsItem?.publishDateTime} uppercase />,
                     })}
+                    variant={isMobile ? 'compact' : 'primary'}
                   />
                   {newsItem?.ingress && (
                     <Blocks value={newsItem?.ingress} className={`grow hidden xl:block`} clampLines={5} />
