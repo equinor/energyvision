@@ -58,7 +58,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const imageVariantClassNames = {
     primary: ``,
     secondary: `rounded-t-md`,
-    compact: 'w-[35%] h-auto',
+    compact: 'w-[25%] h-auto',
   }
 
   return (
