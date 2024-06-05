@@ -892,14 +892,15 @@ export type GridTeaserData = {
   action?: LinkData
   theme?: number
 }
-export type PodcastTeaserData = {
+export type AnchorLinkListData = {
   id: string
-  type: 'podcastTeaser'
-  spotifyLink?: string
-  appleLink?: string
-  linkTitle?: string
-  podcastName?: PortableTextBlock[]
-  podcastEpisode?: PortableTextBlock[]
-  image: ImageWithAlt
-  designOptions: DesignOptions
+  type: 'anchorLinkList'
+  title?: string
+  columns?: string
+  anchorList?: {
+    id: string
+    type: 'anchorLinkReference'
+    title?: string
+    anchorReference?: string
+  }[]
 }
