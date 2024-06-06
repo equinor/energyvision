@@ -52,11 +52,10 @@
  */
   a[aria-describedby='footnote-label']:focus::after {
     @apply outline-dashed outline-2 outline-offset-2 outline-norwegian-woods-100;
-    /*outline: thin dotted;
-    outline-offset: 2px;*/
   }
+
   /* highlight the note in the footer */
-  footer :target {
+  .prose :target {
     @apply bg-autumn-storm-40 w-fit;
   }
 }

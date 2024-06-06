@@ -11,6 +11,7 @@ export const elements = css`
   body {
     background-color: var(--theme-background-primary);
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 
   em {
@@ -19,6 +20,28 @@ export const elements = css`
   strong,
   b {
     font-weight: var(--fontWeight-bold);
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  #root,
+  #__next {
+    isolation: isolate;
   }
 
   .video-js video {
