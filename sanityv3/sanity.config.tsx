@@ -119,7 +119,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
           }
         })
     },
-    comments: {
+    unstable_comments: {
       enabled: false,
     },
   },
