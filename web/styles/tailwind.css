@@ -38,11 +38,11 @@
     text-xs 
     pl-[2px] 
     text-slate-blue-95 
-    underline
+    no-underline
     font-medium
     pr-[2px]
     cursor-pointer
-    hover:no-underline
+    hover:underline
     hover:font-medium;
     content: counter(footnotes); /* 1 */
   }
@@ -55,7 +55,7 @@
   }
 
   /* highlight the note in the footer */
-  .prose :target {
+  footer :target {
     @apply bg-autumn-storm-40 w-fit;
   }
 }
