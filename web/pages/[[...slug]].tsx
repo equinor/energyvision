@@ -98,25 +98,6 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
   const intl = await getIntl(locale, preview)
-
-  // http://localhost:3000/news/2002/12/16/AlphaNorthContracts
-  if (queryParams?.slug && queryParams.slug.includes('news') && Flags.HAS_ARCHIVED_NEWS) {
-    const existsInSanity = await pathExistsInSanity(queryParams.slug, preview)
-    if (!existsInSanity) {
-      const archivedPath = queryParams.slug.replace('news', 'news/archive')
-      const slug = archivedNews.find((e: { slug: string }) => e.slug.toLowerCase() === archivedPath)?.slug
-      return slug
-        ? {
-            redirect: {
-              permanent: true,
-              destination: slug,
-            },
-            props: {},
-          }
-        : { notFound: true }
-    }
-  }
-
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query,

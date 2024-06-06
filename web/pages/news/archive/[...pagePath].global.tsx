@@ -215,15 +215,11 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
 
-  const archivedItems = archivedNews.filter((e) => e.slug.toLowerCase() === `/news/archive/${pagePath}`)
+  const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
 
-  if (archivedItems.length === 0) return { notFound: true }
+  const response = await fetchArchiveData(pagePathArray, pagePath, locale)
 
-  const cammelCasedPath = archivedItems[0].slug.replace('/news/archive/', '')
-
-  const response = await fetchArchiveData(pagePathArray, cammelCasedPath, locale)
-
-  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, cammelCasedPath, locale)
+  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
 
   const pageData = await parseResponse(response)
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
