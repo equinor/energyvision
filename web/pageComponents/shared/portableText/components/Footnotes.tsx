@@ -56,17 +56,30 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
                 }}
               />
               <BaseLink
-                href={`#${`back_ref_${_key + 10}`}`}
+                href={`#${`back_ref_${_key}`}`}
                 className="
-                w-full
-                h-full
+                w-fit
+                h-fit
                 px-2 
                 hover:no-underline
                 text-sm
                 lg:text-2xs 
-                font-thin"
+                font-thin
+                relative
+                before:cursor-pointer
+                before:content-['']
+                before:absolute
+                before:w-[48px]
+                before:aspect-square
+                before:top-1/2
+                before:left-1/2
+                before:translate-y-[-50%]
+                before:translate-x-[-50%]
+                before:rounded-[100%]
+                "
                 aria-label={intl.formatMessage({ id: 'back_to_content', defaultMessage: 'Back to content' })}
                 role="doc-backlink"
+                title={intl.formatMessage({ id: 'back_to_content', defaultMessage: 'Back to content' })}
               >
                 ↵
               </BaseLink>

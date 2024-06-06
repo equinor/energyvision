@@ -58,10 +58,10 @@ const footnoteSerializer = {
       <span>
         {children}
         <span>
-          <a id={`back_ref_${markKey + 10}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
+          <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
             {/* the number for footnote is added by css see tailwind.css components */}
             <span className="sr-only">
-              <FormattedMessage id="footnote" defaultMessage="Footnotes" />
+              <FormattedMessage id="footnote" defaultMessage="Footnote" />
             </span>
           </a>
         </span>
