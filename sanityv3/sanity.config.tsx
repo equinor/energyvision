@@ -119,6 +119,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
           }
         })
     },
+    comments: {
+      enabled: false,
+    },
   },
   auth: createAuthStore({
     projectId: projectIdParam,
