@@ -56,13 +56,13 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
                 }}
               />
               <BaseLink
-                href={`#${`back_ref_${_key}`}`}
+                href={`#${`back_ref_${_key + 10}`}`}
                 className="
                 w-full
                 h-full
                 px-2 
                 hover:no-underline
-                text-xs
+                text-sm
                 lg:text-2xs 
                 font-thin"
                 aria-label={intl.formatMessage({ id: 'back_to_content', defaultMessage: 'Back to content' })}
