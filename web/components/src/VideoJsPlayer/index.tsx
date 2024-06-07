@@ -99,8 +99,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
         onReady && onReady(player)
       },
     )
-    console.log('useFillMode', useFillMode)
-    console.log('aspext', aspectRatio)
 
     player.on('error', (error: MediaError) => {
       console.log(error.message)
@@ -123,23 +121,10 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   useVideojsAnalytics(player, src, title, autoPlay)
 
-  const videojsARStyles = {
-    '16:9': 'vjs-16-9',
-    '9:16': 'vjs-9-16',
-    '4:3': 'vjs-4-3',
-    '1:1': 'vjs-1-1',
-  }
-
   return (
     <>
       {/* eslint-disable-next-line */}
-      <video
-        ref={measuredRef}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        className={`vjs-envis video-js vjs-fill`}
-        poster={poster}
-      ></video>
+      <video ref={measuredRef} className={`vjs-envis video-js vjs-fill`} poster={poster}></video>
       {showPlayButton && (
         <button
           className={`${
