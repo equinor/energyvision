@@ -15,6 +15,7 @@ const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
   content: [
+    './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,tsx}',
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
