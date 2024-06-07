@@ -55,7 +55,7 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
     ${
       type === 'downloadableFile' || type === 'downloadableImage'
         ? 'group-hover:translate-y-0.5'
-        : 'group-hover:translate-x-2'
+        : '-translate-y-1 group-hover:translate-x-2'
     }
     transition-all
     duration-300

@@ -61,7 +61,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
-      <span className="grid grid-cols-[1fr_max-content] gap-2 items-end  pb-5 pr-2">
+      <span className="grid grid-cols-[1fr_max-content] gap-14 items-end pb-5 pr-2">
         {children}
         <ArrowRight className={iconClassNames} />
       </span>
