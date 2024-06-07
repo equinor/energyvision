@@ -85,7 +85,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
           fullscreenToggle: allowFullScreen,
         },
         html5: {
-          nativeControlsForTouch: true,
+          //nativeControlsForTouch: true,
           useDevicePixelRatio: true,
           limitRenditionByPlayerDimensions: false,
           hls: {
