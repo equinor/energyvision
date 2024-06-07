@@ -701,6 +701,8 @@ export type AnchorLinkData = {
 
 export enum VideoPlayerRatios {
   '16:9' = '16:9',
+  '3:2' = '3:2',
+  '16:10' = '16:10',
   '9:16' = '9:16',
   '1:1' = '1:1',
 }
@@ -722,7 +724,7 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  height?: number
+  height?: number | string
   width?: 'normal' | 'extraWide'
   useBrandTheme?: boolean
 }

@@ -1,7 +1,4 @@
 /* Change all text and icon colors in the player. */
-.vjs-envis.video-js {
-}
-
-.vjs-envis .vjs-control-bar {
-  @apply bg-slate-80;
+.vjs-envis .vjs-big-play-button {
+  @apply bg-energy-red-100;
 }
