@@ -84,12 +84,16 @@ export const VideoJS: React.FC<VideoJSProps> = ({
         controlBar: {
           fullscreenToggle: allowFullScreen,
         },
+        html5: {
+          useDevicePixelRatio: true,
+        },
         ...rest,
       },
       () => {
         onReady && onReady(player)
       },
     )
+    console.log('aspext', aspectRatio)
 
     player.on('error', (error: MediaError) => {
       console.log(error.message)

@@ -49,6 +49,11 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
         width: 336,
         height: 600,
       }
+    case VideoPlayerRatios['3:2']:
+      return {
+        width: 600,
+        height: 600,
+      }
     case VideoPlayerRatios['1:1']:
       return {
         width: 600,

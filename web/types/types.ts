@@ -701,6 +701,7 @@ export type AnchorLinkData = {
 
 export enum VideoPlayerRatios {
   '16:9' = '16:9',
+  '3:2' = '3:2',
   '9:16' = '9:16',
   '1:1' = '1:1',
 }

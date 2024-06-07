@@ -1,5 +1,5 @@
 import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
-import { FigureData, IFrameData, VideoPlayerData } from '../../types/types'
+import { FigureData, IFrameData, VideoPlayerData, VideoPlayerRatios } from '../../types/types'
 import IFrame from '../../pageComponents/topicPages/IFrame'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'
@@ -19,7 +19,15 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.R
     case 'iframe':
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
-      return <VideoJsComponent key={data.id} useFillMode {...(data as VideoPlayerData)} />
+      return (
+        <VideoJsComponent
+          key={data.id}
+          {...(data as VideoPlayerData)}
+          designOptions={{
+            aspectRatio: VideoPlayerRatios['3:2'],
+          }}
+        />
+      )
     }
     default:
       return null
