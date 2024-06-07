@@ -3,7 +3,7 @@ import { useEffect, HTMLProps, useState, useCallback } from 'react'
 import videojs from 'video.js'
 import Player from 'video.js/dist/types/player'
 //import 'video.js/dist/video-js.css'
-import { play_circle, pause_circle, play } from '@equinor/eds-icons'
+import { play_circle, pause_circle } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
 import MediaError from 'video.js/dist/types/media-error'
 import useVideojsAnalytics from '../../../lib/hooks/useVideojsAnalytics'
@@ -137,7 +137,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
         ref={measuredRef}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        className={`vjs-envis video-js ${useFillMode ? 'vjs-fill' : videojsARStyles[aspectRatio ?? '16:9']}`}
+        className={`vjs-envis video-js vjs-fill`}
         poster={poster}
       ></video>
       {showPlayButton && (
