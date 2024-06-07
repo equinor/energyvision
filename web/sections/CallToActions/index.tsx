@@ -15,27 +15,38 @@ type CallToActionsProps = {
 const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList, className }: CallToActionsProps) => {
   if (!callToActions) return null
 
-  const getSingleButtonLink = () => {
+  const getSingleAction = () => {
     const { label, extension, type, link } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])
     if (!url) {
       console.warn(`CallToActions: Missing URL on 'ButtonLink' link with type: '${type}' and label: '${label}'`)
+      return null
     }
-    return url ? (
+    const linkContent = `${label} ${extension ? `(${extension.toUpperCase()})` : ''}`
+
+    return overrideButtonStyle ? (
+      <ResourceLink
+        href={url}
+        {...(link?.lang && { locale: getLocaleFromName(link?.lang) })}
+        type={type}
+        className="w-fit"
+      >
+        {linkContent}
+      </ResourceLink>
+    ) : (
       <ButtonLink
         {...(type === 'internalUrl' && { locale: getLocaleFromName(link?.lang) })}
         href={url}
         type={type}
         className={twMerge(className, 'mb-8 block')}
       >
-        {`${label} ${extension ? `(${extension.toUpperCase()})` : ''}`}
+        {linkContent}
       </ButtonLink>
-    ) : null
+    )
   }
-  // If we have only one link and the publisher has not made an active choice of overriding the style
-  // in Sanity the default style is a button style
-  return callToActions?.length === 1 && !overrideButtonStyle ? (
-    getSingleButtonLink()
+
+  return callToActions?.length === 1 ? (
+    getSingleAction()
   ) : (
     <List split={splitList} className={className} listClassName={'list-none'}>
       {callToActions.map((callToAction: LinkData) => {
