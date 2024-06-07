@@ -1,14 +1,14 @@
 import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
-import { FigureData, IFrameData, VideoPlayerData, VideoPlayerRatios } from '../../types/types'
+import { FigureData, IFrameData, VideoPlayerData } from '../../types/types'
 import IFrame from '../../pageComponents/topicPages/IFrame'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'
 import GridFigure from './GridFigure'
 
-export type RowType = 'span3' | 'span2and1' | undefined
+export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
-export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.ReactNode => {
+export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
   switch (data.type) {
     case 'gridTextBlock':
       return <GridTextBlock key={data.id} data={data as any} />
@@ -23,9 +23,8 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.R
         <VideoJsComponent
           key={data.id}
           {...(data as VideoPlayerData)}
-          designOptions={{
-            aspectRatio: VideoPlayerRatios['3:2'],
-          }}
+          className="h-full sm:w-full"
+          {...(!isMobile && { useFillMode: true })}
         />
       )
     }

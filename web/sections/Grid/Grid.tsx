@@ -25,6 +25,7 @@ const Grid = forwardRef<HTMLElement, GridProps>(function Grid({ data, anchor, cl
         break
     }
   }
+
   return (
     <section
       ref={ref}
@@ -35,7 +36,7 @@ const Grid = forwardRef<HTMLElement, GridProps>(function Grid({ data, anchor, cl
         mx-auto
         w-full
         grid
-        auto-rows-[minmax(350px,auto)]
+        auto-rows-max
         lg:auto-rows-[minmax(auto,600px)]
         grid-cols-1
         lg:grid-cols-3

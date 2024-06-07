@@ -25,8 +25,9 @@ const GridTextBlock = ({ data, className }: GridTextBlockProps) => {
 
   return (
     <div
-      className={`p-10 lg:p-12 relative w-full h-full flex flex-col items-center justify-center
-       ${theme !== null ? backgroundUtility : ''} overflow-y-scroll`}
+      className={`p-10 lg:p-12 relative w-full h-full flex flex-col items-center justify-center overflow-y-auto ${
+        theme !== null ? backgroundUtility : ''
+      }`}
     >
       {content && (
         <div className="flex flex-col justify-center">
