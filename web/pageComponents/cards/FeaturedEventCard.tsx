@@ -7,7 +7,7 @@ import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import type { CSSProperties } from 'react'
-import type { FeaturedContentData } from '../../types/types'
+import type { FeaturedContentData } from '../../types/index'
 import type { PortableTextBlock } from '@portabletext/types'
 
 const { Title, Media, Header, Text, Action, Arrow, CardLink } = Card

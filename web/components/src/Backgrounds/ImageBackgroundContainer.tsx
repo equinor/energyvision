@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import { ImageBackground } from '../../../types/types'
+import { ImageBackground } from '../../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 

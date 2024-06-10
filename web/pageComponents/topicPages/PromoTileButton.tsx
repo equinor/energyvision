@@ -1,4 +1,4 @@
-import { LinkData } from '../../types/types'
+import { LinkData } from '../../types/index'
 import { ButtonLink } from '../shared/ButtonLink'
 import { Card, Link } from '@components'
 import { getUrlFromAction } from '../../common/helpers'

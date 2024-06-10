@@ -11,7 +11,7 @@ import AddToCalendar from '../topicPages/AddToCalendar'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 
-import type { EventCardData, EventDateType } from '../../types/types'
+import type { EventCardData, EventDateType } from '../../types/index'
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
 

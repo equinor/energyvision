@@ -5,7 +5,7 @@ import type {
   EventCardData,
   PromotionType,
   EventPromotionSettings,
-} from '../../../types/types'
+} from '../../../types/index'
 import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
 import { Carousel } from '../../shared/Carousel'

@@ -1,7 +1,7 @@
 import { Heading } from '@components'
 import styled from 'styled-components'
 import NewsCard from '../cards/NewsCard'
-import type { CardData } from '../../types/types'
+import type { CardData } from '../../types/index'
 import { FormattedMessage } from 'react-intl'
 import { Carousel } from '../shared/Carousel'
 

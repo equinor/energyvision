@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { IFrameData } from '../../types/types'
+import type { IFrameData } from '../../types/index'
 import { BackgroundContainer, FigureCaption } from '@components'
 import CoreIFrame from '../shared/iframe/IFrame'
 import { ButtonLink } from '../shared/ButtonLink'

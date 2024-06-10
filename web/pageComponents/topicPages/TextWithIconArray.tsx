@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Img from 'next/image'
 
 import IngressText from '../shared/portableText/IngressText'
-import type { TextWithIconArrayData, TextWithIconItem, ImageWithAlt } from '../../types/types'
+import type { TextWithIconArrayData, TextWithIconItem, ImageWithAlt } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 
 const Container = styled.div<{ items: number }>`

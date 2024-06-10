@@ -5,7 +5,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { arrow_forward, external_link, arrow_down } from '@equinor/eds-icons'
 import styled, { css } from 'styled-components'
 import { outlineTemplate, Tokens } from '@utils'
-import type { LinkType } from '../../../types/types'
+import type { LinkType } from '../../../types/index'
 import { default as NextLink } from 'next/link'
 
 const { outline } = Tokens

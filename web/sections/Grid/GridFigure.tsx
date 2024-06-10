@@ -1,5 +1,5 @@
 import Image from '../../pageComponents/shared/SanityImage'
-import type { FigureData } from '../../types/types'
+import type { FigureData } from '../../types/index'
 
 type GridFigureProps = {
   data: FigureData

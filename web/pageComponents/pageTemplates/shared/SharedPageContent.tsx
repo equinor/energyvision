@@ -54,7 +54,7 @@ import {
   GridData,
   CampaignBannerData,
   DesignOptions,
-} from '../../../types/types'
+} from '../../../types/index'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'

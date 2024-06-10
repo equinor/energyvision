@@ -1,5 +1,5 @@
 import { ButtonLink } from '@components'
-import type { LinkData } from '../../../types/types'
+import type { LinkData } from '../../../types/index'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../../lib/localization'
 

@@ -1,6 +1,6 @@
 import { getEventDates } from '../../../common/helpers/dateUtilities'
 import styled from 'styled-components'
-import type { EventCardData, EventPromotionSettings } from '../../../types/types'
+import type { EventCardData, EventPromotionSettings } from '../../../types/index'
 import EventsCard from '../../cards/EventsCard'
 import { Carousel } from '../../shared/Carousel'
 import { BackgroundContainer } from '@components/Backgrounds'

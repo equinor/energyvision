@@ -2,7 +2,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Img from 'next/image'
-import { GridTeaserData } from '../../types/types'
+import { GridTeaserData } from '../../types/index'
 import { urlFor } from '../../common/helpers'
 import { RowType } from './mapGridContent'
 import GridLinkArrow from './GridLinkArrow'

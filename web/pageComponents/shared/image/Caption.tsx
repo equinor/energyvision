@@ -1,4 +1,4 @@
-import type { CaptionData } from 'types/types'
+import type { CaptionData } from 'types/index'
 import { FigureCaption } from '@components'
 import { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'

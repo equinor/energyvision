@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { GridData, GridRowType } from '../../types/types'
+import { GridData, GridRowType } from '../../types/index'
 import { HTMLAttributes, forwardRef } from 'react'
 import Span3 from './Span3'
 import Span2And1 from './Span2And1'

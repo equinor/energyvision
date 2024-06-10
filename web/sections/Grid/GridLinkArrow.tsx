@@ -4,7 +4,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { BaseLink } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
-import { LinkData } from '../../types/types'
+import { LinkData } from '../../types/index'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
 
 type GridLinkArrowProps = {

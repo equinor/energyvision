@@ -2,7 +2,7 @@ import { useHits, UseHitsProps } from 'react-instantsearch'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MagazineCard from '../../cards/MagazineCard'
-import type { MagazineCardData } from '../../../types/types'
+import type { MagazineCardData } from '../../../types/index'
 import { forwardRef } from 'react'
 
 const HitList = styled.div`
