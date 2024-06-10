@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/types'
+import { VideoPlayerCarouselData, VideoPlayerRatios } from '../../types/index'
 import { BackgroundContainer } from '@components'
 import TitleText from './portableText/TitleText'
 import { VideoJsComponent } from './VideoPlayer'

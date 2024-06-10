@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link, List, Menu } from '@components'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
-import type { SimpleGroupData } from '../../../../types/types'
+import type { SimpleGroupData } from '../../../../types/index'
 
 const { SubMenu } = Menu
 const { Item } = List

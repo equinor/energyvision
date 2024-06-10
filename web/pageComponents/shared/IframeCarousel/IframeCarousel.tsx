@@ -3,7 +3,7 @@
 import { BackgroundContainer, FigureCaption } from '@components'
 import styled from 'styled-components'
 import TitleText from '../portableText/TitleText'
-import type { IframeCarouselData } from '../../../types/types'
+import type { IframeCarouselData } from '../../../types/index'
 
 import 'swiper/css'
 import 'swiper/css/pagination'

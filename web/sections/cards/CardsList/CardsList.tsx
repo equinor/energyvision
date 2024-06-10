@@ -1,4 +1,4 @@
-import type { CardsListData } from '../../../types/types'
+import type { CardsListData } from '../../../types/index'
 import CardItem from './CardItem'
 import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
 import { Heading } from '../../../core/Typography'

@@ -1,5 +1,5 @@
 import { PortableTextBlock } from '@portabletext/types'
-import { BackgroundColours, HeroType, HeroTypes, LoopingVideoData } from '../../../types/types'
+import { BackgroundColours, HeroType, HeroTypes, LoopingVideoData } from '../../../types/index'
 import { DefaultHero } from '../../shared/Hero/DefaultHero'
 import { FiftyFiftyHero } from '../../shared/Hero/FiftyFiftyHero'
 import { FullImageHero } from '../../shared/Hero/FullImageHero'

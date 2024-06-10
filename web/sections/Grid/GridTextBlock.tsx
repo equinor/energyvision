@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers'
 import GridLinkArrow from './GridLinkArrow'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
-import { GridTextBlockData } from '../../types/types'
+import { GridTextBlockData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 type GridTextBlockProps = {

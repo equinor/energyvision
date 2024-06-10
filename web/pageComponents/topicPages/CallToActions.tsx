@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { List } from '@components'
-import type { LinkData } from '../../types/types'
+import type { LinkData } from '../../types/index'
 import { ButtonLink } from '../shared/ButtonLink'
 import { ReadMoreLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'

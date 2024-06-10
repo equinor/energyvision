@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 import FeaturedEventCard from '../../cards/FeaturedEventCard'
-import type { FeaturedContentData } from '../../../types/types'
+import type { FeaturedContentData } from '../../../types/index'
 
 const Promoted = styled.div`
   margin-top: var(--space-medium);

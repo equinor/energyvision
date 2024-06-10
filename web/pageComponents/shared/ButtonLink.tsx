@@ -2,7 +2,7 @@ import { ButtonLink as Link, ButtonLinkProps } from '@components'
 import { LinkProps } from 'next/link'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
-import type { LinkData } from '../../types/types'
+import type { LinkData } from '../../types/index'
 
 type Props = {
   action: LinkData

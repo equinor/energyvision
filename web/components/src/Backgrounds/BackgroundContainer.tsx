@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
 import { normal, inverted } from '../../../styles/themes'
-import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/types'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/index'
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'

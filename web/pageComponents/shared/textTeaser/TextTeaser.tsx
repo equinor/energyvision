@@ -2,7 +2,7 @@ import { Teaser as EnvisTeaser, BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import IngressText from '../portableText/IngressText'
 import TitleText from '../portableText/TitleText'
-import type { TextTeaserData } from '../../../types/types'
+import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
 

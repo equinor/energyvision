@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { IFrameData } from '../../../types/types'
+import type { IFrameData } from '../../../types/index'
 import { BackgroundContainer } from '@components'
 import TitleText from '../portableText/TitleText'
 import IFrame from './IFrame'

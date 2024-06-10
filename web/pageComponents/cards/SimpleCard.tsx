@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Image, { Ratios } from '../shared/SanityImage'
 
 import { Card, Heading } from '@components'
-import type { MenuLinkData, SubMenuGroupLinkData } from '../../types/types'
+import type { MenuLinkData, SubMenuGroupLinkData } from '../../types/index'
 
 const { Header, Action, Arrow, CardLink, Media } = Card
 

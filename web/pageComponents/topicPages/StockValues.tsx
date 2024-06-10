@@ -4,7 +4,7 @@ import * as xml2js from 'xml2js'
 import styled from 'styled-components'
 import { BackgroundContainer, FormattedDate } from '@components'
 import { FormattedMessage } from 'react-intl'
-import type { StockValuesData } from '../../types/types'
+import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 
 const fetchData = async (url: string) => {

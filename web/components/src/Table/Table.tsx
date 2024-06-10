@@ -1,7 +1,7 @@
 import { forwardRef, CSSProperties } from 'react'
 import { Table as EdsTable, TableProps as EdsTableProps } from '@equinor/eds-core-react'
 import styled, { ThemeProvider } from 'styled-components'
-import { TableThemes } from '../../../types/types'
+import { TableThemes } from '../../../types/index'
 
 type ThemeType = {
   headerBackground: string

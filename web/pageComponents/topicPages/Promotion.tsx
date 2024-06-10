@@ -4,7 +4,7 @@ import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
-import type { PromotionData } from '../../types/types'
+import type { PromotionData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 
 const Wrapper = styled.div`

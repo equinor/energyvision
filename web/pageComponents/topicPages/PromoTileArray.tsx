@@ -1,6 +1,6 @@
 import Card from '@sections/cards/Card'
 import styled from 'styled-components'
-import type { PromoTileArrayData, PromoTileData } from '../../types/types'
+import type { PromoTileArrayData, PromoTileData } from '../../types/index'
 import { Ratios } from '../shared/SanityImage'
 import { Carousel } from '../shared/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'

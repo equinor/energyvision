@@ -6,7 +6,7 @@ import Image, { Ratios } from '../shared/SanityImage'
 import RichText from '../shared/portableText/RichText'
 
 import type { PortableTextBlock } from '@portabletext/types'
-import type { CardData } from '../../types/types'
+import type { CardData } from '../../types/index'
 
 const { Title, Header, Text, Action, Arrow, Media, CardLink } = Card
 

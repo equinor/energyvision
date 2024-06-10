@@ -4,7 +4,7 @@ import EventCard from '../../cards/EventsCard'
 import NewsCard from '../../cards/NewsCard'
 import TopicPageCard from '../../cards/TopicPageCard'
 
-import type { PeopleCardData, EventCardData, CardData } from '../../../types/types'
+import type { PeopleCardData, EventCardData, CardData } from '../../../types/index'
 
 const LandscapeWrapper = styled.div`
   /* max-width: 350px; */

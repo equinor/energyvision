@@ -5,7 +5,7 @@ import { Heading, Text } from '@components'
 import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import BackgroundImage from '../errorPages/BackgroundImage'
-import type { ErrorPageData } from '../../types/types'
+import type { ErrorPageData } from '../../types/index'
 import { metaTitleSuffix } from '../../languages'
 
 const TextWrapper = styled.div`

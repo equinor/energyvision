@@ -2,7 +2,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@components'
 import Image from '../../../SanityImage'
-import type { ImageWithAlt } from '../../../../../types/types'
+import type { ImageWithAlt } from '../../../../../types/index'
 
 type Layout = 'full' | 'left' | 'right'
 
