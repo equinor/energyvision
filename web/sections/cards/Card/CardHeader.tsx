@@ -2,6 +2,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import { Heading, Typography, TypographyVariants } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Variants } from './Card'
 
 export type CardHeaderProps = {
   /** Title string content */
@@ -25,7 +26,7 @@ export type CardHeaderProps = {
   /** Variant to use
    * @default primary
    */
-  variant?: 'primary' | 'secondary' | 'compact'
+  variant?: Variants
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -51,12 +52,14 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     primary: `  max-md:text-lg`,
     secondary: `  max-md:text-lg`,
     compact: `max-md:text-md`,
+    single: `text-lg leading-planetary`,
   }
 
   const titleClassNames = twMerge(
     `group-hover/card:underline
     group-focus-visible/card:underline
     ${variantTitle[variant]}
+    max-w-prose
     text-pretty
   `,
     titleClassName,

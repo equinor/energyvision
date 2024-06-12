@@ -6,47 +6,14 @@ import type {
   EventPromotionSettings,
 } from '../../../types/types'
 import MultipleEventCards from './MultipleEventCards'
-import Card from '@sections/cards/Card'
-import { FormattedDate } from '@components/FormattedDateTime'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+
 import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import { EventCard } from '@sections/cards/EventCard'
 import { closestIndexTo } from 'date-fns'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import { twMerge } from 'tailwind-merge'
 
 type CardProps = CardData | PeopleCardData | EventCardData
-
-const PromoCard = ({ slug, title, ingress, publishDateTime, heroImage, id, type }: CardData) => {
-  const isMobile = useMediaQuery(`(max-width: 768px)`)
-
-  return (
-    <li className="" key={id}>
-      <Card href={slug} image={heroImage?.image} className="w-full h-full" key={id}>
-        <Card.Content>
-          <Card.Header
-            {...(typeof title === 'string'
-              ? {
-                  title: title,
-                }
-              : {
-                  titleBlock: title,
-                })}
-            {...(publishDateTime && {
-              eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
-            })}
-          />
-          {ingress && (
-            <Blocks
-              value={ingress}
-              className={`grow ${type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'}`}
-              clampLines={isMobile ? 3 : 5}
-            />
-          )}
-        </Card.Content>
-      </Card>
-    </li>
-  )
-}
 
 const MultiplePromotions = ({
   data,
@@ -64,13 +31,21 @@ const MultiplePromotions = ({
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return <PromoCard key={data.id} {...data} />
+        return (
+          <li key={data?.id}>
+            <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
+          </li>
+        )
       case 'topics':
       case 'magazine':
-        return <PromoCard key={data.id} {...data} />
+        return (
+          <li key={data?.id}>
+            <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
+          </li>
+        )
       case 'people':
         return (
-          <li key={data.id} className="">
+          <li key={data.id} className="flex justify-center">
             <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
@@ -120,16 +95,16 @@ const MultiplePromotions = ({
 
   return (
     <ul
-      className={`
+      className={twMerge(`
       max-lg:w-full
       grid 
       ${getRowGap(variant)}
-    justify-center
-    content-center
-    grid-cols-1
-    auto-rows-auto
-    md:grid-cols-3
-    md:grid-rows-1`}
+      justify-center
+      content-center
+      grid-cols-1
+      auto-rows-auto
+      md:grid-cols-3
+      md:grid-rows-1`)}
     >
       <>
         {data.map((item) => {
