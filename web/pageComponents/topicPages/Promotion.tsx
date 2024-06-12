@@ -2,11 +2,10 @@ import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import IngressText from '../shared/portableText/IngressText'
-import type { EventCardData, PromotionData } from '../../types/types'
+import type { PromotionData } from '../../types/types'
 import { twMerge } from 'tailwind-merge'
 import { ButtonLink } from '@core/Link'
 import { Heading } from '@core/Typography'
-import { EventCard } from '@sections/cards/EventCard'
 
 const Promotion = ({
   data,
@@ -29,7 +28,8 @@ const Promotion = ({
       <div
         className={twMerge(
           `pb-page-content px-4 ${
-            variant === 'promoteEvents' && (promoteSingleUpcomingEvent || promotions?.length === 1)
+            (variant === 'promoteEvents' && (promoteSingleUpcomingEvent || promotions?.length === 1)) ||
+            (variant === 'promotePeople' && promotions?.length === 1)
               ? 'lg:px-layout-lg'
               : 'lg:px-layout-sm'
           } max-w-viewport mx-auto flex flex-col items-center`,
@@ -44,14 +44,7 @@ const Promotion = ({
           </div>
         )}
         {promotions?.length === 1 ? (
-          /*  TODO: More than just people and events */
-          <>
-            {variant === 'promoteEvents' ? (
-              <EventCard data={promotions[0] as EventCardData} hasSectionTitle={!!title} variant="single" />
-            ) : (
-              <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
-            )}
-          </>
+          <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <MultiplePromotions
             data={promotions}

@@ -34,7 +34,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   const { title, location, eventDate, slug, ingress } = data
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-  const metaClassNames = `h-full flex gap-sm items-center py-2`
+  const metaClassNames = `h-full grid grid-cols-[24px_auto] gap-sm items-center py-2`
 
   return (
     <div
@@ -75,14 +75,20 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         )}
         {location && (
           <div className={metaClassNames}>
-            <Icon data={world} color={'currentColor'} className="text-norwegian-woods-100" /> {location}
+            <Icon
+              data={world}
+              color={'currentColor'}
+              style={{ fontSize: 'var(--typeScale-0)' }}
+              className="text-norwegian-woods-100"
+            />
+            <span className="text-xs">{location}</span>
           </div>
         )}
 
         {start && end ? (
-          <div className={metaClassNames}>
+          <div className={`h-full flex gap-1 items-center py-2`}>
             <FormattedTime icon datetime={start} small />
-            <span>-</span>
+            <span className="w-max">-</span>
             <FormattedTime datetime={end} timezone small />
           </div>
         ) : (

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import NewsCard from '../cards/NewsCard'
 import TitleText from '../shared/portableText/TitleText'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/types'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
 
 const StyledHeading = styled(TitleText)`
   text-align: var(--promotion-titleAlign, center);
@@ -54,7 +54,7 @@ const NewsList = ({
       {title && <StyledHeading value={title} level="h2" size="xl" />}
       <Articles {...rest}>
         {pagedArticles.map((article) => (
-          <NewsCard key={article.id} data={article} />
+          <PromotionCard key={article.id} data={article} hasSectionTitle={!!title} />
         ))}
       </Articles>
       <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />

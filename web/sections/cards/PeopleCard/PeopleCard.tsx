@@ -11,6 +11,7 @@ import { SocialProfileJsonLd } from 'next-seo'
 export type PeopleCardProps = {
   data: PeopleCardData
   hasSectionTitle: boolean
+  variant?: 'default' | 'single'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -18,12 +19,18 @@ export type PeopleCardProps = {
  * Remember to wrap in ul and li if in a list.
  * */
 const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCard(
-  { data, className = '', hasSectionTitle = true, ...rest },
+  { data, className = '', variant = 'default', hasSectionTitle = true, ...rest },
   ref,
 ) {
   const { name, image, title, department, isLink, phone, email, cv, enableStructuredMarkup } = data
   const cvUrl = cv ? getUrlFromAction(cv) : ''
   const linkClassNames = 'text-norwegian-woods-100 no-underline hover:underline text-sm'
+
+  const variantClassNames = {
+    default: `grid-cols-1 grid-rows-[max-content_1fr] max-w-[300px] justify-items-center items-start gap-0`,
+    single: `grid-cols-[30%_60%] grid-rows-1 gap-4 lg:gap-8 items-start lg:items-center`,
+  }
+
   return (
     <>
       <div
@@ -32,14 +39,9 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
           `h-full
         w-full
         grid
-        grid-cols-1
-        grid-rows-[max-content_1fr_auto]
-        justify-items-center
-        items-start
-        gap-0
+        ${variantClassNames[variant]}
         shadow-card
         rounded-sm
-        max-w-[300px]
         px-6
         py-8
         bg-white-100
@@ -56,7 +58,11 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
         {...rest}
       >
         {image && (
-          <div className="relative size-[150px] box-content mb-10">
+          <div
+            className={`relative ${variant === 'single' ? 'lg:p-4' : 'size-[150px]'} box-content ${
+              variant === 'single' ? '' : 'mb-10'
+            }`}
+          >
             <Image
               image={image}
               maxWidth={400}
@@ -66,39 +72,53 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             />
           </div>
         )}
-        <div className="flex flex-col items-center justify-start">
-          <Typography as={hasSectionTitle ? 'h3' : 'h2'} variant="sm" className="font-medium mb-4 text-center">
-            {name}
-          </Typography>
-          {title && <div className="text-sm text-center">{title}</div>}
-          {department && <div className="text-sm text-center">{department}</div>}
-        </div>
-
-        <div className="flex flex-col items-center gap-2 pt-6">
-          {isLink && cv && cvUrl ? (
-            <ButtonLink
-              href={cvUrl}
-              aria-label={cv?.ariaLabel}
-              variant="outlined"
-              className="text-center"
-              locale={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
+        <div className={`grid grid-cols-1 grid-rows-[1fr_auto]`}>
+          <div
+            className={`flex flex-col ${
+              variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
+            } max-w-prose`}
+          >
+            <Typography
+              as={hasSectionTitle ? 'h3' : 'h2'}
+              variant={`${variant === 'single' ? 'md' : 'sm'}`}
+              className="font-medium mb-4"
             >
-              {cv?.label}
-            </ButtonLink>
-          ) : (
-            <>
-              {email && (
-                <BaseLink href={`mailto:${email}`} className={linkClassNames}>
-                  {email}
-                </BaseLink>
-              )}
-              {phone && (
-                <BaseLink href={`tel:${phone}`} className={linkClassNames}>
-                  {phone}
-                </BaseLink>
-              )}
-            </>
-          )}
+              {name}
+            </Typography>
+            {title && <div className="text-sm text-pretty">{title}</div>}
+            {department && <div className="mt-2 text-sm text-pretty">{department}</div>}
+          </div>
+
+          <div
+            className={`flex flex-col ${
+              variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
+            }  gap-2 pt-6`}
+          >
+            {isLink && cv && cvUrl ? (
+              <ButtonLink
+                href={cvUrl}
+                aria-label={cv?.ariaLabel}
+                variant="outlined"
+                className=""
+                locale={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
+              >
+                {cv?.label}
+              </ButtonLink>
+            ) : (
+              <>
+                {email && (
+                  <BaseLink href={`mailto:${email}`} className={linkClassNames}>
+                    {email}
+                  </BaseLink>
+                )}
+                {phone && (
+                  <BaseLink href={`tel:${phone}`} className={linkClassNames}>
+                    {phone}
+                  </BaseLink>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
       {enableStructuredMarkup && (

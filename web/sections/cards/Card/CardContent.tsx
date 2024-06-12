@@ -1,12 +1,13 @@
 import { ArrowRight } from '../../../icons'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Variants } from './Card'
 
 export type CardContentProps = {
   /** Variant to use
    * @default primary
    */
-  variant?: 'primary' | 'secondary' | 'compact'
+  variant?: Variants
   /** Overriding styles for the icon  */
   iconClassName?: string
   /** Take care of the arrow yourself */
@@ -31,11 +32,13 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     primary: `${commonStyling} flex-col items-start`,
     secondary: `${commonStyling} pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
     compact: `pb-4 pt-2`,
+    single: `${commonStyling} px-10 flex-col items-start`,
   }
   const variantLinkClassNames = {
     primary: `self-end mt-auto max-lg:hidden`,
     secondary: `max-lg:hidden`,
     compact: `max-xl:hidden`,
+    single: 'self-end mt-auto max-lg:hidden',
   }
   const iconClassNames = twMerge(
     `
@@ -65,9 +68,9 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
       )}
       {...rest}
     >
-      {variant === 'secondary' ? (
+      {variant === 'secondary' || variant === 'single' ? (
         <>
-          <div>{children}</div>
+          <div className={`${variant === 'single' ? 'pr-12 flex flex-col gap-12' : ''}`}>{children}</div>
           {!noArrow && <ArrowRight className={iconClassNames} />}
         </>
       ) : (
