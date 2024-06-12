@@ -31,7 +31,7 @@
   display: block !important;
 }
 
-.vjs-paused:not(.vjs-has-started) .vjs-control-bar {
+.vjs-paused:not(.vjs-has-started).vjs-envis-hasPlayButton .vjs-control-bar {
   display: none;
 }
 

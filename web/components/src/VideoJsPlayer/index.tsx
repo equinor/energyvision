@@ -57,6 +57,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   }, [player])
 
   const getPlayer = (node: Element) => {
+    console.log('controls', controls)
     const player = videojs(
       node,
       {
@@ -118,8 +119,8 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       {/* eslint-disable-next-line */}
       <video
         ref={measuredRef}
-        data-big-button={playButton}
-        className={`video-js vjs-layout-large vjs-fill vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''}`}
+        className={`video-js vjs-layout-large vjs-fill vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''}
+        ${playButton ? 'vjs-envis-hasPlayButton' : ''}`}
         poster={poster}
       ></video>
       {!playButton && !controls && autoPlay && (
@@ -153,7 +154,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
           hover:bg-black-100 
           `}
           >
-            <div className="text-md leading-none mt-1 text-white-100">{isPlaying ? '⏵' : '⏸'}</div>
+            <div className="text-md leading-none mt-1 text-white-100">{isPlaying ? '⏸' : '⏵'}</div>
           </div>
         </button>
       )}
