@@ -23,8 +23,7 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile
         <VideoJsComponent
           key={data.id}
           {...(data as VideoPlayerData)}
-          className="h-full sm:w-full"
-          {...(!isMobile && { useFillMode: true })}
+          className={`${isMobile ? '' : 'h-full sm:w-full'}`}
         />
       )
     }

@@ -10,7 +10,7 @@ export type Span3Props = {
 
 const Span3 = forwardRef<HTMLDivElement, Span3Props>(function Span3({ data, className = '', ...rest }, ref) {
   const isMobile = useMediaQuery(`(max-width: 800px)`)
-  const minHeight = data?.content?.type === 'videoPlayer' ? '' : 'min-h-[350px]'
+  const minHeight = data?.content?.type === 'videoPlayer' ? '' : 'min-h-[350px] lg:min-h-[600px]'
 
   return (
     <div
