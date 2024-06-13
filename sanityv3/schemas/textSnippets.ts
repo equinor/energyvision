@@ -709,6 +709,21 @@ const snippets: textSnippet = {
     group: groups.others,
     hidden: Flags.IS_SATELLITE,
   },
+  footnotes: {
+    title: 'Footnotes',
+    defaultValue: 'Footnotes',
+    group: groups.others,
+  },
+  footnote: {
+    title: 'Footnote',
+    defaultValue: 'Footnote',
+    group: groups.others,
+  },
+  back_to_content: {
+    title: 'Back to content',
+    defaultValue: 'Back to content',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

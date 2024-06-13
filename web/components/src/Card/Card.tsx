@@ -1,11 +1,8 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { outlineTemplate, Tokens } from '@utils'
 import { LandscapeCard } from './LandscapeCard'
 import { PortraitCard } from './PortraitCard'
 import { default as NextLink } from 'next/link'
-
-const { outline } = Tokens
 
 export type CardProps = {
   /** What kind of card is this (we'll probably add more options to this list) */
@@ -19,9 +16,6 @@ export const CardLink = styled(NextLink)`
   color: inherit;
   &:hover {
     cursor: pointer;
-  }
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
   }
 `
 

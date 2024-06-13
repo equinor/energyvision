@@ -131,6 +131,7 @@ export type PeopleCardData = {
 export type EventPromotionSettings = {
   manuallySelectEvents: boolean
   promotePastEvents: boolean
+  promoteSingleUpcomingEvent: boolean
   pastEventsCount?: number
 }
 
@@ -141,6 +142,7 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  ingress?: PortableTextBlock[]
 }
 
 export type NewsSchema = {
@@ -569,6 +571,7 @@ export type PromotionData = {
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
   }
+  viewAllLink?: LinkData
   useHorizontalScroll?: boolean | undefined
   designOptions?: DesignOptions
 }
@@ -893,15 +896,4 @@ export type GridTeaserData = {
   imagePosition?: TeaserImagePosition
   action?: LinkData
   theme?: number
-}
-export type PodcastTeaserData = {
-  id: string
-  type: 'podcastTeaser'
-  spotifyLink?: string
-  appleLink?: string
-  linkTitle?: string
-  podcastName?: PortableTextBlock[]
-  podcastEpisode?: PortableTextBlock[]
-  image: ImageWithAlt
-  designOptions: DesignOptions
 }

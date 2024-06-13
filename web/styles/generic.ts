@@ -1,10 +1,11 @@
 import { css } from 'styled-components'
 
+//    box-sizing: inherit;
 export const generic = css`
   *,
   *:before,
   *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
   }
 
   * {
