@@ -13,7 +13,7 @@ const FeaturedContent = ({ data }: Props) => {
   //To destructure and get rid of 2 but keep rest
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { routeContentType, type, ...restData } = data
-  const containerClassName = 'hidden xl:block pl-6 border-l border-autumn-storm-50 w-[20vw]'
+  const containerClassName = 'hidden xl:block pl-6 border-l border-autumn-storm-50 w-[16vw]'
 
   if (isEvent(data)) {
     return (
@@ -26,6 +26,7 @@ const FeaturedContent = ({ data }: Props) => {
             } as EventCardData
           }
           hasSectionTitle={false}
+          className="h-fit"
         />
       </div>
     )
@@ -33,7 +34,7 @@ const FeaturedContent = ({ data }: Props) => {
 
   return (
     <div className={containerClassName}>
-      <PromotionCard data={data} hasSectionTitle={false} />
+      <PromotionCard data={data} hasSectionTitle={false} className="h-fit" />
     </div>
   )
 }
