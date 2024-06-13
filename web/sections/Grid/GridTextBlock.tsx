@@ -34,7 +34,7 @@ const GridTextBlock = ({ data, className }: GridTextBlockProps) => {
           <Blocks
             value={content}
             proseClassName="prose-campaign"
-            className={`flex flex-col gap-sm ${contentClassNames} ${theme !== null ? textUtility : ''}`}
+            className={`flex flex-col gap-sm ${contentClassNames} ${theme !== null ? textUtility : ''} text-balance`}
           />
         </div>
       )}
