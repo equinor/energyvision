@@ -1,8 +1,8 @@
 const variants = {
   heading: {
-    h1: 'text-slate-80 dark:text-white-100 text-3xl leading-earthy font-normal pb-8',
-    h2: 'text-slate-80 dark:text-white-100 text-2xl leading-cloudy font-normal pb-8',
-    h3: 'text-slate-80 dark:text-white-100 text-xl leading-inherit font-normal pb-0',
+    h1: 'text-slate-80 dark:text-white-100 text-3xl leading-earthy font-normal pb-11 my-0',
+    h2: 'text-slate-80 dark:text-white-100 text-2xl leading-cloudy font-normal pb-8 my-0',
+    h3: 'text-slate-80 dark:text-white-100 text-xl leading-inherit font-normal pb-0 my-0',
     h4: 'text-slate-80 dark:text-white-100 text-lg leading-inherit font-normal pb-0',
     h5: 'text-slate-80 dark:text-white-100 text-md leading-inherit font-normal pb-0',
     h6: 'text-slate-80 dark:text-white-100 text-base leading-inherit font-normal pb-0',

@@ -13,7 +13,7 @@ const SharedTitle = ({ sharedTitle, background }: SharedTitleProps) => {
         value={sharedTitle}
         as="h1"
         variant="3xl"
-        className="py-8 px-layout-lg max-w-viewport mx-auto text-pretty"
+        className="py-11 my-0 px-layout-lg max-w-viewport mx-auto text-pretty"
       />
     </BackgroundContainer>
   )
