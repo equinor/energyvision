@@ -72,7 +72,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             />
           </div>
         )}
-        <div className={`grid grid-cols-1 grid-rows-[1fr_auto]`}>
+        <div className={`h-full grid grid-cols-1 grid-rows-[1fr_auto]`}>
           <div
             className={`flex flex-col ${
               variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
