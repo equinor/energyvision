@@ -38,7 +38,13 @@ const MAGAZINE_INDEX = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const SEARCH = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const EVENT = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const FORMS = [...GLOBAL_PROD, ...GLOBAL_DEV]
+
+const SUBSCRIBE_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const CAREERS_CONTACT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const CONTACT_EQUINOR_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const ORDER_REPORT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const CAREER_FAIR_AND_VISITS_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV, 'brazil']
+
 const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* LANDING_PAGE requires FANCY_MENU to work */
 const LANDING_PAGE = [...GLOBAL_PROD, ...GLOBAL_DEV]
@@ -62,7 +68,19 @@ export default (dataset) => ({
   HAS_LOCAL_NEWS: LOCAL_NEWS.includes(dataset),
   HAS_SEARCH: SEARCH.includes(dataset),
   HAS_EVENT: EVENT.includes(dataset),
-  HAS_FORMS: FORMS.includes(dataset),
+  HAS_FORMS:
+    CAREERS_CONTACT_FORM.includes(dataset) ||
+    CAREER_FAIR_AND_VISITS_FORM.includes(dataset) ||
+    CONTACT_EQUINOR_FORM.includes(dataset) ||
+    ORDER_REPORT_FORM.includes(dataset) ||
+    SUBSCRIBE_FORM.includes(dataset),
+
+  HAS_SUBSCRIBE_FORM: SUBSCRIBE_FORM.includes(dataset),
+  HAS_CAREERS_CONTACT_FORM: CAREERS_CONTACT_FORM.includes(dataset),
+  HAS_CAREER_FAIR_AND_VISITS_FORM: CAREER_FAIR_AND_VISITS_FORM.includes(dataset),
+  HAS_ORDER_REPORT_FORM: ORDER_REPORT_FORM.includes(dataset),
+  HAS_CONTACT_EQUINOR_FORM: CONTACT_EQUINOR_FORM.includes(dataset),
+
   HAS_FANCY_MENU: FANCY_MENU.includes(dataset),
   /* LANDING_PAGE requires FANCY_MENU to work */
   HAS_LANDING_PAGE: FANCY_MENU.includes(dataset) && LANDING_PAGE.includes(dataset),

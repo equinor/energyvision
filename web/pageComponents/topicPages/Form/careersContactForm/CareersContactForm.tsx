@@ -12,9 +12,9 @@ import {
   FormSubmitFailureBox,
 } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
-import FriendlyCaptcha from './FriendlyCaptcha'
+import FriendlyCaptcha from '../FriendlyCaptcha'
 import styled from 'styled-components'
-import { CareersContactFormCatalogType } from '../../../types'
+import getCatalogType from './getRequestType'
 
 type FormValues = {
   name: string
@@ -43,7 +43,7 @@ const CareersContactForm = () => {
       body: JSON.stringify({
         data,
         frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        catalogType: getCatalog(data.category),
+        catalogType: getCatalogType(intl, data.category, data.candidateType),
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -52,18 +52,6 @@ const CareersContactForm = () => {
     })
     setSuccessfullySubmitted(res.status == 200)
     setServerError(res.status != 200)
-  }
-  const getCatalog = (category: string): CareersContactFormCatalogType | null => {
-    if (
-      category.includes(
-        intl.formatMessage({
-          id: 'careers_contact_form_suspected_recruitment_scam',
-          defaultMessage: 'Suspected recruitment scam',
-        }),
-      )
-    )
-      return 'suspectedRecruitmentScamRequest'
-    else return 'others'
   }
 
   const {
