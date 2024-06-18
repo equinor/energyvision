@@ -27,8 +27,8 @@
 .vjs-envis .vjs-big-play-button .vjs-icon-placeholder:before {
   @apply text-white-100 block w-fit h-fit relative text-2xl;
 }
-.vjs-paused.vjs-has-started .vjs-big-play-button {
-  display: block !important;
+.vjs-paused.vjs-has-started.vjs-envis-hasPlayButton .vjs-big-play-button {
+  display: block;
 }
 
 .vjs-paused:not(.vjs-has-started).vjs-envis-hasPlayButton .vjs-control-bar {
