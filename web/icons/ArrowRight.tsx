@@ -29,7 +29,7 @@ export const ArrowRight = forwardRef<SVGSVGElement, ArrowRightProps>(function Ar
       viewBox={`0 0 ${size} ${size}`}
       fill="currentColor"
       aria-hidden
-      className={twMerge(`h-full w-auto`, className)}
+      className={twMerge(``, className)}
       {...rest}
     >
       {Array.isArray(icon.svgPathData) ? (
