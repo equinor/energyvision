@@ -49,13 +49,14 @@ export const ReadMoreLink = forwardRef<HTMLAnchorElement, ReadMoreLinkProps>(fun
   }
   const iconClassNames = twMerge(
     `
+    size-arrow-right
     text-energy-red-100
     dark:text-white-100
     ml-2
     ${
       type === 'downloadableFile' || type === 'downloadableImage'
         ? 'group-hover:translate-y-0.5'
-        : '-translate-y-1 group-hover:translate-x-2'
+        : '-translate-y-0.5 group-hover:translate-x-2'
     }
     transition-all
     duration-300
