@@ -16,7 +16,7 @@ import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
+import Footnotes from '../shared/portableText/components/Footnotes/Footnotes'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
