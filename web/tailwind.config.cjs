@@ -235,7 +235,7 @@ module.exports = {
         '6xl': ['clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem))'],
       },
       size: {
-        'arrow-right': '1.6rem',
+        'arrow-right': '1.58rem',
       },
       fontWeight: {
         semibolder: 650,
