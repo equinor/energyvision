@@ -6,6 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 import { defaultColors } from '../defaultColors'
+import { FootnoteRenderer } from './FootnoteRenderer'
 
 export type BlockContentProps = {
   h2?: boolean
@@ -45,7 +46,7 @@ const round = (num: number) =>
     .replace(/\.0$/, '')
 export const em = (px: number, base: number) => `${round(px / base)}em`
 
-const SmallTextRender = (props: any) => {
+export const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
@@ -124,18 +125,20 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
           icon: EdsIcon(star_filled),
           fields: [
             {
+              name: 'marker',
+              title: 'Marker',
+              description: 'Enter the footnote marker as asteriks or number',
+              type: 'string',
+              validation: (Rule: Rule) => Rule.required(),
+            },
+            {
               name: 'text',
+              title: 'Text',
               type: 'array',
               of: [
                 {
                   type: 'block',
-                  styles: [
-                    {
-                      title: 'Small text',
-                      value: 'smallText',
-                      component: SmallTextRender,
-                    },
-                  ],
+                  styles: [],
                   lists: [],
                   marks: {
                     decorators: [
@@ -154,11 +157,16 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
                         component: SuperScriptRenderer,
                       },
                     ],
+                    annotations: [],
                   },
                 },
               ],
+              validation: (Rule: Rule) => Rule.required(),
             },
           ],
+          components: {
+            annotation: FootnoteRenderer,
+          },
         },
       ],
     },

@@ -11,4 +11,7 @@ export const generic = css`
   * {
     font-family: Equinor, 'Open Sans', sans-serif;
   }
+  html {
+    scroll-behavior: smooth;
+  }
 `

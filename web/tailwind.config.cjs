@@ -298,11 +298,16 @@ module.exports = {
           '0%, 100%': { opacity: '0' },
           '20%, 80%': { opacity: '1' },
         },
+        highlight: {
+          '0%': { background: 'theme(colors.transparent)' },
+          '10%,100%': { background: 'theme(colors.moss-green.50)' },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
+        highlightInOut: 'highlight 5s linear',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -441,6 +446,7 @@ module.exports = {
           },
         },
       ),
+        addVariant('target', '&:target'),
         addUtilities({
           '.envis-outline': {
             'outline-style': 'dashed',
