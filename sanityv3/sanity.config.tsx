@@ -11,7 +11,7 @@ import {
   Template,
 } from 'sanity'
 
-import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType } from 'sanity'
+import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentBadgeComponent } from 'sanity'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
@@ -31,6 +31,7 @@ import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 import { getMetaTitleSuffix } from '../satellitesConfig'
 import { defaultLanguage } from './languages'
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
+import { LangBadge } from './schemas/components/LangBadge'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -121,6 +122,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     },
     unstable_comments: {
       enabled: false,
+    },
+    badges: (prev: DocumentBadgeComponent[], context: any) => {
+      return i18n.schemaTypes.includes(context.schemaType) ? [LangBadge, ...prev] : prev
     },
   },
   auth: createAuthStore({
