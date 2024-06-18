@@ -43,10 +43,10 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   const iconClassNames = twMerge(
     `
+    size-arrow-right
     text-energy-red-100
     dark:text-white-100
     justify-self-end
-    max-h-[25px]
     ${iconRotation[type]}
     ${
       type === 'downloadableFile' || type === 'downloadableImage'

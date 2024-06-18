@@ -35,7 +35,9 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
   after:duration-300
   group-hover/card:after:w-full
   `
-  const iconClassNames = `text-energy-red-100
+  const iconClassNames = `
+    size-arrow-right
+    text-energy-red-100
     ${type === 'externalUrl' ? '-rotate-45' : ''}
     dark:text-white-100
     ml-2

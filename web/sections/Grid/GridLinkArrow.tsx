@@ -53,7 +53,7 @@ const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
             <span className="sr-only">{`${action.label} ${
               action.extension ? `(${action.extension.toUpperCase()})` : ''
             }`}</span>
-            <ArrowRight className={`w-10 h-10`} />
+            <ArrowRight className={`size-10`} />
           </BaseLink>
         </div>
       )}
