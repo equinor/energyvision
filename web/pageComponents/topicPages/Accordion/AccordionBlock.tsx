@@ -53,13 +53,14 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
               <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
             </div>
           )}
-          {Array.isArray(title) ? (
-            <Heading value={title} as="h2" variant="xl" className="mb-2" />
-          ) : (
-            <Typography as="h2" variant="xl" className="mb-2">
-              {title}
-            </Typography>
-          )}
+          {title &&
+            (Array.isArray(title) ? (
+              <Heading value={title} as="h2" variant="xl" className="mb-2" />
+            ) : (
+              <Typography as="h2" variant="xl" className="mb-2">
+                {title}
+              </Typography>
+            ))}
           {ingress && <IngressText value={ingress} />}
           {accordion && accordion.length > 0 && (
             <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
