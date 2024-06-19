@@ -93,7 +93,8 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     isSecret &&
       crossDatasetDuplicator({
         tool: true,
-        types: ['news', 'tag', 'countryTag'],
+        types: ['news', 'tag', 'countryTag', 'translation.metadata'],
+        follow: ['inbound'],
       }),
   ].filter((e) => e) as PluginOptions[],
 
