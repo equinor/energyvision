@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'
 import { AnchorLinkListData } from '../../types'
 import { Typography } from '../../core/Typography'
-import { ButtonLink } from '../../core/Link'
+import { BaseLink, ButtonLink, Link } from '../../core/Link'
 
 export type AnchorLinkListProps = {
   data: AnchorLinkListData
@@ -17,41 +17,41 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
   const { title, anchorList = [], columns } = data
 
   const getFlow = () => {
-    const commonGridStyling = 'grid justify-start'
+    const commonGridStyling = 'flex flex-wrap justify-stretch lg:grid justify-start'
     switch (columns) {
       case '3':
-        return `${commonGridStyling} grid-cols-3`
+        return `${commonGridStyling} lg:grid-cols-3`
       case '4':
-        return `${commonGridStyling} grid-cols-4`
+        return `${commonGridStyling} lg:grid-cols-4`
       case '5':
-        return `${commonGridStyling} grid-cols-5`
+        return `${commonGridStyling} lg:grid-cols-5`
       case '6':
-        return `${commonGridStyling} grid-cols-6`
+        return `${commonGridStyling} lg:grid-cols-6`
       default:
       case 'flex':
-        return 'flex flex-wrap justify-between'
+        return 'flex flex-wrap justify-stretch'
     }
   }
   return (
     <section
       ref={ref}
-      className={twMerge(`px-layout-lg pb-page-content max-w-viewport mx-auto flex flex-col items-center`, className)}
+      className={twMerge(`px-layout-lg pb-page-content max-w-viewport mx-auto flex flex-col`, className)}
       id={anchor}
       {...rest}
     >
       {title && (
-        <Typography variant="h4" as="h2">
+        <Typography variant="h3" as="h2" className="pb-8 text-center">
           {title}
         </Typography>
       )}
-      <ul className={`${getFlow()}  gap-y-8 gap-x-16`}>
+      <ul className={`${getFlow()}  gap-x-10 gap-y-8 lg:gap-y-10 lg:gap-x-12`}>
         {anchorList?.map((anchorLink) => {
           const anchor = anchorLink?.anchorReference ? `#${anchorLink?.anchorReference}` : ''
           return (
-            <li key={`anchor_link_${anchorLink?.id}`}>
-              <ButtonLink href={anchor} variant="ghost" className="text-moss-green-100">
+            <li key={`anchor_link_${anchorLink?.id}`} className="flex-fr">
+              <Link href={anchor} className="text-moss-green-100 no-underline hover:underline">
                 {anchorLink?.title}
-              </ButtonLink>
+              </Link>
             </li>
           )
         })}

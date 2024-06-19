@@ -278,6 +278,9 @@ module.exports = {
         '4/5': '0.8',
         '5/4': '1.25',
       },
+      flex: {
+        fr: '1 1 1',
+      },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
@@ -430,7 +433,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ addVariant, matchVariant, addUtilities, theme, config, e }) {
+    plugin(function ({ addVariant, matchUtilities, matchVariant, addUtilities, theme, config, e }) {
       matchVariant(
         'nth',
         (value) => {
