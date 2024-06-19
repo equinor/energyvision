@@ -1,4 +1,3 @@
-import styled, { css } from 'styled-components'
 import type {
   CardData,
   PeopleCardData,
@@ -6,100 +5,21 @@ import type {
   PromotionType,
   EventPromotionSettings,
 } from '../../../types/types'
-import PeopleCard from '../../cards/PeopleCard/PeopleCard'
 import MultipleEventCards from './MultipleEventCards'
-import { Carousel } from '../../shared/Carousel'
-import { BackgroundContainer } from '@components/Backgrounds'
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
-import Card from '@sections/cards/Card'
-import { Ratios } from '../../../pageComponents/shared/SanityImage'
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import { FormattedDate } from '@components/FormattedDateTime'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
-const PeopleCardsWrapper = styled.ul`
-  --min: 210px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-  padding: 0 var(--space-xxLarge);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-  justify-content: center;
-  align-content: center;
-  /* We need some breakpoints here because we don't know if we have 2 or 20 people cards,
-  and if we have 2 or 3, 1fr is too wide */
-  @media (min-width: 800px) {
-    --min: 240px;
-    grid-template-columns: repeat(auto-fit, minmax(var(--min), 280px));
-  }
-  @media (min-width: 1400px) {
-    padding: 0 var(--layout-paddingHorizontal-small);
-    max-width: var(--maxViewportWidth);
-  }
-`
-
-const CardStyle = css`
-  width: 100%;
-  height: 100%;
-`
-
-const StyledBackground = styled(BackgroundContainer)`
-  min-width: var(--card-minWidth);
-  max-width: var(--card-maxWidth);
-  flex-basis: 0;
-  flex-grow: 1;
-`
-
-const StyledPeopleCard = styled(PeopleCard)`
-  ${CardStyle}
-`
+import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
+import { EventCard } from '@sections/cards/EventCard'
+import { closestIndexTo } from 'date-fns'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import { twMerge } from 'tailwind-merge'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
-const TWCard = ({ slug, title, ingress, publishDateTime, heroImage, id }: CardData) => {
-  const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
-
-
-  return (
-    <li className="min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidt)] basis-0 grow" key={id}>
-      <Card
-        href={slug}
-        {...(image && {
-          imageUrl: image.src,
-        })}
-        className="w-full h-full"
-        key={id}
-      >
-        <Card.Content>
-          <Card.Header
-            {...(typeof title === 'string'
-              ? {
-                  title: title,
-                }
-              : {
-                  titleBlock: title,
-                })}
-            {...(publishDateTime && {
-              eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
-            })}
-          />
-          {ingress && <Blocks value={ingress} className="line-clamp-5 grow pb-[0.5em]" />}
-        </Card.Content>
-      </Card>
-    </li>
-  )
-}
-
-/** TODO: Update carousel and make it ul list  */
 const MultiplePromotions = ({
   data,
   variant,
   hasSectionTitle,
   eventPromotionSettings,
-  useHorizontalScroll = false,
 }: {
   data: CardData[] | PeopleCardData[] | EventCardData[]
   variant: PromotionType
@@ -111,70 +31,81 @@ const MultiplePromotions = ({
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return <TWCard key={data.id} {...data} />
+        return (
+          <li key={data?.id}>
+            <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
+          </li>
+        )
       case 'topics':
       case 'magazine':
-        return <TWCard key={data.id} {...data} />
+        return (
+          <li key={data?.id}>
+            <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
+          </li>
+        )
       case 'people':
         return (
-          <li className="list-none" key={data.id}>
-            <StyledBackground key={data.id}>
-              <StyledPeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} key={data.id} />
-            </StyledBackground>
+          <li key={data.id} className="flex justify-center">
+            <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
       default:
         return console.warn('Missing card type for ', data)
     }
   }
+  const getRowGap = (type: string) => {
+    switch (type) {
+      case 'promotePeople':
+        return 'gap-y-3 lg:gap-y-8 gap-x-4'
 
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
-  const renderScroll = useHorizontalScroll || isMobile
+      default:
+        return 'gap-y-3 gap-x-4'
+    }
+  }
 
-  if (variant === 'promoteEvents') {
-    return (
-      <MultipleEventCards
-        data={data as EventCardData[]}
-        hasSectionTitle={hasSectionTitle}
-        eventPromotionSettings={eventPromotionSettings}
-        renderScroll={renderScroll}
-      />
+  let closestToTodayIndex = undefined
+  if (variant === 'promoteEvents' && eventPromotionSettings?.promoteSingleUpcomingEvent) {
+    const events = data as EventCardData[]
+    closestToTodayIndex = closestIndexTo(
+      new Date(),
+      events?.map((event) => new Date(event?.eventDate?.date)),
     )
   }
 
-  if (renderScroll) {
+  if (variant === 'promoteEvents') {
     return (
       <>
-        <Carousel horizontalPadding>
-          {data.map((item) => {
-            const card = getCard(item)
-            if (card) {
-              return (
-                <ul className="flex min-w-[280px] max-w-[var(--card-maxWidth)] w-full" key={item.id}>
-                  {card}
-                </ul>
-              )
-            }
-          })}
-        </Carousel>
+        {eventPromotionSettings?.promoteSingleUpcomingEvent && closestToTodayIndex ? (
+          <EventCard
+            data={data[closestToTodayIndex] as EventCardData}
+            hasSectionTitle={hasSectionTitle}
+            variant="single"
+          />
+        ) : (
+          <MultipleEventCards
+            data={data as EventCardData[]}
+            hasSectionTitle={hasSectionTitle}
+            eventPromotionSettings={eventPromotionSettings}
+            renderScroll={false}
+          />
+        )}
       </>
     )
   }
 
-  if (variant === 'promotePeople') {
-    return (
-      <PeopleCardsWrapper>
-        <>
-          {data.map((item) => {
-            return getCard(item)
-          })}
-        </>
-      </PeopleCardsWrapper>
-    )
-  }
-
   return (
-    <ul className="w-full max-w-[calc(var(--card-maxWidth)*3+var(--space-large)*2)] px-6 py-0 m-auto flex gap-6 justify-center content-center flex-wrap flex-col list-none md:flex-row">
+    <ul
+      className={twMerge(`
+      max-lg:w-full
+      grid 
+      ${getRowGap(variant)}
+      justify-center
+      content-center
+      grid-cols-1
+      auto-rows-auto
+      md:grid-cols-3
+      md:grid-rows-1`)}
+    >
       <>
         {data.map((item) => {
           return getCard(item)

@@ -131,6 +131,7 @@ export type PeopleCardData = {
 export type EventPromotionSettings = {
   manuallySelectEvents: boolean
   promotePastEvents: boolean
+  promoteSingleUpcomingEvent: boolean
   pastEventsCount?: number
 }
 
@@ -141,6 +142,7 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  ingress?: PortableTextBlock[]
 }
 
 export type NewsSchema = {
@@ -569,6 +571,7 @@ export type PromotionData = {
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
   }
+  viewAllLink?: LinkData
   useHorizontalScroll?: boolean | undefined
   designOptions?: DesignOptions
 }
@@ -701,6 +704,8 @@ export type AnchorLinkData = {
 
 export enum VideoPlayerRatios {
   '16:9' = '16:9',
+  '3:2' = '3:2',
+  '16:10' = '16:10',
   '9:16' = '9:16',
   '1:1' = '1:1',
 }
@@ -722,7 +727,7 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  height?: number
+  height?: number | string
   width?: 'normal' | 'extraWide'
   useBrandTheme?: boolean
 }
@@ -801,7 +806,7 @@ export type IframeCarouselData = {
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
 
-export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'others'
+export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'emergingTalentsQueries' | 'others'
 
 export type KeyNumberItemData = {
   type: 'keyNumberItem'

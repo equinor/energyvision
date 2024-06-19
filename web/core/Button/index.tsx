@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export const commonButtonStyling = `
-w-max
+w-fit
 text-sm
 px-5
 py-3
@@ -12,6 +12,7 @@ focus:outline-none
 focus-visible:envis-outline
 dark:focus:outline-none
 dark:focus-visible:envis-outline-invert
+active:scale-99
 flex
 items-center
 gap-3
@@ -31,18 +32,16 @@ export const getVariant = (variant: Variants): string => {
       dark:text-white-100
       dark:hover:bg-white-transparent
       dark:focus-visible:envis-outline-invert
-      dark:active:envis-outline-invert
       `
     case 'outlined':
       return `
       border
-      border-slate-blue-95
-      text-slate-80
+      border-north-sea-100
+      text-norwegian-woods-100
       hover:bg-moss-green-60
-      hover:text-white-100
+      hover:text-moss-green-100
       focus:outline-none
       focus-visible:outline-slate-blue-95
-      active:scale-99
       dark:text-white-100
       dark:border-white-100
       dark:hover:bg-white-transparent
@@ -50,17 +49,15 @@ export const getVariant = (variant: Variants): string => {
       `
     case 'contained':
     default:
-      return `bg-teal-100 
+      return `bg-norwegian-woods-100 
       text-white-100 
       hover:bg-moss-green-100
       focus:outline-none
-      focus-visible:outline-teal-100
-      active:scale-99
+      focus-visible:outline-norwegian-woods-100
       dark:bg-white-100
-      dark:hover:bg-moss-green-60
+      dark:hover:bg-norwegian-woods-40
       dark:text-slate-80
       dark:focus-visible:outline-white-100
-      dark:active:bg-moss-green-80
       `
   }
 }

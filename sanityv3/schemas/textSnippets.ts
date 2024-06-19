@@ -5,11 +5,11 @@ export const groups = {
   magazine: { title: 'Magazine', hidden: !Flags.HAS_MAGAZINE },
   search: { title: 'Search', hidden: !Flags.HAS_SEARCH },
   eventPromotion: { title: 'Event', hidden: !Flags.HAS_EVENT },
-  subscribeForm: { title: 'Subscribe form', hidden: !Flags.HAS_FORMS },
-  careerFairForm: { title: 'Career fair form', hidden: !Flags.HAS_FORMS },
-  contactForm: { title: 'Contact form', hidden: !Flags.HAS_FORMS },
-  careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_FORMS },
-  orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_FORMS },
+  subscribeForm: { title: 'Subscribe form', hidden: !Flags.HAS_SUBSCRIBE_FORM },
+  careerFairForm: { title: 'Career fair form', hidden: !Flags.HAS_CAREER_FAIR_AND_VISITS_FORM },
+  contactForm: { title: 'Contact form', hidden: !Flags.HAS_CONTACT_EQUINOR_FORM },
+  careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_CAREERS_CONTACT_FORM },
+  orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_ORDER_REPORT_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
   others: { title: 'Others' },
@@ -708,6 +708,21 @@ const snippets: textSnippet = {
     defaultValue: 'at least 20 minutes delayed',
     group: groups.others,
     hidden: Flags.IS_SATELLITE,
+  },
+  footnotes: {
+    title: 'Footnotes',
+    defaultValue: 'Footnotes',
+    group: groups.others,
+  },
+  footnote: {
+    title: 'Footnote',
+    defaultValue: 'Footnote',
+    group: groups.others,
+  },
+  back_to_content: {
+    title: 'Back to content',
+    defaultValue: 'Back to content',
+    group: groups.others,
   },
 }
 

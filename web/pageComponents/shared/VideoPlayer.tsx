@@ -23,7 +23,7 @@ const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   },
 )
 
-const getHeightWidth = (aspectRatio: string, height?: number) => {
+const getHeightWidth = (aspectRatio: string, height?: number | string) => {
   if (!height) {
     switch (aspectRatio) {
       case VideoPlayerRatios['1:1']:
@@ -32,9 +32,13 @@ const getHeightWidth = (aspectRatio: string, height?: number) => {
         return 'h-[56.25%] w-full'
       case VideoPlayerRatios['9:16']:
         return 'h-[569px] w-[320px] sm:h-[600px] sm:w-[337.5px]'
+      case VideoPlayerRatios['3:2']:
+        return 'w-full h-full'
+      default:
+        return 'w-full h-full'
     }
   }
-  return `h-[${height}px] w-full`
+  return `h-[${typeof height == 'string' ? height : `${height}px`}] w-full`
 }
 
 const getThumbnailRatio = (aspectRatio: string, height?: number) => {
@@ -54,6 +58,16 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
         width: 600,
         height: 600,
       }
+    case VideoPlayerRatios['3:2']:
+      return {
+        width: 800,
+        height: 533,
+      }
+    case VideoPlayerRatios['16:10']:
+      return {
+        width: 800,
+        height: 500,
+      }
     default:
       return {
         width: 0,
@@ -66,8 +80,8 @@ type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
-  height?: string
   useFillMode?: boolean
+  className?: string
 }
 
 export const VideoJsComponent = ({
@@ -75,14 +89,18 @@ export const VideoJsComponent = ({
   videoControls,
   designOptions,
   useFillMode = false,
+  className = '',
 }: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
   return (
     <figure
-      className={`
+      className={twMerge(
+        `
         ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
         [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `}
+        `,
+        className,
+      )}
     >
       <DynamicVideoJsComponent
         className="object-cover"

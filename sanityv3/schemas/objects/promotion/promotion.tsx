@@ -10,20 +10,23 @@ import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { EdsIcon } from '../../../icons'
 import { Flags } from '../../../src/lib/datasetHelpers'
 
-const horizontalScrollValidation = (context: Promotion): true | ValidationError => {
-  const { promotion, useHorizontalScroll } = context
+import routes from '../../routes'
+import { filterByRoute } from '../../../helpers/referenceFilters'
+
+const promotionLengthValidation = (context: Promotion): true | ValidationError => {
+  const { promotion } = context
   const promo = promotion[0]
   const numberOfItems = promo._type === 'promoteTopics' ? promo.references?.length : promo.promotedArticles?.length
   const MIN = 3
-  const MAX = useHorizontalScroll ? 6 : 3
+  const MAX = 3
 
   const validateNumber = (length: number): true | ValidationError => {
     if (length < MIN)
       // @ts-ignore
-      return { message: `Must have at least ${MIN} items`, paths: ['promotion'] }
+      return { message: `Must have ${MIN} items`, paths: ['promotion'] }
     if (length > MAX)
       // @ts-ignore
-      return { message: `Maximum of ${MIN} items allowed`, paths: ['promotion'] }
+      return { message: `Must have ${MIN} items`, paths: ['promotion'] }
 
     return true
   }
@@ -70,10 +73,10 @@ export default {
   ],
   validation: (Rule: Rule) =>
     Rule.custom((value: Promotion): CustomValidatorResult => {
-      const typesToValidate = ['promoteTopics', 'promoteMagazine']
+      const typesToValidate = ['promoteTopics', 'promoteMagazine', 'promoteNews']
 
       if (typesToValidate.includes(value.promotion[0]._type)) {
-        return horizontalScrollValidation(value)
+        return promotionLengthValidation(value)
       }
 
       return true
@@ -111,10 +114,24 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(1).max(1),
     },
     {
+      name: 'viewAllLink',
+      title: 'View all internal link',
+      description: 'Use this if you want a "View all ..." link to e.g. all news',
+      type: 'reference',
+      to: routes,
+      options: {
+        filter: filterByRoute,
+      },
+    },
+    {
+      name: 'viewAllLinkLabel',
+      title: 'Label for the View all link',
+      type: 'string',
+    },
+    {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
-      description:
-        'When this is enabled, the promotion will use horizontal scroll if the amount of content is greater than the screen size allows. This feature is enabled by default for smaller screen sizes.',
+      description: '(Deprecated) Not used anymore. Will be removed after an interval',
       type: 'boolean',
       initialValue: false,
     },

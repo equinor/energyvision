@@ -6,7 +6,7 @@ import Figure from '../../topicPages/Figure'
 import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
 import AccordionBlock from '../../topicPages/Accordion/AccordionBlock'
-import PromoTileArray from '../../topicPages/PromoTileArray'
+import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
 import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
 import Form from '../../topicPages/Form/Form'
@@ -54,12 +54,19 @@ import {
   GridData,
   CampaignBannerData,
   AnchorLinkListData,
+  DesignOptions,
 } from '../../../types/types'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
 import { AnchorLinkList } from '../../../sections/AnchorLinkList'
+import { BackgroundContainerProps } from '@components/Backgrounds'
 
+type DefaultComponent = {
+  id?: string
+  type?: string
+  designOptions?: DesignOptions
+}
 // How could we do this for several different component types?
 export type ComponentProps =
   | TeaserData
@@ -83,8 +90,12 @@ export type ComponentProps =
   | CookieDeclarationData
   | TextTeaserData
   | KeyNumbersData
+  | DefaultComponent
 
-type PageContentProps = { data: TopicPageSchema | MagazinePageSchema }
+type PageContentProps = {
+  data: TopicPageSchema | MagazinePageSchema
+  titleBackground?: BackgroundContainerProps
+}
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /**
@@ -122,12 +133,15 @@ const isColoredBackgroundAndNotWhite = (componentsDO: any, isWhiteColor: boolean
 }
 
 const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: any) => {
-  return (
-    (currentComponentsDO?.backgroundUtility &&
-      previousComponentsDO?.backgroundUtility &&
-      currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility) ??
-    currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
-  )
+  if (
+    currentComponentsDO?.backgroundUtility &&
+    currentComponentsDO?.backgroundUtility !== '' &&
+    previousComponentsDO?.backgroundUtility &&
+    previousComponentsDO?.backgroundUtility !== ''
+  ) {
+    return currentComponentsDO?.backgroundUtility === previousComponentsDO?.backgroundUtility
+  }
+  return currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
 }
 
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
@@ -164,7 +178,7 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
 
 /*eslint-enable @typescript-eslint/ban-ts-comment */
 
-export const PageContent = ({ data }: PageContentProps) => {
+export const PageContent = ({ data, titleBackground }: PageContentProps) => {
   const content = (data?.content || []).map((c: ComponentProps, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
@@ -172,12 +186,20 @@ export const PageContent = ({ data }: PageContentProps) => {
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
         : undefined
 
-    //Returns pt-12 when applicable or empty string
+    //Returns pt-20 when applicable or empty string
     const previousComponentIndex = prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
-    const topSpacingClassName = applyPaddingTopIfApplicable(
-      c,
-      data?.content?.[previousComponentIndex] as unknown as ComponentProps,
-    )
+
+    const previousComponentToCompare =
+      index === 0
+        ? ({
+            type: 'pageTitle',
+            designOptions: {
+              background: titleBackground?.background,
+            },
+          } as DefaultComponent)
+        : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
+
+    const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
 
     switch (c.type) {
       case 'teaser':

@@ -6,9 +6,9 @@ import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'
 import GridFigure from './GridFigure'
 
-export type RowType = 'span3' | 'span2and1' | undefined
+export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
-export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.ReactNode => {
+export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
   switch (data.type) {
     case 'gridTextBlock':
       return <GridTextBlock key={data.id} data={data as any} />
@@ -19,7 +19,14 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.R
     case 'iframe':
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
-      return <VideoJsComponent key={data.id} useFillMode {...(data as VideoPlayerData)} />
+      return (
+        <VideoJsComponent
+          key={data.id}
+          {...(data as VideoPlayerData)}
+          className="h-full sm:w-full"
+          {...(!isMobile && { useFillMode: true })}
+        />
+      )
     }
     default:
       return null

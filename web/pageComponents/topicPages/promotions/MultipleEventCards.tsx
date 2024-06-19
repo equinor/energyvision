@@ -1,26 +1,6 @@
 import { getEventDates } from '../../../common/helpers/dateUtilities'
-import styled from 'styled-components'
 import type { EventCardData, EventPromotionSettings } from '../../../types/types'
-import EventsCard from '../../cards/EventsCard'
-import { Carousel } from '../../shared/Carousel'
-import { BackgroundContainer } from '@components/Backgrounds'
-
-const FlexibleWrapper = styled.div`
-  --card-minWidth: 250px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-  @media (min-width: 1000px) {
-    --card-minWidth: 340px;
-  }
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-  margin: var(--space-xLarge) auto 0 auto;
-  max-width: var(--maxViewportWidth);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-minWidth)), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-`
+import { EventCard } from '@sections/cards/EventCard'
 
 type MultipleEventCardsProp = {
   data: EventCardData[]
@@ -29,26 +9,7 @@ type MultipleEventCardsProp = {
   renderScroll?: boolean
 }
 
-const StyledBackground = styled(BackgroundContainer)`
-  --card-maxWidth: 280px;
-
-  @media (min-width: 1000px) {
-    --card-maxWidth: 400px;
-  }
-
-  min-width: var(--card-maxWidth, 100%);
-  max-width: var(--card-maxWidth, 100%);
-`
-const StyledEventsCard = styled(EventsCard)`
-  width: 100%;
-  height: 100%;
-`
-const MultipleEventCards = ({
-  data,
-  hasSectionTitle,
-  eventPromotionSettings,
-  renderScroll = false,
-}: MultipleEventCardsProp) => {
+const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: MultipleEventCardsProp) => {
   // sort only automatically selected future events
   if (!eventPromotionSettings?.manuallySelectEvents && !eventPromotionSettings?.promotePastEvents) {
     data.sort((a, b) => {
@@ -62,44 +23,28 @@ const MultipleEventCards = ({
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
 
-  if (renderScroll) {
-    return (
-      <>
-        <Carousel horizontalPadding={true}>
-          {data.map((item) => {
-            return (
-              <StyledBackground key={item.id}>
-                <StyledEventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-              </StyledBackground>
-            )
-          })}
-        </Carousel>
-      </>
-    )
-  }
-
   return (
-    <>
-      {data.length === 1 ? (
-        <div className="mt-6 px-6 m-auto">
-          {data.map((item: EventCardData) => {
-            return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-          })}
-        </div>
-      ) : data.length === 2 ? (
-        <div className=" w-full py-0 px-layout-xs mx-auto my-0 max-w-viewport grid grid-cols-2 gap-x-6 gap-y-2">
-          {data.map((item: EventCardData) => {
-            return <EventsCard className="w-full" data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-          })}
-        </div>
-      ) : (
-        <FlexibleWrapper>
-          {data.map((item) => {
-            return <EventsCard data={item} hasSectionTitle={hasSectionTitle} key={item.id} />
-          })}
-        </FlexibleWrapper>
-      )}
-    </>
+    <ul
+      className=" 
+      max-lg:w-full
+      grid 
+    gap-y-3
+    gap-x-4
+    grid-cols-1
+    justify-center
+    content-center
+    auto-rows-auto
+    md:grid-cols-3
+    md:grid-rows-1"
+    >
+      {data.map((item) => {
+        return (
+          <li key={item.id}>
+            <EventCard data={item} hasSectionTitle={hasSectionTitle} />
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 

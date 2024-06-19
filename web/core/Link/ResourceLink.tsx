@@ -43,10 +43,10 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   const iconClassNames = twMerge(
     `
+    size-arrow-right
     text-energy-red-100
     dark:text-white-100
     justify-self-end
-    max-h-[25px]
     ${iconRotation[type]}
     ${
       type === 'downloadableFile' || type === 'downloadableImage'
@@ -61,7 +61,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
-      <span className="grid grid-cols-[1fr_max-content] gap-2 items-end  pb-5 pr-2">
+      <span className="grid grid-cols-[1fr_max-content] gap-14 items-end pb-5 pr-2">
         {children}
         <ArrowRight className={iconClassNames} />
       </span>
