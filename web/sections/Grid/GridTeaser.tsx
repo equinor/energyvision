@@ -56,7 +56,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
             <Blocks
               value={content}
               proseClassName="prose-campaign"
-              className={`flex flex-col gap-4 ${theme !== null ? textUtility : ''}`}
+              className={`flex flex-col gap-4 text-md ${theme !== null ? textUtility : ''}`}
             />
           )}
           {quote && (

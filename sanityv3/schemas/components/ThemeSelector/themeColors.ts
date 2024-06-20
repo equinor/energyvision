@@ -13,6 +13,8 @@ export const themeColors = [
   { title: 'Mid Blue 3', value: 8 },
   { title: 'Mid Green', value: 9 },
   { title: 'Mist Blue 2', value: 10 },
+  { title: 'Black text', value: 11 },
+  { title: 'White text', value: 12 },
 ]
 
 //Keep in sync with web/pageComponents/shared/textTeaser/theme
@@ -68,7 +70,10 @@ export const getColorForTheme = (pattern: number) => {
           value: defaultColors[5].value,
           key: defaultColors[5].key,
         },
-        highlight: {},
+        highlight: {
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
+        },
       }
     case 6:
       return {
@@ -120,6 +125,28 @@ export const getColorForTheme = (pattern: number) => {
         highlight: {
           value: defaultColors[6].value,
           key: defaultColors[6].key,
+        },
+      }
+    case 11:
+      return {
+        background: {
+          value: defaultColors[0].value,
+          key: defaultColors[0].key,
+        },
+        highlight: {
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
+        },
+      }
+    case 12:
+      return {
+        background: {
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
+        },
+        highlight: {
+          value: defaultColors[0].value,
+          key: defaultColors[0].key,
         },
       }
 

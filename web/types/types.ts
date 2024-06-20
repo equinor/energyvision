@@ -872,9 +872,12 @@ export type GridTextBlockData = {
   id: string
   type: 'gridTextBlock'
   action?: LinkData
+  overline?: string
+  title?: PortableTextBlock[]
   content?: PortableTextBlock[]
   textAlignment?: ContentAlignmentTypes
   theme?: number
+  backgroundImage?: ImageBackground
 }
 
 export type CampaignBannerData = {

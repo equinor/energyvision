@@ -1,6 +1,12 @@
 import { defineType, defineField, Image } from 'sanity'
 import { RadioIconSelector } from '../../components'
-import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
+import {
+  ContentRightImage,
+  ContentLeftImage,
+  ContentCenterImage,
+  ContentBottomLeftImage,
+  ContentBottomCenterImage,
+} from '../../../icons'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 
 export type ColorType = {
@@ -12,6 +18,8 @@ const contentAlignmentOptions = [
   { value: 'left', icon: ContentLeftImage },
   { value: 'center', icon: ContentCenterImage },
   { value: 'right', icon: ContentRightImage },
+  { value: 'bottom-left', icon: ContentBottomLeftImage },
+  { value: 'bottom-center', icon: ContentBottomCenterImage },
 ]
 
 export default defineType({
@@ -43,7 +51,7 @@ export default defineType({
     defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',
-      description: 'Select the content alignment on larger screens.',
+      description: 'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
       type: 'string',
       initialValue: 'left',
       components: {
