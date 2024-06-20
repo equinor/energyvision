@@ -187,6 +187,18 @@ const snippets: textSnippet = {
       'Want the full picture? We’d love to share this content with you, but first you must accept {typeOfCookie} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
+  cookie_consent_two: {
+    title: 'Information text - for two types of cookies',
+    defaultValue:
+      'Want the full picture? We’d love to share this content with you, but first you must accept {type1} and {type2} cookies by enabling them in our cookie settings.',
+    group: groups.cookie,
+  },
+  cookie_consent_many: {
+    title: 'Information text',
+    defaultValue:
+      'Want the full picture? We’d love to share this content with you, but first you must accept {type1}, {type2} and {type3} cookies by enabling them in our cookie settings.',
+    group: groups.cookie,
+  },
   contact_form_name: {
     title: 'Name',
     defaultValue: 'Name',

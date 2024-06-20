@@ -2,6 +2,7 @@ import { HTMLAttributes, useContext } from 'react'
 import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 import styled from 'styled-components'
 import RequestConsentContainer from './RequestConsentContainer'
+import { CookiePolicy } from '../../../types'
 
 const IFrameContainer = styled.div<{ aspectRatioPadding: string }>`
   position: relative;
@@ -31,7 +32,7 @@ const calculatePadding = (aspectRatio: string): string => {
 type IFrameProps = {
   frameTitle: string
   url: string
-  cookiePolicy: string
+  cookiePolicy: CookiePolicy[]
   height?: number
   aspectRatio: string
   hasSectionTitle: boolean
@@ -43,7 +44,7 @@ const IFrame = ({
   hasSectionTitle = true,
   frameTitle,
   url,
-  cookiePolicy = 'none',
+  cookiePolicy = ['none'],
   aspectRatio,
   height,
   className = '',
@@ -63,9 +64,12 @@ const IFrame = ({
     )
   }
 
+  const cookieOptinClassNames = cookiePolicy.map((it) => `cookieconsent-optin-${it}`).join(' ')
+  const cookieOptoutClassNames = cookiePolicy.map((it) => `cookieconsent-optout-${it}`).join(' ')
+
   return (
     <>
-      <div className={`cookieconsent-optin-${cookiePolicy} ${className}`}>
+      <div className={`${cookieOptinClassNames} ${className}`}>
         <IFrameContainer aria-describedby={describedBy} aspectRatioPadding={containerPadding}>
           <StyledIFrame
             allowFullScreen
@@ -76,8 +80,8 @@ const IFrame = ({
           ></StyledIFrame>
         </IFrameContainer>
       </div>
-      {cookiePolicy !== 'none' && (
-        <div className={`cookieconsent-optout-${cookiePolicy}`}>
+      {!cookiePolicy.includes('none') && (
+        <div className={`${cookieOptoutClassNames}`}>
           <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
         </div>
       )}

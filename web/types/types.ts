@@ -526,7 +526,8 @@ export type SimpleMenuData = {
   groups: SimpleGroupData[]
 }
 
-export type CookiePolicy = 'none' | 'marketing' | 'statistics'
+export type CookieType = 'none' | 'marketing' | 'statistics'
+export type CookiePolicy = CookieType[]
 
 export type IFrameData = {
   id?: string
