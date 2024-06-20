@@ -460,6 +460,9 @@ module.exports = {
             'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
           },
+          '.auto-fill-fr': {
+            gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,
+          },
         })
     }),
   ],
