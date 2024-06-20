@@ -11,12 +11,17 @@ type GridLinkArrowProps = {
   theme?: number
   action?: LinkData
   className?: string
+  /* If background image */
+  hasBackgroundImage?: boolean
 }
 
-const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
+const GridLinkArrow = ({ theme, action, className = '', hasBackgroundImage = false }: GridLinkArrowProps) => {
   const url = action && getUrlFromAction(action)
 
-  const { textUtility } = getColorForTheme(theme ?? 0)
+  let { textUtility } = getColorForTheme(theme ?? 0)
+  if (hasBackgroundImage) {
+    textUtility = 'text-slate-80'
+  }
 
   const variantClassName = () => {
     switch (theme) {

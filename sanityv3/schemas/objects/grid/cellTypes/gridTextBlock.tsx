@@ -2,14 +2,20 @@
 import { text_field } from '@equinor/eds-icons'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
+import CompactBlockEditor from '../../../components/CompactBlockEditor'
 import blocksToText from '../../../../helpers/blocksToText'
 import { EdsIcon } from '../../../../icons'
-import { configureBlockContent } from '../../../editors'
+import { configureBlockContent, configureTitleBlockContent } from '../../../editors'
 
 const blockContentType = configureBlockContent({
   smallText: true,
   largeText: true,
   extraLargeText: true,
+})
+const titleContentType = configureTitleBlockContent({
+  largeText: true,
+  extraLargeText: true,
+  twoXLText: true,
 })
 
 type GridTextBlock = {
@@ -23,6 +29,21 @@ export default {
   title: 'Grid Text block',
   type: 'object',
   fields: [
+    {
+      name: 'overline',
+      title: 'Eyebrow',
+      type: 'string',
+    },
+    {
+      name: 'title',
+      type: 'array',
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [titleContentType],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
+    },
     {
       name: 'content',
       title: 'Content',
@@ -58,17 +79,18 @@ export default {
     {
       name: 'theme',
       type: 'themeList',
+      description: 'use White text or Black text when using background image',
     },
     {
       name: 'backgroundImage',
       type: 'imageBackground',
       title: 'Background Image',
-      description: 'Content alignment is ignored on this',
+      description: '',
     },
   ].filter((e) => e),
   preview: {
     select: {
-      title: 'content',
+      title: 'title',
     },
     prepare({ title }: { title: PortableTextBlock[] }) {
       const plainTitle = blocksToText(title)

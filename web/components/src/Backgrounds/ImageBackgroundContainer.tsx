@@ -4,12 +4,26 @@ import { ImageBackground } from '../../../types/types'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 
-type ImageBackgroundContainerProps = ImageBackground & HTMLAttributes<HTMLDivElement>
+type ImageBackgroundContainerProps = {
+  scrimClassName?: string
+  /* On mobile dont split background image and content */
+  dontSplit?: boolean
+} & ImageBackground &
+  HTMLAttributes<HTMLDivElement>
 const DEFAULT_MAX_WIDTH = 1920
 
 export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgroundContainerProps>(
   function ImageBackgroundContainer(
-    { image, useAnimation = false, useLight = false, contentAlignment = 'center', children, className },
+    {
+      image,
+      useAnimation = false,
+      useLight = false,
+      contentAlignment = 'center',
+      children,
+      className = '',
+      scrimClassName = '',
+      dontSplit = false,
+    },
     ref,
   ) {
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
@@ -36,20 +50,27 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       className,
     )
 
+    const lightGradientForContentAlignment = {
+      center: 'white-center-gradient',
+      right: 'white-center-gradient xl:white-right-gradient',
+      left: 'white-center-gradient xl:white-left-gradient',
+      'bottom-left': 'white-to-top-gradient',
+      'bottom-center': 'white-to-top-gradient',
+    }
+    const darkGradientForContentAlignment = {
+      center: '',
+      right: 'xl:black-right-gradient',
+      left: 'xl:black-left-gradient',
+      'bottom-left': 'black-to-top-gradient',
+      'bottom-center': 'black-to-top-gradient',
+    }
+
     const animatedScrimGradient = useLight
-      ? `white-center-gradient ${
-          contentAlignment !== 'center'
-            ? `${contentAlignment === 'right' ? 'xl:white-right-gradient' : 'xl:white-left-gradient'}`
-            : ``
-        }`
-      : `black-center-gradient ${
-          contentAlignment !== 'center'
-            ? `${contentAlignment === 'right' ? 'xl:black-right-gradient' : 'xl:black-left-gradient'}`
-            : ``
-        }`
+      ? `${lightGradientForContentAlignment[contentAlignment]}`
+      : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
 
     return useAnimation && !isMobile ? (
-      <section
+      <div
         ref={ref}
         className={backgroundClassNames}
         style={
@@ -61,46 +82,50 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       >
         {/** Scrim */}
         <div
-          className={`
-          py-40 
-          lg:py-[25dvh]
-          ${animatedScrimGradient}
-          animate-timeline
-          relative
-      `}
+          className={twMerge(
+            `py-40
+            lg:py-[25dvh]
+            ${animatedScrimGradient}
+            animate-timeline
+            relative`,
+            scrimClassName,
+          )}
         >
           {children}
         </div>
-      </section>
-    ) : isMobile ? (
-      <section ref={ref}>
+      </div>
+    ) : isMobile && !dontSplit ? (
+      <div ref={ref}>
         <div
-          className={`${backgroundClassNames} aspect-video`}
+          className={twMerge(`aspect-video`, backgroundClassNames)}
           style={{
             backgroundImage: `url(${src})`,
           }}
         />
         {children}
-      </section>
+      </div>
     ) : (
-      <section
+      <div
         ref={ref}
-        className={`${backgroundClassNames}`}
+        className={backgroundClassNames}
         style={{
           backgroundImage: `url(${src})`,
         }}
       >
         {/** Scrim */}
         <div
-          className={`
+          className={twMerge(
+            `h-full
           py-40 
           lg:py-52
           relative
-          ${animatedScrimGradient}`}
+          ${animatedScrimGradient}`,
+            scrimClassName,
+          )}
         >
           {children}
         </div>
-      </section>
+      </div>
     )
   },
 )

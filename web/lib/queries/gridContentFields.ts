@@ -38,6 +38,8 @@ _type == "gridTextBlock"=>{
 "id": _key,
 "theme": coalesce(theme.value, null),
 textAlignment,
+overline,
+title[]{..., ${markDefs}},
 content[]{..., ${markDefs}},
 "action": action[0]{
 ${linkSelectorFields},

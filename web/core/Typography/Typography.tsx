@@ -18,6 +18,7 @@ const getElementType = (variant: string, link: boolean): ElementType => {
       return variant
     case 'caption':
     case 'ingress':
+    case 'overline':
     case 'body':
     default:
       return 'p'

@@ -46,6 +46,8 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     right:
       'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
     left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    'bottom-left': 'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    'bottom-center': 'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
   }
   let backgroundImageContentClassNames = `
   justify-center
