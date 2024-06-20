@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'
 import { AnchorLinkListData } from '../../types'
 import { Typography } from '../../core/Typography'
-import { BaseLink, ButtonLink, Link } from '../../core/Link'
+import { ButtonLink } from '../../core/Link'
 
 export type AnchorLinkListProps = {
   data: AnchorLinkListData
@@ -17,7 +17,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
   const { title, anchorList = [], columns } = data
 
   const getFlow = () => {
-    const commonGridStyling = 'flex flex-wrap justify-stretch lg:grid justify-start'
+    const commonGridStyling = 'grid auto-fill-fr lg:place-items-start'
     switch (columns) {
       case '3':
         return `${commonGridStyling} lg:grid-cols-3`
@@ -29,33 +29,35 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
         return `${commonGridStyling} lg:grid-cols-6`
       default:
       case 'flex':
-        return 'flex flex-wrap justify-stretch'
+        return 'grid auto-fill-fr justify-start'
     }
   }
   return (
     <section
       ref={ref}
-      className={twMerge(`px-layout-lg pb-page-content max-w-viewport mx-auto flex flex-col`, className)}
+      className={twMerge(`px-layout-md pb-page-content max-w-viewport mx-auto flex flex-col items-center`, className)}
       id={anchor}
       {...rest}
     >
-      {title && (
-        <Typography variant="h3" as="h2" className="pb-8 text-center">
-          {title}
-        </Typography>
-      )}
-      <ul className={`${getFlow()}  gap-x-10 gap-y-8 lg:gap-y-10 lg:gap-x-12`}>
-        {anchorList?.map((anchorLink) => {
-          const anchor = anchorLink?.anchorReference ? `#${anchorLink?.anchorReference}` : ''
-          return (
-            <li key={`anchor_link_${anchorLink?.id}`} className="flex-fr">
-              <Link href={anchor} className="text-moss-green-100 no-underline hover:underline">
-                {anchorLink?.title}
-              </Link>
-            </li>
-          )
-        })}
-      </ul>
+      <div className="w-full border-y border-moss-green-50 py-6">
+        {title && (
+          <Typography variant="h5" as="h2" className="pb-4 text-center">
+            {title}
+          </Typography>
+        )}
+        <ul className={`w-full ${getFlow()} gap-x-4 gap-y-2 lg:gap-y-4 lg:gap-x-6`}>
+          {anchorList?.map((anchorLink) => {
+            const anchor = anchorLink?.anchorReference ? `#${anchorLink?.anchorReference}` : ''
+            return (
+              <li key={`anchor_link_${anchorLink?.id}`} className="w-full flex justify-center">
+                <ButtonLink variant="ghost" href={anchor} className="w-max text-moss-green-100">
+                  {anchorLink?.title}
+                </ButtonLink>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </section>
   )
 })
