@@ -53,11 +53,13 @@ import {
   CardsListData,
   GridData,
   CampaignBannerData,
+  AnchorLinkListData,
   DesignOptions,
 } from '../../../types/types'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
+import { AnchorLinkList } from '../../../sections/AnchorLinkList'
 import { BackgroundContainerProps } from '@components/Backgrounds'
 
 type DefaultComponent = {
@@ -339,6 +341,15 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
       case 'campaignBanner':
         return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
+      case 'anchorLinkList':
+        return (
+          <AnchorLinkList
+            key={c.id}
+            data={c as AnchorLinkListData}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
       default:
         return null
     }
