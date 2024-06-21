@@ -57,7 +57,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   }, [player])
 
   const getPlayer = (node: Element) => {
-    console.log('controls', controls)
     const player = videojs(
       node,
       {
