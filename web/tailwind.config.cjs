@@ -430,6 +430,7 @@ module.exports = {
           css: {
             color: theme('colors.current'),
             p: {
+              textWrap: 'balance',
               marginTop: '0',
               marginBottom: '0',
             },

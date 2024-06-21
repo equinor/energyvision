@@ -75,17 +75,21 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
       rowType === 'span3' ? 'black-to-top-tall-gradient lg:black-to-top-gradient' : 'black-to-top-tall-gradient',
   }
 
+  const getLayout = () => {
+    switch (rowType) {
+      case 'span3':
+        return 'lg:grid lg:grid-cols-[35%_60%] gap-4'
+      case 'span2and1':
+        return '4xl:grid 4xl:grid-cols-[35%_60%] gap-4'
+      case 'threeColumns':
+      default:
+        return ''
+    }
+  }
+
   const mainContent = (
     <>
-      <div
-        className={`${
-          title && content
-            ? `flex flex-col items-start lg:items-end justify-end ${
-                rowType !== 'span3' ? '4xl:grid 4xl:grid-cols-[35%_60%] gap-4' : 'lg:grid lg:grid-cols-[35%_60%] gap-4'
-              } `
-            : ``
-        }`}
-      >
+      <div className={`${title && content ? `flex flex-col items-start lg:items-end justify-end ${getLayout()}` : ``}`}>
         {overline ? (
           <hgroup className={`flex flex-col gap-2 mb-1 max-w-text`}>
             <Typography variant="overline" className="text-xs">
@@ -115,7 +119,10 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
       {...imageBgOptions}
       className={`h-full aspect-auto`}
       dontSplit
-      scrimClassName={`p-10 
+      scrimClassName={`
+        py-10
+        pl-8
+        pr-20 
         lg:p-12 
         flex 
         ${contentAlignment[backgroundImage?.contentAlignment]} 
