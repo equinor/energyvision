@@ -57,7 +57,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   }, [player])
 
   const getPlayer = (node: Element) => {
-    console.log('controls', controls)
     const player = videojs(
       node,
       {
@@ -82,7 +81,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
           fullscreenToggle: allowFullScreen,
         },
         html5: {
-          nativeControlsForTouch: true,
           useDevicePixelRatio: true,
           limitRenditionByPlayerDimensions: false,
           hls: {
