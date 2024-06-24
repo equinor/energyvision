@@ -78,18 +78,18 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
   const getLayout = () => {
     switch (rowType) {
       case 'span3':
-        return 'lg:grid lg:grid-cols-[35%_60%] gap-4'
+        return 'lg:grid lg:grid-cols-[35%_60%] gap-4 lg:items-end'
       case 'span2and1':
-        return '4xl:grid 4xl:grid-cols-[35%_60%] gap-4'
+        return '4xl:grid 4xl:grid-cols-[35%_60%] gap-4 4xl:items-end'
       case 'threeColumns':
       default:
-        return ''
+        return 'lg:items-end'
     }
   }
 
   const mainContent = (
     <>
-      <div className={`${title && content ? `flex flex-col items-start lg:items-end justify-end ${getLayout()}` : ``}`}>
+      <div className={`${title && content ? `flex flex-col items-start justify-end ${getLayout()}` : ``}`}>
         {overline ? (
           <hgroup className={`flex flex-col gap-2 mb-1 max-w-text`}>
             <Typography variant="overline" className="text-xs">
