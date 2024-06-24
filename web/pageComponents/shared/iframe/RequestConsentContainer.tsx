@@ -3,7 +3,7 @@ import { Text, Button, Heading, BackgroundContainer } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
-import { CookiePolicy } from '../../../types'
+import { CookieType } from '../../../types'
 
 declare global {
   interface Window {
@@ -73,7 +73,7 @@ const LeftAlignedButton = styled(Button)`
 
 type RequestConsentContainerProps = {
   hasSectionTitle?: boolean
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
 }
 
 const handleCookiebotRenew = (locale?: string) => {
@@ -92,7 +92,7 @@ const handleCookiebotRenew = (locale?: string) => {
 const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
   const router = useRouter()
   const intl = useIntl()
-  const getCookieInformationText = (cookiePolicy: CookiePolicy) => {
+  const getCookieInformationText = (cookiePolicy: CookieType[]) => {
     if (cookiePolicy.length === 1) {
       return intl.formatMessage(
         { id: 'cookie_consent', defaultMessage: 'Cookie consent' },

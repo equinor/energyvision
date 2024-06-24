@@ -70,7 +70,6 @@ export const cookiePolicy = {
   initialValue: 'none',
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => {
-      console.log(value)
       if (value === undefined || value?.length === 0) return 'Required'
       else if (value.length > 1 && value.includes('none')) return `Cannot select ${value.toString()} together`
       return true

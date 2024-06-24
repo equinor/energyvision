@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 
 const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
-  const { title, frameTitle, url, cookiePolicy = 'none', designOptions } = data || {}
+  const { title, frameTitle, url, cookiePolicy = ['none'], designOptions } = data || {}
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions

@@ -526,8 +526,7 @@ export type SimpleMenuData = {
   groups: SimpleGroupData[]
 }
 
-export type CookieType = 'none' | 'marketing' | 'statistics'
-export type CookiePolicy = CookieType[]
+export type CookieType = 'none' | 'marketing' | 'statistics' | 'preferences'
 
 export type IFrameData = {
   id?: string
@@ -539,7 +538,7 @@ export type IFrameData = {
   action?: LinkData
   frameTitle: string
   url: string
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
   designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
@@ -791,7 +790,7 @@ export type IFrameCarouselItemData = {
   description?: PortableTextBlock[]
   frameTitle: string
   url: string
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
   aspectRatio: string
   height?: number
   action?: LinkData
