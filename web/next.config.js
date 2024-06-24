@@ -4,6 +4,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 import nextTranspileModules from 'next-transpile-modules'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
 import securityHeaders from './securityHeaders.js'
+import { getAllRedirects } from './redirects.js'
 
 const withTM = nextTranspileModules(['friendly-challenge'])
 
@@ -89,7 +90,7 @@ export default withBundle(
           source: '/legacy/:slug*',
           destination: `${archiveServerHostname}/:slug*`,
         },
-      ].filter((e) => e)
+      ]
     },
     async headers() {
       return [
@@ -97,35 +98,10 @@ export default withBundle(
           source: '/:path*',
           headers: securityHeaders,
         },
-      ].filter((e) => e)
+      ]
     },
     async redirects() {
-      return [
-        // Redirect IE users to not-supported page
-        {
-          source: '/',
-          has: [
-            {
-              type: 'header',
-              key: 'user-agent',
-              value: '.*(MSIE|Trident).*',
-            },
-          ],
-          permanent: true,
-          destination: '/not-supported.html',
-        },
-        // redirects for /50 site
-        ['global', 'global-development', 'global-test'].includes(dataset) && {
-          source: '/50/en/:slug*',
-          destination: '/magazine',
-          permanent: true,
-        },
-        ['global', 'global-development', 'global-test'].includes(dataset) && {
-          source: '/50/:slug*',
-          destination: '/no/magasin',
-          permanent: true,
-        },
-      ].filter((e) => e)
+      return await getAllRedirects()
     },
   }),
 )

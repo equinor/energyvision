@@ -54,7 +54,7 @@ const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element =>
       scriptTag.id = 'legacyScript'
       document.body.appendChild(scriptTag)
     }
-  })
+  }, [isArchivePage])
 
   if (!router.isFallback && !data?.news) {
     setIsArchivePage(false)
@@ -216,7 +216,6 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   const pagePath = pagePathArray.join('/')
 
   const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
-  if (archivedItems.length === 0) return { notFound: true }
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
 
