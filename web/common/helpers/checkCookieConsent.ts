@@ -1,4 +1,6 @@
-export const checkCookieConsent = (cookiePolicy: string): boolean => {
+import { CookieType } from '../../types'
+
+const checkSingleCookieConsent = (cookiePolicy: CookieType): boolean => {
   if (cookiePolicy === 'none') return true
 
   if (typeof window !== 'undefined') {
@@ -10,4 +12,11 @@ export const checkCookieConsent = (cookiePolicy: string): boolean => {
   }
 
   return false
+}
+
+export const checkCookieConsent = (cookiePolicies: CookieType[]): boolean => {
+  if (cookiePolicies.length === 1 && cookiePolicies[0] === 'none') return true
+  return cookiePolicies
+    .map((it) => checkSingleCookieConsent(it))
+    .reduce((accumulator, currentValue) => accumulator && currentValue, true)
 }

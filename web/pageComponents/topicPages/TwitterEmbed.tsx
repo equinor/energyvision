@@ -57,7 +57,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
             <Embed />
           </div>
           <div className="cookieconsent-optout-marketing">
-            <RequestConsentContainer cookiePolicy="marketing" />
+            <RequestConsentContainer cookiePolicy={['marketing']} />
           </div>
         </div>
       </BackgroundContainer>
