@@ -220,7 +220,7 @@ _type == "keyNumbers" =>{
       ${linkSelectorFields},
     },
     url,
-    "cookiePolicy": coalesce(cookiePolicy, ['none']),
+    "cookiePolicy": coalesce([cookiePolicy], ['none']),
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       ${background},
