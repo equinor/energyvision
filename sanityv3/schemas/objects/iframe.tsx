@@ -33,7 +33,7 @@ export type IFrame = {
   aspectRatio: string
   height?: number
   background?: ColorSelectorValue
-  cookiePolicy: 'none' | 'marketing' | 'statistics'
+  cookiePolicy: 'none' | 'marketing' | 'statistics' | 'preferences'
 }
 
 export default {
