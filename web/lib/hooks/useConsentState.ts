@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { CookieType } from '../../types'
+import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
 
 //COOKIEBOT
 declare global {
@@ -10,19 +12,13 @@ declare global {
   }
 }
 
-export type ConsentType = 'marketing' | 'statistics'
-
-function useConsentState(consentType: ConsentType, callback: () => void, cleanup?: () => void) {
+function useConsentState(consentType: CookieType[], callback: () => void, cleanup?: () => void) {
   const [consent, changeConsent] = useState<boolean>(false)
   const router = useRouter()
 
   useEffect(() => {
     const manageCookies = () => {
-      if (consentType === 'marketing') {
-        changeConsent(window?.Cookiebot.consent.marketing)
-      } else if (consentType === 'statistics') {
-        changeConsent(window?.Cookiebot.consent.statistics)
-      }
+      changeConsent(checkCookieConsent(consentType))
     }
     window?.addEventListener('CookiebotOnAccept', manageCookies)
     window?.addEventListener('CookiebotOnDecline', manageCookies)
