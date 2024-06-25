@@ -11,7 +11,9 @@ const getValidSlugs = (allSlugs: AllSlugsType) => {
 const getPageSlugs = (data: any) => {
   const isNewsPage = !!data?.pageData?.news
   const pageSlugs = isNewsPage ? data?.pageData?.news[0]?.slugs?.allSlugs : data?.pageData?.slugs?.allSlugs
+  console.log('pageSlugs', pageSlugs)
   const validSlugs = getValidSlugs((pageSlugs as AllSlugsType) || [])
+  console.log('validSlugs', validSlugs)
   const defaultSlug = validSlugs.find((slug) => slug.lang === defaultLanguage.name)
   const filteredSlugs = validSlugs.filter((slug) => slug.lang !== defaultLanguage.name)
   return defaultSlug ? [defaultSlug, ...filteredSlugs] : validSlugs

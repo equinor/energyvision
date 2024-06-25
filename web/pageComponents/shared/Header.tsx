@@ -148,6 +148,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   /** Display "All sites" in case menu is empty **/
   const shouldDisplayAllSites = !Flags.HAS_FANCY_MENU && !menuData
 
+  console.log('slugs in header', slugs)
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
   const intl = useIntl()
