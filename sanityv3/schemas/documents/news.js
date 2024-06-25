@@ -3,10 +3,10 @@ import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { i18n } from '../documentTranslation'
 import SlugInput from '../components/SlugInput'
 import { withSlugValidation } from '../validations/validateSlug'
 import { file_add } from '@equinor/eds-icons'
+import { lang } from './langField'
 import {
   content,
   countryTags,
@@ -30,7 +30,6 @@ export default {
   title: 'News',
   name: 'news',
   type: 'document',
-  i18n,
   icon: () => EdsIcon(file_add),
   fieldsets: [
     {
@@ -61,6 +60,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     isLive,
     {
       ...seo,
@@ -95,7 +95,7 @@ export default {
         slugify: (input, _schemaType, context) => {
           const slug = slugify(input)
           const { parent: document } = context
-          const translatedNews = document._lang ? `/${newsSlug[document._lang]}` : `/${newsSlug[defaultLanguage.name]}`
+          const translatedNews = document.lang ? `/${newsSlug[document.lang]}` : `/${newsSlug[defaultLanguage.name]}`
           return `${translatedNews}/${slug}`
         },
       }),

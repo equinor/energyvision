@@ -1,6 +1,6 @@
 import { TopicDocuments } from '../../../../icons'
+import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
-import { i18n } from '../../../../schemas/documentTranslation'
 
 export const TopicContent = (S) =>
   S.listItem()
@@ -12,8 +12,8 @@ export const TopicContent = (S) =>
         .id('pages')
         .title('Topic content')
         .apiVersion(apiVersion)
-        .filter('_type == "page" && (!defined(_lang) || _lang == $baseLang)')
-        .params({ baseLang: i18n.base })
+        .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
+        .params({ baseLang: defaultLanguage.name })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
           return params.type === 'page'

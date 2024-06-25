@@ -3,7 +3,6 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 
@@ -24,7 +23,6 @@ export default {
   title: `500 page`,
   name: `internalServerError`,
   icon: () => EdsIcon(collection_5),
-  i18n,
   fieldsets: [
     {
       title: 'SEO & metadata',

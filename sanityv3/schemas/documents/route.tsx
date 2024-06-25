@@ -51,7 +51,7 @@ export default (isoCode: string, title: string) => {
           },
         ].filter((e) => e),
         options: {
-          filter: '_lang == $lang',
+          filter: 'lang == $lang',
           filterParams: { lang: `${isoCode}` },
           disableNew: true,
         },

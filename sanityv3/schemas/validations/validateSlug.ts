@@ -6,21 +6,31 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
   const { document, getClient } = context
 
   if (!document) return
-
-  const baseId = document._id.replace('drafts.', '').substring(0, 36)
-
-  let query: string
-
-  if (document._type.includes('route')) {
-    query = /* groq */ `*[slug.current == $slug && _type == $type && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
-  } else {
-    query = /* groq */ `*[slug.current == $slug && !(_id match $baseId + "*") && !(_id in path("drafts.**"))]`
+  const id = document._id.replace(/^drafts\./, '')
+  const params = {
+    draft: `drafts.${id}`,
+    published: id,
+    slug,
+    type: document._type,
+    language: document.lang || '',
   }
 
-  const params = { type: document._type, baseId, slug }
-  const matchingSlugs = await getClient({ apiVersion: apiVersion }).fetch(query, params)
-
-  return matchingSlugs.length === 0
+  let query: string
+  if (document._type.includes('route')) {
+    query = /* groq */ `!defined(*[
+      !(_id in [$draft, $published]) &&
+      slug.current == $slug && 
+      _type == $type
+    ][0]._id)`
+  } else {
+    query = /* groq */ `!defined(*[
+      !(_id in [$draft, $published]) &&
+      slug.current == $slug && 
+      lang == $language
+    ][0]._id)`
+  }
+  const result = await getClient({ apiVersion: apiVersion }).fetch(query, params)
+  return result
 }
 
 export const withSlugValidation = (options: any) => {

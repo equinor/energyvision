@@ -1,5 +1,4 @@
 import blocksToText from '../../helpers/blocksToText'
-import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import MagazineFooterComponent from '../objects/magazineFooterComponent'
 import sharedHeroFields from './header/sharedHeaderFields'
@@ -7,6 +6,7 @@ import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
 
 import type { PortableTextBlock, Rule } from 'sanity'
+import { lang } from './langField'
 
 const textContentType = configureBlockContent({
   h2: true,
@@ -23,7 +23,6 @@ export default {
   title: 'Magazine Index Page',
   name: 'magazineIndex',
   icon: () => EdsIcon(bookmarks),
-  i18n,
   fieldsets: [
     {
       title: 'Header',
@@ -40,6 +39,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',

@@ -6,13 +6,13 @@ import { defaultColors } from '../defaultColors'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
-import { i18n } from '../documentTranslation'
 import { configureBlockContent } from '../editors/blockContentType'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { withSlugValidation } from '../validations/validateSlug'
 import sharedHeaderFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
+import { lang } from './langField'
 
 const ingressBlockContentType = configureBlockContent({
   h2: false,
@@ -29,7 +29,6 @@ export default {
   name: 'magazine',
   title: 'Magazine page',
   icon: () => EdsIcon(bookmarks),
-  i18n,
   fieldsets: [
     {
       title: 'Header',
@@ -63,6 +62,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       // Set automatically in the custom action "ConfirmPublishWithi18n"
       title: 'Date and time of when the document was first published at',
@@ -132,7 +132,7 @@ export default {
       },
       options: withSlugValidation({
         source: (doc: SanityDocument) => {
-          const translatedMagazine = doc._lang ? magazineSlug[doc._lang as string] : magazineSlug[defaultLanguage.name]
+          const translatedMagazine = doc.lang ? magazineSlug[doc.lang as string] : magazineSlug[defaultLanguage.name]
           return doc.magazineSlug
             ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string, { lower: true })}`
             : ''

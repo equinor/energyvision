@@ -4,9 +4,9 @@ import blocksToText from '../../helpers/blocksToText'
 import { filterByLang } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
+import { lang } from './langField'
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -20,7 +20,6 @@ export default {
   type: 'document',
   title: 'Landing page',
   name: 'landingPage',
-  i18n,
   icon: () => EdsIcon(flight_land),
   fieldsets: [
     {
@@ -34,6 +33,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',

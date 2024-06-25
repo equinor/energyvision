@@ -6,6 +6,7 @@ import routes from '../routes'
 import { EdsIcon } from '../../icons'
 import { directions } from '@equinor/eds-icons'
 import { apiVersion } from '../../sanity.client'
+import { lang } from './langField'
 
 export default {
   title: 'Redirect',
@@ -13,6 +14,7 @@ export default {
   type: 'document',
   icon: () => EdsIcon(directions),
   fields: [
+    lang,
     {
       title: 'From:',
       description: 'Example: /this-is/an-example',

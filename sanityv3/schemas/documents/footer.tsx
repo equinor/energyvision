@@ -4,6 +4,7 @@ import routes from '../routes'
 import { filterByRoute } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import { format_color_text } from '@equinor/eds-icons'
+import { lang } from './langField'
 
 export type ColumnLink = {
   _type: 'link'
@@ -19,6 +20,7 @@ export default {
   icon: () => EdsIcon(format_color_text),
 
   fields: [
+    lang,
     {
       title: 'Footer columns',
       name: 'footerColumns',
