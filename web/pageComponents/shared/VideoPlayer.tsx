@@ -27,7 +27,7 @@ const getHeightWidth = (aspectRatio: string, height?: number | string) => {
   if (!height) {
     switch (aspectRatio) {
       case VideoPlayerRatios['1:1']:
-        return 'h-[320px] sm: h-[320px] sm: w-[320px] md: h-[487px] md: w-[487px] lg: h-[600px] lg: w-[600px]'
+        return 'h-[320px] sm:h-[320px] sm:w-[320px] md:h-[487px] md:w-[487px] lg:h-[600px] lg:w-[600px]'
       case VideoPlayerRatios['16:9']:
         return 'h-[56.25%] w-full'
       case VideoPlayerRatios['9:16']:

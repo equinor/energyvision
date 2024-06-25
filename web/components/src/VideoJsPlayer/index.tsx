@@ -5,6 +5,7 @@ import Player from 'video.js/dist/types/player'
 //import 'video.js/dist/video-js.css'
 import MediaError from 'video.js/dist/types/media-error'
 import useVideojsAnalytics from '../../../lib/hooks/useVideojsAnalytics'
+import { Play, Pause } from '../../../icons'
 
 type VideoJSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
@@ -152,7 +153,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
           hover:bg-black-100 
           `}
           >
-            <div className="text-md leading-none mt-1 text-white-100">{isPlaying ? '⏸' : '⏵'}</div>
+            <div className=" text-white-100">{isPlaying ? <Pause /> : <Play />}</div>
           </div>
         </button>
       )}
