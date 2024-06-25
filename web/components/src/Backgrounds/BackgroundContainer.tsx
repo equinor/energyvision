@@ -25,10 +25,25 @@ export type BackgroundContainerProps = {
   renderFragmentWhenPossible?: boolean
   /** Extended tailwind styling */
   twClassName?: string
+  /** Extended  styling when background image */
+  scrimClassName?: string
+  /* On mobile dont split background image and content */
+  dontSplit?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background, style, children, className, twClassName = '', id, renderFragmentWhenPossible = false, ...rest },
+  {
+    background,
+    style,
+    children,
+    className = '',
+    scrimClassName = '',
+    twClassName = '',
+    id,
+    renderFragmentWhenPossible = false,
+    dontSplit = false,
+    ...rest
+  },
   ref,
 ) {
   const { backgroundImage, type, ...restBackground } = background || {}
@@ -37,11 +52,14 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     <>
       {type === 'backgroundImage' && backgroundImage && (
         <StyledImageBackground
+          {...rest}
           $isInverted={backgroundImage?.useLight ? false : true}
           ref={ref}
           id={id}
           {...backgroundImage}
-          {...rest}
+          className={className}
+          scrimClassName={scrimClassName}
+          dontSplit={dontSplit}
         >
           {children}
         </StyledImageBackground>
