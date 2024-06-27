@@ -739,6 +739,7 @@ export type VideoPlayerData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
+  transcript?: PortableTextBlock[]
 }
 
 export type VideoPlayerCarouselData = {
