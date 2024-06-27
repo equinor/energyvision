@@ -306,6 +306,9 @@ const CareerFairForm = () => {
                 />
               )}
             />
+            <div className="pb-4">
+              <FormattedMessage id="all_fields_required" defaultMessage="All fields with * is required" />
+            </div>
             <StyledCheckBox
               label={intl.formatMessage({
                 id: 'career_fair_form_supporting_documents',

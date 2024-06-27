@@ -15,6 +15,11 @@ export const groups = {
   others: { title: 'Others' },
 }
 const snippets: textSnippet = {
+  all_fields_required: {
+    title: 'All fields with * is required',
+    defaultValue: 'All fields with * is required',
+    group: groups.others,
+  },
   loading: {
     title: 'Loading',
     defaultValue: 'Loading...',
@@ -189,7 +194,7 @@ const snippets: textSnippet = {
   },
   contact_form_name: {
     title: 'Name',
-    defaultValue: 'Name',
+    defaultValue: 'Name *',
     group: groups.contactForm,
   },
   contact_form_name_placeholder: {
@@ -199,7 +204,7 @@ const snippets: textSnippet = {
   },
   contact_form_email: {
     title: 'Email',
-    defaultValue: 'Email',
+    defaultValue: 'Email *',
     group: groups.contactForm,
   },
   contact_form_name_validation: {
@@ -471,7 +476,7 @@ const snippets: textSnippet = {
   },
   careers_contact_form_name: {
     title: 'Name',
-    defaultValue: 'Your Name',
+    defaultValue: 'Your Name *',
     group: groups.careerContactForm,
   },
 
