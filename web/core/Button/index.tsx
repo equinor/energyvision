@@ -18,7 +18,7 @@ items-center
 gap-3
 `
 
-export type Variants = 'contained' | 'outlined' | 'ghost'
+export type Variants = 'contained' | 'outlined' | 'ghost' | 'contained-secondary' | 'outlined-secondary'
 
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
@@ -47,6 +47,28 @@ export const getVariant = (variant: Variants): string => {
       dark:hover:bg-white-transparent
       dark:focus-visible:outline-white-100
       `
+    case 'outlined-secondary':
+      return `
+      border
+      border-north-sea-100
+      text-black-80 
+      hover:bg-slate-blue-100
+      hover:text-white-100
+      focus:outline-none
+      focus-visible:outline-slate-blue-95
+      dark:text-white-100
+      dark:border-white-100
+      dark:hover:bg-white-transparent
+      dark:focus-visible:outline-white-100
+      `
+    case 'contained-secondary':
+      return `bg-slate-blue-95 
+      text-white-100 
+      hover:bg-slate-blue-100
+      hover:text-white-100
+      focus:outline-none
+      focus-visible:outline-slate-blue-95
+    `
     case 'contained':
     default:
       return `bg-norwegian-woods-100 
