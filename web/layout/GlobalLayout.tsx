@@ -1,6 +1,7 @@
 import { HTMLAttributes } from 'react'
 import type { FooterColumns, MenuData, SimpleMenuData } from '../types/types'
 import Footer from './Footer'
+import Header from './Header'
 
 export type LayoutProps = {
   footerData?: { footerColumns: FooterColumns[] }
@@ -11,7 +12,7 @@ export type LayoutProps = {
 export const Layout = ({ children, footerData, menuData, ...rest }: LayoutProps): JSX.Element => {
   return (
     <div className="flex flex-col justify-between" {...rest}>
-      <HeaderComponent menuData={menuData} />
+      <Header slugs={slugs} menuData={menuData} />
       <main className="min-h-[calc(100vh-var(--topbar-height))]">{children}</main>
       <Footer footerData={footerData} />
     </div>
