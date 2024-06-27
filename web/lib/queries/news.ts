@@ -1,4 +1,4 @@
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { noDrafts, sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
@@ -17,7 +17,7 @@ const latestNewsFields = /* groq */ `
   "updatedAt": _updatedAt,
   title,
   heroImage,
-  ${slugsForNewsAndMagazine('news')},
+  ${slugsForNewsAndMagazine},
   ${ingressForNewsQuery},
   "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
@@ -30,7 +30,7 @@ const newsFields = /* groq */ `
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
-  ${slugsForNewsAndMagazine('news')},
+  ${slugsForNewsAndMagazine},
   ${ingressForNewsQuery},
   "iframe": ${iframeForNewsQuery},
   "content": ${contentForNewsQuery},
@@ -54,7 +54,7 @@ export const newsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${newsFields}
-  }
+  }${querySuffixForNewsAndMagazine}
 `
 
 export const newsPromotionQuery = /* groq */ `

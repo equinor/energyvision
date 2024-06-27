@@ -10,15 +10,16 @@ import {
   SchemaTypeDefinition,
   Template,
 } from 'sanity'
-import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentActionsContext } from 'sanity'
-import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
+import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentBadgeComponent } from 'sanity'
+import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { withDocumentI18nPlugin, createPublishAction } from '@sanity/document-internationalization'
+import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
+import { documentInternationalization } from '@equinor/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { createCustomPublishAction } from './actions/CustomPublishAction'
@@ -28,6 +29,9 @@ import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
 import { i18n } from './schemas/documentTranslation'
 import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 import { getMetaTitleSuffix } from '../satellitesConfig'
+import { defaultLanguage } from './languages'
+import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
+import { LangBadge } from './schemas/components/LangBadge'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -71,48 +75,57 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       input: handleInputComponents,
     },
   },
-  plugins: withDocumentI18nPlugin(
-    [
-      deskTool({
-        structure: (S: StructureBuilder, context: ConfigContext) => {
-          return deskStructure(S, context)
-        },
-        defaultDocumentNode: defaultDocumentNodeResolver,
-        name: 'desk',
-        title: 'Desk',
+  plugins: [
+    documentInternationalization(i18n),
+    deskTool({
+      structure: (S: StructureBuilder, context: ConfigContext) => {
+        return deskStructure(S, context)
+      },
+      defaultDocumentNode: defaultDocumentNodeResolver,
+      name: 'desk',
+      title: 'Desk',
+    }),
+    media(),
+    scheduledPublishing(),
+    datasetParam === 'global-development' && visionTool(),
+    FotowareAssetSource(),
+    BrandmasterAssetSource(),
+    isSecret &&
+      crossDatasetDuplicator({
+        tool: true,
+        types: ['news', 'tag', 'countryTag', 'translation.metadata'],
+        follow: ['inbound'],
       }),
-      media(),
-      scheduledPublishing(),
-      datasetParam === 'global-development' && visionTool(),
-      FotowareAssetSource(),
-      BrandmasterAssetSource(),
-      isSecret &&
-        crossDatasetDuplicator({
-          tool: true,
-          types: ['news', 'tag', 'countryTag'],
-        }),
-    ].filter((e) => e) as PluginOptions[],
-    {
-      includeDeskTool: false,
-      ...i18n,
-    },
-  ),
+  ].filter((e) => e) as PluginOptions[],
+
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
-    templates: (prev: Template<any, any>[]) => [...prev, ...initialValueTemplates],
+    templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
   },
   document: {
-    actions: (prev: DocumentActionComponent[], context: DocumentActionsContext) => {
+    actions: (prev: DocumentActionComponent[], context: any) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
+      if (i18n.schemaTypes.includes(context.schemaType)) prev.push(DeleteTranslationAction)
       return prev
-        .filter(({ action, name }: DocumentActionComponent) => {
-          return !(name !== 'DuplicateAction' && action === 'duplicate') // two actions are named duplicate, so we filter on two values to get the correct one
+        .filter(({ action }: DocumentActionComponent) => {
+          return !(action === 'delete' && i18n.schemaTypes.includes(context.schemaType))
         })
-        .map((originalAction) =>
-          originalAction.action === 'publish'
-            ? createCustomPublishAction(createPublishAction(i18n), context)
-            : originalAction,
-        )
+        .map((originalAction) => {
+          switch (originalAction.action) {
+            case 'publish':
+              return createCustomPublishAction(originalAction, context)
+            case 'duplicate':
+              return createCustomDuplicateAction(originalAction, context)
+            default:
+              return originalAction
+          }
+        })
+    },
+    unstable_comments: {
+      enabled: false,
+    },
+    badges: (prev: DocumentBadgeComponent[], context: any) => {
+      return i18n.schemaTypes.includes(context.schemaType) ? [LangBadge, ...prev] : prev
     },
   },
   auth: createAuthStore({
@@ -140,3 +153,10 @@ export default dataset === 'secret'
       ].map((e) => getConfig(e.dataset, e.projectId, true)),
     )
   : getConfig(dataset, projectId)
+
+const filterTemplates = (prev: Template<any, any>[]) => {
+  const excludedTemplates = i18n.supportedLanguages
+    .filter((lang) => lang.title != defaultLanguage.title)
+    .flatMap((lang) => i18n.schemaTypes.map((type) => `${type}-${lang.id}`))
+  return prev.filter((template) => !(i18n.schemaTypes.includes(template.id) || excludedTemplates.includes(template.id)))
+}
