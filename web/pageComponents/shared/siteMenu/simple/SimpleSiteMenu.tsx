@@ -15,6 +15,7 @@ import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
 import { FloatingFocusManager, FloatingOverlay, useDismiss, useFloating, useInteractions } from '@floating-ui/react'
+import { useIsomorphicLayoutEffect } from '@equinor/eds-utils'
 
 const MenuContainer = styled.div`
   font-size: var(--typeScale-1);
@@ -61,7 +62,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
 
   const { getReferenceProps, getFloatingProps } = useInteractions([useDismiss(context)])
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events, handleRouteChange])

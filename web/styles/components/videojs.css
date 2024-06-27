@@ -5,3 +5,15 @@
 .vjs-envis .vjs-control-bar {
   @apply bg-slate-80;
 }
+
+.video-js video {
+  object-fit: cover;
+}
+
+.vjs-paused .vjs-control-bar {
+  display: flex;
+}
+
+.vjs-poster img {
+  object-fit: cover;
+}

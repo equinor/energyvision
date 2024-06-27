@@ -1,0 +1,84 @@
+import fs from 'fs'
+//import { groupBy, omit } from 'lodash'
+import { groq } from 'next-sanity'
+import { sanityClient } from '../lib/sanity.server'
+import { allNewsDocuments } from '../lib/queries/newsroom'
+
+main()
+
+async function main() {
+  await createIndex()
+}
+
+async function createIndex() {
+  const lang = 'en_GB' //getNameFromLocale(locale)
+  const data = await sanityClient.fetch(groq`${allNewsDocuments}`, {
+    lang,
+  })
+
+  if (data.length === 0) {
+    throw new Error('Searchindex is empty, something went wrong when retrieving data from Sanity.')
+  }
+
+  fs.writeFileSync('./public/searchindex.json', JSON.stringify(data))
+}
+
+/* function sanitzeSanityData(data) {
+  return data
+    .sort((a, b) => {
+      if (!a.publishedAt && !b.publishedAt) {
+        return 0
+      }
+      if (!a.publishedAt) {
+        return 1
+      }
+      if (!b.publishedAt) {
+        return -1
+      }
+
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    })
+    .map((x) => ({
+      ...omit(x, ['publishedAt', 'seo']),
+      intro: x.intro ?? x.seo?.meta ?? '',
+      lvl2: getHeadings(x.content, 'h2'),
+      lvl3: getHeadings(x.content, 'h3'),
+      lvl4: getHeadings(x.content, 'h4'),
+      content: mapContent(x.content),
+    }))
+} */
+
+/* function getHeadings(blocks: any[], block: 'h2' | 'h3' | 'h4') {
+  if (!blocks || blocks.length === 0) {
+    return ''
+  }
+  return blocks.filter((x) => x.style === block).map((x) => ({ text: x.children[0].text, id: x._key ?? '' }))
+}
+
+function mapContent(blocks: any[]) {
+  if (!blocks || blocks.length === 0) {
+    return ''
+  }
+
+  const contentBlocks: { text: string; id?: string }[] = []
+
+  let currentAnchor = ''
+  blocks.forEach((x) => {
+    if (['h2', 'h3', 'h4'].includes(x.style)) {
+      currentAnchor = x._key ?? ''
+    }
+    if (x.style === 'normal') {
+      contentBlocks.push({
+        text: x.children[0].text.replace(/\n|\r/g, ' '),
+        id: currentAnchor,
+      })
+    }
+  })
+
+  const mapped = Object.entries(groupBy(contentBlocks, 'id')).map(([key, value]) => ({
+    id: key,
+    text: value.map((x) => x.text).join(' '),
+  }))
+
+  return mapped
+} */

@@ -23,7 +23,7 @@ const StyledLink = styled(CardLink)`
 type TopicPageCardProp = {
   data: CardData
   fitToContent?: boolean
-}
+} & HTMLAttributes<HTMLAnchorElement>
 
 const TopicPageCard = ({ data, fitToContent = false, ...rest }: TopicPageCardProp) => {
   const { slug, title, heroImage, openGraphImage, ingress } = data

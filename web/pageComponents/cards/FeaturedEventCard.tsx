@@ -6,7 +6,7 @@ import { getEventDates } from '../../common/helpers/dateUtilities'
 import { TimeIcon } from '../../components/src/FormattedDateTime/shared'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, HTMLAttributes } from 'react'
 import type { FeaturedContentData } from '../../types/types'
 import type { PortableTextBlock } from '@portabletext/types'
 
@@ -49,7 +49,7 @@ const Center = styled.div`
 type FeaturedEventCardProps = {
   data: FeaturedContentData
   fitToContent?: boolean
-}
+} & HTMLAttributes<HTMLAnchorElement>
 
 const FeaturedEventCard = ({ data, fitToContent = false, ...rest }: FeaturedEventCardProps) => {
   const { slug, title, eventDate, location } = data

@@ -20,3 +20,21 @@ export const getComponentsData = async (page: { query: string; queryParams: Quer
 
   return { menuData, pageData, footerData }
 }
+export const getPageData = async (page: { query: string; queryParams: QueryParams }, preview = false) => {
+  const client = getClient(preview)
+  const pageDataWithDrafts = await client.fetch(page.query, page.queryParams)
+  const pageData = filterDataToSingleItem(pageDataWithDrafts, preview)
+
+  return { pageData }
+}
+export const getMenuAndFooterData = async (queryParams: QueryParams, preview = false) => {
+  const client = getClient(preview)
+
+  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
+  const menuDataWithDrafts = await client.fetch(menuQuery, queryParams)
+  const menuData = filterDataToSingleItem(menuDataWithDrafts, preview)
+  const footerDataWithDrafts = await client.fetch(footerQuery, queryParams)
+  const footerData = filterDataToSingleItem(footerDataWithDrafts, preview)
+
+  return { menuData, footerData }
+}

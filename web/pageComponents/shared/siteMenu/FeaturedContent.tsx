@@ -20,9 +20,10 @@ const Promoted = styled.div`
 
 type Props = {
   data: FeaturedContentData
+  onNavigation: () => void
 }
 
-const FeaturedContent = ({ data }: Props) => {
+const FeaturedContent = ({ data, onNavigation }: Props) => {
   if (!data.type) return null
 
   const isNews = (type: string): boolean => type === 'news' || type === 'localNews'
@@ -31,7 +32,7 @@ const FeaturedContent = ({ data }: Props) => {
   if (isNews(data.type)) {
     return (
       <Promoted>
-        <NewsCard data={data} fitToContent />
+        <NewsCard data={data} fitToContent onClick={() => onNavigation()} />
       </Promoted>
     )
   }
@@ -39,14 +40,14 @@ const FeaturedContent = ({ data }: Props) => {
   if (isEvent(data)) {
     return (
       <Promoted>
-        <FeaturedEventCard data={data} />
+        <FeaturedEventCard data={data} onClick={() => onNavigation()} />
       </Promoted>
     )
   }
 
   return (
     <Promoted>
-      <TopicPageCard data={data} />
+      <TopicPageCard data={data} onClick={() => onNavigation()} />
     </Promoted>
   )
 }

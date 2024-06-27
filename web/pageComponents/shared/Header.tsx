@@ -1,8 +1,9 @@
+'use client'
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styled, { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
-import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/types'
@@ -76,14 +77,14 @@ export type HeaderProps = {
 }
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
-  const router = useRouter()
+  const intl = useIntl()
+  const pathname = usePathname()
   const localization = {
-    activeLocale: router.locale || defaultLanguage.locale,
+    activeLocale: intl.locale || defaultLanguage.locale,
   }
   const { publicRuntimeConfig } = getConfig()
 
-  const activeSlug =
-    slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || router.asPath
+  const activeSlug = slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || pathname
   const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
   const defaultLocale = defaultLanguage.locale
   const canonicalSlug =
@@ -133,9 +134,9 @@ const AllSites = () => {
 }
 
 const Header = ({ slugs, menuData }: HeaderProps) => {
-  const router = useRouter()
+  const intl = useIntl()
   const localization = {
-    activeLocale: router.locale || defaultLanguage.locale,
+    activeLocale: intl.locale || defaultLanguage.locale,
   }
   const hasSearch = Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
@@ -150,7 +151,6 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
 
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
-  const intl = useIntl()
   const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
   return (

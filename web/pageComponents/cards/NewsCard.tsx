@@ -4,13 +4,14 @@ import type { CardData } from '../../types/types'
 import { Ratios } from '../shared/SanityImage'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { HTMLAttributes } from 'react'
 
 type NewsCardProp = {
   data: CardData
   fitToContent?: boolean
-}
+} & HTMLAttributes<HTMLAnchorElement>
 
-const NewsCard = ({ data }: NewsCardProp) => {
+const NewsCard = ({ data, ...rest }: NewsCardProp) => {
   const { slug, title, ingress, publishDateTime, heroImage } = data
 
   const image = useSanityLoader(heroImage?.image, 400, Ratios.NINE_TO_SIXTEEN)
@@ -21,6 +22,7 @@ const NewsCard = ({ data }: NewsCardProp) => {
       {...(image && {
         imageUrl: image.src,
       })}
+      {...rest}
       className="basis-0 grow min-w-[var(--card-minWidth)] max-w-[var(--card-maxWidth)]"
     >
       <Card.Content>

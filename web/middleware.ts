@@ -31,6 +31,8 @@ const isPreviewEnabled = (request: NextRequest): boolean => {
 
 export async function middleware(request: NextRequest) {
   const { origin, locale } = request.nextUrl
+
+  console.log('request.nextUrl locale', locale)
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isPreview = isPreviewEnabled(request)

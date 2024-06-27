@@ -2,7 +2,52 @@
 @import 'tailwindcss/components';
 @import 'video.js/dist/video-js.css';
 @import './components/videojs.css';
+@import './components/algolia.css';
+@import './components/cookieBot.css';
 @import 'tailwindcss/utilities';
+
+:root {
+  --topbar-height: 100px;
+}
+
+@layer base {
+  @font-face {
+    font-family: Equinor;
+    font-style: normal;
+    font-weight: 1 999;
+    font-display: fallback;
+    src: local('😊'), url(/fonts/equinor/EquinorVariable-VF.woff2) format('woff2-variations'),
+      url(/fonts/equinor/EquinorVariable-VF.woff) format('woff-variations'),
+      url(/fonts/equinor/Equinor-Regular.woff) format('woff');
+  }
+
+  * {
+    font-family: Equinor, 'Open Sans', sans-serif;
+  }
+  html {
+    @apply text-slate-80;
+  }
+  body {
+    @apply min-h-screen bg-white-100 pt-[var(--topbar-height)];
+    -webkit-font-smoothing: antialiased;
+  }
+  em {
+    @apply italic;
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+}
 
 @layer utilities {
   /* Scroll-Timeline Supported, Yay! */

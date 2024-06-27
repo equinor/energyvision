@@ -1,13 +1,18 @@
-import styled from 'styled-components'
+import envisTwMerge from '../../../twMerge'
 
-const Container = styled.div`
-  width: 100%;
-  height: var(--topbar-height);
-  max-width: var(--topbar-innerMaxWidth);
-  margin: auto;
-  padding: var(--space-small) 0;
-`
-
-export const InnerContainer = ({ children, ...rest }: React.HTMLAttributes<HTMLDivElement>) => (
-  <Container {...rest}>{children}</Container>
+export const InnerContainer = ({ children, className = '', ...rest }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={envisTwMerge(
+      `w-full 
+    h-[var(--topbar-height)]
+    max-w-[calc(1920px-theme(padding.layout-sm)*2))]
+    m-auto 
+    py-3
+    `,
+      className,
+    )}
+    {...rest}
+  >
+    {children}
+  </div>
 )

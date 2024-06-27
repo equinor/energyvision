@@ -1,7 +1,7 @@
 import { defaultLanguage } from '../../../languages'
 
 export const sameLang = /* groq */ `
-  _lang == $lang
+  lang == $lang
 `
 
 export const noDrafts = /* groq */ `

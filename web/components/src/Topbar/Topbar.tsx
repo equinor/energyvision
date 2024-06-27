@@ -1,22 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import styled from 'styled-components'
-import { useState, useEffect, useRef, HTMLAttributes } from 'react'
+import { useState, useRef, HTMLAttributes } from 'react'
+import { useIsomorphicLayoutEffect } from '@equinor/eds-utils'
+import envisTwMerge from '../../../twMerge'
 
-const Bar = styled.div<{ hasDropShadow: boolean }>`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: var(--topbar-height);
-  padding: 0 var(--layout-paddingHorizontal-small);
-  position: fixed;
-  top: 0;
-  transition: top 0.3s;
-  z-index: 10;
-  background-color: var(--white-100);
-  ${({ hasDropShadow }) => hasDropShadow && `box-shadow: var(--topBar-box-shadow);`}
-`
-
-export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) => {
+export const Topbar = ({ children, className = '', ...rest }: HTMLAttributes<HTMLDivElement>) => {
   const ref = useRef<HTMLDivElement>(null)
 
   const [height, setHeight] = useState(0)
@@ -24,13 +11,13 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
   const [isVisible, setIsVisible] = useState(true)
   const [hasDropShadow, setHasDropShadow] = useState(false)
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (ref && ref?.current) {
       setHeight(ref.current.getBoundingClientRect().height)
     }
   }, [setHeight])
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const handleScroll = () => {
       let currentScrollPos = window.pageYOffset
       // Fix for iOS to avoid negative scroll positions
@@ -63,7 +50,7 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
     return () => window.removeEventListener('scroll', handleScroll)
   }, [prevScrollPos, isVisible, height, hasDropShadow])
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (ref && ref?.current) {
       const topbar = ref.current
 
@@ -80,8 +67,28 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
   }, [isVisible])
 
   return (
-    <Bar ref={ref} style={{ top: isVisible ? 0 : -height }} hasDropShadow={hasDropShadow} {...rest}>
+    <div
+      ref={ref}
+      className={envisTwMerge(
+        `flex 
+        items-center
+        w-full
+        h-[var(--topbar-height)]
+        px-layout-sm 
+        fixed
+        top-0
+        transition-[top]
+        duration-300
+        z-10
+        bg-white-100
+        ${hasDropShadow ? 'shadow-[0_0_15px_10px_rgba(41,62,64,0.15)]' : ''}
+        `,
+        className,
+      )}
+      style={{ top: isVisible ? 0 : -height }}
+      {...rest}
+    >
       {children}
-    </Bar>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
-import { useEffect, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import styled from 'styled-components'
+import { usePathname } from 'next/navigation'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
-import { useRouter } from 'next/router'
 import { Menu, MenuButton, Link } from '@components'
 import { MenuGroup } from './MenuGroup'
 import { TopbarDropdown } from './TopbarDropdown'
@@ -42,9 +42,9 @@ export type MenuProps = {
 }
 
 const SiteMenu = ({ data, ...rest }: MenuProps) => {
-  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const intl = useIntl()
+  const pathname = usePathname()
 
   const { refs, context } = useFloating({
     open: isOpen,
@@ -58,17 +58,17 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
   }, [])
   const menuItems = (data && data.subMenus) || []
 
-  useEffect(() => {
+  /*   useIsomorphicLayoutEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange])
+  }, [router.events, handleRouteChange]) */
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getAllSitesLink('internal', router?.locale || 'en')
+  const allSitesURL = getAllSitesLink('internal', intl?.locale || 'en')
 
   const getCurrentMenuItemIndex = (menuItems: SubMenuData[]) => {
     return menuItems.findIndex((menuItem) =>
-      menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath)),
+      menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === pathname)),
     )
   }
 
@@ -101,7 +101,14 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                 <MenuContainer>
                   <Menu defaultIndex={getCurrentMenuItemIndex(menuItems)}>
                     {menuItems.map((topLevelItem: SubMenuData, idx) => {
-                      return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
+                      return (
+                        <MenuGroup
+                          key={topLevelItem.id}
+                          index={idx}
+                          topLevelItem={topLevelItem}
+                          onNavigation={handleRouteChange}
+                        />
+                      )
                     })}
                   </Menu>
 

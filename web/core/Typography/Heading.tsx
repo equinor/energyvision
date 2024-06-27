@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'

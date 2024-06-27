@@ -20,6 +20,8 @@ module.exports = {
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
+    './routes/**/*.{js,ts,tsx}',
+    './templates/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
   ],
   /*

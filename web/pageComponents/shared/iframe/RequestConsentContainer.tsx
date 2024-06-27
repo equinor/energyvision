@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { Text, Button, Heading, BackgroundContainer } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
 
 declare global {
@@ -89,7 +88,6 @@ const handleCookiebotRenew = (locale?: string) => {
 }
 
 const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
-  const router = useRouter()
   const intl = useIntl()
   const typeOfCookie =
     cookiePolicy === 'statistics'
@@ -154,7 +152,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
             }}
           />
         </Text>
-        <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
+        <LeftAlignedButton onClick={() => handleCookiebotRenew(intl?.locale)} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
         </LeftAlignedButton>
       </Content>

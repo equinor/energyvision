@@ -5,7 +5,8 @@ import { Link, List, Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 import FeaturedContent from './FeaturedContent'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
+import { ReadMoreLink } from '@core/Link'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const { Item } = List
@@ -79,13 +80,14 @@ function getLink(linkData: MenuLinkData) {
 type MenuGroupType = {
   topLevelItem: SubMenuData
   index: number
+  onNavigation: () => void
 }
 
-export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
+export const MenuGroup = ({ topLevelItem, index, onNavigation }: MenuGroupType) => {
   const { topLevelLink, groups, intro, featuredContent } = topLevelItem
 
   const topLevelHref = getLink(topLevelLink)
-  const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <SubMenu id={index}>
@@ -99,9 +101,9 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                   <RichText value={intro} />
                 </TextContainer>
               )}
-              <ReadMore href={topLevelHref} variant="readMore">
+              <ReadMoreLink href={topLevelHref} onClick={() => onNavigation()}>
                 {topLevelLink?.label}
-              </ReadMore>
+              </ReadMoreLink>
             </StyledSection>
             {groups && groups.length > 0 && (
               <SubMenuGroups>
@@ -119,7 +121,8 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                             <StyledSubMenuGroupLink
                               underline={false}
                               href={getLink(link)}
-                              aria-current={router.asPath == link?.link?.slug ? 'page' : 'false'}
+                              aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
+                              onClick={() => onNavigation()}
                             >
                               {link.label}
                             </StyledSubMenuGroupLink>
@@ -132,7 +135,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
               </SubMenuGroups>
             )}
           </div>
-          {featuredContent && <FeaturedContent data={featuredContent} />}
+          {featuredContent && <FeaturedContent data={featuredContent} onNavigation={onNavigation} />}
         </Grid>
       </PositionedSubMenuPanel>
     </SubMenu>
