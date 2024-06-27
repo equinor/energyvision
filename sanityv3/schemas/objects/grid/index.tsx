@@ -1,5 +1,3 @@
-import { configureBlockContent } from '../../editors'
-import { PortableTextBlock } from 'sanity'
 import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'
 
@@ -51,7 +49,7 @@ export default {
     select: {
       title: 'title',
     },
-    prepare({ title = [] }: { title: PortableTextBlock[] }) {
+    prepare() {
       const plainTitle = 'Grid'
 
       return {

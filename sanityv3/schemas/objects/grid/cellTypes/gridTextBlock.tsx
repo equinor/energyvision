@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../../../components/ColorSelector'
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../../helpers/blocksToText'
 import { EdsIcon } from '../../../../icons'
 import { configureBlockContent } from '../../../editors'
@@ -11,12 +10,6 @@ const blockContentType = configureBlockContent({
   largeText: true,
   extraLargeText: true,
 })
-
-type GridTextBlock = {
-  content?: string
-  action?: Reference[]
-  background?: ColorSelectorValue
-}
 
 export default {
   name: 'gridTextBlock',

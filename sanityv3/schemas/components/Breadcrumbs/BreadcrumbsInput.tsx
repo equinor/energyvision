@@ -28,7 +28,7 @@ export const BreadcrumbsInput = (props: BreadCrumbsInputProps) => {
     if (slug?.current) {
       setDefaultBreadcrumbs(constructBreadcrumbs('home', topicSlug ?? slug?.current))
     }
-  }, [slug, parent, setDefaultBreadcrumbs])
+  }, [slug, parent, setDefaultBreadcrumbs, topicSlug, client])
 
   useEffect(() => {
     const resolveReferences = async (references: Reference[]) => {

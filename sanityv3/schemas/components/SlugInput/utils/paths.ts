@@ -80,8 +80,11 @@ function normalizeIndexSegment(segment: string): PathSegment {
   return Number(segment.replace(/[^\d]/g, ''))
 }
 
-function normalizeKeySegment(segment: string): KeyedSegment {
+function normalizeKeySegment(segment: string): KeyedSegment | null {
   const segments = segment.match(reKeySegment)
+  if (!segments) {
+    return null
+  }
   return { _key: segments![1] }
 }
 

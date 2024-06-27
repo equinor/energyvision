@@ -3,7 +3,7 @@ import blocksToText from '../../../../helpers/blocksToText'
 import { configureBlockContent } from '../../../editors'
 import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
-import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { DownloadableImage } from './../../downloadableImage'
 import type { DownloadableFile } from '../../files'
 import type { ImageWithAlt } from '../../imageWithAlt'
@@ -67,7 +67,7 @@ export default {
       type: 'array',
       of: [blockContentType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },

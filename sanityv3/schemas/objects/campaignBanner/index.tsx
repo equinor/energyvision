@@ -30,7 +30,6 @@ const blockConfigContent = {
 }
 
 const blockTitleType = configureBlockContent({ ...blockConfigTitle })
-const blockContentType = configureBlockContent({ ...blockConfigContent })
 
 export type CampaignBanner = {
   _type: 'campaignBanner'
@@ -66,7 +65,7 @@ export default {
       type: 'array',
       of: [blockTitleType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },
