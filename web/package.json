@@ -47,7 +47,6 @@
     "date-fns-tz": "^2.0.0",
     "easy-soap-request": "^5.4.0",
     "focus-visible": "^5.2.0",
-    "framer-motion": "^6",
     "friendly-challenge": "^0.9.6",
     "video.js": "^8.10.0",
     "@types/video.js": "^7.3.57",

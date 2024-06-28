@@ -301,11 +301,17 @@ module.exports = {
           '0%, 100%': { opacity: '0' },
           '20%, 80%': { opacity: '1' },
         },
+        move: {
+          to: {
+            transform: 'translateX(calc(-100%+100vw))',
+          },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
+        move: 'auto linear move forwards',
       },
       typography: (theme) => ({
         DEFAULT: {

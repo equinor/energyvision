@@ -740,19 +740,17 @@ export type VideoPlayerData = {
   ingress?: PortableTextBlock[]
   action?: LinkData
 }
+export type VideoPlayerCarouselItem = {
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  aspectRatio?: VideoPlayerRatios
+}
 
 export type VideoPlayerCarouselData = {
   id: string
   type: string
-  items: {
-    id: string
-    title: PortableTextBlock[]
-    video: {
-      title: string
-      url: string
-      thumbnail: ImageWithAlt
-    }
-  }[]
+  items: VideoPlayerCarouselItem[]
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
   }

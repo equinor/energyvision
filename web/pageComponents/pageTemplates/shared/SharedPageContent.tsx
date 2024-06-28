@@ -18,7 +18,6 @@ import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
-import VideoPlayerCarousel from '../../shared/VideoPlayerCarousel'
 import TextTeaser from '../../shared/textTeaser/TextTeaser'
 import KeyNumbers from '../../topicPages/KeyNumbers/KeyNumbers'
 import CardsList from '../../../sections/cards/CardsList/CardsList'
@@ -59,6 +58,7 @@ import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
 import { BackgroundContainerProps } from '@components/Backgrounds'
+import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
 
 type DefaultComponent = {
   id?: string
