@@ -21,6 +21,7 @@ module.exports = {
     './sections/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
   ],
+  safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.

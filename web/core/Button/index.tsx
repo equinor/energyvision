@@ -5,8 +5,10 @@ import { twMerge } from 'tailwind-merge'
 export const commonButtonStyling = `
 w-fit
 text-sm
-px-5
-py-3
+px-3
+py-2
+lg:px-5
+lg:py-3
 rounded-md
 focus:outline-none
 focus-visible:envis-outline

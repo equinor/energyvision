@@ -535,6 +535,7 @@ export type IFrameData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   description?: PortableTextBlock[]
+  transcript?: PortableTextBlock[]
   action?: LinkData
   frameTitle: string
   url: string

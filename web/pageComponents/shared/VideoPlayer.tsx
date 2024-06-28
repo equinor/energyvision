@@ -8,19 +8,12 @@ import {
   VideoDesignOptionsType,
 } from '../../types/types'
 import { BackgroundContainer } from '@components'
-import { getUrlFromAction, urlFor } from '../../common/helpers'
+import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
-import { Icon } from '@equinor/eds-core-react'
-import { useState } from 'react'
-import { commonButtonStyling, getVariant } from '@core/Button'
-import { ButtonLink } from '@core/Link'
-import { getLocaleFromName } from '../../lib/localization'
-import { add_circle_filled } from '@equinor/eds-icons'
-import Modal from './Modal'
-import RichText from './portableText/RichText'
+import TranscriptAndActions from './TranscriptAndActions'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -115,14 +108,7 @@ export const VideoJsComponent = ({
 const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions, transcript } = data
   const { width } = designOptions
-  const [isOpen, setIsOpen] = useState(false)
-  const actionUrl = action ? getUrlFromAction(action) : ''
-  const handleOpen = () => {
-    setIsOpen(true)
-  }
-  const handleClose = () => {
-    setIsOpen(false)
-  }
+
   return (
     <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
       <div
@@ -133,40 +119,8 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
       >
         {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
         {ingress && <IngressText value={ingress} className="mb-lg" />}
-        <VideoJsComponent
-          className={'pb-11'}
-          video={video}
-          designOptions={designOptions}
-          videoControls={videoControls}
-        />
-        <div className="flex flex-wrap gap-x-4">
-          {action && action.label && (
-            <ButtonLink
-              href={actionUrl || ''}
-              aria-label={action?.ariaLabel}
-              variant="outlined"
-              className={`grow mb-8 justify-center ${getVariant('outlined-secondary')}`}
-              locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-            >
-              {action.label}
-            </ButtonLink>
-          )}
-
-          {transcript && (
-            <>
-              <button
-                onClick={handleOpen}
-                className={`grow mb-8 ${commonButtonStyling} ${getVariant('contained-secondary')}`}
-              >
-                <span className="grow">Show Transcript</span>
-                <Icon data={add_circle_filled}></Icon>
-              </button>
-              <Modal isOpen={isOpen} onClose={handleClose} title="My Modal">
-                <RichText value={transcript} />
-              </Modal>
-            </>
-          )}
-        </div>
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+        <TranscriptAndActions action={action} transcript={transcript} />
       </div>
     </BackgroundContainer>
   )

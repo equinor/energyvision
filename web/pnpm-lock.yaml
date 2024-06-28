@@ -71,6 +71,9 @@ dependencies:
   '@types/easy-soap-request':
     specifier: ^4.1.1
     version: 4.1.1
+  '@types/react-transition-group':
+    specifier: ^4.4.10
+    version: 4.4.10
   '@types/uuid':
     specifier: ^8.3.4
     version: 8.3.4
@@ -6826,6 +6829,12 @@ packages:
 
   /@types/react-is@18.3.0:
     resolution: {integrity: sha512-KZJpHUkAdzyKj/kUHJDc6N7KyidftICufJfOFpiG6haL/BDQNQt5i4n1XDUL/nDZAtGLHDSWRYpLzKTAKSvX6w==}
+    dependencies:
+      '@types/react': 18.2.17
+    dev: false
+
+  /@types/react-transition-group@4.4.10:
+    resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
     dependencies:
       '@types/react': 18.2.17
     dev: false

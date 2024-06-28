@@ -215,6 +215,10 @@ _type == "keyNumbers" =>{
       ...,
       ${markDefs},
     },
+    "transcript":transcript.text[]{
+      ...,
+      ${markDefs},
+    },
     frameTitle,
     "action": action[0]{
       ${linkSelectorFields},

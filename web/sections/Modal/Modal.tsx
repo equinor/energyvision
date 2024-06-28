@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions*/
-import { Icon } from '@equinor/eds-core-react'
 import { add_circle_filled } from '@equinor/eds-icons'
-import TransformableIcon from 'icons/TransformableIcon'
+import { TransformableIcon } from '../../icons/TransformableIcon'
 import { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
-interface ModalProps {
+export type ModalProps = {
   isOpen: boolean
   onClose: () => void
   title: string
@@ -63,41 +62,37 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   return (
     <CSSTransition
       in={isOpen}
-      key={'asd'}
       nodeRef={nodeRef}
-      classNames="alert"
+      classNames="modal"
       timeout={300}
       unmountOnExit
       onEntered={() => setOpen(true)}
       onExited={() => setOpen(false)}
     >
-      <>
-        <div className="alert-enter-done alert-enter-active alert-enter alert-exit alert-exit-active "></div>
-        <div
-          className={` fixed inset-0 flex justify-center bg-north-sea-90 w-full overflow-y-auto bg-opacity-80`}
-          role="dialog"
-          aria-modal="true"
-          aria-label={title}
-          ref={nodeRef}
-          onKeyDown={handleKeyDown}
-        >
-          <div className="rounded-lg shadow-lg w-[997px] mx-auto h-max my-24 relative">
-            <div ref={modalRef} tabIndex={-1} className="bg-white-100  relative">
-              <div className="flex justify-end sticky top-0 right-0 pt-8 pr-8 bg-white">
-                <button
-                  ref={closeButtonRef}
-                  className="text-gray-600 hover:text-gray-900"
-                  onClick={onClose}
-                  aria-label="Close modal"
-                >
-                  <TransformableIcon iconData={add_circle_filled} className="rotate-45 scale-150" />
-                </button>
-              </div>
-              <div className="pt-16 p-24 ">{children}</div>
+      <div
+        className={`fixed inset-0 flex justify-center bg-north-sea-90 w-full overflow-y-auto bg-opacity-80`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        ref={nodeRef}
+        onKeyDown={handleKeyDown}
+      >
+        <div className="md:rounded-lg md:shadow-lg w-full md:w-[997px] md:mx-auto h-max md:my-24 relative">
+          <div ref={modalRef} tabIndex={-1} className="bg-white-100 relative">
+            <div className="flex justify-end sticky top-0 right-0 pt-8 md:pr-8 pr-4 bg-white">
+              <button
+                ref={closeButtonRef}
+                className="text-gray-600 hover:text-gray-900"
+                onClick={onClose}
+                aria-label="Close modal"
+              >
+                <TransformableIcon iconData={add_circle_filled} className="rotate-45 md:scale-150" />
+              </button>
             </div>
+            <div className="md:pt-16 md:p-24 p-12">{children}</div>
           </div>
         </div>
-      </>
+      </div>
     </CSSTransition>
   )
 }

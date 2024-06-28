@@ -2,11 +2,11 @@ import styled from 'styled-components'
 import type { IFrameData } from '../../types/types'
 import { BackgroundContainer, FigureCaption } from '@components'
 import CoreIFrame from '../shared/iframe/IFrame'
-import { ButtonLink } from '../shared/ButtonLink'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import RichText from '../shared/portableText/RichText'
 import { twMerge } from 'tailwind-merge'
+import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
@@ -17,17 +17,13 @@ const Figure = styled.figure`
   margin: 0;
 `
 
-const StyledButtonLink = styled(ButtonLink)`
-  margin-top: var(--space-xLarge);
-`
-
 const Ingress = styled.div`
   margin-bottom: var(--space-large);
 `
 
 const IFrame = ({
   anchor,
-  data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action },
+  data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action, transcript },
   className,
   ...rest
 }: {
@@ -71,7 +67,7 @@ const IFrame = ({
             hasSectionTitle={!!title}
           />
         )}
-        {action && action.label && <StyledButtonLink action={action} />}
+        <TranscriptAndActions action={action} transcript={transcript} />
       </div>
     </BackgroundContainer>
   )
