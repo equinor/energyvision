@@ -170,10 +170,23 @@ const CareerFairForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
-                    id: ' career_fair_form_phone',
-                    defaultMessage: 'Phone Number',
-                  })}
+                  label={
+                    <>
+                      <span>
+                        {intl.formatMessage({
+                          id: ' career_fair_form_phone',
+                          defaultMessage: 'Phone Number',
+                        })}
+                      </span>
+                      <br />
+                      <span className="text-xs">
+                        {intl.formatMessage({
+                          id: 'country_code_format',
+                          defaultMessage: 'e.g. +47',
+                        })}
+                      </span>
+                    </>
+                  }
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
