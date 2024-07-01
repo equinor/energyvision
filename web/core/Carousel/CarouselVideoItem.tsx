@@ -10,6 +10,7 @@ type CarouselType = {
   displayMode?: DisplayModes
   className?: string
   active?: boolean
+  innerRef?: () => void
 } & VideoPlayerCarouselItem &
   Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
@@ -19,9 +20,13 @@ export const CarouselVideoItem = ({
   displayMode = 'scroll',
   aspectRatio = VideoPlayerRatios['16:9'],
   className = '',
+  innerRef,
   active = false,
   ...rest
 }: CarouselType) => {
+  {
+    /**         ${!active && displayMode === 'single' ? 'opacity-60' : ''} */
+  }
   return (
     <li
       {...rest}
@@ -30,10 +35,9 @@ export const CarouselVideoItem = ({
       className={envisTwMerge(
         `
         transform-all
-        ${!active && displayMode === 'single' ? 'opacity-60' : ''}
         shrink-0
         relative
-        min-w-[90%]
+        w-[70%]
       ${displayMode === 'scroll' ? 'snap-start scroll-ml-6' : ''}
         `,
         className,

@@ -6,10 +6,6 @@ import { MediaButton } from '@core/MediaButton/MediaButton'
 import { CarouselVideoItem } from './CarouselVideoItem'
 import { CarouselImageItem } from './CarouselImageItem'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
-import { Autoplay } from 'swiper'
-import 'swiper/css'
-import 'swiper/css/autoplay'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -45,51 +41,26 @@ export const Carousel = ({
   const carouselId = useId('carousel')
   const carouselItemsId = useId('carousel-items')
   const sliderRef = useRef<HTMLUListElement>(null)
+  //const itemListRef = useRef(items.map(() => createRef()))
+  const itemListRef = useRef({})
   //a prefers-reduced-motion user setting must always override autoplay
   const prefersReducedMotion = usePrefersReducedMotion()
   const internalAutoRotation = prefersReducedMotion ? false : autoRotation
   const [currentIndex, setCurrentIndex] = useState(0)
   const scrollAmount = 300
-  const swiper = useSwiper()
 
   const prevSlide = () => {
-    console.log('swiper', swiper)
-    if (swiper) {
-      swiper?.slidePrev()
-    }
-
-    /*     const isFirst = currentIndex === 0
+    const isFirst = currentIndex === 0
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     setCurrentIndex(newIndex)
-    if (sliderRef?.current) {
-      const slider = sliderRef.current
-      const childOffset = slider.childNodes[newIndex]?.offsetLeft
-      console.log('childOffset', childOffset)
-      sliderRef.current.scrollBy({
-        top: 0,
-        left: -childOffset,
-        behavior: 'smooth',
-      })
-    } */
+    if (itemListRef.current) {
+      console.log('itemListRef.current', itemListRef.current)
+    }
   }
   const nextSlide = () => {
-    swiper.slideNext()
-    /*     const isLast = currentIndex === items?.length - 1
+    const isLast = currentIndex === items?.length - 1
     const newIndex = isLast ? 0 : currentIndex + 1
     setCurrentIndex(newIndex)
-    if (sliderRef?.current) {
-      const gap = 48
-      const slider = sliderRef.current
-      const noOfItems = slider.childElementCount
-      const childOffset = slider.childNodes[newIndex]?.offsetLeft
-      console.log('childOffset', childOffset)
-      sliderRef.current.scrollBy({
-        top: 0,
-        left: +childOffset,
-        behavior: 'smooth',
-      })
-      const scrollWidth = slider.scrollWidth
-    } */
   }
   const scrollEnd = () => {
     if (sliderRef?.current) {
@@ -109,28 +80,9 @@ export const Carousel = ({
       })
     }
   }
-
   const layoutClassNames = {
     full: ``,
     default: `px-layout-sm mx-auto max-w-viewport`,
-  }
-
-  const getVariantComponent = (itemData: CarouselItemTypes, isActive: boolean, ariaLabel: string) => {
-    return variant === 'video' ? (
-      <CarouselVideoItem
-        {...(itemData as VideoPlayerCarouselItem)}
-        displayMode={displayMode}
-        aria-label={ariaLabel}
-        active={isActive}
-      />
-    ) : (
-      <CarouselImageItem
-        {...(itemData as ImageWithAlt | ImageWithCaptionData)}
-        displayMode={displayMode}
-        aria-label={ariaLabel}
-        active={isActive}
-      />
-    )
   }
 
   const controlButtonClassName = `
@@ -140,7 +92,6 @@ export const Carousel = ({
   hover:bg-autumn-storm-50
  `
   const ariaLive = internalAutoRotation ? 'off' : 'polite'
-
   //stop autorotation on hover and focus on a slide
   useEffect(() => {
     if (internalAutoRotation) {
@@ -150,12 +101,9 @@ export const Carousel = ({
     }
   }, [currentIndex, internalAutoRotation, items.length])
 
-  const getSlidesPerView = () => {}
-
   /*TODO:
   visible focus marker
   horizontal scroll offset on next  and prev
-  
 */
   return (
     <section
@@ -196,7 +144,7 @@ export const Carousel = ({
           />
         </div>
       </div>
-      {/*       <ul
+      <ul
         ref={sliderRef}
         className={envisTwMerge(
           `
@@ -214,37 +162,29 @@ export const Carousel = ({
         )}
         id={carouselItemsId}
         aria-live={ariaLive}
-      > */}
-      <Swiper
-        spaceBetween={30}
-        loop={true}
-        mousewheel={true}
-        {...(displayMode === 'single' && {
-          slidesPerView: 3,
-        })}
-        {...(layout === 'default' && {
-          centeredSlides: true,
-        })}
-        freeMode={true}
-        modules={[Autoplay]}
-        {...(autoRotation
-          ? {
-              autoplay: {
-                delay: 5000,
-                disableOnInteraction: true,
-                pauseOnMouseEnter: true,
-              },
-            }
-          : {})}
-        className="w-full h-full"
       >
         {items?.map((item, i, array) => {
           const ariaLabel = `${i + 1} of ${items?.length}`
-          return (
-            <SwiperSlide key={item.id}>{({ isActive }) => getVariantComponent(item, isActive, ariaLabel)}</SwiperSlide>
+          return variant === 'video' ? (
+            <CarouselVideoItem
+              key={item.id}
+              innerRef={(element) => (itemListRef.current[item.id] = element)} //{(itemListRef.current[item.id] ??= { current: null })}
+              {...(item as VideoPlayerCarouselItem)}
+              displayMode={displayMode}
+              aria-label={ariaLabel}
+              active={false}
+            />
+          ) : (
+            <CarouselImageItem
+              key={item.id}
+              {...(itemData as ImageWithAlt | ImageWithCaptionData)}
+              displayMode={displayMode}
+              aria-label={ariaLabel}
+              active={isActive}
+            />
           )
         })}
-      </Swiper>
+      </ul>
     </section>
   )
 }
