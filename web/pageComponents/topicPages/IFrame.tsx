@@ -67,7 +67,7 @@ const IFrame = ({
             hasSectionTitle={!!title}
           />
         )}
-        <TranscriptAndActions action={action} transcript={transcript} />
+        <TranscriptAndActions action={action} transcript={transcript} ariaTitle={frameTitle} />
       </div>
     </BackgroundContainer>
   )

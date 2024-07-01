@@ -10,15 +10,20 @@ import RichText from './portableText/RichText'
 import { add_circle_filled } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
+import { useIntl } from 'react-intl'
+import { title } from 'process'
 
 type TranscriptAndActionsProps = {
   className?: string
   action?: LinkData
   transcript?: PortableTextBlock[]
+  ariaTitle: string
 }
-const TranscriptAndActions = ({ action, transcript, className }: TranscriptAndActionsProps) => {
+const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: TranscriptAndActionsProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const actionUrl = action ? getUrlFromAction(action) : ''
+  const intl = useIntl()
+  const readTranscript = intl.formatMessage({ id: 'read_transcript', defaultMessage: 'Read transcript' })
   const handleOpen = () => {
     setIsOpen(true)
   }
@@ -43,12 +48,13 @@ const TranscriptAndActions = ({ action, transcript, className }: TranscriptAndAc
         <>
           <button
             onClick={handleOpen}
+            aria-label={`${readTranscript} ${ariaTitle}`}
             className={`w-full mb-8 ${commonButtonStyling} ${getVariant('contained-secondary')}`}
           >
-            <span className="grow">Show Transcript</span>
+            <span className="grow">{readTranscript}</span>
             <TransformableIcon className={'scale-90 lg:scale-100'} iconData={add_circle_filled} />
           </button>
-          <Modal isOpen={isOpen} onClose={handleClose} title="My Modal">
+          <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
             <RichText value={transcript} />
           </Modal>
         </>

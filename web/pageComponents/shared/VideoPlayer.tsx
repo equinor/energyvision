@@ -120,7 +120,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
         {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
         {ingress && <IngressText value={ingress} className="mb-lg" />}
         <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
-        <TranscriptAndActions action={action} transcript={transcript} />
+        <TranscriptAndActions action={action} transcript={transcript} ariaTitle={video.title} />
       </div>
     </BackgroundContainer>
   )
