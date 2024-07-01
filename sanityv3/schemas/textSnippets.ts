@@ -18,12 +18,12 @@ const snippets: textSnippet = {
   country_code_format: {
     title: 'e.g. +47',
     defaultValue: 'e.g. +47',
-    group: groups.others,
+    group: groups.form,
   },
   all_fields_required: {
     title: 'All fields with * is required',
     defaultValue: 'All fields with * is required',
-    group: groups.others,
+    group: groups.form,
   },
   loading: {
     title: 'Loading',
