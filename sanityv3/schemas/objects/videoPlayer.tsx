@@ -71,6 +71,12 @@ export default {
       },
     },
     {
+      title: 'Show transcript button',
+      description: 'Shows transcript from the video asset.',
+      name: 'showTranscript',
+      type: 'boolean',
+    },
+    {
       name: 'aspectRatio',
       type: 'string',
       title: 'Aspect ratio',
@@ -108,6 +114,7 @@ export default {
       description: 'Set a fixed height in pixels for the video. Note: this will override the aspect ratio setting.',
       validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
     },
+
     {
       title: 'Use brand theme for video',
       description: 'Make play button bigger and brand red.',

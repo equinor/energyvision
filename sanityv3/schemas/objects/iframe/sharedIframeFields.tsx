@@ -104,6 +104,11 @@ export const description = {
   of: [descriptionContentType],
 }
 
+export const transcript = {
+  name: 'transcript',
+  title: 'Enter transcript if this iframe is a youtube video.',
+  type: 'transcript',
+}
 export const action = {
   name: 'action',
   title: 'Link/action',

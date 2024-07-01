@@ -26,6 +26,7 @@ export const videoPlayerFields = /* groq */ `
     autoPlay,
     muted,
   },
+  defined(showTranscript) && showTranscript =>  { "transcript": videoFile->transcript.text},
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     height,

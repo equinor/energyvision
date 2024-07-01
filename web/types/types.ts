@@ -535,6 +535,7 @@ export type IFrameData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   description?: PortableTextBlock[]
+  transcript?: PortableTextBlock[]
   action?: LinkData
   frameTitle: string
   url: string
@@ -739,6 +740,7 @@ export type VideoPlayerData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
+  transcript?: PortableTextBlock[]
 }
 
 export type VideoPlayerCarouselData = {
