@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import blocksToText from '../../../../helpers/blocksToText'
-import { configureBlockContent } from '../../../editors'
+import { configureBlockContent, configureThemedTitleBlockContent } from '../../../editors'
 import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
@@ -11,12 +11,14 @@ import type { LinkSelector } from '../../linkSelector'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import { LeftAlignedImage, RightAlignedImage } from '../../../../icons'
 import { RadioIconSelector } from '../../../components'
+import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../../components/ThemeSelector'
 
 const blockContentType = configureBlockContent({
   smallText: true,
   largeText: true,
   extraLargeText: true,
 })
+const themedTitleContentType = configureThemedTitleBlockContent({ normalText: false, extraLargeText: true })
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -26,6 +28,8 @@ const imageAlignmentOptions = [
 export type GridTeaser = {
   _type: 'gridTeaser'
   content?: PortableTextBlock[]
+  themedContent?: PortableTextBlock[]
+  useExtendedThemes?: boolean
   quote: string
   author: string
   authorTitle?: string
@@ -33,6 +37,9 @@ export type GridTeaser = {
   image: ImageWithAlt
   imagePosition?: string
   background?: ColorSelectorValue
+}
+type GridTeaserDocument = {
+  parent: GridTeaser
 }
 
 export default {
@@ -62,20 +69,56 @@ export default {
   ],
   fields: [
     {
+      title: 'Use extended themes',
+      name: 'useExtendedThemes',
+      description: 'Enabling this removes normal text style, but gives more theme options',
+      type: 'boolean',
+    },
+    {
       name: 'content',
       title: 'Content',
       type: 'array',
       of: [blockContentType],
+      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },
     {
+      name: 'themedContent',
+      title: 'Themed Content',
+      type: 'array',
+      of: [themedTitleContentType],
+      hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+          return validateCharCounterEditor(value, 600)
+        }).warning(),
+    },
+    {
+      name: 'contentThemeFromNormal',
+      title: 'Content theme',
+      type: 'themeList',
+      options: {
+        colors: fromNormalTextThemeColors,
+      },
+      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
+    },
+    {
+      name: 'contentThemeFromLarger',
+      title: 'Content theme',
+      type: 'themeList',
+      options: {
+        colors: fromLargerTextThemeColors,
+      },
+      hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
+    },
+    {
       name: 'quote',
       type: 'text',
       title: 'Quote',
-      description: 'Highlighted quote from the article.',
+      description: 'Highlighted quote from the article, gets theme from below',
       rows: 5,
     },
     {
@@ -130,6 +173,9 @@ export default {
     {
       name: 'theme',
       title: 'Theme',
+      options: {
+        colors: fromNormalTextThemeColors,
+      },
       description: 'If no theme set, normal text color is set',
       type: 'themeList',
     },

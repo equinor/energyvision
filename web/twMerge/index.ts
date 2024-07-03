@@ -9,7 +9,8 @@ const envisTwMerge = extendTailwindMerge({
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       maxWidth: ['viewport'],
-      minWidthh: ['viewport'],
+      minWidth: ['viewport'],
+      lineHeight: ['text', 'earthy', 'misty', 'cloudy', 'planetary', 'inherit'],
     },
   },
 })

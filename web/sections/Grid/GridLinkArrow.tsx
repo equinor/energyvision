@@ -13,17 +13,26 @@ type GridLinkArrowProps = {
   className?: string
   /* If background image */
   hasBackgroundImage?: boolean
+  useLight?: boolean
 }
 
-const GridLinkArrow = ({ theme, action, className = '', hasBackgroundImage = false }: GridLinkArrowProps) => {
+const GridLinkArrow = ({
+  theme,
+  action,
+  className = '',
+  hasBackgroundImage = false,
+  useLight = false,
+}: GridLinkArrowProps) => {
   const url = action && getUrlFromAction(action)
-
-  let { textUtility } = getColorForTheme(theme ?? 0)
-  if (hasBackgroundImage) {
-    textUtility = 'text-slate-80'
-  }
+  const { textUtility } = getColorForTheme(theme)
 
   const variantClassName = () => {
+    if (hasBackgroundImage) {
+      if (useLight) {
+        return 'text-slate-80 hover:bg-white-100 hover:text-slate-80 focus-visible:bg-white-100 focus-visible:text-slate-80'
+      }
+      return 'text-white-100 hover:bg-white-100 hover:text-slate-80 focus-visible:bg-white-100 focus-visible:text-slate-80'
+    }
     switch (theme) {
       case 0:
         return 'text-energy-red-100 hover:bg-energy-red-100 hover:text-white-100 focus-visible:bg-energy-red-100 focus-visible:text-white-100'
@@ -34,7 +43,6 @@ const GridLinkArrow = ({ theme, action, className = '', hasBackgroundImage = fal
         return `${theme !== null ? textUtility : ''} hover:bg-white-100 hover:${
           theme !== null ? textUtility : ''
         } focus-visible:bg-white-100 focus-visible:${theme !== null ? textUtility : ''}`
-      //return 'text-white-100 hover:bg-white-100 hover:text-slate-80 focus-visible:bg-white-100 focus-visible:text-slate-80'
     }
   }
 

@@ -8,13 +8,13 @@ export type ThemeColors = {
   dark?: boolean
 }
 //Keep in sync with sanityv3/schemas/components/ThemeSelector/themeColors
-export const getColorForTheme = (pattern: number): ThemeColors => {
+export const getColorForTheme = (pattern?: number): ThemeColors => {
   switch (pattern) {
     case 1:
       return {
         background: 'Moss Green Light',
         backgroundUtility: 'bg-moss-green-50',
-        textUtility: 'text-slate-80',
+        textUtility: 'text-energy-red-100',
       }
     case 2:
       return {
@@ -47,6 +47,7 @@ export const getColorForTheme = (pattern: number): ThemeColors => {
         highlight: 'var(--bg-mid-orange)',
         backgroundUtility: 'bg-blue-50',
         textUtility: 'text-orange-50',
+        dark: true,
       }
     case 7:
       return {
@@ -54,6 +55,7 @@ export const getColorForTheme = (pattern: number): ThemeColors => {
         backgroundUtility: 'bg-blue-50',
         highlight: 'var(--bg-mid-yellow)',
         textUtility: 'text-yellow-50',
+        dark: true,
       }
     case 8:
       return {
@@ -61,6 +63,7 @@ export const getColorForTheme = (pattern: number): ThemeColors => {
         backgroundUtility: 'bg-blue-50',
         highlight: 'var(--bg-white)',
         textUtility: 'text-white-100',
+        dark: true,
       }
     case 9:
       return {
@@ -82,14 +85,21 @@ export const getColorForTheme = (pattern: number): ThemeColors => {
     case 12:
       return {
         textUtility: 'text-white-100',
+        dark: true,
       }
-
+    case 13:
+      return {
+        background: 'Moss Green Light',
+        backgroundUtility: 'bg-moss-green-50',
+        textUtility: 'text-slate-80',
+      }
     case 0:
-    default:
       return {
         background: 'White',
         backgroundUtility: 'bg-white-100',
         textUtility: 'text-energy-red-100',
       }
+    default:
+      return {}
   }
 }

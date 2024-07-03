@@ -95,7 +95,7 @@ export type BlockProps = {
   /**
    * Override default block serializers
    */
-  blocks?: BlockType
+  blocksComponents?: Partial<PortableTextReactComponents>
   /**
    * Override default marks serializers
    */
@@ -131,7 +131,7 @@ const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicI
 //@ts-ignore
 export default function Blocks({
   value,
-  blocks: blocksComponents,
+  blocksComponents,
   components,
   proseClassName = '',
   className = '',

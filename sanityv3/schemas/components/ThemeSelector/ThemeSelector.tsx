@@ -1,5 +1,5 @@
 import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
-import { useCallback } from 'react'
+import { useCallback, useId } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
@@ -66,6 +66,7 @@ type ThemeSelectorProps = ObjectInputProps
 export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProps) => {
   const { options } = schemaType
   const colors = (options?.colors as ThemeSelectorValue[]) || themeColors
+  const theSelectorUniqueId = useId()
 
   const handleSelect = useCallback(
     (selected: ThemeSelectorValue) => {
@@ -83,10 +84,10 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
             {colors.map((colorItem: ThemeSelectorValue) => {
-              const { background } = getColorForTheme(colorItem.value)
+              const { background, highlight } = getColorForTheme(colorItem.value)
               return (
                 <ColorCircle
-                  key={background.value}
+                  key={`${theSelectorUniqueId}_${background.value}_${highlight.key}`}
                   color={colorItem}
                   active={colorItem.value === value?.value}
                   onClickHandler={handleSelect}

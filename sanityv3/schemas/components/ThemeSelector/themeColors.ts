@@ -17,15 +17,37 @@ export const themeColors = [
   { title: 'White text', value: 12 },
 ]
 
+export const fromLargerTextThemeColors = [
+  { title: 'White', value: 0 },
+  { title: 'Moss Green Light', value: 1 },
+  { title: 'Mid Blue 1', value: 6 },
+  { title: 'Mid Blue 2', value: 7 },
+  { title: 'Mist Blue 2', value: 10 },
+]
+export const fromNormalTextThemeColors = [
+  { title: 'Moss Green Light', value: 13 },
+  { title: 'Spruce Wood', value: 2 },
+  { title: 'Mist Blue', value: 3 },
+  { title: 'Mid Yellow', value: 4 },
+  { title: 'Mid Orange', value: 5 },
+  { title: 'Mid Blue 2', value: 7 },
+  { title: 'Mid Blue 3', value: 8 },
+  { title: 'Mid Green', value: 9 },
+  { title: 'Black text', value: 11 },
+  { title: 'White text', value: 12 },
+]
+
 //Keep in sync with web/pageComponents/shared/textTeaser/theme
 export const getColorForTheme = (pattern: number) => {
   switch (pattern) {
     case 1:
       return {
+        //moss green light
         background: {
           value: defaultColors[1].value,
           key: defaultColors[1].key,
         },
+        //energy red
         highlight: {
           value: defaultColors[8].value,
           key: defaultColors[8].key,
@@ -38,8 +60,8 @@ export const getColorForTheme = (pattern: number) => {
           key: defaultColors[2].key,
         },
         highlight: {
-          value: defaultColors[8].value,
-          key: defaultColors[8].key,
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
         },
       }
     case 3:
@@ -49,8 +71,8 @@ export const getColorForTheme = (pattern: number) => {
           key: defaultColors[3].key,
         },
         highlight: {
-          value: defaultColors[8].value,
-          key: defaultColors[8].key,
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
         },
       }
     case 4:
@@ -60,8 +82,8 @@ export const getColorForTheme = (pattern: number) => {
           key: defaultColors[4].key,
         },
         highlight: {
-          value: defaultColors[8].value,
-          key: defaultColors[8].key,
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
         },
       }
     case 5:
@@ -149,6 +171,19 @@ export const getColorForTheme = (pattern: number) => {
           key: defaultColors[0].key,
         },
       }
+    case 13: {
+      //black on moss green light
+      return {
+        background: {
+          value: defaultColors[1].value,
+          key: defaultColors[1].key,
+        },
+        highlight: {
+          value: defaultColors[9].value,
+          key: defaultColors[9].key,
+        },
+      }
+    }
 
     case 0:
     default:

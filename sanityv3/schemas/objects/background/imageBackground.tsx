@@ -1,12 +1,6 @@
 import { defineType, defineField, Image } from 'sanity'
 import { RadioIconSelector } from '../../components'
-import {
-  ContentRightImage,
-  ContentLeftImage,
-  ContentCenterImage,
-  ContentBottomLeftImage,
-  ContentBottomCenterImage,
-} from '../../../icons'
+import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 
 export type ColorType = {
@@ -18,8 +12,6 @@ const contentAlignmentOptions = [
   { value: 'left', icon: ContentLeftImage },
   { value: 'center', icon: ContentCenterImage },
   { value: 'right', icon: ContentRightImage },
-  { value: 'bottom-left', icon: ContentBottomLeftImage },
-  { value: 'bottom-center', icon: ContentBottomCenterImage },
 ]
 
 export default defineType({
@@ -41,6 +33,10 @@ export default defineType({
       name: 'useAnimation',
       type: 'boolean',
       description: 'Animates content over the background image.',
+      hidden: ({ parent }: any) => {
+        console.log('parent in image background', parent)
+        return false
+      },
     }),
     defineField({
       title: 'Apply light gradient',

@@ -867,17 +867,22 @@ export type ThreeColumns = {
   id: string
   columns?: GridContentType[]
 }
+type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
 
 export type GridTextBlockData = {
   id: string
   type: 'gridTextBlock'
   action?: LinkData
   overline?: string
+  useThemedTitle?: boolean
   title?: PortableTextBlock[]
+  themedTitle?: PortableTextBlock[]
+  titleThemeFromNormal?: any
+  titleThemeFromLarger?: any
   content?: PortableTextBlock[]
-  textAlignment?: ContentAlignmentTypes
-  theme?: number
-  backgroundImage?: ImageBackground
+  contentAlignment?: GridTextBlockContentAlignment
+  contentTheme?: any
+  imageBackground?: ImageBackground
 }
 
 export type CampaignBannerData = {
@@ -891,7 +896,11 @@ export type GridTeaserData = {
   id: string
   image: ImageWithAlt
   rowType?: RowType
-  content?: PortableTextBlock
+  useExtendedThemes?: boolean
+  content?: PortableTextBlock[]
+  themedContent?: PortableTextBlock[]
+  contentThemeFromNormal?: any
+  contentThemeFromLarger?: any
   quote?: string
   author?: string
   authorTitle?: string
