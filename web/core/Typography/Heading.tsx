@@ -27,34 +27,35 @@ type DefaultComponentsProps = {
     extraLargeText?: string
     twoXLText?: string
   }
+  className?: string
 } & TypographyProps
 
-const defaultComponents = ({ variant, as: providedAs, serializerClassnames }: DefaultComponentsProps) => {
+const defaultComponents = ({ variant, as: providedAs, serializerClassnames, className }: DefaultComponentsProps) => {
   return {
     block: {
       h1: ({ children }: PortableTextBlock) => {
         return (
-          <Typography variant="h1">
+          <Typography variant="h1" className={className}>
             <>{children}</>
           </Typography>
         )
       },
       h2: ({ children }: PortableTextBlock) => {
         return (
-          <Typography variant="h2">
+          <Typography variant="h2" className={className}>
             <>{children}</>
           </Typography>
         )
       },
       h3: ({ children }: PortableTextBlock) => {
         return (
-          <Typography variant="h3">
+          <Typography variant="h3" className={className}>
             <>{children}</>
           </Typography>
         )
       },
       largeText: ({ children }: PortableTextBlock) => {
-        const classNames = serializerClassnames ? serializerClassnames['largeText'] : ''
+        const classNames = serializerClassnames ? serializerClassnames['largeText'] : className
         return (
           <Typography variant="2xl" as={providedAs} className={classNames}>
             <>{children}</>
@@ -62,7 +63,7 @@ const defaultComponents = ({ variant, as: providedAs, serializerClassnames }: De
         )
       },
       extraLargeText: ({ children }: PortableTextBlock) => {
-        const classNames = serializerClassnames ? serializerClassnames['extraLargeText'] : ''
+        const classNames = serializerClassnames ? serializerClassnames['extraLargeText'] : className
         return (
           <Typography variant="5xl" as={providedAs} className={classNames}>
             <>{children}</>
@@ -70,7 +71,7 @@ const defaultComponents = ({ variant, as: providedAs, serializerClassnames }: De
         )
       },
       twoXLText: ({ children }: PortableTextBlock) => {
-        const classNames = serializerClassnames ? serializerClassnames['twoXLText'] : ''
+        const classNames = serializerClassnames ? serializerClassnames['twoXLText'] : className
         return (
           <Typography variant="8xl" as={providedAs} className={classNames}>
             <>{children}</>
@@ -80,13 +81,13 @@ const defaultComponents = ({ variant, as: providedAs, serializerClassnames }: De
       //TODO Deprecate together with bigTitle option in text teaser
       extraLarge: ({ children }: PortableTextBlock) => {
         return (
-          <Typography variant="5xl" as={providedAs}>
+          <Typography variant="5xl" as={providedAs} className={className}>
             <>{children}</>
           </Typography>
         )
       },
       normal: ({ children }: PortableTextBlock) => {
-        const classNames = serializerClassnames ? serializerClassnames['normal'] : ''
+        const classNames = serializerClassnames ? serializerClassnames['normal'] : className
         if (isEmpty(children)) return null
         return (
           <Typography variant={variant} as={providedAs} className={classNames}>
@@ -116,7 +117,7 @@ export const Heading = ({
   className,
   noProse = false,
   proseClassName = '',
-  serializerClassnames = {},
+  serializerClassnames,
   ...props
 }: HeadingProps) => {
   let div: PortableTextBlock[] = []
@@ -151,7 +152,8 @@ export const Heading = ({
                     // eslint-disable-next-line
                     // @ts-ignore
                     block: {
-                      ...defaultComponents({ variant, group, as: PortableTextTag, serializerClassnames }).block,
+                      ...defaultComponents({ variant, group, as: PortableTextTag, serializerClassnames, className })
+                        .block,
                       ...blocksComponents,
                     },
                     // eslint-disable-next-line
@@ -172,7 +174,7 @@ export const Heading = ({
             // eslint-disable-next-line
             // @ts-ignore
             block: {
-              ...defaultComponents({ variant, group, as, serializerClassnames }).block,
+              ...defaultComponents({ variant, group, as, serializerClassnames, className }).block,
               ...blocksComponents,
             },
             // eslint-disable-next-line
@@ -181,7 +183,6 @@ export const Heading = ({
               ...defaultComponents({ variant, group, as }).marks,
             },
           }}
-          className={className}
           {...props}
         />
       )}
