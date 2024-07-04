@@ -46,7 +46,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       bgColor = extendedBg
     }
   }
-  if (theme) {
+  if (!useExtendedThemes && theme) {
     const { backgroundUtility: themeBg, textUtility: themeTxt } = getColorForTheme(theme)
     if (themeTxt) {
       contentTextColor = themeTxt
