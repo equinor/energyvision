@@ -30,5 +30,5 @@ export const futureEventsQuery = (withTags = true): string => /* groq */ `
     && content->eventDate.date >= $date
     && ${noDrafts}
     ${withTags ? tagFilter : ''}
-  ]
+  ]|order(content->eventDate.date asc)
 `
