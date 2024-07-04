@@ -3,10 +3,10 @@ import { VideoPlayerCarouselItem, VideoPlayerRatios } from '../../types/types'
 import { DisplayModes } from './Carousel'
 import { Heading } from '@core/Typography'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
-import { HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 //import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
-type CarouselType = {
+type CarouselVideoItemProps = {
   displayMode?: DisplayModes
   className?: string
   active?: boolean
@@ -14,30 +14,34 @@ type CarouselType = {
 } & VideoPlayerCarouselItem &
   Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
-export const CarouselVideoItem = ({
-  video,
-  title,
-  displayMode = 'scroll',
-  aspectRatio = VideoPlayerRatios['16:9'],
-  className = '',
-  innerRef,
-  active = false,
-  ...rest
-}: CarouselType) => {
+export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProps>(function CarouselVideoItem(
+  {
+    video,
+    title,
+    displayMode = 'scroll',
+    aspectRatio = VideoPlayerRatios['16:9'],
+    className = '',
+    active = false,
+    ...rest
+  },
+  ref,
+) {
   {
     /**         ${!active && displayMode === 'single' ? 'opacity-60' : ''} */
   }
   return (
     <li
       {...rest}
+      ref={ref}
       role="group"
       aria-roledescription="slide"
       className={envisTwMerge(
         `
+        ${!active && displayMode === 'single' ? 'opacity-60' : ''}
         transform-all
         shrink-0
         relative
-        w-[70%]
+        ${aspectRatio === VideoPlayerRatios['9:16'] ? 'w-fit' : 'w-[80%]'}
       ${displayMode === 'scroll' ? 'snap-start scroll-ml-6' : ''}
         `,
         className,
@@ -56,4 +60,4 @@ export const CarouselVideoItem = ({
       {title && <Heading variant="lg" as="h3" value={title} />}
     </li>
   )
-}
+})

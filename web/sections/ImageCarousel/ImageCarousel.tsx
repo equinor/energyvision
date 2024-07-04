@@ -1,44 +1,39 @@
 import { Heading } from '@core/Typography'
 import envisTwMerge from '../../twMerge'
-import { VideoPlayerCarouselData } from '../../types/types'
+import { ImageCarouselData } from '../../types/types'
 import { BackgroundContainer } from '@components'
 import { useId } from '@equinor/eds-utils'
 import { Carousel } from '@core/Carousel/Carousel'
 import { forwardRef } from 'react'
 
-type VideoPlayerCarouselProps = {
-  data: VideoPlayerCarouselData
+type ImageCarouselProps = {
+  data: ImageCarouselData
   anchor?: string
   className?: string
 }
 
-const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProps>(function VideoPlayerCarousel(
+const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function ImageCarousel(
   { anchor, data, className },
   ref,
 ) {
-  const { title, items, designOptions } = data
-  const { background, aspectRatio } = designOptions
-  const headingId = useId('video-carousel-heading')
+  const { title, items, designOptions, options } = data
+  const { background } = designOptions
+  const headingId = useId('image-carousel-heading')
 
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
       {title && <Heading id={headingId} value={title} className="pb-2" />}
       <Carousel
         ref={ref}
-        items={items.map((item) => {
-          return {
-            ...item,
-            aspectRatio: aspectRatio,
-          }
-        })}
+        items={items}
         displayMode="single"
-        variant="video"
+        variant="image"
         layout="full"
         labelledbyId={headingId}
-        autoRotation={false}
+        autoRotation={options?.autoplay}
       />
     </BackgroundContainer>
   )
 })
 
-export default VideoPlayerCarousel
+export default ImageCarousel

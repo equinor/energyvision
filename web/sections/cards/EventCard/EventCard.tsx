@@ -101,7 +101,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
       <div className="mt-4 lg:mt-8 flex gap-6">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
-        <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${title}`}>
+        <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${plainTitle}`}>
           {details}
         </ButtonLink>
       </div>

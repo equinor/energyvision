@@ -15,7 +15,6 @@ import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
 import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
-import ImageCarousel from '../../shared/ImageCarousel/ImageCarousel'
 import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
 import TextTeaser from '../../shared/textTeaser/TextTeaser'
@@ -59,6 +58,7 @@ import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
 import { BackgroundContainerProps } from '@components/Backgrounds'
 import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 
 type DefaultComponent = {
   id?: string

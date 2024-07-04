@@ -52,11 +52,12 @@ export default {
     {
       type: 'number',
       name: 'delay',
-      title: 'Delay',
+      title: 'Delay( Not in use anymore )',
       description: 'Time in seconds that an image should be visible for before transitioning to the next.',
       initialValue: 3,
       fieldset: 'carouselOptions',
       validation: (Rule: Rule) => Rule.required().min(2),
+      readOnly: ({ value }: { value?: string }) => !value,
     },
     {
       type: 'boolean',

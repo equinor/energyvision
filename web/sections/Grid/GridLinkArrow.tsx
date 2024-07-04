@@ -6,6 +6,7 @@ import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
 import { LinkData } from '../../types/types'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
+import { forwardRef } from 'react'
 
 type GridLinkArrowProps = {
   theme?: number
@@ -13,7 +14,10 @@ type GridLinkArrowProps = {
   className?: string
 }
 
-const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
+const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function GridLinkArrow(
+  { theme, action, className },
+  ref,
+) {
   const url = action && getUrlFromAction(action)
 
   const { textUtility } = getColorForTheme(theme ?? 0)
@@ -36,7 +40,10 @@ const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
   return (
     <>
       {action && url && (
-        <div className={twMerge(`absolute bottom-0 right-0 pt-4 3xl:pt-12 w-full flex justify-end`, className)}>
+        <div
+          ref={ref}
+          className={twMerge(`absolute bottom-0 right-0 pt-4 3xl:pt-12 w-full flex justify-end`, className)}
+        >
           <BaseLink
             href={url as string}
             {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
@@ -59,6 +66,6 @@ const GridLinkArrow = ({ theme, action, className }: GridLinkArrowProps) => {
       )}
     </>
   )
-}
+})
 
 export default GridLinkArrow
