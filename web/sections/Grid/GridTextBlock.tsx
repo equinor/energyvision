@@ -33,10 +33,17 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
 
   const contentAlignmentUtilities = {
     center: 'justify-center items-center',
-    right: 'justify-right items-center',
-    left: 'justify-left items-center',
+    right: 'justify-center items-end',
+    left: 'justify-center items-start',
     'bottom-left': 'justify-start items-end',
     'bottom-center': 'justify-center items-end',
+  }
+  const textContentAlignmentUtilities = {
+    center: 'text-center',
+    right: 'text-end',
+    left: 'text-start',
+    'bottom-left': 'text-start',
+    'bottom-center': 'text-center',
   }
 
   const textClassNames = twMerge(`${(title || themedTitle) && content ? 'text-sm' : 'text-md'}`, className)
@@ -101,12 +108,13 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
       case 'span3':
         return 'lg:grid lg:grid-cols-[35%_60%] gap-10'
       case 'span2and1':
-        return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10 lg:items-start'
+        return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
       case 'threeColumns':
       default:
         return 'lg:items-end'
     }
   }
+
   const serializerClassnames = {
     largeText: `leading-tight text-balance`,
     normal: `text-lg leading-snug text-balance`,
@@ -124,7 +132,9 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
         )}
       >
         {overline ? (
-          <hgroup className={`flex flex-col gap-2 max-w-text`}>
+          <hgroup
+            className={`flex flex-col gap-2 max-w-text ${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
+          >
             <Typography variant="overline" className="text-sm">
               {overline}
             </Typography>
@@ -149,6 +159,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
                 value={useThemedTitle ? themedTitle : title}
                 serializerClassnames={serializerClassnames}
                 noProse
+                className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
               />
             )}
           </>
@@ -158,7 +169,9 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
             <Blocks
               value={content}
               proseClassName="prose-campaign"
-              className={`flex flex-col gap-sm ${textClassNames} ${mainContentTextColor} text-balance`}
+              className={`flex flex-col gap-sm ${textClassNames} ${mainContentTextColor} ${
+                textContentAlignmentUtilities[contentAlignment ?? 'left']
+              } text-balance`}
             />
           </div>
         )}
@@ -188,7 +201,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
         h-full
         text-balance
         max-lg:min-h-[420px]
-        ${contentAlignment ? contentAlignmentUtilities[contentAlignment ?? 'center'] : ''}
+        ${contentAlignmentUtilities[contentAlignment ?? 'center']}
         ${
           imageBackground?.useLight
             ? lightGradientForContentAlignment[contentAlignment ?? 'center']
@@ -202,7 +215,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
     <div
       className={`p-10 lg:p-12 relative w-full h-full flex flex-col overflow-y-auto ${backgroundUtility} ${
         dark ? 'dark' : ''
-      } ${contentAlignment ? contentAlignmentUtilities[contentAlignment ?? 'center'] : ''}`}
+      } ${contentAlignmentUtilities[contentAlignment ?? 'center']}`}
     >
       {mainContent}
     </div>

@@ -69,21 +69,23 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
         </div>
       )}
 
-      <div
-        className={`relative h-full flex flex-col justify-start items-center ${action ? '' : ''} ${contentTextColor}`}
-      >
-        <div className={`px-10 flex flex-col gap-6 pb-6 pt-6 ${rowType !== 'span3' ? 'lg:pt-8 lg:pb-0' : 'lg:pt-16'} `}>
+      <div className={`relative h-full ${contentTextColor}`}>
+        <div
+          className={`h-full px-10 flex flex-col justify-center items-center gap-6 py-6 ${
+            rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
+          } `}
+        >
           {(content || (useExtendedThemes && themedContent)) && (
             <Blocks
               value={(useExtendedThemes ? themedContent : content) as PortableTextBlock[]}
               proseClassName="prose-campaign"
-              className={`flex flex-col gap-4 text-md ${contentTextColor}`}
+              className={`text-md ${contentTextColor}`}
               {...(useExtendedThemes && {
                 blocksComponents: {
                   normal: ({ children }: PortableTextBlock) => {
                     if (isEmpty(children)) return null
                     return (
-                      <p className="text-lg leading-snug">
+                      <p className="text-2xl leading-snug">
                         <>{children}</>
                       </p>
                     )
