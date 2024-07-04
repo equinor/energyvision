@@ -70,7 +70,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
     }
     bgColor = titleBgUtility ?? contentBgUtility ?? 'bg-white-100'
   }
-  if (theme) {
+  if (!useThemedTitle && theme) {
     const { backgroundUtility: commonBgUtility, textUtility: commonTextUtility } = getColorForTheme(theme)
     if (commonTextUtility) {
       titleTextColor = commonTextUtility
