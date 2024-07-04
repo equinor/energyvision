@@ -877,11 +877,11 @@ export type GridTextBlockData = {
   useThemedTitle?: boolean
   title?: PortableTextBlock[]
   themedTitle?: PortableTextBlock[]
-  titleThemeFromNormal?: any
-  titleThemeFromLarger?: any
   content?: PortableTextBlock[]
   contentAlignment?: GridTextBlockContentAlignment
   contentTheme?: any
+  titleThemeFromLarger?: any
+  theme?: any
   imageBackground?: ImageBackground
 }
 
@@ -899,8 +899,7 @@ export type GridTeaserData = {
   useExtendedThemes?: boolean
   content?: PortableTextBlock[]
   themedContent?: PortableTextBlock[]
-  contentThemeFromNormal?: any
-  contentThemeFromLarger?: any
+  themeFromLarger?: any
   quote?: string
   author?: string
   authorTitle?: string

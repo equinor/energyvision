@@ -96,17 +96,6 @@ export default {
         Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
     },
     {
-      name: 'titleThemeFromNormal',
-      title: 'Title theme',
-      type: 'themeList',
-      options: {
-        colors: fromNormalTextThemeColors,
-      },
-      fieldset: 'title',
-      hidden: ({ parent }: GridTextBlockDocument) => parent.useThemedTitle,
-      description: 'use white text or black text when background image',
-    },
-    {
       name: 'titleThemeFromLarger',
       title: 'Title theme',
       type: 'themeList',
@@ -115,7 +104,7 @@ export default {
       },
       fieldset: 'title',
       hidden: ({ parent }: GridTextBlockDocument) => !parent.useThemedTitle,
-      description: 'use white text or black text when background image',
+      description: 'Use white text or black text when background image',
     },
     {
       name: 'content',
@@ -142,8 +131,19 @@ export default {
       options: {
         colors: fromNormalTextThemeColors,
       },
+      hidden: ({ parent }: GridTextBlockDocument) => !parent.useThemedTitle,
       description:
         'Title theme background will be used if different.Text will then be white/black. Use white or black text when background image',
+    },
+    {
+      name: 'theme',
+      title: 'Theme',
+      type: 'themeList',
+      options: {
+        colors: fromNormalTextThemeColors,
+      },
+      hidden: ({ parent }: GridTextBlockDocument) => parent.useThemedTitle,
+      description: 'Use white or black text when background image',
     },
     {
       name: 'contentAlignment',

@@ -28,20 +28,33 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
     author,
     authorTitle,
     useExtendedThemes,
-    contentThemeFromLarger,
-    contentThemeFromNormal,
+    themeFromLarger,
     theme,
   } = data
+
   const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
   const altTag = image?.isDecorative ? '' : image?.alt || ''
 
-  const {
-    backgroundUtility,
-    textUtility: contentTextUtility,
-    dark,
-  } = getColorForTheme(useExtendedThemes ? contentThemeFromLarger : contentThemeFromNormal)
-
-  const contentTextColor = (contentThemeFromNormal || contentThemeFromLarger) !== null ? contentTextUtility : ''
+  let contentTextColor = 'text-slate-80'
+  let bgColor = 'bg-white-100'
+  if (useExtendedThemes && themeFromLarger) {
+    const { backgroundUtility: extendedBg, textUtility: extendedTxt } = getColorForTheme(themeFromLarger)
+    if (extendedTxt) {
+      contentTextColor = extendedTxt
+    }
+    if (extendedBg) {
+      bgColor = extendedBg
+    }
+  }
+  if (theme) {
+    const { backgroundUtility: themeBg, textUtility: themeTxt } = getColorForTheme(theme)
+    if (themeTxt) {
+      contentTextColor = themeTxt
+    }
+    if (themeBg) {
+      bgColor = themeBg
+    }
+  }
 
   return (
     <div
@@ -52,8 +65,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       grid-rows-2
       lg:grid-rows-[250px_1fr]
       ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''}
-      ${backgroundUtility ?? ''}
-      ${dark ? 'dark' : ''}
+      ${bgColor}
       `)}
     >
       {image && (
@@ -119,7 +131,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
             </figure>
           )}
         </div>
-        {action && <GridLinkArrow theme={theme} action={action} />}
+        {action && <GridLinkArrow bgColor={bgColor} action={action} />}
       </div>
     </div>
   )

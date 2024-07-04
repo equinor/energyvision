@@ -71,7 +71,7 @@ export default {
     {
       title: 'Use extended themes',
       name: 'useExtendedThemes',
-      description: 'Enabling this removes normal text style, but gives more theme options',
+      description: 'Enabling this removes normal text style and quote, but gives more theme options',
       type: 'boolean',
     },
     {
@@ -97,40 +97,25 @@ export default {
         }).warning(),
     },
     {
-      name: 'contentThemeFromNormal',
-      title: 'Content theme',
-      type: 'themeList',
-      options: {
-        colors: fromNormalTextThemeColors,
-      },
-      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
-    },
-    {
-      name: 'contentThemeFromLarger',
-      title: 'Content theme',
-      type: 'themeList',
-      options: {
-        colors: fromLargerTextThemeColors,
-      },
-      hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
-    },
-    {
       name: 'quote',
       type: 'text',
       title: 'Quote',
       description: 'Highlighted quote from the article, gets theme from below',
       rows: 5,
+      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
     },
     {
       name: 'author',
       type: 'string',
       title: 'Name',
+      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
     },
     {
       name: 'authorTitle',
       type: 'string',
       title: 'Title',
       description: 'Optional title for the author.',
+      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
     },
     {
       name: 'action',
@@ -173,11 +158,20 @@ export default {
     {
       name: 'theme',
       title: 'Theme',
+      type: 'themeList',
       options: {
         colors: fromNormalTextThemeColors,
       },
-      description: 'If no theme set, normal text color is set',
+      hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
+    },
+    {
+      name: 'themeFromLarger',
+      title: 'Theme',
       type: 'themeList',
+      options: {
+        colors: fromLargerTextThemeColors,
+      },
+      hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
     },
   ],
   preview: {

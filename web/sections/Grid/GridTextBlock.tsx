@@ -24,8 +24,8 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
     useThemedTitle,
     themedTitle,
     titleThemeFromLarger,
-    titleThemeFromNormal,
     contentTheme,
+    theme,
     contentAlignment,
     imageBackground,
   } = data
@@ -33,8 +33,8 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
 
   const contentAlignmentUtilities = {
     center: 'justify-center items-center',
-    right: 'justify-center items-end',
-    left: 'justify-center items-start',
+    right: 'justify-end items-center',
+    left: 'justify-start items-center',
     'bottom-left': 'justify-start items-end',
     'bottom-center': 'justify-center items-end',
   }
@@ -48,41 +48,65 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
 
   const textClassNames = twMerge(`${(title || themedTitle) && content ? 'text-sm' : 'text-md'}`, className)
 
-  const {
-    backgroundUtility: titleBgUtility,
-    textUtility: titleTextUtility,
-    dark,
-  } = getColorForTheme(useThemedTitle ? titleThemeFromLarger : titleThemeFromNormal)
+  let titleTextColor = 'text-slate-80'
+  let contentTextColor = 'text-slate-80'
+  let bgColor = 'bg-white-100'
 
-  const { textUtility: contentTextUtility, backgroundUtility: contentBgUtility } = getColorForTheme(contentTheme ?? 0)
+  if (useThemedTitle) {
+    const {
+      backgroundUtility: titleBgUtility,
+      textUtility: titleTextUtility,
+      dark,
+    } = getColorForTheme(titleThemeFromLarger)
+    if (titleTextUtility) {
+      titleTextColor = titleTextUtility
+    }
+    const { textUtility: contentTextUtility, backgroundUtility: contentBgUtility } = getColorForTheme(contentTheme)
+    if (contentBgUtility === titleBgUtility && contentTextUtility) {
+      contentTextColor = contentTextUtility
+    }
+    if (contentBgUtility !== titleBgUtility) {
+      contentTextColor = dark ? 'text-white-100' : 'text-slate-80'
+    }
+    bgColor = titleBgUtility ?? contentBgUtility ?? 'bg-white-100'
+  }
+  if (theme) {
+    const { backgroundUtility: commonBgUtility, textUtility: commonTextUtility } = getColorForTheme(theme)
+    if (commonTextUtility) {
+      titleTextColor = commonTextUtility
+      contentTextColor = commonTextUtility
+    }
+    if (commonBgUtility) {
+      bgColor = commonBgUtility
+    }
+  }
 
   const imageBgOptions = {
     background: {
       type: 'backgroundImage' as BackgroundTypes,
       backgroundImage: imageBackground,
       dark:
-        (titleThemeFromNormal ?? titleThemeFromLarger ?? contentTheme) === 12 && !imageBackground?.useLight
+        (((useThemedTitle && titleThemeFromLarger) || contentTheme) ?? theme) === 12 && !imageBackground?.useLight
           ? true
           : false,
     },
   }
 
-  let titleTextColor = (titleThemeFromNormal || titleThemeFromLarger) !== null ? titleTextUtility : ''
   if (imageBackground?.image) {
     titleTextColor = 'text-white-100'
     if (imageBackground?.useLight) {
       titleTextColor = 'text-slate-80'
     }
   }
-  let mainContentTextColor = contentTheme !== null ? contentTextUtility : titleTextColor
+
   if (imageBackground?.image) {
-    mainContentTextColor = 'text-white-100'
+    bgColor = 'bg-slate-80'
+    contentTextColor = 'text-white-100'
     if (imageBackground?.useLight) {
-      mainContentTextColor = 'text-slate-80'
+      contentTextColor = 'text-slate-80'
+      bgColor = 'bg-white-100'
     }
   }
-
-  const backgroundUtility = titleBgUtility ?? contentBgUtility ?? ''
 
   const lightGradientForContentAlignment = {
     center: '',
@@ -111,29 +135,29 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
         return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
       case 'threeColumns':
       default:
-        return 'lg:items-end'
+        return ''
     }
   }
 
   const serializerClassnames = {
-    largeText: `leading-tight text-balance`,
-    normal: `text-lg leading-snug text-balance`,
+    largeText: `leading-tight text-balance ${titleTextColor}`,
+    normal: `text-lg leading-snug text-balance ${titleTextColor}`,
   }
 
   const mainContent = (
     <>
       <div
         className={envisTwMerge(
-          `${dark ? 'dark' : ''} h-fit ${
-            (title || (useThemedTitle && themedTitle)) && content
-              ? `flex flex-col items-start lg:items-end text-balance ${getLayout()}`
-              : ``
+          `h-fit ${
+            (title || (useThemedTitle && themedTitle)) && content ? `flex flex-col text-balance ${getLayout()}` : ``
           }`,
         )}
       >
         {overline ? (
           <hgroup
-            className={`flex flex-col gap-2 max-w-text ${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
+            className={`flex flex-col gap-2 max-w-text ${
+              textContentAlignmentUtilities[contentAlignment ?? 'left']
+            } ${titleTextColor}`}
           >
             <Typography variant="overline" className="text-sm">
               {overline}
@@ -165,24 +189,18 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
           </>
         )}
         {content && (
-          <div className={`flex flex-col justify-center ${rowType === 'span3' ? 'lg:-translate-y-[10px]' : ''}`}>
+          <div className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-[10px]' : ''}`}>
             <Blocks
               value={content}
               proseClassName="prose-campaign"
-              className={`flex flex-col gap-sm ${textClassNames} ${mainContentTextColor} ${
+              className={`flex flex-col gap-sm ${textClassNames} ${contentTextColor} ${
                 textContentAlignmentUtilities[contentAlignment ?? 'left']
               } text-balance`}
             />
           </div>
         )}
       </div>
-      {action && url && (
-        <GridLinkArrow
-          theme={contentTheme ?? titleThemeFromNormal ?? titleThemeFromLarger}
-          hasBackgroundImage={!!imageBackground?.image}
-          action={action}
-        />
-      )}
+      {action && url && <GridLinkArrow bgColor={bgColor} action={action} />}
     </>
   )
 
@@ -213,9 +231,9 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
     </BackgroundContainer>
   ) : (
     <div
-      className={`p-10 lg:p-12 relative w-full h-full flex flex-col overflow-y-auto ${backgroundUtility} ${
-        dark ? 'dark' : ''
-      } ${contentAlignmentUtilities[contentAlignment ?? 'center']}`}
+      className={`p-10 lg:p-12 relative w-full h-full flex overflow-y-auto ${bgColor} ${
+        contentAlignmentUtilities[contentAlignment ?? 'center']
+      }`}
     >
       {mainContent}
     </div>
