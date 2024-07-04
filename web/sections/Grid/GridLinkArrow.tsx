@@ -21,7 +21,9 @@ const GridLinkArrow = ({ action, className = '', bgColor }: GridLinkArrowProps) 
       case 'bg-green-50':
       case 'bg-orange-50':
       case 'bg-mist-blue-100':
-        return `text-slate-80 hover:bg-slate-80 hover:text-white-100 focus-visible:bg-slate-80  focus-visible:text-white-100`
+      case 'bg-moss-green-50':
+      case 'bg-spruce-wood-90':
+        return `text-slate-80 hover:bg-slate-80 hover:text-white-100 focus-visible:bg-slate-80 focus-visible:text-white-100`
       case 'bg-white-100':
         return `text-slate-80 hover:bg-grey-50 hover:text-white-100 focus-visible:bg-grey-50 focus-visible:text-white-100`
       case 'bg-blue-50':
@@ -34,7 +36,12 @@ const GridLinkArrow = ({ action, className = '', bgColor }: GridLinkArrowProps) 
   return (
     <>
       {action && url && (
-        <div className={twMerge(`absolute bottom-0 right-0 pt-4 3xl:pt-12 w-full flex justify-end`, className)}>
+        <div
+          className={twMerge(
+            `absolute bottom-0 right-0 focus-visible:-translate-y-[5px] focus-visible:-translate-x-[5px] pt-4 3xl:pt-12 w-full flex justify-end`,
+            className,
+          )}
+        >
           <BaseLink
             href={url as string}
             {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
