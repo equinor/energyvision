@@ -74,7 +74,7 @@ _type == "keyNumbers" =>{
         bigTitle[]{..., ${markDefs}},
         title[]{..., ${markDefs}}
       ),
-    useBrandTheme,
+    'useBrandTheme': coalesce(useBrandTheme, false),
     ingress[]{..., ${markDefs}},
     text[]{..., ${markDefs}},
     "callToActions": action[]{

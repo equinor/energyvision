@@ -25,4 +25,5 @@ export const defaultColors = [
   { title: 'Mid Blue', value: colors.blue[50], key: 'blue-50', dark: true },
   { title: 'Mid Green', value: colors.green[50], key: 'green-50', dark: false },
   { title: 'Energy Red', value: colors['energy-red'][100], key: 'energy-red-50', dark: false, onlyTextColor: true },
+  { title: 'Black', value: 'rgba(61, 61, 61, 1)', key: 'slate-80', dark: false, onlyTextColor: true },
 ]

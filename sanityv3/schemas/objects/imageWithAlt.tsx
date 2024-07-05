@@ -22,7 +22,6 @@ export default {
       title: 'Image is decorative',
       description:
         'If this image is purely decorative you can disable the alt tag input here. Please note that this makes the image invisible for screen reader users.',
-      initialValue: false,
     },
     {
       name: 'alt',
