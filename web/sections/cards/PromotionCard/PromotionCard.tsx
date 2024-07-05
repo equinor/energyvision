@@ -53,6 +53,10 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
             value={ingress}
             className={` max-w-prose grow ${type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'}`}
             {...(!(variant === 'single' && !isMobile) && { clampLines: isMobile ? 3 : 5 })}
+            marks={{
+              em: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+              strong: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
+            }}
           />
         )}
       </Card.Content>
