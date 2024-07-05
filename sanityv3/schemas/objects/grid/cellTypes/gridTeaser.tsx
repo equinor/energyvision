@@ -133,7 +133,7 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.custom((value: ImageWithAlt) => (!value.asset ? 'Image is required' : true)),
     },
     {
       name: 'imagePosition',
