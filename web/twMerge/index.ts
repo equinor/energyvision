@@ -10,6 +10,7 @@ const envisTwMerge = extendTailwindMerge({
       //@ts-ignore
       maxWidth: ['viewport'],
       minWidth: ['viewport'],
+      size: ['arrow-right'],
       lineHeight: ['text', 'earthy', 'misty', 'cloudy', 'planetary', 'inherit'],
     },
   },

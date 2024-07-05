@@ -132,6 +132,7 @@ const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicI
 export default function Blocks({
   value,
   blocksComponents,
+  marks: marksComponents,
   components,
   proseClassName = '',
   className = '',
@@ -170,6 +171,7 @@ export default function Blocks({
                     types: { ...defaultSerializers.types },
                     marks: {
                       ...defaultSerializers.marks,
+                      ...marksComponents,
                       ...(includeFootnotes && footnoteSerializer),
                     },
                   }}

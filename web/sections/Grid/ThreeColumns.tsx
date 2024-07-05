@@ -14,7 +14,7 @@ const ThreeColumns = forwardRef<HTMLDivElement, ThreeColumnsProps>(function Thre
 ) {
   const { columns = [] } = data
   const borderStyling = `w-full h-full border border-moss-green-60`
-  const minHeight = 'min-h-[350px]'
+  const minHeight = 'min-h-[350px] lg:min-h-[600px]'
   const isMobile = useMediaQuery(`(max-width: 800px)`)
   return (
     <Fragment ref={ref}>
