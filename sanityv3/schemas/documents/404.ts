@@ -3,9 +3,9 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { i18n } from '../documentTranslation'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
+import { lang } from './langField'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
@@ -24,7 +24,6 @@ export default {
   title: `404 page`,
   name: `pageNotFound`,
   icon: () => EdsIcon(collection_4),
-  i18n,
   fieldsets: [
     {
       title: 'SEO & metadata',

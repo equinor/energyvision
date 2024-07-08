@@ -1,6 +1,6 @@
 import { TopicDocuments } from '../../../../icons'
+import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
-import { i18n } from '../../../../schemas/documentTranslation'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -15,8 +15,8 @@ export const Magazine = (S) =>
             .id('magazines')
             .title('Magazines')
             .apiVersion(apiVersion)
-            .filter('_type == "magazine" && (!defined(_lang) || _lang == $baseLang)')
-            .params({ baseLang: i18n.base })
+            .filter('_type == "magazine" && (!defined(lang) || lang == $baseLang)')
+            .params({ baseLang: defaultLanguage.name })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
               return params.type === 'magazine'
