@@ -7,14 +7,14 @@ import {
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
-import { publishDateTimeQuery } from './common/publishDateTime'
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './common/publishDateTime'
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
 
 const latestNewsFields = /* groq */ `
   "id": _id,
-  "updatedAt": _updatedAt,
+  "updatedAt": ${lastUpdatedTimeQuery},
   title,
   heroImage,
   ${slugsForNewsAndMagazine},
@@ -26,7 +26,7 @@ const latestNewsFields = /* groq */ `
 
 const newsFields = /* groq */ `
   "id": _id,
-  "updatedAt": _updatedAt,
+  "updatedAt": ${lastUpdatedTimeQuery},
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
@@ -70,7 +70,7 @@ export const newsPromotionQuery = /* groq */ `
   ] | order(${publishDateTimeQuery} desc)[0...3]{
     "type": _type,
     "id": _id,
-    "updatedAt": _updatedAt,
+    "updatedAt":  ${lastUpdatedTimeQuery},
     title,
     heroImage,
     "publishDateTime": ${publishDateTimeQuery},
