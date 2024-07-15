@@ -20,9 +20,9 @@ const snippets: textSnippet = {
     defaultValue: 'e.g. +47',
     group: groups.form,
   },
-  all_fields_required: {
-    title: 'All fields with * is required',
-    defaultValue: 'All fields with * is required',
+  all_fields_mandatory: {
+    title: 'All fields with * are mandatory',
+    defaultValue: 'All fields with * are mandatory',
     group: groups.form,
   },
   loading: {

@@ -360,8 +360,8 @@ const CareersContactForm = () => {
                 />
               )}
             />
-            <div className="pb-4">
-              <FormattedMessage id="all_fields_required" defaultMessage="All fields with * is required" />
+            <div className="pb-4 text-xs italic">
+              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
             </div>
             <StyledCheckBox
               label={intl.formatMessage({
