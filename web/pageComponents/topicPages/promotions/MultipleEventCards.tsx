@@ -19,6 +19,10 @@ const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: M
       )
     })
   }
+  if (eventPromotionSettings?.upcomingEventsCount) {
+    data = data.slice(0, eventPromotionSettings.upcomingEventsCount)
+  }
+
   if (eventPromotionSettings?.promotePastEvents && eventPromotionSettings?.pastEventsCount) {
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
