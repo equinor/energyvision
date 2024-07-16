@@ -43,7 +43,7 @@ const Promotion = ({
             <IngressText value={ingress} />
           </div>
         )}
-        {promotions?.length === 1 ? (
+        {promotions?.length === 1 || promoteSingleUpcomingEvent ? (
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <MultiplePromotions
