@@ -52,7 +52,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                     variant={isMobile ? 'compact' : 'primary'}
                   />
                   {newsItem?.ingress && (
-                    <Blocks value={newsItem?.ingress} className={`grow hidden xl:block`} clampLines={5} />
+                    <Blocks value={newsItem?.ingress} className={`break-word grow hidden xl:block`} clampLines={5} />
                   )}
                 </Card.Content>
               </Card>
