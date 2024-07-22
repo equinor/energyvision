@@ -6,7 +6,7 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import {
   title,
   frameTitle,
@@ -33,7 +33,7 @@ export type IFrame = {
   aspectRatio: string
   height?: number
   background?: ColorSelectorValue
-  cookiePolicy: 'none' | 'marketing' | 'statistics' | 'preferences'
+  cookiePolicy: string[]
 }
 
 export default {
