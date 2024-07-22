@@ -2,8 +2,9 @@ import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
+import { cookiePolicyQuery } from './cookiePolicy'
 
-export const iframeForNewsQuery = /* groq */ `defined(iframe) {
+export const iframeForNewsQuery = /* groq */ ` iframe{
   title,
   frameTitle,
   url,
@@ -11,6 +12,7 @@ export const iframeForNewsQuery = /* groq */ `defined(iframe) {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     height,
   },
+  ${cookiePolicyQuery}
 }`
 
 export const contentForNewsQuery = /* groq */ `content[] {
