@@ -4,7 +4,7 @@ import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 import { cookiePolicyQuery } from './cookiePolicy'
 
-export const iframeForNewsQuery = /* groq */ `defined(iframe) {
+export const iframeForNewsQuery = /* groq */ ` iframe{
   title,
   frameTitle,
   url,
