@@ -32,6 +32,7 @@ import { getMetaTitleSuffix } from '../satellitesConfig'
 import { defaultLanguage } from './languages'
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { LangBadge } from './schemas/components/LangBadge'
+import { createCustomUnPublishAction } from './actions/CustomUnpublishAction'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -113,9 +114,11 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return createCustomPublishAction(originalAction, context)
+              return createCustomPublishAction(originalAction)
             case 'duplicate':
               return createCustomDuplicateAction(originalAction, context)
+            case 'unpublish':
+              return createCustomUnPublishAction(originalAction, context)
             default:
               return originalAction
           }
