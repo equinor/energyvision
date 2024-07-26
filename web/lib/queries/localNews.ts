@@ -5,12 +5,12 @@ import {
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
-import { publishDateTimeQuery } from './common/publishDateTime'
+import { publishDateTimeQuery, lastUpdatedTimeQuery } from './common/publishDateTime'
 import { fixPreviewForDrafts } from './common/langAndDrafts'
 
 const localNewsFields = /* groq */ `
   "id": _id,
-  "updatedAt": _updatedAt,
+  "updatedAt":  ${lastUpdatedTimeQuery},
   title,
   heroImage,
   ${slugsForNewsAndMagazine},

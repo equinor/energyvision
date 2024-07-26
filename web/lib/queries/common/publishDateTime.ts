@@ -5,3 +5,7 @@ export const publishDateTimeQuery = /* groq */ `
       coalesce(firstPublishedAt, _createdAt)
   )
 `
+
+export const lastUpdatedTimeQuery = /* groq */ `
+  coalesce(lastModifiedAt,_updatedAt)
+`

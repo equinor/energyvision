@@ -13,7 +13,7 @@ import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
-import { publishDateTimeQuery } from './publishDateTime'
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -274,7 +274,7 @@ _type == "keyNumbers" =>{
         ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
-          "updatedAt": _updatedAt,
+          "updatedAt":  ${lastUpdatedTimeQuery},
           title,
           heroImage,
           "publishDateTime": ${publishDateTimeQuery},
@@ -449,7 +449,7 @@ _type == "keyNumbers" =>{
     ] | order(${publishDateTimeQuery} desc){
       "type": _type,
       "id": _id,
-      "updatedAt": _updatedAt,
+      "updatedAt":  ${lastUpdatedTimeQuery},
       title,
       heroImage,
       "publishDateTime": ${publishDateTimeQuery},

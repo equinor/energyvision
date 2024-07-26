@@ -96,6 +96,14 @@ export const publishDateTime = [
     readOnly: true,
     hidden: true,
   },
+  {
+    // Set automatically in the custom action "ConfirmPublishWithi18n"
+    title: 'Date and time of when the document was last updated at',
+    name: 'lastModifiedAt',
+    type: 'datetime',
+    readOnly: true,
+    hidden: true,
+  },
 ]
 
 export const tags = {
