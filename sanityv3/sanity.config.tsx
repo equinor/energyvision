@@ -30,9 +30,9 @@ import { i18n } from './schemas/documentTranslation'
 import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 import { getMetaTitleSuffix } from '../satellitesConfig'
 import { defaultLanguage } from './languages'
-import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
+import { CustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { LangBadge } from './schemas/components/LangBadge'
-import { createCustomUnPublishAction } from './actions/CustomUnpublishAction'
+import { CustomUnpublishAction } from './actions/CustomUnpublishAction'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -50,6 +50,8 @@ const handleInputComponents = (inputProps: InputProps) => {
 
   return inputProps.renderDefault(inputProps)
 }
+
+const requiresCustomPublishFields = ['news', 'localNews', 'magazine']
 
 const getStudioTitle = (dataset: string) => {
   switch (dataset) {
@@ -116,9 +118,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
             case 'publish':
               return createCustomPublishAction(originalAction)
             case 'duplicate':
-              return createCustomDuplicateAction(originalAction, context)
+              return CustomDuplicateAction
             case 'unpublish':
-              return createCustomUnPublishAction(originalAction, context)
+              return requiresCustomPublishFields.includes(context.schemaType) ? CustomUnpublishAction : originalAction
             default:
               return originalAction
           }

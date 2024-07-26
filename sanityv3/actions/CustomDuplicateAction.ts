@@ -1,97 +1,100 @@
-import { useToast } from '@sanity/ui'
-import { DocumentActionComponent, DocumentActionDescription, DocumentActionProps, DocumentActionsContext } from 'sanity'
-import { defaultLanguage } from '../languages'
-import { apiVersion } from '../sanity.client'
-import { omit } from 'lodash'
-import { useRouter, useRouterState } from 'sanity/router'
-import { RouterPanes } from 'sanity/structure'
-import { useMemo } from 'react'
+import { CopyIcon } from '@sanity/icons'
 import { uuid } from '@sanity/uuid'
+import { useCallback, useMemo, useState } from 'react'
+import { filter, firstValueFrom } from 'rxjs'
+import {
+  type DocumentActionComponent,
+  InsufficientPermissionsMessage,
+  useClient,
+  useCurrentUser,
+  useDocumentOperation,
+  useDocumentPairPermissions,
+  useDocumentStore,
+  useTranslation,
+} from 'sanity'
+import { useRouter } from 'sanity/router'
 
-export function createCustomDuplicateAction(originalAction: DocumentActionComponent, context: DocumentActionsContext) {
-  const CustumDuplicateAction = (props: DocumentActionProps) => {
-    const { draft, published } = props
-    const originalResult = originalAction(props) as DocumentActionDescription
-    const toast = useToast()
-    const client = context.getClient({ apiVersion: apiVersion })
+import { structureLocaleNamespace } from 'sanity/structure'
+import { defaultLanguage } from '../languages'
+import { useToast } from '@sanity/ui'
+import { apiVersion } from '../sanity.client'
+import { FIRST_PUBLISHED_AT_FIELD_NAME, LAST_MODIFIED_AT_FIELD_NAME, requiredCustomPublishFields } from './constants'
 
-    const { navigate } = useRouter()
-    const routerState = useRouterState()
-    const schemaType = props.type as string
-    const omitProps = ['_id', '_rev', '_createdAt', '_updatedAt', 'firstPublishedAt', 'lastModifiedAt']
-    // omit the omitProps from either the draft or published document version passed down in the props
-    const newDocProps = {
-      _id: uuid(),
-      ...omit(draft ? draft : published, omitProps),
-    }
-    const routerPaneGroups = useMemo<RouterPanes>(() => (routerState?.panes || []) as RouterPanes, [routerState?.panes])
+const DISABLED_REASON_KEY = {
+  NOTHING_TO_DUPLICATE: 'action.duplicate.disabled.nothing-to-duplicate',
+  NOT_READY: 'action.duplicate.disabled.not-ready',
+}
 
-    const openPane = (id: string) => {
-      const nextPanes: RouterPanes = [
-        // keep existing panes except the last one
-        ...routerPaneGroups.splice(routerPaneGroups.length - 2, 1),
-        [
-          {
-            id: id,
-            params: {
-              type: schemaType,
-              ...newDocProps,
-            },
-          },
-        ],
-      ]
+export const CustomDuplicateAction: DocumentActionComponent = ({ id, draft, published, type, onComplete }) => {
+  const documentStore = useDocumentStore()
+  const { duplicate } = useDocumentOperation(id, type)
+  const { navigateIntent } = useRouter()
+  const [isDuplicating, setDuplicating] = useState(false)
+  const [permissions, isPermissionsLoading] = useDocumentPairPermissions({
+    id,
+    type,
+    permission: 'duplicate',
+  })
 
-      navigate({
-        panes: nextPanes,
+  const { t } = useTranslation(structureLocaleNamespace)
+
+  const currentUser = useCurrentUser()
+  const client = useClient({ apiVersion: apiVersion })
+  const toast = useToast()
+
+  const handle = useCallback(async () => {
+    const dupeId = uuid()
+    const lang = draft?.lang || published?.lang
+    if (lang && lang != defaultLanguage.name) {
+      toast.push({
+        duration: 7000,
+        status: 'error',
+        title: 'Cannot duplicate the translation.',
       })
+      onComplete()
+      return
+    }
+
+    setDuplicating(true)
+
+    // set up the listener before executing
+    const duplicateSuccess = firstValueFrom(
+      documentStore.pair.operationEvents(id, type).pipe(filter((e) => e.op === 'duplicate' && e.type === 'success')),
+    )
+    duplicate.execute(dupeId)
+
+    // only navigate to the duplicated document when the operation is successful
+    await duplicateSuccess
+    navigateIntent('edit', { id: dupeId, type })
+
+    // clear the custom fields...
+    if (requiredCustomPublishFields.includes(type)) {
+      await client
+        .patch(`drafts.${dupeId}`)
+        .unset([LAST_MODIFIED_AT_FIELD_NAME, FIRST_PUBLISHED_AT_FIELD_NAME])
+        .commit()
+        .catch((e) => console.error(e))
+    }
+
+    onComplete()
+  }, [documentStore.pair, duplicate, id, navigateIntent, onComplete, type, client, draft, published])
+
+  return useMemo(() => {
+    if (!isPermissionsLoading && !permissions?.granted) {
+      return {
+        icon: CopyIcon,
+        disabled: true,
+        label: t('action.duplicate.label'),
+        title: InsufficientPermissionsMessage({ context: 'duplicate-document', currentUser: currentUser }),
+      }
     }
 
     return {
-      ...originalResult,
-      onHandle: () => {
-        client
-          .fetch(/* groq */ `*[_id match '*'+$id][0]{lang}`, { id: context.documentId })
-          .then((result) => {
-            if (result?.lang == defaultLanguage.name) {
-              // allow duplicate action only on base language
-              const transaction = client.transaction()
-              transaction.create(newDocProps)
-              transaction
-                .commit()
-                .then((result) => {
-                  openPane(result.documentIds[0])
-                  toast.push({
-                    duration: 7000,
-                    status: 'success',
-                    title: 'Duplicated the document ' + result,
-                  })
-                })
-                .catch((error) => {
-                  console.error('Error committing transaction:', error)
-                  toast.push({
-                    duration: 7000,
-                    status: 'error',
-                    title: 'Failed to duplicate.',
-                  })
-                })
-            } else {
-              toast.push({
-                duration: 7000,
-                status: 'error',
-                title: 'Cannot duplicate the translation.',
-              })
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-            toast.push({
-              duration: 7000,
-              status: 'error',
-              title: 'Failed to duplicate',
-            })
-          })
-      },
+      icon: CopyIcon,
+      disabled: isDuplicating || Boolean(duplicate.disabled) || isPermissionsLoading,
+      label: isDuplicating ? t('action.duplicate.running.label') : t('action.duplicate.label'),
+      title: duplicate.disabled ? t(DISABLED_REASON_KEY[duplicate.disabled]) : '',
+      onHandle: handle,
     }
-  }
-  return CustumDuplicateAction
+  }, [currentUser, duplicate.disabled, handle, isDuplicating, isPermissionsLoading, permissions?.granted, t])
 }
