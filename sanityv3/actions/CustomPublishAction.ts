@@ -14,7 +14,7 @@ const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
 const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt'
 
 const requiresConfirm = ['news', 'localNews']
-const requiresFirstPublished = ['news', 'localNews', 'magazine']
+const requiresFirstPublished = ['news', 'localNews']
 
 const updateCustomPublishFields = async (id: string, client: SanityClient, setFirstPublish: boolean) => {
   const currentTimeStamp = new Date().toISOString()
@@ -43,6 +43,7 @@ export function createCustomPublishAction(originalAction: DocumentActionComponen
           )
         }
         originalResult.onHandle && originalResult.onHandle()
+        setDialogOpen(false)
       } catch (e) {
         console.error(e)
         toast.push({

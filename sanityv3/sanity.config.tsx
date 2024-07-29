@@ -115,7 +115,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
             case 'publish':
               return createCustomPublishAction(originalAction, context)
             case 'duplicate':
-              return createCustomDuplicateAction(originalAction, context)
+              return createCustomDuplicateAction(originalAction)
             default:
               return originalAction
           }

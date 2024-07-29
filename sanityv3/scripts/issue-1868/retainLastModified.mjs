@@ -7,7 +7,7 @@ import { sanityClients } from './getSanityClients.mjs'
 
 const UPDATED_AT = `_updatedAt`
 const LAST_MODIFIED_AT = `lastModifiedAt`
-const SCHEMA_TYPE = [`news`, `localNews`, 'magazine']
+const SCHEMA_TYPE = [`news`, `localNews`]
 
 // This will use the client configured in ./sanity.cli.ts
 const client = sanityClients[0]

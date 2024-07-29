@@ -72,14 +72,6 @@ export default {
       hidden: true,
     },
     {
-      // Set automatically in the custom action "ConfirmPublishWithi18n"
-      title: 'Date and time of when the document was last updated at',
-      name: 'lastModifiedAt',
-      type: 'datetime',
-      readOnly: true,
-      hidden: true,
-    },
-    {
       title: 'Meta information',
       name: 'seo',
       type: 'titleAndMeta',
