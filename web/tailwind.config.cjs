@@ -33,6 +33,7 @@ module.exports = {
     extend: {
       screens: {
         '3xl': '1600px',
+        '4xl': '1920px',
       },
       colors: ({ theme }) => ({
         current: 'currentColor',
@@ -260,6 +261,8 @@ module.exports = {
       },
       maxWidth: {
         viewport: '1920px',
+        //When large font, prose(65ch) might not be the best
+        text: '760px',
       },
       minWidth: {
         viewport: '375',
@@ -429,7 +432,7 @@ module.exports = {
           css: {
             color: theme('colors.current'),
             p: {
-              fontSize: theme('fontSize.md'),
+              textWrap: 'balance',
               marginTop: '0',
               marginBottom: '0',
             },
