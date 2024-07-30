@@ -1,6 +1,7 @@
 import { ArrowRight, Pause, Play } from '../../icons'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import envisTwMerge from '../../twMerge'
+import { CircularProgress } from '@core/Progress/CircularProgress'
 
 type ModeVariants = 'play' | 'pause' | 'next' | 'previous'
 type Variants = 'video' | 'default'
@@ -13,10 +14,15 @@ export type ButtonProps = {
   title?: string
   className?: string
   iconClassName?: string
+  useTimer?: boolean
+  paused?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ mode = 'play', variant = 'default', className = '', iconClassName = '', ...rest }, ref) => {
+  (
+    { mode = 'play', variant = 'default', useTimer = false, paused, className = '', iconClassName = '', ...rest },
+    ref,
+  ) => {
     const getModeIcon = () => {
       switch (mode) {
         case 'pause':
@@ -35,16 +41,16 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
     const getButtonVariantClassNames = () => {
       switch (variant) {
         case 'video':
-          return `size-[48px] `
+          return `border-none size-[48px] m-auto`
         default:
           return `
-          border
-          border-north-sea-100
-          text-north-sea-100
+          size-[44px]
+          ${useTimer ? `` : `border border-grey-50 dark:border-white-100`}
+          text-slate-80
           focus:outline-none
+          hover:bg-grey-50
+          hover:text-white-100
           focus-visible:outline-slate-blue-95
-          dark:border-white-100
-          dark:border-white-100
           dark:hover:bg-white-transparent
           dark:focus-visible:outline-white-100`
       }
@@ -66,12 +72,11 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type="button"
         className={envisTwMerge(
-          `m-auto 
+          `relative
           flex 
           justify-center
           rounded-full
           items-center
-          border-none 
           cursor-pointer 
           focus-none
           focus-visible:envis-outline
@@ -80,10 +85,18 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {...rest}
       >
+        {useTimer && (
+          <CircularProgress
+            type="timer"
+            duration={5}
+            paused={paused ?? mode === 'pause'}
+            variant="determinate"
+            className="text-grey-50 absolute inset-0 size-[44px]"
+          />
+        )}
         <div
           className={envisTwMerge(
             `
-          relative
           flex 
           justify-center
           items-center

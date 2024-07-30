@@ -284,6 +284,9 @@ module.exports = {
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
+      transitionTimingFunction: {
+        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)', //'cubic-bezier(0.23, 1, 0.32, 1)',
+      },
       keyframes: {
         reveal: {
           '0%': { opacity: '0' },
@@ -312,6 +315,7 @@ module.exports = {
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
+        'spin-slow': 'spin 3s linear infinite',
       },
       typography: (theme) => ({
         DEFAULT: {
