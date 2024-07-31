@@ -744,6 +744,7 @@ export type VideoPlayerCarouselItem = {
   id: string
   video: VideoType
   title?: PortableTextBlock[]
+  hideVideoTitle?: boolean
   aspectRatio?: VideoPlayerRatios
 }
 

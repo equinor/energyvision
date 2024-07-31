@@ -65,7 +65,7 @@ const VideoPlayer = ({
                   controls: true,
                 }}
               />
-              {item.title && <StyledHeading size="lg" level="h3" value={item.title} className="px-layout-lg" />}
+              {item?.title && <StyledHeading size="lg" level="h3" value={item.title} className="px-layout-lg" />}
             </VideoItem>
           ))}
         </Carousel>

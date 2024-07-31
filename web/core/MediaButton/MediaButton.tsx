@@ -51,7 +51,8 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           hover:bg-autumn-storm-60
           hover:text-white-100
           focus-visible:outline-slate-blue-95
-          dark:hover:bg-white-transparent
+          dark:hover:bg-white-100
+          dark:hover:border-white-100
           dark:focus-visible:outline-white-100`
       }
     }
@@ -63,7 +64,7 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           hover:bg-black-100
           text-white-100`
         default:
-          return `size-10`
+          return `size-10 dark:text-white-100 dark:group-hover/mediabutton:text-slate-80`
       }
     }
 

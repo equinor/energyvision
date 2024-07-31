@@ -1,8 +1,7 @@
 import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselItem, VideoPlayerRatios } from '../../types/types'
 import { DisplayModes } from './Carousel'
-import { Heading } from '@core/Typography'
-import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
+import { VideoComponentWithCaption } from '../../pageComponents/shared/VideoPlayer'
 import { forwardRef, HTMLAttributes } from 'react'
 //import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
@@ -45,8 +44,9 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
         className,
       )}
     >
-      <VideoJsComponent
+      <VideoComponentWithCaption
         video={video}
+        title={title}
         designOptions={{
           aspectRatio,
         }}
@@ -55,7 +55,6 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
           controls: true,
         }}
       />
-      {title && <Heading variant="lg" as="h3" value={title} />}
     </li>
   )
 })

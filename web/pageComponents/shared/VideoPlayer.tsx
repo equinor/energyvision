@@ -12,8 +12,10 @@ import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
-import { Heading } from '@core/Typography'
+import { Heading, Paragraph, Typography } from '@core/Typography'
 import CallToActions from '@sections/CallToActions'
+import { PortableTextBlock } from '@portabletext/types'
+import Blocks from './portableText/Blocks'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -64,6 +66,51 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   }
 }
 
+type VideoComponentWithCaptionType = {
+  video: VideoType
+  videoControls: VideoControlsType
+  designOptions: VideoDesignOptionsType
+  useFillMode?: boolean
+  className?: string
+  captionClassName?: string
+  title?: PortableTextBlock[]
+}
+export const VideoComponentWithCaption = ({
+  video,
+  title,
+  videoControls,
+  designOptions,
+  useFillMode = false,
+  className = '',
+  captionClassName = '',
+}: VideoComponentWithCaptionType) => {
+  const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
+  return (
+    <figure
+      className={twMerge(
+        `
+        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
+        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
+        `,
+        className,
+      )}
+    >
+      <DynamicVideoJsComponent
+        className="object-cover"
+        src={video.url}
+        title={video.title}
+        poster={urlFor(video.thumbnail).width(w).height(h).url()}
+        playsInline
+        aspectRatio={designOptions.aspectRatio}
+        useBrandTheme={designOptions?.useBrandTheme}
+        useFillMode={useFillMode}
+        {...videoControls}
+      />
+      <figcaption className={twMerge('text-md py-2', captionClassName)}>{title && <Blocks value={title} />}</figcaption>
+    </figure>
+  )
+}
+
 type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
@@ -71,7 +118,6 @@ type VideoJsComponentType = {
   useFillMode?: boolean
   className?: string
 }
-
 export const VideoJsComponent = ({
   video,
   videoControls,
