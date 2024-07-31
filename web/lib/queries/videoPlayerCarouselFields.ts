@@ -4,6 +4,7 @@ export const videoPlayerCarouselFields = /* groq */ `
   "id": _key,
   "type": _type,
   title,
+  ingress,
   items[] {
     "id": _key,
     title,

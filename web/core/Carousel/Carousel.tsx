@@ -1,15 +1,17 @@
-import { useId } from '@equinor/eds-utils'
-import { ImageWithCaptionData, ImageWithAlt, VideoPlayerCarouselItem } from '../../types/types'
-import { forwardRef, HTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { VideoPlayerCarouselItem, ImageCarouselItem } from '../../types/types'
+import { forwardRef, HTMLAttributes, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@core/MediaButton/MediaButton'
 import { CarouselVideoItem } from './CarouselVideoItem'
 import { CarouselImageItem } from './CarouselImageItem'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { PortableTextBlock } from '@portabletext/types'
+import { toPlainText } from '@portabletext/react'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
-type CarouselItemTypes = VideoPlayerCarouselItem | ImageWithCaptionData | ImageWithAlt
+type CarouselItemTypes = VideoPlayerCarouselItem | ImageCarouselItem
 type Variants = 'video' | 'image'
 
 type CarouselProps = {
@@ -22,29 +24,32 @@ type CarouselProps = {
   className?: string
   listClassName?: string
   autoRotation?: boolean
-} & HTMLAttributes<HTMLDivElement>
+  title?: PortableTextBlock[]
+} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
-const TRANSLATE_X_AMOUNT = 1000
+const TRANSLATE_X_AMOUNT_LG = 1000
+const TRANSLATE_X_AMOUNT_SM = 295
+const TRANSLATE_X_AMOUNT_MD = 712
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel(
   {
     items,
     variant = 'video',
     displayMode = 'scroll',
-    layout = 'full',
+    //layout = 'full',
     autoRotation = false,
     labelledbyId,
+    title,
     className = '',
     listClassName = '',
-    ...rest
   },
   ref,
 ) {
-  const carouselId = useId('carousel')
-  const carouselItemsId = useId('carousel-items')
+  //TODO translations
+  const carouselItemsId = useId()
+  const controlsId = useId()
   const sliderRef = useRef<HTMLUListElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const itemListRef = useRef<Record<number, HTMLElement>>({})
   //a prefers-reduced-motion user setting must always override autoplay
   const prefersReducedMotion = usePrefersReducedMotion()
   const internalAutoRotation = prefersReducedMotion ? false : autoRotation
@@ -52,35 +57,64 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const [currentXPosition, setCurrentXPosition] = useState(0)
   const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
   const [pauseAutoRotation, setPauseAutoRotation] = useState(false)
-  //[0, 1000, 2000, -1000]
+  let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM
+  const isMedium = useMediaQuery(`(min-width: 768px)`)
+  const isLarge = useMediaQuery(`(min-width: 1024px)`)
+  if (isMedium) {
+    TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
+  }
+  if (isLarge) {
+    TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG
+  }
+
   const initialPositions = useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     return items.map((item, i) => {
       if (i === items.length - 1) {
         return -TRANSLATE_X_AMOUNT
       }
       return TRANSLATE_X_AMOUNT * i
     })
-  }, [items])
-  const [itemsXPositions, setItemsXPositions] = useState(initialPositions)
+  }, [TRANSLATE_X_AMOUNT, items])
+
+  const [itemsXPositions, setItemsXPositions] = useState<number[]>([])
+
   const prevSlide = () => {
     const isFirst = currentIndex === 0
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     setCurrentIndex(newIndex)
-    if (itemListRef.current) {
-      itemListRef.current[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    if (sliderRef?.current) {
+      const noOfItems = sliderRef?.current?.childElementCount
+      const itemWidth = sliderRef?.current?.lastElementChild?.clientWidth || 0
+      const padding = (sliderRef?.current?.scrollWidth - itemWidth * noOfItems) / (noOfItems - 1)
+      const calculatedOffset = itemWidth + padding / 2
+
+      sliderRef?.current.scrollBy({
+        left: -calculatedOffset,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      })
     }
   }
+
   const nextSlide = () => {
     const isLast = currentIndex === items?.length - 1
     const newIndex = isLast ? 0 : currentIndex + 1
     setCurrentIndex(newIndex)
-    if (itemListRef.current) {
-      itemListRef.current[newIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    if (sliderRef?.current) {
+      const noOfItems = sliderRef?.current?.childElementCount
+      const itemWidth = sliderRef?.current?.lastElementChild?.clientWidth || 0
+      const padding = (sliderRef?.current?.scrollWidth - itemWidth * noOfItems) / (noOfItems - 1)
+      const calculatedOffset = itemWidth + padding / 2
+
+      sliderRef?.current.scrollBy({
+        left: calculatedOffset,
+        behavior: 'smooth',
+      })
     }
   }
 
   const loopSlideNext = useCallback(() => {
-    console.log('Go to next')
     const isLast = currentIndex === items?.length - 1
     const newIndex = isLast ? 0 : currentIndex + 1
     const newXPosition = currentXPosition + TRANSLATE_X_AMOUNT
@@ -102,10 +136,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     setCurrentListTranslateX(newTranslateX)
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
-  }, [currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions, setCurrentListTranslateX])
+  }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
 
-  const loopSlidePrev = () => {
-    console.log('Go to previous')
+  const loopSlidePrev = useCallback(() => {
     const isFirst = currentIndex === 0
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
@@ -126,29 +159,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     setCurrentListTranslateX(newTranslateX)
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
-  }
+  }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
 
-  const layoutClassNames = {
-    full: ``,
-    default: `px-layout-sm mx-auto max-w-viewport`,
-  }
-
-  const listVariantClassName = {
-    video: 'flex gap-12 w-full h-full overflow-y-hidden',
-    image: `${
-      displayMode === 'single'
-        ? 'grid w-[min-content] transition-transform ease-scroll delay-0 duration-[800ms]'
-        : 'flex gap-12 w-full h-full overflow-y-hidden'
-    }`,
-  }
-  const listDisplayModeClassName = {
-    scroll: 'snap-mandatory snap-x overflow-x-scroll',
-    single: ``,
-  }
-
-  const ariaLive = autoRotation ? 'off' : 'polite'
-
-  //stop autorotation on focus on a slide
   useEffect(() => {
     if (internalAutoRotation && !pauseAutoRotation) {
       timeoutRef.current = setTimeout(() => loopSlideNext(), 6000) // + 1s from the play/pause button timer
@@ -158,42 +170,71 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     }
   }, [internalAutoRotation, loopSlideNext, pauseAutoRotation])
 
+  useEffect(() => {
+    const reset = () => {
+      setCurrentIndex(0)
+      setCurrentXPosition(0)
+      setCurrentListTranslateX(0)
+      setItemsXPositions(initialPositions)
+    }
+    reset()
+  }, [initialPositions])
+
   const cancelTimeout = () => {
     timeoutRef.current && clearTimeout(timeoutRef.current)
+  }
+
+  const listVariantClassName = {
+    video: 'flex gap-3 lg:gap-12 w-full h-full overflow-y-hidden',
+    image: `${
+      displayMode === 'single'
+        ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
+        : 'flex gap-3 md:gap-8 lg:gap-12 w-full h-full overflow-y-hidden'
+    }`,
+  }
+  const listDisplayModeClassName = {
+    scroll: 'snap-mandatory snap-x overflow-x-scroll',
+    single: ``,
   }
 
   return (
     <section
       ref={ref}
-      id={carouselId}
-      aria-labelledby={labelledbyId}
-      role="group"
+      {...(labelledbyId && {
+        'aria-labelledby': labelledbyId,
+      })}
+      {...(!labelledbyId &&
+        title && {
+          'aria-label': toPlainText(title),
+        })}
       aria-roledescription="carousel"
       className={envisTwMerge(
         `relative
         ${
           variant === 'image' && displayMode === 'single'
             ? 'overflow-hidden grid grid-flow-row'
-            : 'px-layout-sm flex flex-col-reverse max-w-viewport'
+            : 'px-6 lg:px-layout-sm flex flex-col-reverse max-w-viewport'
         }
-        ${layoutClassNames[layout]}
         `,
         className,
       )}
     >
       {/* Controls - should be before slide in DOM but not visually */}
       <div
+        role="group"
+        aria-labelledby={controlsId}
         className={`${
           variant === 'image' && displayMode === 'single'
-            ? 'w-[980px] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
+            ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
             : ''
-        } pt-6 flex ${internalAutoRotation ? 'justify-between' : 'justify-end'}`}
+        } pt-6 pb-2 flex ${internalAutoRotation ? 'justify-between' : 'justify-end'}`}
       >
+        <div id={controlsId} className="sr-only">{`Carousel controls`}</div>
         {internalAutoRotation && (
           <MediaButton
             key={`play_pause_button_${currentIndex}`}
-            title={pauseAutoRotation ? `Play our image gallery` : `Pause image gallery`}
-            mode={pauseAutoRotation ? 'pause' : 'play'}
+            title={pauseAutoRotation ? `Play our image gallery.` : `Pause image gallery`}
+            mode={pauseAutoRotation ? 'play' : 'pause'}
             onClick={() => {
               setPauseAutoRotation(!pauseAutoRotation)
             }}
@@ -203,26 +244,46 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         )}
         <div className="flex gap-3 items-center">
           <MediaButton
-            title={`Go to previous`}
+            title={`Go to slide `}
             aria-controls={carouselItemsId}
             mode="previous"
-            onClick={() => (variant === 'image' && displayMode === 'single' ? loopSlidePrev() : prevSlide())}
+            onClick={() => {
+              if (variant === 'image' && displayMode === 'single') {
+                loopSlidePrev()
+                if (!pauseAutoRotation) {
+                  setPauseAutoRotation(true)
+                }
+              } else {
+                prevSlide()
+              }
+            }}
+            className="hover:border-autumn-storm-60"
           />
-          <span className="text-sm">{`${currentIndex + 1}/${items?.length}`}</span>
           <MediaButton
             title={`Go to next`}
             mode="next"
             aria-controls={carouselItemsId}
-            onClick={() => (variant === 'image' && displayMode === 'single' ? loopSlideNext() : nextSlide())}
+            onClick={() => {
+              if (variant === 'image' && displayMode === 'single') {
+                loopSlideNext()
+                if (!pauseAutoRotation) {
+                  setPauseAutoRotation(true)
+                }
+              } else {
+                nextSlide()
+              }
+            }}
+            className="hover:border-autumn-storm-60"
           />
         </div>
       </div>
       <ul
         ref={sliderRef}
+        id={carouselItemsId}
         className={envisTwMerge(
-          `
-          [scrollbar-width:none]
+          `transparent-scrollbar
           transition-all
+          duration-300
           m-auto
           ${listDisplayModeClassName[displayMode]}
           ${listVariantClassName[variant]}
@@ -235,17 +296,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
             },
           })}
-        id={carouselItemsId}
-        aria-live={ariaLive}
+        aria-live={pauseAutoRotation ? 'polite' : 'off'}
       >
-        {items?.map((item, i, array) => {
+        {items?.map((item, i) => {
           const ariaLabel = `${i + 1} of ${items?.length}`
           return variant === 'video' ? (
             <CarouselVideoItem
-              key={item.id ?? `${carouselId}_${i + 1}`}
-              ref={(element: any) => {
-                itemListRef.current[i] = element
-              }}
+              key={item.id}
               {...(item as VideoPlayerCarouselItem)}
               displayMode={displayMode}
               aria-label={ariaLabel}
@@ -253,11 +310,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             />
           ) : (
             <CarouselImageItem
-              key={item.id ?? `${carouselId}_${i + 1}`}
-              ref={(element: any) => {
-                itemListRef.current[i] = element
-              }}
-              {...(item as ImageWithAlt | ImageWithCaptionData)}
+              key={item.id}
+              {...(item as ImageCarouselItem)}
               displayMode={displayMode}
               aria-label={ariaLabel}
               active={i === currentIndex}
@@ -268,13 +322,20 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                   },
                 })}
               onFocus={() => {
-                console.log('in focus, cancel timeout')
                 cancelTimeout()
               }}
             />
           )
         })}
       </ul>
+      {/*       <div
+        aria-live={variant === 'video' ? 'off' : 'polite'}
+        hidden={variant === 'video'}
+        aria-atomic="true"
+        className="sr-only"
+      >
+        <span className="sr-only">{`${currentIndex + 1} of ${items?.length}`}</span>
+      </div> */}
     </section>
   )
 })

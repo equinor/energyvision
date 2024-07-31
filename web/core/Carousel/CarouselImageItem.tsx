@@ -2,9 +2,7 @@ import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
 import { ImageWithAlt, ImageWithCaptionData } from '../../types/types'
 import { DisplayModes } from './Carousel'
-import { Caption } from '@components/FigureCaption/Caption'
-import { forwardRef } from 'react'
-//import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { forwardRef, HTMLAttributes } from 'react'
 
 type CarouselImageItemProps = {
   image?: ImageWithAlt | ImageWithCaptionData
@@ -14,32 +12,23 @@ type CarouselImageItemProps = {
   caption?: string
   attribution?: string
   active?: boolean
-}
+} & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  {
-    active = false,
-    image,
-    caption,
-    attribution,
-    displayMode = 'scroll',
-    aspectRatio = '16:9',
-    className = '',
-    ...rest
-  },
+  { active = false, image, caption, attribution, displayMode = 'single', className = '', ...rest },
   ref,
 ) {
-  console.log('caption', caption)
-  console.log('attribution', attribution)
   return (
     <li
       {...rest}
       ref={ref}
       role="group"
+      aria-current={active}
+      aria-hidden={!active}
       aria-roledescription="slide"
       className={envisTwMerge(
         `aspect-4/5
-        lg:aspect-video
+        md:aspect-video
         relative
         h-full
         ${!active && displayMode === 'single' ? 'opacity-30' : ''}
@@ -48,21 +37,34 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         ease-[ease]
         ${
           displayMode === 'scroll'
-            ? 'snap-start scroll-ml-6 shrink-0'
-            : 'w-[980px] ms-2 me-2 col-start-1 col-end-1 row-start-1 row-end-1'
+            ? 'snap-center scroll-ml-6 shrink-0'
+            : 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] ms-2 me-2 col-start-1 col-end-1 row-start-1 row-end-1'
         }
         `,
         className,
       )}
     >
-      <figure className="relative w-full h-full">
-        <Image maxWidth={1420} image={image} fill className="rounded-md" />
-        <figcaption className="absolute bottom-0 left-0 pt-[200px] black-to-top-gradient">
-          <div className="ms-8 mb-8">
-            {`${caption ? caption : ''}${caption && attribution ? '. ' : ''}${attribution ? attribution : ''}`}
-          </div>
-        </figcaption>
-      </figure>
+      {caption || attribution ? (
+        <figure className="relative w-full h-full">
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <figcaption
+            className={`${
+              active ? 'block' : 'hidden'
+            } absolute bottom-0 left-4 right-4 lg:left-8 lg:right-8 mb-4 lg:mb-8`}
+          >
+            <div
+              className={`bg-spruce-wood-70/75 px-8 pt-6 w-fit flex flex-col max-w-text ${
+                attribution ? 'pb-4' : 'pb-6'
+              }`}
+            >
+              {caption && <span className={`text-lg ${attribution ? 'pb-3' : ''}`}>{caption}</span>}
+              {attribution && <span className="text-sm">{attribution}</span>}
+            </div>
+          </figcaption>
+        </figure>
+      ) : (
+        <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+      )}
     </li>
   )
 })

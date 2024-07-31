@@ -755,6 +755,7 @@ export type VideoPlayerCarouselData = {
     aspectRatio: VideoPlayerRatios
   }
   title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
 }
 
 export type LoopingVideoRatio = '1:2' | 'narrow'
@@ -765,12 +766,17 @@ export type LoopingVideoData = {
   url: string
   ratio: LoopingVideoRatio
 }
+export type ImageCarouselItem = {
+  id: string
+} & ImageWithCaptionData
 
 export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
-  items: ImageWithCaptionData[]
+  ingress?: PortableTextBlock[]
+  hideTitle?: boolean
+  items: ImageCarouselItem[]
   options: {
     autoplay: boolean
     delay: number

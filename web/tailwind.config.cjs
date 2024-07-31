@@ -83,6 +83,7 @@ module.exports = {
         'spruce-wood': {
           100: 'hsl(25, 100%, 92%)',
           90: colors['spruce-wood'][90],
+          70: 'hsl(26, 100%, 97%)',
         },
         'heritage-red': {
           100: 'hsl(343, 100%, 25%)',
@@ -177,7 +178,9 @@ module.exports = {
         'autumn-storm': {
           60: '#86A7AC',
           50: '#B5C7C9',
-          40: '#E3EDEA',
+          40: '#C2D4D6',
+          30: '#D3DFDE',
+          20: '#E3EDEA',
         },
       }),
       boxShadowColor: {

@@ -45,10 +45,10 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
         default:
           return `
           size-[44px]
-          ${useTimer ? `` : `border border-grey-50 dark:border-white-100`}
+          ${useTimer ? `` : `border border-autumn-storm-40 dark:border-white-100`}
           text-slate-80
           focus:outline-none
-          hover:bg-grey-50
+          hover:bg-autumn-storm-60
           hover:text-white-100
           focus-visible:outline-slate-blue-95
           dark:hover:bg-white-transparent
@@ -72,7 +72,8 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type="button"
         className={envisTwMerge(
-          `relative
+          `group/mediabutton
+          relative
           flex 
           justify-center
           rounded-full
@@ -91,7 +92,8 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
             duration={5}
             paused={paused ?? mode === 'pause'}
             variant="determinate"
-            className="text-grey-50 absolute inset-0 size-[44px]"
+            className="absolute inset-0 size-[44px]"
+            trackClassName="group-hover/mediabutton:stroke-autumn-storm-60"
           />
         )}
         <div

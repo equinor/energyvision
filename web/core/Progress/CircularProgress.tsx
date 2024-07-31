@@ -1,5 +1,6 @@
-import { forwardRef, SVGProps, Ref, useEffect, useState, CSSProperties, useRef } from 'react'
+import { forwardRef, SVGProps, useEffect, useState, CSSProperties } from 'react'
 import envisTwMerge from '../../twMerge'
+import { useIntl } from 'react-intl'
 
 export type CircularProgressProps = {
   /**  Use indeterminate when there is no progress value */
@@ -11,9 +12,9 @@ export type CircularProgressProps = {
   value?: number
   /** duration for countdown. Will count down by seconds. */
   duration?: number
-  /* To provide more meaningful translation of what is in progress, percent is added after "...80%" */
-  progressTitle?: string
   paused?: boolean
+  trackClassName?: string
+  progressClassName?: string
 } & SVGProps<SVGSVGElement>
 
 const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(function CircularProgress(
@@ -23,12 +24,14 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
     duration = 5,
     type = 'timer',
     paused,
-    progressTitle = 'Loading',
     className = '',
+    trackClassName = '',
+    progressClassName = '',
     ...rest
   },
   ref,
 ) {
+  const intl = useIntl()
   const thickness = 2.5
   const progress = value ? Math.round(value) : 0
   const props = {
@@ -39,7 +42,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
   const [srProgress, setSrProgress] = useState(type === 'timer' ? duration : 0)
   const circumference = 2 * Math.PI * ((48 - thickness) / 2)
 
-  if (variant === 'determinate') {
+  if (variant === 'determinate' && type === 'progress') {
     if (type === 'progress') {
       props['aria-valuenow'] = progress
 
@@ -60,17 +63,15 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
 
   useEffect(() => {
     if (variant === 'determinate' && type === 'timer' && paused) {
-      console.log('reset internal duration becasue pausing')
       setInternalDuration(duration)
     }
   }, [duration, paused, type, variant])
 
   useEffect(() => {
-    console.log('use efffect paused', paused)
-    console.log('use efffect internalDuration', internalDuration)
     if (variant === 'determinate' && type === 'timer' && internalDuration && internalDuration > 0 && !paused) {
       const id = setInterval(() => {
-        console.log('set interval, and reduce internal duration in 1sec', internalDuration)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         setInternalDuration((prev) => prev - 1)
       }, 1000)
       return () => clearInterval(id)
@@ -91,7 +92,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
   }, [progress, variant])
 
   const getProgressFormatted = () => {
-    return `Loading ${srProgress}%`
+    return `${intl.formatMessage({ id: 'loading', defaultMessage: 'Loading' })} ${srProgress}%`
   }
 
   const trackStyle: CSSProperties = {
@@ -116,7 +117,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
       <svg
         {...props}
         viewBox="24 24 48 48"
-        role="progressbar"
+        role={type === 'timer' ? 'timer' : 'progressbar'}
         height={48}
         width={48}
         preserveAspectRatio="xMidYMid meet"
@@ -131,7 +132,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           fill="none"
           strokeWidth={thickness}
           stroke="currentColor"
-          opacity={0.25}
+          className={envisTwMerge('stroke-autumn-storm-40', trackClassName)}
         />
         {/* Progress */}
         <circle
@@ -143,11 +144,11 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           strokeLinecap="round"
           strokeWidth={thickness}
           strokeDasharray={variant === 'determinate' ? circumference : 48}
-          stroke="currentColor"
+          className={envisTwMerge('stroke-autumn-storm-60', progressClassName)}
           opacity={paused ? 0 : 1}
         />
       </svg>
-      {variant === 'determinate' && <span className="sr-only">{getProgressFormatted()}</span>}
+      {variant === 'determinate' && type === 'progress' && <span className="sr-only">{getProgressFormatted()}</span>}
     </>
   )
 })

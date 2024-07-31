@@ -1,10 +1,9 @@
-import { Heading } from '@core/Typography'
+import { Heading, Paragraph } from '@core/Typography'
 import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselData } from '../../types/types'
 import { BackgroundContainer } from '@components'
-import { useId } from '@equinor/eds-utils'
 import { Carousel } from '@core/Carousel/Carousel'
-import { forwardRef } from 'react'
+import { forwardRef, useId } from 'react'
 
 type VideoPlayerCarouselProps = {
   data: VideoPlayerCarouselData
@@ -16,13 +15,23 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   { anchor, data, className },
   ref,
 ) {
-  const { title, items, designOptions } = data
+  const { title, ingress, items, designOptions } = data
   const { background, aspectRatio } = designOptions
-  const headingId = useId('video-carousel-heading')
+  const headingId = useId()
 
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
-      {title && <Heading id={headingId} value={title} className="pb-2" />}
+      <div className="w-full flex flex-col px-layout-sm pb-8">
+        {title && (
+          <Heading
+            id={headingId}
+            as="h2"
+            value={title}
+            className={`${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
+          />
+        )}
+        {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
+      </div>
       <Carousel
         ref={ref}
         items={items.map((item) => {
@@ -31,9 +40,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
             aspectRatio: aspectRatio,
           }
         })}
-        displayMode="single"
         variant="video"
-        layout="full"
         labelledbyId={headingId}
         autoRotation={false}
       />

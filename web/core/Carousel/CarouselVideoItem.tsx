@@ -26,23 +26,21 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
   },
   ref,
 ) {
-  {
-    /**         ${!active && displayMode === 'single' ? 'opacity-60' : ''} */
-  }
   return (
     <li
       {...rest}
       ref={ref}
       role="group"
+      aria-current={active}
+      aria-hidden={!active}
       aria-roledescription="slide"
       className={envisTwMerge(
         `
-        ${!active && displayMode === 'single' ? 'opacity-60' : ''}
         transform-all
         shrink-0
         relative
         ${aspectRatio === VideoPlayerRatios['9:16'] ? 'w-fit' : 'w-[80%]'}
-      ${displayMode === 'scroll' ? 'snap-start scroll-ml-6' : ''}
+      ${displayMode === 'scroll' ? 'snap-center scroll-ml-6' : ''}
         `,
         className,
       )}
