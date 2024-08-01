@@ -740,23 +740,23 @@ export type VideoPlayerData = {
   ingress?: PortableTextBlock[]
   action?: LinkData
 }
+export type VideoPlayerCarouselItem = {
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  hideVideoTitle?: boolean
+  aspectRatio?: VideoPlayerRatios
+}
 
 export type VideoPlayerCarouselData = {
   id: string
   type: string
-  items: {
-    id: string
-    title: PortableTextBlock[]
-    video: {
-      title: string
-      url: string
-      thumbnail: ImageWithAlt
-    }
-  }[]
+  items: VideoPlayerCarouselItem[]
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
   }
   title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
 }
 
 export type LoopingVideoRatio = '1:2' | 'narrow'
@@ -767,12 +767,17 @@ export type LoopingVideoData = {
   url: string
   ratio: LoopingVideoRatio
 }
+export type ImageCarouselItem = {
+  id: string
+} & ImageWithCaptionData
 
 export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
-  items: ImageWithCaptionData[]
+  ingress?: PortableTextBlock[]
+  hideTitle?: boolean
+  items: ImageCarouselItem[]
   options: {
     autoplay: boolean
     delay: number
