@@ -24,7 +24,6 @@ export const CarouselEventItem = forwardRef<HTMLLIElement, CarouselEventItemProp
       ref={ref}
       role="group"
       aria-current={active}
-      aria-hidden={!active}
       aria-roledescription="slide"
       className={envisTwMerge(
         `transform-all

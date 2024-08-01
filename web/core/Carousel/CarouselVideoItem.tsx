@@ -31,7 +31,6 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
       ref={ref}
       role="group"
       aria-current={active}
-      aria-hidden={!active}
       aria-roledescription="slide"
       className={envisTwMerge(
         `
