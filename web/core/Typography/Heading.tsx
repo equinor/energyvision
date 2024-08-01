@@ -148,7 +148,7 @@ export const Heading = ({
             div = []
             const WrapperTextTag = as ?? (`h2` as React.ElementType)
             const PortableTextTag = `span` as React.ElementType
-            console.log('set id on port')
+
             return (
               <WrapperTextTag
                 key={block._key}

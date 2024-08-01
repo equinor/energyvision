@@ -21,7 +21,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
 
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
-      <div className="w-full flex flex-col px-layout-sm pb-8">
+      <div className="w-full flex flex-col px-layout-lg pb-8">
         {title && (
           <Heading
             id={headingId}

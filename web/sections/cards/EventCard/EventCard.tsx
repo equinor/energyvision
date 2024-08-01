@@ -17,7 +17,7 @@ import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 export type EventCardProps = {
   data: EventCardData
   hasSectionTitle: boolean
-  variant?: 'default' | 'single'
+  variant?: 'default' | 'single' | 'carousel'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -57,6 +57,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         focus-visible:envis-outline
         dark:text-white-100
         dark:focus-visible:envis-outline-invert
+        ${variant === 'carousel' ? 'w-[383px]' : ''}
       `,
         className,
       )}

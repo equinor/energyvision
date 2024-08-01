@@ -167,10 +167,10 @@
   }
   @supports selector(::-webkit-scrollbar) {
     .transparent-scrollbar::-webkit-scrollbar {
-      @apply bg-white-100 dark:bg-transparent h-2;
+      @apply bg-white-100 dark:bg-transparent h-2 my-2;
     }
     .transparent-scrollbar::-webkit-scrollbar-track {
-      @apply py-[2px];
+      @apply my-[2px];
     }
     .transparent-scrollbar::-webkit-scrollbar-thumb {
       @apply bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;

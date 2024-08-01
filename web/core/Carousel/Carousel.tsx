@@ -1,4 +1,4 @@
-import { VideoPlayerCarouselItem, ImageCarouselItem } from '../../types/types'
+import { VideoPlayerCarouselItem, ImageCarouselItem, EventCardData } from '../../types/types'
 import { forwardRef, HTMLAttributes, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@core/MediaButton/MediaButton'
@@ -8,11 +8,12 @@ import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMot
 import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { CarouselEventItem } from './CarouselEventItem'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
-type CarouselItemTypes = VideoPlayerCarouselItem | ImageCarouselItem
-type Variants = 'video' | 'image'
+type CarouselItemTypes = VideoPlayerCarouselItem | ImageCarouselItem | EventCardData
+type Variants = 'video' | 'image' | 'event'
 
 type CarouselProps = {
   items: CarouselItemTypes[]
@@ -24,6 +25,7 @@ type CarouselProps = {
   className?: string
   listClassName?: string
   autoRotation?: boolean
+  hasSectionTitle?: boolean
   title?: PortableTextBlock[]
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
@@ -42,6 +44,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     title,
     className = '',
     listClassName = '',
+    hasSectionTitle = false,
   },
   ref,
 ) {
@@ -191,10 +194,57 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
         : 'flex gap-3 md:gap-8 lg:gap-12 w-full h-full overflow-y-hidden'
     }`,
+    event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden`,
   }
   const listDisplayModeClassName = {
     scroll: 'snap-mandatory snap-x overflow-x-scroll',
     single: ``,
+  }
+
+  const getCarouselItem = (item: CarouselItemTypes, i: number) => {
+    const ariaLabel = `${i + 1} of ${items?.length}`
+    switch (variant) {
+      case 'video':
+        return (
+          <CarouselVideoItem
+            key={item.id}
+            {...(item as VideoPlayerCarouselItem)}
+            displayMode={displayMode}
+            aria-label={ariaLabel}
+            active={i === currentIndex}
+          />
+        )
+      case 'image':
+        return (
+          <CarouselImageItem
+            key={item.id}
+            {...(item as ImageCarouselItem)}
+            displayMode={displayMode}
+            aria-label={ariaLabel}
+            active={i === currentIndex}
+            {...(variant === 'image' &&
+              displayMode === 'single' && {
+                style: {
+                  transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
+                },
+              })}
+            onFocus={() => {
+              cancelTimeout()
+            }}
+          />
+        )
+      case 'event':
+        return (
+          <CarouselEventItem
+            key={item.id}
+            event={item as EventCardData}
+            displayMode={displayMode}
+            aria-label={ariaLabel}
+            active={i === currentIndex}
+            hasSectionTitle={hasSectionTitle}
+          />
+        )
+    }
   }
 
   return (
@@ -285,6 +335,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           transition-all
           duration-300
           m-auto
+          ${variant === 'event' ? 'p-[2px]' : ''}
           ${listDisplayModeClassName[displayMode]}
           ${listVariantClassName[variant]}
         `,
@@ -299,43 +350,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         aria-live={pauseAutoRotation ? 'polite' : 'off'}
       >
         {items?.map((item, i) => {
-          const ariaLabel = `${i + 1} of ${items?.length}`
-          return variant === 'video' ? (
-            <CarouselVideoItem
-              key={item.id}
-              {...(item as VideoPlayerCarouselItem)}
-              displayMode={displayMode}
-              aria-label={ariaLabel}
-              active={i === currentIndex}
-            />
-          ) : (
-            <CarouselImageItem
-              key={item.id}
-              {...(item as ImageCarouselItem)}
-              displayMode={displayMode}
-              aria-label={ariaLabel}
-              active={i === currentIndex}
-              {...(variant === 'image' &&
-                displayMode === 'single' && {
-                  style: {
-                    transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
-                  },
-                })}
-              onFocus={() => {
-                cancelTimeout()
-              }}
-            />
-          )
+          return getCarouselItem(item, i)
         })}
       </ul>
-      {/*       <div
-        aria-live={variant === 'video' ? 'off' : 'polite'}
-        hidden={variant === 'video'}
-        aria-atomic="true"
-        className="sr-only"
-      >
-        <span className="sr-only">{`${currentIndex + 1} of ${items?.length}`}</span>
-      </div> */}
     </section>
   )
 })

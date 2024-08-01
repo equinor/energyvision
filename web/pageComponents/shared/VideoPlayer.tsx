@@ -12,7 +12,7 @@ import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
-import { Heading, Paragraph, Typography } from '@core/Typography'
+import { Heading } from '@core/Typography'
 import CallToActions from '@sections/CallToActions'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from './portableText/Blocks'
@@ -106,7 +106,9 @@ export const VideoComponentWithCaption = ({
         useFillMode={useFillMode}
         {...videoControls}
       />
-      <figcaption className={twMerge('text-md py-2', captionClassName)}>{title && <Blocks value={title} />}</figcaption>
+      <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''}`, captionClassName)}>
+        {title && <Blocks value={title} />}
+      </figcaption>
     </figure>
   )
 }
