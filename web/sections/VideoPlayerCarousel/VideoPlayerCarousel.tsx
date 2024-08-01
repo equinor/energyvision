@@ -21,7 +21,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
 
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
-      <div className="w-full flex flex-col px-layout-lg pb-8">
+      <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
         {title && (
           <Heading
             id={headingId}
@@ -40,8 +40,9 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
             aspectRatio: aspectRatio,
           }
         })}
+        hasSectionTitle={!!title}
         variant="video"
-        labelledbyId={headingId}
+        labelledbyId={title ? headingId : undefined}
         autoRotation={false}
       />
     </BackgroundContainer>

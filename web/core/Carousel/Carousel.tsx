@@ -1,5 +1,15 @@
 import { VideoPlayerCarouselItem, ImageCarouselItem, EventCardData } from '../../types/types'
-import { forwardRef, HTMLAttributes, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import {
+  ElementType,
+  forwardRef,
+  HTMLAttributes,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@core/MediaButton/MediaButton'
 import { CarouselVideoItem } from './CarouselVideoItem'
@@ -48,6 +58,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   },
   ref,
 ) {
+  const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
   //TODO translations
   const carouselItemsId = useId()
   const controlsId = useId()
@@ -248,8 +259,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
 
   return (
-    <section
+    <CarouselTag
       ref={ref}
+      {...(hasSectionTitle && {
+        role: 'region',
+      })}
       {...(labelledbyId && {
         'aria-labelledby': labelledbyId,
       })}
@@ -259,7 +273,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         })}
       aria-roledescription="carousel"
       className={envisTwMerge(
-        `relative
+        `w-full
+        relative
+        mx-auto
         ${
           variant === 'image' && displayMode === 'single'
             ? 'overflow-hidden grid grid-flow-row'
@@ -353,6 +369,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           return getCarouselItem(item, i)
         })}
       </ul>
-    </section>
+    </CarouselTag>
   )
 })

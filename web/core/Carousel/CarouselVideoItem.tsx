@@ -25,11 +25,15 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
   },
   ref,
 ) {
+  const aspectRatioUtilityClass = {
+    '16:9': 'aspect-video',
+    '9:16': 'aspect-9/16',
+    '1:1': 'aspect-square',
+  }
   return (
     <li
       {...rest}
       ref={ref}
-      role="group"
       aria-current={active}
       aria-roledescription="slide"
       className={envisTwMerge(
@@ -37,6 +41,7 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
         transform-all
         shrink-0
         relative
+        ${aspectRatioUtilityClass[aspectRatio]}
         ${aspectRatio === VideoPlayerRatios['9:16'] ? 'w-fit' : 'w-[80%]'}
       ${displayMode === 'scroll' ? 'snap-center scroll-ml-6' : ''}
         `,

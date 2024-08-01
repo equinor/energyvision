@@ -278,12 +278,12 @@ module.exports = {
       },
       boxShadow: {
         card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px',
-        //card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px, rgba(0, 0, 0, 0.20) 0px 1px 2px',
         'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
       },
       aspectRatio: {
         '4/5': '0.8',
         '5/4': '1.25',
+        '9/16': '0.56',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',

@@ -67,6 +67,7 @@ const MultipleEventCards = ({
               {...(hasSectionTitle && {
                 labelledbyId: labelledbyId,
               })}
+              className="lg:px-0 max-w-viewport"
               hasSectionTitle={hasSectionTitle}
             />
           )}

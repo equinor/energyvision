@@ -88,8 +88,7 @@ export const VideoComponentWithCaption = ({
   return (
     <figure
       className={twMerge(
-        `
-        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
+        `${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
         [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
         `,
         className,
