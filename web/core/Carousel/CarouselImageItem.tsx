@@ -22,7 +22,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     <li
       {...rest}
       ref={ref}
-      role="group"
       aria-current={active}
       aria-hidden={!active}
       aria-roledescription="slide"

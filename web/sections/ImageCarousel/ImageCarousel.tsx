@@ -21,7 +21,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
 
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
-      <div className="w-full flex flex-col px-layout-lg pb-8">
+      <div className="w-full flex flex-col px-layout-lg max-w-viewport mx-auto pb-8">
         {title && !hideTitle && (
           <Heading
             as="h2"
@@ -38,7 +38,8 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
         displayMode="single"
         variant="image"
         layout="full"
-        labelledbyId={headingId}
+        hasSectionTitle={!!title}
+        labelledbyId={title ? headingId : undefined}
         title={title}
         autoRotation={options?.autoplay}
       />
