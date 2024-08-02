@@ -14,6 +14,7 @@ import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
+import { cookiePolicyQuery } from './cookiePolicy'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -220,7 +221,7 @@ _type == "keyNumbers" =>{
       ${linkSelectorFields},
     },
     url,
-    "cookiePolicy": coalesce(cookiePolicy, 'none'),
+    ${cookiePolicyQuery},
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       ${background},

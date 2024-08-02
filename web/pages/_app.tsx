@@ -102,7 +102,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
     disableDynatrace()
   }
 
-  useConsentState('statistics', enableStatisticsCookies, disableStatisticsCookies)
+  useConsentState(['statistics'], enableStatisticsCookies, disableStatisticsCookies)
 
   const GoogleTagManagerHead = () => (
     // eslint-disable-next-line @next/next/next-script-for-ga
