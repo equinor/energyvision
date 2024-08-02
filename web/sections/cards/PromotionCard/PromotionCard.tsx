@@ -51,7 +51,9 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
         {ingress && (
           <Blocks
             value={ingress}
-            className={` max-w-prose grow ${type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'}`}
+            className={`break-word max-w-prose grow ${
+              type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
+            }`}
             {...(!(variant === 'single' && !isMobile) && { clampLines: isMobile ? 3 : 5 })}
             marks={{
               em: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
