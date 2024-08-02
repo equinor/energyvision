@@ -174,68 +174,69 @@
     }
     .transparent-scrollbar::-webkit-scrollbar-thumb {
       @apply bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
-      .modal-enter {
-        opacity: 0;
-        z-index: 11;
-        > div {
-          > div {
-            opacity: 0;
-            clip-path: inset(10% round 0.5rem);
-            transform: translateY(40vh);
-          }
-        }
-      }
     }
   }
-  .modal-enter-done {
-    opacity: 1;
-    z-index: 11;
-    --transition-duration: 0.4s;
-    --transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
-    transition: z-index 0s linear var(--transition-duration),
-      opacity calc(var(--transition-duration) * 2 / 3) var(--transition-easing) calc(var(--transition-duration) / 3);
-    > div {
-      > div {
-        clip-path: inset(0 round 0.5rem);
-        transform: none;
-        opacity: 1;
-        transition: opacity calc(var(--transition-duration) / 2) var(--transition-easing)
-            calc(var(--transition-duration) / 2),
-          transform var(--transition-duration) var(--transition-easing),
-          clip-path var(--transition-duration) var(--transition-easing);
-      }
-    }
-  }
-
-  .modal-exit-active {
-    opacity: 1;
-    z-index: 11;
-    > div {
-      > div {
-        clip-path: inset(0 round 0.5rem);
-        transform: none;
-        opacity: 1;
-      }
-    }
-  }
-  .modal-exit {
+  .modal-enter {
     opacity: 0;
-    z-index: -1;
-    --transition-duration: 0.4s;
-    --transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
-
-    transition: z-index 0s linear var(--transition-duration),
-      opacity calc(var(--transition-duration) * 2 / 3) var(--transition-easing) calc(var(--transition-duration) / 3);
+    z-index: 11;
     > div {
       > div {
         opacity: 0;
         clip-path: inset(10% round 0.5rem);
         transform: translateY(40vh);
-        transition: opacity calc(var(--transition-duration) / 2) var(--transition-easing)
-            calc(var(--transition-duration) / 2),
-          transform var(--transition-duration) var(--transition-easing),
-          clip-path var(--transition-duration) var(--transition-easing);
       }
+    }
+  }
+}
+
+.modal-enter-done {
+  opacity: 1;
+  z-index: 11;
+  --transition-duration: 0.4s;
+  --transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+  transition: z-index 0s linear var(--transition-duration),
+    opacity calc(var(--transition-duration) * 2 / 3) var(--transition-easing) calc(var(--transition-duration) / 3);
+  > div {
+    > div {
+      clip-path: inset(0 round 0.5rem);
+      transform: none;
+      opacity: 1;
+      transition: opacity calc(var(--transition-duration) / 2) var(--transition-easing)
+          calc(var(--transition-duration) / 2),
+        transform var(--transition-duration) var(--transition-easing),
+        clip-path var(--transition-duration) var(--transition-easing);
+    }
+  }
+}
+
+.modal-exit-active {
+  opacity: 1;
+  z-index: 11;
+  > div {
+    > div {
+      clip-path: inset(0 round 0.5rem);
+      transform: none;
+      opacity: 1;
+    }
+  }
+}
+.modal-exit {
+  opacity: 0;
+  z-index: -1;
+  --transition-duration: 0.4s;
+  --transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+  transition: z-index 0s linear var(--transition-duration),
+    opacity calc(var(--transition-duration) * 2 / 3) var(--transition-easing) calc(var(--transition-duration) / 3);
+  > div {
+    > div {
+      opacity: 0;
+      clip-path: inset(10% round 0.5rem);
+      transform: translateY(40vh);
+      transition: opacity calc(var(--transition-duration) / 2) var(--transition-easing)
+          calc(var(--transition-duration) / 2),
+        transform var(--transition-duration) var(--transition-easing),
+        clip-path var(--transition-duration) var(--transition-easing);
     }
   }
 }
