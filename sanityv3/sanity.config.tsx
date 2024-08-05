@@ -1,6 +1,5 @@
 import { visionTool } from '@sanity/vision'
 import { media } from 'sanity-plugin-media'
-
 import {
   ConfigContext,
   createAuthStore,
@@ -12,7 +11,6 @@ import {
 } from 'sanity'
 
 import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentBadgeComponent } from 'sanity'
-import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
@@ -32,6 +30,11 @@ import { getMetaTitleSuffix } from '../satellitesConfig'
 import { defaultLanguage } from './languages'
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { LangBadge } from './schemas/components/LangBadge'
+import './customStyles.css'
+import { partialStudioTheme } from './studioTheme'
+import { buildLegacyTheme } from 'sanity'
+
+export const customTheme = buildLegacyTheme(partialStudioTheme)
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -70,6 +73,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
   basePath: '/' + datasetParam,
   projectId: projectIdParam,
   dataset: datasetParam,
+  theme: customTheme,
   form: {
     components: {
       input: handleInputComponents,
@@ -86,7 +90,6 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
-    scheduledPublishing(),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),
