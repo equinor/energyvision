@@ -10,7 +10,14 @@ import {
   Template,
 } from 'sanity'
 
-import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentBadgeComponent } from 'sanity'
+import type {
+  InputProps,
+  ArrayOfObjectsInputProps,
+  SchemaType,
+  ArraySchemaType,
+  DocumentBadgeComponent,
+  DocumentFieldAction,
+} from 'sanity'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
@@ -33,6 +40,7 @@ import { LangBadge } from './schemas/components/LangBadge'
 import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { buildLegacyTheme } from 'sanity'
+import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -129,6 +137,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     },
     badges: (prev: DocumentBadgeComponent[], context: any) => {
       return i18n.schemaTypes.includes(context.schemaType) ? [LangBadge, ...prev] : prev
+    },
+    unstable_fieldActions: (previous: DocumentFieldAction[]) => {
+      return previous.map((it) => (it.name === 'copyField' ? copyAction : it))
     },
   },
   auth: createAuthStore({
