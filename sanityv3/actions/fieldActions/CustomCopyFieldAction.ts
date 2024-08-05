@@ -29,6 +29,12 @@ export const copyAction = defineDocumentFieldAction({
           description: 'Cannot copy document. Use duplicate instead.',
         })
         return
+      } else if (path[0] === 'lang') {
+        toast.push({
+          title: 'Cannot copy language',
+          description: 'Copying language is not allowed.',
+        })
+        return
       }
       const value = getFormValue([]) as FormDocumentValue
       onCopy(path, value, {
