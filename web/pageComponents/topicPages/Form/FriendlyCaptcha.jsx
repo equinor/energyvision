@@ -11,7 +11,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
         startMode: 'focus',
         doneCallback: doneCallback,
         errorCallback: errorCallback,
-        puzzleEndpoint: 'https://eu-api.friendlycaptcha.eu/api/v1/puzzle',
+        puzzleEndpoint: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT,
       })
     }
   }, [container, doneCallback, errorCallback])
