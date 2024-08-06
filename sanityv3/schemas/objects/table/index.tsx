@@ -168,8 +168,7 @@ export default {
                 } else if (cellContent._type === 'downloadableFile') {
                   return cellContent.filename
                 } else if (cellContent._type === 'richText') {
-                  const cellString = blocksToText(cellContent.text) || ''
-                  return cellString.length > 15 ? cellString.slice(0, 15) + '...' : cellString
+                  return blocksToText(cellContent.text) || ''
                 } else if (cellContent._type === 'dateField') {
                   return cellContent.date
                 }
