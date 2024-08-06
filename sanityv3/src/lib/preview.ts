@@ -4,7 +4,7 @@ import { defaultLanguage } from '../../languages'
 import type { SanityDocument as DefaultSanityDocument } from 'sanity'
 
 type SanityDocument = {
-  _lang?: string | undefined
+  lang?: string | undefined
   slug?: {
     current?: string
   }
@@ -44,7 +44,7 @@ export const resolvePreviewUrl = (document: SanityDocument): string | false => {
   }
 
   const previewUrl = new URL(getBaseUrl(dataset))
-  const locale = getLocaleFromName(document?._lang) || defaultLanguage.locale
+  const locale = getLocaleFromName(document?.lang) || defaultLanguage.locale
 
   previewUrl.pathname = '/api/preview'
   previewUrl.searchParams.append('type', document._type)

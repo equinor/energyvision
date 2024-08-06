@@ -10,7 +10,7 @@ export type Span2And1Props = {
 
 const Span2And1 = forwardRef<HTMLDivElement, Span2And1Props>(function Span2And1({ data, className = '' }, ref) {
   const { singleColumn, span2, alignSpan2Right = false } = data
-  const minHeight = 'min-h-[350px]'
+  const minHeight = 'min-h-[350px] lg:min-h-[600px]'
   const commonStyling = `${minHeight}`
   const borderStyling = `border border-moss-green-60`
   const isMobile = useMediaQuery(`(max-width: 800px)`)

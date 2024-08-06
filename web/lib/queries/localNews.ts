@@ -1,19 +1,19 @@
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
-import { publishDateTimeQuery } from './common/publishDateTime'
+import { publishDateTimeQuery, lastUpdatedTimeQuery } from './common/publishDateTime'
 import { fixPreviewForDrafts } from './common/langAndDrafts'
 
 const localNewsFields = /* groq */ `
   "id": _id,
-  "updatedAt": _updatedAt,
+  "updatedAt":  ${lastUpdatedTimeQuery},
   title,
   heroImage,
-  ${slugsForNewsAndMagazine('localNews')},
+  ${slugsForNewsAndMagazine},
   ${ingressForNewsQuery},
   "publishDateTime": ${publishDateTimeQuery},
   "iframe": ${iframeForNewsQuery},
@@ -33,5 +33,5 @@ export const localNewsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${localNewsFields}
-  }
+  }${querySuffixForNewsAndMagazine}
 `

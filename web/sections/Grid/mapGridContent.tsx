@@ -11,7 +11,7 @@ export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
   switch (data.type) {
     case 'gridTextBlock':
-      return <GridTextBlock key={data.id} data={data as any} />
+      return <GridTextBlock key={data.id} data={data as any} rowType={rowType} />
     case 'gridTeaser':
       return <GridTeaser key={data.id} data={data as any} rowType={rowType} />
     case 'figure':
@@ -23,8 +23,7 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile
         <VideoJsComponent
           key={data.id}
           {...(data as VideoPlayerData)}
-          className="h-full sm:w-full"
-          {...(!isMobile && { useFillMode: true })}
+          className={`${isMobile ? '' : 'h-full sm:w-full'}`}
         />
       )
     }

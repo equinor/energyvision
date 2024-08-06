@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react'
 import { WidgetInstance } from 'friendly-challenge'
 
 const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
+  const sitekey = process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY
+  const puzzleEndpoint = process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT
   const container = useRef()
   const widget = useRef()
   useEffect(() => {
@@ -10,12 +12,12 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
         startMode: 'focus',
         doneCallback: doneCallback,
         errorCallback: errorCallback,
-        puzzleEndpoint: 'https://eu-api.friendlycaptcha.eu/api/v1/puzzle',
+        puzzleEndpoint: puzzleEndpoint,
       })
     }
-  }, [container, doneCallback, errorCallback])
+  }, [container, doneCallback, errorCallback, puzzleEndpoint])
 
-  return <div ref={container} className="frc-captcha" data-sitekey="FCMLCFU23ASH8D84" />
+  return <div ref={container} className="frc-captcha" data-sitekey={sitekey} />
 }
 
 export default FriendlyCaptcha
