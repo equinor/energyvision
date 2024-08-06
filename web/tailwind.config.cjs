@@ -460,6 +460,9 @@ module.exports = {
             'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
           },
+          '.break-word': {
+            wordBreak: 'break-word',
+          },
         })
     }),
   ],
