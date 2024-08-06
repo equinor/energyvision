@@ -8,6 +8,8 @@ import type {
   HeroType,
   ImageWithCaptionData,
   BackgroundColours,
+  CardData,
+  LinkData,
 } from './types'
 import { PortableTextBlock } from '@portabletext/types'
 
@@ -24,10 +26,24 @@ export type AlgoliaIndexPageType = {
   }
 }
 
+export type Tag = {
+  id?: string
+  key?: string
+  title?: string
+}
+
 export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
+  newsList?: CardData[]
+  newsTopicTagList?: Tag[]
+  newsCountryTagList?: Tag[]
+  subscriptionHeading?: string
+  subscriptionLink?: LinkData
+  subscriptionLinkTitle?: string
+  localNewsPagesHeading?: string
+  localNewsPages?: LinkData[]
 }
 
 export type MagazineIndexPageType = {

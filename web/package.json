@@ -15,7 +15,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "preinstall": "npx only-allow pnpm",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "update:searchindex": "ts-node --project tsconfig.json ./scripts/create-index"
   },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",
@@ -39,6 +40,7 @@
     "@sanity/client": "^5.4.2",
     "@sanity/image-url": "^1.0.2",
     "@sanity/webhook": "^2.0.0",
+    "@tanstack/react-virtual": "^3.8.4",
     "@types/easy-soap-request": "^4.1.1",
     "@types/uuid": "^8.3.4",
     "@types/xml2js": "^0.4.11",
