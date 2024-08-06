@@ -46,12 +46,6 @@ inputs:
   deployToBothClusters:
     description: 'Deploy app to both Radix clusters'
     required: false
-  friendlyCaptchaSitekey:
-    description: 'Friendly captcha site key'
-    required: true
-  friendlyCaptchaPuzzleEndpoint:
-    description: 'Friendly captcha puzzle endpoint'
-    required: true
 runs:
   using: 'composite'
   steps:
@@ -110,8 +104,6 @@ runs:
           --build-arg ARG_DYNATRACE_IMAGE=${{ inputs.dynatraceImage || 'node:18-alpine' }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --build-arg ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }} \
-          --build-arg ARG_FRIENDLY_CAPTCHA_SITEKEY=${{ inputs.friendlyCaptchaSitekey}} \
-          --build-arg ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${{ inputs.friendlyCaptchaPuzzleEndpoint}}
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
