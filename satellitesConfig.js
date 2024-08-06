@@ -199,7 +199,7 @@ export const getMetaTitleSuffix = (dataset) => {
  */
 export const getFriendlyCaptchaConstants = (dataset) => {
   return {
-    sitekey: websiteDomains[dataset]?.sitekey,
-    puzzleEndpoint: websiteDomains[dataset]?.puzzleEndpoint,
+    sitekey: websiteDomains[dataset]?.fc_sitekey,
+    puzzleEndpoint: websiteDomains[dataset]?.fc_puzzle_endpoint,
   }
 }
