@@ -88,6 +88,8 @@ jobs:
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          friendlyCaptchaSitekey: ${{ vars.FC_SITEKEY}}
+          friendlyCaptchaPuzzleEndpoint: ${{ vars.FC_PUZZLE_END_POINT}}
           deployToBothClusters: true
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
