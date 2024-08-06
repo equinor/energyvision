@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { WidgetInstance } from 'friendly-challenge'
-import { friendlyCaptcha } from '../../../lib/config'
 
 const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
-  const puzzleEndpoint = friendlyCaptcha.puzzleEndpoint
+  const sitekey = process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY
+  const puzzleEndpoint = process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT
   const container = useRef()
   const widget = useRef()
   useEffect(() => {
@@ -18,7 +18,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
     }
   }, [container, doneCallback, errorCallback, puzzleEndpoint])
 
-  return <div ref={container} className="frc-captcha" data-sitekey={friendlyCaptcha.siteKey} />
+  return <div ref={container} className="frc-captcha" data-sitekey={sitekey} />
 }
 
 export default FriendlyCaptcha
