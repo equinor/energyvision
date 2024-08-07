@@ -89,6 +89,8 @@ jobs:
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           environment: ${{ secrets.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          friendlyCaptchaSitekey: ${{ vars.FC_SITEKEY}}
+          friendlyCaptchaPuzzleEndpoint: ${{ vars.FC_PUZZLE_END_POINT}}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
@@ -145,6 +147,8 @@ jobs:
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           environment: ${{ secrets.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          friendlyCaptchaSitekey: ${{ vars.FC_SITEKEY}}
+          friendlyCaptchaPuzzleEndpoint: ${{ vars.FC_PUZZLE_END_POINT}}
           deployToBothClusters: true
       - uses: act10ns/slack@v2
         with:
