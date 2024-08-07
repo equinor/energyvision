@@ -174,7 +174,7 @@ const CareerFairForm = () => {
                     <>
                       <span>
                         {intl.formatMessage({
-                          id: ' career_fair_form_phone',
+                          id: 'career_fair_form_phone',
                           defaultMessage: 'Phone Number',
                         })}
                       </span>
@@ -217,7 +217,7 @@ const CareerFairForm = () => {
                   {...props}
                   id={props.name}
                   label={intl.formatMessage({
-                    id: ' career_fair_form_email',
+                    id: 'career_fair_form_email',
                     defaultMessage: 'Email',
                   })}
                   inputRef={ref}
