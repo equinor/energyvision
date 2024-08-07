@@ -71,8 +71,6 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
-      global-development_FC_SITEKEY: ${{vars.GLOBAL_DEVELOPMENT_FC_SITEKEY}}
-      global-development_FC_PUZZLE_END_POINT: ${{vars.GLOBAL_DEVELOPMENT_FC_PUZZLE_END_POINT}}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -90,8 +88,8 @@ jobs:
           dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
           dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
-          friendlyCaptchaSitekey: ${{ env[matrix.dataset +'_FC_SITEKEY']}}
-          friendlyCaptchaPuzzleEndpoint: ${{ env[matrix.dataset + '_FC_PUZZLE_END_POINT']}}
+          friendlyCaptchaSitekey: ${{ vars[format({0}_FC_SITEKEY',matrix.dataset)]}}
+          friendlyCaptchaPuzzleEndpoint: ${{ vars[format('{0}_FC_PUZZLE_END_POINT',matrix.dataset)]}}
           deployToBothClusters: true
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
