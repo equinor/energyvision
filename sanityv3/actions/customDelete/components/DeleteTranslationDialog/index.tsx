@@ -1,7 +1,6 @@
 import { Card, Flex, Spinner, Stack, Text } from '@sanity/ui'
 import { useEffect, useMemo, useState } from 'react'
-import { SanityDocument } from 'sanity'
-import { useClient } from 'sanity'
+import { SanityDocument , useClient } from 'sanity'
 import { separateReferences } from './seperateReferences'
 import { apiVersion } from '../../../../sanity.client'
 import { defaultLanguage } from '../../../../languages'
