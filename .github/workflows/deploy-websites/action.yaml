@@ -111,7 +111,7 @@ runs:
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --build-arg ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }} \
           --build-arg ARG_FRIENDLY_CAPTCHA_SITEKEY=${{ inputs.friendlyCaptchaSitekey}} \
-          --build-arg ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${{ inputs.friendlyCaptchaPuzzleEndpoint}}
+          --build-arg ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${{ inputs.friendlyCaptchaPuzzleEndpoint}} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
