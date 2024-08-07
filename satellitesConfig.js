@@ -95,8 +95,6 @@ const websiteDomains = {
   global: {
     url: 'https://www.equinor.com',
     meta: 'Equinor',
-    fc_sitekey: 'FCMLCFU23ASH8D84',
-    fc_puzzle_endpoint: 'https://eu-api.friendlycaptcha.eu/api/v1/puzzle',
   },
   poland: {
     url: 'https://www.equinor.pl',
@@ -105,8 +103,6 @@ const websiteDomains = {
   brazil: {
     url: 'https://www.equinor.com.br',
     meta: 'equinor.com.br',
-    fc_sitekey: 'FCMLCFU238ACUELS',
-    fc_puzzle_endpoint: 'https://api.friendlycaptcha.com/api/v1/puzzle',
   },
   germany: {
     url: 'https://www.equinor.de',
@@ -147,14 +143,10 @@ const websiteDomains = {
   'global-development': {
     url: 'localhost:3000',
     meta: 'Equinor',
-    fc_sitekey: 'FCMLCFU23ASH8D84',
-    fc_puzzle_endpoint: 'https://eu-api.friendlycaptcha.eu/api/v1/puzzle',
   },
   'global-test': {
     url: 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com',
     meta: 'Equinor',
-    fc_sitekey: 'FCMLCFU23ASH8D84',
-    fc_puzzle_endpoint: 'https://eu-api.friendlycaptcha.eu/api/v1/puzzle',
   },
 }
 
@@ -192,14 +184,4 @@ export const getDomain = (dataset) => websiteDomains[dataset]?.url || 'Domain no
  */
 export const getMetaTitleSuffix = (dataset) => {
   return websiteDomains[dataset]?.meta || 'Equinor'
-}
-
-/**
- * @param {string} dataset
- */
-export const getFriendlyCaptchaConstants = (dataset) => {
-  return {
-    sitekey: websiteDomains[dataset]?.sitekey,
-    puzzleEndpoint: websiteDomains[dataset]?.puzzleEndpoint,
-  }
 }
