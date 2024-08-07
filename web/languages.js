@@ -1,10 +1,4 @@
-import {
-  defaultWebLanguage,
-  getDomain,
-  getFriendlyCaptchaConstants,
-  getLanguages,
-  getMetaTitleSuffix,
-} from '../satellitesConfig.js'
+import { defaultWebLanguage, getDomain, getLanguages, getMetaTitleSuffix } from '../satellitesConfig.js'
 
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 
@@ -15,5 +9,3 @@ export const defaultLanguage = languages.find((lang) => lang.id === defaultWebLa
 export const domain = getDomain(dataset)
 
 export const metaTitleSuffix = getMetaTitleSuffix(dataset)
-
-export const friendlycaptcha = getFriendlyCaptchaConstants(dataset)
