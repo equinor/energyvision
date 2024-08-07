@@ -8,7 +8,6 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
   const widget = useRef()
   useEffect(() => {
     if (!widget.current && container.current) {
-      console.log(puzzleEndpoint)
       widget.current = new WidgetInstance(container.current, {
         startMode: 'focus',
         doneCallback: doneCallback,
