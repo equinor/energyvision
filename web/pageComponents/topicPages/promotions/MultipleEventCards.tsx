@@ -29,17 +29,16 @@ const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: M
 
   return (
     <ul
-      className=" 
-      max-lg:w-full
-      grid 
-    gap-y-3
-    gap-x-4
-    grid-cols-1
-    justify-center
-    content-center
-    auto-rows-auto
-    md:grid-cols-3
-    md:grid-rows-1"
+      className={` 
+                max-lg:w-full
+                grid 
+                gap-y-3
+                gap-x-4
+                grid-cols-1
+                justify-center
+                content-center
+                auto-rows-auto
+                md:${data.length === 2 ? 'grid-cols-2 grid-rows-1' : 'grid-cols-3 grid-rows-1'}`}
     >
       {data.map((item) => {
         return (
