@@ -2,7 +2,8 @@ import type { Reference, Rule, ValidationContext } from 'sanity'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
-import { EventPromotionInput, EventPromotionPreview } from '../../components/EventPromotion'
+import { EventPromotionPreview } from '../../components/EventPromotion'
+import { EventPromotionInput } from '../../components/EventPromotion/EventPromotionInput'
 
 export type EventPromotion = {
   _key: string
