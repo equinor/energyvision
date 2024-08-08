@@ -12,7 +12,7 @@ const InlinePreview = ({ value }: { value: EventPromotion | undefined }) => {
   if (!value) return null
 
   const time = value?.promotePastEvents ? 'past' : 'upcoming'
-  const number = value?.pastEventsCount
+  const number = value?.promotePastEvents ? value?.pastEventsCount || '50 (max)' : ''
   const withTags = value?.useTags ? 'from selected tags' : ''
   const automaticPromotion = value?.promoteSingleUpcomingEvent
     ? 'Automatically promoting single upcoming event'
@@ -31,7 +31,7 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
   const useTags = getObjectMemberField(members, 'useTags')
   const promotePastEvents = getObjectMemberField(members, 'promotePastEvents')
   const pastEventsCount = getObjectMemberField(members, 'pastEventsCount')
-  const upcomingEventsCount = getObjectMemberField(members, 'upcomingEventsCount') 
+  const upcomingEventsCount = getObjectMemberField(members, 'upcomingEventsCount')
   const selectedTags = getObjectMemberField(members, 'tags')
   const promotedEvents = getObjectMemberField(members, 'promotedEvents')
 
@@ -86,7 +86,7 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
 
       {!value?.manuallySelectEvents && (
         <>
-          <Grid columns={3} gap={3}>
+          <Grid columns={2} gap={3}>
             <MemberField
               member={useTags}
               renderInput={renderInput}
@@ -101,39 +101,37 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
               renderItem={renderItem}
               renderPreview={renderPreview}
             />
-            {value?.promotePastEvents && (
-              <MemberField
-                member={pastEventsCount}
-                renderInput={renderInput}
-                renderField={renderField}
-                renderItem={renderItem}
-                renderPreview={renderPreview}
-              />
-            )}
           </Grid>
-          <Grid columns={2} gap={3}>
-            <Card padding={2} radius={2} shadow={1}>
-              <MemberField
-                member={upcomingEventsCount}
-                renderInput={renderInput}
-                renderField={renderField}
-                renderItem={renderItem}
-                renderPreview={renderPreview}
+          {value?.promotePastEvents && (
+            <MemberField
+              member={pastEventsCount}
+              renderInput={renderInput}
+              renderField={renderField}
+              renderItem={renderItem}
+              renderPreview={renderPreview}
+            />
+          )}
+          {!value?.promotePastEvents && (
+            <MemberField
+              member={upcomingEventsCount}
+              renderInput={renderInput}
+              renderField={renderField}
+              renderItem={renderItem}
+              renderPreview={renderPreview}
+            />
+          )}
+          <Card padding={2} radius={2} shadow={1}>
+            <Inline space={2}>
+              <Switch
+                id="selectSingleUpcomingPromotion"
+                checked={value?.promoteSingleUpcomingEvent}
+                onChange={() => onChange(set(!value?.promoteSingleUpcomingEvent, ['promoteSingleUpcomingEvent']))}
               />
-            </Card>
-            <Card padding={2} radius={2} shadow={1}>
-              <Inline space={2}>
-                <Switch
-                  id="selectSingleUpcomingPromotion"
-                  checked={value?.promoteSingleUpcomingEvent}
-                  onChange={() => onChange(set(!value?.promoteSingleUpcomingEvent, ['promoteSingleUpcomingEvent']))}
-                />
-                <Text as="label" htmlFor="selectSingleUpcomingPromotion">
-                  Promote single upcoming event
-                </Text>
-              </Inline>
-            </Card>
-          </Grid>
+              <Text as="label" htmlFor="selectSingleUpcomingPromotion">
+                Promote single upcoming event
+              </Text>
+            </Inline>
+          </Card>
 
           {value?.useTags && (
             <MemberField
