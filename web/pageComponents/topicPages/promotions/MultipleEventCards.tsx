@@ -42,9 +42,9 @@ const MultipleEventCards = ({
       {eventPromotionSettings?.promotePastEvents && <PastEvents events={data} hasSectionTitle={hasSectionTitle} />}
       {!eventPromotionSettings?.promotePastEvents && (
         <>
-          {data?.length <= 4 || isMobile ? (
+          {data?.length <= 3 || isMobile ? (
             <ul
-              className=" 
+              className={` 
                 max-lg:w-full
                 grid 
                 gap-y-3
@@ -53,8 +53,7 @@ const MultipleEventCards = ({
                 justify-center
                 content-center
                 auto-rows-auto
-                md:grid-cols-3
-                md:grid-rows-1"
+                md:${data.length === 2 ? 'grid-cols-2 grid-rows-1' : 'grid-cols-3 grid-rows-1'}`}
             >
               {data.map((item) => {
                 return (
