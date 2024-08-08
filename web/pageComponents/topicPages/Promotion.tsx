@@ -6,6 +6,7 @@ import type { PromotionData } from '../../types/types'
 import { twMerge } from 'tailwind-merge'
 import { ButtonLink } from '@core/Link'
 import { Heading } from '@core/Typography'
+import { useId } from 'react'
 
 const Promotion = ({
   data,
@@ -22,13 +23,17 @@ const Promotion = ({
   const promotions = content?.promotions || []
   const variant = data.content?.type
   const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
+  const sectionTitleId = useId()
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
       <div
         className={twMerge(
           `pb-page-content px-4 ${
-            (variant === 'promoteEvents' && (promoteSingleUpcomingEvent || promotions?.length === 1)) ||
+            (variant === 'promoteEvents' &&
+              (promoteSingleUpcomingEvent ||
+                promotions?.length === 1 ||
+                data?.content?.eventPromotionSettings?.promotePastEvents)) ||
             (variant === 'promotePeople' && promotions?.length === 1)
               ? 'lg:px-layout-lg'
               : 'lg:px-layout-sm'
@@ -37,7 +42,9 @@ const Promotion = ({
         )}
         {...rest}
       >
-        {title && <Heading value={title} as="h2" variant="xl" className="w-fit mb-10 text-center" />}
+        {title && (
+          <Heading id={sectionTitleId} value={title} as="h2" variant="xl" className="w-fit mb-10 text-center" />
+        )}
         {ingress && (
           <div className="mb-24">
             <IngressText value={ingress} />
@@ -52,6 +59,7 @@ const Promotion = ({
             hasSectionTitle={!!title}
             eventPromotionSettings={content?.eventPromotionSettings}
             useHorizontalScroll={useHorizontalScroll}
+            labelledbyId={sectionTitleId}
           />
         )}
         {viewAllLink?.link?.slug && (

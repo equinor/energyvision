@@ -17,7 +17,7 @@ import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 export type EventCardProps = {
   data: EventCardData
   hasSectionTitle: boolean
-  variant?: 'default' | 'single'
+  variant?: 'default' | 'single' | 'carousel'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -57,6 +57,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         focus-visible:envis-outline
         dark:text-white-100
         dark:focus-visible:envis-outline-invert
+        ${variant === 'carousel' ? 'w-[383px]' : ''}
       `,
         className,
       )}
@@ -101,7 +102,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
       <div className="mt-4 lg:mt-8 flex gap-6">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
-        <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${title}`}>
+        <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${plainTitle}`}>
           {details}
         </ButtonLink>
       </div>

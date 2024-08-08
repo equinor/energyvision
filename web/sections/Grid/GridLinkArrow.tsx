@@ -5,6 +5,7 @@ import { BaseLink } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
 import { LinkData } from '../../types/types'
+import { forwardRef } from 'react'
 
 type GridLinkArrowProps = {
   action?: LinkData
@@ -12,7 +13,10 @@ type GridLinkArrowProps = {
   bgColor?: string
 }
 
-const GridLinkArrow = ({ action, className = '', bgColor }: GridLinkArrowProps) => {
+const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function GridLinkArrow(
+  { action, className = '', bgColor },
+  ref,
+) {
   const url = action && getUrlFromAction(action)
 
   const variantClassName = () => {
@@ -37,6 +41,7 @@ const GridLinkArrow = ({ action, className = '', bgColor }: GridLinkArrowProps) 
     <>
       {action && url && (
         <div
+          ref={ref}
           className={twMerge(
             `absolute bottom-0 right-0 focus-visible:-translate-y-[5px] focus-visible:-translate-x-[5px] pt-4 3xl:pt-12 w-full flex justify-end`,
             className,
@@ -64,6 +69,6 @@ const GridLinkArrow = ({ action, className = '', bgColor }: GridLinkArrowProps) 
       )}
     </>
   )
-}
+})
 
 export default GridLinkArrow
