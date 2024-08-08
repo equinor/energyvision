@@ -89,8 +89,9 @@ jobs:
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           environment: ${{ secrets.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
-          friendlyCaptchaSitekey: ${{ vars.FC_SITEKEY}}
-          friendlyCaptchaPuzzleEndpoint: ${{ vars.FC_PUZZLE_END_POINT}}
+          friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
+          friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
