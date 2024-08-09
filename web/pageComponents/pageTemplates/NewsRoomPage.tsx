@@ -79,7 +79,6 @@ const NewsRoomPage = ({ isServerRendered, locale, pageData, slug, url }: NewsRoo
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
-  let eventHandler: any
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {

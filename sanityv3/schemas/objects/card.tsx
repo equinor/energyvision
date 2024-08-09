@@ -5,7 +5,7 @@ import type { PortableTextBlock } from 'sanity'
 import { Stack, Text, Card } from '@sanity/ui'
 import blocksToText from '../../helpers/blocksToText'
 
-const CardField = forwardRef((props: any, ref) => {
+const CardField = forwardRef((props: any) => {
   return (
     <Stack>
       <Card padding={3} borderLeft>

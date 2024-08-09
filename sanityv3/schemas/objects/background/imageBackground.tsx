@@ -1,4 +1,4 @@
-import { defineType, defineField, Image } from 'sanity'
+import { defineType, defineField } from 'sanity'
 import { RadioIconSelector } from '../../components'
 import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'

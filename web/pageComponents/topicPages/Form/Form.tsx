@@ -6,7 +6,7 @@ import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
 import CareersContactForm from './careersContactForm/CareersContactForm'
-import type { LinkData, FormData } from '../../../types/types'
+import type { FormData } from '../../../types/types'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
 

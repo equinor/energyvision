@@ -1,4 +1,3 @@
-import { noDrafts } from './common/langAndDrafts'
 import pageContentFields from './common/pageContentFields'
 import { landingPageContentFields } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'

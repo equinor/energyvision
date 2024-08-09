@@ -4,18 +4,17 @@ import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import CompactBlockEditor from '../../../components/CompactBlockEditor'
 import blocksToText from '../../../../helpers/blocksToText'
-import { EdsIcon } from '../../../../icons'
-import { configureBlockContent } from '../../../editors'
-import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEditorContentType'
-import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../../components/ThemeSelector'
-import { capitalizeFirstLetter } from '../../../../helpers/formatters'
-import {
+import { EdsIcon ,
   ContentRightImage,
   ContentLeftImage,
   ContentCenterImage,
   ContentBottomLeftImage,
   ContentBottomCenterImage,
 } from '../../../../icons'
+import { configureBlockContent } from '../../../editors'
+import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEditorContentType'
+import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../../components/ThemeSelector'
+import { capitalizeFirstLetter } from '../../../../helpers/formatters'
 import { RadioIconSelector } from '../../../components'
 
 const blockContentType = configureBlockContent({

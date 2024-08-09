@@ -71,9 +71,7 @@ const Level3BaseStyle = (props: any) => {
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
     h2 = true,
-    useH2BaseStyle = false,
     h3 = true,
-    useH3BaseStyle = false,
     h4 = false,
     internalLink = true,
     externalLink = true,
@@ -165,9 +163,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   const h2DefaultConfig = { title: 'Heading 2', value: 'h2' }
-  const h2BaseConfig = { title: 'Heading 2', value: 'h2', component: Level2BaseStyle }
   const h3DefaultConfig = { title: 'Heading 3', value: 'h3' }
-  const h3BaseConfig = { title: 'Heading 3', value: 'h3', component: Level3BaseStyle }
   const h4Config = { title: 'Heading 4', value: 'h4' }
   const smallTextConfig = {
     title: 'Small text',

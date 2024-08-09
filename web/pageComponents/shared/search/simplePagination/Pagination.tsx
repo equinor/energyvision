@@ -1,7 +1,6 @@
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import { useContext, useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 import { PaginationContext } from './PaginationContext'
 import { PaginationItem } from './PaginationItem'

@@ -1,5 +1,4 @@
 import blocksToText from '../../../../helpers/blocksToText'
-import { configureBlockContent } from '../../../editors'
 
 import { PortableTextBlock, Rule } from 'sanity'
 import { EdsIcon } from '../../../../icons'
