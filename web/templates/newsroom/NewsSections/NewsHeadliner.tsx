@@ -1,21 +1,19 @@
 import { FormattedDate } from '@components/FormattedDateTime'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { forwardRef, HTMLAttributes } from 'react'
-import { CardData } from '../../types/types'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
-import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
-import envisTwMerge from '../../twMerge'
+import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import envisTwMerge from '../../../twMerge'
 
-export type PageHeadlinerProps = {
-  data: CardData
+export type NewsHeadlinerProps = {
+  data: any
 } & HTMLAttributes<HTMLLIElement>
 
-const PageHeadliner = forwardRef<HTMLLIElement, PageHeadlinerProps>(function PageHeadliner(
+const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function NewsHeadliner(
   { data, className = '', ...rest },
   ref,
 ) {
-  const { slug, title, ingress, publishDateTime, heroImage, id, type } = data
+  const { slug, pageTitle, ingress, publishDateTime, heroImage } = data
 
   return (
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
@@ -28,30 +26,25 @@ const PageHeadliner = forwardRef<HTMLLIElement, PageHeadlinerProps>(function Pag
               priority
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 1440px"
-              className="rounded-sm"
+              className=""
             />
           </div>
         )}
         {publishDateTime && (
           <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-medium leading-normal" />
         )}
-        {title && (
+        {pageTitle && (
           <Typography as="h2" variant="md" className="group-hover:underline">
-            {title}
+            {pageTitle}
           </Typography>
         )}
         {ingress && (
-          <Blocks
-            value={ingress}
-            className={`text-sm max-w-prose`}
-            marks={{
-              em: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
-              strong: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
-            }}
-          />
+          <Typography variant="body" className="text-sm max-w-prose`">
+            {ingress}
+          </Typography>
         )}
       </BaseLink>
     </section>
   )
 })
-export default PageHeadliner
+export default NewsHeadliner

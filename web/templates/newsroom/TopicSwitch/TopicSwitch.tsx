@@ -1,53 +1,34 @@
-import { forwardRef, HTMLAttributes, useContext, useState } from 'react'
+import { forwardRef } from 'react'
 import { Checkbox } from '@equinor/eds-core-react'
-import { Tag } from '../../../types/types'
-import { useFilter } from '../FilterContext'
+import { useRefinementList, UseRefinementListProps } from 'react-instantsearch'
+import { FormattedMessage } from 'react-intl'
 
-export type TopicSwitchProps = {
-  topics: Tag[]
-  selectedTopics: Tag[]
-  onTopicChange: (newTopic: string) => void
-} & HTMLAttributes<HTMLLIElement>
+export type TopicSwitchProps = React.ComponentProps<'fieldset'> & UseRefinementListProps
 
-const TopicSwitch = forwardRef<HTMLElement, TopicSwitchProps>(function TopicSwitch(
-  { topics, className = '', ...rest },
-  ref,
-) {
-  console.log('topics', topics)
-  const { selectedTopics, setSelectedTopics } = useFilter()
-
-  const handleTopicChange = (newTopic: Tag) => {
-    console.log('TopicSwitch handle topic change', newTopic)
-    //Remove from list if already there, or else add
-    if (selectedTopics?.some((selectedTopic: any) => selectedTopic.id === newTopic.id)) {
-      setSelectedTopics(
-        selectedTopics.filter((selectedTopic: any) => {
-          selectedTopic.id !== newTopic?.id
-        }),
-      )
-    } else {
-      setSelectedTopics([...selectedTopics, newTopic])
-    }
-  }
+const TopicSwitch = forwardRef<HTMLElement, TopicSwitchProps>(function TopicSwitch({ className = '', ...rest }, ref) {
+  const { items, refine } = useRefinementList(rest)
 
   return (
     <fieldset ref={ref} className="p-0">
-      <legend className="pb-2">Select topic</legend>
-      <div className="border border-autumn-storm-60 rounded-md pl-1 pr-6 py-4 flex flex-col">
-        {topics &&
-          topics.map((topic) => {
-            return (
-              <Checkbox
-                key={topic.id}
-                name={topic.key}
-                label={topic.title}
-                onChange={() => {
-                  handleTopicChange(topic)
-                }}
-                checked={selectedTopics?.some((selectedTopic) => selectedTopic?.id === topic?.id)}
-              />
-            )
-          })}
+      <legend className="text-xs pb-2">
+        <FormattedMessage id="newsroom_topic_filter" defaultMessage="Select topic" />
+      </legend>
+      <div className="border border-autumn-storm-60 rounded-md pl-1 pr-6 py-4 flex flex-col max-h-[800px] overflow-auto transparent-v-scrollbar">
+        {items.length > 0 ? (
+          items.map((item) => (
+            <Checkbox
+              key={item.value}
+              value={item.value}
+              label={`${item.label} (${item.count})`}
+              checked={item.isRefined}
+              onChange={() => refine(item.value)}
+            />
+          ))
+        ) : (
+          <div>
+            <FormattedMessage id="newsroom_no_relevant_filters" defaultMessage="No relevant content for this filter" />
+          </div>
+        )}
       </div>
     </fieldset>
   )

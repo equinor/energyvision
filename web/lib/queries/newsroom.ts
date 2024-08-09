@@ -1,3 +1,4 @@
+import { linkReferenceFields } from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 import { noDrafts, sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
@@ -15,7 +16,7 @@ export const newsroomQuery = /* groq */ `
       ${markDefs},
     },
     subscriptionHeading,
-    subscriptionLink,
+    "subscriptionLink": subscriptionLink->${linkReferenceFields},
     subscriptionLinkTitle,
     localNewsPagesHeading,
     localNewsPages[]{
@@ -65,9 +66,11 @@ export const getNewsByTopic = /* groq */ `
 `
 
 export const getNewsByCountryAndOrTopicAndOrYear = /* groq */ `
-  *[_type == 'news'
-    && count(tags[_ref in $tags[].id]) > 0
-    && ${sameLang} && ${noDrafts}
+  *[_type == 'news' && ${sameLang} && 
+  (count(tags[_ref in $tags[].id]) > 0 || 
+    count(countryTags[_ref in $countryTags[].id]) > 0 
+    || count(dateTime(firstPublishedAt) ==) > 0
+  )
   ] | order(${publishDateTimeQuery} desc){
     "type": _type,
     "id": _id,
@@ -79,3 +82,16 @@ export const getNewsByCountryAndOrTopicAndOrYear = /* groq */ `
     ${ingressForNewsQuery},
   }
 `
+
+/* export const getNewsByCountryAndOrTopicAndOrYear = `
+  *[_type == 'news' && count(tags[_ref in $tags[].id]) > 0 && ${sameLang}] | order(${publishDateTimeQuery} desc){
+    "type": _type,
+    "id": _id,
+    "updatedAt":  ${lastUpdatedTimeQuery},
+    title,
+    heroImage,
+    "publishDateTime": ${publishDateTimeQuery},
+    "slug": slug.current,
+    ${ingressForNewsQuery},
+  }
+` */

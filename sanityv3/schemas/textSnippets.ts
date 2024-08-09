@@ -101,6 +101,16 @@ const snippets: textSnippet = {
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
     group: groups.search,
   },
+  search_reset: {
+    title: 'Reset',
+    defaultValue: 'Reset',
+    group: groups.search,
+  },
+  search_filter_by: {
+    title: 'Filter by',
+    defaultValue: 'Filter by',
+    group: groups.search,
+  },
   copyright: {
     title: 'Copyright',
     defaultValue: 'Copyright 2022 Equinor ASA',

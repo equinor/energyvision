@@ -1,70 +1,42 @@
-import { getNewsroomComponentsData } from '../../lib/fetchData'
-import { newsroomQuery } from '../../lib/queries/newsroom'
-import { getIsoFromLocale, getNameFromLocale } from '../../lib/localization'
-import getIntl from '../../common/helpers/getIntl'
-import { defaultLanguage } from '../../languages'
+import { GetServerSideProps } from 'next'
+import { InstantSearchSSRProvider, getServerState } from 'react-instantsearch'
+import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import Header from '../../pageComponents/shared/Header'
 import Footer from '../../pageComponents/shared/Footer'
-import { FooterColumns, IntlData, MagazineIndexPageType, MenuData, NewsRoomPageType } from '../../types'
-import { AppProps } from 'next/app'
-import NewsRoomTemplate from '../../templates/newsroom/Newsroom'
+import Header from '../../pageComponents/shared/Header'
+import { newsroomQuery } from '../../lib/queries/newsroom'
+import getIntl from '../../common/helpers/getIntl'
+import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
+import { defaultLanguage } from '../../languages'
+import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
+import { getComponentsData } from '../../lib/fetchData'
+import { renderToString } from 'react-dom/server'
+import NewsRoomTemplate from '@templates/newsroom/Newsroom'
 
-type NewsRoom = {
-  url: string
-  data: {
-    menuData?: MenuData
-    footerData?: {
-      footerColumns: FooterColumns[]
-    }
-    intl?: IntlData
-    pageData?: MagazineIndexPageType | NewsRoomPageType
-    slug?: string | undefined
-  }
-}
-
-export const getServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
-  if (locale !== 'en') {
-    return {
-      notFound: true,
-    }
-  }
-  const lang = getNameFromLocale(locale)
-  const intl = await getIntl(locale, false)
-  const queryParams = { lang }
-  const slug = req.url
-
-  const { menuData, pageData, footerData } = await getNewsroomComponentsData(
-    {
-      query: newsroomQuery,
-      queryParams,
-    },
-    preview,
-  )
-
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const newsRoom: NewsRoom = {
-    url,
-    data: {
-      menuData,
-      footerData,
-      intl,
-      pageData,
-      slug,
-    },
-  }
-
-  return {
-    props: { ...newsRoom },
-  }
-}
-
-export default function NewsRoom({ data, url }: NewsRoom) {
+export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
-  return <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} slug={slug} />
+
+  return (
+    <InstantSearchSSRProvider {...serverState}>
+      <IntlProvider
+        locale={getIsoFromLocale(locale)}
+        defaultLocale={getIsoFromLocale(defaultLocale)}
+        messages={intl?.messages}
+      >
+        <NewsRoomTemplate
+          isServerRendered={isServerRendered}
+          locale={locale}
+          pageData={pageData as NewsRoomPageType}
+          slug={slug}
+          url={url}
+        />
+      </IntlProvider>
+    </InstantSearchSSRProvider>
+  )
 }
+
 NewsRoom.getLayout = (page: AppProps) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -92,4 +64,62 @@ NewsRoom.getLayout = (page: AppProps) => {
       </>
     </IntlProvider>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
+  // For the time being, let's just give 404 for satellites
+  // We will also return 404 if the locale is not English.
+  // This is a hack and and we should improve this at some point
+  // See https://github.com/vercel/next.js/discussions/18485
+
+  if (locale !== 'en') {
+    return {
+      notFound: true,
+    }
+  }
+
+  const lang = getNameFromLocale(locale)
+  const intl = await getIntl(locale, false)
+
+  const queryParams = {
+    lang,
+  }
+
+  const slug = req.url
+
+  const { menuData, pageData, footerData } = await getComponentsData(
+    {
+      query: newsroomQuery,
+      queryParams,
+    },
+    preview,
+  )
+
+  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
+  const serverState = await getServerState(
+    <NewsRoom
+      isServerRendered
+      data={{
+        intl,
+        pageData,
+        slug,
+      }}
+      url={url}
+    />,
+    { renderToString },
+  )
+
+  return {
+    props: {
+      serverState,
+      url,
+      data: {
+        menuData,
+        footerData,
+        intl,
+        pageData,
+        slug,
+      },
+    },
+  }
 }

@@ -13,12 +13,13 @@ export const FormattedDate = ({
   year = 'numeric',
   month = 'long',
   day = '2-digit',
+  weekday = 'long',
   icon = false,
   uppercase = false,
   ...rest
 }: DateProps): JSX.Element => {
   return (
-    <StyledDate uppercase={uppercase} {...rest}>
+    <StyledDate $uppercase={uppercase} {...rest}>
       {icon && <DateIcon />}
       <StyledTime suppressHydrationWarning dateTime={datetime}>
         <ReactIntlDate value={new Date(datetime)} day={day} year={year} month={month} />

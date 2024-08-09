@@ -1,4 +1,4 @@
-import { getClient, sanityClient } from './sanity.server'
+import { getClient } from './sanity.server'
 import type { QueryParams } from './queryFromSlug'
 import { Flags } from '../common/helpers/datasetHelpers'
 import { filterDataToSingleItem } from './filterDataToSingleItem'
@@ -6,7 +6,6 @@ import { footerQuery } from './queries/footer'
 import { simpleMenuQuery } from './queries/simpleMenu'
 import { menuQuery as globalMenuQuery } from './queries/menu'
 import { allNewsCountryTags, allNewsDocuments, allNewsTopicTags } from './queries/newsroom'
-import { groq } from 'next-sanity'
 
 export const getComponentsData = async (page: { query: string; queryParams: QueryParams }, preview = false) => {
   const client = getClient(preview)
@@ -58,11 +57,10 @@ export const getNewsroomData = async (
   fetchQuery: { query: string; queryParams: NewsroomQueryParams },
   preview = false,
 ) => {
-  const client = getClient(false)
-  console.log('GETTER fetchQuery.query', fetchQuery.query)
-  console.log('GETTER fetchQuery.queryParams', fetchQuery.queryParams)
-  const results = await sanityClient.fetch(groq`*[_type == 'news']`)
-  //client.fetch(fetchQuery.query, fetchQuery.queryParams)
-  console.log('GETTER results', results)
+  console.log('preview', preview)
+  const client = getClient(preview)
+  console.log('client', client)
+  const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
+  console.log('results', results)
   return results
 }

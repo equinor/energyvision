@@ -14,10 +14,10 @@ export type DateProps = {
   uppercase?: boolean
 } & HTMLAttributes<HTMLSpanElement>
 
-export const StyledDate = styled.span<{ uppercase?: boolean }>`
+export const StyledDate = styled.span<{ $uppercase?: boolean }>`
   display: inline-flex;
   align-items: center;
-  text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'none')};
+  text-transform: ${(props) => (props.$uppercase ? 'uppercase' : 'none')};
   & > svg {
     flex-shrink: 0;
     box-sizing: content-box;
