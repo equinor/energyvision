@@ -26,7 +26,6 @@ const MultipleEventCards = ({ data, hasSectionTitle, eventPromotionSettings }: M
   return (
     <ul
       className=" 
-      max-lg:w-full
       grid 
     gap-y-3
     gap-x-4
