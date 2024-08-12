@@ -41,12 +41,23 @@ export default {
       type: 'imageWithAlt',
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
+      validation: (Rule: any) =>
+        Rule.custom((value: any, context: any) => {
+          const isCampaign = context.document.isCampaign
+          const heroImage = context.document.heroImage
+
+          if (isCampaign && !heroImage && !value) {
+            return 'Please add an image to Open Graph Image when not using a header image'
+          }
+
+          return true
+        }),
     },
     ...sharedHeroFields,
     {
-      title: 'Is Campain',
+      title: 'Is Campaign',
       name: 'isCampaign',
-      description: 'Set this to true if the page should be treated as campaign. the header title h1 will be hidden.',
+      description: 'Set this to true if the page should be treated as a campaign. The header title h1 will be hidden.',
       type: 'boolean',
     },
     {
