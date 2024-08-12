@@ -167,7 +167,7 @@
   }
   @supports selector(::-webkit-scrollbar) {
     .transparent-scrollbar::-webkit-scrollbar {
-      @apply bg-white-100 dark:bg-transparent h-2 my-2;
+      @apply bg-transparent h-2 my-2;
     }
     .transparent-scrollbar::-webkit-scrollbar-track {
       @apply my-[2px];

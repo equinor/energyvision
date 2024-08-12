@@ -132,7 +132,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           fill="none"
           strokeWidth={thickness}
           stroke="currentColor"
-          className={envisTwMerge('stroke-autumn-storm-40', trackClassName)}
+          className={envisTwMerge('stroke-grey-30', trackClassName)}
         />
         {/* Progress */}
         <circle
@@ -144,7 +144,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           strokeLinecap="round"
           strokeWidth={thickness}
           strokeDasharray={variant === 'determinate' ? circumference : 48}
-          className={envisTwMerge('stroke-autumn-storm-60', progressClassName)}
+          className={envisTwMerge('stroke-grey-60', progressClassName)}
           opacity={paused ? 0 : 1}
         />
       </svg>

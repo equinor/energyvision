@@ -45,7 +45,7 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
         default:
           return `
           size-[44px]
-          ${useTimer ? `` : `border border-autumn-storm-40 dark:border-white-100`}
+          ${useTimer ? `` : `border border-grey-60 dark:border-white-100`}
           text-slate-80
           focus:outline-none
           hover:bg-autumn-storm-60
@@ -94,7 +94,7 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
             paused={paused ?? mode === 'pause'}
             variant="determinate"
             className="absolute inset-0 size-[44px]"
-            trackClassName="group-hover/mediabutton:stroke-autumn-storm-60"
+            trackClassName="group-hover/mediabutton:stroke-autumn-storm-60 dark:group-hover/mediabutton:stroke-grey-30"
           />
         )}
         <div

@@ -52,7 +52,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
             } absolute bottom-0 left-4 right-4 lg:left-8 lg:right-8 mb-4 lg:mb-8`}
           >
             <div
-              className={`bg-spruce-wood-70/75 px-8 pt-6 w-fit flex flex-col max-w-text ${
+              className={`bg-spruce-wood-70/75 text-slate-80 px-8 pt-6 w-fit flex flex-col max-w-text ${
                 attribution ? 'pb-4' : 'pb-6'
               }`}
             >
