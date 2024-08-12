@@ -13,7 +13,7 @@ export const FormattedDate = ({
   year = 'numeric',
   month = 'long',
   day = '2-digit',
-  weekday = 'long',
+  weekday,
   icon = false,
   uppercase = false,
   ...rest
@@ -22,7 +22,13 @@ export const FormattedDate = ({
     <StyledDate $uppercase={uppercase} {...rest}>
       {icon && <DateIcon />}
       <StyledTime suppressHydrationWarning dateTime={datetime}>
-        <ReactIntlDate value={new Date(datetime)} day={day} year={year} month={month} />
+        <ReactIntlDate
+          value={new Date(datetime)}
+          day={day}
+          year={year}
+          month={month}
+          {...(weekday && { weekday: weekday })}
+        />
       </StyledTime>
     </StyledDate>
   )

@@ -6,7 +6,7 @@ export type ImageSize = 'small' | 'full'
 
 export type TeaserProps = {
   /** Should the image be positioned to the left or the right */
-  imagePosition?: ImagePosition
+  $imagePosition?: ImagePosition
 } & HTMLAttributes<HTMLElement>
 
 export const StyledTeaser = styled.article`
@@ -29,20 +29,20 @@ const TeaserWrapper = styled.div<TeaserProps>`
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
     grid-template-areas: 'image content';
-    ${({ imagePosition }) =>
-      imagePosition === 'right' && {
+    ${({ $imagePosition }) =>
+      $imagePosition === 'right' && {
         gridTemplateAreas: '"content image"',
       }}
   }
 `
 
 export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
-  { imagePosition = 'left', children, ...rest },
+  { $imagePosition = 'left', children, ...rest },
   ref,
 ) {
   return (
     <StyledTeaser ref={ref} {...rest}>
-      <TeaserWrapper imagePosition={imagePosition}>{children}</TeaserWrapper>
+      <TeaserWrapper $imagePosition={$imagePosition}>{children}</TeaserWrapper>
     </StyledTeaser>
   )
 })

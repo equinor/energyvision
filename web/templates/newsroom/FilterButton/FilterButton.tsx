@@ -63,7 +63,9 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
         onClick={() => setIsOpen(!isOpen)}
         className={`
           text-sm
-          ${isOpen ? 'border border-x border-t border-b-0 border-autumn-storm-60 rounded-b-none' : ''}
+          border
+          border-transparent
+          ${isOpen ? 'border-x border-t border-b-0 border-autumn-storm-60 rounded-b-none' : ''}
           pl-6
           pr-2
           py-2`}
@@ -97,7 +99,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
             <div className="w-full flex rounded-b-md">
               <Button
                 variant="outlined"
-                className="w-full px-6 py-4 border-l-0 border-b-0 rounded-none rounded-bl-md border-autumn-storm-60"
+                className="w-full px-6 py-4 border-x-0 border-b-0 rounded-none rounded-bl-md border-autumn-storm-60"
                 aria-label="Close filter"
                 onClick={handleClose}
               >

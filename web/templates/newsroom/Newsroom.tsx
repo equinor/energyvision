@@ -13,7 +13,6 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import { UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
-import { searchClient } from '../../lib/algolia'
 import { useIntl } from 'react-intl'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
@@ -151,7 +150,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           <div className="border-y border-autumn-storm-40 py-4">
             <FormattedDate
               suppressHydrationWarning
-              datetime={new Date().toLocaleString()}
+              datetime={new Date()}
               weekday="long"
               day="numeric"
               year="numeric"

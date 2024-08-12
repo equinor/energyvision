@@ -3,9 +3,9 @@ import { List as EdsList, ListProps as EdsListProps } from '@equinor/eds-core-re
 import styled from 'styled-components'
 
 export type ListProps = {
-  unstyled?: boolean
-  centered?: boolean
-  splitList?: boolean
+  $unstyled?: boolean
+  $centered?: boolean
+  $splitList?: boolean
 } & EdsListProps
 
 const StyledList = styled(EdsList)<ListProps>`
@@ -16,20 +16,20 @@ const StyledList = styled(EdsList)<ListProps>`
   margin-right: var(--space-medium);
   padding-left: var(--space-medium);
   list-style-position: outside;
-  ${({ unstyled }) =>
-    unstyled && {
+  ${({ $unstyled }) =>
+    $unstyled && {
       margin: 0,
       padding: 0,
       listStyle: 'none',
     }}
-  ${({ centered }) =>
-    centered && {
+  ${({ $centered }) =>
+    $centered && {
       display: 'grid',
       placeContent: 'center',
     }}
     @media (min-width: 800px) {
-    ${({ splitList }) =>
-      splitList && {
+    ${({ $splitList }) =>
+      $splitList && {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
         gridColumnGap: `var(--space-xLarge)`,
@@ -39,15 +39,15 @@ const StyledList = styled(EdsList)<ListProps>`
 `
 
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(
-  { unstyled = false, centered = false, splitList = false, style, children, ...rest },
+  { $unstyled = false, $centered = false, $splitList = false, style, children, ...rest },
   ref,
 ) {
   return (
     <StyledList
       ref={ref}
-      unstyled={unstyled}
-      centered={centered}
-      splitList={splitList}
+      $unstyled={$unstyled}
+      $centered={$centered}
+      $splitList={$splitList}
       style={
         {
           ...style,
