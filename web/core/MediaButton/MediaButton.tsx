@@ -53,7 +53,10 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           focus-visible:outline-slate-blue-95
           dark:hover:bg-white-100
           dark:hover:border-white-100
-          dark:focus-visible:outline-white-100`
+          dark:focus-visible:outline-white-100
+          disabled:border-grey-40
+          dark:disabled:border-white-100/40
+          disabled:pointer-events-none`
       }
     }
     const getIconVariantClassNames = () => {
@@ -64,7 +67,7 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           hover:bg-black-100
           text-white-100`
         default:
-          return `size-10 dark:text-white-100 dark:group-hover/mediabutton:text-slate-80`
+          return `size-10 dark:text-white-100 dark:group-hover/mediabutton:text-slate-80 group-disabled/mediabutton:text-grey-40`
       }
     }
 
