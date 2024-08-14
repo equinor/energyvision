@@ -141,10 +141,23 @@ const CareersContactForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
-                    id: 'careers_contact_form_phone',
-                    defaultMessage: 'Phone Number',
-                  })}
+                  label={
+                    <>
+                      <span>
+                        {intl.formatMessage({
+                          id: 'careers_contact_form_phone',
+                          defaultMessage: 'Phone Number',
+                        })}
+                      </span>
+                      <br />
+                      <span className="text-xs">
+                        {intl.formatMessage({
+                          id: 'country_code_format',
+                          defaultMessage: 'e.g. +47',
+                        })}
+                      </span>
+                    </>
+                  }
                   placeholder={intl.formatMessage({
                     id: 'careers_contact_form_phone_placeholder',
                     defaultMessage: 'Country code and phone number',
@@ -347,6 +360,9 @@ const CareersContactForm = () => {
                 />
               )}
             />
+            <div className="pb-4 text-xs italic">
+              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+            </div>
             <StyledCheckBox
               label={intl.formatMessage({
                 id: 'career_fair_form_supporting_documents',

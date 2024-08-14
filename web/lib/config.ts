@@ -18,3 +18,8 @@ export const algolia = {
   applicationId: process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
   searchApiKey: process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || '',
 }
+
+export const friendlyCaptcha = {
+  siteKey: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY || '',
+  puzzleEndpoint: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT || '',
+}
