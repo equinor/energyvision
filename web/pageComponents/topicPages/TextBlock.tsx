@@ -46,6 +46,8 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     right:
       'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
     left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    'bottom-left': 'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    'bottom-center': 'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
   }
   let backgroundImageContentClassNames = `
   justify-center
@@ -70,6 +72,14 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     }
   }
 
+  const common = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
+  const serializerClassnames = {
+    largeText: common,
+    normal: common,
+    twoXLText: common,
+    extraLargeText: common,
+  }
+
   return (
     <StyledTextBlockWrapper {...bgContainerOptions} id={anchor} renderFragmentWhenPossible>
       <div
@@ -88,7 +98,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
             {overline ? (
               <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
                 <Eyebrow>{overline}</Eyebrow>
-                {title && <Heading value={title} as="h2" variant="xl" />}
+                {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
               </hgroup>
             ) : (
               <>
@@ -97,7 +107,8 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
                     value={title}
                     as="h2"
                     variant="xl"
-                    className={`mb-2 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
+                    serializerClassnames={serializerClassnames}
+                    className={`mb-2`}
                   />
                 )}
               </>

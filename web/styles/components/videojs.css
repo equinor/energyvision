@@ -1,4 +1,44 @@
 /* Change all text and icon colors in the player. */
+.vjs-envis {
+  @apply text-xs lg:text-2xs;
+}
+.vjs-envis .vjs-control-bar {
+  @apply bg-slate-blue-100;
+}
+.vjs-envis button,
+[type='button'] {
+  @apply focus:outline-none focus-visible:envis-outline-invert;
+}
 .vjs-envis .vjs-big-play-button {
+  @apply bg-slate-blue-100/70 border-none rounded-full w-[60px] h-[60px] lg:w-[80px] lg:h-[80px];
+  margin-left: -0.85em;
+  margin-top: -1.1em;
+}
+.vjs-envis:hover .vjs-big-play-button {
+  @apply bg-slate-blue-100;
+}
+.vjs-envis .vjs-big-play-button:focus {
+  @apply bg-slate-blue-100;
+}
+
+.vjs-envis .vjs-icon-placeholder {
+  @apply w-full h-full flex justify-center items-center;
+}
+.vjs-envis .vjs-big-play-button .vjs-icon-placeholder:before {
+  @apply text-white-100 block w-fit h-fit relative text-2xl;
+}
+.vjs-paused.vjs-has-started.vjs-envis-hasPlayButton .vjs-big-play-button {
+  display: block;
+}
+
+.vjs-paused:not(.vjs-has-started).vjs-envis-hasPlayButton .vjs-control-bar {
+  display: none;
+}
+
+/* BRAND THEMING */
+.vjs-envis-brand:hover .vjs-big-play-button {
+  @apply bg-energy-red-100;
+}
+.vjs-envis-brand .vjs-big-play-button:focus {
   @apply bg-energy-red-100;
 }

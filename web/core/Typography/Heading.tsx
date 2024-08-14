@@ -9,11 +9,28 @@ import { twMerge } from 'tailwind-merge'
 
 export type HeadingProps = {
   value?: PortableTextBlock[]
+  noProse?: boolean
+  serializerClassnames?: {
+    largeText?: string
+    normal?: string
+    extraLargeText?: string
+    twoXLText?: string
+  }
 } & PortableTextProps &
   TypographyProps &
   BlockProps
 
-const defaultComponents = ({ variant, as: providedAs, className }: TypographyProps) => {
+type DefaultComponentsProps = {
+  serializerClassnames?: {
+    largeText?: string
+    normal?: string
+    extraLargeText?: string
+    twoXLText?: string
+  }
+  className?: string
+} & TypographyProps
+
+const defaultComponents = ({ variant, as: providedAs, serializerClassnames, className }: DefaultComponentsProps) => {
   return {
     block: {
       h1: ({ children }: PortableTextBlock) => {
@@ -38,22 +55,25 @@ const defaultComponents = ({ variant, as: providedAs, className }: TypographyPro
         )
       },
       largeText: ({ children }: PortableTextBlock) => {
+        const classNames = serializerClassnames ? serializerClassnames['largeText'] : className
         return (
-          <Typography variant="2xl" as={providedAs} className={className}>
+          <Typography variant="2xl" as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
       },
       extraLargeText: ({ children }: PortableTextBlock) => {
+        const classNames = serializerClassnames ? serializerClassnames['extraLargeText'] : className
         return (
-          <Typography variant="5xl" as={providedAs} className={className}>
+          <Typography variant="5xl" as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
       },
       twoXLText: ({ children }: PortableTextBlock) => {
+        const classNames = serializerClassnames ? serializerClassnames['twoXLText'] : className
         return (
-          <Typography variant="8xl" as={providedAs} className={className}>
+          <Typography variant="8xl" as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -67,9 +87,10 @@ const defaultComponents = ({ variant, as: providedAs, className }: TypographyPro
         )
       },
       normal: ({ children }: PortableTextBlock) => {
+        const classNames = serializerClassnames ? serializerClassnames['normal'] : className
         if (isEmpty(children)) return null
         return (
-          <Typography variant={variant} as={providedAs} className={className}>
+          <Typography variant={variant} as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -89,15 +110,18 @@ const defaultComponents = ({ variant, as: providedAs, className }: TypographyPro
  */
 export const Heading = ({
   value,
-  components = {},
+  blocksComponents = {},
   variant,
   group,
   as,
   className,
+  noProse = false,
   proseClassName = '',
+  serializerClassnames,
   ...props
 }: HeadingProps) => {
   let div: PortableTextBlock[] = []
+
   return (
     <>
       {value?.length > 1 ? (
@@ -117,17 +141,27 @@ export const Heading = ({
             return (
               <WrapperTextTag
                 key={block._key}
-                className={twMerge(`prose ${proseClassName} dark:prose-invert flex flex-col`, className)}
+                className={twMerge(
+                  `${noProse ? '' : `prose ${proseClassName} dark:prose-invert`} flex flex-col`,
+                  className,
+                )}
               >
                 <PortableText
                   value={value}
-                  // eslint-disable-next-line
-                  // @ts-ignore
                   components={{
-                    ...defaultComponents({ variant, group, as: PortableTextTag, className }),
-                    ...components,
+                    // eslint-disable-next-line
+                    // @ts-ignore
+                    block: {
+                      ...defaultComponents({ variant, group, as: PortableTextTag, serializerClassnames, className })
+                        .block,
+                      ...blocksComponents,
+                    },
+                    // eslint-disable-next-line
+                    // @ts-ignore
+                    marks: {
+                      ...defaultComponents({ variant, group, as: PortableTextTag }).marks,
+                    },
                   }}
-                  {...props}
                 />
               </WrapperTextTag>
             )
@@ -136,9 +170,19 @@ export const Heading = ({
       ) : (
         <PortableText
           value={value}
-          // eslint-disable-next-line
-          // @ts-ignore
-          components={{ ...defaultComponents({ variant, group, as, className }), ...components }}
+          components={{
+            // eslint-disable-next-line
+            // @ts-ignore
+            block: {
+              ...defaultComponents({ variant, group, as, serializerClassnames, className }).block,
+              ...blocksComponents,
+            },
+            // eslint-disable-next-line
+            // @ts-ignore
+            marks: {
+              ...defaultComponents({ variant, group, as }).marks,
+            },
+          }}
           {...props}
         />
       )}

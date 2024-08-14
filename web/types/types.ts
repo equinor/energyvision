@@ -279,6 +279,7 @@ export type PromotionData = {
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
   }
+  viewAllLink?: LinkData
   useHorizontalScroll?: boolean | undefined
   designOptions?: DesignOptions
 }

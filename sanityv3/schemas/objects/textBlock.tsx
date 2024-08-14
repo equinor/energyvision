@@ -90,7 +90,7 @@ export default {
       name: 'actions',
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
     {

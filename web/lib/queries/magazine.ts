@@ -1,6 +1,6 @@
 import { heroFields } from './common/heroFields'
 import pageContentFields from './common/pageContentFields'
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
@@ -43,14 +43,14 @@ export const magazineQuery = /* groq */ `
     "content": content[] {
           ${pageContentFields}
       },
-      ${slugsForNewsAndMagazine('magazine')},
+      ${slugsForNewsAndMagazine},
     "footerComponent": *[_type == 'magazineIndex' && ${sameLang} && ${noDrafts}][0]{
       "data": footerComponent{
         ${footerComponentFields}
       }
     },
     hideFooterComponent,
-}`
+}${querySuffixForNewsAndMagazine}`
 
 export const magazineIndexQuery = /* groq */ `
   *[_type == "magazineIndex" && ${sameLang}] {

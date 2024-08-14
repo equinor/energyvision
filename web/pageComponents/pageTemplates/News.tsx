@@ -16,6 +16,7 @@ import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
+import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -94,12 +95,6 @@ const LeadParagraph = styled.div`
   & > p {
     margin-bottom: 0;
   }
-`
-
-const Latest = styled.div`
-  padding: 0 var(--space-medium);
-  margin: var(--space-4xLarge) auto 0;
-  max-width: 1700px;
 `
 
 const isDateAfter = (a: string, b: string) => {
@@ -211,13 +206,21 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             <Image>{heroImage && <DefaulHeroImage data={heroImage} />}</Image>
             {ingress && ingress.length > 0 && (
               <LeadParagraph>
-                <IngressText value={ingress} />
+                <IngressText value={ingress} includeFootnotes />
               </LeadParagraph>
             )}
 
             {content && content.length > 0 && (
-              <Blocks value={content} proseClassName="prose-article" className="p-0 max-w-viewport mx-auto" />
+              <Blocks
+                value={content}
+                proseClassName="prose-article"
+                className="p-0 max-w-viewport mx-auto"
+                includeFootnotes
+              />
             )}
+            <div className="mt-8 mb-2 px-layout-lg max-w-viewport mx-auto">
+              <Footnotes blocks={[...ingress, ...content]} />
+            </div>
 
             {iframe && <BasicIFrame data={iframe} />}
 
@@ -233,11 +236,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               />
             )}
 
-            {latestNews && latestNews.length > 0 && (
-              <Latest>
-                <LatestNews data={latestNews} />
-              </Latest>
-            )}
+            {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
           </NewsLayout>
         </article>
       </main>

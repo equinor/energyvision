@@ -1,8 +1,8 @@
 import { list, tag as tagIcon } from '@equinor/eds-icons'
 import { map } from 'rxjs/operators'
 import { EdsIcon, NewsDocuments } from '../../../../icons'
+import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
-import { i18n } from '../../../../schemas/documentTranslation'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
@@ -25,8 +25,8 @@ const localNewsStructure = (S, context) => {
                   .apiVersion(apiVersion)
                   .id('localNews')
                   .title('Local news articles')
-                  .filter('_type == "localNews" && (!defined(_lang) || _lang == $baseLang)')
-                  .params({ baseLang: i18n.base })
+                  .filter('_type == "localNews" && (!defined(lang) || lang == $baseLang)')
+                  .params({ baseLang: defaultLanguage.name })
                   .canHandleIntent((_name, params) => {
                     // Assume we can handle all intents (actions) regarding post documents
                     return params.type === 'localNews'
@@ -43,10 +43,8 @@ const localNewsStructure = (S, context) => {
                     .apiVersion(apiVersion)
                     .title(`Results for: ${tag.title}`)
                     .schemaType(documentName)
-                    .filter(
-                      `_type == "${documentName}" && references($tagId) && (!defined(_lang) || _lang == $baseLang)`,
-                    )
-                    .params({ tagId: tag._id, baseLang: i18n.base })
+                    .filter(`_type == "${documentName}" && references($tagId) && (!defined(lang) || lang == $baseLang)`)
+                    .params({ tagId: tag._id, baseLang: defaultLanguage.name })
                     .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
                     .child((documentId) =>
                       S.documentWithInitialValueTemplate('localnews-with-tag', {

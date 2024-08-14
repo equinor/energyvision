@@ -36,15 +36,22 @@ height,
 _type == "gridTextBlock"=>{
 "type": _type,
 "id": _key,
-"theme": coalesce(theme.value, null),
 textAlignment,
+overline,
+useThemedTitle,
+title[]{..., ${markDefs}},
+themedTitle[]{..., ${markDefs}},
+"titleThemeFromLarger":coalesce(titleThemeFromLarger.value, null),
 content[]{..., ${markDefs}},
+"contentTheme":coalesce(contentTheme.value, null),
+"theme":coalesce(theme.value, null),
 "action": action[0]{
 ${linkSelectorFields},
 ${downloadableFileFields},
 ${downloadableImageFields},
 },
-backgroundImage
+contentAlignment,
+imageBackground
 },
 _type == "figure"=>{
 "type": _type,
@@ -62,16 +69,16 @@ ${background},
 _type == "gridTeaser" => {
     "type": _type,
     "id": _key,
+    useExtendedThemes,
     content[]{..., ${markDefs}},
+    themedContent[]{..., ${markDefs}},
+    "themeFromLarger": coalesce(themeFromLarger.value, null),
+    "theme":coalesce(theme.value, null),
     author,
     authorTitle,
     quote,
     "imagePosition": coalesce(imagePosition, 'left'),
-    "theme": coalesce(theme.value, null),
-    "image": image {
-      ...,
-      "extension": asset-> extension
-    },
+    image,
     "action": action[0]{
       ${linkSelectorFields},
       ${downloadableFileFields},

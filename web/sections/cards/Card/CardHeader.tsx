@@ -2,6 +2,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import { Heading, Typography, TypographyVariants } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Variants } from './Card'
 
 export type CardHeaderProps = {
   /** Title string content */
@@ -22,6 +23,10 @@ export type CardHeaderProps = {
   eyebrow?: React.ReactNode
   /* Override styling on eyebrow element  */
   eyebrowClassName?: string
+  /** Variant to use
+   * @default primary
+   */
+  variant?: Variants
 } & HTMLAttributes<HTMLDivElement>
 
 /**
@@ -38,20 +43,31 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     titleClassName = '',
     eyebrow,
     eyebrowClassName = '',
+    variant = 'primary',
     ...rest
   },
   ref,
 ) {
+  const variantTitle = {
+    primary: `  max-md:text-lg`,
+    secondary: `  max-md:text-lg`,
+    compact: `max-md:text-md`,
+    single: `text-lg leading-planetary`,
+  }
+
   const titleClassNames = twMerge(
-    `
-  group-hover/card:underline 
-  group-focus-visible/card:underline
-  line-clamp-2`,
+    `group-hover/card:underline
+    group-focus-visible/card:underline
+    ${variantTitle[variant]}
+    max-w-prose
+    text-pretty
+  `,
     titleClassName,
   )
+
   return eyebrow ? (
     <hgroup ref={ref} className={twMerge('flex flex-col gap-2', className)} {...rest}>
-      <p className={twMerge(`text-xs font-medium uppercase`, eyebrowClassName)}>{eyebrow}</p>
+      <p className={twMerge(`text-xs font-medium uppercase leading-normal`, eyebrowClassName)}>{eyebrow}</p>
       {title && (
         <Typography
           {...(titleVariant && { as: titleLevel })}

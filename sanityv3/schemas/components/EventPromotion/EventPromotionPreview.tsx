@@ -9,13 +9,22 @@ type EventPromotionPreviewProps = {
   manuallySelectEvents?: boolean
   promotedEvents?: Reference[]
   promotePastEvents?: boolean
+  promoteSingleUpcomingEvent?: boolean
   pastEventsCount?: number
   useTags?: boolean
 } & PreviewProps
 
 export const EventPromotionPreview = (props: EventPromotionPreviewProps) => {
-  const { manuallySelectEvents, promotedEvents, promotePastEvents, pastEventsCount, useTags, tags, renderDefault } =
-    props
+  const {
+    manuallySelectEvents,
+    promotedEvents,
+    promotePastEvents,
+    pastEventsCount,
+    promoteSingleUpcomingEvent,
+    useTags,
+    tags,
+    renderDefault,
+  } = props
   const [title, setTitle] = useState('Event promotion')
 
   useEffect(() => {
@@ -23,13 +32,14 @@ export const EventPromotionPreview = (props: EventPromotionPreviewProps) => {
       return setTitle(`Showing ${promotedEvents.length} selected events`)
     }
 
-    const time = promotePastEvents ? 'past' : 'upcoming'
+    const time = promotePastEvents ? 'past' : `${promoteSingleUpcomingEvent ? 'single' : ''} upcoming`
     const number = promotePastEvents ? pastEventsCount || '50 (max)' : ''
     const withTags = useTags && tags ? `from ${tags.length} tag(s)` : ''
 
-    return setTitle(`Showing ${number} ${time} events ${withTags}`)
-  }, [manuallySelectEvents, promotedEvents, useTags, tags, pastEventsCount])
+    return setTitle(`Showing ${number} ${time} ${promoteSingleUpcomingEvent ? 'event' : 'events'} ${withTags}`)
+  }, [manuallySelectEvents, promotedEvents, useTags, tags, pastEventsCount, promoteSingleUpcomingEvent])
 
+  console.log('title', title)
   return (
     <Flex align="center">
       <Box flex={1}>

@@ -84,7 +84,7 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
             <Blocks
               value={title}
               proseClassName="prose-campaign"
-              blocks={campaignTitleBlocks}
+              blocksComponents={campaignTitleBlocks}
               className="w-fit max-w-prose text-energy-red-100"
             />
           </h2>

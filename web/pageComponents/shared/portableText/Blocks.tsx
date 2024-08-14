@@ -10,6 +10,7 @@ import {
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
 import { twMerge } from 'tailwind-merge'
+import { FormattedMessage } from 'react-intl'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,14 +49,53 @@ const defaultSerializers = {
     internalLink: ({ children, value }: any) => {
       return <InternalLink value={value}>{children}</InternalLink>
     },
+    footnote: () => null,
   },
+}
+const footnoteSerializer = {
+  footnote: ({ children, markKey }: any) => {
+    return (
+      <span>
+        {children}
+        <span>
+          <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
+            {/* the number for footnote is added by css see tailwind.css components */}
+            <span className="sr-only">
+              <FormattedMessage id="footnote" defaultMessage="Footnote" />
+            </span>
+          </a>
+        </span>
+      </span>
+    )
+  },
+}
+
+type TWLineClamps = {
+  [key: number]: string
+}
+
+//TODO - Struggling with types
+const getLineClampNormalBlock = (linesToClamp: number): any => {
+  const twLineClampUtility: TWLineClamps = {
+    3: 'line-clamp-3',
+    4: 'line-clamp-4',
+    5: 'line-clamp-5',
+  }
+
+  return {
+    normal: ({ children }: PortableTextBlock) => (
+      <p className={twLineClampUtility[linesToClamp as keyof TWLineClamps]}>
+        <>{children}</>
+      </p>
+    ),
+  }
 }
 
 export type BlockProps = {
   /**
    * Override default block serializers
    */
-  blocks?: BlockType
+  blocksComponents?: Partial<PortableTextReactComponents>
   /**
    * Override default marks serializers
    */
@@ -81,6 +121,9 @@ export type BlockProps = {
    * If needed to connect with aria-describedby and such
    */
   id?: string
+  /** Use to clamp lines on number */
+  clampLines?: number
+  includeFootnotes?: boolean
 } & PortableTextProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
@@ -88,11 +131,14 @@ const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicI
 //@ts-ignore
 export default function Blocks({
   value,
-  blocks: blocksComponents,
+  blocksComponents,
+  marks: marksComponents,
   components,
   proseClassName = '',
   className = '',
   id,
+  clampLines,
+  includeFootnotes = false,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
   return (
@@ -120,9 +166,14 @@ export default function Blocks({
                     block: {
                       ...defaultSerializers.block,
                       ...blocksComponents,
+                      ...(clampLines && getLineClampNormalBlock(clampLines)),
                     },
                     types: { ...defaultSerializers.types },
-                    marks: { ...defaultSerializers.marks },
+                    marks: {
+                      ...defaultSerializers.marks,
+                      ...marksComponents,
+                      ...(includeFootnotes && footnoteSerializer),
+                    },
                   }}
                 />
               </div>

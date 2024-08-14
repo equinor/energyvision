@@ -8,6 +8,9 @@ import { RowType } from './mapGridContent'
 import GridLinkArrow from './GridLinkArrow'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { PortableTextBlock } from '@portabletext/types'
+import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import { PortableTextReactComponents } from '@portabletext/react'
 
 export type GridTeaserProps = {
   data: GridTeaserData
@@ -16,11 +19,42 @@ export type GridTeaserProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function GridTeaser({ data, rowType }, ref) {
-  const { image, action, content, quote, author, authorTitle, theme } = data
+  const {
+    image,
+    action,
+    content,
+    themedContent,
+    quote,
+    author,
+    authorTitle,
+    useExtendedThemes,
+    themeFromLarger,
+    theme,
+  } = data
+
   const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
   const altTag = image?.isDecorative ? '' : image?.alt || ''
 
-  const { backgroundUtility, textUtility } = getColorForTheme(theme ?? 0)
+  let contentTextColor = 'text-slate-80'
+  let bgColor = 'bg-white-100'
+  if (useExtendedThemes && themeFromLarger) {
+    const { backgroundUtility: extendedBg, textUtility: extendedTxt } = getColorForTheme(themeFromLarger)
+    if (extendedTxt) {
+      contentTextColor = extendedTxt
+    }
+    if (extendedBg) {
+      bgColor = extendedBg
+    }
+  }
+  if (!useExtendedThemes && theme) {
+    const { backgroundUtility: themeBg, textUtility: themeTxt } = getColorForTheme(theme)
+    if (themeTxt) {
+      contentTextColor = themeTxt
+    }
+    if (themeBg) {
+      bgColor = themeBg
+    }
+  }
 
   return (
     <div
@@ -31,7 +65,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
       grid-rows-2
       lg:grid-rows-[250px_1fr]
       ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''}
-      ${theme !== null ? backgroundUtility : ''}
+      ${bgColor}
       `)}
     >
       {image && (
@@ -41,22 +75,35 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
             alt={altTag}
             style={{ objectFit: 'cover' }}
             fill
+            sizes="(max-width: 800px) 100vw, 800px"
             role={image?.isDecorative ? 'presentation' : undefined}
           />
         </div>
       )}
 
-      <div
-        className={`relative h-full flex flex-col justify-start items-center ${action ? '' : ''} ${
-          theme !== null ? textUtility : ''
-        } `}
-      >
-        <div className={`px-10 flex flex-col gap-6 pb-6 pt-6 ${rowType !== 'span3' ? 'lg:pt-8 lg:pb-0' : 'lg:pt-16'} `}>
-          {content && (
+      <div className={`relative h-full ${contentTextColor}`}>
+        <div
+          className={`h-full px-10 flex flex-col justify-center items-center gap-6 py-6 ${
+            rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
+          } `}
+        >
+          {(content || (useExtendedThemes && themedContent)) && (
             <Blocks
-              value={content}
+              value={(useExtendedThemes ? themedContent : content) as PortableTextBlock[]}
               proseClassName="prose-campaign"
-              className={`flex flex-col gap-4 ${theme !== null ? textUtility : ''}`}
+              className={`text-md ${contentTextColor}`}
+              {...(useExtendedThemes && {
+                blocksComponents: {
+                  normal: ({ children }: PortableTextBlock) => {
+                    if (isEmpty(children)) return null
+                    return (
+                      <p className="text-2xl leading-snug">
+                        <>{children}</>
+                      </p>
+                    )
+                  },
+                } as Partial<PortableTextReactComponents>,
+              })}
             />
           )}
           {quote && (
@@ -84,7 +131,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
             </figure>
           )}
         </div>
-        {action && <GridLinkArrow theme={theme} action={action} />}
+        {action && <GridLinkArrow bgColor={bgColor} action={action} />}
       </div>
     </div>
   )

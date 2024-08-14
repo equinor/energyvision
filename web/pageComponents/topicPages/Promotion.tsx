@@ -1,30 +1,11 @@
-import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
-import TitleText from '../shared/portableText/TitleText'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-
-const Wrapper = styled.div`
-  --card-maxWidth: 400px;
-  --card-minWidth: 200px;
-`
-const Ingress = styled.div`
-  margin-bottom: var(--space-xLarge);
-`
-
-const Intro = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-large);
-  max-width: var(--maxViewportWidth);
-  margin: 0 auto;
-`
-
-const StyledHeading = styled(TitleText)`
-  text-align: var(--promotion-titleAlign, center);
-  margin-bottom: var(--space-xLarge);
-`
+import { ButtonLink } from '@core/Link'
+import { Heading } from '@core/Typography'
 
 const Promotion = ({
   data,
@@ -36,24 +17,33 @@ const Promotion = ({
   anchor?: string
   className?: string
 }) => {
-  const { title, ingress, content, useHorizontalScroll, designOptions } = data
+  const { title, ingress, content, useHorizontalScroll, viewAllLink, designOptions } = data
   // const { articles = [], pages = [] } = data.promotion
   const promotions = content?.promotions || []
   const variant = data.content?.type
+  const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <Wrapper className={twMerge(`pb-page-content px-14`, className)} {...rest}>
-        <Intro>
-          {title && <StyledHeading value={title} level="h2" size="xl" />}
-          {ingress && (
-            <Ingress>
-              <IngressText value={ingress} />
-            </Ingress>
-          )}
-        </Intro>
+      <div
+        className={twMerge(
+          `pb-page-content px-4 ${
+            (variant === 'promoteEvents' && (promoteSingleUpcomingEvent || promotions?.length === 1)) ||
+            (variant === 'promotePeople' && promotions?.length === 1)
+              ? 'lg:px-layout-lg'
+              : 'lg:px-layout-sm'
+          } max-w-viewport mx-auto flex flex-col items-center`,
+          className,
+        )}
+        {...rest}
+      >
+        {title && <Heading value={title} as="h2" variant="xl" className="w-fit mb-10 text-center" />}
+        {ingress && (
+          <div className="mb-24">
+            <IngressText value={ingress} />
+          </div>
+        )}
         {promotions?.length === 1 ? (
-          /*  TODO: More than just people and events */
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <MultiplePromotions
@@ -64,7 +54,14 @@ const Promotion = ({
             useHorizontalScroll={useHorizontalScroll}
           />
         )}
-      </Wrapper>
+        {viewAllLink?.link?.slug && (
+          <div className="px-8 flex justify-center mt-12">
+            <ButtonLink variant="outlined" href={viewAllLink?.link?.slug} className="px-layout-lg md:px-layout-sm">
+              {viewAllLink?.label}
+            </ButtonLink>
+          </div>
+        )}
+      </div>
     </BackgroundContainer>
   )
 }

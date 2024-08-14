@@ -1,12 +1,13 @@
 import { ArrowRight } from '../../../icons'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Variants } from './Card'
 
 export type CardContentProps = {
   /** Variant to use
    * @default primary
    */
-  variant?: 'primary' | 'secondary'
+  variant?: Variants
   /** Overriding styles for the icon  */
   iconClassName?: string
   /** Take care of the arrow yourself */
@@ -26,17 +27,22 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
   { variant = 'primary', className = '', iconClassName = '', noArrow = false, children, ...rest },
   ref,
 ) {
+  const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
   const variantClassNames = {
-    primary: `flex-col items-start border border-grey-10 border-t-0`,
-    secondary: `pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
+    primary: `${commonStyling} flex-col items-start`,
+    secondary: `${commonStyling} pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
+    compact: `pb-4 pt-2`,
+    single: `${commonStyling} px-10 flex-col items-start`,
   }
   const variantLinkClassNames = {
-    primary: `self-end mt-auto`,
-    secondary: ``,
+    primary: `self-end mt-auto max-lg:hidden`,
+    secondary: `max-lg:hidden`,
+    compact: `max-xl:hidden`,
+    single: 'self-end mt-auto max-lg:hidden',
   }
   const iconClassNames = twMerge(
     `
-    max-h-8
+    size-arrow-right
     text-energy-red-100
     dark:text-white-100
     mr-2
@@ -51,23 +57,20 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     <div
       ref={ref}
       className={twMerge(
-        `
-        basis-0
+        `basis-0
         grow
-        pt-8
-        pb-6
-        px-6
         flex
-        gap-6
+        gap-4
+        md:gap-6
       ${variantClassNames[variant]}
       `,
         className,
       )}
       {...rest}
     >
-      {variant === 'secondary' ? (
+      {variant === 'secondary' || variant === 'single' ? (
         <>
-          <div>{children}</div>
+          <div className={`${variant === 'single' ? 'pr-12 flex flex-col gap-12' : ''}`}>{children}</div>
           {!noArrow && <ArrowRight className={iconClassNames} />}
         </>
       ) : (

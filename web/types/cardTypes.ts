@@ -50,6 +50,7 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  ingress?: PortableTextBlock[]
 }
 
 export type CardsListData = {

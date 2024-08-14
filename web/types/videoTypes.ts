@@ -3,8 +3,6 @@ import { PortableTextBlock } from '@portabletext/types'
 
 export enum VideoPlayerRatios {
   '16:9' = '16:9',
-  '3:2' = '3:2',
-  '16:10' = '16:10',
   '9:16' = '9:16',
   '1:1' = '1:1',
 }
