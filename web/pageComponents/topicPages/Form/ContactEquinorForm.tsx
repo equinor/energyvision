@@ -256,7 +256,9 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                 )
               }}
             />
-
+            <div className="pb-4 text-xs italic">
+              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+            </div>
             <FriendlyCaptcha
               doneCallback={() => {
                 setSubmitButtonEnabled(true)

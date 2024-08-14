@@ -32,7 +32,9 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        md: '750px',
         '3xl': '1600px',
+        '4xl': '1920px',
       },
       colors: ({ theme }) => ({
         current: 'currentColor',
@@ -234,6 +236,9 @@ module.exports = {
         '5xl': ['clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem))'],
         '6xl': ['clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem))'],
       },
+      size: {
+        'arrow-right': '1.58rem',
+      },
       fontWeight: {
         semibolder: 650,
         //--fontWeight-bold: tw -> semibold
@@ -257,6 +262,8 @@ module.exports = {
       },
       maxWidth: {
         viewport: '1920px',
+        //When large font, prose(65ch) might not be the best
+        text: '760px',
       },
       minWidth: {
         viewport: '375',
@@ -416,7 +423,7 @@ module.exports = {
           css: {
             color: theme('colors.current'),
             p: {
-              fontSize: theme('fontSize.md'),
+              textWrap: 'balance',
               marginTop: '0',
               marginBottom: '0',
             },
@@ -453,6 +460,9 @@ module.exports = {
             'outline-width': '2px',
             'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
+          },
+          '.break-word': {
+            wordBreak: 'break-word',
           },
         })
     }),

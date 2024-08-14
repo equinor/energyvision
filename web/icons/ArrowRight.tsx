@@ -1,6 +1,5 @@
 import { forwardRef, Ref, SVGProps } from 'react'
 import { arrow_forward } from '@equinor/eds-icons'
-import { twMerge } from 'tailwind-merge'
 
 export type ArrowRightProps = {
   /** Size, use if you need large icon resolutions
@@ -29,7 +28,7 @@ export const ArrowRight = forwardRef<SVGSVGElement, ArrowRightProps>(function Ar
       viewBox={`0 0 ${size} ${size}`}
       fill="currentColor"
       aria-hidden
-      className={twMerge(`h-full w-auto`, className)}
+      className={className}
       {...rest}
     >
       {Array.isArray(icon.svgPathData) ? (
