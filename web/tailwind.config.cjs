@@ -32,6 +32,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        md: '750px',
         '3xl': '1600px',
         '4xl': '1920px',
       },
@@ -473,6 +474,9 @@ module.exports = {
             'outline-width': '2px',
             'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
+          },
+          '.break-word': {
+            wordBreak: 'break-word',
           },
         })
     }),
