@@ -19,19 +19,19 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-12">
         {heroImage && (
-          <div className="aspect-video relative max-h-[324px]">
+          <div className="aspect-video relative max-h-[324px] mb-2">
             <Image
               image={heroImage?.image}
               fill
               priority
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 1440px"
-              className=""
+              className="rounded-sm"
             />
           </div>
         )}
         {publishDateTime && (
-          <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-medium leading-normal" />
+          <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-normal leading-normal" />
         )}
         {pageTitle && (
           <Typography as="h2" variant="md" className="group-hover:underline">

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
@@ -13,11 +13,13 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import { UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
-import { useIntl } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
 import { algolia } from '../../lib/config'
 import algoliasearch from 'algoliasearch'
+import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
+import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -49,6 +51,8 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
+  const resultsRef = useRef<HTMLDivElement>(null)
+
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }) => {
@@ -142,7 +146,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   }
 
   return (
-    <>
+    <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main ref={ref} className="px-layout-sm">
         <div className="w-2/3">
@@ -184,12 +188,15 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           <div className="flex flex-col gap-12">
             <div>
               <Typography as="h2" variant="h6" className="max-w-text pt-12 pb-4">
-                Search among Equinor corporate-level news releases
+                <FormattedMessage
+                  id="search_quick_search_label"
+                  defaultMessage="Search among Equinor corporate-level news releases"
+                />
               </Typography>
               <QuickSearch />
             </div>
             <div className="grid grid-cols-[22vw_auto] gap-12">
-              <aside className="self-start sticky top-0 flex flex-col gap-6 py-8">
+              <aside className="self-start sticky top-0 flex flex-col gap-6 pt-7 pb-8">
                 <TopicSwitch limit={50} attribute="topicTags" />
                 {subscriptionLink?.slug && subscriptionHeading && (
                   <div className="bg-spruce-wood-100 px-8 py-6">
@@ -214,17 +221,16 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   </div>
                 )}
               </aside>
-              <div>
-                <div>
-                  <NewsRoomFilters />
-                  <NewsSections />
-                </div>
+              <div className="flex flex-col">
+                <NewsRoomFilters />
+                <NewsSections />
+                <Pagination hitsPerPage={20} className="w-full justify-center py-12" />
               </div>
             </div>
           </div>
         </InstantSearch>
       </main>
-    </>
+    </PaginationContextProvider>
   )
 })
 

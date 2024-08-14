@@ -14,7 +14,6 @@ import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
 import CallToActions from '@sections/CallToActions'
-import { NextVideoPlayer } from '@core/VideoPlayer/VideoPlayer'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -109,8 +108,7 @@ export const VideoJsComponent = ({
 const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions } = data
   const { width } = designOptions
-  const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
-  console.log('video.url', video.url)
+
   return (
     <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
       <div
@@ -122,14 +120,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
         {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
         {ingress && <IngressText value={ingress} className="mb-lg" />}
         {action && action.label && <CallToActions callToActions={[action]} overrideButtonStyle={false} />}
-        <NextVideoPlayer
-          src={video.url}
-          title={video.title}
-          poster={urlFor(video.thumbnail).width(w).height(h).url()}
-          playsInline
-          {...videoControls}
-        />
-        {/*         <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} /> */}
+        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
       </div>
     </BackgroundContainer>
   )

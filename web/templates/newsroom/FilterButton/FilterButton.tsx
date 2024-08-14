@@ -15,7 +15,7 @@ import {
 import OptionList from './OptionList'
 import { chevron_down } from '@equinor/eds-icons'
 import { Button } from '@core/Button'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type FilterButtonProps = {
   optionsList: any[]
@@ -29,6 +29,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
   ref,
 ) {
   const [isOpen, setIsOpen] = useState(false)
+  const intl = useIntl()
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -46,7 +47,12 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
 
   const refinedItems = optionsList.filter((item) => item.isRefined)
   const buttonStateLabel =
-    refinedItems?.length > 0 ? `${filterName} filter, ${refinedItems.length} selected` : `Filter by ${filterName}`
+    refinedItems?.length > 0
+      ? `${filterName}, ${refinedItems.length} ${intl.formatMessage({
+          id: 'newsroom_filters_selected',
+          defaultMessage: 'selected',
+        })}`
+      : `${filterName}`
 
   const handleClose = () => {
     setIsOpen(false)
@@ -70,13 +76,13 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
           pr-2
           py-2`}
       >
-        <div aria-hidden className="flex gap-2 items-center">
+        <div aria-hidden className="flex gap-1.5 items-center">
           <div className="flex gap-2 items-center">
             <span className="">{filterName}</span>
             <span
               className={`${
-                refinedItems?.length > 0 ? 'bg-norwegian-woods-100' : 'bg-transparent'
-              } bg-norwegian-woods-100 rounded-sm text-white-100 px-2 py-1`}
+                refinedItems?.length > 0 ? 'bg-moss-green-60' : 'bg-transparent'
+              } rounded-sm text-slate-80 px-2 py-1`}
             >
               <span className={`${refinedItems?.length > 0 ? 'block' : 'hidden'}`}>{refinedItems.length}</span>
             </span>

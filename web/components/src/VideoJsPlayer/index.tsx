@@ -93,7 +93,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const measuredRef = useCallback(
     (node: any) => {
-      if (node !== null && typeof window !== 'undefined') {
+      if (node !== null) {
         setPlayer(getPlayer(node))
       }
     },

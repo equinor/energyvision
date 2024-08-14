@@ -1,7 +1,7 @@
 import { Typography } from '@core/Typography'
-//import { Icon } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
 import { forwardRef, HTMLAttributes } from 'react'
-//import { filter_list } from '@equinor/eds-icons'
+import { filter_list } from '@equinor/eds-icons'
 import FilterButton from '@templates/newsroom/FilterButton/FilterButton'
 import { useRefinementList, UseRefinementListProps } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -30,11 +30,11 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
   const intl = useIntl()
 
   return (
-    <section ref={ref} className="w-full flex justify-end items-center mb-4 border-b border-autumn-storm-60">
-      <div className="flex gap-2 items-center">
-        {/*         <Icon data={filter_list} className="" /> */}
-        <Typography as="h3" variant="sm" className="pr-6">
-          Filter by:
+    <section ref={ref} className="w-fit self-end flex justify-end items-center mb-4 border-b border-autumn-storm-60">
+      <div className="h-full flex gap-2 items-center">
+        <Icon data={filter_list} className="" />
+        <Typography as="h3" variant="sm" className="inline-block pr-6 leading-none">
+          <FormattedMessage id="newsroom_filters_label" defaultMessage="Filter by:" />
         </Typography>
       </div>
       <RefinementList

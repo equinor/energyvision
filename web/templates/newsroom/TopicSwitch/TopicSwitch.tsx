@@ -5,15 +5,18 @@ import { FormattedMessage } from 'react-intl'
 
 export type TopicSwitchProps = React.ComponentProps<'fieldset'> & UseRefinementListProps
 
-const TopicSwitch = forwardRef<HTMLElement, TopicSwitchProps>(function TopicSwitch({ className = '', ...rest }, ref) {
+const TopicSwitch = forwardRef<HTMLFieldSetElement, TopicSwitchProps>(function TopicSwitch(
+  { className = '', ...rest },
+  ref,
+) {
   const { items, refine } = useRefinementList(rest)
 
   return (
     <fieldset ref={ref} className="p-0">
-      <legend className="text-xs pb-2">
+      <legend className="text-xs pb-4">
         <FormattedMessage id="newsroom_topic_filter" defaultMessage="Select topic" />
       </legend>
-      <div className="border border-autumn-storm-60 rounded-md pl-1 pr-6 py-4 flex flex-col max-h-[800px] overflow-auto transparent-v-scrollbar">
+      <div className="border border-autumn-storm-60 rounded-md pl-1 pr-6 flex flex-col max-h-[800px] overflow-auto transparent-v-scrollbar">
         {items.length > 0 ? (
           items.map((item) => (
             <Checkbox

@@ -1,5 +1,5 @@
+import dynamic from 'next/dynamic'
 import { forwardRef, HTMLProps } from 'react'
-import Player from 'next-video/player'
 
 export type NextVideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
@@ -9,6 +9,8 @@ export type NextVideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   loadingSpinner?: boolean
   useBrandTheme?: boolean
 }
+
+const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
 
 export const NextVideoPlayer = forwardRef<HTMLElement, NextVideoPlayerProps>(function NextVideoPlayer(
   {
@@ -25,30 +27,39 @@ export const NextVideoPlayer = forwardRef<HTMLElement, NextVideoPlayerProps>(fun
     loadingSpinner,
     useBrandTheme = false,
     allowFullScreen,
+    loop,
     ...rest
   },
   ref,
 ) {
   const config = {
-    sources: {
-      type: 'application/x-mpegURL',
+    file: {
+      forceVideo: true,
+      attributes: {
+        muted: muted,
+        playsInline: playsInline,
+        autoPlay: autoPlay,
+        controls: controls,
+        loop: loop,
+        poster: poster,
+        src: src,
+      },
     },
-    /*     file: {
-      attributes: { poster },
-    }, */
   }
   return (
-    <Player
+    <ReactPlayer
       autoPlay={autoPlay}
-      config={config}
       controls={controls}
       title={title}
+      url={src}
       muted={muted}
       playsInline={playsInline}
-      playButton={playButton}
       allowFullScreen={allowFullScreen}
-      src={src}
-      poster={poster}
+      config={{
+        file: {
+          forceVideo: true,
+        },
+      }}
     />
   )
 })

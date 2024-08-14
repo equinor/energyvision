@@ -21,7 +21,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
       <BaseLink href={slug} className="group flex justify-between">
         <div>
           {publishDateTime && (
-            <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-medium leading-normal pb-1" />
+            <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-normal leading-normal pb-1" />
           )}
           {pageTitle && (
             <Typography as="h2" variant="base" className="max-w-text text-pretty group-hover:underline">
@@ -36,7 +36,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 800px"
               fill
-              className=""
+              className="rounded-sm"
             />
           )}
         </div>

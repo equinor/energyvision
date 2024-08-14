@@ -1,17 +1,16 @@
 import { forwardRef } from 'react'
-import { useInfiniteHits, UseInfiniteHitsProps } from 'react-instantsearch'
+import { useHits, UseHitsProps } from 'react-instantsearch'
 import { FormattedMessage } from 'react-intl'
 import NewsHeadliner from './NewsHeadliner'
 import NewsItem from './NewsItem'
-import { Button } from '@core/Button'
 
-type NewsSectionsProps = React.ComponentProps<'div'> & UseInfiniteHitsProps
+type NewsSectionsProps = React.ComponentProps<'div'> & UseHitsProps
 
 const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function NewsSections(
   { className = '', ...rest },
   ref,
 ) {
-  const { hits, showMore } = useInfiniteHits()
+  const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
     return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
@@ -26,9 +25,6 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
           <NewsItem key={hit.objectID} data={hit} />
         )
       })}
-      <Button variant="outlined" onClick={showMore} className="mx-auto my-10">
-        Show more
-      </Button>
     </div>
   )
 })

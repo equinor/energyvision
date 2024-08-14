@@ -66,6 +66,16 @@ const snippets: textSnippet = {
     defaultValue: 'Search',
     group: groups.search,
   },
+  search_quick_search: {
+    title: 'Quick search',
+    defaultValue: 'Quick search',
+    group: groups.search,
+  },
+  search_quick_search_label: {
+    title: 'Quick search label',
+    defaultValue: 'Search among Equinor corporate-level news releases',
+    group: groups.search,
+  },
   search_news_tab: {
     title: 'News tab name',
     defaultValue: 'News',
@@ -109,6 +119,16 @@ const snippets: textSnippet = {
   search_filter_by: {
     title: 'Filter by',
     defaultValue: 'Filter by',
+    group: groups.search,
+  },
+  search_pagination_first_page: {
+    title: 'First page',
+    defaultValue: 'First page',
+    group: groups.search,
+  },
+  search_pagination_last_page: {
+    title: 'Last page',
+    defaultValue: 'Last page',
     group: groups.search,
   },
   copyright: {
@@ -667,6 +687,16 @@ const snippets: textSnippet = {
     defaultValue: 'Topic',
     group: groups.newsroom,
   },
+  newsroom_filters_label: {
+    title: 'Filters label',
+    defaultValue: 'Filter by:',
+    group: groups.newsroom,
+  },
+  newsroom_filters_selected: {
+    title: 'Selected',
+    defaultValue: 'selected',
+    group: groups.newsroom,
+  },
   newsroom_country_filter: {
     title: 'Country filter heading',
     defaultValue: 'Country',
@@ -732,6 +762,21 @@ const snippets: textSnippet = {
   back_to_content: {
     title: 'Back to content',
     defaultValue: 'Back to content',
+    group: groups.others,
+  },
+  next: {
+    title: 'Next',
+    defaultValue: 'Next',
+    group: groups.others,
+  },
+  previous: {
+    title: 'Previous',
+    defaultValue: 'Previous',
+    group: groups.others,
+  },
+  page: {
+    title: 'Page',
+    defaultValue: 'Page',
     group: groups.others,
   },
 }
