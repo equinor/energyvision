@@ -30,7 +30,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
   const intl = useIntl()
 
   return (
-    <section ref={ref} className="w-full flex justify-end items-center mb-4">
+    <section ref={ref} className="w-full flex justify-end items-center mb-4 border-b border-autumn-storm-60">
       <div className="flex gap-2 items-center">
         {/*         <Icon data={filter_list} className="" /> */}
         <Typography as="h3" variant="sm" className="pr-6">

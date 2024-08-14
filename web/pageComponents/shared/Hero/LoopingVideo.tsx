@@ -1,19 +1,11 @@
+import { NextVideoPlayer } from '@core/VideoPlayer/VideoPlayer'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import styled from 'styled-components'
 import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
-import dynamic from 'next/dynamic'
-import { VideoJS } from '@components/VideoJsPlayer'
+import { Ratios } from '../SanityImage'
 
 const DEFAULT_MAX_WIDTH = 1920
 
-const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
-  {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  },
-)
-
+/* 
 const Container = styled.div<{ $aspectRatio: LoopingVideoRatio }>`
   position: relative;
   ${({ $aspectRatio }) =>
@@ -45,12 +37,16 @@ const StyledPlayer = styled(DynamicVideoJsComponent)`
     object-fit: cover;
   }
 `
-
+ */
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const { title, url, thumbnail, ratio } = video
-  const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, undefined)
+  const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, Ratios.NINE_TO_SIXTEEN)
   return (
-    <Container $aspectRatio={ratio}>
+    <div className={`relative`}>
+      <NextVideoPlayer loop muted autoPlay playButton={false} poster={thumbnailURL.src} src={url} />
+    </div>
+
+    /*     <Container $aspectRatio={ratio}>
       <StyledFigure>
         <StyledPlayer
           loop
@@ -63,6 +59,6 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
           videoDescription={thumbnail.alt}
         />
       </StyledFigure>
-    </Container>
+    </Container> */
   )
 }

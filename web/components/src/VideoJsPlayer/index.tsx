@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useEffect, HTMLProps, useState, useCallback } from 'react'
 import videojs from 'video.js'
 import Player from 'video.js/dist/types/player'
@@ -28,7 +27,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   muted,
   playsInline,
   aspectRatio,
-  onReady,
   loadingSpinner,
   useBrandTheme = false,
   useFillMode = false,
@@ -38,12 +36,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 }) => {
   const [player, setPlayer] = useState<Player | null>(null)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
-
-  const measuredRef = useCallback((node: any) => {
-    if (node !== null) {
-      setPlayer(getPlayer(node))
-    }
-  }, [])
 
   const handlePlayButton = useCallback(() => {
     if (player) {
@@ -57,10 +49,9 @@ export const VideoJS: React.FC<VideoJSProps> = ({
     }
   }, [player])
 
-  const getPlayer = (node: Element) => {
-    const player = videojs(
-      node,
-      {
+  const getPlayer = useCallback(
+    (node: Element) => {
+      const player = videojs(node, {
         sources: [
           {
             src: src,
@@ -90,17 +81,24 @@ export const VideoJS: React.FC<VideoJSProps> = ({
           },
         },
         ...rest,
-      },
-      () => {
-        onReady && onReady(player)
-      },
-    )
+      })
 
-    player.on('error', (error: MediaError) => {
-      console.log(error.message)
-    })
-    return player
-  }
+      player.on('error', (error: MediaError) => {
+        console.log(error.message)
+      })
+      return player
+    },
+    [allowFullScreen, aspectRatio, autoPlay, controls, muted, playButton, playsInline, rest, src, useFillMode],
+  )
+
+  const measuredRef = useCallback(
+    (node: any) => {
+      if (node !== null && typeof window !== 'undefined') {
+        setPlayer(getPlayer(node))
+      }
+    },
+    [getPlayer],
+  )
 
   useEffect(() => {
     return () => {

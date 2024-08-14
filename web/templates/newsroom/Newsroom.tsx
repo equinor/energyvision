@@ -205,7 +205,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                       {localNewsPagesHeading}
                     </Typography>
                     {localNewsPages?.map((localNewsPage) => {
-                      return localNewsPage.href ? (
+                      return localNewsPage ? (
                         <ReadMoreLink key={localNewsPage._key} href={localNewsPage.href}>
                           {localNewsPage?.label}
                         </ReadMoreLink>
