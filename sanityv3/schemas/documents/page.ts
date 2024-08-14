@@ -51,7 +51,7 @@ export default {
           }
 
           return true
-        }),
+        }).warning(),
     },
     ...sharedHeroFields,
     {
