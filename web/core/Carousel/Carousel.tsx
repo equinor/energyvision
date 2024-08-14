@@ -19,6 +19,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { CarouselEventItem } from './CarouselEventItem'
+import { ScrollbarEvents } from 'swiper/types'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -74,6 +75,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM
   const isMedium = useMediaQuery(`(min-width: 768px)`)
   const isLarge = useMediaQuery(`(min-width: 1024px)`)
+  const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
+
   if (isMedium) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
   }
@@ -108,6 +111,14 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         left: -calculatedOffset,
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
       })
+      const calculatedYPos = Math.abs(sliderRef?.current.scrollLeft - calculatedOffset)
+      const isAtStart = calculatedYPos <= 0 + itemWidth / 2
+      if (scrollPosition === 'end') {
+        setScrollPosition('middle')
+      }
+      if (isAtStart) {
+        setScrollPosition('start')
+      }
     }
   }
 
@@ -125,6 +136,15 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         left: calculatedOffset,
         behavior: 'smooth',
       })
+      const calculatedYPos = Math.abs(sliderRef?.current.scrollLeft + calculatedOffset)
+      const maxW = sliderRef?.current.scrollWidth - sliderRef?.current.clientWidth
+      const isAtEnd = calculatedYPos >= maxW - itemWidth / 2
+      if (scrollPosition === 'start') {
+        setScrollPosition('middle')
+      }
+      if (isAtEnd) {
+        setScrollPosition('end')
+      }
     }
   }
 
@@ -199,7 +219,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
 
   const listVariantClassName = {
-    video: 'flex gap-3 lg:gap-12 w-full h-full overflow-y-hidden',
+    video: 'flex gap-3 lg:gap-12 w-full h-full overflow-y-hidden no-scrollbar',
     image: `${
       displayMode === 'single'
         ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
@@ -310,9 +330,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         )}
         <div className="flex gap-3 items-center">
           <MediaButton
-            title={`Go to slide `}
+            title={`Go to previous`}
             aria-controls={carouselItemsId}
             mode="previous"
+            disabled={displayMode === 'scroll' && scrollPosition === 'start'}
             onClick={() => {
               if (variant === 'image' && displayMode === 'single') {
                 loopSlidePrev()
@@ -329,6 +350,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             title={`Go to next`}
             mode="next"
             aria-controls={carouselItemsId}
+            disabled={displayMode === 'scroll' && scrollPosition === 'end'}
             onClick={() => {
               if (variant === 'image' && displayMode === 'single') {
                 loopSlideNext()

@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import { getEventDates } from '../../../../common/helpers/dateUtilities'
 import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
-import { useIntl } from 'react-intl'
+import { FormattedDateParts, useIntl } from 'react-intl'
 import { BaseLink } from '@core/Link'
 import Blocks from '../../../../pageComponents/shared/portableText/Blocks'
 import FormattedDateTime from '@core/FormattedDateTime/FormattedDateTime'
@@ -38,10 +38,9 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
       className={twMerge(
         `h-full
         w-full
-        flex
+        grid
+        grid-cols-[18%_auto]
         flex-col
-        pt-6
-        pb-10
         dark:text-white-100
         group
       `,
@@ -49,14 +48,34 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
       )}
       {...rest}
     >
-      {start && <FormattedDateTime date={start} className="uppercase pb-3" timeClassName="text-xs" hideIcon />}
-      <Heading
-        value={title}
-        as={hasSectionTitle ? 'h3' : 'h2'}
-        variant="h5"
-        className="text-base pb-4 group-hover:underline"
-      />
-      {ingress && <Blocks value={ingress} className="text-xs max-w-prose text-pretty" />}
+      <div className="w-full h-full aspect-square bg-norwegian-woods-100 text-white-100 flex justify-center items-center p-2">
+        {/*   {start && <FormattedDateTime date={start} className="uppercase pb-3" timeClassName="text-sm" hideIcon />} */}
+        {start && (
+          <FormattedDateParts value={start} year="numeric" month="short" day="2-digit">
+            {(parts) => {
+              return (
+                <div className="flex flex-col gap-4 justify-start items-center">
+                  <span className="text-md">{`${parts[0].value} ${parts[2].value}`}</span>
+                  {/*                   <div className="flex flex-col">
+                    <span className="text-lg">{parts[0].value}</span>
+                    <span className="text-base">{parts[2].value}</span>
+                  </div> */}
+                  <span className="text-sm">{parts[4].value}</span>
+                </div>
+              )
+            }}
+          </FormattedDateParts>
+        )}
+      </div>
+      <div className="px-6 py-6">
+        <Heading
+          value={title}
+          as={hasSectionTitle ? 'h3' : 'h2'}
+          variant="h5"
+          className="text-base pb-4 group-hover:underline"
+        />
+        {ingress && <Blocks value={ingress} className="text-xs max-w-prose text-pretty" />}
+      </div>
     </BaseLink>
   )
 })
