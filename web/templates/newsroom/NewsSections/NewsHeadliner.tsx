@@ -26,7 +26,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
               priority
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 1440px"
-              className="rounded-sm"
+              className="rounded-xs"
             />
           </div>
         )}

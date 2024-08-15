@@ -16,7 +16,7 @@ const TopicSwitch = forwardRef<HTMLFieldSetElement, TopicSwitchProps>(function T
       <legend className="text-xs pb-4">
         <FormattedMessage id="newsroom_topic_filter" defaultMessage="Select topic" />
       </legend>
-      <div className="border border-autumn-storm-60 rounded-md pl-1 pr-6 flex flex-col max-h-[800px] overflow-auto transparent-v-scrollbar">
+      <div className="border border-autumn-storm-60 rounded-md pl-1 pr-6 flex flex-col max-h-[250px] lg:max-h-[800px] overflow-auto transparent-v-scrollbar">
         {items.length > 0 ? (
           items.map((item) => (
             <Checkbox

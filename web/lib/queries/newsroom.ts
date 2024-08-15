@@ -1,4 +1,4 @@
-import { linkReferenceFields } from './common/actions/linkSelectorFields'
+import linkSelectorFields, { linkReferenceFields } from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 import { noDrafts, sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
@@ -20,7 +20,7 @@ export const newsroomQuery = /* groq */ `
     subscriptionLinkTitle,
     localNewsPagesHeading,
     localNewsPages[]{
-      ...
+      ${linkSelectorFields},
     },
     backgroundImage
   }`

@@ -269,6 +269,9 @@ module.exports = {
       minWidth: {
         viewport: '375',
       },
+      borderRadius: {
+        xs: '0.1rem',
+      },
       padding: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',

@@ -12,7 +12,7 @@ type OptionListProps = {
 }
 
 const OptionList = forwardRef<HTMLUListElement, OptionListProps>(function FilterButton(
-  { optionsList = [], onChange, ...rest },
+  { optionsList = [], onChange },
   ref,
 ) {
   return (
@@ -27,7 +27,7 @@ const OptionList = forwardRef<HTMLUListElement, OptionListProps>(function Filter
               value={item.value}
               label={`${item.label} (${item.count})`}
               checked={Boolean(item.isRefined)}
-              onChange={(e) => onChange(item.value)}
+              onChange={() => onChange(item.value)}
             />
           )
         })}

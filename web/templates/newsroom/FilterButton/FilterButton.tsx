@@ -21,11 +21,10 @@ type FilterButtonProps = {
   optionsList: any[]
   onChange: (value: string) => void
   filterName: string
-  listLabel?: string
 }
 
 const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function FilterButton(
-  { optionsList = [], onChange, filterName, listLabel, ...rest },
+  { optionsList = [], onChange, filterName },
   ref,
 ) {
   const [isOpen, setIsOpen] = useState(false)
@@ -53,6 +52,11 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
           defaultMessage: 'selected',
         })}`
       : `${filterName}`
+
+  const handleChange = (itemValue: string) => {
+    onChange && onChange(itemValue)
+    setIsOpen(false)
+  }
 
   const handleClose = () => {
     setIsOpen(false)
@@ -100,7 +104,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
           border-y-autumn-storm-60 rounded-b-[0.42rem] z-[1400]"
           >
             <div className="overflow-y-auto min-w-[250px] max-h-[350px] transparent-v-scrollbar">
-              {optionsList && <OptionList onChange={onChange} optionsList={optionsList} />}
+              {optionsList && <OptionList onChange={handleChange} optionsList={optionsList} />}
             </div>
             <div className="w-full flex rounded-b-md">
               <Button

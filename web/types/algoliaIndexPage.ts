@@ -40,7 +40,7 @@ export type NewsRoomPageType = {
   newsTopicTagList?: Tag[]
   newsCountryTagList?: Tag[]
   subscriptionHeading?: string
-  subscriptionLink?: LinkData
+  subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
   localNewsPagesHeading?: string
   localNewsPages?: LinkData[]

@@ -13,11 +13,10 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import { UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
-import { algolia } from '../../lib/config'
-import algoliasearch from 'algoliasearch'
+import { searchClient } from '../../lib/algolia'
 import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 
@@ -29,10 +28,10 @@ type NewsRoomTemplateProps = {
   url?: string
 }
 
-const client = algoliasearch(algolia.applicationId, algolia.searchApiKey)
+//const client = algoliasearch(algolia.applicationId, algolia.searchApiKey)
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
-  { isServerRendered, locale, pageData, slug, url, ...rest },
+  { isServerRendered, locale, pageData, slug, url },
   ref,
 ) {
   const {
@@ -45,8 +44,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     localNewsPagesHeading,
     localNewsPages,
   } = pageData || {}
-
-  const intl = useIntl()
 
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -148,13 +145,13 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
-      <main ref={ref} className="px-layout-sm">
-        <div className="w-2/3">
-          <Heading value={title} variant="h1" />
+      <main ref={ref} className="">
+        <div className="lg:w-2/3 px-layout-sm">
+          {title && <Heading value={title} variant="h1" />}
           <div className="border-y border-autumn-storm-40 py-4">
             <FormattedDate
               suppressHydrationWarning
-              datetime={new Date()}
+              datetime={new Date().toString()}
               weekday="long"
               day="numeric"
               year="numeric"
@@ -162,31 +159,34 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             />
           </div>
         </div>
-        {ingress && <Blocks value={ingress} />}
+        {ingress && <Blocks value={ingress} className="px-layout-sm" />}
         <InstantSearch
-          /*           searchClient={
+          searchClient={
             isServerRendered
               ? searchClient({
                   headers: {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
                     Referer: url,
                   },
                 })
               : searchClient(undefined)
-          } */
-          searchClient={client}
+          }
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
           routing={routing}
         >
           <Configure
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
             facetingAfterDistinct
             maxFacetHits={50}
             maxValuesPerFacet={100}
             facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
           />
 
-          <div className="flex flex-col gap-12">
-            <div>
+          <div className="flex flex-col gap-8 lg:gap-12">
+            <div className="px-layout-sm">
               <Typography as="h2" variant="h6" className="max-w-text pt-12 pb-4">
                 <FormattedMessage
                   id="search_quick_search_label"
@@ -195,11 +195,11 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
               </Typography>
               <QuickSearch />
             </div>
-            <div className="grid grid-cols-[22vw_auto] gap-12">
-              <aside className="self-start sticky top-0 flex flex-col gap-6 pt-7 pb-8">
+            <div className="flex flex-col lg:grid lg:grid-cols-[22vw_auto] gap-8 lg:gap-12 lg:px-layout-sm">
+              <aside className="lg:self-start lg:sticky lg:top-0 flex flex-col gap-4 lg:gap-6 lg:pt-7 lg:pb-8 max-lg:px-layout-sm">
                 <TopicSwitch limit={50} attribute="topicTags" />
                 {subscriptionLink?.slug && subscriptionHeading && (
-                  <div className="bg-spruce-wood-100 px-8 py-6">
+                  <div className="bg-spruce-wood-100 px-6 lg:px-8 py-4 lg:py-6">
                     <Typography as="h2" variant="h6" className="font-medium pb-4">
                       {subscriptionHeading}
                     </Typography>
@@ -207,13 +207,13 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   </div>
                 )}
                 {localNewsPages && localNewsPages?.length > 0 && localNewsPagesHeading && (
-                  <div className="bg-moss-green-50 px-8 py-6">
+                  <div className="bg-moss-green-50 px-6 lg:px-8 py-4 lg:py-6">
                     <Typography as="h2" variant="h6" className="font-medium pb-4">
                       {localNewsPagesHeading}
                     </Typography>
                     {localNewsPages?.map((localNewsPage) => {
-                      return localNewsPage ? (
-                        <ReadMoreLink key={localNewsPage._key} href={localNewsPage.href}>
+                      return localNewsPage?.link?.slug ? (
+                        <ReadMoreLink key={localNewsPage.id} type={localNewsPage.type} href={localNewsPage?.link?.slug}>
                           {localNewsPage?.label}
                         </ReadMoreLink>
                       ) : null
@@ -221,7 +221,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   </div>
                 )}
               </aside>
-              <div className="flex flex-col">
+              <div className="flex flex-col max-lg:px-4">
                 <NewsRoomFilters />
                 <NewsSections />
                 <Pagination hitsPerPage={20} className="w-full justify-center py-12" />

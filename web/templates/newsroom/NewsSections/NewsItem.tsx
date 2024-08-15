@@ -18,7 +18,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
 
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
-      <BaseLink href={slug} className="group flex justify-between">
+      <BaseLink href={slug} className="group grid grid-cols-[1fr_25vw] lg:grid-cols-[1fr_10vw] gap-4 lg:gap-6">
         <div>
           {publishDateTime && (
             <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-normal leading-normal pb-1" />
@@ -29,14 +29,14 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
             </Typography>
           )}
         </div>
-        <div className="lg:w-[173px] h-full aspect-video relative">
+        <div className="lg:w-[173px] h-full aspect-5/4 lg:aspect-video relative">
           {heroImage && (
             <Image
               image={heroImage?.image}
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 800px"
               fill
-              className="rounded-sm"
+              className="rounded-xs"
             />
           )}
         </div>
