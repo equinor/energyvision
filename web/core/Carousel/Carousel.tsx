@@ -225,7 +225,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
         : 'flex gap-3 md:gap-8 lg:gap-12 w-full h-full overflow-y-hidden'
     }`,
-    event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden`,
+    event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden no-scrollbar`,
   }
   const listDisplayModeClassName = {
     scroll: 'snap-mandatory snap-x overflow-x-scroll',
