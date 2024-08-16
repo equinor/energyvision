@@ -32,8 +32,6 @@ const getHeightWidth = (aspectRatio: string, height?: number | string) => {
         return 'h-[56.25%] w-full'
       case VideoPlayerRatios['9:16']:
         return 'h-[569px] w-[320px] sm:h-[600px] sm:w-[337.5px]'
-      case VideoPlayerRatios['3:2']:
-        return 'w-full h-full'
       default:
         return 'w-full h-full'
     }
@@ -57,16 +55,6 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
       return {
         width: 600,
         height: 600,
-      }
-    case VideoPlayerRatios['3:2']:
-      return {
-        width: 800,
-        height: 533,
-      }
-    case VideoPlayerRatios['16:10']:
-      return {
-        width: 800,
-        height: 500,
       }
     default:
       return {

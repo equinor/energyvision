@@ -1,4 +1,4 @@
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
+import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { noDrafts, sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
@@ -7,17 +7,17 @@ import {
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
-import { publishDateTimeQuery } from './common/publishDateTime'
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './common/publishDateTime'
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
 
 const latestNewsFields = /* groq */ `
   "id": _id,
-  "updatedAt": _updatedAt,
+  "updatedAt": ${lastUpdatedTimeQuery},
   title,
   heroImage,
-  ${slugsForNewsAndMagazine('news')},
+  ${slugsForNewsAndMagazine},
   ${ingressForNewsQuery},
   "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
@@ -26,11 +26,11 @@ const latestNewsFields = /* groq */ `
 
 const newsFields = /* groq */ `
   "id": _id,
-  "updatedAt": _updatedAt,
+  "updatedAt": ${lastUpdatedTimeQuery},
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
-  ${slugsForNewsAndMagazine('news')},
+  ${slugsForNewsAndMagazine},
   ${ingressForNewsQuery},
   "iframe": ${iframeForNewsQuery},
   "content": ${contentForNewsQuery},
@@ -54,7 +54,7 @@ export const newsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${newsFields}
-  }
+  }${querySuffixForNewsAndMagazine}
 `
 
 export const newsPromotionQuery = /* groq */ `
@@ -70,7 +70,7 @@ export const newsPromotionQuery = /* groq */ `
   ] | order(${publishDateTimeQuery} desc)[0...3]{
     "type": _type,
     "id": _id,
-    "updatedAt": _updatedAt,
+    "updatedAt":  ${lastUpdatedTimeQuery},
     title,
     heroImage,
     "publishDateTime": ${publishDateTimeQuery},

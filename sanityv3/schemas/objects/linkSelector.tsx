@@ -69,16 +69,16 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       hidden: ({ parent }: { parent: LinkSelector }) => parent?.linkToOtherLanguage || isHidden(parent),
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
-          const { parent, document } = context as { parent: LinkSelector; document: { _lang?: string } }
+          const { parent, document } = context as { parent: LinkSelector; document: { lang?: string } }
           if (isHidden(parent)) return true
           if (parent?.linkToOtherLanguage) return true
           if (value?._ref) {
             const referenceLang = await context
               .getClient({ apiVersion: apiVersion })
-              .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->_lang, _lang)}.lang`, {
+              .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`, {
                 id: value._ref,
               })
-            if (document._lang ? document._lang !== referenceLang : defaultLanguage.name !== referenceLang)
+            if (document.lang ? document.lang !== referenceLang : defaultLanguage.name !== referenceLang)
               return 'Reference must have the same language as the document'
           }
           return validateInternalOrExternalUrl(value, parent?.url)
