@@ -1,13 +1,7 @@
-import styled from 'styled-components'
 import type { HeroType, ImageWithCaptionData } from 'types'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import Image, { Ratios } from '../SanityImage'
 import { StyledCaption } from '../image/StyledCaption'
-
-const ImgWrapper = styled.div`
-  height: calc(100vh - var(--topbar-height));
-  position: relative;
-`
 
 type FullImageHeroType = {
   figure: ImageWithCaptionData
@@ -15,14 +9,6 @@ type FullImageHeroType = {
 }
 
 const imageSizes = '100vw'
-
-const FullScreenHero = ({ figure }: FullImageHeroType) => {
-  return (
-    <ImgWrapper>
-      <Image maxWidth={2560} image={figure.image} fill sizes={imageSizes} priority />
-    </ImgWrapper>
-  )
-}
 
 const NarrowHero = ({ figure }: FullImageHeroType) => {
   // 4:3 for small screens and 10:3 for large screens
@@ -60,8 +46,6 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
   const getHero = () => {
     if (figure)
       switch (ratio) {
-        case 'fullScreen':
-          return <FullScreenHero figure={figure} />
         case 'narrow':
           return <NarrowHero figure={figure} />
         case 'tall':
