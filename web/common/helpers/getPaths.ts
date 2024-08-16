@@ -40,7 +40,6 @@ const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
       blacklist,
     },
   )
-  console.log('data', data)
   return data
 }
 
