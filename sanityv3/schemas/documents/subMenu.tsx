@@ -8,6 +8,7 @@ import type { Rule, ValidationContext, Reference } from 'sanity'
 import routes from '../routes'
 import { filterByRoute, filterByRouteNewsMagazineAndTitle } from '../../helpers/referenceFilters'
 import { Flags } from '../../src/lib/datasetHelpers'
+import { lang } from './langField'
 
 export type SubMenu = {
   _type: 'subMenu'
@@ -46,6 +47,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Menu label',
       name: 'label',

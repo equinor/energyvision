@@ -2,7 +2,7 @@
 import { forwardRef, ElementType, HTMLAttributes, AnchorHTMLAttributes } from 'react'
 import { TypographyGroups, TypographyVariants, quickVariants, variants } from './variants'
 import { OverridableComponent } from '@equinor/eds-utils'
-import { twMerge } from 'tailwind-merge'
+import envisTwMerge from '../../twMerge'
 
 const getElementType = (variant: string, link: boolean): ElementType => {
   if (link) {
@@ -18,6 +18,7 @@ const getElementType = (variant: string, link: boolean): ElementType => {
       return variant
     case 'caption':
     case 'ingress':
+    case 'overline':
     case 'body':
     default:
       return 'p'
@@ -77,12 +78,10 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
   if (typeof typography === 'undefined') {
     throw new Error(`Typography variant not found for variant "${variant}" ("${variant}") & group "${group || ''}"`)
   }
-  const classNames = twMerge(typography, className)
-
   const TypographyTag = as ?? (`p` as React.ElementType)
 
   return (
-    <TypographyTag {...rest} ref={ref} className={`${classNames}`}>
+    <TypographyTag {...rest} ref={ref} className={envisTwMerge(typography, className)}>
       {children}
     </TypographyTag>
   )

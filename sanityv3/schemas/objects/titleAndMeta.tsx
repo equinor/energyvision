@@ -26,7 +26,9 @@ export default {
   title: 'Fields for title and description meta',
   name: 'titleAndMeta',
   type: 'object',
-  validation: (Rule: Rule) => [Rule.required().warning('Please pay attention to SEO')],
+  validation: (Rule: Rule) => [
+    Rule.required().warning('It is recommended to complete the SEO fields for better search visibility'),
+  ],
   fields: [
     {
       name: 'documentTitle',
@@ -37,13 +39,13 @@ export default {
       type: 'string',
 
       validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.required().warning('The document title is very important for SEO'),
+        Rule.required().warning('Ensure the document title is optimized for SEO'),
     },
     {
       name: 'metaDescription',
       title: 'Meta description',
       validation: (Rule: Rule) => [
-        Rule.required().warning('Meta description is important for SEO'),
+        Rule.required().warning('Provide an SEO-friendly meta description'),
         Rule.max(160).warning('Google recommends max. 160 chars'),
       ],
       description: `Meta descriptions are HTML attributes that provide concise summaries of webpages.

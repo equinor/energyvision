@@ -1,31 +1,7 @@
 import { languages } from '../languages'
 
 // Document types
-import pageNotFound from './documents/404'
-import internalServerError from './documents/500'
-import assetFile from './documents/assetFile'
-import assetTag from './documents/assetTag'
-import countryTag from './documents/countryTag'
-import event from './documents/event'
-import eventTag from './documents/eventTag'
-import externalRedirect from './documents/externalRedirect'
-import footer from './documents/footer'
-import landingPage from './documents/landingPage'
-import localNews from './documents/localNews'
-import localNewsTag from './documents/localNewsTag'
-import magazine from './documents/magazine'
-import magazineIndex from './documents/magazineIndexPage'
-import magazineTag from './documents/magazineTag'
-import news from './documents/news'
-import newsroom from './documents/newsroom'
-import page from './documents/page'
-import redirect from './documents/redirect'
-import route from './documents/route'
-import routeHomepage from './documents/routeHomepage'
-import simpleMenu from './documents/simpleMenu'
-import siteMenu from './documents/siteMenu'
-import subMenu from './documents/subMenu'
-import tag from './documents/tag'
+import documentSchemaTypes from './documents'
 
 // Objects
 import { Flags } from '../src/lib/datasetHelpers'
@@ -103,6 +79,34 @@ import gridTeaser from './objects/grid/cellTypes/gridTeaser'
 import threeColumns from './objects/grid/rowTypes/3columns'
 import gridColorTheme from './objects/grid/theme'
 import transcript from './objects/transcript'
+
+const {
+  pageNotFound,
+  internalServerError,
+  assetFile,
+  assetTag,
+  countryTag,
+  event,
+  eventTag,
+  landingPage,
+  footer,
+  externalRedirect,
+  localNews,
+  localNewsTag,
+  magazine,
+  magazineTag,
+  magazineIndex,
+  route,
+  redirect,
+  newsroom,
+  news,
+  page,
+  tag,
+  subMenu,
+  siteMenu,
+  simpleMenu,
+  routeHomepage,
+} = documentSchemaTypes
 
 const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)

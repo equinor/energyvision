@@ -11,31 +11,6 @@ const StyledCard = styled(Card)`
   --card-gap: var(--space-large);
 `
 
-const StyledLink = styled(CardLink)`
-  display: inline-block;
-`
-
-const TagsContainer = styled.div`
-  overflow-x: scroll;
-  white-space: nowrap;
-  flex-wrap: nowrap;
-  gap: var(--space-medium);
-  display: flex;
-  padding: 0 var(--space-medium) var(--space-medium);
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  @media (min-width: 1024px) {
-    flex-wrap: wrap;
-    overflow: overlay;
-  }
-`
-const Tag = styled.span`
-  color: var(--moss-green-100);
-  font-weight: var(--fontWeight-medium);
-  font-size: var(--typeScale-0);
-`
 type MagazineCardProp = {
   data: MagazineCardData
   fitToContent?: boolean
@@ -59,10 +34,11 @@ const getThumbnail = (data: MagazineCardData) => {
 const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp) => {
   const { slug, title, tags } = data
   const thumbnail = getThumbnail(data)
+
   if (!thumbnail) return null
 
   return (
-    <StyledLink href={slug} prefetch={false} {...rest}>
+    <CardLink className="inline-block" href={slug} prefetch={false} {...rest}>
       <StyledCard
         style={
           {
@@ -80,14 +56,19 @@ const MagazineCard = ({ data, fitToContent = false, ...rest }: MagazineCardProp)
           <Arrow />
         </Action>
         {tags && tags.length > 0 && (
-          <TagsContainer>
-            {tags.map((tag: string) => (
-              <Tag key={tag}>{tag}</Tag>
-            ))}
-          </TagsContainer>
+          <div className="relative flex items-center">
+            <div className="gap-x-1 px-4 pt-0 pb-4">
+              {tags.map((tag: string, index: number) => (
+                <span className="text-moss-green-100 font-medium text-xs" key={tag}>
+                  {tag}
+                  {index < tags.length - 1 && ', '}
+                </span>
+              ))}
+            </div>
+          </div>
         )}
       </StyledCard>
-    </StyledLink>
+    </CardLink>
   )
 }
 
