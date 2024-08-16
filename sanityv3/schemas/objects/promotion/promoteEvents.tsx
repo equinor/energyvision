@@ -49,8 +49,8 @@ export default {
       name: 'upcomingEventsCount',
       title: 'How many number of future events to show?',
       type: 'number',
-      description: 'Leave empty to show all the future events (max limit 50).',
-      validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
+      description: 'Leave empty to show all the future events (min 2, max limit 50).',
+      validation: (Rule: Rule) => Rule.integer().positive().greaterThan(1).lessThan(50),
     },
     {
       name: 'promoteSingleUpcomingEvent',
