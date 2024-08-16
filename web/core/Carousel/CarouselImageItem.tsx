@@ -26,17 +26,23 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       aria-hidden={!active}
       aria-roledescription="slide"
       className={envisTwMerge(
-        `aspect-4/5
+        `
+        aspect-4/5
         md:aspect-video
         relative
         h-full
-        ${!active && displayMode === 'single' ? 'opacity-30' : ''}
+        ${
+          displayMode === 'single'
+            ? `
         transition-opacity
         duration-1000
-        ease-[ease]
+        ease-[ease]`
+            : 'shrink-0'
+        }
+        ${!active && displayMode === 'single' ? 'opacity-30' : ''}
         ${
           displayMode === 'scroll'
-            ? 'snap-center scroll-ml-6 shrink-0'
+            ? 'w-[80%] snap-center scroll-ml-6'
             : 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] ms-2 me-2 col-start-1 col-end-1 row-start-1 row-end-1'
         }
         `,
