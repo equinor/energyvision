@@ -7,6 +7,8 @@ import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import { FormattedDateParts, useIntl } from 'react-intl'
 import { BaseLink } from '@core/Link'
+import { Icon } from '@equinor/eds-core-react'
+import { world } from '@equinor/eds-icons'
 
 export type PastEventsListItemProps = {
   event: EventCardData
@@ -64,9 +66,17 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
           className="text-base pb-4 group-hover:underline text-pretty max-w-text"
         />
         {location && (
-          <Typography variant="body" className="text-sm text-pretty max-w-text">
-            {location}
-          </Typography>
+          <div className="flex gap-sm items-start">
+            <Icon
+              data={world}
+              color={'currentColor'}
+              style={{ fontSize: 'var(--typeScale-0)' }}
+              className="text-norwegian-woods-100"
+            />
+            <Typography variant="body" className="text-sm text-pretty max-w-text">
+              {location}
+            </Typography>
+          </div>
         )}
       </div>
     </BaseLink>
