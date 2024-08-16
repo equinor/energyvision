@@ -45,7 +45,6 @@ const MultipleEventCards = ({
           {data?.length <= 4 || isMobile ? (
             <ul
               className={` 
-                max-lg:w-full
                 grid 
                 gap-y-3
                 gap-x-4
