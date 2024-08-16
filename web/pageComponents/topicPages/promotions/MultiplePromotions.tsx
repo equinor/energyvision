@@ -20,10 +20,12 @@ const MultiplePromotions = ({
   variant,
   hasSectionTitle,
   eventPromotionSettings,
+  labelledbyId,
 }: {
   data: CardData[] | PeopleCardData[] | EventCardData[]
   variant: PromotionType
   hasSectionTitle: boolean
+  labelledbyId?: string
   eventPromotionSettings?: EventPromotionSettings
   useHorizontalScroll?: boolean | undefined
 }) => {
@@ -92,6 +94,7 @@ const MultiplePromotions = ({
             hasSectionTitle={hasSectionTitle}
             eventPromotionSettings={eventPromotionSettings}
             renderScroll={false}
+            labelledbyId={labelledbyId}
           />
         )}
       </>

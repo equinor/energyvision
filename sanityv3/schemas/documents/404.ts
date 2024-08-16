@@ -36,6 +36,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',
