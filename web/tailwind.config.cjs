@@ -85,6 +85,7 @@ module.exports = {
         'spruce-wood': {
           100: 'hsl(25, 100%, 92%)',
           90: colors['spruce-wood'][90],
+          70: 'hsl(26, 100%, 97%)',
         },
         'heritage-red': {
           100: 'hsl(343, 100%, 25%)',
@@ -180,7 +181,9 @@ module.exports = {
         'autumn-storm': {
           60: '#86A7AC',
           50: '#B5C7C9',
-          40: '#E3EDEA',
+          40: '#C2D4D6',
+          30: '#D3DFDE',
+          20: '#E3EDEA',
         },
 
         'modal-background': {
@@ -281,18 +284,22 @@ module.exports = {
         'page-content': 'theme(spacing.20)',
       },
       boxShadow: {
-        card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px, rgba(0, 0, 0, 0.20) 0px 1px 2px',
+        card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px',
         'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
       },
       aspectRatio: {
         '4/5': '0.8',
         '5/4': '1.25',
+        '9/16': '0.56',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
+      },
+      transitionTimingFunction: {
+        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)', //'cubic-bezier(0.23, 1, 0.32, 1)',
       },
       keyframes: {
         reveal: {
@@ -311,11 +318,18 @@ module.exports = {
           '0%, 100%': { opacity: '0' },
           '20%, 80%': { opacity: '1' },
         },
+        move: {
+          to: {
+            transform: 'translateX(calc(-100%+100vw))',
+          },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
+        move: 'auto linear move forwards',
+        'spin-slow': 'spin 3s linear infinite',
       },
       typography: (theme) => ({
         DEFAULT: {
