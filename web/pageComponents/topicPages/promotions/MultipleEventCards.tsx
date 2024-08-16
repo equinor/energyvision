@@ -28,6 +28,10 @@ const MultipleEventCards = ({
       )
     })
   }
+  if (eventPromotionSettings?.upcomingEventsCount) {
+    data = data.slice(0, eventPromotionSettings.upcomingEventsCount)
+  }
+
   if (eventPromotionSettings?.promotePastEvents && eventPromotionSettings?.pastEventsCount) {
     data = data.slice(0, eventPromotionSettings.pastEventsCount)
   }
@@ -40,7 +44,7 @@ const MultipleEventCards = ({
         <>
           {data?.length <= 4 || isMobile ? (
             <ul
-              className=" 
+              className={` 
                 max-lg:w-full
                 grid 
                 gap-y-3
@@ -49,8 +53,7 @@ const MultipleEventCards = ({
                 justify-center
                 content-center
                 auto-rows-auto
-                md:grid-cols-3
-                md:grid-rows-1"
+                md:${data.length === 2 ? 'grid-cols-2 grid-rows-1' : 'grid-cols-3 grid-rows-1'}`}
             >
               {data.map((item) => {
                 return (

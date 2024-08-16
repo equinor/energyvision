@@ -66,7 +66,10 @@ const MultiplePromotions = ({
   }
 
   let closestToTodayIndex = undefined
-  if (variant === 'promoteEvents' && eventPromotionSettings?.promoteSingleUpcomingEvent) {
+  if (
+    variant === 'promoteEvents' &&
+    (eventPromotionSettings?.promoteSingleUpcomingEvent || eventPromotionSettings?.upcomingEventsCount === 1)
+  ) {
     const events = data as EventCardData[]
     closestToTodayIndex = closestIndexTo(
       new Date(),
@@ -77,7 +80,9 @@ const MultiplePromotions = ({
   if (variant === 'promoteEvents') {
     return (
       <>
-        {eventPromotionSettings?.promoteSingleUpcomingEvent && closestToTodayIndex ? (
+        {typeof closestToTodayIndex === 'number' &&
+        closestToTodayIndex >= 0 &&
+        (eventPromotionSettings?.promoteSingleUpcomingEvent || eventPromotionSettings?.upcomingEventsCount === 1) ? (
           <EventCard
             data={data[closestToTodayIndex] as EventCardData}
             hasSectionTitle={hasSectionTitle}
