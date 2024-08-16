@@ -249,4 +249,31 @@
         clip-path var(--transition-duration) var(--transition-easing);
     }
   }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
+    }
+  }
+  @supports selector(::-webkit-scrollbar) {
+    .transparent-scrollbar::-webkit-scrollbar {
+      @apply bg-transparent h-2 my-2;
+    }
+    .transparent-scrollbar::-webkit-scrollbar-track {
+      @apply my-[2px];
+    }
+    .transparent-scrollbar::-webkit-scrollbar-thumb {
+      @apply bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }

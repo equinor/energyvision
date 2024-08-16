@@ -13,9 +13,9 @@ import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
+import TranscriptAndActions from './TranscriptAndActions'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from './portableText/Blocks'
-import TranscriptAndActions from './TranscriptAndActions'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),

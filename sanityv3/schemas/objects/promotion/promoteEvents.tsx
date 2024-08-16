@@ -4,6 +4,8 @@ import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
 import { EventPromotionPreview } from '../../components/EventPromotion'
 import { EventPromotionInput } from '../../components/EventPromotion/EventPromotionInput'
+import { EventPromotionPreview } from '../../components/EventPromotion'
+import { EventPromotionInput } from '../../components/EventPromotion/EventPromotionInput'
 
 export type EventPromotion = {
   _key: string
