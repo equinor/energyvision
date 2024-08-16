@@ -21,6 +21,7 @@ module.exports = {
     './sections/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
   ],
+  safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.
@@ -121,7 +122,7 @@ module.exports = {
         blue: {
           //--mid-blue
           //--bg-mid-blue
-          //north-sea-80
+          //north-sea-70
           50: colors.blue[50],
         },
         orange: {
@@ -152,11 +153,12 @@ module.exports = {
         },
         'north-sea': {
           100: '#243746',
-          90: '#2A4D74',
-          80: '#49709C',
-          70: '#7294BB',
-          60: '#A8C3DB',
-          50: '#DFF5FF',
+          90: '#051b33',
+          80: '#2A4D74',
+          70: '#49709C',
+          60: '#7294BB',
+          50: '#A8C3DB',
+          40: '#DFF5FF',
         },
         'norwegian-woods': {
           100: '#007079',
@@ -179,6 +181,10 @@ module.exports = {
           60: '#86A7AC',
           50: '#B5C7C9',
           40: '#E3EDEA',
+        },
+
+        'modal-background': {
+          100: 'hsla(212, 82%, 11%, 1)',
         },
       }),
       boxShadowColor: {
