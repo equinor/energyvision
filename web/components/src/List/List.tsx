@@ -3,12 +3,12 @@ import { List as EdsList, ListProps as EdsListProps } from '@equinor/eds-core-re
 import styled from 'styled-components'
 
 export type ListProps = {
-  $unstyled?: boolean
-  $centered?: boolean
-  $splitList?: boolean
+  unstyled?: boolean
+  centered?: boolean
+  splitList?: boolean
 } & EdsListProps
 
-const StyledList = styled(EdsList)<ListProps>`
+const StyledList = styled(EdsList)<{ $unstyled?: boolean; $centered?: boolean; $splitList?: boolean }>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-3);
   /* EDS list removes margin */
@@ -39,15 +39,15 @@ const StyledList = styled(EdsList)<ListProps>`
 `
 
 export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(function List(
-  { $unstyled = false, $centered = false, $splitList = false, style, children, ...rest },
+  { unstyled = false, centered = false, splitList = false, style, children, ...rest },
   ref,
 ) {
   return (
     <StyledList
       ref={ref}
-      $unstyled={$unstyled}
-      $centered={$centered}
-      $splitList={$splitList}
+      $unstyled={unstyled}
+      $centered={centered}
+      $splitList={splitList}
       style={
         {
           ...style,

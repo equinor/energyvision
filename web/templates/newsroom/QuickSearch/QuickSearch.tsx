@@ -8,7 +8,7 @@ export type QuickSearchProps = {
   className?: string
 } & SearchBoxProps
 
-const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickSearch({ className = '' }, ref) {
+const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickSearch(_props, ref) {
   const intl = useIntl()
   const getResetIcon = () => <Icon data={close} />
   const queryHook = (query: any, search: any) => {

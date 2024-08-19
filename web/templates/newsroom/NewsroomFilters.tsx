@@ -5,6 +5,7 @@ import { filter_list } from '@equinor/eds-icons'
 import FilterButton from '@templates/newsroom/FilterButton/FilterButton'
 import { useRefinementList, UseRefinementListProps } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
+import envisTwMerge from '../../twMerge'
 
 type NewsRoomFiltersProps = HTMLAttributes<HTMLDivElement>
 
@@ -26,11 +27,20 @@ const RefinementList = ({ filterName, ...rest }: RefinementListProps) => {
   )
 }
 
-const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(function NewsRoomFilters({ ...props }, ref) {
+const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(function NewsRoomFilters(
+  { className = '' },
+  ref,
+) {
   const intl = useIntl()
 
   return (
-    <section ref={ref} className="w-fit self-end flex justify-end items-center mb-4 border-b border-autumn-storm-60 ">
+    <section
+      ref={ref}
+      className={envisTwMerge(
+        `w-fit self-end flex justify-end items-center mb-4 border-b border-autumn-storm-60`,
+        className,
+      )}
+    >
       <div className="h-full flex gap-2 items-center">
         <Icon data={filter_list} className="" />
         <Typography as="h3" variant="sm" className="inline-block pr-6 pt-1.5 leading-none">

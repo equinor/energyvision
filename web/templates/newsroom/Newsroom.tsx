@@ -145,7 +145,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
-      <main ref={ref} className="">
+      <main ref={ref} className="mx-auto max-w-viewport">
         <div className="lg:w-2/3 px-layout-sm">
           {title && <Heading value={title} variant="h1" />}
           <div className="border-y border-autumn-storm-40 py-4">
@@ -177,8 +177,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           routing={routing}
         >
           <Configure
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            //@ts-ignore
             facetingAfterDistinct
             maxFacetHits={50}
             maxValuesPerFacet={100}
@@ -195,7 +193,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
               </Typography>
               <QuickSearch />
             </div>
-            <div className="flex flex-col lg:grid lg:grid-cols-[22vw_auto] gap-8 lg:gap-12 lg:px-layout-sm">
+            <div className="flex flex-col lg:grid lg:grid-cols-[29%_auto] gap-8 lg:gap-12 lg:px-layout-sm">
               <aside className="lg:self-start lg:sticky lg:top-0 flex flex-col gap-4 lg:gap-6 lg:pt-7 lg:pb-8 max-lg:px-layout-sm">
                 <TopicSwitch limit={50} attribute="topicTags" />
                 {subscriptionLink?.slug && subscriptionHeading && (

@@ -26,19 +26,11 @@ export type AlgoliaIndexPageType = {
   }
 }
 
-export type Tag = {
-  id?: string
-  key?: string
-  title?: string
-}
-
 export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   newsList?: CardData[]
-  newsTopicTagList?: Tag[]
-  newsCountryTagList?: Tag[]
   subscriptionHeading?: string
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string

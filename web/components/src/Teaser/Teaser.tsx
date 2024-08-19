@@ -6,14 +6,14 @@ export type ImageSize = 'small' | 'full'
 
 export type TeaserProps = {
   /** Should the image be positioned to the left or the right */
-  $imagePosition?: ImagePosition
+  imagePosition?: ImagePosition
 } & HTMLAttributes<HTMLElement>
 
 export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
 
-const TeaserWrapper = styled.div<TeaserProps>`
+const TeaserWrapper = styled.div<{ $imagePosition?: ImagePosition }>`
   --max-content-width: 1440px;
 
   display: grid;
@@ -37,12 +37,12 @@ const TeaserWrapper = styled.div<TeaserProps>`
 `
 
 export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
-  { $imagePosition = 'left', children, ...rest },
+  { imagePosition = 'left', children, ...rest },
   ref,
 ) {
   return (
     <StyledTeaser ref={ref} {...rest}>
-      <TeaserWrapper $imagePosition={$imagePosition}>{children}</TeaserWrapper>
+      <TeaserWrapper $imagePosition={imagePosition}>{children}</TeaserWrapper>
     </StyledTeaser>
   )
 })

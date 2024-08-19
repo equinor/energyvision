@@ -84,7 +84,7 @@ Page.getLayout = (page: AppProps) => {
   const slugs = getPageSlugs(data)
 
   return (
-    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
+    <Layout footerData={data?.footerData} intl={data?.intl}>
       <>
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}

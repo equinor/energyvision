@@ -5,19 +5,19 @@ export type TeaserMediaProps = {
   /** If the image is of type SVG it can have a small size */
   size?: 'small' | 'full'
   /** Should the height be fixed for small screens */
-  $fixedHeight?: boolean
+  fixedHeight?: boolean
   /** If the media is smaller than the container, it can be centered with the content  */
-  $center?: boolean
+  center?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-const StyledMedia = styled.div<TeaserMediaProps>`
+const StyledMedia = styled.div<{ $center?: boolean; $fixedHeight?: boolean; $size?: 'small' | 'full' }>`
   grid-area: image;
   position: relative;
   /* @TODO: Discuss this image height */
-  width: ${(props) => (props.size === 'small' ? '55%' : '100%')};
-  ${({ size }) =>
-    size &&
-    size === 'small' && {
+  width: ${({ $size }) => ($size === 'small' ? '55%' : '100%')};
+  ${({ $size }) =>
+    $size &&
+    $size === 'small' && {
       paddingTop: 'var(--space-xxLarge)',
     }}
   ${({ $fixedHeight }) =>
@@ -38,11 +38,11 @@ const StyledMedia = styled.div<TeaserMediaProps>`
 `
 
 export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media(
-  { size = 'full', $fixedHeight = true, $center = false, children, ...rest },
+  { size = 'full', fixedHeight = true, center = false, children, ...rest },
   ref,
 ) {
   return (
-    <StyledMedia size={size} $center={$center} $fixedHeight={$fixedHeight} ref={ref} {...rest}>
+    <StyledMedia $size={size} $center={center} $fixedHeight={fixedHeight} ref={ref} {...rest}>
       {children}
     </StyledMedia>
   )

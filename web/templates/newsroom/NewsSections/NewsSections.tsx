@@ -3,13 +3,11 @@ import { useHits, UseHitsProps } from 'react-instantsearch'
 import { FormattedMessage } from 'react-intl'
 import NewsHeadliner from './NewsHeadliner'
 import NewsItem from './NewsItem'
+import envisTwMerge from '../../../twMerge'
 
 type NewsSectionsProps = React.ComponentProps<'div'> & UseHitsProps
 
-const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function NewsSections(
-  { className = '', ...rest },
-  ref,
-) {
+const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function NewsSections({ className = '' }, ref) {
   const { hits } = useHits()
 
   if (!hits || hits.length === 0) {
@@ -17,7 +15,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
   }
 
   return (
-    <div ref={ref} className="flex flex-col gap-4">
+    <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
       {hits.map((hit, index) => {
         return index === 0 ? (
           <NewsHeadliner key={hit.objectID} data={hit} />
