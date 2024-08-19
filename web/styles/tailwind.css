@@ -276,4 +276,21 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
+    }
+  }
+  @supports selector(::-webkit-scrollbar) {
+    .transparent-v-scrollbar::-webkit-scrollbar {
+      @apply bg-white-100 dark:bg-transparent w-3;
+    }
+    .transparent-v-scrollbar::-webkit-scrollbar-track {
+      @apply bg-white-100 dark:bg-transparent;
+    }
+    .transparent-v-scrollbar::-webkit-scrollbar-thumb {
+      @apply w-[2px] bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
+    }
+  }
 }

@@ -1,5 +1,5 @@
+import { Button } from '@core/Button'
 import { usePagination } from 'react-instantsearch'
-import { Button } from '@components'
 import styled from 'styled-components'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
@@ -45,22 +45,35 @@ type PaginationItemProps = React.ComponentProps<'a'> &
   }
 
 export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine, children }: PaginationItemProps) => {
+  const itemClassNames = `
+  flex
+  justify-center
+  items-center
+  size-12 
+  text-slate-80
+  rounded-full
+  p-0
+  ${isCurrent ? 'bg-moss-green-80 text-slate-80 dark:text-slate-80' : 'text-slate-80 dark:text-white-100'}
+  disabled:cursor-pointer-none
+  disabled:text-grey-30/50
+  dark:hover:text-slate-80`
+
   if (isDisabled || isCurrent) {
     return (
-      <StyledListItem>
-        <PaginationLink disabled={isDisabled} isCurrent={isCurrent} variant="ghost_icon" aria-label={ariaLabel}>
+      <li>
+        <Button disabled={isDisabled} variant="ghost" className={itemClassNames} aria-label={ariaLabel}>
           {children}
-        </PaginationLink>
-      </StyledListItem>
+        </Button>
+      </li>
     )
   }
 
   return (
-    <StyledListItem>
-      <PaginationLink
-        disabled={isDisabled}
-        variant="ghost_icon"
+    <li>
+      <Button
+        variant="ghost"
         aria-label={ariaLabel}
+        className={itemClassNames}
         onClick={(event) => {
           if (isModifierClick(event)) {
             return
@@ -71,7 +84,7 @@ export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine
         }}
       >
         {children}
-      </PaginationLink>
-    </StyledListItem>
+      </Button>
+    </li>
   )
 }

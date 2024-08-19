@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { Fragment, HTMLAttributes, forwardRef } from 'react'
+import { Fragment, HTMLAttributes } from 'react'
 import { mapGridContent } from './mapGridContent'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
@@ -8,7 +8,7 @@ export type Span2And1Props = {
   className?: string
 } & HTMLAttributes<HTMLDivElement>
 
-const Span2And1 = forwardRef<HTMLDivElement, Span2And1Props>(function Span2And1({ data, className = '' }, ref) {
+const Span2And1 = ({ data, className = '' }: Span2And1Props) => {
   const { singleColumn, span2, alignSpan2Right = false } = data
   const minHeight = 'min-h-[350px] lg:min-h-[600px]'
   const commonStyling = `${minHeight}`
@@ -16,7 +16,7 @@ const Span2And1 = forwardRef<HTMLDivElement, Span2And1Props>(function Span2And1(
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   return (
-    <Fragment ref={ref}>
+    <Fragment>
       {alignSpan2Right ? (
         <>
           <div className={twMerge(commonStyling, borderStyling, className)}>
@@ -38,6 +38,6 @@ const Span2And1 = forwardRef<HTMLDivElement, Span2And1Props>(function Span2And1(
       )}
     </Fragment>
   )
-})
+}
 
 export default Span2And1

@@ -53,7 +53,7 @@ const StyledHeader = styled(Typography)`
   }
 `
 
-const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
+const StyledTypography = styled(Typography)<{ $isExpanded?: boolean }>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-2);
   display: inline-block;
@@ -65,8 +65,8 @@ const StyledTypography = styled(Typography)<{ isExpanded?: boolean }>`
 
   color: var(--color-on-background);
 
-  ${({ isExpanded }) =>
-    isExpanded && {
+  ${({ $isExpanded }) =>
+    $isExpanded && {
       fontWeight: 700,
     }}
 `
@@ -92,7 +92,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
             <FilledIcon size={iconSize} data={add_circle_filled} />
           </StyledIcon>
         )}
-        <StyledTypography isExpanded={isOpen} forwardedAs="span">
+        <StyledTypography $isExpanded={isOpen} forwardedAs="span">
           {children}
         </StyledTypography>
       </StyledCAccordionButton>

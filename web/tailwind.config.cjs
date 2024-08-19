@@ -19,6 +19,7 @@ module.exports = {
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
+    './templates/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
   ],
   safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
@@ -276,6 +277,9 @@ module.exports = {
       },
       minWidth: {
         viewport: '375',
+      },
+      borderRadius: {
+        xs: '0.1rem',
       },
       padding: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
