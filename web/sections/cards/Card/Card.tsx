@@ -78,7 +78,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       text-slate-80
       focus:outline-none
       focus-visible:envis-outline
-      dark:text-white-100
+      dark:text-slate-80
       dark:focus-visible:envis-outline-invert
       `,
         className,
