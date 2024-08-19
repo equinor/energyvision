@@ -141,7 +141,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
 
   const serializerClassnames = {
     largeText: `leading-tight text-balance ${titleTextColor}`,
-    normal: `text-lg leading-snug text-balance ${titleTextColor}`,
+    normal: `text-4xl leading-snug text-balance ${titleTextColor}`,
   }
 
   const mainContent = (
