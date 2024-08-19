@@ -54,8 +54,6 @@ const defaultSerializers = {
 }
 const footnoteSerializer = {
   footnote: (props: any) => {
-    console.log('props in blocks', props)
-
     return (
       <span>
         {props.children}
