@@ -42,7 +42,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
   }
   const iconClassNames = twMerge(
     `
-    max-h-8
+    size-arrow-right
     text-energy-red-100
     dark:text-white-100
     mr-2

@@ -33,6 +33,10 @@ export default defineType({
       name: 'useAnimation',
       type: 'boolean',
       description: 'Animates content over the background image.',
+      hidden: ({ parent }: any) => {
+        console.log('parent in image background', parent)
+        return false
+      },
     }),
     defineField({
       title: 'Apply light gradient',
@@ -43,7 +47,7 @@ export default defineType({
     defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',
-      description: 'Select the content alignment on larger screens.',
+      description: 'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
       type: 'string',
       initialValue: 'left',
       components: {

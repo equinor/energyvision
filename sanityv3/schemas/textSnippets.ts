@@ -15,9 +15,24 @@ export const groups = {
   others: { title: 'Others' },
 }
 const snippets: textSnippet = {
+  country_code_format: {
+    title: 'e.g. +47',
+    defaultValue: 'e.g. +47',
+    group: groups.form,
+  },
+  all_fields_mandatory: {
+    title: 'All fields with * are mandatory',
+    defaultValue: 'All fields with * are mandatory',
+    group: groups.form,
+  },
   loading: {
     title: 'Loading',
     defaultValue: 'Loading...',
+    group: groups.others,
+  },
+  read_transcript: {
+    title: 'Read Transcript',
+    defaultValue: 'Read transcript',
     group: groups.others,
   },
   menu: {
@@ -189,7 +204,7 @@ const snippets: textSnippet = {
   },
   contact_form_name: {
     title: 'Name',
-    defaultValue: 'Name',
+    defaultValue: 'Name *',
     group: groups.contactForm,
   },
   contact_form_name_placeholder: {
@@ -199,7 +214,7 @@ const snippets: textSnippet = {
   },
   contact_form_email: {
     title: 'Email',
-    defaultValue: 'Email',
+    defaultValue: 'Email *',
     group: groups.contactForm,
   },
   contact_form_name_validation: {
@@ -471,7 +486,7 @@ const snippets: textSnippet = {
   },
   careers_contact_form_name: {
     title: 'Name',
-    defaultValue: 'Your Name',
+    defaultValue: 'Your Name *',
     group: groups.careerContactForm,
   },
 

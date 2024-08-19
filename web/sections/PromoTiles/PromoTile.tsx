@@ -4,6 +4,7 @@ import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUti
 import { BaseLinkProps } from '@core/Link'
 import { ArrowRight } from '../../icons'
 import { PromoTileData } from '../../types/types'
+import { forwardRef } from 'react'
 
 export type FakeReadMoreProps = {
   children?: React.ReactNode
@@ -35,7 +36,9 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
   after:duration-300
   group-hover/card:after:w-full
   `
-  const iconClassNames = `text-energy-red-100
+  const iconClassNames = `
+    size-arrow-right
+    text-energy-red-100
     ${type === 'externalUrl' ? '-rotate-45' : ''}
     dark:text-white-100
     ml-2
@@ -51,8 +54,12 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
     </div>
   )
 }
+type PromoTileProps = PromoTileData
 
-export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
+export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function PromoTile(
+  { id, designOptions, image, title, action, linkLabelAsTitle },
+  ref,
+) {
   const url = getUrlFromAction(action)
   const { background } = designOptions
   const colorName =
@@ -70,6 +77,7 @@ export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAs
       //eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       href={url}
+      ref={ref}
       image={image}
       variant="secondary"
       className="w-full h-full md:max-w-[100%]"
@@ -90,4 +98,4 @@ export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAs
       </Card.Content>
     </Card>
   )
-}
+})

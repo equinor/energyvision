@@ -1,108 +1,8 @@
-import styled from 'styled-components'
 import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
 import { default as NextLink } from 'next/link'
 
-const StyledFooter = styled.footer`
-  min-height: var(--space-4xLarge);
-  clear: both;
-  color: white;
-  background-color: var(--slate-blue-95);
-  padding: var(--space-medium) 0;
-`
-
-const FooterTop = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  max-width: var(--layout-maxContent-wide);
-  justify-content: space-between;
-  padding: 0 var(--layout-paddingHorizontal-small) var(--space-medium);
-  @media (max-width: 750px) {
-    flex-direction: column;
-  }
-`
-
-const LinkHeader = styled.h3`
-  font-size: var(--typeScale-2);
-  color: var(--white-100);
-  padding: var(--space-small) 0;
-  font-weight: var(--fontWeight-medium);
-  line-height: var(--lineHeight-1);
-`
-
-const LinkWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  @media (max-width: 750px) {
-    padding: var(--space-medium) 0;
-    width: 70%;
-  }
-`
-
-const LinksList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  grid-row-gap: var(--space-small);
-  column-gap: var(--space-medium);
-  align-items: self-start;
-  @media (min-width: 750px) {
-    display: flex;
-    flex-direction: column;
-    grid-row-gap: 0px;
-  }
-`
-
-const FooterLink = styled(NextLink)`
-  font-size: var(--typeScale-05);
-  padding: var(--space-xSmall) 0;
-  color: var(--white-100);
-  text-decoration: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: var(--space-xLarge);
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      color: var(--moss-green-90);
-      text-decoration: underline;
-    }
-  }
-  @media (max-width: 750px) {
-    flex: 0 0 40%;
-    max-width: var(--space-4xLarge);
-  }
-`
-const FooterBottom = styled.div`
-  display: flex;
-  justify-content: left;
-  min-height: var(--space-large);
-  padding: var(--space-xLarge) var(--layout-paddingHorizontal-small) var(--space-small);
-
-  @media (min-width: 750px) {
-    justify-content: center;
-  }
-`
-
-const CompanyName = styled.span`
-  font-size: var(--typeScale-small);
-  color: white;
-`
-
-const SomeIcon = styled.span`
-  display: inline-block;
-  text-align: center;
-  width: 30px;
-  margin-right: var(--space-small);
-  fill: var(--white-100);
-  @media (hover: hover) and (pointer: fine) {
-    ${FooterLink}:hover & {
-      fill: var(--moss-green-90);
-    }
-  }
-`
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -129,36 +29,43 @@ type FooterProps = {
 
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
   return (
-    <StyledFooter ref={ref} {...rest}>
-      <FooterTop>
+    <footer className="min-h-12 clear-both text-white-100 bg-slate-blue-95 py-4 px-0" ref={ref} {...rest}>
+      <div className="flex flex-row flex-wrap my-0 mx-auto justify-between px-layout-sm pb-2 max-w-screen-2xl max-md:flex-col">
         {footerData?.footerColumns?.map(({ header, linkList }) => (
-          <LinkWrapper key={header}>
-            <LinkHeader>{header}</LinkHeader>
-            <LinksList>
+          <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}> 
+            <h3 className="text-md font-medium text-white-100 px-0 py-2 leading-1">{header}</h3>
+            <div className="grid grid-cols-2 gap-y-2 gap-x-4 items-start md:flex md:flex-col md:grid-y-0">
               {linkList?.map((link: FooterLinkData) => {
                 const { id, type, someType, label, url } = link
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
 
                 return (
-                  <FooterLink
+                  <NextLink
                     key={id}
                     href={url || getLink(link)}
                     prefetch={false}
-                    className="focus:outline-none focus-visible:envis-outline-invert"
+                    className="items-center group focus:outline-none hover:underline hover:text-moss-green-90 focus-visible:envis-outline-invert p-0 min-w-11 min-h-11 no-underline flex flex-row align-center text-sm"
                   >
-                    {icon && <SomeIcon aria-hidden={true}>{icon}</SomeIcon>}
+                    {icon && (
+                      <span
+                        className="group-hover:fill-moss-green-90 inline-block text-center w-[30px] mr-2 fill-white-100"
+                        aria-hidden={true}
+                      >
+                        {icon}
+                      </span>
+                    )}
                     {label}
-                  </FooterLink>
+                  </NextLink>
                 )
               })}
-            </LinksList>
-          </LinkWrapper>
+            </div>
+          </section>
         ))}
-      </FooterTop>
-      <FooterBottom>
-        <CompanyName>Copyright {new Date().getFullYear()} Equinor ASA</CompanyName>
-      </FooterBottom>
-    </StyledFooter>
+      </div>
+      <div className="flex md:justify-center justify-start pl-4 pt-12 pb-3">
+        <span className="text-2xs text-white-100">Copyright {new Date().getFullYear()} Equinor ASA</span>
+      </div>
+    </footer>
   )
 })
 
