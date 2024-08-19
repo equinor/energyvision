@@ -13,7 +13,7 @@ import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
-import { publishDateTimeQuery } from './publishDateTime'
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -215,6 +215,10 @@ _type == "keyNumbers" =>{
       ...,
       ${markDefs},
     },
+    "transcript":transcript.text[]{
+      ...,
+      ${markDefs},
+    },
     frameTitle,
     "action": action[0]{
       ${linkSelectorFields},
@@ -274,7 +278,7 @@ _type == "keyNumbers" =>{
         ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
-          "updatedAt": _updatedAt,
+          "updatedAt":  ${lastUpdatedTimeQuery},
           title,
           heroImage,
           "publishDateTime": ${publishDateTimeQuery},
@@ -355,6 +359,7 @@ _type == "keyNumbers" =>{
           manuallySelectEvents,
           promotePastEvents,
           pastEventsCount,
+          upcomingEventsCount,
           promoteSingleUpcomingEvent
         },
         !manuallySelectEvents => {
@@ -362,12 +367,12 @@ _type == "keyNumbers" =>{
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
             !useTags => {
-              "promotions": ${futureEventsQuery(false)}[0...3]{
+              "promotions": ${futureEventsQuery(false)}[]{
                 ${eventPromotionFields}
               },
             },
             useTags => {
-              "promotions": ${futureEventsQuery(true)}[0...3]{
+              "promotions": ${futureEventsQuery(true)}[]{
                 ${eventPromotionFields}
               },
             },
@@ -449,7 +454,7 @@ _type == "keyNumbers" =>{
     ] | order(${publishDateTimeQuery} desc){
       "type": _type,
       "id": _id,
-      "updatedAt": _updatedAt,
+      "updatedAt":  ${lastUpdatedTimeQuery},
       title,
       heroImage,
       "publishDateTime": ${publishDateTimeQuery},

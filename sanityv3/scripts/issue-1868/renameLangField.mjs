@@ -25,14 +25,14 @@ import { testDocs, SCHEMA_TYPE } from './testDocument.mjs'
 
 const UNSET_FIELD_NAME = `_lang`
 const NEW_FIELD_NAME = `lang`
-//const SCHEMA_TYPE = [`magazine`, `localNews`]
+// This field will be unset from all documents that contain it
+const UNSET_BASE_FIELD = `__i18n_base`
 
 // This will use the client configured in ./sanity.cli.ts
 const client = sanityClients[0]
 
 //&& _id in $testDocs
-const query = `*[_type in $type && defined(${UNSET_FIELD_NAME}) 
-  
+const query = `*[_type in $type && defined(${UNSET_FIELD_NAME}) || defined(${UNSET_BASE_FIELD})
   ][0...100] {
     _id, 
     _rev, 
@@ -49,7 +49,7 @@ const buildPatches = (docs) =>
     id: doc._id,
     patch: {
       set: { [NEW_FIELD_NAME]: doc[UNSET_FIELD_NAME] },
-      unset: [UNSET_FIELD_NAME],
+      unset: [UNSET_FIELD_NAME, UNSET_BASE_FIELD],
       // this will cause the migration to fail if any of the
       // documents have been modified since the original fetch.
       ifRevisionID: doc._rev,

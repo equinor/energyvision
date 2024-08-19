@@ -1,6 +1,5 @@
 import { visionTool } from '@sanity/vision'
 import { media } from 'sanity-plugin-media'
-
 import {
   ConfigContext,
   createAuthStore,
@@ -11,8 +10,14 @@ import {
   Template,
 } from 'sanity'
 
-import type { InputProps, ArrayOfObjectsInputProps, SchemaType, ArraySchemaType, DocumentBadgeComponent } from 'sanity'
-import { scheduledPublishing } from '@sanity/scheduled-publishing'
+import type {
+  InputProps,
+  ArrayOfObjectsInputProps,
+  SchemaType,
+  ArraySchemaType,
+  DocumentBadgeComponent,
+  DocumentFieldAction,
+} from 'sanity'
 import { deskTool, StructureBuilder } from 'sanity/desk'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
@@ -32,6 +37,12 @@ import { getMetaTitleSuffix } from '../satellitesConfig'
 import { defaultLanguage } from './languages'
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { LangBadge } from './schemas/components/LangBadge'
+import './customStyles.css'
+import { partialStudioTheme } from './studioTheme'
+import { buildLegacyTheme } from 'sanity'
+import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
+
+export const customTheme = buildLegacyTheme(partialStudioTheme)
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -70,6 +81,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
   basePath: '/' + datasetParam,
   projectId: projectIdParam,
   dataset: datasetParam,
+  theme: customTheme,
   form: {
     components: {
       input: handleInputComponents,
@@ -86,7 +98,6 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
-    scheduledPublishing(),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),
@@ -115,7 +126,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
             case 'publish':
               return createCustomPublishAction(originalAction, context)
             case 'duplicate':
-              return createCustomDuplicateAction(originalAction, context)
+              return createCustomDuplicateAction(originalAction)
             default:
               return originalAction
           }
@@ -126,6 +137,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     },
     badges: (prev: DocumentBadgeComponent[], context: any) => {
       return i18n.schemaTypes.includes(context.schemaType) ? [LangBadge, ...prev] : prev
+    },
+    unstable_fieldActions: (previous: DocumentFieldAction[]) => {
+      return previous.map((it) => (it.name === 'copyField' ? copyAction : it))
     },
   },
   auth: createAuthStore({

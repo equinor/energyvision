@@ -4,7 +4,12 @@ export const imageCarouselFields = /* groq */ `
     "id": _key,
     "type": _type,
     title,
-    items,
+    ingress,
+    hideTitle,
+    items[] {
+    "id": _key,
+    ...
+    },
     "options": {
       autoplay,
       delay
