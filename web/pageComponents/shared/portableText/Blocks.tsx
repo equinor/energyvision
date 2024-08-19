@@ -53,16 +53,36 @@ const defaultSerializers = {
   },
 }
 const footnoteSerializer = {
-  footnote: ({ children, markKey }: any) => {
+  footnote: (props: any) => {
     return (
       <span>
-        {children}
+        {props.children}
         <span>
-          <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
-            {/* the number for footnote is added by css see tailwind.css components */}
+          <a
+            id={`back_ref_${props.markKey}`}
+            href={`#${props.markKey}`}
+            aria-describedby="footnote-label"
+            className={`relative 
+            text-xs
+            align-super
+            text-slate-blue-95 
+            dark:text-white-100
+            no-underline
+            font-medium
+            cursor-pointer
+            hover:underline
+            hover:font-medium
+            clickbound-area
+            focus:outline-none
+            focus-visible:envis-outline
+            dark:focus-visible:envis-outline-invert
+            `}
+          >
             <span className="sr-only">
               <FormattedMessage id="footnote" defaultMessage="Footnote" />
+              {` `}
             </span>
+            <span className="">{`${props?.value?.marker}`}</span>
           </a>
         </span>
       </span>

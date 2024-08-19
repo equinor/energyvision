@@ -327,6 +327,10 @@ module.exports = {
             transform: 'translateX(calc(-100%+100vw))',
           },
         },
+        highlight: {
+          '0%': { background: 'theme(colors.transparent)' },
+          '10%,100%': { background: 'theme(colors.moss-green.50)' },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
@@ -334,6 +338,7 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
+        highlightInOut: 'highlight 5s linear',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -472,6 +477,7 @@ module.exports = {
           },
         },
       ),
+        addVariant('target', '&:target'),
         addUtilities({
           '.envis-outline': {
             'outline-style': 'dashed',
