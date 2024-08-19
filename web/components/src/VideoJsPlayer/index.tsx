@@ -28,12 +28,14 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   playsInline,
   aspectRatio,
   loadingSpinner,
+  onReady,
   useBrandTheme = false,
   useFillMode = false,
   poster,
   allowFullScreen,
   ...rest
 }) => {
+  /*   const [isLoading, setIsLoading] = useState<boolean>(true) */
   const [player, setPlayer] = useState<Player | null>(null)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
 
@@ -51,44 +53,50 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const getPlayer = useCallback(
     (node: Element) => {
-      const player = videojs(node, {
-        sources: [
-          {
-            src: src,
-            type: 'application/x-mpegURL',
+      const player = videojs(
+        node,
+        {
+          sources: [
+            {
+              src: src,
+              type: 'application/x-mpegURL',
+            },
+          ],
+          muted: muted ? 'muted' : false,
+          playsinline: playsInline,
+          autoplay: autoPlay,
+          preload: autoPlay ? 'auto' : 'none',
+          controls: controls ?? !autoPlay,
+          responsive: true,
+          ...(!useFillMode && { aspectRatio: aspectRatio }),
+          ...(useFillMode && { fill: true }),
+          bigPlayButton: playButton && !autoPlay,
+          controlbar: true,
+          loadingSpinner: !autoPlay,
+          controlBar: {
+            fullscreenToggle: allowFullScreen,
           },
-        ],
-        muted: muted ? 'muted' : false,
-        playsinline: playsInline,
-        autoplay: autoPlay,
-        preload: autoPlay ? 'auto' : 'none',
-        controls: controls ?? !autoPlay,
-        responsive: true,
-        ...(!useFillMode && { aspectRatio: aspectRatio }),
-        ...(useFillMode && { fill: true }),
-        bigPlayButton: playButton && !autoPlay,
-        controlbar: true,
-        loadingSpinner: !autoPlay,
-        controlBar: {
-          fullscreenToggle: allowFullScreen,
-        },
-        html5: {
-          useDevicePixelRatio: true,
-          limitRenditionByPlayerDimensions: false,
-          hls: {
+          html5: {
             useDevicePixelRatio: true,
             limitRenditionByPlayerDimensions: false,
+            hls: {
+              useDevicePixelRatio: true,
+              limitRenditionByPlayerDimensions: false,
+            },
           },
+          ...rest,
         },
-        ...rest,
-      })
+        () => {
+          onReady && onReady(player)
+        },
+      )
 
       player.on('error', (error: MediaError) => {
         console.log(error.message)
       })
       return player
     },
-    [allowFullScreen, aspectRatio, autoPlay, controls, muted, playButton, playsInline, rest, src, useFillMode],
+    [allowFullScreen, aspectRatio, autoPlay, controls, muted, onReady, playButton, playsInline, rest, src, useFillMode],
   )
 
   const measuredRef = useCallback(

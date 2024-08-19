@@ -111,9 +111,9 @@ const heroRatio = {
   type: 'string',
   options: {
     list: [
-      { title: '2:1', value: '0.5' },
+      { title: 'Tall', value: 'tall' },
+      { title: '2:1(deprecated)', value: '0.5' },
       { title: 'Narrow', value: 'narrow' },
-      { title: 'Full screen', value: 'fullScreen' },
     ],
   },
   hidden: ({ parent }: DocumentType) => {

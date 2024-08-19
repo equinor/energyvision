@@ -30,6 +30,11 @@ const snippets: textSnippet = {
     defaultValue: 'Loading...',
     group: groups.others,
   },
+  read_transcript: {
+    title: 'Read Transcript',
+    defaultValue: 'Read transcript',
+    group: groups.others,
+  },
   menu: {
     title: 'Menu',
     defaultValue: 'Menu',

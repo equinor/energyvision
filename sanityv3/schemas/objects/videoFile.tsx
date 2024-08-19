@@ -17,6 +17,11 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      name: 'transcript',
+      title: 'Video Transcript',
+      type: 'transcript',
+    },
+    {
       name: 'thumbnail',
       type: 'imageWithAlt',
       title: 'Thumbnail',
