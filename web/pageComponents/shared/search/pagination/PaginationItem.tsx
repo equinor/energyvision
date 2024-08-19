@@ -53,6 +53,7 @@ export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine
   text-slate-80
   rounded-full
   p-0
+  lg:p-0
   ${isCurrent ? 'bg-moss-green-80 text-slate-80 dark:text-slate-80' : 'text-slate-80 dark:text-white-100'}
   disabled:cursor-pointer-none
   disabled:text-grey-30/50
