@@ -51,7 +51,6 @@ const defaultComponents = ({
         )
       },
       h2: ({ children }: PortableTextBlock) => {
-        console.log('is h2', id)
         return (
           <Typography variant="h2" id={id} className={className}>
             <>{children}</>
@@ -132,6 +131,19 @@ export const Heading = ({
   id,
   ...props
 }: HeadingProps) => {
+  let serializers = {
+    // eslint-disable-next-line
+    // @ts-ignore
+    block: {
+      ...defaultComponents({ variant, group, as, serializerClassnames, className, id }).block,
+    },
+    // eslint-disable-next-line
+    // @ts-ignore
+    marks: {
+      ...defaultComponents({ variant, group, as }).marks,
+    },
+  }
+
   let div: PortableTextBlock[] = []
   return (
     <>
@@ -149,6 +161,20 @@ export const Heading = ({
             const WrapperTextTag = as ?? (`h2` as React.ElementType)
             const PortableTextTag = `span` as React.ElementType
 
+            serializers = {
+              // eslint-disable-next-line
+              // @ts-ignore
+              block: {
+                ...defaultComponents({ variant, group, as: PortableTextTag, serializerClassnames, className }).block,
+                ...blocksComponents,
+              },
+              // eslint-disable-next-line
+              // @ts-ignore
+              marks: {
+                ...defaultComponents({ variant, group, as: PortableTextTag }).marks,
+              },
+            }
+
             return (
               <WrapperTextTag
                 key={block._key}
@@ -158,44 +184,18 @@ export const Heading = ({
                 )}
                 id={id}
               >
-                <PortableText
-                  value={value}
-                  components={{
-                    // eslint-disable-next-line
-                    // @ts-ignore
-                    block: {
-                      ...defaultComponents({ variant, group, as: PortableTextTag, serializerClassnames, className })
-                        .block,
-                      ...blocksComponents,
-                    },
-                    // eslint-disable-next-line
-                    // @ts-ignore
-                    marks: {
-                      ...defaultComponents({ variant, group, as: PortableTextTag }).marks,
-                    },
-                  }}
-                />
+                {/*@ts-ignore */}
+                <PortableText value={value} components={serializers} />
               </WrapperTextTag>
             )
           }
         })
       ) : (
         <PortableText
-          value={value}
-          components={{
-            // eslint-disable-next-line
-            // @ts-ignore
-            block: {
-              ...defaultComponents({ variant, group, as, serializerClassnames, className, id }).block,
-              ...blocksComponents,
-            },
-            // eslint-disable-next-line
-            // @ts-ignore
-            marks: {
-              ...defaultComponents({ variant, group, as }).marks,
-            },
-          }}
           {...props}
+          value={value}
+          /*@ts-ignore */
+          components={serializers}
         />
       )}
     </>
