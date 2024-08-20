@@ -13,7 +13,6 @@ import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
-import { cookiePolicyQuery } from './cookiePolicy'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 
 const pageContentFields = /* groq */ `
@@ -221,7 +220,7 @@ _type == "keyNumbers" =>{
       ${linkSelectorFields},
     },
     url,
-    ${cookiePolicyQuery},
+   cookiePolicy,
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       ${background},

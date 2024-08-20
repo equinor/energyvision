@@ -3,7 +3,6 @@ import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import background from './background'
-import { cookiePolicyQuery } from './cookiePolicy'
 
 export const eventContentFields = /* groq */ `
   location,
@@ -21,7 +20,7 @@ export const eventContentFields = /* groq */ `
       title,
       frameTitle,
       url,
-      ${cookiePolicyQuery},
+      cookiePolicy,
       "designOptions": {
         "aspectRatio": coalesce(aspectRatio, '16:9'),
         height,
