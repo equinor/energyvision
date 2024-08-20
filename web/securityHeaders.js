@@ -64,13 +64,14 @@ const selfSrcUrls = [
   'cdn.sanity.io',
   'cdn.equinor.com',
   'https://bcdn.screen9.com',
+  'https://qcdn.screen9.com',
   'https://h61q9gi9.api.sanity.io',
   'https://tools.eurolandir.com',
   'https://inferred.litix.io/',
   'https://*.algolia.net',
   'https://*.algolianet.com',
   'https://*.cookiebot.com',
-  'https://eu-api.friendlycaptcha.eu',
+  dataset !== 'brazil' ? 'https://eu-api.friendlycaptcha.eu' : 'https://api.friendlycaptcha.com/',
   isProduction ? '' : 'ws:',
 ]
   .filter((e) => e)
@@ -86,7 +87,7 @@ const ContentSecurityPolicy = `
      frame-src 'self' ${iframeSrcs};
      frame-ancestors ${xFrameUrls};
      font-src 'self' ${edsCdnUrl} data:;
-     media-src 'self' blob: https://bcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
+     media-src 'self' blob: https://bcdn.screen9.com https://qcdn.screen9.com https://cdn.sanity.io/ https://cdn.equinor.com/;
      `
 
 export default [

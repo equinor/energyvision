@@ -1,18 +1,17 @@
 import blocksToText from '../../helpers/blocksToText'
 import { defaultColors } from '../defaultColors'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { i18n } from '../documentTranslation'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
+import { lang } from './langField'
 
 export default {
   type: 'document',
   name: 'page',
   title: 'Topic page',
   icon: () => EdsIcon(paste),
-  i18n,
   fieldsets: [
     {
       title: 'Header',
@@ -29,6 +28,7 @@ export default {
     },
   ],
   fields: [
+    lang,
     {
       title: 'Meta information',
       name: 'seo',

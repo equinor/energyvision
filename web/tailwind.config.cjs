@@ -21,6 +21,7 @@ module.exports = {
     './sections/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
   ],
+  safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.
@@ -32,7 +33,9 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        md: '750px',
         '3xl': '1600px',
+        '4xl': '1920px',
       },
       colors: ({ theme }) => ({
         current: 'currentColor',
@@ -82,6 +85,7 @@ module.exports = {
         'spruce-wood': {
           100: 'hsl(25, 100%, 92%)',
           90: colors['spruce-wood'][90],
+          70: 'hsl(26, 100%, 97%)',
         },
         'heritage-red': {
           100: 'hsl(343, 100%, 25%)',
@@ -119,7 +123,7 @@ module.exports = {
         blue: {
           //--mid-blue
           //--bg-mid-blue
-          //north-sea-80
+          //north-sea-70
           50: colors.blue[50],
         },
         orange: {
@@ -150,11 +154,12 @@ module.exports = {
         },
         'north-sea': {
           100: '#243746',
-          90: '#2A4D74',
-          80: '#49709C',
-          70: '#7294BB',
-          60: '#A8C3DB',
-          50: '#DFF5FF',
+          90: '#051b33',
+          80: '#2A4D74',
+          70: '#49709C',
+          60: '#7294BB',
+          50: '#A8C3DB',
+          40: '#DFF5FF',
         },
         'norwegian-woods': {
           100: '#007079',
@@ -176,7 +181,13 @@ module.exports = {
         'autumn-storm': {
           60: '#86A7AC',
           50: '#B5C7C9',
-          40: '#E3EDEA',
+          40: '#C2D4D6',
+          30: '#D3DFDE',
+          20: '#E3EDEA',
+        },
+
+        'modal-background': {
+          100: 'hsla(212, 82%, 11%, 1)',
         },
       }),
       boxShadowColor: {
@@ -260,6 +271,8 @@ module.exports = {
       },
       maxWidth: {
         viewport: '1920px',
+        //When large font, prose(65ch) might not be the best
+        text: '760px',
       },
       minWidth: {
         viewport: '375',
@@ -271,12 +284,13 @@ module.exports = {
         'page-content': 'theme(spacing.20)',
       },
       boxShadow: {
-        card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px, rgba(0, 0, 0, 0.20) 0px 1px 2px',
+        card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px',
         'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
       },
       aspectRatio: {
         '4/5': '0.8',
         '5/4': '1.25',
+        '9/16': '0.56',
       },
       flex: {
         fr: '1 1 1',
@@ -286,6 +300,9 @@ module.exports = {
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
+      },
+      transitionTimingFunction: {
+        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)', //'cubic-bezier(0.23, 1, 0.32, 1)',
       },
       keyframes: {
         reveal: {
@@ -304,11 +321,18 @@ module.exports = {
           '0%, 100%': { opacity: '0' },
           '20%, 80%': { opacity: '1' },
         },
+        move: {
+          to: {
+            transform: 'translateX(calc(-100%+100vw))',
+          },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
+        move: 'auto linear move forwards',
+        'spin-slow': 'spin 3s linear infinite',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -422,7 +446,7 @@ module.exports = {
           css: {
             color: theme('colors.current'),
             p: {
-              fontSize: theme('fontSize.md'),
+              textWrap: 'balance',
               marginTop: '0',
               marginBottom: '0',
             },
@@ -459,6 +483,9 @@ module.exports = {
             'outline-width': '2px',
             'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
+          },
+          '.break-word': {
+            wordBreak: 'break-word',
           },
           '.auto-fill-fr': {
             gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,

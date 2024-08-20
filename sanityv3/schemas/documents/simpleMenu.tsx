@@ -1,4 +1,5 @@
 import { MenuIcon } from '../../icons'
+import { lang } from './langField'
 
 export default {
   type: 'document',
@@ -6,6 +7,7 @@ export default {
   name: 'simpleMenu',
   __experimental_actions: ['create', 'update', 'publish' /*,"delete"*/],
   fields: [
+    lang,
     {
       title: 'Menu groups',
       name: 'group',

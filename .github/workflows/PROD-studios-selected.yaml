@@ -1,0 +1,123 @@
+name: PROD - Deploy selected satellite studio
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: 'Name of studio to deploy'
+        required: true
+        type: choice
+        options:
+          - brazil
+          - germany
+          - argentina
+          - poland
+          - japan
+          - storage
+          - equinorfunds
+          - southkorea
+          - celticsea
+permissions:
+  id-token: write
+jobs:
+  update-radix-config:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Promote preprod tag to prod 🗒️
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        id: modify-radix
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          python ci/promoteToProduction.py studio ${{ github.event.inputs.site }}
+          git config --global user.name 'github'
+          git config --global user.email 'padms@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          if [[ `git status --porcelain` ]]
+          then
+            git commit -am "🚀 Deploy ${{ github.event.inputs.site }} to production"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-satellite-studios:
+    needs: update-radix-config
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Get token 🔑
+        id: get-token
+        uses: ./.github/workflows/get-auth-token/
+
+      # PRODUCTION CLUSTERS
+      - name: Deploy to Radix 🚀
+        id: deploy
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --context platform2
+            -a equinor-web-sites
+            -e ${{ secrets.ENV }}
+            -f
+
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  store-image-tags:
+    needs: deploy-satellite-studios
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Or any version you prefer
+
+      - name: Install dependencies
+        run: |
+          npm install js-yaml
+
+      - name: Run script for 'studio'
+        run: node ci/storeImageTags.js studio
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github'
+          git config --global user.email 'padms@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git add latest-prod-tags.json
+          git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
+          git push

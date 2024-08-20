@@ -133,6 +133,7 @@ export type EventPromotionSettings = {
   promotePastEvents: boolean
   promoteSingleUpcomingEvent: boolean
   pastEventsCount?: number
+  upcomingEventsCount?: number
 }
 
 export type EventCardData = {
@@ -535,6 +536,7 @@ export type IFrameData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   description?: PortableTextBlock[]
+  transcript?: PortableTextBlock[]
   action?: LinkData
   frameTitle: string
   url: string
@@ -704,8 +706,6 @@ export type AnchorLinkData = {
 
 export enum VideoPlayerRatios {
   '16:9' = '16:9',
-  '3:2' = '3:2',
-  '16:10' = '16:10',
   '9:16' = '9:16',
   '1:1' = '1:1',
 }
@@ -741,24 +741,25 @@ export type VideoPlayerData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
+  transcript?: PortableTextBlock[]
+}
+export type VideoPlayerCarouselItem = {
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  hideVideoTitle?: boolean
+  aspectRatio?: VideoPlayerRatios
 }
 
 export type VideoPlayerCarouselData = {
   id: string
   type: string
-  items: {
-    id: string
-    title: PortableTextBlock[]
-    video: {
-      title: string
-      url: string
-      thumbnail: ImageWithAlt
-    }
-  }[]
+  items: VideoPlayerCarouselItem[]
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
   }
   title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
 }
 
 export type LoopingVideoRatio = '1:2' | 'narrow'
@@ -769,12 +770,17 @@ export type LoopingVideoData = {
   url: string
   ratio: LoopingVideoRatio
 }
+export type ImageCarouselItem = {
+  id: string
+} & ImageWithCaptionData
 
 export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
-  items: ImageWithCaptionData[]
+  ingress?: PortableTextBlock[]
+  hideTitle?: boolean
+  items: ImageCarouselItem[]
   options: {
     autoplay: boolean
     delay: number
@@ -867,14 +873,22 @@ export type ThreeColumns = {
   id: string
   columns?: GridContentType[]
 }
+type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
 
 export type GridTextBlockData = {
   id: string
   type: 'gridTextBlock'
   action?: LinkData
+  overline?: string
+  useThemedTitle?: boolean
+  title?: PortableTextBlock[]
+  themedTitle?: PortableTextBlock[]
   content?: PortableTextBlock[]
-  textAlignment?: ContentAlignmentTypes
-  theme?: number
+  contentAlignment?: GridTextBlockContentAlignment
+  contentTheme?: any
+  titleThemeFromLarger?: any
+  theme?: any
+  imageBackground?: ImageBackground
 }
 
 export type CampaignBannerData = {
@@ -888,7 +902,10 @@ export type GridTeaserData = {
   id: string
   image: ImageWithAlt
   rowType?: RowType
-  content?: PortableTextBlock
+  useExtendedThemes?: boolean
+  content?: PortableTextBlock[]
+  themedContent?: PortableTextBlock[]
+  themeFromLarger?: any
   quote?: string
   author?: string
   authorTitle?: string
