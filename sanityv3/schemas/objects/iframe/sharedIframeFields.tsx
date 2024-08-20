@@ -67,7 +67,7 @@ export const cookiePolicy = {
       { title: 'Marketing', value: 'marketing' },
     ],
   },
-  initialValue: 'none',
+  initialValue: ['none'],
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => {
       if (value === undefined || value?.length === 0) return 'Required'
