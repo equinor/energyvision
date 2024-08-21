@@ -231,7 +231,7 @@
   }
   @supports selector(::-webkit-search-cancel-button) {
     .no-webkit-search-cancel::-webkit-search-cancel-button {
-      @apply appearance-none opacity-0 focus:opacity-0 focus:[pointer-events:all];
+      @apply appearance-none opacity-0;
     }
   }
 
