@@ -21,6 +21,10 @@
   h6 {
     overflow-wrap: break-word;
   }
+
+  input[type='search' i]::-webkit-search-cancel-button {
+    display: none;
+  }
 }
 
 @layer components {
