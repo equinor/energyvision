@@ -21,6 +21,7 @@ module.exports = {
     './sections/**/*.{js,ts,tsx}',
     './templates/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
+    './pages/**/*.{js,ts,tsx}',
   ],
   safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
