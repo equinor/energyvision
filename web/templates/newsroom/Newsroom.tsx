@@ -101,7 +101,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     router: createInstantSearchRouterNext({
       singletonRouter,
       serverUrl: url,
-
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
