@@ -65,10 +65,6 @@ export function SearchBox({ className = '', resetClassName = '', submitClassName
           text-white-100
           pl-6 pr-12
           py-4
-          no-webkit-search-cancel
-          focus:no-webkit-search-cancel
-          focus-visible:no-webkit-search-cancel
-          hover:no-webkit-search-cancel
           `,
           className,
         )}
