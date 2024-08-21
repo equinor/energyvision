@@ -16,6 +16,7 @@ const Span2And1 = forwardRef<HTMLDivElement, Span2And1Props>(function Span2And1(
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   return (
+    //@ts-ignore: Will be refactored and removed in new newsroom branch
     <Fragment ref={ref}>
       {alignSpan2Right ? (
         <>
