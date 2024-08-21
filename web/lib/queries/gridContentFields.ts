@@ -3,7 +3,6 @@ import downloadableImageFields from './common/actions/downloadableImageFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import background from './common/background'
 import markDefs from './common/blockEditorMarks'
-import { cookiePolicyQuery } from './common/cookiePolicy'
 import { videoPlayerFields } from './videoPlayerFields'
 
 const gridContentFields = /* groq */ `
@@ -27,7 +26,7 @@ frameTitle,
 ${linkSelectorFields},
 },
 url,
-${cookiePolicyQuery},
+cookiePolicy,
 "designOptions": {
 "aspectRatio": coalesce(aspectRatio, '16:9'),
 ${background},
