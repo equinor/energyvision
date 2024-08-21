@@ -21,6 +21,10 @@
   h6 {
     overflow-wrap: break-word;
   }
+
+  input[type='search' i]::-webkit-search-cancel-button {
+    display: none;
+  }
 }
 
 @layer components {
@@ -228,10 +232,6 @@
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
-  }
-
-  .no-webkit-search-cancel[type='search']::-webkit-search-cancel-button {
-    @apply hidden;
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
