@@ -588,6 +588,18 @@ _type == "keyNumbers" =>{
       "extension": asset-> extension
     },
   },
+  _type == "anchorLinkList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    columns,
+    "anchorList":anchorList[]{
+      "type": _type,
+      "id": _key,
+      title,
+      anchorReference,
+    }
+  },
 `
 
 export default pageContentFields
