@@ -28,6 +28,19 @@
 }
 
 @layer components {
+  .clickbound-area {
+    @apply before:cursor-pointer 
+    before:content-[''] 
+    before:absolute 
+    before:w-[48px]
+    before:aspect-square
+    before:top-1/2
+    before:left-1/2
+    before:translate-y-[-50%]
+    before:translate-x-[-50%]
+    before:rounded-[100%];
+  }
+
   article {
     counter-reset: footnotes;
   }

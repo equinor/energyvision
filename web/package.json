@@ -40,6 +40,7 @@
     "@sanity/client": "5.4.2",
     "@sanity/image-url": "^1.0.2",
     "@sanity/webhook": "^2.0.0",
+    "@radix-ui/react-accordion": "^1.2.0",
     "algoliasearch": "^4.16.0",
     "date-fns": "^2.29.3",
     "date-fns-tz": "^2.0.0",

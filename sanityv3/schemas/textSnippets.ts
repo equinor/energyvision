@@ -794,6 +794,11 @@ const snippets: textSnippet = {
     defaultValue: 'Page',
     group: groups.others,
   },
+  remove: {
+    title: 'Remove',
+    defaultValue: 'Remove',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
