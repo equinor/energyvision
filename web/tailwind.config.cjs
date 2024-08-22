@@ -481,7 +481,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ matchVariant, addUtilities, theme }) {
+    plugin(function ({ addVariant, matchVariant, addUtilities, theme }) {
       matchVariant(
         'nth',
         (value) => {
