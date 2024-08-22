@@ -914,3 +914,15 @@ export type GridTeaserData = {
   action?: LinkData
   theme?: number
 }
+export type AnchorLinkListData = {
+  id: string
+  type: 'anchorLinkList'
+  title?: string
+  columns?: string
+  anchorList?: {
+    id: string
+    type: 'anchorLinkReference'
+    title?: string
+    anchorReference?: string
+  }[]
+}
