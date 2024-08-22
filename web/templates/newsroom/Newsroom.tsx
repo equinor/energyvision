@@ -161,7 +161,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
 
           <div className="flex flex-col gap-8 lg:gap-12">
             <div className="bg-slate-blue-95 dark py-24">
-              <div className="flex flex-col gap-4  grid-rows-2 px-layout-sm mx-auto">
+              <div className="flex flex-col gap-4  grid-rows-2 mx-auto px-layout-sm max-w-viewport">
                 {title && <Heading value={title} as="h1" variant="h2" />}
                 {ingress && <Blocks value={ingress} />}
                 <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between items-center">
