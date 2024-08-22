@@ -1,7 +1,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
 import { forwardRef } from 'react'
-import { SearchBox, SearchBoxProps } from 'react-instantsearch'
+import { SearchBox, SearchBoxProps, UseSearchBoxProps } from 'react-instantsearch'
 import { useIntl } from 'react-intl'
 
 export type QuickSearchProps = {
@@ -11,7 +11,7 @@ export type QuickSearchProps = {
 const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickSearch(_props, ref) {
   const intl = useIntl()
   const getResetIcon = () => <Icon data={close} />
-  const queryHook = (query: any, search: any) => {
+  const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {
     if (query !== '') {
       search(query)
     }
@@ -29,7 +29,7 @@ const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickS
         resetButtonTitle: intl.formatMessage({ id: 'reset', defaultMessage: 'Reset' }),
       }}
       classNames={{
-        root: 'w-full lg:w-2/4',
+        root: 'w-full',
         form: 'w-full relative flex',
         input:
           'flex-grow border border-autumn-storm-60 rounded-s-md focus:outline-none focus-visible:envis-outline text-slate-80 px-6 py-3',

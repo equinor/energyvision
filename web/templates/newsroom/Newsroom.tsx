@@ -4,9 +4,9 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
 import { Heading, Typography } from '@core/Typography'
 import { FormattedDate } from '@components/FormattedDateTime'
-import TopicSwitch from '@templates/newsroom/TopicSwitch/TopicSwitch'
-import NewsRoomFilters from './NewsroomFilters'
-import { ReadMoreLink } from '@core/Link'
+import TopicSwitch from '@templates/newsroom/Filters/RefinementListFilter'
+import NewsRoomFilters from './Filters/NewsroomFilters'
+import { ReadMoreLink, ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
@@ -19,6 +19,7 @@ import QuickSearch from './QuickSearch/QuickSearch'
 import { searchClient } from '../../lib/algolia'
 import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
+import { List } from '@core/List'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -34,16 +35,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   { isServerRendered, locale, pageData, slug, url },
   ref,
 ) {
-  const {
-    ingress,
-    title,
-    seoAndSome,
-    subscriptionHeading,
-    subscriptionLink,
-    subscriptionLinkTitle,
-    localNewsPagesHeading,
-    localNewsPages,
-  } = pageData || {}
+  const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages } = pageData || {}
 
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -101,7 +93,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     router: createInstantSearchRouterNext({
       singletonRouter,
       serverUrl: url,
-
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
@@ -145,28 +136,13 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
-      <main ref={ref} className="mx-auto max-w-viewport">
-        <div className="lg:w-2/3 px-layout-sm">
-          {title && <Heading value={title} variant="h1" />}
-          <div className="border-y border-autumn-storm-40 py-4">
-            <FormattedDate
-              suppressHydrationWarning
-              datetime={new Date().toString()}
-              weekday="long"
-              day="numeric"
-              year="numeric"
-              month="long"
-            />
-          </div>
-        </div>
-        {ingress && <Blocks value={ingress} className="px-layout-sm" />}
+      <main ref={ref} className="">
         <InstantSearch
           searchClient={
             isServerRendered
               ? searchClient({
                   headers: {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
+                    //@ts-ignore: TODO
                     Referer: url,
                   },
                 })
@@ -184,43 +160,48 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           />
 
           <div className="flex flex-col gap-8 lg:gap-12">
-            <div className="px-layout-sm">
-              <Typography as="h2" variant="h6" className="max-w-text pt-12 pb-4">
-                <FormattedMessage
-                  id="search_quick_search_label"
-                  defaultMessage="Search among Equinor corporate-level news releases"
-                />
-              </Typography>
-              <QuickSearch />
+            <div className="bg-slate-blue-95 dark py-24">
+              <div className="flex flex-col gap-4  grid-rows-2 px-layout-sm mx-auto">
+                {title && <Heading value={title} as="h1" variant="h2" />}
+                {ingress && <Blocks value={ingress} />}
+                <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between items-center">
+                  <div className="w-full lg:w-fit">
+                    <Typography as="h2" variant="h6" className="max-w-text py-4">
+                      <FormattedMessage
+                        id="search_quick_search_label"
+                        defaultMessage="Search among Equinor corporate-level news releases"
+                      />
+                    </Typography>
+                    <QuickSearch />
+                  </div>
+                  <List className="max-lg:w-full" listClassName={'list-none'}>
+                    <List.Item className="w-full">
+                      {subscriptionLink?.slug && (
+                        <ResourceLink href={subscriptionLink.slug} className="w-full">
+                          {subscriptionLinkTitle}
+                        </ResourceLink>
+                      )}
+                    </List.Item>
+                    {localNewsPages &&
+                      localNewsPages?.length > 0 &&
+                      localNewsPages?.map((localNewsPage) => {
+                        return localNewsPage?.link?.slug ? (
+                          <List.Item key={localNewsPage.id} className="w-full">
+                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug} className="w-full">
+                              {localNewsPage?.label}
+                            </ResourceLink>
+                          </List.Item>
+                        ) : null
+                      })}
+                  </List>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col lg:grid lg:grid-cols-[29%_auto] gap-8 lg:gap-12 lg:px-layout-sm">
-              <aside className="lg:self-start lg:sticky lg:top-0 flex flex-col gap-4 lg:gap-6 lg:pt-7 lg:pb-8 max-lg:px-layout-sm">
-                <TopicSwitch limit={50} attribute="topicTags" />
-                {subscriptionLink?.slug && subscriptionHeading && (
-                  <div className="bg-spruce-wood-100 px-6 lg:px-8 py-4 lg:py-6">
-                    <Typography as="h2" variant="h6" className="font-medium pb-4">
-                      {subscriptionHeading}
-                    </Typography>
-                    <ReadMoreLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ReadMoreLink>
-                  </div>
-                )}
-                {localNewsPages && localNewsPages?.length > 0 && localNewsPagesHeading && (
-                  <div className="bg-moss-green-50 px-6 lg:px-8 py-4 lg:py-6">
-                    <Typography as="h2" variant="h6" className="font-medium pb-4">
-                      {localNewsPagesHeading}
-                    </Typography>
-                    {localNewsPages?.map((localNewsPage) => {
-                      return localNewsPage?.link?.slug ? (
-                        <ReadMoreLink key={localNewsPage.id} type={localNewsPage.type} href={localNewsPage?.link?.slug}>
-                          {localNewsPage?.label}
-                        </ReadMoreLink>
-                      ) : null
-                    })}
-                  </div>
-                )}
+            <div className="flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
+              <aside className="lg:self-start lg:sticky lg:top-10 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
+                <NewsRoomFilters />
               </aside>
               <div className="flex flex-col max-lg:px-4">
-                <NewsRoomFilters />
                 <NewsSections />
                 <Pagination hitsPerPage={20} className="w-full justify-center py-12" />
               </div>

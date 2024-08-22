@@ -31,10 +31,8 @@ export type NewsRoomPageType = {
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   newsList?: CardData[]
-  subscriptionHeading?: string
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
-  localNewsPagesHeading?: string
   localNewsPages?: LinkData[]
 }
 

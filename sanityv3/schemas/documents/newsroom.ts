@@ -69,11 +69,6 @@ export default {
       of: [textContentType],
     },
     {
-      name: 'subscriptionHeading',
-      title: 'Heading for the subscription banner',
-      type: 'string',
-    },
-    {
       name: 'subscriptionLink',
       title: 'Link to the email subscription page',
       type: 'reference',
@@ -85,11 +80,6 @@ export default {
     {
       name: 'subscriptionLinkTitle',
       title: 'Title for the subscription link',
-      type: 'string',
-    },
-    {
-      name: 'localNewsPagesHeading',
-      title: 'Heading for the local news pages banner',
       type: 'string',
     },
     {
