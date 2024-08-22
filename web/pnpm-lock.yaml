@@ -9484,7 +9484,7 @@ snapshots:
 
   '@chakra-ui/styled-system@2.4.0':
     dependencies:
-      csstype: 3.1.2
+      csstype: 3.1.3
       lodash.mergewith: 4.6.2
 
   '@chakra-ui/switch@2.0.17(@chakra-ui/system@2.3.4(@emotion/react@11.0.0(@babel/core@7.21.4)(@types/react@18.0.9)(react@18.2.0))(@emotion/styled@11.0.0(@babel/core@7.21.4)(@emotion/react@11.0.0(@babel/core@7.21.4)(@types/react@18.0.9)(react@18.2.0))(@types/react@18.0.9)(react@18.2.0))(react@18.2.0))(framer-motion@11.3.28(@emotion/is-prop-valid@1.2.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)':
@@ -9635,7 +9635,7 @@ snapshots:
   '@emotion/babel-plugin@11.11.0':
     dependencies:
       '@babel/helper-module-imports': 7.22.5
-      '@babel/runtime': 7.23.9
+      '@babel/runtime': 7.24.4
       '@emotion/hash': 0.9.1
       '@emotion/memoize': 0.8.1
       '@emotion/serialize': 1.1.2
@@ -9753,9 +9753,6 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       styled-components: 5.3.9(react-dom@18.2.0(react@18.2.0))(react-is@18.1.0)(react@18.2.0)
-
-  '@esbuild/aix-ppc64@0.20.2':
-    optional: true
 
   '@esbuild/aix-ppc64@0.20.2':
     optional: true
@@ -11837,7 +11834,7 @@ snapshots:
   '@testing-library/dom@9.3.4':
     dependencies:
       '@babel/code-frame': 7.22.5
-      '@babel/runtime': 7.23.9
+      '@babel/runtime': 7.24.4
       '@types/aria-query': 5.0.1
       aria-query: 5.1.3
       chalk: 4.1.2
@@ -11933,11 +11930,11 @@ snapshots:
 
   '@types/follow-redirects@1.14.4':
     dependencies:
-      '@types/minimatch': 5.1.2
       '@types/node': 17.0.35
 
   '@types/glob@7.2.0':
     dependencies:
+      '@types/minimatch': 5.1.2
       '@types/node': 17.0.35
 
   '@types/google.maps@3.53.4': {}
@@ -11956,17 +11953,7 @@ snapshots:
 
   '@types/hoist-non-react-statics@3.3.1':
     dependencies:
-      '@types/node': 17.0.35
-
-  '@types/hast@2.3.10':
-    dependencies:
-      '@types/unist': 2.0.10
-
-  '@types/hogan.js@3.0.1': {}
-
-  '@types/hoist-non-react-statics@3.3.1':
-    dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.2.17
       hoist-non-react-statics: 3.3.2
 
   '@types/http-proxy@1.17.10':
@@ -12003,7 +11990,6 @@ snapshots:
   '@types/lodash.mergewith@4.6.6':
     dependencies:
       '@types/lodash': 4.14.195
-    dev: false
 
   '@types/lodash@4.14.195': {}
 
@@ -12041,18 +12027,18 @@ snapshots:
 
   '@types/react-instantsearch-core@6.26.3':
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.2.17
       algoliasearch: 4.16.0
       algoliasearch-helper: 3.14.0(algoliasearch@4.16.0)
 
   '@types/react-instantsearch-dom@6.12.3':
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.2.17
       '@types/react-instantsearch-core': 6.26.3
 
   '@types/react-instantsearch-native@6.3.2':
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.2.17
       '@types/react-instantsearch-core': 6.26.3
 
   '@types/react-instantsearch@6.10.1':
@@ -12061,8 +12047,7 @@ snapshots:
       '@types/react-instantsearch-dom': 6.12.3
       '@types/react-instantsearch-native': 6.3.2
 
-  /@types/react-transition-group@4.4.11:
-    resolution: {integrity: sha512-RM05tAniPZ5DZPzzNFP+DmrcOdD0efDUxMy3145oljWSl3x9ZV5vhme98gTxFrj2lhXvmGNnUiuDyJgY9IKkNA==}
+  '@types/react-is@18.3.0':
     dependencies:
       '@types/react': 18.3.3
 
@@ -13499,11 +13484,10 @@ snapshots:
   focus-lock@0.11.6:
     dependencies:
       tslib: 2.6.2
-    dev: false
 
-  /focus-visible@5.2.0:
-    resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
-    dev: false
+  focus-visible@5.2.0: {}
+
+  follow-redirects@1.15.2: {}
 
   follow-redirects@1.15.5(debug@4.3.4):
     optionalDependencies:
