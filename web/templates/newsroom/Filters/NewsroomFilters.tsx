@@ -17,9 +17,25 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
 
   return (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
+      <a
+        href="#newsroom_news"
+        className="sr-only
+        focus:outline-none
+        focus-visible:not-sr-only
+        text-sm
+        underline
+        hover:no-underline
+        focus-visible:envis-outline
+        px-4
+        py-3
+        rounded-sm
+        "
+      >
+        <FormattedMessage id="newsroom_skip_to_news" defaultMessage="Skip to list of news" />
+      </a>
       <SelectedFilters />
       {!isMobile ? (
-        <div className="flex flex-col gap-4">
+        <>
           <h2 className="sr-only">
             <FormattedMessage id="newsroom_filters_label" defaultMessage="Filter by:" />
           </h2>
@@ -47,7 +63,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
             attribute="year"
             limit={50}
           />
-        </div>
+        </>
       ) : (
         <Accordion type="single" defaultValue={'filter-topic'} collapsible>
           <Accordion.Item value="filter-topic">
