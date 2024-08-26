@@ -3,17 +3,15 @@ import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
 import { Heading, Typography } from '@core/Typography'
-import { FormattedDate } from '@components/FormattedDateTime'
-import TopicSwitch from '@templates/newsroom/Filters/RefinementListFilter'
 import NewsRoomFilters from './Filters/NewsroomFilters'
-import { ReadMoreLink, ResourceLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import { UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
 import { searchClient } from '../../lib/algolia'
@@ -35,8 +33,9 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   { isServerRendered, locale, pageData, slug, url },
   ref,
 ) {
-  const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages } = pageData || {}
-
+  const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
+    pageData || {}
+  const intl = useIntl()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
@@ -165,16 +164,16 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                 {title && <Heading value={title} as="h1" variant="h2" />}
                 {ingress && <Blocks value={ingress} />}
                 <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between items-center">
-                  <div className="w-full lg:w-fit">
-                    <Typography as="h2" variant="h6" className="max-w-text py-4">
-                      <FormattedMessage
-                        id="search_quick_search_label"
-                        defaultMessage="Search among Equinor corporate-level news releases"
-                      />
-                    </Typography>
-                    <QuickSearch />
-                  </div>
-                  <List className="max-lg:w-full" listClassName={'list-none'}>
+                  <QuickSearch />
+                  <List
+                    role="navigation"
+                    className="max-lg:w-full"
+                    listClassName={'list-none'}
+                    aria-label={intl.formatMessage({
+                      id: 'newsroom_related_links',
+                      defaultMessage: 'Related links',
+                    })}
+                  >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
                         <ResourceLink href={subscriptionLink.slug} className="w-full">
@@ -198,11 +197,14 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
               </div>
             </div>
             <div className="flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
-              <aside className="lg:self-start lg:sticky lg:top-10 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
+              <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
                 <NewsRoomFilters />
               </aside>
               <div className="flex flex-col max-lg:px-4">
-                <NewsSections />
+                <Typography id="newsroom_news" as="h2" className="sr-only">
+                  <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
+                </Typography>
+                <NewsSections fallbackImages={fallbackImages} />
                 <Pagination hitsPerPage={20} className="w-full justify-center py-12" />
               </div>
             </div>

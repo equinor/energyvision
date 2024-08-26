@@ -126,6 +126,11 @@ const snippets: textSnippet = {
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
     group: groups.search,
   },
+  search_submit: {
+    title: 'Submit search',
+    defaultValue: 'Submit search',
+    group: groups.search,
+  },
   search_reset: {
     title: 'Reset',
     defaultValue: 'Reset',
@@ -726,7 +731,12 @@ const snippets: textSnippet = {
   },
   newsroom_filters_selected: {
     title: 'Selected',
-    defaultValue: 'selected',
+    defaultValue: 'Selected',
+    group: groups.newsroom,
+  },
+  newsroom_filters_clear_all: {
+    title: 'Clear all',
+    defaultValue: 'Clear all',
     group: groups.newsroom,
   },
   newsroom_country_filter: {
@@ -758,6 +768,16 @@ const snippets: textSnippet = {
   newsroom_no_hits: {
     title: 'No hits',
     defaultValue: 'Your search returned no results',
+    group: groups.newsroom,
+  },
+  newsroom_related_links: {
+    title: 'Related links',
+    defaultValue: 'Related links',
+    group: groups.newsroom,
+  },
+  newsroom_skip_to_news: {
+    title: 'Skip to list of news',
+    defaultValue: 'Skip to list of news',
     group: groups.newsroom,
   },
   magazineindex_list_header: {

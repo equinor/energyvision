@@ -1,7 +1,6 @@
-import { Icon } from '@equinor/eds-core-react'
-import { close } from '@equinor/eds-icons'
+import { SearchBox } from '../../../pageComponents/search/SearchBox'
 import { forwardRef } from 'react'
-import { SearchBox, SearchBoxProps, UseSearchBoxProps } from 'react-instantsearch'
+import { SearchBoxProps } from 'react-instantsearch'
 import { useIntl } from 'react-intl'
 
 export type QuickSearchProps = {
@@ -10,35 +9,35 @@ export type QuickSearchProps = {
 
 const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickSearch(_props, ref) {
   const intl = useIntl()
-  const getResetIcon = () => <Icon data={close} />
-  const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {
-    if (query !== '') {
-      search(query)
-    }
-  }
 
   return (
-    <SearchBox
-      ref={ref}
-      queryHook={queryHook}
-      searchAsYouType={false}
-      placeholder={intl.formatMessage({ id: 'search_quick_search', defaultMessage: 'Quick search' })}
-      resetIconComponent={() => getResetIcon()}
-      translations={{
-        submitButtonTitle: intl.formatMessage({ id: 'search', defaultMessage: 'Search' }),
-        resetButtonTitle: intl.formatMessage({ id: 'reset', defaultMessage: 'Reset' }),
-      }}
-      classNames={{
-        root: 'w-full',
-        form: 'w-full relative flex',
-        input:
-          'flex-grow border border-autumn-storm-60 rounded-s-md focus:outline-none focus-visible:envis-outline text-slate-80 px-6 py-3',
-        submit: `h-inherit rounded-e-md px-4 py-3 bg-norwegian-woods-100 text-white-100 hover:bg-moss-green-100 focus:outline-none focus-visible:envis-outline`,
-        submitIcon: `fill-white-100 size-5`,
-        reset: ``,
-        resetIcon: ``,
-      }}
-    />
+    <div ref={ref} className="w-full lg:w-fit">
+      <SearchBox
+        label={intl.formatMessage({
+          id: 'search_quick_search_label',
+          defaultMessage: 'Search among Equinor corporate-level news releases',
+        })}
+        placeholder={intl.formatMessage({ id: 'search_quick_search', defaultMessage: 'Quick search' })}
+        className="
+        bg-white-100 
+        border 
+        border-slate-blue-95 
+        px-6 
+        py-3 
+        focus-visible:envis-outline 
+        dark:focus-visible:envis-outline-invert"
+        submitClassName="bg-norwegian-woods-70
+          text-slate-blue-95
+          hover:text-slate-blue-95
+          hover:bg-norwegian-woods-60
+          focus:outline-none
+          focus-visible:envis-outline
+          dark:focus-visible:envis-outline-invert
+          border
+          border-slate-blue-95
+          border-l-0"
+      />
+    </div>
   )
 })
 

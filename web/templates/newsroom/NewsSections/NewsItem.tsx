@@ -4,14 +4,17 @@ import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import envisTwMerge from '../../../twMerge'
+import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 export type NewsListItemProps = {
-  data: any
+  data: NewsRoomNewsItem
+  fallbackImage?: SanityImageObject
 } & HTMLAttributes<HTMLLIElement>
 
 /* Not a semantic list even tho name implies it, used as other news pages with sections */
 const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
-  { data, className = '', ...rest },
+  { data, fallbackImage, className = '', ...rest },
   ref,
 ) {
   const { slug, pageTitle, publishDateTime, heroImage } = data || {}
@@ -30,9 +33,10 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
           )}
         </div>
         <div className="lg:w-[173px] h-full aspect-5/4 lg:aspect-video relative">
-          {heroImage && (
+          {(heroImage ?? fallbackImage) && (
             <Image
-              image={heroImage?.image}
+              image={heroImage?.image ?? fallbackImage}
+              aria-hidden
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 800px"
               fill

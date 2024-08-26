@@ -20,12 +20,19 @@ const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...res
     <div
       className={`${
         variant === 'list'
-          ? 'border border-autumn-storm-60 rounded-sm p-4 flex flex-col max-h-[350px] overflow-auto transparent-v-scrollbar'
+          ? 'border border-autumn-storm-60 rounded-sm p-4 flex flex-col overflow-auto focus:outline-none focus-visible:envis-outline transparent-v-scrollbar'
           : ''
       }`}
+      {...(variant === 'list' && {
+        style: {
+          maxHeight: 'calc(90vh/3)',
+        },
+      })}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
     >
       {variant === 'list' && (
-        <Typography as="h3" variant="h6" id={headingId}>
+        <Typography as="h3" variant="h7" className="font-semibold" id={headingId}>
           {filterName}
         </Typography>
       )}
