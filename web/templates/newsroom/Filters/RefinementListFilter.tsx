@@ -23,6 +23,8 @@ const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...res
           ? 'border border-autumn-storm-60 rounded-sm p-4 flex flex-col max-h-[350px] overflow-auto transparent-v-scrollbar'
           : ''
       }`}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
     >
       {variant === 'list' && (
         <Typography as="h3" variant="h6" id={headingId}>

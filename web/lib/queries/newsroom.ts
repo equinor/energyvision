@@ -22,7 +22,8 @@ export const newsroomQuery = /* groq */ `
     localNewsPages[]{
       ${linkSelectorFields},
     },
-    backgroundImage
+    backgroundImage,
+    "fallbackImages": imageThumbnailFallbacks[]{...}
   }`
 
 export const allNewsDocuments = /* groq */ `

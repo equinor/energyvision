@@ -4,13 +4,16 @@ import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import envisTwMerge from '../../../twMerge'
+import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 export type NewsHeadlinerProps = {
-  data: any
+  data: NewsRoomNewsItem
+  fallbackImage?: SanityImageObject
 } & HTMLAttributes<HTMLLIElement>
 
 const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function NewsHeadliner(
-  { data, className = '', ...rest },
+  { data, fallbackImage, className = '', ...rest },
   ref,
 ) {
   const { slug, pageTitle, ingress, publishDateTime, heroImage } = data
@@ -18,15 +21,16 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
   return (
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-12">
-        {heroImage && (
+        {(heroImage ?? fallbackImage) && (
           <div className="aspect-video relative max-h-[324px] mb-2">
             <Image
-              image={heroImage?.image}
+              image={heroImage?.image ?? fallbackImage}
               fill
               priority
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 1440px"
               className="rounded-xs"
+              aria-hidden
             />
           </div>
         )}

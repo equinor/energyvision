@@ -88,6 +88,22 @@ export default {
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
     },
+    {
+      title: 'Image thumbnail fallbacks',
+      name: 'imageThumbnailFallbacks',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          title: 'Fallback image',
+          options: {
+            hotspot: true,
+            collapsed: false,
+          },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.max(3),
+    },
   ],
   preview: {
     select: {

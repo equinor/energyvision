@@ -12,6 +12,7 @@ import type {
   LinkData,
 } from './types'
 import { PortableTextBlock } from '@portabletext/types'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 export type AlgoliaIndexPageType = {
   isServerRendered?: boolean
@@ -26,14 +27,23 @@ export type AlgoliaIndexPageType = {
   }
 }
 
+export type NewsRoomNewsItem = {
+  slug: string
+  pageTitle: string
+  publishDateTime?: string
+  heroImage: ImageWithCaptionData
+  ingress?: string
+}
+
 export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  newsList?: CardData[]
+  newsList?: NewsRoomNewsItem[]
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]
+  fallbackImages?: SanityImageObject[]
 }
 
 export type MagazineIndexPageType = {

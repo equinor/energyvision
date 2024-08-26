@@ -709,7 +709,12 @@ const snippets: textSnippet = {
   },
   newsroom_filters_selected: {
     title: 'Selected',
-    defaultValue: 'selected',
+    defaultValue: 'Selected',
+    group: groups.newsroom,
+  },
+  newsroom_filters_clear_all: {
+    title: 'Clear all',
+    defaultValue: 'Clear all',
     group: groups.newsroom,
   },
   newsroom_country_filter: {
@@ -741,6 +746,11 @@ const snippets: textSnippet = {
   newsroom_no_hits: {
     title: 'No hits',
     defaultValue: 'Your search returned no results',
+    group: groups.newsroom,
+  },
+  newsroom_related_links: {
+    title: 'Related links',
+    defaultValue: 'Related links',
     group: groups.newsroom,
   },
   magazineindex_list_header: {
