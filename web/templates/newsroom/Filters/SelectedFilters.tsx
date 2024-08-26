@@ -1,7 +1,7 @@
 import { TransformableIcon } from '../../../icons/TransformableIcon'
 import { isModifierClick } from '../../../pageComponents/shared/search/simplePagination/PaginationItem'
 import { forwardRef, HTMLAttributes } from 'react'
-import { useCurrentRefinements, UseRefinementListProps, useSearchBox } from 'react-instantsearch'
+import { useClearRefinements, useCurrentRefinements, UseRefinementListProps, useSearchBox } from 'react-instantsearch'
 import { close_circle_outlined, close } from '@equinor/eds-icons'
 import { Typography } from '@core/Typography'
 import { FormattedMessage } from 'react-intl'
@@ -19,7 +19,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
   ref,
 ) {
   const { items, refine } = useCurrentRefinements()
-  const { clear } = useSearchBox()
+  const { refine: clearRefinements } = useClearRefinements()
 
   const flattenedItems = items.flatMap((item) => {
     return item.refinements
@@ -33,7 +33,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
         </Typography>
         <button
           type="button"
-          onClick={clear}
+          onClick={clearRefinements}
           className="flex gap-1 text-xs underline hover:no-underline focus:outline-none focus-visible:envis-outline active:scale-99"
         >
           <TransformableIcon iconData={close} className="size-6" />
