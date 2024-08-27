@@ -2,9 +2,7 @@ import { InstantSearch, Configure, Index } from 'react-instantsearch'
 import { searchClient as client } from '../../lib/algolia'
 import dynamic from 'next/dynamic'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { SearchBox } from './SearchBox'
 import { getIsoFromLocale } from '../../lib/localization'
-//import { SearchContextProvider } from './SearchContext'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import singletonRouter, { useRouter } from 'next/router'
 import type { UiState } from 'instantsearch.js'
@@ -15,6 +13,7 @@ import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
 import { useIntl } from 'react-intl'
 import { SearchClient } from 'algoliasearch/lite'
+import { SearchBox } from '@core/AlgoliaSearchBox/SearchBox'
 
 const SearchResults = dynamic(() => import('./SearchResults'))
 
@@ -167,14 +166,11 @@ const Search = () => {
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
       ))}
-
-      {/*       <SearchContextProvider> */}
-      <SearchBox />
+      <SearchBox variant="inverted" />
       <SearchResults resultsRef={resultsRef} items={indices} />
       <PaginationContextProvider defaultRef={resultsRef}>
         <StyledPagination padding={padding} hitsPerPage={5} />
       </PaginationContextProvider>
-      {/*       </SearchContextProvider> */}
     </InstantSearch>
   )
 }
