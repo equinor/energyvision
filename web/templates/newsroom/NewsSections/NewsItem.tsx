@@ -19,6 +19,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
 ) {
   const { slug, pageTitle, publishDateTime, heroImage } = data || {}
 
+  console.log('heroImage', heroImage)
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
       <BaseLink href={slug} className="group grid grid-cols-[1fr_25vw] lg:grid-cols-[1fr_10vw] gap-4 lg:gap-6">
@@ -33,9 +34,10 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
           )}
         </div>
         <div className="lg:w-[173px] h-full aspect-5/4 lg:aspect-video relative">
-          {(heroImage ?? fallbackImage) && (
+          {(heroImage?.image?.asset || fallbackImage) && (
             <Image
-              image={heroImage?.image ?? fallbackImage}
+              //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
+              image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
               aria-hidden
               aspectRatio={Ratios.NINE_TO_SIXTEEN}
               sizes="(max-width: 800px) 100vw, 800px"

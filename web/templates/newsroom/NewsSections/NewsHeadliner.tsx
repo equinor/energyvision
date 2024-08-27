@@ -21,10 +21,11 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
   return (
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-12">
-        {(heroImage ?? fallbackImage) && (
+        {(heroImage?.image?.asset || fallbackImage) && (
           <div className="aspect-video relative max-h-[324px] mb-2">
             <Image
-              image={heroImage?.image ?? fallbackImage}
+              //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
+              image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
               fill
               priority
               aspectRatio={Ratios.NINE_TO_SIXTEEN}

@@ -21,6 +21,8 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
     return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
   }
 
+  console.log('fallbackImages', fallbackImages)
+
   return (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
       {items.map((hit, index) => {
@@ -29,7 +31,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
             key={hit.objectID}
             //@ts-ignore: TODO Hit<BaseHit> into a NewsRoomNewsItem
             data={hit}
-            {...(!hit?.heroImage &&
+            {...(!hit?.heroImage?.image?.asset &&
               fallbackImages && {
                 fallbackImage: fallbackImages[Math.floor(Math.random() * fallbackImages?.length)],
               })}
@@ -39,7 +41,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
             key={hit.objectID}
             //@ts-ignore: TODO Hit<BaseHit> into a NewsRoomNewsItem
             data={hit}
-            {...(!hit?.heroImage &&
+            {...(!hit?.heroImage?.image?.asset &&
               fallbackImages && {
                 fallbackImage: fallbackImages[Math.floor(Math.random() * fallbackImages?.length)],
               })}
