@@ -53,7 +53,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal({ isOpen,
           items-start
           py-4 
           px-4 
-          [overscroll-behavior:contain]
+          overscroll-contain
           overflow-y-auto
           rounded-lg
           md:shadow-lg
