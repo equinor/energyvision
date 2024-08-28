@@ -4,15 +4,21 @@ import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { useIntl } from 'react-intl'
 import { mergeRefs } from '@equinor/eds-utils'
 import { Button } from '@core/Button'
+import envisTwMerge from '../../twMerge'
 
 export type ModalProps = {
   isOpen: boolean
   onClose: () => void
   title: string
   children: React.ReactNode
+  dialogClassName?: string
+  className?: string
 }
 
-const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal({ isOpen, onClose, title, children }, ref) {
+const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
+  { isOpen, onClose, title, children, dialogClassName = '', className = '' },
+  ref,
+) {
   const modalRef = useRef<HTMLDialogElement>(null)
   const combinedDialogRef = useMemo(() => mergeRefs<HTMLDialogElement>(modalRef, ref), [modalRef, ref])
   const intl = useIntl()
@@ -34,19 +40,23 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal({ isOpen,
   return (
     <dialog
       ref={combinedDialogRef}
-      className={`
+      className={envisTwMerge(
+        `
+        p-0
         modal
         modal-transition
         bd-blurred
-      `}
+      `,
+        dialogClassName,
+      )}
       aria-label={title}
       onKeyDown={handleKeyDown}
     >
       <div
-        className={`
-          w-full 
+        className={envisTwMerge(
+          `w-[90vw] 
           md:w-[997px] 
-          h-auto
+          max-h-[90vh]
           relative
           flex 
           flex-col 
@@ -57,7 +67,9 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal({ isOpen,
           overflow-y-auto
           rounded-lg
           md:shadow-lg
-          `}
+          `,
+          className,
+        )}
         // Scrollable, needs to be keyboard accessible
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
