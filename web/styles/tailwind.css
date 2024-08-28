@@ -104,7 +104,6 @@
       @apply opacity-0 [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh];
     }
   }
-
   .modal-transition {
     transition: opacity calc(var(--modal-transition-duration) / 2) var(--modal-transition-easing)
         calc(var(--modal-transition-duration) / 2),
@@ -216,7 +215,7 @@
     scrollbar-width: none; /* Firefox */
   }
 
-  @supports (scrollbar-color: auto) {
+  @supports selector(::backdrop) {
     .bd-blurred::backdrop {
       @apply backdrop-blur-md bg-north-sea-90/50;
     }
