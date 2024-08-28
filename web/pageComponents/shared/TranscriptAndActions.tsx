@@ -11,7 +11,6 @@ import { add_circle_filled } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { useIntl } from 'react-intl'
-import { title } from 'process'
 
 type TranscriptAndActionsProps = {
   className?: string
@@ -48,6 +47,7 @@ const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: Tran
         <>
           <button
             onClick={handleOpen}
+            aria-haspopup="dialog"
             aria-label={`${readTranscript} ${ariaTitle}`}
             className={`w-full mb-8 ${commonButtonStyling} ${getVariant('contained-secondary')}`}
           >
