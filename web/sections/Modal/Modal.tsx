@@ -47,7 +47,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal({ isOpen,
           w-full 
           md:w-[997px] 
           h-auto
-           relative
+          relative
           flex 
           flex-col 
           items-start
